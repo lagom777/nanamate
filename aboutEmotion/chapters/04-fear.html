@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4. 공포 — aboutEmotion</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">💗 표지</a></li>
+    <li><a href="01-joy.html">1. 기쁨</a></li>
+    <li><a href="02-sadness.html">2. 슬픔</a></li>
+    <li><a href="03-anger.html">3. 분노</a></li>
+    <li><a href="04-fear.html">4. 공포</a></li>
+    <li><a href="05-disgust.html">5. 혐오</a></li>
+    <li><a href="06-surprise.html">6. 놀람</a></li>
+    <li><a href="07-love.html">7. 사랑·애착</a></li>
+    <li><a href="08-shame-guilt.html">8. 수치·죄책감</a></li>
+    <li><a href="09-pride-hope.html">9. 자긍심·희망</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header"><h1><em>공포</em></h1><p class="authors">Chapter 4 — Fear & Anxiety</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 보라색 그림자를 회전시키며 탐구하세요</span>
+
+<h2>공포란?</h2>
+<p>공포는 "위협이 있다, 도망치거나 대비하라"는 가장 빠르고 자동적인 경보입니다. 편도체가 사령관이며 의식적 사고보다 빠르게 작동합니다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>Fear / Anxiety — Threat detection, avoidance motivation, sympathetic-arousal high-priority signal.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3><p>공포는 "지금 위험하다, 안전해질 때까지 피하거나 대비하라"는 마음의 비상벨입니다.</p>
+  <h3>왜 중요한가?</h3><p>공포 없이 산다면 인간은 며칠도 못 살았을 겁니다. 도로에서 차를 피하고, 모르는 음식을 의심하고, 깊은 물을 조심하는 것 모두 공포의 산물입니다. 다만 현대 사회의 위협은 야생동물이 아니라 시험·발표·관계여서, 오작동하는 공포가 더 큰 문제입니다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>편도체</strong>: 공포의 1차 처리 센터</li><li><strong>투쟁-도피-경직</strong>: 위협 반응 3유형</li><li><strong>불안</strong>: 미래의 모호한 위협</li><li><strong>공황발작</strong>: 갑작스러운 극심한 공포 반응</li><li><strong>회피</strong>: 단기엔 편하지만 장기엔 공포 강화</li></ul></div>
+  <h3>핵심 개념 풀어쓰기</h3><p>공포와 불안은 비슷해 보여도 다릅니다. 공포는 "지금 여기"의 구체적 위협에 대한 반응이고, 불안은 "미래의 모호한" 위협에 대한 반응입니다. 둘 다 핵심 회로는 비슷하지만 다루는 방법이 다릅니다. 공포는 회피·도망이 효과적일 수 있고, 불안은 회피하면 오히려 강해집니다. 무서워서 발표를 안 하면 다음 번엔 더 무서워지는 식입니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 무서운 일을 미루는 자신을 발견했다면, "5분만 해보기" 규칙을 적용해보세요. 시작이 가장 큰 장벽이고, 시작하면 공포 강도가 30% 이상 줄어드는 경우가 많습니다.</div>
+  <h3>한 페이지 요약</h3><ul><li>공포 = 즉시 위협의 알람</li><li>편도체가 의식보다 먼저 반응</li><li>공포 ≠ 불안</li><li>회피는 단기약·장기독</li><li>점진적 노출이 회복의 표준</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3><p>LeDoux의 이중 경로 모델은 시상에서 편도체로 직접 가는 "빠른 경로"와 시상-피질-편도체로 가는 "느린 경로"를 제안합니다. 빠른 경로는 정확성보다 속도가 우선이라 오작동이 많지만 생존에 결정적입니다. Mowrer의 2요인 학습 이론은 공포가 고전적 조건화로 학습되고, 회피로 강화된다고 봅니다. Foa의 정서 처리 이론은 노출(exposure)을 통해 공포 구조를 활성화하고 새 정보로 수정함으로써 치료가 가능하다고 봅니다. 신경회로로는 편도체 외측핵 → 중심핵 → 시상하부·PAG가 핵심이고, vmPFC가 멸절(extinction)을 매개합니다.</p>
+  <h3>핵심 메커니즘</h3><div class="formula">불안 = 위협 추정 × 결과 심각성 ÷ (대처 자원 + 회복 자원)</div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1: 발표 불안</h4><p>심박수 상승·손 떨림·생각의 백지화. 점진적 노출 + 호흡 조절 + 인지 재구성이 1차 치료.</p></div>
+  <div class="info-card"><h4>📐 예제 2: 공포증(거미·고소·폐쇄)</h4><p>회피로 강화된 공포는 가상현실 노출치료(VR-ET) 4-8회기로 큰 효과(메타분석 d≈0.9).</p></div>
+  <h3>응용 사례</h3><p>현대인의 가장 흔한 정신질환이 불안장애입니다(평생 유병률 약 30%). 한국에서 코로나19 이후 불안·공황 호소가 증가했고, 디지털 CBT 앱과 챗봇 상담이 1차 접근로로 확대되고 있습니다. SSRI·SNRI 약물치료와 인지행동치료가 표준 1차 치료입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "이런 걸 무서워하면 안 돼"라는 자기 비난은 공포를 강화합니다. 공포 자체는 정상이고, 다루는 방식만 바꿔야 합니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3><p>공포 학습과 멸절은 분자 수준에서 NMDA 수용체, BDNF, GABA 회로의 가소성과 연관됩니다. 노출치료의 효과는 단순한 "약화"가 아니라 새 안전 학습이 기존 공포 기억 위에 형성되는 것이며, 맥락이 바뀌면 재발(renewal, reinstatement) 위험이 있어 다양한 맥락에서의 노출이 권장됩니다(Bouton). D-cycloserine 같은 인지 보조제가 노출치료 효과를 증강한다는 RCT 결과도 누적되고 있습니다. PTSD는 외상 기억이 정상 기억 회로(해마)와 분리되어 편도체에 강하게 응고된 상태이며, EMDR·노출치료·트라우마 중심 CBT가 표준 치료입니다.</p>
+  <h3>최신 연구·동향</h3><p>2024-2026 사이코델릭 보조 치료(MDMA, psilocybin)가 PTSD·치료저항성 불안에서 임상 시험 단계에 진입했습니다. VR·AR 노출치료의 접근성이 빠르게 좋아졌고, 디지털 표현형으로 공황발작 직전 신호를 예측하는 웨어러블 연구도 진행 중입니다. 한국 KAIST·서울대 정신건강의학과는 한국형 디지털 CBT 개발에 참여하고 있습니다.</p>
+  <h3>관련 분야</h3><ul><li>임상심리·정신의학</li><li>학습이론·기억 신경과학</li><li>가상현실 의학</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>LeDoux, "Anxious"</li><li>Barlow, "Anxiety and Its Disorders"</li><li>대한신경정신의학회 불안장애 가이드라인</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 본인이 피해 온 작은 공포(예: 모르는 사람에게 길 묻기) 한 가지를 골라 점진적 노출 계획을 5단계로 만들고, 매 단계 SUDS 점수(0-100)를 기록하며 실행하세요.</div>
+</div>
+</main></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const shadows=[];for(let i=0;i<25;i++){const m=new THREE.Mesh(new THREE.IcosahedronGeometry(0.3+Math.random()*0.2,0),new THREE.MeshBasicMaterial({color:0x8b5cf6,wireframe:true,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);shadows.push(m);}
+  let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
+  function a(){requestAnimationFrame(a);s.rotation.y+=0.002;shadows.forEach((m,i)=>{m.position.x+=Math.sin(Date.now()*0.0008+i)*0.004;});r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script></body></html>
