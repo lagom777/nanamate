@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사랑·애착 — aboutLove</title><link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="index.html">💗 표지 · 소개</a></li>
+<li><a href="chapters/01-definition.html">1. 정의와 본질</a></li>
+<li><a href="chapters/02-evolution.html">2. 진화와 기능</a></li>
+<li><a href="chapters/03-neural.html">3. 신경 메커니즘</a></li>
+<li><a href="chapters/04-development.html">4. 발달과 학습</a></li>
+<li><a href="chapters/05-culture.html">5. 문화와 표현</a></li>
+<li><a href="chapters/06-daily.html">6. 일상에서 다루기</a></li>
+<li><a href="chapters/07-clinical.html">7. 임상과 병리</a></li>
+<li><a href="chapters/08-regulation.html">8. 조절과 치료</a></li>
+<li><a href="chapters/09-future.html">9. 응용과 미래</a></li>
+</ol></aside>
+<main>
+<header class="paper-header">
+  <h1><em>사랑·애착</em>의 모든 것</h1>
+  <p class="authors">Love & Attachment — A Deep Dive into One Emotion</p>
+  <p class="affiliation">Vol. 31 · May 2026 · aboutLove Editorial</p>
+</header>
+
+<div class="scene-3d" id="intro-scene"></div>
+<span class="interact-hint">⟳ 마우스로 회전 · 핑크 유대</span>
+
+<h2>이 과목에 대하여</h2>
+<p>사랑은 친밀·열정·헌신의 복합체, 애착은 그 토대입니다. 하버드 85년 추적 연구가 보여준 "관계의 질이 인생의 질" 메시지를 9개 챕터로.</p>
+
+<h2>학습 로드맵</h2>
+<div class="info-card"><h4>📐 챕터 1–3: 기초 이해</h4><p>정의·진화적 기능·신경 메커니즘. "사랑·애착이 무엇이고 왜 존재하는가"에 답합니다.</p></div>
+<div class="info-card"><h4>🌱 챕터 4–6: 발달·문화·일상</h4><p>어떻게 자라고, 문화마다 어떻게 다르며, 일상에서 어떻게 다룰지.</p></div>
+<div class="info-card"><h4>🩺 챕터 7–9: 임상·조절·미래</h4><p>병리적 양상, 치료적 접근, 그리고 디지털 시대의 새 응용.</p></div>
+
+<h2>이렇게 학습하세요</h2>
+<p>각 챕터마다 <strong>하 · 중 · 상</strong> 3단계 난이도 탭이 있습니다. 처음에는 "하"에서 한 줄 정의와 일상 예시를 익히고, 익숙해지면 "중"에서 이론과 메커니즘을, 마지막에 "상"에서 최신 연구·임상을 다룹니다. 우측 상단 언어 토글로 영어·일본어·중국어 학습도 가능합니다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 관계가 흔들릴 때 "내 애착 유형이 지금 무엇을 두려워하는가"를 자문하면 갈등의 절반이 풀립니다.</div>
+
+</main></div>
+<script>(function(){
+  const c=document.getElementById('intro-scene');const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,10);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COLOR=0xec4899;const N=30;
+  const parts=[];for(let i=0;i<N;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.18,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*8,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  function a(){requestAnimationFrame(a);s.rotation.y+=0.002;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.003;});r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script></body></html>
