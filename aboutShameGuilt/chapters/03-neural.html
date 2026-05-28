@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 신경 메커니즘 — aboutShameGuilt</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🟪 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>신경 메커니즘</em></h1>
+  <p class="authors">Chapter 3 — Neural Mechanisms</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 라벤더 안개를 회전시키며 탐구하세요</span>
+
+<h2>신경 메커니즘 개요</h2>
+<p>수치심과 죄책감은 단일 뇌 부위가 아니라 분산된 회로의 협주다. 공통 핵심은 전대상피질(ACC), 섬엽(insula), 복내측 전전두피질(vmPFC), 측두두정 접합부(TPJ)다. 수치심은 여기에 더해 자기 표상을 담당하는 내측 전전두피질(mPFC)이 더 강하게 동원된다. 즉 수치심은 "나라는 표상이 위협받고 있다"는 신호를 자기 회로로 직접 던지는 정서다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>죄책감 = 행동 평가 회로(vmPFC + TPJ) 우세, 수치심 = 자기 표상 회로(mPFC + dACC + 섬엽) 우세. 같은 뇌가 자기를 보는 각도에 따라 다른 정서가 점화된다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3><p>수치·죄책감은 뇌가 "자기 자신"을 평가 무대 위에 올리는 순간 켜지는 회로다.</p>
+  <h3>왜 중요한가?</h3><p>수치심이 들 때 얼굴이 달아오르고 위가 조이는 신체 감각은 기분 탓이 아니라 섬엽이라는 뇌 부위가 만든 실제 신호다. 이 회로를 알면 "감정이 진짜 몸에 있다"는 사실을 받아들이게 되고, 자기 비난 대신 신체 진정 기법(호흡·이완)으로 접근할 수 있다. 또한 수치심과 죄책감이 다른 회로를 쓴다는 사실은 둘에 대한 대응법도 달라야 함을 알려준다. 죄책감은 인지적 사과·보상으로, 수치심은 신체적 안전 신호와 자기 자비로 풀린다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>전대상피질(ACC)</strong>: 갈등·오류 감지의 본부, 사회적 통증도 처리한다.</li><li><strong>섬엽(Insula)</strong>: 내장 감각과 정서를 통합하는 신체 의식의 중심이다.</li><li><strong>vmPFC</strong>: 복내측 전전두피질, 자기 평가와 가치 판단을 담당한다.</li><li><strong>mPFC</strong>: 내측 전전두피질, 자기 표상의 핵심 영역이다.</li><li><strong>TPJ</strong>: 측두두정 접합부, 타인 관점 추론(마음 이론)을 담당한다.</li></ul></div>
+  <h3>핵심 개념 풀어쓰기</h3><p>친구가 내 비밀을 폭로한 자리에서 얼굴이 빨개진다면, dACC가 사회적 통증을 감지하고 섬엽이 그 신호를 얼굴 혈관 확장으로 표현한 결과다. 동시에 mPFC가 "내가 어떻게 보일까"라는 자기 시뮬레이션을 돌리고, TPJ는 청중의 시선을 추론한다. 이 모든 회로가 1초 만에 협주해서 우리가 "수치심"이라고 부르는 한 덩어리 경험이 만들어진다. 단일 정서로 보이지만 안에는 작은 오케스트라가 있다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 수치심이 올 때 "지금 내 섬엽이 작동 중"이라고 명명해보자. 정서를 신체 회로로 외재화하는 한 줄이 즉시 강도를 낮춘다.</div>
+  <h3>한 페이지 요약</h3><ul><li>수치·죄책감은 분산 회로의 협주다.</li><li>핵심 노드는 ACC, 섬엽, vmPFC, TPJ다.</li><li>수치심은 자기 표상 회로(mPFC)가 추가 활성된다.</li><li>얼굴 붉어짐·위 조임은 섬엽의 실제 신호다.</li><li>회로별 대응법을 달리해야 효과적이다.</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3><p>Michl 등 2014의 fMRI 메타분석은 수치심과 죄책감의 신경회로를 분리해 비교했다. 두 정서 모두 vmPFC, 측두엽, TPJ를 공유하지만 수치심은 frontal lobe(특히 dmPFC), 죄책감은 fusiform gyrus와 측두극에서 차별적 활성을 보였다. Wagner 등 2011은 죄책감이 mentalizing 네트워크(TPJ, precuneus, mPFC)에서 강하게 활성됨을 보였는데, 이는 죄책감이 "타인 관점에서 내 행동을 보는" 인지 과정에 의존함을 시사한다. 수치심은 추가로 우측 mPFC와 후대상피질(PCC) 활성이 두드러지며, 이 영역들은 자기 표상의 핵심 노드다. Olsson &amp; Ochsner의 사회신경과학 연구에 따르면, 사회적 통증을 처리하는 dACC와 anterior insula는 신체적 통증 회로와 거의 동일하다. 이는 "수치심으로 가슴이 찢어진다"는 한국어 표현이 단순 은유가 아님을 시사한다. 자율신경 측면에서 수치심은 부교감 우세의 freeze 반응(얼굴 붉어짐·시선 회피·동작 위축)을, 죄책감은 교감 우세의 접근 동기(사과·보상 행동)를 만든다.</p>
+  <h3>핵심 메커니즘</h3><div class="info-card"><h4>📐 자기 의식적 정서의 4-노드 회로</h4><p>① dACC: 사회적 위협·갈등 감지 → ② 섬엽: 신체 감각 통합 → ③ vmPFC: 자기 가치 평가 → ④ TPJ/mPFC: 타인 시선 추론·자기 표상. 네 노드의 활성 비율이 수치/죄책/당혹감을 가른다.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>발표 중 자료가 틀린 게 청중에게 들켰을 때, TPJ가 청중 시선을 시뮬레이션하고 mPFC가 자기 표상을 활성화하면서 얼굴이 화끈거린다. 이때 섬엽이 위장의 긴장까지 만들어 "구역질날 것 같다"는 느낌을 만든다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>친구의 비밀을 무심코 누설한 뒤 vmPFC가 "내 행동의 도덕적 가치"를 음수로 평가하고, mentalizing 회로가 친구 관점을 시뮬레이션하면서 죄책감이 사과 동기를 만든다. 이때 신체 신호보다 인지적 반추가 우세하다.</p></div>
+  <h3>응용 사례</h3><p>한국 정신의학에서 자기 의식적 정서의 신경회로 연구는 우울·사회불안의 매개 기제를 설명하는 데 활용된다. 사회불안장애 환자는 수치심 자극 시 dACC와 섬엽의 과활성이 일관되게 보고되며, 이는 CBT·CFT의 표적 회로가 된다. 임상적으로 호흡·이완·따뜻한 신체 감각 자극은 미주신경(vagal tone)을 통해 섬엽 활성을 낮추는 방식으로 작동한다.</p>
+  <div class="warning-box">⚠️ 자주 하는 실수: "수치심은 인지 왜곡이니 생각만 바꾸면 된다"는 가정은 신체 회로를 무시한다. 신체 진정 없이 인지 재구성만 시도하면 종종 실패한다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3><p>자기 의식적 정서의 신경 기반은 단순한 "감정 회로"가 아니라 self-referential processing의 변형이다. Northoff 2006이 제안한 cortical midline structures(CMS) — mPFC, ACC, PCC, precuneus —는 자기 표상의 핵심 네트워크이며, 수치심에서 일관되게 활성된다. 이는 수치심이 본질적으로 "자기 평가 회로의 음성 출력"임을 시사한다. Gilbert의 사회 위계 이론과 결합하면, 만성 수치심은 dACC-insula-amygdala 축의 만성 활성과 vmPFC의 하향 조절 실패로 모델링된다. 거울 시스템(premotor, IPL) 연구에서는 수치심 노출 자극(타인의 수치 장면)을 볼 때 자신이 수치를 겪을 때와 유사한 회로가 활성됨이 보고된다. 이는 공감적 수치(empathic shame)의 신경 기반이다. 신경전달물질 측면에서 옥시토신은 죄책감 후 회복 행동을 증진하고, 코르티솔은 수치심 직후 급격히 상승하며 만성화 시 HPA 축의 둔감화를 유발한다. 또한 vagal tone(HRV)이 높을수록 수치심 자극에서의 회복이 빠르며, 이것이 CFT의 soothing rhythm breathing이 표적으로 삼는 생리적 메커니즘이다.</p>
+  <h3>최신 연구·동향</h3><p>최근에는 7T fMRI와 다변량 패턴 분석(MVPA)을 활용해 수치심·죄책감의 신경 표상을 디코딩하는 연구가 진행 중이다. Bastin 등 2021은 머신러닝으로 두 정서의 활성 패턴을 분리 가능함을 보였다. 또한 RDoC 프레임워크에서 수치심은 negative valence + social processes의 교차 영역으로 재정의되고 있다.</p>
+  <h3>관련 분야</h3><ul><li>사회신경과학(Social Neuroscience)</li><li>정서신경과학(Affective Neuroscience)</li><li>자기 표상 연구(Self-Representation Research)</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"The Archaeology of Mind" — Jaak Panksepp &amp; Lucy Biven</li><li>"Self and Other in the Brain" — Sui &amp; Humphreys (논문 컬렉션)</li><li>"The Compassionate Mind" — Paul Gilbert</li></ul>
+  <div class="success-box">🎓 도전 과제: 수치심 신경회로의 핵심 4-5개 노드(dACC, 섬엽, vmPFC, mPFC, TPJ)를 종이에 그리고 각 노드의 기능과 상호 연결을 화살표로 표시해보자.</div>
+</div>
+
+</main></div>
+<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0xa78bfa;const parts=[];for(let i=0;i<32;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>

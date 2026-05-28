@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4. 발달과 학습 — aboutAnger</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔴 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>발달과 학습</em></h1>
+  <p class="authors">Chapter 4 — Development &amp; Learning</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 붉은 불꽃을 회전시키며 탐구하세요</span>
+
+<h2>발달과 학습 개요</h2>
+<p>분노는 생후 몇 개월부터 나타나며 평생 형태가 바뀌어 간다. 영아의 떼쓰기, 유아의 짜증, 청소년의 자율성 분노, 성인의 자기주장 — 같은 정서가 사회화 단계마다 다른 옷을 입는다. 부모와 사회가 분노를 어떻게 다뤘는지가 그 사람의 평생 분노 패턴을 거의 결정한다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>분노는 발달 과정에서 (1) 떼쓰기 같은 원시적 표출, (2) 사회적 규범 학습을 통한 억제, (3) 언어를 통한 자기주장으로 변환된다. 양육자의 분노 다루는 방식이 모델링과 강화로 자녀에게 전이된다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3><p>아이의 떼쓰기에서 어른의 자기주장까지, 분노는 평생 사회화되며 형태를 바꾼다.</p>
+  <h3>왜 중요한가?</h3><p>분노 패턴은 거의 부모에게서 학습된다. 부모가 분노를 폭발시키면 아이도 폭발하고, 부모가 분노를 억누르면 아이도 억누른다. 이걸 알면 자기 분노 스타일이 어디서 왔는지 추적할 수 있다. 또한 2~3세 아이의 떼쓰기는 병이 아니라 정상 발달 단계라는 사실을 알면 양육 죄책감이 줄어든다. 분노 다루는 법을 배우는 가장 결정적 시기는 어린 시절이지만, 성인이 된 후에도 충분히 다시 학습할 수 있다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>분노발작(temper tantrum)</strong>: 2~3세 아이의 정상 발달 분노다.</li><li><strong>모델링</strong>: 부모의 분노 표현을 그대로 학습하는 과정이다.</li><li><strong>강화</strong>: 떼쓰기에 양보하면 분노가 강화된다.</li><li><strong>자율성 분노</strong>: 청소년기 "내 일 내가 결정한다"는 분노다.</li><li><strong>정서 코칭</strong>: 자녀 분노를 인정하고 이름 붙이는 양육 방식이다.</li></ul></div>
+  <h3>핵심 개념 풀어쓰기</h3><p>마트에서 누워서 우는 아이는 일부러 그러는 게 아니라 전두엽이 아직 분노 브레이크를 잡지 못해서 그렇다. 이때 부모가 "그만!"이라고 소리치면 아이는 "분노에는 더 큰 분노로 답한다"를 배운다. 반대로 "지금 많이 속상하구나"라고 이름 붙여주면 아이는 "분노를 말로 풀 수 있다"를 배운다. 이 작은 차이가 20년 후 그 아이의 갈등 해결 스타일을 만든다. 결국 자녀 양육은 분노 모델을 물려주는 일이다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 본인이 화났을 때 가장 먼저 떠오르는 대처 방식이 어머니·아버지 중 누구의 것과 닮았는지 생각해보자.</div>
+  <h3>한 페이지 요약</h3><ul><li>2~3세 떼쓰기는 정상 발달 단계다.</li><li>분노 패턴은 부모에게서 모델링된다.</li><li>떼쓰기 양보가 분노를 강화한다.</li><li>청소년기 분노는 자율성 욕구의 표현이다.</li><li>정서 코칭이 평생 분노 조절력을 키운다.</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3><p>발달 단계별 분노 양상은 비교적 잘 정립돼 있다. 영아기(0~1세)는 신체적 불편함에 대한 일반적 분노 울음이다. 유아기(2~3세)는 자율성 욕구가 폭발하며 "싫어!"가 시작된다. 학령전기(4~6세)는 사회적 규범을 배우면서 분노 표현이 점차 언어화된다. 학령기(7~12세)는 또래 갈등에서 정의 감각이 발달한다. 청소년기(13~18세)는 전두엽 미성숙과 호르몬 변화로 충동성과 자율성 분노가 정점에 오른다. Bowlby의 애착 이론은 안전 애착이 형성된 아이가 분노를 조절하고 표현하는 능력이 훨씬 더 발달한다고 본다. Gottman의 emotion coaching 연구는 자녀 정서를 인정·이름 붙이기·문제 해결로 안내하는 부모의 자녀가 평생 정서지능과 분노 조절력에서 월등하다는 종단 데이터를 제시했다. 반면 정서 무시·정서 처벌 부모의 자녀는 분노 폭발 또는 억압 양극단으로 흐른다.</p>
+  <h3>핵심 메커니즘</h3><div class="info-card"><h4>📐 발달 단계별 분노 변환</h4><p>0~1세: 신체 불편 울음 → 2~3세: 자율성 떼쓰기 → 4~6세: 언어적 분노 표현 → 7~12세: 정의·공정성 분노 → 13~18세: 자율성·정체성 분노 → 성인: 자기주장 또는 폭발/억압 패턴 고착.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>"안 돼"를 무조건 통제로만 다루면 청소년기 자율성 분노가 폭발한다. 어릴 때 "왜 안 되는지" 설명받은 아이는 같은 상황에서 협상으로 풀어낸다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>3살 아이가 마트에서 떼쓸 때 부모가 사주면 "떼쓰면 얻을 수 있다"가 강화된다. 5살이 되면 같은 전략이 더 격렬해진다. 침착한 일관성이 정서 코칭의 핵심이다.</p></div>
+  <h3>응용 사례</h3><p>한국은 2020년대 들어 양육 문화가 빠르게 변화 중이다. 체벌 금지 법제화(아동복지법 2021 개정)와 함께 정서 코칭·비폭력 양육이 보급되고 있다. 그러나 부모 세대가 정서 코칭을 받아본 적이 없어 자기 모델이 없는 상태에서 자녀에게 적용하려다 좌절하는 사례가 흔하다. 부모 교육 프로그램(예: 부모-자녀 상호작용 치료 PCIT)이 EAP와 보건소를 통해 확산되고 있다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 떼쓰는 아이를 "이기적"이라 해석하면 분노 발작이 정상 발달 단계임을 놓친다. 떼쓰기는 자율성의 신호다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3><p>발달정신병리학에서 분노·공격성 장애는 발달 궤적을 따라 분류된다. Oppositional Defiant Disorder(ODD, 적대적 반항 장애)는 학령전기·학령기에 시작되며 권위에 대한 반항·논쟁·복수 욕구가 특징이다. Conduct Disorder(CD, 품행 장애)는 더 심각한 형태로 타인 권리 침해·공격·재산 파괴를 포함한다. CD가 18세까지 지속되면 반사회성 인격 장애(ASPD)로 이행하는 비율이 높다. Moffitt의 1993년 유명한 분류는 청소년기 한정 반사회성(adolescent-limited)과 평생 지속 반사회성(life-course-persistent)을 구분했다. 전자는 청소년기 자율성 분노의 일시적 표현이고, 후자는 어린 시절 신경발달 손상에서 시작된다. 청소년기 분노 폭발의 신경학적 근거로 Steinberg는 dual systems 모델을 제시했다. 변연계(보상·정서) 발달은 사춘기에 폭발적인 반면, 전전두엽(억제·계획) 성숙은 25세 전후까지 이어진다. 둘의 시간차가 청소년기 충동성과 분노의 본질이다. 이 점에서 청소년 사법 시스템도 분노 조절 미성숙을 고려해 점점 더 회복적 사법(restorative justice)으로 이동하고 있다.</p>
+  <h3>최신 연구·동향</h3><p>최근 연구는 어린 시절 역경 경험(ACEs, Adverse Childhood Experiences)이 성인기 만성 분노·공격성과 강하게 연관된다는 종단 증거를 축적하고 있다. 또한 후성유전학적 변화(메틸화 패턴)가 학대 경험을 다음 세대로 전달하는 메커니즘으로 주목받고 있다.</p>
+  <h3>관련 분야</h3><ul><li>발달정신병리학(Developmental Psychopathology)</li><li>애착 이론(Attachment Theory)</li><li>청소년심리학(Adolescent Psychology)</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"Raising an Emotionally Intelligent Child" — John Gottman</li><li>"The Whole-Brain Child" — Daniel Siegel</li><li>"Age of Opportunity" — Laurence Steinberg</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 부모님의 분노 다루는 방식 3가지를 적고, 본인이 그중 어떤 것을 무의식적으로 닮았는지·어떤 것을 의식적으로 바꿨는지 회고해보자.</div>
+</div>
+
+</main></div>
+<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0xef4444;const parts=[];for(let i=0;i<34;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>

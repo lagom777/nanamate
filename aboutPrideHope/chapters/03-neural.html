@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 신경 메커니즘 — aboutPrideHope</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🌸 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>신경 메커니즘</em></h1>
+  <p class="authors">Chapter 3 — Neural Mechanisms</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 로즈빛 나선을 회전시키며 탐구하세요</span>
+
+<h2>신경 메커니즘 개요</h2>
+<p>자긍심과 희망은 보상 회로(VTA-NAc)와 자기 평가 회로(mPFC)의 결합으로 만들어진다. 도파민이 보상 예측을, mPFC가 "그 보상의 주체가 나"라는 자기 표상을 제공한다. 두 회로가 만나는 지점에서 "내가 해낸다"는 자기 효능감의 신경 기반이 형성된다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>자긍심·희망은 단일 영역이 아니라 회로 시스템이다. mPFC(자기 표상), NAc(보상), VTA(도파민), ACC(동기 추적)의 네 영역이 협력해야 작동한다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3><p>자긍심과 희망은 "보상 회로 + 자기 평가 회로"의 두 시스템이 만나서 만드는 감정이다.</p>
+  <h3>왜 중요한가?</h3><p>이 회로가 약해지면 우울증, 무기력, 번아웃이 온다. 보상 회로가 둔해지면 어떤 성취도 기쁘지 않다. 자기 평가 회로가 부정 방향으로 굳어지면 성공해도 "나는 부족하다"가 출력된다. 신경 메커니즘을 알면 약물·심리치료·생활 습관이 어디에 작용하는지 보이고, 자신의 어떤 부분을 회복시켜야 하는지 정확히 짚을 수 있다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>VTA-NAc 회로</strong>: 도파민 보상 회로, 기쁨과 동기의 원천</li>
+    <li><strong>mPFC(내측 전전두엽)</strong>: 자기 표상·자기 평가의 중심</li>
+    <li><strong>도파민(Dopamine)</strong>: 보상 예측·동기 신호 신경전달물질</li>
+    <li><strong>옥시토신(Oxytocin)</strong>: 사회적 자긍심에 관여하는 호르몬</li>
+    <li><strong>ACC(전대상피질)</strong>: 노력·동기 추적, 희망의 인지 기반</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3><p>"내가 시험에 합격했다"는 단순 보상이 아니다. NAc는 "보상이 왔다"를 알리고, mPFC는 "이 보상의 주체는 나다"를 입력하며, ACC는 "내가 노력해서 만든 결과다"를 연결한다. 세 신호가 합쳐질 때 단순 기쁨이 자긍심으로 진화한다. 희망은 같은 회로가 미래 방향으로 작동하는 것이다. "내가 미래에 보상을 받을 수 있다"는 예측이 도파민을 지속적으로 흘려보내며 행동을 끌고 간다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 큰 보상 하나보다 작은 보상 여럿이 회로를 더 자주 활성화한다. 큰 목표를 잘게 쪼개야 자긍심 회로가 자주 켜진다.</div>
+  <h3>한 페이지 요약</h3><ul>
+    <li>자긍심·희망 = 보상 회로 + 자기 평가 회로의 결합</li>
+    <li>VTA-NAc 도파민이 기쁨·동기 신호를 제공</li>
+    <li>mPFC가 "주체는 나"라는 자기 표상을 입력</li>
+    <li>ACC가 노력과 결과를 연결</li>
+    <li>회로 약화가 우울·무기력의 신경 기반</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3><p>Takahashi 등(2008)의 fMRI 연구는 자긍심 상황(자신의 좋은 행동 상상)에서 mPFC와 좌측 후두정엽이 강하게 활성화됨을 보였다. 같은 자극에서 죄책감 조건은 mPFC + 측두엽 접합부(TPJ)가 활성화되어, 두 자기 평가 정서가 같은 mPFC 허브를 공유하되 보조 영역이 다름을 시사한다. 희망의 신경 기반 연구는 ACC와 PFC의 연결성이 핵심임을 보인다. ACC는 "노력 가치(effort value)"를 코딩하며, 이 가치 신호가 약하면 행동이 시작되지 않는다. 우울증에서 흔히 보이는 무기력은 ACC-PFC 연결 약화의 직접 결과다. 자기 효능감의 신경 표상은 ventral striatum 보상 학습 신호의 적분으로 모델링된다 — 작은 성공의 누적이 자기 효능감 회로를 키운다.</p>
+  <h3>핵심 메커니즘</h3>
+  <div class="info-card"><h4>📐 자긍심·희망의 4영역 회로</h4><p>① VTA → 도파민 분비. ② NAc → 보상 감지. ③ mPFC → "주체는 나"라는 자기 표상. ④ ACC → 노력-결과 연결. 네 영역이 동시에 활성화되면 단순 기쁨이 자긍심·희망으로 진화한다. 한 영역이라도 끊기면 정서가 약해진다.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>장기 학습 후 시험 합격: NAc(보상) + mPFC(나) + ACC(내 노력이 만든) 동시 활성화로 강력한 자긍심. 같은 합격이라도 "운"으로 해석하면 ACC 활성이 약해 자긍심이 약해진다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>우울증 환자: VTA 도파민 분비 둔화 + mPFC 자기 평가 부정 편향. 같은 성취 자극에도 보상 회로가 켜지지 않아 "성공해도 기쁘지 않다"가 발생한다.</p></div>
+  <h3>응용 사례</h3><p>한국 학생의 시험 후 무기력은 단순 피로가 아니라 ACC-PFC 회로의 일시적 고갈일 가능성이 크다. 작은 성공 경험을 자주 만들어 회로를 회복시키는 것이 휴식보다 중요하다. BCI(뇌-컴퓨터 인터페이스) 연구는 자기 효능감 회로의 직접 측정·강화를 실험하고 있다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "도파민만 늘리면 자긍심이 생긴다"는 오해. 도파민은 보상 신호일 뿐, mPFC 자기 평가가 없으면 자긍심으로 진화하지 않는다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3><p>Takahashi 등(2008)의 자긍심 fMRI 연구 이후, 자긍심 신경상관 연구는 두 자긍심(진정·오만)의 회로 분리를 시도해왔다. 오만 자긍심은 ventral striatum 과활성 + mPFC 자기 인플레이션으로 나타나며, 나르시시즘 척도와 강한 상관을 보인다. Schultz의 도파민 보상 예측 오류(RPE) 이론은 희망의 신경 기반을 설명한다 — 희망은 양의 예측 오류가 누적된 상태로, 미래 보상 예측이 도파민 톤을 지속적으로 유지하게 한다. Berridge의 "wanting vs liking" 구분은 자긍심 회로의 이해를 깊게 했다. 자긍심은 단순 liking(쾌락)이 아니라 wanting(동기)의 자기 지향 형태다. 한국 연구에서 Lee 등(2020)은 한국인 성공·실패 자극에 대한 mPFC 반응이 서구 표본보다 자기-타자 구분이 약함을 보고했다.</p>
+  <h3>최신 연구·동향</h3><p>2024년 들어 광유전학(optogenetics)을 통한 NAc 직접 자극이 동물 모델에서 희망 유사 행동(persistence)을 증가시킴이 보고되었다. 인간에서는 비침습 뇌자극(tDCS)으로 mPFC를 자극해 자기 효능감을 일시적으로 높이는 실험이 진행 중이다. AI 기반 신경표상 디코딩으로 자긍심·희망의 실시간 측정이 시도되고 있다.</p>
+  <h3>관련 분야</h3><ul>
+    <li>인지신경과학(Cognitive Neuroscience)</li>
+    <li>계산신경과학(Computational Neuroscience)</li>
+    <li>신경경제학(Neuroeconomics)</li>
+  </ul>
+  <h3>추가 학습 자료</h3><ul>
+    <li>"The Molecule of More" — Daniel Lieberman</li>
+    <li>"Behave" — Robert Sapolsky</li>
+    <li>"Affective Neuroscience" — Jaak Panksepp</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 본인의 자긍심·희망 회로 도식을 그려보라 — 어떤 자극이 VTA·NAc·mPFC·ACC를 각각 활성화하는지 본인의 일상에서 매핑하라.</div>
+</div>
+
+</main></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COLOR=0xf472b6;const parts=[];
+  for(let i=0;i<36;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}
+  let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
+  function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script></body></html>

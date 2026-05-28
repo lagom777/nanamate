@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7. 임상과 병리 — aboutSurprise</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🟠 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>임상과 병리</em></h1>
+  <p class="authors">Chapter 7 — Clinical &amp; Pathology</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 황금 섬광을 회전시키며 탐구하세요</span>
+
+<h2>임상과 병리 개요</h2>
+<p>놀람 시스템의 병리는 양극단에서 나타난다. 과도하면 PTSD의 과각성(hyperarousal)과 startle reactivity로, 감퇴하면 우울증의 무감동(anhedonia)과 도파민 평탄화로 드러난다. 조현병은 새로움 평가(salience attribution) 자체가 어긋나 무의미한 자극에 과한 놀람을 보이며, 자폐는 예측 오차 가중치(precision)의 비정형성이 핵심 가설로 떠올랐다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>정신질환의 상당수는 놀람 회로의 보정(calibration) 실패다. 너무 자주 놀라거나, 충분히 놀라지 못하거나, 엉뚱한 것에 놀라는 패턴이 각 질환의 핵심 생리를 이룬다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3><p>너무 많이 놀라면 PTSD, 너무 못 놀라면 우울증 — 정상 놀람은 두 극단 사이의 황금 영역이다.</p>
+  <h3>왜 중요한가?</h3><p>전투·사고·폭력을 겪은 사람은 작은 소리에도 깜짝 놀라는 과각성 상태에 갇힌다. 반대로 우울증 환자는 좋은 일에도 놀라지 못해 살아 있어도 살아 있지 않은 느낌이 든다. 두 상태 모두 본인의 의지 문제가 아니라 놀람 회로의 신경 보정 문제다. 이것을 알면 가족·친구의 증상을 인격이 아니라 회로의 문제로 볼 수 있어, 비난 대신 도움이 가능해진다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>과각성</strong>: 작은 자극에도 과도하게 놀라는 PTSD 증상이다.</li><li><strong>무감동</strong>: 좋은 일에도 기쁨·놀람을 못 느끼는 우울 증상이다.</li><li><strong>과민 경계</strong>: 늘 위협을 살피느라 쉬지 못하는 상태다.</li><li><strong>도파민 평탄화</strong>: 보상에 대한 도파민 반응이 둔해진 상태다.</li><li><strong>salience</strong>: 자극이 주의 가치가 있다고 평가되는 정도다.</li></ul></div>
+  <h3>핵심 개념 풀어쓰기</h3><p>군대를 다녀온 친구가 지하철 안내방송에도 몸이 굳는다면 PTSD 과각성의 신호일 수 있다. 반대로 우울증을 겪는 가족이 자녀의 합격 소식에도 무덤덤하다면 도파민 회로가 일시적으로 멈춰 있는 것이다. 두 경우 모두 "왜 그렇게 예민해", "왜 안 기뻐해"라는 비난은 회로를 더 망가뜨린다. 필요한 것은 안전감과 시간, 그리고 적절한 치료다. 놀람 시스템은 다행히 회복 가능한 회로이다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 가까운 사람의 놀람 반응이 평소와 크게 다르면 인격이 아닌 신경 상태 변화를 의심하자.</div>
+  <h3>한 페이지 요약</h3><ul><li>PTSD = 놀람 회로의 과활성이다.</li><li>우울증 = 놀람·보상 회로의 저활성이다.</li><li>조현병 = 놀람의 잘못된 대상 할당이다.</li><li>자폐 = 예측 오차 가중치의 비정형성이다.</li><li>모두 신경 보정 문제이지 의지 문제가 아니다.</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3><p>PTSD의 DSM-5 진단 기준 E군은 "현저한 변화된 각성과 반응성(arousal and reactivity)"으로, 과장된 놀람 반응(exaggerated startle response)과 과민 경계(hypervigilance)를 명시한다. 신경생리적으로 편도체-시상하부-부신축이 과활성화되어 코르티솔 기저치와 노르에피네프린 톤이 높아진다. 우울증의 anhedonia는 측좌핵(NAc) 도파민 반응의 둔화와 직결되며, 보상 학습 과제에서 음수 RPE가 양수 RPE보다 큰 영향을 미치는 비대칭이 관찰된다(Pizzagalli). 조현병에서는 Kapur의 aberrant salience 가설이 핵심으로, 정상적으로는 무의미한 자극에 도파민 phasic burst가 발생해 환자가 그것에 의미·연결을 부여하게 된다(망상 형성의 신경 기반). 자폐의 predictive coding 가설(Pellicano &amp; Burr 2012, van de Cruys 2014)은 hypo-precision 또는 hyper-precision priors로 인해 예측 오차 처리가 비정형적임을 제안한다.</p>
+  <h3>핵심 메커니즘</h3><div class="info-card"><h4>📐 PTSD 과각성 회로</h4><p>외상 후 → 편도체 감작 + LC 노르에피네프린 톤 상승 + 전전두엽 조절 약화 → startle threshold 저하 + 일반화된 위협 평가. 이 회로가 굳어지면 작은 자극에도 큰 반응이 만성화된다.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>PTSD 환자의 acoustic startle reflex 측정 시 정상군보다 EMG 진폭이 2-3배 크고, 습관화도 더 느리다. 이 측정값은 치료 효과 판단의 객관적 바이오마커로 사용된다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>우울증 환자에게 monetary incentive delay 과제를 시키면 보상 예고에 NAc 활성이 정상군보다 유의하게 낮다(Pizzagalli 2009). 이것이 "좋은 일이 일어나도 기쁘지 않은" 신경 기반이다.</p></div>
+  <h3>응용 사례</h3><p>한국에서는 천안함·세월호·이태원 등 집단 외상 사건 이후 PTSD 임상 연구가 크게 확장됐다. 국립정신건강센터와 군의관 정신건강 연구단은 startle reactivity와 fMRI 기반 PTSD 바이오마커 연구를 진행 중이다. 한국 자폐스펙트럼 진단도 시선 추적·sensory profile에서 예측 오차 가중치 이상을 측정하는 방향으로 정밀화되고 있다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 우울증 환자의 무반응을 "의지가 약하다"로 해석하는 것. 사실은 도파민 회로의 일시적 신경 셧다운이다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3><p>computational psychiatry의 통합 프레임은 정신질환을 "예측 오차 처리의 매개변수 이상"으로 본다. 조현병의 양성 증상은 prior에 비해 예측 오차 가중치가 과도해(top-down precision &lt; bottom-up precision) 무관 자극에 의미가 부여되는 것으로 모델링된다. 음성 증상과 우울의 무감동은 반대로 보상 예측 오차 자체가 감쇄된 hypo-prediction error 상태다. 자폐 모델 중 high-precision prediction error(HIPPEA) 가설은 자폐인의 뇌가 모든 입력을 "예측 모델 갱신이 필요한 새로움"으로 처리해 만성적 감각 과부하를 겪는다고 본다. PTSD에서 fear extinction의 신경 기반은 vmPFC-편도체 회로의 안전 학습이며, prazosin·SSRI·EMDR·prolonged exposure 모두 이 회로를 표적으로 한다. Krystal과 Charney의 PTSD 신경회로 모델은 hippocampal volume reduction, mPFC hypoactivity, amygdala hyperactivity의 삼각 패턴을 핵심으로 본다. 최근에는 ketamine이 NMDA 매개 학습 가소성을 일시적으로 증대시켜 PTSD·우울에 빠른 효과를 낸다는 가설이 주목받는다.</p>
+  <h3>최신 연구·동향</h3><p>2020년대 정밀 정신의학은 prediction error 처리의 EEG·fMRI 바이오마커로 환자를 층화하는 시도를 한다. mismatch negativity(MMN) ERP 성분은 조현병의 NMDA 기능 저하 바이오마커로 자리잡았고, RDoC framework은 진단명이 아닌 도메인(예: positive valence, arousal)을 기반으로 환자를 분류한다. 한국 IBS·서울아산병원에서 한국인 PTSD 코호트의 startle·HRV 다중 측정 연구가 진행 중이다.</p>
+  <h3>관련 분야</h3><ul><li>계산정신의학(Computational Psychiatry)</li><li>외상신경과학(Trauma Neuroscience)</li><li>정밀 정신의학(Precision Psychiatry)</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"The Body Keeps the Score" — Bessel van der Kolk</li><li>"Surfing Uncertainty" — Andy Clark</li><li>"Computational Psychiatry" — Alan Anticevic &amp; John Murray</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> PTSD의 startle reactivity 연구 논문(예: Pole 2007 메타분석) 1편을 정독하고, 효과 크기와 임상적 의미를 정리해보자.</div>
+</div>
+
+</main></div>
+<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0xfbbf24;const parts=[];for(let i=0;i<45;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 신경 메커니즘 — aboutSadness</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔵 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>신경 메커니즘</em></h1>
+  <p class="authors">Chapter 3 — Neural Mechanisms</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 푸른 물방울을 회전시키며 탐구하세요</span>
+
+<h2>신경 메커니즘 개요</h2>
+<p>슬픔의 회로는 단일 뇌 영역이 아니라 네트워크다. 아래쪽 슬하 전대상피질(sgACC), 섬엽(insula), 편도체(amygdala), 그리고 디폴트 모드 네트워크(DMN)가 함께 움직인다. 우울증은 이 네트워크가 균형을 잃고 sgACC가 과활성화된 상태로 정의된다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>sgACC는 슬픔·자기참조적 사고의 허브다. 우울증 환자에서 sgACC 대사가 정상보다 높고, Helen Mayberg의 DBS 연구는 이 영역을 자극하면 치료저항성 우울이 호전된다는 결정적 증거를 제시했다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3><p>슬픔은 sgACC·섬엽·편도체·디폴트 모드 네트워크라는 네 영역의 합주다.</p>
+  <h3>왜 중요한가?</h3><p>슬픔의 회로를 알면 우울증 약과 심리치료가 왜 같은 목표를 다른 길로 공략하는지가 보인다. 약은 신경전달물질의 양을, 치료는 회로의 사용 패턴을 바꾼다. 또한 슬픔이 "마음이 약해서"가 아니라 뇌의 특정 회로가 과활성된 상태라는 사실은 환자의 자기낙인을 줄이는 데 결정적이다. 회로를 이해할수록 약·운동·수면·치료가 어떤 점에서 다른 자물쇠를 푸는지가 명확해진다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>sgACC</strong>: 슬하(膝下) 전대상피질로, 슬픔의 허브 영역이다.</li><li><strong>섬엽(insula)</strong>: 신체 감각과 정서를 연결하는 영역이다.</li><li><strong>편도체(amygdala)</strong>: 위험·부정 정서를 감지하는 경보 센터다.</li><li><strong>디폴트 모드 네트워크(DMN)</strong>: 멍하니 있을 때 작동하는 자기참조 사고 회로다.</li><li><strong>HPA 축</strong>: 시상하부-뇌하수체-부신을 잇는 스트레스 반응 축이다.</li></ul></div>
+  <h3>핵심 개념 풀어쓰기</h3><p>슬플 때 가슴이 답답한 이유는 섬엽이 신체 신호를 정서로 통역하기 때문이다. 슬픔이 길어지면 HPA 축이 만성적으로 켜져 코르티솔이 올라가고 면역이 떨어진다. 그래서 슬픔이 길어진 사람이 감기·소화불량을 더 많이 겪는 것은 의지의 문제가 아니라 회로의 문제다. 약물 치료(SSRI)는 세로토닌을 늘려 회로의 음량을 조절하고, 심리치료(CBT)는 DMN의 반추 패턴을 바꾼다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> "내 슬픔이 어느 영역에서 가장 크게 느껴지는가"를 생각해보자. 가슴(섬엽), 머릿속 반복생각(DMN), 두려움(편도체) 중 어느 쪽이 두드러지는지 알면 대처법이 보인다.</div>
+  <h3>한 페이지 요약</h3><ul><li>슬픔은 sgACC·섬엽·편도체·DMN의 네트워크 활동이다.</li><li>우울증은 sgACC 과활성·DMN 과활성이 핵심 특징이다.</li><li>HPA 축 활성화가 신체 증상의 신경내분비적 정체다.</li><li>SSRI는 세로토닌으로 회로의 음량을 조절한다.</li><li>심리치료는 회로의 사용 패턴 자체를 바꾼다.</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3><p>슬픔과 우울증 신경회로는 크게 네 가지 변화로 정리된다. 첫째, sgACC(Brodmann area 25)의 과활성 — 자기참조적 부정 사고의 허브가 켜져 있다. 둘째, DMN의 과활성과 외부 과제 네트워크(CEN)와의 불균형 — "지금 여기"에서 멀어지고 머릿속 반추가 우세해진다. 셋째, HPA 축 만성 활성화 — CRH·ACTH·코르티솔이 높게 유지되며 해마 부피가 감소한다. 넷째, 단가 아민(monoamine) 시스템의 저하 — 세로토닌, 노르에피네프린, 도파민이 모두 약화된다. 이들 변화는 BDNF(뇌유래신경영양인자) 감소로 시냅스 가소성이 떨어지며, "회복할 수 있는 뇌"의 기반 자체가 약해진다. SSRI는 단가 아민의 양을, 운동·수면·CBT는 BDNF와 회로 가소성을 표적으로 한다.</p>
+  <h3>핵심 메커니즘</h3><div class="info-card"><h4>📐 sgACC 가설</h4><p>Helen Mayberg는 우울증 환자의 sgACC가 정상보다 대사가 높고, 치료저항성 우울 환자에서 sgACC DBS(심부뇌자극)가 즉각적 안도감을 유발한다는 연속 연구로 회로 기반 정신의학을 열었다.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>SSRI는 시냅스에 세로토닌을 늘리지만 효과는 2~4주 뒤 나타난다. 즉각적 증감이 아니라 BDNF 증가와 시냅스 가소성 회복이 본질적 작용 기전이라는 가설이 우세하다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>마음챙김 명상 8주 프로그램은 DMN의 자기참조 활동을 줄이고 전전두피질의 조절 능력을 강화한다. CBT도 같은 표적을 다른 경로로 공략한다.</p></div>
+  <h3>응용 사례</h3><p>한국에서는 서울대 의대·KAIST의 우울증 신경영상 연구가 활발하다. fMRI 기반 우울 바이오마커, 약물 반응 예측 모델이 임상 응용을 향해 가고 있다. 또한 한국 정신건강복지법 개정으로 TMS(경두개자기자극) 보험 적용이 확대되며 회로 기반 치료의 접근성이 좋아지고 있다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "우울증은 세로토닌 부족"이라는 단순 가설은 1990년대 마케팅 슬로건이며, 실제 연구는 회로·신경가소성·염증·HPA 등 다층적 모델로 이동했다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3><p>Helen Mayberg의 1997년 PET 연구는 sgACC(BA25)가 우울증 회로의 허브임을 처음 제시했다. 2005년 이후 sgACC DBS 임상시험은 치료저항성 우울 일부 환자에서 극적 반응을 보였으나, 무작위 시험에서는 효과가 일관되지 않아 표적 정의·전극 위치·환자 표현형의 정밀화가 진행 중이다. 단가 아민 가설의 한계는 ketamine 효과로 분명해졌다. Ketamine은 NMDA 수용체 차단을 통해 글루타메이트 시스템에 작용하며, 수 시간 내 항우울 효과를 낸다. 이로써 글루타메이트·BDNF·시냅스 가소성 가설이 강력해졌다. 신경염증 가설은 만성 스트레스 → 미세아교세포 활성 → IL-6·TNF-α 상승 → sgACC·해마 회로 손상의 경로를 제안한다. 우울증 환자의 약 1/3에서 염증 마커가 상승해 있다는 메타분석이 누적됐다. 정밀 정신의학은 회로 표현형(sgACC 과활성형, 보상 무감형, 불안 우세형 등)에 따라 치료를 매칭하는 방향으로 가고 있다.</p>
+  <h3>최신 연구·동향</h3><p>2023년 JAMA에 실린 Drysdale 등의 fMRI 기반 우울증 4개 biotype 분류가 한 차례 충격을 줬으나 재현성 논쟁이 진행 중이다. Psilocybin 항우울 RCT(NEJM 2022)는 DMN 가소성 증가를 기전으로 제시했다. 한국에서는 KAIST 정용 교수팀의 7T fMRI 우울 회로 연구가 국제 학계에서 인용되고 있다.</p>
+  <h3>관련 분야</h3><ul><li>정서신경과학(Affective Neuroscience)</li><li>임상신경영상학(Clinical Neuroimaging)</li><li>정신약리학(Psychopharmacology)</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"The Noonday Demon" — Andrew Solomon</li><li>"Lost Connections" — Johann Hari</li><li>"Affective Neuroscience" — Jaak Panksepp</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 우울증 신경회로도를 sgACC·DMN·편도체·해마·HPA 다섯 노드로 그리고, 각 노드에 SSRI·CBT·운동·TMS·ketamine의 작용점을 색깔로 표시해보자.</div>
+</div>
+
+</main></div>
+<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0x60a5fa;const parts=[];for(let i=0;i<36;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7. 임상과 병리 — aboutSadness</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔵 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>임상과 병리</em></h1>
+  <p class="authors">Chapter 7 — Clinical Aspects</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 푸른 물방울을 회전시키며 탐구하세요</span>
+
+<h2>임상과 병리 개요</h2>
+<p>슬픔이 어느 선을 넘어 병리가 되면 자기 의지로 회복하기 어려운 임상 상태가 된다. 주요우울장애(MDD)·지속성우울장애(PDD)·지속성비탄장애(PGD)·계절성정서장애(SAD)·양극성 우울이 그 대표 진단이다. 자가 선별 도구 PHQ-9는 가장 보편적 임상 척도다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>슬픔과 우울증의 경계는 "2주 + 5가지 증상 + 기능 손상"의 DSM 기준에서 그어진다. 그러나 임상의 진짜 경계는 "혼자 회복 가능한가, 도움이 필요한가"의 실용적 질문이다. 자살 사고가 있다면 즉시 1393으로 연락한다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3><p>슬픔이 2주 이상 계속되고 일상 기능을 무너뜨리면 임상적 우울증을 의심한다.</p>
+  <h3>왜 중요한가?</h3><p>우울증은 의지의 문제가 아닌 명확한 질병이다. 마치 당뇨가 식이로만 해결되지 않듯, 일정 수준을 넘은 우울은 치료 없이 회복하기 어렵다. 자살 시도의 90% 이상이 진단 가능한 정신질환을 동반한다. 따라서 본인 또는 주변인의 우울 신호를 빨리 알아채는 능력은 생명을 구할 수 있다. 한국은 OECD 자살률 1위 국가이기에 이 지식의 사회적 가치가 더 크다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>PHQ-9</strong>: 9문항 우울 자가검사. 10점 이상이면 진료 권고다.</li><li><strong>MDD</strong>: 주요우울장애. 2주 이상 5개 이상 증상이 기준이다.</li><li><strong>PGD</strong>: 지속성 비탄장애. 사별 1년 후에도 비탄이 기능을 무너뜨리는 상태다.</li><li><strong>계절성 정서장애(SAD)</strong>: 일조량이 줄어드는 겨울에 반복되는 우울 양상이다.</li><li><strong>자살예방 1393</strong>: 24시간 무료 한국 자살예방 상담전화다.</li></ul></div>
+  <h3>핵심 개념 풀어쓰기</h3><p>슬픔이 며칠을 가는 것은 정상이지만, 식욕·수면·집중·의욕이 동시에 무너지고 자신을 무가치하다고 느끼는 상태가 2주 이상 가면 임상의 영역이다. PHQ-9 같은 무료 자가검사가 첫 신호등이다. 정신과 방문에 대한 한국 사회의 낙인은 줄어들고 있고, 건강보험이 진료비의 상당 부분을 보장한다. 그리고 죽고 싶다는 생각이 든다면 그것은 약함이 아니라 응급 신호다 — 즉시 1393에 전화한다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> PHQ-9를 본인·가족 단위로 분기마다 점검하는 습관을 만들자. 혈압처럼 정신건강도 정기 체크가 필요하다.</div>
+  <h3>한 페이지 요약</h3><ul><li>2주 + 5증상 + 기능손상이 MDD의 핵심 기준이다.</li><li>PHQ-9는 가장 보편적 우울 자가검사다.</li><li>지속성 비탄장애(PGD)는 2022년 정식 진단으로 추가됐다.</li><li>계절성 정서장애는 일조량 변화와 연관된다.</li><li>자살 사고가 있으면 즉시 1393에 연락한다.</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3><p>DSM-5-TR(2022)의 주요우울장애 기준은 (1) 우울 기분 또는 흥미 상실 중 1개 포함, (2) 식욕/수면/정신운동/피로/무가치감/집중/자살사고 중 추가 4개 이상, (3) 2주 이상 지속, (4) 기능 손상, (5) 다른 질환·약물에 의한 것이 아님이다. 지속성 우울장애(PDD, 구 dysthymia)는 강도는 낮지만 2년 이상 지속되는 만성형이다. 양극성 장애의 우울 삽화는 MDD와 증상이 같지만 과거 조증·경조증 병력이 있어 치료가 달라진다 — SSRI 단독 사용 시 조증 유발 위험이 있다. PGD(Prolonged Grief Disorder)는 2022년 DSM에 추가된 신생 진단으로, 사별 후 12개월 이상 지속되는 강렬한 그리움·정체성 혼란·정서 마비가 기준이다. PHQ-9 점수 0~4 정상, 5~9 경도, 10~14 중등도, 15~19 중증, 20~27 매우 중증이며, 10점 이상은 전문가 평가가 권고된다.</p>
+  <h3>핵심 메커니즘</h3><div class="info-card"><h4>📐 자살 위험 신호 5가지</h4><p>(1) 자살 의도 직접 언급, (2) 자살 계획·방법 구체화, (3) 갑작스러운 정리(소중한 물건 정리, 작별 메시지), (4) 평소와 다른 평온함(결심 후 안정화), (5) 극심한 절망·고립감. 하나라도 보이면 즉시 1393·119 또는 정신과 응급실로 연계한다.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>겨울마다 늦가을부터 우울이 시작돼 봄에 풀리는 패턴이 2년 이상 반복된다면 계절성 정서장애(SAD)다. 광치료(10,000 lux, 매일 30분)가 일차 치료다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>SSRI 복용 후 들떠서 잠을 안 자도 멀쩡하고 충동 소비·과대 사고가 나타나면 잠재 양극성을 시사한다. 정신과 재평가가 필요하다.</p></div>
+  <h3>응용 사례</h3><p>한국의 우울증 평생유병률은 약 7%(2021 정신건강실태조사). 그러나 진료를 받는 비율은 그중 1/4 미만으로 OECD 평균보다 낮다. 직장 EAP, 정신건강복지센터, 청년마음건강바우처 등 접근 경로가 늘고 있다. 자살예방상담 1393은 24시간 무료이며 SNS 상담(마음톡톡 등)도 확대 중이다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "약을 먹으면 평생 의존한다"는 통념은 SSRI 데이터와 맞지 않는다. 첫 삽화는 6~9개월 유지 후 단계적 감량이 표준 가이드라인이다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3><p>치료저항성 우울증(TRD)은 2개 이상의 적정 용량·기간 항우울제에 반응하지 않는 상태로, MDD 환자의 약 1/3에 해당한다. TRD에 대한 STAR*D 시험(2006)은 첫 SSRI 반응률이 약 37%, 4단계까지 누적 관해율이 67%에 그친다는 사실을 보여줘 단가 아민 가설의 한계를 드러냈다. 분자 바이오마커 연구는 IL-6·CRP 등 염증 마커, BDNF, 코르티솔, FKBP5 다형성 등을 우울증 예측·치료 반응 변수로 검토 중이다. 약 1/3의 우울증 환자에서 염증 마커가 상승해 있고, 이 하위 집단은 항염증 치료(infliximab 등)에 부분적으로 반응한다는 시그널이 있다. 신경회로 표적 치료는 sgACC DBS, dorsolateral PFC TMS, ECT가 대표적이다. ECT는 중증·자살 위험·치료저항 우울에서 가장 강력한 효과 크기를 가진 치료지만 인지부작용·낙인으로 저활용되고 있다. 자살학(suicidology)은 자살을 단일 질병이 아닌 다층 모델(고통·소속감 결여·짐스러움 인식·획득된 능력)로 본다(Joiner의 IPTS 이론).</p>
+  <h3>최신 연구·동향</h3><p>PGD가 정식 진단으로 들어오면서 사별 후 12개월 시점 선별 도구(PG-13)와 표적 심리치료(Complicated Grief Treatment, CGT)가 한국에 빠르게 도입되고 있다. AI 기반 자살 위험 예측 모델은 임상 노트·SNS·디지털 표현형을 결합해 정확도를 높이고 있으나 윤리·프라이버시 논의가 함께 진행 중이다.</p>
+  <h3>관련 분야</h3><ul><li>정신의학(Psychiatry)</li><li>자살학(Suicidology)</li><li>임상신경과학(Clinical Neuroscience)</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"Listening to Prozac" — Peter Kramer</li><li>"Why People Die by Suicide" — Thomas Joiner</li><li>"한국 자살예방 백서" — 보건복지부</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> PHQ-9를 본인이 직접 받고, 점수대별 권고 행동(0~4 자가관리, 5~9 생활 개입, 10~14 전문가 상담 권고, 15+ 즉시 진료)을 매핑해 행동 계획을 작성해보자.</div>
+</div>
+
+</main></div>
+<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0x60a5fa;const parts=[];for(let i=0;i<36;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
