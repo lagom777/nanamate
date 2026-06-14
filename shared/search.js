@@ -23,6 +23,7 @@
     {"n": "정보보안", "e": "Information Security", "d": "암호학, 네트워크 보안, 웹 취약점, 침투테스트", "u": "aboutSecurity/index.html", "c": "IT", "a": "#475569"},
     {"n": "심리학", "e": "Psychology", "d": "뇌·지각·학습·기억·발달·성격·사회·정서", "u": "aboutPsy/index.html", "c": "인문", "a": "#a855f7"},
     {"n": "철학", "e": "Philosophy", "d": "고대 그리스~현대 철학, 사상의 계보", "u": "aboutPhilosophy/index.html", "c": "인문", "a": "#d4a047"},
+    {"n": "작문", "e": "Writing", "d": "문장 기초~에세이·스토리텔링·자기소개서·AI 작문", "u": "aboutWriting/index.html", "c": "인문", "a": "#ec6f9c"},
     {"n": "역사", "e": "World History", "d": "고대 문명~현대, 한국사 포함", "u": "aboutHistory/index.html", "c": "인문", "a": "#b45309"},
     {"n": "사회학", "e": "Sociology", "d": "문화, 계층, 젠더, 디지털 사회", "u": "aboutSociology/index.html", "c": "인문", "a": "#7c3aed"},
     {"n": "정치학", "e": "Political Science", "d": "정치 이념, 민주주의, 국제관계", "u": "aboutPolitics/index.html", "c": "인문", "a": "#dc2626"},
