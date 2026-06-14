@@ -8,7 +8,8 @@
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🎵 표지</a></li><li><a href="01-basics.html">1. 음악 기초</a></li><li><a href="02-rhythm.html">2. 리듬과 박자</a></li><li><a href="03-harmony.html">3. 화성학</a></li><li><a href="04-melody.html">4. 멜로디와 작곡</a></li><li><a href="05-form.html">5. 음악 형식</a></li><li><a href="06-genres.html">6. 장르의 이해</a></li><li><a href="07-production.html">7. 음악 제작</a></li><li><a href="08-ear-training.html">8. 청음 훈련</a></li><li><a href="09-modern.html">9. 현대 음악이론</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>음악 기초</em></h1><p class="authors">Chapter 1 — Notes, Scales & Intervals</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 한 옥타브 음계 사다리 — 도에서 도까지 차례로 올라가는 음들</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 드래그로 회전 · 단계별로 진행됩니다</span>
+<div id="sim-cap" style="margin:4px 0 16px;padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border:1px solid var(--border);border-radius:12px;background:var(--bg-card);min-height:1.5em;">한 옥타브 음계를 한 음씩 올라가며 살펴봅니다.</div>
 <h2>음악 기초</h2><p>Notes, Scales & Intervals의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Notes, Scales & Intervals</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -73,13 +74,30 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,9);cam.lookAt(0,0.5,0);
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,9.5);cam.lookAt(0,0.5,0);
   const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const steps=[];for(let i=0;i<8;i++){const hue=i/8;const col=new THREE.Color().setHSL(hue,0.7,0.55);const step=new THREE.Mesh(new THREE.BoxGeometry(0.7,0.25,0.7),new THREE.MeshBasicMaterial({color:col}));step.position.set((i-3.5)*0.85,(i-3.5)*0.42,0);s.add(step);const ball=new THREE.Mesh(new THREE.SphereGeometry(0.24,18,18),new THREE.MeshBasicMaterial({color:col}));ball.position.set((i-3.5)*0.85,(i-3.5)*0.42+0.45,0);s.add(ball);steps.push(ball);}
-  s.userData.steps=steps;
+  const capEl=document.getElementById('sim-cap');function cap(t){if(capEl)capEl.textContent=t;}
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.01,cv.height*0.01,1);return sp;}
+  const noteN=['도 C','레 D','미 E','파 F','솔 G','라 A','시 B','도 C'];
+  const steps=[],labMats=[];
+  for(let i=0;i<8;i++){const hue=i/8;const col=new THREE.Color().setHSL(hue,0.7,0.55);const step=new THREE.Mesh(new THREE.BoxGeometry(0.7,0.25,0.7),new THREE.MeshBasicMaterial({color:col}));step.position.set((i-3.5)*0.85,(i-3.5)*0.42,0);s.add(step);const ball=new THREE.Mesh(new THREE.SphereGeometry(0.24,18,18),new THREE.MeshBasicMaterial({color:col}));ball.position.set((i-3.5)*0.85,(i-3.5)*0.42+0.45,0);s.add(ball);steps.push(ball);const L=lbl(noteN[i],col.getHex());L.position.set((i-3.5)*0.85,(i-3.5)*0.42+0.95,0);s.add(L);labMats.push(L.material);}
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const lit=Math.floor(T*2)%8;s.userData.steps.forEach((b,i)=>{b.scale.setScalar(i===lit?1.5:1);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  function lite(idx){steps.forEach((b,i)=>b.scale.setScalar(i===idx?1.6:1));}
+  const phases=[
+    {dur:6,cap:'음계를 한 음씩 올라갑니다 — 도·레·미·파·솔·라·시·도. 옥타브: 맨 위 \'도\'는 맨 아래 \'도\'와 같은 음이지만 진동수가 2배입니다.',
+     up:u=>{lite(Math.min(7,Math.floor(u*8)));}},
+    {dur:5,cap:'반음의 위치 — 대부분은 온음(두 칸) 간격이지만, \'미–파\'와 \'시–도\'만 반음(한 칸)입니다. 이 두 곳의 좁은 간격이 장음계 특유의 느낌을 만듭니다.',
+     up:u=>{const half=(Math.floor(u*6)%2===0)?2:6;lite(half);steps.forEach((b,i)=>{if(i===2||i===3||i===6||i===7)b.scale.setScalar(1.3);});}},
+    {dur:5,cap:'옥타브 = 7음의 반복 — 이 8칸(7+1)이 모든 멜로디·화음의 기본 재료입니다. 회전해 사다리 구조를 보세요.',
+     up:u=>{lite(7);s.rotation.y+=0.005;}}
+  ];
+  let pi=0,pt=0,last=0;cap(phases[0].cap);
+  function a(now){requestAnimationFrame(a);const dt=Math.min(0.05,(now-last)/1000||0.016);last=now;pt+=dt;
+    if(pt>=phases[pi].dur){pt=0;pi=(pi+1)%phases.length;cap(phases[pi].cap);}
+    if(phases[pi].up)phases[pi].up(pt/phases[pi].dur);
+    r.render(s,cam);}
+  requestAnimationFrame(a);
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

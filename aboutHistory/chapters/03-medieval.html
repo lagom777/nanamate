@@ -8,7 +8,8 @@
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">📜 표지</a></li><li><a href="01-ancient.html">1. 고대 문명</a></li><li><a href="02-classical.html">2. 그리스와 로마</a></li><li><a href="03-medieval.html">3. 중세 세계</a></li><li><a href="04-renaissance.html">4. 르네상스와 대항해</a></li><li><a href="05-revolution.html">5. 혁명의 시대</a></li><li><a href="06-imperialism.html">6. 제국주의와 세계대전</a></li><li><a href="07-cold-war.html">7. 냉전과 현대</a></li><li><a href="08-korean.html">8. 한국사 핵심</a></li><li><a href="09-future.html">9. 역사로 보는 미래</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>중세 세계</em></h1><p class="authors">Chapter 3 — Medieval Period & Feudalism</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 봉건제의 위계: 왕-영주-기사-농노가 쌓아올린 피라미드</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 드래그로 회전 · 단계별로 진행됩니다</span>
+<div id="sim-cap" style="margin:4px 0 16px;padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border:1px solid var(--border);border-radius:12px;background:var(--bg-card);min-height:1.5em;">봉건제의 위계가 위에서 아래로 형성되는 과정을 살펴봅니다.</div>
 <h2>중세 세계</h2><p>Medieval Period & Feudalism의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Medieval Period & Feudalism</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -75,15 +76,34 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1.5,8);cam.lookAt(0,0.3,0);
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1.5,8.5);cam.lookAt(0,0.3,0);
   const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const layers=[{n:1,y:2.1,r:0,c:0xd4af37},{n:2,y:1.1,r:1.0,c:0xc06030},{n:6,y:0.0,r:1.9,c:0x4070a0},{n:12,y:-1.1,r:2.7,c:0x4a7a4a}];const nodes=[];
-  layers.forEach(L=>{const col=new THREE.Color(L.c);if(L.n===1){const k=new THREE.Mesh(new THREE.ConeGeometry(0.5,0.9,4),new THREE.MeshBasicMaterial({color:col,wireframe:true}));k.position.y=L.y;s.add(k);nodes.push(k);}else{for(let i=0;i<L.n;i++){const ang=i/L.n*Math.PI*2;const m=new THREE.Mesh(new THREE.BoxGeometry(0.4,0.4,0.4),new THREE.MeshBasicMaterial({color:col,wireframe:true}));m.position.set(Math.cos(ang)*L.r,L.y,Math.sin(ang)*L.r);s.add(m);nodes.push(m);}}});
+  const capEl=document.getElementById('sim-cap');function cap(t){if(capEl)capEl.textContent=t;}
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const layers=[{n:1,y:2.1,r:0,c:0xd4af37,name:'왕'},{n:2,y:1.1,r:1.0,c:0xc06030,name:'영주(귀족)'},{n:6,y:0.0,r:1.9,c:0x4070a0,name:'기사'},{n:12,y:-1.1,r:2.7,c:0x4a7a4a,name:'농노'}];
+  const tierObjs=[];
+  layers.forEach((L,li)=>{const col=new THREE.Color(L.c);const meshes=[];if(L.n===1){const k=new THREE.Mesh(new THREE.ConeGeometry(0.5,0.9,4),new THREE.MeshBasicMaterial({color:col,wireframe:true,transparent:true,opacity:0}));k.position.y=L.y;s.add(k);meshes.push(k);}else{for(let i=0;i<L.n;i++){const ang=i/L.n*Math.PI*2;const m=new THREE.Mesh(new THREE.BoxGeometry(0.4,0.4,0.4),new THREE.MeshBasicMaterial({color:col,wireframe:true,transparent:true,opacity:0}));m.position.set(Math.cos(ang)*L.r,L.y,Math.sin(ang)*L.r);s.add(m);meshes.push(m);}}
+  const Lab=lbl(L.name,0x4a3520);Lab.position.set(L.r+1.6,L.y,0);Lab.material.opacity=0;s.add(Lab);tierObjs.push({meshes:meshes,lab:Lab.material});});
   const axis=new THREE.Mesh(new THREE.CylinderGeometry(0.02,0.02,3.6,6),new THREE.MeshBasicMaterial({color:0xaaaaaa,transparent:true,opacity:0.4}));axis.position.y=0.4;s.add(axis);
-  s.userData.nd=nodes;
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.004;s.userData.nd.forEach(m=>{m.rotation.y+=0.01;m.rotation.x+=0.006;});r.render(s,cam);}a();
+  function showTier(k,u){const t=tierObjs[k],f=ez(u);t.meshes.forEach(m=>m.material.opacity=f);t.lab.opacity=f;}
+  const phases=[
+    {dur:3,cap:'① 왕 — 모든 땅의 명목상 주인. 봉건 피라미드의 정점입니다.',up:u=>showTier(0,u)},
+    {dur:3,cap:'② 영주(귀족) — 왕에게 충성·군사 봉사를 바치는 대가로 영지(봉토)를 받습니다. 토지가 곧 권력입니다.',up:u=>showTier(1,u)},
+    {dur:3,cap:'③ 기사 — 영주에게 다시 봉토를 받고 전투로 봉사. 위로 갈수록 적고 권력은 큽니다.',up:u=>showTier(2,u)},
+    {dur:4,cap:'④ 농노 — 가장 많고 가장 아래. 땅에 묶여 경작하고 세금·노동을 위로 바칩니다.',up:u=>showTier(3,u)},
+    {dur:5,cap:'⑤ 쌍방의 의무 — 위는 토지·보호를 아래로, 아래는 봉사·세금을 위로. 이 \'주고받음\'의 사슬이 중세 봉건제의 뼈대입니다. 회전해 보세요.',
+     up:u=>{tierObjs.forEach((t,k)=>showTier(k,1));s.rotation.y+=0.004;}}
+  ];
+  let pi=0,pt=0,last=0,T=0;cap(phases[0].cap);
+  function a(now){requestAnimationFrame(a);const dt=Math.min(0.05,(now-last)/1000||0.016);last=now;T+=dt;pt+=dt;
+    if(pt>=phases[pi].dur){pt=0;pi=(pi+1)%phases.length;if(pi===0){tierObjs.forEach(t=>{t.meshes.forEach(m=>m.material.opacity=0);t.lab.opacity=0;});}cap(phases[pi].cap);}
+    if(phases[pi].up)phases[pi].up(pt/phases[pi].dur);
+    tierObjs.forEach(t=>t.meshes.forEach(m=>{if(m.material.opacity>0.3){m.rotation.y+=0.01;m.rotation.x+=0.006;}}));
+    r.render(s,cam);}
+  requestAnimationFrame(a);
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

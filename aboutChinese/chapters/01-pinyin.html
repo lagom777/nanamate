@@ -8,7 +8,8 @@
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🇨🇳 표지</a></li><li><a href="01-pinyin.html">1. 발음과 성조</a></li><li><a href="02-basic-grammar.html">2. 기초 문법</a></li><li><a href="03-characters.html">3. 한자 기초</a></li><li><a href="04-daily.html">4. 일상 회화</a></li><li><a href="05-hsk3.html">5. HSK 3급 대비</a></li><li><a href="06-hsk4.html">6. HSK 4급 대비</a></li><li><a href="07-business.html">7. 비즈니스 중국어</a></li><li><a href="08-culture.html">8. 중국 문화와 언어</a></li><li><a href="09-advanced.html">9. 고급 독해와 작문</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>발음과 성조</em></h1><p class="authors">Chapter 1 — Pinyin, Tones & Pronunciation</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 4개 성조 곡선 — 1성 평탄·2성 상승·3성 굴곡·4성 하강</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 드래그로 회전 · 단계별로 진행됩니다</span>
+<div id="sim-cap" style="margin:4px 0 16px;padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border:1px solid var(--border);border-radius:12px;background:var(--bg-card);min-height:1.5em;">중국어 4성조를 하나씩 그려봅니다.</div>
 <h2>발음과 성조</h2><p>Pinyin, Tones & Pronunciation의 핵심을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Pinyin, Tones & Pronunciation</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -73,12 +74,32 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
   const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const toneShapes=[i=>2.0,i=>-1.6+3.2*i,i=>(i<0.5?0.5-2.4*i:-0.7+2.4*(i-0.5)),i=>1.8-3.6*i];const N=40;const toneLines=[];for(let t=0;t<4;t++){const pts=[];for(let k=0;k<N;k++){const u=k/(N-1);pts.push(new THREE.Vector3(-3+6*u,toneShapes[t](u)-2.6+t*1.8,0));}const g=new THREE.BufferGeometry().setFromPoints(pts);const col=new THREE.Color().setHSL(0.0+t*0.09,0.7,0.55);const ln=new THREE.Line(g,new THREE.LineBasicMaterial({color:col}));s.add(ln);toneLines.push(ln);const dot=new THREE.Mesh(new THREE.SphereGeometry(0.18,12,12),new THREE.MeshBasicMaterial({color:col}));s.add(dot);dot.userData.tone=t;dot.userData.base=t;s.userData['dot'+t]=dot;}s.userData.shapes=toneShapes;s.userData.N=N;
+  const capEl=document.getElementById('sim-cap');function cap(t){if(capEl)capEl.textContent=t;}
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const toneShapes=[i=>2.0,i=>-1.6+3.2*i,i=>(i<0.5?0.5-2.4*i:-0.7+2.4*(i-0.5)),i=>1.8-3.6*i];
+  const toneNames=['1성 mā (평탄·높게 유지)','2성 má (낮→높 상승)','3성 mǎ (내렸다 올림)','4성 mà (높→낮 하강)'];
+  const N=40;const lineMats=[],dots=[],dotMats=[],labMats=[];
+  for(let t=0;t<4;t++){const pts=[];for(let k=0;k<N;k++){const u=k/(N-1);pts.push(new THREE.Vector3(-3+6*u,toneShapes[t](u)-2.2+t*1.45,0));}const g=new THREE.BufferGeometry().setFromPoints(pts);const col=new THREE.Color().setHSL(0.0+t*0.09,0.7,0.55);const lm=new THREE.LineBasicMaterial({color:col,transparent:true,opacity:0});s.add(new THREE.Line(g,lm));lineMats.push(lm);const dm=new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0});const dot=new THREE.Mesh(new THREE.SphereGeometry(0.18,12,12),dm);s.add(dot);dots.push(dot);dotMats.push(dm);const L=lbl(toneNames[t],col.getHex());L.position.set(3.7,toneShapes[t](1)-2.2+t*1.45,0);L.material.opacity=0;s.add(L);labMats.push(L.material);}
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;for(let t=0;t<4;t++){const d=s.userData['dot'+t];const u=(Math.sin(T*0.7-t*0.5)+1)/2;d.position.set(-3+6*u,s.userData.shapes[t](u)-2.6+t*1.8,0);}s.rotation.y+=0.002;r.render(s,cam);}a();
+  // 한 성조를 처음부터 끝까지 그리며(라인이 자라남) 점이 따라간다
+  function draw(t,u){lineMats[t].opacity=0.9;dotMats[t].opacity=1;labMats[t].opacity=Math.min(1,u*3);dots[t].position.set(-3+6*u,toneShapes[t](u)-2.2+t*1.45,0);}
+  const phases=[
+    {dur:3.5,cap:'1성 — 높은 음을 평탄하게 길게 유지합니다. 예: mā(妈, 엄마). 음높이가 변하지 않습니다.',up:u=>draw(0,u)},
+    {dur:3.5,cap:'2성 — 낮은 곳에서 높은 곳으로 올라갑니다(↗). 예: má(麻, 삼). 되묻는 말투처럼.',up:u=>draw(1,u)},
+    {dur:3.5,cap:'3성 — 내려갔다가 다시 올라갑니다(∨). 예: mǎ(马, 말). 가장 어려운 성조.',up:u=>draw(2,u)},
+    {dur:3.5,cap:'4성 — 높은 곳에서 뚝 떨어집니다(↘). 예: mà(骂, 꾸짖다). 단호하게.',up:u=>draw(3,u)},
+    {dur:5,cap:'네 성조 비교 — 같은 \'ma\'라도 음높이 곡선에 따라 뜻이 완전히 달라집니다. 성조가 곧 의미입니다.',
+     up:u=>{const T2=u*phases[4].dur;for(let t=0;t<4;t++){lineMats[t].opacity=0.9;dotMats[t].opacity=1;labMats[t].opacity=1;const uu=(Math.sin(T2*1.4-t*0.5)+1)/2;dots[t].position.set(-3+6*uu,toneShapes[t](uu)-2.2+t*1.45,0);}}}
+  ];
+  let pi=0,pt=0,last=0;cap(phases[0].cap);
+  function a(now){requestAnimationFrame(a);const dt=Math.min(0.05,(now-last)/1000||0.016);last=now;pt+=dt;
+    if(pt>=phases[pi].dur){pt=0;pi=(pi+1)%phases.length;if(pi===0){lineMats.forEach(m=>m.opacity=0);dotMats.forEach(m=>m.opacity=0);labMats.forEach(m=>m.opacity=0);}cap(phases[pi].cap);}
+    if(phases[pi].up)phases[pi].up(pt/phases[pi].dur);
+    r.render(s,cam);}
+  requestAnimationFrame(a);
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

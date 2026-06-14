@@ -9,7 +9,8 @@
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">📊 표지</a></li><li><a href="01-micro.html">1. 미시경제학</a></li><li><a href="02-macro.html">2. 거시경제학</a></li><li><a href="03-finance.html">3. 금융과 투자</a></li><li><a href="04-trade.html">4. 국제무역</a></li><li><a href="05-behavioral.html">5. 행동경제학</a></li><li><a href="06-development.html">6. 경제발전</a></li><li><a href="07-labor.html">7. 노동경제학</a></li><li><a href="08-public-finance.html">8. 재정학</a></li><li><a href="09-crypto-fintech.html">9. 크립토/핀테크</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>미시경제학</em></h1><p class="authors">Chapter 1 — Supply, Demand & Market Equilibrium</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 우하향 수요·우상향 공급 곡선이 만나는 균형점에서 가격이 형성됩니다</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 드래그로 회전 · 단계별로 진행됩니다</span>
+<div id="sim-cap" style="margin:4px 0 16px;padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border:1px solid var(--border);border-radius:12px;background:var(--bg-card);min-height:1.5em;">가격이 어떻게 균형을 찾아가는지 단계별로 살펴봅니다.</div>
 <h2>미시경제학 개요</h2><p>Supply, Demand & Market Equilibrium의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Supply, Demand & Market Equilibrium</p></div>
 
@@ -100,16 +101,45 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
   const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const capEl=document.getElementById('sim-cap');function cap(t){if(capEl)capEl.textContent=t;}
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+20;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.012,cv.height*0.012,1);return sp;}
+  // 가격(P) = 세로축, 수량(Q) = 가로축. 수요 D: 가격↑→수량↓ / 공급 S: 가격↑→수량↑.
   const dPts=[],sPts=[];for(let i=0;i<=40;i++){const x=-3.5+i*0.175;dPts.push(new THREE.Vector3(x,-x*0.85,0));sPts.push(new THREE.Vector3(x,x*0.85,0));}
-  const dCurve=new THREE.Line(new THREE.BufferGeometry().setFromPoints(dPts),new THREE.LineBasicMaterial({color:0x3b82f6}));s.add(dCurve);
-  const sCurve=new THREE.Line(new THREE.BufferGeometry().setFromPoints(sPts),new THREE.LineBasicMaterial({color:0xef4444}));s.add(sCurve);
-  const ax=[new THREE.Vector3(-4,-3.2,0),new THREE.Vector3(-4,3.2,0),new THREE.Vector3(4,-3.2,0)];const axis=new THREE.Line(new THREE.BufferGeometry().setFromPoints([ax[0],ax[1]]),new THREE.LineBasicMaterial({color:0x94a3b8}));s.add(axis);const axis2=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-4,-3.2,0),ax[2]]),new THREE.LineBasicMaterial({color:0x94a3b8}));s.add(axis2);
-  const eq=new THREE.Mesh(new THREE.SphereGeometry(0.35,20,20),new THREE.MeshBasicMaterial({color:0xfbbf24}));s.add(eq);s.userData.eq=eq;
+  const dMat=new THREE.LineBasicMaterial({color:0x3b82f6,transparent:true,opacity:0});const dCurve=new THREE.Line(new THREE.BufferGeometry().setFromPoints(dPts),dMat);s.add(dCurve);
+  const sMat=new THREE.LineBasicMaterial({color:0xef4444,transparent:true,opacity:0});const sCurve=new THREE.Line(new THREE.BufferGeometry().setFromPoints(sPts),sMat);s.add(sCurve);
+  const axis=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-4,-3.2,0),new THREE.Vector3(-4,3.2,0)]),new THREE.LineBasicMaterial({color:0x94a3b8}));s.add(axis);
+  const axis2=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-4,-3.2,0),new THREE.Vector3(4,-3.2,0)]),new THREE.LineBasicMaterial({color:0x94a3b8}));s.add(axis2);
+  const pAxL=lbl('가격 P',0x94a3b8);pAxL.position.set(-3.5,3.0,0);s.add(pAxL);const qAxL=lbl('수량 Q',0x94a3b8);qAxL.position.set(3.2,-3.0,0);s.add(qAxL);
+  const dL=lbl('수요 D',0x3b82f6);dL.position.set(3.0,-2.6,0);dL.material.opacity=0;s.add(dL);
+  const sL=lbl('공급 S',0xef4444);sL.position.set(3.0,2.6,0);sL.material.opacity=0;s.add(sL);
+  // 가격선(수평) — 위아래로 움직이며 균형을 탐색
+  const priceLine=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-4,0,0),new THREE.Vector3(4,0,0)]),new THREE.LineDashedMaterial({color:0x64748b,dashSize:0.2,gapSize:0.12,transparent:true,opacity:0}));priceLine.computeLineDistances();s.add(priceLine);
+  const eq=new THREE.Mesh(new THREE.SphereGeometry(0.35,20,20),new THREE.MeshBasicMaterial({color:0xfbbf24,transparent:true,opacity:0}));s.add(eq);
+  const eqL=lbl('균형점 E',0xca8a04);eqL.position.set(1.4,0.9,0);eqL.material.opacity=0;s.add(eqL);
+  function setPrice(py){priceLine.position.y=py;}// 균형은 원점(0,0)
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const p=0.9+0.25*Math.sin(T*0.8);s.userData.eq.scale.setScalar(p);s.rotation.y=0.35*Math.sin(T*0.4);r.render(s,cam);}a();
+  const phases=[
+    {dur:3,cap:'① 수요곡선(파랑) — 가격이 내려갈수록 사람들은 더 많이 사려 합니다(우하향).',
+     up:u=>{dMat.opacity=ez(u);dL.material.opacity=ez(u);}},
+    {dur:3,cap:'② 공급곡선(빨강) — 가격이 올라갈수록 기업은 더 많이 팔려 합니다(우상향).',
+     up:u=>{sMat.opacity=ez(u);sL.material.opacity=ez(u);}},
+    {dur:4,cap:'③ 가격이 너무 높으면(P를 위로) — 공급(팔려는 양)이 수요(사려는 양)를 넘습니다 → 초과공급. 안 팔린 재고가 가격을 끌어내립니다.',
+     up:u=>{priceLine.material.opacity=0.9;setPrice(2.4);}},
+    {dur:4,cap:'④ 가격이 너무 낮으면(P를 아래로) — 수요가 공급을 넘습니다 → 초과수요(품절). 사려는 사람이 많아 가격이 올라갑니다.',
+     up:u=>{priceLine.material.opacity=0.9;setPrice(-2.4);}},
+    {dur:5,cap:'⑤ 균형 — 가격선이 D와 S가 만나는 점으로 수렴하면 사려는 양 = 팔려는 양. 여기서 \'균형가격\'이 결정됩니다.',
+     up:u=>{priceLine.material.opacity=0.9*(1-ez(u));setPrice(-2.4*(1-ez(u)));eq.material.opacity=ez(u);eqL.material.opacity=ez(u);eq.scale.setScalar(0.9+0.2*Math.sin(T*4));}}
+  ];
+  let pi=0,pt=0,last=0,T=0;cap(phases[0].cap);setPrice(2.4);
+  function a(now){requestAnimationFrame(a);const dt=Math.min(0.05,(now-last)/1000||0.016);last=now;T+=dt;pt+=dt;
+    if(pt>=phases[pi].dur){pt=0;pi=(pi+1)%phases.length;if(pi===0){dMat.opacity=0;sMat.opacity=0;dL.material.opacity=0;sL.material.opacity=0;priceLine.material.opacity=0;eq.material.opacity=0;eqL.material.opacity=0;setPrice(2.4);}cap(phases[pi].cap);}
+    if(phases[pi].up)phases[pi].up(pt/phases[pi].dur);
+    r.render(s,cam);}
+  requestAnimationFrame(a);
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

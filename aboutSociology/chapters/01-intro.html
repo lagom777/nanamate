@@ -8,7 +8,8 @@
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">👥 표지</a></li><li><a href="01-intro.html">1. 사회학 개론</a></li><li><a href="02-culture.html">2. 문화와 사회화</a></li><li><a href="03-stratification.html">3. 사회 계층</a></li><li><a href="04-institutions.html">4. 사회 제도</a></li><li><a href="05-deviance.html">5. 일탈과 범죄</a></li><li><a href="06-gender.html">6. 젠더와 가족</a></li><li><a href="07-race.html">7. 인종과 민족</a></li><li><a href="08-urban.html">8. 도시와 환경</a></li><li><a href="09-digital.html">9. 디지털 사회</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>사회학 개론</em></h1><p class="authors">Chapter 1 — Introduction to Sociology</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 원형으로 둘러선 개인들이 관계의 그물로 이어진 사회 — 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 드래그로 회전 · 단계별로 진행됩니다</span>
+<div id="sim-cap" style="margin:4px 0 16px;padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border:1px solid var(--border);border-radius:12px;background:var(--bg-card);min-height:1.5em;">개인들이 모이는 과정을 단계별로 살펴봅니다.</div>
 <h2>사회학 개론</h2><p>Introduction to Sociology의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Introduction to Sociology</p></div>
 
@@ -98,14 +99,40 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
   const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const N=12,people=[],ringR=3.2;for(let i=0;i<N;i++){const ang=i/N*Math.PI*2;const px2=Math.cos(ang)*ringR,py2=Math.sin(ang)*ringR;const col=new THREE.Color().setHSL(i/N,0.55,0.55);const person=new THREE.Mesh(new THREE.SphereGeometry(0.32,16,16),new THREE.MeshBasicMaterial({color:col}));person.position.set(px2,py2,0);s.add(person);people.push(person);}
-  for(let i=0;i<N;i++){for(let j=i+1;j<N;j++){if((i*7+j*3)%4===0){s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([people[i].position,people[j].position]),new THREE.LineBasicMaterial({color:0x888899,transparent:true,opacity:0.28})));}}}
-  const hub=new THREE.Mesh(new THREE.IcosahedronGeometry(0.7,0),new THREE.MeshBasicMaterial({color:0xa78bfa,wireframe:true}));s.add(hub);s.userData.hub=hub;s.userData.people=people;
+  const capEl=document.getElementById('sim-cap');function cap(t){if(capEl)capEl.textContent=t;}
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+20;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.013,cv.height*0.013,1);return sp;}
+  // 개인 노드(원형 배치)
+  const N=12,people=[],ringR=3.2;for(let i=0;i<N;i++){const ang=i/N*Math.PI*2;const px2=Math.cos(ang)*ringR,py2=Math.sin(ang)*ringR;const col=new THREE.Color().setHSL(i/N,0.55,0.55);const person=new THREE.Mesh(new THREE.SphereGeometry(0.32,16,16),new THREE.MeshBasicMaterial({color:col}));person.position.set(px2,py2,0);person.scale.setScalar(0.01);s.add(person);people.push(person);}
+  // 관계의 선(처음엔 숨김)
+  const links=[];for(let i=0;i<N;i++){for(let j=i+1;j<N;j++){if((i*7+j*3)%4===0){const mt=new THREE.LineBasicMaterial({color:0x888899,transparent:true,opacity:0});const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints([people[i].position,people[j].position]),mt);s.add(ln);links.push(mt);}}}
+  // 창발하는 '사회적 사실' 허브(처음엔 숨김)
+  const hub=new THREE.Mesh(new THREE.IcosahedronGeometry(0.7,0),new THREE.MeshBasicMaterial({color:0xa78bfa,wireframe:true,transparent:true,opacity:0}));s.add(hub);
+  const hubL=lbl('사회적 사실',0xa78bfa);hubL.position.set(0,1.2,0);hubL.material.opacity=0;s.add(hubL);
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.hub.rotation.y+=0.01;s.userData.hub.rotation.x+=0.006;s.userData.people.forEach((p,i)=>{p.scale.setScalar(1+0.18*Math.sin(T*1.5+i));});s.rotation.y+=0.003;r.render(s,cam);}a();
+  let grown=false;
+  function setPeople(scl){people.forEach((p,i)=>{const f=Math.max(0,Math.min(1,scl*N-i));p.userData.g=ez(f);p.scale.setScalar(0.01+p.userData.g);});}
+  const phases=[
+    {dur:4,cap:'① 개인 — 저마다 색이 다른 사람들이 하나씩 등장합니다. 아직은 그저 흩어진 개인들이죠.',
+     up:u=>{grown=false;setPeople(u);}},
+    {dur:4,cap:'② 관계 — 개인들이 서로 이어지며 보이지 않던 \'관계의 그물\'이 드러납니다. 사회는 점이 아니라 선입니다.',
+     up:u=>{grown=true;links.forEach(m=>m.opacity=ez(u)*0.32);}},
+    {dur:4,cap:'③ 창발 — 관계가 쌓이면 개인의 합을 넘는 힘(규범·여론·사회적 사실)이 중심에 솟아납니다.',
+     up:u=>{const f=ez(u);hub.material.opacity=f*0.9;hubL.material.opacity=f;hub.scale.setScalar(0.3+f*0.7);}},
+    {dur:5,cap:'④ 구조 — 이제 전체를 돌려봅니다. 한 사람의 행동도 이 구조 안에서 일어납니다 — 사회학은 이 숨은 구조를 분석합니다.',
+     up:()=>{s.rotation.y+=0.004;}}
+  ];
+  let pi=0,pt=0,last=0,T=0;cap(phases[0].cap);
+  function a(now){requestAnimationFrame(a);const dt=Math.min(0.05,(now-last)/1000||0.016);last=now;T+=dt;pt+=dt;
+    const ph=phases[pi];if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;if(pi===0){links.forEach(m=>m.opacity=0);hub.material.opacity=0;hubL.material.opacity=0;}cap(phases[pi].cap);}
+    if(phases[pi].up)phases[pi].up(pt/phases[pi].dur);
+    hub.rotation.y+=0.01;hub.rotation.x+=0.006;
+    if(grown)people.forEach((p,i)=>p.scale.setScalar(1+0.12*Math.sin(T*1.5+i)));
+    r.render(s,cam);}
+  requestAnimationFrame(a);
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

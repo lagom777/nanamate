@@ -8,7 +8,8 @@
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">⚖️ 표지</a></li><li><a href="01-intro.html">1. 법학 개론</a></li><li><a href="02-constitutional.html">2. 헌법</a></li><li><a href="03-civil.html">3. 민법 기초</a></li><li><a href="04-criminal.html">4. 형법 기초</a></li><li><a href="05-labor.html">5. 근로기준법</a></li><li><a href="06-property.html">6. 부동산/재산법</a></li><li><a href="07-consumer.html">7. 소비자 보호법</a></li><li><a href="08-ip.html">8. 지식재산권</a></li><li><a href="09-digital-law.html">9. 디지털 법률</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>법학 개론</em></h1><p class="authors">Chapter 1 — Introduction to Law & Legal Systems</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 헌법을 정점으로 한 법의 위계 피라미드 — 드래그로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 드래그로 회전 · 단계별로 진행됩니다</span>
+<div id="sim-cap" style="margin:4px 0 16px;padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border:1px solid var(--border);border-radius:12px;background:var(--bg-card);min-height:1.5em;">법의 위계가 정점에서 아래로 쌓이는 과정을 살펴봅니다.</div>
 <h2>법학 개론</h2><p>Introduction to Law & Legal Systems의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Introduction to Law & Legal Systems</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -53,14 +54,37 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,9);cam.lookAt(0,0,0);
   const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const grp=new THREE.Group();const tiers=[{w:1.0,h:2.6},{w:2.0,h:1.4},{w:3.0,h:0.2},{w:4.0,h:-1.0},{w:5.0,h:-2.2}];
-  tiers.forEach((t,i)=>{const col=new THREE.Color().setHSL(0.58-i*0.05,0.55,0.55);const slab=new THREE.Mesh(new THREE.BoxGeometry(t.w,0.7,t.w),new THREE.MeshBasicMaterial({color:col}));slab.position.y=t.h;grp.add(slab);const eg=new THREE.EdgesGeometry(new THREE.BoxGeometry(t.w,0.7,t.w));const wire=new THREE.LineSegments(eg,new THREE.LineBasicMaterial({color:0xffffff}));wire.position.y=t.h;grp.add(wire);});
-  const cap=new THREE.Mesh(new THREE.TetrahedronGeometry(0.55),new THREE.MeshBasicMaterial({color:0xffe08a}));cap.position.y=3.5;grp.add(cap);s.add(grp);
+  const capEl=document.getElementById('sim-cap');function cap(t){if(capEl)capEl.textContent=t;}
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+20;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.012,cv.height*0.012,1);return sp;}
+  const grp=new THREE.Group();const tiers=[{w:1.0,h:2.6,name:'헌법'},{w:2.0,h:1.4,name:'법률'},{w:3.0,h:0.2,name:'명령·규칙'},{w:4.0,h:-1.0,name:'조례'},{w:5.0,h:-2.2,name:'규칙·처분'}];
+  const slabs=[];
+  tiers.forEach((t,i)=>{const col=new THREE.Color().setHSL(0.58-i*0.05,0.55,0.55);const slab=new THREE.Mesh(new THREE.BoxGeometry(t.w,0.7,t.w),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0}));slab.position.y=t.h;grp.add(slab);const wire=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(t.w,0.7,t.w)),new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:0}));wire.position.y=t.h;grp.add(wire);const L=lbl(t.name,0x39415a);L.position.set(t.w/2+1.1,t.h,0);L.material.opacity=0;grp.add(L);slabs.push({slab:slab,wire:wire.material,L:L.material});});
+  const apex=new THREE.Mesh(new THREE.TetrahedronGeometry(0.55),new THREE.MeshBasicMaterial({color:0xffe08a,transparent:true,opacity:0}));apex.position.y=3.5;grp.add(apex);s.add(grp);
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;cap.rotation.y+=0.02;cap.rotation.x+=0.01;cap.position.y=3.5+Math.sin(T)*0.12;s.rotation.y+=0.004;r.render(s,cam);}a();
+  function showTier(k,u){const t=slabs[k];const f=ez(u);t.slab.material.opacity=f*0.92;t.wire.opacity=f;t.L.opacity=f;}
+  const phases=[
+    {dur:3,cap:'① 헌법 — 최고 규범. 국가의 모든 법은 여기서 정당성을 얻습니다. 정점에서 시작합니다.',
+     up:u=>{apex.material.opacity=ez(u);showTier(0,u);}},
+    {dur:3,cap:'② 법률 — 국회가 헌법의 위임·테두리 안에서 제정. 헌법에 어긋나면 위헌으로 효력을 잃습니다.',
+     up:u=>showTier(1,u)},
+    {dur:3,cap:'③ 명령·규칙 — 행정부가 법률의 위임을 받아 세부사항을 규정. 법률을 벗어날 수 없습니다.',
+     up:u=>showTier(2,u)},
+    {dur:3,cap:'④ 조례 — 지방의회가 법령 범위 안에서 제정하는 지역 규범.',
+     up:u=>showTier(3,u)},
+    {dur:4,cap:'⑤ 위계의 핵심 — 아래 단계는 위 단계를 위반할 수 없습니다(상위법 우선). 이 피라미드가 \'법치\'의 뼈대입니다. 회전해 전체 구조를 보세요.',
+     up:u=>{showTier(4,u);s.rotation.y+=0.004;}}
+  ];
+  let pi=0,pt=0,last=0,T=0;cap(phases[0].cap);
+  function a(now){requestAnimationFrame(a);const dt=Math.min(0.05,(now-last)/1000||0.016);last=now;T+=dt;pt+=dt;
+    if(pt>=phases[pi].dur){pt=0;pi=(pi+1)%phases.length;if(pi===0){slabs.forEach(t=>{t.slab.material.opacity=0;t.wire.opacity=0;t.L.opacity=0;});apex.material.opacity=0;}cap(phases[pi].cap);}
+    if(phases[pi].up)phases[pi].up(pt/phases[pi].dur);
+    apex.rotation.y+=0.02;apex.rotation.x+=0.01;apex.position.y=3.5+Math.sin(T)*0.12;
+    r.render(s,cam);}
+  requestAnimationFrame(a);
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

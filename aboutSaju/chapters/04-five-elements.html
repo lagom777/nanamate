@@ -18,7 +18,8 @@
 <li><a href="07-compatibility.html">7. 궁합</a></li><li><a href="08-career.html">8. 직업과 재물</a></li>
 <li><a href="09-modern-application.html">9. 현대적 활용</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>오행 (五行)</em></h1><p class="authors">Chapter 4 — Five Elements Theory & Interactions</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 오행 — 상생(겉 오각형)과 상극(안 별모양)</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 드래그로 회전 · 단계별로 진행됩니다</span>
+<div id="sim-cap" style="margin:4px 0 16px;padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border:1px solid var(--border);border-radius:12px;background:var(--bg-card);min-height:1.5em;">오행의 상생·상극 관계를 단계별로 살펴봅니다.</div>
 <h2>오행 (五行) 개요</h2><p>이 챕터에서는 오행 (五行)의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Five Elements Theory & Interactions</p></div>
 
@@ -86,12 +87,33 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7.5);cam.lookAt(0,0,0);
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
   const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const ELC=[0x22c55e,0xef4444,0xeab308,0xf1f5f9,0x3b82f6];const R=2.7;const pos=[];for(let i=0;i<5;i++){const t=Math.PI/2 - i/5*Math.PI*2;pos.push(new THREE.Vector3(Math.cos(t)*R,Math.sin(t)*R,0));const m=new THREE.Mesh(new THREE.SphereGeometry(0.45,18,18),new THREE.MeshBasicMaterial({color:ELC[i]}));m.position.copy(pos[i]);s.add(m);}for(let i=0;i<5;i++){const g=new THREE.BufferGeometry().setFromPoints([pos[i],pos[(i+1)%5]]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x22c55e,transparent:true,opacity:0.6})));}for(let i=0;i<5;i++){const g=new THREE.BufferGeometry().setFromPoints([pos[i],pos[(i+2)%5]]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xef4444,transparent:true,opacity:0.4})));}
+  const capEl=document.getElementById('sim-cap');function cap(t){if(capEl)capEl.textContent=t;}
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const ELC=[0x22c55e,0xef4444,0xeab308,0xb0b6c0,0x3b82f6];const ELN=['木 목(나무)','火 화(불)','土 토(흙)','金 금(쇠)','水 수(물)'];const R=2.7;const pos=[],lblMats=[];
+  for(let i=0;i<5;i++){const t=Math.PI/2 - i/5*Math.PI*2;pos.push(new THREE.Vector3(Math.cos(t)*R,Math.sin(t)*R,0));const m=new THREE.Mesh(new THREE.SphereGeometry(0.45,18,18),new THREE.MeshBasicMaterial({color:ELC[i]}));m.position.copy(pos[i]);s.add(m);const L=lbl(ELN[i],0x3a3a3a);L.position.set(Math.cos(t)*(R+0.95),Math.sin(t)*(R+0.55),0);L.material.opacity=0;s.add(L);lblMats.push(L.material);}
+  const genMats=[],ctrlMats=[];
+  for(let i=0;i<5;i++){const g=new THREE.BufferGeometry().setFromPoints([pos[i],pos[(i+1)%5]]);const m=new THREE.LineBasicMaterial({color:0x22c55e,transparent:true,opacity:0});s.add(new THREE.Line(g,m));genMats.push(m);}
+  for(let i=0;i<5;i++){const g=new THREE.BufferGeometry().setFromPoints([pos[i],pos[(i+2)%5]]);const m=new THREE.LineBasicMaterial({color:0xef4444,transparent:true,opacity:0});s.add(new THREE.Line(g,m));ctrlMats.push(m);}
+  const pulse=new THREE.Mesh(new THREE.SphereGeometry(0.2,12,12),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0}));s.add(pulse);
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.z+=0.003;r.render(s,cam);}a();
+  const phases=[
+    {dur:4,cap:'오행 — 만물을 이루는 다섯 기운: 木(나무)·火(불)·土(흙)·金(쇠)·水(물). 다섯 점이 서로 영향을 주고받습니다.',
+     up:u=>{lblMats.forEach((m,i)=>m.opacity=ez(Math.max(0,Math.min(1,u*2-i*0.18))));}},
+    {dur:6,cap:'상생(相生) — 서로를 낳는 순환: 나무→불→흙→쇠→물→나무. 빛 구슬이 \'낳는\' 방향으로 한 바퀴 돕니다.',
+     up:u=>{genMats.forEach(m=>m.opacity=0.7);pulse.material.opacity=0.95;const seg=u*5,i=Math.floor(seg)%5,f=seg-Math.floor(seg);pulse.position.lerpVectors(pos[i],pos[(i+1)%5],f);}},
+    {dur:6,cap:'상극(相剋) — 서로를 이기는 별모양: 나무는 흙을, 흙은 물을, 물은 불을, 불은 쇠를, 쇠는 나무를 누릅니다. 균형을 잡는 견제입니다.',
+     up:u=>{genMats.forEach(m=>m.opacity=0.25);ctrlMats.forEach(m=>m.opacity=0.6);pulse.material.opacity=0.95;const seg=u*5,i=Math.floor(seg)%5,f=seg-Math.floor(seg);pulse.position.lerpVectors(pos[i],pos[(i+2)%5],f);s.rotation.z+=0.0;}}
+  ];
+  let pi=0,pt=0,last=0,T=0;cap(phases[0].cap);
+  function a(now){requestAnimationFrame(a);const dt=Math.min(0.05,(now-last)/1000||0.016);last=now;T+=dt;pt+=dt;
+    if(pt>=phases[pi].dur){pt=0;pi=(pi+1)%phases.length;if(pi===0){genMats.forEach(m=>m.opacity=0);ctrlMats.forEach(m=>m.opacity=0);pulse.material.opacity=0;lblMats.forEach(m=>m.opacity=0);}cap(phases[pi].cap);}
+    if(phases[pi].up)phases[pi].up(pt/phases[pi].dur);
+    r.render(s,cam);}
+  requestAnimationFrame(a);
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

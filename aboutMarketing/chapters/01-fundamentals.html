@@ -36,7 +36,8 @@
   <p class="authors">Chapter 1 — Marketing Fundamentals & Concepts</p>
 </header>
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 제품·가격·유통·판촉 4P가 중심을 둘러싼 마케팅 믹스</span>
+<span class="interact-hint">⟳ 드래그로 회전 · 단계별로 진행됩니다</span>
+<div id="sim-cap" style="margin:4px 0 16px;padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border:1px solid var(--border);border-radius:12px;background:var(--bg-card);min-height:1.5em;">마케팅 믹스 4P를 하나씩 살펴봅니다.</div>
 <h2>마케팅 기초 개요</h2>
 <p>이 챕터에서는 마케팅 기초의 핵심 전략과 프레임워크를 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Marketing Fundamentals & Concepts의 원리와 실전 적용법을 다룹니다.</p></div>
@@ -140,12 +141,40 @@
 </div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8.5);cam.lookAt(0,0,0);
   const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const hub=new THREE.Mesh(new THREE.IcosahedronGeometry(0.9,0),new THREE.MeshBasicMaterial({color:0xff5a3c,wireframe:true}));s.add(hub);const pillars=[];const colP=[0xff8a3c,0x3cc8ff,0x9b5cff,0x3cff8a];for(let i=0;i<4;i++){const ang=i*Math.PI/2;const box=new THREE.Mesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshBasicMaterial({color:colP[i],wireframe:true}));box.position.set(Math.cos(ang)*2.8,Math.sin(ang)*2.8,0);s.add(box);pillars.push(box);const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.BufferAttribute(new Float32Array([0,0,0,box.position.x,box.position.y,0]),3));s.add(new THREE.Line(lg,new THREE.LineBasicMaterial({color:colP[i],transparent:true,opacity:0.6})));}
+  const capEl=document.getElementById('sim-cap');function cap(t){if(capEl)capEl.textContent=t;}
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const hub=new THREE.Mesh(new THREE.IcosahedronGeometry(0.9,0),new THREE.MeshBasicMaterial({color:0xff5a3c,wireframe:true}));s.add(hub);
+  const hubL=lbl('마케팅 믹스',0xc23a20);hubL.position.set(1.7,-0.7,0);hubL.material.opacity=0;s.add(hubL);
+  const colP=[0xff8a3c,0x3cc8ff,0x9b5cff,0x3cff8a];
+  const pNames=['Product 제품','Price 가격','Place 유통','Promotion 판촉'];
+  const pillars=[],pLineMats=[],pLabMats=[];
+  for(let i=0;i<4;i++){const ang=i*Math.PI/2;const box=new THREE.Mesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshBasicMaterial({color:colP[i],wireframe:true,transparent:true,opacity:0}));box.position.set(Math.cos(ang)*2.8,Math.sin(ang)*2.8,0);s.add(box);pillars.push(box);
+    const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.BufferAttribute(new Float32Array([0,0,0,box.position.x,box.position.y,0]),3));const lm=new THREE.LineBasicMaterial({color:colP[i],transparent:true,opacity:0});s.add(new THREE.Line(lg,lm));pLineMats.push(lm);
+    const Lab=lbl(pNames[i],colP[i]);Lab.position.set(Math.cos(ang)*2.8,Math.sin(ang)*2.8+0.95,0);Lab.material.opacity=0;s.add(Lab);pLabMats.push(Lab.material);}
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;hub.rotation.x+=0.01;hub.rotation.y+=0.012;pillars.forEach((b,i)=>{b.rotation.x+=0.02;b.rotation.y+=0.02;const sc=1+Math.sin(T*2+i*1.5)*0.15;b.scale.set(sc,sc,sc);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  function showP(i,u){const f=ez(u);pillars[i].material.opacity=f;pLineMats[i].opacity=f*0.6;pLabMats[i].opacity=f;}
+  const phases=[
+    {dur:3,cap:'중심 — 마케팅 믹스는 고객에게 가치를 전달하기 위해 기업이 조절하는 4가지 도구의 조합입니다.',
+     up:u=>{hubL.material.opacity=ez(u);}},
+    {dur:3,cap:'① Product(제품) — 무엇을 파는가. 품질·디자인·기능·브랜드가 가치의 핵심입니다.',up:u=>showP(0,u)},
+    {dur:3,cap:'② Price(가격) — 얼마에 파는가. 원가·경쟁사·고객이 느끼는 가치 사이에서 결정됩니다.',up:u=>showP(1,u)},
+    {dur:3,cap:'③ Place(유통) — 어디서 파는가. 매장·온라인·물류 등 고객이 제품을 만나는 경로입니다.',up:u=>showP(2,u)},
+    {dur:3,cap:'④ Promotion(판촉) — 어떻게 알리는가. 광고·홍보·할인으로 고객과 소통합니다.',up:u=>showP(3,u)},
+    {dur:5,cap:'핵심 — 네 요소는 따로가 아니라 \'함께\' 맞물려야 합니다. 하나만 좋아도 실패 — 4P의 균형이 마케팅 전략입니다. 회전해 보세요.',
+     up:u=>{s.rotation.y+=0.004;}}
+  ];
+  let pi=0,pt=0,last=0,T=0;cap(phases[0].cap);
+  function a(now){requestAnimationFrame(a);const dt=Math.min(0.05,(now-last)/1000||0.016);last=now;T+=dt;pt+=dt;
+    if(pt>=phases[pi].dur){pt=0;pi=(pi+1)%phases.length;if(pi===0){hubL.material.opacity=0;pillars.forEach((b,i)=>{b.material.opacity=0;pLineMats[i].opacity=0;pLabMats[i].opacity=0;});}cap(phases[pi].cap);}
+    if(phases[pi].up)phases[pi].up(pt/phases[pi].dur);
+    hub.rotation.x+=0.01;hub.rotation.y+=0.012;
+    pillars.forEach((b,i)=>{if(b.material.opacity>0.3){b.rotation.x+=0.02;b.rotation.y+=0.02;}});
+    r.render(s,cam);}
+  requestAnimationFrame(a);
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
