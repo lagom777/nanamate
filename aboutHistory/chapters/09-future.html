@@ -2,16 +2,18 @@
 <title>9. 역사로 보는 미래 — aboutHistory</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">📜 표지</a></li><li><a href="chapters/01-ancient.html">1. 고대 문명</a></li><li><a href="chapters/02-classical.html">2. 그리스와 로마</a></li><li><a href="chapters/03-medieval.html">3. 중세 세계</a></li><li><a href="chapters/04-renaissance.html">4. 르네상스와 대항해</a></li><li><a href="chapters/05-revolution.html">5. 혁명의 시대</a></li><li><a href="chapters/06-imperialism.html">6. 제국주의와 세계대전</a></li><li><a href="chapters/07-cold-war.html">7. 냉전과 현대</a></li><li><a href="chapters/08-korean.html">8. 한국사 핵심</a></li><li><a href="chapters/09-future.html">9. 역사로 보는 미래</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">📜 표지</a></li><li><a href="01-ancient.html">1. 고대 문명</a></li><li><a href="02-classical.html">2. 그리스와 로마</a></li><li><a href="03-medieval.html">3. 중세 세계</a></li><li><a href="04-renaissance.html">4. 르네상스와 대항해</a></li><li><a href="05-revolution.html">5. 혁명의 시대</a></li><li><a href="06-imperialism.html">6. 제국주의와 세계대전</a></li><li><a href="07-cold-war.html">7. 냉전과 현대</a></li><li><a href="08-korean.html">8. 한국사 핵심</a></li><li><a href="09-future.html">9. 역사로 보는 미래</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>역사로 보는 미래</em></h1><p class="authors">Chapter 9 — Lessons from History & Future Trends</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 역사의 순환 고리에서 여러 갈래의 미래로 뻗어 나가는 분기</span>
 <h2>역사로 보는 미래</h2><p>Lessons from History & Future Trends의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Lessons from History & Future Trends</p></div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -28,13 +30,15 @@
 </div>
 <div class="difficulty-content" data-level="medium">
   <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3><p>역사 비교 사고는 Niall Ferguson의 "응용 역사학"이 대표적입니다. 1차 대전 직전과 2014년 우크라이나, 1929 대공황과 2008 금융위기 같은 비교가 정책 설계에 활용됩니다. 콘드라티예프 파동(50년)과 슘페터의 창조적 파괴는 기술 혁명이 경제 주기와 연동된다고 봅니다. 한국은 1차 인구 보너스(1970-2010)에서 보너스 소멸 → 인구 감소 단계로 빠르게 이동 중이며, 이는 일본의 1990년대 이후와 비교됩니다. 기후 시나리오(RCP, SSP)는 IPCC 보고서가 표준이며, 1.5℃ vs 2℃ 시나리오의 차이는 인류사적 분기점입니다.</p>
-  <h3>핵심 프레임워크</h3><div class="info-card"><h4>📐 STEEPV 분석</h4><p>Social · Tech · Economic · Environmental · Political · Values 6개 축으로 미래 변화 요인을 정리.</p></div>
+  <h3>이론 깊이 들어가기</h3><p>역사를 미래 예측에 쓰는 사고법은 크게 세 갈래로 정리됩니다. 첫째, Niall Ferguson 등이 주창한 "응용 역사학(Applied History)"은 현재의 정책 문제를 과거의 유사 상황과 짝지어 분석합니다. 1차 대전 직전 유럽의 동맹 구조와 오늘날 강대국 경쟁, 1929년 대공황의 정책 실패와 2008년 금융위기 대응 같은 비교가 대표적입니다. 둘째, 콘드라티예프 장기 파동(약 50년 주기)과 슘페터의 창조적 파괴는 기술 혁명이 경제 호황·불황의 큰 주기와 맞물린다고 봅니다 — 증기·철도, 전기·중화학, 정보통신, 그리고 지금의 AI가 각 파동의 핵심 기술로 거론됩니다. 셋째, 인구·기후 같은 구조 변수는 외삽 가능성이 비교적 높아 장기 전망의 뼈대가 됩니다. 한국은 인구 보너스(생산가능인구 비중이 높던 고성장기)에서 보너스 소멸·인구 감소 단계로 이례적으로 빠르게 이동 중이며, 이는 1990년대 이후 저성장·고령화를 먼저 겪은 일본과 자주 비교됩니다. 기후 측면에서는 IPCC가 제시한 시나리오(SSP/RCP) 체계가 표준이며, 1.5℃와 2℃ 경로의 차이가 폭염·해수면·생태계에서 인류사적 분기점으로 다뤄집니다.</p>
+  <h3>핵심 프레임워크</h3>
+  <div class="info-card"><h4>📐 STEEPV 분석</h4><p>Social(사회)·Technological(기술)·Economic(경제)·Environmental(환경)·Political(정치)·Values(가치) 6개 축으로 변화 동인을 빠짐없이 점검하는 미래학의 기본 체크리스트입니다. 한 축에만 매몰되는 편향을 막고, 축들 사이의 상호작용(예: 기술→일자리→정치)을 드러내는 것이 핵심입니다.</p></div>
+  <div class="info-card"><h4>📐 시나리오 플래닝</h4><p>"가장 불확실하면서 영향이 큰" 변수 2개를 직교축으로 놓아 4분면의 미래 시나리오를 만드는 기법입니다. 1970년대 오일쇼크 이후 셸(Shell)이 정착시킨 방법으로, 하나의 예측에 베팅하지 않고 여러 미래에 대비하도록 설계합니다.</p></div>
   <h3>대표 예제</h3>
-  <div class="info-card"><h4>📐 예제 1: AI와 일자리</h4><p>증기기관·전기·컴퓨터의 노동 시장 충격을 분석해 AI가 가져올 변화를 추정. 단기 충격 + 장기 보완으로 보는 시각이 다수.</p></div>
-  <div class="info-card"><h4>📐 예제 2: 인구 감소 도시</h4><p>일본 지방 도시·이탈리아 산골·디트로이트가 한국 지방 소멸의 선행 사례. 정책 대응(이민·재편·로봇화) 비교 가능.</p></div>
-  <h3>응용 사례</h3><p>한국 정부의 "2050 탄소중립", "인구전략기획부", "K-반도체 전략"이 모두 역사적 패턴 인식에서 출발한 정책 시나리오입니다. 기업의 시나리오 플래닝(Shell, KPMG)은 1970년대 오일쇼크 이후 표준화되었습니다.</p>
-  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "과거에 이랬으니 미래도 이럴 것"이라는 단순 외삽은 종종 빗나갑니다. 핵심은 비교의 한계와 차이를 정확히 인식하는 것입니다.</div>
+  <div class="info-card"><h4>📐 예제 1: AI와 일자리</h4><p>증기기관·전기·컴퓨터가 노동 시장에 준 충격을 단서로 AI의 영향을 추정합니다. 과거 사례는 "특정 직무는 사라지지만 새 직무가 생기고, 전환기에는 임금·고용의 단기 충격이 크다"는 패턴을 보여줍니다. 다만 AI는 육체 노동이 아닌 인지·사무 노동을 자동화한다는 점에서 과거와 결이 다르다는 반론도 강합니다.</p></div>
+  <div class="info-card"><h4>📐 예제 2: 인구 감소 도시</h4><p>일본 지방 소도시, 이탈리아 산간 마을, 미국 디트로이트의 인구 유출과 공동화는 한국 "지방 소멸"의 선행 사례입니다. 빈집·세수 감소·인프라 유지 부담이라는 공통 문제에 대해 이민 유입, 도시 재편(축소 도시), 로봇·자동화 같은 대응책을 서로 비교·학습할 수 있습니다.</p></div>
+  <h3>현대적 전개</h3><p>최근에는 단일 위기가 아니라 인구·기후·지정학·기술이 얽혀 서로를 증폭시키는 복합 위기(polycrisis)로 미래를 읽습니다. 한국 정부의 "2050 탄소중립" 로드맵, 저출생·고령화 대응 인구 전략, 반도체 중심의 산업·안보 전략은 모두 이런 역사적·구조적 패턴 인식에서 출발한 시나리오성 정책입니다. 기업 역시 셸·KPMG 등이 정착시킨 시나리오 플래닝을 표준 도구로 삼아, 하나의 예측이 아니라 여러 미래에 견디는 전략을 설계합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "과거에 이랬으니 미래도 이럴 것"이라는 단순 외삽은 종종 빗나갑니다. 비교는 출발점일 뿐, 핵심은 과거와 현재의 결정적 차이(기술 속도·인구 구조·제도)를 함께 짚어 비교의 한계를 분명히 하는 것입니다.</div>
 </div>
 <div class="difficulty-content" data-level="hard">
   <span class="difficulty-badge hard">상 · 심화</span>
@@ -44,5 +48,25 @@
   <h3>추가 학습 자료</h3><ul><li>"The Square and the Tower" — Niall Ferguson</li><li>"Sapiens"·"Homo Deus" — Yuval Harari</li><li>IPCC 보고서, OECD Global Trends</li></ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 한국이 2050년까지 마주할 3대 위기(인구·기후·기술)를 STEEPV로 분석하고 가장 가능성 높은 시나리오 3가지를 1쪽 전망 보고서로 작성하세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b45309","questions":[{"q":"콘드라티예프 장기 파동의 주기는?","choices":["약 10년","약 30년","약 50년","약 100년"],"answer":2},{"q":"역사의 운율을 말한 인물은?","choices":["마크 트웨인","토인비","하라리","퍼거슨"],"answer":0},{"q":"STEEPV에서 V의 의미는?","choices":["폭력","가치","속도","다양성"],"answer":1},{"q":"오일쇼크 후 시나리오 기법 정착 기업?","choices":["IBM","IPCC","OECD","셸"],"answer":3},{"q":"응용 역사학을 주창한 학자는?","choices":["하라리","퍼거슨","토인비","테인터"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(1.5,0,9);cam.lookAt(1.5,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const cycle=new THREE.Mesh(new THREE.TorusGeometry(1.5,0.05,10,60),new THREE.MeshBasicMaterial({color:0x7f8c8d,transparent:true,opacity:0.7}));s.add(cycle);
+  const past=[];for(let i=0;i<8;i++){const ang=i/8*Math.PI*2;const node=new THREE.Mesh(new THREE.SphereGeometry(0.16,10,8),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.58,0.4,0.55),wireframe:true}));node.position.set(Math.cos(ang)*1.5,Math.sin(ang)*1.5,0);cycle.add(node);past.push(node);}
+  const branches=[];const bcol=[0x27ae60,0xf39c12,0xc0392b,0x8e44ad];for(let b=0;b<4;b++){const ang=-0.6+b*0.4;const pts=[new THREE.Vector3(1.5,0,0)];for(let k=1;k<=6;k++){pts.push(new THREE.Vector3(1.5+k*0.4,Math.sin(ang)*k*0.45,Math.cos(ang*1.7)*k*0.2));}const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:bcol[b],transparent:true,opacity:0.7}));s.add(line);
+  const tip=new THREE.Mesh(new THREE.TetrahedronGeometry(0.25),new THREE.MeshBasicMaterial({color:bcol[b],wireframe:true}));tip.position.copy(pts[pts.length-1]);s.add(tip);branches.push(tip);}
+  s.userData.cy=cycle;s.userData.pn=past;s.userData.bt=branches;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.cy.rotation.z+=0.005;s.userData.pn.forEach((n,i)=>{n.scale.setScalar(1+0.3*Math.sin(T*2+i*0.7));});s.userData.bt.forEach((t,i)=>{t.rotation.y+=0.03;t.rotation.x+=0.02;t.scale.setScalar(1+0.2*Math.sin(T*1.5+i));});r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

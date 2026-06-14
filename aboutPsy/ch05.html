@@ -5,14 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>기억 | 심리학 기초</title>
 <link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../shared/light-theme.css">
   <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
   <script defer src="../shared/difficulty.js"></script>
+  <script defer src="../shared/quizgame3d.js"></script>
 </head>
 <body>
 
 <aside>
-  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h1><a href="index.html">심리학 기초</a></h1>
   <div class="sub">PSYCHOLOGY FROM ZERO</div>
   <nav>
@@ -42,6 +45,18 @@
   <section class="chapter" id="ch5">
     <div class="chap-num">CHAPTER 05</div>
     <h2>기억 — 어떻게 저장되고 왜 잊히는가</h2>
+<span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 기억의 흐름 — 감각기억 → 단기기억 → 장기기억</span>
+<div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');if(!c||!window.THREE)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xa855f7;const labels=[0xeab308,0x3b82f6,0x22c55e];const boxes=[];for(let i=0;i<3;i++){const b=new THREE.Mesh(new THREE.BoxGeometry(1.2,1.2,1.2),new THREE.MeshBasicMaterial({color:labels[i],wireframe:true}));b.position.x=(i-1)*2.4;s.add(b);boxes.push(b);if(i<2)s.add(new THREE.Mesh(new THREE.ConeGeometry(0.18,0.4,12),new THREE.MeshBasicMaterial({color:COL})).translateX((i-1)*2.4+1.2).rotateZ(-Math.PI/2));}const flow=[];for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1,8,8),new THREE.MeshBasicMaterial({color:COL}));m.userData={off:Math.random()*4.8};s.add(m);flow.push(m);}s.userData.flow=flow;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.flow.forEach(m=>{m.userData.off+=0.03;if(m.userData.off>4.8)m.userData.off=0;m.position.set(-2.4+m.userData.off,Math.sin(m.userData.off*2)*0.2,0);});boxes.forEach((b,i)=>b.rotation.y+=0.01);s.rotation.y+=0;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script>
+
     <div class="en">Memory</div>
 
     <p>기억은 하나의 '저장소'가 아닙니다. 심리학에서 가장 널리 쓰이는 모델은 <strong>앳킨슨과 시프린(1968)</strong>의 3단계 모델입니다. 정보가 감각기관을 거쳐 장기기억에 저장되기까지, 세 개의 방을 통과하는 셈이죠.</p>
@@ -289,6 +304,11 @@
 </div>
 
   <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d97757","questions":[{"q":"단기기억의 용량은 약?","choices":["7±2 항목","100항목","1항목","무한"],"answer":0},{"q":"큰 정보를 의미 단위로 묶는 것은?","choices":["시연","청킹","인출","부호화"],"answer":1},{"q":"망각 곡선을 연구한 학자는?","choices":["앳킨슨","파블로프","에빙하우스","피아제"],"answer":2},{"q":"자전거 타기 같은 몸의 기억은?","choices":["일화기억","의미기억","감각기억","절차기억"],"answer":3},{"q":"책을 덮고 떠올리는 공부법은?","choices":["인출 연습","분산 학습","청킹","정교화"],"answer":0}]};</script>
 </main>
 
 <script src="js/main.js"></script>

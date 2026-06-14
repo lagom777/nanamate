@@ -5,7 +5,9 @@
 <link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
@@ -16,7 +18,7 @@
 <li><a href="07-ethics.html">7. 윤리학</a></li><li><a href="08-political.html">8. 정치철학</a></li>
 <li><a href="09-contemporary.html">9. 현대 철학</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>고대 그리스 철학</em></h1><p class="authors">Chapter 1 — Socrates, Plato & Aristotle</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 소크라테스→플라톤→아리스토텔레스로 이어지는 사제 계보</span>
 <h2>고대 그리스 철학 개요</h2><p>이 챕터에서는 고대 그리스 철학의 핵심 사상과 철학자들의 관계를 3D로 탐구합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Socrates, Plato & Aristotle</p></div>
 
@@ -76,27 +78,29 @@
   </ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 플라톤의 이데아 세계가 정말 존재한다면, "AI의 이데아"도 존재할까요? 그렇다면 GPT-4와 GPT-5는 같은 이데아를 분유하는 개별자인가, 서로 다른 종(species)인가? 이 질문은 보편자 논쟁을 디지털 존재론으로 확장합니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d4a047","questions":[{"q":"만물의 근원을 물이라고 본 철학자는?","choices":["플라톤","소크라테스","탈레스","아리스토텔레스"],"answer":2},{"q":"동굴의 비유를 제시한 철학자는?","choices":["소크라테스","플라톤","탈레스","아리스토텔레스"],"answer":1},{"q":"'너 자신을 알라'와 관련된 인물은?","choices":["아리스토텔레스","플라톤","탈레스","소크라테스"],"answer":3},{"q":"제3의 인간 논증으로 이데아론을 비판한 이는?","choices":["아리스토텔레스","플라톤","파르메니데스","헤라클레이토스"],"answer":0},{"q":"만물 유전(판타 레이)을 주장한 사람은?","choices":["파르메니데스","소크라테스","헤라클레이토스","플라톤"],"answer":2}]};</script>
 </main></div>
 <script>
-(function() {
-  const container = document.getElementById('sim-scene');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 3, 8);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  container.appendChild(renderer.domElement);
-  const nodes = [];
-  for (let i = 0; i < 8; i++) { const m = new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0), new THREE.MeshBasicMaterial({ color: 0xd4a047, wireframe: true })); m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4); scene.add(m); nodes.push(m); }
-  for (let i=0;i<nodes.length-1;i++){const g=new THREE.BufferGeometry().setFromPoints([nodes[i].position,nodes[i+1].position]);scene.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xd4a047,transparent:true,opacity:0.2})));}
-  let md=false,px=0;
-  container.addEventListener('mousedown',e=>{md=true;px=e.clientX;});
-  container.addEventListener('mouseup',()=>md=false);
-  container.addEventListener('mousemove',e=>{if(md){scene.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
-  container.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});
-  container.addEventListener('touchmove',e=>{scene.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});
-  function animate(){requestAnimationFrame(animate);scene.rotation.y+=0.002;renderer.render(scene,camera);}animate();
-  window.addEventListener('resize',()=>{camera.aspect=container.clientWidth/container.clientHeight;camera.updateProjectionMatrix();renderer.setSize(container.clientWidth,container.clientHeight);});
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const lineage=new THREE.Group();const ys=[3,0,-3];const sizes=[0.7,1,1.3];
+  for(let i=0;i<3;i++){const col=new THREE.Color().setHSL(0.58-i*0.13,0.6,0.6);
+    const node=new THREE.Mesh(new THREE.OctahedronGeometry(sizes[i],0),new THREE.MeshBasicMaterial({color:col,wireframe:true}));
+    node.position.set(0,ys[i],0);lineage.add(node);
+    const halo=new THREE.Mesh(new THREE.RingGeometry(sizes[i]+0.25,sizes[i]+0.35,32),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.5,side:THREE.DoubleSide}));
+    halo.position.set(0,ys[i],0);lineage.add(halo);}
+  for(let i=0;i<2;i++){const lg=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,ys[i],0),new THREE.Vector3(0,ys[i+1],0)]);
+    lineage.add(new THREE.Line(lg,new THREE.LineBasicMaterial({color:0x88aaff})));}
+  s.add(lineage);s.userData.nodes=lineage.children;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.004;s.userData.nodes.forEach((n,i)=>{if(n.geometry.type==='OctahedronGeometry'){n.rotation.y+=0.01+i*0.004;n.rotation.x+=0.006;}});r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
-</script></body></html>
+</script>
+</body></html>

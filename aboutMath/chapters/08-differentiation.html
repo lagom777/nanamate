@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8장. 미분 — 변화율의 수학</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📐 표지 · 소개</a></li>
+    <li><a href="01-numbers-sets.html">1. 수와 집합</a></li>
+    <li><a href="02-algebra.html">2. 대수 — 방정식과 다항식</a></li>
+    <li><a href="03-functions.html">3. 함수와 그래프</a></li>
+    <li><a href="04-geometry.html">4. 기하 — 도형과 피타고라스</a></li>
+    <li><a href="05-trigonometry.html">5. 삼각함수 — 원과 파동</a></li>
+    <li><a href="06-exponential-log.html">6. 지수와 로그</a></li>
+    <li><a href="07-sequences-limits.html">7. 수열과 극한</a></li>
+    <li><a href="08-differentiation.html" style="color:var(--accent);font-weight:600;">8. 미분 — 변화율의 수학</a></li>
+    <li><a href="09-integration.html">9. 적분과 확률·통계</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. 순간변화율 — "지금 이 순간의 속도"라는 역설</h2>
+<p>자동차가 2시간에 160km를 갔다면 평균 속도는 80km/h — 이것이 <strong>평균변화율</strong> Δy/Δx입니다. 그런데 계기판의 바늘이 가리키는 "지금 이 순간의 속도"는 무엇일까요? 한 순간에는 Δt = 0이라 이동 거리도 0, 0/0이 되어버립니다. 이 역설을 7장의 <strong>극한</strong>이 해결합니다: 구간을 한없이 줄여 가며 평균변화율의 극한을 취하는 것.</p>
+<p>함수 f의 x = a에서의 <strong>미분계수</strong>를 이렇게 정의합니다: f′(a) = lim_{h→0} (f(a+h) − f(a))/h. 기하적으로는 곡선 위 두 점을 잇는 <strong>할선의 기울기</strong>가, 두 점이 한없이 가까워지며 <strong>접선의 기울기</strong>로 수렴하는 것입니다 — 아래 3D의 첫 장면이 정확히 이 과정입니다. 미분이란 "곡선을 한 점에서 확대하면 직선으로 보인다"는 사실에 붙인 이름입니다.</p>
+</section>
+
+<!-- 3D 학습 시각화: 할선→접선, 그리고 접선 기울기가 그리는 도함수 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#e8506e;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 미분: 할선이 접선이 되는 순간 — 접선 기울기를 모으면 도함수</div>
+  <div id="math3d-08" style="width:100%;height:430px;"></div>
+  <div id="math3d-08-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">두 점을 잇는 할선이 접선으로 수렴하는 과정을 봅니다.</div>
+</div>
+
+<section id="sec2">
+<h2>2. 도함수 — 기울기를 모은 새 함수</h2>
+<p>모든 점에서 미분계수를 구해 모으면 새 함수 <strong>도함수 f′(x)</strong>가 됩니다(위 3D의 둘째 장면: 점이 곡선을 따라가며 접선 기울기가 주황 곡선으로 기록됩니다). 기본 공식은 정의에서 직접 나옵니다: <strong>(xⁿ)′ = nxⁿ⁻¹</strong> (이항정리), <strong>(sin x)′ = cos x</strong> (5장의 sin x/x → 1), <strong>(eˣ)′ = eˣ</strong> — e가 특별한 이유가 바로 "미분해도 자기 자신"이라는 이 성질입니다.</p>
+<p>조합 규칙 네 개로 어떤 함수든 미분합니다: (f+g)′ = f′+g′, <strong>곱의 법칙</strong> (fg)′ = f′g + fg′, <strong>몫의 법칙</strong> (f/g)′ = (f′g − fg′)/g², 그리고 가장 강력한 <strong>연쇄법칙</strong> (g(f(x)))′ = g′(f(x))·f′(x) — 3장의 합성함수가 "변화율의 곱"으로 미분됩니다. 안에서 밖으로, 한 겹씩 벗기며 곱하면 됩니다.</p>
+</section>
+
+<section id="sec3">
+<h2>3. 도함수로 읽는 함수의 모양</h2>
+<p>f′의 부호가 f의 운동 방향입니다: f′ &gt; 0인 구간에서 증가, f′ &lt; 0에서 감소. 따라서 <strong>f′ = 0이 되는 점(임계점)</strong>에서 증가↔감소가 바뀌면 극대·극소가 됩니다(위 3D 셋째 장면 — 접선이 수평이 되는 두 지점). 이차 도함수 f″는 "기울기의 기울기": f″ &gt; 0이면 아래로 볼록(웃는 모양), f″ &lt; 0이면 위로 볼록, 부호가 바뀌는 점이 변곡점입니다.</p>
+<p>이것이 <strong>최적화</strong>의 알고리즘입니다: 닫힌 구간에서 최댓값·최솟값은 임계점과 양 끝점만 비교하면 됩니다(최대·최소 정리가 존재를 보장). "둘레가 일정한 직사각형 중 넓이 최대는 정사각형", "재료가 일정한 캔 중 부피 최대인 비율" — 모든 최적 설계 문제가 f′ = 0 풀기로 환원됩니다.</p>
+</section>
+
+<section id="sec4">
+<h2>4. 미분이 여는 세계</h2>
+<p><strong>뉴턴법</strong>: 방정식 f(x) = 0의 근을 접선으로 추적합니다 — xₙ₊₁ = xₙ − f(xₙ)/f′(xₙ). 7장 바빌로니아법의 정체이며, 이차 수렴(정확한 자릿수가 매번 2배)으로 계산기의 √ 버튼부터 딥러닝 최적화 2차 방법까지 쓰입니다. <strong>경사하강법</strong>: 다변수 함수에서 기울기(gradient)의 반대 방향으로 한 걸음씩 — 신경망 학습의 전부가 "도함수 따라 내려가기"입니다.</p>
+<p>그리고 <strong>미분방정식</strong>: "변화율이 현재 상태에 비례한다"(y′ = ky)고 쓰면 해는 y = Ce^{kt} — 6장의 지수 성장·감쇠가 미분의 언어로 다시 태어납니다. 행성 궤도, 전염병 모델, 회로, 약물 농도 — 자연 법칙 대부분이 미분방정식으로 표현됩니다. "자연의 언어가 수학"이라는 말의 실체는 사실 미분방정식입니다.</p>
+<div class="formula">f′(a) = lim_{h→0} (f(a+h)−f(a))/h &nbsp;|&nbsp; (xⁿ)′ = nxⁿ⁻¹ &nbsp;|&nbsp; (fg)′ = f′g+fg′ &nbsp;|&nbsp; (g∘f)′ = g′(f)·f′</div>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="07-sequences-limits.html" style="text-decoration:none;">← 7. 수열과 극한</a><a href="09-integration.html" style="text-decoration:none;">9. 적분과 확률·통계 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>미분은 "지금 이 순간 얼마나 빨리 변하고 있나?"를 재는 도구예요. 그래프 위에 돋보기를 대고 한 점을 무한히 확대하면 곡선이 직선처럼 보이는데, 그 직선(접선)의 기울기가 미분값입니다.</p>
+  <h3>왜 중요한가?</h3>
+  <p>자동차 계기판의 속도, 그래프가 "꺾이는" 최고점·최저점 찾기(가격 최적화, 최대 이익), AI가 학습하는 원리(오차를 줄이는 방향 = 미분의 반대 방향) — 변화가 있는 모든 곳에 미분이 있습니다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>평균변화율</strong>: (변화량)/(걸린 구간) — 두 점 사이 기울기</li>
+    <li><strong>미분계수 f′(a)</strong>: 구간을 0으로 줄인 극한 — 한 점의 기울기</li>
+    <li><strong>접선</strong>: 그 점에서 곡선에 "딱 붙는" 직선</li>
+    <li><strong>도함수 f′(x)</strong>: 모든 점의 기울기를 모은 새 함수</li>
+    <li><strong>극대·극소</strong>: 기울기가 0이 되며 방향이 바뀌는 봉우리·골짜기</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>등산으로 비유하면: f는 산의 높이, f′는 "지금 발밑의 경사"예요. 오르막이면 f′ &gt; 0, 내리막이면 f′ &lt; 0, 정상이나 골짜기에선 잠깐 평평(f′ = 0). 그래서 정상을 찾고 싶으면 "경사가 0인 곳"을 찾으면 됩니다 — 이 단순한 아이디어가 모든 최적화의 핵심이에요. 위 3D에서 점이 곡선을 따라갈 때 접선 색이 초록(오르막)↔빨강(내리막)으로 바뀌는 것을 보세요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 미분 공식 연습 전에 "그래프를 보고 도함수 개형 그리기"를 먼저 하세요. 원 함수의 봉우리/골짜기에서 도함수가 0을 지나는지, 가파른 곳에서 도함수가 큰지 — 이 감각이 있으면 공식 계산이 틀렸을 때 스스로 알아챌 수 있습니다.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>미분 = 순간변화율 = 접선의 기울기 = 확대하면 보이는 직선</li>
+    <li>(xⁿ)′ = nxⁿ⁻¹: 지수를 앞으로, 지수는 1 감소</li>
+    <li>f′ &gt; 0 증가, f′ &lt; 0 감소, f′ = 0에서 극값 후보</li>
+    <li>(sin)′ = cos, (eˣ)′ = eˣ — e는 "미분해도 그대로"인 유일한 밑</li>
+    <li>최댓값 찾기 = f′ = 0인 점과 구간 끝점 비교</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>정의로 직접 한 번은 계산해야 합니다. f(x) = x²: f′(x) = lim ( (x+h)² − x² )/h = lim (2xh + h²)/h = lim (2x + h) = 2x. 0/0 꼴이 인수분해·약분로 해소되는 것 — 2장의 대수 기술이 극한 계산의 도구가 되는 순간입니다. 미분가능하면 연속이지만 역은 거짓: |x|는 x = 0에서 연속이나 좌우 기울기가 −1, +1로 달라 미분 불가능(뾰족점). "매끄러움"은 연속보다 강한 조건입니다.</p>
+  <p>이론의 중심 기둥은 <strong>평균값 정리(MVT)</strong>입니다: [a,b]에서 연속이고 (a,b)에서 미분가능하면 f′(c) = (f(b)−f(a))/(b−a)인 c가 존재 — "평균 속도와 같은 순간 속도가 어딘가에 반드시 있다". 구간 단속 카메라의 원리이고, "f′ = 0이면 f는 상수", "f′ &gt; 0이면 증가" 같은 모든 정리가 MVT에서 나옵니다.</p>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>🎯 예제 1 — 상자 최적화</h4><p>한 변 12인 정사각형 종이의 네 모서리에서 x씩 잘라 상자를 만들 때 부피 V = x(12−2x)². V′ = (12−2x)(12−6x) = 0에서 x = 2 (x = 6은 부피 0). V(2) = 2·64 = 128로 최대. "자르는 만큼 바닥이 줄고 높이가 느는" 상충을 미분이 정확히 중재합니다.</p></div>
+  <div class="info-card"><h4>🎯 예제 2 — 연쇄법칙 실전</h4><p>y = sin(3x²)의 도함수: 바깥(sin)′ = cos을 속 그대로 두고 × 속(3x²)′ = 6x → y′ = 6x cos(3x²). "겉미분 × 속미분"을 겹겹이 — 신경망 역전파(backpropagation)는 이 연쇄법칙을 수백만 번 자동 적용하는 것입니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① <strong>물리</strong>: 위치를 미분하면 속도, 속도를 미분하면 가속도 — F = ma는 2계 미분방정식. ② <strong>경제</strong>: 한계비용·한계수입 = 비용·수입 함수의 도함수, "한계 = marginal = 미분". ③ <strong>딥러닝</strong>: 손실함수의 gradient를 연쇄법칙으로 계산(역전파)해 파라미터를 갱신 — GPT의 학습도 본질은 f′ 계산. ④ <strong>그래픽스</strong>: 곡선의 법선·곡률 계산, 베지어 곡선의 매끄러운 연결 조건이 도함수 일치입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① (fg)′ = f′g′ — 곱의 법칙은 f′g + fg′. ② 연쇄법칙에서 속미분 누락: (sin 2x)′ = 2cos 2x. ③ f′(a) = 0이면 무조건 극값 — 거짓(f(x) = x³의 x = 0은 극값 아님, 부호 변화 확인 필수). ④ 분수함수를 몫의 법칙 없이 항별 미분. ⑤ 극값(local)과 최값(global) 혼동 — 끝점 비교를 잊지 말 것.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>미분의 현대적 정의는 "선형 근사"입니다: f(a+h) = f(a) + f′(a)h + o(h) — 미분가능이란 <strong>국소적으로 일차함수(선형사상)로 근사된다</strong>는 뜻이고, f′(a)는 그 선형사상입니다. 이 관점이어야 다변수로 일반화됩니다: 도함수는 수가 아니라 야코비 행렬이라는 선형사상이 되고, 연쇄법칙은 "선형사상의 합성 = 행렬 곱"이라는 한 줄이 됩니다.</p>
+  <p>더 밀면 테일러 전개: f(a+h) = Σ f⁽ⁿ⁾(a)hⁿ/n! — 매끄러운 함수를 다항식의 극한으로 복원합니다. sin, cos, eˣ의 급수(5장)가 이렇게 나오며, "함수의 모든 정보가 한 점의 미분계수들에 담긴다"는 해석함수의 강성(rigidity)으로 이어집니다. 단 주의: 모든 도함수가 존재해도 급수가 함수와 다를 수 있습니다(e^{−1/x²}의 유명한 반례 — 매끄러움 ≠ 해석성).</p>
+  <h3>수학적·정량적 기초</h3>
+  <div class="formula">미분가능 ⟺ f(a+h) = f(a) + Lh + o(h), L = f′(a)<br>MVT: ∃c∈(a,b), f′(c) = (f(b)−f(a))/(b−a)<br>테일러: f(x) = Σₖ f⁽ᵏ⁾(a)(x−a)ᵏ/k! + Rₙ, 뉴턴법: xₙ₊₁ = xₙ − f/f′</div>
+  <p>뉴턴법의 이차 수렴 증명이 테일러 전개의 직접 응용입니다: 근 r 근처에서 eₙ₊₁ ≈ (f″(r)/2f′(r))·eₙ² — 오차가 제곱으로 줄어듭니다. 반면 f′(r) = 0(중근)이면 선형 수렴으로 격하 — 알고리즘의 성능이 함수의 미분 구조에 의해 결정되는 전형입니다.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>자동미분(AD)</strong>: 연쇄법칙을 계산 그래프에 기계적으로 적용해 기계 정밀도의 도함수를 얻는 기술 — PyTorch/JAX의 심장이며, 수치미분(차분)과 기호미분을 모두 대체. ② <strong>비평활 해석</strong>: ReLU처럼 미분 불가능한 점이 있는 함수의 서브그래디언트 이론 — 현대 최적화의 표준 장비. ③ <strong>신경 미분방정식(Neural ODE)</strong>: 신경망의 층을 연속 시간 흐름으로 보는 관점, 잔차망(ResNet)의 극한.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>선형대수</strong>: 야코비안·헤시안 — 다변수 미분의 본체</li>
+    <li><strong>최적화</strong>: 경사하강법, 뉴턴법, 볼록성과 f″</li>
+    <li><strong>물리학</strong>: 운동방정식, 변분법(최소작용의 원리)</li>
+    <li><strong>머신러닝</strong>: 역전파 = 연쇄법칙, 손실 지형의 임계점 분석</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Michael Spivak, <em>Calculus</em> — 엄밀한 1변수 미적분의 고전</li>
+    <li>📖 김홍종, <em>미적분학 1+</em> — 서울대 표준 교재</li>
+    <li>📺 3Blue1Brown — "Essence of Calculus" 전 시리즈 (필수 시청)</li>
+    <li>🔬 키워드: derivative as linear map, mean value theorem, Taylor series, automatic differentiation</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> ① 정의로 (√x)′ = 1/(2√x)를 유도하기(분자 유리화). ② f(x) = x³ − 3x의 증감표를 그려 위 3D 곡선(x³/12 − x와 닮은꼴)의 극대·극소 위치를 해석적으로 확인하기. ③ 뉴턴법으로 x² − 2 = 0을 x₁ = 2에서 3회 반복해 √2와 비교 — 7장 바빌로니아법과 식이 일치함을 대수로 증명하기.</div>
+</div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f43f5e","questions":[{"q":"미분계수의 기하적 의미는?","choices":["곡선 아래 넓이","접선의 기울기","회전체 부피","호의 길이"],"answer":1},{"q":"(xⁿ)′은?","choices":["xⁿ⁺¹","nxⁿ","nxⁿ⁻¹","xⁿ⁻¹"],"answer":2},{"q":"미분해도 자기 자신인 함수는?","choices":["sin x","ln x","x²","eˣ"],"answer":3},{"q":"(sin x)′은?","choices":["cos x","−cos x","−sin x","tan x"],"answer":0},{"q":"f′>0인 구간에서 f는?","choices":["감소","상수","증가","진동"],"answer":2}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('math3d-08');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('math3d-08-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,16,12),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+
+  camera.position.set(0,1.0,12.5);camera.lookAt(0,0.4,0);
+
+  var XS=1.12,YS=1.12;
+  function f(x){return x*x*x/12-x;}
+  function fp(x){return x*x/4-1;}
+  function P(x,y){return V(x*XS,y*YS,0);}
+
+  // 축
+  scene.add(line(P(-4.6,0),P(4.6,0),0x39415a,0.85));
+  scene.add(line(P(0,-3),P(0,3.4),0x39415a,0.85));
+
+  // 곡선 f
+  var cpts=[];
+  for(var i=0;i<=120;i++){var x=-4.3+8.6*i/120;cpts.push(P(x,f(x)));}
+  scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(cpts),new THREE.LineBasicMaterial({color:0x39415a,transparent:true,opacity:0.95})));
+  var fL=lbl('y = f(x) = x³/12 − x',24,'#39415a',0.95);fL.position.set(-3.4,3.0,0);scene.add(fL);
+
+  // 도함수 곡선 (점진적으로 그려짐)
+  var ND=120;
+  var dArr=new Float32Array((ND+1)*3);
+  var dGeo=new THREE.BufferGeometry();
+  dGeo.setAttribute('position',new THREE.BufferAttribute(dArr,3));
+  dGeo.setDrawRange(0,0);
+  var dLine=new THREE.Line(dGeo,new THREE.LineBasicMaterial({color:0xe0a82e,transparent:true,opacity:0.95}));
+  scene.add(dLine);
+  for(var j=0;j<=ND;j++){var xx=-4.3+8.6*j/ND;dArr[j*3]=xx*XS;dArr[j*3+1]=fp(xx)*YS*0.7;dArr[j*3+2]=-0.18;}
+  var dL=lbl("y = f '(x) — 기울기의 기록",24,'#b07d0a',0.95);dL.position.set(3.1,3.0,0);dL.visible=false;scene.add(dL);
+
+  // 점 P, Q와 할선/접선
+  var Ppt=sph(0.15,0xe8506e,1);scene.add(Ppt);
+  var Qpt=sph(0.13,0x5b6bd6,1);scene.add(Qpt);
+  var sec=line(V(0,0,0),V(0,0,0),0x5b6bd6,0.9);scene.add(sec);
+  var tan=line(V(0,0,0),V(0,0,0),0x2f9e63,0.0);scene.add(tan);
+  var hL=lbl('h',24,'#5b6bd6',0.9);scene.add(hL);
+  var slopeL=null,slopeTimer=0;
+  function setSlope(txt,color){
+    if(slopeL)scene.remove(slopeL);
+    slopeL=lbl(txt,25,color||'#252c3d',1);slopeL.position.set(0.4,-2.7,0);scene.add(slopeL);
+  }
+  function secant(a,h,len){
+    var ya=f(a),yb=f(a+h);
+    var m=(yb-ya)/h;
+    Ppt.position.copy(P(a,ya));
+    Qpt.position.copy(P(a+h,yb));
+    var dx=1/Math.sqrt(1+m*m);
+    var dirx=dx,diry=m*dx;
+    sec.geometry.setFromPoints([P(a-dirx*len,ya-diry*len),P(a+dirx*len,ya+diry*len)]);
+    hL.position.set((a+h/2)*XS,(ya-0.5)*YS,0);
+    return m;
+  }
+  function tangentAt(a,len){
+    var m=fp(a),ya=f(a);
+    var dx=1/Math.sqrt(1+m*m);
+    tan.geometry.setFromPoints([P(a-dx*len,ya-m*dx*len),P(a+dx*len,ya+m*dx*len)]);
+    tan.material.color.set(m>=0?0x2f9e63:0xd6455b);
+    Ppt.position.copy(P(a,ya));
+    return m;
+  }
+  // 극값 마커
+  var mx1=sph(0.16,0xe0a82e,0);mx1.position.copy(P(-2,f(-2)));scene.add(mx1);
+  var mx2=sph(0.16,0xe0a82e,0);mx2.position.copy(P(2,f(2)));scene.add(mx2);
+  var exL1=lbl("극대 — f '=0",22,'#b07d0a',0.85);exL1.position.copy(P(-2,f(-2)+0.55));exL1.visible=false;scene.add(exL1);
+  var exL2=lbl("극소 — f '=0",22,'#b07d0a',0.85);exL2.position.copy(P(2,f(2)-0.55));exL2.visible=false;scene.add(exL2);
+
+  var A0=-3.2; // 할선의 고정점
+  var phases=[
+    {dur:9,cap:'① 할선 → 접선: 파란 점 Q가 빨간 점 P로 다가가면(h → 0), 두 점을 잇는 할선의 기울기가 한 값으로 수렴합니다. 그 극한이 미분계수 f′(a) — 접선의 기울기입니다.',
+     enter:function(){Qpt.visible=true;sec.material.opacity=0.9;tan.material.opacity=0;hL.visible=true;dGeo.setDrawRange(0,0);dL.visible=false;mx1.material.opacity=0;mx2.material.opacity=0;exL1.visible=false;exL2.visible=false;},
+     update:function(u,dt){
+       var h=3.4*(1-ez(Math.min(1,u*1.12)))+0.04;
+       var m=secant(A0,h,2.2);
+       slopeTimer+=dt;
+       if(slopeTimer>0.22){slopeTimer=0;setSlope('할선 기울기 = '+m.toFixed(3)+'  (h = '+h.toFixed(2)+')','#5b6bd6');}
+     }},
+    {dur:12,cap:'② 접점이 곡선을 따라 이동하면 접선 기울기가 계속 변합니다 — 오르막(초록)·내리막(빨강). 각 점의 기울기 값을 아래에 기록한 노란 곡선이 바로 도함수 f′(x) = x²/4 − 1입니다.',
+     enter:function(){Qpt.visible=false;sec.material.opacity=0;hL.visible=false;tan.material.opacity=0.95;dL.visible=true;},
+     update:function(u,dt){
+       var a=-4.3+8.6*u;
+       var m=tangentAt(a,1.6);
+       dGeo.setDrawRange(0,Math.max(2,Math.floor(u*ND)+1));
+       slopeTimer+=dt;
+       if(slopeTimer>0.22){slopeTimer=0;setSlope("f '("+a.toFixed(1)+') = '+m.toFixed(2)+(m>=0?'  ↗ 증가':'  ↘ 감소'),m>=0?'#2f9e63':'#d6455b');}
+     }},
+    {dur:8,cap:'③ f′(x) = 0이 되는 두 곳(x = ±2)에서 접선이 수평 — 오르막이 내리막으로 바뀌는 극대, 내리막이 오르막으로 바뀌는 극소입니다. "최적점 찾기 = f′ = 0 풀기"의 기하적 의미입니다.',
+     enter:function(){dGeo.setDrawRange(0,ND+1);mx1.material.opacity=1;mx2.material.opacity=1;exL1.visible=true;exL2.visible=true;setSlope("f '(±2) = 0 — 접선 수평",'#b07d0a');},
+     update:function(u){
+       var a=u<0.5?-2:2;
+       tangentAt(a,1.7);
+       var s=1+0.18*Math.sin(u*Math.PI*6);
+       mx1.scale.set(s,s,s);mx2.scale.set(s,s,s);
+     }}
+  ];
+
+  var pi=0,pt=0,last=0;
+  phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

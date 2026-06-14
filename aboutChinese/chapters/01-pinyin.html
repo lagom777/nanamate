@@ -2,15 +2,17 @@
 <title>1. 발음과 성조 — aboutChinese</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">🇨🇳 표지</a></li><li><a href="chapters/01-pinyin.html">1. 발음과 성조</a></li><li><a href="chapters/02-basic-grammar.html">2. 기초 문법</a></li><li><a href="chapters/03-characters.html">3. 한자 기초</a></li><li><a href="chapters/04-daily.html">4. 일상 회화</a></li><li><a href="chapters/05-hsk3.html">5. HSK 3급 대비</a></li><li><a href="chapters/06-hsk4.html">6. HSK 4급 대비</a></li><li><a href="chapters/07-business.html">7. 비즈니스 중국어</a></li><li><a href="chapters/08-culture.html">8. 중국 문화와 언어</a></li><li><a href="chapters/09-advanced.html">9. 고급 독해와 작문</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🇨🇳 표지</a></li><li><a href="01-pinyin.html">1. 발음과 성조</a></li><li><a href="02-basic-grammar.html">2. 기초 문법</a></li><li><a href="03-characters.html">3. 한자 기초</a></li><li><a href="04-daily.html">4. 일상 회화</a></li><li><a href="05-hsk3.html">5. HSK 3급 대비</a></li><li><a href="06-hsk4.html">6. HSK 4급 대비</a></li><li><a href="07-business.html">7. 비즈니스 중국어</a></li><li><a href="08-culture.html">8. 중국 문화와 언어</a></li><li><a href="09-advanced.html">9. 고급 독해와 작문</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>발음과 성조</em></h1><p class="authors">Chapter 1 — Pinyin, Tones & Pronunciation</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 4개 성조 곡선 — 1성 평탄·2성 상승·3성 굴곡·4성 하강</span>
 <h2>발음과 성조</h2><p>Pinyin, Tones & Pronunciation의 핵심을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Pinyin, Tones & Pronunciation</p></div>
 <h2>📚 난이도별 학습</h2>
-<p>본인 수준에 맞춰 탭 선택. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -63,5 +65,21 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 绕口令(rào kǒu lìng, 잰말놀이) '四是四,十是十(Sì shì sì, shí shì shí)'을 막힘없이 5회 반복해보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ef4444","questions":[{"q":"병음(拼音)이 표기하는 것은?","choices":["어순","한자의 발음","한자의 획수","문장 부호"],"answer":1},{"q":"3성이 연속될 때 앞의 3성은?","choices":["1성으로 변함","4성으로 변함","2성으로 변함","변하지 않음"],"answer":2},{"q":"mā(妈)의 뜻은?","choices":["말","욕하다","삼","엄마"],"answer":3},{"q":"한어병음방안이 채택된 해는?","choices":["1958년","1949년","1956년","1986년"],"answer":0},{"q":"광둥어(粤语)의 성조 수는?","choices":["4성","6성","7성","9성"],"answer":3}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<12;i++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.6,0.6,0.1),new THREE.MeshBasicMaterial({color:[0xef4444,0xfbbf24][i%2],wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*3);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const toneShapes=[i=>2.0,i=>-1.6+3.2*i,i=>(i<0.5?0.5-2.4*i:-0.7+2.4*(i-0.5)),i=>1.8-3.6*i];const N=40;const toneLines=[];for(let t=0;t<4;t++){const pts=[];for(let k=0;k<N;k++){const u=k/(N-1);pts.push(new THREE.Vector3(-3+6*u,toneShapes[t](u)-2.6+t*1.8,0));}const g=new THREE.BufferGeometry().setFromPoints(pts);const col=new THREE.Color().setHSL(0.0+t*0.09,0.7,0.55);const ln=new THREE.Line(g,new THREE.LineBasicMaterial({color:col}));s.add(ln);toneLines.push(ln);const dot=new THREE.Mesh(new THREE.SphereGeometry(0.18,12,12),new THREE.MeshBasicMaterial({color:col}));s.add(dot);dot.userData.tone=t;dot.userData.base=t;s.userData['dot'+t]=dot;}s.userData.shapes=toneShapes;s.userData.N=N;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;for(let t=0;t<4;t++){const d=s.userData['dot'+t];const u=(Math.sin(T*0.7-t*0.5)+1)/2;d.position.set(-3+6*u,s.userData.shapes[t](u)-2.6+t*1.8,0);}s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

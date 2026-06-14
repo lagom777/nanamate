@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 붉은 불꽃을 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 발달 — 나이에 따라 자라는 감정</span>
 
 <h2>발달과 학습 개요</h2>
 <p>분노는 생후 몇 개월부터 나타나며 평생 형태가 바뀌어 간다. 영아의 떼쓰기, 유아의 짜증, 청소년의 자율성 분노, 성인의 자기주장 — 같은 정서가 사회화 단계마다 다른 옷을 입는다. 부모와 사회가 분노를 어떻게 다뤘는지가 그 사람의 평생 분노 패턴을 거의 결정한다.</p>
@@ -61,7 +63,7 @@
   <h3>대표 예제</h3>
   <div class="info-card"><h4>📐 예제 1</h4><p>"안 돼"를 무조건 통제로만 다루면 청소년기 자율성 분노가 폭발한다. 어릴 때 "왜 안 되는지" 설명받은 아이는 같은 상황에서 협상으로 풀어낸다.</p></div>
   <div class="info-card"><h4>📐 예제 2</h4><p>3살 아이가 마트에서 떼쓸 때 부모가 사주면 "떼쓰면 얻을 수 있다"가 강화된다. 5살이 되면 같은 전략이 더 격렬해진다. 침착한 일관성이 정서 코칭의 핵심이다.</p></div>
-  <h3>응용 사례</h3><p>한국은 2020년대 들어 양육 문화가 빠르게 변화 중이다. 체벌 금지 법제화(아동복지법 2021 개정)와 함께 정서 코칭·비폭력 양육이 보급되고 있다. 그러나 부모 세대가 정서 코칭을 받아본 적이 없어 자기 모델이 없는 상태에서 자녀에게 적용하려다 좌절하는 사례가 흔하다. 부모 교육 프로그램(예: 부모-자녀 상호작용 치료 PCIT)이 EAP와 보건소를 통해 확산되고 있다.</p>
+  <h3>응용 사례</h3><p>한국은 2020년대 들어 양육 문화가 빠르게 변화 중이다. 체벌 금지 법제화(민법 징계권 조항 삭제, 2021)와 함께 정서 코칭·비폭력 양육이 보급되고 있다. 그러나 부모 세대가 정서 코칭을 받아본 적이 없어 자기 모델이 없는 상태에서 자녀에게 적용하려다 좌절하는 사례가 흔하다. 부모 교육 프로그램(예: 부모-자녀 상호작용 치료 PCIT)이 EAP와 보건소를 통해 확산되고 있다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 떼쓰는 아이를 "이기적"이라 해석하면 분노 발작이 정상 발달 단계임을 놓친다. 떼쓰기는 자율성의 신호다.</div>
 </div>
 
@@ -74,5 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 부모님의 분노 다루는 방식 3가지를 적고, 본인이 그중 어떤 것을 무의식적으로 닮았는지·어떤 것을 의식적으로 바꿨는지 회고해보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ef4444","questions":[{"q":"2~3세 떼쓰기의 성격은?","choices":["정상 발달 단계","심각한 질병","유전 질환","약물 부작용"],"answer":0},{"q":"분노 패턴을 주로 학습하는 대상은?","choices":["친구","부모","교사","이웃"],"answer":1},{"q":"정서 코칭의 핵심은?","choices":["분노 처벌","분노 무시","감정 인정·명명","체벌"],"answer":2},{"q":"애착 이론을 제시한 학자는?","choices":["Gross","Ekman","Bowlby","Fehr"],"answer":2},{"q":"emotion coaching 연구자는?","choices":["Gottman","Novaco","LeDoux","Pinker"],"answer":0}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0xef4444;const parts=[];for(let i=0;i<34;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xef4444;const line=new THREE.Mesh(new THREE.BoxGeometry(7.5,0.05,0.05),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.4}));line.position.y=-1.3;s.add(line);const st=[];for(let i=0;i<5;i++){const x=(i-2)*1.6;const rad=0.25+i*0.22;const m=new THREE.Mesh(new THREE.SphereGeometry(rad,18,18),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.6+i*0.08}));m.position.set(x,-1.3+rad,0);s.add(m);st.push(m);}const arrow=new THREE.Mesh(new THREE.ConeGeometry(0.18,0.45,12),new THREE.MeshBasicMaterial({color:0xffe08a}));arrow.rotation.z=-Math.PI/2;arrow.position.set(4,-1.3,0);s.add(arrow);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;st.forEach((m,i)=>m.position.y=-1.3+m.geometry.parameters.radius+Math.sin(T*1.5+i)*0.08);s.rotation.y+=0.0;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

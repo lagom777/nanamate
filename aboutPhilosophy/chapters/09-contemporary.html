@@ -5,7 +5,9 @@
 <link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
@@ -16,7 +18,7 @@
 <li><a href="07-ethics.html">7. 윤리학</a></li><li><a href="08-political.html">8. 정치철학</a></li>
 <li><a href="09-contemporary.html">9. 현대 철학</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>현대 철학</em></h1><p class="authors">Chapter 9 — Analytic, Continental & Postmodernism</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 하나의 뿌리가 분석·대륙·포스트모던으로 갈라지고 해체된다</span>
 <h2>현대 철학 개요</h2><p>이 챕터에서는 현대 철학의 핵심 사상과 철학자들의 관계를 3D로 탐구합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Analytic, Continental & Postmodernism</p></div>
 
@@ -50,7 +52,7 @@
 </div>
 <div class="difficulty-content" data-level="medium">
   <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>논변 깊이</h3><p>비트겐슈타인의 후기 철학(『철학적 탐구』)에서 "사적 언어 논증(private language argument)"은 데카르트적 내면의 자기 투명성을 결정적으로 무너뜨립니다 — 만약 어떤 감각의 이름을 오직 나만 안다면, 내가 그 이름을 "올바르게" 사용했는지 검증할 기준이 없으므로, 그 이름은 의미를 가질 수 없다는 논변입니다. 이는 마음을 공적 실천에서 분리할 수 없다는 외재주의(externalism)의 토대가 됩니다. 콰인의 "두 가지 도그마"(1951)는 분석/종합 구분과 환원주의를 동시에 거부하며, 지식이 "신앙의 그물(web of belief)"을 이루며 경험과 그물 전체로 만난다는 의미론적 전체론을 옹호합니다. 이는 카르나프식 논리실증주의의 종언이자, 자연주의적 인식론의 출발입니다. 크립키의 『명명과 필연』(1980)은 양상 논리와 의미론을 결합하여, "물은 H₂O이다"가 후험적이지만 필연적 진리라는 새로운 범주를 도입했습니다 — 이는 본질주의의 부활로 이어집니다. 한편 데리다의 차연(différance) — 차이(différer)와 연기(delay)의 합성어 — 는 모든 의미가 다른 기호와의 차이 그리고 시간적 연기에 의해서만 성립한다는 분석으로, 헤겔적 부정성과 소쉬르적 차이를 결합한 것입니다. 푸코의 계보학(genealogy)은 니체의 도덕 계보학을 방법론으로 발전시켜, 현재의 자명한 것들의 우연적 형성 과정을 추적합니다.</p>
+  <h3>논변 깊이</h3><p>비트겐슈타인의 후기 철학(『철학적 탐구』)에서 "사적 언어 논증(private language argument)"은 데카르트적 내면의 자기 투명성을 결정적으로 무너뜨립니다 — 만약 어떤 감각의 이름을 오직 나만 안다면, 내가 그 이름을 "올바르게" 사용했는지 검증할 기준이 없으므로, 그 이름은 의미를 가질 수 없다는 논변입니다. 이는 마음을 공적 실천에서 분리할 수 없다는 외재주의(externalism)의 토대가 됩니다. 콰인의 "두 가지 도그마"(1951)는 분석/종합 구분과 환원주의를 동시에 거부하며, 지식이 "신념의 그물(web of belief)"을 이루며 경험과 그물 전체로 만난다는 의미론적 전체론을 옹호합니다. 이는 카르나프식 논리실증주의의 종언이자, 자연주의적 인식론의 출발입니다. 크립키의 『명명과 필연』(1980)은 양상 논리와 의미론을 결합하여, "물은 H₂O이다"가 후험적이지만 필연적 진리라는 새로운 범주를 도입했습니다 — 이는 본질주의의 부활로 이어집니다. 한편 데리다의 차연(différance) — 차이(différer)와 연기(delay)의 합성어 — 는 모든 의미가 다른 기호와의 차이 그리고 시간적 연기에 의해서만 성립한다는 분석으로, 헤겔적 부정성과 소쉬르적 차이를 결합한 것입니다. 푸코의 계보학(genealogy)은 니체의 도덕 계보학을 방법론으로 발전시켜, 현재의 자명한 것들의 우연적 형성 과정을 추적합니다.</p>
   <h3>주요 사상가/저작</h3>
   <div class="info-card"><h4>📖 비트겐슈타인 — 『논리철학논고』(1921), 『철학적 탐구』(1953)</h4><p>전기와 후기로 나뉘는 두 비트겐슈타인. 전기는 "말할 수 없는 것에 대해서는 침묵해야 한다"는 그림 이론. 후기는 언어 게임과 가족 유사성으로 의미의 본질주의를 거부. "철학은 언어의 마법으로부터 우리의 지성을 풀어주는 투쟁이다."</p></div>
   <div class="info-card"><h4>📖 후설/하이데거/메를로퐁티 — 현상학</h4><p>후설의 의도성(Intentionalität)에서 시작해, 하이데거의 세계내존재(In-der-Welt-sein), 메를로퐁티의 체화된 지각으로 이어지는 현상학적 운동. 사르트르를 통해 실존주의와, 가다머를 통해 해석학과 연결되며, 21세기에는 인지과학과 대화합니다.</p></div>
@@ -76,27 +78,32 @@
   </ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 GPT급 AI가 비트겐슈타인의 언어 게임에 완벽히 참여할 수 있다면, 그것은 의미를 "이해"하는가, 단지 패턴을 매칭하는가? 차머스의 좀비 사고실험을 AI에 적용하면 어떻게 되는가? 인공의식의 가능성은 분석철학과 대륙철학의 자원이 모두 필요한 진정으로 통합적 문제일 수 있습니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d4a047","questions":[{"q":"'의미는 사용에 있다'고 본 철학자는?","choices":["콰인","크립키","푸코","비트겐슈타인"],"answer":3},{"q":"해체와 차연의 철학자는?","choices":["데리다","푸코","콰인","들뢰즈"],"answer":0},{"q":"권력-지식의 그물망을 분석한 인물은?","choices":["비트겐슈타인","푸코","크립키","데이비슨"],"answer":1},{"q":"분석/종합 구분을 거부한 철학자는?","choices":["크립키","데리다","콰인","차머스"],"answer":2},{"q":"좀비 사고실험으로 유명한 철학자는?","choices":["데닛","들뢰즈","라투르","차머스"],"answer":3}]};</script>
 </main></div>
 <script>
-(function() {
-  const container = document.getElementById('sim-scene');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 3, 8);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  container.appendChild(renderer.domElement);
-  const nodes = [];
-  for (let i = 0; i < 8; i++) { const m = new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0), new THREE.MeshBasicMaterial({ color: 0xd4a047, wireframe: true })); m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4); scene.add(m); nodes.push(m); }
-  for (let i=0;i<nodes.length-1;i++){const g=new THREE.BufferGeometry().setFromPoints([nodes[i].position,nodes[i+1].position]);scene.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xd4a047,transparent:true,opacity:0.2})));}
-  let md=false,px=0;
-  container.addEventListener('mousedown',e=>{md=true;px=e.clientX;});
-  container.addEventListener('mouseup',()=>md=false);
-  container.addEventListener('mousemove',e=>{if(md){scene.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
-  container.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});
-  container.addEventListener('touchmove',e=>{scene.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});
-  function animate(){requestAnimationFrame(animate);scene.rotation.y+=0.002;renderer.render(scene,camera);}animate();
-  window.addEventListener('resize',()=>{camera.aspect=container.clientWidth/container.clientHeight;camera.updateProjectionMatrix();renderer.setSize(container.clientWidth,container.clientHeight);});
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,10);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // 하나의 뿌리에서 세 학파로 분기 → 끝에서 파편으로 해체
+  const root=new THREE.Vector3(0,-3.5,0);
+  const rootM=new THREE.Mesh(new THREE.IcosahedronGeometry(0.5,0),new THREE.MeshBasicMaterial({color:0xffffff,wireframe:true}));rootM.position.copy(root);s.add(rootM);
+  const trunkTop=new THREE.Vector3(0,-1,0);
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([root,trunkTop]),new THREE.LineBasicMaterial({color:0xcccccc})));
+  const frags=[];const branchG=new THREE.Group();
+  for(let b=0;b<3;b++){const col=new THREE.Color().setHSL(b/3,0.6,0.6);const end=new THREE.Vector3((b-1)*2.6,2.2,(b-1)*0.8);
+    branchG.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([trunkTop,end]),new THREE.LineBasicMaterial({color:col})));
+    const hub=new THREE.Mesh(new THREE.OctahedronGeometry(0.45,0),new THREE.MeshBasicMaterial({color:col,wireframe:true}));hub.position.copy(end);branchG.add(hub);
+    for(let k=0;k<5;k++){const base=end.clone().add(new THREE.Vector3((Math.random()-0.5)*1.6,(Math.random()-0.2)*1.6,(Math.random()-0.5)*1.6));
+      const f=new THREE.Mesh(new THREE.TetrahedronGeometry(0.18,0),new THREE.MeshBasicMaterial({color:col}));f.position.copy(base);f.userData={base:base.clone(),ph:Math.random()*6.28};branchG.add(f);frags.push(f);}}
+  s.add(branchG);s.userData.frags=frags;s.userData.root=rootM;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.004;s.userData.root.rotation.y+=0.01;s.userData.frags.forEach(f=>{f.rotation.x+=0.04;f.position.x=f.userData.base.x+Math.sin(T+f.userData.ph)*0.18;f.position.y=f.userData.base.y+Math.cos(T*0.8+f.userData.ph)*0.18;});r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
-</script></body></html>
+</script>
+</body></html>

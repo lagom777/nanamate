@@ -2,14 +2,16 @@
 <title>9. 현대 정치 이슈 — aboutPolitics</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">🏛️ 표지</a></li><li><a href="01-intro.html">1. 정치학 개론</a></li><li><a href="02-ideologies.html">2. 정치 이념</a></li><li><a href="03-democracy.html">3. 민주주의</a></li><li><a href="04-institutions.html">4. 정치 제도</a></li><li><a href="05-parties.html">5. 정당과 선거</a></li><li><a href="06-international.html">6. 국제 정치</a></li><li><a href="07-public-policy.html">7. 공공 정책</a></li><li><a href="08-media.html">8. 미디어와 정치</a></li><li><a href="09-contemporary.html">9. 현대 정치</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>현대 정치 이슈</em></h1><p class="authors">Chapter 9 — Contemporary Political Challenges</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
-<h2>현대 정치 이슈 개요</h2><p>Contemporary Political Challenges의 핵심 원리를 3D로 학습합니다.</p>
-<div class="info-card"><h4>핵심 개념</h4><p>Contemporary Political Challenges</p></div>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 드래그로 회전 · 하단 캡션이 단계별로 설명합니다</span>
+<h2>현대 정치 이슈 개요</h2><p>현대 정치는 기후위기, 정치 양극화, 포퓰리즘, 디지털 거버넌스, 이주, AI 윤리처럼 한 나라의 국경 안에서 풀 수 없는 과제들과 마주하고 있다. 이 의제들은 서로 분리된 문제가 아니라 긴밀히 얽혀 있어, 하나의 해법이 다른 영역에 파급을 일으킨다. 위 3D 장면은 지구 위의 주요 이슈들이 국경을 넘어 연결된 그물망을 이루는 모습과, 글로벌 차원과 일상 차원이 동시에 작동하는 현대 정치의 다층성을 보여준다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>현대 정치 이슈의 공통 구조: ① 국경을 넘는 외부효과(기후·감염병·AI), ② 장기 과제와 단기 선거 주기의 불일치, ③ 글로벌 협력과 국내 정치의 긴장. 이 세 축을 이해하면 개별 이슈가 하나의 지도 위에 놓인다.</p></div>
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
@@ -37,11 +39,107 @@
 </div>
 <div class="difficulty-content" data-level="hard">
   <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3><p>현대 정치 이론은 여러 위기 진단을 종합합니다. 후쿠야마의 '역사의 종말' 명제는 1990년대 자유민주주의의 보편적 승리를 선언했지만, 25년이 지난 지금 그 진단은 무너지고 있습니다. 자유민주주의의 후퇴, 권위주의의 정교화, 중국·인도 같은 비서구 대국의 부상으로 다극 질서가 도래했습니다. 무페와 라클라우의 급진민주주의는 갈등(antagonism)을 인정하면서도 적대(enemy)로 변질되지 않는 정치를 제안합니다. 자넷 브라운의 '취약성의 정치(politics of vulnerability)'는 코로나19 같은 위기에서 부상한 새로운 정치적 감수성을 이론화합니다. 인류세(Anthropocene) 정치학은 라투르, 차크라바르티의 작업을 통해 인간-비인간 관계의 재편을 정치적 의제로 끌어올렸습니다. 디지털 정치이론에서 주보프의 '감시 자본주의'는 빅테크의 데이터 추출이 새로운 권력 양식을 만들었다고 진단했고, 푸코의 통치성 개념을 알고리즘 통치에 확장하는 연구도 활발합니다. AI 윤리 연구는 알고리즘 편향, 자율 무기, 생성 AI의 거짓정보 문제를 다루며, 글로벌 거버넌스의 새로운 의제로 부상했습니다. 한반도 평화 정치, 동아시아 지역질서 재편도 한국 정치학의 핵심 주제로 남아 있습니다.</p>
+  <h3>전문가 레벨</h3><p>현대 정치 이론은 여러 위기 진단을 종합합니다. 후쿠야마의 '역사의 종말' 명제는 1990년대 자유민주주의의 보편적 승리를 선언했지만, 25년이 지난 지금 그 진단은 무너지고 있습니다. 자유민주주의의 후퇴, 권위주의의 정교화, 중국·인도 같은 비서구 대국의 부상으로 다극 질서가 도래했습니다. 무페와 라클라우의 급진민주주의는 갈등(antagonism)을 인정하면서도 적대(enemy)로 변질되지 않는 정치를 제안합니다. 주디스 버틀러 등이 발전시킨 '취약성의 정치(politics of vulnerability)' 논의는 코로나19 같은 위기에서 부상한 새로운 정치적 감수성을 이론화합니다. 인류세(Anthropocene) 정치학은 라투르, 차크라바르티의 작업을 통해 인간-비인간 관계의 재편을 정치적 의제로 끌어올렸습니다. 디지털 정치이론에서 주보프의 '감시 자본주의'는 빅테크의 데이터 추출이 새로운 권력 양식을 만들었다고 진단했고, 푸코의 통치성 개념을 알고리즘 통치에 확장하는 연구도 활발합니다. AI 윤리 연구는 알고리즘 편향, 자율 무기, 생성 AI의 거짓정보 문제를 다루며, 글로벌 거버넌스의 새로운 의제로 부상했습니다. 한반도 평화 정치, 동아시아 지역질서 재편도 한국 정치학의 핵심 주제로 남아 있습니다.</p>
   <h3>주요 학파/논쟁</h3><p>자유민주주의의 미래를 둘러싼 비관론(레비츠키·지블랫)과 회복탄력론(다이아몬드)의 대립, 포퓰리즘이 민주주의 위협인지 정정 메커니즘인지에 대한 논쟁, 인류세 정치학에서 인간중심주의 비판과 휴머니즘 옹호 사이의 긴장이 현재진행형입니다. 디지털 거버넌스에서 자유주의 규제 모델(EU)과 시장 자율 모델(미국), 권위주의 통제 모델(중국)의 3대 진영 경쟁이 격화되고 있습니다.</p>
   <h3>최신 연구</h3><p>첫째, AI 정치학(politics of AI)이 빠르게 성장합니다. 알고리즘 의사결정의 책임, 생성 AI의 선거 영향, AI 안전 거버넌스가 핵심 주제입니다. 둘째, 기후 정의(climate justice) 연구는 기후 부담의 세대 간·국가 간 분배를 다루며, 청년 기후 소송이 새로운 사례입니다. 셋째, 디지털 시민권(digital citizenship) 연구는 데이터 권리, 디지털 노동, 플랫폼 협동조합 모델을 탐구합니다.</p>
   <h3>관련 분야</h3><ul><li>기술정치학(politics of technology)</li><li>환경정치학(environmental politics)</li><li>미래학(futures studies)</li></ul>
   <h3>추가 자료</h3><ul><li>Steven Levitsky & Daniel Ziblatt, 『How Democracies Die』</li><li>Shoshana Zuboff, 『The Age of Surveillance Capitalism』</li><li>Bruno Latour, 『Down to Earth』</li></ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 미래 세대에게 투표권을 준다면(가상 세대 대표 의석), 오늘의 정치는 어떻게 달라질까요? 기후위기, 국가 부채, AI 규제 등 장기 의제는 단기 선거 정치 안에서 어떻게 자리 잡을 수 있을까요?</div>
-</div></main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<8;i++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5),new THREE.MeshBasicMaterial({color:[0xdc2626,0x2563eb,0x16a34a][i%3],wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+</div>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#dc2626","questions":[{"q":"'민중 대 엘리트' 구도의 정치 양식은?","choices":["포퓰리즘","자유주의","연방주의","다원주의"],"answer":0},{"q":"정치 진영 간 거리가 멀어지는 현상은?","choices":["세계화","민영화","양극화","도시화"],"answer":2},{"q":"2015년 196개국이 참여한 기후 협약은?","choices":["교토의정서","파리협정","몬트리올 의정서","람사르 협약"],"answer":1},{"q":"포퓰리즘을 '얇은 이념'으로 정의한 학자는?","choices":["뮐러","후쿠야마","주보프","카스 무데"],"answer":3},{"q":"세계 최초의 포괄적 AI 규제법은?","choices":["미국 AI법","EU AI Act","중국 AI법","한국 AI법"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+function start(){
+  const c=document.getElementById('sim-scene');
+  if(!c||typeof THREE==='undefined')return;
+  const W=c.clientWidth||800,H=c.clientHeight||400;
+  const scene=new THREE.Scene();
+  scene.background=new THREE.Color(0xf4f6fb);
+  const cam=new THREE.PerspectiveCamera(50,W/H,0.1,1000);
+  let renderer;try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  c.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.95));
+  const dlight=new THREE.DirectionalLight(0xffffff,0.5);dlight.position.set(5,10,7);scene.add(dlight);
+  const tEl=document.createElement('div');
+  tEl.textContent='3D · 국경을 넘는 의제들';
+  tEl.style.cssText='position:absolute;top:10px;left:12px;font:700 11px/1.4 ui-monospace,monospace;letter-spacing:0.1em;color:#5b6bd6;background:rgba(255,255,255,0.88);padding:3px 9px;border-radius:10px;pointer-events:none;z-index:3;';
+  c.appendChild(tEl);
+  const capEl=document.createElement('div');
+  capEl.style.cssText='position:absolute;left:0;right:0;bottom:0;padding:9px 14px;font-size:0.84em;line-height:1.5;color:#26314a;background:rgba(252,253,255,0.92);border-top:1px solid rgba(40,60,110,0.08);pointer-events:none;z-index:3;min-height:2.4em;';
+  c.appendChild(capEl);
+  function cap(t){capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function M(col,o){return new THREE.MeshLambertMaterial({color:col,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,col,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),M(col,o));}
+  function sph(r,col,o){return new THREE.Mesh(new THREE.SphereGeometry(r,20,16),M(col,o));}
+  function cyl(r1,r2,h,col,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,24),M(col,o));}
+  function cone(r,h,col,o){return new THREE.Mesh(new THREE.ConeGeometry(r,h,24),M(col,o));}
+  function tor(r,t,col,o,arc){return new THREE.Mesh(new THREE.TorusGeometry(r,t,14,48,arc===undefined?Math.PI*2:arc),M(col,o));}
+  function line(a,b,col,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:col,transparent:true,opacity:o===undefined?0.6:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||26;const cv=document.createElement('canvas');let ctx=cv.getContext('2d');
+    const font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;cv.width=Math.ceil(ctx.measureText(txt).width)+24;cv.height=fs+20;
+    ctx=cv.getContext('2d');ctx.font=font;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillStyle=color||'#2b3242';ctx.fillText(txt,cv.width/2,cv.height/2);
+    const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    const k=(scl||1)*0.012;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  const root=new THREE.Group();scene.add(root);
+  let sway=0.10;
+
+  cam.position.set(0,1.8,12.5);cam.lookAt(0,0.2,0);sway=0.12;
+  const globe=sph(1.7,0x3f6fd0,0.3);root.add(globe);
+  const wire=new THREE.Mesh(new THREE.SphereGeometry(1.72,16,12),new THREE.MeshBasicMaterial({color:0x2456a8,wireframe:true,transparent:true,opacity:0.25}));root.add(wire);
+  const gLab=lbl('지구 — 어느 한 나라도 혼자 풀 수 없다',23,'#39415a',0.9);gLab.position.set(0,-2.75,0);root.add(gLab);
+  const issues=[['기후위기',0x2fa86d],['AI · 디지털',0x6b4a8a],['양극화 · 포퓰리즘',0xd6455b],['이주 · 난민',0xe0883f],['감염병',0x29a3a3],['불평등',0xb05f1d]];
+  const nds=issues.map((d,i)=>{
+    const a=i/6*Math.PI*2;const g=new THREE.Group();
+    const m=sph(0.3,d[1]);g.add(m);
+    const L=lbl(d[0],22,'#39415a',0.85);L.position.set(0,0.62,0);g.add(L);
+    g.position.set(Math.cos(a)*3.6,Math.sin(a*2)*0.7,Math.sin(a)*3.6);
+    g.scale.set(0.01,0.01,0.01);root.add(g);return g;
+  });
+  const lns=[];
+  for(let i=0;i<6;i++)for(let j=i+1;j<6;j++){const ln=line(nds[i].position,nds[j].position,0x8a93ad,0.0);root.add(ln);lns.push(ln);}
+  const rings=[2.4,3.0,3.6].map((r,i)=>{const t=tor(r,0.03,0x2fa86d,0.0);t.rotation.x=Math.PI/2+0.15*i;root.add(t);return t;});
+  const rl=lbl('도시 — 국가 — 지역 — 글로벌: 다층 거버넌스',23,'#1c7a4d',0.9);rl.position.set(0,3.1,0);rl.material.opacity=0;root.add(rl);
+  const phases=[
+   {dur:6,cap:'① 의제의 지구화 — 기후·AI·감염병·이주·불평등·양극화는 한 나라 안에서 시작돼도 영향은 국경을 넘는다.',enter(){lns.forEach(l=>l.material.opacity=0);rings.forEach(r=>r.material.opacity=0);rl.material.opacity=0;},update(u){const k=ez(Math.min(1,u*1.4));nds.forEach((g,i)=>{const s=Math.max(0.01,ez(Math.min(1,u*6-i*0.7)));g.scale.set(s,s,s);});}},
+   {dur:6.5,cap:'② 상호 연결 — 기후위기는 이주를, 불평등은 양극화를, AI는 노동과 여론을 흔든다. 한 의제의 충격이 그물망을 타고 번진다.',enter(){nds.forEach(g=>g.scale.set(1,1,1));},update(u){const k=ez(Math.min(1,u*1.6));lns.forEach(l=>l.material.opacity=0.45*k);}},
+   {dur:6.5,cap:'③ 다층 거버넌스 — 도시·국가·지역기구·글로벌 협약(초록 고리들)이 여러 층에서 동시에 움직여야 한다. 파리협정과 EU AI법이 그런 시도다.',update(u){const k=ez(Math.min(1,u*1.8));rings.forEach(r=>r.material.opacity=0.7*k);rl.material.opacity=k;}},
+   {dur:6.5,cap:'④ 시간의 긴장 — 이 과제들은 수십 년짜리인데 선거 주기는 4~5년이다. 장기 의제를 단기 정치 안에 어떻게 담을지가 현대 정치의 가장 어려운 숙제다.'}
+  ];
+  let uy=0,ux=0,md=false,px=0,py=0;
+  c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup',()=>{md=false;});
+  c.addEventListener('mousemove',e=>{if(md){uy+=(e.clientX-px)*0.005;ux+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    const dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    let ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,now/1000);
+    if(typeof always==='function')always(now/1000);
+    root.rotation.y=uy+Math.sin(now/1000*0.25)*sway;
+    root.rotation.x=ux;
+    renderer.render(scene,cam);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',()=>{const w=c.clientWidth,h=c.clientHeight;if(!w||!h)return;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body></html>

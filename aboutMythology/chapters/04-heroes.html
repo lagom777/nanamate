@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4. 영웅 신화 — aboutMythology</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🏛️ 표지</a></li>
+    <li><a href="01-what-is.html">1. 신화란 무엇인가</a></li>
+    <li><a href="02-creation.html">2. 창조 신화</a></li>
+    <li><a href="03-olympians.html">3. 올림포스 12신</a></li>
+    <li><a href="04-heroes.html">4. 영웅 신화</a></li>
+    <li><a href="05-trojan-war.html">5. 트로이 전쟁</a></li>
+    <li><a href="06-odyssey.html">6. 오디세이아의 귀환</a></li>
+    <li><a href="07-metamorphoses.html">7. 사랑과 변신</a></li>
+    <li><a href="08-underworld.html">8. 저승과 운명</a></li>
+    <li><a href="09-legacy.html">9. 신화의 유산</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>영웅 신화</em></h1>
+  <p class="authors">Chapter 4 — The Heroes</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 떠남·시련·귀환으로 순환하는 영웅의 여정 — 회전시켜 보세요</span>
+
+<h2>영웅 신화 개요</h2>
+<p>영웅 신화는 인간보다 뛰어나지만 신은 아닌 존재가 거대한 시련에 맞서 모험을 떠나는 이야기다. 그리스 신화에서 헤라클레스·페르세우스·테세우스·이아손·오이디푸스 같은 영웅들은 괴물을 물리치고 불가능한 과업을 완수하지만, 동시에 분노·교만·운명 같은 인간적 약점도 함께 지닌다. 이들의 이야기는 단순한 모험담을 넘어, 인간이 한계에 도전하고 좌절하는 보편적 경험을 담은 거울이다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>영웅은 신적 도전(괴물·과업)과 인간적 결함(오만·분노·운명)을 동시에 지닌다. 조지프 캠벨은 여러 문화의 영웅담에서 떠남·시련·귀환이라는 공통 구조('영웅의 여정')를 발견했다. 헤라클레스의 12과업, 페르세우스의 메두사 퇴치, 테세우스의 미노타우로스, 이아손의 황금양털, 오이디푸스의 스핑크스가 대표적 이야기다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>영웅 신화는 평범한 사람보다 강하지만 완벽하지는 않은 주인공이 괴물과 시련에 맞서 모험을 떠났다가 변화한 모습으로 돌아오는 이야기다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>영웅 신화는 수천 년이 지난 지금도 영화와 소설, 게임 속에서 반복해서 등장한다. 우리가 즐기는 수많은 모험 이야기의 원형이 바로 이 고대의 영웅담이기 때문이다. 영웅들은 강하고 용감하지만 화를 참지 못하거나 교만에 빠지는 등 인간적인 결함도 함께 지닌다. 그래서 독자는 그들의 위대함에 감탄하면서도 그들의 실수에 공감할 수 있다. 또한 영웅이 집을 떠나 시련을 겪고 성장해 돌아오는 구조는 우리가 어려움을 이겨내며 성장하는 삶의 과정과 닮아 있다. 그렇기에 영웅 이야기는 단순한 옛날이야기가 아니라 인간 마음을 비추는 거울로 읽힌다.</p>
+
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>영웅(hero)</strong>: 인간을 뛰어넘는 능력으로 큰 시련에 맞서지만 신은 아닌 존재. 흔히 신과 인간 사이에서 태어난다.</li>
+<li><strong>과업(labor)</strong>: 영웅에게 주어지는 거의 불가능해 보이는 임무. 헤라클레스의 12과업이 대표적이다.</li>
+<li><strong>괴물(monster)</strong>: 영웅이 물리쳐야 하는 위협적 존재. 메두사, 미노타우로스, 스핑크스 등이 있다.</li>
+<li><strong>영웅의 여정</strong>: 영웅이 집을 떠나(출발) 시련을 겪고(시련) 변화해 돌아오는(귀환) 이야기 구조.</li>
+<li><strong>운명(fate)</strong>: 신탁이나 예언으로 정해진 미래. 오이디푸스처럼 피하려 할수록 가까워지기도 한다.</li>
+</ul></div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>영웅 신화를 게임 한 판에 비유하면 이해하기 쉽다. 주인공은 평화로운 마을(집)에서 출발해 던전(시련의 세계)으로 들어가고, 거기서 보스 몬스터(괴물)와 싸운 뒤 보물을 들고 돌아온다. 헤라클레스에게는 12개의 스테이지가 있었고, 페르세우스의 보스는 메두사, 테세우스의 보스는 미노타우로스였다. 다만 이 주인공들은 무적이 아니다. 화를 참지 못하거나 자만하다가 큰 대가를 치르기도 한다. 바로 이 불완전함이 영웅을 더 인간적으로 만든다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 영웅 이름과 그가 물리친 괴물을 짝지어 외우면 기억이 오래간다. 페르세우스-메두사, 테세우스-미노타우로스, 이아손-황금양털, 오이디푸스-스핑크스처럼 한 쌍으로 묶어보자.</div>
+
+<h3>한 페이지 요약</h3>
+<ul>
+<li>영웅은 인간을 뛰어넘는 능력을 지녔지만 신은 아닌, 결함도 있는 존재다.</li>
+<li>헤라클레스는 12개의 어려운 과업을 차례로 완수한 가장 유명한 영웅이다.</li>
+<li>페르세우스는 메두사를 처치하고 안드로메다를 구했다.</li>
+<li>테세우스는 미궁 속 미노타우로스를 무찔렀고, 이아손은 황금양털을 찾아 나섰다.</li>
+<li>영웅 이야기는 출발-시련-귀환이라는 공통 구조를 가져 오늘날 콘텐츠의 원형이 되었다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>그리스 영웅 신화의 영웅들은 대부분 신과 인간 사이에서 태어난 반신(半神)적 존재로 그려진다. 헤라클레스는 제우스의 아들이며, 페르세우스 역시 제우스의 핏줄로 전해진다. 이런 혈통은 영웅에게 인간을 뛰어넘는 힘을 부여하지만, 동시에 신들의 질투와 분노를 사는 원인이 되기도 한다. 헤라클레스가 12과업을 짊어진 것도 헤라 여신의 미움 속에서 광기에 빠져 저지른 비극에 대한 속죄에서 비롯되었다고 전해진다. 영웅은 위대한 업적을 이루지만 그 위대함은 늘 시련과 고통의 대가로 주어진다. 페르세우스는 메두사의 머리를 베어 돌아오는 길에 바다 괴물의 제물이 될 뻔한 안드로메다를 구해 아내로 맞는다. 테세우스는 미노스 왕의 미궁에 들어가 미노타우로스를 죽이고, 아리아드네가 건넨 실타래 덕분에 미궁을 빠져나온다. 이아손은 아르고호를 타고 동료들과 함께 황금양털을 찾아 머나먼 콜키스로 항해한다. 이처럼 영웅담은 괴물 퇴치, 보물 획득, 사랑과 배신이 얽힌 복합적 서사로 발전했다. 한편 오이디푸스는 괴물 스핑크스의 수수께끼를 푼 지혜로운 영웅이지만, 정작 자신의 운명 앞에서는 무력했다.</p>
+
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 영웅의 여정 — 출발·시련·귀환</h4><p>신화학자 조지프 캠벨은 저서 <em>천의 얼굴을 가진 영웅</em>에서 세계 여러 문화의 영웅담이 공통된 구조를 가진다고 보았다. 영웅은 일상의 세계를 떠나(출발), 미지의 세계에서 시련과 시험을 거치며(입문·시련), 변화한 모습으로 공동체에 돌아온다(귀환). 모험으로의 부름, 조력자와의 만남, 결정적 시련, 보상의 획득 같은 단계가 반복적으로 나타난다. 이 구조는 하나의 절대 공식이라기보다, 많은 이야기에서 발견되는 반복 패턴으로 이해하는 편이 정확하다.</p></div>
+
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1 — 헤라클레스의 12과업</h4><p>헤라클레스는 네메아의 사자, 레르나의 히드라, 케르베로스를 끌어오는 일 등 12가지 과업을 차례로 완수한다. 각 과업은 단순한 힘만으로는 풀 수 없고, 히드라의 머리를 불로 지져 재생을 막는 것처럼 지혜와 기지를 함께 요구한다. 그의 이야기는 압도적 힘을 지닌 영웅조차 신의 명령과 속죄의 짐에서 자유롭지 못함을 보여준다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 테세우스와 미궁의 미노타우로스</h4><p>테세우스는 아테네의 젊은이들을 제물로 삼키던 미노타우로스를 처치하러 크레타의 미궁으로 들어간다. 미노스 왕의 딸 아리아드네가 건넨 실타래를 풀며 들어가 괴물을 무찌른 뒤, 그 실을 되감아 무사히 빠져나온다. 그러나 귀환길에 그는 아리아드네를 두고 떠나고, 흰 돛 신호를 잊는 실수로 아버지 아이게우스를 잃는다. 영웅의 승리 뒤에 부주의와 망각이라는 인간적 그림자가 따라붙는 전형적 사례다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>캠벨의 영웅의 여정 구조는 20세기 후반 대중문화에 큰 영향을 주었다. 많은 영화 시나리오와 게임 서사가 이 틀을 의식적으로 활용했다고 알려져 있으며, 평범한 주인공이 부름을 받고 모험을 떠나 성장해 돌아오는 이야기는 오늘날에도 끊임없이 변주된다. 다만 모든 이야기를 단일 공식에 끼워 맞추려는 시도는 한계가 있어, 이를 절대적 법칙이 아니라 분석 도구로 활용하는 신중함이 필요하다.</p>
+
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 영웅이 신처럼 완벽하고 무적이라고 생각하기 쉽지만, 그리스 영웅들은 오히려 분노·교만·망각 같은 결함 때문에 비극을 맞는 경우가 많다. 그들의 불완전함은 실수가 아니라 이야기의 핵심 주제다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>영웅 신화를 깊이 읽으려면 이야기를 영웅 개인의 무용담으로만 보지 않고, 그것이 형성된 사회·종교·심리적 맥락을 함께 살펴야 한다. 많은 그리스 영웅은 특정 도시나 부족의 시조이자 수호신적 존재로 숭배되었으며, 영웅 숭배(hero cult)는 신 숭배와는 구별되는 종교적 관습이었다. 테세우스가 아테네의 영웅으로, 헤라클레스가 도리스계 도시들과 연결되는 데서 보듯, 영웅담은 공동체의 정체성과 정치적 정당성을 뒷받침하는 기능을 했다. 한편 오이디푸스 이야기는 운명과 자유의지의 긴장을 극적으로 보여준다. 예언을 피하려는 모든 행동이 도리어 예언을 실현시키는 구조는, 인간이 자신의 운명을 얼마나 통제할 수 있는가라는 오래된 물음을 던진다. 영웅의 결함(hamartia) 역시 단순한 성격적 흠이 아니라, 비극적 몰락을 이끄는 서사적 장치로 작동한다. 또한 캠벨의 단일신화(monomyth) 개념은 영웅담의 보편성을 부각했지만, 모든 문화의 이야기를 하나의 틀로 환원한다는 비판도 함께 받아 왔다. 따라서 전문가는 보편 구조와 문화적 특수성을 동시에 고려하며 신화를 다층적으로 읽는다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>현대 신화 연구는 캠벨식 보편주의를 보완하거나 비판하는 방향으로 전개되어 왔다. 한쪽에서는 영웅의 여정 구조가 서구 남성 영웅 중심으로 기울어 있어 여성 인물이나 비서구 전통의 다양한 서사를 포착하지 못한다고 지적한다. 다른 한편에서는 역사적·고고학적 접근을 통해 영웅 숭배의 실제 의례와 지역적 변이를 재구성하려는 시도가 이어진다. 또한 영웅의 여정을 창작 도구로 단순화해 활용하는 흐름과, 그 도식화가 이야기의 다양성을 빈약하게 만든다는 우려가 공존한다. 신화를 보편 심리의 산물로 볼 것인지, 특정 사회의 산물로 볼 것인지는 여전히 열린 쟁점이다.</p>
+
+<h3>관련 분야</h3>
+<ul>
+<li><strong>비교신화학</strong>: 여러 문화의 영웅담을 비교해 공통 구조와 차이를 분석하는 분야.</li>
+<li><strong>고전학·고고학</strong>: 그리스 영웅 숭배의 의례와 유적을 통해 신화의 사회적 맥락을 복원한다.</li>
+<li><strong>서사학·심리학</strong>: 영웅의 여정 구조와 인간 심리의 관계, 이야기의 보편적 매력을 탐구한다.</li>
+</ul>
+
+<h3>더 읽을거리</h3>
+<ul>
+<li>"천의 얼굴을 가진 영웅" — 조지프 캠벨</li>
+<li>"그리스인 이야기(신화)" — 토머스 불핀치</li>
+<li>"오이디푸스 왕" — 소포클레스</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 헤라클레스·페르세우스·테세우스·이아손·오이디푸스 중 한 명을 골라, 그의 이야기를 캠벨의 출발·시련·귀환 구조에 맞춰 정리해 보자. 그리고 그 영웅이 어떤 인간적 결함을 지녔는지, 그 결함이 이야기에서 어떤 역할을 하는지 함께 분석해 보라.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#e0b341","questions":[{"q":"메두사를 처치한 영웅은?","choices":["페르세우스","테세우스","이아손","헤라클레스"],"answer":0},{"q":"미노타우로스를 무찌른 영웅은?","choices":["헤라클레스","페르세우스","이아손","테세우스"],"answer":3},{"q":"헤라클레스의 과업 개수는?","choices":["10개","12개","7개","24개"],"answer":1},{"q":"'영웅의 여정'을 제시한 학자는?","choices":["소포클레스","호메로스","조지프 캠벨","토머스 불핀치"],"answer":2},{"q":"테세우스에게 실타래를 준 사람은?","choices":["아리아드네","안드로메다","아테나","헤라"],"answer":0}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // 영웅의 여정: 원형 경로(여정의 순환) 위에 시련 표지(뾰족한 콘)들이 박혀 있고, 영웅(빛나는 구)이 길을 따라 돈다
+  const R=3, path=new THREE.Mesh(new THREE.TorusGeometry(R,0.05,10,90),new THREE.MeshBasicMaterial({color:0xe0b341,transparent:true,opacity:0.45})); s.add(path);
+  const ordeals=[], M=8;
+  for(let i=0;i<M;i++){const ang=i/M*Math.PI*2; const x=Math.cos(ang)*R, y=Math.sin(ang)*R; const cone=new THREE.Mesh(new THREE.ConeGeometry(0.28,0.7,5),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.02,0.6,0.5)})); cone.position.set(x,y,0); cone.rotation.z=-ang+Math.PI/2; s.add(cone); ordeals.push(cone);}
+  const hero=new THREE.Mesh(new THREE.IcosahedronGeometry(0.4,1),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.14,0.9,0.62)})); s.add(hero);
+  const home=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.7})); home.position.set(R,0,0); s.add(home);
+  s.userData.hero=hero;s.userData.ordeals=ordeals;s.userData.R=R;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const ang=T*0.6,RR=s.userData.R;s.userData.hero.position.set(Math.cos(ang)*RR,Math.sin(ang)*RR,0);s.userData.hero.rotation.y+=0.04;s.userData.ordeals.forEach((o,i)=>{o.scale.y=1+0.3*Math.sin(T*3+i);});s.rotation.z+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

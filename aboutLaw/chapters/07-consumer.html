@@ -2,16 +2,18 @@
 <title>7. 소비자 보호법 — aboutLaw</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">⚖️ 표지</a></li><li><a href="chapters/01-intro.html">1. 법학 개론</a></li><li><a href="chapters/02-constitutional.html">2. 헌법</a></li><li><a href="chapters/03-civil.html">3. 민법 기초</a></li><li><a href="chapters/04-criminal.html">4. 형법 기초</a></li><li><a href="chapters/05-labor.html">5. 근로기준법</a></li><li><a href="chapters/06-property.html">6. 부동산/재산법</a></li><li><a href="chapters/07-consumer.html">7. 소비자 보호법</a></li><li><a href="chapters/08-ip.html">8. 지식재산권</a></li><li><a href="chapters/09-digital-law.html">9. 디지털 법률</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">⚖️ 표지</a></li><li><a href="01-intro.html">1. 법학 개론</a></li><li><a href="02-constitutional.html">2. 헌법</a></li><li><a href="03-civil.html">3. 민법 기초</a></li><li><a href="04-criminal.html">4. 형법 기초</a></li><li><a href="05-labor.html">5. 근로기준법</a></li><li><a href="06-property.html">6. 부동산/재산법</a></li><li><a href="07-consumer.html">7. 소비자 보호법</a></li><li><a href="08-ip.html">8. 지식재산권</a></li><li><a href="09-digital-law.html">9. 디지털 법률</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>소비자 보호법</em></h1><p class="authors">Chapter 7 — Consumer Protection Law</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 청약철회·보증의 방패가 소비자를 둘러싸 보호 — 드래그로 회전</span>
 <h2>소비자 보호법</h2><p>Consumer Protection Law의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Consumer Protection Law</p></div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -44,5 +46,24 @@
   <h3>추가 학습 자료</h3><ul><li>공정거래위원회·소비자원 공식 자료</li><li>"소비자법" — 윤주헌</li><li>OECD Consumer Policy Toolkit</li></ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 자주 쓰는 앱 3개의 환불·해지 흐름을 캡처해 다크패턴 요소를 5가지 식별하고, 시정 권고안을 작성해보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#1d4ed8","questions":[{"q":"온라인 단순변심 청약철회 기간은?","choices":["3일","14일","7일","30일"],"answer":2},{"q":"한국소비자원 상담 번호는?","choices":["112","1372","1588","120"],"answer":1},{"q":"고객에게 부당하게 불리한 약관은?","choices":["유효","일부 유효","취소 가능","무효"],"answer":3},{"q":"결함 상품의 청약철회 기간은?","choices":["7일","15일","30일","60일"],"answer":2},{"q":"해지를 어렵게 만든 화면 설계는?","choices":["다크패턴","앵커링","가짜 리뷰","스팸"],"answer":0}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8.5);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const consumer=new THREE.Mesh(new THREE.SphereGeometry(0.9,24,18),new THREE.MeshBasicMaterial({color:0xffe08a}));s.add(consumer);
+  const shells=[];const cols=[0x5b8def,0x4caf78,0xe0732a];cols.forEach((col,i)=>{const ring=new THREE.Mesh(new THREE.TorusGeometry(1.7+i*0.55,0.09,12,40),new THREE.MeshBasicMaterial({color:col}));ring.rotation.x=Math.PI/2*(i%2);ring.rotation.y=i*0.7;s.add(ring);shells.push(ring);});
+  const guards=[];for(let i=0;i<6;i++){const th=i/6*Math.PI*2;const g=new THREE.Mesh(new THREE.ConeGeometry(0.28,0.7,4),new THREE.MeshBasicMaterial({color:0x9ad0ff}));g.position.set(Math.cos(th)*2.7,Math.sin(th)*2.7,0);g.rotation.z=th+Math.PI/2;s.add(g);guards.push({m:g,th:th});}
+  s.userData.shells=shells;s.userData.guards=guards;s.userData.core=consumer;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.core.scale.setScalar(1+Math.sin(T*2)*0.06);s.userData.shells.forEach((ring,i)=>{ring.rotation.z+=0.006*(i+1);});s.userData.guards.forEach(g=>{const rad=2.7+Math.sin(T*1.5+g.th)*0.18;g.m.position.set(Math.cos(g.th)*rad,Math.sin(g.th)*rad,0);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>8. 관측 천문학 — aboutAstronomy</title>
+<title>8. 관측천문학 — aboutAstronomy</title>
 <link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -17,100 +19,427 @@
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">🌌 표지 · 소개</a></li>
-    <li><a href="01-celestial-mechanics.html">1. 천체 역학</a></li>
+    <li><a href="01-celestial-mechanics.html">1. 천체역학</a></li>
     <li><a href="02-solar-system.html">2. 태양계</a></li>
     <li><a href="03-stars.html">3. 항성</a></li>
     <li><a href="04-galaxies.html">4. 은하</a></li>
     <li><a href="05-cosmology.html">5. 우주론</a></li>
     <li><a href="06-black-holes.html">6. 블랙홀</a></li>
     <li><a href="07-exoplanets.html">7. 외계행성</a></li>
-    <li><a href="08-observational.html">8. 관측 천문학</a></li>
-    <li><a href="09-space-exploration.html">9. 우주 탐사</a></li>
+    <li><a href="08-observational.html" style="color:var(--accent);font-weight:600;">8. 관측천문학</a></li>
+    <li><a href="09-space-exploration.html">9. 우주탐사</a></li>
   </ol>
 </aside>
 <main>
 <header class="paper-header">
-  <h1><em>관측 천문학</em></h1>
-  <p class="authors">Chapter 8 — Telescopes & Observation</p>
+  <h1>관측천문학:<br><em>우주를 보는 눈</em></h1>
+  <p class="authors">Chapter 8 — Observational Astronomy: Eyes on the Universe</p>
+  <p class="affiliation">전자기 스펙트럼 파동 시뮬레이터 포함</p>
 </header>
 
-<div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
-
-<h2>관측 천문학 개요</h2>
-<p>이 챕터에서는 관측 천문학의 핵심 개념을 3D 시뮬레이션과 함께 학습합니다. 우주를 직접 탐험하세요.</p>
+<h2>관측천문학이란?</h2>
+<p>관측천문학은 망원경과 각종 검출기를 이용하여 천체로부터 오는 전자기파와 입자를 수집하고 분석하는 학문입니다. 갈릴레오가 망원경을 하늘에 처음 향한 이래, 관측 기술의 발전은 우주에 대한 이해를 혁명적으로 바꿔 왔습니다.</p>
 
 <div class="info-card">
   <h4>핵심 개념</h4>
-  <p>Telescopes & Observation의 기본 원리와 최신 발견을 다룹니다.</p>
+  <p>우주의 천체들은 가시광선뿐 아니라 전파, 적외선, 자외선, X선, 감마선 등 다양한 파장의 전자기파를 방출합니다. 각 파장 영역을 관측하면 천체의 서로 다른 물리적 특성을 알 수 있습니다.</p>
 </div>
 
+<h2>망원경의 종류</h2>
+
+<div class="info-card">
+  <h4>🔭 굴절 망원경 (Refracting Telescope)</h4>
+  <p>볼록 렌즈로 빛을 모아 상을 만듭니다. 갈릴레오와 케플러가 사용한 최초의 천문 망원경 형태입니다. 색수차가 주요 단점이며, 렌즈 크기에 물리적 한계가 있어 현대에는 소형 망원경에 주로 사용됩니다.</p>
+</div>
+
+<div class="info-card energy">
+  <h4>🔭 반사 망원경 (Reflecting Telescope)</h4>
+  <p>오목 거울로 빛을 모읍니다. 뉴턴이 발명했으며, 색수차가 없고 거울을 크게 만들 수 있어 현대 대형 망원경의 주류입니다. 케크 망원경(10m), ELT(39m) 등이 대표적입니다.</p>
+</div>
+
+<div class="info-card wave">
+  <h4>📡 전파 망원경 (Radio Telescope)</h4>
+  <p>전파 영역의 전자기파를 수집하는 안테나입니다. 구름과 먼지를 투과하여 관측할 수 있으며, 여러 안테나를 연결하는 간섭계 기술(VLBI)로 극도로 높은 분해능을 달성합니다. ALMA, VLA가 대표적입니다.</p>
+</div>
+
+<h2>전자기 스펙트럼</h2>
+<p>전자기파는 파장에 따라 전파, 마이크로파, 적외선, 가시광선, 자외선, X선, 감마선으로 분류됩니다. 파장이 짧을수록 진동수와 에너지가 높습니다.</p>
+
+<div class="formula">c = λν &nbsp;&nbsp;|&nbsp;&nbsp; E = hν = hc/λ &nbsp;&nbsp;(h = 6.626 × 10⁻³⁴ J·s)</div>
+
+<h2>전자기 스펙트럼 시뮬레이터</h2>
+<p>아래 시뮬레이션에서 파장 슬라이더를 조절하여 전파부터 감마선까지 전자기파의 파형, 색상, 진동수, 에너지 변화를 관찰하세요.</p>
+
+<div class="scene-3d" id="wave-scene">
+  <div class="scene-controls">
+    <label>파장: <span id="wl-val">550</span> nm &nbsp;(<span id="wl-name">가시광선 (녹색)</span>)</label>
+    <input type="range" id="wl-slider" min="0" max="100" value="50">
+    <label>진동수: <span id="freq-val">5.45 × 10¹⁴</span> Hz</label>
+    <label>에너지: <span id="energy-val">3.61 × 10⁻¹⁹</span> J</label>
+  </div>
+</div>
+<span class="interact-hint">🎯 슬라이더를 조절하여 전파(왼쪽)부터 감마선(오른쪽)까지 파장을 변화시키세요</span>
+
+<h2>우주 망원경</h2>
+
+<div class="info-card">
+  <h4>🛰️ 허블 우주망원경 (Hubble Space Telescope)</h4>
+  <p>1990년 발사된 허블은 대기 밖에서 관측하여 전례 없는 선명한 영상을 제공했습니다. 허블 딥 필드 관측은 수천 개의 먼 은하를 포착하여 우주의 규모를 실감하게 했습니다. 구경 2.4m의 반사 망원경으로 자외선, 가시광선, 근적외선을 관측합니다.</p>
+</div>
+
+<div class="info-card energy">
+  <h4>🛰️ 제임스 웹 우주망원경 (JWST)</h4>
+  <p>2021년 발사된 JWST는 구경 6.5m의 적외선 망원경으로, L2 라그랑주 점에서 운용됩니다. 최초의 별과 은하, 외계행성 대기, 별 탄생 영역을 전례 없는 해상도로 관측하고 있습니다. 금도금 베릴륨 거울 18개가 벌집 형태로 배열되어 있습니다.</p>
+</div>
+
+<div class="info-card wave">
+  <h4>🛰️ 찬드라 X선 망원경 (Chandra)</h4>
+  <p>1999년 발사된 찬드라는 고에너지 X선 영역을 관측하여 블랙홀, 초신성 잔해, 고온 가스 등 극한 환경의 천체를 연구합니다. 비스듬한 입사 거울 기술을 사용합니다.</p>
+</div>
+
+<h2>유명 천문대</h2>
+
+<div class="info-card">
+  <h4>🏔️ 마우나케아 천문대 (하와이)</h4>
+  <p>해발 4,205m에 위치한 세계 최고의 지상 관측지 중 하나입니다. 케크 쌍둥이 망원경(10m), 스바루 망원경(8.2m) 등 13개의 대형 망원경이 운용 중입니다.</p>
+</div>
+
+<div class="info-card energy">
+  <h4>🏔️ 아타카마 사막 (칠레)</h4>
+  <p>세계에서 가장 건조한 곳 중 하나로, ALMA 전파 간섭계(66개 안테나), VLT(8.2m 4기), 건설 중인 ELT(39m)가 있습니다. 극도로 낮은 습도와 맑은 하늘이 관측에 이상적입니다.</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>관측천문학은 망원경과 검출기로 우주에서 오는 다양한 종류의 빛(전자기파)을 모아, 직접 가볼 수 없는 천체를 연구하는 학문입니다.</p>
+  <h3>왜 중요한가?</h3>
+  <p>우리는 별이나 은하에 직접 가서 손으로 만져 볼 수 없습니다. 우주를 아는 거의 유일한 방법은 천체가 보내오는 "빛"을 분석하는 것입니다. 그런데 우리 눈에 보이는 빛은 전자기파의 극히 일부에 불과합니다. 전파, 적외선, X선 등 보이지 않는 빛으로 우주를 보면 완전히 다른 모습이 드러납니다. 가시광선으로는 평범해 보이는 은하가 X선으로 보면 중심에 거대한 블랙홀이 빛나고 있고, 전파로 보면 수백만 광년 길이의 제트를 내뿜고 있을 수 있습니다. 그래서 관측천문학은 우주를 이해하는 모든 발견의 출발점입니다.</p>
+  <div class="info-card">
+    <h4>🌱 핵심 용어</h4>
+    <ul>
+      <li><strong>전자기파(빛)</strong> — 전파부터 감마선까지, 우주의 정보를 실어 나르는 파동</li>
+      <li><strong>구경(口徑)</strong> — 망원경이 빛을 모으는 렌즈나 거울의 지름. 클수록 어두운 천체를 본다</li>
+      <li><strong>분해능</strong> — 두 점을 따로 떼어 구별할 수 있는 능력. 좋을수록 세밀하게 보인다</li>
+      <li><strong>전파/광학/적외선 망원경</strong> — 어떤 파장의 빛을 받느냐에 따라 나뉘는 망원경 종류</li>
+      <li><strong>우주망원경</strong> — 대기 방해를 피하려고 우주 공간에 띄운 망원경(허블, 제임스 웹)</li>
+    </ul>
+  </div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>망원경의 가장 중요한 역할은 "확대"가 아니라 "빛 모으기"입니다. 우리 눈동자의 지름은 약 7mm에 불과하지만, 망원경은 지름 수 미터의 거울로 빛을 모아 우리 눈보다 수십만 배 많은 빛을 받습니다. 그래서 맨눈으로는 안 보이는 어두운 별과 은하까지 볼 수 있습니다. 또 망원경 거울이 클수록 더 세밀한 부분까지 또렷하게 구별합니다. 한편 지구 대기는 별빛을 흔들고(별이 반짝이는 이유) 자외선·X선 같은 빛은 아예 막아 버립니다. 그래서 천문학자들은 공기가 맑고 건조한 높은 산 위에 천문대를 짓거나, 아예 망원경을 우주로 올려보냅니다. 파장마다 보이는 우주가 다르기 때문에, 같은 천체를 전파·적외선·가시광선·X선으로 두루 관측해 종합하면 비로소 그 정체를 제대로 알 수 있습니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 전자기 스펙트럼은 "전(전파) 마(마이크로파) 적(적외선) 가(가시광선) 자(자외선) X(X선) 감(감마선)"으로 파장이 긴 순서대로 외우세요. 오른쪽으로 갈수록 파장이 짧고 에너지가 큽니다.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>관측천문학은 천체의 빛을 모아 분석하는, 우주 연구의 출발점</li>
+    <li>망원경의 핵심은 확대가 아니라 빛을 많이 모으는 "집광"</li>
+    <li>구경이 클수록 어둡고 세밀한 천체까지 관측할 수 있다</li>
+    <li>파장(전파·적외선·X선 등)마다 천체의 다른 모습이 드러난다</li>
+    <li>대기 방해를 피하려고 높은 산이나 우주에 망원경을 둔다</li>
+  </ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>망원경의 핵심 성능은 배율이 아니라 <strong>집광력</strong>과 <strong>분해능</strong>입니다. 집광력은 빛을 받는 면적, 즉 구경의 제곱에 비례하므로 구경 10m 망원경은 1m 망원경보다 100배 많은 빛을 모읍니다. 각분해능은 빛의 파동성에서 비롯되는 회절 한계로 결정되어 θ ≈ 1.22λ/D를 따릅니다. 즉 구경 D가 클수록, 파장 λ가 짧을수록 더 세밀한 구조를 분해합니다. 같은 구경이라도 전파(긴 파장)는 분해능이 나빠 간섭계가 필요하고, X선(짧은 파장)은 원리상 유리하지만 거울 제작이 까다롭습니다. 검출기 성능은 양자효율(들어온 광자 중 몇 %를 신호로 잡아내는가)과 신호대잡음비(S/N)로 평가하며, CCD·CMOS 검출기의 등장으로 사진 건판 시대보다 감도가 비약적으로 향상되었습니다.</p>
+  <div class="formula">θ_min = 1.22 λ/D &nbsp;&nbsp;|&nbsp;&nbsp; 집광력 ∝ D² &nbsp;&nbsp;|&nbsp;&nbsp; S/N ∝ √(t)</div>
+  <h3>핵심 메커니즘</h3>
+  <div class="info-card"><h4>🔧 적응광학(Adaptive Optics)</h4><p>지구 대기의 난류는 별빛의 파면을 흐트러뜨려 지상 망원경의 분해능을 떨어뜨립니다. 적응광학은 밝은 자연별이나 레이저로 만든 인공별(레이저 가이드 스타)로 파면 왜곡을 초당 수백 번 측정하고, 변형 거울을 실시간으로 휘게 하여 왜곡을 상쇄합니다. 이로써 지상 대형 망원경이 우주망원경에 가까운 선명도를 얻습니다.</p></div>
+  <div class="info-card"><h4>🔧 분광과 측광</h4><p>측광은 천체의 밝기를 정밀 측정하는 것이고, 분광은 빛을 파장별로 펼쳐 스펙트럼을 얻는 것입니다. 흡수선·방출선의 위치와 세기에서 천체의 화학 조성, 온도, 밀도, 시선속도(도플러 효과)를 읽어낼 수 있어, 분광은 현대 천체물리의 핵심 도구입니다.</p></div>
+  <h3>대표 사례</h3>
+  <div class="info-card"><h4>🛰️ 사례 1 — 허블 딥 필드</h4><p>허블 우주망원경이 하늘의 거의 빈 영역을 오랜 시간 노출하여 수천 개의 먼 은하를 포착했습니다. 노출 시간을 늘려 신호를 쌓으면(S/N ∝ √t) 극도로 어두운 천체까지 드러난다는 원리를 상징적으로 보여 준 관측입니다.</p></div>
+  <div class="info-card"><h4>📡 사례 2 — ALMA 전파 간섭계</h4><p>칠레 아타카마 고원의 66개 안테나를 연결해 하나의 거대 망원경처럼 작동시킵니다. 안테나 간 거리를 기선으로 삼아 단일 안테나로는 불가능한 분해능을 달성하고, 원시 행성 원반의 고리 구조 같은 미세 구조를 밀리미터파로 포착합니다.</p></div>
+  <h3>현대적 전개</h3>
+  <p>오늘날 관측은 단일 망원경을 넘어 여러 파장·여러 시설을 결합하는 방향으로 진화하고 있습니다. 자동 광시야 서베이(예: 츠비키 천체물리 시설, 베라 루빈 천문대)는 밤하늘 전체를 반복 촬영해 초신성·소행성·변광성 등 변화를 시간 영역에서 추적합니다. 또한 관측 데이터가 폭증하면서 자료 처리에 기계학습이 도입되어, 약한 신호 검출과 천체 자동 분류가 활발히 이루어지고 있습니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 배율(확대율)은 망원경 성능의 핵심 지표가 아닙니다. 집광력과 분해능이 더 중요하며, 분해능 이상으로 배율만 높이면 흐릿한 상이 커질 뿐입니다. 또한 지상 망원경의 실제 분해능은 회절 한계가 아니라 대기 시상(seeing)에 의해 제한되는 경우가 많습니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>간섭 측정법(interferometry)은 여러 망원경의 신호를 위상 정보까지 보존하여 결합함으로써, 기선(baseline) 길이에 해당하는 유효 구경의 분해능을 얻는 기술입니다. 결합된 신호의 상관(correlation)으로부터 천체의 가시도(visibility)를 측정하고, 이를 푸리에 역변환하여 영상을 복원합니다(개구 합성, aperture synthesis). VLBI(Very Long Baseline Interferometry)는 대륙 간 또는 지구 크기의 가상 망원경을 구현하며, EHT(Event Horizon Telescope)는 이 기술로 M87*와 우리은하 Sgr A*의 블랙홀 그림자를 영상화했습니다. 스펙클 간섭법, 강도 간섭법, 널링 간섭법 등 다양한 변형이 각각 특정 관측 목적에 최적화되어 있습니다. 한편 다중 메신저 천문학은 전자기파 외에 중력파, 중성미자, 우주선을 결합하여 하나의 천체 현상을 여러 정보원으로 교차 검증하는 패러다임으로, 2017년 중성자별 병합(GW170817)에서 중력파와 감마선·가시광 대응체가 함께 관측되며 정점을 찍었습니다.</p>
+  <h3>최신 연구·쟁점</h3>
+  <p>차세대 30m급 지상 망원경(ELT, TMT, GMT)은 극단 적응광학과 결합해 외계행성의 직접 촬영과 대기 분광을 목표로 하지만, 항성 대비 행성의 극심한 밝기 차를 억제하는 코로나그래프·점확산함수(PSF) 제어가 핵심 난제로 남아 있습니다. 시간 영역·다중 메신저 천문학에서는 베라 루빈 천문대의 광시야 서베이가 야간마다 막대한 일시적 현상 경보를 쏟아내면서, 실시간 자동 분류와 후속 관측 자원 배분이 현안이 되고 있습니다. 전파 영역에서는 SKA(Square Kilometre Array)가 전례 없는 감도를 예고하는 한편, 위성 군집(메가컨스텔레이션)에 의한 광학·전파 간섭이 관측 환경을 위협하는 쟁점으로 부상했습니다.</p>
+  <div class="formula">V(u,v) = ∫∫ I(l,m) e^{-2πi(ul+vm)} dl dm &nbsp;|&nbsp; θ ≈ λ/B_max</div>
+  <h3>관련 분야</h3>
+  <ul>
+    <li>신호처리·푸리에 광학: 개구 합성, 영상 복원 알고리즘(CLEAN, 최대 엔트로피법)</li>
+    <li>검출기 물리: CCD/CMOS, 초전도 검출기(KID, TES), 단일광자 계수</li>
+    <li>중력파·입자 천문학: 레이저 간섭계, 광검출기를 이용한 중성미자 관측</li>
+  </ul>
+  <h3>더 읽을거리</h3>
+  <ul>
+    <li>Thompson, Moran &amp; Swenson, <em>Interferometry and Synthesis in Radio Astronomy</em></li>
+    <li>Howell, <em>Handbook of CCD Astronomy</em></li>
+    <li>Chromey, <em>To Measure the Sky: An Introduction to Observational Astronomy</em></li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> ALMA의 최대 기선(약 16km)에서 관측 파장 1mm일 때의 각분해능 θ ≈ λ/B를 계산하고, 허블(구경 2.4m, 파장 500nm)과 비교해 보세요. 어느 쪽이 더 세밀하게 분해하는지, 그리고 왜 전파 천문학이 간섭계에 의존할 수밖에 없는지 설명하세요.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7b9fff","questions":[{"q":"현대 대형 망원경의 주류 형태는?","choices":["반사 망원경","굴절 망원경","전파 망원경","감마선 망원경"],"answer":0},{"q":"JWST의 거울 구경은?","choices":["2.4m","10m","6.5m","39m"],"answer":2},{"q":"망원경의 가장 중요한 역할은?","choices":["확대","사진 인화","온도 측정","빛 모으기"],"answer":3},{"q":"망원경의 각분해능 공식은?","choices":["D/λ","1.22λ/D","λ²/D","1.22D/λ"],"answer":1},{"q":"대기 왜곡을 실시간 보정하는 기술은?","choices":["측광","분광","적응광학","다단 로켓"],"answer":2}]};</script>
 </main>
 </div>
 
 <script>
 (function() {
-  const container = document.getElementById('sim-scene');
+  const container = document.getElementById('wave-scene');
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 5, 12);
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 2, 10);
+  camera.lookAt(0, 0, 0);
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
 
-  // Stars background
+  // Spectrum data: slider 0=radio .. 100=gamma
+  const spectrumBands = [
+    { name: '전파 (Radio)',        maxNm: 1e8,   minNm: 1e6,   color: [0.4, 0.4, 0.6] },
+    { name: '마이크로파 (Microwave)', maxNm: 1e6,   minNm: 1e3,   color: [0.5, 0.4, 0.3] },
+    { name: '적외선 (Infrared)',    maxNm: 1e3,   minNm: 700,   color: [0.8, 0.2, 0.1] },
+    { name: '가시광선 (Visible)',   maxNm: 700,   minNm: 400,   color: null },
+    { name: '자외선 (Ultraviolet)', maxNm: 400,   minNm: 100,   color: [0.4, 0.2, 0.8] },
+    { name: 'X선 (X-ray)',         maxNm: 100,   minNm: 0.01,  color: [0.2, 0.6, 1.0] },
+    { name: '감마선 (Gamma)',       maxNm: 0.01,  minNm: 0.0001,color: [0.9, 0.1, 0.9] }
+  ];
+
+  function sliderToWavelength(s) {
+    // logarithmic mapping: slider 0 → 1e8 nm (radio), 100 → 1e-4 nm (gamma)
+    const logMax = 8, logMin = -4;
+    const logWl = logMax - (s / 100) * (logMax - logMin);
+    return Math.pow(10, logWl);
+  }
+
+  function wavelengthToColor(wl_nm) {
+    if (wl_nm >= 700) return new THREE.Color(0.8, 0.2, 0.1);
+    if (wl_nm >= 620) return new THREE.Color(1, 0.3, 0);
+    if (wl_nm >= 590) return new THREE.Color(1, 0.7, 0);
+    if (wl_nm >= 570) return new THREE.Color(0.8, 0.9, 0);
+    if (wl_nm >= 495) return new THREE.Color(0, 0.8, 0.2);
+    if (wl_nm >= 450) return new THREE.Color(0, 0.4, 1);
+    if (wl_nm >= 400) return new THREE.Color(0.4, 0.1, 0.9);
+    return new THREE.Color(0.5, 0.2, 0.8);
+  }
+
+  function getBandInfo(wl_nm) {
+    if (wl_nm > 1e6) return spectrumBands[0];
+    if (wl_nm > 1e3) return spectrumBands[1];
+    if (wl_nm > 700) return spectrumBands[2];
+    if (wl_nm > 400) return spectrumBands[3];
+    if (wl_nm > 100) return spectrumBands[4];
+    if (wl_nm > 0.01) return spectrumBands[5];
+    return spectrumBands[6];
+  }
+
+  function getColor(wl_nm) {
+    const band = getBandInfo(wl_nm);
+    if (band.color) return new THREE.Color(band.color[0], band.color[1], band.color[2]);
+    return wavelengthToColor(wl_nm);
+  }
+
+  // 3D wave geometry
+  const numPoints = 200;
+  const wavePositions = new Float32Array(numPoints * 3);
+  const waveGeo = new THREE.BufferGeometry();
+  waveGeo.setAttribute('position', new THREE.BufferAttribute(wavePositions, 3));
+  const waveMat = new THREE.LineBasicMaterial({ color: 0x22c55e, linewidth: 2 });
+  const waveLine = new THREE.Line(waveGeo, waveMat);
+  scene.add(waveLine);
+
+  // Second wave (faded) for depth
+  const wave2Positions = new Float32Array(numPoints * 3);
+  const wave2Geo = new THREE.BufferGeometry();
+  wave2Geo.setAttribute('position', new THREE.BufferAttribute(wave2Positions, 3));
+  const wave2Mat = new THREE.LineBasicMaterial({ color: 0x22c55e, transparent: true, opacity: 0.3 });
+  const wave2Line = new THREE.Line(wave2Geo, wave2Mat);
+  scene.add(wave2Line);
+
+  // Propagation arrow
+  const arrowDir = new THREE.Vector3(1, 0, 0);
+  const arrow = new THREE.ArrowHelper(arrowDir, new THREE.Vector3(-7, -1.8, 0), 3, 0xaaaaaa, 0.3, 0.15);
+  scene.add(arrow);
+
+  // E-field label arrow (vertical)
+  const eArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), new THREE.Vector3(-7, -1.5, 0), 2.5, 0xef4444, 0.2, 0.12);
+  scene.add(eArrow);
+
+  // Spectrum bar at bottom
+  const barWidth = 12, barHeight = 0.3;
+  const barCanvas = document.createElement('canvas');
+  barCanvas.width = 512; barCanvas.height = 32;
+  const bCtx = barCanvas.getContext('2d');
+  const grad = bCtx.createLinearGradient(0, 0, 512, 0);
+  grad.addColorStop(0, '#6666aa');
+  grad.addColorStop(0.15, '#884433');
+  grad.addColorStop(0.25, '#cc3311');
+  grad.addColorStop(0.35, '#ff0000');
+  grad.addColorStop(0.40, '#ff7700');
+  grad.addColorStop(0.45, '#ffff00');
+  grad.addColorStop(0.50, '#00cc33');
+  grad.addColorStop(0.55, '#0066ff');
+  grad.addColorStop(0.60, '#6611ee');
+  grad.addColorStop(0.70, '#6633cc');
+  grad.addColorStop(0.85, '#3399ff');
+  grad.addColorStop(1.0, '#cc11cc');
+  bCtx.fillStyle = grad;
+  bCtx.fillRect(0, 0, 512, 32);
+  const barTex = new THREE.CanvasTexture(barCanvas);
+  const barMesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(barWidth, barHeight),
+    new THREE.MeshBasicMaterial({ map: barTex })
+  );
+  barMesh.position.set(0, -2.5, 0);
+  scene.add(barMesh);
+
+  // Indicator on spectrum bar
+  const indicatorGeo = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(0, -0.3, 0), new THREE.Vector3(0, 0.3, 0)
+  ]);
+  const indicatorLine = new THREE.Line(indicatorGeo, new THREE.LineBasicMaterial({ color: 0xffffff }));
+  indicatorLine.position.set(0, -2.5, 0.01);
+  scene.add(indicatorLine);
+
+  // Stars
   const starGeo = new THREE.BufferGeometry();
-  const starPositions = new Float32Array(1000*3);
-  for (let i = 0; i < 1000; i++) {
-    starPositions[i*3] = (Math.random()-0.5)*100;
-    starPositions[i*3+1] = (Math.random()-0.5)*100;
-    starPositions[i*3+2] = (Math.random()-0.5)*100;
+  const sp = new Float32Array(500 * 3);
+  for (let i = 0; i < 500; i++) {
+    sp[i*3] = (Math.random()-0.5)*80;
+    sp[i*3+1] = (Math.random()-0.5)*80;
+    sp[i*3+2] = -20 - Math.random()*40;
   }
-  starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-  scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 })));
+  starGeo.setAttribute('position', new THREE.BufferAttribute(sp, 3));
+  scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.08 })));
 
-  // Central body (sun/star)
-  const sun = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), new THREE.MeshBasicMaterial({ color: 0xfbbf24 }));
-  scene.add(sun);
-  scene.add(new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 32), new THREE.MeshBasicMaterial({ color: 0xfbbf24, transparent: true, opacity: 0.15 })));
+  let currentWl = 550;
+  let phase = 0;
 
-  // Orbiting planets
-  const planets = [];
-  const planetColors = [0x60a5fa, 0xef4444, 0x22c55e, 0xa855f7, 0xfb923c];
-  for (let i = 0; i < 5; i++) {
-    const r = 0.15 + i*0.05;
-    const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 16, 16), new THREE.MeshBasicMaterial({ color: planetColors[i] }));
-    const orbit = 3 + i*1.5;
-    planets.push({ mesh, orbit, speed: 0.02/(i+1), angle: Math.random()*Math.PI*2 });
-    scene.add(mesh);
-    // Orbit ring
-    const ring = new THREE.Line(
-      new THREE.BufferGeometry().setFromPoints(Array.from({length:65}, (_,j) => new THREE.Vector3(Math.cos(j/64*Math.PI*2)*orbit, 0, Math.sin(j/64*Math.PI*2)*orbit))),
-      new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1 })
-    );
-    scene.add(ring);
+  function updateWave() {
+    const logWl = Math.log10(currentWl);
+    // Map wavelength to visual frequency: shorter wl → more cycles
+    const visualFreq = Math.max(0.5, Math.min(20, 8 - logWl * 1.2));
+    const amplitude = 1.2;
+    const posAttr = waveGeo.getAttribute('position');
+    const pos2Attr = wave2Geo.getAttribute('position');
+
+    for (let i = 0; i < numPoints; i++) {
+      const t = (i / numPoints) * 12 - 6;
+      const y = Math.sin(t * visualFreq + phase) * amplitude;
+      const z = Math.cos(t * visualFreq + phase) * amplitude * 0.5;
+
+      posAttr.array[i*3]   = t;
+      posAttr.array[i*3+1] = y;
+      posAttr.array[i*3+2] = 0;
+
+      pos2Attr.array[i*3]   = t;
+      pos2Attr.array[i*3+1] = 0;
+      pos2Attr.array[i*3+2] = z;
+    }
+    posAttr.needsUpdate = true;
+    pos2Attr.needsUpdate = true;
+
+    const color = getColor(currentWl);
+    waveMat.color.copy(color);
+    wave2Mat.color.copy(color);
+
+    // Indicator position
+    const sliderVal = parseInt(document.getElementById('wl-slider').value);
+    indicatorLine.position.x = -6 + (sliderVal / 100) * 12;
   }
 
-  let mouseDown = false, prevX = 0, prevY = 0;
+  // Controls
+  const wlSlider = document.getElementById('wl-slider');
+  const wlVal = document.getElementById('wl-val');
+  const wlName = document.getElementById('wl-name');
+  const freqVal = document.getElementById('freq-val');
+  const energyVal = document.getElementById('energy-val');
+
+  function formatSci(num) {
+    if (num === 0) return '0';
+    const exp = Math.floor(Math.log10(Math.abs(num)));
+    const mantissa = num / Math.pow(10, exp);
+    return mantissa.toFixed(2) + ' × 10' + (exp >= 0 ? '⁺' : '⁻') + superscript(Math.abs(exp));
+  }
+  function superscript(n) {
+    const sup = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+    return String(n).split('').map(d => sup[parseInt(d)]).join('');
+  }
+
+  wlSlider.addEventListener('input', () => {
+    const s = parseInt(wlSlider.value);
+    currentWl = sliderToWavelength(s);
+    const band = getBandInfo(currentWl);
+
+    // Display
+    if (currentWl >= 1e6) {
+      wlVal.textContent = (currentWl / 1e6).toFixed(1) + ' mm';
+    } else if (currentWl >= 1e3) {
+      wlVal.textContent = (currentWl / 1e3).toFixed(1) + ' μm';
+    } else if (currentWl >= 1) {
+      wlVal.textContent = currentWl.toFixed(0) + ' nm';
+    } else {
+      wlVal.textContent = (currentWl * 1000).toFixed(2) + ' pm';
+    }
+    wlName.textContent = band.name;
+
+    const c = 3e8;
+    const h = 6.626e-34;
+    const wlMeters = currentWl * 1e-9;
+    const freq = c / wlMeters;
+    const energy = h * freq;
+    freqVal.textContent = formatSci(freq);
+    energyVal.textContent = formatSci(energy);
+  });
+
+  // Mouse rotation
+  let mouseDown = false, prevX = 0, prevY = 0, rotY = 0, rotX = 0.15;
   container.addEventListener('mousedown', e => { mouseDown = true; prevX = e.clientX; prevY = e.clientY; });
-  container.addEventListener('mouseup', () => mouseDown = false);
+  window.addEventListener('mouseup', () => mouseDown = false);
   container.addEventListener('mousemove', e => {
     if (!mouseDown) return;
-    scene.rotation.y += (e.clientX - prevX)*0.005;
+    rotY += (e.clientX - prevX) * 0.005;
+    rotX = Math.max(-0.8, Math.min(0.8, rotX + (e.clientY - prevY) * 0.005));
     prevX = e.clientX; prevY = e.clientY;
   });
-  container.addEventListener('touchstart', e => { prevX = e.touches[0].clientX; });
-  container.addEventListener('touchmove', e => { scene.rotation.y += (e.touches[0].clientX - prevX)*0.005; prevX = e.touches[0].clientX; });
+  container.addEventListener('touchstart', e => { prevX = e.touches[0].clientX; prevY = e.touches[0].clientY; });
+  container.addEventListener('touchmove', e => {
+    rotY += (e.touches[0].clientX - prevX) * 0.005;
+    rotX = Math.max(-0.8, Math.min(0.8, rotX + (e.touches[0].clientY - prevY) * 0.005));
+    prevX = e.touches[0].clientX; prevY = e.touches[0].clientY;
+  });
+
+  // Trigger initial values
+  wlSlider.dispatchEvent(new Event('input'));
 
   function animate() {
     requestAnimationFrame(animate);
-    planets.forEach(p => { p.angle += p.speed; p.mesh.position.set(Math.cos(p.angle)*p.orbit, 0, Math.sin(p.angle)*p.orbit); });
-    sun.rotation.y += 0.003;
+    const logWl = Math.log10(currentWl);
+    const speed = Math.max(0.01, Math.min(0.15, 0.12 - logWl * 0.015));
+    phase += speed;
+    updateWave();
+
+    camera.position.x = 10 * Math.sin(rotY);
+    camera.position.z = 10 * Math.cos(rotY);
+    camera.position.y = 2 + 6 * Math.sin(rotX);
+    camera.lookAt(0, 0, 0);
+
     renderer.render(scene, camera);
   }
   animate();
-  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
 })();
 </script>
 </body>

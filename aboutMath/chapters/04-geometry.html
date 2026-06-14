@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4장. 기하 — 도형과 피타고라스</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📐 표지 · 소개</a></li>
+    <li><a href="01-numbers-sets.html">1. 수와 집합</a></li>
+    <li><a href="02-algebra.html">2. 대수 — 방정식과 다항식</a></li>
+    <li><a href="03-functions.html">3. 함수와 그래프</a></li>
+    <li><a href="04-geometry.html" style="color:var(--accent);font-weight:600;">4. 기하 — 도형과 피타고라스</a></li>
+    <li><a href="05-trigonometry.html">5. 삼각함수 — 원과 파동</a></li>
+    <li><a href="06-exponential-log.html">6. 지수와 로그</a></li>
+    <li><a href="07-sequences-limits.html">7. 수열과 극한</a></li>
+    <li><a href="08-differentiation.html">8. 미분 — 변화율의 수학</a></li>
+    <li><a href="09-integration.html">9. 적분과 확률·통계</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. 기하 — 공리에서 정리로</h2>
+<p>기하학(geometry)은 "땅(geo)을 재다(metry)"에서 온 말이지만, 유클리드의 <em>원론</em>(기원전 300년경) 이후 그 본질은 측량이 아니라 <strong>증명</strong>이 되었습니다. 점·선·면 같은 무정의 용어와 다섯 개의 공준에서 출발해, 오직 논리만으로 수백 개의 정리를 쌓아 올리는 것 — 인류 최초의 공리적 체계이며, 이후 모든 수학의 모범이 되었습니다.</p>
+<p>기초 사실들을 확인합니다. 삼각형 내각의 합은 180°(평행선의 엇각·동위각 성질에서 증명됩니다), n각형 내각의 합은 (n−2)×180°. 두 삼각형이 <strong>합동</strong>이 되는 조건은 SSS·SAS·ASA 세 가지이고, 모양만 같은 <strong>닮음</strong> 조건은 SSS(비)·SAS(비)·AA입니다. 닮음비가 k이면 넓이비는 k², 부피비는 k³ — "길이·넓이·부피의 차원이 다르다"는 이 사실은 아래 피타고라스 증명에서도, 9장의 적분에서도 반복해 등장합니다.</p>
+</section>
+
+<!-- 3D 학습 시각화: 피타고라스 정리 — 넓이 채우기 시각 증명 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#e8506e;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 피타고라스 정리: a² + b² 타일이 c² 를 정확히 채운다</div>
+  <div id="math3d-04" style="width:100%;height:430px;"></div>
+  <div id="math3d-04-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">직각삼각형 세 변 위에 정사각형을 세우고, 넓이로 정리를 증명합니다.</div>
+</div>
+
+<section id="sec2">
+<h2>2. 피타고라스 정리 — 수학에서 가장 많이 증명된 정리</h2>
+<p>직각삼각형에서 빗변을 c, 나머지 두 변을 a, b라 하면 <strong>a² + b² = c²</strong>. 기록된 증명만 370가지가 넘는, 수학사상 가장 사랑받는 정리입니다. 위 3D는 그중 가장 직관적인 <strong>넓이 증명</strong>입니다: 세 변 위에 정사각형을 세우면, 두 작은 정사각형의 단위 타일(3²=9개와 4²=16개)이 큰 정사각형(5²=25칸)을 빈틈도 남김도 없이 정확히 채웁니다.</p>
+<p>고전적 증명 하나를 글로도 적어 둡니다. 한 변이 (a+b)인 큰 정사각형 안에 직각삼각형 4개를 모서리에 배치하면 가운데에 한 변이 c인 정사각형이 남습니다. 큰 정사각형의 넓이를 두 방식으로 세면 (a+b)² = 4·(½ab) + c², 전개하면 a²+2ab+b² = 2ab+c², 따라서 a²+b² = c². 역도 성립합니다: 세 변이 a²+b²=c²를 만족하면 그 삼각형은 직각삼각형입니다(예: 3-4-5, 5-12-13 — 측량에서 직각을 만드는 고대의 도구).</p>
+</section>
+
+<section id="sec3">
+<h2>3. 좌표기하 — 도형을 계산으로</h2>
+<p>데카르트의 좌표평면은 기하와 대수를 통일했습니다. 두 점 (x₁,y₁), (x₂,y₂) 사이의 <strong>거리 공식</strong> d = √((x₂−x₁)²+(y₂−y₁)²)은 피타고라스 정리 그 자체입니다 — 가로 차와 세로 차가 두 직각변, 거리가 빗변. 3차원이면 √(Δx²+Δy²+Δz²)로 자연스럽게 확장됩니다.</p>
+<p>거리 공식에서 <strong>원의 방정식</strong>이 즉시 나옵니다: 중심 (a,b)에서 거리 r인 점들의 집합, (x−a)² + (y−b)² = r². "도형 = 조건을 만족하는 점들의 집합 = 방정식"이라는 번역 사전이 완성되면, 자와 컴퍼스의 문제가 식 계산 문제로 바뀝니다. 직선과 원의 위치 관계(만나는가?)는 2장의 판별식 문제가 되고, 접선 조건은 "D = 0"이 됩니다 — 장들이 서로 연결되는 지점입니다.</p>
+</section>
+
+<section id="sec4">
+<h2>4. 삼각비 — 닮음이 주는 보편 상수</h2>
+<p>직각삼각형에서 한 예각 θ가 정해지면, 삼각형의 크기와 무관하게 변들의 <strong>비율</strong>이 정해집니다(AA 닮음). 이 비율에 이름을 붙인 것이 삼각비입니다: sin θ = 높이/빗변, cos θ = 밑변/빗변, tan θ = 높이/밑변. 닮음 덕분에 "각도만 알면 비율을 안다" — 그래서 30°-60°-90° 삼각형의 1 : √3 : 2, 45° 삼각형의 1 : 1 : √2 비율만 외우면 측량이 시작됩니다.</p>
+<p>피타고라스 정리를 빗변 1인 직각삼각형에 적용하면 <strong>sin²θ + cos²θ = 1</strong> — 삼각함수의 가장 중요한 항등식이 기하에서 공짜로 나옵니다. 일반 삼각형으로 확장하면 코사인법칙 c² = a² + b² − 2ab·cos C (C = 90°면 피타고라스로 환원)와 사인법칙 a/sin A = b/sin B = c/sin C = 2R을 얻습니다. 다음 장에서 이 삼각비를 "각도의 함수"로 승격시킵니다.</p>
+<div class="formula">a² + b² = c² &nbsp;|&nbsp; d = √(Δx²+Δy²) &nbsp;|&nbsp; (x−a)²+(y−b)² = r² &nbsp;|&nbsp; c² = a²+b²−2ab cos C</div>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="03-functions.html" style="text-decoration:none;">← 3. 함수와 그래프</a><a href="05-trigonometry.html" style="text-decoration:none;">5. 삼각함수 — 원과 파동 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>피타고라스 정리는 "직각삼각형의 두 짧은 변으로 만든 정사각형 두 개를 잘라 붙이면, 빗변으로 만든 정사각형이 정확히 된다"는 넓이 이야기예요. 위 3D의 타일 9개 + 16개 = 25개가 그 증명 전부입니다.</p>
+  <h3>왜 중요한가?</h3>
+  <p>내비게이션의 직선거리, 게임에서 두 캐릭터 사이 거리, 모니터 "27인치"(대각선!), 사다리를 벽에 얼마나 멀리 놓을지 — 일상에서 거리를 재는 거의 모든 계산이 피타고라스입니다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>직각삼각형</strong>: 한 각이 90°인 삼각형 — 빗변(가장 긴 변)과 두 직각변</li>
+    <li><strong>합동</strong>: 모양도 크기도 같음 / <strong>닮음</strong>: 모양만 같음(비율 일정)</li>
+    <li><strong>거리 공식</strong>: √(가로차² + 세로차²) — 피타고라스의 좌표 버전</li>
+    <li><strong>삼각비</strong>: 직각삼각형 변들의 비율 (sin, cos, tan)</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>왜 "제곱"이 나올까요? 변의 길이에 정사각형의 "넓이"를 대응시켰기 때문이에요. 길이 3의 변 위에 세운 정사각형은 타일 9장, 길이 4면 16장. 신기하게도 이 25장이 빗변 위 5×5 정사각형에 꼭 들어맞아요. 어떤 직각삼각형으로 해도 항상 맞는다는 것 — 그것이 "정리"이고, 항상 맞는 이유를 따지는 것이 "증명"입니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 3-4-5, 5-12-13, 8-15-17 — 자주 나오는 피타고라스 세 쌍(직각을 이루는 자연수 변)을 외워 두면 문제 풀이 속도가 크게 빨라집니다. 그리고 "빗변이 항상 최장"이므로 c 자리에 어떤 수가 오는지부터 확인하세요.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>삼각형 내각의 합 180°, n각형은 (n−2)×180°</li>
+    <li>합동 조건 SSS·SAS·ASA, 닮음 조건엔 AA 포함</li>
+    <li>닮음비 k ⇒ 넓이비 k², 부피비 k³</li>
+    <li>a²+b² = c² (직각삼각형), 역도 성립</li>
+    <li>거리 공식·원의 방정식 = 피타고라스의 좌표 번역</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>유클리드 <em>원론</em>의 다섯 번째 공준(평행선 공준: 한 점을 지나 주어진 직선에 평행한 직선은 단 하나)은 2000년간 "증명되어야 할 정리"로 의심받았습니다. 19세기에 보여진 답은 충격적이었습니다: 이 공준을 부정해도 모순 없는 기하가 존재합니다. 평행선이 무한히 많은 <strong>쌍곡기하</strong>(로바쳅스키), 하나도 없는 <strong>구면(타원)기하</strong>(리만). 구면 위 삼각형의 내각 합은 180°보다 크고, 그 초과분이 넓이에 비례합니다 — "내각 합 180°"는 진리가 아니라 평탄한 공간의 성질이었던 것입니다.</p>
+  <p>피타고라스 정리도 같은 운명입니다. 휘어진 공간에서는 성립하지 않으며, 일반화된 버전(계량 텐서 ds² = gᵢⱼdxⁱdxʲ)이 그 자리를 차지합니다. 아인슈타인의 일반상대성이론은 "중력 = 공간의 휘어짐"을 정확히 이 언어로 씁니다.</p>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>🎯 예제 1 — 직선과 원의 위치 관계</h4><p>원 x²+y² = 5와 직선 y = x+k가 접할 조건은? 대입하면 2x²+2kx+(k²−5) = 0, 접함 ⟺ D/4 = k²−2(k²−5) = 0 ⟺ k² = 10, k = ±√10. 기하 문제("접한다")가 2장의 판별식 문제로 번역되는 전형입니다.</p></div>
+  <div class="info-card"><h4>🎯 예제 2 — 닮음으로 높이 재기</h4><p>막대(1.5m)의 그림자가 2m일 때 나무 그림자가 12m면 나무 높이는? 같은 시각 태양 고도가 같으므로 두 삼각형은 AA 닮음. 1.5 : 2 = h : 12, h = 9m. 탈레스가 피라미드 높이를 잰 바로 그 방법입니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① <strong>GPS</strong>: 위성까지의 거리들로 위치를 결정하는 삼변측량은 3차원 거리 공식(= 피타고라스) 연립이 핵심입니다. ② <strong>컴퓨터 비전</strong>: 카메라의 원근 투영, 에피폴라 기하 — 전부 닮음과 비례의 산물. ③ <strong>로보틱스</strong>: 관절 로봇의 끝점 위치 계산(순기구학)은 삼각비의 연쇄. ④ <strong>게임 물리</strong>: 충돌 판정의 기본 연산이 거리 공식이며, 제곱근을 피하려고 d² 비교를 쓰는 것이 표준 최적화입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① 빗변이 아닌 변을 c로 놓기 — 직각의 "맞은편" 변이 빗변. ② 닮음비와 넓이비 혼동 — 길이 2배면 넓이 4배. ③ 원의 방정식에서 반지름 r과 r² 혼동: (x−1)²+y² = 9의 반지름은 3. ④ "내각 합 180°"를 구면(지구) 위 장거리 항로에 적용 — 평면에서만 성립.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>현대적 관점에서 기하학은 클라인의 <strong>에를랑겐 프로그램</strong>(1872)으로 정리됩니다: 기하학이란 "변환군 아래 불변인 성질의 연구"다. 유클리드 기하는 강체 변환(회전·평행이동·반사)군의 불변량(길이·각도), 아핀 기하는 평행성, 사영 기하는 공선성(직선 위에 있음), 위상수학은 연속 변형의 불변량을 다룹니다. 군이 클수록 불변량은 적어지고 기하는 "부드러워"집니다.</p>
+<p>피타고라스 정리의 현대적 자리는 <strong>내적 공간</strong>입니다. 내적 ⟨u,v⟩가 정의된 벡터공간에서 u⊥v이면 ‖u+v‖² = ‖u‖²+‖v‖² — 이것이 추상화된 피타고라스이며, 푸리에 급수의 파스발 항등식(∑|cₙ|² = ‖f‖²)은 "무한차원 피타고라스"입니다. 통계학의 분산 분해(총변동 = 설명된 변동 + 잔차 변동)도 직교 사영의 피타고라스입니다.</p>
+  <h3>수학적·정량적 기초</h3>
+  <div class="formula">내적 공간: u ⊥ v ⇒ ‖u+v‖² = ‖u‖² + ‖v‖²<br>구면 삼각형: 내각합 − π = 넓이/R² (가우스–보네의 특수형)<br>피타고라스 세 쌍 생성: (m²−n², 2mn, m²+n²), m &gt; n ≥ 1</div>
+  <p>피타고라스 세 쌍의 일반해 (m²−n², 2mn, m²+n²)는 원시 세 쌍 전부를 생성합니다(m, n 서로소·홀짝 다름). 이 문제의 지수를 3 이상으로 올린 것이 페르마의 마지막 정리 — xⁿ+yⁿ = zⁿ (n≥3)은 자연수 해가 없다 — 이며, 1995년 와일즈가 타원곡선의 모듈러성을 통해 증명했습니다. 고대의 직각삼각형이 20세기 수론의 정점으로 이어진 것입니다.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>기하적 딥러닝</strong>: 데이터의 대칭성(군 작용)을 신경망 구조에 내장하는 equivariant network — 에를랑겐 프로그램의 ML 버전으로 불립니다. ② <strong>이산 미분기하</strong>: 메시(mesh) 위의 곡률·측지선 계산이 3D 그래픽스/시뮬레이션의 수학적 기반. ③ <strong>계산 기하</strong>: 보로노이 다이어그램, 들로네 삼각분할의 고차원·동적 알고리즘.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>선형대수</strong>: 내적, 직교 사영 — 피타고라스의 추상화</li>
+    <li><strong>미분기하·상대성이론</strong>: 계량 텐서, 휘어진 공간의 "거리"</li>
+    <li><strong>수론</strong>: 피타고라스 세 쌍 → 페르마의 마지막 정리</li>
+    <li><strong>통계학</strong>: 최소제곱법 = 직교 사영, 분산 분해</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 유클리드, <em>원론</em> 1권 (47번 명제가 피타고라스 정리)</li>
+    <li>📖 Robin Hartshorne, <em>Geometry: Euclid and Beyond</em></li>
+    <li>📖 Eli Maor, <em>The Pythagorean Theorem: A 4,000-Year History</em></li>
+    <li>📺 3Blue1Brown — 시각적 기하 증명 모음</li>
+    <li>🔬 키워드: Erlangen program, inner product space, non-Euclidean geometry, Gauss–Bonnet</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> ① (a+b)² 정사각형 배치 증명을 그림으로 직접 재구성하기. ② 닮음을 이용한 피타고라스 증명(빗변에 수선을 내려 작은 삼각형 두 개로 분할, c = a²/c + b²/c)을 완성하기. ③ 지구 표면에서 "북극–적도–적도" 세 점으로 내각 합 270°인 삼각형을 만들어 보고, 구면에서 피타고라스 정리가 어떻게 수정되는지(cos c = cos a cos b) 조사하기.</div>
+</div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f43f5e","questions":[{"q":"피타고라스 정리는?","choices":["a²+b²=c²","a+b=c","a²−b²=c²","ab=c²"],"answer":0},{"q":"삼각형 내각의 합은?","choices":["90°","360°","180°","270°"],"answer":2},{"q":"닮음비 k일 때 넓이비는?","choices":["k","2k","k³","k²"],"answer":3},{"q":"sin θ의 정의는?","choices":["밑변/빗변","높이/빗변","높이/밑변","빗변/높이"],"answer":1},{"q":"거리 공식의 바탕이 되는 정리는?","choices":["사인법칙","나머지정리","피타고라스 정리","인수정리"],"answer":2}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('math3d-04');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('math3d-04-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+
+  // 삼각형: A(0,0,0) 직각, B(3,0,0), C(0,0,-4) — 전체를 보기 좋게 중앙 이동
+  var ROOT=new THREE.Group();scene.add(ROOT);
+  ROOT.position.set(-1.6,0,1.0);
+  camera.position.set(2,11,10.5);camera.lookAt(0,0,-1);
+
+  var A=V(0,0,0),B=V(3,0,0),C=V(0,0,-4);
+  // 삼각형 윤곽
+  ROOT.add(line(A,B,0x39415a,0.95));
+  ROOT.add(line(A,C,0x39415a,0.95));
+  ROOT.add(line(B,C,0x39415a,0.95));
+  // 직각 표시
+  ROOT.add(line(V(0.35,0,0),V(0.35,0,-0.35),0x39415a,0.8));
+  ROOT.add(line(V(0.35,0,-0.35),V(0,0,-0.35),0x39415a,0.8));
+  var aLab=lbl('a = 3',24,'#2f9e63',0.95);aLab.position.set(1.5,0.45,0.35);ROOT.add(aLab);
+  var bLab=lbl('b = 4',24,'#5b6bd6',0.95);bLab.position.set(-0.55,0.45,-2);ROOT.add(bLab);
+  var cLab=lbl('c = 5',24,'#d6455b',0.95);cLab.position.set(1.85,0.45,-2.35);ROOT.add(cLab);
+
+  // 빗변 방향/법선
+  var dHat=V(-0.6,0,-0.8), nHat=V(0.8,0,-0.6);
+  var hypAngle=Math.atan2(0.8,-0.6); // 박스 회전각: local +x -> dHat
+
+  function tile(color){
+    var m=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.16,0.9),mat(color,0.96));
+    ROOT.add(m);return m;
+  }
+  // a² 타일 (3x3, x∈[0,3], z∈[0,3] — 삼각형 바깥쪽)
+  var aTiles=[];
+  for(var i=0;i<3;i++)for(var j=0;j<3;j++){
+    var t=tile(0x2f9e63);
+    t.userData.home=V(i+0.5,0,j+0.5);
+    t.position.copy(t.userData.home);
+    aTiles.push(t);
+  }
+  // b² 타일 (4x4, x∈[-4,0], z∈[-4,0])
+  var bTiles=[];
+  for(var i2=0;i2<4;i2++)for(var j2=0;j2<4;j2++){
+    var t2=tile(0x5b6bd6);
+    t2.userData.home=V(-(i2+0.5),0,-(j2+0.5));
+    t2.position.copy(t2.userData.home);
+    bTiles.push(t2);
+  }
+  // c² 목표 칸 (5x5, 빗변 바깥쪽) + 윤곽
+  var targets=[];
+  for(var ii=0;ii<5;ii++)for(var jj=0;jj<5;jj++){
+    var p=V(B.x,0,B.z).add(dHat.clone().multiplyScalar(ii+0.5)).add(nHat.clone().multiplyScalar(jj+0.5));
+    targets.push(p);
+  }
+  var cc1=B.clone(),cc2=C.clone(),cc3=C.clone().add(nHat.clone().multiplyScalar(5)),cc4=B.clone().add(nHat.clone().multiplyScalar(5));
+  var outline=[line(cc1,cc2,0xd6455b,0.9),line(cc2,cc3,0xd6455b,0.9),line(cc3,cc4,0xd6455b,0.9),line(cc4,cc1,0xd6455b,0.9)];
+  outline.forEach(function(l){l.visible=false;ROOT.add(l);});
+
+  var aSqL=lbl('a² = 9',26,'#2f9e63',1);aSqL.position.set(1.5,1.0,1.5);aSqL.visible=false;ROOT.add(aSqL);
+  var bSqL=lbl('b² = 16',26,'#5b6bd6',1);bSqL.position.set(-2,1.0,-2);bSqL.visible=false;ROOT.add(bSqL);
+  var cCenter=B.clone().add(dHat.clone().multiplyScalar(2.5)).add(nHat.clone().multiplyScalar(2.5));
+  var cSqL=lbl('c² = ?',26,'#d6455b',1);cSqL.position.set(cCenter.x,1.0,cCenter.z);cSqL.visible=false;ROOT.add(cSqL);
+  function setCSqL(txt){
+    ROOT.remove(cSqL);cSqL=lbl(txt,26,'#d6455b',1);cSqL.position.set(cCenter.x,1.0,cCenter.z);cSqL.visible=true;ROOT.add(cSqL);
+  }
+
+  var all=aTiles.concat(bTiles); // 25개 — targets와 1:1
+  function resetTiles(){
+    all.forEach(function(t,k){
+      t.position.copy(t.userData.home);
+      t.rotation.y=0;
+      t.scale.set(0.001,0.001,0.001);
+      t.userData.target=targets[k];
+    });
+    outline.forEach(function(l){l.visible=false;});
+    aSqL.visible=bSqL.visible=cSqL.visible=false;
+  }
+  resetTiles();
+
+  var phases=[
+    {dur:4,cap:'① 변이 3, 4, 5인 직각삼각형. 빗변 c는 직각의 맞은편, 가장 긴 변입니다.',
+     enter:function(){resetTiles();},
+     update:function(u){}},
+    {dur:5,cap:'② 두 직각변 위에 정사각형을 세웁니다. 한 변이 a=3이면 단위 타일 9장(a²), b=4면 16장(b²) — "제곱"은 곧 넓이입니다.',
+     enter:function(){aSqL.visible=true;bSqL.visible=true;},
+     update:function(u){
+       all.forEach(function(t,k){var s=ez(Math.min(1,Math.max(0,u*30-k)));t.scale.set(s,s,s);});
+     }},
+    {dur:4,cap:'③ 빗변 위에도 정사각형 자리(5×5 = 25칸)를 그립니다. 과연 9 + 16장의 타일이 이 25칸을 채울 수 있을까요?',
+     enter:function(){outline.forEach(function(l){l.visible=true;});setCSqL('c² = ?');},
+     update:function(u){}},
+    {dur:8,cap:'④ 타일이 날아가 빗변의 정사각형을 빈틈도, 남김도 없이 정확히 채웁니다: 9 + 16 = 25, 즉 a² + b² = c².',
+     enter:function(){},
+     update:function(u){
+       all.forEach(function(t,k){
+         var w=ez(Math.min(1,Math.max(0,(u*1.25-k*0.012))));
+         var h=t.userData.home,g=t.userData.target;
+         t.position.set(h.x+(g.x-h.x)*w,Math.sin(w*Math.PI)*1.6,h.z+(g.z-h.z)*w);
+         t.rotation.y=w*hypAngle;
+       });
+       if(u>0.92)setCSqL('c² = 25 = 9 + 16');
+     }},
+    {dur:5,cap:'⑤ a² + b² = c². 어떤 직각삼각형에서도 성립하며, 역도 참입니다 — 좌표평면의 거리 공식 √(Δx²+Δy²)이 바로 이 정리입니다.',
+     enter:function(){setCSqL('a² + b² = c²');},
+     update:function(u,dt,tt){
+       all.forEach(function(t,k){t.position.y=0.12+Math.sin(tt*2.4+k*0.25)*0.06;});
+     }}
+  ];
+
+  var pi=0,pt=0,last=0,tt=0;
+  phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;tt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt,tt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

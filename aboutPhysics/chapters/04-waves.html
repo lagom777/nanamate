@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -80,7 +82,7 @@
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -115,6 +117,11 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 분산성 매질에서 가우시안 파속이 시간이 지남에 따라 어떻게 퍼지는지 군속도와 분산계수로 정량 분석해 보세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00d4ff","questions":[{"q":"파동의 기본 공식 v는?","choices":["fλ","f/λ","λ/f","f+λ"],"answer":0},{"q":"소리는 어떤 파동인가?","choices":["횡파","전자기파","종파","정상파"],"answer":2},{"q":"20°C 공기 중 소리의 속력은?","choices":["약 150 m/s","약 343 m/s","약 3×10⁸ m/s","약 1500 m/s"],"answer":1},{"q":"맥놀이 진동수의 공식은?","choices":["f₁+f₂","f₁×f₂","f₁/f₂","|f₁−f₂|"],"answer":3},{"q":"줄에서 파동의 속도 v는?","choices":["√(T/μ)","T/μ","μ/T","√(μT)"],"answer":0}]};</script>
 </main>
 </div>
 

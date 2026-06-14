@@ -2,11 +2,13 @@
 <title>2. 리듬과 박자 — aboutMusic</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">🎵 표지</a></li><li><a href="chapters/01-basics.html">1. 음악 기초</a></li><li><a href="chapters/02-rhythm.html">2. 리듬과 박자</a></li><li><a href="chapters/03-harmony.html">3. 화성학</a></li><li><a href="chapters/04-melody.html">4. 멜로디와 작곡</a></li><li><a href="chapters/05-form.html">5. 음악 형식</a></li><li><a href="chapters/06-genres.html">6. 장르의 이해</a></li><li><a href="chapters/07-production.html">7. 음악 제작</a></li><li><a href="chapters/08-ear-training.html">8. 청음 훈련</a></li><li><a href="chapters/09-modern.html">9. 현대 음악이론</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🎵 표지</a></li><li><a href="01-basics.html">1. 음악 기초</a></li><li><a href="02-rhythm.html">2. 리듬과 박자</a></li><li><a href="03-harmony.html">3. 화성학</a></li><li><a href="04-melody.html">4. 멜로디와 작곡</a></li><li><a href="05-form.html">5. 음악 형식</a></li><li><a href="06-genres.html">6. 장르의 이해</a></li><li><a href="07-production.html">7. 음악 제작</a></li><li><a href="08-ear-training.html">8. 청음 훈련</a></li><li><a href="09-modern.html">9. 현대 음악이론</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>리듬과 박자</em></h1><p class="authors">Chapter 2 — Rhythm, Meter & Time Signatures</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 4/4 박자 시퀀서 — 박이 하나씩 차례로 튀어오르는 리듬 그리드</span>
 <h2>리듬과 박자</h2><p>Rhythm, Meter & Time Signatures의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Rhythm, Meter & Time Signatures</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -62,5 +64,23 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 좋아하는 곡 한 곡을 4/4에서 7/8로 바꿔 보고, 박자가 바뀔 때 멜로디·화성·정서가 어떻게 달라지는지 기록해 보라.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ec4899","questions":[{"q":"곡의 빠르기를 측정하는 단위는?","choices":["Hz","dB","BPM","km"],"answer":2},{"q":"약박을 강조해 흥겨움을 만드는 것은?","choices":["당김음","템포","박자표","옥타브"],"answer":0},{"q":"4분음표가 한 박이면 8분음표는?","choices":["두 박","한 박","네 박","반 박"],"answer":3},{"q":"「Take Five」의 박자는?","choices":["4/4","5/4","6/8","3/4"],"answer":1},{"q":"복합박에 해당하는 박자는?","choices":["2/4","3/4","6/8","4/4"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,2.5,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const bars=[];const beats=4,subs=4;for(let b=0;b<beats;b++){for(let sd=0;sd<subs;sd++){const idx=b*subs+sd;const strong=(sd===0);const col=new THREE.Color().setHSL(strong?0.0:0.58,0.7,strong?0.55:0.5);const bar=new THREE.Mesh(new THREE.BoxGeometry(0.4,1,0.4),new THREE.MeshBasicMaterial({color:col}));bar.position.set((idx-7.5)*0.55,0,0);s.add(bar);bars.push({m:bar,strong:strong});}}
+  const gridGeo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-4.5,-0.6,0),new THREE.Vector3(4.5,-0.6,0)]);s.add(new THREE.Line(gridGeo,new THREE.LineBasicMaterial({color:0x888888})));
+  s.userData.bars=bars;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const head=Math.floor(T*4)%16;s.userData.bars.forEach((o,i)=>{const hit=(i===head);const h=hit?(o.strong?2.4:1.7):1;o.m.scale.y=h;o.m.position.y=(h-1)*0.5;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

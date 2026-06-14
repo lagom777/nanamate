@@ -2,6 +2,7 @@
 <title>중국어: 니하오부터 HSK까지</title><link rel="stylesheet" href="styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../shared/light-theme.css">
   <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
   <script defer src="../shared/difficulty.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">🇨🇳 표지</a></li><li><a href="chapters/01-pinyin.html">1. 발음과 성조</a></li><li><a href="chapters/02-basic-grammar.html">2. 기초 문법</a></li><li><a href="chapters/03-characters.html">3. 한자 기초</a></li><li><a href="chapters/04-daily.html">4. 일상 회화</a></li><li><a href="chapters/05-hsk3.html">5. HSK 3급 대비</a></li><li><a href="chapters/06-hsk4.html">6. HSK 4급 대비</a></li><li><a href="chapters/07-business.html">7. 비즈니스 중국어</a></li><li><a href="chapters/08-culture.html">8. 중국 문화와 언어</a></li><li><a href="chapters/09-advanced.html">9. 고급 독해와 작문</a></li></ol></aside>
@@ -11,4 +12,15 @@
 <div class="scene-3d" id="intro-scene"></div><span class="interact-hint">🇨🇳 한자 3D 시각화</span>
 <h2>중국어를 배우는 이유</h2><p>14억 인구가 사용하는 세계 최대 언어. 비즈니스, 여행, 문화 이해까지 — 발음(성조)부터 HSK 시험 대비, 비즈니스 중국어까지 체계적으로 학습합니다.</p>
 </main></div>
-<script>(function(){const c=document.getElementById('intro-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,10);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<20;i++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.8,0.1),new THREE.MeshBasicMaterial({color:[0xef4444,0xfbbf24,0xf97316][i%3],wireframe:true}));m.position.set((Math.random()-0.5)*8,(Math.random()-0.5)*5,(Math.random()-0.5)*3);m.rotation.set(Math.random(),Math.random(),0);s.add(m);}function a(){requestAnimationFrame(a);s.rotation.y+=0.003;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('intro-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=16281969;const cubes=[];for(let i=0;i<24;i++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5),new THREE.MeshBasicMaterial({color:C,transparent:true,opacity:0.5+Math.random()*0.4,wireframe:Math.random()<0.4}));m.position.set((Math.random()-0.5)*8,(Math.random()-0.5)*5,(Math.random()-0.5)*5);m.rotation.set(Math.random()*3,Math.random()*3,0);s.add(m);cubes.push(m);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;cubes.forEach((c2,i)=>{c2.rotation.x+=0.005;c2.rotation.y+=0.006;c2.position.y+=Math.sin(T+i)*0.003;});s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

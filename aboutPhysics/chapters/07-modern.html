@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -79,7 +81,7 @@
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -114,6 +116,11 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 슈바르츠실트 메트릭에서 광자가 사건의 지평을 통과할 때 멀리 있는 관측자가 보는 적색편이가 발산함을 시간성분 g_tt 분석으로 보이세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00d4ff","questions":[{"q":"움직이는 시계는 어떻게 되는가?","choices":["빨라진다","느리게 간다","멈춘다","변화 없다"],"answer":1},{"q":"질량-에너지 등가 공식은?","choices":["F=ma","PV=nRT","E=mc²","v=fλ"],"answer":2},{"q":"일반상대성에서 중력의 정체는?","choices":["힘","자기장","입자 교환","시공간 곡률"],"answer":3},{"q":"v=0.6c일 때 γ 값은?","choices":["1.25","0.8","2.0","1.5"],"answer":0},{"q":"LIGO 중력파 검출 연도는?","choices":["2005년","2010년","2015년","2020년"],"answer":2}]};</script>
 </main>
 </div>
 

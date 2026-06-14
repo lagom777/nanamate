@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 붉은 불꽃을 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 진화적 기능 — 생존을 도운 적응의 갈래</span>
 
 <h2>진화와 기능 개요</h2>
 <p>분노는 자원 경쟁·영역 보호·사회적 처벌이라는 세 가지 진화 과제를 풀기 위해 만들어진 정서적 도구다. 동물의 위협 디스플레이부터 인간 특유의 도덕적 분노까지, 분노는 단순한 폭력 충동이 아니라 집단 협력을 유지하는 "사회 신호 장치"다. 분노가 없었다면 인류는 무임승차자에게 잡아먹혔을 것이다.</p>
@@ -74,5 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 본인이 최근 한 달간 화났던 사건들을 모아 "내 가치 재계산 요구"와 "집단 규범 위반 처벌" 중 어느 쪽이 70%를 차지하는지 분석해보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ef4444","questions":[{"q":"좌절-공격 가설의 핵심은?","choices":["목표 막히면 공격↑","잠 부족시 분노","배고프면 화남","추우면 공격"],"answer":0},{"q":"이타적 처벌이 막는 행위는?","choices":["수면","무임승차","운동","식사"],"answer":1},{"q":"인간 고유의 분노는?","choices":["도구적 분노","위협 분노","도덕적 분노","공포 분노"],"answer":2},{"q":"재계산 이론을 제시한 학자는?","choices":["Sell 등","Bowlby","Ekman","Novaco"],"answer":0},{"q":"공공재 게임 처벌을 보인 학자는?","choices":["LeDoux","Bandura","Fehr","Gross"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0xef4444;const parts=[];for(let i=0;i<34;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xef4444;function branch(x,y,len,ang,d){if(d<=0)return;const x2=x+Math.cos(ang)*len,y2=y+Math.sin(ang)*len;s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,y,0),new THREE.Vector3(x2,y2,0)]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.5})));const n=new THREE.Mesh(new THREE.SphereGeometry(0.08+d*0.03,10,10),new THREE.MeshBasicMaterial({color:COL}));n.position.set(x2,y2,0);s.add(n);branch(x2,y2,len*0.72,ang+0.5,d-1);branch(x2,y2,len*0.72,ang-0.5,d-1);}branch(0,-2.6,1.5,Math.PI/2,4);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -2,14 +2,16 @@
 <title>8. 미디어와 정치 — aboutPolitics</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">🏛️ 표지</a></li><li><a href="01-intro.html">1. 정치학 개론</a></li><li><a href="02-ideologies.html">2. 정치 이념</a></li><li><a href="03-democracy.html">3. 민주주의</a></li><li><a href="04-institutions.html">4. 정치 제도</a></li><li><a href="05-parties.html">5. 정당과 선거</a></li><li><a href="06-international.html">6. 국제 정치</a></li><li><a href="07-public-policy.html">7. 공공 정책</a></li><li><a href="08-media.html">8. 미디어와 정치</a></li><li><a href="09-contemporary.html">9. 현대 정치</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>미디어와 정치</em></h1><p class="authors">Chapter 8 — Media, Propaganda & Public Opinion</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
-<h2>미디어와 정치 개요</h2><p>Media, Propaganda & Public Opinion의 핵심 원리를 3D로 학습합니다.</p>
-<div class="info-card"><h4>핵심 개념</h4><p>Media, Propaganda & Public Opinion</p></div>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 드래그로 회전 · 하단 캡션이 단계별로 설명합니다</span>
+<h2>미디어와 정치 개요</h2><p>미디어는 정치 정보를 전달하는 통로이자, 무엇이 중요한 의제인지(의제설정)와 그것을 어떤 틀로 볼지(프레이밍)를 결정하는 권력이다. 디지털 시대에는 알고리즘이 보이지 않는 편집자가 되어 각자가 보는 세계를 다르게 만들고, 이는 여론의 분극화와도 맞물린다. 위 3D 장면은 세상의 수많은 사건 가운데 일부만 미디어의 문을 통과하고(게이트키핑), 같은 사건이 다른 프레임으로 채색되며, 알고리즘이 비슷한 성향끼리 묶는 과정을 보여준다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>미디어의 세 가지 힘: ① 게이트키핑 — 무엇을 보도할지 선별, ② 프레이밍 — 같은 사실을 어떤 틀로 보여줄지 결정, ③ 알고리즘 큐레이션 — 이용자별로 다른 정보 세계를 구성. 이 셋을 알아야 뉴스를 비판적으로 읽을 수 있다.</p></div>
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
@@ -37,11 +39,111 @@
 </div>
 <div class="difficulty-content" data-level="hard">
   <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3><p>현대 미디어 정치 연구는 매스미디어 시대의 효과 모델에서 디지털·알고리즘 미디어 환경 연구로 패러다임이 이동했습니다. 베넷과 아이옌가의 '잘 정착된 시민(citizen-as-monitorial)' 개념은 시민이 미디어 환경을 능동적으로 항해하는 모습을 그리지만, 동시에 정보 과부하와 진실 인식 위기(epistemic crisis)도 부각됩니다. 알고리즘 정치 연구(투페키, 누나와) 는 추천 시스템이 어떻게 음모론·극단주의를 증폭시키는지를 분석합니다. 메타정치(metapolitics)와 대안우파 미디어 생태계 연구(루이스, 도노반)는 4chan, Telegram, Substack 같은 분산 플랫폼이 새로운 정치 동원의 인프라가 되는 방식을 추적합니다. 컴퓨테이셔널 프로파간다(우들리, 하워드) 연구는 봇과 가짜 계정 네트워크가 어떻게 여론에 개입하는지를 데이터로 분석합니다. 비판이론 측면에서 만하임의 이데올로기론, 부르디외의 미디어 장(field) 이론, 페어클로프의 비판적 담론분석(CDA)은 미디어 권력의 작동을 다양한 층위에서 해석하게 합니다. 한편 미디어 자유 측정(Reporters Without Borders, V-Dem 미디어 변수)은 글로벌 비교 연구의 인프라를 제공합니다.</p>
+  <h3>전문가 레벨</h3><p>현대 미디어 정치 연구는 매스미디어 시대의 효과 모델에서 디지털·알고리즘 미디어 환경 연구로 패러다임이 이동했습니다. 슈드슨의 '모니터링 시민(monitorial citizen)' 개념은 시민이 미디어 환경을 능동적으로 감시하며 항해하는 모습을 그리지만, 동시에 정보 과부하와 진실 인식 위기(epistemic crisis)도 부각됩니다. 알고리즘 정치 연구(투페키 등)는 추천 시스템이 어떻게 음모론·극단주의를 증폭시키는지를 분석합니다. 메타정치(metapolitics)와 대안우파 미디어 생태계 연구(루이스, 도노반)는 4chan, Telegram, Substack 같은 분산 플랫폼이 새로운 정치 동원의 인프라가 되는 방식을 추적합니다. 컴퓨테이셔널 프로파간다(우들리, 하워드) 연구는 봇과 가짜 계정 네트워크가 어떻게 여론에 개입하는지를 데이터로 분석합니다. 비판이론 측면에서 만하임의 이데올로기론, 부르디외의 미디어 장(field) 이론, 페어클로프의 비판적 담론분석(CDA)은 미디어 권력의 작동을 다양한 층위에서 해석하게 합니다. 한편 미디어 자유 측정(Reporters Without Borders, V-Dem 미디어 변수)은 글로벌 비교 연구의 인프라를 제공합니다.</p>
   <h3>주요 학파/논쟁</h3><p>미디어 효과론은 강효과(이펙트)·제한효과·중간효과론 사이의 오래된 진동을 거쳐, 현재는 '조건적 효과(conditional effects)' 합의에 가까워졌습니다. 객관주의 저널리즘 vs 옹호 저널리즘 논쟁은 디지털 환경에서 다시 활발하며, 솔루션 저널리즘 같은 대안도 부상합니다. 플랫폼 규제 논쟁(섹션 230, EU 디지털 서비스법)은 표현의 자유와 유해 콘텐츠 통제 사이의 긴장을 보여줍니다.</p>
   <h3>최신 연구</h3><p>첫째, 생성형 AI와 딥페이크가 선거에 미치는 영향 연구가 폭증합니다. 2024년 슈퍼선거의 해를 거치며 AI 합성 콘텐츠와 정치 광고의 새로운 윤리 문제가 부상했습니다. 둘째, 정서적 양극화(affective polarization) 연구는 미디어 노출과 정치적 적대감 사이의 관계를 정밀 분석합니다. 셋째, 미디어 리터러시 교육과 사실 검증(fact-checking)의 효과성 연구가 활발합니다.</p>
   <h3>관련 분야</h3><ul><li>저널리즘 연구</li><li>정치커뮤니케이션</li><li>미디어 사회학</li></ul>
   <h3>추가 자료</h3><ul><li>Edward Herman & Noam Chomsky, 『Manufacturing Consent』</li><li>Daniel Hallin & Paolo Mancini, 『Comparing Media Systems』</li><li>Zeynep Tufekci, 『Twitter and Tear Gas』</li></ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 모든 뉴스를 AI가 작성한다면, '저널리즘'이라는 개념은 살아남을 수 있을까요? 인간 기자의 핵심 가치는 정보 전달의 정확성에 있는가, 아니면 사회적 책임과 도덕적 판단에 있는가?</div>
-</div></main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<8;i++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5),new THREE.MeshBasicMaterial({color:[0xdc2626,0x2563eb,0x16a34a][i%3],wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+</div>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#dc2626","questions":[{"q":"무엇을 보도할지 선별하는 작용은?","choices":["프레이밍","게이트키핑","검열","광고"],"answer":1},{"q":"이슈를 어떤 틀로 보여주는가의 개념은?","choices":["의제설정","여론","프레이밍","보도"],"answer":2},{"q":"디지털 시대의 보이지 않는 편집자는?","choices":["알고리즘","기자","정당","광고주"],"answer":0},{"q":"의제설정 이론을 제시한 학자는?","choices":["라자스펠드","엔트만","촘스키","매콤스와 쇼"],"answer":3},{"q":"침묵의 나선 이론의 주창자는?","choices":["파리저","선스타인","노엘레-노이만","허먼"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+function start(){
+  const c=document.getElementById('sim-scene');
+  if(!c||typeof THREE==='undefined')return;
+  const W=c.clientWidth||800,H=c.clientHeight||400;
+  const scene=new THREE.Scene();
+  scene.background=new THREE.Color(0xf4f6fb);
+  const cam=new THREE.PerspectiveCamera(50,W/H,0.1,1000);
+  let renderer;try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  c.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.95));
+  const dlight=new THREE.DirectionalLight(0xffffff,0.5);dlight.position.set(5,10,7);scene.add(dlight);
+  const tEl=document.createElement('div');
+  tEl.textContent='3D · 게이트키핑 · 프레이밍 · 필터버블';
+  tEl.style.cssText='position:absolute;top:10px;left:12px;font:700 11px/1.4 ui-monospace,monospace;letter-spacing:0.1em;color:#5b6bd6;background:rgba(255,255,255,0.88);padding:3px 9px;border-radius:10px;pointer-events:none;z-index:3;';
+  c.appendChild(tEl);
+  const capEl=document.createElement('div');
+  capEl.style.cssText='position:absolute;left:0;right:0;bottom:0;padding:9px 14px;font-size:0.84em;line-height:1.5;color:#26314a;background:rgba(252,253,255,0.92);border-top:1px solid rgba(40,60,110,0.08);pointer-events:none;z-index:3;min-height:2.4em;';
+  c.appendChild(capEl);
+  function cap(t){capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function M(col,o){return new THREE.MeshLambertMaterial({color:col,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,col,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),M(col,o));}
+  function sph(r,col,o){return new THREE.Mesh(new THREE.SphereGeometry(r,20,16),M(col,o));}
+  function cyl(r1,r2,h,col,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,24),M(col,o));}
+  function cone(r,h,col,o){return new THREE.Mesh(new THREE.ConeGeometry(r,h,24),M(col,o));}
+  function tor(r,t,col,o,arc){return new THREE.Mesh(new THREE.TorusGeometry(r,t,14,48,arc===undefined?Math.PI*2:arc),M(col,o));}
+  function line(a,b,col,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:col,transparent:true,opacity:o===undefined?0.6:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||26;const cv=document.createElement('canvas');let ctx=cv.getContext('2d');
+    const font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;cv.width=Math.ceil(ctx.measureText(txt).width)+24;cv.height=fs+20;
+    ctx=cv.getContext('2d');ctx.font=font;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillStyle=color||'#2b3242';ctx.fillText(txt,cv.width/2,cv.height/2);
+    const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    const k=(scl||1)*0.012;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  const root=new THREE.Group();scene.add(root);
+  let sway=0.10;
+
+  cam.position.set(0,1.0,12.5);cam.lookAt(0,0.2,0);sway=0.05;
+  const evs=[];for(let i=0;i<16;i++){const m=box(0.3,0.3,0.3,0x9aa3b8);m.position.set(-4.7+(i%2)*0.6,(Math.floor(i/2)-3.5)*0.6+0.2,0);root.add(m);evs.push(m);}
+  const eL=lbl('세상의 사건들',23,'#5a6478',0.9);eL.position.set(-4.4,3.1,0);root.add(eL);
+  const gate=tor(1.0,0.09,0x44518a,1);gate.position.set(-1.1,0.2,0);root.add(gate);
+  const gL=lbl('미디어의 문',23,'#39415a',0.9);gL.position.set(-1.1,1.9,0);root.add(gL);
+  const aud=[];for(let i=0;i<12;i++){const m=sph(0.18,0x7a86a8);m.position.set(2.7+(i%3)*0.55,(Math.floor(i/3)-1.5)*0.62+0.2,0);root.add(m);aud.push(m);}
+  const aL=lbl('시민 · 수용자',23,'#5a6478',0.9);aL.position.set(3.3,3.1,0);root.add(aL);
+  const passIdx=[2,6,9,13];
+  const passers=passIdx.map((pi,k)=>{const m=box(0.3,0.3,0.3,0x44518a);root.add(m);return {m,fy:evs[pi].position.y,k};});
+  let mode=0;
+  const always=function(t){
+    passers.forEach((o,k)=>{
+      const u=((t*0.18)+k/4)%1;
+      const ty=(mode>=2)?((k%2)?1.1:-0.7):0.2;
+      const y=o.fy*(1-u)+ty*u;
+      o.m.position.set(-4.4+7.3*u,y,0.05);
+      if(mode===0){o.m.material.color.set(0x44518a);}
+      else{o.m.material.color.set(u>0.45?((k%2)?0xd9684a:0x3f6fd0):0x9aa3b8);}
+    });
+  };
+  const phases=[
+   {dur:6,cap:'① 게이트키핑 — 수많은 사건 중 미디어의 문을 통과하는 것은 일부뿐이다. 보도되지 않은 사건은 여론의 세계에서 일어나지 않은 일처럼 된다(의제설정).',enter(){mode=0;aud.forEach(m=>m.material.color.set(0x7a86a8));}},
+   {dur:6,cap:'② 프레이밍 — 같은 사건도 문을 지나며 서로 다른 틀(빨강/파랑)을 입는다. "경제 문제"로 부를지 "정치 문제"로 부를지에 따라 수용자의 판단이 달라진다.',enter(){mode=1;}},
+   {dur:7,cap:'③ 필터버블 — 알고리즘은 성향에 맞는 프레임만 골라 배달한다. 수용자가 두 묶음으로 갈라져 서로 다른 "사실의 세계"에 살게 될 수 있다(에코챔버).',enter(){mode=2;aud.forEach((m,i)=>{m.material.color.set(Math.floor(i/3)>=2?0xd9684a:0x3f6fd0);});}},
+   {dur:6,cap:'④ 미디어 리터러시 — 같은 사건을 다른 매체로 교차 확인하고, 내 화면이 어떻게 골라졌는지 의식하는 것이 디지털 시대 시민의 기본기다.'}
+  ];
+  let uy=0,ux=0,md=false,px=0,py=0;
+  c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup',()=>{md=false;});
+  c.addEventListener('mousemove',e=>{if(md){uy+=(e.clientX-px)*0.005;ux+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    const dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    let ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,now/1000);
+    if(typeof always==='function')always(now/1000);
+    root.rotation.y=uy+Math.sin(now/1000*0.25)*sway;
+    root.rotation.x=ux;
+    renderer.render(scene,cam);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',()=>{const w=c.clientWidth,h=c.clientHeight;if(!w||!h)return;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body></html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6. 음택 — 묘지와 명당 — aboutFengshui</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🧭 표지</a></li>
+    <li><a href="01-what-is.html">1. 풍수란 무엇인가</a></li>
+    <li><a href="02-yinyang-five.html">2. 음양오행과 기</a></li>
+    <li><a href="03-form-school.html">3. 형세론 — 산과 물</a></li>
+    <li><a href="04-compass-school.html">4. 이기론 — 나경과 좌향</a></li>
+    <li><a href="05-yangtaek.html">5. 양택 — 집과 공간</a></li>
+    <li><a href="06-eumtaek.html">6. 음택 — 묘지와 명당</a></li>
+    <li><a href="07-interior.html">7. 인테리어·현대 풍수</a></li>
+    <li><a href="08-korea.html">8. 비보풍수와 한국 풍수</a></li>
+    <li><a href="09-science.html">9. 풍수의 과학·비판</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>음택 — 묘지와 명당</em></h1>
+  <p class="authors">Chapter 6 — Yin Dwellings — Burial Sites</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 명당과 발복 — 조상의 기가 후손에게(동기감응)</span>
+
+<h2>음택 — 묘지와 명당 개요</h2>
+<p>음택(陰宅)은 죽은 이를 모시는 무덤의 풍수를 다루는 분야다. 산 사람의 집을 다루는 양택과 짝을 이루며, 동아시아 전통에서는 조상을 어떤 자리에 모시느냐가 후손의 길흉과 번영에 영향을 준다고 여겨 왔다. 이 챕터는 명당과 발복(發福) 사상, 동기감응(同氣感應)이라는 이론적 핵심, 곽박의 『장서(葬書)』, 그리고 좌향·득수·파구 같은 실제 간법의 요소를 살펴본다. 아울러 한국의 명당 신앙과 이장 풍습, 그리고 과학적 검증의 한계까지 균형 있게 다룬다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>음택 풍수는 좋은 자리(명당)에 조상의 유골을 모시면 같은 기를 나눈 후손에게 그 기운이 전해진다는 동기감응 사상에 뿌리를 둔다. 곽박의 『장서』가 그 고전적 근거로 여겨지며, 산세(좌향)와 물의 흐름(득수·파구)을 읽어 자리를 정한다. 한국에서는 명당을 둘러싼 신앙과 묘를 옮기는 이장 풍습이 깊이 자리 잡았으나, 발복의 인과 관계는 과학적으로 입증된 바가 없다는 비판도 함께 존재한다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>음택은 조상의 무덤을 좋은 자리에 두면 그 좋은 기운이 후손에게 흘러간다고 믿는 '무덤의 풍수'다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>음택은 단순히 묘를 어디에 쓰느냐의 문제가 아니라, 동아시아 사람들의 효(孝) 관념과 가족 의식이 풍수와 만나는 지점이다. 조상을 명당에 모시는 일은 죽은 이에 대한 예의이자, 동시에 후손의 안녕을 비는 정성으로 여겨졌다. 그래서 과거에는 좋은 묏자리를 둘러싸고 가문 사이에 다툼이 벌어지기도 했고, 묘를 옮기는 이장이 큰 결정으로 다뤄졌다. 오늘날에는 신앙으로서의 무게가 줄었지만, 명당과 발복이라는 말은 여전히 한국 문화 곳곳에 남아 있다. 이 사상을 이해하면 전통 사회의 가치관과 자연을 읽는 옛 방식을 함께 엿볼 수 있다.</p>
+
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>음택(陰宅)</strong>: 죽은 이를 모시는 무덤의 풍수. 산 사람의 집인 양택과 짝을 이룬다.</li>
+<li><strong>명당(明堂)</strong>: 기가 모여 좋다고 여겨지는 자리. 본래는 혈 앞의 평평한 공간을 뜻하지만, 넓게는 '좋은 터'를 가리키는 말로 쓰인다.</li>
+<li><strong>발복(發福)</strong>: 좋은 자리에 묘를 써서 후손에게 복이 일어난다고 보는 것.</li>
+<li><strong>동기감응(同氣感應)</strong>: 같은 기를 나눈 조상과 후손이 서로 감응한다는 음택의 핵심 논리.</li>
+<li><strong>이장(移葬)</strong>: 묏자리가 좋지 않다고 보거나 사정이 생겼을 때 묘를 다른 곳으로 옮기는 일.</li>
+</ul></div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>동기감응은 흔히 라디오에 비유된다. 같은 주파수를 가진 송신기와 수신기가 멀리 떨어져 있어도 서로 신호를 주고받듯, 조상과 후손은 같은 '기의 주파수'를 공유한다고 본 것이다. 그래서 조상의 유골이 놓인 자리의 기운이 좋으면 그 좋은 신호가 후손에게 전해진다고 여겨졌다. 명당을 찾는 일은 이 신호가 가장 잘 모이는 '좋은 안테나 자리'를 고르는 작업에 가깝다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 양택은 '지금 사는 나'에게, 음택은 '조상을 통해 후손에게' 작용한다고 본다는 점을 먼저 구분해 두면 두 분야가 헷갈리지 않는다.</div>
+
+<h3>한 페이지 요약</h3><ul>
+<li>음택은 무덤의 풍수로, 양택(집의 풍수)과 대비된다.</li>
+<li>좋은 자리에 조상을 모시면 후손이 복을 받는다는 발복 사상이 바탕이다.</li>
+<li>그 논리적 핵심은 같은 기끼리 통한다는 동기감응이다.</li>
+<li>곽박의 『장서』가 음택 이론의 고전적 근거로 꼽힌다.</li>
+<li>한국에는 명당 신앙과 이장 풍습이 깊이 뿌리내려 있으나, 발복의 인과는 과학적으로 입증되지 않았다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>음택 풍수의 사상적 출발점은 동기감응이다. 만물이 기로 이루어져 있고 같은 종류의 기는 서로 감응한다는 동아시아의 기 우주론에서, 조상과 후손은 혈연을 통해 같은 기를 나눈 존재로 이해되었다. 곽박의 『장서』에는 이 사상을 압축한 유명한 구절이 전해지는데, 부모의 유해가 기를 받으면 그 기운이 자식에게 미친다는 취지의 논리가 음택의 이론적 토대가 되었다. 여기서 '장(葬)이란 생기를 타는 것(乘生氣)'이라는 명제가 강조된다. 즉 좋은 매장이란 땅속을 흐르는 생기가 모이는 자리에 유골을 두어 그 기운을 받게 하는 일이라는 것이다. 이때 생기는 바람을 만나면 흩어지고 물을 만나면 멈춘다고 보아, 바람을 갈무리하고(藏風) 물을 얻는(得水) 지형이 좋은 자리로 여겨졌다. 이런 까닭에 음택 간법은 산의 형세와 물의 흐름을 함께 읽는 작업으로 발전했다.</p>
+
+<h3>핵심 메커니즘/교리</h3>
+<div class="info-card"><h4>📐 동기감응과 승생기</h4><p>음택의 두 축은 동기감응(같은 기끼리 감응한다)과 승생기(생기를 탄다)다. 조상의 유골을 생기가 모이는 명당에 두면, 그 생기를 받은 조상의 기가 같은 기를 지닌 후손에게 전해져 발복으로 이어진다고 본다. 자리를 정할 때는 산이 내려와 멈추는 혈(穴)을 중심으로, 좌향(坐向, 묘가 등진 방향과 바라보는 방향)을 나경으로 재고, 물이 들어오는 득수와 물이 빠져나가는 파구(破口)를 살펴 생기가 머무는지 새어 나가는지를 판단한다.</p></div>
+
+<h3>대표 사례·경전</h3>
+<div class="info-card"><h4>📐 사례 1 — 곽박의 『장서』</h4><p>위진 시대 인물로 전해지는 곽박의 이름으로 전하는 『장서』(『금낭경』으로도 불린다)는 음택 풍수의 고전으로 꼽힌다. '장은 생기를 타는 것'이라는 명제와 장풍득수의 원리를 제시하여, 이후 형세론과 이기론이 공유하는 기본 틀을 마련했다고 평가된다. 다만 실제 저자와 성립 시기에 대해서는 학계에서 이견이 있다는 점도 함께 알아 둘 만하다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 좌향·득수·파구의 간법</h4><p>실제 묏자리를 정할 때는 혈을 잡은 뒤 그 묘가 어느 방위를 등지고 어느 쪽을 바라보는지(좌향)를 정한다. 그다음 명당 앞으로 물이 어떻게 들어와(득수) 어디로 빠져나가는지(파구)를 본다. 물이 곧장 빠르게 빠져나가면 기가 흩어진다고 보아 꺼리고, 천천히 굽이쳐 머물다 나가면 기가 모인다고 보아 길하게 여긴다. 이렇게 산의 형세와 물의 흐름, 방위를 종합해 자리의 좋고 나쁨을 가린다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>오늘날에는 화장과 봉안(납골)이 보편화되면서 전통적인 묏자리 풍수의 실제 비중은 크게 줄었다. 매장 중심의 음택 신앙은 약해졌지만, 묘원이나 봉안당의 입지를 고를 때 양지바르고 물이 잘 빠지며 경관이 좋은 자리를 선호하는 경향은 여전히 남아 있다. 일부에서는 음택의 형세 판단을 자연환경과 경관을 읽는 전통 지식의 한 갈래로 재해석하기도 한다.</p>
+
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 명당은 '풍경이 화려하고 웅장한 자리'라는 생각은 흔한 오해다. 음택에서 좋은 자리는 화려함이 아니라 바람을 갈무리하고 물을 얻어 생기가 모이는 안정된 지형으로 여겨진다. 오히려 너무 트이거나 바람이 거센 곳은 기가 흩어진다고 보아 꺼린다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>음택 풍수를 깊이 살피려면 그 사상이 기 우주론, 효 윤리, 그리고 운명관이 겹쳐 빚어진 복합적 구성물이라는 점을 보아야 한다. 동기감응은 한대(漢代) 이래 발전한 감응 우주론, 곧 같은 부류의 기가 서로 호응한다는 유비적 세계관에 기대고 있다. 여기에 조상을 정성껏 모셔야 한다는 유교적 효 관념이 결합하면서, 좋은 자리를 찾는 일은 윤리적 의무와 현세적 기복이 한데 묶인 행위가 되었다. 흥미롭게도 음택은 죽은 이를 통해 산 후손에게 작용한다는 점에서, 풍수 가운데서도 가장 형이상학적 전제를 많이 요구하는 분야다. 형세론과 이기론은 이 자리를 찾는 두 갈래의 방법론으로, 전자는 산과 물의 가시적 형상을, 후자는 나경의 방위 이치를 중시한다. 두 학파는 종종 경합했지만 실제 간산(看山)에서는 함께 쓰였다. 음택의 평가가 양택보다 더 길게, 때로는 여러 세대에 걸쳐 작용한다고 본 점도 이 분야의 독특한 시간 관념을 보여 준다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>현대 학계에서 음택은 대체로 신앙·문화사·경관 연구의 대상으로 다뤄진다. 인류학과 종교학에서는 명당 신앙과 이장 풍습을 가족·계급·토지를 둘러싼 사회적 실천으로 읽고, 묏자리 분쟁이나 발복 기대가 공동체 안에서 작동하는 방식을 분석한다. 한편 발복의 인과 메커니즘 자체는 검증 가능한 자연과학적 가설로 성립하기 어렵다는 것이 지배적 평가다. 유골이 놓인 자리의 환경이 멀리 떨어진 후손의 길흉에 영향을 준다는 주장은 재현 가능한 실험으로 확인된 바가 없고, 좋은 결과를 명당 덕으로, 나쁜 결과는 자리 탓으로 돌리는 사후 해석에 빠지기 쉽다는 비판이 따른다. 다만 음택 간법이 강조한 장풍득수·배수·일조 같은 입지 조건은 묘역의 보존과 경관 측면에서 합리적 요소를 담고 있다고 보는 시각도 있어, 신앙적 주장과 경험적 지혜를 구분해 평가하려는 논의가 이어지고 있다.</p>
+
+<h3>관련 분야</h3><ul>
+<li><strong>형세론·이기론</strong>: 음택에서 자리를 찾는 두 방법론으로, 산수의 형상과 나경의 방위를 각각 중시한다.</li>
+<li><strong>유교 상장례와 효 사상</strong>: 조상을 모시는 윤리적 동기가 음택 신앙과 결합한 배경.</li>
+<li><strong>문화지리·경관학</strong>: 명당 입지와 묘역 조성을 자연환경 인식의 한 형태로 분석하는 분야.</li>
+</ul>
+
+<h3>더 읽을거리</h3><ul>
+<li>"한국의 풍수사상" — 최창조</li>
+<li>"청오경·금낭경(장서)" — 동아시아 풍수 고전 역주서</li>
+<li>"조선의 묘지 풍수와 산송(山訟)" — 관련 역사·민속 연구서</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 동기감응이 '검증 가능한 과학 가설'이 되려면 어떤 조건을 갖춰야 할지 정리해 보라. 그리고 음택 간법이 강조한 입지 조건(장풍·득수·배수·일조) 가운데 신앙과 무관하게 합리적으로 설명되는 요소와, 오직 동기감응 전제 위에서만 성립하는 주장을 각각 구분해 표로 만들어 보라.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#14b8a6","questions":[{"q":"죽은 이의 무덤을 다루는 풍수는?","choices":["양택","음택","비보","압승"],"answer":1},{"q":"조상과 후손이 같은 기로 통한다는 말은?","choices":["장풍득수","승생기","발복","동기감응"],"answer":3},{"q":"『장서』의 저자로 전하는 인물은?","choices":["도선","무학","곽박","정도전"],"answer":2},{"q":"『장서』의 다른 이름은?","choices":["청오경","금낭경","양택삼요","주역"],"answer":1},{"q":"물이 빠져나가는 곳을 부르는 말은?","choices":["파구","득수","혈","명당수"],"answer":0}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,2,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0x14b8a6;const mtn=new THREE.Mesh(new THREE.ConeGeometry(1.8,2.8,18,1,true),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.4}));mtn.position.set(0,0.6,-2.4);s.add(mtn);const tomb=new THREE.Mesh(new THREE.SphereGeometry(0.6,18,12,0,Math.PI*2,0,Math.PI/2),new THREE.MeshBasicMaterial({color:0xffe08a}));tomb.position.set(0,0,-0.5);s.add(tomb);const heirs=[];for(let i=0;i<4;i++){const d=new THREE.Mesh(new THREE.SphereGeometry(0.18,12,12),new THREE.MeshBasicMaterial({color:0x14b8a6}));d.position.set((i-1.5)*1.0,-1.4,1.4);s.add(d);heirs.push(d);s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,-0.5),d.position]),new THREE.LineBasicMaterial({color:0xffe08a,transparent:true,opacity:0.3})));}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;heirs.forEach((d,i)=>d.scale.setScalar(0.8+0.3*Math.sin(T*2+i)));s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

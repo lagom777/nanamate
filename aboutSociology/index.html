@@ -2,10 +2,22 @@
 <title>사회학</title><link rel="stylesheet" href="styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../shared/light-theme.css">
   <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
   <script defer src="../shared/difficulty.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">👥 표지</a></li><li><a href="chapters/01-intro.html">1. 사회학 개론</a></li><li><a href="chapters/02-culture.html">2. 문화와 사회화</a></li><li><a href="chapters/03-stratification.html">3. 사회 계층</a></li><li><a href="chapters/04-institutions.html">4. 사회 제도</a></li><li><a href="chapters/05-deviance.html">5. 일탈과 범죄</a></li><li><a href="chapters/06-gender.html">6. 젠더와 가족</a></li><li><a href="chapters/07-race.html">7. 인종과 민족</a></li><li><a href="chapters/08-urban.html">8. 도시와 환경</a></li><li><a href="chapters/09-digital.html">9. 디지털 사회</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>사회학</em></h1><p class="authors">Vol. 18 · May 2026</p></header>
 <div class="scene-3d" id="intro-scene"></div><span class="interact-hint">👥 인터랙티브 3D 시각화</span>
 <h2>소개</h2><p>이 사이트에서는 사회학의 핵심 개념을 9개 챕터에 걸쳐 3D 인터랙티브로 학습합니다.</p></main></div>
-<script>(function(){const c=document.getElementById('intro-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,4,10);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<15;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.3,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*8,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);}function a(){requestAnimationFrame(a);s.rotation.y+=0.003;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('intro-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=10980346;const nodes=[];for(let i=0;i<14;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.2,12,12),new THREE.MeshBasicMaterial({color:C}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);nodes.push(m);}for(let i=0;i<18;i++){const A=nodes[Math.floor(Math.random()*nodes.length)],B=nodes[Math.floor(Math.random()*nodes.length)];s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([A.position,B.position]),new THREE.LineBasicMaterial({color:C,transparent:true,opacity:0.25})));}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

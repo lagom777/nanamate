@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 라임색 거품을 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 문화 — 표현과 규범의 차이</span>
 
 <h2>문화와 표현 개요</h2>
 <p>혐오 표정(코 찡그림·윗입술 들림)은 거의 모든 문화에서 공통이지만, 무엇을 혐오할지의 목록은 문화마다 극단적으로 다르다. 인도의 카스트 청정·부정, 이슬람·유대의 음식 금기, 한국의 위계 청결까지 — 문화는 핵심 회로를 빌려 자기만의 도덕적 지도를 그린다.</p>
@@ -74,5 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 본인이 혐오스러워하는 음식 5개를 골라 각각의 문화적 학습 경로(가족·종교·미디어)를 추적해보자. 본능보다 학습이 압도적임을 발견하게 된다.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#84cc16","questions":[{"q":"문화마다 다른 것은?","choices":["혐오 표정","혐오 대상","코 찡그림","윗입술 들림"],"answer":1},{"q":"혐오 표정의 특징은?","choices":["코 찡그림","눈 크게 뜸","입 벌림","귀 움직임"],"answer":0},{"q":"한국 문화가 민감한 영역은?","choices":["음악","기후","수학","위생·청결"],"answer":3},{"q":"Mary Douglas의 더러움 정의는?","choices":["위험한 것","자리에 어긋난 것","오래된 것","비싼 것"],"answer":1},{"q":"Haidt 도덕기반 중 혐오와 연결되는 것은?","choices":["fairness","loyalty","purity","authority"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0x84cc16;const parts=[];for(let i=0;i<32;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1.5,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0x84cc16;const globe=new THREE.Mesh(new THREE.SphereGeometry(1.6,18,14),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.4}));s.add(globe);const faces=[];const fc=[0xffe08a,0x93c5fd,0xfca5a5,0x86efac,0xc4b5fd,0xfdba74];for(let i=0;i<6;i++){const t=i/6*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.28,14,14),new THREE.MeshBasicMaterial({color:fc[i]}));s.add(m);faces.push({m,ph:t});}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;globe.rotation.y+=0.005;faces.forEach(o=>{o.m.position.set(Math.cos(T*0.4+o.ph)*2.7,Math.sin(o.ph)*0.6,Math.sin(T*0.4+o.ph)*2.7);});s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7. 괘 해석법 — aboutIching</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">☯ 표지 · 점치기</a></li>
+    <li><a href="01-what-is.html">1. 주역이란 무엇인가</a></li>
+    <li><a href="02-yin-yang-yao.html">2. 음양과 효(爻)</a></li>
+    <li><a href="03-eight-trigrams.html">3. 팔괘(八卦)</a></li>
+    <li><a href="04-64-hexagrams.html">4. 64괘의 세계</a></li>
+    <li><a href="05-casting.html">5. 작괘법 — 점치는 법</a></li>
+    <li><a href="06-changing-lines.html">6. 동효와 변괘</a></li>
+    <li><a href="07-interpretation.html">7. 괘 해석법</a></li>
+    <li><a href="08-history.html">8. 주역의 역사와 활용</a></li>
+    <li><a href="09-science.html">9. 주역의 과학·심리</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>괘 해석법</em></h1>
+  <p class="authors">Chapter 7 — Reading the Oracle</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 6효의 자리와 응(應) — 1-4, 2-5, 3-6이 호응</span>
+
+<h2>괘 해석법 개요</h2>
+<p>점을 쳐서 괘를 얻었다면, 그 괘가 무엇을 말하는지 읽어 내는 일이 남는다. 주역의 괘는 64개의 그림(卦象)에 짧은 글이 붙어 있어, 글과 그림을 함께 살펴야 뜻이 드러난다. 같은 괘라도 어느 효가 움직였는지, 효들이 서로 어떻게 호응하는지에 따라 풀이가 달라진다. 전통적으로 의리역(義理易)과 상수역(象數易)이라는 두 갈래로 해석이 이어져 왔다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>괘를 읽는 기본은 괘 전체를 설명한 <strong>괘사(卦辭)</strong>와 각 효를 설명한 <strong>효사(爻辭)</strong>를 읽는 것이다. 효의 길흉은 자리의 원리—가운데인 중(中), 제자리에 있는 정(正), 짝끼리 호응하는 응(應), 이웃한 비(比)—로 가늠한다. 실전 점술인 육효학(六爻)에서는 효에 천간·지지를 붙이는 납갑(納甲), 세효·응효, 육친, 용신으로 더 정밀하게 본다. 의리역은 같은 괘를 도덕과 처세의 교훈으로 읽는다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>괘 해석은 괘 전체를 말한 '괘사'와 여섯 효 각각을 말한 '효사'를 함께 읽으면서, 각 효가 놓인 자리의 좋고 나쁨을 따져 보는 일이다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>점을 쳐서 괘를 얻는 것은 절반에 지나지 않는다. 괘를 어떻게 읽느냐에 따라 같은 그림이 전혀 다른 조언이 되기 때문이다. 주역은 한 글자 한 글자가 압축되어 있어, 곧이곧대로 직역하면 뜻이 잘 통하지 않는다. 그래서 옛사람들은 효가 놓인 자리, 효들끼리의 관계 같은 '읽는 규칙'을 마련해 두었다. 이 규칙을 알면 짧은 문장 너머의 상황을 더 입체적으로 그려 볼 수 있다. 해석법을 익히는 것은 주역이라는 책의 문법을 배우는 셈이다.</p>
+
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>괘사(卦辭)</strong>: 괘 하나 전체에 붙은 짧은 설명. 그 괘의 전반적 분위기를 말한다.</li>
+<li><strong>효사(爻辭)</strong>: 여섯 효 각각에 붙은 설명. 아래에서 위로 위치마다 다른 상황을 가리킨다.</li>
+<li><strong>중(中)</strong>: 아래·위 괘의 가운데 자리(2효·5효). 치우치지 않아 길하게 본다.</li>
+<li><strong>정(正)</strong>: 효가 제자리에 있는 것. 양효가 홀수 자리, 음효가 짝수 자리에 오면 정이다.</li>
+<li><strong>응(應)</strong>: 멀리 떨어진 두 효(1-4, 2-5, 3-6)가 음양으로 호응하는 관계.</li>
+</ul></div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>괘를 한 편의 짧은 이야기라고 생각하면 쉽다. 여섯 효는 아래에서 위로 올라가는 여섯 단계의 무대이고, 효사는 각 단계에서 벌어지는 장면을 적은 대사다. 이때 '누가 어느 자리에 섰는가'가 중요하다. 회의실에서 가운데 앉은 사람이 양쪽을 아우르듯, 가운데 자리(중)에 든 효는 안정적이라고 여긴다. 또 어울리는 자리에 앉은 사람(정)은 제 역할을 다하기 좋다고 본다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 효는 항상 맨 아래에서부터 1·2·3·4·5·6의 순서로 센다. 그림을 볼 때 위에서 아래로 읽지 말고, 아래에서 위로 '쌓아 올라간다'고 생각하면 효사의 흐름이 자연스럽게 잡힌다.</div>
+
+<h3>한 페이지 요약</h3><ul>
+<li>괘 해석은 괘사(전체)와 효사(각 효)를 함께 읽는 데서 출발한다.</li>
+<li>효는 맨 아래부터 위로 1~6까지 세며, 자리마다 의미가 다르다.</li>
+<li>2효·5효는 가운데라 길하게 보는 '중(中)'의 자리다.</li>
+<li>양효가 홀수 자리, 음효가 짝수 자리에 오면 제자리인 '정(正)'이다.</li>
+<li>같은 괘라도 어느 효가 움직였는지에 따라 풀이가 달라진다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>효의 길흉을 가늠하는 전통적 잣대는 흔히 중(中)·정(正)·응(應)·비(比) 네 가지로 정리된다. 중은 한 괘를 이루는 위·아래 소성괘의 가운데 효, 곧 2효와 5효를 가리키며, 치우치지 않은 자리이므로 길하다고 본다. 정은 효가 제자리에 있는지를 따지는데, 양효(─)는 1·3·5의 홀수 자리, 음효(╌)는 2·4·6의 짝수 자리에 있을 때 '정(正)' 또는 '득위(得位)'라 하여 바르다고 여긴다. 응은 아래 괘와 위 괘에서 같은 순번에 있는 효끼리, 즉 1효와 4효, 2효와 5효, 3효와 6효가 음양으로 짝을 이루면 서로 호응한다고 본다. 비는 바로 이웃한 두 효의 관계로, 음과 양이 이웃하면 친밀하다고 풀이한다. 특히 5효는 가운데이면서 양의 자리라 흔히 군주의 자리로 여겨, 5효가 양효이면 '중정(中正)'을 얻었다고 하여 매우 좋게 본다. 이런 자리의 원리는 절대적 공식이 아니라, 효사의 짧은 글을 상황에 맞게 풀어내기 위한 해석의 길잡이로 쓰인다. 그래서 같은 자리라도 괘 전체의 뜻과 효사의 글에 따라 판단이 조정된다.</p>
+
+<h3>핵심 메커니즘/원리</h3>
+<div class="info-card"><h4>📐 자리·관계로 읽는 네 가지 원리</h4><p><strong>중(中)</strong>은 2·5효가 가운데라 안정적임을, <strong>정(正)</strong>은 양은 홀수 자리·음은 짝수 자리에 있어 바름을, <strong>응(應)</strong>은 1-4·2-5·3-6 효가 음양으로 호응함을, <strong>비(比)</strong>는 이웃한 두 효의 친소를 나타낸다. 보통 중과 정을 모두 갖춘 '중정'을 가장 좋게 보며, 응이 있으면 도움을 받고 비가 어울리면 주변 관계가 순조롭다고 풀이한다.</p></div>
+
+<h3>대표 사례·예시</h3>
+<div class="info-card"><h4>📐 사례 1 — 중정을 얻은 5효</h4><p>어떤 괘에서 5효가 양효라면, 이는 가운데(중)이면서 홀수 자리에 양이 든 정(正)을 함께 갖춘 셈이다. 전통 해석에서는 이를 군주가 바른 자리에 서서 치우침 없이 일을 처리하는 모습으로 읽어, 대체로 길한 신호로 여긴다. 여기에 2효가 음효로 5효와 응한다면, 신하가 군주에게 호응하여 일이 순조롭다고 본다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 자리를 잃은 효</h4><p>반대로 음효가 홀수 자리에, 양효가 짝수 자리에 놓이면 '실위(失位)' 또는 부정(不正)이라 하여 제자리를 얻지 못했다고 본다. 다만 자리를 잃었더라도 가운데(중)에 있거나 응이 있으면, 약점을 보완할 여지가 있다고 풀이하기도 한다. 이처럼 여러 조건을 겹쳐 종합적으로 판단한다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>이러한 자리·관계 중심의 해석은 주로 의리역의 관점에서 한 괘를 도덕과 처세의 교훈으로 읽는 데 활용된다. 한편 실제로 길흉의 시점과 사안을 구체적으로 점치는 현장에서는 상수역 계열의 육효학(六爻)이 널리 쓰인다. 육효학에서는 효 하나하나에 천간·지지를 붙이는 납갑(納甲)을 한 뒤, 점치는 사람을 나타내는 세효(世爻)와 상대·사안을 나타내는 응효(應爻)를 세운다. 그리고 효마다 부모·형제·자손·처재(妻財)·관귀(官鬼)라는 육친(六親)을 배정하고, 묻는 일에 해당하는 핵심 효인 용신(用神)을 정해 그 왕쇠와 다른 효와의 관계로 길흉을 정밀하게 따진다.</p>
+
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 중·정·응·비를 마치 점수처럼 더해 자동으로 길흉이 결정된다고 여기기 쉽지만, 그렇지 않다. 이 원리들은 효사를 풀이하기 위한 해석의 단서일 뿐이며, 괘 전체의 뜻과 묻는 상황을 함께 고려해야 한다. 또한 의리역의 자리 원리와 육효학의 납갑·용신은 서로 다른 해석 체계여서, 둘을 뒤섞어 쓰면 혼란이 생긴다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>주역 해석사는 크게 의리역과 상수역의 두 흐름으로 정리되며, 두 갈래는 같은 64괘를 서로 다른 언어로 읽어 왔다. 의리역은 괘와 효를 도덕·정치·처세의 상징으로 보아, 중정과 응비 같은 자리 원리를 인간 관계와 군신·진퇴의 윤리로 풀어낸다. 상수역은 괘를 상(象)과 수(數)의 체계로 보아, 효의 변화와 천간·지지의 배합으로 구체적 길흉과 시점을 읽으려 한다. 실전 점술인 육효학은 상수역의 흐름 위에서 발전한 체계로, 납갑으로 효에 간지를 붙이고 세효·응효를 세운 뒤 육친과 용신을 통해 사안별로 판단한다. 예컨대 재물을 물으면 처재(妻財)를, 벼슬·시험·소송을 물으면 관귀(官鬼)를 용신으로 삼는 식이다. 용신이 왕성하고 세효를 돕는 관계에 있으면 좋게, 용신이 약하거나 충(沖)·극(剋)을 받으면 불리하게 보는 것이 기본 틀이다. 다만 이런 판단은 어디까지나 전통적 점법의 약속이며, 객관적 인과로 검증된 사실은 아니라는 점을 분별해 두어야 한다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>현대의 주역 연구는 점술의 적중 여부보다 주역이라는 텍스트와 사고방식 자체에 주목한다. 출토 문헌인 마왕퇴(馬王堆) 백서(帛書) 주역 등이 발견되면서, 괘의 배열과 글이 시대에 따라 달라졌음이 드러나 해석의 역사성이 새롭게 조명되고 있다. 심리학 쪽에서는 카를 융이 주역을 인과가 아닌 '동시성(synchronicity)'의 사례로 본 논의가 잘 알려져 있는데, 이는 점괘가 마음을 비추는 투사(投射)의 거울로 작동한다는 관점이다. 한편 비판적 시각에서는 모호하고 일반적인 문장이 누구에게나 들어맞는 것처럼 느껴지는 바넘 효과(Barnum effect)로 적중감을 설명하기도 한다. 이처럼 주역의 의미를 전통·문헌·심리의 여러 층위에서 균형 있게 보려는 시도가 이어진다.</p>
+
+<h3>관련 분야</h3><ul>
+<li><strong>문헌학·역사학</strong>: 출토 죽간·백서를 통한 역경 텍스트의 형성과 변천 연구.</li>
+<li><strong>심리학</strong>: 융의 동시성, 투사, 바넘 효과 등 점괘 경험에 대한 분석.</li>
+<li><strong>동아시아 사상사</strong>: 의리역·상수역의 전개와 유학·도가와의 상호 영향.</li>
+</ul>
+
+<h3>더 읽을거리</h3><ul>
+<li>"주역(周易)" — 역경 본문과 십익(十翼) 번역·주해서</li>
+<li>"역경(I Ching, or Book of Changes)" — 리하르트 빌헬름 역, 카리 베인스 영역</li>
+<li>"심리학과 연금술·동시성 관련 저작" — 카를 구스타프 융</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 임의의 한 괘를 골라, 먼저 의리역의 방식으로 중·정·응·비를 따져 그 괘가 주는 처세의 교훈을 한 문단으로 정리해 보자. 그다음 같은 괘를 육효학의 틀로 옮겨, 묻고 싶은 일에 맞는 용신(예: 재물이면 처재)을 정하고 세효·응효를 세워 보며, 두 해석 체계가 같은 괘를 얼마나 다르게 읽어 내는지 비교해 보자.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#cf9b34","questions":[{"q":"괘 전체에 붙은 짧은 설명은?","choices":["효사","괘사","십익","납갑"],"answer":1},{"q":"'중(中)'에 해당하는 자리는?","choices":["1효·4효","3효·6효","2효·5효","1효·6효"],"answer":2},{"q":"효를 세는 올바른 순서는?","choices":["아래에서 위로","위에서 아래로","왼쪽부터","오른쪽부터"],"answer":0},{"q":"1-4, 2-5, 3-6 효의 호응 관계는?","choices":["비(比)","중(中)","정(正)","응(應)"],"answer":3},{"q":"재물을 물을 때의 용신은?","choices":["관귀","처재","부모","형제"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7.5);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=0xcf9b34;const pat=[1,0,1,0,1,0];const ys=[];pat.forEach((y,j)=>{const yy=(j-2.5)*0.55;ys.push(yy);const mid=(j===1||j===4);const col=mid?0xffffff:C;if(y){const b=new THREE.Mesh(new THREE.BoxGeometry(2.0,0.2,0.2),new THREE.MeshBasicMaterial({color:col}));b.position.y=yy;s.add(b);}else{const l=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.2,0.2),new THREE.MeshBasicMaterial({color:col}));l.position.set(-0.6,yy,0);s.add(l);const r2=l.clone();r2.position.x=0.6;s.add(r2);}});[[0,3],[1,4],[2,5]].forEach(pr=>{const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(1.3,ys[pr[0]],0),new THREE.Vector3(1.3,ys[pr[1]],0)]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:C,transparent:true,opacity:0.5})));});
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

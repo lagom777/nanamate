@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1. 천체 역학 — aboutAstronomy</title>
+<title>1. 천체역학: 중력의 춤 — aboutAstronomy</title>
 <link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -17,36 +19,83 @@
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">🌌 표지 · 소개</a></li>
-    <li><a href="01-celestial-mechanics.html">1. 천체 역학</a></li>
+    <li><a href="01-celestial-mechanics.html" style="color:var(--accent);font-weight:600;">1. 천체역학</a></li>
     <li><a href="02-solar-system.html">2. 태양계</a></li>
     <li><a href="03-stars.html">3. 항성</a></li>
     <li><a href="04-galaxies.html">4. 은하</a></li>
     <li><a href="05-cosmology.html">5. 우주론</a></li>
     <li><a href="06-black-holes.html">6. 블랙홀</a></li>
     <li><a href="07-exoplanets.html">7. 외계행성</a></li>
-    <li><a href="08-observational.html">8. 관측 천문학</a></li>
-    <li><a href="09-space-exploration.html">9. 우주 탐사</a></li>
+    <li><a href="08-observational.html">8. 관측천문학</a></li>
+    <li><a href="09-space-exploration.html">9. 우주탐사</a></li>
   </ol>
 </aside>
 <main>
 <header class="paper-header">
-  <h1><em>천체 역학</em></h1>
-  <p class="authors">Chapter 1 — Celestial Mechanics & Gravity</p>
+  <h1>천체역학:<br><em>중력</em>의 춤</h1>
+  <p class="authors">Chapter 1 — Celestial Mechanics: The Dance of Gravity</p>
+  <p class="affiliation">이체 궤도 시뮬레이터 포함</p>
 </header>
 
-<div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
-
-<h2>천체 역학 개요</h2>
-<p>이 챕터에서는 천체 역학의 핵심 개념을 3D 시뮬레이션과 함께 학습합니다. 우주를 직접 탐험하세요.</p>
+<h2>케플러의 행성 운동 법칙</h2>
+<p>요하네스 케플러는 티코 브라헤의 정밀 관측 데이터를 분석하여 행성 운동의 세 가지 법칙을 발견했습니다. 이 법칙들은 뉴턴의 만유인력 법칙으로부터 수학적으로 유도될 수 있습니다.</p>
 
 <div class="info-card">
-  <h4>핵심 개념</h4>
-  <p>Celestial Mechanics & Gravity의 기본 원리와 최신 발견을 다룹니다.</p>
+  <h4>제1법칙 (타원 궤도의 법칙)</h4>
+  <p>모든 행성은 태양을 한 초점으로 하는 타원 궤도를 따라 공전한다. 원궤도는 이심률이 0인 특수한 경우입니다.</p>
+</div>
+
+<div class="info-card energy">
+  <h4>제2법칙 (면적 속도 일정의 법칙)</h4>
+  <p>행성과 태양을 잇는 선분은 같은 시간 동안 같은 면적을 쓸고 지나간다. 이는 각운동량 보존의 직접적인 결과입니다.</p>
+</div>
+
+<div class="info-card wave">
+  <h4>제3법칙 (조화의 법칙)</h4>
+  <p>행성의 공전 주기의 제곱은 궤도 긴반지름의 세제곱에 비례한다.</p>
+</div>
+
+<div class="formula">T² = (4π²/GM) a³</div>
+
+<h2>뉴턴의 만유인력 법칙</h2>
+<p>뉴턴은 사과가 떨어지는 힘과 달을 궤도에 묶어두는 힘이 같은 중력임을 깨달았습니다. 두 질량 사이에 작용하는 중력은 다음과 같습니다:</p>
+
+<div class="formula">F = GMm/r²</div>
+
+<p>여기서 G = 6.674 × 10⁻¹¹ N·m²/kg²은 만유인력 상수, M과 m은 두 물체의 질량, r은 두 물체 사이의 거리입니다.</p>
+
+<h2>궤도 역학</h2>
+<p>원형 궤도에서의 공전 속도와 탈출 속도는 중력과 원심력의 균형에서 구해집니다:</p>
+
+<div class="formula">v_원형 = √(GM/r) &nbsp;&nbsp;&nbsp; v_탈출 = √(2GM/r)</div>
+
+<p>탈출 속도는 원형 궤도 속도의 √2배입니다. 이 관계는 우주선 발사와 궤도 설계의 핵심입니다.</p>
+
+<h2>이체 궤도 시뮬레이터</h2>
+<p>아래 시뮬레이터에서 질량비와 이심률을 조절하여 두 천체의 궤도 운동을 관찰하세요. 속도 벡터와 중력장을 실시간으로 확인할 수 있습니다.</p>
+
+<div class="scene-3d" id="orbit-scene">
+  <div class="scene-controls">
+    <label>질량비 (M₂/M₁): <span id="mass-val">0.3</span></label>
+    <input type="range" id="mass-slider" min="5" max="95" value="30">
+    <label>이심률: <span id="ecc-val">0.5</span></label>
+    <input type="range" id="ecc-slider" min="0" max="90" value="50">
+    <label>시간 속도: <span id="time-val">1.0</span>×</label>
+    <input type="range" id="time-slider" min="1" max="50" value="10">
+    <button id="reset-btn">🔄 초기화</button>
+    <button id="toggle-vectors-btn">📐 속도 벡터</button>
+    <button id="toggle-field-btn">🌀 중력장</button>
+  </div>
+</div>
+<span class="interact-hint">🎯 질량비와 이심률을 조절하고 궤도 변화를 관찰하세요 · 마우스 드래그로 회전</span>
+
+<div class="info-card quantum">
+  <h4>💡 탐구 과제</h4>
+  <p>이심률을 0에 가깝게 설정하면 원에 가까운 궤도를, 0.9에 가깝게 하면 긴 타원 궤도를 관찰할 수 있습니다. 질량비를 변화시키면 무거운 천체도 흔들리는 것을 확인해 보세요 — 이것이 외계행성을 발견하는 시선속도법의 원리입니다!</p>
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -55,133 +104,370 @@
 <div class="difficulty-content" data-level="easy">
   <span class="difficulty-badge easy">하 · 입문</span>
   <h3>한 줄로 이해하기</h3>
-  <p>천체 역학은 행성, 달, 별과 같은 천체가 서로 끌어당기는 중력에 의해 어떻게 움직이는지를 설명하는 학문입니다.</p>
+  <p>천체역학은 행성, 달, 별과 같은 천체가 서로 끌어당기는 중력에 의해 어떻게 움직이는지를 설명하는 학문입니다.</p>
   <h3>왜 흥미로운가?</h3>
-  <p>지구가 태양 주위를 1년에 한 바퀴 도는 이유, 달이 매일 밤하늘 같은 자리에 머물지 않는 이유, 그리고 인공위성이 떨어지지 않고 계속 도는 이유 모두 천체 역학으로 설명됩니다. 일상에서 GPS가 정확한 위치를 알려주고, 우주선이 화성에 도달하며, 우리가 일식과 월식의 시간을 미리 예측할 수 있는 것 또한 모두 이 원리 덕분입니다.</p>
+  <p>지구가 태양 주위를 1년에 한 바퀴 도는 이유, 달이 매일 밤하늘 같은 자리에 머물지 않는 이유, 인공위성이 떨어지지 않고 계속 도는 이유 모두 천체역학으로 설명됩니다. GPS가 정확한 위치를 알려주고, 우주선이 화성에 도달하며, 일식과 월식의 시간을 미리 예측할 수 있는 것도 이 원리 덕분입니다.</p>
   <div class="info-card">
     <h4>🌱 핵심 용어</h4>
     <ul>
       <li><strong>중력</strong> — 질량이 있는 모든 물체가 서로 끌어당기는 힘</li>
-      <li><strong>궤도</strong> — 한 천체가 다른 천체 주위를 도는 길</li>
-      <li><strong>공전</strong> — 행성이 별 주위를 도는 운동</li>
-      <li><strong>자전</strong> — 천체가 스스로 회전하는 운동</li>
+      <li><strong>궤도</strong> — 한 천체가 다른 천체 주위를 도는 경로</li>
+      <li><strong>이심률</strong> — 타원이 얼마나 찌그러져 있는지 나타내는 값 (0이면 원, 1에 가까우면 긴 타원)</li>
+      <li><strong>근일점/원일점</strong> — 태양에 가장 가까운/먼 점</li>
       <li><strong>케플러 법칙</strong> — 행성 운동을 설명하는 세 가지 규칙</li>
     </ul>
   </div>
   <h3>핵심 개념 풀어쓰기</h3>
-  <p>공을 위로 던지면 다시 떨어집니다. 이는 지구가 공을 끌어당기기 때문입니다. 그런데 공을 충분히 빠르게 옆으로 던진다면 어떻게 될까요? 공은 떨어지면서도 지구의 둥근 표면을 따라 계속 비껴 떨어지게 되어, 결국 떨어지지 않고 지구를 도는 셈이 됩니다. 이것이 바로 궤도의 원리입니다. 달도 같은 원리로 지구 주위를 돌고, 지구도 태양 주위를 돕니다. 마치 줄에 매단 공을 머리 위에서 빙빙 돌릴 때 줄의 장력이 공을 잡아주듯, 중력이 보이지 않는 줄 역할을 합니다. 이 줄이 강할수록(질량이 클수록) 더 빠르고 가까이 돌게 됩니다. 태양은 매우 무겁기 때문에 모든 행성을 단단히 붙잡고 있습니다.</p>
-  <div class="study-tip"><strong>💡 학습 TIP:</strong> 케플러 제2법칙(면적 속도 일정)은 "행성이 태양에 가까울 때 빠르고 멀 때 느리다"로 외우면 쉽습니다.</div>
+  <p>공을 위로 던지면 다시 떨어집니다. 지구가 공을 끌어당기기 때문입니다. 그런데 공을 충분히 빠르게 옆으로 던지면 어떨까요? 공은 떨어지면서도 지구의 둥근 표면을 따라 계속 비껴 떨어져, 결국 지구를 도는 셈이 됩니다. 이것이 궤도의 원리입니다. 마치 줄에 매단 공을 빙빙 돌릴 때 줄이 공을 잡아주듯, 중력이 보이지 않는 줄 역할을 합니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 케플러 제2법칙은 "행성이 태양에 가까울 때 빠르고 멀 때 느리다"로 기억하세요.</div>
   <h3>요약</h3>
   <ul>
     <li>중력은 질량이 있는 모든 물체 사이에 작용한다</li>
     <li>궤도는 떨어지는 운동과 옆으로의 운동이 균형을 이룬 것이다</li>
     <li>케플러는 행성 운동을 세 법칙으로 정리했다</li>
-    <li>뉴턴은 이 법칙들을 중력 이론으로 통합했다</li>
-    <li>천체 역학은 우주 탐사의 기초다</li>
+    <li>뉴턴은 이 법칙들을 만유인력으로 통합했다</li>
   </ul>
 </div>
 <div class="difficulty-content" data-level="medium">
   <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이</h3>
-  <p>뉴턴의 만유인력 법칙은 두 질량 사이에 작용하는 힘이 두 질량의 곱에 비례하고 거리의 제곱에 반비례함을 보입니다. 이 단순한 법칙으로부터 케플러의 세 가지 행성 운동 법칙이 자연스럽게 유도됩니다. 첫째, 행성은 태양을 한 초점에 두는 타원 궤도를 그립니다. 원이 아닌 타원인 이유는 행성의 초기 속도와 위치 조건에 따라 궤도가 결정되기 때문입니다. 둘째, 행성과 태양을 잇는 선분은 같은 시간에 같은 면적을 쓸어갑니다. 이는 각운동량 보존의 결과로, 행성이 태양에 가까운 근일점에서는 빠르게, 먼 원일점에서는 느리게 움직이게 합니다. 셋째, 공전 주기의 제곱은 궤도 긴반지름의 세제곱에 비례합니다. 이 관계를 이용하면 한 행성의 주기와 거리만 알면 다른 행성의 거리를 계산할 수 있습니다. 인공위성의 궤도 설계, 행성 간 항행, 다체 문제의 안정성 분석이 모두 이 이론에 기반합니다.</p>
+  <h3>이론 깊이 들어가기</h3>
+  <p>뉴턴의 만유인력 법칙에서 케플러의 세 법칙이 자연스럽게 유도됩니다. 타원 궤도는 역제곱 중심력 문제의 일반해이며, 궤도 방정식은 r(θ) = a(1-e²)/(1+e·cosθ)로 표현됩니다. 여기서 a는 긴반지름, e는 이심률입니다. 면적 속도 일정 법칙은 각운동량 보존 L = r×mv의 직접적 결과입니다. 행성이 근일점에서 빠르고 원일점에서 느린 이유가 여기에 있습니다.</p>
   <h3>핵심 공식</h3>
-  <div class="formula">F = G·m₁·m₂/r² &nbsp;&nbsp;|&nbsp;&nbsp; T² = (4π²/GM)·a³ &nbsp;&nbsp;|&nbsp;&nbsp; v_탈출 = √(2GM/r)</div>
+  <div class="formula">F = GMm/r² &nbsp;&nbsp;|&nbsp;&nbsp; T² = (4π²/GM)a³ &nbsp;&nbsp;|&nbsp;&nbsp; v = √(GM/r)</div>
   <h3>대표 사례</h3>
-  <div class="info-card"><h4>🌌 사례 1 — 해왕성의 발견</h4><p>천왕성 궤도의 미세한 어긋남을 천체역학으로 분석하여 1846년 해왕성의 위치를 예측해 냈습니다. 이는 뉴턴 역학이 거둔 가장 극적인 승리 중 하나입니다.</p></div>
-  <div class="info-card"><h4>🌌 사례 2 — 보이저호의 중력 도움</h4><p>1977년 발사된 보이저 1·2호는 목성·토성 등의 중력을 이용해 가속하여 적은 연료로 외태양계까지 도달했습니다. 이를 스윙바이(중력 보조) 항법이라 합니다.</p></div>
-  <h3>관측 응용</h3>
-  <p>행성의 시차 측정으로 천문 단위(AU) 거리 결정이 가능하고, 쌍성의 궤도 분석으로 별의 질량을 정확히 잴 수 있습니다. 또한 별빛의 미세한 흔들림을 측정해 보이지 않는 동반 천체(외계행성)의 존재를 추정합니다.</p>
-  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 케플러 제3법칙의 a는 평균 거리가 아니라 타원의 긴반지름입니다. 또한 단위를 AU·년으로 쓰면 상수가 1이 되어 계산이 간단해집니다.</div>
+  <div class="info-card"><h4>🌌 사례 1 — 해왕성의 발견</h4><p>천왕성 궤도의 미세한 어긋남을 천체역학으로 분석하여 1846년 해왕성의 위치를 예측해 냈습니다. 뉴턴 역학의 극적인 승리입니다.</p></div>
+  <div class="info-card"><h4>🌌 사례 2 — 호만 전이 궤도</h4><p>두 원궤도 사이를 최소 에너지로 이동하는 타원 궤도입니다. 화성 탐사선은 이 방법으로 지구 궤도에서 화성 궤도로 전이합니다.</p></div>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 케플러 제3법칙의 a는 평균 거리가 아니라 타원의 긴반지름입니다. 단위를 AU·년으로 쓰면 상수가 1이 되어 계산이 간편해집니다.</div>
 </div>
 <div class="difficulty-content" data-level="hard">
   <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3>
-  <p>고전적 케플러-뉴턴 역학은 두 점질량의 이체 문제에서는 완전히 풀리지만, 세 개 이상의 천체가 상호작용하는 다체 문제는 일반해가 존재하지 않습니다. 푸앵카레는 19세기 말 제한된 삼체 문제에서 카오스가 발생함을 보였고, 이는 현대 역학계 이론의 출발점이 되었습니다. 라그랑주 점은 두 천체와 함께 회전하는 좌표계에서 효과 퍼텐셜의 임계점으로, L1·L2·L3는 안장점이고 L4·L5는 특정 질량비 조건에서 안정합니다. 일반상대성 이론에서는 중력을 시공간 곡률로 기술하며, 수성 근일점의 세차 운동(43초/세기), 중력 적색이동, 빛의 휘어짐 등이 뉴턴 역학으로 설명되지 않는 보정항을 통해 설명됩니다. 강한 중력장에서는 측지선 방정식으로 궤도를 다루며, 슈바르츠실트 해는 회전하지 않는 구대칭 천체 주변의 시공간 구조를 정확히 기술합니다. 다체 시뮬레이션은 N이 커질 때 O(N²) 복잡도를 줄이기 위해 트리 코드, 다중극 전개법(FMM), 입자-망 하이브리드 등을 사용합니다.</p>
+  <h3>전문가 레벨 이해</h3>
+  <p>이체 문제는 환산 질량 μ = m₁m₂/(m₁+m₂)를 도입하여 1체 문제로 변환됩니다. 유효 퍼텐셜 V_eff = -GMμ/r + L²/(2μr²)의 분석에서 궤도의 안정성과 종류(원, 타원, 포물선, 쌍곡선)가 결정됩니다. 삼체 문제는 일반해가 존재하지 않으며, 푸앵카레가 카오스의 존재를 처음 보였습니다. 라그랑주 점 L1-L5는 회전 좌표계에서의 효과 퍼텐셜 극값으로, JWST는 L2에 위치합니다.</p>
   <h3>유도</h3>
-  <div class="formula">d²r/dt² = -GM·r̂/r² → 보존량: E = ½v² - GM/r, L = r×v → 궤도 방정식: r(θ) = a(1-e²)/(1+e·cosθ)</div>
+  <div class="formula">d²r/dt² = -GM·r̂/r² → E = ½v² - GM/r, L = r×v → r(θ) = a(1-e²)/(1+e·cosθ)</div>
   <h3>최신 연구</h3>
-  <p>NASA의 LISA(2030년대 발사 예정) 임무는 백색왜성·중성자별 쌍성의 중력파 신호로부터 궤도 진화를 정밀 추적할 예정입니다. JWST의 외계행성 직접 관측 데이터는 행성 이동(planet migration) 시나리오의 검증 자료로 사용되고 있으며, ESA의 Gaia 임무는 별 10억 개의 위치·운동을 측정해 은하 동역학의 새 시대를 열고 있습니다.</p>
-  <h3>관련 분야</h3>
-  <ul>
-    <li>일반상대성 이론과 중력파 천문학</li>
-    <li>해석 역학(라그랑주·해밀턴 형식)</li>
-    <li>역학계 카오스 이론과 KAM 정리</li>
-  </ul>
+  <p>LISA 임무(2030년대)는 중성자별 쌍성의 중력파 신호로 궤도 진화를 추적할 예정입니다. ESA의 Gaia 임무는 별 10억 개의 위치와 운동을 측정하여 은하 동역학의 새 시대를 열고 있습니다.</p>
   <h3>추가 자료</h3>
   <ul>
     <li>Murray & Dermott, <em>Solar System Dynamics</em></li>
     <li>Goldstein, <em>Classical Mechanics</em></li>
-    <li>NASA JPL Horizons System (실시간 천체 궤도)</li>
+    <li>NASA JPL Horizons System</li>
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 지구-달 시스템의 L1 라그랑주 점 위치를 효과 퍼텐셜로부터 수치적으로 계산해 보세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7b9fff","questions":[{"q":"케플러 제1법칙에서 행성 궤도의 모양은?","choices":["원","직선","타원","나선"],"answer":2},{"q":"같은 시간에 같은 면적을 쓰는 케플러 법칙은?","choices":["제1법칙","제2법칙","제3법칙","만유인력 법칙"],"answer":1},{"q":"탈출 속도는 원형 궤도 속도의 몇 배인가?","choices":["½배","2배","√2배","3배"],"answer":2},{"q":"1846년 궤도 분석으로 위치가 예측된 행성은?","choices":["해왕성","천왕성","토성","명왕성"],"answer":0},{"q":"JWST가 위치한 라그랑주 점은?","choices":["L1","L4","L5","L2"],"answer":3}]};</script>
 </main>
 </div>
 
 <script>
+// Two-Body Orbit Simulator
 (function() {
-  const container = document.getElementById('sim-scene');
+  const container = document.getElementById('orbit-scene');
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 5, 12);
+  const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 12, 16);
+  camera.lookAt(0, 0, 0);
+
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
 
-  // Stars background
+  // Stars
   const starGeo = new THREE.BufferGeometry();
-  const starPositions = new Float32Array(1000*3);
-  for (let i = 0; i < 1000; i++) {
-    starPositions[i*3] = (Math.random()-0.5)*100;
-    starPositions[i*3+1] = (Math.random()-0.5)*100;
-    starPositions[i*3+2] = (Math.random()-0.5)*100;
+  const starPos = new Float32Array(1500 * 3);
+  for (let i = 0; i < 1500; i++) {
+    starPos[i*3]   = (Math.random() - 0.5) * 200;
+    starPos[i*3+1] = (Math.random() - 0.5) * 200;
+    starPos[i*3+2] = (Math.random() - 0.5) * 200;
   }
-  starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-  scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 })));
+  starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+  scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.15 })));
 
-  // Central body (sun/star)
-  const sun = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), new THREE.MeshBasicMaterial({ color: 0xfbbf24 }));
-  scene.add(sun);
-  scene.add(new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 32), new THREE.MeshBasicMaterial({ color: 0xfbbf24, transparent: true, opacity: 0.15 })));
+  // Bodies
+  const body1Mat = new THREE.MeshBasicMaterial({ color: 0xfbbf24 });
+  const body2Mat = new THREE.MeshBasicMaterial({ color: 0x60a5fa });
+  const body1Glow = new THREE.MeshBasicMaterial({ color: 0xfbbf24, transparent: true, opacity: 0.15 });
+  const body2Glow = new THREE.MeshBasicMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.15 });
 
-  // Orbiting planets
-  const planets = [];
-  const planetColors = [0x60a5fa, 0xef4444, 0x22c55e, 0xa855f7, 0xfb923c];
-  for (let i = 0; i < 5; i++) {
-    const r = 0.15 + i*0.05;
-    const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 16, 16), new THREE.MeshBasicMaterial({ color: planetColors[i] }));
-    const orbit = 3 + i*1.5;
-    planets.push({ mesh, orbit, speed: 0.02/(i+1), angle: Math.random()*Math.PI*2 });
-    scene.add(mesh);
-    // Orbit ring
-    const ring = new THREE.Line(
-      new THREE.BufferGeometry().setFromPoints(Array.from({length:65}, (_,j) => new THREE.Vector3(Math.cos(j/64*Math.PI*2)*orbit, 0, Math.sin(j/64*Math.PI*2)*orbit))),
-      new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1 })
-    );
-    scene.add(ring);
+  let body1, body1G, body2, body2G;
+
+  // Trails
+  const trail1Points = [];
+  const trail2Points = [];
+  let trail1Line = null, trail2Line = null;
+  const maxTrailLen = 400;
+
+  // Velocity vectors
+  let vel1Arrow = null, vel2Arrow = null;
+  let showVectors = true;
+  let showField = false;
+
+  // Gravity field particles
+  const fieldGroup = new THREE.Group();
+  scene.add(fieldGroup);
+  const fieldParticles = [];
+
+  function createFieldParticles() {
+    fieldGroup.children.forEach(c => fieldGroup.remove(c));
+    fieldParticles.length = 0;
+    if (!showField) return;
+    const fMat = new THREE.PointsMaterial({ color: 0x22c55e, size: 0.08, transparent: true, opacity: 0.5 });
+    for (let i = 0; i < 200; i++) {
+      const geo = new THREE.BufferGeometry();
+      const p = new Float32Array(3);
+      p[0] = (Math.random() - 0.5) * 20;
+      p[1] = (Math.random() - 0.5) * 2;
+      p[2] = (Math.random() - 0.5) * 20;
+      geo.setAttribute('position', new THREE.BufferAttribute(p, 3));
+      const pt = new THREE.Points(geo, fMat);
+      fieldGroup.add(pt);
+      fieldParticles.push({ mesh: pt, pos: [p[0], p[1], p[2]], origPos: [p[0], p[1], p[2]] });
+    }
   }
 
-  let mouseDown = false, prevX = 0, prevY = 0;
-  container.addEventListener('mousedown', e => { mouseDown = true; prevX = e.clientX; prevY = e.clientY; });
+  // Simulation state
+  let massRatio = 0.3;
+  let eccentricity = 0.5;
+  let timeSpeed = 1.0;
+  let simTime = 0;
+
+  // Orbital parameters
+  const GM_total = 50;
+  const semiMajor = 6;
+
+  function createBodies() {
+    if (body1) { scene.remove(body1); scene.remove(body1G); scene.remove(body2); scene.remove(body2G); }
+    const r1 = 0.5 + (1 - massRatio) * 0.6;
+    const r2 = 0.3 + massRatio * 0.5;
+    body1 = new THREE.Mesh(new THREE.SphereGeometry(r1, 32, 32), body1Mat);
+    body1G = new THREE.Mesh(new THREE.SphereGeometry(r1 * 1.3, 32, 32), body1Glow);
+    body2 = new THREE.Mesh(new THREE.SphereGeometry(r2, 32, 32), body2Mat);
+    body2G = new THREE.Mesh(new THREE.SphereGeometry(r2 * 1.3, 32, 32), body2Glow);
+    scene.add(body1); scene.add(body1G); scene.add(body2); scene.add(body2G);
+  }
+
+  function createArrow(from, dir, color) {
+    const len = dir.length();
+    if (len < 0.01) return null;
+    const arrowDir = dir.clone().normalize();
+    const arrow = new THREE.ArrowHelper(arrowDir, from, len, color, 0.3, 0.15);
+    scene.add(arrow);
+    return arrow;
+  }
+
+  function clearTrails() {
+    trail1Points.length = 0;
+    trail2Points.length = 0;
+    if (trail1Line) { scene.remove(trail1Line); trail1Line = null; }
+    if (trail2Line) { scene.remove(trail2Line); trail2Line = null; }
+  }
+
+  // Draw orbit ellipse
+  let orbitEllipse1 = null, orbitEllipse2 = null;
+  function drawOrbits() {
+    if (orbitEllipse1) { scene.remove(orbitEllipse1); scene.remove(orbitEllipse2); }
+    const a = semiMajor;
+    const e = eccentricity;
+    const b = a * Math.sqrt(1 - e * e);
+    const cx = -a * e;
+    const m2frac = massRatio / (1 + massRatio);
+    const m1frac = 1 / (1 + massRatio);
+
+    const pts1 = [], pts2 = [];
+    for (let i = 0; i <= 128; i++) {
+      const theta = (i / 128) * Math.PI * 2;
+      const x = cx + a * Math.cos(theta);
+      const z = b * Math.sin(theta);
+      pts1.push(new THREE.Vector3(-x * m2frac, 0, -z * m2frac));
+      pts2.push(new THREE.Vector3(x * m1frac, 0, z * m1frac));
+    }
+    const geo1 = new THREE.BufferGeometry().setFromPoints(pts1);
+    const geo2 = new THREE.BufferGeometry().setFromPoints(pts2);
+    orbitEllipse1 = new THREE.Line(geo1, new THREE.LineBasicMaterial({ color: 0xfbbf24, transparent: true, opacity: 0.25 }));
+    orbitEllipse2 = new THREE.Line(geo2, new THREE.LineBasicMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.25 }));
+    scene.add(orbitEllipse1);
+    scene.add(orbitEllipse2);
+  }
+
+  function reset() {
+    simTime = 0;
+    clearTrails();
+    createBodies();
+    drawOrbits();
+    createFieldParticles();
+  }
+
+  // Controls
+  const massSlider = document.getElementById('mass-slider');
+  const eccSlider = document.getElementById('ecc-slider');
+  const timeSlider = document.getElementById('time-slider');
+  const massVal = document.getElementById('mass-val');
+  const eccVal = document.getElementById('ecc-val');
+  const timeVal = document.getElementById('time-val');
+  const resetBtn = document.getElementById('reset-btn');
+  const toggleVecBtn = document.getElementById('toggle-vectors-btn');
+  const toggleFieldBtn = document.getElementById('toggle-field-btn');
+
+  massSlider.addEventListener('input', () => {
+    massRatio = parseInt(massSlider.value) / 100;
+    massVal.textContent = massRatio.toFixed(2);
+    reset();
+  });
+  eccSlider.addEventListener('input', () => {
+    eccentricity = parseInt(eccSlider.value) / 100;
+    eccVal.textContent = eccentricity.toFixed(2);
+    reset();
+  });
+  timeSlider.addEventListener('input', () => {
+    timeSpeed = parseInt(timeSlider.value) / 10;
+    timeVal.textContent = timeSpeed.toFixed(1);
+  });
+  resetBtn.addEventListener('click', reset);
+  toggleVecBtn.addEventListener('click', () => { showVectors = !showVectors; toggleVecBtn.style.opacity = showVectors ? 1 : 0.5; });
+  toggleFieldBtn.addEventListener('click', () => { showField = !showField; toggleFieldBtn.style.opacity = showField ? 1 : 0.5; createFieldParticles(); });
+
+  // Mouse rotation
+  let mouseDown = false, prevMX = 0;
+  container.addEventListener('mousedown', e => { mouseDown = true; prevMX = e.clientX; });
   container.addEventListener('mouseup', () => mouseDown = false);
+  container.addEventListener('mouseleave', () => mouseDown = false);
   container.addEventListener('mousemove', e => {
     if (!mouseDown) return;
-    scene.rotation.y += (e.clientX - prevX)*0.005;
-    prevX = e.clientX; prevY = e.clientY;
+    scene.rotation.y += (e.clientX - prevMX) * 0.005;
+    prevMX = e.clientX;
   });
-  container.addEventListener('touchstart', e => { prevX = e.touches[0].clientX; });
-  container.addEventListener('touchmove', e => { scene.rotation.y += (e.touches[0].clientX - prevX)*0.005; prevX = e.touches[0].clientX; });
+  container.addEventListener('touchstart', e => { prevMX = e.touches[0].clientX; });
+  container.addEventListener('touchmove', e => { scene.rotation.y += (e.touches[0].clientX - prevMX) * 0.005; prevMX = e.touches[0].clientX; });
+
+  // Grid
+  const grid = new THREE.GridHelper(30, 30, 0x1a2340, 0x0f1526);
+  grid.position.y = -0.5;
+  scene.add(grid);
+
+  reset();
 
   function animate() {
     requestAnimationFrame(animate);
-    planets.forEach(p => { p.angle += p.speed; p.mesh.position.set(Math.cos(p.angle)*p.orbit, 0, Math.sin(p.angle)*p.orbit); });
-    sun.rotation.y += 0.003;
+
+    simTime += 0.016 * timeSpeed;
+    const a = semiMajor;
+    const e = eccentricity;
+    const b = a * Math.sqrt(1 - e * e);
+    const cx = -a * e;
+
+    // Kepler equation: solve M = E - e*sin(E) for E
+    const n = Math.sqrt(GM_total / (a * a * a));
+    const M = n * simTime;
+    let E = M;
+    for (let i = 0; i < 10; i++) { E = M + e * Math.sin(E); }
+
+    // Position in orbital plane (relative orbit)
+    const relX = a * (Math.cos(E) - e);
+    const relZ = b * Math.sin(E);
+
+    // Two-body: positions relative to center of mass
+    const m2frac = massRatio / (1 + massRatio);
+    const m1frac = 1 / (1 + massRatio);
+
+    const x1 = -relX * m2frac;
+    const z1 = -relZ * m2frac;
+    const x2 = relX * m1frac;
+    const z2 = relZ * m1frac;
+
+    body1.position.set(x1, 0, z1);
+    body1G.position.set(x1, 0, z1);
+    body2.position.set(x2, 0, z2);
+    body2G.position.set(x2, 0, z2);
+
+    // Velocity (dE/dt = n / (1 - e*cos(E)))
+    const dEdt = n / (1 - e * Math.cos(E));
+    const vRelX = -a * Math.sin(E) * dEdt;
+    const vRelZ = b * Math.cos(E) * dEdt;
+
+    const vx1 = -vRelX * m2frac;
+    const vz1 = -vRelZ * m2frac;
+    const vx2 = vRelX * m1frac;
+    const vz2 = vRelZ * m1frac;
+
+    // Velocity arrows
+    if (vel1Arrow) { scene.remove(vel1Arrow); vel1Arrow = null; }
+    if (vel2Arrow) { scene.remove(vel2Arrow); vel2Arrow = null; }
+    if (showVectors) {
+      const scale = 0.5;
+      vel1Arrow = createArrow(
+        new THREE.Vector3(x1, 0, z1),
+        new THREE.Vector3(vx1 * scale, 0, vz1 * scale),
+        0xff6b35
+      );
+      vel2Arrow = createArrow(
+        new THREE.Vector3(x2, 0, z2),
+        new THREE.Vector3(vx2 * scale, 0, vz2 * scale),
+        0xff6b35
+      );
+    }
+
+    // Trails
+    trail1Points.push(new THREE.Vector3(x1, 0, z1));
+    trail2Points.push(new THREE.Vector3(x2, 0, z2));
+    if (trail1Points.length > maxTrailLen) trail1Points.shift();
+    if (trail2Points.length > maxTrailLen) trail2Points.shift();
+
+    if (trail1Line) scene.remove(trail1Line);
+    if (trail2Line) scene.remove(trail2Line);
+    if (trail1Points.length > 2) {
+      trail1Line = new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints(trail1Points),
+        new THREE.LineBasicMaterial({ color: 0xfbbf24, transparent: true, opacity: 0.4 })
+      );
+      scene.add(trail1Line);
+    }
+    if (trail2Points.length > 2) {
+      trail2Line = new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints(trail2Points),
+        new THREE.LineBasicMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.4 })
+      );
+      scene.add(trail2Line);
+    }
+
+    // Gravity field
+    if (showField) {
+      fieldParticles.forEach(fp => {
+        const pos = fp.mesh.geometry.attributes.position.array;
+        const dx1 = x1 - pos[0], dz1 = z1 - pos[2];
+        const dx2 = x2 - pos[0], dz2 = z2 - pos[2];
+        const r1sq = dx1*dx1 + dz1*dz1 + 0.5;
+        const r2sq = dx2*dx2 + dz2*dz2 + 0.5;
+        const m1 = 1 - massRatio, m2 = massRatio;
+        const fx = m1 * dx1 / (r1sq * Math.sqrt(r1sq)) + m2 * dx2 / (r2sq * Math.sqrt(r2sq));
+        const fz = m1 * dz1 / (r1sq * Math.sqrt(r1sq)) + m2 * dz2 / (r2sq * Math.sqrt(r2sq));
+        pos[0] += fx * 0.03;
+        pos[2] += fz * 0.03;
+        // Reset if too far
+        const dist = pos[0]*pos[0] + pos[2]*pos[2];
+        if (dist > 200 || dist < 0.5) {
+          pos[0] = fp.origPos[0];
+          pos[1] = fp.origPos[1];
+          pos[2] = fp.origPos[2];
+        }
+        fp.mesh.geometry.attributes.position.needsUpdate = true;
+      });
+    }
+
     renderer.render(scene, camera);
   }
   animate();
-  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
 })();
 </script>
 </body>

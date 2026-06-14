@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2. 음양과 효(爻) — aboutIching</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">☯ 표지 · 점치기</a></li>
+    <li><a href="01-what-is.html">1. 주역이란 무엇인가</a></li>
+    <li><a href="02-yin-yang-yao.html">2. 음양과 효(爻)</a></li>
+    <li><a href="03-eight-trigrams.html">3. 팔괘(八卦)</a></li>
+    <li><a href="04-64-hexagrams.html">4. 64괘의 세계</a></li>
+    <li><a href="05-casting.html">5. 작괘법 — 점치는 법</a></li>
+    <li><a href="06-changing-lines.html">6. 동효와 변괘</a></li>
+    <li><a href="07-interpretation.html">7. 괘 해석법</a></li>
+    <li><a href="08-history.html">8. 주역의 역사와 활용</a></li>
+    <li><a href="09-science.html">9. 주역의 과학·심리</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>음양과 효(爻)</em></h1>
+  <p class="authors">Chapter 2 — Yin-Yang and the Lines</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 양효(⚊ 이어진 막대)와 음효(⚋ 끊긴 막대), 그리고 음양</span>
+
+<h2>음양과 효(爻) 개요</h2>
+<p>주역의 모든 괘는 단 두 가지 기호, 즉 양효와 음효로 이루어진다. 이 두 효는 음양(陰陽)이라는 동양 사상의 가장 근본적인 대립과 보완의 원리를 막대 하나로 형상화한 것이다. 효가 셋 모이면 팔괘가 되고, 여섯이 모이면 64괘가 되니, 효는 주역이라는 거대한 상징 체계를 떠받치는 가장 작은 벽돌이라 할 수 있다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>효(爻)는 괘를 이루는 기본 단위로, 이어진 막대인 양효(⚊)와 끊긴 막대인 음효(⚋) 둘뿐이다. 음양은 하늘과 땅, 강함과 부드러움, 남과 여처럼 서로 대립하면서도 보완하는 관계로 본다. 태극에서 음과 양의 양의(兩儀)가 갈리고, 다시 사상(노양·소양·소음·노음)으로, 그리고 팔괘로 분화한다고 여긴다. 효 셋이 모이면 소성괘인 팔괘, 여섯이 모이면 대성괘인 64괘가 되며, 효가 놓인 자리(位)와 음양의 어울림이 길흉을 좌우한다고 본다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>효는 주역을 이루는 가장 작은 기호로, 이어진 막대 하나(양)와 끊긴 막대 하나(음)뿐이며, 이 둘이 음양의 세계를 그려낸다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>주역에는 64개의 괘가 있지만, 그 모든 괘는 결국 양효와 음효 두 가지 기호의 조합일 뿐이다. 그래서 음양과 효를 이해하지 못하면 어떤 괘도 제대로 읽을 수 없다. 양효는 이어진 막대(⚊)로 적극적이고 강한 성질을, 음효는 끊긴 막대(⚋)로 수용적이고 부드러운 성질을 나타낸다고 본다. 이 두 효가 어느 자리에 어떻게 놓이는가에 따라 괘의 의미와 길흉이 달라진다. 말하자면 효는 주역이라는 언어의 자음과 모음에 해당한다. 따라서 이 장은 앞으로 배울 팔괘와 64괘 전체를 떠받치는 기초가 된다.</p>
+
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>효(爻)</strong>: 괘를 이루는 기본 단위가 되는 막대 기호로, 양효와 음효 두 가지뿐이다.</li>
+<li><strong>양효(陽爻)</strong>: 가운데가 끊기지 않고 이어진 막대(⚊). 강함·움직임·하늘 등을 상징한다고 본다.</li>
+<li><strong>음효(陰爻)</strong>: 가운데가 끊어진 막대(⚋). 부드러움·고요함·땅 등을 상징한다고 본다.</li>
+<li><strong>음양(陰陽)</strong>: 하늘과 땅, 강함과 부드러움처럼 대립하면서도 서로 보완하는 한 쌍의 원리.</li>
+<li><strong>태극(太極)</strong>: 음양이 아직 갈리지 않은 근원의 상태로, 여기서 음과 양이 나뉜다고 여긴다.</li>
+</ul></div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>음양을 어렵게 생각할 필요는 없다. 낮과 밤, 더위와 추위, 들이쉬는 숨과 내쉬는 숨처럼 우리 일상은 짝을 이루는 두 힘이 번갈아 작용하며 흐른다. 양효는 켜진 스위치, 음효는 꺼진 스위치처럼 단순한 두 신호라고 떠올려도 좋다. 다만 한쪽이 다른 쪽보다 우월한 것이 아니라, 낮이 있어 밤이 의미를 가지듯 서로가 있어야 온전해지는 보완 관계라는 점이 핵심이다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 양효는 '한 줄로 이어진 막대', 음효는 '가운데가 끊긴 막대'로 외우자. 끊김(음)과 이어짐(양)이라는 모양만 기억하면 어떤 괘를 보아도 효를 구분할 수 있다.</div>
+
+<h3>한 페이지 요약</h3><ul>
+<li>효는 괘를 이루는 기본 단위이며 양효(⚊)와 음효(⚋) 두 가지뿐이다.</li>
+<li>음양은 하늘·땅, 강·유, 남·여처럼 대립하면서 서로 보완하는 관계로 본다.</li>
+<li>양효는 강하고 적극적인 성질을, 음효는 부드럽고 수용적인 성질을 상징한다고 여긴다.</li>
+<li>효가 셋 모이면 팔괘, 여섯 모이면 64괘가 된다.</li>
+<li>음양과 효의 이해는 주역의 모든 괘를 읽기 위한 기초가 된다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>주역의 우주관은 분화의 단계로 설명된다. 먼저 음양이 아직 갈리지 않은 근원의 상태인 태극이 있고, 거기서 음과 양이라는 두 기운, 곧 양의(兩儀)가 나뉜다고 본다. 이 양의가 다시 둘로 갈라지면 노양·소양·소음·노음의 네 가지 상(象), 곧 사상(四象)이 된다. 사상이 한 번 더 분화하면 여덟 가지 기본 괘인 팔괘가 이루어진다고 여긴다. 이처럼 하나가 둘로, 둘이 넷으로, 넷이 여덟으로 갈라지는 구조는 음과 양이라는 단 두 요소가 반복적으로 결합하여 복잡한 세계를 만들어 낸다는 관점을 담고 있다. 효의 자리에서도 음양은 중요한데, 효가 놓인 위치(位)에는 본래 음의 자리와 양의 자리가 정해져 있다고 본다. 양효가 양의 자리에, 음효가 음의 자리에 놓이면 어울림이 좋아 길하다고 여기고, 어긋나면 불안정하다고 본다. 이런 자리와 음양의 어울림이 괘 해석에서 길흉을 가르는 중요한 기준이 된다. 따라서 같은 효라도 어느 자리에 있느냐에 따라 의미가 달라진다는 점이 주역 해석의 묘미다.</p>
+
+<h3>핵심 메커니즘/원리</h3>
+<div class="info-card"><h4>📐 태극에서 팔괘로의 분화</h4><p>태극 → 양의(음·양) → 사상(노양·소양·소음·노음) → 팔괘로 이어지는 이분화의 사슬이 주역 상징 체계의 골격이다. 각 단계마다 기존의 상에 음효 또는 양효를 하나씩 더 얹어 가는 방식으로 더 구체적인 상이 만들어진다고 본다. 효 셋이 모이면 소성괘인 팔괘가 되고, 두 소성괘를 위아래로 겹쳐 효 여섯이 되면 대성괘인 64괘가 된다.</p></div>
+
+<h3>대표 사례·예시</h3>
+<div class="info-card"><h4>📐 사례 1</h4><p>양효 셋이 모두 모이면 순수한 양의 괘인 건(乾)이 되어 하늘을 상징한다고 본다. 반대로 음효 셋이 모두 모이면 순수한 음의 괘인 곤(坤)이 되어 땅을 상징한다고 여긴다. 이 두 괘는 음양의 극단을 보여 주는 가장 기본적인 예다.</p></div>
+<div class="info-card"><h4>📐 사례 2</h4><p>사상으로 보면, 노양은 양이 가득 찬 상태, 노음은 음이 가득 찬 상태로 본다. 작괘에서 노양은 수 9, 노음은 수 6에 대응하며, 이 두 경우는 '변하는 효', 곧 동효(動爻)가 되어 양이 음으로, 음이 양으로 바뀌는 변화를 일으킨다고 여긴다. 반면 소양과 소음은 변하지 않는 효로 본다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>음양의 이분 구조는 오늘날 0과 1로 모든 것을 표현하는 이진법과 자주 비교된다. 실제로 끊긴 효를 0, 이어진 효를 1로 대응시키면 64괘는 여섯 자리 이진수와 같은 구조를 가진다는 점이 흥미롭게 회자된다. 다만 이는 구조적 유사성에 대한 비유일 뿐, 주역이 이진법을 의도해 만들어졌다는 뜻은 아니다.</p>
+
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> '양은 좋고 음은 나쁘다'고 여기기 쉽지만, 음양은 우열 관계가 아니다. 밤이 있어야 낮이 의미를 갖듯 둘은 서로 보완하는 한 쌍으로, 어느 한쪽이 본질적으로 더 우월하다고 보지 않는다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>효의 자리에 대한 분석은 주역 해석학의 핵심을 이룬다. 대성괘는 아래에서 위로 초효·이효·삼효·사효·오효·상효의 여섯 자리로 이루어지며, 전통적으로 홀수 자리(초·삼·오)는 양의 자리, 짝수 자리(이·사·상)는 음의 자리로 본다. 양효가 양의 자리에, 음효가 음의 자리에 놓이는 것을 자리를 얻었다(得位)고 하여 안정적이라 여기고, 그 반대를 자리를 잃었다(失位)고 본다. 또한 가운데에 해당하는 이효와 오효는 각각 하괘와 상괘의 중심으로서 '중(中)'을 얻은 자리로 중시되며, 아래위 두 효가 음양으로 서로 호응하는 응(應) 관계 역시 길흉 판단의 단서가 된다. 사상에서 노양과 노음만이 동효가 된다는 점은 변화가 '극에 이른 것이 되돌아간다'는 사고와 연결된다고 본다. 이처럼 효 하나하나는 모양·자리·중·응·변화라는 여러 층위를 통해 읽히며, 이 다층적 독해가 주역 해석을 풍부하게 만든다. 따라서 같은 음효라도 어느 괘의 어느 자리에 있느냐에 따라 전혀 다른 의미를 가질 수 있다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>오늘날 학계에서는 주역을 점술 그 자체로 검증하기보다, 그 상징 체계와 사용 방식을 인문학·심리학적으로 탐구하는 경향이 강하다. 음양의 대립·보완 구조는 정신분석에서 말하는 대극의 통합이나, 결정을 앞두고 무작위적 자극을 매개로 자기 생각을 투사하고 재구성하는 과정과 견주어 논의되기도 한다. 이런 관점에서는 괘가 미래를 알려 준다기보다, 질문자가 자신의 상황을 새로운 틀로 다시 바라보도록 돕는 성찰의 장치로 이해된다. 다만 이는 해석의 한 관점이며, 점이 객관적 예측력을 가진다는 주장은 과학적으로 입증된 바 없다는 점은 분명히 구분해 둘 필요가 있다.</p>
+
+<h3>관련 분야</h3><ul>
+<li><strong>동양철학·역학</strong>: 음양오행과 태극 사상의 형성 및 주역과의 관계.</li>
+<li><strong>기호학·정보이론</strong>: 두 기호의 조합으로 의미를 생성하는 구조와 이진 표현의 유사성.</li>
+<li><strong>심리학</strong>: 상징을 매개로 한 자기 성찰과 투사, 의사결정 과정에 대한 연구.</li>
+</ul>
+
+<h3>더 읽을거리</h3><ul>
+<li>"주역" — 원전(주역 본문과 십익을 포함한 고전 텍스트)</li>
+<li>"주역 강의" — 남회근</li>
+<li>"The I Ching or Book of Changes" — Richard Wilhelm 번역, Cary F. Baynes 영역</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 임의의 대성괘 하나를 골라 여섯 효를 아래에서 위로 적은 뒤, 각 효가 자리를 얻었는지(得位) 잃었는지 따져 보자. 이어 이효와 오효가 음양으로 호응하는지 확인하며, 자리와 어울림이 괘의 인상을 어떻게 바꾸는지 스스로 정리해 보자.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#cf9b34","questions":[{"q":"이어진 막대(⚊)가 나타내는 효는?","choices":["음효","양효","동효","변효"],"answer":1},{"q":"음양이 갈리기 전 근원의 상태는?","choices":["사상","양의","태극","팔괘"],"answer":2},{"q":"효 셋이 모이면 무엇이 되나?","choices":["팔괘","64괘","사상","태극"],"answer":0},{"q":"작괘에서 노양에 대응하는 수는?","choices":["6","7","8","9"],"answer":3},{"q":"변하지 않는 효로 보는 것은?","choices":["노양","노음","소양·소음","동효"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,6);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=0xcf9b34;const yang=new THREE.Mesh(new THREE.BoxGeometry(3,0.4,0.4),new THREE.MeshBasicMaterial({color:C}));yang.position.y=1.1;s.add(yang);const yl=new THREE.Mesh(new THREE.BoxGeometry(1.2,0.4,0.4),new THREE.MeshBasicMaterial({color:C}));yl.position.set(-0.9,-0.3,0);s.add(yl);const yr=new THREE.Mesh(new THREE.BoxGeometry(1.2,0.4,0.4),new THREE.MeshBasicMaterial({color:C}));yr.position.set(0.9,-0.3,0);s.add(yr);const ring=new THREE.Mesh(new THREE.TorusGeometry(0.7,0.06,12,36),new THREE.MeshBasicMaterial({color:C}));ring.position.y=-1.7;s.add(ring);const d1=new THREE.Mesh(new THREE.SphereGeometry(0.33,16,16),new THREE.MeshBasicMaterial({color:C}));d1.position.set(0,-1.4,0);s.add(d1);const d2=new THREE.Mesh(new THREE.SphereGeometry(0.33,16,16),new THREE.MeshBasicMaterial({color:0xffffff}));d2.position.set(0,-2.0,0);s.add(d2);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.005;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

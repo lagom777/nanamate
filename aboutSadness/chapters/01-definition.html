@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 푸른 물방울을 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 감정의 정의 — 느낌·몸(생리)·행동의 묶음</span>
 
 <h2>정의와 본질 개요</h2>
 <p>슬픔(Sadness)은 "무언가를 잃었다, 멈춰서 정리하라"는 회복·사회 신호다. 진화가 수십만 년에 걸쳐 다듬어 놓은 정서적 브레이크이자 사회적 지지를 끌어오는 호출음이다. 약함의 표시도, 제거해야 할 오류도 아니라 회복과 의미 만들기를 가능케 하는 기제다.</p>
@@ -74,5 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 최근 슬펐던 사건 1건을 골라 5W1H로 기록하고, "잃은 것은 무엇인가 / 그것의 의미는 무엇이었는가 / 지금 남은 것은 무엇인가" 세 문장으로 의미 만들기를 시도해보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#60a5fa","questions":[{"q":"슬픔이 보내는 신호의 핵심은?","choices":["상실·회복","번식","공격","포만"],"answer":0},{"q":"상실 후 자연스러운 슬픔 반응은?","choices":["조증","비탄","환청","공포"],"answer":1},{"q":"부정적 생각을 반복해 곱씹는 것은?","choices":["반사","공감","반추","회피"],"answer":2},{"q":"슬플 때 우세해지는 신경은?","choices":["교감","운동","감각","부교감"],"answer":3},{"q":"Bonanno 연구의 회복탄력적 비율은?","choices":["약 10%","약 60%","약 90%","약 30%"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0x60a5fa;const parts=[];for(let i=0;i<36;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0x60a5fa;const core=new THREE.Mesh(new THREE.SphereGeometry(0.8,24,24),new THREE.MeshBasicMaterial({color:COL}));s.add(core);const halo=new THREE.Mesh(new THREE.TorusGeometry(1.15,0.04,10,44),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.5}));s.add(halo);const sat=[];const sc=[0xffffff,0xfcd34d,0x93c5fd];for(let i=0;i<3;i++){const t=i/3*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.34,16,16),new THREE.MeshBasicMaterial({color:sc[i]}));s.add(m);sat.push({m,ph:t});s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,0)]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.3})));}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;core.scale.setScalar(0.92+0.1*Math.sin(T*2.2));halo.rotation.z+=0.01;sat.forEach((o,i)=>{o.m.position.set(Math.cos(T*0.6+o.ph)*2.4,Math.sin(T*0.4+o.ph)*0.8,Math.sin(T*0.6+o.ph)*2.4);});s.rotation.y+=0.0015;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

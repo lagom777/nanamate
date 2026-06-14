@@ -5,7 +5,9 @@
 <link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
@@ -16,7 +18,7 @@
 <li><a href="07-compatibility.html">7. 궁합</a></li><li><a href="08-career.html">8. 직업과 재물</a></li>
 <li><a href="09-modern-application.html">9. 현대적 활용</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>지지 (地支)</em></h1><p class="authors">Chapter 3 — 12 Earthly Branches & Animals</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 오행 관계를 회전하며 탐구하세요</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 12지지 — 자축인묘진사오미신유술해(12동물·계절)</span>
 <h2>지지 (地支) 개요</h2><p>이 챕터에서는 지지 (地支)의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>12 Earthly Branches & Animals</p></div>
 
@@ -76,33 +78,21 @@
   </ul>
   <div class="success-box"><strong>🎓 학술적 탐구:</strong> 같은 지지를 두고 자평·적천수·난강망·궁통보감이 어떻게 다르게 해석하는지 비교 정리해 보면, 동아시아 학문의 다층성과 해석학적 깊이를 체감할 수 있습니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ff4d8d","questions":[{"q":"지지는 모두 몇 글자인가?","choices":["10글자","11글자","12글자","13글자"],"answer":2},{"q":"지지 속에 숨은 천간의 이름은?","choices":["십신","지장간","용신","격국"],"answer":1},{"q":"명식에서 가장 중요한 지지는?","choices":["연지","일지","시지","월지"],"answer":3},{"q":"인·오·술 삼합이 만드는 국은?","choices":["화국","수국","목국","금국"],"answer":0},{"q":"지지충에 해당하는 쌍은?","choices":["인묘","사오","묘유","신유"],"answer":2}]};</script>
 </main></div>
 <script>
-(function() {
-  const container = document.getElementById('sim-scene');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 3, 8);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  container.appendChild(renderer.domElement);
-  const colors = [0x22c55e,0xef4444,0xeab308,0xf8fafc,0x3b82f6];
-  for (let i = 0; i < 5; i++) {
-    const m = new THREE.Mesh(new THREE.OctahedronGeometry(0.4,0), new THREE.MeshBasicMaterial({ color: colors[i], wireframe: true }));
-    const a = (i/5)*Math.PI*2;
-    m.position.set(Math.cos(a)*2.5, 0, Math.sin(a)*2.5);
-    scene.add(m);
-  }
-  const torus = new THREE.Mesh(new THREE.TorusGeometry(2.5,0.05,8,64), new THREE.MeshBasicMaterial({ color: 0xff4d8d, transparent: true, opacity: 0.3 }));
-  torus.rotation.x = Math.PI/2; scene.add(torus);
-  let md=false,px=0;
-  container.addEventListener('mousedown',e=>{md=true;px=e.clientX;});
-  container.addEventListener('mouseup',()=>md=false);
-  container.addEventListener('mousemove',e=>{if(md){scene.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
-  container.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});
-  container.addEventListener('touchmove',e=>{scene.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});
-  function animate(){requestAnimationFrame(animate);scene.rotation.y+=0.003;renderer.render(scene,camera);}animate();
-  window.addEventListener('resize',()=>{camera.aspect=container.clientWidth/container.clientHeight;camera.updateProjectionMatrix();renderer.setSize(container.clientWidth,container.clientHeight);});
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3.4,8.5);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(3.2,0.04,10,80),new THREE.MeshBasicMaterial({color:0xff4d8d,transparent:true,opacity:0.3}));ring.rotation.x=Math.PI/2;s.add(ring);const nodes=[];for(let i=0;i<12;i++){const t=i/12*Math.PI*2;const col=new THREE.Color().setHSL(i/12,0.55,0.6);const m=new THREE.Mesh(new THREE.SphereGeometry(0.3,16,16),new THREE.MeshBasicMaterial({color:col}));m.position.set(Math.cos(t)*3.2,0,Math.sin(t)*3.2);s.add(m);nodes.push(m);const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(Math.cos(t)*3.2,0,Math.sin(t)*3.2)]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xff4d8d,transparent:true,opacity:0.1})));}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
-</script></body></html>
+</script>
+</body></html>

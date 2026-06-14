@@ -8,12 +8,14 @@
 <script defer src="../toggle.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">📖 표지 · 초록</a></li>
@@ -194,7 +196,7 @@
 
 <h5>5. Temporal 데이터 처리</h5>
 <p>시간이 지나면서 데이터 변경 추적. 버전 컬럼이나 별도 히스토리 테이블 사용.</p>
-<p>표준: SQL 2011 TEMPORAL 테이블 (MySQL 5.7.6+, PostgreSQL)</p>
+<p>표준: SQL 2011 TEMPORAL 테이블 (MariaDB 10.3+, SQL Server 2016+)</p>
 </div>
 </section>
 
@@ -503,6 +505,11 @@ ORDER  BY version;</code></pre>
   </div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d6efd","questions":[{"q":"이벤트 소싱이 저장하는 것은?","choices":["현재 상태만","모든 변경 기록","백업 파일","스키마만"],"answer":1},{"q":"CQRS가 분리하는 것은?","choices":["읽기와 쓰기","키와 값","행과 열","캐시와 큐"],"answer":0},{"q":"소프트 딜리트에 쓰는 컬럼은?","choices":["created_at","updated_at","version","deleted_at"],"answer":3},{"q":"DB 변경과 메시지 발행을 묶는 패턴은?","choices":["캐시 패턴","사가 패턴","Outbox 패턴","큐 패턴"],"answer":2},{"q":"같은 요청이 반복돼도 결과가 한 번인 성질은?","choices":["원자성","멱등성","일관성","지속성"],"answer":1}]};</script>
 </main>
 </div>
 </body>

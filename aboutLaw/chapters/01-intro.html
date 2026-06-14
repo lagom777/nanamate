@@ -2,11 +2,13 @@
 <title>1. 법학 개론 — aboutLaw</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">⚖️ 표지</a></li><li><a href="chapters/01-intro.html">1. 법학 개론</a></li><li><a href="chapters/02-constitutional.html">2. 헌법</a></li><li><a href="chapters/03-civil.html">3. 민법 기초</a></li><li><a href="chapters/04-criminal.html">4. 형법 기초</a></li><li><a href="chapters/05-labor.html">5. 근로기준법</a></li><li><a href="chapters/06-property.html">6. 부동산/재산법</a></li><li><a href="chapters/07-consumer.html">7. 소비자 보호법</a></li><li><a href="chapters/08-ip.html">8. 지식재산권</a></li><li><a href="chapters/09-digital-law.html">9. 디지털 법률</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">⚖️ 표지</a></li><li><a href="01-intro.html">1. 법학 개론</a></li><li><a href="02-constitutional.html">2. 헌법</a></li><li><a href="03-civil.html">3. 민법 기초</a></li><li><a href="04-criminal.html">4. 형법 기초</a></li><li><a href="05-labor.html">5. 근로기준법</a></li><li><a href="06-property.html">6. 부동산/재산법</a></li><li><a href="07-consumer.html">7. 소비자 보호법</a></li><li><a href="08-ip.html">8. 지식재산권</a></li><li><a href="09-digital-law.html">9. 디지털 법률</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>법학 개론</em></h1><p class="authors">Chapter 1 — Introduction to Law & Legal Systems</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 헌법을 정점으로 한 법의 위계 피라미드 — 드래그로 회전</span>
 <h2>법학 개론</h2><p>Introduction to Law & Legal Systems의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Introduction to Law & Legal Systems</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -29,8 +31,8 @@
   <span class="difficulty-badge medium">중 · 응용</span>
   <h3>법리 깊이</h3><p>법체계는 크게 대륙법(독일·프랑스·한국·일본)과 영미법(영국·미국)으로 나뉩니다. 대륙법은 추상적 조문을 정점으로 두고 법관이 이를 사건에 적용하는 연역적 구조를 가지며, 영미법은 선례(precedent)가 사실상 법원으로 작동하는 귀납적 구조를 갖습니다. 한국법은 대륙법 전통이지만 헌법재판제도와 행정소송 구조에서 영미법적 요소를 일부 흡수했고, 대법원 전원합의체 판결은 사실상 후속 재판을 구속하는 선례적 효력을 발휘합니다. 법규는 강행규정과 임의규정으로 구분되는데, 강행규정은 당사자 합의로 배제할 수 없는 규정이고, 임의규정은 합의로 다르게 정할 수 있는 규정입니다. 예컨대 근로기준법의 최저임금 조항은 강행규정이라 사용자와 근로자가 더 낮은 임금에 합의해도 무효이고, 민법의 매매대금 지급시기 조항은 임의규정이라 당사자가 분할 지급으로 합의하면 그 합의가 우선합니다. 법해석에는 문리해석·논리해석·역사적해석·목적론적해석·헌법합치적해석이 있고, 법관은 사안에 따라 이들을 결합해 결론을 도출합니다.</p>
   <h3>주요 조문/판례</h3>
-  <div class="info-card"><h4>⚖️ 판례 1 — 양심적 병역거부 (대법 2018도10396 전원합의체)</h4><p>사실관계: 종교적 신념을 이유로 현역 입영을 거부한 피고인이 병역법 위반으로 기소되었다. 판결요지: 진정한 양심에 따른 병역거부는 병역법 제88조 제1항의 "정당한 사유"에 해당해 처벌할 수 없다. 종래 판례를 변경하며 양심의 자유를 제도적으로 인정한 사례.</p></div>
-  <div class="info-card"><h4>⚖️ 판례 2 — 호주제 헌법불합치 (헌재 2005헌가13)</h4><p>사실관계: 호주를 가족의 정점으로 두고 남성 우선 승계를 정한 민법 호주제 조항의 위헌 여부가 다투어졌다. 판결요지: 양성평등과 개인의 존엄에 어긋나 헌법불합치. 가족법이 시대의 가치 변화에 따라 어떻게 진화하는지를 보여 주는 상징적 사건.</p></div>
+  <div class="info-card"><h4>⚖️ 판례 1 — 양심적 병역거부 (대법 2016도10912 전원합의체)</h4><p>사실관계: 종교적 신념을 이유로 현역 입영을 거부한 피고인이 병역법 위반으로 기소되었다. 판결요지: 진정한 양심에 따른 병역거부는 병역법 제88조 제1항의 "정당한 사유"에 해당해 처벌할 수 없다. 종래 판례를 변경하며 양심의 자유를 제도적으로 인정한 사례.</p></div>
+  <div class="info-card"><h4>⚖️ 판례 2 — 호주제 헌법불합치 (헌재 2001헌가9)</h4><p>사실관계: 호주를 가족의 정점으로 두고 남성 우선 승계를 정한 민법 호주제 조항의 위헌 여부가 다투어졌다. 판결요지: 양성평등과 개인의 존엄에 어긋나 헌법불합치. 가족법이 시대의 가치 변화에 따라 어떻게 진화하는지를 보여 주는 상징적 사건.</p></div>
   <h3>실무 응용</h3><p>실제 분쟁을 보면 법은 더 생생합니다. 첫째, 온라인 쇼핑몰에서 옷을 샀는데 사이즈가 달라 환불을 요청했지만 거부당한 사례. 전자상거래법 제17조의 7일 청약철회권이 적용되어 단순 변심으로도 환불이 가능합니다. 둘째, 이웃집의 늦은 밤 피아노 소음으로 잠을 못 자는 사례. 민법 제214조 방해배제청구권과 환경분쟁조정위원회 조정으로 해결할 수 있습니다. 셋째, 회사 단톡방에서 상사가 인격을 모욕한 사례. 형법 제311조 모욕죄와 동시에 직장 내 괴롭힘 금지 조항이 함께 작동합니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "구두 약속은 효력이 없다"는 말은 잘못된 통념입니다. 민법은 원칙적으로 낙성·불요식주의를 채택해 구두 합의도 계약으로 성립하며, 다만 입증의 어려움이 따를 뿐입니다.</div>
 </div>
@@ -43,5 +45,23 @@
   <h3>추가 자료</h3><ul><li>H.L.A. Hart, 『The Concept of Law』 — 법실증주의의 고전</li><li>R. Dworkin, 『Law's Empire』 — 통합성으로서의 법 이론</li><li>대한민국 국가법령정보센터 (law.go.kr) — 모든 법령·판례 검색</li><li>헌법재판소 결정집 — 한국 헌법재판의 핵심 사례 모음</li></ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> AI 판사가 모든 사건을 데이터로 판결한다면, 그 결정은 "법"이라 부를 수 있을까요? 자연법론·법실증주의·법경제학 세 입장에서 답해 보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#1d4ed8","questions":[{"q":"법을 강제력으로 뒷받침하는 주체는?","choices":["개인","국가","기업","학교"],"answer":1},{"q":"법 위계 피라미드의 정점은?","choices":["법률","시행령","헌법","조례"],"answer":2},{"q":"개인과 개인의 관계를 다루는 법은?","choices":["공법","형법","헌법","사법"],"answer":3},{"q":"한국 법체계가 속한 법 전통은?","choices":["대륙법","영미법","종교법","관습법"],"answer":0},{"q":"당사자 합의로 배제할 수 없는 규정은?","choices":["임의규정","권고규정","강행규정","보충규정"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const grp=new THREE.Group();const tiers=[{w:1.0,h:2.6},{w:2.0,h:1.4},{w:3.0,h:0.2},{w:4.0,h:-1.0},{w:5.0,h:-2.2}];
+  tiers.forEach((t,i)=>{const col=new THREE.Color().setHSL(0.58-i*0.05,0.55,0.55);const slab=new THREE.Mesh(new THREE.BoxGeometry(t.w,0.7,t.w),new THREE.MeshBasicMaterial({color:col}));slab.position.y=t.h;grp.add(slab);const eg=new THREE.EdgesGeometry(new THREE.BoxGeometry(t.w,0.7,t.w));const wire=new THREE.LineSegments(eg,new THREE.LineBasicMaterial({color:0xffffff}));wire.position.y=t.h;grp.add(wire);});
+  const cap=new THREE.Mesh(new THREE.TetrahedronGeometry(0.55),new THREE.MeshBasicMaterial({color:0xffe08a}));cap.position.y=3.5;grp.add(cap);s.add(grp);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;cap.rotation.y+=0.02;cap.rotation.x+=0.01;cap.position.y=3.5+Math.sin(T)*0.12;s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

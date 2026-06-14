@@ -5,7 +5,9 @@
 <link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
@@ -16,7 +18,7 @@
 <li><a href="07-compatibility.html">7. 궁합</a></li><li><a href="08-career.html">8. 직업과 재물</a></li>
 <li><a href="09-modern-application.html">9. 현대적 활용</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>오행 (五行)</em></h1><p class="authors">Chapter 4 — Five Elements Theory & Interactions</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 오행 관계를 회전하며 탐구하세요</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 오행 — 상생(겉 오각형)과 상극(안 별모양)</span>
 <h2>오행 (五行) 개요</h2><p>이 챕터에서는 오행 (五行)의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Five Elements Theory & Interactions</p></div>
 
@@ -76,33 +78,21 @@
   </ul>
   <div class="success-box"><strong>🎓 학술적 탐구:</strong> 오행을 단순한 분류가 아니라 동아시아 사상사의 통합 언어로 보면, 명리·한의·풍수·문학을 가로지르는 인문학적 시야가 열립니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ff4d8d","questions":[{"q":"봄과 동쪽을 상징하는 오행은?","choices":["화","토","목","수"],"answer":2},{"q":"수렴과 가을을 상징하는 오행은?","choices":["목","금","토","수"],"answer":1},{"q":"서로 도와주는 오행 관계는?","choices":["상생","상극","비화","합화"],"answer":0},{"q":"일간이 강한 명식의 명칭은?","choices":["신약","신강","중화","종격"],"answer":1},{"q":"한겨울 명식에 필요한 기운은?","choices":["수","금","토","화"],"answer":3}]};</script>
 </main></div>
 <script>
-(function() {
-  const container = document.getElementById('sim-scene');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 3, 8);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  container.appendChild(renderer.domElement);
-  const colors = [0x22c55e,0xef4444,0xeab308,0xf8fafc,0x3b82f6];
-  for (let i = 0; i < 5; i++) {
-    const m = new THREE.Mesh(new THREE.OctahedronGeometry(0.4,0), new THREE.MeshBasicMaterial({ color: colors[i], wireframe: true }));
-    const a = (i/5)*Math.PI*2;
-    m.position.set(Math.cos(a)*2.5, 0, Math.sin(a)*2.5);
-    scene.add(m);
-  }
-  const torus = new THREE.Mesh(new THREE.TorusGeometry(2.5,0.05,8,64), new THREE.MeshBasicMaterial({ color: 0xff4d8d, transparent: true, opacity: 0.3 }));
-  torus.rotation.x = Math.PI/2; scene.add(torus);
-  let md=false,px=0;
-  container.addEventListener('mousedown',e=>{md=true;px=e.clientX;});
-  container.addEventListener('mouseup',()=>md=false);
-  container.addEventListener('mousemove',e=>{if(md){scene.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
-  container.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});
-  container.addEventListener('touchmove',e=>{scene.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});
-  function animate(){requestAnimationFrame(animate);scene.rotation.y+=0.003;renderer.render(scene,camera);}animate();
-  window.addEventListener('resize',()=>{camera.aspect=container.clientWidth/container.clientHeight;camera.updateProjectionMatrix();renderer.setSize(container.clientWidth,container.clientHeight);});
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7.5);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const ELC=[0x22c55e,0xef4444,0xeab308,0xf1f5f9,0x3b82f6];const R=2.7;const pos=[];for(let i=0;i<5;i++){const t=Math.PI/2 - i/5*Math.PI*2;pos.push(new THREE.Vector3(Math.cos(t)*R,Math.sin(t)*R,0));const m=new THREE.Mesh(new THREE.SphereGeometry(0.45,18,18),new THREE.MeshBasicMaterial({color:ELC[i]}));m.position.copy(pos[i]);s.add(m);}for(let i=0;i<5;i++){const g=new THREE.BufferGeometry().setFromPoints([pos[i],pos[(i+1)%5]]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x22c55e,transparent:true,opacity:0.6})));}for(let i=0;i<5;i++){const g=new THREE.BufferGeometry().setFromPoints([pos[i],pos[(i+2)%5]]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xef4444,transparent:true,opacity:0.4})));}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.z+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
-</script></body></html>
+</script>
+</body></html>

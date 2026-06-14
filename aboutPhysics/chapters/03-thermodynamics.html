@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -84,7 +86,7 @@
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -119,6 +121,11 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 2차원 이징 모형의 분배함수가 가지는 임계온도를 정성적으로 추정하고, 평균장 근사로 자발자기화의 임계지수를 구해 보세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00d4ff","questions":[{"q":"열역학 제1법칙의 식은?","choices":["ΔS≥0","ΔU=Q−W","PV=nRT","F=ma"],"answer":1},{"q":"고립계의 엔트로피는?","choices":["감소한다","항상 0이다","감소하지 않는다","진동한다"],"answer":2},{"q":"이상기체 법칙은?","choices":["PV=nRT","ΔU=Q−W","E=hf","p=mv"],"answer":0},{"q":"카르노 기관의 효율 공식은?","choices":["1−T_h/T_c","T_c/T_h","1−T_c/T_h","T_h−T_c"],"answer":2},{"q":"S=k_B ln Ω에서 Ω의 의미는?","choices":["에너지","온도","부피","미시상태 수"],"answer":3}]};</script>
 </main>
 </div>
 

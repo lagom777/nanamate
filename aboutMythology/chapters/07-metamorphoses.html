@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7. 사랑과 변신 — aboutMythology</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🏛️ 표지</a></li>
+    <li><a href="01-what-is.html">1. 신화란 무엇인가</a></li>
+    <li><a href="02-creation.html">2. 창조 신화</a></li>
+    <li><a href="03-olympians.html">3. 올림포스 12신</a></li>
+    <li><a href="04-heroes.html">4. 영웅 신화</a></li>
+    <li><a href="05-trojan-war.html">5. 트로이 전쟁</a></li>
+    <li><a href="06-odyssey.html">6. 오디세이아의 귀환</a></li>
+    <li><a href="07-metamorphoses.html">7. 사랑과 변신</a></li>
+    <li><a href="08-underworld.html">8. 저승과 운명</a></li>
+    <li><a href="09-legacy.html">9. 신화의 유산</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>사랑과 변신</em></h1>
+  <p class="authors">Chapter 7 — Love &amp; Metamorphoses</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 사람이 나무·꽃으로 변신하는 모습의 순환 — 회전시켜 보세요</span>
+
+<h2>사랑과 변신 개요</h2>
+<p>그리스·로마 신화에서 사랑은 종종 누군가의 모습을 송두리째 바꾸어 놓는다. 사람이 나무가 되고, 꽃이 되고, 돌이 사람으로 깨어난다. 이 변신의 이야기를 가장 풍부하게 모아 전한 작품이 로마 시인 오비디우스의 <em>변신 이야기</em>다. 변신은 단순한 마법이 아니라 욕망과 죄, 그리고 거스를 수 없는 운명이 몸으로 드러난 형태로 읽힌다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>아폴론과 다프네(월계수), 나르키소스와 에코, 피그말리온과 갈라테이아, 미다스의 손, 오르페우스와 에우리디케, 데메테르와 페르세포네(계절의 기원), 이카로스의 추락. 이들 이야기에서 변신은 욕망·죄·운명이 형상으로 굳은 상징이다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>변신 이야기는 누군가가 강렬한 사랑이나 욕심, 슬픔 때문에 사람이 아닌 다른 존재로 바뀌는 이야기다.</p>
+<h3>왜 중요한가?</h3>
+<p>변신 신화는 인간의 감정을 눈에 보이는 모습으로 바꾸어 보여 준다. 아폴론의 사랑을 피해 달아나던 다프네가 월계수가 되고, 자기 모습에만 빠진 나르키소스가 수선화가 되는 식이다. 우리는 이런 이야기를 통해 "왜 월계수가 승리의 상징이 되었는가", "왜 자기애를 나르시시즘이라 부르는가" 같은 문화의 뿌리를 만난다. 또한 변신은 통제할 수 없는 욕망과 그 결과를 한 장면으로 압축해 보여 주기 때문에, 오랜 세월 화가와 시인들이 즐겨 다룬 소재였다. 즉 변신 이야기는 감정과 운명을 그림처럼 기억하게 만드는 옛사람들의 지혜다.</p>
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>변신(메타모르포시스)</strong>: 사람이나 신이 다른 존재(나무·꽃·동물·돌 등)로 모습을 바꾸는 일</li>
+<li><strong>월계수</strong>: 다프네가 변한 나무로, 승리와 명예의 상징이 되었다</li>
+<li><strong>나르시시즘</strong>: 나르키소스 이야기에서 나온 말로, 지나친 자기애를 가리킨다</li>
+<li><strong>갈라테이아</strong>: 피그말리온이 만든 조각상이 생명을 얻어 된 여인의 이름</li>
+<li><strong>저승(하데스)</strong>: 죽은 이들이 가는 곳으로, 오르페우스와 페르세포네 이야기의 배경</li>
+</ul></div>
+<h3>핵심 개념 풀어쓰기</h3>
+<p>변신을 마음의 거울이라고 생각하면 쉽다. 거울은 그 사람의 속을 바깥 모습으로 비춘다. 자기만 사랑하던 나르키소스는 물가에서 자기 그림자만 바라보다 꽃이 되었는데, 이는 "안으로만 향한 사랑은 결국 제자리에 굳어 버린다"는 뜻을 모습으로 보여 준 셈이다. 미다스가 만지는 것마다 황금이 되자 빵도 딸도 만질 수 없게 된 이야기 역시, 끝없는 욕심이 스스로를 가둔다는 교훈을 손이라는 구체적 장면으로 바꾼 것이다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 변신 이야기를 읽을 때 "이 사람의 어떤 마음이 이 모습으로 바뀌었을까?"를 먼저 떠올리면 줄거리가 훨씬 잘 기억된다.</div>
+<h3>한 페이지 요약</h3>
+<ul>
+<li>변신은 사랑·욕심·슬픔 같은 감정이 다른 모습으로 굳어진 이야기다</li>
+<li>다프네는 월계수, 나르키소스는 수선화로 변했다</li>
+<li>피그말리온의 조각상은 거꾸로 사람이 되었다(갈라테이아)</li>
+<li>미다스의 황금 손은 지나친 욕심의 위험을 보여 준다</li>
+<li>이런 이야기는 오비디우스의 <em>변신 이야기</em>에 많이 모여 있다</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>변신 신화를 체계적으로 집대성한 작품은 로마 시인 오비디우스가 쓴 라틴어 서사시 <em>변신 이야기</em>다. 이 작품은 세상의 창조에서 시작해 수많은 변신 이야기를 사슬처럼 엮어 나가는데, 그 바탕에는 "모든 것은 변한다"는 관점이 깔려 있다. 그리스 신화 자체에서도 변신은 흔한 장치였지만, 오비디우스는 이를 사랑과 욕망의 드라마로 다듬어 하나의 큰 흐름으로 묶었다. 여기서 변신은 보통 세 가지 의미를 띤다. 첫째는 <strong>욕망</strong>이다. 누군가를 향한 격렬한 사랑이 상대를 변하게 하거나 자신을 변하게 만든다. 둘째는 <strong>죄와 벌</strong>이다. 오만이나 불경, 잔인함에 대한 응징으로 신이 사람의 모습을 바꾼다. 셋째는 <strong>운명</strong>이다. 인간의 의지로는 막을 수 없는 흐름이 결국 한 존재를 다른 존재로 옮겨 놓는다. 이렇게 변신은 추상적인 감정과 도덕을 눈에 보이는 형상으로 번역하는 신화적 장치였다. 또한 많은 변신 이야기는 자연 현상이나 사물의 기원을 설명하는 기원 설화(아이티온)의 성격도 함께 지닌다.</p>
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 욕망·죄·운명의 형상화</h4><p>변신은 인물의 내면 상태가 신의 개입을 통해 외형으로 고정되는 구조를 따른다. 다프네의 정절은 늘 푸른 월계수로, 나르키소스의 자기애는 고개 숙인 수선화로, 미다스의 탐욕은 모든 것을 굳히는 황금 손으로 굳는다. 변신의 순간은 대개 감정이 절정에 이른 지점에서 일어나며, 바뀐 모습은 그 감정을 영원히 증언하는 표지로 남는다.</p></div>
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1 — 아폴론과 다프네</h4><p>아폴론이 에로스의 화살을 맞아 강의 신의 딸 다프네를 사랑하게 되지만, 다프네는 그를 거부하고 달아난다. 붙잡히기 직전 다프네는 아버지에게 도움을 구하고 월계수로 변한다. 아폴론은 그 잎으로 화관을 엮어 명예의 상징으로 삼았다고 전한다. 이는 강요된 사랑과 지켜낸 정절이 늘 푸른 나무로 굳은 사례다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 데메테르와 페르세포네</h4><p>대지의 여신 데메테르의 딸 페르세포네가 저승의 신 하데스에게 끌려가자, 슬픔에 빠진 데메테르가 대지를 메마르게 한다. 결국 페르세포네는 한 해의 일부를 저승에서, 나머지를 지상에서 보내게 되는데, 그가 지상에 올라오면 봄과 여름이 오고 저승으로 내려가면 가을과 겨울이 온다고 본다. 이는 계절의 순환을 설명하는 대표적 기원 신화다.</p></div>
+<h3>현대적 전개</h3>
+<p>변신 이야기는 후대 예술의 마르지 않는 샘이 되었다. 르네상스와 바로크 시대의 수많은 회화와 조각이 다프네의 변신이나 피그말리온의 조각상을 소재로 삼았고, 오르페우스 이야기는 초기 오페라의 단골 주제가 되었다. 오늘날에도 '나르시시즘', '미다스의 손', '판도라' 같은 표현은 일상 언어 속에 살아 있다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 변신 이야기는 흔히 '아름다운 사랑 이야기'로만 기억되지만, 원전에서는 강요·폭력·상실의 어두운 면이 함께 담겨 있다. 다프네의 변신은 거부와 도주의 결과였고, 페르세포네는 납치되었다. 사랑의 결말이 늘 행복한 것은 아니라는 점을 함께 보아야 한다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>오비디우스의 <em>변신 이야기</em>는 천지창조에서 시인 자신의 시대에 이르기까지를 변신이라는 주제로 꿰어 낸 라틴 서사시로, 15권에 걸쳐 250편 안팎의 이야기를 담고 있다. 이 작품의 형식적 묘미는 한 이야기의 끝이 다음 이야기의 실마리가 되도록 매끄럽게 연결되는 액자식·연쇄식 구성에 있다. 변신은 종종 신의 권능과 인간의 한계가 충돌하는 지점에서 발생하며, 그 결과로 생겨난 형상은 자연물이나 천체, 별자리의 기원을 설명하는 기능을 겸한다. 오르페우스와 에우리디케 이야기는 이 작품 안에서 특히 풍부하게 다루어지는데, 죽은 아내를 되찾으러 저승에 내려간 오르페우스가 "지상에 닿기 전에는 뒤돌아보지 말라"는 금기를 끝내 어기고 그녀를 영영 잃는 장면은 예술가의 사랑과 상실, 그리고 인간 의지의 취약함을 응축한다. 이카로스 이야기 역시 아버지 다이달로스의 경고를 무시하고 태양에 너무 가까이 날아 밀랍 날개가 녹아 추락한다는 점에서, 절제를 잃은 욕망과 오만(휘브리스)에 대한 경고로 읽힌다. 이처럼 변신의 모티프는 단순한 환상이 아니라 윤리적·우주론적 질서를 형상화하는 장치로 기능한다. 다만 신화 텍스트는 전승마다 세부가 다르므로, 어느 한 판본을 절대적 '정답'으로 단정하기보다 변이의 폭을 함께 보는 태도가 필요하다.</p>
+<h3>최신 연구·쟁점</h3>
+<p>오늘날 고전학과 문화 연구에서는 변신 신화의 권력 관계를 다시 읽으려는 시도가 활발하다. 다프네나 페르세포네의 이야기를 강요와 폭력의 서사로 비판적으로 분석하거나, 피그말리온 이야기를 통해 '대상화'의 문제를 논하는 식이다. 동시에 오비디우스 텍스트의 정치적 맥락, 즉 작가가 처했던 시대 상황과 작품의 관계도 꾸준한 토론 주제다. 이런 해석들은 풍부한 통찰을 주지만, 고대 텍스트를 현대의 기준으로만 재단할 위험도 있어 균형 잡힌 독해가 요구된다.</p>
+<h3>관련 분야</h3>
+<ul>
+<li><strong>고전 문헌학</strong>: 라틴어·그리스어 원전의 판본 비교와 전승 연구</li>
+<li><strong>미술사</strong>: 변신 주제를 다룬 회화·조각의 도상 해석</li>
+<li><strong>심리학</strong>: 나르시시즘 등 신화에서 유래한 개념의 임상·이론적 활용</li>
+</ul>
+<h3>더 읽을거리</h3>
+<ul>
+<li>"변신 이야기" — 오비디우스</li>
+<li>"신화의 힘" — 조지프 캠벨</li>
+<li>"그리스 로마 신화" — 토머스 불핀치</li>
+</ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> 다프네·나르키소스·미다스·이카로스 가운데 둘을 골라, 각각의 변신이 '욕망·죄·운명' 중 어느 의미에 가장 가까운지 근거를 들어 비교해 보자. 하나의 이야기에 여러 의미가 겹친다면 그 점도 함께 설명해 보자.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#e0b341","questions":[{"q":"다프네가 변한 나무는?","choices":["올리브","월계수","포도나무","소나무"],"answer":1},{"q":"나르키소스가 변한 꽃은?","choices":["장미","백합","수선화","아네모네"],"answer":2},{"q":"피그말리온의 조각상이 된 여인은?","choices":["갈라테이아","다프네","에코","페르세포네"],"answer":0},{"q":"『변신 이야기』를 쓴 로마 시인은?","choices":["호메로스","베르길리우스","헤시오도스","오비디우스"],"answer":3},{"q":"계절의 순환과 연결된 인물은?","choices":["에우리디케","페르세포네","다프네","갈라테이아"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // 사랑과 변신: 세 형상이 '사람(구)' ↔ '나무·꽃(줄기+가지)'로 끊임없이 변신. 줄기가 자라고 머리가 꽃잎으로 펼쳐짐
+  const figs=[];const xs=[-2.8,0,2.8];
+  xs.forEach((x,k)=>{const g=new THREE.Group(); const stem=new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.16,1.6,6),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.1,0.5,0.4)})); stem.position.y=-0.4; const head=new THREE.Mesh(new THREE.IcosahedronGeometry(0.5,1),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.05,0.5,0.55)})); head.position.y=0.7; const petals=[]; for(let p=0;p<6;p++){const pl=new THREE.Mesh(new THREE.ConeGeometry(0.18,0.5,4),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.92,0.6,0.6)})); const ang=p/6*Math.PI*2; pl.position.set(Math.cos(ang)*0.4,0.7,Math.sin(ang)*0.4); pl.rotation.z=-ang; petals.push(pl); g.add(pl);} g.add(stem); g.add(head); g.position.x=x; s.add(g); figs.push({g,stem,head,petals,ph:k*2});});
+  s.userData.figs=figs;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.figs.forEach(f=>{const m=(Math.sin(T*0.8+f.ph)+1)/2;f.stem.scale.y=0.7+m*0.9;f.head.scale.setScalar(1-m*0.6);f.head.material.color.setHSL(0.05+m*0.3,0.5+m*0.2,0.55);f.petals.forEach((pl,i)=>{pl.scale.setScalar(m);const ang=i/6*Math.PI*2;const rr=0.2+m*0.5;pl.position.set(Math.cos(ang)*rr,0.7,Math.sin(ang)*rr);});f.g.rotation.y+=0.01;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

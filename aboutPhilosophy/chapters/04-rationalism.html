@@ -5,7 +5,9 @@
 <link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
@@ -16,7 +18,7 @@
 <li><a href="07-ethics.html">7. 윤리학</a></li><li><a href="08-political.html">8. 정치철학</a></li>
 <li><a href="09-contemporary.html">9. 현대 철학</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>합리론과 경험론</em></h1><p class="authors">Chapter 4 — Descartes, Locke & Hume</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 왼쪽 이성(합리론)과 오른쪽 감각(경험론)이 지식을 두고 대립한다</span>
 <h2>합리론과 경험론 개요</h2><p>이 챕터에서는 합리론과 경험론의 핵심 사상과 철학자들의 관계를 3D로 탐구합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Descartes, Locke & Hume</p></div>
 
@@ -52,7 +54,7 @@
   <span class="difficulty-badge medium">중 · 응용</span>
   <h3>논변 깊이</h3><p>데카르트의 코기토는 단순한 자기 발견이 아니라, 정교한 인식론적 토대주의(foundationalism) 프로그램의 출발점입니다. 그러나 코기토만으로는 외부 세계의 존재가 증명되지 않으므로, 그는 "신 존재 증명"(완전한 존재의 관념은 그보다 덜 완전한 내가 만들 수 없으므로)을 거쳐 "신은 우리를 속이지 않는다"는 보증으로 외부 세계를 회복합니다. 이 회복 과정이 "데카르트의 순환(Cartesian Circle)"이라는 유명한 비판을 낳지요 — 신의 존재 증명에 명석판명한 관념을 사용하면서, 그 관념의 신뢰성을 다시 신으로 정당화하는 것은 순환 논증입니다. 한편 흄의 인과 분석은 더 정교합니다. 그는 인상(impression)과 관념(idea)을 구분하고, 모든 관념은 어떤 인상으로 추적 가능해야 한다는 "복사 원리(copy principle)"를 제시합니다. 그런데 인과 관계의 인상이 어디 있는가? 그는 답합니다 — "우리 마음 안의 항상적 결합에 따른 기대의 습관"이라고. 이는 자연주의적 인식론의 시초입니다. 라이프니츠는 데카르트와 흄 사이의 미묘한 위치에 있습니다. 그의 모나드론은 "각 모나드는 외부와 인과적으로 상호작용하지 않으나, 신의 예정조화(pre-established harmony)에 의해 마치 상호작용하는 것처럼 행동한다"는 다세계 형이상학입니다.</p>
   <h3>주요 사상가/저작</h3>
-  <div class="info-card"><h4>📖 데카르트 — 『제일철학에 관한 성찰』</h4><p>6일에 걸친 명상의 기록. 1성찰: 회의의 도입(꿈 논증, 악령 가설). 2성찰: 코기토. 3성찰: 신 존재 증명. 4성찰: 진리와 오류. 5성찰: 물체의 본질. 6성찰: 외부 세계와 심신 구분. 그의 심신 이원론(res cogitans vs res extensa)은 솔방울샘(pineal gland)을 통한 상호작용을 가정해 후일 점령 문제를 야기합니다.</p></div>
+  <div class="info-card"><h4>📖 데카르트 — 『제일철학에 관한 성찰』</h4><p>6일에 걸친 명상의 기록. 1성찰: 회의의 도입(꿈 논증, 악령 가설). 2성찰: 코기토. 3성찰: 신 존재 증명. 4성찰: 진리와 오류. 5성찰: 물체의 본질. 6성찰: 외부 세계와 심신 구분. 그의 심신 이원론(res cogitans vs res extensa)은 솔방울샘(pineal gland)을 통한 상호작용을 가정해 후일 심신 상호작용 문제를 야기합니다.</p></div>
   <div class="info-card"><h4>📖 로크 — 『인간 오성론』</h4><p>"본유관념은 없다"는 1권의 비판이 출발점입니다. 모든 관념은 감각(sensation)과 반성(reflection)에서 옵니다. 1차 성질(연장·형태)과 2차 성질(색·소리)의 구분은 갈릴레오·로버트 보일의 자연철학을 인식론으로 옮긴 것이며, 후일 버클리가 이를 비판하며 관념론으로 나아갑니다.</p></div>
   <div class="info-card"><h4>📖 흄 — 『인성론』, 『인간 오성에 관한 탐구』</h4><p>귀납의 문제 — 과거의 규칙성이 미래에도 지속될 것이라는 믿음은 어떤 이성적 정당화도 가질 수 없다(귀납은 귀납으로 정당화될 수 없다). 자아도 단지 "지각의 다발(bundle of perceptions)"일 뿐이며, 영혼의 단순성·동일성은 환상이라고 분석.</p></div>
   <h3>현대적 의미</h3><p>첫째, AI에서 머신러닝의 귀납적 일반화는 흄의 귀납 문제를 정면으로 마주합니다 — 분포 변화(distribution shift) 문제는 본질적으로 흄적 회의주의의 변형입니다. 둘째, 심리철학에서 데카르트의 심신 이원론은 차머스의 "어려운 문제(hard problem of consciousness)"로 부활했습니다. 셋째, 인지과학에서 본유관념 논쟁은 촘스키의 보편문법 vs 핀커-튜링의 통계 학습 논쟁으로 재현되었습니다.</p>
@@ -76,27 +78,31 @@
   </ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 데카르트의 악령(evil demon) 가설은 현대의 "통 속의 뇌(brain in a vat)" 시나리오, 그리고 시뮬레이션 가설로 이어집니다. 만약 우리가 정교한 시뮬레이션 안에 산다면, 코기토는 여전히 유효한가? 시뮬레이션 안의 "나"도 진짜 생각하는가, 아니면 생각의 시뮬레이션을 하는가?</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d4a047","questions":[{"q":"'나는 생각한다, 고로 존재한다'는 누구?","choices":["로크","흄","데카르트","라이프니츠"],"answer":2},{"q":"마음은 백지라고 본 경험론 철학자는?","choices":["데카르트","로크","스피노자","흄"],"answer":1},{"q":"인과를 마음의 습관으로 본 철학자는?","choices":["흄","로크","데카르트","라이프니츠"],"answer":0},{"q":"흄의 복사 원리에서 관념의 근원은?","choices":["본유관념","이성","신","인상"],"answer":3},{"q":"예정조화로 설명되는 라이프니츠 개념은?","choices":["이데아","모나드","범주","코기토"],"answer":1}]};</script>
 </main></div>
 <script>
-(function() {
-  const container = document.getElementById('sim-scene');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 3, 8);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  container.appendChild(renderer.domElement);
-  const nodes = [];
-  for (let i = 0; i < 8; i++) { const m = new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0), new THREE.MeshBasicMaterial({ color: 0xd4a047, wireframe: true })); m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4); scene.add(m); nodes.push(m); }
-  for (let i=0;i<nodes.length-1;i++){const g=new THREE.BufferGeometry().setFromPoints([nodes[i].position,nodes[i+1].position]);scene.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xd4a047,transparent:true,opacity:0.2})));}
-  let md=false,px=0;
-  container.addEventListener('mousedown',e=>{md=true;px=e.clientX;});
-  container.addEventListener('mouseup',()=>md=false);
-  container.addEventListener('mousemove',e=>{if(md){scene.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
-  container.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});
-  container.addEventListener('touchmove',e=>{scene.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});
-  function animate(){requestAnimationFrame(animate);scene.rotation.y+=0.002;renderer.render(scene,camera);}animate();
-  window.addEventListener('resize',()=>{camera.aspect=container.clientWidth/container.clientHeight;camera.updateProjectionMatrix();renderer.setSize(container.clientWidth,container.clientHeight);});
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // 좌: 이성/생득관념(정연한 격자 입방체), 우: 경험/감각(흩어진 구들)
+  const reason=new THREE.Mesh(new THREE.IcosahedronGeometry(1.3,1),new THREE.MeshBasicMaterial({color:0x6aa0ff,wireframe:true}));reason.position.x=-3.2;s.add(reason);
+  const senses=new THREE.Group();senses.position.x=3.2;const dots=[];
+  for(let i=0;i<14;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.22,8,6),new THREE.MeshBasicMaterial({color:0xffae5a}));
+    m.position.set((Math.random()-0.5)*2.4,(Math.random()-0.5)*2.4,(Math.random()-0.5)*2.4);m.userData.ph=Math.random()*6.28;senses.add(m);dots.push(m);}
+  s.add(senses);
+  // 중앙: 두 입장이 만나 형성되는 지식(반투명 토러스)
+  const know=new THREE.Mesh(new THREE.TorusGeometry(0.9,0.28,12,40),new THREE.MeshBasicMaterial({color:0xcaa0ff,transparent:true,opacity:0.6}));s.add(know);
+  const lL=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-3.2,0,0),new THREE.Vector3(0,0,0)]);s.add(new THREE.Line(lL,new THREE.LineBasicMaterial({color:0x6aa0ff,transparent:true,opacity:0.4})));
+  const lR=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(3.2,0,0),new THREE.Vector3(0,0,0)]);s.add(new THREE.Line(lR,new THREE.LineBasicMaterial({color:0xffae5a,transparent:true,opacity:0.4})));
+  s.userData.reason=reason;s.userData.senses=senses;s.userData.dots=dots;s.userData.know=know;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.002;s.userData.reason.rotation.x+=0.006;s.userData.reason.rotation.y+=0.008;s.userData.senses.rotation.y-=0.01;s.userData.dots.forEach(d=>{d.position.y+=Math.sin(T+d.userData.ph)*0.004;});s.userData.know.rotation.x+=0.01;s.userData.know.rotation.z+=0.012;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
-</script></body></html>
+</script>
+</body></html>

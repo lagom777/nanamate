@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>9. 우주 탐사 — aboutAstronomy</title>
+<title>9. 우주탐사 — aboutAstronomy</title>
 <link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -17,100 +19,480 @@
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">🌌 표지 · 소개</a></li>
-    <li><a href="01-celestial-mechanics.html">1. 천체 역학</a></li>
+    <li><a href="01-celestial-mechanics.html">1. 천체역학</a></li>
     <li><a href="02-solar-system.html">2. 태양계</a></li>
     <li><a href="03-stars.html">3. 항성</a></li>
     <li><a href="04-galaxies.html">4. 은하</a></li>
     <li><a href="05-cosmology.html">5. 우주론</a></li>
     <li><a href="06-black-holes.html">6. 블랙홀</a></li>
     <li><a href="07-exoplanets.html">7. 외계행성</a></li>
-    <li><a href="08-observational.html">8. 관측 천문학</a></li>
-    <li><a href="09-space-exploration.html">9. 우주 탐사</a></li>
+    <li><a href="08-observational.html">8. 관측천문학</a></li>
+    <li><a href="09-space-exploration.html" style="color:var(--accent);font-weight:600;">9. 우주탐사</a></li>
   </ol>
 </aside>
 <main>
 <header class="paper-header">
-  <h1><em>우주 탐사</em></h1>
-  <p class="authors">Chapter 9 — Space Exploration & Future</p>
+  <h1>우주탐사:<br><em>인류의 위대한 여정</em></h1>
+  <p class="authors">Chapter 9 — Space Exploration: Humanity's Great Journey</p>
+  <p class="affiliation">로켓 발사 및 궤도 진입 시뮬레이터 포함</p>
 </header>
 
-<div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
-
-<h2>우주 탐사 개요</h2>
-<p>이 챕터에서는 우주 탐사의 핵심 개념을 3D 시뮬레이션과 함께 학습합니다. 우주를 직접 탐험하세요.</p>
+<h2>우주탐사의 역사</h2>
+<p>인류의 우주탐사는 1957년 소련의 스푸트니크 1호 발사로 시작되었습니다. 이후 반세기 만에 인간은 달에 발을 디디고, 화성에 탐사 로봇을 보내고, 태양계 밖으로 탐사선을 날려보내기에 이르렀습니다.</p>
 
 <div class="info-card">
   <h4>핵심 개념</h4>
-  <p>Space Exploration & Future의 기본 원리와 최신 발견을 다룹니다.</p>
+  <p>우주탐사는 로켓 과학, 궤도역학, 생명유지 시스템, 원격 통신 등 다양한 기술의 종합입니다. 중력을 이기고 우주로 나가기 위해서는 막대한 에너지와 정밀한 계산이 필요합니다.</p>
 </div>
 
+<h2>로켓 과학의 기초</h2>
+
+<div class="info-card">
+  <h4>🚀 치올코프스키 로켓 방정식</h4>
+  <p>로켓의 최종 속도는 배기가스 속도와 질량비에 의해 결정됩니다. 이 관계는 콘스탄틴 치올코프스키가 1903년에 유도한 것으로, 모든 로켓 설계의 기초입니다.</p>
+</div>
+
+<div class="formula">Δv = v_e × ln(m₀/m_f) &nbsp;&nbsp;(v_e: 배기 속도, m₀: 초기 질량, m_f: 최종 질량)</div>
+
+<div class="info-card energy">
+  <h4>🌍 궤도 속도와 탈출 속도</h4>
+  <p>지구 저궤도(LEO, ~400km)에 진입하려면 약 7.8 km/s의 속도가 필요합니다. 지구 중력권을 완전히 벗어나려면 약 11.2 km/s의 탈출 속도가 필요합니다. 다단 로켓은 빈 연료 탱크를 분리하여 효율을 극대화합니다.</p>
+</div>
+
+<div class="info-card wave">
+  <h4>🔄 호만 전이 궤도 (Hohmann Transfer)</h4>
+  <p>두 원궤도 사이를 이동하는 가장 연료 효율적인 방법입니다. 타원 궤도를 이용하여 두 번의 엔진 점화(Δv)로 목표 궤도에 도달합니다. 행성 간 항해의 기본 전략입니다.</p>
+</div>
+
+<h2>로켓 발사 및 궤도 진입 시뮬레이터</h2>
+<p>아래 시뮬레이션에서 로켓이 지구 표면에서 발사되어 목표 궤도에 진입하는 과정을 관찰하세요. 목표 궤도 고도를 슬라이더로 조절할 수 있습니다.</p>
+
+<div class="scene-3d" id="launch-scene">
+  <div class="scene-controls">
+    <label>목표 궤도 고도: <span id="alt-val">400</span> km (LEO)</label>
+    <input type="range" id="alt-slider" min="200" max="36000" value="400" step="100">
+    <button id="launch-btn">🚀 발사!</button>
+    <button id="reset-launch-btn">🔄 초기화</button>
+  </div>
+</div>
+<span class="interact-hint">🎯 목표 고도를 설정하고 발사 버튼을 누르세요. 마우스 드래그로 시점을 회전할 수 있습니다.</span>
+
+<h2>역사적 우주 임무</h2>
+
+<div class="info-card">
+  <h4>🌙 아폴로 계획 (1961-1972)</h4>
+  <p>NASA의 아폴로 계획은 인류를 달에 보낸 가장 야심찬 우주 프로그램입니다. 1969년 아폴로 11호의 닐 암스트롱이 달 표면에 첫 발을 디뎠습니다. 총 12명의 우주비행사가 달을 걸었으며, 382kg의 월석 시료를 지구로 가져왔습니다.</p>
+</div>
+
+<div class="info-card energy">
+  <h4>🛸 보이저 임무 (1977-현재)</h4>
+  <p>보이저 1호와 2호는 목성, 토성, 천왕성, 해왕성을 차례로 방문한 뒤 태양계 밖으로 향하고 있습니다. 보이저 1호는 2012년 성간 공간에 진입하여 인류가 만든 물체 중 가장 먼 곳에 도달했습니다. 골든 레코드에는 지구의 소리와 이미지가 담겨 있습니다.</p>
+</div>
+
+<div class="info-card wave">
+  <h4>🔴 화성 탐사 (1997-현재)</h4>
+  <p>패스파인더, 스피릿, 오퍼튜니티, 큐리오시티, 퍼서비어런스 등 여러 로버가 화성 표면을 탐사했습니다. 퍼서비어런스는 화성 시료를 채취하여 미래 귀환 임무에 대비하고 있으며, 인저뉴이티 헬리콥터는 다른 행성에서의 최초 동력 비행에 성공했습니다.</p>
+</div>
+
+<div class="info-card">
+  <h4>🛰️ 제임스 웹 우주망원경 (2021)</h4>
+  <p>역사상 가장 강력한 우주 망원경으로, L2 라그랑주 점에서 우주의 가장 먼 곳과 가장 오래된 빛을 관측하고 있습니다. 발사 후 완벽한 전개 과정은 엔지니어링의 경이로운 성취입니다.</p>
+</div>
+
+<h2>우주탐사의 미래</h2>
+
+<div class="info-card energy">
+  <h4>🏗️ 아르테미스 계획</h4>
+  <p>NASA의 아르테미스 계획은 2020년대에 인류를 다시 달에 보내고, 달 남극에 영구 기지를 건설하는 것을 목표로 합니다. 이는 화성 유인 탐사를 위한 전초 기지 역할도 할 것입니다.</p>
+</div>
+
+<div class="info-card wave">
+  <h4>🔴 화성 유인 탐사</h4>
+  <p>SpaceX의 스타십, NASA의 계획 등을 통해 2030~2040년대 화성 유인 탐사가 추진되고 있습니다. 편도 약 7개월의 여행, 방사선 차폐, 식량 자급자족 등 많은 기술적 도전이 남아 있습니다.</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>우주탐사는 로켓을 이용해 지구의 중력을 이기고 우주로 나가 다른 천체를 탐사하는 인류의 모험입니다.</p>
+  <h3>왜 흥미로운가?</h3>
+  <p>수천 년간 밤하늘을 올려다보기만 하던 인류가 이제는 직접 우주로 나가고 있습니다. 1957년 첫 인공위성 스푸트니크 1호가 발사된 지 불과 12년 만에 인간은 달 위를 걸었습니다. 오늘날에는 화성 표면을 로봇이 누비고, 태양계 밖 성간 공간까지 탐사선이 도달했으며, 작은 위성을 만들어 쏘아 올리는 일은 더 이상 거대 국가만의 일이 아니게 되었습니다. 우주탐사는 인류가 지구라는 요람을 벗어나는 첫걸음이라는 점에서 특별합니다.</p>
+  <div class="info-card">
+    <h4>🌱 핵심 용어</h4>
+    <ul>
+      <li><strong>로켓</strong> — 연료를 태운 가스를 뒤로 내뿜어 그 반작용으로 앞으로 나아가는 추진 장치</li>
+      <li><strong>궤도</strong> — 천체의 중력에 붙잡혀 그 주위를 도는 닫힌 경로</li>
+      <li><strong>탈출 속도</strong> — 천체의 중력권을 완전히 벗어나는 데 필요한 최소 속도(지구는 약 11.2 km/s)</li>
+      <li><strong>인공위성</strong> — 인간이 만들어 지구나 다른 천체 궤도에 올린 물체</li>
+      <li><strong>탐사선</strong> — 다른 천체를 조사하기 위해 보내는 무인 우주선</li>
+    </ul>
+  </div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>로켓은 뉴턴의 제3법칙(작용-반작용)으로 작동합니다. 뜨거운 가스를 아래로 세게 내뿜으면 로켓은 위로 밀려 올라갑니다. 풍선에서 공기를 빼면 반대 방향으로 날아가는 것과 똑같은 원리입니다. 그런데 단순히 위로 높이 올라가는 것만으로는 우주에 머물 수 없습니다. 위로 올라간 물체는 결국 중력 때문에 다시 떨어지기 때문입니다. 우주정거장이 떨어지지 않는 비결은 "옆으로 매우 빠르게" 움직이는 데 있습니다. 옆으로 충분히 빠르면(저궤도에서 초속 약 7.8 km), 떨어지는 만큼 지구 표면이 둥글게 휘어 비껴가므로 영원히 지구를 돌게 됩니다. 이것이 바로 궤도 비행입니다. 더 멀리 다른 행성으로 가려면 빈 연료통을 버려 무게를 줄이는 다단 로켓과, 연료를 가장 아끼는 타원형 항로(호만 전이)를 사용합니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 궤도를 도는 우주정거장은 "떨어지면서 비껴가는" 상태입니다. 무중력이 아니라 자유낙하 상태라는 점을 기억하세요. 정거장 안의 우주비행사도 함께 떨어지고 있어서 둥둥 떠 보이는 것입니다.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>로켓은 작용-반작용으로 가스를 뒤로 내뿜어 앞으로 나아간다</li>
+    <li>우주에 머물려면 높이 올라가는 것이 아니라 옆으로 빠르게 돌아야 한다(궤도)</li>
+    <li>지구 중력을 완전히 벗어나려면 탈출 속도 약 11.2 km/s가 필요하다</li>
+    <li>다단 로켓은 빈 연료통을 버려 효율을 높인다</li>
+    <li>1957년 스푸트니크로 시작해 달 착륙, 화성 탐사, 성간 탐사까지 이어졌다</li>
+  </ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>모든 로켓 설계의 출발점은 <strong>치올코프스키 로켓 방정식</strong> Δv = v_e ln(m₀/m_f)입니다. 여기서 핵심은 속도 증가량이 질량비에 로그로 의존한다는 점입니다. 즉 같은 Δv를 얻으려면 연료를 기하급수적으로 늘려야 하므로, 단번에 모든 임무를 수행하는 단일 로켓은 비효율적입니다. 이 때문에 빈 연료 탱크를 분리하는 <strong>다단 로켓</strong>이 필수입니다. 궤도역학에서 원궤도 속도는 v = √(GM/r)로 고도가 높을수록 느리며, 한 지점에서의 총 역학적 에너지는 비스-비바(vis-viva) 방정식 v² = GM(2/r − 1/a)로 주어집니다. 엔진의 효율은 <strong>비추력(I_sp = v_e/g₀, 초 단위)</strong>으로 나타내며, 화학 로켓은 약 300~450초, 이온 엔진은 수천 초에 이릅니다.</p>
+  <h3>핵심 메커니즘</h3>
+  <div class="info-card"><h4>🔄 호만 전이 궤도</h4><p>두 원궤도 사이를 잇는 가장 연료 효율적인 경로입니다. 출발 궤도에서 가속(Δv₁)해 타원 전이 궤도에 진입하고, 원지점에 도달하면 다시 가속(Δv₂)해 목표 원궤도로 원형화합니다. 총 Δv는 두 기동의 합이며, 대신 비행 시간이 가장 깁니다.</p></div>
+  <div class="formula">v_원궤도 = √(GM/r) &nbsp;|&nbsp; v² = GM(2/r − 1/a) &nbsp;|&nbsp; Δv_총 = Δv₁ + Δv₂</div>
+  <h3>대표 사례</h3>
+  <div class="info-card"><h4>🔴 사례 1 — 화성으로의 호만 전이</h4><p>지구에서 화성까지의 호만 전이에 필요한 Δv는 약 3.6 km/s이며 전이 시간은 약 259일입니다. 지구와 화성의 상대 위치가 맞아야 하므로 발사 기회(발사 창)는 약 26개월마다 한 번씩만 열립니다.</p></div>
+  <div class="info-card"><h4>🪐 사례 2 — 보이저의 중력 보조</h4><p>보이저 2호는 1970년대 후반 행성들이 일렬로 늘어선 드문 배열을 이용해, 목성·토성·천왕성·해왕성의 중력으로 차례로 가속하며 적은 연료로 외행성을 모두 방문했습니다. 중력 보조는 행성의 궤도 운동 에너지를 빌려 탐사선을 가속하는 기법입니다.</p></div>
+  <h3>현대적 전개</h3>
+  <p>오늘날에는 화학 로켓의 한계를 넘기 위한 다양한 추진 기술이 실용화·연구되고 있습니다. 이온·홀 추력기 같은 전기 추진은 추력은 약하지만 비추력이 매우 높아 장기 심우주 임무에 쓰입니다. 또한 팰컨 9으로 대표되는 <strong>재사용 발사체</strong>는 1단 로켓을 회수·재사용하여 발사 비용을 크게 낮추며 우주 접근성을 바꾸어 놓았습니다.</p>
+  <div class="warning-box"><strong>⚠️ 주의:</strong> 호만 전이는 가장 연료 효율적이지만 가장 느립니다. 시간이 중요한 임무에서는 더 많은 Δv를 쓰는 빠른 궤적을 택하거나, 추력이 약한 이온 엔진의 경우 호만 근사가 들어맞지 않아 별도의 저추력 궤적 설계가 필요합니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>실제 행성 간 궤도 설계는 다체 문제이지만, 1차 근사로 <strong>패치드 코닉(patched conic)</strong> 기법을 씁니다. 비행을 세 구간(출발 행성 영향권, 태양 중심 전이, 도착 행성 영향권)으로 나누고, 각 구간을 하나의 지배 천체에 대한 이체 문제(원뿔곡선)로 풀어 영향권 경계에서 연결합니다. <strong>중력 보조(gravity assist)</strong>는 행성 중심 좌표계에서는 쌍곡선 통과로 속력 크기가 보존되지만 방향이 바뀌고, 태양 중심 좌표계에서는 행성의 막대한 궤도 에너지 중 극히 일부를 주고받아 탐사선이 가속되거나 감속됩니다. 추력이 약한 임무에서는 <strong>저추력 궤적(low-thrust trajectory)</strong>을 사용하며, 연료 최소화 같은 최적 제어 문제는 변분법과 폰트랴긴 최대 원리로 다룹니다.</p>
+  <h3>핵심 수식</h3>
+  <div class="formula">Δv = v_e ln(m₀/m_f) &nbsp;|&nbsp; v² = GM(2/r − 1/a) &nbsp;|&nbsp; v_∞² = v_탈출 좌표계² (중력 보조 시 방향 전환)</div>
+  <h3>최신 연구·쟁점</h3>
+  <p>최근에는 연료를 거의 쓰지 않고 천체의 약한 중력 균형을 이용해 이동하는 <strong>저에너지 전이(약불변 다양체, weak stability boundary)</strong>가 주목받으며, 달·라그랑주 점 임무 설계에 응용됩니다. 행성 대기와의 마찰로 감속해 추진제를 아끼는 <strong>에어로브레이킹·에어로캡처</strong>도 화성·금성 궤도선에 활용됩니다. 한편 저궤도 위성이 폭증하면서 충돌 파편이 연쇄적으로 늘어나는 <strong>케슬러 증후군</strong>과 궤도 쓰레기 관리가 핵심 쟁점이 되었고, NASA의 DART 임무(2022)는 소행성 디모르포스에 충돌해 궤도 주기를 실제로 단축시킨 최초의 행성 방어 실증으로 평가됩니다.</p>
+  <h3>관련 분야</h3>
+  <ul>
+    <li>천체역학·최적 제어: 다체 궤도 설계, 불변 다양체, 폰트랴긴 최대 원리</li>
+    <li>추진공학: 화학·전기·핵열 추진, 재사용 발사체와 궤도 정비</li>
+    <li>우주 환경공학: 방사선 차폐, 생명유지 시스템, 궤도 잔해 완화</li>
+  </ul>
+  <h3>더 읽을거리</h3>
+  <ul>
+    <li>Curtis, <em>Orbital Mechanics for Engineering Students</em></li>
+    <li>Vallado, <em>Fundamentals of Astrodynamics and Applications</em></li>
+    <li>Bate, Mueller & White, <em>Fundamentals of Astrodynamics</em></li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 지구 LEO(고도 400 km)에서 정지궤도(고도 35,786 km)까지의 호만 전이에 필요한 Δv₁, Δv₂를 비스-비바 방정식으로 각각 구하고, 총 Δv를 계산해 보세요.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7b9fff","questions":[{"q":"1957년 발사된 최초의 인공위성은?","choices":["아폴로 11호","스푸트니크 1호","보이저 1호","허블"],"answer":1},{"q":"지구 탈출 속도는 약 얼마인가?","choices":["7.8 km/s","3.6 km/s","11.2 km/s","30 km/s"],"answer":2},{"q":"두 원궤도 사이 최소 연료 이동 경로는?","choices":["호만 전이","중력 보조","에어로캡처","저궤도 진입"],"answer":0},{"q":"로켓 방정식을 1903년 유도한 사람은?","choices":["뉴턴","치올코프스키","호만","갈릴레오"],"answer":1},{"q":"지구-화성 호만 전이의 비행 시간은 약?","choices":["약 26일","약 100일","약 259일","약 3년"],"answer":2}]};</script>
 </main>
 </div>
 
 <script>
 (function() {
-  const container = document.getElementById('sim-scene');
+  const container = document.getElementById('launch-scene');
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 5, 12);
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 2000);
+  camera.position.set(0, 2, 20);
+  camera.lookAt(0, 0, 0);
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
 
-  // Stars background
+  // Stars
   const starGeo = new THREE.BufferGeometry();
-  const starPositions = new Float32Array(1000*3);
+  const sp = new Float32Array(1000 * 3);
   for (let i = 0; i < 1000; i++) {
-    starPositions[i*3] = (Math.random()-0.5)*100;
-    starPositions[i*3+1] = (Math.random()-0.5)*100;
-    starPositions[i*3+2] = (Math.random()-0.5)*100;
+    sp[i*3]   = (Math.random() - 0.5) * 200;
+    sp[i*3+1] = (Math.random() - 0.5) * 200;
+    sp[i*3+2] = (Math.random() - 0.5) * 200;
   }
-  starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+  starGeo.setAttribute('position', new THREE.BufferAttribute(sp, 3));
   scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 })));
 
-  // Central body (sun/star)
-  const sun = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), new THREE.MeshBasicMaterial({ color: 0xfbbf24 }));
-  scene.add(sun);
-  scene.add(new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 32), new THREE.MeshBasicMaterial({ color: 0xfbbf24, transparent: true, opacity: 0.15 })));
+  // Earth
+  const earthRadius = 6.0;
+  const earthMat = new THREE.MeshBasicMaterial({ color: 0x2563eb });
+  const earth = new THREE.Mesh(new THREE.SphereGeometry(earthRadius, 48, 48), earthMat);
+  scene.add(earth);
 
-  // Orbiting planets
-  const planets = [];
-  const planetColors = [0x60a5fa, 0xef4444, 0x22c55e, 0xa855f7, 0xfb923c];
-  for (let i = 0; i < 5; i++) {
-    const r = 0.15 + i*0.05;
-    const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 16, 16), new THREE.MeshBasicMaterial({ color: planetColors[i] }));
-    const orbit = 3 + i*1.5;
-    planets.push({ mesh, orbit, speed: 0.02/(i+1), angle: Math.random()*Math.PI*2 });
-    scene.add(mesh);
-    // Orbit ring
-    const ring = new THREE.Line(
-      new THREE.BufferGeometry().setFromPoints(Array.from({length:65}, (_,j) => new THREE.Vector3(Math.cos(j/64*Math.PI*2)*orbit, 0, Math.sin(j/64*Math.PI*2)*orbit))),
-      new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1 })
+  // Atmosphere glow
+  const atmosGeo = new THREE.SphereGeometry(earthRadius * 1.03, 48, 48);
+  const atmosMat = new THREE.MeshBasicMaterial({ color: 0x60a5fa, transparent: true, opacity: 0.12 });
+  scene.add(new THREE.Mesh(atmosGeo, atmosMat));
+
+  const atmosGeo2 = new THREE.SphereGeometry(earthRadius * 1.06, 48, 48);
+  const atmosMat2 = new THREE.MeshBasicMaterial({ color: 0x93c5fd, transparent: true, opacity: 0.06 });
+  scene.add(new THREE.Mesh(atmosGeo2, atmosMat2));
+
+  // Continents hint (green patches)
+  const landGeo = new THREE.SphereGeometry(earthRadius * 1.002, 48, 48);
+  const landMat = new THREE.MeshBasicMaterial({ color: 0x22c55e, transparent: true, opacity: 0.3 });
+  const land = new THREE.Mesh(landGeo, landMat);
+  scene.add(land);
+
+  // Target orbit ring
+  let targetAlt = 400;
+  let targetOrbitRadius = earthRadius + targetAlt / 1000;
+  let orbitLine;
+
+  function makeTargetOrbit() {
+    if (orbitLine) scene.remove(orbitLine);
+    targetOrbitRadius = earthRadius + targetAlt / 1000;
+    const pts = [];
+    for (let j = 0; j <= 128; j++) {
+      pts.push(new THREE.Vector3(
+        Math.cos(j / 128 * Math.PI * 2) * targetOrbitRadius,
+        0,
+        Math.sin(j / 128 * Math.PI * 2) * targetOrbitRadius
+      ));
+    }
+    orbitLine = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints(pts),
+      new THREE.LineBasicMaterial({ color: 0xfbbf24, transparent: true, opacity: 0.4 })
     );
-    scene.add(ring);
+    scene.add(orbitLine);
+  }
+  makeTargetOrbit();
+
+  // Hohmann transfer ellipse (shown during flight)
+  let hohmannLine = null;
+  function makeHohmannEllipse() {
+    if (hohmannLine) scene.remove(hohmannLine);
+    const rStart = earthRadius + 0.15;
+    const rEnd = targetOrbitRadius;
+    const a = (rStart + rEnd) / 2;
+    const c = a - rStart;
+    const b = Math.sqrt(a * a - c * c);
+    const pts = [];
+    for (let j = 0; j <= 128; j++) {
+      const theta = (j / 128) * Math.PI; // Half ellipse
+      const x = a * Math.cos(theta) - c;
+      const z = b * Math.sin(theta);
+      pts.push(new THREE.Vector3(x, 0, z));
+    }
+    hohmannLine = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints(pts),
+      new THREE.LineBasicMaterial({ color: 0xef4444, transparent: true, opacity: 0.5 })
+    );
+    scene.add(hohmannLine);
   }
 
-  let mouseDown = false, prevX = 0, prevY = 0;
+  // Rocket
+  const rocketGroup = new THREE.Group();
+  // Body
+  const bodyGeo = new THREE.CylinderGeometry(0.08, 0.12, 0.6, 8);
+  const bodyMat = new THREE.MeshBasicMaterial({ color: 0xcccccc });
+  rocketGroup.add(new THREE.Mesh(bodyGeo, bodyMat));
+  // Nose cone
+  const noseGeo = new THREE.ConeGeometry(0.08, 0.2, 8);
+  const noseMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+  const nose = new THREE.Mesh(noseGeo, noseMat);
+  nose.position.y = 0.4;
+  rocketGroup.add(nose);
+  // Fins
+  for (let i = 0; i < 3; i++) {
+    const finGeo = new THREE.BoxGeometry(0.02, 0.15, 0.15);
+    const fin = new THREE.Mesh(finGeo, new THREE.MeshBasicMaterial({ color: 0x888888 }));
+    fin.position.y = -0.25;
+    fin.rotation.y = (i / 3) * Math.PI * 2;
+    fin.position.x = Math.sin(fin.rotation.y) * 0.12;
+    fin.position.z = Math.cos(fin.rotation.y) * 0.12;
+    rocketGroup.add(fin);
+  }
+
+  // Exhaust particles
+  const exhaustCount = 50;
+  const exhaustGeo = new THREE.BufferGeometry();
+  const exhaustPositions = new Float32Array(exhaustCount * 3);
+  const exhaustSizes = new Float32Array(exhaustCount);
+  exhaustGeo.setAttribute('position', new THREE.BufferAttribute(exhaustPositions, 3));
+  const exhaustMat = new THREE.PointsMaterial({ color: 0xff6600, size: 0.08, transparent: true, opacity: 0.7 });
+  const exhaustParticles = new THREE.Points(exhaustGeo, exhaustMat);
+  scene.add(exhaustParticles);
+  const exhaustVelocities = [];
+  for (let i = 0; i < exhaustCount; i++) {
+    exhaustVelocities.push({ vx: 0, vy: 0, vz: 0, life: 0 });
+  }
+
+  rocketGroup.position.set(0, earthRadius + 0.3, 0);
+  scene.add(rocketGroup);
+
+  // State
+  let launched = false;
+  let launchPhase = 0; // 0: on ground, 1: ascending, 2: gravity turn, 3: orbital insertion, 4: orbiting
+  let rocketAngle = Math.PI / 2; // Angle from center of earth
+  let rocketDist = earthRadius + 0.15;
+  let rocketSpeed = 0;
+  let orbitAngle = 0;
+  let time = 0;
+
+  // Controls
+  const altSlider = document.getElementById('alt-slider');
+  const altVal = document.getElementById('alt-val');
+
+  altSlider.addEventListener('input', () => {
+    targetAlt = parseInt(altSlider.value);
+    let label = targetAlt + ' km';
+    if (targetAlt <= 2000) label += ' (LEO)';
+    else if (targetAlt <= 20000) label += ' (MEO)';
+    else if (targetAlt >= 35000 && targetAlt <= 36500) label += ' (GEO)';
+    else label += ' (HEO)';
+    altVal.textContent = label;
+    makeTargetOrbit();
+  });
+
+  document.getElementById('launch-btn').addEventListener('click', () => {
+    if (launched) return;
+    launched = true;
+    launchPhase = 1;
+    rocketAngle = Math.PI / 2;
+    rocketDist = earthRadius + 0.15;
+    rocketSpeed = 0;
+    time = 0;
+    makeHohmannEllipse();
+  });
+
+  document.getElementById('reset-launch-btn').addEventListener('click', () => {
+    launched = false;
+    launchPhase = 0;
+    rocketAngle = Math.PI / 2;
+    rocketDist = earthRadius + 0.15;
+    rocketSpeed = 0;
+    orbitAngle = 0;
+    time = 0;
+    rocketGroup.position.set(0, earthRadius + 0.3, 0);
+    rocketGroup.rotation.z = 0;
+    if (hohmannLine) { scene.remove(hohmannLine); hohmannLine = null; }
+    exhaustMat.opacity = 0;
+  });
+
+  // Mouse rotation
+  let mouseDown = false, prevX = 0, prevY = 0, camTheta = 0, camPhi = 0.3;
   container.addEventListener('mousedown', e => { mouseDown = true; prevX = e.clientX; prevY = e.clientY; });
-  container.addEventListener('mouseup', () => mouseDown = false);
+  window.addEventListener('mouseup', () => mouseDown = false);
   container.addEventListener('mousemove', e => {
     if (!mouseDown) return;
-    scene.rotation.y += (e.clientX - prevX)*0.005;
+    camTheta += (e.clientX - prevX) * 0.005;
+    camPhi = Math.max(-1.2, Math.min(1.2, camPhi + (e.clientY - prevY) * 0.005));
     prevX = e.clientX; prevY = e.clientY;
   });
-  container.addEventListener('touchstart', e => { prevX = e.touches[0].clientX; });
-  container.addEventListener('touchmove', e => { scene.rotation.y += (e.touches[0].clientX - prevX)*0.005; prevX = e.touches[0].clientX; });
+  container.addEventListener('touchstart', e => { prevX = e.touches[0].clientX; prevY = e.touches[0].clientY; });
+  container.addEventListener('touchmove', e => {
+    camTheta += (e.touches[0].clientX - prevX) * 0.005;
+    camPhi = Math.max(-1.2, Math.min(1.2, camPhi + (e.touches[0].clientY - prevY) * 0.005));
+    prevX = e.touches[0].clientX; prevY = e.touches[0].clientY;
+  });
+
+  function updateExhaust() {
+    const posArr = exhaustGeo.getAttribute('position').array;
+    const rocketPos = rocketGroup.position;
+    const rocketRot = rocketGroup.rotation.z;
+    const dirX = -Math.sin(rocketRot);
+    const dirY = -Math.cos(rocketRot);
+
+    for (let i = 0; i < exhaustCount; i++) {
+      const ev = exhaustVelocities[i];
+      if (ev.life <= 0 && launched && launchPhase < 4) {
+        // Respawn
+        posArr[i*3]   = rocketPos.x;
+        posArr[i*3+1] = rocketPos.y;
+        posArr[i*3+2] = rocketPos.z;
+        const spread = 0.05;
+        ev.vx = dirX * 0.15 + (Math.random() - 0.5) * spread;
+        ev.vy = dirY * 0.15 + (Math.random() - 0.5) * spread;
+        ev.vz = (Math.random() - 0.5) * spread;
+        ev.life = 15 + Math.random() * 10;
+      } else {
+        posArr[i*3]   += ev.vx;
+        posArr[i*3+1] += ev.vy;
+        posArr[i*3+2] += ev.vz;
+        ev.life -= 1;
+      }
+    }
+    exhaustGeo.getAttribute('position').needsUpdate = true;
+    exhaustMat.opacity = (launched && launchPhase < 4) ? 0.7 : 0;
+  }
 
   function animate() {
     requestAnimationFrame(animate);
-    planets.forEach(p => { p.angle += p.speed; p.mesh.position.set(Math.cos(p.angle)*p.orbit, 0, Math.sin(p.angle)*p.orbit); });
-    sun.rotation.y += 0.003;
+    earth.rotation.y += 0.001;
+    land.rotation.y += 0.001;
+
+    if (launched) {
+      time += 1;
+      const targetR = targetOrbitRadius;
+
+      if (launchPhase === 1) {
+        // Vertical ascent
+        rocketDist += 0.012;
+        rocketGroup.position.x = Math.cos(rocketAngle) * rocketDist;
+        rocketGroup.position.y = Math.sin(rocketAngle) * rocketDist;
+        rocketGroup.rotation.z = rocketAngle - Math.PI / 2;
+        if (rocketDist > earthRadius + 0.5) launchPhase = 2;
+      } else if (launchPhase === 2) {
+        // Gravity turn + Hohmann transfer ascent
+        const progress = (rocketDist - earthRadius) / (targetR - earthRadius);
+        const turnRate = 0.006 * (1 + targetAlt / 5000);
+        rocketAngle -= turnRate * (1 - progress * 0.5);
+        const ascentSpeed = 0.015 * (1 + (targetR - earthRadius) * 0.05);
+        rocketDist += ascentSpeed * (1 - progress * 0.3);
+
+        rocketGroup.position.x = Math.cos(rocketAngle) * rocketDist;
+        rocketGroup.position.y = Math.sin(rocketAngle) * rocketDist;
+
+        // Point along velocity (tangent)
+        const tangentAngle = rocketAngle - Math.PI / 2 - (1 - progress) * 0.3;
+        rocketGroup.rotation.z = tangentAngle;
+
+        if (rocketDist >= targetR) {
+          launchPhase = 3;
+          rocketDist = targetR;
+          orbitAngle = rocketAngle;
+        }
+      } else if (launchPhase === 3) {
+        // Circularization burn
+        orbitAngle -= 0.01;
+        rocketGroup.position.x = Math.cos(orbitAngle) * targetR;
+        rocketGroup.position.y = Math.sin(orbitAngle) * targetR;
+        rocketGroup.rotation.z = orbitAngle - Math.PI / 2;
+        if (time > 30) { // Brief burn
+          launchPhase = 4;
+          if (hohmannLine) { scene.remove(hohmannLine); hohmannLine = null; }
+        }
+      } else if (launchPhase === 4) {
+        // Stable orbit
+        const orbitSpeed = 0.008 / Math.sqrt(targetR / earthRadius);
+        orbitAngle -= orbitSpeed;
+        rocketGroup.position.x = Math.cos(orbitAngle) * targetR;
+        rocketGroup.position.y = Math.sin(orbitAngle) * targetR;
+        rocketGroup.position.z = 0;
+        rocketGroup.rotation.z = orbitAngle - Math.PI / 2;
+      }
+    }
+
+    updateExhaust();
+
+    // Camera
+    const camDist = 20 + targetOrbitRadius * 0.8;
+    camera.position.x = camDist * Math.sin(camTheta) * Math.cos(camPhi);
+    camera.position.z = camDist * Math.cos(camTheta) * Math.cos(camPhi);
+    camera.position.y = camDist * Math.sin(camPhi);
+    camera.lookAt(0, 0, 0);
+
     renderer.render(scene, camera);
   }
   animate();
-  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
 })();
 </script>
 </body>

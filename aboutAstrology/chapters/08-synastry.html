@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8. 궁합·트랜짓 — aboutAstrology</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">✨ 표지</a></li>
+    <li><a href="01-what-is.html">1. 점성술이란 무엇인가</a></li>
+    <li><a href="02-zodiac.html">2. 황도 12궁 · 12별자리</a></li>
+    <li><a href="03-elements.html">3. 4원소와 3특질</a></li>
+    <li><a href="04-planets.html">4. 행성의 의미</a></li>
+    <li><a href="05-houses.html">5. 12하우스</a></li>
+    <li><a href="06-natal-chart.html">6. 출생 차트 읽기</a></li>
+    <li><a href="07-big-three.html">7. 태양·달·상승궁 (빅3)</a></li>
+    <li><a href="08-synastry.html">8. 궁합·트랜짓</a></li>
+    <li><a href="09-science.html">9. 점성술의 과학·비판</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>궁합·트랜짓</em></h1>
+  <p class="authors">Chapter 8 — Synastry &amp; Transits</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 두 사람의 차트가 만나는 궁합(시너스트리)</span>
+
+<h2>궁합·트랜짓 개요</h2>
+<p>이 챕터는 점성술의 실전 활용 영역인 <strong>궁합</strong>과 <strong>트랜짓</strong>을 다룬다. 궁합은 두 사람의 출생 차트를 견주어 관계의 결을 읽는 기법이고, 트랜짓은 지금 하늘을 운행 중인 행성이 내 출생 차트를 어떻게 자극하는지 살펴 시기와 흐름을 가늠하는 기법이다. 출생 차트가 한 사람의 '청사진'이라면, 이 둘은 그 청사진을 관계와 시간이라는 축 위에서 다시 펼쳐 보는 작업이라 할 수 있다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>궁합은 시너스트리(두 차트를 겹쳐 비교)와 컴포짓 차트(두 차트를 하나로 합성)로 관계를 본다. 트랜짓은 현재 운행 중인 행성이 출생 차트의 행성·포인트를 건드릴 때 일어나는 변화의 시기·타이밍을 본다. 솔라 리턴(생일에 태양이 출생 위치로 돌아온 순간의 차트)은 한 해의 흐름을 보는 도구이며, 대중문화에서 자주 회자되는 '수성 역행' 역시 트랜짓의 한 사례다. 점성술에서는 이 모든 기법을 가능성과 경향을 읽는 언어로 다룰 뿐, 결정론적으로 단정하지 않는 태도를 강조한다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>궁합은 '두 사람의 하늘 지도를 겹쳐 보는 일'이고, 트랜짓은 '지금의 하늘이 내 출생 지도를 두드리는 순간을 읽는 일'이다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>점성술을 처음 배우는 사람들이 가장 궁금해하는 두 질문은 대개 "이 사람과 나는 잘 맞을까?"와 "지금이 어떤 시기일까?"이다. 궁합과 트랜짓은 바로 이 두 질문에 답하려는 실전 기법이라 점성술의 입문자에게 가장 친근하게 다가온다. 출생 차트가 정적인 사진이라면, 트랜짓은 그 위에서 시간이 흐르며 만들어지는 영상에 가깝다. 궁합은 한 사람의 차트를 넘어 두 사람 사이의 상호작용을 다루므로, 관계를 입체적으로 바라보는 시야를 길러 준다. 다만 점성술 전통 안에서도 이 기법들은 '미래를 확정하는 예언'이 아니라 '경향과 분위기를 읽는 안내'로 다뤄진다는 점을 처음부터 분명히 해 두는 것이 좋다.</p>
+
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>시너스트리(Synastry)</strong>: 두 사람의 출생 차트를 겹쳐, 한쪽 행성이 다른 쪽 행성을 어떤 각도로 자극하는지 비교하는 궁합 기법이다.</li>
+<li><strong>컴포짓 차트(Composite Chart)</strong>: 두 사람의 차트를 수학적으로 합성해 '관계 자체'를 한 장의 차트로 만든 것이다.</li>
+<li><strong>트랜짓(Transit)</strong>: 지금 실제로 운행 중인 행성이 내 출생 차트의 행성·포인트에 닿는 현상으로, 시기와 흐름을 읽는 데 쓴다.</li>
+<li><strong>솔라 리턴(Solar Return)</strong>: 매년 태양이 출생 당시 위치로 돌아온 순간을 기준으로 그린, 그해 한 해를 위한 생일 차트다.</li>
+<li><strong>수성 역행(머큐리 레트로그레이드)</strong>: 수성이 하늘에서 거꾸로 움직이는 것처럼 보이는 시기로, 대중문화에서 소통·일정의 혼선과 자주 연결되는 트랜짓이다.</li>
+</ul></div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>시너스트리는 두 장의 투명 필름을 겹쳐 보는 일과 비슷하다. 한 사람의 '애정' 자리에 상대의 '책임' 별이 겹치면 그 부분에서 특별한 끌림이나 긴장이 생긴다고 본다. 트랜짓은 날씨와 닮았다. 출생 차트가 내 '집'이라면, 트랜짓은 그 집 위를 지나가는 맑음과 비바람 같아서 같은 집이라도 시기마다 분위기가 달라진다. 수성 역행은 그중 자주 입에 오르는 '환절기' 같은 것이라 보면 이해가 쉽다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 궁합과 트랜짓을 외우려 들지 말고, 먼저 '겹쳐 보기(궁합)'와 '지나가며 두드리기(트랜짓)'라는 두 동작의 이미지로 구분해 두자. 큰 그림이 잡히면 세부 기법은 자연스럽게 따라온다.</div>
+
+<h3>한 페이지 요약</h3><ul>
+<li>궁합은 두 사람의 관계를, 트랜짓은 시간의 흐름을 읽는 실전 기법이다.</li>
+<li>시너스트리는 두 차트를 겹쳐 비교하고, 컴포짓 차트는 둘을 하나로 합성한다.</li>
+<li>트랜짓은 운행 중인 행성이 출생 차트를 자극하는 시기·타이밍을 본다.</li>
+<li>솔라 리턴은 한 해의 흐름, 수성 역행은 소통·일정과 자주 연결되는 트랜짓이다.</li>
+<li>이 모든 기법은 확정된 예언이 아니라 경향과 분위기를 읽는 언어로 다뤄진다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>관계와 시간을 보는 점성술 기법은 크게 두 갈래로 발전해 왔다. 첫째는 두 차트를 비교하는 궁합 계열이고, 둘째는 출생 차트를 시간 축 위에서 움직이게 하는 예측(프레딕티브) 계열이다. 궁합의 대표가 시너스트리로, 한 사람의 행성이 다른 사람의 행성·상승궁·하강궁 등에 형성하는 어스펙트(각도)를 따져 끌림과 마찰의 지점을 읽는다. 예컨대 한쪽의 금성이 다른 쪽의 화성에 가까이 닿으면 강한 끌림으로, 한쪽의 토성이 다른 쪽의 달에 각을 맺으면 책임감과 무게로 해석하는 식이다. 컴포짓 차트는 두 사람의 행성 위치를 중점(미드포인트)으로 합성해 '관계 그 자체'를 한 장의 독립된 차트로 다루는 방법으로, 시너스트리와는 다른 시선을 제공한다.</p>
+<p>예측 계열의 핵심은 트랜짓이다. 트랜짓은 지금 실제 하늘을 도는 행성이 내 출생 차트의 어느 자리를 통과하며 각을 맺는지를 본다. 토성, 천왕성, 해왕성, 명왕성 같은 느린 행성의 트랜짓은 몇 달에서 몇 년에 걸친 큰 국면으로, 빠른 행성의 트랜짓은 짧은 분위기로 해석되는 경향이 있다. 솔라 리턴은 매년 생일 무렵 태양이 출생 위치로 정확히 돌아온 순간을 포착해 그해 한 해의 주제를 읽는 별도의 차트다. 전통 점성술에는 이 밖에도 프로그레션 같은 상징적 진행 기법이 있으나, 입문·응용 단계에서는 트랜짓과 솔라 리턴이 가장 널리 쓰인다. 이 모든 기법에서 점성술가들은 행성의 움직임을 '강제하는 운명'이 아니라 '그 시기에 활성화되는 주제'로 풀이하는 편이다.</p>
+
+<h3>핵심 메커니즘/교리</h3>
+<div class="info-card"><h4>📐 어스펙트 — 끌림과 마찰의 문법</h4><p>궁합과 트랜짓 모두 두 점 사이의 각도(어스펙트)를 해석의 기본 단위로 삼는다. 0도 합(컨정션)은 융합과 강조, 90도와 180도(스퀘어·어포지션)는 긴장과 도전, 120도와 60도(트라인·섹스타일)는 조화와 흐름으로 본다. 같은 행성 조합이라도 어떤 각을 맺느냐에 따라 해석의 결이 달라진다고 여겨진다.</p></div>
+
+<h3>대표 사례·경전</h3>
+<div class="info-card"><h4>📐 사례 1 — 시너스트리 속 금성과 화성</h4><p>두 사람을 비교했을 때 한쪽의 금성이 다른 쪽의 화성에 합을 이루면, 점성술에서는 전형적인 매력과 열정의 신호로 읽는다. 다만 같은 배치라도 스퀘어로 각을 맺으면 끌림에 마찰이 섞인다고 보아, 단일 배치가 아니라 차트 전체의 맥락 속에서 해석해야 한다는 점을 강조한다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 솔라 리턴으로 한 해 읽기</h4><p>어떤 사람의 솔라 리턴 차트에서 태양이 특정 하우스에 들어가면, 그 한 해 동안 해당 영역(예: 일·관계·이동)이 부각된다고 해석한다. 솔라 리턴은 출생 차트라는 평생의 바탕 위에 그해의 '계절감'을 덧입히는 도구로 다뤄지며, 출생 차트를 대체하지 않는다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>오늘날에는 차트 계산이 앱과 웹으로 자동화되면서, 시너스트리·트랜짓·솔라 리턴을 누구나 손쉽게 받아 볼 수 있게 되었다. 특히 '수성 역행'은 SNS와 대중문화를 통해 일상어처럼 퍼져, 소통 오류나 일정 혼선을 농담처럼 그 시기에 빗대는 문화가 자리 잡았다. 이런 대중화는 점성술의 접근성을 높였지만, 동시에 한두 개의 트랜짓만으로 모든 일을 단정하는 단순화의 위험도 함께 키웠다는 평가를 받는다.</p>
+
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> "수성 역행이면 무조건 일이 꼬인다"거나 "궁합이 나쁘면 그 관계는 안 된다"는 식의 단정은 점성술 전통의 신중한 태도와도 어긋난다. 점성술에서 역행이나 까다로운 어스펙트는 '주의가 필요한 시기·주제'를 가리키는 상징일 뿐, 결과를 확정하는 장치가 아니라고 본다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>심화 단계에서는 궁합과 트랜짓을 단일 기법이 아니라 '시간과 관계를 다루는 여러 모델의 비교'로 이해하는 것이 중요하다. 시너스트리가 두 차트의 상호 어스펙트를 통해 관계를 '둘 사이의 역학'으로 보는 반면, 컴포짓 차트는 미드포인트 합성을 통해 관계를 '제3의 독립된 실체'로 가정한다. 이 둘은 전제가 다르므로, 같은 커플이라도 강조되는 측면이 갈릴 수 있다. 트랜짓 역시 행성 속도에 따라 해석의 시간 척도가 달라지며, 느린 행성의 트랜짓은 토성 리턴(약 29.5년 주기)처럼 인생의 큰 전환을 상징하는 장기 국면으로 다뤄진다. 솔라 리턴은 사용하는 출생 시각·장소 기준에 따라 결과가 민감하게 변한다는 점에서, 데이터의 정확성이 해석의 전제 조건이 된다. 전문 점성가들은 이런 기법을 결합할 때, 하나의 신호가 아니라 여러 신호가 같은 방향을 가리키는 '수렴'을 더 신뢰하는 경향이 있다. 이런 신중한 다층 해석은 점성술 전통 안에서 결정론을 경계하는 태도와 맞닿아 있다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>학술적 관점에서 궁합과 트랜짓은 검증의 대상이 되어 왔다. 관계 만족도나 결혼·이혼 통계와 시너스트리 지표 사이의 상관을 검토한 연구들은 일관된 통계적 효과를 확인하지 못한 경우가 많았고, 점성술 일반의 예측력을 검증하려 한 실험에서도 무작위 수준을 넘는 결과를 안정적으로 얻기는 어려웠다고 보고된다. 비판자들은 '바넘 효과(누구에게나 들어맞는 듯한 모호한 진술)'와 사후 해석의 유연성이 체감 적중률을 높인다고 지적한다. 반면 점성술을 옹호하는 쪽에서는 이 기법들이 통계적 예측보다 '상징적 자기 이해와 대화의 언어'로 기능하며, 검증 설계가 그 본질을 담아내지 못한다고 반론한다. 어느 쪽이든, 적어도 현재까지의 통제된 과학적 검증에서 트랜짓·궁합의 예측적 효과가 입증되지 않았다는 점은 균형 있게 인식할 필요가 있다. 따라서 이 기법들은 사실로 단정하기보다 '그렇게 본다/여겨진다'는 해석적 전통으로 다루는 것이 적절하다.</p>
+
+<h3>관련 분야</h3><ul>
+<li><strong>천문학·역서(에페메리스)</strong>: 트랜짓과 솔라 리턴 계산의 토대가 되는 정밀한 행성 위치 자료를 다룬다.</li>
+<li><strong>심리학</strong>: 바넘 효과, 확증 편향 등 점성술 체감 적중을 설명하는 인지 기제를 연구한다.</li>
+<li><strong>융 심리학·상징 해석</strong>: 점성술을 상징과 동시성의 언어로 재해석하려는 현대적 흐름과 닿아 있다.</li>
+</ul>
+
+<h3>더 읽을거리</h3><ul>
+<li>"The Astrology of Human Relationships" — Robert Hand</li>
+<li>"Planets in Transit" — Robert Hand</li>
+<li>"Cosmos and Psyche" — Richard Tarnas</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 자신과 가까운 사람의 출생 데이터로 시너스트리와 컴포짓 차트를 각각 만들어, 두 기법이 같은 관계를 어떻게 다르게 비추는지 비교해 보자. 동시에, 그 해석이 '검증된 예측'이 아니라 '상징적 안내'라는 점을 의식하며, 어떤 부분이 바넘 효과로 설명될 수 있을지도 함께 적어 보자.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#c084fc","questions":[{"q":"두 차트를 겹쳐 보는 궁합 기법은?","choices":["시너스트리","솔라 리턴","트랜짓","프로그레션"],"answer":0},{"q":"트랜짓으로 읽는 것은?","choices":["전생","시기·흐름","외모","혈액형"],"answer":1},{"q":"한 해 흐름을 보는 생일 차트는?","choices":["컴포짓","수성 역행","솔라 리턴","아스펙트"],"answer":2},{"q":"컴포짓 차트의 합성 기준은?","choices":["평균 나이","태양 위치","오브","미드포인트"],"answer":3},{"q":"수성 역행과 자주 연결되는 주제는?","choices":["재물 증가","건강 회복","소통 혼선","승진"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=0xc084fc;function wheel(cx,col){const g=new THREE.Group();g.position.x=cx;const ring=new THREE.Mesh(new THREE.TorusGeometry(2.0,0.04,10,60),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.6}));g.add(ring);const dots=[];for(let i=0;i<4;i++){const t=Math.random()*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.16,14,14),new THREE.MeshBasicMaterial({color:col}));m.position.set(Math.cos(t)*2.0,Math.sin(t)*2.0,0);g.add(m);dots.push(m);}s.add(g);return {g,dots};}const A=wheel(-1.6,0xffaad4);const B=wheel(1.6,0xc084fc);for(let i=0;i<3;i++)s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([A.dots[i].position.clone().add(A.g.position),B.dots[i].position.clone().add(B.g.position)]),new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:0.25})));for(let i=0;i<40;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.03+Math.random()*0.04,6,6),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.3+Math.random()*0.5}));m.position.set((Math.random()-0.5)*18,(Math.random()-0.5)*11,(Math.random()-0.5)*18);s.add(m);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

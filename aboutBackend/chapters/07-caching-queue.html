@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -134,7 +136,7 @@ channel.consume('order-events', (msg) => {
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -177,6 +179,11 @@ async function getUser(id) {
   <div class="success-box"><strong>🎓 도전 과제:</strong> 동일 워크로드를 캐시 없음 / 단순 캐시 / stale-while-revalidate 세 가지로 구성해 적중률·p99·DB QPS를 비교하세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00ff88","questions":[{"q":"캐시에 데이터가 있어 바로 응답하는 경우는?","choices":["Cache Miss","Cache Hit","TTL","DLQ"],"answer":1},{"q":"캐시 유효 시간을 뜻하는 용어는?","choices":["TTL","ACK","TCP","SLA"],"answer":0},{"q":"메시지를 큐에 넣는 주체는?","choices":["Consumer","Broker","Producer","Worker"],"answer":2},{"q":"캐시와 DB에 동시에 쓰는 전략은?","choices":["Cache-Aside","Write-Back","Lazy Loading","Write-Through"],"answer":3},{"q":"AMQP 기반 메시지 브로커는?","choices":["Kafka","RabbitMQ","Redis","Nginx"],"answer":1}]};</script>
 </main>
 </div>
 

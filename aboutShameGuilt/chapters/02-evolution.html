@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 라벤더 안개를 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 진화적 기능 — 생존을 도운 적응의 갈래</span>
 
 <h2>진화와 기능 개요</h2>
 <p>수치심과 죄책감은 인간이 사회적 동물로 진화하면서 평판과 위계를 관리하기 위해 만든 내장 시스템이다. 죄책감은 가까운 협력자와의 관계를 회복하는 "관계 접착제" 기능을, 수치심은 집단 내 위계 신호와 추방 회피 기능을 한다. 적당한 수치·죄책감은 생존 자산이지만, 만성화된 수치심은 진화적 유산이 현대 환경에서 폭주한 결과다.</p>
@@ -74,5 +76,21 @@
   <div class="success-box">🎓 도전 과제: 본인이 최근 느낀 죄책감 1건과 수치심 1건을 골라, 각각이 어떤 진화적 기능(관계 회복 / 위계 신호 / 평판 보존 / 자기 처벌)을 수행했는지 분류해 표로 정리해보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#a78bfa","questions":[{"q":"수치심의 원형이 된 동물 자세는?","choices":["사자 포효","침팬지 굴복","공작 깃털","늑대 울음"],"answer":1},{"q":"죄책감의 진화적 기능은?","choices":["위계 신호","경쟁","관계 회복","추방"],"answer":2},{"q":"수치심이 담당하는 기능은?","choices":["협력 회복","위계 신호","사과","보상"],"answer":1},{"q":"dual-function 모델 제시 학자는?","choices":["Fessler","Trivers","Baumeister","Lewis"],"answer":0},{"q":"죄책감을 호혜적 이타주의로 본 학자는?","choices":["Fessler","Gilbert","Trivers","Brown"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0xa78bfa;const parts=[];for(let i=0;i<32;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xa78bfa;function branch(x,y,len,ang,d){if(d<=0)return;const x2=x+Math.cos(ang)*len,y2=y+Math.sin(ang)*len;s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,y,0),new THREE.Vector3(x2,y2,0)]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.5})));const n=new THREE.Mesh(new THREE.SphereGeometry(0.08+d*0.03,10,10),new THREE.MeshBasicMaterial({color:COL}));n.position.set(x2,y2,0);s.add(n);branch(x2,y2,len*0.72,ang+0.5,d-1);branch(x2,y2,len*0.72,ang-0.5,d-1);}branch(0,-2.6,1.5,Math.PI/2,4);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

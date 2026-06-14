@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 핑크빛 유대를 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 임상 — 과하거나 모자랄 때(스펙트럼)</span>
 
 <h2>임상과 병리 개요</h2>
 <p>사랑은 가장 깊은 치유의 원천이자 동시에 가장 깊은 외상의 원천이다. 외도·사별·애착 외상은 PTSD에 준하는 신경·정서 손상을 남기며, 임상 분야에서 별도의 진단·치료 프로토콜이 발달하였다.</p>
@@ -74,14 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 본인의 가장 큰 관계 외상 1건을 회상하여 영향 회로(사고·정서·신체·행동) 도식으로 그리고, 미해결 영역을 1쪽으로 정리한다.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ec4899","questions":[{"q":"지속비탄장애의 약자는?","choices":["PTSD","PGD","ACE","NVC"],"answer":1},{"q":"관계 없이 자기 가치를 못 느끼는 패턴은?","choices":["분리불안","비탄","공의존","외도"],"answer":2},{"q":"사별 중 PGD로 진행하는 비율은 약?","choices":["10%","50%","90%","1%"],"answer":0},{"q":"Takotsubo 심근병증은 누구에게 우세?","choices":["남성","여성","동일","아동"],"answer":1},{"q":"한국 이혼 사유 1위는?","choices":["외도","성격 차이","경제 문제","건강"],"answer":1}]};</script>
 </main></div>
-<script>(function(){
-  const c=document.getElementById('sim-scene');const s=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
   const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const COLOR=0xec4899;const parts=[];
-  for(let i=0;i<30;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}
-  let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
-  function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();
+  const COL=0xec4899;const N=15;const bars=[];for(let i=0;i<N;i++){const x=(i-(N-1)/2)*0.42;const col2=new THREE.Color().setHSL(0.0+0.33*(i/(N-1)),0.6,0.55);const b=new THREE.Mesh(new THREE.BoxGeometry(0.3,1,0.3),new THREE.MeshBasicMaterial({color:col2}));b.position.x=x;s.add(b);bars.push(b);}const marker=new THREE.Mesh(new THREE.ConeGeometry(0.22,0.5,12),new THREE.MeshBasicMaterial({color:0xffffff}));marker.position.y=1.4;s.add(marker);s.userData.m=marker;s.userData.N=N;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const N=s.userData.N;const x=Math.sin(T*0.8)*(N-1)/2*0.42;s.userData.m.position.x=x;s.rotation.y+=0.0;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
-})();</script></body></html>
+})();
+</script>
+</body></html>

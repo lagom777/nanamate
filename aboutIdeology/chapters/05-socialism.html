@@ -1,0 +1,231 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5. 사회주의 — aboutIdeology</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">⚖️ 표지</a></li>
+    <li><a href="01-democracy.html">1. 민주주의</a></li>
+    <li><a href="02-liberalism.html">2. 자유주의</a></li>
+    <li><a href="03-conservatism.html">3. 보수주의</a></li>
+    <li><a href="04-capitalism.html">4. 자본주의</a></li>
+    <li><a href="05-socialism.html">5. 사회주의</a></li>
+    <li><a href="06-communism.html">6. 공산주의 · 마르크스주의</a></li>
+    <li><a href="07-welfare.html">7. 복지국가 · 사회민주주의</a></li>
+    <li><a href="08-totalitarianism.html">8. 전체주의 · 파시즘</a></li>
+    <li><a href="09-anarchism.html">9. 무정부주의 · 자유지상주의</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>사회주의</em></h1>
+  <p class="authors">Chapter 5 — Socialism</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 드래그로 회전 · 하단 캡션이 단계별로 설명합니다</span>
+
+<h2>사회주의 개요</h2>
+<p>사회주의는 생산수단을 사회적·공동으로 소유하고, 부와 권력의 분배에서 평등과 협동을 지향하는 광범위한 사상과 운동의 묶음이다. 시장의 사적 소유와 경쟁이 만들어 내는 불평등을 비판하면서, 경제의 핵심 자원을 소수의 손이 아니라 사회 전체가 함께 관리해야 한다고 본다. 다만 사회주의는 단일한 교리가 아니라, 온건한 개혁부터 급진적 혁명까지를 아우르는 넓은 스펙트럼을 가진다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>사회주의는 '생산수단의 사회적 소유'와 '평등한 분배'를 공통분모로 삼는 사상군이다. 공장·토지·자본 같은 생산 자원을 사적으로 소유해 이윤을 독점하는 대신, 공동체나 노동자, 또는 국가가 함께 소유·운영하자는 것이다. 역사적으로는 도덕적 이상에 기댄 공상적 사회주의와 자본주의의 운동 법칙을 분석하려 한 과학적 사회주의로 나뉘었고, 오늘날에는 민주사회주의·시장사회주의처럼 시장과 민주주의를 결합한 형태까지 다양하게 전개된다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>사회주의란 공장·토지·자본 같은 '생산수단'을 개인이 독점하지 않고 사회가 함께 소유하면서, 부를 더 평등하게 나누자는 생각이다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>산업혁명 이후 공장과 기계로 막대한 부가 생겨났지만, 그 부는 소수의 소유주에게 집중되고 노동자들은 가난과 장시간 노동에 시달렸다. 사회주의는 이런 불평등이 자연스러운 것이 아니라 소유 구조 때문이라고 보고, 다른 길이 가능하다고 주장했다. 이 문제 제기는 노동조합, 최저임금, 공교육, 공공의료, 연금 같은 오늘날 우리가 당연하게 여기는 제도들의 사상적 뿌리가 되었다. 또한 20세기의 거대한 정치 지형—냉전, 혁명, 복지국가—을 이해하려면 사회주의를 빼놓을 수 없다. 사회주의를 안다는 것은 곧 '시장과 평등을 어떻게 조화시킬 것인가'라는, 지금도 계속되는 논쟁의 한복판으로 들어가는 일이다.</p>
+
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>생산수단</strong>: 물건을 만들어 내는 데 쓰이는 공장·기계·토지·자본 등. 누가 이것을 소유하는가가 사회주의 논의의 핵심이다.</li>
+<li><strong>사회적 소유</strong>: 생산수단을 개인이 아니라 사회 전체, 노동자, 또는 국가가 함께 소유하는 것.</li>
+<li><strong>평등한 분배</strong>: 일한 만큼, 또는 필요한 만큼 부와 자원을 고르게 나누려는 원리.</li>
+<li><strong>계급</strong>: 생산수단을 가진 사람들과 그렇지 못해 노동을 파는 사람들처럼, 경제적 위치로 나뉜 집단.</li>
+<li><strong>공상적 사회주의</strong>: 도덕적 이상과 모범 공동체로 더 나은 사회를 만들려 한 초기 사회주의.</li>
+</ul></div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>큰 식당을 떠올려 보자. 자본주의에서는 한 사람이 주방과 모든 도구를 소유하고, 요리사들은 시급을 받으며 일한 뒤 이윤은 주인이 가져간다. 사회주의는 그 주방과 도구를 요리사들이 함께 소유하고, 메뉴와 일하는 방식도 같이 정하며, 이익도 나누자고 제안하는 셈이다. 핵심은 '누가 가게의 주인이 되어야 하는가'라는 물음이며, 사회주의는 그 답을 '일하는 사람들, 또는 사회 전체'에서 찾는다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> '사회주의 = 공산주의 = 소련'이라고 묶어 외우지 말자. 사회주의는 훨씬 넓은 우산이고, 그 안에는 선거와 시장을 인정하는 온건한 형태도 많다. 먼저 '생산수단의 공동 소유'라는 공통점부터 잡고, 거기서 갈라지는 갈래들을 구분하는 순서로 이해하면 헷갈리지 않는다.</div>
+
+<h3>한 페이지 요약</h3>
+<ul>
+<li>사회주의는 생산수단의 사회적·공동 소유와 평등한 분배, 협동을 지향한다.</li>
+<li>산업혁명기의 극심한 불평등에 대한 비판에서 출발했다.</li>
+<li>도덕적 이상에 기댄 공상적 사회주의와, 자본주의 분석에 기댄 과학적 사회주의로 나뉜다.</li>
+<li>민주사회주의·시장사회주의처럼 시장·민주주의와 결합한 넓은 스펙트럼이 있다.</li>
+<li>오늘날의 복지·노동 제도 다수가 사회주의의 문제 제기에 빚지고 있다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>사회주의 사상은 19세기 초 산업자본주의의 그늘에서 본격적으로 형성되었다. 초기 흐름은 흔히 '공상적 사회주의'라 불리는데, 로버트 오언, 샤를 푸리에, 생시몽이 대표적이다. 이들은 자본주의의 불평등을 도덕적으로 고발하고, 협동과 합리적 설계로 조화로운 공동체를 만들 수 있다고 믿었다. 오언은 자신이 운영하던 공장에서 노동 조건을 개선하고 협동 마을을 실험했고, 푸리에는 '팔랑스테르'라 불린 공동생활 단위를 구상했으며, 생시몽은 산업과 과학을 합리적으로 조직하면 사회가 발전한다고 보았다. 그러나 이 흐름은 '왜 자본주의가 불평등을 낳는가'를 체계적으로 설명하기보다 이상적 청사진을 제시하는 데 머물렀다는 한계가 지적되었다. 카를 마르크스와 프리드리히 엥겔스는 이런 도덕적 호소를 넘어, 자본주의의 작동 법칙 자체를 분석하려 했고, 자신들의 입장을 '과학적 사회주의'라 불러 앞선 흐름과 구분했다. 마르크스는 역사를 계급투쟁의 연속으로 보고, 자본주의 내부의 모순이 결국 노동자 계급의 변혁으로 이어진다고 주장했다. 다만 사회주의 전체가 마르크스주의로 환원되는 것은 아니며, 의회와 점진적 개혁을 중시한 흐름도 처음부터 강하게 존재했다.</p>
+
+<h3>핵심 메커니즘/교리</h3>
+<div class="info-card"><h4>📐 공상적 사회주의와 과학적 사회주의</h4><p>공상적 사회주의는 인간의 선의와 합리적 설계로 모범 공동체를 세우면 사회가 바뀐다고 본 반면, 마르크스가 내세운 과학적 사회주의는 자본주의의 경제 구조와 역사적 운동 법칙을 분석해 변혁의 조건을 밝히려 했다. 두 흐름 모두 생산수단의 공동 소유를 지향했지만, 그 길에 이르는 방법—도덕적 설득이냐, 구조적 분석과 계급의 운동이냐—에서 갈라졌다.</p></div>
+
+<h3>대표 사례·경전</h3>
+<div class="info-card"><h4>📐 사례 1 — 민주사회주의</h4><p>민주사회주의는 생산수단의 사회적 통제를 지향하되, 그 변화를 폭력 혁명이 아니라 선거·의회·법치 같은 민주적 절차로 이루어야 한다고 본다. 다수 유럽의 사회주의·노동 정당이 이 노선을 따랐으며, 시장을 전면 폐지하기보다 핵심 영역의 공적 통제와 강한 복지·재분배를 결합하는 방향으로 발전했다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 시장사회주의</h4><p>시장사회주의는 시장의 가격 기능과 경쟁은 유지하되, 기업의 소유는 사적 자본가가 아니라 노동자·공동체·공공이 갖도록 하려는 모델이다. '계획이냐 시장이냐'라는 이분법을 넘어, 공동 소유와 시장 메커니즘을 결합할 수 있는지를 묻는 시도로 여겨진다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>20세기 사회주의는 크게 두 갈래로 갈라졌다. 한쪽은 의회와 복지국가를 통한 점진적 개혁의 길로 나아가, 오늘날의 사회민주주의로 이어졌다. 다른 한쪽은 혁명과 일당 체제, 중앙계획경제로 나아갔고, 그 성패와 명암은 지금까지도 활발히 평가·논쟁된다. 냉전 이후에는 국가의 전면적 계획을 내세우기보다, 시장·민주주의와 결합한 형태가 사회주의 논의의 주류가 되었다.</p>
+
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 사회주의와 공산주의는 같은 말이 아니다. 마르크스의 이론에서 국가와 계급의 소멸은 '공산주의'라는 최종 단계의 특징이고, 사회주의는 그에 이르기 전의 과도기 단계를 가리키거나, 그와 무관하게 시장·선거를 인정하는 더 온건한 흐름을 가리키는 데도 쓰인다. '사회주의'라는 한 단어가 문맥에 따라 매우 다른 입장을 뜻할 수 있다는 점을 늘 염두에 두어야 한다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>사회주의를 학술적으로 깊이 다루려면 20세기 초의 '사회주의 경제계산 논쟁'을 빼놓을 수 없다. 이 논쟁의 핵심 물음은 단순했다. 사적 소유와 자본 시장이 없는 사회에서, 무엇을 얼마나 생산할지 합리적으로 계산할 수 있는가? 오스트리아학파의 루트비히 폰 미제스는 생산수단의 사적 소유와 시장이 없으면 자본재의 가격이 형성되지 않고, 가격이 없으면 자원을 합리적으로 배분할 수 없다고 주장했다. 즉 사회주의는 '계산 불가능'하다는 것이 그의 도전이었다. 이 비판은 뒤이어 프리드리히 하이에크에 의해 정교해졌는데, 하이에크는 경제에 필요한 지식이 한곳에 모이지 않고 무수한 개인에게 분산되어 있으며, 시장 가격이야말로 그 흩어진 지식을 압축해 전달하는 장치라고 보았다. 이에 맞서 오스카어 랑게는 '시장사회주의' 모델로 응수했다. 그는 중앙계획 당국이 시행착오 방식으로 가격을 조정하면, 마치 시장처럼 수요와 공급을 맞추는 균형에 도달할 수 있다고 논증하며, 계획 아래에서도 합리적 계산이 가능하다고 주장했다. 이 논쟁은 어느 한쪽의 일방적 승리로 끝났다기보다, 정보·유인·지식의 분산이라는 문제를 경제학과 정치철학의 중심 의제로 끌어올린 사건으로 평가된다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>현대의 논의는 더 이상 '전면적 중앙계획이냐 순수 시장이냐'라는 양극단에 머물지 않는다. 한편에서는 노동자 자주관리 기업, 협동조합, 공동 소유와 시장의 결합을 탐구하는 다양한 시장사회주의 모델이 제안되며, 디지털 기술과 방대한 데이터가 계획의 계산 문제를 새롭게 바꿀 수 있는지를 두고도 활발한 논쟁이 이어진다. 다른 한편에서는 21세기 들어 불평등 심화와 금융위기, 기후위기를 배경으로 사회주의적 의제가 다시 부상하는 '21세기 사회주의' 흐름이 주목받았다. 다만 이 부활을 두고 어떤 이들은 분배 정의와 공공성의 복권으로, 다른 이들은 과거 실패에 대한 충분한 성찰 없는 회귀로 평가하는 등 해석이 엇갈린다. 사회주의 연구는 이처럼 규범적 정당성과 제도적 실현 가능성을 함께 따지는 학제적 영역으로 남아 있다.</p>
+
+<h3>관련 분야</h3>
+<ul>
+<li><strong>정치경제학</strong>: 소유 구조와 분배, 시장과 계획의 효율성을 분석하는 토대 학문.</li>
+<li><strong>정치철학</strong>: 평등·자유·정의의 관계와 재분배의 도덕적 근거를 다룬다.</li>
+<li><strong>비교정치·경제사</strong>: 복지국가, 계획경제, 협동조합 등 실제 체제의 성과를 검증한다.</li>
+</ul>
+
+<h3>더 읽을거리</h3>
+<ul>
+<li>"공산당 선언" — 카를 마르크스 · 프리드리히 엥겔스</li>
+<li>"사회주의의 전제와 사회민주주의의 과제" — 에두아르트 베른슈타인(온건·개혁적 사회주의를 직접 서술한 1차 문헌)</li>
+<li>"노예의 길" — 프리드리히 하이에크(사회주의에 대한 비판서)</li>
+<li>"사회주의" — 루트비히 폰 미제스(사회주의에 대한 비판서)</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 미제스·하이에크의 '계산 불가능' 비판과 랑게의 시장사회주의 응답을 각각 한 문단으로 요약한 뒤, 오늘날의 빅데이터·인공지능이 이 논쟁의 균형을 바꿀 수 있을지 자신의 입장을 근거와 함께 정리해 보자. 어느 한쪽을 단정하기보다, 양측 논거의 강점을 충실히 짚는 것이 핵심이다.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#e11d48","questions":[{"q":"사회주의의 공통분모는?","choices":["사적 소유","자유방임","생산수단 사회적 소유","군주제"],"answer":2},{"q":"공상적 사회주의자가 아닌 사람은?","choices":["오언","푸리에","생시몽","마르크스"],"answer":3},{"q":"'과학적 사회주의'를 내세운 인물은?","choices":["마르크스","오언","랑게","미제스"],"answer":0},{"q":"'계산 불가능' 비판을 한 학자는?","choices":["랑게","미제스","베른슈타인","마르크스"],"answer":1},{"q":"랑게가 옹호한 모델은?","choices":["봉건제","자유방임","시장사회주의","중상주의"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+function start(){
+  const c=document.getElementById('sim-scene');
+  if(!c||typeof THREE==='undefined')return;
+  const W=c.clientWidth||800,H=c.clientHeight||400;
+  const scene=new THREE.Scene();
+  scene.background=new THREE.Color(0xf4f6fb);
+  const cam=new THREE.PerspectiveCamera(50,W/H,0.1,1000);
+  let renderer;try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  c.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.95));
+  const dlight=new THREE.DirectionalLight(0xffffff,0.5);dlight.position.set(5,10,7);scene.add(dlight);
+  const tEl=document.createElement('div');
+  tEl.textContent='3D · 소유 구조: 누가 주인인가';
+  tEl.style.cssText='position:absolute;top:10px;left:12px;font:700 11px/1.4 ui-monospace,monospace;letter-spacing:0.1em;color:#5b6bd6;background:rgba(255,255,255,0.88);padding:3px 9px;border-radius:10px;pointer-events:none;z-index:3;';
+  c.appendChild(tEl);
+  const capEl=document.createElement('div');
+  capEl.style.cssText='position:absolute;left:0;right:0;bottom:0;padding:9px 14px;font-size:0.84em;line-height:1.5;color:#26314a;background:rgba(252,253,255,0.92);border-top:1px solid rgba(40,60,110,0.08);pointer-events:none;z-index:3;min-height:2.4em;';
+  c.appendChild(capEl);
+  function cap(t){capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function M(col,o){return new THREE.MeshLambertMaterial({color:col,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,col,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),M(col,o));}
+  function sph(r,col,o){return new THREE.Mesh(new THREE.SphereGeometry(r,20,16),M(col,o));}
+  function cyl(r1,r2,h,col,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,24),M(col,o));}
+  function cone(r,h,col,o){return new THREE.Mesh(new THREE.ConeGeometry(r,h,24),M(col,o));}
+  function tor(r,t,col,o,arc){return new THREE.Mesh(new THREE.TorusGeometry(r,t,14,48,arc===undefined?Math.PI*2:arc),M(col,o));}
+  function line(a,b,col,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:col,transparent:true,opacity:o===undefined?0.6:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||26;const cv=document.createElement('canvas');let ctx=cv.getContext('2d');
+    const font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;cv.width=Math.ceil(ctx.measureText(txt).width)+24;cv.height=fs+20;
+    ctx=cv.getContext('2d');ctx.font=font;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillStyle=color||'#2b3242';ctx.fillText(txt,cv.width/2,cv.height/2);
+    const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    const k=(scl||1)*0.012;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  const root=new THREE.Group();scene.add(root);
+  let sway=0.10;
+
+  cam.position.set(0,1.6,12.5);cam.lookAt(0,0.2,0);sway=0.07;
+  function factory(x){const g=new THREE.Group();const b=box(1.6,1.0,1.2,0x7a86a8);g.add(b);const ch=cyl(0.12,0.12,0.8,0x5a6478);ch.position.set(0.5,0.9,0);g.add(ch);g.position.set(x,-0.7,0);root.add(g);return g;}
+  const f1=factory(-2.9),f2=factory(2.9);
+  const owner=sph(0.4,0x3f6fd0);owner.position.set(-2.9,1.6,0);root.add(owner);
+  const ol=lbl('소유자',22,'#2456a8',0.85);ol.position.set(-2.9,2.3,0);root.add(ol);
+  const w1=[];for(let i=0;i<6;i++){const m=sph(0.16,0x9aa3b8);m.position.set(-3.9+i*0.4,-1.8,0.9);root.add(m);w1.push(m);}
+  const wl=lbl('노동자 (임금)',21,'#5a6478',0.8);wl.position.set(-2.9,-2.4,0.9);root.add(wl);
+  const w2=[],olines=[];
+  for(let i=0;i<6;i++){const a=i/6*Math.PI*2;const m=sph(0.2,0x2fa86d);m.position.set(2.9+Math.cos(a)*1.7,-0.9,Math.sin(a)*1.3);root.add(m);w2.push(m);
+    const ln=line(f2.position,m.position,0x2fa86d,0.5);root.add(ln);olines.push(ln);}
+  const w2l=lbl('공동 소유자 = 일하는 사람들',22,'#1c7a4d',0.85);w2l.position.set(2.9,2.3,0);root.add(w2l);
+  const tL=lbl('사적 소유 (자본주의)',24,'#1d2742',0.9);tL.position.set(-2.9,3.2,0);root.add(tL);
+  const tR=lbl('사회적 소유 (사회주의의 공통분모)',24,'#1d2742',0.9);tR.position.set(2.9,3.2,0);root.add(tR);
+  const pf1=[];for(let i=0;i<3;i++){const m=sph(0.1,0xffc83c);root.add(m);pf1.push(m);}
+  const pf2=[];for(let i=0;i<6;i++){const m=sph(0.1,0xffc83c);root.add(m);pf2.push(m);}
+  let lOn=1,rOn=1;
+  const always=function(t){
+    pf1.forEach((m,i)=>{const u=((t*0.3)+i/3)%1;m.position.set(-2.9,-0.4+2.0*u*1.0,0.2);m.material.opacity=lOn;});
+    pf2.forEach((m,i)=>{const u=((t*0.3)+i/6)%1;const a=i/6*Math.PI*2;m.position.set(2.9+Math.cos(a)*1.7*u,-0.5-0.3*u,Math.sin(a)*1.3*u);m.material.opacity=rOn;});
+  };
+  function dimSide(left,right){
+    [f1,owner,ol,wl,tL].forEach(o=>{if(o.material)o.material.opacity=left;else o.children.forEach(ch=>ch.material.opacity=left);});
+    w1.forEach(m=>m.material.opacity=left);
+    [f2,w2l,tR].forEach(o=>{if(o.material)o.material.opacity=right;else o.children.forEach(ch=>ch.material.opacity=right);});
+    w2.forEach(m=>m.material.opacity=right);olines.forEach(l=>l.material.opacity=0.5*right);
+    lOn=left;rOn=right;
+  }
+  const phases=[
+   {dur:6.5,cap:'① 사적 소유(왼쪽) — 생산수단의 주인은 개인·주주다. 이윤(노란 흐름)은 소유자에게 가고 노동자는 임금을 받는다. 강한 투자 유인과 효율이 장점으로 꼽힌다.',enter(){dimSide(1,0.25);}},
+   {dur:6.5,cap:'② 사회적 소유(오른쪽) — 같은 공장을 일하는 사람들 또는 공동체가 함께 소유하고, 결정과 분배도 함께한다. 이것이 다양한 사회주의 사상의 공통분모다.',enter(){dimSide(0.25,1);}},
+   {dur:7,cap:'③ 넓은 스펙트럼 — 전면 국유·중앙계획부터, 시장을 유지한 협동조합·시장사회주의, 선거로 개혁하는 민주사회주의까지 사회주의의 폭은 넓다. 하나로 뭉뚱그릴 수 없다.',enter(){dimSide(1,1);}},
+   {dur:6.5,cap:'④ 핵심 쟁점 — 공동 소유는 평등을 높이는가, 유인과 정보(가격) 문제를 낳는가. 미제스·하이에크 대 랑게의 경제계산 논쟁 이래 지금도 검토가 이어진다.'}
+  ];
+  let uy=0,ux=0,md=false,px=0,py=0;
+  c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup',()=>{md=false;});
+  c.addEventListener('mousemove',e=>{if(md){uy+=(e.clientX-px)*0.005;ux+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    const dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    let ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,now/1000);
+    if(typeof always==='function')always(now/1000);
+    root.rotation.y=uy+Math.sin(now/1000*0.25)*sway;
+    root.rotation.x=ux;
+    renderer.render(scene,cam);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',()=>{const w=c.clientWidth,h=c.clientHeight;if(!w||!h)return;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body></html>

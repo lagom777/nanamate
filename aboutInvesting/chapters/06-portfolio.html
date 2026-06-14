@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6. 분산투자·포트폴리오 — aboutInvesting</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">💰 표지</a></li>
+    <li><a href="01-basics.html">1. 재테크 기초</a></li>
+    <li><a href="02-stocks.html">2. 주식 투자</a></li>
+    <li><a href="03-bonds.html">3. 채권과 금리</a></li>
+    <li><a href="04-funds.html">4. 펀드·ETF·인덱스</a></li>
+    <li><a href="05-realestate.html">5. 부동산</a></li>
+    <li><a href="06-portfolio.html">6. 분산투자·포트폴리오</a></li>
+    <li><a href="07-tax-pension.html">7. 세금·연금</a></li>
+    <li><a href="08-behavioral.html">8. 행동재무학</a></li>
+    <li><a href="09-retirement.html">9. 은퇴·재무설계</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>분산투자·포트폴리오</em></h1>
+  <p class="authors">Chapter 6 — Portfolio &amp; Risk</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 여러 자산군으로 나뉜 자산배분 원판을 회전시켜 분산의 원리를 보세요</span>
+
+<h2>분산투자·포트폴리오 개요</h2>
+<p>분산투자는 여러 자산에 나누어 투자해 특정 자산의 손실이 전체에 미치는 충격을 줄이는 전략이다. 흔히 인용되는 연구들은 장기 수익의 변동 대부분이 개별 종목 선택이나 매매 시점보다 주식·채권·현금·대체자산 사이의 자산배분에서 비롯된다고 본다. 즉 무엇을 사느냐보다 자산군을 어떻게 나누느냐가 더 큰 영향을 준다는 관점이다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>서로 다르게 움직이는(상관관계가 낮은) 자산을 섞어 위험을 낮추고, 자신의 리스크 허용도에 맞는 비중을 정한 뒤 정기적으로 리밸런싱한다. 현대포트폴리오이론은 이 직관을 수학적으로 정리해 같은 위험에서 더 높은 기대수익을 주는 '효율적 투자선'을 제시한다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>"달걀을 한 바구니에 담지 마라"라는 말처럼, 돈을 여러 자산에 나눠 담아 한 곳이 무너져도 전체가 함께 무너지지 않게 하는 것이 분산투자다.</p>
+<h3>왜 중요한가?</h3>
+<p>아무리 좋아 보이는 투자처라도 미래는 누구도 정확히 알 수 없다. 한 종목이나 한 자산에 전 재산을 넣으면, 그 판단이 틀렸을 때 회복하기 어려운 손실을 입을 수 있다. 분산투자는 이런 '한 방에 무너질' 위험을 줄여 준다. 또한 어떤 자산이 떨어질 때 다른 자산이 오르거나 덜 떨어지면 전체 변동이 완만해져, 불안에 휩쓸려 잘못된 매매를 할 가능성도 낮아진다. 결국 분산은 큰 수익을 노리는 기술이라기보다, 오래 살아남으며 투자를 이어 가기 위한 안전장치에 가깝다.</p>
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>분산투자</strong>: 여러 자산에 나누어 투자해 위험을 줄이는 것</li>
+<li><strong>자산배분</strong>: 주식·채권·현금·대체자산 등 자산군별로 비중을 정하는 일</li>
+<li><strong>상관관계</strong>: 두 자산이 같은 방향으로 움직이는 정도. 낮을수록 분산 효과가 크다</li>
+<li><strong>리밸런싱</strong>: 시간이 지나며 틀어진 비중을 원래 목표대로 되돌리는 조정</li>
+<li><strong>리스크 허용도</strong>: 손실을 견딜 수 있는 심리적·재정적 한계</li>
+</ul></div>
+<h3>핵심 개념 풀어쓰기</h3>
+<p>분산투자는 식단을 짜는 일과 비슷하다. 한 가지 음식만 먹으면 그 음식이 상했을 때 큰일이 나지만, 여러 음식을 골고루 먹으면 하나가 문제여도 전체 건강은 유지된다. 자산도 마찬가지다. 주식이 흔들릴 때 채권이 버텨 주고, 현금이 기회를 기다린다. 중요한 것은 단순히 종목 수를 늘리는 게 아니라, 서로 다른 상황에서 다르게 반응하는 자산을 섞는 것이다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 같은 업종 주식 열 개를 사는 것은 진짜 분산이 아니다. 그 업종이 무너지면 열 개가 함께 무너진다. '서로 다르게 움직이는가'를 먼저 따져 본다.</div>
+<h3>한 페이지 요약</h3>
+<ul>
+<li>분산투자는 한 자산의 손실이 전체를 무너뜨리지 않게 하는 안전장치다.</li>
+<li>장기 성과는 개별 종목보다 자산배분의 영향을 더 크게 받는다고 본다.</li>
+<li>상관관계가 낮은 자산을 섞을수록 분산 효과가 커진다.</li>
+<li>자신이 견딜 수 있는 손실(리스크 허용도)에 맞춰 비중을 정한다.</li>
+<li>비중이 틀어지면 정기적으로 리밸런싱해 목표 상태로 되돌린다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>분산투자의 핵심은 '위험이 줄어드는 방식'에 있다. 개별 자산의 위험은 크게 두 종류로 나뉜다. 하나는 특정 기업이나 산업에만 해당하는 비체계적 위험이고, 다른 하나는 경기·금리·전쟁처럼 시장 전체를 흔드는 체계적 위험이다. 분산투자는 비체계적 위험을 상당 부분 줄여 주지만, 시장 전체의 위험까지 없애지는 못한다. 그래서 자산을 충분히 나눠도 시장이 폭락하면 함께 떨어지는 부분이 남는다. 분산 효과의 크기는 자산 간 상관관계에 달려 있다. 상관관계가 +1에 가까우면 같이 움직여 분산 효과가 거의 없고, 0이나 음수에 가까울수록 한쪽이 떨어질 때 다른 쪽이 버텨 전체 변동이 줄어든다. 이 때문에 단순히 종목 수를 늘리는 것보다, 성격이 다른 자산군을 조합하는 것이 더 중요하다. 자산배분이 장기 성과의 대부분을 좌우한다는 관점도 여기서 나온다. 한편 분산은 평균 수익 자체를 높여 주기보다 같은 수익에서 위험을, 또는 같은 위험에서 수익의 안정성을 개선하는 데 가깝다.</p>
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 상관관계와 위험 감소</h4><p>두 자산을 섞은 포트폴리오의 변동성은 각 자산의 변동성을 단순 평균한 값보다 작아질 수 있다. 핵심 변수는 상관계수다. 상관계수가 1보다 작은 두 자산을 섞으면, 한쪽의 하락을 다른 쪽이 일부 상쇄해 전체 흔들림이 줄어든다. 이것이 '공짜에 가까운 점심'이라 불리는 분산의 효과다.</p></div>
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1 — 주식·채권 조합</h4><p>전통적으로 주식과 채권은 자주 다르게 움직여, 경기 둔화로 주식이 하락할 때 안전자산인 채권이 버텨 주는 경우가 많았다. 그래서 주식 60·채권 40 같은 조합이 오래 기본형으로 쓰였다. 다만 금리가 급변하는 시기에는 둘이 함께 떨어지기도 해, 상관관계가 항상 고정된 것은 아니라는 점을 보여 준다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 리밸런싱의 작동</h4><p>주식 60·채권 40으로 시작했는데 주식이 크게 올라 비중이 70·30이 되었다고 하자. 리밸런싱은 오른 주식 일부를 팔아 채권을 사서 다시 60·40으로 맞춘다. 결과적으로 '비싸진 것을 팔고 싸진 것을 사는' 규칙적 행동이 되어, 감정에 휘둘리지 않고 위험 수준을 일정하게 유지하게 해 준다.</p></div>
+<h3>현대적 전개</h3>
+<p>오늘날에는 주식·채권·현금 외에 부동산(리츠), 원자재, 인플레이션 연동 자산 같은 대체자산을 더해 분산의 폭을 넓히려는 시도가 흔하다. 인덱스펀드와 ETF의 보급으로 소액으로도 전 세계 수천 종목에 한 번에 분산하는 것이 쉬워졌고, 목표 비중을 자동으로 유지해 주는 자동 리밸런싱 서비스도 늘었다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> "종목을 많이 사면 무조건 안전하다"는 생각은 틀리다. 같은 방향으로 움직이는 자산을 아무리 많이 모아도 시장 전체가 떨어지면 함께 떨어진다. 중요한 것은 개수가 아니라 상관관계가 낮은 자산을 섞었는지다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>현대포트폴리오이론(MPT)은 해리 마코위츠가 1952년 발표한 평균-분산 분석에서 출발한다. 그는 투자자가 기대수익과 위험(분산)을 함께 고려한다고 보고, 같은 위험 수준에서 기대수익이 가장 높은 자산 조합들의 집합을 '효율적 투자선(efficient frontier)'으로 정의했다. 이 곡선 위의 포트폴리오는 더 이상 개선할 여지가 없는 최적 조합이며, 그 아래 조합은 불필요한 위험을 떠안고 있다고 본다. 핵심 통찰은 개별 자산의 위험만 보지 말고, 자산들이 함께 움직이는 정도(공분산)까지 고려해 전체 포트폴리오 차원에서 위험을 평가해야 한다는 것이다. 이후 무위험자산을 도입한 자본시장선과 토빈의 분리정리, 그리고 자산의 기대수익을 시장 위험으로 설명하는 자본자산가격결정모형(CAPM)으로 이론이 확장되었다. 마코위츠는 이 공로로 1990년 노벨 경제학상을 받았다. 다만 이론이 입력값으로 쓰는 기대수익·분산·상관관계는 과거 데이터로 추정한 값이라 미래에 그대로 성립하지 않으며, 위기 때 상관관계가 1에 수렴해 분산 효과가 사라지는 현상은 모형의 중요한 한계로 지적된다.</p>
+<h3>최신 연구·쟁점</h3>
+<p>추정 오차에 민감한 평균-분산 최적화의 약점을 보완하려는 시도가 이어진다. 블랙-리터만 모형은 시장 균형 비중을 출발점으로 삼아 투자자의 견해를 결합하고, 리스크 패리티는 수익 예측 대신 각 자산의 위험 기여도를 균등하게 맞춘다. 또 수익률 분포가 정규분포가 아니며 꼬리 위험(극단적 폭락)이 모형 가정보다 크다는 비판, 분산만으로는 비대칭적 하락 위험을 충분히 담지 못한다는 지적도 활발하다. 이런 한계 때문에 MPT는 정답을 주는 공식이라기보다, 위험과 수익을 체계적으로 사고하는 틀로 참고하는 것이 합리적이다.</p>
+<h3>관련 분야</h3>
+<ul>
+<li>행동재무학 — 분산과 리밸런싱을 방해하는 손실 회피·과신 같은 심리 편향을 다룬다.</li>
+<li>자산가격결정론 — CAPM, 다요인 모형 등 기대수익의 결정 요인을 연구한다.</li>
+<li>리스크 관리 — VaR, 꼬리 위험, 시나리오 분석으로 극단 손실을 측정·통제한다.</li>
+</ul>
+<h3>더 읽을거리</h3>
+<ul>
+<li>"Portfolio Selection" — Harry Markowitz</li>
+<li>"A Random Walk Down Wall Street" — Burton Malkiel</li>
+<li>"The Intelligent Asset Allocator" — William Bernstein</li>
+</ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> 주식·채권·현금·대체자산으로 구성한 자신만의 목표 자산배분 비중을 정하고, 각 자산을 고른 이유를 상관관계 관점에서 설명해 보라. 이어서 어떤 기준(비중 이탈 폭 또는 기간)으로 리밸런싱할지, 그리고 시장 위기 때 상관관계가 함께 오르는 한계를 어떻게 감안할지 적어 보라.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#16c784","questions":[{"q":"분산 효과가 커지는 상관관계는?","choices":["+1에 가까움","높을수록","낮을수록","무관하다"],"answer":2},{"q":"틀어진 비중을 목표로 되돌리는 것은?","choices":["리밸런싱","레버리지","앵커링","손절매"],"answer":0},{"q":"분산으로 없앨 수 없는 위험은?","choices":["개별기업 위험","산업 위험","비체계적 위험","체계적 위험"],"answer":3},{"q":"효율적 투자선을 제시한 학자는?","choices":["카너먼","마코위츠","보글","파마"],"answer":1},{"q":"마코위츠의 노벨상 수상 연도는?","choices":["1990년","2002년","2013년","1952년"],"answer":0}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,5,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // 자산배분 원판: 서로 다른 자산군을 색 다른 파이 조각(실린더 섹터)으로 표현
+  const fracs=[0.4,0.25,0.2,0.1,0.05];const cols=[0x16c784,0x3d7eff,0xffd34d,0xff8a3d,0xb86bff];let start=0;const wedges=[];for(let i=0;i<fracs.length;i++){const len=fracs[i]*Math.PI*2;const geo=new THREE.CylinderGeometry(2.4,2.4,0.5,40,1,false,start,len);const w=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color:cols[i]}));const mid=start+len/2;w.userData={mid:mid};s.add(w);wedges.push(w);start+=len;}
+  // 분산을 상징하는 외곽 노드 링(상관관계 낮은 자산들)
+  const nodes=[];const NN=8;for(let i=0;i<NN;i++){const ang=(i/NN)*Math.PI*2;const n=new THREE.Mesh(new THREE.SphereGeometry(0.22,12,12),new THREE.MeshBasicMaterial({color:0xffffff}));n.position.set(Math.cos(ang)*3.3,0.3,Math.sin(ang)*3.3);n.userData={ph:i*0.7};s.add(n);nodes.push(n);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;wedges.forEach(w=>{const pop=0.15*(0.5+0.5*Math.sin(T*1.2+w.userData.mid));w.position.x=Math.cos(w.userData.mid)*pop;w.position.z=-Math.sin(w.userData.mid)*pop;});nodes.forEach(n=>{n.position.y=0.3+Math.sin(T*1.5+n.userData.ph)*0.25;});s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 붉은 불꽃을 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 감정의 정의 — 느낌·몸(생리)·행동의 묶음</span>
 
 <h2>정의와 본질 개요</h2>
 <p>분노(Anger)는 "지금 부당한 일이 벌어지고 있다, 경계를 지켜라"고 뇌가 보내는 비상 알람이다. 단순히 화를 내는 감정이 아니라 자기 보호와 사회적 정의 감각을 작동시키는 가장 오래된 생존 신호다. 그러나 분노는 표출하기만 해도, 억누르기만 해도 양쪽 모두 위험한 양날의 검이다.</p>
@@ -74,5 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 1주일간 분노 일지를 기록하면서 표출·억제·자기주장 빈도를 비교하고, 자신의 디폴트 패턴이 무엇인지 확인해보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ef4444","questions":[{"q":"분노가 알리는 본질 신호는?","choices":["부당함","배고픔","졸음","기쁨"],"answer":0},{"q":"충동 정점을 넘기는 규칙은?","choices":["10분 규칙","6초 규칙","1시간 규칙","3일 규칙"],"answer":1},{"q":"분노의 건강한 제3의 길은?","choices":["표출","억제","자기주장","회피"],"answer":2},{"q":"특성 분노를 재는 척도는?","choices":["혈압계","MRI","IQ테스트","STAXI-2"],"answer":3},{"q":"ABC 공식에서 B가 뜻하는 것은?","choices":["사건","신념","결과","행동"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0xef4444;const parts=[];for(let i=0;i<34;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xef4444;const core=new THREE.Mesh(new THREE.SphereGeometry(0.8,24,24),new THREE.MeshBasicMaterial({color:COL}));s.add(core);const halo=new THREE.Mesh(new THREE.TorusGeometry(1.15,0.04,10,44),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.5}));s.add(halo);const sat=[];const sc=[0xffffff,0xfcd34d,0x93c5fd];for(let i=0;i<3;i++){const t=i/3*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.34,16,16),new THREE.MeshBasicMaterial({color:sc[i]}));s.add(m);sat.push({m,ph:t});s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,0)]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.3})));}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;core.scale.setScalar(0.92+0.1*Math.sin(T*2.2));halo.rotation.z+=0.01;sat.forEach((o,i)=>{o.m.position.set(Math.cos(T*0.6+o.ph)*2.4,Math.sin(T*0.4+o.ph)*0.8,Math.sin(T*0.6+o.ph)*2.4);});s.rotation.y+=0.0015;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

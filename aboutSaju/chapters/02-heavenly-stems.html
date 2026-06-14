@@ -5,7 +5,9 @@
 <link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
@@ -16,7 +18,7 @@
 <li><a href="07-compatibility.html">7. 궁합</a></li><li><a href="08-career.html">8. 직업과 재물</a></li>
 <li><a href="09-modern-application.html">9. 현대적 활용</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>천간 (天干)</em></h1><p class="authors">Chapter 2 — 10 Heavenly Stems & Five Elements</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 오행 관계를 회전하며 탐구하세요</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 10천간 — 갑을병정무기경신임계, 오행·음양으로</span>
 <h2>천간 (天干) 개요</h2><p>이 챕터에서는 천간 (天干)의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>10 Heavenly Stems & Five Elements</p></div>
 
@@ -76,33 +78,21 @@
   </ul>
   <div class="success-box"><strong>🎓 학술적 탐구:</strong> 동일한 천간이 학파별로 어떻게 다르게 해석되는지 비교 분석해 보면, 명리학이 단일한 체계가 아니라 시대와 지역에 따라 다층적으로 발전해 왔음을 이해하게 됩니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ff4d8d","questions":[{"q":"천간은 모두 몇 글자인가?","choices":["8글자","10글자","12글자","60글자"],"answer":1},{"q":"갑과 을의 오행은?","choices":["화","토","목","금"],"answer":2},{"q":"임수가 비유되는 자연물은?","choices":["큰 강과 바다","등불","보석","덩굴"],"answer":0},{"q":"병신합(丙辛合)의 결과 오행은?","choices":["목","화","토","수"],"answer":3},{"q":"천간충에 해당하는 것은?","choices":["갑기합","을경합","갑경충","정임합"],"answer":2}]};</script>
 </main></div>
 <script>
-(function() {
-  const container = document.getElementById('sim-scene');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 3, 8);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  container.appendChild(renderer.domElement);
-  const colors = [0x22c55e,0xef4444,0xeab308,0xf8fafc,0x3b82f6];
-  for (let i = 0; i < 5; i++) {
-    const m = new THREE.Mesh(new THREE.OctahedronGeometry(0.4,0), new THREE.MeshBasicMaterial({ color: colors[i], wireframe: true }));
-    const a = (i/5)*Math.PI*2;
-    m.position.set(Math.cos(a)*2.5, 0, Math.sin(a)*2.5);
-    scene.add(m);
-  }
-  const torus = new THREE.Mesh(new THREE.TorusGeometry(2.5,0.05,8,64), new THREE.MeshBasicMaterial({ color: 0xff4d8d, transparent: true, opacity: 0.3 }));
-  torus.rotation.x = Math.PI/2; scene.add(torus);
-  let md=false,px=0;
-  container.addEventListener('mousedown',e=>{md=true;px=e.clientX;});
-  container.addEventListener('mouseup',()=>md=false);
-  container.addEventListener('mousemove',e=>{if(md){scene.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
-  container.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});
-  container.addEventListener('touchmove',e=>{scene.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});
-  function animate(){requestAnimationFrame(animate);scene.rotation.y+=0.003;renderer.render(scene,camera);}animate();
-  window.addEventListener('resize',()=>{camera.aspect=container.clientWidth/container.clientHeight;camera.updateProjectionMatrix();renderer.setSize(container.clientWidth,container.clientHeight);});
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3.2,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const ELC=[0x22c55e,0xef4444,0xeab308,0xf1f5f9,0x3b82f6];const ring=new THREE.Mesh(new THREE.TorusGeometry(3.0,0.04,10,72),new THREE.MeshBasicMaterial({color:0xff4d8d,transparent:true,opacity:0.3}));ring.rotation.x=Math.PI/2;s.add(ring);const nodes=[];for(let i=0;i<10;i++){const t=i/10*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.32,16,16),new THREE.MeshBasicMaterial({color:ELC[Math.floor(i/2)],transparent:i%2?true:false,opacity:i%2?0.6:1}));m.position.set(Math.cos(t)*3.0,0,Math.sin(t)*3.0);s.add(m);nodes.push(m);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.004;nodes.forEach((n,i)=>n.scale.setScalar(0.85+0.2*Math.sin(T*2+i)));r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
-</script></body></html>
+</script>
+</body></html>

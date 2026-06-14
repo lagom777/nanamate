@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9장. 거버넌스·컴플라이언스</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔐 표지 · 소개</a></li>
+    <li><a href="01-basics.html">1. 보안 기초와 위협 모델</a></li>
+    <li><a href="02-crypto.html">2. 암호학 입문</a></li>
+    <li><a href="03-network.html">3. 네트워크 보안</a></li>
+    <li><a href="04-web-vulns.html">4. 웹 취약점 (OWASP Top 10)</a></li>
+    <li><a href="05-auth.html">5. 인증과 권한</a></li>
+    <li><a href="06-system.html">6. 시스템·엔드포인트 보안</a></li>
+    <li><a href="07-pentest.html">7. 침투테스트와 레드팀</a></li>
+    <li><a href="08-incident.html">8. 사고 대응과 포렌식</a></li>
+    <li><a href="09-governance.html">9. 거버넌스·컴플라이언스</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. 보안 거버넌스란 무엇인가</h2>
+<p>거버넌스(Governance)는 "조직이 어떻게 보안을 의사결정·운영·감독하는가"의 체계입니다. 기술적 통제(방화벽·EDR·암호화)가 "어떻게(How)"라면, 거버넌스는 "왜(Why)와 누가(Who)"를 정합니다. 이사회의 보안 책임, CISO의 권한과 보고 라인, 예산 배분, 위험 수용 한계, 직원 교육, 외부 감사 — 이 모든 것이 거버넌스의 범위입니다.</p>
+<p>거버넌스의 표준 프레임워크는 ① <strong>COBIT 2019</strong>(ISACA) — IT 전반의 거버넌스, ② <strong>NIST Cybersecurity Framework(CSF) 2.0</strong>(2024) — Identify·Protect·Detect·Respond·Recover에 <em>Govern</em>이 6번째 함수로 추가됨, ③ <strong>ISO/IEC 27001:2022</strong> — ISMS 인증 표준, ④ <strong>CIS Controls v8.1</strong> — 18개 통제로 우선순위화된 실무 가이드입니다.</p>
+</section>
+
+<!-- 3D 학습 시각화: 위험 매트릭스와 PDCA -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 거버넌스: 위험 평가 → 완화 → 사이클</div>
+  <div id="sec3d-09" style="width:100%;height:430px;"></div>
+  <div id="sec3d-09-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">위험을 평가하고 통제로 밀어내는 관리 과정.</div>
+</div>
+
+
+<section id="sec2">
+<h2>2. ISO 27001과 ISMS</h2>
+<p>ISO/IEC 27001은 정보보안 경영시스템(ISMS, Information Security Management System)의 국제 표준입니다. 2022년판은 <strong>Annex A 통제 93개</strong>(이전 114개에서 통합·재분류)로 구성되며, 4개 테마(조직·인적·물리·기술)로 분류됩니다. 인증은 인증기관(BSI, DNV, KAB 등) 심사를 통해 받으며, 3년 주기로 재심사합니다.</p>
+<p>ISMS 운영의 핵심은 <strong>PDCA 사이클</strong>(Plan-Do-Check-Act)입니다. ① Plan에서 위험평가·통제 선정·SoA(Statement of Applicability), ② Do에서 통제 구현·운영, ③ Check에서 내부감사·KPI 측정·경영검토, ④ Act에서 시정·개선. ISMS는 단발 인증이 아니라 살아 있는 운영 체계로, 인증 도장보다 PDCA가 실제로 돌아가는지가 보안 성숙도를 결정합니다.</p>
+</section>
+
+<section id="sec3">
+<h2>3. 글로벌 컴플라이언스 — GDPR·CCPA·국내법</h2>
+<p>개인정보 보호 규제는 지난 10년간 빠르게 진화했습니다. ① <strong>GDPR</strong>(EU, 2018) — 전 세계 GDPR 정합 입법의 기준점, 위반 시 글로벌 매출의 4% 또는 €20M, ② <strong>CCPA/CPRA</strong>(캘리포니아) — 미국 주별 규제의 선도, ③ <strong>한국 개인정보보호법(PIPA)</strong> — 2023년 대폭 개정, 전송요구권·자동화 결정 대응권 신설, ④ <strong>중국 PIPL·DSL</strong> — 국외 이전에 엄격한 보안 평가 의무.</p>
+<p>업종별 규제도 큽니다. ① <strong>PCI DSS v4.0</strong> (카드결제 처리, 2025년 3월 부터 전면 적용) — 카드 데이터 환경의 64개 요구사항, ② <strong>HIPAA</strong> (미국 의료), ③ <strong>SOX</strong> (미국 상장사 회계 통제), ④ <strong>전자금융감독규정/금융보안원 가이드</strong>(한국 금융), ⑤ <strong>ISMS-P</strong>(국내, 정보보호+개인정보보호 통합). 글로벌 서비스는 거의 모든 규제를 동시에 충족하는 매핑 작업이 필수입니다.</p>
+</section>
+
+<section id="sec4">
+<h2>4. 위험 관리와 보안 메트릭스</h2>
+<p>거버넌스의 척도는 "측정 가능한 위험 감소"입니다. 정성적 평가(High/Medium/Low)는 빠르지만 비교가 어렵고, 정량적 평가(<strong>FAIR — Factor Analysis of Information Risk</strong>)는 금액 단위로 의사결정을 돕습니다. FAIR의 핵심은 LEF(Loss Event Frequency) × LM(Loss Magnitude)이며, 분포 기반 시뮬레이션(Monte Carlo)으로 ROI까지 산출 가능합니다.</p>
+<p>이사회 보고용 KPI는 단순 명료해야 합니다. ① <strong>패치 적시성</strong>(critical 30일 내 비율), ② <strong>MFA 적용률</strong>, ③ <strong>침해 평균 탐지·대응 시간</strong>(MTTD·MTTR), ④ <strong>훈련 이수율과 피싱 사기 통과율</strong>, ⑤ <strong>분기별 위험 등록부의 변화</strong>(신규/마감/잔존), ⑥ <strong>보안 예산 대비 손실 비율</strong>. 너무 많은 지표보다 5~7개의 핵심 KPI를 trend로 보는 것이 효과적입니다.</p>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="08-incident.html" style="text-decoration:none;">← 8. 사고 대응과 포렌식</a><a href="../index.html" style="text-decoration:none;">표지로 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>거버넌스·컴플라이언스는 "보안을 회사 차원에서 어떻게 관리하고, 법과 표준을 어떻게 지킬까"의 영역이에요. 기술이 아닌 정책·교육·감사·법규 준수의 세계입니다. 기술 보안만큼 중요하고, 사실 회사 사고의 절반은 여기서 시작돼요.</p>
+  <h3>왜 중요한가?</h3>
+  <p>① 회사가 ISO 27001 인증을 받으면 B2B 영업에서 큰 가산점이에요. ② GDPR을 어기면 글로벌 매출의 4%까지 벌금(메타·구글 모두 수천억 원 사례). ③ 한국에서도 개인정보 유출 시 한 명당 최대 300만 원 손해배상 + 회사 매출 3% 과징금. ④ 핀테크·의료·교육·금융은 각 산업 규제를 따로 충족해야 시작할 수 있어요.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>거버넌스</strong>: "누가 결정하고 누가 책임지는가"의 체계</li>
+    <li><strong>컴플라이언스</strong>: 법·규제·표준의 의무사항을 충족하는 활동</li>
+    <li><strong>ISMS</strong>: 정보보안 경영시스템 — PDCA로 돌아가는 운영 체계</li>
+    <li><strong>ISO 27001</strong>: ISMS의 국제 표준, 인증서 발급 가능</li>
+    <li><strong>GDPR</strong>: EU의 개인정보 보호법 — 전 세계 영향</li>
+    <li><strong>위험평가</strong>: 자산·위협·취약점·영향을 분석해 우선순위 결정</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>비유하자면 거버넌스는 "회사의 헌법과 행정조직"이에요. 누가 보안 최종 책임자(CISO)인지, 사고가 났을 때 누가 결정권을 갖는지, 예산은 어떻게 배분하는지를 정합니다. 컴플라이언스는 "회사 밖 법을 지키는 일" — 국가법, 산업법, 국제 표준 같은 외부 규칙을 우리 회사 안에 매핑해서 빠짐없이 지키는 활동이에요. ISO 27001은 "우리 회사 보안이 체계적이다"를 외부 기관이 도장 찍어 보증해주는 인증입니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 거버넌스는 기술자에게 가장 인기 없는 영역이지만, 보안 커리어가 시니어로 갈수록 가장 중요해집니다. CISSP·CISA·CISM 같은 자격증이 이 영역을 다루고, 평균 연봉도 기술 자격(OSCP 등)보다 높습니다.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>거버넌스 = 누가·왜·어떻게 결정하는가</li>
+    <li>컴플라이언스 = 외부 규제·표준 충족</li>
+    <li>NIST CSF 2.0은 Identify·Protect·Detect·Respond·Recover + Govern</li>
+    <li>ISO 27001 = ISMS 국제 표준, PDCA 사이클로 운영</li>
+    <li>GDPR·PIPA·PCI DSS·HIPAA·전자금융감독규정 등이 주요 규제</li>
+    <li>KPI로 측정 가능한 위험 감소가 거버넌스의 척도</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>NIST CSF 2.0(2024년 2월)의 가장 큰 변화는 6번째 함수 <strong>Govern(GV)</strong>의 추가입니다. 기존 5함수 위에 거버넌스 카테고리(조직 컨텍스트·전략·역할책임·정책·감독·위험관리·공급망)가 자리잡았습니다. 이는 "기술적 통제만으로는 안 된다, 조직 차원의 거버넌스가 모든 보안 활동의 토대"임을 명시적으로 인정한 변화입니다. 그리고 처음으로 SCRM(Supply Chain Risk Management)이 별도 카테고리로 분리되어 SolarWinds·MOVEit·xz-utils 같은 공급망 침해 시대를 반영했습니다.</p>
+  <p>CIS Controls v8.1(2024)은 우선순위가 명확한 18개 통제와 약 153개 세부 보호조치로 구성됩니다. IG1(Implementation Group 1, 56개)은 모든 조직의 최소 기준이고, IG2(소형 ~ 중형), IG3(대형·고위험)로 확장됩니다. ISO 27001 Annex A·NIST 800-53과 양방향 매핑되어 있어, 한 번의 통제 구현이 여러 인증에 동시 기여하도록 설계되었습니다.</p>
+  <h3>핵심 도구 — 위험 등록부 템플릿</h3>
+  <pre><code># Risk Register (CSV 예시)
+ID,Risk,Asset,Threat,Likelihood,Impact,Inherent,Mitigation,Residual,Owner,DueDate
+R-001,"S3 버킷 공개","고객 PII","오설정 노출",4,5,20,"SCP+IAM 정책+탐지",5,"Cloud Lead",2026-06-30
+R-002,"공급망 종속성","CI/CD","악성 npm 패키지",3,4,12,"SLSA 3+서명검증",4,"DevSecOps",2026-08-15
+R-003,"피싱","임직원","자격증명 탈취",5,4,20,"MFA(passkey)+훈련",6,"HR+Sec",상시
+R-004,"미패치","서버","RCE",4,4,16,"30일 SLA+자동패치",4,"InfraOps",2026-Q3
+R-005,"규제 위반","개인정보","GDPR 미고지",2,5,10,"DPIA+PrivacyOps",2,"DPO",상시
+
+# Inherent = Likelihood × Impact (1~25 척도)
+# Residual = Mitigation 적용 후 재평가 — 0이 되지 않으면 잔존 위험으로 수용·전가·회피 결정</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📑 예제 1 — GDPR Article 33의 72시간 통지</h4><p>EU 거주자 개인정보가 침해됐다면 사실 인지 후 <strong>72시간 안에</strong> 감독기관에 통지해야 합니다. 늦으면 추가 과징금. 따라서 IR 플레이북에 "법무·DPO·홍보팀 동시 호출"이 1단계로 박혀 있어야 합니다. Meta는 2023년 이용자 데이터 보호 미흡으로 €1.2B(약 1.7조 원) 과징금을 받았는데, 통지 지연이 가중치였습니다.</p></div>
+  <div class="info-card"><h4>📑 예제 2 — SOC 2 Type II 감사</h4><p>SaaS 기업이 미국 엔터프라이즈 고객을 받으려면 사실상 필수인 AICPA의 감사 보고서. Type I은 특정 시점의 통제 설계, Type II는 6~12개월간 통제가 실제로 운영되었는지를 증명합니다. Trust Service Criteria(Security·Availability·Confidentiality·Processing Integrity·Privacy) 중 보통 Security + 1~2개로 시작합니다. 자동화 도구(Drata, Vanta, Secureframe)로 증거 수집을 80% 이상 자동화하는 것이 표준입니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① <strong>Policy as Code</strong>: OPA Gatekeeper, AWS Config Rules, Azure Policy로 인프라 규정 준수를 코드로 강제. ② <strong>GRC 플랫폼</strong>: ServiceNow GRC, Archer, OneTrust로 위험·통제·증거·감사 통합 관리. ③ <strong>Compliance Automation</strong>: Drata·Vanta·Secureframe로 SOC 2·ISO 27001·HIPAA 증거 수집 자동화. ④ <strong>제3자 위험 관리(TPRM)</strong>: BitSight·SecurityScorecard로 공급업체 보안 점수화. ⑤ <strong>Privacy Engineering</strong>: 데이터 매핑·DPIA·RoPA(개인정보 처리 기록)를 코드와 결합.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① "인증만 따고 운영 안 함" — 도장만 받은 ISMS는 실효성 0. ② 정책 문서는 100쪽인데 직원은 한 번도 안 읽음 — 한 페이지 시각 요약 필수. ③ 컴플라이언스 ≠ 보안 — 규제 충족이 안전을 보장하지 않음(Target은 PCI 준수 상태에서 침해). ④ 위험 수용 결정의 책임자 미정 — 사고 시 책임 회피. ⑤ KPI를 너무 많이 측정해 핵심이 흐려짐.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>현대 보안 거버넌스의 패러다임은 <strong>"Compliance-driven → Risk-driven → Outcome-driven"</strong>으로 진화했습니다. 1세대는 규제 충족이 목표, 2세대는 위험 기반 우선순위, 3세대는 측정 가능한 비즈니스 결과(예: "고객 신뢰 점수", "보안으로 인한 매출 손실 0", "M&amp;A 가치 증가")로 정의됩니다. Gartner의 <em>Cybersecurity Mesh Architecture(CSMA)</em>는 분산된 보안 도구를 정책·신원·분석·대시보드 4개 공통 레이어로 묶는 거버넌스 청사진입니다.</p>
+  <p>SEC의 2023년 7월 사이버 공시 규칙(Item 1.05 of Form 8-K)은 미국 상장사에 "material" 사이버 사고를 4영업일 안에 공시하도록 의무화했습니다. 동시에 연간 10-K에 사이버 거버넌스(이사회의 감독·전문성)와 리스크 관리 프로세스를 기술해야 합니다. 이는 사이버 보안을 재무·법무·이사회 안건으로 끌어올린 결정적 사건이고, 한국·EU도 유사 방향(NIS2 Directive)으로 정렬 중입니다.</p>
+  <h3>수학적·정량적 기초</h3>
+  <div class="formula">$$\text{FAIR ALE} = \int LEF(t) \cdot LM(t) \, dt \approx \text{Monte Carlo}(10^4 \text{ runs})$$
+  $$\text{ROSI (Return on Security Investment)} = \frac{(\text{ALE}_{\text{pre}} - \text{ALE}_{\text{post}}) - \text{Cost}}{\text{Cost}}$$
+  $$\text{Cyber VaR}_{\alpha} = \text{Loss percentile at } \alpha \, (\text{보통 95\% or 99\%})$$</div>
+  <p>FAIR Institute는 PERT(Project Evaluation Review Technique) 분포로 최소·최빈·최대를 추정하고 Monte Carlo로 손실 분포를 시뮬레이션합니다. 결과는 단일 숫자가 아닌 신뢰구간으로 제시되어, 이사회가 "95% 확률로 연 손실은 $X 이하"같은 형태로 의사결정합니다. 보험업계가 사이버 보험 가격 책정에도 이 방법론을 채택하면서 사실상 표준이 되었습니다.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>EU AI Act</strong>(2024년 8월 발효): 고위험 AI 시스템에 보안·테스트·모니터링·문서화 의무. 기업의 AI 거버넌스를 사이버 거버넌스와 통합하는 작업이 진행 중. ② <strong>NIST AI RMF + GAI Profile</strong>(2024): 생성형 AI 특화 위험 관리. ISO/IEC 42001(AI 경영시스템)이 ISO 27001의 짝으로 부상. ③ <strong>SBOM 의무화</strong>: 미국 EO 14028 + EU CRA(Cyber Resilience Act, 2024)로 소프트웨어 제품에 SBOM 동봉 의무화. ④ <strong>Continuous Controls Monitoring(CCM)</strong>: 연간 감사 → 실시간 통제 모니터링. Drata·Vanta가 SaaS 표준화. ⑤ <strong>Quantum-Safe Compliance</strong>: NSA CNSA 2.0 (2024) — 2030년까지 미정부 시스템 PQC 전환 의무화, 민간도 매핑 시작.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>법학</strong>: 행정법(규제 해석), 형법(개인정보 침해), 회사법(이사 신인의무)</li>
+    <li><strong>경제학</strong>: 위험 인지 편향, 사이버 보험 가격, ROSI 분석</li>
+    <li><strong>조직심리</strong>: 보안 문화, blameless 학습 조직, 행동경제학적 nudge</li>
+    <li><strong>회계·감사</strong>: SOX ITGC, COSO 통제 프레임워크</li>
+    <li><strong>윤리·철학</strong>: 정보윤리, 프라이버시 권리, AI 책임</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 ISO/IEC 27001:2022, ISO/IEC 27002:2022 통제 가이드</li>
+    <li>📖 NIST CSF 2.0, NIST SP 800-53 Rev. 5, NIST AI RMF</li>
+    <li>📖 Jack Freund &amp; Jack Jones, <em>Measuring and Managing Information Risk: A FAIR Approach</em></li>
+    <li>📖 CIS Controls v8.1, OWASP SAMM v2.1</li>
+    <li>📺 ISACA CISM·CISA·CRISC 트레이닝</li>
+    <li>🔬 자격증 경로: CISSP → CISM → C-CISO (관리·전략 라인)</li>
+    <li>🔬 키워드: CSF 2.0 Govern, CRA, NIS2, FAIR, CCM, Cyber Mesh</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 자신이 다니는 회사 또는 사이드 프로젝트를 대상으로 ① NIST CSF 2.0 6함수 기준 현재 성숙도를 1~5 점으로 자가평가, ② 부족한 카테고리에 대한 3개월·6개월·12개월 로드맵 작성, ③ FAIR로 Top 3 위험에 대한 ALE 추정 + ROSI 계산, ④ 이사회 보고용 1페이지 대시보드(KPI 5개·trend·decision needed)까지 만들어보세요. CISO 1년차의 핵심 산출물을 모두 손에 잡게 됩니다.</div>
+</div>
+
+<h2 style="margin-top:80px;">🎓 정보보안 9챕터 완주 축하합니다</h2>
+<p>이 강의는 기초(CIA·위협모델) → 핵심 기술(암호·네트워크·웹·인증·시스템) → 공격적 보안(레드팀) → 사고 대응(IR·포렌식) → 거버넌스(ISO·GDPR)의 순으로 정보보안의 전체 그림을 그렸습니다. 다음 단계는 ① 한 분야 깊이 파기(웹·클라우드·AppSec·DFIR·GRC 중 하나), ② 실습 환경에서 직접 깨보고 막아보기, ③ 자격증과 커뮤니티(KISA·OWASP Korea·CodeRed·NULLcon) 참여입니다. 보안은 끝없이 변하지만 기초 원리는 안 바뀝니다 — 이 9챕터의 개념이 평생 유효한 뼈대가 될 것입니다.</p>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#475569","questions":[{"q":"ISMS의 국제 표준 인증은?","choices":["ISO 27001","GDPR","PICERL","OSCP"],"answer":0},{"q":"법·규제·표준의 의무 충족 활동은?","choices":["거버넌스","컴플라이언스","포렌식","펜테스트"],"answer":1},{"q":"EU의 대표적 개인정보 보호법은?","choices":["HIPAA","SOX","GDPR","PCI"],"answer":2},{"q":"NIST CSF 2.0에서 새로 추가된 함수는?","choices":["Govern","Detect","Recover","Protect"],"answer":0},{"q":"ISMS 운영의 핵심 사이클은?","choices":["STRIDE","PDCA","CIA","PICERL"],"answer":1}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('sec3d-09');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('sec3d-09-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(7,7.5,9);camera.lookAt(0,0,-0.5);
+  var N=5;
+  for(var c2=0;c2<N;c2++)for(var r=0;r<N;r++){
+    var danger=(c2+r)/8;
+    var col=new THREE.Color(0x2f9e63).lerp(new THREE.Color(0xd6455b),danger);
+    var t=box(1.35,0.12,1.35,col.getHex(),0.75);
+    t.position.set((c2-2)*1.5,-0.06,-(r-2)*1.5);scene.add(t);
+  }
+  var xl=lbl('발생 가능성 →',25,'#39415a',1);xl.position.set(0,0.2,4.4);scene.add(xl);
+  var zl=lbl('영향도 →',25,'#39415a',1);zl.position.set(-4.9,0.2,0);zl.material.rotation=0;scene.add(zl);
+  var risks=[
+    {t:'피싱',from:[4,3],to:[2,3],h:2.6},
+    {t:'랜섬웨어',from:[3,4],to:[1,2],h:3.2},
+    {t:'내부 유출',from:[2,4],to:[1,3],h:2.8},
+    {t:'서버 장애',from:[3,1],to:[2,1],h:1.6}
+  ];
+  function cellPos(c3,r3){return V((c3-2)*1.5,0,-(r3-2)*1.5);}
+  var rMeshes=[],rLbls=[];
+  risks.forEach(function(rk){
+    var m=cyl(0.4,0.4,1,0xe07a3f,0.95);m.visible=false;scene.add(m);rMeshes.push(m);
+    var L=lbl(rk.t,22,'#39415a',0.85);L.material.opacity=0;scene.add(L);rLbls.push(L);
+  });
+  function placeRisk(i,c3,r3,h){
+    var p=cellPos(c3,r3);
+    rMeshes[i].position.set(p.x,h/2,p.z);rMeshes[i].scale.y=h;
+    rLbls[i].position.set(p.x,h+0.6,p.z);
+  }
+  var pdca=new THREE.Mesh(new THREE.TorusGeometry(1.2,0.08,10,40),mat(0x5b6bd6,0.9));
+  pdca.position.set(4.6,3.6,-3);scene.add(pdca);
+  var pdcaDot=sph(0.18,0x5b6bd6);scene.add(pdcaDot);
+  var pdcaL=lbl('PDCA: 계획→실행→점검→개선',22,'#5b6bd6',0.9);pdcaL.position.set(4.6,5.3,-3);scene.add(pdcaL);
+  var phases=[
+    {dur:4.5,cap:'위험 평가: 조직의 위험을 "발생 가능성 × 영향도" 매트릭스에 올립니다. 막대 높이 = 위험 점수. 랜섬웨어가 가장 위험한 코너에.',
+     enter:function(){risks.forEach(function(rk,i){rMeshes[i].visible=true;rMeshes[i].material.color.set(0xe07a3f);rLbls[i].material.opacity=1;});},
+     update:function(u){
+       risks.forEach(function(rk,i){
+         var f=clamp01(u*4-i*0.8);
+         placeRisk(i,rk.from[0],rk.from[1],0.2+ez(f)*(rk.h-0.2));
+       });
+     }},
+    {dur:5.5,cap:'통제 적용(ISO 27001 관리체계): MFA·백업·DLP·이중화 같은 통제가 위험 블록을 매트릭스의 안전한 구석으로 밀어냅니다 — 완화(Mitigation).',
+     update:function(u){
+       risks.forEach(function(rk,i){
+         var f=ez(clamp01(u*1.6-i*0.15));
+         var c3=rk.from[0]+(rk.to[0]-rk.from[0])*f;
+         var r3=rk.from[1]+(rk.to[1]-rk.from[1])*f;
+         var h=rk.h+(0.7-rk.h)*f*0.7;
+         placeRisk(i,c3,r3,h);
+         rMeshes[i].material.color.set(new THREE.Color(0xe07a3f).lerp(new THREE.Color(0x2f9e63),f).getHex());
+       });
+     }},
+    {dur:4.5,cap:'잔여 위험: 0으로 만드는 것은 불가능·비경제적 — 남은 위험은 "수용"하거나 보험으로 "전가"하고, 문서로 경영진이 승인합니다.',
+     update:function(u){rMeshes.forEach(function(m){m.material.opacity=0.8+0.15*Math.sin(u*8);});}},
+    {dur:4,cap:'거버넌스는 1회성 점검이 아니라 PDCA 사이클: 위협이 변하므로 평가→통제→감사→개선을 계속 돕니다. 이것이 ISMS의 본질.',
+     update:function(u){
+       var a=u*Math.PI*4;
+       pdcaDot.position.set(4.6+Math.cos(a)*1.2,3.6+Math.sin(a)*1.2,-3);
+     }}
+  ];
+  function always(t){var a=t*0.1;camera.position.set(Math.cos(a*0.7)*1.5+7,7.5,9);camera.lookAt(0,0.5,-0.5);}
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

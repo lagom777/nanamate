@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -17,168 +19,262 @@
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">⚗️ 표지 · 소개</a></li>
-    <li><a href="01-atomic-structure.html">1. 원자 구조</a></li>
-    <li><a href="02-chemical-bonds.html">2. 화학 결합</a></li>
+    <li><a href="01-atomic-structure.html" style="color:var(--accent);font-weight:600;">1. 원자 구조</a></li>
+    <li><a href="02-chemical-bonding.html">2. 화학 결합</a></li>
     <li><a href="03-chemical-reactions.html">3. 화학 반응</a></li>
     <li><a href="04-thermochemistry.html">4. 열화학</a></li>
     <li><a href="05-acid-base.html">5. 산과 염기</a></li>
     <li><a href="06-redox.html">6. 산화 환원</a></li>
     <li><a href="07-organic.html">7. 유기 화학</a></li>
-    <li><a href="08-polymers.html">8. 고분자</a></li>
+    <li><a href="08-polymer.html">8. 고분자</a></li>
     <li><a href="09-biochemistry.html">9. 생화학</a></li>
   </ol>
 </aside>
 <main>
 <header class="paper-header">
-  <h1><em>원자 구조</em></h1>
-  <p class="authors">Chapter 1 — Atomic Structure & Electron Orbitals</p>
+  <h1>원자 구조:<br><em>물질</em>의 기본 단위</h1>
+  <p class="authors">Chapter 1 — Atomic Structure & Electron Configuration</p>
+  <p class="affiliation">3D 보어 모델 · 전자 오비탈 시뮬레이터</p>
 </header>
 
-<div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
-
-<h2>원자 구조 개요</h2>
-<p>이 챕터에서는 원자 구조의 핵심 개념을 3D 시뮬레이션과 함께 학습합니다. 분자 구조를 직접 회전시키고, 반응 과정을 관찰하세요.</p>
+<h2>원자란 무엇인가?</h2>
+<p>원자는 물질을 이루는 가장 기본적인 단위입니다. 양성자와 중성자로 구성된 원자핵, 그리고 그 주위를 도는 전자로 이루어져 있습니다. 원자의 크기는 약 1~3 옹스트롬(Å)으로, 머리카락 굵기의 약 50만 분의 1입니다.</p>
 
 <div class="info-card">
-  <h4>핵심 개념</h4>
-  <p>Atomic Structure & Electron Orbitals의 기본 원리와 응용을 다룹니다.</p>
+  <h4>원자의 구성 입자</h4>
+  <p>양성자(+): 핵 속, 질량 1.67×10⁻²⁷ kg | 중성자(0): 핵 속 | 전자(−): 핵 주위 궤도, 질량은 양성자의 1/1836</p>
 </div>
 
-<h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
-<div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
-</div>
+<div class="formula">원자 번호(Z) = 양성자 수 = 전자 수 &nbsp;&nbsp;|&nbsp;&nbsp; 질량수(A) = 양성자 수 + 중성자 수</div>
 
-<div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
-  <h3>한 줄로 이해하기</h3>
-  <p>원자는 양성자·중성자가 모인 핵과 그 주위를 도는 전자로 이루어진, 물질을 구성하는 가장 작은 단위입니다.</p>
-  <h3>왜 중요한가?</h3>
-  <p>원자 구조를 이해하면 우리 주변 모든 물질의 정체를 알 수 있습니다. 일상 사례를 보면, 첫째 풍선에 든 헬륨은 전자가 2개뿐이라 매우 가볍고 안정적입니다. 둘째 철 못이 녹스는 것은 산소 원자가 철 원자에서 전자를 빼앗아가는 현상입니다. 셋째 배터리는 원자가 전자를 주고받으며 전류를 만드는 장치입니다.</p>
-  <div class="info-card">
-    <h4>🌱 핵심 용어</h4>
-    <ul>
-      <li><strong>원자핵</strong>: 양성자와 중성자가 모여 있는 원자의 중심부</li>
-      <li><strong>전자</strong>: 핵 주위를 빠르게 움직이는 음전하 입자</li>
-      <li><strong>원소번호</strong>: 양성자의 개수, 원소의 정체를 결정</li>
-      <li><strong>전자껍질</strong>: 전자가 위치할 수 있는 에너지 층</li>
-    </ul>
+<h2>3D 보어 원자 모델</h2>
+<p>아래 시뮬레이터에서 원자 번호를 조절하여 다양한 원소의 보어 모델을 관찰하세요. 전자가 각 에너지 준위(껍질)에 어떻게 배치되는지 확인할 수 있습니다.</p>
+
+<div class="scene-3d" id="bohr-scene">
+  <div class="scene-controls">
+    <label>원자 번호(Z): <span id="z-val">6</span></label>
+    <input type="range" id="z-slider" min="1" max="36" value="6" step="1">
+    <button id="toggle-labels">원소 정보</button>
   </div>
-  <h3>핵심 개념 풀어쓰기</h3>
-  <p>원자를 거대한 운동장에 비유해 봅시다. 운동장 한가운데 작은 구슬 하나가 놓여 있다고 상상해 보세요. 이 구슬이 바로 원자핵입니다. 운동장 전체를 원자라고 하면, 핵의 크기는 전체의 10만분의 1 정도밖에 되지 않습니다. 그런데 원자의 질량은 거의 다 핵에 집중되어 있습니다. 핵 안에는 양성자(+)와 중성자(중성)가 함께 모여 있고, 핵 주변에는 전자(-)가 구름처럼 흩어져 있습니다. 전자는 정해진 궤도가 아니라 확률적으로 분포하지만, 입문 단계에서는 태양계 모형처럼 핵 주변을 도는 것으로 이해해도 됩니다. 양성자 수가 1개면 수소, 6개면 탄소, 8개면 산소처럼 양성자 수가 원소를 결정합니다. 전자는 가장 안쪽 껍질부터 차곡차곡 채워지며, 가장 바깥 껍질에 있는 전자가 화학 반응에 참여합니다.</p>
-  <div class="study-tip"><strong>💡 학습 TIP:</strong> 원자 모형을 직접 손으로 그려보세요. 핵에 양성자/중성자 개수를 적고, 바깥에 전자껍질을 동심원으로 그리며 전자를 배치하면 한 번에 머릿속에 박힙니다.</div>
-  <h3>한 페이지 요약</h3>
-  <ul>
-    <li>원자 = 핵(양성자+중성자) + 전자</li>
-    <li>양성자 수 = 원소번호 = 원소의 신분증</li>
-    <li>전자는 껍질 단위로 채워지며, 최외각 전자가 화학적 성질을 좌우</li>
-    <li>중성자 수가 다른 같은 원소를 동위원소라고 함</li>
-  </ul>
+</div>
+<span class="interact-hint">⟳ 마우스로 드래그하여 회전 · 슬라이더로 원자 번호 변경</span>
+
+<div id="element-info" style="margin:16px 0;padding:16px 20px;background:var(--bg-elevated);border-radius:12px;border-left:4px solid var(--accent);display:none;">
+  <h4 style="font-family:var(--font-display);color:var(--text);margin:0 0 6px;" id="elem-name"></h4>
+  <p style="margin:0;font-size:0.9em;" id="elem-config"></p>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
-  <p>원자 모형은 역사적으로 톰슨의 푸딩 모형, 러더퍼드의 핵 모형, 보어의 양자화된 궤도 모형, 슈뢰딩거의 양자역학적 오비탈 모형으로 발전해 왔습니다. 보어 모형은 전자가 특정한 에너지 준위만 가질 수 있다고 보았고, 이는 수소 원자의 선스펙트럼을 설명했습니다. 그러나 다전자 원자에서는 한계가 있어 양자역학으로 대체되었습니다. 현대의 오비탈 개념은 전자가 발견될 확률 분포를 의미하며, s, p, d, f의 네 가지 형태로 구분됩니다. 각 오비탈은 주양자수(n), 부양자수(l), 자기양자수(m), 스핀양자수(s)로 표현되며, 파울리 배타원리에 따라 한 오비탈에는 스핀이 반대인 전자 두 개만 들어갈 수 있습니다. 훈트 규칙에 따라 같은 에너지 오비탈에는 전자가 먼저 하나씩 들어가고 그 다음에 짝을 이룹니다.</p>
-  <h3>핵심 공식과 반응식</h3>
-  <div class="formula">
-    드브로이 파장: λ = h / (mv)<br>
-    보어의 에너지 준위(수소): E_n = -13.6 eV / n²<br>
-    리드베리 식: 1/λ = R(1/n₁² - 1/n₂²)
+<h2>전자 배치 규칙</h2>
+
+<div class="info-card">
+  <h4>아우프바우 원리 (쌓음 원리)</h4>
+  <p>전자는 에너지가 낮은 오비탈부터 차례대로 채워집니다. 1s → 2s → 2p → 3s → 3p → 4s → 3d → 4p ...</p>
+</div>
+
+<div class="info-card reaction">
+  <h4>파울리 배타 원리</h4>
+  <p>하나의 오비탈에는 스핀이 반대인 전자 최대 2개까지만 들어갈 수 있습니다.</p>
+</div>
+
+<div class="info-card acid">
+  <h4>훈트 규칙</h4>
+  <p>같은 에너지의 오비탈에 전자가 채워질 때, 가능한 한 홀전자 수가 최대가 되도록 배치됩니다.</p>
+</div>
+
+<h2>양자역학적 원자 모델</h2>
+<p>보어 모델은 전자가 정해진 궤도를 돈다고 설명하지만, 현대 양자역학에서는 전자의 위치를 확률적으로 기술합니다. 전자가 발견될 확률이 높은 공간을 오비탈이라 합니다.</p>
+
+<div class="formula">s 오비탈: 구형 &nbsp;|&nbsp; p 오비탈: 아령형 &nbsp;|&nbsp; d 오비탈: 복잡한 형태</div>
+
+<p>아래에서 오비탈 유형을 선택하면 3D 확률 밀도 분포를 관찰할 수 있습니다.</p>
+
+<div class="scene-3d" id="orbital-scene">
+  <div class="scene-controls">
+    <label>오비탈:</label>
+    <select id="orbital-select">
+      <option value="s">1s</option>
+      <option value="p">2p</option>
+      <option value="d">3d</option>
+    </select>
+    <label>밀도: <span id="density-val">500</span></label>
+    <input type="range" id="density-slider" min="100" max="2000" value="500" step="100">
   </div>
-  <h3>대표 예제</h3>
-  <div class="info-card"><h4>📐 예제 1</h4><p>탄소(원소번호 6)의 전자 배치를 적으시오. 답: 1s² 2s² 2p². 최외각에 4개의 전자가 있어 4개의 결합을 형성할 수 있습니다.</p></div>
-  <div class="info-card"><h4>📐 예제 2</h4><p>수소 원자가 n=3에서 n=2로 떨어질 때 방출되는 빛의 파장은? 리드베리 식에 대입하면 약 656 nm로 붉은색 빛(Hα선)이 나옵니다.</p></div>
-  <h3>응용 사례</h3>
-  <p>형광등은 수은 원자의 전자가 들뜬 상태에서 떨어지며 자외선을 내고, 이것이 형광 물질을 자극해 가시광선을 방출하는 원리입니다. 네온사인의 색은 원자마다 고유한 에너지 준위 차이 때문에 다르게 나타납니다. 또한 별빛 스펙트럼을 분석하면 수십억 광년 떨어진 별이 어떤 원소로 이루어졌는지 알 수 있습니다.</p>
-  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 전자껍질(K, L, M)과 오비탈(s, p, d)을 혼동하기 쉽습니다. 껍질은 주양자수 n으로 묶은 큰 단위이고, 오비탈은 그 안의 세부 방 구조입니다.</div>
+</div>
+<span class="interact-hint">⟳ 마우스 드래그로 회전 · 오비탈 유형과 밀도 조절 가능</span>
+
+<h2>주기율표의 구조</h2>
+<p>원소들은 원자 번호 순으로 배열되며, 비슷한 화학적 성질을 가진 원소들이 같은 세로줄(족)에 위치합니다. 주기율표는 s, p, d, f 블록으로 나뉘며, 이는 마지막 전자가 채워지는 오비탈에 해당합니다.</p>
+
+<div class="info-card bond">
+  <h4>주기적 성질</h4>
+  <p>원자 반지름: 같은 주기에서 오른쪽으로 갈수록 감소 | 이온화 에너지: 같은 주기에서 오른쪽으로 갈수록 증가 | 전기 음성도: 같은 주기에서 오른쪽으로 갈수록 증가 (비활성 기체 제외)</p>
 </div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
-  <p>현대 양자역학에서 원자는 시간 비의존 슈뢰딩거 방정식의 해로 기술됩니다. 수소 원자처럼 단일 전자 시스템에서는 해석적 해가 가능하며, 파동함수 ψ(r,θ,φ)는 동경부분 R_nl(r)과 구면조화함수 Y_lm(θ,φ)의 곱으로 분리됩니다. 다전자 원자에서는 전자-전자 상호작용 때문에 해석적 풀이가 불가능하고, Hartree-Fock 자기일관장 방법이나 밀도범함수이론(DFT)으로 근사합니다. 상대론적 효과는 무거운 원소(예: 금, 수은)에서 두드러지며, 금의 노란색과 수은의 액체 상태는 모두 상대론적 보정 없이는 설명되지 않습니다. 또한 양자전기역학(QED)은 람 이동(Lamb shift)과 같은 미세한 에너지 보정을 예측하며, 측정값과 10⁻¹² 수준의 정확도로 일치합니다.</p>
-  <h3>유도와 증명</h3>
-  <div class="formula">
-    수소 원자 슈뢰딩거 방정식:<br>
-    [-ℏ²/(2μ)∇² - e²/(4πε₀r)] ψ = E ψ<br>
-    분리: ψ_nlm(r,θ,φ) = R_nl(r) Y_lm(θ,φ)<br>
-    에너지: E_n = -μe⁴ / (32π²ε₀²ℏ² n²)<br>
-    스핀-궤도 결합: H_SO = ξ(r) L·S
-  </div>
-  <h3>최신 연구</h3>
-  <p>최근에는 초고속 펨토초·아토초 레이저로 전자의 운동을 실시간 관측하는 아토초 화학이 주목받고 있습니다. 또한 단일 원자를 광 트랩으로 가두어 양자컴퓨터의 큐비트로 사용하는 중성 원자 양자 컴퓨팅 연구가 활발합니다. 초중원소(원소번호 113~118)의 화학적 거동에 대한 연구도 상대론적 효과를 검증하는 중요한 분야입니다.</p>
-  <h3>관련 분야 연결</h3>
-  <ul>
-    <li><strong>양자물리학</strong>: 슈뢰딩거 방정식과 파동함수의 수학적 토대</li>
-    <li><strong>분광학</strong>: 원자/분자의 에너지 준위와 전이를 측정</li>
-    <li><strong>천체물리학</strong>: 별의 원소 조성과 항성 진화 분석</li>
-    <li><strong>재료과학</strong>: 전자 구조에서 출발한 신소재 설계</li>
-  </ul>
-  <h3>추가 학습 자료</h3>
-  <ul>
-    <li>📖 Atkins, Physical Chemistry — 양자화학 챕터</li>
-    <li>📺 MIT OCW 5.61 Physical Chemistry 강의</li>
-    <li>🔬 NIST Atomic Spectra Database</li>
-  </ul>
-  <div class="success-box"><strong>🎓 도전 과제:</strong> 헬륨 원자의 바닥 상태 에너지를 변분법으로 추정해 보세요. 시험 파동함수로 ψ = e^(-αr₁) e^(-αr₂)를 두고 α를 변수로 최소화하면 실험값에 근접한 결과가 나옵니다.</div>
-</div>
 
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e896","questions":[{"q":"원자 번호(Z)와 같은 값은?","choices":["중성자 수","양성자 수","질량수","전자 질량"],"answer":1},{"q":"s 오비탈의 형태는?","choices":["아령형","고리형","구형","평면형"],"answer":2},{"q":"한 오비탈에 들어가는 전자 최대 수는?","choices":["2개","1개","4개","8개"],"answer":0},{"q":"훈트 규칙의 핵심은?","choices":["전자쌍 최대","에너지 최대","스핀 반대","홀전자 최대"],"answer":3},{"q":"같은 주기 오른쪽으로 갈수록 원자 반지름은?","choices":["증가","감소","불변","무한"],"answer":1}]};</script>
 </main>
 </div>
 
 <script>
+const elements = [
+  '', 'H 수소', 'He 헬륨', 'Li 리튬', 'Be 베릴륨', 'B 붕소', 'C 탄소', 'N 질소', 'O 산소', 'F 플루오린', 'Ne 네온',
+  'Na 나트륨', 'Mg 마그네슘', 'Al 알루미늄', 'Si 규소', 'P 인', 'S 황', 'Cl 염소', 'Ar 아르곤',
+  'K 칼륨', 'Ca 칼슘', 'Sc 스칸듐', 'Ti 타이타늄', 'V 바나듐', 'Cr 크로뮴', 'Mn 망가니즈', 'Fe 철', 'Co 코발트', 'Ni 니켈', 'Cu 구리', 'Zn 아연',
+  'Ga 갈륨', 'Ge 저마늄', 'As 비소', 'Se 셀레늄', 'Br 브로민', 'Kr 크립톤'
+];
+const configs = [
+  '', '1s¹', '1s²', '[He]2s¹', '[He]2s²', '[He]2s²2p¹', '[He]2s²2p²', '[He]2s²2p³', '[He]2s²2p⁴', '[He]2s²2p⁵', '[He]2s²2p⁶',
+  '[Ne]3s¹', '[Ne]3s²', '[Ne]3s²3p¹', '[Ne]3s²3p²', '[Ne]3s²3p³', '[Ne]3s²3p⁴', '[Ne]3s²3p⁵', '[Ne]3s²3p⁶',
+  '[Ar]4s¹', '[Ar]4s²', '[Ar]3d¹4s²', '[Ar]3d²4s²', '[Ar]3d³4s²', '[Ar]3d⁵4s¹', '[Ar]3d⁵4s²', '[Ar]3d⁶4s²', '[Ar]3d⁷4s²', '[Ar]3d⁸4s²', '[Ar]3d¹⁰4s¹', '[Ar]3d¹⁰4s²',
+  '[Ar]3d¹⁰4s²4p¹', '[Ar]3d¹⁰4s²4p²', '[Ar]3d¹⁰4s²4p³', '[Ar]3d¹⁰4s²4p⁴', '[Ar]3d¹⁰4s²4p⁵', '[Ar]3d¹⁰4s²4p⁶'
+];
+
+function getShells(z) {
+  const maxPerShell = [2, 8, 18, 8];
+  const shells = [];
+  let remaining = z;
+  for (let i = 0; i < maxPerShell.length && remaining > 0; i++) {
+    const n = Math.min(remaining, maxPerShell[i]);
+    shells.push(n);
+    remaining -= n;
+  }
+  return shells;
+}
+
+// Bohr Model Scene
 (function() {
-  const container = document.getElementById('sim-scene');
+  const container = document.getElementById('bohr-scene');
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 3, 8);
+  const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 5, 10);
+  camera.lookAt(0, 0, 0);
+
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
 
-  // Molecule-like structure
-  const atoms = [];
-  const numAtoms = 5 + Math.floor(Math.random()*5);
-  for (let i = 0; i < numAtoms; i++) {
-    const r = 0.2 + Math.random()*0.3;
-    const color = [0x00e890, 0xfbbf24, 0xef4444, 0xa78bfa, 0x60a5fa][i % 5];
-    const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 32, 32), new THREE.MeshBasicMaterial({ color }));
-    mesh.position.set((Math.random()-0.5)*4, (Math.random()-0.5)*4, (Math.random()-0.5)*4);
-    scene.add(mesh);
-    atoms.push(mesh);
-  }
-  // Bonds
-  for (let i = 0; i < atoms.length-1; i++) {
-    const points = [atoms[i].position, atoms[i+1].position];
-    const geo = new THREE.BufferGeometry().setFromPoints(points);
-    scene.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0x00e890, transparent: true, opacity: 0.4 })));
+  const atomGroup = new THREE.Group();
+  scene.add(atomGroup);
+
+  let electronMeshes = [], shellRings = [], nucleusMesh, nucleusGlow;
+
+  function buildAtom(z) {
+    electronMeshes.forEach(e => atomGroup.remove(e));
+    shellRings.forEach(r => atomGroup.remove(r));
+    if (nucleusMesh) atomGroup.remove(nucleusMesh);
+    if (nucleusGlow) atomGroup.remove(nucleusGlow);
+    electronMeshes = []; shellRings = [];
+
+    const nSize = 0.3 + z * 0.015;
+    nucleusMesh = new THREE.Mesh(new THREE.SphereGeometry(nSize, 32, 32), new THREE.MeshBasicMaterial({ color: 0xff6b35, transparent: true, opacity: 0.9 }));
+    atomGroup.add(nucleusMesh);
+    nucleusGlow = new THREE.Mesh(new THREE.SphereGeometry(nSize * 1.5, 32, 32), new THREE.MeshBasicMaterial({ color: 0xff6b35, transparent: true, opacity: 0.12 }));
+    atomGroup.add(nucleusGlow);
+
+    const shells = getShells(z);
+    const shellColors = [0x00e896, 0x38bdf8, 0xa855f7, 0xf59e0b];
+    shells.forEach((count, i) => {
+      const radius = 1.5 + i * 1.4;
+      const ring = new THREE.Mesh(new THREE.RingGeometry(radius - 0.02, radius + 0.02, 64), new THREE.MeshBasicMaterial({ color: shellColors[i], transparent: true, opacity: 0.15, side: THREE.DoubleSide }));
+      ring.rotation.x = -Math.PI / 2;
+      atomGroup.add(ring); shellRings.push(ring);
+      for (let e = 0; e < count; e++) {
+        const eMesh = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 16), new THREE.MeshBasicMaterial({ color: shellColors[i] }));
+        eMesh.userData = { radius, shellIndex: i, angle: (e / count) * Math.PI * 2, speed: 1.5 - i * 0.3, tilt: (Math.random() - 0.5) * 0.5 };
+        atomGroup.add(eMesh); electronMeshes.push(eMesh);
+      }
+    });
   }
 
-  let mouseDown = false, prevX = 0, prevY = 0;
-  container.addEventListener('mousedown', e => { mouseDown = true; prevX = e.clientX; prevY = e.clientY; });
-  container.addEventListener('mouseup', () => mouseDown = false);
-  container.addEventListener('mousemove', e => {
-    if (!mouseDown) return;
-    scene.rotation.y += (e.clientX - prevX)*0.005;
-    scene.rotation.x += (e.clientY - prevY)*0.005;
-    prevX = e.clientX; prevY = e.clientY;
+  buildAtom(6);
+
+  const slider = document.getElementById('z-slider');
+  const zVal = document.getElementById('z-val');
+  const infoDiv = document.getElementById('element-info');
+  const elemName = document.getElementById('elem-name');
+  const elemConfig = document.getElementById('elem-config');
+
+  slider.addEventListener('input', () => {
+    const z = parseInt(slider.value); zVal.textContent = z; buildAtom(z);
+    if (infoDiv.style.display !== 'none') { elemName.textContent = elements[z] || ''; elemConfig.textContent = '전자 배치: ' + (configs[z] || ''); }
   });
-  container.addEventListener('touchstart', e => { prevX = e.touches[0].clientX; prevY = e.touches[0].clientY; });
-  container.addEventListener('touchmove', e => {
-    scene.rotation.y += (e.touches[0].clientX - prevX)*0.005;
-    scene.rotation.x += (e.touches[0].clientY - prevY)*0.005;
-    prevX = e.touches[0].clientX; prevY = e.touches[0].clientY;
+  document.getElementById('toggle-labels').addEventListener('click', () => {
+    const z = parseInt(slider.value);
+    if (infoDiv.style.display === 'none') { infoDiv.style.display = 'block'; elemName.textContent = elements[z]; elemConfig.textContent = '전자 배치: ' + configs[z]; }
+    else infoDiv.style.display = 'none';
   });
 
-  function animate() { requestAnimationFrame(animate); scene.rotation.y += 0.003; renderer.render(scene, camera); }
+  let isDragging = false, prevX = 0, prevY = 0, rotX = 0, rotY = 0;
+  container.addEventListener('mousedown', e => { isDragging = true; prevX = e.clientX; prevY = e.clientY; });
+  window.addEventListener('mouseup', () => isDragging = false);
+  container.addEventListener('mousemove', e => { if (!isDragging) return; rotY += (e.clientX - prevX) * 0.005; rotX += (e.clientY - prevY) * 0.005; prevX = e.clientX; prevY = e.clientY; });
+  container.addEventListener('wheel', e => { e.preventDefault(); camera.position.z = Math.max(4, Math.min(20, camera.position.z + e.deltaY * 0.01)); }, { passive: false });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = Date.now() * 0.001;
+    atomGroup.rotation.y = rotY; atomGroup.rotation.x = rotX;
+    electronMeshes.forEach(em => { const d = em.userData; const a = t * d.speed + d.angle; em.position.x = Math.cos(a) * d.radius; em.position.z = Math.sin(a) * d.radius; em.position.y = Math.sin(a * 2) * d.tilt; });
+    renderer.render(scene, camera);
+  }
   animate();
-  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+})();
+
+// Orbital Scene
+(function() {
+  const container = document.getElementById('orbital-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 3, 6); camera.lookAt(0, 0, 0);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  const orbitalGroup = new THREE.Group();
+  scene.add(orbitalGroup);
+  let particles = [];
+
+  function buildOrbital(type, count) {
+    particles.forEach(p => orbitalGroup.remove(p)); particles = [];
+    for (let i = 0; i < count; i++) {
+      const mesh = new THREE.Mesh(new THREE.SphereGeometry(0.03, 6, 6), new THREE.MeshBasicMaterial({ color: 0x00e896, transparent: true, opacity: 0.5 + Math.random() * 0.3 }));
+      let x, y, z;
+      if (type === 's') {
+        const r = Math.random() * 2, theta = Math.random() * Math.PI * 2, phi = Math.acos(2 * Math.random() - 1);
+        if (Math.random() > Math.exp(-r)) { i--; continue; }
+        x = r * Math.sin(phi) * Math.cos(theta); y = r * Math.sin(phi) * Math.sin(theta); z = r * Math.cos(phi);
+      } else if (type === 'p') {
+        const lobe = Math.random() > 0.5 ? 1 : -1, r = Math.random() * 2, s = 0.4;
+        x = (Math.random() - 0.5) * s * r; y = lobe * (0.3 + r * 0.8); z = (Math.random() - 0.5) * s * r;
+      } else {
+        const angle = Math.random() * Math.PI * 2, r = 0.3 + Math.random() * 1.8;
+        if (Math.random() > Math.abs(Math.cos(2 * angle))) { i--; continue; }
+        x = r * Math.cos(angle); z = r * Math.sin(angle); y = (Math.random() - 0.5) * 0.5;
+      }
+      mesh.position.set(x, y, z); orbitalGroup.add(mesh); particles.push(mesh);
+    }
+    const nucleus = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 16), new THREE.MeshBasicMaterial({ color: 0xff6b35 }));
+    orbitalGroup.add(nucleus); particles.push(nucleus);
+  }
+
+  buildOrbital('s', 500);
+  document.getElementById('orbital-select').addEventListener('change', function() { buildOrbital(this.value, parseInt(document.getElementById('density-slider').value)); });
+  document.getElementById('density-slider').addEventListener('input', function() { document.getElementById('density-val').textContent = this.value; buildOrbital(document.getElementById('orbital-select').value, parseInt(this.value)); });
+
+  let isDrag = false, pX = 0, pY = 0, rX = 0, rY = 0;
+  container.addEventListener('mousedown', e => { isDrag = true; pX = e.clientX; pY = e.clientY; });
+  window.addEventListener('mouseup', () => isDrag = false);
+  container.addEventListener('mousemove', e => { if (!isDrag) return; rY += (e.clientX - pX) * 0.005; rX += (e.clientY - pY) * 0.005; pX = e.clientX; pY = e.clientY; });
+  container.addEventListener('wheel', e => { e.preventDefault(); camera.position.z = Math.max(3, Math.min(15, camera.position.z + e.deltaY * 0.01)); }, { passive: false });
+
+  function animate() { requestAnimationFrame(animate); orbitalGroup.rotation.y = rY; orbitalGroup.rotation.x = rX; renderer.render(scene, camera); }
+  animate();
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
 })();
 </script>
 </body>

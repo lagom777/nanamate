@@ -15,12 +15,14 @@
 <script defer src="../toggle.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">📖 표지 · 초록</a></li>
@@ -40,7 +42,7 @@
 <h2>참고문헌 (Selected References)</h2>
 <div class="easy-version"><div class="easy-box">
 <h4>🧒 참고문헌이에요</h4>
-<p>AI 발전에 기여한 주요 논문 38편. 더 깊이 공부하고 싶다면 이 논문들을 직접 찾아 읽어보세요. 특히 굵직한 것:</p>
+<p>AI 발전에 기여한 주요 논문 39편. 더 깊이 공부하고 싶다면 이 논문들을 직접 찾아 읽어보세요. 특히 굵직한 것:</p>
 <ul>
   <li><strong>Vaswani 2017</strong> — Transformer 원전 ("Attention is All You Need")</li>
   <li><strong>Brown 2020</strong> — GPT-3</li>
@@ -94,10 +96,18 @@
 
 </div>
 </section>
+
+<!-- 3D 학습 시각화: 인용 계보 — 논문이 논문을 낳는 지도 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 참고문헌: 인용 네트워크로 본 AI 계보</div>
+  <div id="ai3d-09" style="width:100%;height:430px;"></div>
+  <div id="ai3d-09-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">핵심 논문들이 인용 관계로 이어진 지식의 흐름.</div>
+</div>
+
 <div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="08-safety-frontiers.html" style="text-decoration:none;">← 안전성·프런티어</a><span></span></div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
@@ -187,7 +197,141 @@ print(urllib.request.urlopen(url).read()[:500])</code></pre>
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 본인이 가장 관심 있는 AI 주제(예: RLHF, diffusion, mech interp)를 골라 ① 가장 많이 인용된 5개 논문을 찾고, ② 각 논문의 figure 1을 손으로 그려서 차이를 비교하고, ③ 최근 6개월 후속 논문 3개를 추가해 timeline을 만드세요. 이 작업 한 번이면 분야의 핵심 직관이 손에 잡힙니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b8441c","questions":[{"q":"참고문헌에 실린 논문 수는?","choices":["19편","29편","39편","49편"],"answer":2},{"q":"Transformer 원전 논문의 저자는?","choices":["Brown","Vaswani","Ho","Ouyang"],"answer":1},{"q":"AI 논문이 먼저 공개되는 사이트는?","choices":["arXiv","JSTOR","PubMed","SSRN"],"answer":0},{"q":"DDPM(확산 모델) 논문의 저자는?","choices":["Goodfellow","Kingma","Silver","Ho"],"answer":3},{"q":"GPT-3 논문(2020)의 저자는?","choices":["Devlin","Brown","Radford","Vaswani"],"answer":1}]};</script>
 </main>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('ai3d-09');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('ai3d-09-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,0.5,12.5);camera.lookAt(0,0,0);
+  var nd={
+    MP:{p:V(-8,2.4,0),t:'1943 MP뉴런',r:0.28},
+    PC:{p:V(-6.2,2.4,0),t:'1958 퍼셉트론',r:0.3},
+    BP:{p:V(-4.0,2.4,0),t:'1986 역전파',r:0.36},
+    LS:{p:V(-1.8,2.4,0),t:'1997 LSTM',r:0.3},
+    LN:{p:V(-2.6,-2.4,0),t:'1998 LeNet(CNN)',r:0.3},
+    AX:{p:V(0.2,-2.4,0),t:'2012 AlexNet',r:0.42},
+    AT:{p:V(0.4,2.4,0),t:'2014 어텐션',r:0.32},
+    TF:{p:V(2.6,0,0),t:'2017 Transformer',r:0.5},
+    BE:{p:V(4.8,1.5,0),t:'2018 BERT',r:0.34},
+    G3:{p:V(4.8,-1.5,0),t:'2020 GPT-3',r:0.42},
+    CG:{p:V(7.0,0,0),t:'2022 ChatGPT',r:0.46}
+  };
+  var nodes={},labels={};
+  for(var k in nd){
+    var n=nd[k];
+    var s=sph(n.r,0x9aa6c0,0.95);s.position.copy(n.p);scene.add(s);nodes[k]=s;
+    var L=lbl(n.t,23,'#39415a',0.9);L.position.set(n.p.x,n.p.y+0.85,0);scene.add(L);labels[k]=L;
+  }
+  var edgeDefs=[['MP','PC'],['PC','BP'],['BP','LS'],['BP','LN'],['LN','AX'],['LS','AT'],['AT','TF'],['AX','TF'],['TF','BE'],['TF','G3'],['BE','G3'],['G3','CG'],['BE','CG']];
+  var edges=[];
+  edgeDefs.forEach(function(e){
+    var a=nd[e[0]].p,b=nd[e[1]].p;
+    var ln=line(a,b,0xc6cddd,0.4);scene.add(ln);
+    edges.push({a:a,b:b,k0:e[0],k1:e[1],l:ln});
+  });
+  var pulses=[];for(var i=0;i<5;i++){var p=sph(0.11,0xffc83c);p.visible=false;scene.add(p);pulses.push(p);}
+  var lineages={
+    base:['MP','PC','BP'],
+    vision:['BP','LN','AX'],
+    seq:['LS','AT','TF'],
+    llm:['TF','BE','G3','CG']
+  };
+  function focus(keys,col){
+    var inSet={};keys.forEach(function(k){inSet[k]=1;});
+    for(var k in nodes){
+      nodes[k].material.color.set(inSet[k]?col:0x9aa6c0);
+      nodes[k].material.opacity=inSet[k]?1:0.35;
+      nodes[k].scale.setScalar(inSet[k]?1.3:1);
+      labels[k].material.opacity=inSet[k]?1:0.3;
+    }
+    edges.forEach(function(e){
+      var on=inSet[e.k0]&&inSet[e.k1];
+      e.l.material.color.set(on?col:0xc6cddd);
+      e.l.material.opacity=on?0.95:0.15;
+      e.on=on;
+    });
+  }
+  function flow(u){
+    var act=edges.filter(function(e){return e.on;});
+    pulses.forEach(function(p,i){
+      if(i>=act.length){p.visible=false;return;}
+      p.visible=true;var e=act[i];
+      p.position.lerpVectors(e.a,e.b,(u*2+i*0.3)%1);
+    });
+  }
+  var phases=[
+    {dur:5,cap:'계보 ① 신경망의 뿌리: McCulloch-Pitts 뉴런(1943) → 퍼셉트론(1958) → 역전파(1986). 모든 딥러닝 논문이 이 셋을 인용 위에 서 있습니다.',
+     enter:function(){focus(lineages.base,0x5b6bd6);},update:flow},
+    {dur:5,cap:'계보 ② 컴퓨터 비전: 역전파 → LeNet(1998)의 CNN → AlexNet(2012)이 GPU로 딥러닝 부활을 증명 (노드 크기 = 영향력).',
+     enter:function(){focus(lineages.vision,0xe07a3f);},update:flow},
+    {dur:5,cap:'계보 ③ 시퀀스 모델: LSTM(1997) → 어텐션(2014) → Transformer(2017) "Attention Is All You Need"가 두 흐름을 통합.',
+     enter:function(){focus(lineages.seq,0x2f9e63);},update:flow},
+    {dur:5,cap:'계보 ④ LLM: Transformer에서 BERT(이해)·GPT-3(생성)로 갈라졌다가 ChatGPT(2022)에서 합류 — 인용 화살표가 곧 지식의 흐름입니다.',
+     enter:function(){focus(lineages.llm,0xd6455b);},update:flow},
+    {dur:4,cap:'참고문헌은 목록이 아니라 지도입니다: 어떤 논문이 어떤 논문을 낳았는지가 AI 분야의 구조 그 자체입니다.',
+     enter:function(){focus(['MP','PC','BP','LS','LN','AX','AT','TF','BE','G3','CG'],0x5b6bd6);},update:flow}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
 </body>
 </html>

@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -145,7 +147,7 @@ async function readAll() {
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -189,6 +191,11 @@ app.get('/api/users/:id', async (req, res, next) =&gt; {
   <div class="success-box"><strong>🎓 도전 과제:</strong> Express vs Fastify로 같은 REST API를 작성하고 autocannon으로 1만 요청 부하 테스트해 RPS, p99 레이턴시, 메모리를 비교하세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00ff88","questions":[{"q":"Node.js가 기반으로 하는 엔진은?","choices":["libuv","npm","V8","Express"],"answer":2},{"q":"Node.js의 패키지 관리 도구는?","choices":["npm","Docker","Redis","Nginx"],"answer":0},{"q":"setTimeout 콜백이 실행되는 단계는?","choices":["Poll","Close","Check","Timers"],"answer":3},{"q":"가장 높은 우선순위로 처리되는 큐는?","choices":["Timer 큐","Microtask 큐","I/O 큐","Close 큐"],"answer":1},{"q":"권장되는 비동기 작성 방식은?","choices":["콜백 중첩","동기 처리","async/await","이벤트 폴링"],"answer":2}]};</script>
 </main>
 </div>
 

@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8. 행동재무학 — aboutInvesting</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">💰 표지</a></li>
+    <li><a href="01-basics.html">1. 재테크 기초</a></li>
+    <li><a href="02-stocks.html">2. 주식 투자</a></li>
+    <li><a href="03-bonds.html">3. 채권과 금리</a></li>
+    <li><a href="04-funds.html">4. 펀드·ETF·인덱스</a></li>
+    <li><a href="05-realestate.html">5. 부동산</a></li>
+    <li><a href="06-portfolio.html">6. 분산투자·포트폴리오</a></li>
+    <li><a href="07-tax-pension.html">7. 세금·연금</a></li>
+    <li><a href="08-behavioral.html">8. 행동재무학</a></li>
+    <li><a href="09-retirement.html">9. 은퇴·재무설계</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>행동재무학</em></h1>
+  <p class="authors">Chapter 8 — Behavioral Finance</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 공포와 탐욕 사이를 오가는 투자 심리의 진자를 회전시켜 살펴보세요</span>
+
+<h2>행동재무학 개요</h2>
+<p>행동재무학은 인간이 합리적으로만 투자한다는 전통 경제학의 가정을 의심하는 데서 출발한다. 실제 투자자는 감정과 인지적 편향에 휘둘려 자주 비합리적인 선택을 한다. 손실회피, 확증편향, 군중심리, 과신 같은 심리 패턴이 어떻게 수익률을 갉아먹는지 이해하는 것이 이 분야의 핵심이다. 시장을 이기기에 앞서 자기 자신을 이기는 법을 배우는 셈이다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>투자의 최대 적은 시장이 아니라 자신의 감정과 편향이다. 손실은 같은 크기 이익보다 약 두 배 아프게 느껴지고(손실회피), 보고 싶은 정보만 골라 보며(확증편향), 남이 사면 따라 사고(군중심리), 자기 실력을 과대평가한다(과신). 카너먼과 트버스키의 전망이론이 이 편향들의 이론적 토대를 마련했다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>행동재무학은 "사람은 돈 앞에서 늘 이성적이지 않다"는 사실을 인정하고, 그 비합리성의 패턴을 연구하는 학문이다.</p>
+<h3>왜 중요한가?</h3>
+<p>아무리 좋은 투자 원칙을 알아도 실제로 지키지 못하면 소용이 없다. 주가가 오르면 욕심에 더 사고 싶고, 떨어지면 두려움에 손절해 버리는 일이 반복된다. 이런 실수는 지식이 부족해서가 아니라 마음의 작동 방식 때문에 일어난다. 행동재무학은 이런 함정의 이름과 원리를 알려 준다. 함정에 이름을 붙이는 순간, 그 함정에 빠지는 자신을 한 발 떨어져 바라볼 수 있게 된다. 결국 투자에서 가장 통제하기 어려운 변수는 시장이 아니라 나 자신이다.</p>
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>손실회피</strong>: 같은 금액이라도 잃는 고통이 얻는 기쁨보다 약 두 배 크게 느껴지는 경향</li>
+<li><strong>확증편향</strong>: 자기 생각을 뒷받침하는 정보만 모으고 반대 정보는 무시하는 경향</li>
+<li><strong>군중심리·FOMO</strong>: 남들이 사니까 나도 사야 할 것 같은 불안(놓칠까 봐 두려운 마음)</li>
+<li><strong>처분효과</strong>: 오른 주식은 서둘러 팔고, 내린 주식은 본전 생각에 계속 붙잡는 습성</li>
+<li><strong>앵커링</strong>: 처음 본 숫자(매수가 등)에 마음이 묶여 판단의 기준점으로 삼는 현상</li>
+</ul></div>
+<h3>핵심 개념 풀어쓰기</h3>
+<p>손실회피를 동전 던지기로 생각해 보면 쉽다. "앞면이면 1만 원을 받고, 뒷면이면 1만 원을 잃는" 게임이 있다면 대부분 거절한다. 수학적으로는 손익이 같은데도 잃을 때의 고통이 너무 크게 느껴지기 때문이다. 사람들은 보통 "10만 원을 따야 10만 원을 걸겠다"가 아니라, "20만 원쯤 따야 10만 원을 걸겠다"고 답한다. 이 비대칭이 바로 손실회피이며, 손해 본 주식을 못 파는 처분효과의 뿌리이기도 하다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 자신이 어떤 편향에 약한지 모를 때는 과거 매매 기록을 펼쳐 보자. "왜 이걸 팔았지", "왜 이걸 계속 들고 있었지"를 적어 보면 자기만의 편향 패턴이 드러난다.</div>
+<h3>한 페이지 요약</h3>
+<ul>
+<li>투자 실수의 상당수는 지식 부족이 아니라 감정과 편향에서 비롯된다.</li>
+<li>손실회피 때문에 손실이 같은 크기 이익보다 약 두 배 아프게 느껴진다.</li>
+<li>확증편향은 보고 싶은 정보만 보게 만들어 잘못된 확신을 키운다.</li>
+<li>처분효과는 "오른 건 빨리, 내린 건 끝까지" 패턴으로 수익을 깎아먹는다.</li>
+<li>편향에 이름을 붙여 알아차리는 것만으로도 실수를 줄일 수 있다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>전통 금융 이론은 투자자를 모든 정보를 합리적으로 처리하는 '호모 이코노미쿠스'로 가정했다. 그러나 심리학자 대니얼 카너먼과 아모스 트버스키는 실제 인간이 체계적으로, 즉 예측 가능한 방식으로 비합리적임을 실험으로 보였다. 두 사람이 제시한 전망이론(prospect theory)은 사람들이 절대적 부의 수준이 아니라 기준점으로부터의 변화(이익이냐 손실이냐)에 반응하며, 손실 영역에서 더 민감하게 반응한다고 설명한다. 이 손실회피 계수는 대체로 1.5~2.5배 사이로 추정되어, 흔히 "손실은 이익보다 약 두 배 아프다"고 요약된다. 또한 사람들은 이익 앞에서는 위험을 피하려 하고(작은 확실한 이익 선호), 손실 앞에서는 위험을 감수하려 한다(손실을 만회하려 도박). 이런 비대칭이 처분효과를 만든다. 오른 종목에서는 확실한 이익을 빨리 챙기려 하고, 내린 종목에서는 손실 확정을 미루며 회복을 기대하기 때문이다. 카너먼은 이 공로로 2002년 노벨 경제학상을 받았다.</p>
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 가치함수의 비대칭</h4><p>전망이론의 가치함수는 기준점을 중심으로 S자 형태를 띤다. 이익 쪽은 오목하고(둔감), 손실 쪽은 볼록하면서 더 가파르다(민감). 그래서 같은 1만 원이라도 손실 구간의 기울기가 이익 구간보다 가팔라, 잃는 고통이 얻는 기쁨을 압도한다. 이 한 장의 그래프가 손실회피와 처분효과를 동시에 설명한다.</p></div>
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1 — 처분효과와 군중심리의 결합</h4><p>강세장 후반, 투자자는 이미 수익이 난 우량주를 "이 정도면 됐다"며 일찍 팔고, 손실 난 종목은 "본전만 오면 판다"며 붙잡는다. 동시에 주변에서 급등주 이야기가 들리면 FOMO에 휩싸여 고점에 뛰어든다. 그 결과 좋은 종목은 짧게, 나쁜 종목은 길게 보유하는 정반대의 행동이 굳어진다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 앵커링과 매수가 집착</h4><p>10만 원에 산 주식이 7만 원으로 떨어지면, 많은 투자자가 현재 가치가 아니라 "내가 산 10만 원"을 기준 삼아 판단한다. 회사의 펀더멘털이 나빠졌더라도 매수가에 닻을 내린 탓에 "본전 회복"만 기다리며 손절을 미룬다. 매수가는 시장에 아무 의미 없는 숫자인데도 의사결정을 지배한다.</p></div>
+<h3>현대적 전개</h3>
+<p>오늘날 행동재무학은 학문을 넘어 실무로 확산되었다. 연금 제도의 '자동 가입' 설계, 분산투자를 유도하는 자문 알고리즘, 과도한 매매를 막기 위한 알림 설계 등이 모두 행동 통찰을 응용한 것이다. 리처드 세일러가 정리한 '넛지(nudge)' 개념은 선택을 강제하지 않으면서 더 나은 기본값을 제시해 사람들의 비합리성을 보완하려 한다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> "나는 감정적으로 투자하지 않으니 편향과 무관하다"는 생각 자체가 과신 편향이다. 편향은 지능이나 의지로 없어지지 않으며, 자신이 편향에서 자유롭다고 믿는 사람일수록 더 위험하다. 편향은 제거하는 것이 아니라 시스템(규칙·체크리스트)으로 관리하는 것이다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>행동재무학은 효율적 시장 가설(EMH)에 대한 강력한 도전으로 자리 잡았다. 유진 파마가 정교화한 EMH는 가격이 모든 정보를 반영하므로 체계적 초과수익이 불가능하다고 본 반면, 행동재무학자들은 군집된 편향이 가격을 펀더멘털에서 지속적으로 이탈시킬 수 있다고 주장한다. 흥미롭게도 파마와 로버트 실러는 시장 효율성을 둘러싼 상반된 견해로 2013년 노벨 경제학상을 함께 받았다. 실러는 주가가 배당의 합리적 기대만으로 설명되지 않을 만큼 과도하게 변동한다는 점을 지적했다. 한편 차익거래의 한계(limits to arbitrage) 이론은, 설령 합리적 투자자가 가격 오류를 알아채도 자금·기간 제약과 추가 손실 위험 때문에 즉시 바로잡지 못함을 보여 준다. 즉 비합리성은 단기에 시장을 지배할 수 있다. 손실회피는 주식 위험 프리미엄이 이론값보다 높은 '주식 프리미엄 퍼즐'을 설명하는 유력한 후보로도 거론된다. 다만 편향의 크기와 방향이 맥락·문화·표본에 따라 달라진다는 점, 일부 고전 실험의 재현성 논쟁 등은 이 분야가 여전히 검증과 정련을 거치는 중임을 시사한다.</p>
+<h3>최신 연구·쟁점</h3>
+<p>최근 연구는 개별 편향의 나열을 넘어, 편향들이 시장 수준에서 어떻게 상호작용해 거품과 붕괴를 만드는지로 옮겨가고 있다. 또한 대형 데이터로 실제 거래 기록을 분석해 처분효과·과신·과잉매매가 평균적으로 수익률을 깎는다는 증거가 축적되었다. 동시에 일부 편향이 표본을 바꾸면 약해지거나 사라진다는 재현성 비판, 실험실 결과를 시장에 그대로 적용할 수 있는가라는 외적 타당성 문제도 활발히 논의된다. 행동 통찰을 응용한 '넛지'가 사람의 자율성을 침해하지 않는가라는 윤리적 쟁점 역시 남아 있다.</p>
+<h3>관련 분야</h3>
+<ul>
+<li><strong>인지심리학</strong>: 휴리스틱과 편향의 인지적 기제를 다루며 행동재무학의 토대를 이룬다.</li>
+<li><strong>신경경제학</strong>: 의사결정 시 뇌 활동을 측정해 손실회피의 신경 기반을 탐구한다.</li>
+<li><strong>실험경제학</strong>: 통제된 실험으로 시장 행동과 편향 가설을 검증한다.</li>
+</ul>
+<h3>더 읽을거리</h3>
+<ul>
+<li>"생각에 관한 생각(Thinking, Fast and Slow)" — 대니얼 카너먼</li>
+<li>"넛지(Nudge)" — 리처드 세일러, 캐스 선스타인</li>
+<li>"비이성적 과열(Irrational Exuberance)" — 로버트 실러</li>
+</ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> 자신의 최근 매매 10건을 표로 정리해 보자. 각 거래마다 매수·매도 이유를 적고, 손실회피·확증편향·처분효과·앵커링·과신 중 어떤 편향이 작용했는지 표시한다. 그런 다음 "다음번에 이 편향을 막을 규칙 한 가지"를 직접 만들어, 본문에서 말한 '편향의 시스템적 관리'를 실천해 보라.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#16c784","questions":[{"q":"손실은 이익보다 약 몇 배 아픈가?","choices":["두 배","네 배","열 배","같다"],"answer":0},{"q":"내린 주식을 본전 생각에 붙잡는 것은?","choices":["앵커링","과신","처분효과","확증편향"],"answer":2},{"q":"매수가에 마음이 묶이는 현상은?","choices":["FOMO","손실회피","군중심리","앵커링"],"answer":3},{"q":"전망이론을 제시한 학자는?","choices":["파마·실러","카너먼·트버스키","세일러","마코위츠"],"answer":1},{"q":"카너먼의 노벨상 수상 연도는?","choices":["1990년","2013년","2002년","1995년"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,11);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // 공포-탐욕 진자: 위쪽 받침점에서 매달린 추가 좌(공포·손실, 큼)와 우(탐욕·이익, 작음) 사이를 오감
+  const anchor=new THREE.Mesh(new THREE.SphereGeometry(0.2,12,12),new THREE.MeshBasicMaterial({color:0x888888}));anchor.position.y=3;s.add(anchor);
+  const pend=new THREE.Group();pend.position.y=3;s.add(pend);
+  const rodG=new THREE.BufferGeometry();rodG.setAttribute('position',new THREE.BufferAttribute(new Float32Array([0,0,0, 0,-3.4,0]),3));pend.add(new THREE.Line(rodG,new THREE.LineBasicMaterial({color:0xaaaaaa})));
+  const bob=new THREE.Mesh(new THREE.SphereGeometry(0.6,20,20),new THREE.MeshBasicMaterial({color:0xff5d5d}));bob.position.y=-3.4;pend.add(bob);
+  // 양쪽 끝 표식: 손실(빨강, 크게)·이익(초록, 작게) — 손실회피의 비대칭
+  const fear=new THREE.Mesh(new THREE.IcosahedronGeometry(0.9,0),new THREE.MeshBasicMaterial({color:0xff5d5d}));fear.position.set(-3.6,-1.2,0);s.add(fear);
+  const greed=new THREE.Mesh(new THREE.IcosahedronGeometry(0.5,0),new THREE.MeshBasicMaterial({color:0x16c784}));greed.position.set(3.6,-1.2,0);s.add(greed);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const sw=Math.sin(T*1.1);pend.rotation.z=sw*0.7;bob.material.color.setHSL(sw>0?0.33:0.0,0.7,0.55);fear.rotation.y+=0.02;fear.scale.setScalar(1+0.12*Math.max(0,-sw));greed.rotation.y+=0.02;greed.scale.setScalar(1+0.12*Math.max(0,sw));s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

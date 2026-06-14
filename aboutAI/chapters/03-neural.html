@@ -15,12 +15,14 @@
 <script defer src="../toggle.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">📖 표지 · 초록</a></li>
@@ -240,10 +242,18 @@ Bengio et al.(2013)의 "Representation Learning" 리뷰는 좋은 표현의 조�
 
 </div>
 </section>
+
+<!-- 3D 학습 시각화: 신경망 — 순전파와 역전파 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 신경망: 순전파 → 오차 → 역전파 → 갱신</div>
+  <div id="ai3d-03" style="width:100%;height:430px;"></div>
+  <div id="ai3d-03-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">신호가 층을 타고 전파되고, 오차가 거꾸로 흘러 가중치를 고칩니다.</div>
+</div>
+
 <div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="02-foundations.html" style="text-decoration:none;">← 수학·ML 이론</a><a href="04-transformer.html" style="text-decoration:none;">Transformer →</a></div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
@@ -342,7 +352,119 @@ opt.step(); opt.zero_grad()</code></pre>
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> Karpathy의 micrograd를 끝까지 따라 구현한 뒤, 자동 미분을 직접 만든 다음 CIFAR-10에 작은 ResNet을 적용해보세요. 이 과정에서 PyTorch의 autograd가 어떻게 계산 그래프를 만들고 backward를 호출하는지 완전히 이해할 수 있습니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b8441c","questions":[{"q":"ReLU 함수의 정의는?","choices":["max(0, x)","min(0, x)","x의 제곱","1/(1+e^-x)"],"answer":0},{"q":"이미지에 특화된 신경망은?","choices":["RNN","LSTM","CNN","GAN"],"answer":2},{"q":"LSTM이 완화하려는 RNN의 문제는?","choices":["과적합","기울기 소실","데이터 부족","느린 추론"],"answer":1},{"q":"1989년 보편근사정리를 증명한 사람은?","choices":["LeCun","Hinton","Telgarsky","Cybenko"],"answer":3},{"q":"LSTM의 게이트가 아닌 것은?","choices":["망각 게이트","입력 게이트","회전 게이트","출력 게이트"],"answer":2}]};</script>
 </main>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('ai3d-03');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('ai3d-03-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,0.4,13.5);camera.lookAt(0,0.4,0);
+  var layers=[4,5,5,3],lx=[-6,-2,2,6],nodes=[],edges=[];
+  layers.forEach(function(n,li){
+    var col=[];
+    for(var i=0;i<n;i++){
+      var y=(i-(n-1)/2)*1.7;
+      var c=li===0?0x2f9e63:(li===layers.length-1?0xe07a3f:0x5b6bd6);
+      var s=sph(0.34,c,0.95);s.position.set(lx[li],y,0);scene.add(s);col.push(s);
+    }
+    nodes.push(col);
+  });
+  ['입력층','은닉층 1','은닉층 2','출력층'].forEach(function(t,i){var L=lbl(t,27,'#39415a',1);L.position.set(lx[i],4.6,0);scene.add(L);});
+  for(var li=0;li<3;li++){
+    nodes[li].forEach(function(a){nodes[li+1].forEach(function(b){
+      var w=Math.random()*0.9+0.1;
+      var ln=line(a.position,b.position,0x9aa6c0,0.08+w*0.3);
+      scene.add(ln);edges.push({l:ln,li:li,w:w});
+    });});
+  }
+  var pulses=[];for(var i=0;i<6;i++){var p=sph(0.13,0xffc83c);p.visible=false;scene.add(p);pulses.push(p);}
+  var errBar=box(0.55,1,0.55,0xd6455b,0.9);errBar.position.set(8,0,0);scene.add(errBar);
+  var errLbl=lbl('오차',25,'#d6455b',0.9);errLbl.position.set(8,-1.0,0);scene.add(errLbl);
+  var round=0;
+  function setErr(h){errBar.scale.y=Math.max(0.02,h);errBar.position.y=h/2;}
+  setErr(0.02);
+  function glow(li,on){nodes[li].forEach(function(s){var k=on?1.45:1;s.scale.set(k,k,k);s.material.opacity=on?1:0.95;});}
+  function resetGlow(){for(var i=0;i<4;i++)glow(i,false);}
+  function travel(u,rev,color){
+    var seg=Math.min(2,Math.floor(u*3)),f=u*3-seg;
+    var a=rev?3-seg:seg,b=rev?2-seg:seg+1;
+    pulses.forEach(function(p,k){
+      p.visible=true;p.material.color.set(color);
+      var n0=nodes[a][k%nodes[a].length],n1=nodes[b][(k*2+seg)%nodes[b].length];
+      p.position.lerpVectors(n0.position,n1.position,f);
+    });
+    resetGlow();glow(a,f<0.5);glow(b,f>=0.5);
+    edges.forEach(function(e){e.l.material.color.set(e.li===(rev?2-seg:seg)?color:0x9aa6c0);});
+  }
+  function hidePulses(){pulses.forEach(function(p){p.visible=false;});edges.forEach(function(e){e.l.material.color.set(0x9aa6c0);});}
+  var phases=[
+    {dur:4,cap:'① 순전파: 입력 신호가 가중치 연결(선의 진하기 = 가중치 크기)을 따라 층층이 전달됩니다.',enter:hidePulses,update:function(u){travel(u,false,0xffc83c);}},
+    {dur:2.5,cap:'② 출력과 정답을 비교해 오차를 계산합니다. 오른쪽 막대 = 현재 오차 크기.',enter:function(){hidePulses();resetGlow();glow(3,true);},update:function(u){setErr(ez(u)*2.4*Math.pow(0.55,round));}},
+    {dur:4,cap:'③ 역전파: 오차의 책임을 출력→입력 방향으로 연쇄법칙에 따라 거꾸로 배분합니다.',update:function(u){travel(u,true,0xd6455b);}},
+    {dur:2.5,cap:'④ 가중치 갱신: 책임이 큰 연결일수록 크게 수정(선 진하기 변화). 반복할수록 오차 막대가 줄어듭니다.',
+     enter:function(){hidePulses();resetGlow();edges.forEach(function(e){e.w=Math.max(0.05,Math.min(1,e.w+(Math.random()-0.5)*0.35));});round=(round+1)%4;},
+     update:function(u){edges.forEach(function(e){e.l.material.opacity=0.08+e.w*0.3;});}}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
 </body>
 </html>

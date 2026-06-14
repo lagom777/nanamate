@@ -5,14 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>이상심리·치료 | 심리학 기초</title>
 <link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../shared/light-theme.css">
   <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
   <script defer src="../shared/difficulty.js"></script>
+  <script defer src="../shared/quizgame3d.js"></script>
 </head>
 <body>
 
 <aside>
-  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h1><a href="index.html">심리학 기초</a></h1>
   <div class="sub">PSYCHOLOGY FROM ZERO</div>
   <nav>
@@ -42,6 +45,18 @@
   <section class="chapter" id="ch9">
     <div class="chap-num">CHAPTER 09</div>
     <h2>이상심리와 치료 — "정상"의 경계는 어디인가</h2>
+<span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 이상과 치료 — 균형에서 벗어났다가 되돌아오기</span>
+<div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');if(!c||!window.THREE)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xa855f7;const N=15;for(let i=0;i<N;i++){const x=(i-(N-1)/2)*0.42;const col=new THREE.Color().setHSL(0.33-0.33*(i/(N-1)),0.6,0.55);const b=new THREE.Mesh(new THREE.BoxGeometry(0.3,1,0.3),new THREE.MeshBasicMaterial({color:col}));b.position.x=x;s.add(b);}const mk=new THREE.Mesh(new THREE.ConeGeometry(0.24,0.55,12),new THREE.MeshBasicMaterial({color:0xffffff}));mk.position.y=1.4;s.add(mk);s.userData.mk=mk;s.userData.N=N;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const N=s.userData.N;const drift=Math.sin(T*0.5);const pull=Math.exp(-((T*0.3)%6))*0;s.userData.mk.position.x=drift*(N-1)/2*0.42*(0.4+0.6*Math.abs(Math.cos(T*0.25)));s.rotation.y+=0;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script>
+
     <div class="en">Abnormal Psychology and Therapy</div>
 
     <p>"정상"과 "비정상"은 칼로 자르듯 나뉘지 않습니다. 누구나 슬픔을 느끼고, 가끔 불안해하며, 잠을 설치는 날도 있습니다. 그렇다면 어디서부터 '심리 장애'라고 부를 수 있을까요? 이 장에서는 (1) 심리학자들이 '이상(abnormal)'을 어떻게 정의하는지, (2) 주요 정신장애 범주에는 무엇이 있는지, 그리고 (3) 어떤 치료적 접근들이 사용되는지를 차례로 살펴봅니다.</p>
@@ -266,7 +281,7 @@
   <p>임상 평가는 구조화 면담(SCID), 자기보고(PHQ-9, GAD-7, BDI), 행동 관찰을 결합합니다. 무선통제시험(RCT)에서는 의도치 분석(ITT), 활성 비교군, 사전등록이 표준이며, 효과크기는 NNT(Number Needed to Treat)로 임상적 유용성을 평가합니다. 네트워크 분석은 증상을 노드로 보고 증상 간 인과 관계를 모형화하며, 머신러닝은 치료 반응 예측에 시도되고 있습니다.</p>
 
   <h3>최신 연구</h3>
-  <p>첫째, 디지털 정신건강: 스마트폰 센서로 우울·자살 위험을 조기 탐지하는 디지털 표현형 연구. 둘째, 사이키델릭 르네상스: 실로시빈, MDMA-보조 치료의 FDA 승인 진행과 신경가소성 기제. 셋째, AI 챗봇 치료: Woebot, Wysa 같은 앱이 경증 우울·불안에 효과를 보인다는 RCT 결과와 임상 윤리 논쟁.</p>
+  <p>첫째, 디지털 정신건강: 스마트폰 센서로 우울·자살 위험을 조기 탐지하는 디지털 표현형 연구. 둘째, 사이키델릭 르네상스: 실로시빈은 phase 3 임상 진행 중이며 MDMA-PTSD 보조 치료는 2024년 FDA 승인이 보류되었고, 신경가소성 기제 연구가 활발합니다. 셋째, AI 챗봇 치료: Woebot, Wysa 같은 앱이 경증 우울·불안에 효과를 보인다는 RCT 결과와 임상 윤리 논쟁.</p>
 
   <h3>관련 분야</h3>
   <ul>
@@ -288,6 +303,11 @@
 </div>
 
   <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d97757","questions":[{"q":"정신장애 진단 표준 매뉴얼은?","choices":["OCEAN","DSM-5","GAS","ABC"],"answer":1},{"q":"조현병의 환각·망상은 어떤 증상?","choices":["양성 증상","음성 증상","정서 둔마","무의욕"],"answer":0},{"q":"ABC 모델에서 B가 뜻하는 것은?","choices":["사건","결과","신념","행동"],"answer":2},{"q":"세로토닌 농도를 높이는 우울증 약은?","choices":["항정신병제","벤조디아제핀","항히스타민","SSRI"],"answer":3},{"q":"자유연상·꿈 분석을 쓰는 치료는?","choices":["정신분석","인지행동치료","행동치료","인본주의"],"answer":0}]};</script>
 </main>
 
 <script src="js/main.js"></script>

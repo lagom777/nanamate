@@ -2,6 +2,7 @@
 <title>경제학: 시장의 원리를 탐구하다</title><link rel="stylesheet" href="styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../shared/light-theme.css">
   <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
   <script defer src="../shared/difficulty.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
@@ -14,7 +15,15 @@
 <p class="authors">Interactive Economics — Market Dynamics in 3D</p><p class="affiliation">Vol. 15 · May 2026</p></header>
 <div class="scene-3d" id="intro-scene"></div><span class="interact-hint">📊 수요-공급 시뮬레이션</span>
 <h2>경제학이란?</h2><p>경제학은 희소한 자원의 배분과 선택을 연구하는 학문입니다. 시장 메커니즘, 금융, 국제무역의 원리를 3D로 체험합니다.</p></main></div>
-<script>(function(){const c=document.getElementById('intro-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,4,10);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-// Bar chart 3D
-for(let i=0;i<8;i++){const h=1+Math.random()*3;const m=new THREE.Mesh(new THREE.BoxGeometry(0.6,h,0.6),new THREE.MeshBasicMaterial({color:[0x0891b2,0x06b6d4,0x22d3ee][i%3]}));m.position.set(i*1.2-4.2,h/2,-1);s.add(m);}
-function a(){requestAnimationFrame(a);s.rotation.y+=0.003;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('intro-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=2282478;const bars=[];for(let i=0;i<9;i++){const b=new THREE.Mesh(new THREE.BoxGeometry(0.5,1,0.5),new THREE.MeshBasicMaterial({color:C}));b.position.x=(i-4)*0.7;s.add(b);bars.push({m:b,ph:i*0.5});}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;bars.forEach(o=>{const h=1+1.5*(0.5+0.5*Math.sin(T*1.2+o.ph));o.m.scale.y=h;o.m.position.y=h/2-0.5;});s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

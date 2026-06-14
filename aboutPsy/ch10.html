@@ -5,14 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>동기와 정서 | 심리학 기초</title>
 <link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../shared/light-theme.css">
   <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
   <script defer src="../shared/difficulty.js"></script>
+  <script defer src="../shared/quizgame3d.js"></script>
 </head>
 <body>
 
 <aside>
-  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h1><a href="index.html">심리학 기초</a></h1>
   <div class="sub">PSYCHOLOGY FROM ZERO</div>
   <nav>
@@ -42,6 +45,18 @@
   <section class="chapter" id="ch10">
     <div class="chap-num">CHAPTER 10</div>
     <h2>동기와 정서 — 우리는 왜 움직이고 무엇을 느끼는가</h2>
+<span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 동기와 정서 — 욕구 위계(매슬로)와 감정</span>
+<div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');if(!c||!window.THREE)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xa855f7;const cols=[0x3b82f6,0x22c55e,0xeab308,0xf97316,0xec4899];for(let i=0;i<5;i++){const w=3.2-i*0.55;const b=new THREE.Mesh(new THREE.BoxGeometry(w,0.7,w*0.5),new THREE.MeshBasicMaterial({color:cols[i],transparent:true,opacity:0.85}));b.position.y=-1.6+i*0.75;s.add(b);}const top=new THREE.Mesh(new THREE.OctahedronGeometry(0.4),new THREE.MeshBasicMaterial({color:0xffe08a}));top.position.y=2.0;s.add(top);s.userData.top=top;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.top.rotation.y+=0.03;s.userData.top.scale.setScalar(0.9+0.2*Math.sin(T*2.5));s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script>
+
     <div class="en">Motivation and Emotion</div>
 
     <p>아침에 침대에서 일어나 학교나 회사로 향하고, 좋아하는 사람을 만나면 미소가 번지고, 시험을 앞두고 가슴이 두근거립니다. 우리의 일상은 끊임없는 <strong>움직임</strong>과 <strong>느낌</strong>의 연속입니다. 심리학에서 <strong>동기(motivation)</strong>는 "왜 행동하는가"를 묻고, <strong>정서(emotion)</strong>는 "그때 무엇을 느끼는가"를 묻습니다. 이 둘은 분리된 주제처럼 보이지만 실제로는 동전의 양면입니다. 배가 고프다는 감각은 음식을 찾는 동기를 만들고, 두려움이라는 정서는 위험에서 도망치는 행동을 유발합니다. 이 장에서는 우리를 움직이는 힘과 그 힘을 색칠하는 감정의 정체를 살펴봅니다.</p>
@@ -226,7 +241,7 @@
 
   <h3>고전 실험과 사례</h3>
   <div class="info-card">
-    <h4>🧠 실험 1 — 샤크터와 싱어의 흔들다리 실험</h4>
+    <h4>🧠 실험 1 — 더턴과 아론의 흔들다리 실험</h4>
     <p>흔들리는 다리에서 만난 매력적인 인터뷰어에게 더 호감을 느낀 남성들이, 안정된 다리에서 만난 경우보다 전화를 걸 확률이 높았습니다. 신체 각성을 상황 단서로 잘못 해석하는 정서의 인지 귀인을 보여 주는 고전입니다.</p>
   </div>
   <div class="info-card">
@@ -273,6 +288,11 @@
 </div>
 
   <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d97757","questions":[{"q":"'떨기에 무섭다'는 정서 이론은?","choices":["제임스-랑게","캐논-바드","샥터-싱어","여키스-도슨"],"answer":0},{"q":"적정 각성에서 성과가 최고인 법칙은?","choices":["추동 감소","여키스-도슨","본능 이론","유인 이론"],"answer":1},{"q":"결핍의 긴장을 줄이는 동기 이론은?","choices":["각성 이론","유인 이론","추동 감소 이론","본능 이론"],"answer":2},{"q":"셀리에 일반적응증후군의 1단계는?","choices":["저항 단계","소진 단계","회복 단계","경고 단계"],"answer":3},{"q":"신체 각성+인지 해석=정서 이론은?","choices":["샥터-싱어 2요인","제임스-랑게","캐논-바드","여키스-도슨"],"answer":0}]};</script>
 </main>
 
 <script src="js/main.js"></script>

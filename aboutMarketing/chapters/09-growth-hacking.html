@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -34,7 +36,7 @@
   <p class="authors">Chapter 9 — Growth Hacking & Conversion</p>
 </header>
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
+<span class="interact-hint">⟳ 나선을 그리며 위로 솟구치는 복리형 성장 곡선</span>
 <h2>그로스 해킹 개요</h2>
 <p>이 챕터에서는 그로스 해킹의 핵심 전략과 프레임워크를 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Growth Hacking & Conversion의 원리와 실전 적용법을 다룹니다.</p></div>
@@ -129,39 +131,22 @@
 
   <div class="success-box"><strong>🎓 도전 과제:</strong> 가상의 SaaS 제품을 위해 노스 스타 1개·활성화 모먼트·성장 루프 3개를 정의하고, 12주 동안의 실험 백로그(40개)와 우선순위·예상 효과까지 정량화한 그로스 플랜을 설계해 보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#e040fb","questions":[{"q":"AARRR 퍼널의 단계 수는?","choices":["3단계","4단계","5단계","6단계"],"answer":2},{"q":"제품 가치를 처음 깨닫는 순간은?","choices":["활성화 모먼트","바이럴 계수","리텐션","K-factor"],"answer":0},{"q":"추천 시 저장 공간을 준 서비스는?","choices":["슬랙","에어비앤비","핀터레스트","드롭박스"],"answer":3},{"q":"슬랙이 발견한 마법의 숫자는?","choices":["친구 7명","메시지 2천 개","로그인 30회","파일 100개"],"answer":1},{"q":"ICE 점수에서 E의 의미는?","choices":["Effort","Energy","Ease","Effect"],"answer":2}]};</script>
 </main>
 </div>
 <script>
-(function() {
-  const container = document.getElementById('sim-scene');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 3, 8);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  container.appendChild(renderer.domElement);
-  // Network graph
-  const nodes = [];
-  for (let i = 0; i < 12; i++) {
-    const mesh = new THREE.Mesh(new THREE.SphereGeometry(0.2,16,16), new THREE.MeshBasicMaterial({ color: [0xe040fb,0xab47bc,0x7c3aed][i%3] }));
-    mesh.position.set((Math.random()-0.5)*6, (Math.random()-0.5)*4, (Math.random()-0.5)*4);
-    scene.add(mesh); nodes.push(mesh);
-  }
-  for (let i = 0; i < nodes.length; i++) {
-    const j = (i+1+Math.floor(Math.random()*3))%nodes.length;
-    const geo = new THREE.BufferGeometry().setFromPoints([nodes[i].position, nodes[j].position]);
-    scene.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0xe040fb, transparent: true, opacity: 0.2 })));
-  }
-  let mouseDown = false, prevX = 0;
-  container.addEventListener('mousedown', e => { mouseDown = true; prevX = e.clientX; });
-  container.addEventListener('mouseup', () => mouseDown = false);
-  container.addEventListener('mousemove', e => { if (mouseDown) { scene.rotation.y += (e.clientX-prevX)*0.005; prevX = e.clientX; } });
-  container.addEventListener('touchstart', e => { prevX = e.touches[0].clientX; });
-  container.addEventListener('touchmove', e => { scene.rotation.y += (e.touches[0].clientX-prevX)*0.005; prevX = e.touches[0].clientX; });
-  function animate() { requestAnimationFrame(animate); scene.rotation.y += 0.002; renderer.render(scene, camera); }
-  animate();
-  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const curvePts=[];const SEG=80;for(let i=0;i<SEG;i++){const t=i/(SEG-1);const ang=t*Math.PI*5;const rad=0.3+t*t*2.6;curvePts.push(Math.cos(ang)*rad,-2.6+t*5.2,Math.sin(ang)*rad);}const cg=new THREE.BufferGeometry();cg.setAttribute('position',new THREE.BufferAttribute(new Float32Array(curvePts),3));s.add(new THREE.Line(cg,new THREE.LineBasicMaterial({color:0x3cff8a,transparent:true,opacity:0.6})));const climbers=[];for(let i=0;i<14;i++){const cm=new THREE.Mesh(new THREE.OctahedronGeometry(0.16,0),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.35,0.8,0.6)}));cm.userData={t:i/14};s.add(cm);climbers.push(cm);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;climbers.forEach(cm=>{cm.userData.t+=0.0035;if(cm.userData.t>1)cm.userData.t-=1;const t=cm.userData.t;const ang=t*Math.PI*5;const rad=0.3+t*t*2.6;cm.position.set(Math.cos(ang)*rad,-2.6+t*5.2,Math.sin(ang)*rad);cm.scale.setScalar(0.6+t*1.2);cm.rotation.x+=0.05;cm.rotation.y+=0.05;});s.rotation.y+=0.006;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
 </body>

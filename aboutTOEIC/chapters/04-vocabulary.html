@@ -2,11 +2,13 @@
 <title>4. 핵심 어휘 — aboutTOEIC</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">📝 표지</a></li><li><a href="chapters/01-listening-part1.html">1. LC Part 1-2</a></li><li><a href="chapters/02-listening-part3.html">2. LC Part 3-4</a></li><li><a href="chapters/03-grammar.html">3. RC 문법</a></li><li><a href="chapters/04-vocabulary.html">4. 핵심 어휘</a></li><li><a href="chapters/05-reading-part5.html">5. RC Part 5-6</a></li><li><a href="chapters/06-reading-part7.html">6. RC Part 7</a></li><li><a href="chapters/07-strategies.html">7. 시험 전략</a></li><li><a href="chapters/08-business.html">8. 비즈니스 영어</a></li><li><a href="chapters/09-practice.html">9. 실전 모의고사</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">📝 표지</a></li><li><a href="01-listening-part1.html">1. LC Part 1-2</a></li><li><a href="02-listening-part3.html">2. LC Part 3-4</a></li><li><a href="03-grammar.html">3. RC 문법</a></li><li><a href="04-vocabulary.html">4. 핵심 어휘</a></li><li><a href="05-reading-part5.html">5. RC Part 5-6</a></li><li><a href="06-reading-part7.html">6. RC Part 7</a></li><li><a href="07-strategies.html">7. 시험 전략</a></li><li><a href="08-business.html">8. 비즈니스 영어</a></li><li><a href="09-practice.html">9. 실전 모의고사</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>핵심 어휘</em></h1><p class="authors">Chapter 4 — Essential TOEIC Vocabulary</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 핵심 단어를 중심으로 동의어·연어가 연결된 어휘망</span>
 <h2>핵심 어휘</h2><p>Essential TOEIC Vocabulary의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Essential TOEIC Vocabulary</p></div>
 
@@ -110,5 +112,24 @@
 
   <div class="success-box"><strong>🎓 만점 도전:</strong> 핵심 어휘 3,500개 + 비즈니스 관용표현 300개를 정복한 학습자는 Part 5 어휘 문제를 5초 내 풀이 가능, RC 만점(495점) 진입권에 들어섭니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f59e0b","questions":[{"q":"70% 정답률에 필요한 단어 수는?","choices":["500개","1,000개","2,000개","5,000개"],"answer":2},{"q":"itinerary의 뜻은?","choices":["본사","동료","청구서","여행 일정표"],"answer":3},{"q":"단어와 함께 외워야 할 것은?","choices":["콜로케이션","철자","한자어","반의어"],"answer":0},{"q":"\"in the red\"의 뜻은?","choices":["흑자","적자","대략적 수치","추가 노력"],"answer":1},{"q":"address와 가장 가까운 의미는?","choices":["deliver","locate","tackle","write"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // A semantic word web: one central headword with synonym/collocation nodes radiating out, each linked back to the center
+  const hub=new THREE.Mesh(new THREE.IcosahedronGeometry(0.85,1),new THREE.MeshBasicMaterial({color:0xfbbf24,wireframe:true}));s.add(hub);
+  const N=9;const nodes=[];for(let i=0;i<N;i++){const ph=Math.acos(1-2*(i+0.5)/N);const th=Math.PI*(1+Math.sqrt(5))*i;const rad=3.0;const x=rad*Math.sin(ph)*Math.cos(th),y=rad*Math.cos(ph),z=rad*Math.sin(ph)*Math.sin(th);const col=new THREE.Color().setHSL(0.55+i*0.04,0.6,0.6);const nd=new THREE.Mesh(new THREE.SphereGeometry(0.32,16,16),new THREE.MeshBasicMaterial({color:col}));nd.position.set(x,y,z);s.add(nd);nodes.push(nd);const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(x,y,z)]),new THREE.LineBasicMaterial({color:col,transparent:true,opacity:0.45}));s.add(ln);}
+  s.userData.hub=hub;s.userData.nodes=nodes;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.hub.rotation.y+=0.01;s.userData.hub.rotation.x+=0.006;s.userData.nodes.forEach((n,i)=>{n.scale.setScalar(1+Math.sin(T*2+i*0.7)*0.25);});s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

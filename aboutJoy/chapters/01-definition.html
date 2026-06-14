@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 황금 보상 입자를 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 감정의 정의 — 느낌·몸(생리)·행동의 묶음</span>
 
 <h2>정의와 본질 개요</h2>
 <p>기쁨(Joy)은 "일이 잘 풀렸다, 지금 이 순간이 안전하다, 다시 일어났으면 좋겠다"는 뇌의 보상 신호다. 단순한 쾌락이 아니라 학습·접근·반복을 촉진하는 정서적 강화 시스템이다. 행복 연구자들이 일관되게 강조하는 핵심은 "행복은 강도가 아니라 빈도"라는 점이다.</p>
@@ -67,12 +69,28 @@
 
 <div class="difficulty-content" data-level="hard">
   <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3><p>Seligman의 PERMA 모델은 행복을 Positive emotion, Engagement, Relationships, Meaning, Accomplishment 다섯 기둥으로 분해한다. 단일 차원이 아니라 다차원이라는 점이 핵심이다. Brickman의 hedonic adaptation 이론은 복권 당첨자·하반신 마비 환자 모두 1년 안에 기저 행복 수준으로 회귀한다는 충격적 데이터를 제시했다. Kahneman은 "경험하는 자아(experiencing self)"와 "기억하는 자아(remembering self)"의 분리를 통해, 우리가 평가하는 행복이 실제 체험된 행복과 다를 수 있음을 보였다. peak-end rule에 따르면 우리는 경험의 정점과 끝만 기억하기에, 마무리를 잘하는 여행이 평균적으로 더 즐거웠던 여행을 이긴다. 이 모든 발견은 "기쁨을 어떻게 측정하느냐"가 행복 연구의 절반이라는 사실을 드러낸다.</p>
+  <h3>전문가 레벨 이해</h3><p>Seligman의 PERMA 모델은 행복을 Positive emotion, Engagement, Relationships, Meaning, Accomplishment 다섯 기둥으로 분해한다. 단일 차원이 아니라 다차원이라는 점이 핵심이다. Brickman의 1978년 연구는 복권 당첨자와 하반신 마비 환자 모두 적응 경향을 보인다는 데이터를 제시했다. 다만 흔한 통념과 달리 완전한 기저선 복귀가 관찰된 것은 아니어서, 복권 당첨자는 일상의 소소한 즐거움이 오히려 줄었고 마비 환자의 행복도는 통제군보다 낮았다. Kahneman은 "경험하는 자아(experiencing self)"와 "기억하는 자아(remembering self)"의 분리를 통해, 우리가 평가하는 행복이 실제 체험된 행복과 다를 수 있음을 보였다. peak-end rule에 따르면 우리는 경험의 정점과 끝만 기억하기에, 마무리를 잘하는 여행이 평균적으로 더 즐거웠던 여행을 이긴다. 이 모든 발견은 "기쁨을 어떻게 측정하느냐"가 행복 연구의 절반이라는 사실을 드러낸다.</p>
   <h3>최신 연구·동향</h3><p>최근에는 well-being을 단순 자기보고가 아닌 EMA(ecological momentary assessment), 웨어러블 HRV, 표정 분석으로 다층 측정하는 흐름이 강하다. 또한 hedonic-eudaimonic 이분법을 넘어 "psychological richness"(다양한 경험의 풍부함)를 제3축으로 제안한 Oishi 2022의 연구가 주목받는다.</p>
   <h3>관련 분야</h3><ul><li>긍정심리학(Positive Psychology)</li><li>행동경제학(Behavioral Economics)</li><li>정서신경과학(Affective Neuroscience)</li></ul>
   <h3>추가 학습 자료</h3><ul><li>"Flourish" — Martin Seligman</li><li>"Thinking, Fast and Slow" — Daniel Kahneman</li><li>"Positivity" — Barbara Fredrickson</li></ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 2주간 매일 감사 3가지를 기록하면서 PHQ-9 우울 척도를 사전·사후 비교해 변화량을 측정해보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#fde047","questions":[{"q":"행복의 핵심은 무엇인가?","choices":["강도","빈도","크기","운"],"answer":1},{"q":"포옹·신뢰에서 분비되는 호르몬은?","choices":["엔도르핀","세로토닌","옥시토신","도파민"],"answer":2},{"q":"운동·웃음 직후 통증을 줄이는 물질은?","choices":["도파민","엔도르핀","옥시토신","세로토닌"],"answer":1},{"q":"RPE에서 기쁨의 크기를 결정하는 것은?","choices":["기대와 실제 차이","결과 그 자체","시간 길이","장소"],"answer":0},{"q":"행복을 5기둥으로 나눈 모델은?","choices":["broaden-build","flow","RPE","PERMA"],"answer":3}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0xfde047;const parts=[];for(let i=0;i<40;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xfde047;const core=new THREE.Mesh(new THREE.SphereGeometry(0.8,24,24),new THREE.MeshBasicMaterial({color:COL}));s.add(core);const halo=new THREE.Mesh(new THREE.TorusGeometry(1.15,0.04,10,44),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.5}));s.add(halo);const sat=[];const sc=[0xffffff,0xfcd34d,0x93c5fd];for(let i=0;i<3;i++){const t=i/3*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.34,16,16),new THREE.MeshBasicMaterial({color:sc[i]}));s.add(m);sat.push({m,ph:t});s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,0)]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.3})));}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;core.scale.setScalar(0.92+0.1*Math.sin(T*2.2));halo.rotation.z+=0.01;sat.forEach((o,i)=>{o.m.position.set(Math.cos(T*0.6+o.ph)*2.4,Math.sin(T*0.4+o.ph)*0.8,Math.sin(T*0.6+o.ph)*2.4);});s.rotation.y+=0.0015;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

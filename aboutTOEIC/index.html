@@ -2,10 +2,22 @@
 <title>토익</title><link rel="stylesheet" href="styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../shared/light-theme.css">
   <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
   <script defer src="../shared/difficulty.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">📝 표지</a></li><li><a href="chapters/01-listening-part1.html">1. LC Part 1-2</a></li><li><a href="chapters/02-listening-part3.html">2. LC Part 3-4</a></li><li><a href="chapters/03-grammar.html">3. RC 문법</a></li><li><a href="chapters/04-vocabulary.html">4. 핵심 어휘</a></li><li><a href="chapters/05-reading-part5.html">5. RC Part 5-6</a></li><li><a href="chapters/06-reading-part7.html">6. RC Part 7</a></li><li><a href="chapters/07-strategies.html">7. 시험 전략</a></li><li><a href="chapters/08-business.html">8. 비즈니스 영어</a></li><li><a href="chapters/09-practice.html">9. 실전 모의고사</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>토익</em></h1><p class="authors">Vol. 21 · May 2026</p></header>
 <div class="scene-3d" id="intro-scene"></div><span class="interact-hint">📝 인터랙티브 3D 시각화</span>
 <h2>소개</h2><p>이 사이트에서는 토익의 핵심 개념을 9개 챕터에 걸쳐 3D 인터랙티브로 학습합니다.</p></main></div>
-<script>(function(){const c=document.getElementById('intro-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,4,10);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<15;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.3,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*8,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);}function a(){requestAnimationFrame(a);s.rotation.y+=0.003;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('intro-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=16498468;const cubes=[];for(let i=0;i<24;i++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5),new THREE.MeshBasicMaterial({color:C,transparent:true,opacity:0.5+Math.random()*0.4,wireframe:Math.random()<0.4}));m.position.set((Math.random()-0.5)*8,(Math.random()-0.5)*5,(Math.random()-0.5)*5);m.rotation.set(Math.random()*3,Math.random()*3,0);s.add(m);cubes.push(m);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;cubes.forEach((c2,i)=>{c2.rotation.x+=0.005;c2.rotation.y+=0.006;c2.position.y+=Math.sin(T+i)*0.003;});s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

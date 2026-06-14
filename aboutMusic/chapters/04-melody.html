@@ -2,11 +2,13 @@
 <title>4. 멜로디와 작곡 — aboutMusic</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">🎵 표지</a></li><li><a href="chapters/01-basics.html">1. 음악 기초</a></li><li><a href="chapters/02-rhythm.html">2. 리듬과 박자</a></li><li><a href="chapters/03-harmony.html">3. 화성학</a></li><li><a href="chapters/04-melody.html">4. 멜로디와 작곡</a></li><li><a href="chapters/05-form.html">5. 음악 형식</a></li><li><a href="chapters/06-genres.html">6. 장르의 이해</a></li><li><a href="chapters/07-production.html">7. 음악 제작</a></li><li><a href="chapters/08-ear-training.html">8. 청음 훈련</a></li><li><a href="chapters/09-modern.html">9. 현대 음악이론</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🎵 표지</a></li><li><a href="01-basics.html">1. 음악 기초</a></li><li><a href="02-rhythm.html">2. 리듬과 박자</a></li><li><a href="03-harmony.html">3. 화성학</a></li><li><a href="04-melody.html">4. 멜로디와 작곡</a></li><li><a href="05-form.html">5. 음악 형식</a></li><li><a href="06-genres.html">6. 장르의 이해</a></li><li><a href="07-production.html">7. 음악 제작</a></li><li><a href="08-ear-training.html">8. 청음 훈련</a></li><li><a href="09-modern.html">9. 현대 음악이론</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>멜로디와 작곡</em></h1><p class="authors">Chapter 4 — Melody Writing & Composition</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 멜로디 곡선 — 순차와 도약이 그리는 아치형 선율을 따라 음표가 흐른다</span>
 <h2>멜로디와 작곡</h2><p>Melody Writing & Composition의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Melody Writing & Composition</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -41,7 +43,7 @@
   <h3>이론 깊이</h3><p>전통적인 멜로디 작법은 「상승-정점-하강」의 아치형 구조를 기본으로 한다. 모차르트와 슈베르트의 멜로디는 음역의 황금 분할 지점에 정점을 두고, 그 앞뒤로 균형을 맞춘다. 도약 후에는 반대 방향의 순차로 회복하는 것이 자연스러우며, 이는 멜로디의 「관성 법칙」이다. 음계 안의 어떤 음에서 시작하느냐에 따라 모드(이오니안, 도리안 등)가 결정되고, 같은 음열도 모드에 따라 전혀 다른 정서를 가진다. 모티브의 발전 기법으로는 반복(repetition), 모방(sequence), 전위(inversion), 역행(retrograde), 확대·축소(augmentation/diminution)가 있다. K-팝 작곡에서는 4마디 단위의 멜로디 셀을 만들고, 가사의 음운과 멜로디 음의 강세를 일치시키는 「음운-운율 매칭」이 중요하다. 또한 후렴의 훅은 종종 코드 톤(코드 안의 음)에서 시작해 안정감을 확보한 뒤, 비코드 톤으로 텐션을 만든다.</p>
   <h3>대표 작품 분석</h3>
   <div class="info-card"><h4>🎵 작품 1 — 슈베르트 「겨울 나그네」 中 〈보리수〉</h4><p>4+4 마디의 균형 잡힌 프레이즈, 5도 도약 후 순차 하강이라는 전통적 멜로디 곡선의 모범이다.</p></div>
-  <div class="info-card"><h4>🎵 작품 2 — 아델 「Someone Like You」</h4><p>A 마이너의 순차 진행으로 시작해 후렴에서 한 옥타브 위 정점으로 도약하며 감정을 폭발시킨다.</p></div>
+  <div class="info-card"><h4>🎵 작품 2 — 아델 「Someone Like You」</h4><p>A 메이저의 순차 진행으로 시작해 후렴에서 한 옥타브 위 정점으로 도약하며 감정을 폭발시킨다.</p></div>
   <h3>실연/제작 응용</h3><p>가수는 멜로디의 도약 지점에서 호흡을 미리 채워 두어 자연스러운 표현을 만든다. 작곡가는 모티브 발전 기법으로 짧은 아이디어에서 한 곡을 키워내며, 영화음악 작곡가는 라이트모티브를 등장인물별로 배정해 서사를 강화한다. 보컬 디렉터는 음역에 맞춰 멜로디 옥타브를 조정해 가수에게 최적의 표현 영역을 제공한다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 도약을 너무 자주 사용하면 멜로디가 불안정해진다. 도약 후에는 반드시 반대 방향의 순차로 회복하는 것이 듣기 자연스럽다.</div>
 </div>
@@ -62,5 +64,24 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 자신만의 4마디 모티브를 만들고, 반복·모방·전위·역행 네 기법을 적용해 16마디 멜로디로 발전시켜 보라.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ec4899","questions":[{"q":"곡의 가장 작은 멜로디 단위는?","choices":["프레이즈","훅","모티브","벌스"],"answer":2},{"q":"한 번 들으면 잊히지 않는 멜로디는?","choices":["훅","모티브","도약","순차"],"answer":0},{"q":"음 사이의 큰 점프를 뜻하는 말은?","choices":["순차","도약","반복","전위"],"answer":1},{"q":"전통 멜로디 작법의 기본 곡선은?","choices":["하강-상승","평행 구조","나선 구조","상승-정점-하강"],"answer":3},{"q":"도약 후 자연스러운 진행은?","choices":["같은 방향 도약","반대 방향 순차","긴 쉼표","옥타브 도약"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const pitches=[0,1,2,1,3,4,3,2,1,0,2,1];const pts=[];const noteBalls=[];for(let i=0;i<pitches.length;i++){const x=(i-(pitches.length-1)/2)*0.7;const y=pitches[i]*0.6-1.2;pts.push(new THREE.Vector3(x,y,0));const col=new THREE.Color().setHSL(pitches[i]/5,0.7,0.55);const nb=new THREE.Mesh(new THREE.SphereGeometry(0.18,16,16),new THREE.MeshBasicMaterial({color:col}));nb.position.set(x,y,0);s.add(nb);noteBalls.push(nb);}
+  const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0xff7755}));s.add(line);
+  const cursor=new THREE.Mesh(new THREE.SphereGeometry(0.3,18,18),new THREE.MeshBasicMaterial({color:0xffee44}));s.add(cursor);
+  s.userData.pts=pts;s.userData.cursor=cursor;s.userData.balls=noteBalls;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const P=s.userData.pts;const f=(T*1.5)%(P.length-1);const i0=Math.floor(f);const t=f-i0;const p0=P[i0],p1=P[i0+1];s.userData.cursor.position.set(p0.x+(p1.x-p0.x)*t,p0.y+(p1.y-p0.y)*t,0);s.userData.balls.forEach((b,i)=>{b.scale.setScalar(i===i0?1.8:1);});s.rotation.y=Math.sin(T*0.3)*0.3;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

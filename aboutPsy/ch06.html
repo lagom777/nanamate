@@ -5,14 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>발달 | 심리학 기초</title>
 <link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../shared/light-theme.css">
   <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
   <script defer src="../shared/difficulty.js"></script>
+  <script defer src="../shared/quizgame3d.js"></script>
 </head>
 <body>
 
 <aside>
-  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h1><a href="index.html">심리학 기초</a></h1>
   <div class="sub">PSYCHOLOGY FROM ZERO</div>
   <nav>
@@ -42,6 +45,18 @@
   <section class="chapter" id="ch6">
     <div class="chap-num">CHAPTER 06</div>
     <h2>발달 — 사람은 어떻게 자라는가</h2>
+<span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 전 생애 발달 — 영아에서 노년까지 자라는 마음</span>
+<div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');if(!c||!window.THREE)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xa855f7;const line=new THREE.Mesh(new THREE.BoxGeometry(7.6,0.05,0.05),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.4}));line.position.y=-1.4;s.add(line);for(let i=0;i<5;i++){const rad=0.28+i*0.2;const m=new THREE.Mesh(new THREE.SphereGeometry(rad,18,18),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.55+i*0.09}));m.position.set((i-2)*1.7,-1.4+rad,0);s.add(m);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script>
+
     <div class="en">Developmental Psychology</div>
 
     <p>발달심리학은 '사람이 태어나서 죽을 때까지 어떻게 변하는가'를 연구합니다. 신체만이 아니라 <strong>사고, 감정, 관계</strong> 모두 단계별로 변화합니다.</p>
@@ -275,6 +290,11 @@
 </div>
 
   <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d97757","questions":[{"q":"인지발달 4단계를 제시한 학자는?","choices":["피아제","에릭슨","보울비","에인즈워스"],"answer":0},{"q":"눈에 안 보여도 존재함을 아는 것은?","choices":["보존 개념","대상영속성","자기중심성","애착"],"answer":1},{"q":"청소년기의 심리사회적 위기는?","choices":["신뢰 vs 불신","친밀감 vs 고립","정체감 vs 역할혼미","자율성 vs 수치"],"answer":2},{"q":"가장 흔한 애착 유형은?","choices":["회피 애착","저항 애착","혼란 애착","안정 애착"],"answer":3},{"q":"'낯선 상황' 실험을 한 학자는?","choices":["에인즈워스","피아제","프로이트","에릭슨"],"answer":0}]};</script>
 </main>
 
 <script src="js/main.js"></script>

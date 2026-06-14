@@ -2,12 +2,14 @@
 <title>8. 재정학 — aboutEconomics</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">📊 표지</a></li><li><a href="01-micro.html">1. 미시경제학</a></li><li><a href="02-macro.html">2. 거시경제학</a></li><li><a href="03-finance.html">3. 금융과 투자</a></li><li><a href="04-trade.html">4. 국제무역</a></li><li><a href="05-behavioral.html">5. 행동경제학</a></li><li><a href="06-development.html">6. 경제발전</a></li><li><a href="07-labor.html">7. 노동경제학</a></li><li><a href="08-public-finance.html">8. 재정학</a></li><li><a href="09-crypto-fintech.html">9. 크립토/핀테크</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>재정학</em></h1><p class="authors">Chapter 8 — Public Finance & Taxation</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 납세자에게서 정부로 모인 세금이 다시 지출로 재분배되는 재정 순환</span>
 <h2>재정학 개요</h2><p>Public Finance & Taxation의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Public Finance & Taxation</p></div>
 
@@ -90,5 +92,23 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 한국 국민연금의 미래 30년 재정전망을 OLG 모형으로 시뮬레이션하고 보험료율·소득대체율·정년 변화의 후생효과를 비교해 보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0891b2","questions":[{"q":"정부가 거두는 돈을 뜻하는 말은?","choices":["세출","세입","국채","공공재"],"answer":1},{"q":"국방·도로처럼 모두가 쓰는 재화는?","choices":["사유재","외부효과","국채","공공재"],"answer":3},{"q":"정부가 빌리는 돈은?","choices":["국채","세입","세출","기금"],"answer":0},{"q":"한국의 부가가치세 도입 연도는?","choices":["1965년","1971년","1977년","1988년"],"answer":2},{"q":"비탄력적 재화에 높은 세율을 매기는 원리?","choices":["미를리스","새즈","램지","피케티"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<6;i++){const h=1+Math.random()*2.5;const m=new THREE.Mesh(new THREE.BoxGeometry(0.5,h,0.5),new THREE.MeshBasicMaterial({color:[0x0891b2,0x06b6d4,0x22d3ee][i%3]}));m.position.set(i*1.5-3.75,h/2,0);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,11);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const govt=new THREE.Mesh(new THREE.CylinderGeometry(0.9,0.9,1.2,6),new THREE.MeshBasicMaterial({color:0xfbbf24,wireframe:true}));s.add(govt);s.userData.govt=govt;
+  const NC=8;const citizens=[],flows=[];for(let i=0;i<NC;i++){const ang=i/NC*Math.PI*2;const rad=4.0;const cz=new THREE.Mesh(new THREE.ConeGeometry(0.3,0.7,6),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.55,0.5,0.55)}));cz.position.set(Math.cos(ang)*rad,0,Math.sin(ang)*rad);s.add(cz);citizens.push(cz);const tax=new THREE.Mesh(new THREE.BoxGeometry(0.16,0.16,0.16),new THREE.MeshBasicMaterial({color:0x22c55e}));s.add(tax);const spend=new THREE.Mesh(new THREE.BoxGeometry(0.16,0.16,0.16),new THREE.MeshBasicMaterial({color:0xf87171}));s.add(spend);flows.push({tax,spend,ang,rad,ph:i/NC});}
+  s.userData.citizens=citizens;s.userData.flows=flows;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.govt.rotation.y+=0.01;s.userData.flows.forEach(o=>{const ft=(T*0.4+o.ph)%1;const ox=Math.cos(o.ang)*o.rad,oz=Math.sin(o.ang)*o.rad;o.tax.position.set(ox*(1-ft),0.2*Math.sin(ft*Math.PI),oz*(1-ft));const fs=(T*0.4+o.ph+0.5)%1;o.spend.position.set(ox*fs,-0.2*Math.sin(fs*Math.PI),oz*fs);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

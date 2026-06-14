@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>세계 종교 — aboutReligion</title><link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="index.html">🕊️ 표지 · 소개</a></li>
+<li><a href="chapters/01-hinduism.html">1. 힌두교 · 크리슈나</a></li>
+<li><a href="chapters/02-judaism.html">2. 유대교 · 모세</a></li>
+<li><a href="chapters/03-buddhism.html">3. 불교 · 석가모니</a></li>
+<li><a href="chapters/04-confucius.html">4. 유교 · 공자</a></li>
+<li><a href="chapters/05-mencius.html">5. 유교 심화 · 맹자</a></li>
+<li><a href="chapters/06-laozi.html">6. 도교 · 노자</a></li>
+<li><a href="chapters/07-zhuangzi.html">7. 도가 · 장자</a></li>
+<li><a href="chapters/08-christianity.html">8. 기독교 · 예수</a></li>
+<li><a href="chapters/09-islam.html">9. 이슬람교 · 무함마드</a></li>
+</ol></aside>
+<main>
+<header class="paper-header">
+  <h1><em>세계 종교</em>의 모든 것</h1>
+  <p class="authors">World Religions — Founders &amp; Their Faiths</p>
+  <p class="affiliation">Vol. 26 · Jun 2026 · aboutReligion Editorial</p>
+</header>
+
+<div class="scene-3d" id="intro-scene"></div>
+<span class="interact-hint">⟳ 마우스로 회전 · 지혜의 입자</span>
+
+<h2>이 과목에 대하여</h2>
+<p>인류 문명의 뼈대는 종교가 세웠습니다. 법과 윤리, 예술과 건축, 달력과 축제, 심지어 전쟁과 평화까지 — 그 뿌리를 거슬러 올라가면 거의 언제나 한 사람의 스승과 그가 연 전통이 있습니다. 이 과목은 <strong>창시자(성인)</strong>를 입구로 삼아 그 종교의 핵심 가르침·경전·세계관을 9개 전통으로 압축해 안내합니다.</p>
+
+<h2>학습 로드맵</h2>
+<div class="info-card"><h4>🕉️ 챕터 1–3: 인도·서아시아의 큰 강</h4><p>가장 오래된 힌두교, 유일신을 처음 세운 유대교, 그리고 고통의 해탈을 설한 불교. 윤회와 유일신이라는 두 세계관의 원형을 만납니다.</p></div>
+<div class="info-card"><h4>📜 챕터 4–7: 동아시아의 두 길</h4><p>공자·맹자의 유교(인과 의의 길)와 노자·장자의 도교(무위자연의 길). 동아시아인의 마음과 질서를 빚은 두 축을 다룹니다.</p></div>
+<div class="info-card"><h4>✝️ 챕터 8–9: 세계를 바꾼 두 일신교</h4><p>오늘날 인류 절반 이상이 믿는 기독교와 이슬람교. 예수와 무함마드, 그리고 그 분파(천주교·개신교·정교회 / 수니·시아)까지 정리합니다.</p></div>
+
+<h2>이렇게 학습하세요</h2>
+<p>각 챕터마다 <strong>하 · 중 · 상</strong> 3단계 난이도 탭이 있습니다. "하"에서 한 줄 정의와 핵심 인물을, "중"에서 교리·경전·역사를, "상"에서 신학적 쟁점과 학술적 논쟁을 다룹니다. 우측 상단 언어 토글로 영어·일본어·중국어 학습도 가능합니다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 종교는 "믿음"이기 전에 "질문"입니다. 각 전통이 <em>인간은 무엇인가, 고통은 왜 있는가, 죽음 뒤엔 무엇이 있는가</em>에 어떻게 답했는지 비교하며 읽으면 9개 전통이 하나의 큰 대화로 보입니다.</div>
+
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('intro-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=14723118;const rings=[];for(let i=0;i<5;i++){const t=new THREE.Mesh(new THREE.TorusGeometry(1+i*0.7,0.04,10,60),new THREE.MeshBasicMaterial({color:C,transparent:true,opacity:0.6-i*0.08}));t.rotation.x=Math.PI/2;s.add(t);rings.push(t);}const core=new THREE.Mesh(new THREE.SphereGeometry(0.4,20,20),new THREE.MeshBasicMaterial({color:C}));s.add(core);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;rings.forEach((t,i)=>{t.rotation.z+=0.004*(i%2?1:-1);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

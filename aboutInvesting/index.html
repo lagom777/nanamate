@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>재테크·투자 — aboutInvesting</title><link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="index.html">💰 표지 · 소개</a></li>
+<li><a href="chapters/01-basics.html">1. 재테크 기초</a></li>
+<li><a href="chapters/02-stocks.html">2. 주식 투자</a></li>
+<li><a href="chapters/03-bonds.html">3. 채권과 금리</a></li>
+<li><a href="chapters/04-funds.html">4. 펀드·ETF·인덱스</a></li>
+<li><a href="chapters/05-realestate.html">5. 부동산</a></li>
+<li><a href="chapters/06-portfolio.html">6. 분산투자·포트폴리오</a></li>
+<li><a href="chapters/07-tax-pension.html">7. 세금·연금</a></li>
+<li><a href="chapters/08-behavioral.html">8. 행동재무학</a></li>
+<li><a href="chapters/09-retirement.html">9. 은퇴·재무설계</a></li>
+</ol></aside>
+<main>
+<header class="paper-header">
+  <h1><em>재테크</em>·투자</h1>
+  <p class="authors">Personal Finance &amp; Investing</p>
+  <p class="affiliation">Vol. 27 · Jun 2026 · aboutInvesting Editorial</p>
+</header>
+
+<div class="scene-3d" id="intro-scene"></div>
+<span class="interact-hint">⟳ 마우스로 회전 · 복리의 성장</span>
+
+<h2>이 과목에 대하여</h2>
+<p>재테크는 돈을 모으고 불려 인생의 선택지를 넓히는 기술이다. 예산·저축·복리 같은 기초부터 주식·채권·펀드·부동산, 그리고 분산투자와 행동재무학까지 — 이 과목은 특정 상품을 권유하지 않고, 스스로 판단할 수 있는 <strong>금융 문해력</strong>을 9개 챕터로 기른다.</p>
+
+<h2>학습 로드맵</h2>
+<div class="info-card"><h4>💵 챕터 1–3: 기초와 자산</h4><p>재테크 기초(예산·복리·72법칙), 주식 투자, 채권과 금리.</p></div>
+<div class="info-card"><h4>📊 챕터 4–6: 자산배분</h4><p>펀드·ETF·인덱스, 부동산, 분산투자와 포트폴리오·리스크 관리.</p></div>
+<div class="info-card"><h4>🧠 챕터 7–9: 절세와 설계</h4><p>세금·연금(연말정산·IRP), 행동재무학의 함정, 은퇴·재무설계.</p></div>
+
+<h2>이렇게 학습하세요</h2>
+<p>각 챕터마다 <strong>하 · 중 · 상</strong> 3단계 난이도 탭이 있습니다. 우측 상단 언어 토글로 영어·일본어·중국어 학습도 가능합니다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 투자에 "확실한 정답"은 없습니다. 이 과목은 투자 권유가 아니라 스스로 판단하는 힘을 기르는 것이 목표입니다. 작게, 분산해서, 길게 — 이 세 단어부터 기억하세요.</div>
+
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('intro-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=0x16c784;const bars=[];for(let i=0;i<7;i++){const b=new THREE.Mesh(new THREE.BoxGeometry(0.5,1,0.5),new THREE.MeshBasicMaterial({color:C}));b.position.x=(i-3)*0.75;s.add(b);bars.push({m:b,ph:i*0.4});}const coins=[];for(let i=0;i<16;i++){const m=new THREE.Mesh(new THREE.CylinderGeometry(0.28,0.28,0.06,20),new THREE.MeshBasicMaterial({color:0xffd34d}));m.rotation.x=Math.PI/2;m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*3);m.userData={sp:0.4+Math.random()*0.8};s.add(m);coins.push(m);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;bars.forEach(o=>{const h=1+1.6*(0.5+0.5*Math.sin(T*1.3+o.ph));o.m.scale.y=h;o.m.position.y=h/2-0.5;});coins.forEach(m=>{m.position.y+=0.02*m.userData.sp;if(m.position.y>3)m.position.y=-3;m.rotation.z+=0.06;});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

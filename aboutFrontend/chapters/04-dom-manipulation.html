@@ -262,12 +262,14 @@
   </style>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
   <div class="container">
     <aside>
-      <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+      <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
       <h3>전체 목차</h3>
       <ol>
         <li><a href="../index.html">📖 표지 · 소개</a></li>
@@ -462,7 +464,7 @@
       </section>
 
       <h2>📚 난이도별 학습</h2>
-      <p>본인 수준에 맞춰 탭 선택. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+      <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
       <div class="difficulty-tabs">
         <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
         <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -571,7 +573,12 @@ function diff(oldNode, newNode) {
           <strong>🎓 도전 과제:</strong> 가상 DOM 없이 Signal만으로 반응성 시스템을 구축하고, 1만 개 노드 리스트에서 60fps 업데이트가 가능한지 측정해보세요.
         </div>
       </div>
-    </main>
+    
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0ea5e9","questions":[{"q":"DOM의 구조는?","choices":["트리 구조","배열 구조","해시 구조","스택 구조"],"answer":0},{"q":"CSS 선택자로 첫 요소를 찾는 것은?","choices":["getElementById","querySelector","createElement","appendChild"],"answer":1},{"q":"이벤트를 등록하는 메서드는?","choices":["setEvent","onClickAll","addEventListener","bindEvent"],"answer":2},{"q":"이벤트가 부모로 전파되는 현상은?","choices":["캡처링","위임","디바운스","버블링"],"answer":3},{"q":"리파싱 때문에 느린 DOM 속성은?","choices":["innerHTML","textContent","classList","dataset"],"answer":0}]};</script>
+</main>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

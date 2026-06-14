@@ -89,7 +89,7 @@
             font-size: 13px;
             font-weight: 600;
             letter-spacing: 0.04em;
-            text-align: center;
+            text-align:left;
             box-shadow: 0 6px 18px -6px rgba(123, 92, 255, 0.5);
             transition: transform 0.2s ease;
         }
@@ -354,7 +354,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
-            text-align: center;
+            text-align:left;
         }
 
         .nav-btn.prev {
@@ -406,7 +406,9 @@
     </style>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
     <div class="container">
@@ -706,7 +708,7 @@ dog.speak();  // "뽀삐이 멍멍 울었습니다."
             </div>
 
             <h2>📚 난이도별 학습</h2>
-            <p>본인 수준에 맞춰 탭 선택. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+            <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
             <div class="difficulty-tabs">
                 <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
                 <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -821,7 +823,12 @@ function trigger(t, k) { /* deps 실행 */ }</code></pre>
                     <strong>🎓 도전 과제:</strong> 100ms 안에 60fps로 동작하는 가상 스크롤 컴포넌트를 직접 구현해보세요. RequestAnimationFrame 스케줄링과 풀링 전략이 핵심입니다.
                 </div>
             </div>
-        </main>
+        
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0ea5e9","questions":[{"q":"재할당이 불가능한 선언은?","choices":["var","let","const","function"],"answer":2},{"q":"JavaScript의 스레드 모델은?","choices":["단일 스레드","듀얼 스레드","멀티 스레드","무스레드"],"answer":0},{"q":"백틱과 ${}를 쓰는 문법은?","choices":["구조 분해","스프레드","화살표 함수","템플릿 리터럴"],"answer":3},{"q":"Promise.then이 들어가는 큐는?","choices":["콜 스택","마이크로태스크 큐","태스크 큐","렌더 큐"],"answer":1},{"q":"외부 함수의 변수를 기억하는 것은?","choices":["호이스팅","프로토타입","클로저","이벤트 루프"],"answer":2}]};</script>
+</main>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

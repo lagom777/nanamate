@@ -18,15 +18,36 @@
   const STORAGE_KEY = 'nanamate-lang';
   let currentLang = localStorage.getItem(STORAGE_KEY) || 'ko';
 
+  function ensureControlsSidebar() {
+    const existingSidebar = document.querySelector('.layout > aside, .container > aside, aside.sidebar, body > aside:not(.study-controls-sidebar)');
+    if (existingSidebar) return existingSidebar;
+
+    let controlsSidebar = document.querySelector('.study-controls-sidebar');
+    if (controlsSidebar) return controlsSidebar;
+
+    controlsSidebar = document.createElement('aside');
+    controlsSidebar.className = 'study-controls-sidebar';
+    controlsSidebar.setAttribute('aria-label', '학습 설정');
+    controlsSidebar.innerHTML = '<div class="study-controls-title">학습 설정</div>';
+    document.body.prepend(controlsSidebar);
+    document.body.classList.add('has-study-controls-sidebar');
+    return controlsSidebar;
+  }
+
   // === 언어 토글 UI 삽입 ===
   function injectToggle() {
     if (document.querySelector('.lang-toggle')) return;
     const toggle = document.createElement('div');
     toggle.className = 'lang-toggle';
-    toggle.innerHTML = Object.entries(LANGS).map(([code, info]) =>
-      `<button data-lang="${code}" title="${info.name}">${info.label}</button>`
-    ).join('');
-    document.body.appendChild(toggle);
+    toggle.innerHTML =
+      '<div class="toggle-label">🌐 언어</div>' +
+      Object.entries(LANGS).map(([code, info]) =>
+        `<button data-lang="${code}" title="${info.name}">${info.label}</button>`
+      ).join('');
+
+    const sidebar = ensureControlsSidebar();
+    toggle.classList.add('in-sidebar');
+    sidebar.appendChild(toggle);
 
     toggle.addEventListener('click', (e) => {
       const btn = e.target.closest('button[data-lang]');

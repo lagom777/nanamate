@@ -2,11 +2,13 @@
 <title>3. 민법 기초 — aboutLaw</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">⚖️ 표지</a></li><li><a href="chapters/01-intro.html">1. 법학 개론</a></li><li><a href="chapters/02-constitutional.html">2. 헌법</a></li><li><a href="chapters/03-civil.html">3. 민법 기초</a></li><li><a href="chapters/04-criminal.html">4. 형법 기초</a></li><li><a href="chapters/05-labor.html">5. 근로기준법</a></li><li><a href="chapters/06-property.html">6. 부동산/재산법</a></li><li><a href="chapters/07-consumer.html">7. 소비자 보호법</a></li><li><a href="chapters/08-ip.html">8. 지식재산권</a></li><li><a href="chapters/09-digital-law.html">9. 디지털 법률</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">⚖️ 표지</a></li><li><a href="01-intro.html">1. 법학 개론</a></li><li><a href="02-constitutional.html">2. 헌법</a></li><li><a href="03-civil.html">3. 민법 기초</a></li><li><a href="04-criminal.html">4. 형법 기초</a></li><li><a href="05-labor.html">5. 근로기준법</a></li><li><a href="06-property.html">6. 부동산/재산법</a></li><li><a href="07-consumer.html">7. 소비자 보호법</a></li><li><a href="08-ip.html">8. 지식재산권</a></li><li><a href="09-digital-law.html">9. 디지털 법률</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>민법 기초</em></h1><p class="authors">Chapter 3 — Civil Law Basics & Contracts</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 청약과 승낙, 두 당사자의 의사가 만나 계약이 성립 — 드래그로 회전</span>
 <h2>민법 기초</h2><p>Civil Law Basics & Contracts의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Civil Law Basics & Contracts</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -43,5 +45,25 @@
   <h3>추가 자료</h3><ul><li>곽윤직·김재형, 『민법총칙』 — 한국 민법학의 표준 교과서</li><li>K. Larenz, 『Lehrbuch des Schuldrechts』 — 독일 채권법 고전</li><li>대법원 종합법률정보 — 판례·해설 검색</li><li>한국민사법학회 — 학회지·세미나 자료</li></ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> AI가 자율적으로 체결한 매매계약에서 매도인이 가격 오류를 주장한다면, 의사표시의 착오·법인격·표현대리 가운데 어떤 법리로 해결할지 논해 보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#1d4ed8","questions":[{"q":"민법은 모두 몇 편으로 구성되는가?","choices":["3편","4편","5편","6편"],"answer":2},{"q":"채권의 일반 소멸시효 기간은?","choices":["1년","3년","5년","10년"],"answer":3},{"q":"내 일은 내가 정한다는 민법 원칙은?","choices":["신의성실","사적 자치","권리남용 금지","공공복리"],"answer":1},{"q":"통정허위표시의 효력은?","choices":["유효","무효","취소","철회"],"answer":1},{"q":"부동산 물권변동의 효력발생요건은?","choices":["등기","인도","점유","계약"],"answer":0}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const partyA=new THREE.Mesh(new THREE.IcosahedronGeometry(1.0,0),new THREE.MeshBasicMaterial({color:0x5b8def}));partyA.position.x=-2.6;s.add(partyA);
+  const partyB=new THREE.Mesh(new THREE.IcosahedronGeometry(1.0,0),new THREE.MeshBasicMaterial({color:0xe0732a}));partyB.position.x=2.6;s.add(partyB);
+  const bond=new THREE.Mesh(new THREE.TorusGeometry(0.6,0.12,12,32),new THREE.MeshBasicMaterial({color:0xffe08a}));s.add(bond);
+  const link=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-2.6,0,0),new THREE.Vector3(2.6,0,0)]),new THREE.LineBasicMaterial({color:0xaaaaaa}));s.add(link);
+  s.userData.A=partyA;s.userData.B=partyB;s.userData.bond=bond;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const o=Math.abs(Math.sin(T*0.6));s.userData.A.position.x=-2.6+o*1.4;s.userData.B.position.x=2.6-o*1.4;s.userData.A.rotation.y+=0.01;s.userData.B.rotation.y-=0.01;s.userData.bond.scale.setScalar(0.4+o);s.userData.bond.rotation.z+=0.02;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

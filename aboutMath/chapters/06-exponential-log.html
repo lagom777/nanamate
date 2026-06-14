@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6장. 지수와 로그</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📐 표지 · 소개</a></li>
+    <li><a href="01-numbers-sets.html">1. 수와 집합</a></li>
+    <li><a href="02-algebra.html">2. 대수 — 방정식과 다항식</a></li>
+    <li><a href="03-functions.html">3. 함수와 그래프</a></li>
+    <li><a href="04-geometry.html">4. 기하 — 도형과 피타고라스</a></li>
+    <li><a href="05-trigonometry.html">5. 삼각함수 — 원과 파동</a></li>
+    <li><a href="06-exponential-log.html" style="color:var(--accent);font-weight:600;">6. 지수와 로그</a></li>
+    <li><a href="07-sequences-limits.html">7. 수열과 극한</a></li>
+    <li><a href="08-differentiation.html">8. 미분 — 변화율의 수학</a></li>
+    <li><a href="09-integration.html">9. 적분과 확률·통계</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. 거듭제곱의 확장 — aⁿ에서 aˣ로</h2>
+<p>2³ = 2×2×2처럼 거듭제곱은 "반복 곱셈"으로 출발하지만, 그대로는 2^0.5나 2^(−1) 같은 표현이 무의미합니다. 확장의 원칙은 단 하나, <strong>지수법칙을 보존한다</strong>입니다: aᵐ·aⁿ = aᵐ⁺ⁿ이 계속 성립하려면 a⁰ = 1 (aⁿ·a⁰ = aⁿ이어야 하므로), a⁻ⁿ = 1/aⁿ, 그리고 a^(1/2) = √a (a^(1/2)·a^(1/2) = a¹이므로)일 수밖에 없습니다. 유리수 지수 a^(p/q) = ᵠ√(aᵖ)를 거쳐, 무리수 지수는 유리수 지수의 극한으로 메워집니다 — 1장의 "수직선 완성"과 똑같은 패턴입니다.</p>
+<p>이렇게 완성된 <strong>지수함수 y = aˣ (a&gt;0, a≠1)</strong>는 모든 실수에서 정의되고, 항상 양수이며, a&gt;1이면 증가·0&lt;a&lt;1이면 감소합니다. 핵심 성질은 "x가 1 늘 때마다 y가 a배" — <strong>덧셈 입력이 곱셈 출력</strong>이 되는 함수입니다.</p>
+</section>
+
+<!-- 3D 학습 시각화: 지수 성장과 로그 — y = x 거울 대칭 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#e8506e;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 지수 성장 2ˣ 와 로그: 역함수의 y = x 거울 대칭</div>
+  <div id="math3d-06" style="width:100%;height:430px;"></div>
+  <div id="math3d-06-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">한 칸 갈 때마다 2배가 되는 성장을 봅니다.</div>
+</div>
+
+<section id="sec2">
+<h2>2. 지수함수가 지배하는 현상들</h2>
+<p><strong>복리</strong>: 원금 P를 연이율 r로 t년 굴리면 P(1+r)ᵗ. 연 7%면 약 10년마다 2배(72의 법칙: 72÷이율 ≈ 2배 기간). <strong>반감기</strong>: 방사성 물질은 N(t) = N₀(1/2)^(t/T) — 0&lt;a&lt;1인 지수 감쇠입니다. <strong>전염병 초기 확산</strong>, 박테리아 증식, 무어의 법칙까지 — "현재 양에 비례해 변하는" 모든 현상이 지수함수를 따릅니다(이 말의 정확한 의미는 8장의 미분방정식 y' = ky에서 완성됩니다).</p>
+<p>복리를 극한까지 밀면 특별한 수가 나타납니다. 이자를 무한히 잘게 나눠 연속으로 붙이면 (1 + 1/n)ⁿ → <strong>e ≈ 2.71828…</strong> (7장에서 수렴을 확인합니다). 밑이 e인 지수함수 eˣ는 "자기 자신이 자신의 변화율"이라는 유일무이한 성질을 갖고, 그래서 자연과학의 표준 밑이 됩니다 — 이름부터 자연(natural)로그의 e입니다.</p>
+</section>
+
+<section id="sec3">
+<h2>3. 로그 — 곱셈을 덧셈으로 바꾸는 발명품</h2>
+<p><strong>로그</strong>는 지수의 역연산입니다: a^x = N ⟺ x = log_a N. "2를 몇 제곱해야 8이 되나?"의 답이 log₂8 = 3. 함수로 보면 y = log_a x는 y = aˣ의 <strong>역함수</strong>이고, 3장의 정리대로 두 그래프는 y = x에 대해 정확히 대칭입니다(위 3D의 거울 장면).</p>
+<p>로그의 존재 이유는 성질 세 줄에 있습니다: <strong>log(MN) = log M + log N</strong>, log(M/N) = log M − log N, log Mᵏ = k log M. 곱셈·나눗셈·거듭제곱이 덧셈·뺄셈·곱셈으로 한 단계씩 내려옵니다. 계산기가 없던 시대에 천문학자들의 곱셈을 로그표가 대신했고("로그는 천문학자의 수명을 두 배로 늘렸다" — 라플라스), 오늘날에도 데이터가 여러 자릿수에 걸칠 때 로그 스케일이 표준입니다. 밑 변환은 log_a x = log x / log a 하나면 충분합니다.</p>
+</section>
+
+<section id="sec4">
+<h2>4. 로그 스케일로 보는 세상</h2>
+<p>인간의 감각과 자연 현상 다수는 "절대량"이 아니라 <strong>"비율"</strong>에 반응합니다. 그래서 단위들이 로그로 정의됩니다. <strong>데시벨</strong>: 소리 세기 10배 = +10dB. <strong>지진 규모</strong>: 매그니튜드 1 차이 = 진폭 10배(에너지 약 32배). <strong>pH</strong>: 1 차이 = 수소이온 농도 10배. <strong>별의 등급</strong>, 음악의 옥타브(진동수 2배 = 같은 음정 간격)도 마찬가지입니다.</p>
+<p>위 3D의 마지막 장면이 이 원리입니다: 로그 곡선 위에서 x가 1 → 2 → 4 → 8로 <strong>곱절</strong>이 될 때마다 y는 <strong>같은 간격</strong>으로 올라갑니다. "곱셈의 세계를 덧셈의 자로 재는 것" — 이것이 로그의 단 하나의 본질입니다.</p>
+<div class="formula">a⁰=1, a⁻ⁿ=1/aⁿ, a^(1/n)=ⁿ√a &nbsp;|&nbsp; aˣ=N ⟺ x=log_a N &nbsp;|&nbsp; log MN = log M + log N &nbsp;|&nbsp; (1+1/n)ⁿ → e</div>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="05-trigonometry.html" style="text-decoration:none;">← 5. 삼각함수 — 원과 파동</a><a href="07-sequences-limits.html" style="text-decoration:none;">7. 수열과 극한 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>지수는 "한 칸마다 ×2"처럼 곱하기로 자라는 함수, 로그는 그걸 거꾸로 묻는 함수("몇 번 곱했어?")예요. 종이를 42번만 접으면(두께 2⁴²배) 달까지 닿는다는 것이 지수의 위력, "42번"이라는 답을 주는 것이 로그입니다.</p>
+  <h3>왜 중요한가?</h3>
+  <p>예금 복리, 대출 이자, 인구 증가, 바이러스 확산, 배터리 열화, 소리 크기(dB), 지진 규모 — 전부 지수·로그의 언어로 쓰여 있습니다. "연 5%씩 20년"이 얼마나 커지는지 감으로 아는 사람과 모르는 사람의 재테크는 완전히 다릅니다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>지수함수 aˣ</strong>: x가 1 늘 때마다 a배 — 곱셈형 성장</li>
+    <li><strong>지수 감쇠</strong>: 밑이 1보다 작으면 반씩 줄어듦 (반감기)</li>
+    <li><strong>로그 log_a N</strong>: "a를 몇 제곱하면 N?"의 답</li>
+    <li><strong>상용로그</strong>: 밑 10 — 자릿수를 세는 로그</li>
+    <li><strong>자연상수 e ≈ 2.718</strong>: 연속 복리의 극한, 자연로그(ln)의 밑</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>쌀 한 톨을 체스판 첫 칸에, 다음 칸마다 2배로 올리는 옛이야기에서 64번째 칸은 2⁶³톨 — 전 세계 쌀 생산량의 수백 배입니다. 지수 성장의 무서움은 "처음엔 아무것도 아닌 듯 보인다"는 데 있어요. 위 3D의 막대들이 처음엔 바닥을 기다가 갑자기 화면을 뚫는 이유입니다. 로그는 그 폭발을 다시 "몇 번째 칸인가"라는 완만한 자로 되돌립니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 2의 거듭제곱 2¹⁰ ≈ 1000 (정확히 1024)을 기억하세요. 2²⁰ ≈ 100만, 2³⁰ ≈ 10억 — IT의 KB/MB/GB가 이것이고, "몇 번 접으면/몇 년 복리면 얼마"를 암산하는 만능 열쇠입니다. log₁₀2 ≈ 0.301도 함께 외우면 자릿수 계산이 됩니다.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>a⁰ = 1, a⁻ⁿ = 1/aⁿ, a^(1/2) = √a — 지수법칙이 확장을 결정</li>
+    <li>지수함수: 덧셈 입력 → 곱셈 출력, 항상 양수</li>
+    <li>로그 = 지수의 역함수, 그래프는 y = x 대칭</li>
+    <li>log MN = log M + log N — 곱셈을 덧셈으로</li>
+    <li>dB·지진 규모·pH = 로그 눈금 (1 차이 = 10배)</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>지수·로그 방정식과 부등식의 모든 기술은 두 가지로 환원됩니다: ① <strong>밑을 통일</strong>하고 지수를 비교 (a^f = a^g ⟺ f = g), ② <strong>치환</strong> t = aˣ (t &gt; 0!)으로 2장의 다항방정식으로 변환. 부등식에서는 밑이 1보다 작으면 부등호가 뒤집힌다는 것(감소함수)이 유일한 함정입니다. 로그 방정식은 항상 <strong>진수 조건(진수 &gt; 0)</strong>을 먼저 적고 시작하세요 — 답의 절반은 조건에서 걸러집니다.</p>
+  <p>상용로그의 구조: log 3700 = log(3.7×10³) = 3 + log 3.7. 정수 부분(지표)이 자릿수−1, 소수 부분(가수)이 숫자 배열을 결정합니다. "2¹⁰⁰은 몇 자리 수인가?" → 100 log 2 ≈ 30.1 → 31자리. 거대 수의 크기를 로그가 즉시 알려줍니다.</p>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>🎯 예제 1 — 72의 법칙 유도</h4><p>원금이 2배 되는 기간: (1+r)ᵗ = 2 ⟺ t = ln 2 / ln(1+r) ≈ 0.693/r (r 작을 때 ln(1+r) ≈ r). 0.693 ≈ 69.3을 백분율로 쓰면 t ≈ 69.3/이율(%) — 실무에선 약수가 많은 72를 씁니다. 연 6%면 72/6 = 12년에 2배.</p></div>
+  <div class="info-card"><h4>🎯 예제 2 — 탄소 연대 측정</h4><p>탄소-14의 반감기는 5730년. 유물의 ¹⁴C가 원래의 30%라면 (1/2)^(t/5730) = 0.3, t = 5730 · log 0.3 / log 0.5 ≈ 5730 × 1.737 ≈ 9950년 전. 고고학의 시계가 로그 계산입니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① <strong>알고리즘 복잡도</strong>: 이진 탐색이 O(log n)인 이유 — 한 번에 절반씩 줄이면 "몇 번 만에 1이 되나" = log₂n. ② <strong>정보이론</strong>: 정보량 = −log₂(확률) 비트, 엔트로피의 정의. ③ <strong>머신러닝</strong>: 크로스 엔트로피 손실, 로그 우도 — 확률의 곱을 로그로 합으로 바꿔 계산 안정성 확보. ④ <strong>금융</strong>: 로그 수익률 ln(P₁/P₀)은 기간 합산이 가능해 표준으로 쓰입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① log(M+N) ≠ log M + log N — 로그가 더하기로 바꾸는 건 "곱셈"입니다. ② (log M)² 과 log M² 혼동. ③ 치환 t = 2ˣ 후 t ≤ 0인 근을 답에 포함. ④ 로그 부등식에서 진수 조건 누락. ⑤ 0.5ˣ 같은 감소 밑에서 부등호 방향 유지하는 실수.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>해석학에서는 순서를 뒤집어 <strong>로그를 먼저 정의</strong>하는 것이 깔끔합니다: ln x = ∫₁ˣ dt/t (9장의 적분). 이 정의에서 ln(xy) = ln x + ln y가 치환적분으로 증명되고, eˣ는 ln의 역함수로 정의됩니다. "반복 곱셈"이라는 소박한 출발점이 적분 기반의 엄밀한 구조물로 재건되는 것 — 수학이 자기 기초를 다시 놓는 전형적 방식입니다.</p>
+  <p>지수함수의 본질적 특성화: f(x+y) = f(x)f(y)를 만족하는 연속함수는 f(x) = aˣ뿐입니다(코시 함수방정식). 즉 지수함수는 "덧셈을 곱셈으로 옮기는 유일한 연속 동형사상" — 군론의 언어로 (ℝ,+) → (ℝ⁺,×)의 동형입니다. 로그는 그 역동형이고, 5장의 오일러 공식 e^(iθ)는 이 동형을 복소수로 확장한 것입니다.</p>
+  <h3>수학적·정량적 기초</h3>
+  <div class="formula">ln x = ∫₁ˣ dt/t &nbsp;|&nbsp; e = lim (1+1/n)ⁿ = Σ 1/n! &nbsp;|&nbsp; (eˣ)' = eˣ<br>스털링: n! ≈ √(2πn) (n/e)ⁿ &nbsp;|&nbsp; 소수 정리: π(x) ~ x / ln x</div>
+  <p>로그는 뜻밖의 곳에서 자연의 분포를 지배합니다. <strong>벤포드의 법칙</strong>: 실세계 수치 데이터의 첫 자리가 1일 확률은 log₁₀2 ≈ 30.1% (9일 확률은 4.6%) — 회계 부정 탐지에 실제로 쓰입니다. <strong>소수 정리</strong>: x 이하의 소수 개수는 x/ln x에 점근 — 정수론의 심장에도 ln이 있습니다.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>로그 시간 알고리즘</strong>: 이산 로그 문제(aˣ ≡ b mod p에서 x 찾기)의 어려움이 디피–헬만 키 교환과 타원곡선 암호의 보안 근거 — 양자 컴퓨터의 쇼어 알고리즘이 이를 깨므로 포스트 양자 암호로의 전환이 진행 중. ② <strong>로그-정규 분포</strong>: 소득·도시 크기·파일 크기 등 "곱셈적 우연"이 쌓인 현상의 표준 모형. ③ <strong>딥러닝</strong>: log-sum-exp, 소프트맥스의 수치 안정화 — 로그 공간 계산이 사실상의 업계 표준.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>미적분</strong>: (eˣ)' = eˣ, ∫dx/x = ln|x| (8~9장의 주인공)</li>
+    <li><strong>정보이론</strong>: 엔트로피 H = −Σ p log p</li>
+    <li><strong>암호학</strong>: 이산 로그 문제, RSA와 거듭제곱 모듈러 연산</li>
+    <li><strong>군론</strong>: exp/log = 리 군과 리 대수를 잇는 다리</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Eli Maor, <em>e: The Story of a Number</em> — e의 전기</li>
+    <li>📖 Walter Rudin, <em>PMA</em> 8장 — exp/log의 엄밀한 구성</li>
+    <li>📺 3Blue1Brown — "e to the pi i", 지수함수의 미분 시각화</li>
+    <li>🔬 키워드: natural logarithm, compound interest, Benford's law, discrete log, log-normal</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> ① ln x = ∫₁ˣ dt/t 정의에서 ln(xy) = ln x + ln y를 치환 t = xs로 증명하기. ② (1+1/n)ⁿ이 단조증가하고 위로 유계임을 이항정리로 보여 e의 존재를 확인하기(7장 예고). ③ 본인 통장의 이율로 원금 2배 시점을 72의 법칙과 정확한 로그 계산으로 각각 구해 오차를 비교하기.</div>
+</div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f43f5e","questions":[{"q":"a⁰의 값은? (a>0)","choices":["0","a","1","정의 안 됨"],"answer":2},{"q":"log₂8의 값은?","choices":["2","4","8","3"],"answer":3},{"q":"자연상수 e의 근삿값은?","choices":["2.718","3.141","1.414","1.618"],"answer":0},{"q":"log(MN)과 같은 것은?","choices":["logM × logN","logM + logN","logM − logN","logM ÷ logN"],"answer":1},{"q":"(1+1/n)ⁿ의 극한은?","choices":["1","π","∞","e"],"answer":3}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('math3d-06');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('math3d-06-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+
+  var S=0.55; // 양 축 공통 스케일 (대칭이 기하학적으로 정확하도록)
+  camera.position.set(1.4,1.6,11.8);camera.lookAt(1.4,1.4,0);
+
+  // 좌표축
+  scene.add(line(V(-2.2,0,0),V(5.4,0,0),0x39415a,0.85));
+  scene.add(line(V(0,-1.6,0),V(0,4.9,0),0x39415a,0.85));
+  var xA=lbl('x',22,'#39415a',0.8);xA.position.set(5.7,-0.3,0);scene.add(xA);
+  var yA=lbl('y',22,'#39415a',0.8);yA.position.set(-0.4,4.7,0);scene.add(yA);
+
+  // ① 2^x 막대 (x=-2..3)
+  var bars=[],barLbls=[];
+  var bdefs=[[-2,'1/4'],[-1,'1/2'],[0,'1'],[1,'2'],[2,'4'],[3,'8']];
+  bdefs.forEach(function(d){
+    var h=Math.pow(2,d[0])*S;
+    var b=new THREE.Mesh(new THREE.BoxGeometry(0.5,1,0.5),mat(0xe8506e,0.9));
+    b.userData.h=h;b.position.set(d[0]*S*2+1.2,0,0); // 보기 좋게 x 간격 확대
+    b.scale.y=0.001;b.position.y=0;
+    scene.add(b);bars.push(b);
+    var L=lbl(d[1],20,'#e8506e',0.8);L.position.set(d[0]*S*2+1.2,h+0.4,0);L.visible=false;scene.add(L);barLbls.push(L);
+  });
+  function setBar(b,k){var h=b.userData.h*k;b.scale.y=Math.max(0.001,h);b.position.y=h/2;}
+  var barTitle=lbl('한 칸마다 ×2 — 2ˣ',26,'#e8506e',1);barTitle.position.set(1.2,4.5,0);scene.add(barTitle);
+
+  // ② 지수 곡선 y=2^x (균등 스케일: px=x*S2, py=2^x*S)
+  function makeCurve(fn,x0,x1,n,color){
+    var pts=[];
+    for(var i=0;i<=n;i++){var x=x0+(x1-x0)*i/n;pts.push(V(x*S,fn(x)*S,0));}
+    var g=new THREE.BufferGeometry().setFromPoints(pts);
+    return new THREE.Line(g,new THREE.LineBasicMaterial({color:color,transparent:true,opacity:0}));
+  }
+  var expCurve=makeCurve(function(x){return Math.pow(2,x);},-2.5,3.1,90,0xe8506e);scene.add(expCurve);
+  var expL=lbl('y = 2ˣ',25,'#e8506e',0.95);expL.position.set(1.0,4.4,0);expL.visible=false;scene.add(expL);
+  // ③ 로그 곡선 + y=x
+  var logCurve=makeCurve(function(x){return Math.log(x)/Math.LN2;},0.18,8.8,120,0x2f9e63);scene.add(logCurve);
+  var logL=lbl('y = log₂x',25,'#2f9e63',0.95);logL.position.set(4.4,1.95,0);logL.visible=false;scene.add(logL);
+  var mirror=line(V(-1.5*S,-1.5*S,0),V(8.2*S,8.2*S,0),0x647088,0.0);scene.add(mirror);
+  var mirL=lbl('y = x (거울)',22,'#647088',0.85);mirL.position.set(4.9,4.2,0);mirL.visible=false;scene.add(mirL);
+  // 대칭 점쌍
+  var pe=sph(0.13,0xe8506e,1),pl=sph(0.13,0x2f9e63,1);pe.visible=pl.visible=false;scene.add(pe);scene.add(pl);
+  var connect=line(V(0,0,0),V(0,0,0),0x647088,0.0);scene.add(connect);
+  // ④ 로그 눈금 마커 (x=1,2,4,8)
+  var marks=[],mlines=[];
+  [1,2,4,8].forEach(function(x,i){
+    var y=Math.log(x)/Math.LN2;
+    var m=sph(0.12,0xb07d0a,1);m.position.set(x*S,y*S,0);m.visible=false;scene.add(m);marks.push(m);
+    var hl=line(V(x*S,y*S,0),V(-0.0,y*S,0),0xb07d0a,0.0);scene.add(hl);mlines.push(hl);
+  });
+  var stepL=lbl('x가 2배 ⇒ y는 +1 (같은 간격)',23,'#b07d0a',0.95);stepL.position.set(2.1,-1.1,0);stepL.visible=false;scene.add(stepL);
+
+  function hideAll(){
+    bars.forEach(function(b){setBar(b,0.001);});
+    barLbls.forEach(function(L){L.visible=false;});
+    barTitle.visible=true;
+    expCurve.material.opacity=0;expL.visible=false;
+    logCurve.material.opacity=0;logL.visible=false;
+    mirror.material.opacity=0;mirL.visible=false;
+    pe.visible=pl.visible=false;connect.material.opacity=0;
+    marks.forEach(function(m){m.visible=false;});
+    mlines.forEach(function(l){l.material.opacity=0;});
+    stepL.visible=false;
+  }
+  hideAll();
+
+  var phases=[
+    {dur:7,cap:'① 한 칸 갈 때마다 2배 — 1/4, 1/2, 1, 2, 4, 8. 음의 지수는 "반으로 나누기"입니다. 처음엔 바닥을 기다가 곧 폭발하는 것이 지수 성장의 본성입니다.',
+     enter:function(){hideAll();},
+     update:function(u){bars.forEach(function(b,i){var k=ez(Math.min(1,Math.max(0,u*7-i)));setBar(b,k);barLbls[i].visible=u*7>i+0.7;});}},
+    {dur:6,cap:'② 막대 사이를 매끄럽게 이으면 연속 지수함수 y = 2ˣ. 모든 실수 x에서 정의되고 항상 양수입니다.',
+     enter:function(){barTitle.visible=false;expL.visible=true;},
+     update:function(u){expCurve.material.opacity=ez(u)*0.95;}},
+    {dur:8,cap:'③ "2를 몇 제곱하면 x인가?"를 답하는 역함수가 로그 y = log₂x. 두 곡선은 거울선 y = x에 대해 정확히 대칭입니다 — 두 점이 거울을 사이에 두고 마주봅니다.',
+     enter:function(){logL.visible=true;mirL.visible=true;pe.visible=pl.visible=true;},
+     update:function(u,dt,tt){
+       logCurve.material.opacity=Math.min(0.95,logCurve.material.opacity+dt*0.8);
+       mirror.material.opacity=Math.min(0.6,mirror.material.opacity+dt*0.5);
+       connect.material.opacity=0.5;
+       var a=-1.2+ (Math.sin(tt*0.7)+1)*1.35; // a ∈ [-1.2, 1.5]
+       var ex=a,ey=Math.pow(2,a);
+       pe.position.set(ex*S,ey*S,0);
+       pl.position.set(ey*S,ex*S,0);
+       connect.geometry.setFromPoints([V(ex*S,ey*S,0),V(ey*S,ex*S,0)]);
+     }},
+    {dur:8,cap:'④ 로그 눈금의 본질: x가 1→2→4→8로 "곱절"이 될 때마다 y는 0→1→2→3 "같은 간격"으로 — 곱셈을 덧셈으로 바꿉니다. 데시벨·지진 규모·pH가 전부 이 자입니다.',
+     enter:function(){stepL.visible=true;},
+     update:function(u){
+       marks.forEach(function(m,i){m.visible=u*4.5>i;});
+       mlines.forEach(function(l,i){l.material.opacity=(u*4.5>i)?0.65:0;});
+     }}
+  ];
+
+  var pi=0,pt=0,last=0,tt=0;
+  phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;tt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt,tt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

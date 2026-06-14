@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9장. 적분과 확률·통계</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📐 표지 · 소개</a></li>
+    <li><a href="01-numbers-sets.html">1. 수와 집합</a></li>
+    <li><a href="02-algebra.html">2. 대수 — 방정식과 다항식</a></li>
+    <li><a href="03-functions.html">3. 함수와 그래프</a></li>
+    <li><a href="04-geometry.html">4. 기하 — 도형과 피타고라스</a></li>
+    <li><a href="05-trigonometry.html">5. 삼각함수 — 원과 파동</a></li>
+    <li><a href="06-exponential-log.html">6. 지수와 로그</a></li>
+    <li><a href="07-sequences-limits.html">7. 수열과 극한</a></li>
+    <li><a href="08-differentiation.html">8. 미분 — 변화율의 수학</a></li>
+    <li><a href="09-integration.html" style="color:var(--accent);font-weight:600;">9. 적분과 확률·통계</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. 곡선 아래 넓이 — 무한히 잘게 썰어 더하기</h2>
+<p>직사각형의 넓이는 가로×세로. 그런데 한 변이 곡선이면? 아르키메데스 이래의 답은 <strong>"직선 조각으로 근사하고, 한없이 잘게 썰어 극한을 취한다"</strong>입니다. 구간 [a, b]를 n등분하고 각 조각 위에 높이 f(xᵢ)의 직사각형을 세워 합한 것이 <strong>리만 합</strong> Sₙ = Σ f(xᵢ)Δx. 아래 3D가 보여주듯 n = 4, 8, 16, …으로 늘리면 들쭉날쭉하던 계단이 곡선에 달라붙고, 그 극한이 <strong>정적분</strong> ∫ₐᵇ f(x)dx입니다. ∫ 기호 자체가 Sum의 S를 길게 늘인 것 — "무한히 가는 조각의 합"이라는 뜻 그대로입니다.</p>
+<p>7장의 극한이 여기서 다시 주연을 맡습니다: 정적분은 "리만 합이라는 수열의 극한"이고, 연속함수라면 이 극한이 항상 존재함이 증명됩니다(완비성 — 1장부터 이어진 끈이 여기까지 옵니다).</p>
+</section>
+
+<!-- 3D 학습 시각화: 리만 합의 수렴 — 그리고 곡선 아래 넓이 = 확률 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#e8506e;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 적분: 리만 합 직사각형이 잘게 쪼개지며 넓이로 수렴 — 그리고 넓이 = 확률</div>
+  <div id="math3d-09" style="width:100%;height:430px;"></div>
+  <div id="math3d-09-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">곡선 아래 넓이를 직사각형으로 근사하는 과정을 봅니다.</div>
+</div>
+
+<section id="sec2">
+<h2>2. 미적분의 기본정리 — 17세기 최대의 발견</h2>
+<p>넓이(적분)와 기울기(미분)는 전혀 다른 문제처럼 보입니다. 뉴턴과 라이프니츠의 발견은 둘이 <strong>역연산</strong>이라는 것입니다. <strong>미적분의 기본정리(FTC)</strong>: F′ = f인 함수(부정적분, 원시함수)를 하나 찾으면, ∫ₐᵇ f(x)dx = F(b) − F(a). 무한 합의 극한이라는 끔찍한 계산이 "미분을 거꾸로 하기 + 빼기 한 번"으로 끝납니다.</p>
+<p>예: ∫₀¹ x² dx. (x³/3)′ = x²이므로 답은 1³/3 − 0 = 1/3. 위 3D의 곡선 f(x) = 4 − x²/4도 마찬가지: 원시함수 4x − x³/12에서 ∫₋₄⁴ = (16 − 16/3) − (−16 + 16/3) = <strong>64/3 ≈ 21.33</strong> — 직사각형들이 수렴해 가던 바로 그 값입니다. 기본 공식은 미분 공식을 뒤집으면 됩니다: ∫xⁿdx = xⁿ⁺¹/(n+1) + C, ∫cos x dx = sin x + C, ∫eˣdx = eˣ + C, ∫dx/x = ln|x| + C.</p>
+</section>
+
+<section id="sec3">
+<h2>3. 적분의 활용 — 넓이를 넘어</h2>
+<p>적분의 본질은 "잘게 썰어 더하기"이므로, 넓이만이 아니라 <strong>쌓아 올릴 수 있는 모든 양</strong>을 계산합니다. <strong>부피</strong>: 단면적 A(x)를 알면 V = ∫A(x)dx — 회전체는 원판의 합 V = π∫f(x)²dx (구의 부피 4πr³/3이 이렇게 유도됩니다). <strong>이동 거리</strong>: 속도의 적분(8장의 역방향). <strong>일(work)</strong>: 힘의 적분. <strong>평균값</strong>: (1/(b−a))∫ₐᵇf dx — "함수의 평균 높이"입니다.</p>
+<p>계산 기법은 두 가지가 중심입니다. <strong>치환적분</strong>(연쇄법칙의 역): 속을 t로 바꿔 단순화. <strong>부분적분</strong>(곱의 법칙의 역): ∫f′g = fg − ∫fg′. 그리고 손으로 안 풀리는 적분은 컴퓨터가 리만 합의 정신으로 수치 계산합니다(사다리꼴 공식, 심프슨 공식) — 적분의 "정의"가 그대로 알고리즘이 되는 드문 사례입니다.</p>
+</section>
+
+<section id="sec4">
+<h2>4. 확률·통계 — 곡선 아래 넓이가 확률이 되다</h2>
+<p>연속 확률변수의 확률은 <strong>확률밀도함수(pdf) 아래의 넓이</strong>로 정의됩니다: P(a ≤ X ≤ b) = ∫ₐᵇ p(x)dx, 전체 넓이는 1. 적분이 곧 확률의 문법입니다. 그 중심에 <strong>정규분포</strong>(종 모양 곡선)가 있습니다: 평균 μ, 표준편차 σ에 대해 <strong>68–95–99.7 법칙</strong> — μ±σ 안에 약 68%, ±2σ 안에 95%, ±3σ 안에 99.7%의 확률이 들어옵니다(위 3D 마지막 장면). 키, 측정 오차, 시험 점수가 대체로 종 모양인 이유는 <strong>중심극한정리</strong>: 독립적인 작은 요인이 많이 더해지면, 원래 분포가 무엇이든 합은 정규분포에 가까워집니다.</p>
+<p>기술통계의 두 기둥은 <strong>평균</strong>(자료의 무게중심)과 <strong>표준편차</strong>(평균에서 흩어진 정도, 분산의 제곱근)입니다. "평균 점수 70, 표준편차 5"와 "평균 70, 표준편차 20"은 완전히 다른 교실입니다 — 중심과 퍼짐을 함께 봐야 분포가 보입니다. 수능·모의고사의 표준점수가 정확히 z = (x−μ)/σ의 변환이고, 그 등급 경계가 정규분포 넓이 계산입니다.</p>
+<div class="formula">∫ₐᵇ f dx = lim Σf(xᵢ)Δx = F(b)−F(a) &nbsp;|&nbsp; ∫xⁿdx = xⁿ⁺¹/(n+1)+C &nbsp;|&nbsp; P(μ−σ≤X≤μ+σ) ≈ 68%</div>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="08-differentiation.html" style="text-decoration:none;">← 8. 미분 — 변화율의 수학</a><a href="../index.html" style="text-decoration:none;">표지로 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>적분은 "잘게 썰어 다 더하기"예요. 곡선 아래를 가느다란 막대로 채우고 막대를 무한히 가늘게 하면 정확한 넓이가 됩니다. 그리고 놀랍게도 이 "더하기"는 미분의 정확한 반대 — 미분을 거꾸로 하면 적분이 풀립니다.</p>
+  <h3>왜 중요한가?</h3>
+  <p>속도 기록으로 이동 거리 구하기(내비게이션), 전기 사용량 곡선에서 총 사용량(전기요금), 시험 점수의 상위 몇 %인지(정규분포 넓이) — "쌓인 양"을 묻는 모든 질문이 적분입니다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>리만 합</strong>: 직사각형들로 곡선 아래를 근사한 합</li>
+    <li><strong>정적분 ∫ₐᵇf dx</strong>: 그 합의 극한 — 정확한 넓이</li>
+    <li><strong>원시함수</strong>: 미분하면 f가 되는 함수 (부정적분)</li>
+    <li><strong>기본정리</strong>: 적분 = 원시함수의 끝값 − 시작값</li>
+    <li><strong>정규분포</strong>: 종 모양 확률 곡선 — 넓이가 확률</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>식빵으로 산 모양 케이크의 부피를 잰다고 해 봐요. 식빵을 얇게 썰면 각 조각은 거의 직육면체라 부피를 알 수 있고, 다 더하면 전체와 비슷해져요. 더 얇게 썰수록 더 정확해지고, "무한히 얇게"의 극한이 적분입니다. 위 3D에서 막대 4개일 때는 틈이 보이지만 64개가 되면 곡선과 거의 구분되지 않는 것 — 그 장면이 적분의 정의 전부입니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 적분 계산의 9할은 "미분 거꾸로"입니다. 미분 공식표를 오른쪽→왼쪽으로 읽는 연습을 하세요: "x³의 미분은 3x²" ⟹ "3x²의 적분은 x³". 적분 후엔 반드시 미분해서 원래 식이 나오는지 검산 — 부호·계수 실수가 즉시 잡힙니다.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>적분 = 잘게 썰어 더하기의 극한 = 곡선 아래 넓이</li>
+    <li>미적분의 기본정리: ∫ₐᵇf = F(b)−F(a), F′ = f</li>
+    <li>∫xⁿ = xⁿ⁺¹/(n+1)+C — 거듭제곱은 지수 하나 올리고 나누기</li>
+    <li>속도를 적분하면 거리, 단면적을 적분하면 부피</li>
+    <li>정규분포: ±1σ 68%, ±2σ 95%, ±3σ 99.7%</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>기본정리가 성립하는 이유를 스케치하면: 넓이 함수 A(x) = ∫ₐˣ f를 정의하고 A′를 계산합니다. A(x+h) − A(x)는 폭 h의 가는 띠의 넓이로, 연속성에 의해 ≈ f(x)·h. 따라서 A′(x) = f(x) — <strong>"넓이의 변화율은 곡선의 높이"</strong>라는 한 문장이 미분과 적분을 잇습니다. 8장의 MVT가 증명의 엄밀화를 담당합니다.</p>
+  <p>치환적분 ∫f(g(x))g′(x)dx = ∫f(t)dt (t = g(x))는 연쇄법칙의 역재생이고, 정적분에서는 <strong>적분 한계도 함께 바뀐다</strong>는 것이 핵심 주의점입니다. 부분적분 ∫u dv = uv − ∫v du는 곱의 법칙의 역이며, "미분하면 단순해지는 것을 u로"(로그·다항식), "적분해도 복잡해지지 않는 것을 dv로"(지수·삼각)가 선택 요령입니다.</p>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>🎯 예제 1 — 두 곡선 사이 넓이</h4><p>y = x와 y = x² 사이(0 ≤ x ≤ 1): ∫₀¹(x − x²)dx = [x²/2 − x³/3]₀¹ = 1/2 − 1/3 = 1/6. "위 곡선 − 아래 곡선"의 적분 — 경제학의 소비자 잉여(수요곡선과 가격선 사이 넓이)가 정확히 이 계산입니다.</p></div>
+  <div class="info-card"><h4>🎯 예제 2 — 구의 부피 유도</h4><p>반지름 r인 구를 두께 dx 원판으로 썰면 단면 반지름은 √(r²−x²) (피타고라스 — 4장!). V = ∫₋ᵣʳ π(r²−x²)dx = π[r²x − x³/3]₋ᵣʳ = 4πr³/3. 암기하던 공식이 "썰어 더하기"로 유도되는 순간입니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① <strong>물리</strong>: 일 = ∫F dx, 충격량 = ∫F dt, 무게중심 = 적분의 비. ② <strong>공학</strong>: 신호의 에너지 ∫|f|²dt, 푸리에 계수도 적분으로 계산. ③ <strong>데이터 과학</strong>: ROC 곡선 아래 넓이(AUC)가 분류기 성능 지표 — "넓이 = 확률"의 실무 버전. ④ <strong>금융</strong>: 옵션 가격(블랙–숄즈)은 정규분포 적분, VaR은 분포 꼬리의 넓이입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① 부정적분에 +C 누락. ② x축 아래 부분은 적분값이 음수 — "넓이"를 물으면 |f| 또는 구간 분할 필요. ③ 치환 후 적분 한계 변경 누락. ④ ∫f·g ≠ ∫f · ∫g — 곱의 적분은 부분적분으로. ⑤ 확률에서 P(X = a) = 0 (연속형) — 넓이는 구간에서만 생깁니다. ⑥ 표준편차와 분산 혼동(σ vs σ²).</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>리만 적분의 한계(극한과 적분의 교환이 까다로움, 병적인 함수 처리 불가)를 극복한 것이 <strong>르베그 적분</strong>입니다. 발상의 전환: 정의역을 써는 대신 <strong>치역을 썰어</strong> "함수값이 y 근처인 집합의 크기(측도)"를 더합니다. 디리클레 함수(1장)는 리만 적분 불가능하지만 르베그 적분으로는 0 — 유리수 집합의 측도가 0이기 때문. 지배수렴정리 등 강력한 극한 정리를 갖춘 르베그 이론이 현대 해석학·확률론의 표준이며, <strong>콜모고로프의 확률 공리화(1933)는 "확률 = 전체 측도 1인 측도"</strong>라는 선언입니다 — 확률론이 적분 이론의 한 장이 되는 순간입니다.</p>
+  <p>중심극한정리의 정확한 진술: 평균 μ, 분산 σ²인 iid 변수들의 표준화 합 (ΣXᵢ − nμ)/(σ√n)은 표준정규분포로 분포수렴합니다. 증명의 표준 도구는 특성함수(푸리에 변환 — 5장!)이고, 수렴 속도는 베리–에신 정리가 O(1/√n)으로 정량화합니다.</p>
+  <h3>수학적·정량적 기초</h3>
+  <div class="formula">FTC: d/dx ∫ₐˣ f(t)dt = f(x)<br>가우스 적분: ∫₋∞^∞ e^(−x²/2)dx = √(2π) — 정규분포가 확률(전체 1)이 되는 이유<br>CLT: (ΣXᵢ−nμ)/(σ√n) →ᵈ N(0,1)</div>
+  <p>가우스 적분 √(2π)의 고전적 계산은 제곱해서 극좌표로 바꾸는 트릭입니다 — 1차원에서 불가능한 원시함수(e^(−x²)의 부정적분은 초등함수가 아님 — 리우빌 정리)가 2차원 우회로 풀리는, 해석학에서 가장 아름다운 계산 중 하나입니다. "원시함수가 없어도 정적분은 가능하다"는 교훈이기도 합니다.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>몬테카를로 적분</strong>: 고차원 적분을 난수 샘플 평균으로 — 차원의 저주를 피하는 유일한 일반 해법, 베이즈 추론(MCMC)·강화학습·금융의 표준. ② <strong>확률적 미분방정식(SDE)</strong>: 이토 적분 — 브라운 운동에 대한 적분으로 주가·확산 모델링, 디퓨전 생성 모델(Stable Diffusion)의 수학적 기초. ③ <strong>수치 적분의 신경망화</strong>: 정규화 흐름(normalizing flow)으로 적분 가능 밀도를 학습하는 생성 모델링.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>측도론</strong>: 르베그 적분, 확률의 공리적 기초</li>
+    <li><strong>통계학</strong>: 추정·검정 — 전부 분포의 적분 계산</li>
+    <li><strong>물리학</strong>: 경로적분(파인만), 통계역학의 분배함수</li>
+    <li><strong>머신러닝</strong>: 기대값 = 적분, ELBO, 디퓨전 모델의 SDE</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Michael Spivak, <em>Calculus</em> 13~14장 — 적분의 엄밀한 구성</li>
+    <li>📖 Sheldon Ross, <em>A First Course in Probability</em> — 확률 표준 입문</li>
+    <li>📖 김우철 외, <em>수리통계학</em> — 한국어 표준 교재</li>
+    <li>📺 3Blue1Brown — "적분이란", "중심극한정리" 시각화</li>
+    <li>🔬 키워드: Riemann sum, FTC, Lebesgue measure, CLT, Monte Carlo, Itô integral</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> ① f(x) = x²의 [0,1] 리만 합 Σ(i/n)²(1/n) = (n+1)(2n+1)/6n²을 직접 유도하고 n→∞에서 1/3을 확인하기(위 3D가 하던 일을 손으로). ② 부분적분으로 ∫ln x dx = x ln x − x + C 유도하기. ③ 동전 100번 던지기에서 앞면 60회 이상의 확률을 CLT 정규근사(μ=50, σ=5, z=2)로 추정해 보기 — "±2σ 바깥 2.5%"가 실제 판단에 쓰이는 경험입니다.</div>
+</div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f43f5e","questions":[{"q":"정적분은 무엇의 극한인가?","choices":["리만 합","평균값","도함수","점화식"],"answer":0},{"q":"∫₀¹ x² dx의 값은?","choices":["1","½","⅓","¼"],"answer":2},{"q":"정규분포 μ±σ 안의 확률은?","choices":["50%","95%","99.7%","약 68%"],"answer":3},{"q":"F′=f일 때 ∫ₐᵇ f dx는?","choices":["F(a)−F(b)","F(b)−F(a)","F(b)+F(a)","F(ab)"],"answer":1},{"q":"부분적분이 거꾸로 쓰는 법칙은?","choices":["연쇄법칙","몫의 법칙","곱의 법칙","지수법칙"],"answer":2}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('math3d-09');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('math3d-09-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+
+  camera.position.set(0,1.6,12.3);camera.lookAt(0,1.3,0);
+
+  var XS=0.98,YS=0.66;
+  function f(x){return 4-x*x/4;}
+  function P(x,y){return V(x*XS,y*YS,0);}
+
+  // 축
+  scene.add(line(P(-4.8,0),P(4.8,0),0x39415a,0.85));
+  scene.add(line(P(-4.3,-0.3),P(-4.3,4.6),0x39415a,0.5));
+
+  // 곡선 f
+  var cpts=[];
+  for(var i=0;i<=100;i++){var x=-4+8*i/100;cpts.push(P(x,f(x)));}
+  var fCurve=new THREE.Line(new THREE.BufferGeometry().setFromPoints(cpts),new THREE.LineBasicMaterial({color:0x39415a,transparent:true,opacity:0.95}));
+  scene.add(fCurve);
+  var fL=lbl('y = 4 − x²/4',24,'#39415a',0.95);fL.position.set(-3.6,3.35,0);scene.add(fL);
+
+  // 리만 직사각형 그룹
+  var rects=[];
+  function clearRects(){rects.forEach(function(r){scene.remove(r);});rects=[];}
+  function buildRects(n,color,op){
+    clearRects();
+    var dx=8/n,sum=0;
+    for(var i=0;i<n;i++){
+      var xm=-4+dx*(i+0.5); // 중점 규칙
+      var h=f(xm);sum+=h*dx;
+      var r=new THREE.Mesh(new THREE.BoxGeometry(dx*XS*0.94,Math.max(0.01,h*YS),0.3),mat(color,op||0.85));
+      r.position.set(xm*XS,h*YS/2,0);
+      r.userData.h=h*YS;
+      r.scale.y=0.001;r.position.y=0.005;
+      scene.add(r);rects.push(r);
+    }
+    return sum;
+  }
+  function growRects(u){
+    rects.forEach(function(r,i){
+      var k=Math.min(1,Math.max(0,u*rects.length*1.5-i));
+      r.scale.y=Math.max(0.001,k);
+      r.position.y=r.userData.h*k/2;
+    });
+  }
+  var sumL=null;
+  function setSumL(txt,color){
+    if(sumL)scene.remove(sumL);
+    sumL=lbl(txt,26,color||'#e8506e',1.05);sumL.position.set(0,-0.85,0);scene.add(sumL);
+  }
+
+  // 정규분포 요소
+  var ndCurvePts=[];
+  function nd(x){return 4.1*Math.exp(-x*x/2);}
+  for(var j=0;j<=100;j++){var x2=-4+8*j/100;ndCurvePts.push(P(x2,nd(x2)));}
+  var ndCurve=new THREE.Line(new THREE.BufferGeometry().setFromPoints(ndCurvePts),new THREE.LineBasicMaterial({color:0x8b5cf6,transparent:true,opacity:0}));
+  scene.add(ndCurve);
+  var ndFill=[];
+  function buildNdFill(){
+    ndFill.forEach(function(r){scene.remove(r);});ndFill=[];
+    var n=40,x0=-1,x1=1,dx=(x1-x0)/n;
+    for(var i=0;i<n;i++){
+      var xm=x0+dx*(i+0.5),h=nd(xm);
+      var r=new THREE.Mesh(new THREE.BoxGeometry(dx*XS*0.96,h*YS,0.28),mat(0x8b5cf6,0.45));
+      r.position.set(xm*XS,h*YS/2,0);r.visible=false;
+      scene.add(r);ndFill.push(r);
+    }
+  }
+  buildNdFill();
+  var sig1=line(P(-1,0),P(-1,nd(-1)+0.4),0x8b5cf6,0);scene.add(sig1);
+  var sig2=line(P(1,0),P(1,nd(1)+0.4),0x8b5cf6,0);scene.add(sig2);
+  var muL=lbl('μ−σ',22,'#8b5cf6',0.85);muL.position.copy(P(-1,-0.45));muL.visible=false;scene.add(muL);
+  var muL2=lbl('μ+σ',22,'#8b5cf6',0.85);muL2.position.copy(P(1,-0.45));muL2.visible=false;scene.add(muL2);
+
+  function hideNd(){
+    ndCurve.material.opacity=0;ndFill.forEach(function(r){r.visible=false;});
+    sig1.material.opacity=0;sig2.material.opacity=0;muL.visible=false;muL2.visible=false;
+  }
+  function showCurveF(on){fCurve.material.opacity=on?0.95:0;fL.visible=on;}
+
+  var steps=[[4,0xe8506e],[8,0xe07a3f],[16,0xe0a82e],[32,0x2f9e63],[64,0x14b8a6]];
+  var phases=[
+    {dur:5,cap:'① 문제: 곡선 y = 4 − x²/4 아래, x = −4부터 4까지의 넓이는? 한 변이 곡선이라 공식이 없습니다 — 그래서 "썰어서 더하기"를 시작합니다.',
+     enter:function(){clearRects();hideNd();showCurveF(true);setSumL('넓이 = ?','#39415a');},
+     update:function(u){}},
+    {dur:5,cap:'② n = 4: 폭 2짜리 직사각형 4개로 근사하면 S₄ = 22.0 — 틈과 초과가 그대로 보입니다.',
+     enter:function(){var s=buildRects(4,steps[0][1]);setSumL('S₄ = '+s.toFixed(2),'#e8506e');},
+     update:function(u){growRects(u);}},
+    {dur:4,cap:'③ n = 8: 더 잘게 — S₈ = 21.5. 계단이 곡선에 다가갑니다.',
+     enter:function(){var s=buildRects(8,steps[1][1]);setSumL('S₈ = '+s.toFixed(2),'#e07a3f');},
+     update:function(u){growRects(u);}},
+    {dur:4,cap:'④ n = 16 → S₁₆ = 21.38. 오차가 눈에 띄게 줄어듭니다.',
+     enter:function(){var s=buildRects(16,steps[2][1]);setSumL('S₁₆ = '+s.toFixed(2),'#b07d0a');},
+     update:function(u){growRects(u);}},
+    {dur:4,cap:'⑤ n = 32 → S₃₂ = 21.34. 이미 곡선과 거의 구분되지 않습니다.',
+     enter:function(){var s=buildRects(32,steps[3][1]);setSumL('S₃₂ = '+s.toFixed(2),'#2f9e63');},
+     update:function(u){growRects(u);}},
+    {dur:6,cap:'⑥ n = 64, 그리고 극한: Sₙ → 64/3 = 21.333… 이 극한값이 정적분 ∫₋₄⁴(4−x²/4)dx — 미적분의 기본정리로는 [4x−x³/12]를 빼기만 하면 같은 답이 나옵니다.',
+     enter:function(){var s=buildRects(64,steps[4][1],0.95);setSumL('S₆₄ = '+s.toFixed(3)+'  →  ∫ = 64/3 ≈ 21.333','#0d9488');},
+     update:function(u){growRects(Math.min(1,u*2));}},
+    {dur:8,cap:'⑦ 같은 아이디어가 확률이 됩니다: 정규분포(종 곡선) 아래 전체 넓이는 1이고, μ±σ 사이의 넓이 ≈ 0.68 — "평균 ±1 표준편차 안에 들어올 확률 68%"는 적분 계산입니다.',
+     enter:function(){clearRects();showCurveF(false);ndCurve.material.opacity=0.95;sig1.material.opacity=0.7;sig2.material.opacity=0.7;muL.visible=true;muL2.visible=true;setSumL('P(μ−σ ≤ X ≤ μ+σ) = 넓이 ≈ 0.68','#8b5cf6');},
+     update:function(u){ndFill.forEach(function(r,i){r.visible=u*ndFill.length*1.3>i;});}}
+  ];
+
+  var pi=0,pt=0,last=0;
+  phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

@@ -3,6 +3,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../shared/light-theme.css">
   <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
   <script defer src="../shared/difficulty.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
@@ -41,13 +42,15 @@
 <div class="study-tip"><strong>💡 학습 TIP:</strong> 회피는 단기 약, 장기 독입니다. 점진적 노출이 공포 극복의 표준 경로입니다.</div>
 
 </main></div>
-<script>(function(){
-  const c=document.getElementById('intro-scene');const s=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,10);
+<script>
+(function(){
+  const c=document.getElementById('intro-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,8);cam.lookAt(0,0,0);
   const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const COLOR=0x8b5cf6;const N=30;
-  const parts=[];for(let i=0;i<N;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.18,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*8,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}
-  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  function a(){requestAnimationFrame(a);s.rotation.y+=0.002;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.003;});r.render(s,cam);}a();
+  const COLOR=9133302;const parts=[];for(let i=0;i<46;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.09+Math.random()*0.14,10,10),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.35+Math.random()*0.5}));const x=(Math.random()-0.5)*9,y=(Math.random()-0.5)*6,z=(Math.random()-0.5)*6;m.position.set(x,y,z);m.userData={bx:x,by:y,bz:z,ph:Math.random()*6.283,sp:0.4+Math.random()*0.8};s.add(m);parts.push(m);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const k=0.55+0.45*Math.sin(T*1.4);parts.forEach(p=>{p.position.set(p.userData.bx*k,p.userData.by*k,p.userData.bz*k);});s.rotation.y+=0.001;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
-})();</script></body></html>
+})();
+</script>
+</body></html>

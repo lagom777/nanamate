@@ -15,12 +15,14 @@
 <script defer src="../toggle.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">📖 표지 · 초록</a></li>
@@ -275,10 +277,18 @@ Pre-LayerNorm(Xiong et al., 2020)은 훈련 안정성을 크게 향상시켜 GPT
 
 </div>
 </section>
+
+<!-- 3D 학습 시각화: 어텐션 — 토큰이 서로를 참조하는 법 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · Self-Attention: 토큰 간 가중치 시각화</div>
+  <div id="ai3d-04" style="width:100%;height:430px;"></div>
+  <div id="ai3d-04-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">각 토큰(Query)이 문장의 다른 토큰을 얼마나 참조하는지 선의 진하기로 표현합니다.</div>
+</div>
+
 <div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="03-neural.html" style="text-decoration:none;">← 신경망</a><a href="05-llm.html" style="text-decoration:none;">대규모 언어모델 →</a></div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
@@ -349,7 +359,7 @@ class SelfAttention(nn.Module):
 <div class="difficulty-content" data-level="hard">
   <span class="difficulty-badge hard">상 · 심화</span>
   <h3>전문가 레벨 이해</h3>
-  <p>Self-attention은 dynamic weight를 가진 그래프 신경망의 한 형태로 해석할 수 있습니다. 각 토큰이 노드이고, attention 가중치가 동적으로 결정되는 edge weight입니다. 이론적으로 Transformer는 Universal Approximator이며(Yun et al., 2020), 충분한 깊이와 폭이 주어지면 임의의 sequence-to-sequence 함수를 근사할 수 있습니다. Mechanistic interpretability 관점에서 Anthropic의 Transformer Circuits 연구(Elhage 2021, Olsson 2022)는 attention head를 induction head, copying head, name mover head 등으로 분해하고, in-context learning이 induction head에 의해 구현됨을 보였습니다. RoPE(Rotary Position Embedding)는 회전 행렬 R_(θm)을 Q, K에 곱하여 상대 위치 m-n을 내적에 자연스럽게 삽입합니다. 이는 long context 일반화의 핵심이 되었고, NTK-aware scaling, YaRN, Position Interpolation 같은 후속 기법으로 RoPE 기반 모델의 컨텍스트 확장이 가능해졌습니다. FlashAttention(Dao 2022, 2023)은 SRAM 친화적 타일링으로 attention의 IO 복잡도를 O(n²d/M)에서 O(n²d²/M)로 개선해 실효 속도를 2-4배 높였습니다. Sparse attention(Longformer, BigBird), linear attention(Performer, Linformer), 그리고 SSM(Mamba, S5)는 quadratic complexity를 우회하는 다른 접근들입니다.</p>
+  <p>Self-attention은 dynamic weight를 가진 그래프 신경망의 한 형태로 해석할 수 있습니다. 각 토큰이 노드이고, attention 가중치가 동적으로 결정되는 edge weight입니다. 이론적으로 Transformer는 Universal Approximator이며(Yun et al., 2020), 충분한 깊이와 폭이 주어지면 임의의 sequence-to-sequence 함수를 근사할 수 있습니다. Mechanistic interpretability 관점에서 Anthropic의 Transformer Circuits 연구(Elhage 2021, Olsson 2022)는 attention head를 induction head, copying head, name mover head 등으로 분해하고, in-context learning이 induction head에 의해 구현됨을 보였습니다. RoPE(Rotary Position Embedding)는 회전 행렬 R_(θm)을 Q, K에 곱하여 상대 위치 m-n을 내적에 자연스럽게 삽입합니다. 이는 long context 일반화의 핵심이 되었고, NTK-aware scaling, YaRN, Position Interpolation 같은 후속 기법으로 RoPE 기반 모델의 컨텍스트 확장이 가능해졌습니다. FlashAttention(Dao 2022, 2023)은 SRAM 친화적 타일링으로 attention의 HBM IO를 표준 어텐션의 Θ(n²)에서 Θ(n²d²/M)로 줄여(SRAM 크기 M이 d²보다 충분히 클 때 이득) 실효 속도를 2-4배 높였습니다. Sparse attention(Longformer, BigBird), linear attention(Performer, Linformer), 그리고 SSM(Mamba, S5)는 quadratic complexity를 우회하는 다른 접근들입니다.</p>
   <h3>수학적 기초</h3>
   <div class="formula">$$\text{Scaled Dot-Product Attention: } \text{Attn}(Q, K, V) = \text{softmax}\!\left(\frac{QK^T}{\sqrt{d_k}}\right) V$$
   $$\text{Multi-Head: } \text{MHA}(X) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h) W^O$$
@@ -375,7 +385,125 @@ class SelfAttention(nn.Module):
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> Karpathy의 nanoGPT(약 300줄)를 읽고 직접 작은 corpus(예: 셰익스피어, 한국어 위키)에서 처음부터 학습시켜보세요. 그 후 attention 가중치를 시각화해 어떤 head가 어떤 패턴을 학습했는지 분석하면, Transformer의 내부가 더 이상 블랙박스로 보이지 않게 됩니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b8441c","questions":[{"q":"Transformer 논문 발표 연도는?","choices":["2012년","2015년","2017년","2020년"],"answer":2},{"q":"어텐션에서 Q가 뜻하는 것은?","choices":["값","질의","열쇠","출력"],"answer":1},{"q":"GPT 계열의 아키텍처 유형은?","choices":["인코더 전용","인코더-디코더","순환형","디코더 전용"],"answer":3},{"q":"어텐션에서 √dk로 나누는 이유는?","choices":["softmax 포화 방지","메모리 절약","속도 향상","정확도 측정"],"answer":0},{"q":"표준 어텐션의 계산 복잡도는?","choices":["O(n)","O(n log n)","O(n²d)","O(d)"],"answer":2}]};</script>
 </main>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('ai3d-04');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('ai3d-04-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,2.6,11.5);camera.lookAt(0,1.4,0);
+  var toks=['나는','어제','친구와','영화를','봤다'],tx=[-6,-3,0,3,6],tboxes=[];
+  toks.forEach(function(t,i){
+    var b=box(2.0,0.9,0.7,0xe9edf6,1);b.position.set(tx[i],0,0);scene.add(b);
+    var w=new THREE.Mesh(new THREE.BoxGeometry(2.04,0.94,0.74),new THREE.MeshBasicMaterial({color:0x5b6bd6,wireframe:true,transparent:true,opacity:0.4}));
+    w.position.copy(b.position);b.userData.wire=w;scene.add(w);
+    var L=lbl(t,30,'#252c3d',1);L.position.set(tx[i],0,0.55);scene.add(L);
+    tboxes.push(b);
+  });
+  var Wm=[[0.50,0.06,0.12,0.10,0.22],[0.12,0.48,0.06,0.10,0.24],[0.16,0.06,0.46,0.10,0.22],[0.12,0.05,0.06,0.50,0.27],[0.25,0.15,0.08,0.35,0.17]];
+  var arcGroup=new THREE.Group();scene.add(arcGroup);
+  var pulse=sph(0.13,0xffc83c);pulse.visible=false;scene.add(pulse);
+  var curArcs=[];
+  function clearArcs(){while(arcGroup.children.length)arcGroup.remove(arcGroup.children[0]);curArcs=[];}
+  function arc(i,j,w,colr,hexColor){
+    var a=V(tx[i],0.5,0),b=V(tx[j],0.5,0);
+    var m=V((a.x+b.x)/2,1.3+Math.abs(i-j)*0.5+w*1.6,0);
+    var cv=new THREE.QuadraticBezierCurve3(a,m,b);
+    var ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints(cv.getPoints(40)),new THREE.LineBasicMaterial({color:colr,transparent:true,opacity:0.12+w*1.5}));
+    arcGroup.add(ln);curArcs.push({cv:cv,w:w});
+    if(w>=0.2){var L=lbl((w*100).toFixed(0)+'%',22,hexColor,0.85);L.position.copy(m);L.position.y+=0.3;arcGroup.add(L);}
+  }
+  function showQuery(qi){
+    clearArcs();
+    tboxes.forEach(function(b,i){
+      var y=i===qi?0.45:0;b.position.y=y;b.userData.wire.position.y=y;
+      b.material.color.set(i===qi?0xffe9a8:0xe9edf6);
+    });
+    for(var j=0;j<5;j++){if(j!==qi)arc(qi,j,Wm[qi][j],0x5b6bd6,'#5b6bd6');}
+  }
+  function movePulse(u){
+    if(!curArcs.length){pulse.visible=false;return;}
+    var best=curArcs[0];curArcs.forEach(function(a){if(a.w>best.w)best=a;});
+    pulse.visible=true;pulse.position.copy(best.cv.getPoint(u%1));
+  }
+  var caps=[
+    "Query='나는': 자기 자신과 동사 '봤다'를 주로 참조 — 주어는 행동과 연결됩니다.",
+    "Query='어제': 시간 부사는 동사 '봤다'(24%)를 가장 강하게 참조 — '언제 봤는가'를 표현.",
+    "Query='친구와': 동반자 표현 역시 동사와 주어를 참조해 '누구와 한 행동'인지 연결.",
+    "Query='영화를': 목적어는 동사 '봤다'(27%)와 강하게 묶임 — 술어-논항 구조.",
+    "Query='봤다': 동사는 '영화를'(35%)·'나는'(25%)에 주목 — 어텐션 가중치(선 진하기·%)가 문장 구조를 학습합니다."
+  ];
+  var phases=[];
+  for(var qi=0;qi<5;qi++){(function(q){
+    phases.push({dur:3.2,cap:caps[q],enter:function(){showQuery(q);},update:movePulse});
+  })(qi);}
+  phases.push({dur:4.5,cap:'멀티헤드 어텐션: 헤드마다 다른 관계를 봅니다 — 파랑 헤드는 문법 구조(주어·목적어), 주황 헤드는 시간 관계.',
+    enter:function(){
+      clearArcs();
+      tboxes.forEach(function(b,i){b.position.y=0;b.userData.wire.position.y=0;b.material.color.set(0xe9edf6);});
+      arc(4,3,0.35,0x5b6bd6,'#5b6bd6');arc(4,0,0.25,0x5b6bd6,'#5b6bd6');
+      arc(4,1,0.45,0xe07a3f,'#e07a3f');arc(1,4,0.24,0xe07a3f,'#e07a3f');
+    },update:movePulse});
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
 </body>
 </html>

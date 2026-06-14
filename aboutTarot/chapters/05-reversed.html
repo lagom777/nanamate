@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5. 정방향과 역방향 — aboutTarot</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🃏 표지</a></li>
+    <li><a href="01-what-is.html">1. 타로란 무엇인가</a></li>
+    <li><a href="02-major.html">2. 메이저 아르카나 22장</a></li>
+    <li><a href="03-minor.html">3. 마이너 아르카나 56장</a></li>
+    <li><a href="04-court.html">4. 코트 카드</a></li>
+    <li><a href="05-reversed.html">5. 정방향과 역방향</a></li>
+    <li><a href="06-spreads.html">6. 대표 스프레드</a></li>
+    <li><a href="07-reading.html">7. 카드 읽는 법</a></li>
+    <li><a href="08-symbolism.html">8. 상징과 융 심리학</a></li>
+    <li><a href="09-ethics.html">9. 타로의 과학·비판·윤리</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>정방향과 역방향</em></h1>
+  <p class="authors">Chapter 5 — Upright &amp; Reversed</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 정방향과 역방향 — 뒤집히며 의미가 변형되는 카드</span>
+
+<h2>정방향과 역방향 개요</h2>
+<p>타로 카드를 뽑아 펼치다 보면 그림이 똑바로 선 정방향(업라이트)과 위아래가 뒤집힌 역방향(리버스)으로 나뉜다. 정방향이 카드의 기본 의미를 그대로 전한다면, 역방향은 그 의미가 약해지거나 지연되고, 안으로 향하거나 지나치게 넘치는 모습으로 본다. 다만 역방향을 쓰지 않고 모든 카드를 정방향으로만 읽는 리더도 많아, 정·역의 사용 여부는 리더가 선택하는 방식의 문제다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>역방향은 정해진 '반대 의미'가 아니라 정방향 에너지의 변형으로 읽는다. 약화·지연·내면화·과잉·차단이라는 다섯 갈래가 대표적인 해석 방향이며, 무엇보다 카드가 놓인 자리와 질문의 맥락이 우선한다. 역방향을 쓸지 말지는 리더의 자유로운 선택이다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>역방향은 카드가 거꾸로 나온 상태로, 그 카드가 지닌 의미가 한 번 비틀려 나타난다고 본다.</p>
+<h3>왜 중요한가?</h3>
+<p>같은 78장의 카드라도 똑바로 나오느냐 뒤집혀 나오느냐에 따라 읽는 결이 달라진다. 정방향만 쓰면 78가지의 그림을 보지만, 역방향까지 더하면 표현의 폭이 한층 넓어진다. 그래서 역방향은 카드 한 장의 의미를 더 섬세하게 들여다보는 장치로 쓰인다. 다만 역방향은 반드시 따라야 하는 규칙이 아니라, 리더가 선택해서 쓰는 도구다. 처음 배우는 사람은 정방향만으로 충분히 연습한 뒤 역방향을 더해도 늦지 않다. 중요한 것은 뒤집힌 모양 자체가 아니라, 그 카드가 질문 안에서 어떤 이야기를 하는가다.</p>
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>정방향(업라이트)</strong>: 그림이 똑바로 선 상태로, 카드의 기본 의미를 그대로 전한다고 본다.</li>
+<li><strong>역방향(리버스)</strong>: 그림이 위아래로 뒤집힌 상태로, 의미가 변형되어 나타난다고 본다.</li>
+<li><strong>약화</strong>: 카드의 힘이 줄어들거나 미약해진 상태로 읽는 갈래.</li>
+<li><strong>내면화</strong>: 밖으로 드러나던 에너지가 안으로 향한다고 보는 갈래.</li>
+<li><strong>맥락</strong>: 카드가 놓인 자리와 질문의 상황으로, 해석의 우선 기준이 된다.</li>
+</ul></div>
+<h3>핵심 개념 풀어쓰기</h3>
+<p>역방향을 수도꼭지에 비유하면 이해하기 쉽다. 정방향이 물이 시원하게 잘 나오는 상태라면, 역방향은 물이 졸졸 나오거나(약화), 아직 안 나오거나(지연), 어딘가 막혀 있거나(차단), 혹은 너무 콸콸 넘쳐버리는(과잉) 상태에 가깝다. 물의 종류 자체가 바뀐 게 아니라 흐름이 달라진 셈이다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 역방향이 나오면 "반대로 뒤집자"가 아니라 "정방향의 에너지가 어디서 멈추거나 넘쳤을까"를 먼저 떠올려 보면 자연스럽다.</div>
+<h3>한 페이지 요약</h3>
+<ul>
+<li>정방향은 카드의 기본 의미, 역방향은 그 의미의 변형으로 본다.</li>
+<li>역방향의 대표 갈래는 약화·지연·내면화·과잉·차단이다.</li>
+<li>역방향은 정해진 '반대'가 아니라 흐름이 달라진 상태에 가깝다.</li>
+<li>정·역을 쓸지 말지는 리더가 자유롭게 선택한다.</li>
+<li>모양보다 질문의 맥락이 언제나 우선한다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>역방향 해석은 정방향의 의미를 어느 방향으로 변형할지 고르는 작업으로 이해된다. 가장 널리 쓰이는 다섯 갈래는 약화·지연·내면화·과잉·차단이다. 약화는 정방향의 힘이 줄어든 상태로, 가령 활력의 카드가 역방향이면 기운이 빠진 모습으로 본다. 지연은 일이 아직 무르익지 않았거나 시기가 늦춰진 상태를 가리킨다. 내면화는 밖으로 향하던 에너지가 안으로 접혀, 겉으로 드러나지 않고 속에서 작동한다고 읽는 방향이다. 과잉은 거꾸로 그 에너지가 지나치게 넘쳐 부작용을 낳는 상태이고, 차단은 흐름이 어딘가 막혀 제대로 작동하지 못하는 상태다. 이 다섯 갈래는 고정된 답이 아니라 선택지이며, 어느 쪽을 택할지는 카드의 성격과 질문의 맥락이 정한다. 그래서 같은 역방향 카드라도 자리와 상황에 따라 약화로도, 과잉으로도 읽힐 수 있다. 한편 역방향을 아예 쓰지 않고 정방향 의미의 폭 안에서 모든 뉘앙스를 소화하는 리더도 적지 않다.</p>
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 다섯 갈래로 변형 방향 고르기</h4><p>역방향 카드를 만나면 먼저 그 카드의 정방향 핵심 에너지를 떠올린 뒤, 약화·지연·내면화·과잉·차단 가운데 어느 갈래가 질문에 가장 자연스럽게 맞는지 가늠한다. 한 카드에 여러 갈래가 겹쳐 보일 수 있으므로, 주변 카드와 자리의 의미를 함께 보고 가장 설득력 있는 방향을 고른다.</p></div>
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1</h4><p>'완드 에이스'처럼 새로운 시작과 열정을 뜻하는 카드가 역방향으로 나왔다면, 의욕은 있으나 아직 불씨가 약하거나(약화) 출발이 미뤄진 상태(지연)로 읽어볼 수 있다. 반대로 자리에 따라 추진력이 지나쳐 무리하는 모습(과잉)으로 보기도 한다.</p></div>
+<div class="info-card"><h4>📐 사례 2</h4><p>균형과 절제를 상징하는 '템퍼런스'가 역방향이면, 조화가 깨지거나 흐름이 막힌 상태(차단)로 보거나, 균형을 잡으려는 노력이 겉으로 드러나지 않고 안에서 진행 중인 모습(내면화)으로 읽기도 한다. 어느 쪽인지는 질문의 결이 정한다.</p></div>
+<h3>현대적 전개</h3>
+<p>오늘날 타로 실천에서는 역방향을 강제 규칙으로 보지 않고 리더의 스타일에 맡기는 흐름이 뚜렷하다. 어떤 리더는 카드를 섞을 때부터 정방향으로 가지런히 정리해 역방향을 아예 배제하고, 또 어떤 리더는 역방향을 적극적으로 활용해 미묘한 결을 살핀다. 둘 다 정당한 방식으로 받아들여진다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 역방향이 곧 '나쁜 카드'이거나 정방향 의미의 정반대라는 생각은 오해다. 역방향은 좋고 나쁨을 가르는 표시가 아니라 의미가 변형되는 방향이며, 정방향이 어려운 카드는 역방향에서 오히려 완화로 읽히기도 한다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>역방향 해석을 깊이 다루려면, 그것이 어디까지나 해석의 약속이지 카드 자체에 내장된 객관적 의미가 아니라는 점을 분명히 해야 한다. 역방향이라는 개념 자체가 후대의 실천 속에서 다듬어진 관습에 가깝고, 표준화된 단일 체계가 있는 것은 아니다. 어떤 리더는 약화·지연·내면화·과잉·차단의 다섯 갈래를 체계적으로 적용하고, 어떤 리더는 카드의 그림 흐름이 끊기는 시각적 인상에 기대어 직관적으로 읽는다. 정·역을 모두 쓰는 방식은 표현의 해상도를 높이지만, 동시에 자의적 해석의 여지를 넓혀 일관성을 떨어뜨릴 위험도 안고 있다. 반대로 정방향만 쓰는 방식은 단순하고 안정적이되, 카드 한 장이 담을 수 있는 뉘앙스의 폭이 좁아질 수 있다. 어느 방식이든 해석의 설득력은 카드 자체보다 리더가 맥락을 얼마나 정합적으로 엮어내느냐에 달려 있다. 따라서 역방향을 다룰 때는 "이 카드가 거꾸로니까 이런 뜻"이라는 기계적 적용을 경계하고, 질문·자리·주변 카드와의 관계 속에서 변형 방향을 신중히 고르는 태도가 필요하다.</p>
+<h3>최신 연구·쟁점</h3>
+<p>역방향에 고정된 객관적 의미가 있다고 보기는 어렵다. 타로 해석은 검증된 인과 법칙이 아니라 상징을 다루는 해석 행위이므로, 역방향이 특정한 결과를 예측한다는 식의 단정은 피하는 것이 합당하다. 실천 공동체 안에서는 정·역 병용의 효용과, 정방향 단일 사용의 간결함 사이에서 무엇이 더 신뢰할 만한가를 두고 견해가 갈린다. 어느 쪽도 우월하다고 입증된 바는 없으며, 결국 리더의 목적과 일관성의 문제로 남는다.</p>
+<h3>관련 분야</h3>
+<ul>
+<li><strong>상징 해석학</strong>: 이미지의 방향과 배치가 의미를 어떻게 바꾸는지 다루는 관점.</li>
+<li><strong>융 심리학</strong>: 내면화·그림자 개념이 역방향의 '안으로 향함'을 읽는 틀로 자주 인용된다.</li>
+<li><strong>인지 편향 연구</strong>: 모호한 자극에 의미를 부여하는 경향이 카드 해석에 작동하는 방식을 이해하는 데 도움이 된다.</li>
+</ul>
+<h3>더 읽을거리</h3>
+<ul>
+<li>"Seventy-Eight Degrees of Wisdom" — Rachel Pollack</li>
+<li>"Tarot for Your Self" — Mary K. Greer</li>
+<li>"The Complete Guide to Tarot" — Eden Gray</li>
+</ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> 같은 카드 한 장을 골라, 역방향을 약화·지연·내면화·과잉·차단의 다섯 갈래로 각각 해석해 보고, 어떤 질문 맥락에서 어느 갈래가 가장 자연스러운지 그 이유를 정리해 보라.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b18cf0","questions":[{"q":"그림이 거꾸로 나온 카드를 부르는 말은?","choices":["정방향","역방향","측방향","무방향"],"answer":1},{"q":"역방향의 올바른 이해는?","choices":["나쁜 징조","정반대 의미","의미의 변형","무효 카드"],"answer":2},{"q":"역방향 사용 여부를 정하는 사람은?","choices":["덱 제작자","질문자","카드 자체","리더"],"answer":3},{"q":"역방향 다섯 갈래에 없는 것은?","choices":["약화","지연","반전","내면화"],"answer":2},{"q":"역방향 해석에서 가장 우선하는 것은?","choices":["질문의 맥락","카드의 번호","카드의 색","뽑은 순서"],"answer":0}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const flips=[];function makeCard(x,col){const m=new THREE.Mesh(new THREE.BoxGeometry(1.1,1.7,0.06),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.9}));const tri=new THREE.Mesh(new THREE.ConeGeometry(0.3,0.7,3),new THREE.MeshBasicMaterial({color:0xffffff}));tri.position.set(0,0.45,0.06);m.add(tri);m.position.x=x;s.add(m);return m;}
+  const up=makeCard(-1.6,0x8ad0a0);const dn=makeCard(1.6,0xd08a9a);flips.push(up,dn);
+  const axisGeo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-1.6,2.2,0),new THREE.Vector3(-1.6,-2.2,0),new THREE.Vector3(1.6,2.2,0),new THREE.Vector3(1.6,-2.2,0)]);const axis=new THREE.LineSegments(axisGeo,new THREE.LineBasicMaterial({color:0xf0c850,transparent:true,opacity:0.4}));s.add(axis);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;up.rotation.z=Math.PI*(0.5-Math.cos(T*0.9)*0.5);dn.rotation.z=Math.PI*(0.5+Math.cos(T*0.9)*0.5);s.rotation.y=Math.sin(T*0.4)*0.25;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

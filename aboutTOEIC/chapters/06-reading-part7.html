@@ -2,11 +2,13 @@
 <title>6. RC Part 7 — aboutTOEIC</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">📝 표지</a></li><li><a href="chapters/01-listening-part1.html">1. LC Part 1-2</a></li><li><a href="chapters/02-listening-part3.html">2. LC Part 3-4</a></li><li><a href="chapters/03-grammar.html">3. RC 문법</a></li><li><a href="chapters/04-vocabulary.html">4. 핵심 어휘</a></li><li><a href="chapters/05-reading-part5.html">5. RC Part 5-6</a></li><li><a href="chapters/06-reading-part7.html">6. RC Part 7</a></li><li><a href="chapters/07-strategies.html">7. 시험 전략</a></li><li><a href="chapters/08-business.html">8. 비즈니스 영어</a></li><li><a href="chapters/09-practice.html">9. 실전 모의고사</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">📝 표지</a></li><li><a href="01-listening-part1.html">1. LC Part 1-2</a></li><li><a href="02-listening-part3.html">2. LC Part 3-4</a></li><li><a href="03-grammar.html">3. RC 문법</a></li><li><a href="04-vocabulary.html">4. 핵심 어휘</a></li><li><a href="05-reading-part5.html">5. RC Part 5-6</a></li><li><a href="06-reading-part7.html">6. RC Part 7</a></li><li><a href="07-strategies.html">7. 시험 전략</a></li><li><a href="08-business.html">8. 비즈니스 영어</a></li><li><a href="09-practice.html">9. 실전 모의고사</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>RC Part 7</em></h1><p class="authors">Chapter 6 — Reading Comprehension</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 여러 지문을 교차 참조하며 정보를 연결하는 독해 구조</span>
 <h2>RC Part 7</h2><p>Reading Comprehension의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Reading Comprehension</p></div>
 
@@ -110,5 +112,26 @@
 
   <div class="success-box"><strong>🎓 만점 도전:</strong> Part 7에서 50/54 이상을 75분 내 풀이로 정답 처리하는 학습자는 RC 만점(495점) 진입권. 추론·NOT·교차 정보 매칭의 정복이 만점의 결정적 분수령입니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f59e0b","questions":[{"q":"Part 7의 문항 수는?","choices":["54문항","30문항","46문항","69문항"],"answer":0},{"q":"이메일의 목적이 나오는 위치는?","choices":["마지막 문단","첫 문단","중간 문단","첨부파일"],"answer":1},{"q":"키워드를 빠르게 찾는 기술은?","choices":["정독","암기","스캐닝","받아쓰기"],"answer":2},{"q":"한 문제 최대 사용 시간은?","choices":["30초","1분","5분","2분"],"answer":3},{"q":"$200의 30% 할인 가격은?","choices":["$170","$140","$200","$230"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,10);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // Three document panels (email / notice / form of a triple-passage set) offset in depth, each with text lines; cross-reference links connect key info between panels, and a travelling "answer" marker hops between them
+  const panelPos=[[-3,0.3,0.5],[0,-0.2,-0.8],[3,0.5,0.4]];const panelCol=[0x60a5fa,0xf472b6,0xfbbf24];const anchors=[];for(let p=0;p<3;p++){const pg=new THREE.Mesh(new THREE.PlaneGeometry(2.2,2.8),new THREE.MeshBasicMaterial({color:panelCol[p],transparent:true,opacity:0.16,side:THREE.DoubleSide}));pg.position.set(panelPos[p][0],panelPos[p][1],panelPos[p][2]);s.add(pg);const fx=panelPos[p][0],fy=panelPos[p][1],fz=panelPos[p][2];const fr=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(fx-1.1,fy+1.4,fz),new THREE.Vector3(fx+1.1,fy+1.4,fz),new THREE.Vector3(fx+1.1,fy-1.4,fz),new THREE.Vector3(fx-1.1,fy-1.4,fz),new THREE.Vector3(fx-1.1,fy+1.4,fz)]),new THREE.LineBasicMaterial({color:panelCol[p]}));s.add(fr);for(let li=0;li<5;li++){const w=0.4+Math.random()*1.4;const tl=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(panelPos[p][0]-0.85,panelPos[p][1]+1-li*0.45,panelPos[p][2]+0.02),new THREE.Vector3(panelPos[p][0]-0.85+w,panelPos[p][1]+1-li*0.45,panelPos[p][2]+0.02)]),new THREE.LineBasicMaterial({color:panelCol[p],transparent:true,opacity:0.7}));s.add(tl);}anchors.push(new THREE.Vector3(panelPos[p][0],panelPos[p][1],panelPos[p][2]));}
+  // cross-reference links between the panels
+  const pairs=[[0,1],[1,2],[0,2]];pairs.forEach(pr=>{const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints([anchors[pr[0]],anchors[pr[1]]]),new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:0.35}));s.add(ln);});
+  const marker=new THREE.Mesh(new THREE.OctahedronGeometry(0.26),new THREE.MeshBasicMaterial({color:0x34d399}));s.add(marker);
+  s.userData.anchors=anchors;s.userData.marker=marker;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const seg=(T*0.35)%3,i0=Math.floor(seg),f=seg-i0;const p1=s.userData.anchors[i0],p2=s.userData.anchors[(i0+1)%3];s.userData.marker.position.lerpVectors(p1,p2,f);s.userData.marker.rotation.y+=0.05;s.userData.marker.rotation.x+=0.03;s.rotation.y+=0.0022;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

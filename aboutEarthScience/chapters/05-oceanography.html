@@ -7,12 +7,14 @@
 <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">🌍 표지 · 소개</a></li>
@@ -106,7 +108,7 @@
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -169,6 +171,11 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 아르고 자료를 이용해 최근 20년간 0–2,000m 해양 열함량의 변화율을 계산하고, 지구 에너지 불균형(EEI) 관측과 비교해 보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#1565c0","questions":[{"q":"해양이 차지하는 지구 표면 비율은?","choices":["51%","61%","71%","81%"],"answer":2},{"q":"표층 해류를 일으키는 주된 원인은?","choices":["바람","달의 인력","지진","화산"],"answer":0},{"q":"해수의 평균 염분은?","choices":["1.5%","2.5%","4.5%","3.5%"],"answer":3},{"q":"열염순환을 구동하는 것은?","choices":["바람","밀도 차","조석","지구 자전"],"answer":1},{"q":"열염순환 전체에 걸리는 시간은?","choices":["약 10년","약 100년","약 1,000년","약 10만 년"],"answer":2}]};</script>
 </main>
 </div>
 

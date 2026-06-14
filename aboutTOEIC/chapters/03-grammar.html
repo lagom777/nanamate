@@ -2,11 +2,13 @@
 <title>3. RC 문법 — aboutTOEIC</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">📝 표지</a></li><li><a href="chapters/01-listening-part1.html">1. LC Part 1-2</a></li><li><a href="chapters/02-listening-part3.html">2. LC Part 3-4</a></li><li><a href="chapters/03-grammar.html">3. RC 문법</a></li><li><a href="chapters/04-vocabulary.html">4. 핵심 어휘</a></li><li><a href="chapters/05-reading-part5.html">5. RC Part 5-6</a></li><li><a href="chapters/06-reading-part7.html">6. RC Part 7</a></li><li><a href="chapters/07-strategies.html">7. 시험 전략</a></li><li><a href="chapters/08-business.html">8. 비즈니스 영어</a></li><li><a href="chapters/09-practice.html">9. 실전 모의고사</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">📝 표지</a></li><li><a href="01-listening-part1.html">1. LC Part 1-2</a></li><li><a href="02-listening-part3.html">2. LC Part 3-4</a></li><li><a href="03-grammar.html">3. RC 문법</a></li><li><a href="04-vocabulary.html">4. 핵심 어휘</a></li><li><a href="05-reading-part5.html">5. RC Part 5-6</a></li><li><a href="06-reading-part7.html">6. RC Part 7</a></li><li><a href="07-strategies.html">7. 시험 전략</a></li><li><a href="08-business.html">8. 비즈니스 영어</a></li><li><a href="09-practice.html">9. 실전 모의고사</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>RC 문법</em></h1><p class="authors">Chapter 3 — Grammar & Sentence Completion</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 문장의 빈칸에 알맞은 품사가 들어가는 문법 구조</span>
 <h2>RC 문법</h2><p>Grammar & Sentence Completion의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Grammar & Sentence Completion</p></div>
 
@@ -108,5 +110,27 @@
 
   <div class="success-box"><strong>🎓 만점 도전:</strong> Part 5 30문항을 10분 이내에 95% 정답률로 푸는 학습자는 RC 만점(495점) 진입권입니다. 남은 시간을 Part 7 장문 독해에 투자할 수 있어 RC 만점이 현실적인 목표가 됩니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f59e0b","questions":[{"q":"Part 5 최다 빈출 문법 유형은?","choices":["가정법","품사 자리","도치 구문","관계대명사"],"answer":1},{"q":"since와 짝을 이루는 시제는?","choices":["과거","미래","현재완료","과거완료"],"answer":2},{"q":"Part 5 한 문제 목표 시간은?","choices":["20초 이내","1분","2분","5분"],"answer":0},{"q":"will 뒤에 오는 동사 형태는?","choices":["과거형","-ing형","명사형","동사원형"],"answer":3},{"q":"impact와 결합하는 동사는?","choices":["make","take","have","do"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // A sentence row of solid word blocks with one empty blank slot (wireframe); 4 part-of-speech candidate tokens float above, the correct one descends into the gap
+  const wordCount=5,gapIdx=3;const blocks=[];for(let i=0;i<wordCount;i++){const isGap=i===gapIdx;const w=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.6,0.3),new THREE.MeshBasicMaterial({color:isGap?0xfbbf24:0x60a5fa,wireframe:isGap}));w.position.set(-2.4+i*1.2,-1.2,0);s.add(w);blocks.push(w);}
+  // baseline under the sentence
+  const base=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-3,-1.7,0),new THREE.Vector3(3,-1.7,0)]),new THREE.LineBasicMaterial({color:0x64748b}));s.add(base);
+  // 4 candidate part-of-speech tokens (noun/verb/adj/adv): different shapes, only the correct one is green and aligned over the gap
+  const gapX=-2.4+gapIdx*1.2;const geos=[new THREE.SphereGeometry(0.32,16,16),new THREE.TetrahedronGeometry(0.42),new THREE.OctahedronGeometry(0.36),new THREE.ConeGeometry(0.32,0.6,16)];const correctIdx=2;const cands=[];for(let i=0;i<4;i++){const ok=i===correctIdx;const t=new THREE.Mesh(geos[i],new THREE.MeshBasicMaterial({color:ok?0x34d399:0xf87171,wireframe:!ok}));t.position.set(-3+i*2,1.8,0);s.add(t);cands.push(t);}
+  s.userData.cands=cands;s.userData.gapBlock=blocks[gapIdx];s.userData.gapX=gapX;s.userData.correctIdx=correctIdx;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const cyc=(Math.sin(T*0.9)+1)/2;s.userData.cands.forEach((t,i)=>{t.rotation.x+=0.012;t.rotation.y+=0.015;if(i===s.userData.correctIdx){t.position.x=s.userData.gapX;t.position.y=1.8-cyc*3.0;}});s.userData.gapBlock.scale.setScalar(1+cyc*0.15);s.rotation.y+=0.0025;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

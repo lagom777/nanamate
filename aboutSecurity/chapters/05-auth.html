@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5장. 인증과 권한</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔐 표지 · 소개</a></li>
+    <li><a href="01-basics.html">1. 보안 기초와 위협 모델</a></li>
+    <li><a href="02-crypto.html">2. 암호학 입문</a></li>
+    <li><a href="03-network.html">3. 네트워크 보안</a></li>
+    <li><a href="04-web-vulns.html">4. 웹 취약점 (OWASP Top 10)</a></li>
+    <li><a href="05-auth.html">5. 인증과 권한</a></li>
+    <li><a href="06-system.html">6. 시스템·엔드포인트 보안</a></li>
+    <li><a href="07-pentest.html">7. 침투테스트와 레드팀</a></li>
+    <li><a href="08-incident.html">8. 사고 대응과 포렌식</a></li>
+    <li><a href="09-governance.html">9. 거버넌스·컴플라이언스</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. 인증(AuthN) vs 인가(AuthZ) — 둘은 다르다</h2>
+<p>현장에서 가장 자주 혼동되는 두 단어는 인증(Authentication)과 인가(Authorization)입니다. <strong>인증</strong>은 "당신이 누구인지" 증명하는 절차이고, <strong>인가</strong>는 "당신이 무엇을 할 수 있는지" 결정하는 절차입니다. 공항 비유로 말하면, 여권 검사는 인증, 1등석 라운지 입장 가능 여부는 인가입니다. 둘은 분리되어 설계되어야 하며, 같은 시스템이 둘을 같은 코드 경로에서 처리하면 거의 반드시 버그가 생깁니다.</p>
+<p>인증의 세 가지 요소(factor)는 ① 지식(knowledge, 비밀번호·PIN), ② 소유(possession, 휴대폰·하드웨어 키), ③ 생체(inherence, 지문·얼굴)입니다. 이 중 둘 이상을 결합하면 <strong>MFA(Multi-Factor Authentication)</strong>가 되며, 같은 요소의 두 개(예: 비밀번호 두 개)는 MFA가 아닙니다.</p>
+</section>
+
+<!-- 3D 학습 시각화: 인증 → 토큰 → 인가 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · AuthN/AuthZ와 JWT의 동작</div>
+  <div id="sec3d-05" style="width:100%;height:430px;"></div>
+  <div id="sec3d-05-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">누구인지 증명하고, 무엇까지 허용되는지 검사받는 과정.</div>
+</div>
+
+
+<section id="sec2">
+<h2>2. 비밀번호 — 여전히 가장 약한 고리</h2>
+<p>비밀번호는 30년 넘게 폐기 선고를 받아왔지만 여전히 가장 보편적인 인증 수단입니다. 안전한 저장의 표준은 솔트(salt)와 의도적으로 느린 KDF의 결합이며, 2025년 기준 권장은 <strong>Argon2id</strong>(2015 PHC 우승, RFC 9106)입니다. bcrypt는 여전히 안전하나 메모리 강성이 약하고, scrypt는 ASIC 저항성에서 더 우월합니다. 일반 SHA-256만으로 비밀번호를 저장하는 것은 GPU·ASIC 무차별 대입에 무력하므로 절대 사용 금지입니다.</p>
+<p>NIST SP 800-63B(2017, 2024 개정)의 권고는 직관과 다릅니다: ① 주기적 변경 강제 금지(유출 의심 시에만), ② 복잡도 규칙(특수문자 강제 등) 폐지, ③ 길이만 강조(최소 8자, 권장 15자+), ④ 침해된 비밀번호 사전(HIBP API) 대조, ⑤ rate limiting과 lockout 정책으로 무차별 대입 방어. 이 권고는 사용자 행동 연구에 기반하며, 강요된 복잡도가 오히려 약한 패턴(<code>Password1!</code>)을 유도한다는 것이 이유입니다.</p>
+</section>
+
+<section id="sec3">
+<h2>3. OAuth 2.0 · OIDC · JWT</h2>
+<p>OAuth 2.0(RFC 6749, 2012)은 인가 위임을 위한 프레임워크입니다. "구글로 로그인"이 대표 사례로, 사용자가 자신의 비밀번호를 제3자에게 노출하지 않고도 일부 권한만 부여할 수 있습니다. 4가지 grant 중 현재 권장은 PKCE를 결합한 <strong>Authorization Code Flow</strong>이며, Implicit Flow는 폐기되었습니다.</p>
+<p>OAuth 자체는 인증이 아닌 <em>인가</em> 프로토콜입니다. 인증을 표준화한 것이 <strong>OpenID Connect(OIDC, 2014)</strong>로, OAuth 2.0 위에 ID Token(JWT 형식)을 추가합니다. JWT(JSON Web Token, RFC 7519)는 header.payload.signature 3부분으로 구성된 자체 검증 가능한 토큰이며, 서명 알고리즘은 <code>alg: HS256</code>(HMAC) 또는 <code>RS256</code>/<code>ES256</code>(비대칭)을 사용합니다. 절대로 <code>alg: none</code>은 허용하면 안 됩니다 — 2015년 다수 라이브러리에서 발견된 치명적 취약점입니다.</p>
+</section>
+
+<section id="sec4">
+<h2>4. 인가 모델 — RBAC, ABAC, ReBAC</h2>
+<p>인가 모델은 권한을 어떻게 정의하고 평가할지의 문제입니다. <strong>RBAC(Role-Based)</strong>는 사용자에게 역할(admin·editor·viewer)을 부여하고 역할에 권한을 묶는 방식으로 가장 흔합니다. <strong>ABAC(Attribute-Based)</strong>는 사용자·자원·환경 속성을 정책 엔진(XACML·OPA)에 넣어 동적으로 결정합니다. <strong>ReBAC(Relationship-Based)</strong>는 구글이 Zanzibar 논문(2019)에서 정립했고, 사용자-자원 간의 관계 그래프로 권한을 표현합니다. SpiceDB·OpenFGA가 오픈소스 구현이며 Notion·GitHub 같은 협업 도구에 적합합니다.</p>
+<p>현장 권고는 단순합니다: ① 작은 시스템은 RBAC로 시작, ② 다차원 정책이 필요하면 OPA(Open Policy Agent)로 ABAC 확장, ③ 공유·계층 관계가 핵심이면 SpiceDB로 ReBAC. 어느 모델이든 <strong>최소 권한 원칙(Principle of Least Privilege)</strong>이 깔려 있어야 합니다.</p>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="04-web-vulns.html" style="text-decoration:none;">← 4. 웹 취약점</a><a href="06-system.html" style="text-decoration:none;">6. 시스템·엔드포인트 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>"인증(AuthN)은 당신이 누구인지, 인가(AuthZ)는 당신이 뭘 할 수 있는지"를 확인하는 두 단계예요. 비밀번호·문자인증·지문·구글로그인·페이스북로그인은 전부 인증이고, "이 사람은 관리자라서 회원 목록을 볼 수 있다"는 인가입니다.</p>
+  <h3>왜 중요한가?</h3>
+  <p>① 카카오로 로그인할 때 카카오에는 비밀번호를 주지만 그 사이트엔 안 주는 게 OAuth 덕분이에요. ② 구글 계정 하나로 여러 서비스를 쓰는 것도 OIDC라는 표준 덕분. ③ "관리자만 글 삭제 가능"같은 권한 분리가 RBAC라는 모델이에요. 우리가 매일 쓰는 거의 모든 서비스가 이 위에서 동작합니다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>AuthN(인증)</strong>: "너 누구야?" 확인 — 비밀번호, 지문, 문자인증</li>
+    <li><strong>AuthZ(인가)</strong>: "뭐 할 수 있어?" 결정 — 관리자/일반회원 구분</li>
+    <li><strong>MFA</strong>: 두 가지 이상의 다른 종류 인증 — 비번 + 문자 (강력 추천)</li>
+    <li><strong>OAuth / OIDC</strong>: "구글로 로그인" 같은 위임된 인증·인가 표준</li>
+    <li><strong>JWT</strong>: 서명된 토큰 — 로그인 후 매 요청마다 들고 다니는 일종의 출입증</li>
+    <li><strong>Passkey</strong>: 비밀번호를 대체하는 새 표준 — 휴대폰 잠금해제로 로그인</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>회사 출입을 생각해봅시다. 사원증을 찍어 들어가는 게 "인증"이에요. 그러나 사원증이 있다고 모든 방에 들어갈 수 있는 건 아니죠. 임원실은 임원만, 서버실은 IT팀만. 이게 "인가"입니다. 비밀번호 하나만 쓰는 건 사원증만 있는 거고, 사원증+얼굴인식이 MFA예요. "구글로 로그인"은 마치 "이 사람은 우리 회사 직원이 맞다고 구글이 보증해줍니다"라고 다른 회사가 확인서를 받는 거고요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 면접에서 "OAuth와 OIDC 차이?"를 물으면 한 문장으로 답하세요: "OAuth는 권한을 빌려주는 것(인가), OIDC는 그 위에서 '누구인지'까지 알려주는 것(인증)." 이 한 문장이 전체 그림을 잡아줍니다.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>인증 = 누구인지 / 인가 = 뭘 할 수 있는지 — 반드시 분리</li>
+    <li>비밀번호는 길이 우선, 복잡도 강제는 역효과 (NIST 권고)</li>
+    <li>MFA는 다른 종류의 요소를 두 개 이상 결합</li>
+    <li>OAuth 2.0 + PKCE + OIDC가 현대 인증의 표준 스택</li>
+    <li>JWT는 편리하지만 알고리즘 검증과 만료시간 관리가 핵심</li>
+    <li>Passkey가 비밀번호의 후계자로 빠르게 자리잡는 중</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>OAuth 2.0의 보안 모범사례는 <strong>OAuth 2.0 Security Best Current Practice(RFC 9700, 2025)</strong>로 정립되어 있습니다. 핵심: ① Implicit·ROPC grant 폐기, ② Authorization Code + PKCE를 모든 클라이언트에 의무화(공개·기밀 무관), ③ Redirect URI 엄격 매칭(부분 매칭 금지), ④ state·nonce 파라미터로 CSRF·재전송 방어, ⑤ refresh token 회전(rotation)과 detection, ⑥ DPoP·mTLS로 토큰 도난 방지. OAuth 2.1 드래프트는 이 권고를 통합한 차세대 사양입니다.</p>
+  <p>세션 관리도 인증의 핵심입니다. 서버 측 세션(쿠키에 session ID, 서버 메모리/Redis에 상태)과 JWT 같은 stateless 토큰은 트레이드오프가 다릅니다. 서버 세션은 즉시 무효화 가능하지만 수평 확장이 부담, JWT는 stateless라 확장이 쉽지만 로그아웃·권한 변경 즉시 반영이 어렵습니다. 실무는 둘을 혼합합니다: 짧은 access token(15분) + 긴 refresh token(7일~30일) + 서버 측 revocation list.</p>
+  <h3>핵심 코드 — JWT 검증</h3>
+  <pre><code># PyJWT — 안전한 JWT 검증
+import jwt
+from jwt.exceptions import InvalidTokenError
+
+def verify_jwt(token: str, public_key: str) -> dict:
+    try:
+        payload = jwt.decode(
+            token,
+            key=public_key,
+            algorithms=["RS256"],           # ⚠️ 명시 필수, "none" 절대 허용 X
+            audience="https://api.example.com",
+            issuer="https://auth.example.com",
+            options={
+                "require": ["exp", "iat", "sub", "aud", "iss"],
+                "verify_exp": True,
+                "verify_iat": True,
+                "verify_signature": True,
+            },
+            leeway=30,  # 시계 오차 30초 허용
+        )
+        return payload
+    except InvalidTokenError as e:
+        raise PermissionError(f"Invalid token: {e}")
+
+# Argon2id — 안전한 비밀번호 저장
+from argon2 import PasswordHasher
+ph = PasswordHasher(time_cost=3, memory_cost=64*1024, parallelism=4)
+hashed = ph.hash("user-password-here")
+ph.verify(hashed, "user-password-here")   # 일치 시 True, 아니면 예외</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>🔑 예제 1 — 2022 Okta 침해와 SAML</h4><p>2022년 1월 Lapsus$ 그룹이 Okta(글로벌 IdP)의 협력업체 직원 PC를 통해 일부 고객 데이터에 접근했습니다. 직접 침해는 좁았지만, IdP 침해의 파급효과는 막대했고 SAML·SCIM·SSO의 신뢰체인 전체가 점검되었습니다. 교훈: SSO는 매우 강력하지만 동시에 단일 실패점이 되며, IdP 자체에 대한 다층 방어(직원 MFA·기기 신뢰·세션 모니터링)가 필수입니다.</p></div>
+  <div class="info-card"><h4>🔑 예제 2 — Passkey로 로그인</h4><p>WebAuthn(W3C, 2019) + FIDO2 CTAP2를 결합한 Passkey가 2022년부터 Apple·Google·Microsoft에서 동시 지원되었습니다. 사용자 디바이스가 키 쌍을 생성·저장하고, 서버에는 공개키만 등록됩니다. 로그인 시 챌린지를 서명하는 방식이라 ① 비밀번호 유출 불가, ② 피싱 저항성(도메인 바인딩), ③ MFA 내장의 세 마리 토끼를 잡습니다. 2024년 Google은 14억 개의 Passkey가 발급되었다고 발표했습니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① <strong>SCIM(System for Cross-domain Identity Management)</strong>: 사용자 프로비저닝·디프로비저닝 표준. Okta·Azure AD·Workspace의 자동화 핵심. ② <strong>Step-up Authentication</strong>: 평소엔 단순 인증, 고위험 작업(송금·설정 변경) 시에만 MFA 재요청. ③ <strong>Risk-based MFA</strong>: 평소와 다른 위치·기기·시간 패턴 감지 시 자동 MFA. ④ <strong>Service Account 관리</strong>: 사람이 아닌 시스템 간 인증은 mTLS · workload identity(SPIFFE/SPIRE) · IAM roles로 자동 발급/회전.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① JWT를 localStorage에 저장 → XSS 한 방에 탈취 (가능하면 HttpOnly cookie). ② Refresh token을 그대로 재사용 (rotation + detection 필수). ③ 인가 결정을 클라이언트에서 (UI 숨김만으로 안전하다고 착각). ④ 비밀번호 재설정 토큰을 무제한 유효로 설정. ⑤ "잠금"이 무차별 대입을 막을 뿐, 분산 공격(credential stuffing)은 못 막음 — HIBP 매칭이 추가로 필요.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>현대 인증·인가의 패러다임은 <strong>Identity-Aware Proxy(IAP)</strong>와 <strong>Zero Trust</strong>로 수렴합니다. 모든 요청은 네트워크 위치와 무관하게 사용자·기기·세션 컨텍스트를 평가받습니다. Google BeyondCorp(2014~)이 산업적 선례를 만들었고, Cloudflare Access·Tailscale·Cisco Duo 등이 대중화했습니다. 핵심 구성은 PDP(정책 결정)·PEP(정책 시행)·PIP(정책 정보)·PAP(정책 관리)의 4요소이며, OPA(Open Policy Agent)와 Rego 언어가 사실상의 표준 PDP가 되었습니다.</p>
+  <p>워크로드 신원(Workload Identity)은 사람이 아닌 서비스 간 인증의 새 표준입니다. <strong>SPIFFE/SPIRE</strong>(CNCF 졸업 프로젝트)는 SVID(SPIFFE Verifiable Identity Document, X.509 또는 JWT)를 자동 발급하고 짧은 TTL로 회전합니다. 클라우드 별로는 AWS IAM Roles for Service Accounts, GCP Workload Identity Federation, Azure Managed Identity가 동등한 기능을 제공합니다. 이로써 비밀번호·API 키의 정적 저장이 사라지고, 모든 자격증명이 동적·단기·검증가능해집니다.</p>
+  <h3>수학적·정량적 기초</h3>
+  <div class="formula">$$\text{Password entropy: } H = L \cdot \log_2(N), \quad \text{(L=길이, N=문자집합)}$$
+  $$\text{Brute force time: } T = \frac{N^L}{2 \cdot R}, \quad \text{(R=초당 시도, 평균은 } N^L/2 \text{)}$$
+  $$\text{Argon2 cost: } \text{Memory} \times \text{Iterations} \times \text{Parallelism}$$</div>
+  <p>예를 들어 8자 영숫자 + 특수문자(N=94)의 엔트로피는 약 52.5비트, GPU 100억회/초로 약 2일이면 깨집니다. 동일 자원에 Argon2id(64MB·3회·4스레드)를 적용하면 단일 GPU가 초당 수백 회로 떨어져 같은 8자도 수십~수백 년이 걸립니다. 즉 KDF가 사실상 의 비밀번호 길이를 수십 비트 더하는 효과를 냅니다.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>Verifiable Credentials &amp; DID</strong>: W3C DID(Decentralized Identifier) v1.0(2022), Verifiable Credentials v2.0이 표준화되어 자기주권 신원(Self-Sovereign Identity)이 실용 단계로. EU eIDAS 2.0 디지털 신원 지갑(EUDI Wallet, 2026)이 대표 사례. ② <strong>Continuous Access Evaluation Protocol(CAEP)</strong>: Shared Signals Framework로 위험 신호(세션 폐기·토큰 회수)를 IdP↔RP 간 실시간 전파. Microsoft·Google·Cisco가 주도. ③ <strong>Privacy-Preserving Authentication</strong>: BBS+ 서명, anonymous credentials(IBM Identity Mixer), zk-SNARK 기반 ID(zkLogin)로 "신원 노출 없이 자격 증명". ④ <strong>OAuth 2.1 + GNAP</strong>: Grant Negotiation and Authorization Protocol(IETF)이 OAuth의 다음 세대로 부상.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>암호학</strong>: 디지털 서명·KDF·임계서명(threshold signature)의 직접 응용</li>
+    <li><strong>형식 검증</strong>: ProVerif, Tamarin으로 인증 프로토콜의 안전성 증명</li>
+    <li><strong>인지심리학</strong>: 비밀번호 기억 한계, 보안과 사용성의 절충</li>
+    <li><strong>법학</strong>: GDPR Article 32, eIDAS, 개인정보보호법의 신원 검증 요구</li>
+    <li><strong>분산시스템</strong>: 분산 캐시, JWT 캐시 무효화, 세션 일관성</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 NIST SP 800-63 시리즈 (Digital Identity Guidelines)</li>
+    <li>📖 RFC 6749 (OAuth 2.0), RFC 9700 (BCP), OpenID Connect Core 1.0</li>
+    <li>📖 Aaron Parecki, <em>OAuth 2.0 Simplified</em> (2017)</li>
+    <li>📖 Google Zanzibar 논문 (USENIX ATC 2019)</li>
+    <li>🔬 실습: Auth0·Keycloak·Ory Hydra·Authelia 셋업, OPA Rego playground</li>
+    <li>🔬 키워드: Passkey, SPIFFE, CAEP, OAuth 2.1, ReBAC, eIDAS 2.0</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 본인의 사이드 프로젝트 하나에 Keycloak 또는 Ory를 셋업하고, ① Authorization Code + PKCE로 로그인, ② Passkey 등록·로그인, ③ Refresh token rotation + 도난 탐지, ④ OPA Rego로 RBAC 정책 외부화, ⑤ HIBP API로 침해 비밀번호 차단까지 한 사이클로 구현해보세요. 보안 면접의 '인증·인가' 질문 80%가 직관적으로 답하게 됩니다.</div>
+</div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#475569","questions":[{"q":"'당신이 누구인지' 증명하는 절차는?","choices":["인가(AuthZ)","인증(AuthN)","감사","인코딩"],"answer":1},{"q":"OAuth는 본래 무엇을 위한 프로토콜인가?","choices":["인증","암호화","인가","해시"],"answer":2},{"q":"역할에 권한을 묶는 인가 모델은?","choices":["RBAC","ABAC","ReBAC","MFA"],"answer":0},{"q":"JWT에서 허용하면 안 되는 알고리즘은?","choices":["RS256","HS256","alg:none","ES256"],"answer":2},{"q":"같은 요소 2개는 무엇이 아닌가?","choices":["MFA","인증","비밀번호","토큰"],"answer":0}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('sec3d-05');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('sec3d-05-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,1.6,13);camera.lookAt(0,0.6,0);
+  var user=sph(0.55,0x5b6bd6,0.95);user.position.set(-7.5,0.5,0);scene.add(user);
+  var uL=lbl('사용자',25,'#5b6bd6',0.95);uL.position.set(-7.5,1.6,0);scene.add(uL);
+  var gate=box(0.5,3.2,1.6,0x39415a,0.9);gate.position.set(-4,0.9,0);scene.add(gate);
+  var gateL=lbl('인증 AuthN: "너는 누구냐?"',25,'#39415a',1);gateL.position.set(-4,3.3,0);scene.add(gateL);
+  // JWT cube
+  var jwt=new THREE.Group();
+  var seg1=box(1.5,0.5,0.9,0xd6455b,0.95);seg1.position.y=0.55;jwt.add(seg1);
+  var seg2=box(1.5,0.5,0.9,0x9b59b6,0.95);jwt.add(seg2);
+  var seg3=box(1.5,0.5,0.9,0x5b6bd6,0.95);seg3.position.y=-0.55;jwt.add(seg3);
+  jwt.position.set(-4,0.9,0);jwt.visible=false;scene.add(jwt);
+  var j1=lbl('Header',19,'#d6455b',0.7),j2=lbl('Payload(역할:user)',19,'#9b59b6',0.7),j3=lbl('서명 Signature',19,'#5b6bd6',0.7);
+  [j1,j2,j3].forEach(function(l){l.material.opacity=0;scene.add(l);});
+  var doors=[
+    {t:'내 문서함 (user 허용)',p:V(5.5,2.2,0),need:'user'},
+    {t:'관리자 콘솔 (admin 전용)',p:V(5.5,-1.4,0),need:'admin'}
+  ];
+  var doorMeshes=[];
+  doors.forEach(function(d){
+    var m=box(1.8,2.2,0.4,0x2f9e63,0.9);m.position.copy(d.p);scene.add(m);doorMeshes.push(m);
+    var L=lbl(d.t,22,'#39415a',0.9);L.position.set(d.p.x,d.p.y+1.5,0);scene.add(L);
+  });
+  doorMeshes[1].material.color.set(0x7c87a3);
+  var azL=lbl('인가 AuthZ: "무엇을 할 수 있나?"',25,'#39415a',1);azL.position.set(5.5,4.2,0);scene.add(azL);
+  var mark=null,lastMark='';
+  function setMark(txt,col,p){if(txt+col===lastMark){if(mark)mark.position.copy(p);return;}lastMark=txt+col;if(mark){scene.remove(mark);if(mark.material.map)mark.material.map.dispose();mark.material.dispose();}mark=lbl(txt,40,col,1.2);mark.position.copy(p);scene.add(mark);}
+  function jwtLbls(){
+    j1.position.set(jwt.position.x-2.4,jwt.position.y+0.55,0);
+    j2.position.set(jwt.position.x-2.9,jwt.position.y,0);
+    j3.position.set(jwt.position.x-2.6,jwt.position.y-0.55,0);
+  }
+  var phases=[
+    {dur:3.5,cap:'① 인증(AuthN): 사용자가 비밀번호+OTP(MFA)로 신원을 증명하고 게이트를 통과합니다.',
+     enter:function(){user.position.set(-7.5,0.5,0);jwt.visible=false;[j1,j2,j3].forEach(function(l){l.material.opacity=0;});if(mark)scene.remove(mark);mark=null;seg2.material.color.set(0x9b59b6);},
+     update:function(u){user.position.x=-7.5+ez(u)*2.6;if(u>0.85)gate.material.color.set(0x2f9e63);}},
+    {dur:3.5,cap:'② 토큰 발급: 서버가 서명한 JWT(Header·Payload·Signature 3층)를 받습니다. Payload에 "역할: user"가 들어 있습니다.',
+     enter:function(){jwt.visible=true;[j1,j2,j3].forEach(function(l){l.material.opacity=1;});},
+     update:function(u){
+       jwt.position.set(-4+ez(u)*3.2,0.9+Math.sin(u*Math.PI)*0.8,0);
+       user.position.x=-4.9+ez(u)*3.2;jwtLbls();
+     }},
+    {dur:3.5,cap:'③ 인가(AuthZ): 같은 토큰이라도 역할에 따라 문이 다르게 반응 — user는 문서함 OK, 관리자 콘솔은 거부. 인증≠인가!',
+     update:function(u){
+       if(u<0.5){var f=ez(u*2);jwt.position.lerpVectors(V(-0.8,0.9,0),V(3.4,2.2,0),f);jwtLbls();if(u>0.4)setMark('✓',' #2f9e63',V(4.3,2.2,0.8));}
+       else{var f2=ez((u-0.5)*2);jwt.position.lerpVectors(V(3.4,2.2,0),V(3.4,-1.4,0),f2);jwtLbls();if(u>0.9)setMark('✕','#d6455b',V(4.3,-1.4,0.8));}
+     }},
+    {dur:4.5,cap:'④ 변조 시도: Payload를 "역할: admin"으로 고치면(보라→빨강 깜빡임) 서명 검증이 실패합니다 — 서명이 토큰의 진실성을 지키는 자물쇠.',
+     enter:function(){if(mark)scene.remove(mark);mark=null;},
+     update:function(u){
+       jwt.position.set(3.4,-1.4,0);jwtLbls();
+       seg2.material.color.set(Math.sin(u*18)>0?0xd6455b:0x9b59b6);
+       if(u>0.5){seg3.material.color.set(Math.sin(u*24)>0?0xd6455b:0x5b6bd6);setMark('서명 불일치!','#d6455b',V(3.4,-3.2,0));}
+     }},
+    {dur:3,cap:'요약: 인증은 "누구인가"(문 앞), 인가는 "무엇까지 허용되나"(문 안). JWT 서명은 위조를, 역할(RBAC)은 월권을 막습니다.',
+     enter:function(){seg3.material.color.set(0x5b6bd6);seg2.material.color.set(0x9b59b6);}}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

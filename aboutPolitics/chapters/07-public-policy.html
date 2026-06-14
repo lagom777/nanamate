@@ -2,14 +2,16 @@
 <title>7. 공공 정책 — aboutPolitics</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">🏛️ 표지</a></li><li><a href="01-intro.html">1. 정치학 개론</a></li><li><a href="02-ideologies.html">2. 정치 이념</a></li><li><a href="03-democracy.html">3. 민주주의</a></li><li><a href="04-institutions.html">4. 정치 제도</a></li><li><a href="05-parties.html">5. 정당과 선거</a></li><li><a href="06-international.html">6. 국제 정치</a></li><li><a href="07-public-policy.html">7. 공공 정책</a></li><li><a href="08-media.html">8. 미디어와 정치</a></li><li><a href="09-contemporary.html">9. 현대 정치</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>공공 정책</em></h1><p class="authors">Chapter 7 — Public Policy & Governance</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
-<h2>공공 정책 개요</h2><p>Public Policy & Governance의 핵심 원리를 3D로 학습합니다.</p>
-<div class="info-card"><h4>핵심 개념</h4><p>Public Policy & Governance</p></div>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 드래그로 회전 · 하단 캡션이 단계별로 설명합니다</span>
+<h2>공공 정책 개요</h2><p>공공 정책은 정부가 사회 문제를 해결하기 위해 만들고 집행하는 행동 계획이며, 거버넌스는 그 과정을 정부·시민·기업이 함께 운영하는 방식을 가리킨다. 정책은 한 번의 결정이 아니라 의제 설정에서 평가까지 이어지는 순환 과정이며, 평가 결과가 다시 새로운 의제를 낳는다. 위 3D 장면은 의제설정 → 정책형성 → 채택 → 집행 → 평가로 도는 정책 사이클을 따라가며 각 단계의 의미를 보여준다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>정책 사이클(의제설정·형성·채택·집행·평가)은 분석을 위한 지도일 뿐, 현실의 정책 과정은 단계가 겹치고 되돌아가며 비선형적으로 진행된다. 어느 단계든 이해관계자의 참여와 갈등 조정이 성패를 좌우한다.</p></div>
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
@@ -37,11 +39,105 @@
 </div>
 <div class="difficulty-content" data-level="hard">
   <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3><p>현대 정책학은 행태주의 정책분석에서 후기실증주의·해석주의 정책연구로 다원화되었습니다. 패션의 정책분석 비판은 정책을 권력의 산물로 재정의했고, 후크네티니·앙카로프의 사회구성주의 정책분석은 정책이 어떻게 대상 집단을 '가치 있는' 사람과 '가치 없는' 사람으로 구성하는지 분석합니다. 사바티에의 옹호연합 프레임워크(Advocacy Coalition Framework)는 정책 변화를 깊은 신념을 공유하는 옹호연합 간의 학습과 외부 충격으로 설명하며, 환경·에너지 정책 연구의 표준 도구가 되었습니다. 베이움가르트너와 존스의 단절적 균형 이론(punctuated equilibrium)은 정책이 오랜 안정 후 급격한 변동을 겪는 패턴을 설명합니다. 정책 이전(policy transfer) 연구는 한 국가의 정책이 다른 국가로 어떻게 확산되는지를 추적합니다. 행동경제학적 통찰을 정책에 적용하는 넛지(nudge) 접근은 영국 행동인사이트팀(BIT) 등을 통해 실무화되었습니다. 한편 거버넌스 연구는 메타 거버넌스, 협력적 거버넌스, 디지털 거버넌스로 분기하며, 알고리즘 행정의 책임성은 새로운 핵심 의제입니다.</p>
+  <h3>전문가 레벨</h3><p>현대 정책학은 행태주의 정책분석에서 후기실증주의·해석주의 정책연구로 다원화되었습니다. 피셔의 정책분석 비판은 정책을 권력의 산물로 재정의했고, 슈나이더와 잉그램의 사회구성주의 정책분석은 정책이 어떻게 대상 집단을 '가치 있는' 사람과 '가치 없는' 사람으로 구성하는지 분석합니다. 사바티에의 옹호연합 프레임워크(Advocacy Coalition Framework)는 정책 변화를 깊은 신념을 공유하는 옹호연합 간의 학습과 외부 충격으로 설명하며, 환경·에너지 정책 연구의 표준 도구가 되었습니다. 바움가트너와 존스의 단절적 균형 이론(punctuated equilibrium)은 정책이 오랜 안정 후 급격한 변동을 겪는 패턴을 설명합니다. 정책 이전(policy transfer) 연구는 한 국가의 정책이 다른 국가로 어떻게 확산되는지를 추적합니다. 행동경제학적 통찰을 정책에 적용하는 넛지(nudge) 접근은 영국 행동인사이트팀(BIT) 등을 통해 실무화되었습니다. 한편 거버넌스 연구는 메타 거버넌스, 협력적 거버넌스, 디지털 거버넌스로 분기하며, 알고리즘 행정의 책임성은 새로운 핵심 의제입니다.</p>
   <h3>주요 학파/논쟁</h3><p>합리주의(드로어, 사이먼) vs 점증주의(린드블롬) 논쟁은 정책학의 고전적 대립이며, 옹호연합 프레임워크와 다중흐름모델이 이를 종합하려는 시도입니다. 신공공관리(NPM) vs 신공공서비스(NPS) 논쟁은 행정의 본질이 효율성인지 시민성인지를 둘러싼 가치 논쟁입니다. 증거기반 정책(evidence-based policy)과 정책 윤리·민주성 사이의 긴장도 활발합니다.</p>
   <h3>최신 연구</h3><p>첫째, AI와 알고리즘 행정 연구가 폭증합니다. 복지 수급 결정, 사회서비스 배분, 형사사법에 알고리즘이 도입되면서 편향과 투명성 문제가 정책학의 중심 주제가 되었습니다. 둘째, 기후 거버넌스 연구는 다층 거버넌스, 도시 기후 행동, 정의로운 전환(just transition)을 다룹니다. 셋째, 위기 거버넌스(코로나19, 재난) 연구가 활발하며, 위기 학습 메커니즘이 분석되고 있습니다.</p>
   <h3>관련 분야</h3><ul><li>행정학(public administration)</li><li>정책분석론(policy analysis)</li><li>거버넌스 연구</li></ul>
   <h3>추가 자료</h3><ul><li>John Kingdon, 『Agendas, Alternatives, and Public Policies』</li><li>Paul Sabatier (ed.), 『Theories of the Policy Process』</li><li>Cass Sunstein & Richard Thaler, 『Nudge』</li></ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 정부가 모든 시민의 행동 데이터를 활용해 '맞춤형 정책'을 제공한다면, 그것은 더 효과적일까요 아니면 새로운 형태의 통제일까요? 정책의 효과성과 시민 자율성은 어떻게 양립할 수 있을까요?</div>
-</div></main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<8;i++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5),new THREE.MeshBasicMaterial({color:[0xdc2626,0x2563eb,0x16a34a][i%3],wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+</div>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#dc2626","questions":[{"q":"사회 문제 해결 위한 정부 행동 계획은?","choices":["여론","시위","공공 정책","사법 판결"],"answer":2},{"q":"정부·시민·기업이 함께하는 운영 방식은?","choices":["독재","거버넌스","관료제","군정"],"answer":1},{"q":"정책 사이클의 마지막 단계는?","choices":["의제설정","집행","채택","평가"],"answer":3},{"q":"'정책의 창' 다중흐름 모델의 학자는?","choices":["킹던","사이먼","라스웰","사바티에"],"answer":0},{"q":"점증주의를 주장한 학자는?","choices":["사이먼","킹던","린드블롬","드로어"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+function start(){
+  const c=document.getElementById('sim-scene');
+  if(!c||typeof THREE==='undefined')return;
+  const W=c.clientWidth||800,H=c.clientHeight||400;
+  const scene=new THREE.Scene();
+  scene.background=new THREE.Color(0xf4f6fb);
+  const cam=new THREE.PerspectiveCamera(50,W/H,0.1,1000);
+  let renderer;try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  c.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.95));
+  const dlight=new THREE.DirectionalLight(0xffffff,0.5);dlight.position.set(5,10,7);scene.add(dlight);
+  const tEl=document.createElement('div');
+  tEl.textContent='3D · 정책 사이클: 문제에서 평가까지';
+  tEl.style.cssText='position:absolute;top:10px;left:12px;font:700 11px/1.4 ui-monospace,monospace;letter-spacing:0.1em;color:#5b6bd6;background:rgba(255,255,255,0.88);padding:3px 9px;border-radius:10px;pointer-events:none;z-index:3;';
+  c.appendChild(tEl);
+  const capEl=document.createElement('div');
+  capEl.style.cssText='position:absolute;left:0;right:0;bottom:0;padding:9px 14px;font-size:0.84em;line-height:1.5;color:#26314a;background:rgba(252,253,255,0.92);border-top:1px solid rgba(40,60,110,0.08);pointer-events:none;z-index:3;min-height:2.4em;';
+  c.appendChild(capEl);
+  function cap(t){capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function M(col,o){return new THREE.MeshLambertMaterial({color:col,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,col,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),M(col,o));}
+  function sph(r,col,o){return new THREE.Mesh(new THREE.SphereGeometry(r,20,16),M(col,o));}
+  function cyl(r1,r2,h,col,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,24),M(col,o));}
+  function cone(r,h,col,o){return new THREE.Mesh(new THREE.ConeGeometry(r,h,24),M(col,o));}
+  function tor(r,t,col,o,arc){return new THREE.Mesh(new THREE.TorusGeometry(r,t,14,48,arc===undefined?Math.PI*2:arc),M(col,o));}
+  function line(a,b,col,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:col,transparent:true,opacity:o===undefined?0.6:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||26;const cv=document.createElement('canvas');let ctx=cv.getContext('2d');
+    const font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;cv.width=Math.ceil(ctx.measureText(txt).width)+24;cv.height=fs+20;
+    ctx=cv.getContext('2d');ctx.font=font;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillStyle=color||'#2b3242';ctx.fillText(txt,cv.width/2,cv.height/2);
+    const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    const k=(scl||1)*0.012;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  const root=new THREE.Group();scene.add(root);
+  let sway=0.10;
+
+  cam.position.set(0,4.6,10.5);cam.lookAt(0,0,0);sway=0.1;
+  const R=3.2;
+  const steps=[['① 의제설정','사회 문제가 정부의 탁자 위에 오른다. 어떤 문제가 의제가 되는가 자체가 권력의 문제다.',0x3f6fd0],
+   ['② 정책형성','전문가·부처·이해관계자가 대안을 설계하고 비용과 효과를 비교한다.',0x29a3a3],
+   ['③ 채택','의회와 정부가 공식적으로 결정한다. 가치 갈등과 타협이 응축되는 단계다.',0x2fa86d],
+   ['④ 집행','현장에서 실행에 옮긴다. 설계와 현장의 간극에서 정책은 다시 한 번 만들어진다.',0xe0883f],
+   ['⑤ 평가','효과를 측정하고 교훈을 얻는다. 평가 결과는 다시 새로운 의제가 된다(환류). 현실에서는 단계가 겹치고 되돌아가기도 한다.',0xd6455b]];
+  const nodes=steps.map((s,i)=>{
+    const a=Math.PI/2-i*2*Math.PI/5;
+    const g=new THREE.Group();const m=cyl(0.5,0.5,0.35,s[2]);g.add(m);
+    const L=lbl(s[0],24,'#1d2742',0.92);L.position.set(0,0.85,0);g.add(L);
+    g.position.set(Math.cos(a)*R,0,-Math.sin(a)*R);root.add(g);return g;
+  });
+  const cLab=lbl('사회 문제 → 해결의 순환',25,'#39415a',0.95);cLab.position.set(0,0.2,0);root.add(cLab);
+  const pts=[];for(let i=0;i<=80;i++){const a=Math.PI/2-i/80*2*Math.PI;pts.push(V(Math.cos(a)*R,-0.05,-Math.sin(a)*R));}
+  root.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0x8a93ad,transparent:true,opacity:0.6})));
+  const marker=sph(0.22,0xffc83c);root.add(marker);
+  function posAt(f){const a=Math.PI/2-f*2*Math.PI;marker.position.set(Math.cos(a)*R,0.3,-Math.sin(a)*R);}
+  function seg(i){return function(u){posAt((i+ez(u))/5);nodes.forEach((n,j)=>{const k=(j===i)?1.2:1;n.scale.set(k,k,k);});};}
+  const phases=steps.map((s,i)=>({dur:4.5,cap:s[0]+' — '+s[1],update:seg(i)}));
+  let uy=0,ux=0,md=false,px=0,py=0;
+  c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup',()=>{md=false;});
+  c.addEventListener('mousemove',e=>{if(md){uy+=(e.clientX-px)*0.005;ux+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    const dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    let ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,now/1000);
+    if(typeof always==='function')always(now/1000);
+    root.rotation.y=uy+Math.sin(now/1000*0.25)*sway;
+    root.rotation.x=ux;
+    renderer.render(scene,cam);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',()=>{const w=c.clientWidth,h=c.clientHeight;if(!w||!h)return;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body></html>

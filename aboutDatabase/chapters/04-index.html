@@ -8,12 +8,14 @@
 <script defer src="../toggle.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">📖 표지 · 초록</a></li>
@@ -449,6 +451,11 @@ ORDER  BY idx_scan ASC;  -- 사용 안 되는 인덱스 발굴</code></pre>
   </div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d6efd","questions":[{"q":"인덱스를 책에 비유하면?","choices":["표지","색인","본문","부록"],"answer":1},{"q":"쿼리 실행 계획을 확인하는 명령은?","choices":["SHOW","DESCRIBE","EXPLAIN","COMMIT"],"answer":2},{"q":"인덱스의 대표적인 단점은?","choices":["읽기 느려짐","보안 약화","조회 불가","쓰기 느려짐"],"answer":3},{"q":"B-Tree 인덱스의 검색 시간복잡도는?","choices":["O(log n)","O(n)","O(1)","O(n²)"],"answer":0},{"q":"인덱스만으로 쿼리가 완성되는 인덱스는?","choices":["유니크 인덱스","커버링 인덱스","부분 인덱스","해시 인덱스"],"answer":1}]};</script>
 </main>
 </div>
 </body>

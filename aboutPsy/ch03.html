@@ -5,14 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>감각과 지각 | 심리학 기초</title>
 <link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../shared/light-theme.css">
   <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
   <script defer src="../shared/difficulty.js"></script>
+  <script defer src="../shared/quizgame3d.js"></script>
 </head>
 <body>
 
 <aside>
-  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h1><a href="index.html">심리학 기초</a></h1>
   <div class="sub">PSYCHOLOGY FROM ZERO</div>
   <nav>
@@ -42,6 +45,18 @@
   <section class="chapter" id="ch3">
     <div class="chap-num">CHAPTER 03</div>
     <h2>감각과 지각</h2>
+<span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 감각 자극이 뇌에서 지각으로 — 빛·소리 → 해석</span>
+<div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');if(!c||!window.THREE)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xa855f7;const src=new THREE.Mesh(new THREE.SphereGeometry(0.4,16,16),new THREE.MeshBasicMaterial({color:0xeab308}));src.position.x=-2.8;s.add(src);const rings=[];for(let i=0;i<4;i++){const rg=new THREE.Mesh(new THREE.TorusGeometry(0.3,0.04,8,32),new THREE.MeshBasicMaterial({color:0xeab308,transparent:true,opacity:0.5}));rg.position.x=-2.8;rg.rotation.y=Math.PI/2;s.add(rg);rings.push({m:rg,ph:i});}const brain=new THREE.Mesh(new THREE.IcosahedronGeometry(0.9,1),new THREE.MeshBasicMaterial({color:COL,wireframe:true}));brain.position.x=2.2;s.add(brain);s.userData.brain=brain;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.brain.rotation.y+=0.012;const k=0.9+0.25*Math.abs(Math.sin(T*2));s.userData.brain.scale.setScalar(k);s.children.forEach(()=>{});s.userData;s.rotation.y+=0;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script>
+
     <div class="en">Sensation and Perception</div>
 
     <h3>3.1 감각과 지각은 다르다</h3>
@@ -277,6 +292,11 @@
 </div>
 
   <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d97757","questions":[{"q":"자극을 신경 신호로 바꾸는 과정은?","choices":["감각","지각","기억","학습"],"answer":0},{"q":"빛이 맺히는 눈의 부위는?","choices":["각막","동공","망막","수정체"],"answer":2},{"q":"길이가 같은데 달라 보이는 착시는?","choices":["게슈탈트","뮐러-라이어","청킹","보존"],"answer":1},{"q":"'전체는 부분의 합보다 크다' 학파는?","choices":["정신분석","행동주의","인지주의","게슈탈트"],"answer":3},{"q":"밝은 곳에서 컬러를 보는 세포는?","choices":["원추체","간상체","시신경","수정체"],"answer":0}]};</script>
 </main>
 
 <script src="js/main.js"></script>

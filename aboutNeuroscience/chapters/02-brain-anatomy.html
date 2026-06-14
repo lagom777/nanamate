@@ -2,12 +2,14 @@
 <title>2. 뇌 해부학 — aboutNeuroscience</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">🧠 표지</a></li><li><a href="01-neurons.html">1. 뉴런과 시냅스</a></li><li><a href="02-brain-anatomy.html">2. 뇌 해부학</a></li><li><a href="03-sensory.html">3. 감각과 지각</a></li><li><a href="04-memory.html">4. 기억과 학습</a></li><li><a href="05-emotion.html">5. 정서와 동기</a></li><li><a href="06-consciousness.html">6. 의식과 수면</a></li><li><a href="07-neuroplasticity.html">7. 신경가소성</a></li><li><a href="08-disorders.html">8. 뇌질환과 장애</a></li><li><a href="09-neurotech.html">9. 뇌공학과 AI</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>뇌 해부학</em></h1><p class="authors">Chapter 2 — Brain Regions & Functional Areas</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 뉴런 네트워크를 회전하며 탐구하세요</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 전두엽·두정엽·측두엽·후두엽·소뇌·뇌간이 색으로 구분된 뇌 부위 지도입니다</span>
 <h2>뇌 해부학 개요</h2><p>Brain Regions & Functional Areas의 핵심 메커니즘을 3D 시뮬레이션과 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Brain Regions & Functional Areas</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -44,9 +46,25 @@
   <h3>추가 자료</h3><ul><li>Mai, <em>Atlas of the Human Brain</em></li><li>Human Connectome Project (humanconnectome.org)</li><li>Allen Brain Atlas의 Brainspan</li></ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 두 사람의 좌반구와 우반구를 교차로 연결할 수 있다면, '나'라는 의식은 누구의 것일까요? 분리뇌 환자 연구에서 단서를 찾아 봅시다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#818cf8","questions":[{"q":"기억 형성의 중심 부위는?","choices":["소뇌","뇌간","해마","편도체"],"answer":2},{"q":"운동 협응과 균형을 맡는 부위는?","choices":["전두엽","해마","측두엽","소뇌"],"answer":3},{"q":"공포와 감정을 처리하는 부위는?","choices":["편도체","해마","소뇌","두정엽"],"answer":0},{"q":"좌우 반구를 연결하는 구조는?","choices":["시상","뇌량","척수","축삭"],"answer":1},{"q":"시각을 처리하는 엽은?","choices":["측두엽","전두엽","후두엽","두정엽"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-const neurons=[];for(let i=0;i<20;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.15,12,12),new THREE.MeshBasicMaterial({color:0x818cf8}));m.position.set((Math.random()-0.5)*8,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);neurons.push(m);}
-for(let i=0;i<neurons.length-1;i++){const g=new THREE.BufferGeometry().setFromPoints([neurons[i].position,neurons[(i+1+Math.floor(Math.random()*3))%neurons.length].position]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x818cf8,transparent:true,opacity:0.15})));}
-let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});
-function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const lobes=[[-1.6,1.0,0.4,1.5,0x6366f1],[0.4,1.7,0.3,1.4,0xf59e0b],[1.9,0.6,0.2,1.2,0x10b981],[2.0,-0.7,0.3,1.0,0xef4444],[-1.4,-1.4,-0.2,1.1,0x8b5cf6]];
+  lobes.forEach(L=>{const lobe=new THREE.Mesh(new THREE.SphereGeometry(L[3]*0.55,16,16),new THREE.MeshBasicMaterial({color:L[4],transparent:true,opacity:0.85}));lobe.position.set(L[0],L[1],L[2]);s.add(lobe);});
+  const stem=new THREE.Mesh(new THREE.CylinderGeometry(0.32,0.42,2.0,12),new THREE.MeshBasicMaterial({color:0x64748b}));stem.position.set(-0.2,-1.9,0);stem.rotation.z=0.25;s.add(stem);
+  const corpus=new THREE.Mesh(new THREE.TorusGeometry(0.9,0.12,8,24,Math.PI),new THREE.MeshBasicMaterial({color:0xfde68a}));corpus.position.set(0,0,0);corpus.rotation.z=-0.3;s.add(corpus);
+  for(let k=0;k<5;k++){const a2=lobes[k],b2=lobes[(k+1)%5];const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(a2[0],a2[1],a2[2]),new THREE.Vector3(b2[0],b2[1],b2[2])]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x94a3b8,transparent:true,opacity:0.4})));}
+  s.position.x=-0.3;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y=0.4*Math.sin(T*0.4); r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

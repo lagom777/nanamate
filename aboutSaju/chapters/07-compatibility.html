@@ -5,7 +5,9 @@
 <link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
@@ -16,7 +18,7 @@
 <li><a href="07-compatibility.html">7. 궁합</a></li><li><a href="08-career.html">8. 직업과 재물</a></li>
 <li><a href="09-modern-application.html">9. 현대적 활용</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>궁합</em></h1><p class="authors">Chapter 7 — Compatibility & Relationships</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 오행 관계를 회전하며 탐구하세요</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 두 사람의 사주 궁합 — 8글자 대 8글자</span>
 <h2>궁합 개요</h2><p>이 챕터에서는 궁합의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Compatibility & Relationships</p></div>
 
@@ -76,33 +78,21 @@
   </ul>
   <div class="success-box"><strong>🎓 학술적 탐구:</strong> 명리적 궁합과 현대 관계심리학의 결과를 같은 사례에 적용해 비교해 보면, 다른 어휘로 같은 인간 현상을 설명하는 두 학문의 만남을 체험할 수 있습니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ff4d8d","questions":[{"q":"궁합에서 가장 먼저 비교하는 것은?","choices":["시주","연주","일주","월주"],"answer":2},{"q":"배우자 자리로 다루는 글자는?","choices":["일지","월지","연지","시지"],"answer":0},{"q":"궁합의 올바른 활용 방식은?","choices":["결정 도구","등급 판정","길흉 단정","이해의 도구"],"answer":3},{"q":"갑목과 정화 일간의 관계는?","choices":["화극금","목생화","수극화","금생수"],"answer":1},{"q":"자수와 오화 일지의 관계는?","choices":["육합","삼합","자오충","방합"],"answer":2}]};</script>
 </main></div>
 <script>
-(function() {
-  const container = document.getElementById('sim-scene');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 3, 8);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  container.appendChild(renderer.domElement);
-  const colors = [0x22c55e,0xef4444,0xeab308,0xf8fafc,0x3b82f6];
-  for (let i = 0; i < 5; i++) {
-    const m = new THREE.Mesh(new THREE.OctahedronGeometry(0.4,0), new THREE.MeshBasicMaterial({ color: colors[i], wireframe: true }));
-    const a = (i/5)*Math.PI*2;
-    m.position.set(Math.cos(a)*2.5, 0, Math.sin(a)*2.5);
-    scene.add(m);
-  }
-  const torus = new THREE.Mesh(new THREE.TorusGeometry(2.5,0.05,8,64), new THREE.MeshBasicMaterial({ color: 0xff4d8d, transparent: true, opacity: 0.3 }));
-  torus.rotation.x = Math.PI/2; scene.add(torus);
-  let md=false,px=0;
-  container.addEventListener('mousedown',e=>{md=true;px=e.clientX;});
-  container.addEventListener('mouseup',()=>md=false);
-  container.addEventListener('mousemove',e=>{if(md){scene.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
-  container.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});
-  container.addEventListener('touchmove',e=>{scene.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});
-  function animate(){requestAnimationFrame(animate);scene.rotation.y+=0.003;renderer.render(scene,camera);}animate();
-  window.addEventListener('resize',()=>{camera.aspect=container.clientWidth/container.clientHeight;camera.updateProjectionMatrix();renderer.setSize(container.clientWidth,container.clientHeight);});
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function chart(cx,col){const g=new THREE.Group();g.position.x=cx;for(let i=0;i<4;i++){const x=(i-1.5)*0.7;const gan=new THREE.Mesh(new THREE.BoxGeometry(0.55,0.5,0.2),new THREE.MeshBasicMaterial({color:col}));gan.position.set(x,0.35,0);g.add(gan);const ji=new THREE.Mesh(new THREE.BoxGeometry(0.55,0.5,0.2),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.6}));ji.position.set(x,-0.3,0);g.add(ji);}s.add(g);return g;}chart(-2.4,0xff4d8d);chart(2.4,0x7b9cff);for(let i=0;i<4;i++){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-2.4+(i-1.5)*0.7,0,0.2),new THREE.Vector3(2.4+(i-1.5)*0.7,0,0.2)]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:0.2})));}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.0025;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
-</script></body></html>
+</script>
+</body></html>

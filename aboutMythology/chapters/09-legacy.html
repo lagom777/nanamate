@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9. 신화의 유산 — aboutMythology</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🏛️ 표지</a></li>
+    <li><a href="01-what-is.html">1. 신화란 무엇인가</a></li>
+    <li><a href="02-creation.html">2. 창조 신화</a></li>
+    <li><a href="03-olympians.html">3. 올림포스 12신</a></li>
+    <li><a href="04-heroes.html">4. 영웅 신화</a></li>
+    <li><a href="05-trojan-war.html">5. 트로이 전쟁</a></li>
+    <li><a href="06-odyssey.html">6. 오디세이아의 귀환</a></li>
+    <li><a href="07-metamorphoses.html">7. 사랑과 변신</a></li>
+    <li><a href="08-underworld.html">8. 저승과 운명</a></li>
+    <li><a href="09-legacy.html">9. 신화의 유산</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>신화의 유산</em></h1>
+  <p class="authors">Chapter 9 — The Legacy of Myth</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 신화 핵심에서 여러 분야로 퍼져 나가는 영향의 방사 — 회전시켜 보세요</span>
+
+<h2>신화의 유산 개요</h2>
+<p>그리스·로마 신화는 신앙으로서의 생명을 잃은 뒤에도 사라지지 않고, 서양 문명의 미술·언어·문학·심리학 속에 깊이 스며들어 살아남았다. 르네상스와 바로크 화가들은 신화를 즐겨 그렸고, 밤하늘의 별자리와 행성에는 신들의 이름이 붙었으며, 정신분석학은 신화의 인물에서 마음을 설명할 개념을 빌려왔다. 오늘날 신화는 사랑·죽음·오만 같은 인간 보편의 주제를 압축해 담은 상징 언어로 기능한다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>신화는 종교적 진리에서 문화적 상징 언어로 변모하며 미술·천문학 명칭·심리학 용어·대중문화로 계승되었다. 그 힘은 인간이 공유하는 보편 주제를 압축한 이야기 형태에 있다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>옛 신화는 더 이상 믿음의 대상이 아니지만, 그림과 별 이름과 우리가 쓰는 말 속에 형태를 바꾸어 지금도 살아 있다.</p>
+<h3>왜 중요한가?</h3>
+<p>신화를 알면 미술관과 밤하늘, 그리고 일상의 언어가 갑자기 풍성하게 읽힌다. 르네상스 그림 속 벌거벗은 여신이 누구이며 왜 거기 있는지, 수성·금성·화성이라는 행성 이름이 어디서 왔는지 그 배경이 보이기 때문이다. 또한 '나르시시즘'이나 '오이디푸스 콤플렉스' 같은 심리학 용어도 신화 인물에서 나왔다. 신화는 사랑·질투·죽음·오만처럼 시대를 초월하는 인간의 마음을 이야기로 담았기에 오래 살아남았다. 그래서 신화는 단순한 옛이야기가 아니라, 우리가 자신을 이해하는 데 쓰는 공용 언어에 가깝다.</p>
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>유산(legacy)</strong>: 후대에 물려받은 영향과 흔적. 여기서는 신화가 문화에 남긴 자취를 뜻한다.</li>
+<li><strong>상징(symbol)</strong>: 어떤 추상적 의미를 대신 나타내는 이미지나 이름. 신은 흔히 특정 가치의 상징이 된다.</li>
+<li><strong>나르시시즘</strong>: 자기 자신에게 빠진 태도. 물에 비친 자기 모습에 반한 청년 나르키소스에서 유래한 말이다.</li>
+<li><strong>휴브리스(hybris)</strong>: 인간이 분수를 넘어 부리는 오만. 그리스 비극에서 파멸을 부르는 핵심 동기다.</li>
+<li><strong>르네상스</strong>: 14~16세기 유럽에서 고대 그리스·로마 문화를 되살린 문화 운동. 신화가 미술로 크게 부활했다.</li>
+</ul></div>
+<h3>핵심 개념 풀어쓰기</h3>
+<p>신화의 유산은 마치 오래된 강이 마른 뒤에도 땅에 남긴 물길과 같다. 강물(원래의 종교적 믿음)은 사라졌지만, 그 물길(이야기의 구조와 이름)은 그대로 남아 새로운 물(미술·과학·심리학)이 그 길을 따라 흐른다. 그래서 우리는 신을 더는 섬기지 않으면서도, 신의 이름으로 행성을 부르고 신의 이야기로 마음을 설명한다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 미술관에 가거나 영화·게임을 볼 때 '이 인물이 신화의 누구와 닮았나'를 떠올려 보면, 신화가 얼마나 곳곳에 스며 있는지 자연스럽게 체감할 수 있다.</div>
+<h3>한 페이지 요약</h3>
+<ul>
+<li>신화는 신앙을 잃은 뒤에도 문화적 상징 언어로 살아남았다.</li>
+<li>르네상스·바로크 미술이 신화를 그림의 단골 주제로 부활시켰다.</li>
+<li>행성과 별자리 이름의 상당수가 신화에서 왔다.</li>
+<li>나르시시즘·오이디푸스 콤플렉스 등 심리학 용어가 신화 인물에서 유래했다.</li>
+<li>신화가 오래가는 이유는 사랑·죽음·오만 같은 보편 주제를 담기 때문이다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>신화의 유산을 이해하려면 신화가 '믿어지는 진리'에서 '활용되는 상징'으로 지위가 바뀌었다는 점을 잡아야 한다. 고대에는 신들의 이야기가 세계의 질서를 설명하는 종교적 진실이었지만, 기독교가 지배한 중세를 거치며 그리스·로마 신화는 신앙의 자리를 잃었다. 그러나 그 이야기와 인물들은 비유와 상징의 저장고로 보존되었고, 르네상스에 이르러 고전 부흥의 흐름 속에서 미술과 문학의 주제로 화려하게 부활했다. 이때 신화는 더는 숭배 대상이 아니라, 인간의 감정과 가치를 표현하는 시각적·언어적 어휘가 되었다. 근대 과학은 행성과 별자리에 신들의 이름을 붙여 신화를 천문학의 명명 체계 안에 새겼다. 20세기 정신분석학은 한 걸음 더 나아가, 신화 인물을 인간 무의식의 보편 구조를 설명하는 모델로 채택했다. 이런 다층적 계승의 공통 원리는, 신화가 사랑·죽음·오만 같은 인류 보편의 경험을 압축한 강력한 이야기 틀이라는 점이다. 그래서 시대와 매체가 바뀌어도 신화는 새 옷을 갈아입으며 반복적으로 소환된다.</p>
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 상징 언어로의 전환</h4><p>신화가 살아남는 핵심 메커니즘은 '문자 그대로의 진실'을 버리고 '상징적 의미'를 얻는 데 있다. 비너스는 더는 숭배받는 여신이 아니지만 '사랑과 미의 화신'이라는 상징으로 그림과 시에 거듭 등장한다. 이렇게 구체적 신이 추상적 가치의 기호가 되면, 어떤 시대든 그 가치를 말하려 할 때 신의 이름을 빌릴 수 있다.</p></div>
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1 — 천문학의 명명</h4><p>태양에 가까운 순서대로 수성·금성·화성·목성·토성은 로마 신 머큐리(메르쿠리우스)·비너스·마르스·유피테르·사투르누스의 이름을 따른다. 빠르게 움직이는 별에는 전령의 신 머큐리를, 가장 밝고 아름다운 별에는 미의 여신 비너스를 붙인 식이다. 천왕성·해왕성, 그리고 한때 행성으로 분류됐던 명왕성(플루토)까지 이 전통이 이어졌다. 신화는 이렇게 과학의 언어 속에 보존되었다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 르네상스·바로크 미술</h4><p>보티첼리의 '비너스의 탄생'은 바다 거품에서 태어난 비너스를 그린 대표적 르네상스 작품으로, 고전 신화를 회화로 부활시킨 상징적 예다. 바로크 시대에는 루벤스 등이 신화 장면을 역동적이고 관능적으로 그렸다. 신화는 누드와 격정 같은 주제를 종교적 거부감 없이 다룰 수 있게 해 주는 '허용된 무대'이기도 했다.</p></div>
+<h3>현대적 전개</h3>
+<p>오늘날 신화는 문학·영화·게임으로 무대를 옮겨 계속 변주된다. 영웅의 여정 구조는 수많은 모험 서사의 골격이 되었고, 게임과 영화는 제우스·헤라클레스·메두사 같은 인물을 직접 등장시키거나 변형한다. 신화는 현대 창작자에게 즉시 통하는 공용 이미지의 보고로 기능한다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> '신화가 미술과 과학에 쓰였으니 사람들이 여전히 신을 믿었다'고 생각하기 쉽다. 그러나 르네상스 이후의 신화 활용은 신앙이 아니라 상징과 교양으로서의 차용이다. 믿음과 상징적 사용을 구분하는 것이 중요하다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>신화의 유산을 깊이 보려면, 신화가 어떻게 '심리의 모델'로 전용되었는지를 살펴야 한다. 프로이트는 소포클레스의 비극 속 오이디푸스 이야기에서 '오이디푸스 콤플렉스'라는 개념을 끌어내, 유아기의 부모를 향한 양가감정을 설명했다. 또한 그는 삶의 충동을 에로스로, 죽음과 파괴를 향하는 충동을 타나토스로 명명해 신화의 이름을 이론의 핵심 용어로 삼았다. 나르키소스 신화에서 온 '나르시시즘'은 자기애를 가리키는 임상 용어로 정착했다. 이런 차용은 신화 인물이 단지 개인의 이야기가 아니라 인간 마음의 반복되는 구조를 담고 있다는 직관에 기댄 것이다. 다만 이런 적용이 보편적으로 타당한지는 논쟁의 대상이며, 특정 문화의 가족 구조를 인류 전체에 일반화했다는 비판이 꾸준히 제기되었다. 그럼에도 신화가 추상적 심리를 구체적 인물과 사건으로 형상화하는 힘을 지녔다는 점은 폭넓게 인정된다. 결국 신화의 현대적 의미는, 말로 다 풀기 어려운 사랑·죽음·오만 같은 경험을 인물과 이야기의 형태로 붙잡아 두는 상징 언어라는 데 있다.</p>
+<h3>최신 연구·쟁점</h3>
+<p>인지·진화적 관점의 연구자들은 특정 신화 모티프가 여러 문화에 반복 등장하는 이유를 인간 마음의 공통된 인지 편향에서 찾으려 한다. 반면 인류학·문화사 연구자들은 '보편 신화'라는 발상이 서구 중심적 일반화일 수 있다고 경계한다. 한편 대중문화 연구에서는 영화·게임이 신화를 재가공하면서 원전을 단순화하거나 왜곡하는 문제, 그리고 그 과정에서 신화가 새로운 의미를 획득하는 현상이 함께 논의된다. 이런 쟁점들은 신화를 '고정된 정답'이 아니라 끊임없이 재해석되는 텍스트로 보게 한다.</p>
+<h3>관련 분야</h3>
+<ul>
+<li><strong>정신분석학·심리학</strong>: 오이디푸스 콤플렉스·나르시시즘·에로스·타나토스 등 신화에서 온 개념의 이론적 위상과 한계.</li>
+<li><strong>미술사</strong>: 르네상스·바로크 회화의 신화 도상학과 그 상징 코드의 해독.</li>
+<li><strong>비교신화학·인류학</strong>: 문화 간 신화 모티프의 유사성과 차이, 보편성 주장에 대한 검토.</li>
+</ul>
+<h3>더 읽을거리</h3>
+<ul>
+<li>"천의 얼굴을 가진 영웅" — 조지프 캠벨</li>
+<li>"신화의 힘" — 조지프 캠벨</li>
+<li>"황금가지" — 제임스 조지 프레이저</li>
+</ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> 최근 본 영화나 게임 하나를 골라, 그 줄거리에서 신화적 요소(영웅의 여정, 휴브리스로 인한 파멸, 사랑·죽음의 상징)를 찾아 한 단락으로 정리해 보라. 그리고 그것이 원전 신화를 어떻게 변형했는지도 함께 적어 보라.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#e0b341","questions":[{"q":"'비너스의 탄생'을 그린 화가는?","choices":["루벤스","프레이저","보티첼리","캠벨"],"answer":2},{"q":"나르시시즘의 유래가 된 인물은?","choices":["오이디푸스","나르키소스","에로스","타나토스"],"answer":1},{"q":"금성의 이름이 된 신은?","choices":["마르스","머큐리","유피테르","비너스"],"answer":3},{"q":"오이디푸스 콤플렉스를 만든 학자는?","choices":["프로이트","캠벨","프레이저","소포클레스"],"answer":0},{"q":"죽음 충동에 붙은 신화 이름은?","choices":["에로스","휴브리스","타나토스","모이라"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // 신화의 유산: 중앙의 신화 핵심에서 미술·천문·심리·대중문화 등 여러 분야로 가지가 방사되고, 가지 끝의 분야 노드가 빛난다
+  const core=new THREE.Mesh(new THREE.IcosahedronGeometry(0.8,1),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.13,0.9,0.6)})); s.add(core);
+  const halo=new THREE.Mesh(new THREE.TorusGeometry(1.1,0.05,8,50),new THREE.MeshBasicMaterial({color:0xe0b341,transparent:true,opacity:0.4})); s.add(halo);
+  const leaves=[];const M=10;
+  for(let i=0;i<M;i++){const ph=Math.acos(1-2*(i+0.5)/M), th=Math.PI*(1+Math.sqrt(5))*i; const dir=new THREE.Vector3(Math.sin(ph)*Math.cos(th),Math.cos(ph),Math.sin(ph)*Math.sin(th)); const end=dir.clone().multiplyScalar(3.4); s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([dir.clone().multiplyScalar(0.8),end]),new THREE.LineBasicMaterial({color:0xe0b341,transparent:true,opacity:0.3}))); const leaf=new THREE.Mesh(new THREE.OctahedronGeometry(0.3,0),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(i/M,0.6,0.55)})); leaf.position.copy(end); s.add(leaf); leaves.push({leaf,dir,ph:i});}
+  s.userData.core=core;s.userData.halo=halo;s.userData.leaves=leaves;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.core.rotation.y+=0.01;s.userData.core.scale.setScalar(1+0.05*Math.sin(T*2));s.userData.halo.rotation.z+=0.01;s.userData.leaves.forEach(o=>{o.leaf.rotation.y+=0.03;const p=3.0+0.5*Math.sin(T*1.5+o.ph);o.leaf.position.copy(o.dir).multiplyScalar(p);o.leaf.scale.setScalar(0.8+0.3*Math.sin(T*2+o.ph));});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

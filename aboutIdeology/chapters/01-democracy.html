@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1. 민주주의 — aboutIdeology</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">⚖️ 표지</a></li>
+    <li><a href="01-democracy.html">1. 민주주의</a></li>
+    <li><a href="02-liberalism.html">2. 자유주의</a></li>
+    <li><a href="03-conservatism.html">3. 보수주의</a></li>
+    <li><a href="04-capitalism.html">4. 자본주의</a></li>
+    <li><a href="05-socialism.html">5. 사회주의</a></li>
+    <li><a href="06-communism.html">6. 공산주의 · 마르크스주의</a></li>
+    <li><a href="07-welfare.html">7. 복지국가 · 사회민주주의</a></li>
+    <li><a href="08-totalitarianism.html">8. 전체주의 · 파시즘</a></li>
+    <li><a href="09-anarchism.html">9. 무정부주의 · 자유지상주의</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>민주주의</em></h1>
+  <p class="authors">Chapter 1 — Democracy</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 드래그로 회전 · 하단 캡션이 단계별로 설명합니다</span>
+
+<h2>민주주의 개요</h2>
+<p>민주주의는 정치 공동체의 주인이 군주나 소수 귀족이 아니라 그 공동체를 이루는 사람들 전체라는 발상에서 출발한다. 권력의 정당성을 통치자의 혈통이나 신의 뜻이 아니라 피치자(被治者)의 동의에서 찾는다는 점에서, 인류가 권력을 다루는 방식에 큰 전환을 가져온 이념이다. 이 챕터에서는 민주주의의 어원과 유형, 핵심 원리, 그리고 고대 아테네에서 근대 대의제와 보통선거권 확대로 이어진 역사적 전개를 살펴본다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>민주주의는 그리스어 <strong>demos</strong>(인민)와 <strong>kratos</strong>(지배)가 합쳐진 말로 '인민의 지배'를 뜻한다. 모든 시민이 직접 정치에 참여하는 직접민주주의(고대 아테네), 대표를 뽑아 대신 결정하게 하는 대의민주주의, 그리고 다수의 지배에 개인의 자유와 권리 보호를 결합한 자유민주주의로 나뉜다. 국민주권, 선거, 다수결과 소수자 보호, 법치, 권력분립이 그 핵심 원리로 꼽힌다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>민주주의는 '나라의 주인은 국민이며, 중요한 결정은 국민 또는 국민이 뽑은 대표가 함께 내린다'는 정치 방식이다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>민주주의가 중요한 까닭은, 그것이 권력이 누구의 것인가에 대한 답을 바꾸기 때문이다. 왕정이나 독재에서는 한 사람이나 소수 집단이 모든 결정을 내리고 나머지는 그저 따른다. 그러나 민주주의에서는 평범한 사람들도 투표와 의견 표현을 통해 자기 삶에 영향을 주는 결정에 참여할 수 있다. 또한 정해진 임기마다 선거를 치르기 때문에, 일을 잘 못한 권력자를 폭력 없이 평화롭게 교체할 수 있다. 한 사람에게 권력이 몰리지 않도록 견제 장치를 두어, 권력 남용으로부터 개인의 자유를 지키려는 제도이기도 하다. 그래서 민주주의는 단순한 다수결 놀이가 아니라, 권력을 통제하고 약자를 보호하는 틀로 발전해 왔다.</p>
+
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>국민주권</strong>: 나라의 최종 권력이 국민에게 있다는 원칙이다.</li>
+<li><strong>선거</strong>: 국민이 자기를 대신해 결정할 대표를 투표로 뽑는 절차다.</li>
+<li><strong>다수결</strong>: 의견이 갈릴 때 더 많은 사람이 지지하는 쪽으로 결정하는 방법이다.</li>
+<li><strong>소수자 보호</strong>: 다수가 결정하더라도 소수의 기본 권리는 함부로 빼앗지 않는다는 원칙이다.</li>
+<li><strong>법치</strong>: 권력자도 자기 마음대로가 아니라 법의 테두리 안에서 통치해야 한다는 원칙이다.</li>
+</ul></div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>반에서 소풍 장소를 정하는 상황을 떠올려 보자. 모두가 모여 손을 들어 직접 정하면 직접민주주의에 가깝고, 반장과 부반장을 뽑아 그들에게 협의를 맡기면 대의민주주의에 가깝다. 학생 수가 적은 학급에서는 다 같이 정할 수 있지만, 수천만 명이 사는 나라에서는 모두가 매번 모일 수 없으니 대표를 뽑는 방식이 자리 잡았다. 여기에 '다수가 정해도 한 친구의 도시락을 빼앗지는 못한다'는 규칙을 더한 것이 자유민주주의의 소수자 보호다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 민주주의를 '다수결'과 같은 말로 외우지 말자. 다수결은 결정 '방법' 중 하나일 뿐이고, 민주주의는 거기에 국민주권·법치·소수자 보호·권력분립이 함께 묶인 더 큰 그릇이다.</div>
+
+<h3>한 페이지 요약</h3><ul>
+<li>민주주의는 demos(인민)+kratos(지배), 곧 '인민의 지배'를 뜻한다.</li>
+<li>유형은 직접민주주의·대의민주주의·자유민주주의로 나뉜다.</li>
+<li>핵심 원리는 국민주권, 선거, 다수결과 소수자 보호, 법치, 권력분립이다.</li>
+<li>큰 나라에서는 대표를 뽑는 대의민주주의가 일반적이다.</li>
+<li>선거를 통해 권력자를 평화롭게 교체할 수 있다는 점이 핵심 장점이다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>민주주의의 역사는 흔히 고대 그리스 아테네에서 시작된 것으로 이야기된다. 기원전 5세기 무렵 아테네에서는 시민들이 민회(에클레시아)에 직접 모여 법과 정책을 토론하고 표결하는 직접민주주의가 운영되었다. 다만 당시 '시민'에는 성인 남성 자유민만 포함되었고 여성·노예·외국인은 배제되었으므로, 오늘날 기준으로 보면 매우 제한된 형태였다. 중세를 거치며 민주주의는 오랫동안 주변으로 밀려나 있었으나, 근대에 들어 다시 부활한다. 17~18세기 계몽사상가들은 권력의 정당성을 새롭게 사유했다. 존 로크는 정부의 권력이 통치받는 사람들의 동의에서 나오며, 정부가 생명·자유·재산이라는 자연권을 침해하면 시민이 저항할 수 있다고 보았다. 몽테스키외는 권력을 입법·행정·사법으로 나누어 서로 견제하게 하는 권력분립을 제시하여, 한 곳에 권력이 집중되어 자유가 위협받는 사태를 막고자 했다. 이러한 사상은 미국 독립과 프랑스 혁명을 거치며 근대 대의민주주의의 제도적 기초가 되었다. 그러나 초기 근대 민주주의에서도 투표권은 재산을 가진 일부 남성에게만 주어졌고, 보통선거권이 노동자와 여성에게로 확대되는 데에는 오랜 시간과 격렬한 투쟁이 필요했다.</p>
+
+<h3>핵심 메커니즘/교리</h3>
+<div class="info-card"><h4>📐 다섯 기둥</h4><p>대의민주주의는 보통 다섯 원리 위에 선다. ①<strong>국민주권</strong>: 권력의 원천은 국민이다. ②<strong>선거</strong>: 정기적·경쟁적 선거로 대표를 선출하고 책임을 묻는다. ③<strong>다수결과 소수자 보호</strong>: 결정은 다수로 하되 소수의 기본권은 침해하지 않는다. ④<strong>법치</strong>: 통치자도 법 아래에 있다. ⑤<strong>권력분립</strong>: 입법·행정·사법이 서로 견제한다. 이 가운데 어느 하나만 빠져도 민주주의의 질은 크게 떨어진다고 본다.</p></div>
+
+<h3>대표 사례·경전</h3>
+<div class="info-card"><h4>📐 사례 1</h4><p>고대 아테네의 민회는 직접민주주의의 원형으로 자주 인용된다. 추첨으로 공직을 맡기고 시민이 직접 표결에 참여했다는 점은 오늘날의 시민 참여 논의에 영감을 주지만, 동시에 참정권이 일부에게만 열려 있었다는 한계도 함께 기억된다.</p></div>
+<div class="info-card"><h4>📐 사례 2</h4><p>근대 대의제는 로크의 <em>통치론</em>과 몽테스키외의 <em>법의 정신</em> 같은 저작에서 이론적 토대를 얻었다. 동의에 기반한 정부와 권력분립이라는 두 발상은 이후 여러 나라의 헌법 설계에 깊이 스며들었다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>20세기 들어 보통선거권이 점차 확립되면서, 민주주의는 일부 유산자 남성의 정치에서 모든 성인 시민의 정치로 확장되었다. 여성 참정권 운동과 노동운동은 이 확대 과정의 중요한 동력이었다. 오늘날 대다수 민주국가는 대의제를 기본으로 하면서도, 국민투표나 주민참여 예산 같은 직접민주주의 요소를 부분적으로 결합한 혼합 형태를 띤다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> '고대 아테네는 완벽한 민주주의였다'는 생각은 사실과 거리가 있다. 아테네 민주주의는 직접 참여라는 점에서 인상적이지만, 여성과 노예와 외국인을 배제한 제한적 체제였다. 민주주의의 '범위'가 넓어진 것은 보통선거권이 확립된 근현대의 일이다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>민주주의가 '인민의 지배'를 뜻한다는 어원적 정의는 명료해 보이지만, '인민'이 무엇이고 '지배'가 어떻게 작동하는가를 따지면 곧장 깊은 이론적 논쟁으로 들어선다. 고전적 민주주의 이론은 시민이 공동선을 숙고하여 일반의지를 형성한다는 규범적 이상을 품었으나, 현대 이론가들은 이 이상이 대규모 사회에서 실제로 어떻게 구현되는지를 더 냉정하게 묻는다. 조지프 슘페터는 민주주의를 인민의 직접 통치가 아니라 <strong>정치 엘리트들이 국민의 표를 얻기 위해 경쟁하는 제도적 장치</strong>로 재정의했다. 이른바 엘리트 경쟁 이론에서 유권자의 역할은 정책을 직접 만드는 것이 아니라, 경쟁하는 지도자 집단 가운데 누구에게 통치를 맡길지 고르는 데 있다고 본다. 로버트 달은 어떤 사회도 '인민 전체의 완전한 지배'라는 이상에 온전히 도달하지 못한다고 보고, 현실에 존재하는 체제를 <strong>다두제(polyarchy, 폴리아키)</strong>라 명명했다. 다두제는 다양한 집단과 권력 중심이 경쟁·연합하며, 공직 경쟁, 폭넓은 참여권, 표현·결사의 자유, 대안적 정보원 같은 조건이 함께 갖춰질 때 성립한다고 분석된다. 한편 위르겐 하버마스는 다수결의 집계만으로는 정당성이 충분치 않다고 보고, 자유롭고 평등한 시민들 사이의 <strong>이성적 토론과 공론장</strong>을 통해 결정의 정당성이 확보된다는 심의민주주의(deliberative democracy)를 제안했다. 이처럼 현대 이론은 민주주의를 단일한 본질로 규정하기보다, 경쟁·참여·심의라는 서로 다른 축으로 분해해 분석하는 경향을 보인다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>최근 비교정치학의 핵심 화두 가운데 하나는 <strong>민주주의 후퇴(democratic backsliding)</strong>다. 이는 노골적인 군사 쿠데타보다, 선출된 권력자가 합법적 절차의 외피를 쓴 채 사법부 독립을 약화시키고 언론을 길들이며 선거 규칙을 자신에게 유리하게 바꾸는 점진적 방식으로 진행된다고 분석된다. 이와 맞물려 포퓰리즘에 대한 논쟁도 활발하다. 포퓰리즘은 사회를 '순수한 인민'과 '부패한 엘리트'로 단순하게 가르고, 자신이 인민의 진정한 의지를 독점적으로 대변한다고 주장하는 경향으로 흔히 설명된다. 일부 연구자는 포퓰리즘이 기성 정치에서 소외된 목소리를 정치로 끌어들이는 교정적 기능을 할 수 있다고 보는 반면, 다른 연구자는 그것이 다원주의와 소수자 보호, 권력 견제 장치를 침식하여 민주주의의 자유주의적 요소를 약화시킬 위험이 크다고 본다. 측정과 지표를 둘러싼 방법론 논쟁, 그리고 디지털 플랫폼이 공론장과 선거에 미치는 영향 또한 활발히 연구되고 있다.</p>
+
+<h3>관련 분야</h3><ul>
+<li><strong>비교정치학</strong>: 여러 나라의 민주주의 체제를 비교하고 그 질과 안정성을 측정한다.</li>
+<li><strong>정치철학</strong>: 정당성, 자유, 평등, 대표 같은 민주주의의 규범적 토대를 탐구한다.</li>
+<li><strong>헌법학</strong>: 권력분립과 기본권 보장이 제도로 어떻게 설계·작동하는지 분석한다.</li>
+</ul>
+
+<h3>더 읽을거리</h3><ul>
+<li>"자본주의·사회주의·민주주의" — 조지프 슘페터</li>
+<li>"민주주의와 그 비판자들" — 로버트 달</li>
+<li>"어떻게 민주주의는 무너지는가" — 스티븐 레비츠키 · 대니얼 지블랫</li>
+</ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> 슘페터의 '엘리트 경쟁 모델'과 하버마스의 '심의민주주의'를 각각 한 문장으로 요약한 뒤, 두 이론이 '좋은 민주주의'를 판단하는 기준에서 어떻게 갈리는지 비교해 보자. 또 최근 뉴스에서 '민주주의 후퇴'의 징후로 볼 수 있는 사례를 하나 찾아, 위에서 정리한 다섯 기둥 중 어느 것이 약화되고 있는지 짚어 보자.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#e11d48","questions":[{"q":"민주주의의 어원적 의미는?","choices":["군주의 지배","인민의 지배","귀족의 지배","법률가의 지배"],"answer":1},{"q":"고대 아테네 민주주의의 형태는?","choices":["직접민주주의","대의민주주의","자유민주주의","혼합민주주의"],"answer":0},{"q":"민주주의 다섯 기둥이 아닌 것은?","choices":["국민주권","선거","법치","세습 왕권"],"answer":3},{"q":"권력분립을 제시한 사상가는?","choices":["로크","슘페터","몽테스키외","하버마스"],"answer":2},{"q":"심의민주주의를 제안한 학자는?","choices":["슘페터","로크","로버트 달","하버마스"],"answer":3}]};</script>
+</main></div>
+<script>
+(function(){
+function start(){
+  const c=document.getElementById('sim-scene');
+  if(!c||typeof THREE==='undefined')return;
+  const W=c.clientWidth||800,H=c.clientHeight||400;
+  const scene=new THREE.Scene();
+  scene.background=new THREE.Color(0xf4f6fb);
+  const cam=new THREE.PerspectiveCamera(50,W/H,0.1,1000);
+  let renderer;try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  c.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.95));
+  const dlight=new THREE.DirectionalLight(0xffffff,0.5);dlight.position.set(5,10,7);scene.add(dlight);
+  const tEl=document.createElement('div');
+  tEl.textContent='3D · 민주주의를 받치는 다섯 기둥';
+  tEl.style.cssText='position:absolute;top:10px;left:12px;font:700 11px/1.4 ui-monospace,monospace;letter-spacing:0.1em;color:#5b6bd6;background:rgba(255,255,255,0.88);padding:3px 9px;border-radius:10px;pointer-events:none;z-index:3;';
+  c.appendChild(tEl);
+  const capEl=document.createElement('div');
+  capEl.style.cssText='position:absolute;left:0;right:0;bottom:0;padding:9px 14px;font-size:0.84em;line-height:1.5;color:#26314a;background:rgba(252,253,255,0.92);border-top:1px solid rgba(40,60,110,0.08);pointer-events:none;z-index:3;min-height:2.4em;';
+  c.appendChild(capEl);
+  function cap(t){capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function M(col,o){return new THREE.MeshLambertMaterial({color:col,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,col,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),M(col,o));}
+  function sph(r,col,o){return new THREE.Mesh(new THREE.SphereGeometry(r,20,16),M(col,o));}
+  function cyl(r1,r2,h,col,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,24),M(col,o));}
+  function cone(r,h,col,o){return new THREE.Mesh(new THREE.ConeGeometry(r,h,24),M(col,o));}
+  function tor(r,t,col,o,arc){return new THREE.Mesh(new THREE.TorusGeometry(r,t,14,48,arc===undefined?Math.PI*2:arc),M(col,o));}
+  function line(a,b,col,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:col,transparent:true,opacity:o===undefined?0.6:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||26;const cv=document.createElement('canvas');let ctx=cv.getContext('2d');
+    const font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;cv.width=Math.ceil(ctx.measureText(txt).width)+24;cv.height=fs+20;
+    ctx=cv.getContext('2d');ctx.font=font;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillStyle=color||'#2b3242';ctx.fillText(txt,cv.width/2,cv.height/2);
+    const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    const k=(scl||1)*0.012;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  const root=new THREE.Group();scene.add(root);
+  let sway=0.10;
+
+  cam.position.set(0,1.4,11.5);cam.lookAt(0,0.4,0);sway=0.07;
+  const base=box(7.6,0.3,2.4,0xb9c2d6);base.position.y=-2.1;root.add(base);
+  const names=['국민주권','선거','다수결+소수자 보호','법치','권력분립'];
+  const cols=[0x3f6fd0,0x29a3a3,0x2fa86d,0xe0883f,0x8a5fb0];
+  const pil=[];
+  names.forEach((n,i)=>{
+    const g=new THREE.Group();
+    const cy=cyl(0.33,0.4,2.4,cols[i]);g.add(cy);
+    const L=lbl(n,20,'#39415a',0.78);L.position.set(0,(i%2)?-0.5:0.4,0.55);g.add(L);
+    g.position.set((i-2)*1.5,-0.75,0);root.add(g);pil.push({g,cy});
+  });
+  const roof=box(7.8,0.45,2.6,0x44518a);roof.position.y=0.7;root.add(roof);
+  const rl=lbl('민 주 주 의',30,'#1d2742',1.1);rl.position.set(0,1.55,0);root.add(rl);
+  function erode(k){
+    const p=pil[3].cy;p.scale.y=1-0.45*k;p.position.y=-(2.4*0.45*k)/2;
+    roof.rotation.z=-0.07*k;roof.position.y=0.7-0.3*k;
+    rl.position.y=1.55-0.3*k;
+    p.material.opacity=1-0.35*k;
+  }
+  const phases=[
+   {dur:7,cap:'① 다섯 기둥 — 국민주권 · 선거 · 다수결과 소수자 보호 · 법치 · 권력분립. 이 다섯이 함께 지붕(민주주의)을 떠받친다. 어느 하나만 빠져도 질이 크게 떨어진다.',enter(){erode(0);},update(u,t){pil.forEach((p,i)=>{const k=1+0.12*Math.max(0,Math.sin(t*2.2-i*1.1));p.g.scale.set(k,k,k);});}},
+   {dur:7,cap:'② 민주주의 후퇴 — 쿠데타 없이도, 법치 기둥이 조금씩 깎이면(사법부 길들이기 · 언론 장악 · 규칙 변경) 지붕이 기울기 시작한다. 선거가 남아 있어도 질은 떨어진다.',enter(){pil.forEach(p=>p.g.scale.set(1,1,1));},update(u){erode(ez(u));}},
+   {dur:6.5,cap:'③ 회복력 — 침식을 멈추는 힘은 시민의 감시와 참여, 독립 언론, 견제 기관이다. 민주주의는 한 번에 무너지기보다 천천히 깎이고, 또 천천히 복구된다.',update(u){erode(1-ez(u));}}
+  ];
+  let uy=0,ux=0,md=false,px=0,py=0;
+  c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup',()=>{md=false;});
+  c.addEventListener('mousemove',e=>{if(md){uy+=(e.clientX-px)*0.005;ux+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    const dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    let ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,now/1000);
+    if(typeof always==='function')always(now/1000);
+    root.rotation.y=uy+Math.sin(now/1000*0.25)*sway;
+    root.rotation.x=ux;
+    renderer.render(scene,cam);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',()=>{const w=c.clientWidth,h=c.clientHeight;if(!w||!h)return;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body></html>

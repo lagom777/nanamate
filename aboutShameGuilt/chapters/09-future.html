@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 라벤더 안개를 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 미래 — 감정 AI·정서 컴퓨팅</span>
 
 <h2>응용과 미래 개요</h2>
 <p>수치심의 미래는 디지털 환경에서의 폭주를 어떻게 막을 것인가의 문제다. SNS 공개 망신 규제, 디지털 시민성 교육, 회복적 정의의 사법 적용, AI 챗봇 자기 연민 코칭, BCI 기반 수치 회로 연구가 5대 응용 영역이다. 한국은 디지털 마녀사냥의 사회적 비용이 가장 큰 나라 중 하나로, 응용 연구의 선도적 실험장이기도 하다.</p>
@@ -74,5 +76,21 @@
   <div class="success-box">🎓 도전 과제: 본인이 과거 SNS에서 누군가의 망신에 가담(좋아요·공유·댓글)한 경험을 1건 회고하고, 그 자리에서 다른 행동을 했다면 어떤 결과가 가능했을지 대안 시나리오를 200자 내외로 써보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#a78bfa","questions":[{"q":"디지털 환경의 공개 망신 현상은?","choices":["로그인","SNS shaming","스트리밍","검색"],"answer":1},{"q":"처벌 대신 회복을 추구하는 사법은?","choices":["응보 사법","무관용","회복적 정의","즉결 심판"],"answer":2},{"q":"자기 연민 코칭 AI 챗봇의 예는?","choices":["Excel","Photoshop","Zoom","Wysa"],"answer":3},{"q":"'So You've Been Publicly Shamed' 저자는?","choices":["Neff","Jon Ronson","Gilbert","Benedict"],"answer":1},{"q":"회복적 정의가 유래한 나라는?","choices":["미국","독일","뉴질랜드","한국"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0xa78bfa;const parts=[];for(let i=0;i<32;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xa78bfa;const layers=[3,4,2];const nodes=[];layers.forEach((cnt,li)=>{const arr=[];for(let i=0;i<cnt;i++){const y=(i-(cnt-1)/2)*1.0;const m=new THREE.Mesh(new THREE.SphereGeometry(0.22,14,14),new THREE.MeshBasicMaterial({color:li===2?0xffe08a:COL}));m.position.set((li-1)*2.4,y,0);s.add(m);arr.push(m);}nodes.push(arr);});for(let li=0;li<nodes.length-1;li++)nodes[li].forEach(p=>nodes[li+1].forEach(q=>s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([p.position,q.position]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.2})))));s.userData.nodes=nodes;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const all=s.userData.nodes.flat();all.forEach((m,i)=>m.scale.setScalar(0.8+0.3*Math.sin(T*3+i)));s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

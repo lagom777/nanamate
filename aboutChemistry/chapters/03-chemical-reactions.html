@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -18,167 +20,144 @@
   <ol>
     <li><a href="../index.html">⚗️ 표지 · 소개</a></li>
     <li><a href="01-atomic-structure.html">1. 원자 구조</a></li>
-    <li><a href="02-chemical-bonds.html">2. 화학 결합</a></li>
-    <li><a href="03-chemical-reactions.html">3. 화학 반응</a></li>
+    <li><a href="02-chemical-bonding.html">2. 화학 결합</a></li>
+    <li><a href="03-chemical-reactions.html" style="color:var(--accent);font-weight:600;">3. 화학 반응</a></li>
     <li><a href="04-thermochemistry.html">4. 열화학</a></li>
     <li><a href="05-acid-base.html">5. 산과 염기</a></li>
     <li><a href="06-redox.html">6. 산화 환원</a></li>
     <li><a href="07-organic.html">7. 유기 화학</a></li>
-    <li><a href="08-polymers.html">8. 고분자</a></li>
+    <li><a href="08-polymer.html">8. 고분자</a></li>
     <li><a href="09-biochemistry.html">9. 생화학</a></li>
   </ol>
 </aside>
 <main>
 <header class="paper-header">
-  <h1><em>화학 반응</em></h1>
-  <p class="authors">Chapter 3 — Reaction Types & Stoichiometry</p>
+  <h1>화학 반응:<br><em>물질</em>의 변환</h1>
+  <p class="authors">Chapter 3 — Chemical Reactions & Kinetics</p>
+  <p class="affiliation">반응 시뮬레이션 · 반응 속도론</p>
 </header>
 
-<div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
-
-<h2>화학 반응 개요</h2>
-<p>이 챕터에서는 화학 반응의 핵심 개념을 3D 시뮬레이션과 함께 학습합니다. 분자 구조를 직접 회전시키고, 반응 과정을 관찰하세요.</p>
+<h2>화학 반응의 유형</h2>
+<p>화학 반응은 반응물의 원자가 재배열되어 새로운 생성물을 만드는 과정입니다. 반응 전후의 원자 종류와 수는 보존됩니다(질량 보존 법칙).</p>
 
 <div class="info-card">
-  <h4>핵심 개념</h4>
-  <p>Reaction Types & Stoichiometry의 기본 원리와 응용을 다룹니다.</p>
+  <h4>합성 반응 (결합)</h4>
+  <p>두 개 이상의 물질이 결합하여 하나의 새로운 물질을 만듭니다. A + B → AB</p>
+</div>
+<div class="info-card reaction">
+  <h4>분해 반응</h4>
+  <p>하나의 물질이 두 개 이상의 물질로 분해됩니다. AB → A + B</p>
+</div>
+<div class="info-card acid">
+  <h4>치환 반응</h4>
+  <p>한 원소가 화합물 속의 다른 원소를 대체합니다. A + BC → AC + B</p>
 </div>
 
-<h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
-<div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
-</div>
+<h2>3D 반응 시뮬레이터</h2>
+<p>분자들이 충돌하고 반응하는 과정을 3D로 관찰하세요. 온도를 조절하면 분자의 운동 속도가 변합니다.</p>
 
-<div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
-  <h3>한 줄로 이해하기</h3>
-  <p>화학 반응은 원자들이 결합을 끊고 다시 이어 붙여 새로운 물질로 바뀌는 변화입니다.</p>
-  <h3>왜 중요한가?</h3>
-  <p>반응을 이해하면 우리 일상이 한층 선명해집니다. 첫째, 가스레인지의 불꽃은 메테인이 산소와 만나 이산화탄소와 물이 되는 연소 반응입니다. 둘째, 빵이 부푸는 것은 베이킹소다가 분해되어 이산화탄소를 내놓기 때문입니다. 셋째, 사진 속 색이 바래는 것도 빛이 일으키는 분해 반응의 결과입니다.</p>
-  <div class="info-card">
-    <h4>🌱 핵심 용어</h4>
-    <ul>
-      <li><strong>반응물</strong>: 반응 전 물질 (왼쪽)</li>
-      <li><strong>생성물</strong>: 반응 후 물질 (오른쪽)</li>
-      <li><strong>화학량론</strong>: 반응물과 생성물의 양 관계</li>
-      <li><strong>몰(mol)</strong>: 입자 6.022×10²³개를 나타내는 단위</li>
-    </ul>
+<div class="scene-3d" id="reaction-scene" style="height:450px;">
+  <div class="scene-controls">
+    <label>온도: <span id="temp-val">300</span>K</label>
+    <input type="range" id="temp-slider" min="100" max="800" value="300" step="50">
+    <button id="reset-reaction">초기화</button>
+    <span id="reaction-count" style="font-size:0.75em;color:var(--accent);font-family:var(--font-mono);">반응 횟수: 0</span>
   </div>
-  <h3>핵심 개념 풀어쓰기</h3>
-  <p>화학 반응을 요리에 비유해 봅시다. 밀가루와 달걀, 우유가 반응물이라면 팬케이크는 생성물입니다. 단지 차이점은 요리에서 재료가 그대로 남아 있을 수 있지만, 화학 반응에서는 원자들이 새로운 결합으로 재배열된다는 점입니다. 그래도 원자의 종류와 수는 변하지 않습니다(질량 보존). 그래서 반응식을 쓸 때는 좌우의 원자 수가 같아지도록 균형을 맞춥니다. 반응의 종류는 결합 반응(작은 것이 큰 것이 됨), 분해 반응(큰 것이 작은 것이 됨), 치환 반응(자리 바꿈), 산화환원 반응(전자 주고받기), 산-염기 반응(H⁺ 주고받기) 등으로 나뉩니다. 또한 모든 반응에는 에너지가 따라옵니다. 발열 반응은 열을 내고, 흡열 반응은 열을 흡수합니다.</p>
-  <div class="study-tip"><strong>💡 학습 TIP:</strong> 반응식 균형 맞추기는 '좌우 원자 수가 같아야 한다'만 기억하세요. 가장 큰 분자부터 계수를 정하면 빨리 풀립니다.</div>
-  <h3>한 페이지 요약</h3>
-  <ul>
-    <li>반응 = 결합의 재배열, 원자 보존</li>
-    <li>주요 반응 유형: 결합/분해/치환/산화환원/산-염기</li>
-    <li>화학량론으로 반응물과 생성물 양을 계산</li>
-    <li>발열/흡열로 에너지 변화 분류</li>
-  </ul>
+</div>
+<span class="interact-hint">⟳ 온도를 올리면 분자 속도 증가 → 충돌 빈도 증가 → 반응 촉진</span>
+
+<h2>반응 속도론</h2>
+<div class="formula">반응 속도 = k[A]ᵐ[B]ⁿ &nbsp;&nbsp;|&nbsp;&nbsp; k = Ae^(−Ea/RT) (아레니우스 식)</div>
+
+<div class="info-card">
+  <h4>활성화 에너지 (Ea)</h4>
+  <p>반응이 일어나기 위해 반응물이 넘어야 하는 최소한의 에너지 장벽입니다. 촉매는 이 장벽을 낮춰 반응 속도를 빠르게 합니다.</p>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
-  <p>반응의 진행은 화학 평형, 반응 속도, 반응 메커니즘이라는 세 축으로 분석합니다. 화학 평형은 정반응과 역반응의 속도가 같아지는 동적 상태이며, 평형 상수 K는 반응의 자발성 정도를 보여줍니다. 르샤틀리에 원리는 평형이 외부 변화(농도, 온도, 압력)에 어떻게 응답하는지 예측하는 핵심 도구입니다. 반응 속도는 충돌 이론과 활성화 에너지로 설명되는데, 분자가 충분한 에너지로 정확한 방향에서 부딪쳐야 반응이 일어납니다. 촉매는 반응 경로를 바꿔 활성화 에너지를 낮추지만 평형 위치를 바꾸지는 않습니다. 메커니즘은 반응이 실제로 일어나는 단계별 경로이며, 가장 느린 단계가 전체 속도를 결정합니다. 화학량론 계산에서는 한계 반응물, 수율, 순도 같은 개념이 중요합니다. 이상기체 방정식 PV=nRT는 기체가 관여하는 반응의 양적 계산에 자주 쓰입니다.</p>
-  <h3>핵심 공식과 반응식</h3>
-  <div class="formula">
-    평형 상수: K_eq = [생성물]^p / [반응물]^r<br>
-    아레니우스 식: k = A · exp(-E_a / RT)<br>
-    이상기체: PV = nRT<br>
-    반응 속도: rate = -1/a · d[A]/dt = +1/c · d[C]/dt
-  </div>
-  <h3>대표 예제</h3>
-  <div class="info-card"><h4>📐 예제 1</h4><p>2H₂ + O₂ → 2H₂O. 4 g의 H₂를 모두 태우면 H₂O는 몇 g 생기는가? H₂ 4 g = 2 mol, 따라서 H₂O 2 mol = 36 g.</p></div>
-  <div class="info-card"><h4>📐 예제 2</h4><p>활성화 에너지가 50 kJ/mol인 반응의 속도가 25°C에서 35°C로 올라갈 때 몇 배가 되는가? 아레니우스 식에 대입하면 약 1.9배 빨라집니다.</p></div>
-  <h3>응용 사례</h3>
-  <p>하버-보슈 공정은 N₂ + 3H₂ ⇌ 2NH₃ 평형을 고압·중온·철촉매로 이동시켜 비료의 핵심 원료인 암모니아를 대량 생산합니다. 자동차 배기가스 정화 촉매는 백금·로듐을 이용해 NOx와 CO를 안전한 N₂, CO₂로 바꿉니다. 효소도 생체 촉매로서 활성화 에너지를 극적으로 낮추는 단백질입니다.</p>
-  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 평형 상수와 반응 속도는 다른 개념입니다. K가 크다고 반응이 빠른 것이 아니며, 빠른 반응도 평형이 한쪽으로 치우치지 않을 수 있습니다.</div>
+<h2>화학 평형</h2>
+<div class="formula">K = [생성물]ⁿ / [반응물]ᵐ &nbsp;&nbsp;|&nbsp;&nbsp; K > 1: 생성물 우세 &nbsp;|&nbsp; K < 1: 반응물 우세</div>
+
+<div class="info-card organic">
+  <h4>르샤틀리에 원리</h4>
+  <p>평형 상태의 계에 변화(농도, 압력, 온도)를 가하면, 그 변화를 상쇄하는 방향으로 평형이 이동합니다.</p>
 </div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
-  <p>현대 반응 동역학은 전이상태 이론(TST)에 기반합니다. Eyring 식은 활성화 자유에너지와 속도 상수의 관계를 ΔG‡ = -RT ln(k h / k_B T)로 연결합니다. 변분 전이상태 이론(VTST)과 다차원 터널링 보정은 수소 전이 반응에서 특히 중요하며, 효소 반응의 양자효과를 설명합니다. 반응 좌표는 고유 반응 좌표(IRC)로 정의되고, 포텐셜 에너지면(PES)의 안장점을 찾아 반응 메커니즘을 결정합니다. 다중 참조 문제(상태 교차, 원뿔 교차점)는 광화학 반응에서 본질적이며, 비단열 동역학(surface hopping, MCTDH)으로 다룹니다. 비평형 통계역학에서 Marcus 이론은 전자전이 반응의 속도를 재배열 에너지 λ와 자유에너지 차이 ΔG로 설명합니다. 반응의 자유에너지 표면을 샘플링하는 방법으로 메타다이내믹스, umbrella sampling, replica exchange가 발전했습니다. 머신러닝 기반 반응 경로 탐색과 자동 메커니즘 발견 알고리즘도 빠르게 성장 중입니다.</p>
-  <h3>유도와 증명</h3>
-  <div class="formula">
-    Eyring 식: k = (k_B T / h) · exp(-ΔG‡ / RT)<br>
-    Marcus 이론: k_ET = (2π/ℏ) |H_AB|² (1/√(4πλk_B T)) exp(-(ΔG° + λ)² / 4λk_B T)<br>
-    아레니우스 사전인자: A = (k_B T / h) exp(ΔS‡ / R)<br>
-    상세 균형: k_f / k_r = K_eq
-  </div>
-  <h3>최신 연구</h3>
-  <p>아토초 분광학으로 화학 결합이 끊어지는 순간의 전자 운동을 직접 관찰하는 연구가 진행 중입니다. 또한 단일분자 반응을 광학 현미경과 형광으로 추적하는 단분자 동역학, 흐름 화학(flow chemistry)으로 연속 합성을 자동화하는 기술, 인공지능 기반 역합성 분석(예: AlphaFold 유사 모델)이 의약품 개발 패러다임을 바꾸고 있습니다.</p>
-  <h3>관련 분야 연결</h3>
-  <ul>
-    <li><strong>화학공학</strong>: 반응기 설계와 공정 최적화</li>
-    <li><strong>촉매 과학</strong>: 균일/불균일/효소 촉매</li>
-    <li><strong>대기화학</strong>: 오존층, 광화학 스모그</li>
-    <li><strong>천체화학</strong>: 성간 분자 형성 메커니즘</li>
-  </ul>
-  <h3>추가 학습 자료</h3>
-  <ul>
-    <li>📖 Steinfeld, Francisco, Hase, Chemical Kinetics and Dynamics</li>
-    <li>📺 Caltech Chemical Kinetics 강의</li>
-    <li>🔬 ORCA, Gaussian의 IRC 계산 실습</li>
-  </ul>
-  <div class="success-box"><strong>🎓 도전 과제:</strong> 단순한 SN2 반응(예: OH⁻ + CH₃Br)에 대해 양자화학으로 PES 안장점을 찾고 ΔG‡를 계산해 실험값과 비교해 보세요.</div>
-</div>
 
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e896","questions":[{"q":"A + B → AB 는 무슨 반응인가?","choices":["합성 반응","분해 반응","치환 반응","중화 반응"],"answer":0},{"q":"AB → A + B 는 무슨 반응인가?","choices":["합성 반응","분해 반응","치환 반응","산화 반응"],"answer":1},{"q":"촉매의 역할은?","choices":["온도 상승","질량 증가","활성화E 낮춤","평형 제거"],"answer":2},{"q":"르샤틀리에 원리는 무엇에 관한가?","choices":["원자 구조","전자 배치","결합 종류","평형 이동"],"answer":3},{"q":"K > 1 일 때 우세한 것은?","choices":["반응물","생성물","촉매","용매"],"answer":1}]};</script>
 </main>
 </div>
 
 <script>
 (function() {
-  const container = document.getElementById('sim-scene');
+  const container = document.getElementById('reaction-scene');
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 3, 8);
+  const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 8, 12); camera.lookAt(0, 0, 0);
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(container.clientWidth, container.clientHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
 
-  // Molecule-like structure
-  const atoms = [];
-  const numAtoms = 5 + Math.floor(Math.random()*5);
-  for (let i = 0; i < numAtoms; i++) {
-    const r = 0.2 + Math.random()*0.3;
-    const color = [0x00e890, 0xfbbf24, 0xef4444, 0xa78bfa, 0x60a5fa][i % 5];
-    const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 32, 32), new THREE.MeshBasicMaterial({ color }));
-    mesh.position.set((Math.random()-0.5)*4, (Math.random()-0.5)*4, (Math.random()-0.5)*4);
-    scene.add(mesh);
-    atoms.push(mesh);
-  }
-  // Bonds
-  for (let i = 0; i < atoms.length-1; i++) {
-    const points = [atoms[i].position, atoms[i+1].position];
-    const geo = new THREE.BufferGeometry().setFromPoints(points);
-    scene.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0x00e890, transparent: true, opacity: 0.4 })));
+  const boxSize = 5;
+  const edges = new THREE.EdgesGeometry(new THREE.BoxGeometry(boxSize*2, boxSize*2, boxSize*2));
+  scene.add(new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x00e896, transparent: true, opacity: 0.15 })));
+
+  let molecules = [], reactionCount = 0, temperature = 300;
+
+  function createMol(type, pos) {
+    const colors = { A: 0xff6b35, B: 0x38bdf8, C: 0xa855f7 };
+    const sizes = { A: 0.2, B: 0.25, C: 0.35 };
+    const mesh = new THREE.Mesh(new THREE.SphereGeometry(sizes[type], 16, 16), new THREE.MeshBasicMaterial({ color: colors[type], transparent: true, opacity: 0.85 }));
+    mesh.position.copy(pos || new THREE.Vector3((Math.random()-0.5)*boxSize*1.6, (Math.random()-0.5)*boxSize*1.6, (Math.random()-0.5)*boxSize*1.6));
+    const sp = (temperature / 300) * (0.02 + Math.random() * 0.03);
+    mesh.userData = { type, velocity: new THREE.Vector3((Math.random()-0.5)*sp, (Math.random()-0.5)*sp, (Math.random()-0.5)*sp) };
+    scene.add(mesh); return mesh;
   }
 
-  let mouseDown = false, prevX = 0, prevY = 0;
-  container.addEventListener('mousedown', e => { mouseDown = true; prevX = e.clientX; prevY = e.clientY; });
-  container.addEventListener('mouseup', () => mouseDown = false);
-  container.addEventListener('mousemove', e => {
-    if (!mouseDown) return;
-    scene.rotation.y += (e.clientX - prevX)*0.005;
-    scene.rotation.x += (e.clientY - prevY)*0.005;
-    prevX = e.clientX; prevY = e.clientY;
-  });
-  container.addEventListener('touchstart', e => { prevX = e.touches[0].clientX; prevY = e.touches[0].clientY; });
-  container.addEventListener('touchmove', e => {
-    scene.rotation.y += (e.touches[0].clientX - prevX)*0.005;
-    scene.rotation.x += (e.touches[0].clientY - prevY)*0.005;
-    prevX = e.touches[0].clientX; prevY = e.touches[0].clientY;
-  });
+  function init() {
+    molecules.forEach(m => scene.remove(m)); molecules = []; reactionCount = 0;
+    document.getElementById('reaction-count').textContent = '반응 횟수: 0';
+    for (let i = 0; i < 15; i++) molecules.push(createMol('A'));
+    for (let i = 0; i < 15; i++) molecules.push(createMol('B'));
+  }
+  init();
 
-  function animate() { requestAnimationFrame(animate); scene.rotation.y += 0.003; renderer.render(scene, camera); }
+  document.getElementById('temp-slider').addEventListener('input', function() {
+    temperature = parseInt(this.value); document.getElementById('temp-val').textContent = temperature;
+    molecules.forEach(m => { const len = m.userData.velocity.length() || 0.01; m.userData.velocity.multiplyScalar((temperature/300)*0.03/len); });
+  });
+  document.getElementById('reset-reaction').addEventListener('click', init);
+
+  let rY = 0.3, rX = 0.5, isDrag = false, pX = 0, pY = 0;
+  container.addEventListener('mousedown', e => { isDrag = true; pX = e.clientX; pY = e.clientY; });
+  window.addEventListener('mouseup', () => isDrag = false);
+  container.addEventListener('mousemove', e => { if (!isDrag) return; rY += (e.clientX-pX)*0.005; rX += (e.clientY-pY)*0.005; pX = e.clientX; pY = e.clientY; });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    molecules.forEach(m => {
+      m.position.add(m.userData.velocity);
+      ['x','y','z'].forEach(a => { if (Math.abs(m.position[a]) > boxSize) { m.position[a] = Math.sign(m.position[a])*boxSize; m.userData.velocity[a] *= -1; } });
+    });
+    for (let i = molecules.length - 1; i >= 0; i--) {
+      for (let j = i - 1; j >= 0; j--) {
+        const a = molecules[i], b = molecules[j];
+        if (!a || !b || a.userData.type === b.userData.type || a.userData.type === 'C' || b.userData.type === 'C') continue;
+        if (a.position.distanceTo(b.position) < 0.5) {
+          const mid = a.position.clone().add(b.position).multiplyScalar(0.5);
+          scene.remove(a); scene.remove(b); molecules.splice(i, 1); if (j < molecules.length) molecules.splice(j, 1);
+          molecules.push(createMol('C', mid)); reactionCount++;
+          document.getElementById('reaction-count').textContent = '반응 횟수: ' + reactionCount; break;
+        }
+      }
+    }
+    scene.rotation.y = rY; scene.rotation.x = rX;
+    renderer.render(scene, camera);
+  }
   animate();
-  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
 })();
 </script>
 </body>

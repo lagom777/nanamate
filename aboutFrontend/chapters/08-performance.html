@@ -320,12 +320,14 @@
   </style>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
   <div class="layout-wrapper">
     <aside>
-      <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+      <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
       <h3>전체 목차</h3>
       <ol>
         <li><a href="../index.html">📖 표지 · 소개</a></li>
@@ -381,7 +383,7 @@
           <p style="margin-top: 15px;"><strong>2. FID / INP (First Input Delay / Interaction to Next Paint)</strong></p>
           <ul style="margin-left: 20px; color: #555;">
             <li>사용자가 클릭했을 때 응답 시간</li>
-            <li>목표: 100ms 이내</li>
+            <li>목표: FID 100ms 이내 / INP 200ms 이내</li>
           </ul>
 
           <p style="margin-top: 15px;"><strong>3. CLS (Cumulative Layout Shift)</strong></p>
@@ -722,7 +724,7 @@ self.addEventListener('install', (event) => {
       </div>
 
       <h2>📚 난이도별 학습</h2>
-      <p>본인 수준에 맞춰 탭 선택. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+      <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
       <div class="difficulty-tabs">
         <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
         <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -761,7 +763,7 @@ self.addEventListener('install', (event) => {
       <div class="difficulty-content" data-level="medium">
         <span class="difficulty-badge medium">중 · 응용</span>
         <h3>이론 깊이</h3>
-        <p>브라우저 렌더링은 Critical Rendering Path를 따릅니다. HTML 파싱 → DOM·CSSOM 생성 → Render Tree → Layout → Paint → Composite. 이 경로의 어느 단계가 늦어도 LCP는 미뤄집니다. 가장 흔한 병목은 (1) 렌더 차단 CSS·JS, (2) 큰 동기 JS의 메인 스레드 점유, (3) 거대한 이미지의 디코드 시간, (4) 폰트 로딩 지연으로 인한 FOIT/FOUT입니다. 해결책으로는 <code>defer</code>/<code>async</code>·<code>type="module"</code> 사용, <code>rel="preload"</code>·<code>preconnect"</code> 힌트, <code>fetchpriority="high"</code>로 LCP 이미지 우선순위 부여, AVIF/WebP 포맷 + responsive image, <code>font-display: swap</code> 등이 있습니다. JS 측면에선 코드 스플리팅(route-based, component-based), 트리 셰이킹, lazy import가 핵심이며, INP는 Long Task(50ms 초과) 분할이 관건입니다.</p>
+        <p>브라우저 렌더링은 Critical Rendering Path를 따릅니다. HTML 파싱 → DOM·CSSOM 생성 → Render Tree → Layout → Paint → Composite. 이 경로의 어느 단계가 늦어도 LCP는 미뤄집니다. 가장 흔한 병목은 (1) 렌더 차단 CSS·JS, (2) 큰 동기 JS의 메인 스레드 점유, (3) 거대한 이미지의 디코드 시간, (4) 폰트 로딩 지연으로 인한 FOIT/FOUT입니다. 해결책으로는 <code>defer</code>/<code>async</code>·<code>type="module"</code> 사용, <code>rel="preload"</code>·<code>rel="preconnect"</code> 힌트, <code>fetchpriority="high"</code>로 LCP 이미지 우선순위 부여, AVIF/WebP 포맷 + responsive image, <code>font-display: swap</code> 등이 있습니다. JS 측면에선 코드 스플리팅(route-based, component-based), 트리 셰이킹, lazy import가 핵심이며, INP는 Long Task(50ms 초과) 분할이 관건입니다.</p>
         <h3>핵심 코드 패턴</h3>
         <pre><code>// 코드 스플리팅 + Suspense
 const Editor = lazy(() => import('./Editor'));
@@ -838,7 +840,12 @@ const result = await api.heavyCompute(input);  // 메인 스레드 블록 X
           <strong>🎓 도전 과제:</strong> 모바일 4G 환경에서 LCP 1.5초·INP 200ms·CLS 0.05 이하의 e-commerce 상품 페이지를 구현하고, Lighthouse 모바일 점수 95+를 달성해보세요.
         </div>
       </div>
-    </main>
+    
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0ea5e9","questions":[{"q":"LCP의 목표 시간은?","choices":["0.1초","1초","2.5초","5초"],"answer":2},{"q":"Core Web Vitals를 정의한 회사는?","choices":["Google","Apple","Meta","Amazon"],"answer":0},{"q":"미사용 코드를 제거하는 기법은?","choices":["코드 스플리팅","트리 셰이킹","레이지 로딩","캐싱"],"answer":1},{"q":"JPEG보다 25~35% 작은 포맷은?","choices":["PNG","GIF","BMP","WebP"],"answer":3},{"q":"CLS가 측정하는 것은?","choices":["응답 지연","로딩 속도","레이아웃 이동","메모리 사용"],"answer":2}]};</script>
+</main>
   </div>
 
   <script>

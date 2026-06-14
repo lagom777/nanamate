@@ -2,11 +2,13 @@
 <title>7. 음악 제작 — aboutMusic</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">🎵 표지</a></li><li><a href="chapters/01-basics.html">1. 음악 기초</a></li><li><a href="chapters/02-rhythm.html">2. 리듬과 박자</a></li><li><a href="chapters/03-harmony.html">3. 화성학</a></li><li><a href="chapters/04-melody.html">4. 멜로디와 작곡</a></li><li><a href="chapters/05-form.html">5. 음악 형식</a></li><li><a href="chapters/06-genres.html">6. 장르의 이해</a></li><li><a href="chapters/07-production.html">7. 음악 제작</a></li><li><a href="chapters/08-ear-training.html">8. 청음 훈련</a></li><li><a href="chapters/09-modern.html">9. 현대 음악이론</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🎵 표지</a></li><li><a href="01-basics.html">1. 음악 기초</a></li><li><a href="02-rhythm.html">2. 리듬과 박자</a></li><li><a href="03-harmony.html">3. 화성학</a></li><li><a href="04-melody.html">4. 멜로디와 작곡</a></li><li><a href="05-form.html">5. 음악 형식</a></li><li><a href="06-genres.html">6. 장르의 이해</a></li><li><a href="07-production.html">7. 음악 제작</a></li><li><a href="08-ear-training.html">8. 청음 훈련</a></li><li><a href="09-modern.html">9. 현대 음악이론</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>음악 제작</em></h1><p class="authors">Chapter 7 — Music Production & DAW</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 믹싱 콘솔 — 트랙별 레벨 미터가 오르내리는 DAW 멀티트랙 화면</span>
 <h2>음악 제작</h2><p>Music Production & DAW의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Music Production & DAW</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -62,5 +64,22 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 좋아하는 곡의 멀티트랙(가능하면 stem)을 구해 직접 믹싱해 보고, 원곡과 비교하며 EQ·컴프레션·공간계 처리의 차이를 분석해 보라.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ec4899","questions":[{"q":"음악 제작 소프트웨어를 일컫는 말은?","choices":["DAW","MIR","BPM","EQ"],"answer":0},{"q":"트랙들의 음량·음색 균형 작업은?","choices":["마스터링","샘플링","믹싱","트래킹"],"answer":2},{"q":"최종 음원의 음량을 다듬는 단계는?","choices":["녹음","편곡","믹싱","마스터링"],"answer":3},{"q":"스트리밍의 LUFS 음량 표준은?","choices":["-7 LUFS","-14 LUFS","-20 LUFS","-30 LUFS"],"answer":1},{"q":"주파수 균형을 조절하는 도구는?","choices":["컴프레서","리버브","EQ","패닝"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const lanes=6,segs=8;const meters=[];const faders=[];for(let l=0;l<lanes;l++){const x=(l-(lanes-1)/2)*1.1;const lane=[];for(let g=0;g<segs;g++){const y=-1.8+g*0.42;const col=new THREE.Color().setHSL(0.33-(g/segs)*0.33,0.8,0.5);const seg=new THREE.Mesh(new THREE.BoxGeometry(0.45,0.3,0.45),new THREE.MeshBasicMaterial({color:col}));seg.position.set(x,y,0);s.add(seg);lane.push(seg);}meters.push(lane);const fad=new THREE.Mesh(new THREE.BoxGeometry(0.6,0.18,0.6),new THREE.MeshBasicMaterial({color:0xdddddd}));fad.position.set(x,0,0.4);s.add(fad);faders.push(fad);}
+  s.userData.meters=meters;s.userData.faders=faders;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.meters.forEach((lane,l)=>{const lvl=(Math.sin(T*3+l*1.3)*0.5+0.5)*lane.length;lane.forEach((seg,g)=>{seg.visible=(g<lvl);});s.userData.faders[l].position.y=-1.6+lvl*0.42;});s.rotation.y=Math.sin(T*0.3)*0.2;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

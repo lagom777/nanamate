@@ -8,6 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../shared/light-theme.css">
   <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
   <script defer src="../shared/difficulty.js"></script>
 </head>
 <body>
@@ -41,47 +42,14 @@
 </main>
 </div>
 <script>
-(function() {
-  const container = document.getElementById('intro-scene');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 4, 10);
-  camera.lookAt(0,0,0);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  container.appendChild(renderer.domElement);
-  // Funnel visualization
-  const funnelLevels = [4, 3.2, 2.4, 1.6, 0.8];
-  const colors = [0xe040fb, 0xab47bc, 0x7c3aed, 0x5b21b6, 0x3b0764];
-  funnelLevels.forEach((r, i) => {
-    const geo = new THREE.CylinderGeometry(r, r*1.1, 1, 32, 1, true);
-    const mat = new THREE.MeshBasicMaterial({ color: colors[i], wireframe: true, transparent: true, opacity: 0.5 });
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.y = 3 - i*1.5;
-    scene.add(mesh);
-  });
-  // Particles flowing through funnel
-  const particles = [];
-  for (let i = 0; i < 50; i++) {
-    const p = new THREE.Mesh(new THREE.SphereGeometry(0.06,8,8), new THREE.MeshBasicMaterial({ color: 0xe040fb }));
-    p.userData = { phase: Math.random()*Math.PI*2, speed: 0.02+Math.random()*0.02, y: 4+Math.random()*2 };
-    scene.add(p); particles.push(p);
-  }
-  function animate() {
-    requestAnimationFrame(animate);
-    particles.forEach(p => {
-      p.userData.y -= p.userData.speed;
-      if (p.userData.y < -4) p.userData.y = 5;
-      const level = Math.max(0.3, (p.userData.y+4)/8 * 4);
-      p.userData.phase += 0.02;
-      p.position.set(Math.cos(p.userData.phase)*level*0.5, p.userData.y, Math.sin(p.userData.phase)*level*0.5);
-    });
-    scene.rotation.y += 0.003;
-    renderer.render(scene, camera);
-  }
-  animate();
-  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+(function(){
+  const c=document.getElementById('intro-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=15235577;const f=new THREE.Mesh(new THREE.ConeGeometry(2.2,3,28,1,true),new THREE.MeshBasicMaterial({color:C,wireframe:true,transparent:true,opacity:0.5,side:THREE.DoubleSide}));s.add(f);const ps=[];for(let i=0;i<40;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.08,6,6),new THREE.MeshBasicMaterial({color:C}));m.userData={a:Math.random()*6.28,y:Math.random()*3-1.5};s.add(m);ps.push(m);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ps.forEach(p=>{p.userData.y-=0.02;if(p.userData.y<-1.5)p.userData.y=1.5;const rr=(p.userData.y+1.5)/3*2.0+0.1;p.position.set(Math.cos(p.userData.a)*rr,p.userData.y,Math.sin(p.userData.a)*rr);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
 </body>

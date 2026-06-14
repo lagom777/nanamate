@@ -7,12 +7,14 @@
 <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">🌍 표지 · 소개</a></li>
@@ -118,7 +120,7 @@
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -181,6 +183,11 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 화강암 박편의 모드 조성을 측정해 IUGS QAPF 다이어그램에서 정확한 명칭을 분류하고, 미량원소 패턴으로 마그마 기원을 추정해 보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#1565c0","questions":[{"q":"마그마가 식어 굳은 암석은?","choices":["퇴적암","변성암","화성암","석회암"],"answer":2},{"q":"모스 경도 10에 해당하는 광물은?","choices":["석영","다이아몬드","활석","황옥"],"answer":1},{"q":"지하에서 서서히 식어 결정이 큰 암석은?","choices":["현무암","유문암","사암","화강암"],"answer":3},{"q":"석회암이 변성작용을 받으면?","choices":["대리암","규암","편마암","점판암"],"answer":0},{"q":"사면체가 독립형 구조인 광물은?","choices":["석영","운모","감람석","장석"],"answer":2}]};</script>
 </main>
 </div>
 

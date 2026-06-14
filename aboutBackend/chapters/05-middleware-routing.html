@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -132,7 +134,7 @@ app.use('/api/posts', require('./routes/posts'));</div>
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -177,6 +179,11 @@ app.use((err, req, res, next) =&gt; {
   <div class="success-box"><strong>🎓 도전 과제:</strong> 자체 작성한 100ms 지연 미들웨어를 체인 앞·중간·뒤 어디에 두느냐에 따라 p95 레이턴시가 어떻게 달라지는지 측정·도식화하세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00ff88","questions":[{"q":"다음 미들웨어로 제어를 넘기는 호출은?","choices":["next()","send()","listen()","get()"],"answer":0},{"q":"에러 처리 미들웨어의 인자 개수는?","choices":["2개","3개","4개","5개"],"answer":2},{"q":"미들웨어 실행 순서를 결정하는 것은?","choices":["알파벳 순","등록 순서","파일 크기","무작위"],"answer":1},{"q":"/users/:id에서 :id의 명칭은?","choices":["쿼리 문자열","헤더","바디","경로 매개변수"],"answer":3},{"q":"모든 요청에 미들웨어를 거는 방법은?","choices":["app.use()","router.get()","app.listen()","next()"],"answer":0}]};</script>
 </main>
 </div>
 

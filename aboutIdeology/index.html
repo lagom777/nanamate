@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이념과 체제 — aboutIdeology</title><link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="index.html">⚖️ 표지 · 소개</a></li>
+<li><a href="chapters/01-democracy.html">1. 민주주의</a></li>
+<li><a href="chapters/02-liberalism.html">2. 자유주의</a></li>
+<li><a href="chapters/03-conservatism.html">3. 보수주의</a></li>
+<li><a href="chapters/04-capitalism.html">4. 자본주의</a></li>
+<li><a href="chapters/05-socialism.html">5. 사회주의</a></li>
+<li><a href="chapters/06-communism.html">6. 공산주의 · 마르크스주의</a></li>
+<li><a href="chapters/07-welfare.html">7. 복지국가 · 사회민주주의</a></li>
+<li><a href="chapters/08-totalitarianism.html">8. 전체주의 · 파시즘</a></li>
+<li><a href="chapters/09-anarchism.html">9. 무정부주의 · 자유지상주의</a></li>
+</ol></aside>
+<main>
+<header class="paper-header">
+  <h1><em>이념</em>과 체제</h1>
+  <p class="authors">Political Ideologies — How We Choose to Live Together</p>
+  <p class="affiliation">Vol. 26 · Jun 2026 · aboutIdeology Editorial</p>
+</header>
+
+<div class="scene-3d" id="intro-scene"></div>
+<span class="interact-hint">⟳ 마우스로 회전 · 사상의 입자</span>
+
+<h2>이 과목에 대하여</h2>
+<p>"세상은 어떻게 굴러가야 하는가?" 이 한 질문에 인류는 서로 다른 답을 내놓았고, 그 답들이 <strong>이념(ism)</strong>이 되었습니다. 누가 다스리는가(민주주의), 무엇을 소유하는가(자본주의·사회주의), 국가는 어디까지 책임지는가(복지국가) — 이 과목은 오늘의 정치·경제를 만든 9가지 이념을 좌우·국가관의 지도 위에서 정리합니다.</p>
+
+<h2>학습 로드맵</h2>
+<div class="info-card"><h4>🗳️ 챕터 1–3: 근대 정치의 토대</h4><p>민주주의(누가 다스리는가), 자유주의(개인의 자유), 보수주의(전통과 점진). 근대 서구 정치 질서의 출발점입니다.</p></div>
+<div class="info-card"><h4>⚙️ 챕터 4–7: 경제 체제와 분배의 전쟁</h4><p>자본주의 대 사회주의, 그 극단인 공산주의, 그리고 둘을 절충한 복지국가·사회민주주의. 20세기를 둘로 가른 대립을 다룹니다.</p></div>
+<div class="info-card"><h4>⚠️ 챕터 8–9: 국가의 두 극단</h4><p>국가가 모든 것을 삼킨 전체주의·파시즘과, 국가를 최소화하거나 없애려는 자유지상주의·무정부주의. 스펙트럼의 양 끝을 봅니다.</p></div>
+
+<h2>이렇게 학습하세요</h2>
+<p>각 챕터마다 <strong>하 · 중 · 상</strong> 3단계 난이도 탭이 있습니다. "하"에서 한 줄 정의와 일상 비유를, "중"에서 핵심 사상가·역사·제도를, "상"에서 비판과 현대적 쟁점을 다룹니다. 우측 상단 언어 토글로 영어·일본어·중국어 학습도 가능합니다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 이념에는 "정답"이 없습니다. 각 이념을 <em>가장 강한 형태로 먼저 이해</em>한 뒤 비판하면(스틸맨 독해), 뉴스 속 정치 논쟁이 누구의 어떤 전제 위에 서 있는지 보이기 시작합니다.</div>
+
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('intro-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const N=11;const bars=[];for(let i=0;i<N;i++){const col=new THREE.Color().setHSL(0.0+0.66*i/(N-1),0.7,0.55);const b=new THREE.Mesh(new THREE.BoxGeometry(0.42,1,0.42),new THREE.MeshBasicMaterial({color:col}));b.position.set((i-(N-1)/2)*0.7,0,0);s.add(b);bars.push({m:b,ph:Math.random()*6.28});}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;bars.forEach(o=>{o.m.scale.y=0.7+1.6*(0.5+0.5*Math.sin(T*1.5+o.ph));});s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

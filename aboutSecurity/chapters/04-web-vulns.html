@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4장. 웹 취약점 — OWASP Top 10</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔐 표지 · 소개</a></li>
+    <li><a href="01-basics.html">1. 보안 기초와 위협 모델</a></li>
+    <li><a href="02-crypto.html">2. 암호학 입문</a></li>
+    <li><a href="03-network.html">3. 네트워크 보안</a></li>
+    <li><a href="04-web-vulns.html">4. 웹 취약점 (OWASP Top 10)</a></li>
+    <li><a href="05-auth.html">5. 인증과 권한</a></li>
+    <li><a href="06-system.html">6. 시스템·엔드포인트 보안</a></li>
+    <li><a href="07-pentest.html">7. 침투테스트와 레드팀</a></li>
+    <li><a href="08-incident.html">8. 사고 대응과 포렌식</a></li>
+    <li><a href="09-governance.html">9. 거버넌스·컴플라이언스</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. OWASP Top 10 — 웹 보안의 공식 지도</h2>
+<p>OWASP(Open Worldwide Application Security Project)는 2003년부터 웹 애플리케이션의 가장 치명적이고 빈번한 보안 위협을 3~4년마다 갱신해 발표하는 비영리 단체입니다. 가장 최근판인 <strong>OWASP Top 10 (2021)</strong>는 50만 개 이상의 실제 애플리케이션 데이터와 산업 설문을 종합해 만들어졌으며, 사실상 웹 보안의 공통 언어입니다.</p>
+<p>2021년판 순위는 ① A01 Broken Access Control, ② A02 Cryptographic Failures, ③ A03 Injection, ④ A04 Insecure Design, ⑤ A05 Security Misconfiguration, ⑥ A06 Vulnerable and Outdated Components, ⑦ A07 Identification and Authentication Failures, ⑧ A08 Software and Data Integrity Failures, ⑨ A09 Security Logging and Monitoring Failures, ⑩ A10 Server-Side Request Forgery입니다. 이전에 독립 항목(2017 A7)이었던 XSS는 Injection 카테고리에 흡수되었습니다.</p>
+</section>
+
+<!-- 3D 학습 시각화: SQL 인젝션 — 데이터가 코드가 될 때 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · SQL Injection: 공격과 방어</div>
+  <div id="sec3d-04" style="width:100%;height:430px;"></div>
+  <div id="sec3d-04-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">입력이 쿼리 구조를 바꾸는 순간을 시각화합니다.</div>
+</div>
+
+
+<section id="sec2">
+<h2>2. A01 — Broken Access Control</h2>
+<p>접근 통제 결함은 2021년 OWASP Top 10에서 5위에서 1위로 급상승했습니다. 실제 침해 사건의 가장 빈번한 원인이며, IDOR(Insecure Direct Object Reference), 권한 우회, 강제 브라우징, JWT 변조 등이 포함됩니다.</p>
+<p>대표 패턴은 <code>GET /api/users/123/orders</code>를 <code>GET /api/users/124/orders</code>로 바꿔 남의 데이터를 보는 IDOR입니다. 단순히 URL의 ID만 바꾸면 되니 자동화 공격이 쉽고, 피해 규모가 큽니다. 해결책은 ① 매 요청마다 서버에서 현재 사용자와 자원 소유자의 일치를 검증, ② 가능한 한 식별자는 추측 불가능한 UUID·암호학적 토큰 사용, ③ 권한 모델을 코드 전반에 일관되게 적용하는 권한 라이브러리·미들웨어 도입입니다.</p>
+</section>
+
+<section id="sec3">
+<h2>3. A03 — Injection (SQLi, NoSQLi, XSS, 명령어 주입)</h2>
+<p>Injection은 신뢰할 수 없는 데이터가 인터프리터(SQL, OS shell, LDAP, XML, NoSQL 쿼리, 브라우저 DOM)에 명령으로 해석될 때 발생합니다. SQL Injection은 1998년 Rain Forest Puppy의 공개 이후 27년이 지난 지금도 매년 침해 사고의 단골입니다. <strong>XSS(Cross-Site Scripting)</strong>는 사용자 입력이 다른 사용자의 브라우저에서 JavaScript로 실행되는 형태이며, Reflected · Stored · DOM-based로 분류됩니다.</p>
+<p>방어의 근본 원칙은 단순합니다: <strong>"데이터와 코드를 분리하라"</strong>. SQL은 prepared statement(parameterized query)로, 셸 명령은 인자 배열 전달로, HTML 출력은 컨텍스트 인식 인코딩으로 처리합니다. CSP(Content Security Policy) 헤더는 XSS의 영향을 추가로 격리합니다.</p>
+</section>
+
+<section id="sec4">
+<h2>4. A10 — SSRF, 그리고 클라우드 시대의 새 위협</h2>
+<p>SSRF(Server-Side Request Forgery)는 서버가 공격자가 지정한 URL로 요청하게 만드는 취약점입니다. 2019년 Capital One 침해(1억 명 개인정보)의 직접 원인이었으며, AWS·GCP·Azure의 메타데이터 엔드포인트(<code>http://169.254.169.254/</code>)에 접근해 IAM 자격증명을 탈취하는 형태가 대표적입니다.</p>
+<p>클라우드 환경에서는 SSRF가 단순한 내부망 스캔이 아니라 <strong>권한 상승 + 데이터 탈취</strong>의 출발점이 됩니다. 방어책은 ① IMDSv2(토큰 기반) 강제, ② 메타데이터 엔드포인트에 대한 egress 차단, ③ URL 파싱·DNS 재해석(rebinding) 방어, ④ 외부 요청 전용 프록시를 통한 일원화된 통제입니다.</p>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="03-network.html" style="text-decoration:none;">← 3. 네트워크 보안</a><a href="05-auth.html" style="text-decoration:none;">5. 인증과 권한 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>웹 사이트가 해킹되는 거의 모든 경로는 ① 남의 정보를 그냥 봐버리거나(접근 통제 실패), ② 입력에 슬쩍 코드를 끼워 넣거나(인젝션), ③ 비밀번호를 약하게 두거나, ④ 설정을 잘못 한 데서 옵니다. OWASP Top 10은 그 10가지 가장 흔한 실수를 정리해둔 체크리스트예요.</p>
+  <h3>왜 중요한가?</h3>
+  <p>① 페이스북·트위터 같은 거대 서비스가 매년 보안 사고를 내는 이유는 OWASP Top 10에 다 적혀 있어요. ② 내가 만든 자그마한 토이 프로젝트라도 이 10가지만 점검하면 흔한 자동 스캔 공격의 80% 이상을 막을 수 있습니다. ③ 보안 면접·자격증(Security+, CISSP)에서 거의 빠지지 않는 주제이기도 해요.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>OWASP</strong>: 웹 보안 가이드를 무료로 공개하는 비영리 단체. Top 10 외에도 ASVS, Cheat Sheet 시리즈가 유명</li>
+    <li><strong>접근 통제(Access Control)</strong>: 누가 무엇을 볼·수정·삭제할 수 있는지 결정하는 규칙</li>
+    <li><strong>인젝션(Injection)</strong>: 입력칸에 명령어를 끼워 넣어 서버를 속이는 공격 (SQLi, XSS 등)</li>
+    <li><strong>SSRF</strong>: 서버를 시켜 다른 곳에 요청하게 만들기 — 내부망 탐색·자격증명 탈취에 사용</li>
+    <li><strong>CSP</strong>: 브라우저에 "이 사이트에선 이런 출처의 스크립트만 실행해도 돼"라고 알려주는 헤더</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>가게에 비유해봅시다. 접근 통제 결함은 직원만 들어가야 할 창고 문이 활짝 열려 있는 상황이에요. 인젝션은 손님이 주문서에 "음료 주세요. 그리고 금고를 열어주세요"라고 적었는데 점원이 그걸 그대로 실행해버리는 거죠. SSRF는 가게 직원에게 "옆 가게에 가서 비밀번호 좀 알아와 주세요"라고 시키는 거예요. 다 사람이라면 안 속겠지만 컴퓨터는 매뉴얼에 없으면 그냥 따릅니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> Top 10을 외우려 하지 말고 카테고리만 머릿속에 두세요: "접근 / 암호 / 입력검증 / 설계 / 설정 / 의존성 / 인증 / 무결성 / 로깅 / SSRF". 코드를 짜다 이 9~10 카테고리 중 하나라도 떠오르면 그 시점에 한 번 더 점검하면 됩니다.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>OWASP Top 10 = 웹 사고의 가장 흔한 10가지 원인 카테고리</li>
+    <li>2021년판 1위 = Broken Access Control (남의 데이터 접근)</li>
+    <li>3위 = Injection — "데이터와 코드를 분리"가 만병통치 원칙</li>
+    <li>10위 = SSRF — 클라우드 시대에 치명적</li>
+    <li>방어는 사후 패치보다 설계 단계 점검이 압도적으로 효율적</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>OWASP Top 10은 단순 순위가 아니라 <strong>CWE(Common Weakness Enumeration)</strong> 매핑입니다. 2021년판 A01에는 CWE-22(Path Traversal), CWE-284(Improper Access Control), CWE-352(CSRF) 등 34개 CWE가 포함됩니다. CWE → CVE(특정 제품 취약점) → CVSS(점수) → KEV(Known Exploited Vulnerabilities, CISA 운영)로 이어지는 체인이 현대 취약점 관리의 표준 어휘입니다.</p>
+  <p>SQL Injection의 변형은 시간이 지나며 정교해졌습니다. ① Classic union-based, ② Blind boolean-based, ③ Time-based blind, ④ Out-of-band(DNS/HTTP exfil), ⑤ Second-order(저장 후 다른 쿼리에서 실행). sqlmap은 이 모든 패턴을 자동화하며, WAF 우회 기법(인코딩, 주석, 함수 호출)도 내장합니다. 방어는 prepared statement가 우선이지만, ORM 사용 시에도 raw query·dynamic order by·LIKE 패턴에는 별도 검증이 필요합니다.</p>
+  <h3>핵심 코드 — 안전한 입력 처리</h3>
+  <pre><code># 🚫 위험 — f-string으로 SQL 조립 (SQLi 직격탄)
+cursor.execute(f"SELECT * FROM users WHERE email = '{email}'")
+
+# ✅ 안전 — prepared statement
+cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+
+# 🚫 위험 — 사용자 입력을 그대로 셸에 전달
+import os
+os.system(f"convert {filename} out.png")
+
+# ✅ 안전 — 인자 배열 + 쉘 우회
+import subprocess
+subprocess.run(["convert", filename, "out.png"], check=True, shell=False)
+
+# 🚫 위험 — XSS (사용자 입력을 HTML에 직접 삽입)
+response.write(f"&lt;div&gt;안녕하세요 {name}님&lt;/div&gt;")
+
+# ✅ 안전 — 컨텍스트 인식 이스케이프 (Jinja2, React 등은 기본 적용)
+from markupsafe import escape
+response.write(f"&lt;div&gt;안녕하세요 {escape(name)}님&lt;/div&gt;")</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>🕷️ 예제 1 — 2019 Capital One 침해</h4><p>한 전직 AWS 엔지니어가 Capital One의 WAF 설정 오류(SSRF 방어 미흡)를 이용해 EC2 인스턴스의 IAM 메타데이터를 탈취, 약 1억 명의 개인정보와 신용카드 신청 데이터를 유출했습니다. 핵심 결함은 ① WAF 룰이 outbound 요청을 충분히 검사하지 못함, ② IMDSv1 사용으로 토큰 없이 자격증명 발급, ③ 해당 IAM 역할에 과도한 S3 권한 부여. 단일 SSRF가 권한상승·데이터유출까지 단번에 연결된 교과서적 사례입니다.</p></div>
+  <div class="info-card"><h4>🕷️ 예제 2 — Stored XSS와 워밍</h4><p>2005년 MySpace의 'Samy 웜'은 프로필 페이지에 저장된 XSS를 통해 24시간 만에 100만 명 이상을 감염시켰습니다. 방문자의 프로필 페이지에 친구추가·웜 코드를 자동 삽입하는 자기 복제 코드였죠. 이후 OWASP Cheat Sheet의 XSS 방어 권고는 ① 출력 컨텍스트별 인코딩(HTML/Attr/JS/CSS/URL), ② CSP 헤더(<code>script-src 'self'</code>), ③ HttpOnly+Secure 쿠키, ④ Trusted Types(브라우저 신 표준)의 4단계 방어로 진화했습니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① <strong>WAF(Web Application Firewall)</strong>: AWS WAF, Cloudflare, ModSecurity + OWASP CRS는 시그니처·룰 기반 방어. 우회 가능성 때문에 보조 수단으로만 의존해야 합니다. ② <strong>SAST·DAST·IAST</strong>: 정적분석(Semgrep, CodeQL), 동적분석(ZAP, Burp Suite), 인스트루먼테이션 기반(Contrast Security) — 개발 파이프라인에 통합. ③ <strong>SCA(Software Composition Analysis)</strong>: Snyk, Dependabot, Trivy — A06 Vulnerable Components 대응. ④ <strong>CSP nonce/hash</strong>로 인라인 스크립트 차단, ⑤ <strong>SRI(Subresource Integrity)</strong>로 CDN 자원 변조 방지.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① WAF만 믿고 코드 검증을 소홀히 하기, ② "프레임워크가 알아서 막아주겠지" — 실제로는 raw query·dangerouslySetInnerHTML·eval 등이 곳곳에 있음, ③ blacklist 기반 입력 검증(공격 패턴을 막는 방식)은 거의 항상 우회됨 — 반드시 allowlist로, ④ 에러 메시지에 SQL 쿼리·스택 트레이스 노출 — 공격자에게 시스템 구조를 알려주는 셈.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>OWASP Top 10의 한계도 인식해야 합니다. ① 카테고리가 너무 광범위해 구체 가이드로는 부족, ② 데이터 출처 편향(설문 + 공개 데이터셋만), ③ API와 모바일 환경의 새로운 위협 부족 — 이를 보완하기 위해 <strong>OWASP API Security Top 10 (2023)</strong>, <strong>OWASP Mobile Top 10</strong>, <strong>OWASP LLM Top 10 (2023, v2.0 2025)</strong>이 별도로 발표되었습니다.</p>
+  <p>특히 <strong>OWASP ASVS(Application Security Verification Standard) v5.0 (2024)</strong>는 Top 10보다 훨씬 세부적인 검증 체크리스트(약 300개)를 Level 1(최소)/2(표준)/3(고위험) 단계로 제공합니다. 실제 보안 감사·인증의 표준 도구이며, NIST SP 800-218(SSDF)과 매핑됩니다. SAMM(Software Assurance Maturity Model)은 조직 차원의 보안 성숙도 측정 프레임워크로 거버넌스·설계·구현·검증·운영의 5도메인 15실천으로 구성됩니다.</p>
+  <h3>수학적·정량적 기초</h3>
+  <div class="formula">$$\text{CVSS Base} = \text{Roundup}(\min[1.08 \times (\text{Impact} + \text{Exploitability}), 10])$$
+  $$\text{EPSS Score} = P(\text{exploit observed in next 30 days} \mid \text{CVE features})$$
+  $$\text{Risk Score (FAIR)} = \text{LEF} \times \text{Magnitude}, \quad \text{LEF} = \text{TEF} \times \text{Vulnerability}$$</div>
+  <p>EPSS(Exploit Prediction Scoring System)는 FIRST.org가 운영하는 ML 기반 익스플로잇 가능성 예측 모델로, 매일 갱신됩니다. CVSS의 정적 심각도와 결합해 패치 우선순위를 결정하는 것이 2024년 이후의 표준 패턴입니다. CVSS 9+ 중에서도 EPSS 0.05 이상인 약 5%만이 실제로 30일 내 익스플로잇되며, 이 작은 부분에 자원을 집중하는 것이 자원 효율적입니다.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>OWASP LLM Top 10 v2.0 (2025)</strong>: Prompt Injection(직간접), Insecure Output Handling, Training Data Poisoning, Model DoS, Supply Chain, Sensitive Info Disclosure, Insecure Plugin Design, Excessive Agency, Overreliance, Model Theft. AI 에이전트의 도구 사용 권한이 핵심 신규 위협. ② <strong>Supply Chain Security</strong>: SLSA(Supply-chain Levels for Software Artifacts) 1.0이 2023년 GA, in-toto / sigstore / cosign으로 빌드·서명·검증이 표준화됨. xz-utils 백도어(2024) 사건이 결정적 계기. ③ <strong>Web Authentication</strong>: WebAuthn/Passkeys가 password-less의 사실상 표준으로 자리잡았고, Apple·Google·Microsoft가 cross-device 동기화 제공. ④ <strong>Browser security primitives</strong>: COOP, COEP, CORP로 Spectre·Meltdown 후속 사이드채널 방어; Trusted Types로 DOM-XSS 원천 차단; Origin Trial로 신기능 점진 배포.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>컴파일러·언어 이론</strong>: taint analysis, abstract interpretation을 활용한 SAST</li>
+    <li><strong>형식 검증</strong>: Boogie, Dafny, F* 등으로 인가 로직의 안전성 증명</li>
+    <li><strong>분산시스템</strong>: 분산 트랜잭션과 권한 일관성, capability-based security</li>
+    <li><strong>UX/HCI</strong>: 보안 결정 UI의 인지부담 — 동의 화면 피로(consent fatigue)</li>
+    <li><strong>법학</strong>: GDPR Article 25(default 보안), 침해 통지 의무, 책임 분배</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 OWASP Top 10 (2021) 공식 문서 — owasp.org/Top10</li>
+    <li>📖 Stuttard &amp; Pinto, <em>The Web Application Hacker's Handbook</em> (2nd ed., 2011) — 클래식</li>
+    <li>📖 Andrew Hoffman, <em>Web Application Security</em> (O'Reilly, 2024)</li>
+    <li>📖 OWASP ASVS v5.0, SAMM v2.0, Cheat Sheet Series</li>
+    <li>🔬 실습: PortSwigger Web Security Academy (무료), DVWA, Juice Shop, HackTheBox</li>
+    <li>🔬 키워드: SLSA, Trusted Types, Passkeys, EPSS, OWASP LLM Top 10</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> PortSwigger Academy의 <em>SSRF + IDOR + SQLi + DOM XSS</em> 라운드를 풀고, 각 풀이마다 ① CWE 번호, ② OWASP Top 10 카테고리, ③ ASVS 검증 항목 번호를 매핑한 리포트를 작성해보세요. 그 다음 본인이 만든 사이드 프로젝트 하나를 ZAP·Burp로 자동 스캔해 동일 카테고리별 결과를 분류하면, 이 챕터의 모든 개념이 실무 감각으로 전환됩니다.</div>
+</div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#475569","questions":[{"q":"OWASP Top 10 2021 1위는?","choices":["Injection","Broken Access Control","SSRF","XSS"],"answer":1},{"q":"인젝션 방어의 근본 원칙은?","choices":["데이터와 코드 분리","비밀번호 강화","로그 삭제","포트 차단"],"answer":0},{"q":"서버가 지정 URL로 요청하게 하는 취약점은?","choices":["XSS","SQLi","SSRF","CSRF"],"answer":2},{"q":"SQL 인젝션의 근본 방어책은?","choices":["문자열 조립","prepared statement","blacklist","WAF만"],"answer":1},{"q":"2021판에서 XSS가 흡수된 카테고리는?","choices":["Injection","SSRF","암호 실패","로깅"],"answer":0}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('sec3d-04');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('sec3d-04-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,1.5,13);camera.lookAt(0,0.3,0);
+  var formL=lbl('로그인 폼 (사용자 입력)',25,'#39415a',1);formL.position.set(-6.4,3.3,0);scene.add(formL);
+  var form=box(2.6,1.2,0.5,0xe9edf6,1);form.position.set(-6.4,2.2,0);scene.add(form);
+  // query template
+  var q1=box(3.6,0.8,0.5,0x9aa6c0,0.95);q1.position.set(-3.4,0,0);scene.add(q1);
+  var q1L=lbl("SELECT … WHERE id='",22,'#ffffff',0.85);q1L.position.set(-3.4,0,0.4);scene.add(q1L);
+  var slot=box(2.2,0.8,0.5,0xf4f6fb,0.9);slot.position.set(-0.3,0,0);scene.add(slot);
+  var slotW=new THREE.Mesh(new THREE.BoxGeometry(2.25,0.85,0.55),new THREE.MeshBasicMaterial({color:0xe07a3f,wireframe:true,transparent:true,opacity:0.7}));
+  slotW.position.copy(slot.position);scene.add(slotW);
+  var q2=box(0.7,0.8,0.5,0x9aa6c0,0.95);q2.position.set(1.35,0,0);scene.add(q2);
+  var q2L=lbl("'",24,'#ffffff',0.85);q2L.position.set(1.35,0,0.4);scene.add(q2L);
+  var qL=lbl('SQL 쿼리 (코드)',24,'#7c87a3',0.9);qL.position.set(-1.4,1.2,0);scene.add(qL);
+  // DB
+  var rows=[];
+  for(var i=0;i<5;i++){
+    var d=cyl(1.1,1.1,0.35,0x5b6bd6,0.9);d.position.set(5.6,1.6-i*0.55,0);scene.add(d);rows.push(d);
+  }
+  var dbL=lbl('DB (회원 테이블)',24,'#5b6bd6',0.95);dbL.position.set(5.6,2.8,0);scene.add(dbL);
+  var inputB=box(2.0,0.7,0.45,0x2f9e63,0.95);inputB.visible=false;scene.add(inputB);
+  var inputL=null;
+  var capsule=box(2.3,0.95,0.6,0x2f9e63,0);scene.add(capsule);
+  var leak=[];for(var i=0;i<5;i++){var s=sph(0.14,0xd6455b);s.visible=false;scene.add(s);leak.push(s);}
+  function setInput(txt,col,hex){
+    inputB.visible=true;inputB.material.color.set(col);
+    if(inputL)scene.remove(inputL);
+    inputL=lbl(txt,21,hex,0.8);scene.add(inputL);
+  }
+  function resetQ(){
+    q1.material.color.set(0x9aa6c0);q2.material.color.set(0x9aa6c0);
+    rows.forEach(function(r){r.material.color.set(0x5b6bd6);r.position.x=5.6;r.visible=true;});
+    leak.forEach(function(s){s.visible=false;});
+    capsule.material.opacity=0;
+  }
+  var phases=[
+    {dur:4,cap:"정상 사용: 입력 'alice'가 쿼리의 빈칸(주황 틀)에 데이터로 들어가고, DB는 alice의 행 1개만 돌려줍니다.",
+     enter:function(){resetQ();setInput("alice",0x2f9e63,'#ffffff');},
+     update:function(u){
+       inputB.position.lerpVectors(V(-6.4,2.2,0),V(-0.3,0,0),ez(Math.min(1,u*1.6)));
+       inputL.position.copy(inputB.position);inputL.position.z+=0.4;
+       if(u>0.7){rows[1].material.color.set(0x2f9e63);rows[1].position.x=5.6-(ez((u-0.7)*3.3))*1.2;}
+     }},
+    {dur:5,cap:"공격: 입력 ' OR 1=1 -- 이 빈칸을 넘어 쿼리의 '구조'를 바꿉니다(회색→빨강) — 데이터가 코드로 해석되는 순간, WHERE 조건이 항상 참이 됩니다.",
+     enter:function(){resetQ();setInput("' OR 1=1 --",0xd6455b,'#ffffff');},
+     update:function(u){
+       inputB.position.lerpVectors(V(-6.4,2.2,0),V(-0.3,0,0),ez(Math.min(1,u*2)));
+       inputL.position.copy(inputB.position);inputL.position.z+=0.4;
+       if(u>0.45){q1.material.color.set(0xd6455b);q2.material.color.set(0xd6455b);}
+       if(u>0.6){
+         rows.forEach(function(r,i){
+           r.material.color.set(0xd6455b);
+           var f=clamp01((u-0.6)*2.5-i*0.1);
+           leak[i].visible=f>0;leak[i].position.set(5.6-f*11,1.6-i*0.55+f*1.5,0);
+         });
+       }
+     }},
+    {dur:5,cap:'전 행 유출: 한 줄의 입력으로 회원 테이블 전체가 공격자에게 — 이것이 OWASP가 20년째 경고하는 인젝션입니다.',
+     update:function(u){
+       rows.forEach(function(r,i){
+         var f=(u+i*0.12)%1;
+         leak[i].visible=true;leak[i].position.set(5.6-f*11,1.6-i*0.55+f*1.5,0);
+       });
+     }},
+    {dur:5,cap:'방어 — Prepared Statement: 입력이 유리 캡슐(파라미터 바인딩)에 갇혀 "절대 코드가 될 수 없는 데이터"로만 전달됩니다. 쿼리 구조는 그대로(회색), 결과는 0행.',
+     enter:function(){resetQ();setInput("' OR 1=1 --",0xd6455b,'#ffffff');},
+     update:function(u){
+       inputB.position.lerpVectors(V(-6.4,2.2,0),V(-0.3,0,0),ez(Math.min(1,u*2)));
+       inputL.position.copy(inputB.position);inputL.position.z+=0.4;
+       capsule.position.copy(inputB.position);
+       capsule.material.opacity=Math.min(0.4,Math.max(0,(u-0.4)*2));
+       if(u>0.7){slotW.material.color.set(0x2f9e63);}else{slotW.material.color.set(0xe07a3f);}
+     }}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

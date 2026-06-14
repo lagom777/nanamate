@@ -2,11 +2,13 @@
 <title>8. 청음 훈련 — aboutMusic</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">🎵 표지</a></li><li><a href="chapters/01-basics.html">1. 음악 기초</a></li><li><a href="chapters/02-rhythm.html">2. 리듬과 박자</a></li><li><a href="chapters/03-harmony.html">3. 화성학</a></li><li><a href="chapters/04-melody.html">4. 멜로디와 작곡</a></li><li><a href="chapters/05-form.html">5. 음악 형식</a></li><li><a href="chapters/06-genres.html">6. 장르의 이해</a></li><li><a href="chapters/07-production.html">7. 음악 제작</a></li><li><a href="chapters/08-ear-training.html">8. 청음 훈련</a></li><li><a href="chapters/09-modern.html">9. 현대 음악이론</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🎵 표지</a></li><li><a href="01-basics.html">1. 음악 기초</a></li><li><a href="02-rhythm.html">2. 리듬과 박자</a></li><li><a href="03-harmony.html">3. 화성학</a></li><li><a href="04-melody.html">4. 멜로디와 작곡</a></li><li><a href="05-form.html">5. 음악 형식</a></li><li><a href="06-genres.html">6. 장르의 이해</a></li><li><a href="07-production.html">7. 음악 제작</a></li><li><a href="08-ear-training.html">8. 청음 훈련</a></li><li><a href="09-modern.html">9. 현대 음악이론</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>청음 훈련</em></h1><p class="authors">Chapter 8 — Ear Training & Sight Reading</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 음정 시계 — 12음을 원형으로 배치하고 기준음에서 음정 거리를 잇는다</span>
 <h2>청음 훈련</h2><p>Ear Training & Sight Reading의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Ear Training & Sight Reading</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -47,7 +49,7 @@
 </div>
 <div class="difficulty-content" data-level="hard">
   <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3><p>청음의 신경과학적 토대는 청각 피질의 음높이 매핑과 후두정 영역의 작업 기억에 있다. 절대음감은 어린 시절(보통 6세 이전)의 결정적 시기에 형성되며, 이후에는 상대음감 훈련이 효과적이다. 다이애나 도이치의 연구는 「티탈리 언어(중국어, 한국어 같은 성조 언어)」 사용자가 절대음감 보유 비율이 더 높다는 흥미로운 통계를 보였다. 시창과 받아쓰기는 단순한 기능적 훈련이 아니라 음악 인지의 「내적 청각(audiation)」을 강화하는 도구이며, 에드윈 고든의 음악 학습 이론에서 핵심 위치를 차지한다. 고급 청음에서는 12음 음렬, 모달 진행, 폴리리듬, 마이크로톤까지 듣고 식별할 수 있어야 하며, 재즈 즉흥 연주자는 동료의 솔로를 실시간으로 듣고 따라가는 「콜 앤 리스폰스」 청음을 수년에 걸쳐 단련한다.</p>
+  <h3>전문가 레벨</h3><p>청음의 신경과학적 토대는 청각 피질의 음높이 매핑과 후두정 영역의 작업 기억에 있다. 절대음감은 어린 시절(보통 6세 이전)의 결정적 시기에 형성되며, 이후에는 상대음감 훈련이 효과적이다. 다이애나 도이치의 연구는 성조 언어(중국어, 베트남어 같은 성조 언어) 사용자가 절대음감 보유 비율이 더 높다는 흥미로운 통계를 보였다. 시창과 받아쓰기는 단순한 기능적 훈련이 아니라 음악 인지의 「내적 청각(audiation)」을 강화하는 도구이며, 에드윈 고든의 음악 학습 이론에서 핵심 위치를 차지한다. 고급 청음에서는 12음 음렬, 모달 진행, 폴리리듬, 마이크로톤까지 듣고 식별할 수 있어야 하며, 재즈 즉흥 연주자는 동료의 솔로를 실시간으로 듣고 따라가는 「콜 앤 리스폰스」 청음을 수년에 걸쳐 단련한다.</p>
   <h3>분석과 이론</h3><p>인지 음악학에서는 청음 능력을 「범주적 지각(categorical perception)」, 「청각적 작업 기억」, 「내적 청각」의 세 축으로 분석한다. 음악 정보 검색에서는 자동 음정 추출(pitch detection)과 화음 인식 알고리즘이 인간 청음을 모델링한다. 또한 음악적 기대(예: 휴론의 ITPRA 모델)는 청음 능력이 단순한 기억이 아니라 예측-검증 과정이라는 점을 보여준다.</p>
   <h3>최신 트렌드</h3><p>AI 청음 도구(Yousician, EarMaster)는 사용자의 응답 시간과 정확도를 분석해 적응형 훈련을 제공하며, 머신러닝 기반 자동 채보(transcription) 도구는 누구나 좋아하는 곡을 악보로 변환할 수 있게 한다. VR 환경에서는 가상 합주를 통한 청음 훈련이 실험되고 있으며, 게임화된 청음 훈련은 학습 동기를 높이는 효과적 방법으로 자리 잡고 있다.</p>
   <h3>관련 분야</h3><ul>
@@ -62,5 +64,24 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 좋아하는 곡 한 곡을 30초 단위로 듣고, 멜로디·코드·리듬을 모두 받아쓰기로 옮긴 뒤 원곡과 비교해 자신의 청음 정확도를 측정해 보라.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ec4899","questions":[{"q":"기준 없이 음을 바로 아는 능력은?","choices":["상대음감","절대음감","시창","받아쓰기"],"answer":1},{"q":"처음 보는 악보를 즉시 노래하는 훈련?","choices":["받아쓰기","채보","시창","합주"],"answer":2},{"q":"듣고 악보로 옮기는 훈련은?","choices":["받아쓰기","시창","합주","즉흥"],"answer":0},{"q":"으뜸음을 항상 「도」로 부르는 방식은?","choices":["픽스드 도","코다이 이동도법","고든 이론","ITPRA"],"answer":1},{"q":"절대음감 형성의 결정적 시기는?","choices":["6세 이전","12세 이전","성인기","20세 이후"],"answer":0}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8.5);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const N=12,R=3;const tones=[];for(let i=0;i<N;i++){const ang=Math.PI/2-i/N*Math.PI*2;const col=new THREE.Color().setHSL(i/N,0.7,0.55);const t=new THREE.Mesh(new THREE.SphereGeometry(0.28,16,16),new THREE.MeshBasicMaterial({color:col}));t.position.set(Math.cos(ang)*R,Math.sin(ang)*R,0);t.userData.ang=ang;s.add(t);tones.push(t);}
+  const ringPts=[];for(let i=0;i<=64;i++){const ang=i/64*Math.PI*2;ringPts.push(new THREE.Vector3(Math.cos(ang)*R,Math.sin(ang)*R,0));}s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(ringPts),new THREE.LineBasicMaterial({color:0x778899})));
+  const root=tones[0];const spoke=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(root.position.x,root.position.y,0),new THREE.Vector3(0,0,0)]),new THREE.LineBasicMaterial({color:0xffcc33}));s.add(spoke);
+  s.userData.tones=tones;s.userData.spoke=spoke;s.userData.root=root;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const tgt=Math.floor(T*1.2)%12;const tn=s.userData.tones[tgt];s.userData.spoke.geometry.setFromPoints([new THREE.Vector3(s.userData.root.position.x,s.userData.root.position.y,0),new THREE.Vector3(tn.position.x,tn.position.y,0)]);s.userData.tones.forEach((t,i)=>{t.scale.setScalar((i===tgt||i===0)?1.5:1);});s.rotation.z+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

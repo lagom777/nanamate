@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 논리적 글쓰기 — aboutWriting</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">✍️ 표지</a></li>
+    <li><a href="01-basics.html">1. 글쓰기의 기본</a></li>
+    <li><a href="02-grammar.html">2. 문법과 맞춤법</a></li>
+    <li><a href="03-logic.html">3. 논리적 글쓰기</a></li>
+    <li><a href="04-persuasion.html">4. 설득과 카피</a></li>
+    <li><a href="05-storytelling.html">5. 이야기와 서사</a></li>
+    <li><a href="06-practical.html">6. 실무 글쓰기</a></li>
+    <li><a href="07-essay.html">7. 자기소개서·에세이</a></li>
+    <li><a href="08-editing.html">8. 퇴고와 편집</a></li>
+    <li><a href="09-ai-writing.html">9. AI 시대의 글쓰기</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>논리적 글쓰기</em></h1>
+  <p class="authors">Chapter 3 — Logical Writing</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 논리 구조 — 주장을 근거 기둥들이 떠받친다</span>
+
+<h2>논리적 글쓰기 개요</h2>
+<p>논리적 글쓰기는 읽는 사람이 한 번에 이해하고 수긍하도록 생각을 짜임새 있게 배치하는 기술이다. 핵심은 명확한 주장을 세우고, 그 주장을 근거와 사례로 떠받치며, 문장과 문단을 빈틈없이 연결하는 데 있다. 화려한 표현보다 정확한 구조가 글의 설득력을 결정한다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>좋은 논리적 글은 '주장-근거-사례'라는 논증의 뼈대를 갖추고, 서론-본론-결론의 흐름을 따른다. 글을 쓰기 전에 개요(아웃라인)를 먼저 짜고, 중요한 결론을 앞에 두는 두괄식으로 배치하며, '따라서·반면' 같은 연결어로 문단을 이어 붙인다. 내용을 나눌 때는 중복도 누락도 없이(MECE) 정리한다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>논리적 글쓰기란 '무엇을 말하고 싶은지(주장)'를 정하고, '왜 그런지(근거)'와 '예를 들면(사례)'을 붙여 읽는 사람이 고개를 끄덕이게 만드는 글쓰기다.</p>
+<h3>왜 중요한가?</h3>
+<p>우리는 하루에도 수없이 글로 누군가를 설득한다. 보고서로 상사를 납득시키고, 메일로 동료에게 협조를 구하며, 글로 자기 생각을 펼친다. 이때 아무리 좋은 생각이라도 두서없이 늘어놓으면 상대는 끝까지 읽지 않는다. 논리적 글쓰기는 생각을 정리된 순서로 배치해 짧은 시간에 정확히 전달되게 한다. 반대로 구조가 흐트러진 글은 내용이 아무리 풍부해도 신뢰를 잃는다. 그래서 논리는 글쓰기에서 가장 먼저 익혀야 할 토대다.</p>
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>주장</strong>: 글에서 말하고 싶은 핵심 의견이나 결론</li>
+<li><strong>근거</strong>: 그 주장이 옳다고 믿게 만드는 이유</li>
+<li><strong>사례</strong>: 근거를 실감 나게 보여 주는 구체적인 예</li>
+<li><strong>두괄식</strong>: 결론이나 핵심 주장을 글의 맨 앞에 두는 방식</li>
+<li><strong>연결어</strong>: '따라서·반면·그러나'처럼 문장과 문단을 이어 주는 말</li>
+</ul></div>
+<h3>핵심 개념 풀어쓰기</h3>
+<p>논증은 집짓기에 비유할 수 있다. '주장'은 지붕이고, '근거'는 그 지붕을 받치는 기둥이며, '사례'는 기둥을 단단히 고정하는 못이다. 기둥 없이 지붕만 얹으면 집은 무너진다. 마찬가지로 근거 없는 주장은 "그냥 내 생각"에 그치고 만다. 글을 쓸 때는 먼저 어떤 지붕을 올릴지(주장) 정하고, 그것을 받칠 기둥과 못을 차례로 마련하면 된다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 글을 시작하기 전에 종이에 '내 주장은 ○○이다. 왜냐하면 ①②③ 때문이다'를 한 줄로 적어 보자. 이 한 줄이 채워지지 않으면 아직 글 쓸 준비가 안 된 것이다.</div>
+<h3>한 페이지 요약</h3>
+<ul>
+<li>논리적 글쓰기의 뼈대는 '주장 + 근거 + 사례'로 이루어진 논증이다.</li>
+<li>글 전체는 서론-본론-결론의 흐름을 따른다.</li>
+<li>핵심을 앞에 두는 두괄식이 가장 읽기 쉽다.</li>
+<li>'따라서·반면' 같은 연결어로 문장을 자연스럽게 잇는다.</li>
+<li>쓰기 전에 개요를 먼저 짜면 길을 잃지 않는다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>논리적 글의 가장 큰 단위는 서론-본론-결론의 삼단 구조다. 서론에서 다룰 문제와 글의 주장을 예고하고, 본론에서 근거와 사례로 주장을 전개하며, 결론에서 핵심을 다시 정리한다. 이때 문단마다 하나의 작은 논증이 들어가도록 설계하면 글 전체가 촘촘해진다. 문단 안에서 자주 쓰이는 틀이 PREP다. PREP는 주장(Point)-이유(Reason)-사례(Example)-주장(Point)의 순서로, 결론을 먼저 던지고 이유와 예로 받친 뒤 다시 결론으로 마무리한다. 비슷한 틀인 OREO는 의견(Opinion)-이유(Reason)-사례(Example)-의견(Opinion)으로, PREP와 사실상 같은 구조를 가진다. 두 틀 모두 두괄식을 기본으로 삼는다는 점이 핵심이다. 본론에서 여러 근거를 나열할 때는 그 근거들이 서로 겹치거나 빠지지 않도록 정리해야 하는데, 이를 MECE라 부른다. 또한 문단과 문단 사이는 '따라서·반면·게다가' 같은 연결어로 이어 독자가 논리의 방향을 놓치지 않게 한다.</p>
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 PREP / OREO 문단 틀</h4><p>PREP는 주장→이유→사례→주장, OREO는 의견→이유→사례→의견의 순서다. 두 틀 모두 가장 중요한 결론을 맨 앞에 두는 두괄식이며, 마지막에 같은 주장을 한 번 더 강조해 인상을 남긴다. 짧은 보고나 답변에서 특히 강력하게 작동한다.</p></div>
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1 — PREP로 쓴 한 문단</h4><p>"원격 근무를 확대해야 한다(주장). 통근 시간이 사라져 집중할 수 있는 시간이 늘기 때문이다(이유). 실제로 도입 후 회의 시간을 줄이고 깊은 작업에 몰입하는 팀이 적지 않다(사례). 그러므로 원격 근무 확대는 생산성에 도움이 된다(주장)." 결론을 앞뒤로 감싸 메시지가 또렷하게 남는다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — MECE로 나눈 근거</h4><p>매출 부진의 원인을 '제품·가격·홍보' 세 항목으로 나누면, 항목끼리 의미가 겹치지 않고(중복 없음) 빠진 영역도 없어(누락 없음) 분석이 깔끔해진다. 반대로 '제품·신제품·인기 상품'처럼 나누면 서로 겹쳐 논리가 흐려진다.</p></div>
+<h3>현대적 전개</h3>
+<p>오늘날에는 보고서뿐 아니라 메신저, 발표 슬라이드, 이메일 등 짧고 빠른 매체에서 논리적 글쓰기가 더 중요해졌다. 독자가 끝까지 읽지 않는 환경일수록 핵심을 앞세우는 두괄식과 PREP 같은 압축된 틀의 가치가 커진다. 또한 데이터로 근거를 보강하는 습관, 글을 쓰기 전에 개요부터 짜는 습관이 실무에서 표준으로 자리 잡았다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 연결어를 많이 넣으면 글이 논리적으로 보인다고 생각하기 쉽다. 그러나 '따라서'는 앞뒤가 실제로 인과로 이어질 때만 써야 한다. 논리적 관계가 없는데 연결어만 붙이면 오히려 어색하고 비약처럼 읽힌다. 연결어는 장식이 아니라 논리의 신호등이다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>전문가의 논리적 글쓰기는 문단 단위의 틀을 넘어 글 전체를 하나의 논증 구조로 설계하는 단계로 나아간다. 이때 자주 쓰이는 것이 결론을 정점에 두고 그 아래로 근거를 가지처럼 펼치는 피라미드식 구성으로, MECE 원칙에 따라 근거 묶음을 겹침과 누락 없이 배열한다. 논증을 더 엄밀하게 보면 주장과 근거 사이에는 둘을 연결하는 숨은 전제(논거)가 있어, 이 전제가 타당해야 논증이 성립한다. 흔한 약점은 근거가 주장을 직접 뒷받침하지 않는 비약, 사례 한둘로 전체를 단정하는 성급한 일반화, 논점을 흐리는 곁가지다. 따라서 좋은 글쓴이는 자기 글에 대해 "이 근거가 정말 이 주장을 받치는가", "반대 의견은 무엇인가"를 끊임없이 자문한다. 반론을 미리 다루고 한계를 인정하는 글이 오히려 더 신뢰를 얻는데, 이는 독자가 글쓴이를 균형 잡힌 사람으로 받아들이기 때문이다. 결국 논리적 글쓰기의 정점은 화려함이 아니라, 빈틈을 스스로 메우는 정직한 검증에 있다.</p>
+<h3>최신 연구·쟁점</h3>
+<p>최근에는 생성형 AI가 매끄러운 문장을 손쉽게 만들어 주면서, 글쓰기의 무게중심이 '표현'에서 '구조와 검증'으로 옮겨 가고 있다. AI는 그럴듯한 논증을 빠르게 제시하지만 근거가 실제로 사실인지, 전제에 비약이 없는지까지 보장하지는 못한다. 그래서 사람이 개요를 설계하고 근거의 진위와 논리적 연결을 점검하는 역할이 더 중요해졌다는 논의가 활발하다. 비판적 사고와 논리 구조 설계 능력이 AI 시대에 오히려 핵심 역량으로 부각되는 셈이다.</p>
+<h3>관련 분야</h3>
+<ul>
+<li><strong>논리학·비판적 사고</strong>: 타당한 논증과 오류를 가려내는 이론적 토대</li>
+<li><strong>수사학</strong>: 설득의 기술을 다루며 논리(로고스)를 한 축으로 삼는다</li>
+<li><strong>리포트·학술 글쓰기</strong>: 근거 인용과 논증 구조를 엄격히 적용하는 실천 영역</li>
+</ul>
+<h3>더 읽을거리</h3>
+<ul>
+<li>"논리의 기술(The Pyramid Principle)" — 바바라 민토</li>
+<li>"생각의 탄생" — 로버트 루트번스타인, 미셸 루트번스타인</li>
+<li>"유시민의 글쓰기 특강" — 유시민</li>
+</ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> 자신이 최근에 쓴 메일이나 글 하나를 골라, 문단마다 '주장-근거-사례'가 갖춰져 있는지 표시해 보자. 빠진 부분이 있다면 PREP 틀로 다시 써 보고, 근거가 주장을 정말 받치는지, 반론은 없는지 스스로 따져 보자.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#38bdf8","questions":[{"q":"논증의 세 요소가 아닌 것은?","choices":["주장","근거","사례","감상"],"answer":3},{"q":"결론을 글 앞에 두는 방식은?","choices":["두괄식","미괄식","삼단식","병렬식"],"answer":0},{"q":"글 전체의 기본 흐름은?","choices":["결론-서론-본론","서론-본론-결론","본론-결론-서론","사례-근거-주장"],"answer":1},{"q":"PREP에서 R의 뜻은?","choices":["결과","이유","반복","검토"],"answer":1},{"q":"중복·누락 없이 나누는 원칙은?","choices":["PREP","OREO","MECE","AIDA"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0x38bdf8;const claim=new THREE.Mesh(new THREE.BoxGeometry(4.4,0.6,1.2),new THREE.MeshBasicMaterial({color:0xffe08a}));claim.position.y=1.6;s.add(claim);const pillars=[];for(let i=0;i<3;i++){const p=new THREE.Mesh(new THREE.CylinderGeometry(0.3,0.3,2.4,14),new THREE.MeshBasicMaterial({color:COL}));p.position.set((i-1)*1.6,0,0);s.add(p);pillars.push(p);const ex=new THREE.Mesh(new THREE.SphereGeometry(0.22,12,12),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.7}));ex.position.set((i-1)*1.6,-1.7,0);s.add(ex);s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3((i-1)*1.6,-1.45,0),new THREE.Vector3((i-1)*1.6,-1.2,0)]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.5})));}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

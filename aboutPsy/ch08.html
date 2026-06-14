@@ -5,14 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>사회심리학 | 심리학 기초</title>
 <link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../shared/light-theme.css">
   <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
   <script defer src="../shared/difficulty.js"></script>
+  <script defer src="../shared/quizgame3d.js"></script>
 </head>
 <body>
 
 <aside>
-  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h1><a href="index.html">심리학 기초</a></h1>
   <div class="sub">PSYCHOLOGY FROM ZERO</div>
   <nav>
@@ -42,6 +45,18 @@
   <section class="chapter" id="ch8">
     <div class="chap-num">CHAPTER 08</div>
     <h2>사회심리학 — 우리는 남의 영향을 얼마나 받는가</h2>
+<span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 사회심리 — 집단의 영향과 동조</span>
+<div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');if(!c||!window.THREE)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xa855f7;const nodes=[];for(let i=0;i<10;i++){const t=i/10*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.26,14,14),new THREE.MeshBasicMaterial({color:i===0?0xef4444:COL}));m.position.set(Math.cos(t)*2.4,Math.sin(t)*2.4,0);s.add(m);nodes.push(m);}for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++)if((j-i)%3===0)s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([nodes[i].position,nodes[j].position]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.15})));s.userData.odd=nodes[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const k=(Math.sin(T)+1)/2;s.userData.odd.material.color.setRGB(0.93*(1-k)+0.66*k,0.27*(1-k)+0.33*k,0.27*(1-k)+0.95*k);s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script>
+
     <div class="en">Social Psychology</div>
 
     <p>사회심리학은 '사람이 다른 사람의 존재·생각·행동에 의해 어떻게 영향을 받는가'를 연구합니다. 결론부터 말하면, 우리는 <b>스스로 생각하는 것보다 훨씬 많이</b> 영향을 받습니다.</p>
@@ -159,7 +174,7 @@
   </div>
   <div class="info-card">
     <h4>🧠 실험 2 — 밀그램의 복종 실험(1963)</h4>
-    <p>참가자에게 학습 실험이라 속이고, 흰 가운을 입은 실험자가 명령하면 다른 사람에게 점점 강한 전기 충격을 주도록 했습니다. 약 65%가 최고 강도(450V)까지 명령에 따랐습니다. 권위에 대한 복종이 평범한 사람을 어떻게 해로운 행위로 이끄는지를 충격적으로 보여 준 연구입니다(스탠포드 감옥 실험과 함께 자주 인용됩니다).</p>
+    <p>참가자에게 학습 실험이라 속이고, 흰 가운을 입은 실험자가 명령하면 다른 사람에게 점점 강한 전기 충격을 주도록 했습니다. 약 65%가 최고 강도(450V)까지 명령에 따랐습니다. 권위에 대한 복종이 평범한 사람을 어떻게 해로운 행위로 이끄는지를 충격적으로 보여 준 연구입니다(앞의 애쉬 동조 실험과 함께 대표적 증거로 꼽힙니다. 흔히 함께 거론되는 스탠포드 감옥 실험은 간수 코칭·연출 정황과 재현 실패 등 방법론적 비판이 제기되어 동급의 근거로 보기는 어렵습니다).</p>
   </div>
 
   <h3>임상/실생활 응용</h3>
@@ -190,7 +205,7 @@
 
   <h3>추가 자료</h3>
   <ul>
-    <li>책: 『The Lucifer Effect』(Zimbardo)</li>
+    <li>책: 『The Lucifer Effect』(Zimbardo) — 스탠포드 감옥 실험에 대한 저자 본인의 해석이며, 이후 제기된 방법론적 비판(연출·코칭 정황)과 함께 비판적으로 읽기를 권합니다</li>
     <li>책: 『Influence』(Cialdini)</li>
     <li>저널: Journal of Personality and Social Psychology, Psychological Science</li>
   </ul>
@@ -201,6 +216,11 @@
 </div>
 
   <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d97757","questions":[{"q":"선분 길이 동조 실험을 한 학자는?","choices":["애쉬","밀그램","페스팅거","프로이트"],"answer":0},{"q":"권위 복종을 본 전기충격 실험은?","choices":["애쉬","밀그램","파블로프","반두라"],"answer":1},{"q":"신념과 행동이 어긋날 때의 불편함은?","choices":["귀인","동조","인지부조화","복종"],"answer":2},{"q":"타인 행동을 성향 탓하는 오류는?","choices":["자기본위 편향","집단사고","몰개성화","기본 귀인 오류"],"answer":3},{"q":"단체로 할 때 노력이 주는 현상은?","choices":["사회적 태만","사회적 촉진","집단사고","동조"],"answer":0}]};</script>
 </main>
 
 <script src="js/main.js"></script>

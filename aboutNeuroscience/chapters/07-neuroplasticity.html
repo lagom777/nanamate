@@ -2,12 +2,14 @@
 <title>7. 신경가소성 — aboutNeuroscience</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">🧠 표지</a></li><li><a href="01-neurons.html">1. 뉴런과 시냅스</a></li><li><a href="02-brain-anatomy.html">2. 뇌 해부학</a></li><li><a href="03-sensory.html">3. 감각과 지각</a></li><li><a href="04-memory.html">4. 기억과 학습</a></li><li><a href="05-emotion.html">5. 정서와 동기</a></li><li><a href="06-consciousness.html">6. 의식과 수면</a></li><li><a href="07-neuroplasticity.html">7. 신경가소성</a></li><li><a href="08-disorders.html">8. 뇌질환과 장애</a></li><li><a href="09-neurotech.html">9. 뇌공학과 AI</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>신경가소성</em></h1><p class="authors">Chapter 7 — Neuroplasticity & Brain Development</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 뉴런 네트워크를 회전하며 탐구하세요</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 경험에 따라 수상돌기 가지가 자라며 뻗어 나가는 신경가소성입니다</span>
 <h2>신경가소성 개요</h2><p>Neuroplasticity & Brain Development의 핵심 메커니즘을 3D 시뮬레이션과 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Neuroplasticity & Brain Development</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -44,9 +46,28 @@
   <h3>추가 자료</h3><ul><li>Doidge, <em>The Brain That Changes Itself</em></li><li>Hensch, <em>Critical Period Plasticity</em> 리뷰</li><li>Bear & Cooper, BCM 이론 원논문</li></ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 성인의 임계기를 임의로 재개할 수 있다면, 새로운 언어 학습은 폭발적으로 빨라지겠지만 기존 기억은 안전할까요? 가소성과 안정성의 트레이드오프를 토론해 봅시다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#818cf8","questions":[{"q":"특정 기능의 학습 황금기를 뜻하는 말은?","choices":["가소성","신경발생","BDNF","임계기"],"answer":3},{"q":"새 뉴런이 생기는 일은?","choices":["가소성","신경발생","임계기","인출"],"answer":1},{"q":"뉴런 성장을 촉진하는 단백질은?","choices":["BDNF","도파민","GABA","코르티솔"],"answer":0},{"q":"택시 기사 연구로 커진 부위는?","choices":["편도체","소뇌","해마","시상"],"answer":2},{"q":"시냅스를 약화시키는 현상은?","choices":["LTP","BDNF","가소성","LTD"],"answer":3}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-const neurons=[];for(let i=0;i<20;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.15,12,12),new THREE.MeshBasicMaterial({color:0x818cf8}));m.position.set((Math.random()-0.5)*8,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);neurons.push(m);}
-for(let i=0;i<neurons.length-1;i++){const g=new THREE.BufferGeometry().setFromPoints([neurons[i].position,neurons[(i+1+Math.floor(Math.random()*3))%neurons.length].position]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x818cf8,transparent:true,opacity:0.15})));}
-let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});
-function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const soma=new THREE.Mesh(new THREE.SphereGeometry(0.45,16,16),new THREE.MeshBasicMaterial({color:0x059669}));soma.position.set(0,-2.6,0);s.add(soma);
+  const branches=[];
+  function grow(x,y,ang,len,depth,gen){if(depth<=0)return;const ex=x+Math.cos(ang)*len,ey=y+Math.sin(ang)*len;
+    const br=new THREE.Mesh(new THREE.CylinderGeometry(0.03+depth*0.012,0.03+depth*0.012,len,6),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.38,0.7,0.45+depth*0.06)}));
+    br.position.set((x+ex)/2,(y+ey)/2,0);br.rotation.z=ang-Math.PI/2;br.scale.y=0.001;s.add(br);branches.push({m:br,gen:gen});
+    const tip=new THREE.Mesh(new THREE.SphereGeometry(0.06,6,6),new THREE.MeshBasicMaterial({color:0x6ee7b7}));tip.position.set(ex,ey,0);tip.scale.setScalar(0.001);s.add(tip);branches.push({m:tip,gen:gen});
+    grow(ex,ey,ang+0.5,len*0.72,depth-1,gen+1);grow(ex,ey,ang-0.5,len*0.72,depth-1,gen+1);}
+  grow(0,-2.6,Math.PI/2,1.5,5,0);
+  s.userData.branches=branches;s.userData.maxGen=6;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const prog=((T*0.4)%(s.userData.maxGen+1.5));s.userData.branches.forEach(b=>{const target=Math.max(0,Math.min(1,prog-b.gen));b.m.scale.y+=(Math.max(0.001,target)-b.m.scale.y)*0.15;if(b.m.geometry.type==='SphereGeometry'){const sc=Math.max(0.001,target);b.m.scale.setScalar(sc);}});s.rotation.y+=0.003; r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

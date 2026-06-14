@@ -1,0 +1,135 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 채권과 금리 — aboutInvesting</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">💰 표지</a></li>
+    <li><a href="01-basics.html">1. 재테크 기초</a></li>
+    <li><a href="02-stocks.html">2. 주식 투자</a></li>
+    <li><a href="03-bonds.html">3. 채권과 금리</a></li>
+    <li><a href="04-funds.html">4. 펀드·ETF·인덱스</a></li>
+    <li><a href="05-realestate.html">5. 부동산</a></li>
+    <li><a href="06-portfolio.html">6. 분산투자·포트폴리오</a></li>
+    <li><a href="07-tax-pension.html">7. 세금·연금</a></li>
+    <li><a href="08-behavioral.html">8. 행동재무학</a></li>
+    <li><a href="09-retirement.html">9. 은퇴·재무설계</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>채권과 금리</em></h1>
+  <p class="authors">Chapter 3 — Bonds &amp; Rates</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 금리와 채권 가격이 시소처럼 반대로 움직이는 모습을 회전시켜 보세요</span>
+
+<h2>채권과 금리 개요</h2>
+<p>채권은 정부나 기업이 돈을 빌리면서 발행하는 일종의 차용증서다. 투자자는 채권을 사서 돈을 빌려주고, 그 대가로 정해진 이자를 받다가 만기에 원금을 돌려받는다. 채권의 가격은 시장금리와 반대로 움직이는데, 이 역관계를 이해하는 것이 채권 투자의 핵심이다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>채권은 액면가·표면금리·만기·신용등급이라는 네 가지 요소로 정의된다. 시장금리가 오르면 기존 채권의 매력이 떨어져 가격이 내리고, 금리가 내리면 가격이 오른다. 국채는 가장 안전한 자산으로 여겨지며, 주식이 흔들릴 때 완충 역할을 하는 경우가 많다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>채권은 "내가 돈을 빌려줬으니 이자를 주고 나중에 원금을 갚아라"라고 적힌 증서다.</p>
+<h3>왜 중요한가?</h3>
+<p>주식만 알아서는 투자 세계의 절반밖에 보지 못한다. 채권은 주식과 함께 자산 시장의 양대 축을 이루며, 전 세계 채권 시장은 주식 시장보다 규모가 더 크다고 알려져 있다. 채권은 매달 또는 매년 정해진 이자를 주기 때문에 비교적 안정적인 현금흐름을 만들어준다. 주식이 급락할 때 국채 가격이 오르는 경우가 많아, 두 자산을 섞으면 충격을 줄일 수 있다. 또 채권 가격이 시장금리와 반대로 움직인다는 원리는 경제 뉴스의 금리 이야기를 이해하는 열쇠가 된다. 그래서 채권을 알면 내 돈을 지키는 방어막을 하나 더 갖추게 된다.</p>
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>액면가</strong>: 만기에 돌려받기로 약속된 원금 금액이다.</li>
+<li><strong>표면금리(쿠폰금리)</strong>: 액면가를 기준으로 매년 지급되는 이자율이다.</li>
+<li><strong>만기</strong>: 원금을 돌려받는 날짜로, 짧으면 1년 미만 길면 수십 년이다.</li>
+<li><strong>신용등급</strong>: 발행자가 빚을 갚을 능력을 평가한 등급이다(예: AAA가 가장 안전).</li>
+<li><strong>시장금리</strong>: 지금 시장에서 통용되는 이자율로, 채권 가격을 좌우한다.</li>
+</ul></div>
+<h3>핵심 개념 풀어쓰기</h3>
+<p>채권 가격과 금리의 역관계는 중고 거래에 비유하면 쉽다. 내가 연 3% 이자를 주는 채권을 갖고 있는데, 갑자기 새로 나온 채권이 연 5%를 준다고 하자. 그러면 내 3%짜리 채권을 그대로 비싸게 사겠다는 사람은 없다. 누군가에게 팔려면 값을 깎아줘야 한다. 이렇게 시장금리가 오르면 기존 채권의 가격은 떨어진다. 반대로 새 채권이 1%밖에 안 주면, 내 3%짜리는 인기가 많아져 값이 오른다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> "금리 위로, 채권 아래로"라는 한 문장만 외워두면 채권의 절반은 이해한 셈이다. 시소처럼 한쪽이 오르면 반대쪽이 내린다고 기억하자.</div>
+<h3>한 페이지 요약</h3>
+<ul>
+<li>채권은 돈을 빌려주고 이자를 받는 증서로, 만기에 원금을 돌려받는다.</li>
+<li>네 가지 기본 요소는 액면가·표면금리·만기·신용등급이다.</li>
+<li>시장금리가 오르면 기존 채권 가격은 내리고, 금리가 내리면 가격은 오른다.</li>
+<li>국채는 가장 안전한 자산으로 여겨지고, 회사채는 더 높은 이자 대신 위험이 크다.</li>
+<li>주식과 섞으면 변동성을 줄이는 완충 효과를 기대할 수 있다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>채권의 가격은 결국 미래에 받을 모든 현금흐름(이자와 원금)을 현재 가치로 환산해 더한 값이다. 할인에 쓰이는 이자율이 바로 시장금리이므로, 시장금리가 오르면 분모가 커져 현재 가치가 줄고 채권 가격이 내린다. 이것이 가격과 금리가 반대로 움직이는 수학적 이유다. 채권에는 표면금리와 별도로 만기수익률(YTD가 아니라 YTM, Yield to Maturity)이라는 개념이 있는데, 지금 가격에 사서 만기까지 보유할 때 실제로 얻는 연평균 수익률을 뜻한다. 채권을 액면가보다 싸게 사면 만기수익률이 표면금리보다 높고, 비싸게 사면 낮아진다. 같은 금리 변화라도 만기가 길수록 가격 변동이 더 크다. 이 민감도를 정량화한 것이 듀레이션이다. 신용등급이 낮은 채권은 부도 위험을 보상하기 위해 더 높은 금리를 제시하며, 이 추가 금리를 신용 스프레드라고 부른다. 경기가 나빠지면 스프레드가 벌어지고, 안정되면 좁혀지는 경향이 있다.</p>
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 듀레이션 — 금리 민감도의 척도</h4><p>듀레이션은 시장금리가 1%포인트 변할 때 채권 가격이 대략 몇 % 움직이는지를 나타내는 숫자다. 듀레이션이 5년인 채권은 금리가 1%포인트 오르면 가격이 약 5% 떨어진다고 본다. 만기가 길고 표면금리가 낮을수록 듀레이션이 커지고, 그만큼 금리 변화에 더 크게 출렁인다. 따라서 금리 상승이 예상되면 듀레이션이 짧은 채권으로 위험을 줄이는 전략을 쓴다.</p></div>
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1 — 금리 인상기와 장기 국채</h4><p>중앙은행이 물가를 잡기 위해 기준금리를 빠르게 올리면, 듀레이션이 긴 장기 국채는 가격이 큰 폭으로 하락한다. 안전자산이라 불리는 국채라도 부도가 안 날 뿐, 중간에 팔면 평가손실이 날 수 있다는 점을 보여준다. 끝까지 보유하면 약속된 원금은 받지만, 그사이 더 높은 금리를 놓치는 기회비용이 생긴다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 안전자산 선호와 주식·채권의 관계</h4><p>증시가 급락하는 위기 국면에서는 투자자들이 안전한 국채로 몰리는 '안전자산 선호' 현상이 나타나곤 한다. 이때 국채 수요가 늘어 가격이 오르고, 주식 손실을 일부 상쇄한다. 다만 이 음(-)의 상관관계는 항상 성립하는 법칙이 아니라, 인플레이션이 높을 때는 주식과 채권이 함께 떨어지기도 한다.</p></div>
+<h3>현대적 전개</h3>
+<p>오늘날 개인 투자자도 채권형 ETF를 통해 수천 종목의 채권에 손쉽게 분산투자할 수 있게 되었다. 또 국채 금리의 만기별 곡선(수익률 곡선)은 경기를 읽는 지표로 널리 활용되는데, 단기금리가 장기금리보다 높아지는 '장단기 금리 역전'은 흔히 경기 둔화 신호로 해석된다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> "국채는 안전하니 손실이 없다"는 생각은 절반만 맞다. 발행국이 부도나지 않는 한 만기 원금은 보장되지만, 금리가 오르는 동안 중간에 팔면 가격이 떨어져 손실이 날 수 있다. '신용 위험이 낮다'와 '가격이 변하지 않는다'는 전혀 다른 이야기다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>채권 가격은 미래 현금흐름의 현재가치 합이므로, 가격과 금리의 관계는 볼록한(convex) 곡선을 그린다. 듀레이션은 이 곡선의 접선 기울기에 해당하는 1차 근사이고, 큰 폭의 금리 변동에서는 컨벡시티(convexity)라는 2차 효과를 함께 고려해야 정확해진다. 컨벡시티가 양(+)이면 금리가 내릴 때 이익이 더 커지고 오를 때 손실이 덜한 비대칭이 생겨 투자자에게 유리하다. 한편 만기수익률은 모든 중간 이자를 같은 금리로 재투자한다고 가정하는데, 실제 금리가 그와 다르면 재투자 위험이 발생한다. 채권 가격을 더 엄밀히 다룰 때는 단일 만기수익률 대신 만기별 무이표채 금리로 구성된 스팟 금리 곡선을 쓴다. 신용채권의 가격에는 부도확률과 회수율로 표현되는 신용위험이 스프레드 형태로 반영되며, 옵션이 붙은 채권(수의상환채 등)은 옵션조정스프레드(OAS)로 평가한다. 인플레이션 위험을 줄이기 위해 원금이 물가에 연동되는 물가연동국채(TIPS류)도 활용된다. 이런 도구들을 종합하면 채권은 단순한 '안전 자산'이 아니라 금리·신용·인플레이션 위험을 정교하게 배분하는 수단임을 알 수 있다.</p>
+<h3>최신 연구·쟁점</h3>
+<p>저금리 시대가 오래 이어진 뒤 금리가 급등한 국면에서는 전통적인 '주식 60·채권 40' 포트폴리오의 분산 효과가 약해진다는 논쟁이 활발하다. 인플레이션이 높을 때는 주식과 채권이 동반 하락해 채권의 방어 기능이 줄어들기 때문이다. 또한 수익률 곡선의 장단기 역전이 경기침체를 예측하는 신뢰도, 중앙은행의 대규모 채권 매입(양적완화)이 시장 금리에 미치는 장기 효과 등도 꾸준히 분석되는 주제다.</p>
+<h3>관련 분야</h3>
+<ul>
+<li><strong>거시경제·통화정책</strong>: 기준금리 결정과 인플레이션이 채권 시장을 직접 움직인다.</li>
+<li><strong>신용분석</strong>: 발행자의 재무 건전성과 부도확률을 평가해 적정 스프레드를 추정한다.</li>
+<li><strong>금융공학</strong>: 듀레이션·컨벡시티·OAS 등으로 채권과 파생상품의 위험을 정량화한다.</li>
+</ul>
+<h3>더 읽을거리</h3>
+<ul>
+<li>"The Bond Book" — Annette Thau</li>
+<li>"Fixed Income Securities" — Bruce Tuckman, Angel Serrat</li>
+<li>"The Intelligent Investor" — Benjamin Graham</li>
+</ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> 만기 10년, 표면금리 3%, 듀레이션 약 8년인 국채가 있다고 하자. 시장금리가 1%포인트 상승하면 가격이 대략 몇 % 변하는지 듀레이션으로 어림하고, 같은 채권을 끝까지 보유할 때와 1년 뒤 팔 때의 손익이 왜 달라지는지 설명해 보자.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#16c784","questions":[{"q":"시장금리가 오르면 기존 채권 가격은?","choices":["오른다","내린다","그대로다","무관하다"],"answer":1},{"q":"만기에 돌려받기로 약속된 원금은?","choices":["표면금리","액면가","쿠폰","스프레드"],"answer":1},{"q":"가장 안전한 신용등급은?","choices":["BBB","CCC","B","AAA"],"answer":3},{"q":"듀레이션 5년, 금리 1%p 상승 시 가격은?","choices":["약 5% 하락","약 5% 상승","약 1% 하락","변화 없음"],"answer":0},{"q":"장단기 금리 역전은 흔히 무슨 신호?","choices":["경기 과열","물가 하락","경기 둔화","주가 급등"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,11);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // 금리와 채권 가격의 역관계: 시소(beam) 양 끝에 두 공이 반대로 오르내림
+  const pivot=new THREE.Mesh(new THREE.ConeGeometry(0.6,1.2,4),new THREE.MeshBasicMaterial({color:0x888888}));pivot.position.y=-1.6;s.add(pivot);
+  const beam=new THREE.Group();s.add(beam);
+  const beamBar=new THREE.Mesh(new THREE.BoxGeometry(7,0.18,0.4),new THREE.MeshBasicMaterial({color:0xcccccc}));beam.add(beamBar);
+  // 왼쪽: 금리(상승=빨강 큐브)
+  const rateBox=new THREE.Mesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshBasicMaterial({color:0xff5d5d}));rateBox.position.set(-3,0.7,0);beam.add(rateBox);
+  // 오른쪽: 채권 가격(하락 시 반대로 내려감=초록 구)
+  const priceBall=new THREE.Mesh(new THREE.SphereGeometry(0.6,20,20),new THREE.MeshBasicMaterial({color:0x16c784}));priceBall.position.set(3,0.7,0);beam.add(priceBall);
+  // 만기 구간을 나타내는 보조 토러스(쿠폰 지급 흐름)
+  const couponRing=new THREE.Mesh(new THREE.TorusGeometry(2.4,0.06,10,48),new THREE.MeshBasicMaterial({color:0xffd34d}));couponRing.rotation.x=Math.PI/2;couponRing.position.y=-1.6;s.add(couponRing);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const tilt=Math.sin(T*0.9)*0.28;beam.rotation.z=tilt;rateBox.rotation.y+=0.02;priceBall.rotation.y+=0.02;couponRing.rotation.z+=0.01;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

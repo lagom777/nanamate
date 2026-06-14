@@ -194,12 +194,9 @@ td {
   border-bottom: 1px solid rgba(0,0,0,0.06) !important;
 }
 
-/* === 난이도 탭 — 우측 상단 고정 === */
+/* === 난이도 탭 === */
 .difficulty-tabs {
-  position: fixed;
-  top: 16px;
-  right: 80px;
-  z-index: 9998;
+  position: static;
   display: flex;
   gap: 4px;
   background: #ffffff;
@@ -238,25 +235,15 @@ td {
   color: #ffffff !important;
 }
 
-/* === 난이도 콘텐츠 — 가운데 정렬 === */
+/* === 난이도 콘텐츠 — 좌측 정렬 (기본 흐름) === */
 .difficulty-content {
   display: none;
-  padding: 32px 0;
-  max-width: 700px;
-  margin: 0 auto;
+  padding: 24px 0;
   animation: fadeIn 0.3s;
+  text-align: left;
 }
 .difficulty-content.active {
   display: block;
-}
-.difficulty-content h3 {
-  text-align: center;
-}
-.difficulty-content > p {
-  text-align: center;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 @keyframes fadeIn {
@@ -278,10 +265,8 @@ td {
 /* 모바일에서 난이도 탭 위치 조정 */
 @media (max-width: 768px) {
   .difficulty-tabs {
-    top: auto;
-    bottom: 16px;
-    right: 50%;
-    transform: translateX(50%);
+    position: static;
+    transform: none;
     font-size: 12px;
   }
   .difficulty-tab {
@@ -292,10 +277,7 @@ td {
 
 /* === 다국어 토글 === */
 .lang-toggle {
-  position: fixed;
-  top: 16px;
-  right: 16px;
-  z-index: 9999;
+  position: static;
   background: #ffffff;
   border: 1px solid rgba(0,0,0,0.12);
   border-radius: 999px;
@@ -323,6 +305,101 @@ td {
 .lang-toggle button:hover:not(.active) {
   background: rgba(0,0,0,0.05) !important;
   color: #0a0e1a !important;
+}
+
+/* === 사이드바 안에 들어간 토글들 (난이도 / 언어) === */
+.study-controls-sidebar {
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 220px !important;
+  z-index: 9997 !important;
+  overflow-y: auto !important;
+  padding: 18px 14px !important;
+  background: rgba(255,255,255,0.96) !important;
+  border-right: 1px solid rgba(0,0,0,0.08) !important;
+  box-shadow: 12px 0 32px rgba(15,23,42,0.06) !important;
+  box-sizing: border-box !important;
+}
+.has-study-controls-sidebar {
+  padding-left: 220px !important;
+}
+.study-controls-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0a0e1a;
+  margin: 0 0 14px;
+  letter-spacing: 0.02em;
+}
+.lang-toggle.in-sidebar,
+.sidebar-difficulty {
+  position: static !important;
+  top: auto !important; right: auto !important; bottom: auto !important; left: auto !important;
+  transform: none !important;
+  display: block !important;
+  margin: 14px 0 !important;
+  padding: 10px 12px !important;
+  background: #f8fafc !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+.toggle-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #6b7280;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.lang-toggle.in-sidebar { display: grid !important; grid-template-columns: repeat(4, 1fr); gap: 4px !important; padding: 10px 10px 8px !important; }
+.lang-toggle.in-sidebar .toggle-label { grid-column: 1 / -1; }
+.lang-toggle.in-sidebar button {
+  padding: 6px 0 !important;
+  font-size: 12px !important;
+  text-align: center;
+}
+.sidebar-difficulty .difficulty-tabs.in-sidebar {
+  position: static !important;
+  top: auto !important; right: auto !important; bottom: auto !important;
+  transform: none !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+.sidebar-difficulty .difficulty-tab {
+  padding: 6px 4px !important;
+  font-size: 11px !important;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* 모바일: 사이드바가 접히면 토글들은 sticky 카드처럼 보이게 */
+@media (max-width: 768px) {
+  .study-controls-sidebar {
+    position: sticky !important;
+    top: 0 !important;
+    bottom: auto !important;
+    width: 100% !important;
+    padding: 10px 12px !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+    box-shadow: 0 8px 22px rgba(15,23,42,0.06) !important;
+  }
+  .has-study-controls-sidebar {
+    padding-left: 0 !important;
+  }
+  .study-controls-title {
+    margin-bottom: 8px;
+  }
+  .lang-toggle.in-sidebar,
+  .sidebar-difficulty { margin: 10px 0 !important; }
 }
 
 /* === 학습 가이드 박스 === */

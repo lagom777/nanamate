@@ -2,12 +2,14 @@
 <title>3. 금융과 투자 — aboutEconomics</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">📊 표지</a></li><li><a href="01-micro.html">1. 미시경제학</a></li><li><a href="02-macro.html">2. 거시경제학</a></li><li><a href="03-finance.html">3. 금융과 투자</a></li><li><a href="04-trade.html">4. 국제무역</a></li><li><a href="05-behavioral.html">5. 행동경제학</a></li><li><a href="06-development.html">6. 경제발전</a></li><li><a href="07-labor.html">7. 노동경제학</a></li><li><a href="08-public-finance.html">8. 재정학</a></li><li><a href="09-crypto-fintech.html">9. 크립토/핀테크</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>금융과 투자</em></h1><p class="authors">Chapter 3 — Financial Markets & Investment</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 중심 포트폴리오를 둘러싼 자산들 — 분산투자로 위험과 수익을 배분합니다</span>
 <h2>금융과 투자 개요</h2><p>Financial Markets & Investment의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Financial Markets & Investment</p></div>
 
@@ -90,5 +92,23 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> KOSPI 200 종목으로 Fama-French 5요인 회귀를 직접 추정하고 한국 시장 특유의 요인(대주주 프리미엄 등)을 추가해 설명력을 비교해 보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0891b2","questions":[{"q":"여러 자산에 나눠 위험을 줄이는 전략은?","choices":["복리","분산투자","유동성","수익률"],"answer":1},{"q":"이자가 원금이 되어 이자를 낳는 효과는?","choices":["단리","환율","복리","듀레이션"],"answer":2},{"q":"복리를 8대 불가사의라 한 인물은?","choices":["케인즈","마코위츠","카너먼","워렌 버핏"],"answer":3},{"q":"금리변동에 대한 채권가격 민감도는?","choices":["듀레이션","베타","샤프비율","쿠폰"],"answer":0},{"q":"버핏 내기에서 인덱스펀드 연 수익률은?","choices":["2.2%","7.1%","10.5%","15.0%"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<6;i++){const h=1+Math.random()*2.5;const m=new THREE.Mesh(new THREE.BoxGeometry(0.5,h,0.5),new THREE.MeshBasicMaterial({color:[0x0891b2,0x06b6d4,0x22d3ee][i%3]}));m.position.set(i*1.5-3.75,h/2,0);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const core=new THREE.Mesh(new THREE.SphereGeometry(0.8,24,24),new THREE.MeshBasicMaterial({color:0x10b981,wireframe:true}));s.add(core);s.userData.core=core;
+  const assets=[];const N=7;for(let i=0;i<N;i++){const rad=2+i*0.45;const sz=0.18+0.04*i;const col=new THREE.Color().setHSL(0.05+i*0.04,0.7,0.55);const m=new THREE.Mesh(new THREE.OctahedronGeometry(sz,0),new THREE.MeshBasicMaterial({color:col}));s.add(m);const orbit=new THREE.Line(new THREE.BufferGeometry().setFromPoints((function(){const p=[];for(let k=0;k<=48;k++){const t=k/48*Math.PI*2;p.push(new THREE.Vector3(Math.cos(t)*rad,0,Math.sin(t)*rad));}return p;})()),new THREE.LineBasicMaterial({color:0x334155}));s.add(orbit);assets.push({m,rad,sp:0.6-i*0.06,ph:i*0.9,tilt:i*0.15});}
+  s.userData.assets=assets;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.core.rotation.y+=0.01;s.userData.assets.forEach(o=>{const ang=T*o.sp+o.ph;o.m.position.set(Math.cos(ang)*o.rad,Math.sin(ang*0.7)*o.tilt,Math.sin(ang)*o.rad);o.m.rotation.x+=0.02;o.m.rotation.y+=0.03;});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

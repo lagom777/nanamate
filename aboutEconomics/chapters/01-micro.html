@@ -2,12 +2,14 @@
 <title>1. 미시경제학 — aboutEconomics</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">📊 표지</a></li><li><a href="01-micro.html">1. 미시경제학</a></li><li><a href="02-macro.html">2. 거시경제학</a></li><li><a href="03-finance.html">3. 금융과 투자</a></li><li><a href="04-trade.html">4. 국제무역</a></li><li><a href="05-behavioral.html">5. 행동경제학</a></li><li><a href="06-development.html">6. 경제발전</a></li><li><a href="07-labor.html">7. 노동경제학</a></li><li><a href="08-public-finance.html">8. 재정학</a></li><li><a href="09-crypto-fintech.html">9. 크립토/핀테크</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>미시경제학</em></h1><p class="authors">Chapter 1 — Supply, Demand & Market Equilibrium</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 우하향 수요·우상향 공급 곡선이 만나는 균형점에서 가격이 형성됩니다</span>
 <h2>미시경제학 개요</h2><p>Supply, Demand & Market Equilibrium의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Supply, Demand & Market Equilibrium</p></div>
 
@@ -90,5 +92,25 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 한국 배달앱 시장(배민·쿠팡이츠·요기요)을 양면시장 모델로 분석하고 수수료 책정 전략과 후생효과를 평가해 보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0891b2","questions":[{"q":"수요와 공급이 일치하는 지점의 가격은?","choices":["기회비용","균형가격","한계효용","공급"],"answer":1},{"q":"수요곡선의 일반적인 형태는?","choices":["우하향","우상향","수직","수평"],"answer":0},{"q":"포기한 다른 선택의 가치를 뜻하는 말은?","choices":["한계효용","수요","균형가격","기회비용"],"answer":3},{"q":"2015년 담배값 인상 후 단기 판매량 변화는?","choices":["약 5% 감소","약 12% 감소","약 24% 감소","약 40% 감소"],"answer":2},{"q":"필수재의 가격탄력성 특징은?","choices":["탄력적","비탄력적","무한탄력","단위탄력"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<6;i++){const h=1+Math.random()*2.5;const m=new THREE.Mesh(new THREE.BoxGeometry(0.5,h,0.5),new THREE.MeshBasicMaterial({color:[0x0891b2,0x06b6d4,0x22d3ee][i%3]}));m.position.set(i*1.5-3.75,h/2,0);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const dPts=[],sPts=[];for(let i=0;i<=40;i++){const x=-3.5+i*0.175;dPts.push(new THREE.Vector3(x,-x*0.85,0));sPts.push(new THREE.Vector3(x,x*0.85,0));}
+  const dCurve=new THREE.Line(new THREE.BufferGeometry().setFromPoints(dPts),new THREE.LineBasicMaterial({color:0x3b82f6}));s.add(dCurve);
+  const sCurve=new THREE.Line(new THREE.BufferGeometry().setFromPoints(sPts),new THREE.LineBasicMaterial({color:0xef4444}));s.add(sCurve);
+  const ax=[new THREE.Vector3(-4,-3.2,0),new THREE.Vector3(-4,3.2,0),new THREE.Vector3(4,-3.2,0)];const axis=new THREE.Line(new THREE.BufferGeometry().setFromPoints([ax[0],ax[1]]),new THREE.LineBasicMaterial({color:0x94a3b8}));s.add(axis);const axis2=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-4,-3.2,0),ax[2]]),new THREE.LineBasicMaterial({color:0x94a3b8}));s.add(axis2);
+  const eq=new THREE.Mesh(new THREE.SphereGeometry(0.35,20,20),new THREE.MeshBasicMaterial({color:0xfbbf24}));s.add(eq);s.userData.eq=eq;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const p=0.9+0.25*Math.sin(T*0.8);s.userData.eq.scale.setScalar(p);s.rotation.y=0.35*Math.sin(T*0.4);r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

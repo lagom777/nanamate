@@ -37,12 +37,14 @@
 </style>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">📖 표지 · 초록</a></li>
@@ -579,6 +581,11 @@ FROM   enrollment_log;</code></pre>
   </div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d6efd","questions":[{"q":"관계형 DB는 데이터를 무엇으로 관리하나?","choices":["그래프","표(테이블)","문서","큐"],"answer":1},{"q":"각 행을 유일하게 구분하는 키는?","choices":["외래 키","슈퍼키","기본 키","대체 키"],"answer":2},{"q":"관계형 모델을 1970년 제안한 사람은?","choices":["E.F. Codd","Chamberlin","Brewer","Kimball"],"answer":0},{"q":"릴레이션의 행(튜플) 개수를 뜻하는 용어는?","choices":["디그리","카디날리티","도메인","속성"],"answer":1},{"q":"특정 속성(열)만 선택하는 관계대수 연산은?","choices":["선택(σ)","조인(⋈)","합집합(∪)","프로젝션(π)"],"answer":3}]};</script>
 </main>
 </div>
 </body>

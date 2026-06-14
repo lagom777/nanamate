@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6장. 시스템·엔드포인트 보안</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔐 표지 · 소개</a></li>
+    <li><a href="01-basics.html">1. 보안 기초와 위협 모델</a></li>
+    <li><a href="02-crypto.html">2. 암호학 입문</a></li>
+    <li><a href="03-network.html">3. 네트워크 보안</a></li>
+    <li><a href="04-web-vulns.html">4. 웹 취약점 (OWASP Top 10)</a></li>
+    <li><a href="05-auth.html">5. 인증과 권한</a></li>
+    <li><a href="06-system.html">6. 시스템·엔드포인트 보안</a></li>
+    <li><a href="07-pentest.html">7. 침투테스트와 레드팀</a></li>
+    <li><a href="08-incident.html">8. 사고 대응과 포렌식</a></li>
+    <li><a href="09-governance.html">9. 거버넌스·컴플라이언스</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. 엔드포인트 — 가장 자주 침해되는 전장</h2>
+<p>엔드포인트(노트북·서버·모바일·IoT)는 사용자가 직접 상호작용하는 지점이며, 동시에 가장 자주 침해되는 자산입니다. 2024년 Verizon DBIR 보고서에 따르면 침해 사건의 약 70%가 엔드포인트에서 시작되거나 경유합니다. 피싱 이메일의 첨부파일, USB로 옮겨온 악성코드, 패치되지 않은 OS·소프트웨어가 대표 경로입니다.</p>
+<p>현대 엔드포인트 방어는 단순 안티바이러스를 넘어 <strong>EDR(Endpoint Detection &amp; Response)</strong>, <strong>XDR(Extended)</strong>로 진화했습니다. EDR은 프로세스 생성·파일 변경·네트워크 연결·레지스트리 수정 등 모든 행위를 텔레메트리로 수집해 행위 기반으로 탐지하고, 침해 시 자동 격리·롤백을 수행합니다. CrowdStrike Falcon, SentinelOne, Microsoft Defender for Endpoint가 대표 상용 제품입니다.</p>
+</section>
+
+<!-- 3D 학습 시각화: 권한 링과 샌드박스 격리 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · OS 권한 모델: 권한 상승과 격리</div>
+  <div id="sec3d-06" style="width:100%;height:430px;"></div>
+  <div id="sec3d-06-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">멀웨어가 안쪽 링으로 파고드는 과정과 이를 막는 격리.</div>
+</div>
+
+
+<section id="sec2">
+<h2>2. OS 권한 모델 — 최소권한과 분리</h2>
+<p>운영체제의 보안 모델은 권한 분리의 역사입니다. 유닉스의 user/group/other 권한, Windows의 ACL과 토큰, 모바일의 앱 샌드박스가 모두 같은 원칙을 다른 방식으로 구현합니다. 핵심은 <strong>최소권한(Principle of Least Privilege)</strong>: 각 프로세스는 임무 수행에 꼭 필요한 최소 권한만 가져야 합니다.</p>
+<p>리눅스는 capabilities(setcap), seccomp(syscall 화이트리스트), namespaces(컨테이너의 기반), cgroups, SELinux/AppArmor MAC 정책 등의 세분화 도구를 제공합니다. macOS는 SIP(System Integrity Protection)·TCC(Transparency, Consent, Control)·Hardened Runtime·Notarization으로 다층 방어를 구성합니다. Windows는 UAC·AppLocker·WDAC(Windows Defender Application Control)·VBS(Virtualization-Based Security)로 동등한 기능을 제공합니다.</p>
+</section>
+
+<section id="sec3">
+<h2>3. 멀웨어의 종류와 동작</h2>
+<p>멀웨어(malicious software)는 형태에 따라 분류됩니다. ① <strong>바이러스</strong>는 다른 실행파일에 자기 코드를 삽입해 전파, ② <strong>웜</strong>은 네트워크를 통해 자율 확산(WannaCry 2017), ③ <strong>트로이목마</strong>는 정상 프로그램으로 위장, ④ <strong>랜섬웨어</strong>는 파일을 암호화하고 몸값을 요구(LockBit·BlackCat), ⑤ <strong>스파이웨어/스토커웨어</strong>는 비밀 정보 수집(Pegasus), ⑥ <strong>루트킷</strong>은 시스템 깊숙이 숨어 탐지 회피, ⑦ <strong>봇/RAT</strong>은 원격 제어 채널 유지(Cobalt Strike).</p>
+<p>현대 멀웨어는 점점 <strong>fileless</strong>·<strong>LotL(Living off the Land)</strong> 기법을 씁니다. PowerShell, WMI, regsvr32, mshta 같은 정상 OS 도구를 악용해 디스크에 흔적을 거의 남기지 않습니다. 시그니처 기반 AV로는 잡히지 않으므로, 행위·메모리·텔레메트리 기반 EDR이 필수가 된 이유입니다.</p>
+</section>
+
+<section id="sec4">
+<h2>4. 컨테이너·클라우드 워크로드 보안</h2>
+<p>컨테이너는 동일 커널을 공유하기 때문에 격리 수준이 VM보다 약합니다. Docker·containerd는 namespaces·cgroups로 격리하지만 커널 취약점(2019 runC CVE-2019-5736, 2022 dirty pipe CVE-2022-0847)이 직접 호스트 침해로 이어질 수 있습니다. 강화 방안은 ① rootless 모드, ② seccomp default profile, ③ AppArmor/SELinux 강제, ④ read-only root filesystem, ⑤ user namespace, ⑥ gVisor·Kata Containers 같은 추가 격리층입니다.</p>
+<p>쿠버네티스 보안의 핵심은 <strong>Pod Security Standards(Restricted)</strong> 적용, RBAC 최소화, NetworkPolicy(default deny), Secrets 외부화(ESO·Vault), 이미지 서명 검증(cosign + admission controller), 런타임 위협 탐지(Falco·Tetragon)입니다. CNCF의 Cloud Native Security Whitepaper와 NIST SP 800-190이 정석 가이드입니다.</p>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="05-auth.html" style="text-decoration:none;">← 5. 인증과 권한</a><a href="07-pentest.html" style="text-decoration:none;">7. 침투테스트와 레드팀 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>시스템 보안은 "내 노트북·휴대폰·서버 자체를 어떻게 안전하게 지킬까"의 문제예요. OS 권한을 잘게 나누고, 의심스러운 프로그램의 행동을 감시하는 게 핵심입니다. 안티바이러스의 후예가 EDR이고, 회사·서버는 거의 다 EDR을 깔아둡니다.</p>
+  <h3>왜 중요한가?</h3>
+  <p>① 모르는 메일 첨부파일을 열었을 때 노트북이 랜섬웨어에 걸리는 게 시스템 보안의 실패 사례예요. ② 회사 IT팀이 "이상한 사이트 접속 알람"을 받는 건 EDR이 알려준 거고요. ③ 아이폰이 "이 앱은 카메라 접근을 요청합니다"라고 물어보는 것도 OS 권한 모델 덕분. 우리가 매일 누리는 "어쩐지 안전한" 디바이스 경험이 다 이 위에 있어요.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>엔드포인트(Endpoint)</strong>: 사람이 직접 쓰는 컴퓨터·휴대폰·서버 등 끝단 기기</li>
+    <li><strong>EDR / XDR</strong>: 엔드포인트의 모든 행동을 감시·자동대응하는 차세대 보안 솔루션</li>
+    <li><strong>최소권한</strong>: 프로그램에 꼭 필요한 만큼만 권한을 주는 원칙</li>
+    <li><strong>랜섬웨어</strong>: 파일을 암호화하고 푸는 키를 돈으로 요구하는 멀웨어</li>
+    <li><strong>샌드박스(Sandbox)</strong>: 의심 프로그램을 격리된 작은 공간에서만 실행하게 하는 방어 기법</li>
+    <li><strong>패치(Patch)</strong>: 발견된 취약점을 막는 업데이트 — 적시 적용이 가장 효과적 방어</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>회사 건물에 비유해봅시다. OS 권한 모델은 각 직원의 출입증 권한이에요 — 인사팀은 인사 자료, 회계팀은 회계 자료에만 접근 가능. EDR은 24시간 CCTV + AI 분석으로 이상한 움직임을 즉시 알리는 통합 보안실 역할이고요. 랜섬웨어는 "건물 안 모든 캐비닛에 자물쇠를 채우고 열쇠를 사라"는 협박이에요. 패치는 무너지기 직전인 기둥을 보수하는 작업입니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 개인 디바이스 보안 체크리스트는 단순합니다 — ① OS·앱 자동 업데이트 켜기, ② 다른 비밀번호 + 비밀번호 관리자, ③ MFA(가능하면 Passkey), ④ 백업(3-2-1 규칙), ⑤ 모르는 첨부·링크 안 열기. 이 다섯만 지켜도 개인 단위 침해의 95%는 막힙니다.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>엔드포인트 보안 = 사람이 쓰는 기기 보호</li>
+    <li>안티바이러스 → EDR → XDR로 진화</li>
+    <li>최소권한 원칙이 OS 보안의 출발점</li>
+    <li>현대 멀웨어는 디스크에 흔적을 안 남기는 fileless 기법 위주</li>
+    <li>컨테이너·클라우드는 새로운 격리·정책 도구가 추가로 필요</li>
+    <li>개인 사용자도 자동 업데이트·MFA·백업의 기본은 필수</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>EDR의 텔레메트리는 OS 후크 지점에 따라 다릅니다. Windows는 ETW(Event Tracing for Windows), 커널 콜백, AMSI(Anti-Malware Scan Interface)로 PowerShell·.NET·VBScript 등 동적 코드 실행을 가시화합니다. macOS는 Endpoint Security Framework(2019부터 KEXT 대체)로 syscall·파일·프로세스 이벤트를 사용자 공간 에이전트에 전달합니다. 리눅스는 audit, eBPF(가장 유연), kprobes·uprobes·tracepoints를 활용합니다. 2024년 CrowdStrike 사태(BSoD 800만 대) 이후 Microsoft는 커널 모드 의존도 축소를 위한 새 API를 제안 중입니다.</p>
+  <p>탐지 로직은 점점 <strong>MITRE ATT&amp;CK 매핑</strong>으로 표준화되었습니다. T1059(Command and Scripting), T1055(Process Injection), T1003(Credential Dumping), T1078(Valid Accounts) 같은 기법별로 탐지 룰이 작성되고, 조직의 ATT&amp;CK 커버리지를 heat map으로 시각화합니다. Atomic Red Team, Caldera는 이 ATT&amp;CK 기법을 안전하게 시뮬레이션해 탐지 공백을 검증합니다.</p>
+  <h3>핵심 도구 — 리눅스 강화</h3>
+  <pre><code># 1. 자동 보안 업데이트 (Ubuntu/Debian)
+sudo apt install unattended-upgrades
+sudo dpkg-reconfigure -plow unattended-upgrades
+
+# 2. SSH 강화 — /etc/ssh/sshd_config
+PermitRootLogin no
+PasswordAuthentication no
+PubkeyAuthentication yes
+MaxAuthTries 3
+ClientAliveInterval 300
+AllowUsers deploy
+
+# 3. fail2ban — 무차별 대입 자동 차단
+sudo apt install fail2ban
+# /etc/fail2ban/jail.local 에 ssh, nginx-noscript 등 활성화
+
+# 4. UFW + 최소 포트 노출
+sudo ufw default deny incoming
+sudo ufw allow 443/tcp
+sudo ufw enable
+
+# 5. 감사 로그 + auditd
+sudo apt install auditd
+sudo auditctl -w /etc/passwd -p wa -k passwd-changes</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>🦠 예제 1 — 2017 WannaCry 웜</h4><p>NSA가 비축하다 유출된 EternalBlue 익스플로잇(SMBv1 CVE-2017-0144)을 사용한 자율 확산 랜섬웨어. 단 며칠 만에 150개국 30만 대 이상을 감염시켰고, 영국 NHS는 응급실이 마비됐습니다. 마이크로소프트는 사고 두 달 전 패치를 배포했지만, 미패치 시스템·EOL Windows XP가 광범위했죠. 핵심 교훈: 패치 관리는 보안의 "기본기"이지만 가장 자주 놓치는 영역입니다.</p></div>
+  <div class="info-card"><h4>🦠 예제 2 — 2024 CrowdStrike Falcon 사태</h4><p>7월 19일, CrowdStrike의 Falcon Sensor 채널 파일 업데이트가 Windows 커널을 충돌시켜 전 세계 약 850만 대 BSoD. 항공·은행·병원이 멈췄습니다. 직접 보안 침해는 아니지만, "보안 도구가 단일 실패점이 될 수 있다"는 경고였고, 이후 staged rollout·canary deployment·커널 의존 축소 논의가 가속화되었습니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① <strong>YARA 룰</strong>: 메모리·파일에서 멀웨어 패턴을 매칭하는 사실상의 표준. VT(VirusTotal) Retro Hunt와 결합해 과거 검체에 새 룰을 적용할 수 있습니다. ② <strong>Sigma 룰</strong>: SIEM 중립적 탐지 룰 언어. ATT&amp;CK 기반 커뮤니티 룰셋이 활발. ③ <strong>Sysmon + ELK</strong>: 가난한 SOC의 표준 스택. Sysinternals Sysmon이 풍부한 텔레메트리를, Elastic Stack이 검색·시각화를 담당. ④ <strong>Memory forensics</strong>: Volatility 3, Rekall로 메모리 덤프에서 프로세스·DLL·네트워크 연결·악성 코드를 추출.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① EDR 깔았다고 안심 — 룰 튜닝·alert 처리 없으면 노이즈만 쌓임. ② Antivirus를 끄고 "느려서"라고 변명 — 가장 빈번한 침해 경로. ③ root/Administrator로 일상 작업 — UAC·sudo는 이유가 있음. ④ "내부망이라 패치 안 해도 됨" — 침해는 외부에서만 오지 않음. ⑤ EDR 로그만 보고 SIEM에 안 보냄 — 다중 소스 상관관계가 핵심.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>현대 엔드포인트 보안의 핵심은 <strong>운영체제 그 자체</strong>에 내장된 보안 메커니즘입니다. macOS는 Apple Silicon의 Secure Enclave·Pointer Authentication·PAC를, Windows는 Hyper-V 기반 VBS·HVCI·Credential Guard·Kernel DMA Protection을, 리눅스는 KASLR·SMEP·SMAP·KPTI·BPF LSM을 활용합니다. 이런 하드웨어·OS 레벨 방어는 사용자 모드 EDR보다 훨씬 회피하기 어렵습니다.</p>
+  <p>특히 <strong>ROP/JOP/COP</strong> 같은 코드 재사용 공격에 대응하기 위한 CFI(Control Flow Integrity)와 ARMv8.3+ Pointer Authentication, Intel CET(Shadow Stack + IBT)는 메모리 손상 공격의 게임 체인저입니다. 2024년 Linux 6.6부터 x86 Shadow Stack이 일반 사용자도 활용 가능해졌고, Chrome·Firefox는 이미 기본 활성화입니다.</p>
+  <h3>수학적·정량적 기초</h3>
+  <div class="formula">$$\text{ASLR 엔트로피: } H \approx \log_2(2^{n} / \text{page size})$$
+  $$\text{MTTD} = \frac{\sum (\text{탐지시각} - \text{침해시각})}{\text{사건수}}, \quad \text{MTTR} = \frac{\sum (\text{복구시각} - \text{탐지시각})}{\text{사건수}}$$
+  $$\text{탐지 정확도: } F1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}$$</div>
+  <p>SOC의 핵심 KPI는 MTTD(평균 탐지 시간)와 MTTR(평균 대응 시간)입니다. Mandiant의 M-Trends 2024 보고서에 따르면 전 세계 평균 dwell time(침해부터 탐지까지)은 약 10일까지 줄어들었습니다(2014년 205일에서). 이 단축은 EDR·XDR·SOAR·CTI 자동화의 누적 결과이며, 동시에 공격자도 더 빨라져서 ransomware 사례에서는 침해부터 암호화까지 평균 5일 미만입니다.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>eBPF 기반 보안</strong>: Cilium Tetragon, Falco, Pixie 같은 도구가 커널 모듈 없이 syscall·네트워크·파일 이벤트를 실시간 가시화·시행. CrowdStrike·SentinelOne도 eBPF 전환 가속화. ② <strong>Confidential Computing</strong>: Intel TDX, AMD SEV-SNP, ARM CCA가 메모리·CPU 단위 격리 제공. 클라우드 워크로드의 데이터 처리 중 기밀성을 보장. ③ <strong>Post-Exploitation 탐지 강화</strong>: BloodHound, SharpHound로 Active Directory 공격경로 시각화 → 방어자가 동일 도구로 사전 점검. ④ <strong>Memory-safe 언어 채택</strong>: Microsoft·Google·Linux 커널이 Rust 도입 가속. 2024년 Linux 6.8에 Rust로 작성된 첫 드라이버 머지. CVE의 약 70%가 메모리 안전 결함이므로 근본적 영향.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>운영체제 이론</strong>: 권한 분리, 자원 격리, 가상화 보안</li>
+    <li><strong>컴파일러</strong>: stack canary, fortify source, CFI, sanitizer</li>
+    <li><strong>하드웨어 보안</strong>: TPM, Secure Enclave, TEE, side-channel(Spectre, Meltdown, Rowhammer)</li>
+    <li><strong>형식 검증</strong>: seL4 미세커널, CompCert, Rust borrow checker</li>
+    <li><strong>데이터 분석</strong>: SIEM·UEBA·머신러닝 기반 anomaly detection</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Anderson, <em>Security Engineering</em> (3rd ed., 무료 PDF)</li>
+    <li>📖 NIST SP 800-83 (멀웨어 사고), SP 800-190 (컨테이너)</li>
+    <li>📖 Sikorski &amp; Honig, <em>Practical Malware Analysis</em></li>
+    <li>📺 MITRE ATT&amp;CK Defender (MAD) 무료 트레이닝</li>
+    <li>🔬 실습: REMnux, FLARE VM, Atomic Red Team, Falco 워크샵</li>
+    <li>🔬 키워드: eBPF security, Confidential Computing, CET, Pointer Authentication, BPF LSM</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 가상머신에 Ubuntu를 설치한 뒤 ① auditd + Sysmon for Linux + Falco를 셋업하고, ② Atomic Red Team에서 T1059·T1003·T1055를 차례로 시뮬레이션해 어느 도구가 어떤 이벤트를 잡는지 매트릭스로 정리해보세요. 그 다음 빈 칸(탐지 공백)을 Sigma/Falco 룰로 메우면 SOC 운영의 핵심 사이클을 한 사이클로 체험할 수 있습니다.</div>
+</div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#475569","questions":[{"q":"안티바이러스가 진화한 차세대 솔루션은?","choices":["VPN","DNS","EDR","CSP"],"answer":2},{"q":"파일 암호화 후 몸값을 요구하는 멀웨어는?","choices":["웜","루트킷","트로이목마","랜섬웨어"],"answer":3},{"q":"필요한 만큼만 권한을 주는 원칙은?","choices":["최소권한","최대권한","공유권한","무권한"],"answer":0},{"q":"디스크에 흔적을 거의 안 남기는 기법은?","choices":["fileless","ECB","SQLi","CSRF"],"answer":0},{"q":"2017 WannaCry의 멀웨어 유형은?","choices":["트로이목마","웜","루트킷","스파이웨어"],"answer":1}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('sec3d-06');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('sec3d-06-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,7.5,9.5);camera.lookAt(0,0,0);
+  var ringDefs=[
+    {r:1.3,c:0xd6455b,t:'Ring 0 커널',y:0.45},
+    {r:2.7,c:0xe07a3f,t:'드라이버·서비스',y:0.3},
+    {r:4.2,c:0x5b6bd6,t:'Ring 3 사용자 앱',y:0.15}
+  ];
+  ringDefs.forEach(function(rd){
+    var m=new THREE.Mesh(new THREE.CylinderGeometry(rd.r,rd.r,rd.y*2,40),mat(rd.c,0.45));
+    m.position.y=rd.y;scene.add(m);
+    var L=lbl(rd.t,24,'#39415a',0.95);L.position.set(0,rd.y*2+0.5,-rd.r+0.4);scene.add(L);
+  });
+  var app=box(0.8,0.8,0.8,0x2f9e63,1);app.position.set(3.4,0.95,1.4);scene.add(app);
+  var appL=lbl('일반 앱',22,'#2f9e63',0.85);appL.position.set(3.4,1.9,1.4);scene.add(appL);
+  var mal=sph(0.34,0xd6455b);mal.position.set(6.5,0.95,3.2);scene.add(mal);
+  var malL=lbl('멀웨어',22,'#d6455b',0.9);malL.position.set(6.5,1.8,3.2);scene.add(malL);
+  var bridge=box(1.6,0.12,0.4,0xd6455b,0);bridge.position.set(2.0,0.6,0.8);bridge.rotation.y=0.4;scene.add(bridge);
+  var brL=lbl('취약점 (권한 상승 통로)',21,'#d6455b',0);brL.position.set(2.2,1.4,0.6);scene.add(brL);
+  var sandbox=box(1.4,1.4,1.4,0x5b6bd6,0);sandbox.position.copy(app.position);scene.add(sandbox);
+  var sbL=lbl('샌드박스 (최소권한 격리)',22,'#5b6bd6',0);sbL.position.set(3.4,2.6,1.4);scene.add(sbL);
+  var core=sph(0.5,0xffc83c,0.95);core.position.set(0,1.1,0);scene.add(core);
+  var coreL=lbl('시스템 핵심',22,'#b98a1a',0.9);coreL.position.set(0,2.0,0);scene.add(coreL);
+  var pulse=sph(0.2,0xd6455b);pulse.visible=false;scene.add(pulse);
+  var phases=[
+    {dur:3.5,cap:'OS는 권한의 동심원: 바깥(Ring 3)의 앱은 안쪽(커널)의 자원을 직접 만질 수 없습니다 — 시스템 콜이라는 정해진 문으로만.',
+     enter:function(){mal.position.set(6.5,0.95,3.2);app.material.color.set(0x2f9e63);core.material.color.set(0xffc83c);bridge.material.opacity=0;brL.material.opacity=0;sandbox.material.opacity=0;sbL.material.opacity=0;pulse.visible=false;},
+     update:function(u){}},
+    {dur:3.5,cap:'감염: 멀웨어가 첨부파일·다운로드로 일반 앱에 올라탑니다. 아직은 Ring 3 — 피해는 그 사용자의 권한 범위까지.',
+     update:function(u){mal.position.lerpVectors(V(6.5,0.95,3.2),V(3.4,1.6,1.4),ez(u));malL.position.set(mal.position.x,mal.position.y+0.8,mal.position.z);if(u>0.9)app.material.color.set(0xd6455b);}},
+    {dur:4.5,cap:'권한 상승(Privilege Escalation): 커널 취약점(빨간 다리)을 타고 안쪽 링으로 — Ring 0을 잡으면 백신도 속일 수 있는 루트킷이 됩니다.',
+     enter:function(){bridge.material.opacity=0.9;brL.material.opacity=1;pulse.visible=true;},
+     update:function(u){
+       pulse.position.lerpVectors(V(3.4,1.2,1.4),V(0,1.1,0),ez(u));
+       if(u>0.92)core.material.color.set(0xd6455b);
+     }},
+    {dur:4.5,cap:'방어 — 최소권한+샌드박스: 앱을 격리 캡슐에 가두면 같은 멀웨어가 들어와도 다리에 닿을 수 없습니다. 침해를 "전제"하고 피해 반경을 줄이는 설계.',
+     enter:function(){core.material.color.set(0xffc83c);app.material.color.set(0x2f9e63);bridge.material.opacity=0.15;brL.material.opacity=0.3;sandbox.material.opacity=0.35;sbL.material.opacity=1;mal.position.set(3.4,1.6,1.4);},
+     update:function(u){
+       var k=u*4%1;
+       pulse.position.set(3.4+Math.sin(k*6.28)*0.5,1.2,1.4+Math.cos(k*6.28)*0.5);
+       sandbox.material.opacity=0.3+0.15*Math.abs(Math.sin(u*8));
+     }},
+    {dur:3,cap:'컨테이너·VM·브라우저 탭이 모두 같은 원리입니다: 권한의 동심원 + 격리 — 뚫려도 한 칸만 잃도록.',
+     update:function(){}}
+  ];
+  function always(t){var a=t*0.12;camera.position.set(Math.sin(a)*4,8,9.5);camera.lookAt(0,0,0);}
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

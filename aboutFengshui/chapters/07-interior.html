@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7. 인테리어·현대 풍수 — aboutFengshui</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🧭 표지</a></li>
+    <li><a href="01-what-is.html">1. 풍수란 무엇인가</a></li>
+    <li><a href="02-yinyang-five.html">2. 음양오행과 기</a></li>
+    <li><a href="03-form-school.html">3. 형세론 — 산과 물</a></li>
+    <li><a href="04-compass-school.html">4. 이기론 — 나경과 좌향</a></li>
+    <li><a href="05-yangtaek.html">5. 양택 — 집과 공간</a></li>
+    <li><a href="06-eumtaek.html">6. 음택 — 묘지와 명당</a></li>
+    <li><a href="07-interior.html">7. 인테리어·현대 풍수</a></li>
+    <li><a href="08-korea.html">8. 비보풍수와 한국 풍수</a></li>
+    <li><a href="09-science.html">9. 풍수의 과학·비판</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>인테리어·현대 풍수</em></h1>
+  <p class="authors">Chapter 7 — Interior &amp; Modern Feng Shui</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 실내 풍수 — 등 뒤에 벽(현무), 문이 보이는 자리</span>
+
+<h2>인테리어·현대 풍수 개요</h2>
+<p>풍수는 본래 산과 물, 도읍과 집터를 보는 학문이지만, 오늘날 많은 사람이 처음 풍수를 만나는 곳은 아파트 거실과 사무실 책상이다. 이 챕터는 도시의 좁은 실내 공간에서 기(氣)의 흐름을 다스리는 방법, 곧 부족한 기운을 보태는 <strong>비보(裨補)</strong>와 나쁜 기운을 눌러 막는 <strong>압승(壓勝)</strong>의 원리를 다룬다. 또한 동아시아 정통 풍수와, 서양에서 대중화된 풍수가 어떻게 다른지, 그리고 풍수를 '인테리어 휴리스틱'으로 합리적으로 활용하는 길을 살핀다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>현대 풍수는 좌향과 산세를 따지던 전통 원리를 실내 규모로 옮겨, 책상·침대의 배치, 색·식물·조명·정리정돈으로 공간의 기를 조절하려는 실천이다. 막힌 곳은 비보로 채우고 거슬리는 곳은 압승으로 막는다는 두 축이 기본이며, 서양의 블랙햇(BTB)·바구아 맵 방식은 정통 나경 풍수와 출발점이 다르다는 점을 이해하는 것이 핵심이다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>현대 풍수란 산과 강 대신 방과 가구를 보며, 부족한 기운은 채우고(비보) 거슬리는 기운은 막아(압승) 공간을 편안하게 다스리려는 실내 풍수다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>오늘날 우리는 하루의 대부분을 실내에서 보낸다. 잠자는 침실, 일하는 책상, 머무는 거실이 곧 우리의 '터'인 셈이다. 풍수는 이런 공간이 사람의 기분과 집중, 휴식에 영향을 준다고 본다. 등 뒤가 트인 자리에 앉으면 왠지 불안하고, 어수선한 방에서는 마음이 가라앉지 않는 경험은 누구에게나 있다. 현대 풍수는 이런 자연스러운 감각을 정리해 배치의 원칙으로 삼는다. 검증의 문제는 뒤에서 다루더라도, 공간을 의식적으로 돌보는 습관 자체는 일상에 도움이 된다고 여겨진다.</p>
+
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>비보(裨補)</strong>: 부족하거나 허한 기를 나무·탑·연못·그림 등으로 보태어 채우는 것</li>
+<li><strong>압승(壓勝)</strong>: 나쁘거나 거슬리는 기운을 무거운 것·가림막 등으로 눌러 막는 것</li>
+<li><strong>현무(玄武)</strong>: 자리의 뒤쪽을 받쳐 주는 든든한 배경. 책상이라면 등 뒤의 벽에 해당한다</li>
+<li><strong>기(氣)의 흐름</strong>: 공간을 따라 도는 기운. 문에서 들어와 막힘 없이 부드럽게 돌아야 좋다고 본다</li>
+<li><strong>바구아(八卦) 맵</strong>: 공간을 여덟 방위와 영역(재물·건강·관계 등)으로 나눠 보는 서양식 풍수 도구</li>
+</ul></div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>실내 풍수는 마치 물길을 다듬는 일과 같다. 기를 시냇물이라 생각하면, 비보는 물이 얕은 곳에 돌을 쌓아 못을 만드는 일이고, 압승은 거센 물살 앞에 둑을 세우는 일이다. 책상을 등 뒤에 벽을 두고 놓는 것은 산을 등진 명당의 축소판이며, 입구가 한눈에 보이는 자리는 누가 들어와도 놀라지 않는 안정감을 준다. 식물과 조명은 막힌 구석에 생기를 더하는 작은 비보의 도구다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 거창하게 시작하지 말고, 가장 오래 앉는 자리 하나만 점검해 보자. 등 뒤에 벽이 있는가, 문이 보이는가, 책상이 정리돼 있는가 — 이 세 가지만 맞춰도 현대 풍수의 절반은 실천한 셈이다.</div>
+
+<h3>한 페이지 요약</h3><ul>
+<li>현대 풍수는 전통 풍수의 원리를 실내 규모로 옮긴 실천이다.</li>
+<li>비보는 채우기, 압승은 막기 — 두 동작이 기본 축이다.</li>
+<li>책상·침대는 등 뒤에 벽(현무)을 두고 입구가 보이는 자리가 좋다고 본다.</li>
+<li>색·식물·조명·정리정돈으로 공간의 기를 조절한다.</li>
+<li>서양식 바구아 맵과 동아시아 정통 풍수는 출발점이 다르다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>실내 풍수의 두 기둥은 비보와 압승이다. 두 개념은 본래 마을과 도읍 규모에서 쓰이던 것으로, 허한 방위에 비보숲을 심거나 흉한 산세를 가리는 탑을 세우던 전통이 그 뿌리다. 한국의 여러 옛 마을에서 마을 입구에 숲(이른바 비보림)을 두어 허한 곳을 채운 사례가 전한다. 현대 풍수는 이 원리를 실내로 가져와, 빛이 들지 않는 구석이나 기운이 빠진다고 여겨지는 자리를 식물·거울·조명으로 보완하고, 날카로운 모서리나 거슬리는 시선은 가림막·커튼으로 누른다.</p>
+<p>배치의 핵심 개념으로는 이른바 '명당 자리(command position)'가 자주 거론된다. 방의 주된 자리인 책상이나 침대를, 문을 직접 마주하지 않으면서도 문이 보이는 위치에, 등 뒤에 단단한 벽을 두고 놓는 배치를 말한다. 등 뒤의 벽은 자리를 받쳐 주는 현무에 해당하고, 문이 보이는 것은 들어오는 기와 사람을 미리 살필 수 있다는 안정감을 준다. 반대로 문을 등지거나 문과 일직선으로 마주 앉으면, 기가 너무 직접적으로 들이친다고 보아 꺼린다. 색·식물·조명·정리정돈은 이런 배치 위에 기운의 질을 더하는 요소로 다룬다.</p>
+
+<h3>핵심 메커니즘/교리</h3>
+<div class="info-card"><h4>📐 비보와 압승의 작동</h4><p>비보는 '더하기'의 논리다. 허하다고 판단된 방위나 어두운 구석에 살아 있는 식물, 밝은 조명, 흐르는 물(작은 분수)이나 그림을 두어 기운을 채운다. 압승은 '빼기·누르기'의 논리다. 화장실처럼 기가 빠진다고 여겨지는 공간은 문을 닫고, 침대 머리맡으로 향하는 날카로운 모서리(이른바 '독화살 살기')는 가구나 화분으로 가린다. 두 동작 모두 공간을 막힘 없이, 그러나 지나치게 거세지 않게 다듬는다는 같은 목표를 향한다.</p></div>
+
+<h3>대표 사례·경전</h3>
+<div class="info-card"><h4>📐 사례 1 — 사무실 책상</h4><p>책상은 등 뒤에 벽을 두어 현무의 안정감을 확보하고, 출입문이 시야에 들어오되 정면으로 마주하지 않게 비스듬히 놓는 것이 정석으로 여겨진다. 등 뒤가 창이나 통로로 트여 있으면 무방비하다고 보아 책장이나 파티션으로 보강(비보)한다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 침실</h4><p>침대 머리맡은 벽에 붙이고, 누운 채로 문이 보이되 발이 문을 정면으로 향하지 않는 배치를 좋게 본다. 머리 위로 무거운 선반이나 들보가 지나가면 압박감을 준다고 보아 피하거나 가린다. 어두운 침실은 은은한 조명으로 기를 보태는 비보로 다스린다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>20세기 후반 풍수가 서양으로 건너가며 크게 대중화되었다. 그 중심에는 토마스 린유 등이 전한 블랙햇(Black Hat, BTB) 종파가 있다. 이 흐름은 전통 풍수의 나경(나침반)과 실제 방위를 따지는 대신, 집의 현관문을 기준으로 공간을 여덟 영역으로 나누는 <strong>바구아 맵</strong>을 평면도에 겹쳐 읽는다. 재물·관계·건강 같은 삶의 영역을 방의 구획에 대응시키고, 해당 구역을 색이나 사물로 활성화한다는 점에서 간편하지만, 실제 자북(磁北)과 좌향을 정밀하게 측정하는 동아시아 정통 풍수와는 방법론이 근본적으로 다르다.</p>
+
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 서양에서 유행하는 바구아 맵 방식과 정통 나경 풍수를 같은 것으로 여기기 쉽다. 그러나 전자는 문 위치만으로 영역을 배정하고 후자는 실제 방위·좌향·연운을 측정한다. 어느 쪽이 '진짜'냐를 따지기보다, 서로 전제가 다른 체계임을 아는 것이 정확한 이해다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>현대 인테리어 풍수를 학술적으로 보면, 적어도 세 층위가 뒤섞여 있다. 첫째는 동아시아 정통 풍수의 이기론·형세론에서 비롯한 좌향·방위 체계, 둘째는 서양에서 재구성된 바구아·블랙햇식 상징 배치, 셋째는 인지·환경심리학으로 설명 가능한 공간 휴리스틱이다. 등 뒤에 벽을 둔 '명당 자리' 선호는 셋째 층위와 잘 맞아떨어진다. 진화심리학에서 말하는 조망-은신(prospect-refuge) 가설은, 사람이 시야가 트이면서도 등이 보호되는 공간에서 안정감을 느낀다고 설명하는데, 이는 현무를 등진 배치 선호와 놀랄 만큼 닮았다. 정리정돈·자연광·식물이 주는 효과 또한 주의 회복 이론이나 바이오필리아 가설로 일부 설명된다. 다만 이런 환경심리학적 효과와, 특정 방위가 재물운을 좌우한다는 전통 주장 사이에는 검증 가능성의 차이가 크다는 점을 구분해야 한다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>학술적으로 풍수의 '효과'를 다룰 때는 메커니즘을 분리해 보는 접근이 우세하다. 무질서한 공간이 인지 부하와 스트레스를 높인다거나, 자연광·녹색 식물이 기분과 집중을 개선한다는 연구는 비교적 견고하지만, 이는 풍수 고유의 '기' 개념을 입증하는 것이 아니라 일반적 환경심리 효과로 해석된다. 한편 전통 방위·연운에 따른 길흉 주장에 대해서는 엄밀한 대조 실험에서 일관된 효과가 확인되지 않았다고 보는 것이 일반적이며, 이를 확증편향과 플라세보로 설명하려는 시각도 있다. 그럼에도 도시계획·건축 분야에서는 풍수를 문화유산·장소성·사용자 만족의 틀로 재해석해 활용하려는 시도가 이어지고 있어, '검증된 과학'과 '의미 있는 문화적 휴리스틱' 사이의 위치 설정이 핵심 쟁점으로 남는다.</p>
+
+<h3>관련 분야</h3><ul>
+<li><strong>환경심리학·건축</strong>: 조망-은신, 주의 회복, 바이오필리아 등으로 공간 선호를 설명</li>
+<li><strong>문화인류학·민속학</strong>: 비보림·압승 의례 등 지역 풍수 전통의 사회적 맥락 연구</li>
+<li><strong>인지과학</strong>: 휴리스틱과 확증편향이 길흉 판단에 미치는 영향</li>
+</ul>
+
+<h3>더 읽을거리</h3><ul>
+<li>"The Experience of Landscape" — Jay Appleton</li>
+<li>"The Living Earth Manual of Feng-Shui" — Stephen Skinner</li>
+<li>"Interior Design with Feng Shui" — Sarah Rossbach</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 자신이 가장 오래 머무는 방 하나를 골라, 그 안의 배치 선택 다섯 가지를 (1) 정통 풍수 원리, (2) 서양 바구아식 해석, (3) 환경심리학적 설명 세 갈래로 각각 분류해 보라. 같은 배치가 세 층위에서 어떻게 다르게 정당화되는지, 그리고 어느 설명이 검증 가능한지를 한 단락으로 정리하면, 현대 풍수의 다층적 성격을 스스로 꿰뚫어 본 것이다.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#14b8a6","questions":[{"q":"부족한 기운을 보태어 채우는 것은?","choices":["압승","비보","살기","좌향"],"answer":1},{"q":"책상 등 뒤에 두면 좋은 것은?","choices":["창문","통로","거울","벽"],"answer":3},{"q":"나쁜 기운을 눌러 막는 것은?","choices":["압승","비보","득수","발복"],"answer":0},{"q":"바구아 맵을 쓰는 서양 풍수 종파는?","choices":["팔택파","현공파","블랙햇","형세파"],"answer":2},{"q":"등 뒤 보호·트인 시야를 설명하는 가설은?","choices":["조망-은신","바이오필리아","바넘효과","주의 회복"],"answer":0}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,2.6,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0x14b8a6;const room=new THREE.Mesh(new THREE.BoxGeometry(4,2.2,4),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.35}));s.add(room);const wall=new THREE.Mesh(new THREE.BoxGeometry(3.8,2,0.1),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.5}));wall.position.set(0,0,-1.9);s.add(wall);const desk=new THREE.Mesh(new THREE.BoxGeometry(1.4,0.5,0.7),new THREE.MeshBasicMaterial({color:0xffe08a}));desk.position.set(0,-0.6,-1.2);s.add(desk);const chair=new THREE.Mesh(new THREE.SphereGeometry(0.25,12,12),new THREE.MeshBasicMaterial({color:0xef4444}));chair.position.set(0,-0.5,-0.5);s.add(chair);const door=new THREE.Mesh(new THREE.BoxGeometry(0.8,1.4,0.08),new THREE.MeshBasicMaterial({color:0x3b82f6,transparent:true,opacity:0.6}));door.position.set(1.4,-0.3,1.95);s.add(door);[[-1.5,-0.6,1.3],[1.5,-0.6,-1.3]].forEach(p=>{const plant=new THREE.Mesh(new THREE.ConeGeometry(0.25,0.6,8),new THREE.MeshBasicMaterial({color:0x22c55e}));plant.position.set(p[0],p[1],p[2]);s.add(plant);});
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.0035;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -2,12 +2,14 @@
 <title>9. 크립토와 핀테크 — aboutEconomics</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">📊 표지</a></li><li><a href="01-micro.html">1. 미시경제학</a></li><li><a href="02-macro.html">2. 거시경제학</a></li><li><a href="03-finance.html">3. 금융과 투자</a></li><li><a href="04-trade.html">4. 국제무역</a></li><li><a href="05-behavioral.html">5. 행동경제학</a></li><li><a href="06-development.html">6. 경제발전</a></li><li><a href="07-labor.html">7. 노동경제학</a></li><li><a href="08-public-finance.html">8. 재정학</a></li><li><a href="09-crypto-fintech.html">9. 크립토/핀테크</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>크립토와 핀테크</em></h1><p class="authors">Chapter 9 — Cryptocurrency, Blockchain & FinTech</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 해시로 연결되어 순차적으로 쌓이는 블록체인 분산원장의 블록 사슬</span>
 <h2>크립토와 핀테크 개요</h2><p>Cryptocurrency, Blockchain & FinTech의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Cryptocurrency, Blockchain & FinTech</p></div>
 
@@ -73,7 +75,7 @@
   <h3>전문가 레벨</h3>
   <p>크립토 자산 가격결정은 전통 자산가격모형의 확장으로 다뤄집니다. Cong-Li-Wang의 토큰가격 모형은 네트워크 사용가치와 투기 프리미엄을 분리하며, Pagnotta의 PoW 균형은 채굴 비용과 토큰 가격, 네트워크 보안성의 동시 결정을 분석합니다. 디파이의 시장미시구조는 AMM의 손실/리밸런싱(LVR) 분석(Milionis-Moallemi-Roughgarden)과 MEV(Maximal Extractable Value) 추출 분석으로 발전했습니다. 스테이블코인 안정성은 디스컨트 동학과 자기실현적 디페그(Self-fulfilling depeg) 모형으로 분석되며, Eichengreen의 통화경쟁 관점에서 다중 통화 균형이 가능합니다. CBDC의 거시효과는 Brunnermeier-Niepelt의 등가 정리와 Andolfatto의 화폐정책 전달경로 분석이 표준이며, 은행 디스인터미디에이션 위험과 결제 효율성의 트레이드오프가 핵심입니다. 또한 Crypto Asset Pricing Factors 연구(Liu-Tsyvinski-Wu)는 시장·규모·모멘텀이 크립토 횡단면 수익률을 설명함을 보입니다.</p>
   <h3>수리 모델</h3>
-  <div class="formula">PoW 균형: c·H = R·p, B = c·H/(R·p)<br>LVR: rate = ½·σ²·V<br>스테이블 디페그 RBC: dP = κ(P*−P)dt + σdW − λ·1{run}<br>크립토 3요인: R_i − Rf = α + β_M·MKT + β_S·SIZE + β_M·MOM</div>
+  <div class="formula">PoW 균형: c·H = R·p, B = c·H/(R·p)<br>LVR: rate = ½·σ²·V<br>스테이블 디페그 RBC: dP = κ(P*−P)dt + σdW − λ·1{run}<br>크립토 3요인: R_i − Rf = α + β_M·MKT + β_S·SIZE + β_MOM·MOM</div>
   <h3>최신 연구</h3>
   <p>MEV의 정량 측정과 분배 분석(Daian 등), 영지식 증명 기반 ZK-Rollup의 확장성·프라이버시 트레이드오프, 그리고 토큰화된 실물자산(RWA)의 자본시장 효과가 활발히 연구됩니다. CBDC의 도매·소매 설계, 외환·결제·금융안정 효과의 정량 추정(BIS, IMF), 한국 가상자산 시장의 김치프리미엄 차익거래 분석과 자본통제의 역할도 주요 주제입니다. AI와 블록체인의 결합으로 검증 가능한 ML 추론, 분산형 데이터·연산 시장의 메커니즘 디자인도 새로운 연구 영역으로 부상하고 있습니다.</p>
   <h3>관련 분야</h3>
@@ -90,5 +92,23 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 한국 원화 거래소와 해외 거래소 간 김치프리미엄 시계열을 분석해 자본통제·환율·차익거래 마찰 변수와의 관계를 정량 추정해 보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0891b2","questions":[{"q":"달러 등에 가치 연동된 암호자산은?","choices":["비트코인","스테이블코인","토큰증권","디파이"],"answer":1},{"q":"중앙은행이 발행하는 디지털 화폐는?","choices":["디파이","스테이블코인","블록체인","CBDC"],"answer":3},{"q":"비트코인 백서의 분량은?","choices":["9페이지","50페이지","100페이지","300페이지"],"answer":0},{"q":"Terra/Luna 붕괴로 증발한 금액은?","choices":["40억 달러","100억 달러","400억 달러","1조 달러"],"answer":2},{"q":"유니스왑 AMM의 핵심 공식은?","choices":["x+y=k","x·y=k","x−y=k","x/y=k"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<6;i++){const h=1+Math.random()*2.5;const m=new THREE.Mesh(new THREE.BoxGeometry(0.5,h,0.5),new THREE.MeshBasicMaterial({color:[0x0891b2,0x06b6d4,0x22d3ee][i%3]}));m.position.set(i*1.5-3.75,h/2,0);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,2,11);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const blocks=[];const NB=7;for(let i=0;i<NB;i++){const blk=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.8,0.8),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.13+i*0.02,0.7,0.55),wireframe:true}));blk.position.set(-4.2+i*1.4,(i%2===0?0.4:-0.4),0);s.add(blk);blocks.push(blk);if(i>0){const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints([blocks[i-1].position.clone(),blk.position.clone()]),new THREE.LineBasicMaterial({color:0x10b981}));s.add(ln);}}
+  s.userData.blocks=blocks;
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(0.6,0.05,8,32),new THREE.MeshBasicMaterial({color:0xfbbf24}));s.add(ring);s.userData.ring=ring;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const active=Math.floor(T*0.7)%s.userData.blocks.length;s.userData.blocks.forEach((b,i)=>{b.rotation.x+=0.01;b.rotation.y+=0.015;const sc=i===active?1.35+0.1*Math.sin(T*5):1;b.scale.setScalar(sc);});const ab=s.userData.blocks[active];s.userData.ring.position.copy(ab.position);s.userData.ring.rotation.z+=0.06;s.rotation.y=0.2*Math.sin(T*0.3);r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

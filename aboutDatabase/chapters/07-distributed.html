@@ -8,12 +8,14 @@
 <script defer src="../toggle.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">📖 표지 · 초록</a></li>
@@ -70,7 +72,7 @@
 
 <div class="paper-version">
 <h4>학술 설명</h4>
-<p><strong>Brewer의 CAP 정리(2000):</strong> 분산 시스템은 C, A, P 중 최대 2개만 동시에 만족할 수 없다.</p>
+<p><strong>Brewer의 CAP 정리(2000):</strong> 분산 시스템은 C, A, P 중 최대 2개만 동시에 만족할 수 있다.</p>
 <p><strong>Gilbert & Lynch의 증명(2002):</strong> 네트워크 분할 상황에서 일관성과 가용성을 동시에 보장 불가능함을 증명.</p>
 <p><strong>실무 분류:</strong></p>
 <ul>
@@ -427,6 +429,11 @@ SELECT * FROM users WHERE user_id = 12345;</code></pre>
   </div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d6efd","questions":[{"q":"서버를 추가해 확장하는 방식은?","choices":["수직 확장","수평 확장","단일 확장","캐시 확장"],"answer":1},{"q":"데이터를 규칙대로 여러 서버에 나누는 것은?","choices":["복제","캐싱","샤딩","백업"],"answer":2},{"q":"같은 데이터를 여러 서버에 복사하는 것은?","choices":["복제","샤딩","정규화","인덱싱"],"answer":0},{"q":"CAP 중 동시에 보장 가능한 최대 개수는?","choices":["1개","3개","4개","2개"],"answer":3},{"q":"일부 샤드에 데이터가 몰리는 문제는?","choices":["데드락","핫스팟","팬텀 리드","오버플로"],"answer":1}]};</script>
 </main>
 </div>
 </body>

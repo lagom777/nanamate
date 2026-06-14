@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 보라 그림자를 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 발달 — 나이에 따라 자라는 감정</span>
 
 <h2>발달과 학습 개요</h2>
 <p>공포는 생애 주기마다 모습을 바꾼다. 영아의 분리불안, 유아의 어둠 공포, 학동의 동물 공포, 청소년의 사회 공포 — 각 발달 단계마다 다른 회로가 우세해진다. 어떤 공포는 자라며 사라지지만, 어떤 공포는 어른의 불안 장애로 이어진다.</p>
@@ -56,7 +58,7 @@
 
 <div class="difficulty-content" data-level="medium">
   <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3><p>발달 정서신경과학은 공포 회로의 성숙 곡선을 추적한다. 편도체는 출생 직후부터 작동하지만 vmPFC의 억제 회로는 청소년기까지 미성숙하다. 그래서 어린 아이는 공포 학습은 빠르지만 멸절은 느리다 — 한 번 무서워한 것을 잘 잊지 못한다. 청소년기는 더 극적이다. 편도체-PFC 연결의 불균형 시기로, 편도체는 성인 수준으로 활성화되지만 PFC는 아직 발달 중이라 충동적 위험 추구와 강한 사회 공포가 공존한다. Pat Casey와 BJ Casey의 fMRI 연구는 이 시기를 "편도체-PFC 비대칭의 창"이라 부른다. 또한 부모-자녀 공포 학습 전이는 사회적 참조(social referencing)를 통해 일어난다 — 아이는 낯선 자극을 만나면 부모 얼굴을 보고 두려움을 모방한다. Bandura의 대리 공포 학습 실험은 한 번 본 부모의 공포 표정만으로도 아이가 그 자극을 학습함을 보여준다.</p>
+  <h3>이론 깊이 들어가기</h3><p>발달 정서신경과학은 공포 회로의 성숙 곡선을 추적한다. 편도체는 출생 직후부터 작동하지만 vmPFC의 억제 회로는 청소년기까지 미성숙하다. 그래서 어린 아이는 공포 학습은 빠르지만 멸절은 느리다 — 한 번 무서워한 것을 잘 잊지 못한다. 청소년기는 더 극적이다. 편도체-PFC 연결의 불균형 시기로, 편도체는 성인 수준으로 활성화되지만 PFC는 아직 발달 중이라 충동적 위험 추구와 강한 사회 공포가 공존한다. BJ Casey의 fMRI 연구는 이 시기를 "편도체-PFC 비대칭의 창"이라 부른다. 또한 부모-자녀 공포 학습 전이는 사회적 참조(social referencing)를 통해 일어난다 — 아이는 낯선 자극을 만나면 부모 얼굴을 보고 두려움을 모방한다. Bandura의 대리 공포 학습 실험은 한 번 본 부모의 공포 표정만으로도 아이가 그 자극을 학습함을 보여준다.</p>
   <h3>핵심 메커니즘</h3><div class="info-card"><h4>📐 발달적 공포 곡선</h4><p>편도체 성숙 = 빠른 곡선(출생~5세). vmPFC 성숙 = 느린 곡선(~25세). 두 곡선의 격차가 청소년기 정서 불안정의 신경 기반이다. 따라서 청소년기 공포·불안은 약함이 아니라 발달 단계 특성이다.</p></div>
   <h3>대표 예제</h3>
   <div class="info-card"><h4>📐 예제 1</h4><p>학교폭력을 경험한 청소년은 단기 사회 공포뿐 아니라 PFC 발달기에 외상이 가해진 탓에 성인기 사회불안장애 위험이 2~3배 높다 — 발달적 timing effect다.</p></div>
@@ -74,5 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 본인 어린 시절(0~12세) 공포 3가지를 시간순으로 적고, 각 공포가 현재 자신의 어떤 패턴(회피·과경계·완벽주의 등)으로 잔존하는지 1페이지로 분석해보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#8b5cf6","questions":[{"q":"낯가림이 출현하는 시기는?","choices":["8개월경","3세","7세","12세"],"answer":0},{"q":"어둠 공포가 정점을 찍는 나이는?","choices":["0~1세","3~5세","10대","성인"],"answer":1},{"q":"사회 공포가 출현하는 시기는?","choices":["영아기","노년기","청소년기","출생직후"],"answer":2},{"q":"vmPFC 억제 회로가 성숙하는 나이는?","choices":["5세","10세","60세","25세경"],"answer":3},{"q":"아이가 부모 표정 보고 공포 배우는 것은?","choices":["본능","사회적 참조","직접 조건화","망각"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0x8b5cf6;const parts=[];for(let i=0;i<30;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0x8b5cf6;const line=new THREE.Mesh(new THREE.BoxGeometry(7.5,0.05,0.05),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.4}));line.position.y=-1.3;s.add(line);const st=[];for(let i=0;i<5;i++){const x=(i-2)*1.6;const rad=0.25+i*0.22;const m=new THREE.Mesh(new THREE.SphereGeometry(rad,18,18),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.6+i*0.08}));m.position.set(x,-1.3+rad,0);s.add(m);st.push(m);}const arrow=new THREE.Mesh(new THREE.ConeGeometry(0.18,0.45,12),new THREE.MeshBasicMaterial({color:0xffe08a}));arrow.rotation.z=-Math.PI/2;arrow.position.set(4,-1.3,0);s.add(arrow);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;st.forEach((m,i)=>m.position.y=-1.3+m.geometry.parameters.radius+Math.sin(T*1.5+i)*0.08);s.rotation.y+=0.0;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

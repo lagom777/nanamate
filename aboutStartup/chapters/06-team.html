@@ -2,16 +2,18 @@
 <title>6. 팀 빌딩 — aboutStartup</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">🚀 표지</a></li><li><a href="chapters/01-ideation.html">1. 아이디어 발굴</a></li><li><a href="chapters/02-validation.html">2. 시장 검증</a></li><li><a href="chapters/03-business-model.html">3. 비즈니스 모델</a></li><li><a href="chapters/04-funding.html">4. 투자와 펀딩</a></li><li><a href="chapters/05-product.html">5. 제품 개발</a></li><li><a href="chapters/06-team.html">6. 팀 빌딩</a></li><li><a href="chapters/07-growth.html">7. 성장 전략</a></li><li><a href="chapters/08-legal.html">8. 법인 설립/법률</a></li><li><a href="chapters/09-exit.html">9. 엑싯과 IPO</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🚀 표지</a></li><li><a href="01-ideation.html">1. 아이디어 발굴</a></li><li><a href="02-validation.html">2. 시장 검증</a></li><li><a href="03-business-model.html">3. 비즈니스 모델</a></li><li><a href="04-funding.html">4. 투자와 펀딩</a></li><li><a href="05-product.html">5. 제품 개발</a></li><li><a href="06-team.html">6. 팀 빌딩</a></li><li><a href="07-growth.html">7. 성장 전략</a></li><li><a href="08-legal.html">8. 법인 설립/법률</a></li><li><a href="09-exit.html">9. 엑싯과 IPO</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>팀 빌딩</em></h1><p class="authors">Chapter 6 — Team Building & Culture</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 창업자를 중심으로 팀원이 선으로 연결된 팀 네트워크</span>
 <h2>팀 빌딩</h2><p>Team Building & Culture의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Team Building & Culture</p></div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -44,5 +46,21 @@
   <h3>추가 학습 자료</h3><ul><li>"High Output Management" — Andy Grove</li><li>"The Hard Thing About Hard Things" — Ben Horowitz</li><li>Netflix Culture Deck, Stripe Press 시리즈</li></ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 본인 회사의 "이런 사람과는 일하지 않는다" 5가지를 정의하고, 다음 인터뷰에서 그 신호를 정량 평가할 수 있는 항목으로 설계하세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f97316","questions":[{"q":"스톡옵션 vesting 시장 표준은?","choices":["4년·1년 cliff","1년·없음","2년·2년 cliff","10년·5년"],"answer":0},{"q":"채용의 1번 책임자는?","choices":["인사팀","CEO","헤드헌터","CTO"],"answer":1},{"q":"문화의 정의는?","choices":["벽에 붙인 글귀","복지 제도","행동의 기본값","사무실 분위기"],"answer":2},{"q":"구조화 인터뷰의 장점은?","choices":["비용 절감","채용 속도 향상","지원자 증가","신뢰도 2배 이상"],"answer":3},{"q":"콘웨이 법칙: SW가 닮는 것은?","choices":["조직 구조","시장 구조","고객 구조","자본 구조"],"answer":0}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const founder=new THREE.Mesh(new THREE.IcosahedronGeometry(0.55,1),new THREE.MeshBasicMaterial({color:0xffaa33}));s.add(founder);const K=7;const members=[];for(let i=0;i<K;i++){const ph=i/K*Math.PI*2;const el=(i%2?0.6:-0.6);const rad=2.1;const pos=new THREE.Vector3(Math.cos(ph)*rad,el*1.2,Math.sin(ph)*rad);const m=new THREE.Mesh(new THREE.SphereGeometry(0.32,16,16),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.55+i*0.05,0.6,0.6)}));m.position.copy(pos);s.add(m);const geo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),pos]);const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:0x88aacc}));s.add(line);members.push({m,base:pos.clone(),ph});}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;members.forEach(o=>{const k=1+Math.sin(T*1.2+o.ph)*0.08;o.m.position.copy(o.base).multiplyScalar(k);o.m.rotation.y+=0.02;});founder.rotation.y+=0.012;founder.scale.setScalar(1+Math.sin(T*1.5)*0.06);s.rotation.y+=0.005;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -102,12 +102,14 @@
 </style>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">📖 표지 · 초록</a></li>
@@ -165,6 +167,14 @@ SQL은 1974년 Donald Chamberlin과 Raymond Boyce가 IBM에서 SEQUEL(Structured
 </ul>
 </div>
 </section>
+
+<!-- 3D 학습 시각화: SQL 논리적 실행 순서 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · SQL: 행이 6개의 게이트를 통과한다</div>
+  <div id="db3d-02" style="width:100%;height:430px;"></div>
+  <div id="db3d-02-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">FROM부터 ORDER BY까지, 행이 걸러지고 묶이고 정렬되는 과정.</div>
+</div>
+
 
 <section id="section-2">
 <h2>2.2 데이터 정의(DDL)</h2>
@@ -719,7 +729,156 @@ CROSS  JOIN LATERAL (
   </div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d6efd","questions":[{"q":"데이터를 조회하는 SQL 명령은?","choices":["INSERT","DELETE","SELECT","DROP"],"answer":2},{"q":"CREATE, ALTER, DROP이 속한 언어는?","choices":["DDL","DML","DCL","TCL"],"answer":0},{"q":"행을 필터링하는 조건절은?","choices":["ORDER BY","GROUP BY","HAVING","WHERE"],"answer":3},{"q":"SELECT 문 실행 시 가장 먼저 처리되는 절은?","choices":["SELECT","FROM","WHERE","ORDER BY"],"answer":1},{"q":"GRANT, REVOKE가 속한 언어는?","choices":["DDL","DML","DCL","CRUD"],"answer":2}]};</script>
 </main>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('db3d-02');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('db3d-02-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,1.6,14);camera.lookAt(0,0.2,0);
+  var qL=lbl('SELECT dept, AVG(sal) FROM emp WHERE sal>300 GROUP BY dept HAVING AVG>400 ORDER BY AVG',23,'#39415a',1.0);
+  qL.position.set(0,4.7,0);scene.add(qL);
+  var stages=['FROM','WHERE','GROUP BY','HAVING','SELECT','ORDER BY'];
+  var gates=[];
+  stages.forEach(function(s,i){
+    var g=box(1.8,0.6,1.0,0xe3e8f2,1);g.position.set(-7+i*2.85,3.4,0);scene.add(g);gates.push(g);
+    var L=lbl((i+1)+'. '+s,21,'#39415a',0.85);L.position.set(-7+i*2.85,3.4,0.6);scene.add(L);
+  });
+  var noteL=lbl('작성 순서는 SELECT부터지만, 실행은 FROM부터!',24,'#d6455b',1);noteL.position.set(0,-4.4,0);scene.add(noteL);
+  // rows: 9 rows, 3 depts
+  var deptCols=[0x5b6bd6,0x2f9e63,0xe07a3f];
+  var rowsData=[[0,520],[0,510],[1,450],[1,280],[1,610],[2,330],[2,290],[0,470],[2,350]];
+  var rows=[];
+  rowsData.forEach(function(rd,i){
+    var b=box(1.5,0.45,0.8,deptCols[rd[0]],0.95);scene.add(b);
+    rows.push({m:b,dept:rd[0],sal:rd[1],alive:true});
+  });
+  var groups=[];
+  function layoutStart(){
+    rows.forEach(function(r,i){
+      r.alive=true;r.m.visible=true;r.m.material.opacity=0.95;r.m.scale.set(1,1,1);
+      r.m.position.set(-7+(i%3)*1.7-1.7+1.7,1.6-Math.floor(i/3)*0.6,0);
+      r.m.position.x=-8.4+(i%3)*1.7;
+      r.m.position.y=1.7-Math.floor(i/3)*0.62;
+    });
+    groups.forEach(function(g){scene.remove(g.m);if(g.l)scene.remove(g.l);});groups=[];
+  }
+  layoutStart();
+  function gate(i){gates.forEach(function(g,k){g.material.color.set(k===i?0xffc83c:(k<i?0xc8d2e8:0xe3e8f2));});}
+  var phases=[
+    {dur:2.5,cap:'① FROM emp: 테이블의 모든 행(9건)을 가져옵니다. 색 = 부서(dept). 여기가 진짜 시작점입니다.',
+     enter:function(){layoutStart();gate(0);},
+     update:function(u){rows.forEach(function(r){r.m.position.z=Math.sin(u*6)*0.05;});}},
+    {dur:3.5,cap:'② WHERE sal>300: 조건에 맞지 않는 행이 탈락(아래로 떨어짐). 집계 전에 행 단위로 거릅니다.',
+     enter:function(){gate(1);},
+     update:function(u){
+       rows.forEach(function(r){
+         if(r.sal<=300){var f=ez(clamp01(u*1.6));r.m.position.y-= f*0.12;r.m.material.opacity=0.95*(1-f);if(f>0.98)r.alive=false;}
+       });
+     }},
+    {dur:3.5,cap:'③ GROUP BY dept: 남은 행들이 부서별 더미로 합쳐집니다 — 이제 단위는 "행"이 아니라 "그룹".',
+     enter:function(){gate(2);},
+     update:function(u){
+       var cx=[-2.6,0,2.6];
+       rows.forEach(function(r){
+         if(!r.alive)return;
+         var f=ez(u);
+         var tx=cx[r.dept],ty=0.6;
+         r.m.position.x+= (tx-r.m.position.x)*f*0.25;
+         r.m.position.y+= (ty-r.m.position.y)*f*0.25;
+       });
+       if(u>0.9&&!groups.length){
+         var avg=[500,530,340];
+         for(var d=0;d<3;d++){
+           var m=box(1.9,1.0,1.0,deptCols[d],0.98);m.position.set(cx[d],0.6,0.2);scene.add(m);
+           var L=lbl('dept'+(d+1)+' AVG='+avg[d],20,'#ffffff',0.8);L.position.set(cx[d],0.6,0.8);scene.add(L);
+           groups.push({m:m,l:L,avg:avg[d],x:cx[d]});
+           rows.forEach(function(r){if(r.alive&&r.dept===d)r.m.visible=false;});
+         }
+       }
+     }},
+    {dur:3,cap:'④ HAVING AVG>400: 이번엔 "그룹"이 걸러집니다(dept3 탈락) — WHERE는 행을, HAVING은 그룹을 거른다!',
+     enter:function(){gate(3);},
+     update:function(u){
+       groups.forEach(function(g){
+         if(g.avg<=400){var f=ez(clamp01(u*1.4));g.m.position.y=0.6-f*2.4;g.m.material.opacity=0.98*(1-f);g.l.material.opacity=0.8*(1-f);}
+       });
+     }},
+    {dur:2.5,cap:'⑤ SELECT dept, AVG: 이제서야 "어떤 컬럼을 보여줄지" 선택 — 그룹 블록이 얇아집니다(컬럼 2개만).',
+     enter:function(){gate(4);},
+     update:function(u){
+       groups.forEach(function(g){if(g.avg>400){g.m.scale.z=1-ez(u)*0.5;}});
+     }},
+    {dur:3,cap:'⑥ ORDER BY AVG DESC: 마지막으로 정렬 — dept2(530)가 dept1(500) 앞으로. SELECT 별칭을 ORDER BY에서만 쓸 수 있는 이유가 이 순서 때문입니다.',
+     enter:function(){gate(5);},
+     update:function(u){
+       if(groups.length>=2){
+         var f=ez(u);
+         groups[0].m.position.x=-2.6+f*2.6;groups[0].l.position.x=-2.6+f*2.6;
+         groups[1].m.position.x=0-f*2.6;groups[1].l.position.x=0-f*2.6;
+       }
+     }}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
 </body>
 </html>

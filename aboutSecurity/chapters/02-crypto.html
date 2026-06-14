@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2장. 암호학 입문</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔐 표지 · 소개</a></li>
+    <li><a href="01-basics.html">1. 보안 기초와 위협 모델</a></li>
+    <li><a href="02-crypto.html">2. 암호학 입문</a></li>
+    <li><a href="03-network.html">3. 네트워크 보안</a></li>
+    <li><a href="04-web-vulns.html">4. 웹 취약점 (OWASP Top 10)</a></li>
+    <li><a href="05-auth.html">5. 인증과 권한</a></li>
+    <li><a href="06-system.html">6. 시스템·엔드포인트 보안</a></li>
+    <li><a href="07-pentest.html">7. 침투테스트와 레드팀</a></li>
+    <li><a href="08-incident.html">8. 사고 대응과 포렌식</a></li>
+    <li><a href="09-governance.html">9. 거버넌스·컴플라이언스</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. 암호학의 두 기둥 — 대칭·비대칭</h2>
+<p>암호학(Cryptography)은 정보를 비밀로 전달하고 위·변조 여부를 검증하기 위한 수학적 도구의 집합입니다. 현대 암호학은 크게 두 흐름으로 나뉩니다: 송수신자가 같은 키를 공유하는 <strong>대칭키 암호(Symmetric)</strong>와, 서로 다른 한 쌍의 키(공개키·개인키)를 쓰는 <strong>비대칭키 암호(Asymmetric, Public-Key)</strong>입니다.</p>
+<p>대칭키 암호는 빠르지만 키 분배 문제가 어렵고, 비대칭키 암호는 키 분배는 우아하게 풀리지만 연산 비용이 큽니다. 실세계 프로토콜(TLS·SSH·메신저)은 둘을 결합한 <em>하이브리드 암호화</em>를 씁니다: 비대칭으로 세션키를 안전하게 교환한 뒤, 본문은 빠른 대칭키로 암호화하는 방식입니다.</p>
+</section>
+
+<!-- 3D 학습 시각화: 하이브리드 암호화 파이프라인 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 암호화: 키 교환 → 암호화 → 전송 → 복호화</div>
+  <div id="sec3d-02" style="width:100%;height:430px;"></div>
+  <div id="sec3d-02-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">평문이 키를 통과해 섞이고 다시 풀리는 전 과정.</div>
+</div>
+
+
+<section id="sec2">
+<h2>2. 해시 함수와 무결성</h2>
+<p>해시 함수는 임의 길이의 입력을 고정 길이 출력으로 압축하는 일방향 함수입니다. 안전한 해시 함수는 세 가지 성질을 만족해야 합니다: <strong>원상 저항성(preimage)</strong>, <strong>제2 원상 저항성(second-preimage)</strong>, <strong>충돌 저항성(collision)</strong>. MD5(1992)와 SHA-1(1995)은 충돌 저항성이 깨져 더는 보안 용도로 쓰지 않으며, 현재 표준은 SHA-256·SHA-3·BLAKE2 계열입니다.</p>
+<p>해시는 단독으로는 무결성만 보장합니다. <strong>HMAC</strong>은 해시에 비밀키를 결합해 메시지 인증(MAC)을 제공하고, <strong>디지털 서명</strong>은 비대칭 암호와 해시를 결합해 무결성·인증·부인 방지를 동시에 달성합니다.</p>
+</section>
+
+<section id="sec3">
+<h2>3. 키 교환과 PKI</h2>
+<p>1976년 Diffie-Hellman의 키 교환 프로토콜은 도청자가 듣고 있는 공개 채널에서 두 당사자가 공유 비밀을 만들 수 있음을 보였습니다. 이산대수 문제의 어려움에 기반하며, 오늘날에는 타원곡선 위의 변형인 ECDH가 표준입니다(곡선 25519, P-256 등).</p>
+<p>공개키를 누구의 것인지 검증하기 위해 <strong>공개키 기반구조(PKI)</strong>가 필요합니다. CA(인증기관)가 공개키와 신원을 묶어 X.509 인증서로 서명하고, 브라우저는 사전 신뢰하는 루트 CA들의 체인을 따라 검증합니다. Let's Encrypt(2016)의 등장과 ACME 프로토콜로 인증서는 무료·자동화되었고, 이제는 90일 단기 인증서가 표준이 되었습니다.</p>
+</section>
+
+<section id="sec4">
+<h2>4. TLS — 인터넷의 기본 암호 계층</h2>
+<p>TLS(Transport Layer Security)는 인터넷의 모든 안전한 통신을 떠받치는 프로토콜입니다. TLS 1.3(2018)은 핸드셰이크를 1-RTT로 줄이고 알려진 취약 알고리즘(RC4·3DES·SHA-1·정적 RSA 키교환)을 모두 제거했습니다. 핵심 흐름은 ① ClientHello/ServerHello로 암호 스위트 협상, ② ECDHE로 일회용 세션키 교환, ③ 인증서 검증과 서버 인증, ④ AEAD 대칭암호(AES-GCM 또는 ChaCha20-Poly1305)로 본문 암호화 입니다.</p>
+<p>TLS의 핵심 보안 속성은 <strong>전방향 안전성(Forward Secrecy)</strong>입니다. 서버의 장기 개인키가 미래에 유출되어도 과거 세션은 복호화할 수 없도록 매 세션마다 새로운 임시 키를 생성합니다. 이것이 정적 RSA 키교환이 폐기된 이유입니다.</p>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="01-basics.html" style="text-decoration:none;">← 1. 보안 기초</a><a href="03-network.html" style="text-decoration:none;">3. 네트워크 보안 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>암호학은 "남이 못 읽게 비밀로 만들기(암호화)", "내용이 바뀌었는지 확인하기(해시·서명)", "이 사람이 진짜 그 사람인지 확인하기(인증서)" 이 세 가지를 수학으로 푸는 학문이에요. 우리가 매일 쓰는 카카오톡·인터넷뱅킹·https 사이트가 다 이 위에 돌아갑니다.</p>
+  <h3>왜 중요한가?</h3>
+  <p>① 카페에서 와이파이로 인터넷뱅킹을 해도 누군가 훔쳐볼 수 없는 건 TLS라는 암호 프로토콜 덕분입니다. ② 카카오톡의 비밀채팅이 카카오 직원도 못 보는 건 종단간 암호화 때문이에요. ③ 윈도우 업데이트 파일이 진짜 마이크로소프트가 만든 것인지 확인하는 건 디지털 서명 덕분입니다. 즉, 우리가 매일 "당연하게" 누리는 디지털 안전은 전부 암호학 위에 서 있어요.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>대칭키 암호</strong>: 자물쇠와 열쇠가 같은 종류 — 빠르지만 미리 키를 안전하게 주고받아야 함 (예: AES)</li>
+    <li><strong>비대칭키 암호</strong>: 자물쇠는 누구나 잠글 수 있고, 열쇠는 주인만 가짐 — 키 교환이 쉬움 (예: RSA, ECC)</li>
+    <li><strong>해시 함수</strong>: 어떤 데이터든 일정한 길이의 "지문"으로 줄여주는 함수 — 변조 감지에 사용 (예: SHA-256)</li>
+    <li><strong>디지털 서명</strong>: 종이 도장의 디지털 버전 — 내가 보냈다는 것과 내용이 안 바뀌었다는 것을 동시에 증명</li>
+    <li><strong>인증서(Certificate)</strong>: "이 공개키는 진짜 네이버의 것"이라고 신뢰기관(CA)이 보증한 디지털 신분증</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>편지를 안전하게 보내는 상황을 생각해봅시다. 대칭키 암호는 "둘만 아는 비밀 열쇠로 잠긴 상자"예요. 빠르고 튼튼하지만, 처음에 그 열쇠를 어떻게 상대에게 안전하게 보낼지가 문제입니다. 비대칭키 암호는 "누구나 잠글 수 있는 자물쇠와 나만 갖는 열쇠"입니다. 친구는 내가 미리 공개해둔 자물쇠로 편지를 잠그고, 나만 가진 열쇠로 풀어 읽어요. 키를 미리 공유할 필요가 없죠. 실제로는 "비대칭으로 한 번 잠시 쓸 대칭 열쇠를 안전하게 전달"하고, 그 다음부터는 빠른 대칭 암호로 대화하는 방식이 쓰입니다(하이브리드).</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 외울 게 너무 많아 보이지만, "암호화는 비밀, 해시는 지문, 서명은 도장, 인증서는 신분증" 이 네 비유만 박아두면 거의 모든 암호 프로토콜이 이해됩니다.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>대칭키 = 빠름, 키 분배 어려움 (AES)</li>
+    <li>비대칭키 = 느림, 키 분배 쉬움 (RSA, ECC)</li>
+    <li>해시 = 지문, 변조 감지 (SHA-256)</li>
+    <li>디지털 서명 = 도장 + 지문 = 인증 + 무결성 + 부인방지</li>
+    <li>TLS = 위 모두를 묶어 인터넷에 적용한 표준</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>대칭키 암호의 사실상 표준은 AES(2001, FIPS 197)입니다. 128/192/256비트 키, 128비트 블록의 SPN(Substitution-Permutation Network) 구조이며, 운용모드(Mode of Operation)에 따라 성격이 달라집니다. ECB는 같은 평문이 같은 암호문이 되어 절대 사용 금지이고, CBC는 IV 누수와 패딩 오라클에 취약합니다. 현재 표준은 인증암호화(AEAD)인 <strong>AES-GCM</strong>과 <strong>ChaCha20-Poly1305</strong>로, 기밀성과 무결성을 한 번에 제공합니다.</p>
+  <p>비대칭키 암호는 수학적 어려움(난문제)에 안전성을 의존합니다. RSA는 큰 정수의 소인수분해, DH/ECDH는 이산대수, ECDSA·Ed25519는 타원곡선 이산대수 문제에 기반합니다. 동등 보안 강도를 비교하면 RSA-2048 ≈ ECC-224 ≈ AES-112 수준이며, RSA-3072 ≈ ECC-256 ≈ AES-128입니다. 모바일·IoT 환경에서 ECC가 압도적으로 선호되는 이유입니다.</p>
+  <h3>핵심 코드 — Python으로 보는 AEAD</h3>
+  <pre><code># AES-GCM (cryptography 라이브러리)
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+import os
+
+key = AESGCM.generate_key(bit_length=256)
+aesgcm = AESGCM(key)
+nonce = os.urandom(12)              # GCM nonce는 반드시 96비트, 절대 재사용 금지
+data = b"transfer $1000 to alice"
+aad = b"account=bob, timestamp=2025-05-20"  # 인증만 하고 암호화는 안 하는 부가 데이터
+
+ct = aesgcm.encrypt(nonce, data, aad)
+pt = aesgcm.decrypt(nonce, ct, aad)  # aad가 바뀌면 InvalidTag 예외
+assert pt == data</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>🔐 예제 1 — Signal 프로토콜의 더블 래칫</h4><p>WhatsApp·시그널의 종단간 암호화는 X3DH(Extended Triple Diffie-Hellman) 키 합의 + Double Ratchet 알고리즘 조합입니다. 매 메시지마다 새로운 키가 파생되어, 한 키가 노출되어도 이전·이후 메시지는 안전합니다(forward secrecy + post-compromise security). 단순한 "AES로 암호화"가 아니라 키 관리가 핵심임을 보여주는 사례입니다.</p></div>
+  <div class="info-card"><h4>🔐 예제 2 — HTTPS 인증서 검증</h4><p>브라우저가 https://naver.com에 접속할 때, 서버가 보낸 인증서 체인을 검증합니다. ① 인증서의 서명을 상위 CA의 공개키로 검증 → ② 그 상위 CA도 같은 방식으로 → ③ 최상위 루트 CA에 도달 (브라우저에 사전 탑재). 추가로 ④ 도메인 이름(SAN) 일치, ⑤ 유효기간, ⑥ OCSP/CRL로 폐기 여부 확인, ⑦ Certificate Transparency 로그에 등록되었는지까지 봅니다. 어느 하나라도 실패하면 빨간 경고 화면이 뜹니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① <strong>JWT(JSON Web Token)</strong>는 HMAC-SHA256(대칭) 또는 RSA·ECDSA(비대칭) 서명으로 토큰의 무결성과 발급자를 보장합니다. 'alg: none' 취약점이나 약한 키 사용은 자주 발견되는 사고 원인입니다. ② <strong>비밀번호 저장</strong>은 단순 SHA-256이 아니라 <strong>bcrypt·scrypt·Argon2</strong> 같은 의도적으로 느린 KDF를 써야 합니다. 2023년 NIST는 Argon2id를 권장합니다. ③ <strong>파일 서명</strong>: GPG, code signing, sigstore 등은 모두 비대칭 서명의 응용입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "암호학은 직접 구현하면 안 된다(Don't roll your own crypto)"는 격언이 가장 중요합니다. AES 자체는 안전해도 ECB 모드를 쓰거나, IV/Nonce를 재사용하거나, 비상수시간(non-constant-time) 비교로 키를 누수하거나, 약한 난수원을 쓰면 전부 무력화됩니다. 검증된 라이브러리(libsodium, BoringSSL, Tink)를 쓰세요.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>현대 암호학의 안전성 정의는 <strong>증명가능 보안(provable security)</strong> 패러다임에 기반합니다. 어떤 암호 스킴 $\Pi$가 안전하다는 것은, 임의의 다항시간 적대자 $\mathcal{A}$의 성공 확률을 어떤 수학적 난문제(소인수분해·이산대수·LWE 등)를 푸는 알고리즘으로 환원(reduction)할 수 있음을 보이는 것입니다. 예: IND-CPA, IND-CCA2, EUF-CMA 같은 게임 기반 정의를 통해 적대자 모델을 형식화합니다.</p>
+  <p>대칭키 영역의 최신 흐름은 <strong>경량 암호(Lightweight Cryptography)</strong>입니다. NIST는 2023년 IoT·임베디드용 표준으로 <strong>Ascon</strong>을 선정했습니다. AES-GCM보다 메모리·전력 효율이 우수하면서도 충분한 보안 마진을 가집니다.</p>
+  <h3>수학적 기초</h3>
+  <div class="formula">$$\text{RSA: } c = m^e \bmod n, \quad m = c^d \bmod n, \quad ed \equiv 1 \pmod{\phi(n)}$$
+  $$\text{ECDH: } K_{AB} = a \cdot (b \cdot G) = b \cdot (a \cdot G) \in E(\mathbb{F}_p)$$
+  $$\text{HKDF: } \text{PRK} = \text{HMAC}(\text{salt}, \text{IKM}), \quad \text{OKM} = \text{HMAC-Expand}(\text{PRK}, \text{info}, L)$$</div>
+  <p>RSA의 안전성은 $n = pq$의 소인수분해 어려움에 환원되며, 일반수체체(GNFS)의 점근 복잡도는 $\exp((c+o(1))(\ln n)^{1/3}(\ln\ln n)^{2/3})$입니다. ECDLP는 일반 군에서 $\Omega(\sqrt{n})$의 Pollard rho 공격이 알려진 최선이므로, 같은 안전 강도에서 훨씬 작은 키 크기로 충분합니다.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>Post-Quantum Cryptography (PQC)</strong>: 충분히 큰 양자컴퓨터가 등장하면 Shor 알고리즘으로 RSA·ECC가 다항시간에 깨집니다. NIST는 2024년 8월 <strong>ML-KEM</strong>(FIPS 203, Kyber 기반 격자 KEM), <strong>ML-DSA</strong>(FIPS 204, Dilithium 기반 서명), <strong>SLH-DSA</strong>(FIPS 205, SPHINCS+ 해시 기반 서명)을 표준화했고, 2025년부터 주요 CA·CDN·OS가 마이그레이션을 시작했습니다. <em>Harvest now, decrypt later</em> 위협 때문에 장기 기밀성이 필요한 데이터는 지금 PQC 하이브리드로 전환해야 합니다. ② <strong>완전동형암호(FHE)</strong>: Microsoft SEAL, OpenFHE, Zama Concrete 등의 라이브러리로 암호화된 상태로 연산이 가능하며, 의료 데이터·금융 분석에 응용 중입니다. ③ <strong>영지식 증명(ZKP)</strong>: zk-SNARK·zk-STARK는 블록체인 롤업과 프라이버시 보호 신원 증명(zkLogin, Anon Aadhaar)에 실용 단계로 진입했습니다.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>수론</strong>: 소인수분해, 이산대수, 타원곡선의 군 구조</li>
+    <li><strong>대수기하학</strong>: 격자 이론(LWE, NTRU), 동조사상(Isogeny) 기반 암호</li>
+    <li><strong>복잡도 이론</strong>: PRG·PRF·OWF의 동등성과 minimal assumption</li>
+    <li><strong>분산시스템</strong>: 비잔틴 합의, 임계 서명(threshold signature), MPC</li>
+    <li><strong>양자정보</strong>: BB84·E91 양자 키 분배, Shor·Grover 알고리즘</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Katz &amp; Lindell, <em>Introduction to Modern Cryptography</em> (3rd ed., 2020)</li>
+    <li>📖 Boneh &amp; Shoup, <em>A Graduate Course in Applied Cryptography</em> (무료 PDF)</li>
+    <li>📖 NIST SP 800-175B / FIPS 197 / FIPS 203·204·205</li>
+    <li>📺 Stanford Cryptography I (Dan Boneh, Coursera)</li>
+    <li>🔬 CryptoPals 챌린지 — 직접 깨보며 배우는 공격 시리즈</li>
+    <li>🔬 키워드: AEAD, KDF, PQC migration, ZK rollup, FHE</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 본인이 자주 쓰는 웹 사이트의 인증서를 `openssl s_client -connect example.com:443 -showcerts`로 가져와, ① 서명 알고리즘, ② 키 종류와 크기, ③ 유효기간, ④ 발급 CA, ⑤ SAN 도메인 목록, ⑥ Certificate Transparency 로그 등록 여부를 직접 추출해보세요. 그리고 동일 사이트의 TLS 1.3 핸드셰이크를 Wireshark로 캡처해 ClientHello의 cipher suite와 key share 곡선을 확인하면 이 챕터의 모든 개념이 한 번에 손에 잡힙니다.</div>
+</div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#475569","questions":[{"q":"빠르지만 키 분배가 어려운 암호는?","choices":["비대칭키","대칭키","해시","서명"],"answer":1},{"q":"데이터의 '지문' 역할을 하는 것은?","choices":["해시 함수","대칭키","인증서","VPN"],"answer":0},{"q":"인터넷 암호 통신의 표준 프로토콜은?","choices":["FTP","TLS","HTTP","SMTP"],"answer":1},{"q":"충돌 저항성이 깨져 폐기된 해시는?","choices":["SHA-256","SHA-3","MD5","BLAKE2"],"answer":2},{"q":"권장되는 비밀번호 저장 방식은?","choices":["SHA-256","Argon2id","Base64","MD5"],"answer":1}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('sec3d-02');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('sec3d-02-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,1.6,13);camera.lookAt(0,0.6,0);
+  var sL=lbl('송신자',27,'#39415a',1);sL.position.set(-7,3.6,0);scene.add(sL);
+  var rL=lbl('수신자',27,'#39415a',1);rL.position.set(7,3.6,0);scene.add(rL);
+  scene.add(line(V(-4.5,-2.2,0),V(4.5,-2.2,0),0x9aa6c0,0.5));
+  var chL=lbl('공개 채널 (도청 가능)',23,'#7c87a3',0.85);chL.position.set(0,-2.9,0);scene.add(chL);
+  var eye=sph(0.32,0xd6455b,0.9);eye.position.set(0,-3.8,0);scene.add(eye);
+  var eyeL=lbl('도청자',22,'#d6455b',0.85);eyeL.position.set(1.5,-3.8,0);scene.add(eyeL);
+  // plaintext block: 4x4 voxel grid
+  var vox=[],voxG=new THREE.Group();scene.add(voxG);
+  for(var i=0;i<16;i++){
+    var v=box(0.5,0.5,0.5,0x2f9e63,1);
+    v.position.set(-7+(i%4)*0.55,2.0-Math.floor(i/4)*0.55,0);
+    voxG.add(v);vox.push(v);
+  }
+  var ptL=lbl('평문',24,'#2f9e63',0.9);ptL.position.set(-7,2.7,0);scene.add(ptL);
+  var key=box(0.8,0.8,0.8,0xffc83c,1);key.position.set(-5,0.2,0);scene.add(key);
+  var keyL=lbl('대칭키(세션키)',23,'#b98a1a',0.9);keyL.position.set(-5,1.1,0);scene.add(keyL);
+  var pub=new THREE.Mesh(new THREE.TorusGeometry(0.55,0.14,10,30),mat(0x5b6bd6,0.95));
+  pub.position.set(7,0.2,0);scene.add(pub);
+  var pubL=lbl('수신자 공개키/개인키 쌍',22,'#5b6bd6',0.85);pubL.position.set(7,1.2,0);scene.add(pubL);
+  var capsule=sph(0.75,0x5b6bd6,0);capsule.position.copy(key.position);scene.add(capsule);
+  var scrambled=[0xd6455b,0x5b6bd6,0xffc83c,0x9aa6c0,0xe07a3f,0x2f9e63];
+  function scramble(k){
+    vox.forEach(function(v,i){
+      if(k<=0){v.material.color.set(0x2f9e63);return;}
+      v.material.color.set(scrambled[(i*7+Math.floor(k*6))%6]);
+      v.position.z=Math.sin(i*3.7+k*12)*0.25*k;
+    });
+  }
+  var phases=[
+    {dur:3.5,cap:'① 키 교환: 수신자의 공개키(파란 고리)가 공개적으로 전달됩니다 — 공개키는 누가 봐도 안전.',
+     enter:function(){voxG.position.set(0,0,0);key.position.set(-5,0.2,0);keyL.position.set(-5,1.1,0);capsule.material.opacity=0;scramble(0);pub.position.set(7,0.2,0);},
+     update:function(u){pub.position.x=7-ez(u)*10.5;}},
+    {dur:3.5,cap:'② 캡슐화: 대칭키(노랑)를 공개키로 잠가 보냅니다. 채널에서 보이는 건 캡슐뿐 — 열쇠는 수신자의 개인키뿐입니다.',
+     update:function(u){
+       capsule.material.opacity=Math.min(0.45,u*2);
+       var x=-5+ez(u)*12;key.position.set(x,u<0.15?0.2:-2.2+ (u<0.3?(0.3-u)*16:0),0);
+       key.position.y=0.2-ez(Math.min(1,u*3))*2.4+ (u>0.85?ez((u-0.85)*6.6)*2.4:0);
+       capsule.position.copy(key.position);keyL.position.set(x,key.position.y+0.9,0);
+     }},
+    {dur:3.5,cap:'③ 암호화: 평문이 대칭키 큐브를 통과하며 픽셀이 뒤섞입니다(AES) — 빠른 대칭 암호가 본문 담당.',
+     enter:function(){key.position.set(-3.4,2.0,0);keyL.position.set(-3.4,3.0,0);capsule.material.opacity=0;},
+     update:function(u){
+       voxG.position.x=ez(Math.min(1,u*1.6))*3.0;
+       var k=clamp01((u-0.25)*1.8);scramble(k);
+       key.scale.setScalar(1+0.15*Math.sin(u*14));
+     }},
+    {dur:3.5,cap:'④ 전송: 도청자가 가로채도 보이는 것은 무작위 픽셀(암호문)뿐 — 키 없이는 의미를 복원할 수 없습니다.',
+     update:function(u){
+       voxG.position.x=3.0+ez(u)*7.2;voxG.position.y=-ez(Math.sin(u*Math.PI))*4.0*0+0;
+       voxG.position.y=-(Math.sin(u*Math.PI))*4.2;
+       eye.scale.setScalar(1+0.3*Math.sin(u*10));
+     }},
+    {dur:3.5,cap:'⑤ 복호화: 수신자는 개인키로 캡슐을 열어 대칭키를 꺼내고, 그 키로 픽셀을 원래대로 되돌립니다 — TLS·메신저가 매일 하는 일.',
+     update:function(u){
+       voxG.position.set(10.2-ez(Math.min(1,u*1.5))*3.2,0,0);
+       var k=1-clamp01((u-0.3)*1.6);scramble(k);
+     }}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

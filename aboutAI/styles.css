@@ -800,10 +800,6 @@ section { margin-bottom: 40px; }
 
 /* ================= Mode toggle ================= */
 .mode-toggle {
-  position: fixed;
-  top: 24px;
-  right: 28px;
-  z-index: 1000;
   display: inline-flex;
   background: var(--paper);
   border: 1.5px solid var(--ink);
@@ -814,6 +810,22 @@ section { margin-bottom: 40px; }
   font-size: 0.78em;
   font-weight: 500;
   letter-spacing: 0.05em;
+}
+.mode-toggle.in-sidebar {
+  position: static;
+  z-index: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  width: 100%;
+  margin: 14px 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+.mode-toggle.in-sidebar .toggle-label {
+  margin-bottom: 2px;
 }
 .mode-toggle button {
   border: none;
@@ -958,7 +970,7 @@ main > *:nth-child(n+5) { animation-delay: 0.08s; }
   .timeline::before { left: 82px; }
   .tl-year { width: 74px; font-size: 0.82em; }
   .tl-dot { left: 76px; }
-  .mode-toggle { top: 12px; right: 12px; font-size: 0.7em; }
+  .mode-toggle { font-size: 0.7em; }
   header.paper-header h1 { font-size: 2.4em; }
   .abstract { columns: 1; }
 }

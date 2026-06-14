@@ -7,12 +7,14 @@
 <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">🌍 표지 · 소개</a></li>
@@ -116,7 +118,7 @@
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -179,6 +181,11 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 신생대 해양 퇴적물 코어의 δ¹⁸O 시계열에 스펙트럼 분석을 적용해 밀란코비치 주기의 시대별 강도 변화를 탐지해 보세요(예: 중기 갱신세 천이).</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#1565c0","questions":[{"q":"지구의 나이는 약 몇 년인가?","choices":["46억 년","460억 년","4.6억 년","6,600만 년"],"answer":0},{"q":"공룡이 살았던 시대는?","choices":["고생대","신생대","중생대","원생누대"],"answer":2},{"q":"페름기 대멸종 때 멸종한 생물 비율은?","choices":["50%","76%","86%","96%"],"answer":3},{"q":"백악기 말 대멸종의 주원인은?","choices":["화산 폭발","소행성 충돌","빙하기","산소 급증"],"answer":1},{"q":"대산화 사건(GOE)이 일어난 시기는?","choices":["약 38억 년 전","약 5.4억 년 전","약 24억 년 전","약 2.5억 년 전"],"answer":2}]};</script>
 </main>
 </div>
 

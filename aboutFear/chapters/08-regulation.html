@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 보라 그림자를 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 조절 — 감정의 온도를 되돌리는 피드백</span>
 
 <h2>조절과 치료 개요</h2>
 <p>공포 치료의 황금 표준은 노출 기반 인지행동치료(CBT)다. 약물은 보조이며, 두 가지를 결합할 때 효과가 극대화된다. 최근에는 MDMA·psilocybin 보조 치료가 PTSD에서 임상 진입을 시작하면서 정신의학의 새 시대가 열리고 있다.</p>
@@ -67,12 +69,28 @@
 
 <div class="difficulty-content" data-level="hard">
   <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3><p>MDMA-assisted therapy for PTSD는 사이코델릭 정신의학의 선두 주자다. MAPS(Multidisciplinary Association for Psychedelic Studies)의 phase 3 임상에서 12주 치료 후 67%가 PTSD 진단 기준을 더 이상 만족하지 않았으며, 21%가 완전 관해되었다 — 기존 치료 30~40% 관해율을 크게 상회한다. MDMA는 세로토닌·노르에피네프린·옥시토신 방출을 증가시켜 외상 기억을 회상하면서도 공포·수치심 없이 처리할 수 있는 "치료 창(therapeutic window)"을 만든다. FDA는 2017년 breakthrough therapy 지정 후 승인 심사 단계에 있다. Psilocybin은 치료저항성 우울·말기 환자 죽음 불안에 효과를 보였으며, Johns Hopkins와 Imperial College London 연구가 선두다. 일반 SSRI 효과 크기 d ≈ 0.3 대비 psilocybin의 d ≈ 1.2~1.5는 극적이다. 작용 기전은 5-HT2A 수용체 활성화를 통한 default mode network 일시 와해와 신경가소성 증강으로 추정된다. 비약물 영역에서는 closed-loop neurofeedback for PTSD가 부상한다. 실시간 fMRI 또는 EEG로 편도체 활성을 모니터링하며 환자가 자발적으로 활성을 낮추는 훈련이다. 또한 transcranial magnetic stimulation(TMS)을 vmPFC에 적용해 멸절 학습을 강화하는 시도가 진행 중이다.</p>
-  <h3>최신 연구·동향</h3><p>한국 식약처는 2024년 ketamine 코스피플레이트(에스케타민)을 치료저항성 우울증에 한정해 승인했고, 불안장애 적응증 확장도 논의 중이다. 또한 한국 임상에서는 디지털 치료제 승인 절차가 정비되어 VR 노출치료가 곧 처방 가능 디지털 치료제로 진입할 전망이다.</p>
+  <h3>전문가 레벨 이해</h3><p>MDMA-assisted therapy for PTSD는 사이코델릭 정신의학의 선두 주자다. MAPS(Multidisciplinary Association for Psychedelic Studies)의 phase 3 임상에서 12주 치료 후 67%가 PTSD 진단 기준을 더 이상 만족하지 않았으며, 21%가 완전 관해되었다 — 기존 치료 30~40% 관해율을 크게 상회한다. MDMA는 세로토닌·노르에피네프린·옥시토신 방출을 증가시켜 외상 기억을 회상하면서도 공포·수치심 없이 처리할 수 있는 "치료 창(therapeutic window)"을 만든다. FDA는 2017년 breakthrough therapy로 지정했으나, 2024년 8월 승인을 보류하고 추가 3상 임상시험을 요구해 현재 재신청을 준비 중이다. Psilocybin은 치료저항성 우울·말기 환자 죽음 불안에 효과를 보였으며, Johns Hopkins와 Imperial College London 연구가 선두다. 일반 SSRI 효과 크기 d ≈ 0.3 대비 psilocybin의 d ≈ 1.2~1.5는 극적이다. 작용 기전은 5-HT2A 수용체 활성화를 통한 default mode network 일시 와해와 신경가소성 증강으로 추정된다. 비약물 영역에서는 closed-loop neurofeedback for PTSD가 부상한다. 실시간 fMRI 또는 EEG로 편도체 활성을 모니터링하며 환자가 자발적으로 활성을 낮추는 훈련이다. 또한 transcranial magnetic stimulation(TMS)을 vmPFC에 적용해 멸절 학습을 강화하는 시도가 진행 중이다.</p>
+  <h3>최신 연구·동향</h3><p>한국 식약처는 2024년 에스케타민(스프라바토)을 치료저항성 우울증에 한정해 승인했고, 불안장애 적응증 확장도 논의 중이다. 또한 한국 임상에서는 디지털 치료제 승인 절차가 정비되어 VR 노출치료가 곧 처방 가능 디지털 치료제로 진입할 전망이다.</p>
   <h3>관련 분야</h3><ul><li>사이코델릭 정신의학(Psychedelic Psychiatry)</li><li>신경자극(Neurostimulation, TMS·tDCS)</li><li>디지털 치료제(Digital Therapeutics)</li></ul>
   <h3>추가 학습 자료</h3><ul><li>"Prolonged Exposure Therapy for PTSD" — Edna Foa</li><li>"How to Change Your Mind" — Michael Pollan</li><li>"Trauma and Recovery" — Judith Herman</li></ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 본인이 가진 공포 1개에 대해 SUDS 기준 8단계의 점진 노출 위계(hierarchy)를 직접 설계하고, 각 단계에서 시도할 수 있는 구체적 행동을 적어보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#8b5cf6","questions":[{"q":"공포 치료의 1차 치료는?","choices":["벤조","노출 기반 CBT","수술","입원"],"answer":1},{"q":"불안장애의 1차 약물은?","choices":["항생제","진통제","SSRI/SNRI","수면제"],"answer":2},{"q":"안구 운동을 활용한 외상 처리 치료는?","choices":["EMDR","CBT","PE","CPT"],"answer":0},{"q":"Foa가 만든 PTSD 황금표준 노출치료는?","choices":["EMDR","MBSR","Prolonged Exposure","DBS"],"answer":2},{"q":"MDMA 치료 12주 후 진단 미충족률은?","choices":["10%","30%","90%","67%"],"answer":3}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0x8b5cf6;const parts=[];for(let i=0;i<30;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0x8b5cf6;const tube=new THREE.Mesh(new THREE.CylinderGeometry(0.25,0.25,3.4,16,1,true),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.4}));s.add(tube);const bulb=new THREE.Mesh(new THREE.SphereGeometry(0.5,18,18),new THREE.MeshBasicMaterial({color:COL}));bulb.position.y=-1.9;s.add(bulb);const lvl=new THREE.Mesh(new THREE.SphereGeometry(0.3,16,16),new THREE.MeshBasicMaterial({color:0xffe08a}));s.add(lvl);s.userData.lvl=lvl;const loop=new THREE.Mesh(new THREE.TorusGeometry(1.5,0.03,8,48),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.3}));loop.position.x=2.2;s.add(loop);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.lvl.position.y=Math.sin(T*1.2)*1.2*Math.exp(-((T*0.2)%6)*0.0)+0.0;s.userData.lvl.position.y=Math.sin(T)*1.0;s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

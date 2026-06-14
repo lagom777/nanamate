@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5장. 삼각함수 — 원과 파동</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📐 표지 · 소개</a></li>
+    <li><a href="01-numbers-sets.html">1. 수와 집합</a></li>
+    <li><a href="02-algebra.html">2. 대수 — 방정식과 다항식</a></li>
+    <li><a href="03-functions.html">3. 함수와 그래프</a></li>
+    <li><a href="04-geometry.html">4. 기하 — 도형과 피타고라스</a></li>
+    <li><a href="05-trigonometry.html" style="color:var(--accent);font-weight:600;">5. 삼각함수 — 원과 파동</a></li>
+    <li><a href="06-exponential-log.html">6. 지수와 로그</a></li>
+    <li><a href="07-sequences-limits.html">7. 수열과 극한</a></li>
+    <li><a href="08-differentiation.html">8. 미분 — 변화율의 수학</a></li>
+    <li><a href="09-integration.html">9. 적분과 확률·통계</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. 각을 재는 자연스러운 단위 — 라디안</h2>
+<p>4장의 삼각비는 0°~90°의 예각에서만 정의됐습니다. 이를 모든 각도(음수, 360° 초과 포함)의 <strong>함수</strong>로 승격시키는 것이 이 장의 목표이고, 그 첫걸음이 각도 단위의 교체입니다. <strong>라디안(radian)</strong>은 "반지름 길이만큼의 호에 해당하는 중심각"입니다: 호의 길이 l = rθ. 원 한 바퀴는 호의 길이가 2πr이므로 360° = 2π rad, 즉 180° = π, 90° = π/2.</p>
+<p>왜 굳이 바꿀까요? 라디안에서만 공식이 깨끗해지기 때문입니다. 호의 길이 l = rθ, 부채꼴 넓이 S = ½r²θ, 그리고 미적분의 핵심 극한 sin x / x → 1 (x→0)이 성립합니다(도 단위면 π/180이 끼어듭니다). 수학에서 각도의 "모국어"는 라디안입니다.</p>
+</section>
+
+<!-- 3D 학습 시각화: 단위원의 회전이 sin·cos 파동을 만든다 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#e8506e;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 단위원 → 파동: 회전의 세로 그림자 = sin, 가로 그림자 = cos</div>
+  <div id="math3d-05" style="width:100%;height:430px;"></div>
+  <div id="math3d-05-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">단위원 위를 도는 점이 어떻게 파동을 만드는지 봅니다.</div>
+</div>
+
+<section id="sec2">
+<h2>2. 단위원 정의 — 삼각비에서 삼각함수로</h2>
+<p>반지름 1인 원(단위원) 위에서 각 θ만큼 회전한 점 P의 좌표를 <strong>(cos θ, sin θ)</strong>로 <em>정의</em>합니다. 예각에서는 4장의 직각삼각형 정의와 정확히 일치하지만, 이제 θ가 어떤 실수여도 — 한 바퀴를 넘어도(θ+2π), 거꾸로 돌아도(−θ) — 값이 정해집니다. tan θ = sin θ / cos θ는 원점에서 P로 그은 직선의 기울기입니다.</p>
+<p>단위원에서 성질들이 그냥 읽힙니다. 점이 원 위에 있으니 <strong>sin²θ + cos²θ = 1</strong>(피타고라스). 한 바퀴 돌면 제자리니 <strong>주기 2π</strong>. y축 대칭·원점 대칭에서 cos(−θ) = cos θ (우함수), sin(−θ) = −sin θ (기함수). 사분면별 부호(All-Sin-Tan-Cos)도 좌표의 부호일 뿐입니다. 외울 것은 단위원 그림 하나입니다.</p>
+</section>
+
+<section id="sec3">
+<h2>3. 그래프 — 회전이 파동이 되다</h2>
+<p>위 3D 시각화의 핵심 장면입니다: 원 위를 등속으로 도는 점의 <strong>세로 좌표만 시간축으로 펼치면 sin 곡선</strong>, 가로 좌표를 펼치면 cos 곡선이 됩니다. 회전(원운동)과 진동(파동)은 같은 현상의 두 그림자입니다. cos 곡선은 sin 곡선을 왼쪽으로 π/2 민 것: cos θ = sin(θ + π/2).</p>
+<p>일반형 y = A sin(ωt + φ)에서 <strong>진폭 A</strong>(흔들림의 크기), <strong>각진동수 ω</strong>(주기 T = 2π/ω), <strong>위상 φ</strong>(시작 위치)를 읽습니다. 소리의 높낮이는 ω, 크기는 A, 스피커 두 개의 간섭은 φ의 문제 — 빛·소리·교류전기·진자·계절 등 주기적인 모든 것이 이 세 글자로 기술됩니다.</p>
+</section>
+
+<section id="sec4">
+<h2>4. 덧셈정리 — 삼각함수의 곱셈표</h2>
+<p>두 각의 합의 삼각함수는 <strong>덧셈정리</strong>로 전개됩니다: sin(α±β) = sin α cos β ± cos α sin β, cos(α±β) = cos α cos β ∓ sin α sin β. 여기서 β = α로 놓으면 배각공식 sin 2α = 2 sin α cos α, cos 2α = 1 − 2sin²α가 나오고, 거꾸로 풀면 반각공식이 나옵니다 — 전부 덧셈정리 하나의 자식들입니다.</p>
+<p>덧셈정리의 실용적 위력은 <strong>파동의 합성</strong>입니다: a sin θ + b cos θ = √(a²+b²) · sin(θ+φ). 서로 다른 위상의 두 진동을 합쳐도 결과는 여전히 하나의 사인파라는 것 — 신호처리와 푸리에 해석(모든 주기 신호는 sin·cos의 합)의 출발점입니다. 일반 삼각형의 변·각 계산은 사인법칙 a/sin A = 2R과 코사인법칙 c² = a²+b²−2ab cos C로 완성됩니다.</p>
+<div class="formula">l = rθ &nbsp;|&nbsp; sin²θ+cos²θ = 1 &nbsp;|&nbsp; cos θ = sin(θ+π/2) &nbsp;|&nbsp; sin(α+β) = sinα cosβ + cosα sinβ</div>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="04-geometry.html" style="text-decoration:none;">← 4. 기하 — 도형과 피타고라스</a><a href="06-exponential-log.html" style="text-decoration:none;">6. 지수와 로그 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>관람차를 옆에서 보면 한 칸이 빙글빙글 돌지만, 그 칸의 "높이"만 시간에 따라 기록하면 부드러운 물결이 됩니다. 그 물결이 sin이고, "옆으로의 위치"를 기록하면 cos이에요. 삼각함수 = 회전의 그림자.</p>
+  <h3>왜 중요한가?</h3>
+  <p>소리(음파), 빛, 와이파이 전파, 콘센트의 교류 전기, 심전도 — 세상의 주기적인 모든 신호가 sin·cos의 조합으로 표현됩니다. 음악 앱의 이퀄라이저가 바로 "소리를 sin들로 분해한" 화면입니다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>라디안</strong>: 호의 길이로 각을 재는 단위 — 180° = π</li>
+    <li><strong>단위원</strong>: 반지름 1인 원 — 그 위의 점이 (cos θ, sin θ)</li>
+    <li><strong>주기</strong>: 같은 모양이 반복되는 간격 — sin은 2π</li>
+    <li><strong>진폭</strong>: 물결의 높이 (A sin θ의 A)</li>
+    <li><strong>위상</strong>: 물결의 "시작 타이밍" — cos은 sin보다 π/2 앞섬</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>위 3D에서 일어나는 일을 말로 풀면: ① 점이 원 위를 일정한 속도로 돈다 → ② 점의 높이는 올라갔다 내려갔다를 반복한다 → ③ 그 높이를 시간축에 펼치면 파도 모양이 된다. 원과 파동이 같은 것의 두 모습이라는 사실만 잡으면, sin 그래프의 모양·주기·대칭성을 외울 필요가 없어집니다 — 머릿속에서 원을 돌리면 되니까요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 특수각 표를 통째로 외우지 말고 단위원 그림에서 읽는 연습을 하세요. 30°, 45°, 60°의 좌표 (√3/2, 1/2), (√2/2, √2/2), (1/2, √3/2)만 익히면 나머지 사분면은 부호만 바꾸면 됩니다. "그림 1장 &gt; 표 1페이지".</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>180° = π rad, 호의 길이 l = rθ (라디안일 때만)</li>
+    <li>(cos θ, sin θ) = 단위원 위의 점 — 모든 실수 θ로 확장</li>
+    <li>sin²+cos² = 1, 주기 2π, cos는 우함수·sin은 기함수</li>
+    <li>회전의 세로 그림자 = sin 파동, 가로 그림자 = cos 파동</li>
+    <li>y = A sin(ωt+φ): 진폭 A, 주기 2π/ω, 위상 φ</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>덧셈정리의 가장 깨끗한 증명은 단위원 위 두 점 (cos α, sin α), (cos β, sin β) 사이 거리를 두 방법으로 계산하는 것입니다(거리 공식 vs 코사인법칙). 정리하면 cos(α−β) = cos α cos β + sin α sin β가 나오고, 나머지 공식 전부가 이 한 줄에서 파생됩니다 — β → −β 치환, α → π/2−α 치환의 기계적 작업입니다. "공식 7개"가 아니라 "정리 1개 + 치환 규칙"으로 기억하세요.</p>
+  <p>삼각방정식 풀이의 핵심은 <strong>일반해</strong>입니다. sin x = ½의 해는 x = π/6 하나가 아니라 x = π/6 + 2nπ 또는 x = 5π/6 + 2nπ (n∈ℤ) — 단위원에서 높이가 ½인 점이 두 개 있고, 회전은 무한히 반복되기 때문입니다. 방정식을 풀 때 항상 단위원을 그려 "몇 개의 기본해가 있는가"부터 확인하는 것이 정석입니다.</p>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>🎯 예제 1 — 파동의 합성</h4><p>y = 3 sin θ + 4 cos θ의 최댓값은? √(3²+4²) = 5이므로 y = 5 sin(θ+φ) (tan φ = 4/3) — 최댓값 5, 최솟값 −5. 4장의 3-4-5 직각삼각형이 파동 합성에서 재등장합니다.</p></div>
+  <div class="info-card"><h4>🎯 예제 2 — 건물 높이 측량</h4><p>건물에서 50m 떨어진 곳에서 꼭대기를 올려본각이 32°라면 높이는 h = 50 tan 32° ≈ 31.2m (+ 눈높이). 우주의 별까지의 거리(연주 시차)도 똑같은 tan 계산입니다 — 자가 닿지 않는 곳을 재는 도구가 삼각법입니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① <strong>푸리에 분석</strong>: 모든 주기 신호를 sin·cos의 합으로 분해 — MP3·JPEG 압축, 음성인식 전처리의 수학. ② <strong>컴퓨터 그래픽스</strong>: 회전 행렬 [[cos, −sin],[sin, cos]]이 모든 2D 회전을 담당하고, 3D는 사원수와 함께. ③ <strong>GPS·천문</strong>: 구면 삼각법으로 위경도와 거리 계산. ④ <strong>교류 회로</strong>: 전압·전류의 위상차가 전력을 결정 — 공학자가 매일 쓰는 cos φ(역률).</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① 계산기 모드(DEG/RAD) 불일치 — sin 30 ≠ sin 30°. ② sin(α+β)를 sin α + sin β로 전개 — 함수는 분배되지 않습니다. ③ 일반해에서 sin x = k의 둘째 해 π−x 누락. ④ 주기 혼동: tan의 주기는 2π가 아니라 π. ⑤ sin⁻¹ 표기를 1/sin으로 오독 — 역함수(arcsin)입니다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>삼각함수의 가장 깊은 정체는 <strong>오일러 공식</strong>입니다: e^(iθ) = cos θ + i sin θ. 복소평면에서 e^(iθ)는 단위원 위의 점이고, 회전은 복소수 곱셈이 됩니다. 덧셈정리는 지수법칙 e^(iα)e^(iβ) = e^(i(α+β))의 실부·허부 비교로 한 줄에 증명됩니다 — 5장의 "공식들"이 사실 지수함수의 그림자였던 것입니다. θ = π를 넣으면 e^(iπ) + 1 = 0, 수학의 다섯 상수가 한 식에 모입니다.</p>
+  <p>해석학적으로 sin·cos의 엄밀한 정의는 거듭제곱급수입니다: sin x = x − x³/3! + x⁵/5! − …, cos x = 1 − x²/2! + x⁴/4! − …. 이 급수는 모든 복소수에서 수렴하므로 sin(i) 같은 값도 정의되며, 쌍곡함수와의 관계 sin(ix) = i sinh x가 드러납니다. 기하(원) → 해석(급수) → 대수(지수)로 같은 대상을 세 언어로 보는 것이 수학적 성숙의 지표입니다.</p>
+  <h3>수학적·정량적 기초</h3>
+  <div class="formula">e^(iθ) = cos θ + i sin θ &nbsp;|&nbsp; cos θ = (e^(iθ)+e^(−iθ))/2<br>sin x = Σ (−1)ⁿ x^(2n+1)/(2n+1)! &nbsp;|&nbsp; lim sin x / x = 1 (x→0)<br>푸리에: f(x) = a₀/2 + Σ (aₙcos nx + bₙsin nx)</div>
+  <p>극한 sin x/x → 1은 부채꼴 넓이 끼워넣기(sin x &lt; x &lt; tan x)로 증명되며, 8장에서 (sin x)' = cos x의 유일한 비자명 단계가 바로 이 극한입니다. 즉 "라디안을 쓰는 이유"가 미분 공식의 형태를 결정합니다.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>고속 푸리에 변환(FFT)</strong>: O(n log n) 분해 알고리즘은 "20세기 가장 중요한 알고리즘" — 희소 FFT, 비균일 FFT가 현역 연구. ② <strong>위상 인출(phase retrieval)</strong>: 크기만 측정되는 신호에서 위상을 복원하는 문제 — 결정학·천문 영상의 핵심 난제. ③ <strong>신경망의 주기 표현</strong>: 위치 인코딩(transformer의 sin/cos positional encoding), NeRF의 푸리에 특징 — 딥러닝이 삼각함수를 재발견한 사례들.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>복소해석</strong>: 오일러 공식, 단위원과 복소 지수</li>
+    <li><strong>신호처리</strong>: 푸리에 변환, 샘플링 정리</li>
+    <li><strong>물리학</strong>: 단진동, 파동방정식, 양자역학의 파동함수</li>
+    <li><strong>기하학</strong>: 회전군 SO(2) ≅ 단위원 — 군론과의 첫 만남</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Eli Maor, <em>Trigonometric Delights</em> — 역사와 직관</li>
+    <li>📖 E. Stein &amp; R. Shakarchi, <em>Fourier Analysis</em> 1장</li>
+    <li>📺 3Blue1Brown — "오일러 공식", "푸리에 변환" 시각화</li>
+    <li>🔬 키워드: Euler's formula, unit circle, Fourier series, phase, positional encoding</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> ① 단위원 거리 계산으로 cos(α−β) 공식을 직접 유도하기. ② sin x &lt; x &lt; tan x 끼워넣기로 sin x/x → 1을 증명하기. ③ 오일러 공식을 이용해 sin 3θ를 sin θ의 다항식으로 전개하기((cosθ+isinθ)³의 허수부). 세 과제 모두 "그림 → 부등식 → 대수"라는 삼각함수의 세 얼굴을 체험하게 합니다.</div>
+</div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f43f5e","questions":[{"q":"180°는 몇 라디안인가?","choices":["π/2","π","2π","π/4"],"answer":1},{"q":"sin 함수의 주기는?","choices":["2π","π","π/2","4π"],"answer":0},{"q":"단위원 위 점의 좌표는?","choices":["(sinθ, cosθ)","(tanθ, sinθ)","(cosθ, sinθ)","(θ, sinθ)"],"answer":2},{"q":"sin²θ + cos²θ의 값은?","choices":["0","2","θ","1"],"answer":3},{"q":"a sinθ + b cosθ의 최댓값은?","choices":["a+b","√(a²+b²)","ab","a−b"],"answer":1}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('math3d-05');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('math3d-05-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+
+  camera.position.set(1.2,2.6,12.5);camera.lookAt(1.2,0,0);
+
+  var R=1.9, CX=-4.6; // 단위원 중심 x
+  // 단위원 (XY 평면)
+  var circPts=[];
+  for(var i=0;i<=72;i++){var a=i/72*Math.PI*2;circPts.push(V(CX+R*Math.cos(a),R*Math.sin(a),0));}
+  scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(circPts),new THREE.LineBasicMaterial({color:0x39415a,transparent:true,opacity:0.85})));
+  // 원의 축
+  scene.add(line(V(CX-R-0.5,0,0),V(CX+R+0.5,0,0),0xb0b8c8,0.7));
+  scene.add(line(V(CX,-R-0.5,0),V(CX,R+0.5,0),0xb0b8c8,0.7));
+  var uL=lbl('단위원 (반지름 1)',23,'#39415a',0.9);uL.position.set(CX,R+0.85,0);scene.add(uL);
+
+  // 시간축 (x = -2 → 오른쪽으로)
+  var T0=-2,TLEN=8.6;
+  scene.add(line(V(T0,0,0),V(T0+TLEN,0,0),0x39415a,0.8));
+  var tL=lbl('시간 →',22,'#647088',0.85);tL.position.set(T0+TLEN+0.4,-0.4,0);scene.add(tL);
+  // 주기 마커 (θ가 2π 지나는 위치)
+  var SPEED=0.9; // rad/s
+  var XSCALE=1.15; // 시간→x 배율
+  var perX=T0+2*Math.PI/SPEED*0; // 표시는 파장으로
+  var waveLen=2*Math.PI*XSCALE/1; // x축에서 한 주기의 길이 = 2π*XSCALE/SPEED*SPEED... 아래 파동 식 기준으로 2π*XSCALE
+  var pm=line(V(T0+2*Math.PI*XSCALE,-0.3,0),V(T0+2*Math.PI*XSCALE,0.3,0),0xb07d0a,0.0);scene.add(pm);
+  var pmL=lbl('주기 2π',22,'#b07d0a',0.85);pmL.position.set(T0+2*Math.PI*XSCALE,-0.75,0);pmL.visible=false;scene.add(pmL);
+
+  // 회전점, 반지름, 투영선
+  var P=sph(0.16,0xe8506e,1);scene.add(P);
+  var radius=line(V(CX,0,0),V(CX+R,0,0),0xe8506e,0.95);scene.add(radius);
+  var projY=line(V(0,0,0),V(0,0,0),0x2f9e63,0.0);scene.add(projY); // P → sin 파동 시작점
+  var projX=line(V(0,0,0),V(0,0,0),0x5b6bd6,0.0);scene.add(projX); // P → 바닥 cos
+  var thetaL=lbl('θ',26,'#e8506e',0.95);scene.add(thetaL);
+
+  // sin 파동 (XY 평면, 세로) / cos 파동 (XZ 평면, 바닥)
+  var NW=140;
+  var sinArr=new Float32Array((NW+1)*3),cosArr=new Float32Array((NW+1)*3);
+  var sinGeo=new THREE.BufferGeometry();sinGeo.setAttribute('position',new THREE.BufferAttribute(sinArr,3));
+  var cosGeo=new THREE.BufferGeometry();cosGeo.setAttribute('position',new THREE.BufferAttribute(cosArr,3));
+  var sinLine=new THREE.Line(sinGeo,new THREE.LineBasicMaterial({color:0x2f9e63,transparent:true,opacity:0.0}));
+  var cosLine=new THREE.Line(cosGeo,new THREE.LineBasicMaterial({color:0x5b6bd6,transparent:true,opacity:0.0}));
+  scene.add(sinLine);scene.add(cosLine);
+  var sinL=lbl('sin θ — 세로 그림자',24,'#2f9e63',0.95);sinL.position.set(2.6,2.75,0);sinL.visible=false;scene.add(sinL);
+  var cosL=lbl('cos θ — 가로 그림자 (바닥)',24,'#5b6bd6',0.95);cosL.position.set(2.6,-2.75,0);cosL.visible=false;scene.add(cosL);
+
+  var theta=0;
+  function updateWaves(){
+    for(var i=0;i<=NW;i++){
+      var x=T0+i/NW*TLEN;
+      var past=theta-(x-T0)/XSCALE; // 시간을 거슬러
+      sinArr[i*3]=x;sinArr[i*3+1]=R*Math.sin(past);sinArr[i*3+2]=0;
+      cosArr[i*3]=x;cosArr[i*3+1]=0;cosArr[i*3+2]=-R*Math.cos(past);
+    }
+    sinGeo.attributes.position.needsUpdate=true;
+    cosGeo.attributes.position.needsUpdate=true;
+  }
+  function updateCircle(){
+    var px=CX+R*Math.cos(theta),py=R*Math.sin(theta);
+    P.position.set(px,py,0);
+    radius.geometry.setFromPoints([V(CX,0,0),V(px,py,0)]);
+    thetaL.position.set(CX+0.55*Math.cos(theta/2+0.000001),0.55*Math.sin(theta/2),0.2);
+    projY.geometry.setFromPoints([V(px,py,0),V(T0,R*Math.sin(theta),0)]);
+    projX.geometry.setFromPoints([V(px,py,0),V(T0,0,-R*Math.cos(theta))]);
+  }
+
+  var phases=[
+    {dur:7,cap:'① 점 P가 단위원 위를 일정한 속도로 돕니다. P의 좌표가 바로 (cos θ, sin θ) — 각 θ가 몇 바퀴를 돌든 값이 정해지는 "함수"가 됩니다.',
+     enter:function(){sinLine.material.opacity=0;cosLine.material.opacity=0;projY.material.opacity=0;projX.material.opacity=0;sinL.visible=false;cosL.visible=false;pm.material.opacity=0;pmL.visible=false;}},
+    {dur:9,cap:'② P의 "높이"(세로 그림자)만 시간축으로 펼치면 — sin 곡선이 자라납니다. 회전이 파동이 되는 순간입니다.',
+     enter:function(){sinLine.material.opacity=0.95;projY.material.opacity=0.8;sinL.visible=true;}},
+    {dur:9,cap:'③ 이번엔 P의 "가로 위치"를 바닥 평면에 펼치면 — cos 곡선. 같은 회전의 다른 방향 그림자일 뿐이며, sin보다 π/2 앞서 갑니다.',
+     enter:function(){cosLine.material.opacity=0.95;projX.material.opacity=0.8;cosL.visible=true;}},
+    {dur:9,cap:'④ 한 바퀴(2π)마다 같은 모양이 반복 — 주기 2π. 반지름이 1이므로 sin²θ + cos²θ = 1 (피타고라스)도 그림에서 그대로 읽힙니다.',
+     enter:function(){pm.material.opacity=0.85;pmL.visible=true;}}
+  ];
+
+  var pi=0,pt=0,last=0;
+  phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    theta+=dt*SPEED;
+    updateCircle();updateWaves();
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

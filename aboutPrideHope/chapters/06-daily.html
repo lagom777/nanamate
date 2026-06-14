@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 로즈빛 나선을 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 일상 — 하루 속 감정의 흐름</span>
 
 <h2>일상에서 다루기 개요</h2>
 <p>자긍심·희망은 한 번의 큰 성공이 아니라 작은 성공의 반복으로 자란다. 매일 작은 목표를 설정하고 달성하는 사이클이 자기 효능감 회로를 키운다. 큰 목표만 가지면 매일이 실패감이 되지만, 작은 목표를 잘게 쪼개면 매일이 자긍심의 기회가 된다.</p>
@@ -95,14 +97,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 30일 동안 매일 자긍심 일기 1줄 + 희망 일기 1줄(실행 의도 형식) 작성. 시작·종료 시 Snyder Hope Scale 자가 측정.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f472b6","questions":[{"q":"자긍심은 무엇으로 자라나?","choices":["큰 성공 한 번","타인의 칭찬","작은 성공 반복","우연"],"answer":2},{"q":"매일 잘한 것을 적는 습관은?","choices":["자긍심 일기","가계부","일정표","식단표"],"answer":0},{"q":"큰 목표를 다루는 권장 방법은?","choices":["미루기","포기","한번에","잘게 쪼개기"],"answer":3},{"q":"if-then 형식의 계획 기법은?","choices":["자유 연상","실행 의도","무작위 계획","목표 회피"],"answer":1},{"q":"행동 활성화(BA)의 핵심 원칙은?","choices":["기분이 먼저","행동이 먼저","휴식 우선","약물 우선"],"answer":1}]};</script>
 </main></div>
-<script>(function(){
-  const c=document.getElementById('sim-scene');const s=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);cam.lookAt(0,0,0);
   const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const COLOR=0xf472b6;const parts=[];
-  for(let i=0;i<36;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}
-  let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
-  function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();
+  const COL=0xf472b6;const ring=new THREE.Mesh(new THREE.TorusGeometry(2.6,0.05,10,72),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.5}));ring.rotation.x=Math.PI/2;s.add(ring);for(let i=0;i<12;i++){const t=i/12*Math.PI*2;const tick=new THREE.Mesh(new THREE.BoxGeometry(0.08,0.08,0.3),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.6}));tick.position.set(Math.cos(t)*2.6,0,Math.sin(t)*2.6);tick.lookAt(0,0,0);s.add(tick);}const sun=new THREE.Mesh(new THREE.SphereGeometry(0.3,16,16),new THREE.MeshBasicMaterial({color:0xffe08a}));s.add(sun);s.userData.sun=sun;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const t=T*0.5;s.userData.sun.position.set(Math.cos(t)*2.6,0,Math.sin(t)*2.6);s.rotation.y+=0.0008;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
-})();</script></body></html>
+})();
+</script>
+</body></html>

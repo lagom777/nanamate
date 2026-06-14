@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 붉은 불꽃을 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 미래 — 감정 AI·정서 컴퓨팅</span>
 
 <h2>응용과 미래 개요</h2>
 <p>분노는 더 이상 개인의 정서가 아니라 알고리즘과 결합된 사회 시스템 이슈가 됐다. 추천 알고리즘이 도덕적 분노를 증폭시키고, SNS가 분노 표현을 학습 강화하며, AI가 갈등 중재를 시도하는 시대다. 디지털 분노 감지, 분노 증폭 알고리즘 규제, BCI 기반 분노 조절이 미래 분노 연구의 최전선이다.</p>
@@ -74,5 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 1주일간 본인의 SNS 분노 발화를 모두 기록·분류해 (1) 트리거 콘텐츠 유형, (2) 시간대, (3) 알고리즘 추천 비율을 패턴으로 도출해보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ef4444","questions":[{"q":"알고리즘은 분노 콘텐츠를?","choices":["차단한다","증폭한다","무시한다","삭제한다"],"answer":1},{"q":"affective computing의 의미는?","choices":["검색엔진","번역기","정서 인식 AI","청소 로봇"],"answer":2},{"q":"BCI가 뜻하는 것은?","choices":["배터리","뇌-컴퓨터 인터페이스","화면 밝기","와이파이"],"answer":1},{"q":"한국의 댓글 AI 필터 예는?","choices":["알파고","시리","클린봇","빅스비"],"answer":2},{"q":"affective computing 정립자는?","choices":["Zuboff","Picard","Crockett","Gilbert"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0xef4444;const parts=[];for(let i=0;i<34;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xef4444;const layers=[3,4,2];const nodes=[];layers.forEach((cnt,li)=>{const arr=[];for(let i=0;i<cnt;i++){const y=(i-(cnt-1)/2)*1.0;const m=new THREE.Mesh(new THREE.SphereGeometry(0.22,14,14),new THREE.MeshBasicMaterial({color:li===2?0xffe08a:COL}));m.position.set((li-1)*2.4,y,0);s.add(m);arr.push(m);}nodes.push(arr);});for(let li=0;li<nodes.length-1;li++)nodes[li].forEach(p=>nodes[li+1].forEach(q=>s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([p.position,q.position]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.2})))));s.userData.nodes=nodes;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const all=s.userData.nodes.flat();all.forEach((m,i)=>m.scale.setScalar(0.8+0.3*Math.sin(T*3+i)));s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

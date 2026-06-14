@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 형세론 — 산과 물 — aboutFengshui</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🧭 표지</a></li>
+    <li><a href="01-what-is.html">1. 풍수란 무엇인가</a></li>
+    <li><a href="02-yinyang-five.html">2. 음양오행과 기</a></li>
+    <li><a href="03-form-school.html">3. 형세론 — 산과 물</a></li>
+    <li><a href="04-compass-school.html">4. 이기론 — 나경과 좌향</a></li>
+    <li><a href="05-yangtaek.html">5. 양택 — 집과 공간</a></li>
+    <li><a href="06-eumtaek.html">6. 음택 — 묘지와 명당</a></li>
+    <li><a href="07-interior.html">7. 인테리어·현대 풍수</a></li>
+    <li><a href="08-korea.html">8. 비보풍수와 한국 풍수</a></li>
+    <li><a href="09-science.html">9. 풍수의 과학·비판</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>형세론 — 산과 물</em></h1>
+  <p class="authors">Chapter 3 — Form School — Mountains &amp; Water</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 사신사 — 좌청룡·우백호·전주작·후현무가 혈을 감싼다</span>
+
+<h2>형세론 — 산과 물 개요</h2>
+<p>형세론(形勢論)은 눈에 보이는 산과 물의 생김새와 흐름을 살펴 좋은 땅을 찾는 풍수의 한 갈래다. 나경(나침반)으로 방위를 따지는 이기론과 달리, 땅의 형태 그 자체를 직관적으로 '읽는' 까닭에 흔히 형기론(形氣論) 또는 '보는 풍수'라고도 부른다. 이 챕터에서는 형세론의 다섯 가지 핵심 요소인 용(龍)·혈(穴)·사(砂)·수(水)·향(向)과, 명당을 둘러싼 사신사(四神砂)의 짜임을 차근차근 살펴본다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>형세론은 산줄기(용)가 뻗어 내려와 기가 모이는 자리(혈)를 찾고, 그 주변을 둘러싼 산(사)과 흐르는 물(수)의 배치, 그리고 바라보는 방향(향)을 종합해 길지를 판단한다. 명당은 뒤로 산을 등지고 앞으로 물을 마주하는 배산임수의 지형에서, 좌청룡·우백호·전주작·후현무의 사신사가 사방을 감싸 안듯 둘러싼 곳을 이상으로 본다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>형세론은 산과 물의 생김새를 눈으로 보고 '여기가 좋은 땅이다'를 가려내는 풍수다.</p>
+<h3>왜 중요한가?</h3>
+<p>풍수에는 크게 두 흐름이 있다고 본다. 하나는 땅의 모양을 직접 살피는 형세론이고, 다른 하나는 나침반으로 방위를 따지는 이기론이다. 그중 형세론은 가장 오래되고 직관적인 방법이어서, 풍수에 처음 입문할 때 누구나 먼저 만나는 관문이다. 산이 어떻게 뻗어 내려오고 물이 어디로 흐르는지를 보는 일은 특별한 도구 없이도 시작할 수 있기 때문이다. 또한 옛사람들이 마을과 집과 묘를 어디에 두었는지를 이해하려면, 그들이 땅의 형세를 어떻게 읽었는지를 먼저 알아야 한다. 형세론을 익히면 한국의 전통 마을 입지나 고궁의 자리잡음이 왜 그렇게 되었는지 한결 또렷하게 보이기 시작한다.</p>
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>용(龍)</strong>: 기가 흐르는 통로로 여겨지는 산줄기·산맥. 굽이치며 내려오는 모습이 용을 닮았다 하여 붙은 이름이다.</li>
+<li><strong>혈(穴)</strong>: 용을 타고 흘러온 기가 마침내 모이는 자리. 집이나 묘를 두는 가장 핵심이 되는 지점이다.</li>
+<li><strong>사(砂)</strong>: 혈 주변을 둘러싼 크고 작은 산들. 혈을 바람으로부터 지켜 주는 울타리 역할을 한다고 본다.</li>
+<li><strong>수(水)</strong>: 혈 앞을 흐르는 물. 기를 가두고 재물을 모은다고 여겨진다.</li>
+<li><strong>향(向)</strong>: 혈에서 바라보는 방향, 곧 좌향(坐向). 집이나 묘가 어느 쪽을 향하느냐를 가리킨다.</li>
+</ul></div>
+<h3>핵심 개념 풀어쓰기</h3>
+<p>형세론을 의자에 비유하면 이해하기 쉽다. 등받이에 해당하는 든든한 산이 뒤에 있고(배산), 앞으로는 시원하게 트인 마당과 물이 있으며(임수), 양옆으로는 팔걸이처럼 산이 감싸 준다. 이렇게 뒤가 막히고 앞이 트이며 양옆이 안기는 자리가 바로 명당이다. 마치 누군가의 품에 폭 안긴 듯한 지형을 찾는 일이라고 생각하면 된다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 용·혈·사·수·향 다섯 글자를 '산줄기 → 자리 → 주변 산 → 물 → 방향' 순서로 외워 두면, 형세론을 보는 눈의 흐름이 자연스럽게 잡힌다.</div>
+<h3>한 페이지 요약</h3>
+<ul>
+<li>형세론은 산과 물의 형태를 눈으로 살펴 길지를 찾는 '보는 풍수'다.</li>
+<li>다섯 핵심 요소는 용(산줄기)·혈(기가 모이는 자리)·사(주변 산)·수(물)·향(방향)이다.</li>
+<li>사신사는 좌청룡·우백호·전주작·후현무로, 혈을 사방에서 둘러싸는 산을 말한다.</li>
+<li>배산임수는 뒤로 산을 등지고 앞으로 물을 마주하는 이상적 지형이다.</li>
+<li>가장 직관적이어서 풍수 입문의 첫 관문이 되는 분야다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>형세론은 풍수의 두 큰 줄기 가운데 하나로, 땅에 흐른다고 보는 기(氣)를 산천의 가시적 형세를 통해 읽어 내는 체계다. 흔히 형세파 또는 형기론이라 부르며, 나경으로 방위와 좌향을 정밀하게 따지는 이기파(이기론)와 짝을 이룬다. 형세론의 출발점은 '용을 찾는 일(심룡, 尋龍)'이다. 여기서 용이란 굽이쳐 뻗어 가는 산줄기를 가리키며, 큰 산에서 갈라져 나와 혈이 맺히는 곳까지 이어지는 줄기를 특히 내룡(來龍)이라 한다. 용은 멈추지 않고 끊임없이 변화하며 생기를 띠어야 좋은 용으로 여겨지고, 죽은 듯 밋밋하거나 부서진 용은 꺼린다. 용을 따라 내려온 기는 어느 한 지점에서 머무는데, 그 자리가 바로 혈이다. 혈을 정확히 잡는 일을 정혈(定穴)이라 하며, 형세론에서 가장 어렵고도 중요한 작업으로 친다. 혈 주변을 둘러싼 산들을 사(砂)라 하고, 앞으로 흐르는 물을 수(水)라 하며, 이 모든 요소가 조화롭게 맞물릴 때 비로소 명당이 완성된다고 본다.</p>
+<h3>핵심 메커니즘/교리</h3>
+<div class="info-card"><h4>📐 사신사(四神砂)의 짜임</h4><p>혈을 중심으로 사방을 지키는 네 산을 사신사라 한다. 왼쪽의 청룡(좌청룡), 오른쪽의 백호(우백호), 앞쪽의 주작(전주작), 뒤쪽의 현무(후현무)다. 동서남북을 지키는 사신(四神) 신화에서 이름을 따왔으며, 뒤의 현무는 든든히 받쳐 주는 주산(主山)에, 앞의 주작은 트인 들과 물에 대응한다. 이 네 산이 혈을 감싸 안듯 둘러싸면 바람을 갈무리하고 기를 모은다(장풍득수, 藏風得水) 하여 길지로 여긴다.</p></div>
+<h3>대표 사례·경전</h3>
+<div class="info-card"><h4>📐 사례 1 — 배산임수의 마을 입지</h4><p>한국 전통 마을의 상당수는 뒤로 산을 등지고 앞으로 내(川)를 마주하는 배산임수 지형에 자리 잡았다. 뒷산이 현무가 되어 찬 북풍을 막아 주고, 앞의 물이 주작 방향에서 농사와 생활용수를 대며, 양옆 산이 청룡·백호가 되어 마을을 감싼다. 형세론의 원리가 실제 생활 공간에 적용된 대표적 예다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 명당·안산·조산</h4><p>혈 앞으로 책상처럼 나지막이 마주 놓인 산을 안산(案山), 그 너머 멀리 보이는 산을 조산(朝山)이라 한다. 안산은 너무 높지도 낮지도 않게 혈을 마주 보며 예를 갖추듯 자리해야 좋다고 본다. 혈 앞에 펼쳐진 평탄한 터를 명당(明堂)이라 하며, 좁게는 혈 바로 앞 공간을, 넓게는 좋은 땅 전체를 일컫는 말로 쓰인다.</p></div>
+<h3>현대적 전개</h3>
+<p>오늘날 형세론은 단지 묘 자리를 보는 데 그치지 않고, 도시계획·건축·조경 같은 공간 설계의 전통적 지혜로 재해석되기도 한다. 산과 물의 흐름, 바람길, 햇빛과 조망을 종합적으로 고려한다는 점에서 환경·생태적 입지론과 통하는 면이 있다는 시각도 있다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> '청룡·백호'를 실제 동물이나 영물로 오해하기 쉽지만, 형세론에서 이들은 혈의 왼쪽·오른쪽에 자리한 <em>산줄기</em>를 가리키는 방위 개념이다. 또 형세론과 이기론을 대립하는 것으로만 보기 쉬우나, 실제 풍수에서는 두 방법을 함께 활용하는 경우가 많다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>형세론을 깊이 들여다보면, 그 핵심 논리는 '기의 흐름을 형태로 환원해 판독한다'는 데 있다. 눈에 보이지 않는 생기(生氣)가 산줄기를 통로 삼아 흐르고, 물의 경계에서 멈춰 모인다는 전제가 용·혈·사·수·향의 모든 판단을 떠받친다. 형세론은 이 흐름을 단계적으로 추적하는데, 큰 산에서 갈래를 따라 용을 찾고(심룡), 그 용이 어디서 멈추는지를 가려 혈을 정하며(정혈), 사신사와 안산·조산의 배치로 그 혈의 격을 평가한다. 물의 경우 단순히 있고 없음이 아니라 들어오고(득수) 나가는(파구, 破口) 방향과 굽이가 중시되며, 물이 혈을 감싸 안듯 굽어 흐르는 형국을 길하게 본다. 이처럼 형세론은 정성적 판단의 체계이면서도 나름의 엄밀한 분류 어휘와 형국론(形局論, 산천을 동물·사물의 형상에 빗대어 보는 관법)을 갖추고 있다. 다만 이러한 판독은 술사의 안목과 경험에 크게 의존하므로 동일한 땅을 두고도 해석이 갈리기 쉽고, 이 점이 형세론의 강점이자 검증을 어렵게 하는 약점으로 함께 지적된다.</p>
+<h3>최신 연구·쟁점</h3>
+<p>학계에서는 형세론을 두 갈래로 접근한다. 한편에서는 형세론을 전통 지리 인식과 경관학의 자료로 보아, 옛사람들이 지형·기후·수문을 어떻게 통합적으로 읽었는지를 문화지리학·민속학의 관점에서 연구한다. 배산임수 입지가 방풍·일조·용수 확보 면에서 실제로 거주에 유리했다는 환경적 합리성을 부분적으로 인정하는 시각도 있다. 다른 한편에서는 형세론의 핵심 전제인 '기의 흐름'이 객관적으로 측정·검증되지 않는다는 점에서, 길흉화복과의 인과 주장에 대해서는 과학적 근거가 부족하다고 본다. 따라서 형세론은 '경험적으로 축적된 입지의 지혜'로서의 측면과 '검증되지 않은 형이상학적 믿음'으로서의 측면을 함께 지닌 것으로 평가하는 것이 균형 잡힌 태도로 여겨진다.</p>
+<h3>관련 분야</h3>
+<ul>
+<li><strong>이기론(나경·좌향)</strong>: 형세론과 짝을 이루는 풍수의 다른 축으로, 방위와 시간을 정밀하게 따진다.</li>
+<li><strong>문화지리학·경관학</strong>: 전통 입지 인식과 토지 이용을 학술적으로 분석한다.</li>
+<li><strong>건축·조경학</strong>: 산수의 흐름과 조망을 고려한 전통적 공간 배치의 응용을 다룬다.</li>
+</ul>
+<h3>더 읽을거리</h3>
+<ul>
+<li>"한국의 풍수사상" — 최창조</li>
+<li>"청오경·금낭경" — 전통 풍수 경전(역주본)</li>
+<li>"땅의 마음" — 한국 풍수 문화에 관한 교양 해설서</li>
+</ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> 자신이 사는 동네나 익숙한 마을 하나를 골라, 어디가 현무(뒷산)이고 어디가 주작(앞쪽 트인 곳·물)인지, 청룡·백호에 해당하는 산줄기가 있는지를 지도와 함께 직접 짚어 보자. 형세론이 실제 지형에서 어떻게 적용되는지, 또 적용이 어려운 지점은 무엇인지 정리해 보면 좋다.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#14b8a6","questions":[{"q":"기가 마침내 모이는 자리는?","choices":["용","혈","사","수"],"answer":1},{"q":"혈의 왼쪽을 지키는 산은?","choices":["우백호","전주작","좌청룡","후현무"],"answer":2},{"q":"형세론의 다른 이름은?","choices":["형기론","이기론","팔택론","비보론"],"answer":0},{"q":"혈 앞에 책상처럼 마주한 산은?","choices":["조산","주산","안산","현무"],"answer":2},{"q":"뒤로 산, 앞으로 물을 둔 지형은?","choices":["전저후고","장풍득수","수화상극","배산임수"],"answer":3}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0x14b8a6;const hyeol=new THREE.Mesh(new THREE.SphereGeometry(0.45,18,18),new THREE.MeshBasicMaterial({color:0xffe08a}));s.add(hyeol);const hw=new THREE.Mesh(new THREE.TorusGeometry(0.7,0.04,10,40),new THREE.MeshBasicMaterial({color:0xffe08a,transparent:true,opacity:0.6}));hw.rotation.x=Math.PI/2;s.add(hw);const hyunmu=new THREE.Mesh(new THREE.ConeGeometry(1.2,3,18,1,true),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.5}));hyunmu.position.set(0,0.3,-3);s.add(hyunmu);const jujak=new THREE.Mesh(new THREE.ConeGeometry(0.7,1.2,16,1,true),new THREE.MeshBasicMaterial({color:0xef4444,wireframe:true,transparent:true,opacity:0.5}));jujak.position.set(0,-0.4,3);s.add(jujak);const cheong=new THREE.Mesh(new THREE.BoxGeometry(0.6,1.4,3.4),new THREE.MeshBasicMaterial({color:0x22c55e,wireframe:true,transparent:true,opacity:0.5}));cheong.position.set(-3,0,0);s.add(cheong);const baek=new THREE.Mesh(new THREE.BoxGeometry(0.6,1.4,3.4),new THREE.MeshBasicMaterial({color:0xf1f5f9,wireframe:true,transparent:true,opacity:0.5}));baek.position.set(3,0,0);s.add(baek);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;hyeol.scale.setScalar(0.9+0.15*Math.sin(T*2));s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

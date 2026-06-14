@@ -321,12 +321,14 @@
   </style>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
   <div class="container">
     <aside>
-      <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+      <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
       <h3>전체 목차</h3>
       <ol>
         <li><a href="../index.html">📖 표지 · 소개</a></li>
@@ -493,35 +495,35 @@
           <thead>
             <tr style="background: rgba(123, 92, 255, 0.2);">
               <th style="padding: 12px; text-align: left; border-bottom: 2px solid rgba(123, 92, 255, 0.5); color: #7b5cff;">라이브러리</th>
-              <th style="padding: 12px; text-align: center; border-bottom: 2px solid rgba(123, 92, 255, 0.5); color: #7b5cff;">번들 크기</th>
-              <th style="padding: 12px; text-align: center; border-bottom: 2px solid rgba(123, 92, 255, 0.5); color: #7b5cff;">학습 곡선</th>
-              <th style="padding: 12px; text-align: center; border-bottom: 2px solid rgba(123, 92, 255, 0.5); color: #7b5cff;">기능성</th>
+              <th style="padding: 12px; text-align:left; border-bottom: 2px solid rgba(123, 92, 255, 0.5); color: #7b5cff;">번들 크기</th>
+              <th style="padding: 12px; text-align:left; border-bottom: 2px solid rgba(123, 92, 255, 0.5); color: #7b5cff;">학습 곡선</th>
+              <th style="padding: 12px; text-align:left; border-bottom: 2px solid rgba(123, 92, 255, 0.5); color: #7b5cff;">기능성</th>
             </tr>
           </thead>
           <tbody>
             <tr style="border-bottom: 1px solid rgba(123, 92, 255, 0.3);">
               <td style="padding: 12px;">Redux</td>
-              <td style="padding: 12px; text-align: center;">중간</td>
-              <td style="padding: 12px; text-align: center;">높음</td>
-              <td style="padding: 12px; text-align: center;">매우 풍부</td>
+              <td style="padding: 12px; text-align:left;">중간</td>
+              <td style="padding: 12px; text-align:left;">높음</td>
+              <td style="padding: 12px; text-align:left;">매우 풍부</td>
             </tr>
             <tr style="border-bottom: 1px solid rgba(123, 92, 255, 0.3);">
               <td style="padding: 12px;">Zustand</td>
-              <td style="padding: 12px; text-align: center;">⭐⭐⭐</td>
-              <td style="padding: 12px; text-align: center;">낮음</td>
-              <td style="padding: 12px; text-align: center;">충분</td>
+              <td style="padding: 12px; text-align:left;">⭐⭐⭐</td>
+              <td style="padding: 12px; text-align:left;">낮음</td>
+              <td style="padding: 12px; text-align:left;">충분</td>
             </tr>
             <tr style="border-bottom: 1px solid rgba(123, 92, 255, 0.3);">
               <td style="padding: 12px;">Recoil</td>
-              <td style="padding: 12px; text-align: center;">중간</td>
-              <td style="padding: 12px; text-align: center;">중간</td>
-              <td style="padding: 12px; text-align: center;">매우 풍부</td>
+              <td style="padding: 12px; text-align:left;">중간</td>
+              <td style="padding: 12px; text-align:left;">중간</td>
+              <td style="padding: 12px; text-align:left;">매우 풍부</td>
             </tr>
             <tr>
               <td style="padding: 12px;">Jotai</td>
-              <td style="padding: 12px; text-align: center;">⭐⭐⭐</td>
-              <td style="padding: 12px; text-align: center;">낮음</td>
-              <td style="padding: 12px; text-align: center;">충분</td>
+              <td style="padding: 12px; text-align:left;">⭐⭐⭐</td>
+              <td style="padding: 12px; text-align:left;">낮음</td>
+              <td style="padding: 12px; text-align:left;">충분</td>
             </tr>
           </tbody>
         </table>
@@ -622,7 +624,7 @@
       </section>
 
       <h2>📚 난이도별 학습</h2>
-      <p>본인 수준에 맞춰 탭 선택. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+      <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
       <div class="difficulty-tabs">
         <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
         <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -738,7 +740,12 @@ function useStore(selector) {
           <strong>🎓 도전 과제:</strong> Yjs로 동시 편집 가능한 협업 메모 앱을 만들고, 오프라인 변경 사항이 다시 연결됐을 때 자동 병합되는지 검증해보세요.
         </div>
       </div>
-    </main>
+    
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0ea5e9","questions":[{"q":"모달 열림/닫힘은 어떤 상태인가?","choices":["서버 상태","UI 상태","캐시 상태","빌드 상태"],"answer":1},{"q":"Props Drilling을 없애는 내장 API는?","choices":["Redux","Zustand","Context API","SWR"],"answer":2},{"q":"서버 상태 관리 라이브러리는?","choices":["Jotai","Recoil","Zustand","React Query"],"answer":3},{"q":"Redux에서 상태를 바꾸는 순수 함수는?","choices":["Reducer","Action","Store","View"],"answer":0},{"q":"Redux에서 Store는 몇 개인가?","choices":["3개","하나","컴포넌트별","제한 없음"],"answer":1}]};</script>
+</main>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

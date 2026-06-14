@@ -3,12 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>백엔드 개발: 서버의 세계를 탐험하다</title>
+<title>백엔드 개발: 서버의 세계를 3D로 탐험하다</title>
 <link rel="stylesheet" href="styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <link rel="stylesheet" href="../shared/light-theme.css">
-  <script defer src="../shared/i18n.js"></script>
-  <script defer src="../shared/difficulty.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -18,54 +15,167 @@
   <ol>
     <li><a href="index.html">🖥️ 표지 · 소개</a></li>
     <li><a href="chapters/01-server-basics.html">1. 서버 기초</a></li>
-    <li><a href="chapters/02-http-api.html">2. HTTP와 API</a></li>
-    <li><a href="chapters/03-nodejs-express.html">3. Node.js/Express</a></li>
+    <li><a href="chapters/02-http-api.html">2. HTTP와 API 설계</a></li>
+    <li><a href="chapters/03-nodejs-express.html">3. Node.js와 Express</a></li>
     <li><a href="chapters/04-auth-security.html">4. 인증과 보안</a></li>
-    <li><a href="chapters/05-middleware-routing.html">5. 미들웨어</a></li>
-    <li><a href="chapters/06-file-streaming.html">6. 파일/스트리밍</a></li>
-    <li><a href="chapters/07-caching-queue.html">7. 캐싱/메시지큐</a></li>
+    <li><a href="chapters/05-middleware-routing.html">5. 미들웨어와 라우팅</a></li>
+    <li><a href="chapters/06-file-streaming.html">6. 파일 처리와 스트리밍</a></li>
+    <li><a href="chapters/07-caching-queue.html">7. 캐싱과 메시지 큐</a></li>
     <li><a href="chapters/08-microservices.html">8. 마이크로서비스</a></li>
-    <li><a href="chapters/09-deploy-devops.html">9. 배포/DevOps</a></li>
+    <li><a href="chapters/09-deploy-devops.html">9. 배포와 DevOps</a></li>
   </ol>
 </aside>
 <main>
 <header class="paper-header">
-  <h1>백엔드 개발,<br><em>서버</em>의 세계를<br>탐험하다</h1>
-  <p class="authors">Interactive Backend Lab — Server Architecture in 3D</p>
+  <h1>백엔드 개발,<br><em>서버</em>의 세계를<br>3D로 탐험하다</h1>
+  <p class="authors">Interactive Backend Lab — Server Architecture in Three Dimensions</p>
   <p class="affiliation">Vol. 07 · May 2026 · aboutBackend Editorial</p>
 </header>
+
 <div class="scene-3d" id="intro-scene"></div>
-<span class="interact-hint">⟳ 서버-클라이언트 통신 시각화</span>
+<span class="interact-hint">⟳ 마우스로 드래그하여 회전 · 서버-클라이언트 네트워크 시각화</span>
+
 <h2>백엔드 개발이란?</h2>
-<p>백엔드는 사용자에게 보이지 않는 서버 측 로직을 담당합니다. API 설계, 데이터베이스 연동, 인증, 배포까지 — 웹 서비스의 핵심 인프라를 구축합니다.</p>
+<p>백엔드는 사용자에게 보이지 않는 서버 측 로직을 담당합니다. 클라이언트의 요청을 받아 비즈니스 로직을 처리하고, 데이터베이스와 통신하며, 안전하게 응답을 돌려보내는 모든 과정이 백엔드의 영역입니다.</p>
+
+<p>이 학습 사이트에서는 Three.js 3D 시각화를 통해 서버 아키텍처, API 흐름, 인증 과정, 배포 파이프라인 등을 입체적으로 체험합니다. 단순히 코드를 읽는 것이 아니라, 데이터가 어떻게 흘러가는지 직접 눈으로 보며 직관을 쌓아가세요.</p>
+
+<h2>학습 로드맵</h2>
+
+<div class="info-card">
+  <h4>🖥️ 챕터 1–2: 서버와 API 기초</h4>
+  <p>클라이언트-서버 모델, TCP/IP, HTTP 프로토콜, RESTful API 설계 원칙. 3D로 요청-응답 흐름을 시뮬레이션합니다.</p>
+</div>
+
+<div class="info-card http">
+  <h4>⚡ 챕터 3: Node.js 실전</h4>
+  <p>이벤트 루프, Express 프레임워크, 라우트 정의. 이벤트 루프의 동작 과정을 3D 애니메이션으로 관찰합니다.</p>
+</div>
+
+<div class="info-card security">
+  <h4>🔒 챕터 4–5: 보안과 미들웨어</h4>
+  <p>JWT 인증, OAuth2, 미들웨어 체인, 에러 핸들링. 인증 흐름과 미들웨어 파이프라인을 시각화합니다.</p>
+</div>
+
+<div class="info-card queue">
+  <h4>📦 챕터 6–7: 데이터 처리</h4>
+  <p>파일 업로드, 스트리밍, Redis 캐싱, 메시지 큐. 데이터 청크가 파이프를 통해 흐르는 모습을 체험합니다.</p>
+</div>
+
+<div class="info-card docker">
+  <h4>🐳 챕터 8–9: 아키텍처와 배포</h4>
+  <p>마이크로서비스, API Gateway, Docker, CI/CD 파이프라인. 분산 아키텍처와 배포 과정을 3D로 탐험합니다.</p>
+</div>
+
+<h2>백엔드의 핵심 흐름</h2>
+<div class="formula">REQ → Router → Middleware → Handler → DB → RES</div>
+
+<div class="terminal-block">
+<span class="terminal-prompt">node server.js</span>
+Server listening on port 3000...
+<span style="color:#00ff88;">✓</span> Connected to database
+<span style="color:#00ff88;">✓</span> Middleware loaded
+<span style="color:#f59e0b;">→</span> GET /api/users 200 12ms
+<span style="color:#f59e0b;">→</span> POST /api/auth/login 200 45ms
+</div>
+
+<p>각 챕터에서는 이 흐름의 각 단계를 깊이 있게 탐구합니다. 왼쪽 사이드바에서 챕터를 선택하여 학습을 시작하세요.</p>
+
 </main>
 </div>
+
 <script>
+// Intro 3D Scene - 서버-클라이언트 네트워크 토폴로지
 (function() {
   const container = document.getElementById('intro-scene');
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 3, 10);
-  camera.lookAt(0,0,0);
+  const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 5, 12);
+  camera.lookAt(0, 0, 0);
+
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
-  // Server nodes
-  const nodes = [];
+
+  // Central server
+  const serverGeo = new THREE.BoxGeometry(1.2, 1.2, 1.2);
+  const serverMat = new THREE.MeshBasicMaterial({ color: 0x00ff88 });
+  const server = new THREE.Mesh(serverGeo, serverMat);
+  scene.add(server);
+
+  // Server glow
+  const glowGeo = new THREE.BoxGeometry(1.6, 1.6, 1.6);
+  const glowMat = new THREE.MeshBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.1, wireframe: true });
+  scene.add(new THREE.Mesh(glowGeo, glowMat));
+
+  // Client nodes
+  const clients = [];
+  const clientColors = [0x60a5fa, 0xf59e0b, 0xa78bfa, 0xef4444, 0x10b981, 0xfbbf24];
+  for (let i = 0; i < 8; i++) {
+    const angle = (i / 8) * Math.PI * 2;
+    const r = 4 + Math.sin(i * 1.5) * 0.8;
+    const geo = new THREE.SphereGeometry(0.3, 16, 16);
+    const mat = new THREE.MeshBasicMaterial({ color: clientColors[i % clientColors.length] });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(Math.cos(angle) * r, (Math.random() - 0.5) * 2, Math.sin(angle) * r);
+    scene.add(mesh);
+    clients.push(mesh);
+
+    // Connection lines
+    const lineGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), mesh.position]);
+    const lineMat = new THREE.LineBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.15 });
+    scene.add(new THREE.Line(lineGeo, lineMat));
+  }
+
+  // Data packets
+  const packets = [];
   for (let i = 0; i < 6; i++) {
-    const mesh = new THREE.Mesh(new THREE.BoxGeometry(0.8,0.8,0.8), new THREE.MeshBasicMaterial({ color: 0x22c55e, wireframe: true }));
-    mesh.position.set((Math.random()-0.5)*8, (Math.random()-0.5)*4, (Math.random()-0.5)*4);
-    scene.add(mesh); nodes.push(mesh);
+    const geo = new THREE.SphereGeometry(0.08, 8, 8);
+    const mat = new THREE.MeshBasicMaterial({ color: 0xfbbf24 });
+    const mesh = new THREE.Mesh(geo, mat);
+    const clientIdx = Math.floor(Math.random() * clients.length);
+    packets.push({ mesh, clientIdx, t: Math.random(), returning: Math.random() > 0.5 });
+    scene.add(mesh);
   }
-  // Connections
-  for (let i = 0; i < nodes.length-1; i++) {
-    const geo = new THREE.BufferGeometry().setFromPoints([nodes[i].position, nodes[i+1].position]);
-    scene.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0x22c55e, transparent: true, opacity: 0.3 })));
+
+  // Grid
+  const grid = new THREE.GridHelper(20, 20, 0x0a3a0a, 0x0a3a0a);
+  grid.position.y = -3;
+  scene.add(grid);
+
+  // Mouse drag
+  let isDragging = false, prevX = 0, rotY = 0;
+  container.addEventListener('mousedown', e => { isDragging = true; prevX = e.clientX; });
+  window.addEventListener('mouseup', () => isDragging = false);
+  container.addEventListener('mousemove', e => {
+    if (isDragging) { rotY += (e.clientX - prevX) * 0.005; prevX = e.clientX; }
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = Date.now() * 0.001;
+    server.rotation.y = t * 0.3;
+
+    packets.forEach(p => {
+      p.t += 0.008;
+      if (p.t > 1) { p.t = 0; p.returning = !p.returning; p.clientIdx = Math.floor(Math.random() * clients.length); }
+      const cp = clients[p.clientIdx].position;
+      const progress = p.returning ? 1 - p.t : p.t;
+      p.mesh.position.lerpVectors(new THREE.Vector3(0, 0, 0), cp, progress);
+      p.mesh.position.y += Math.sin(p.t * Math.PI) * 0.5;
+    });
+
+    scene.rotation.y += (rotY - scene.rotation.y) * 0.05;
+    renderer.render(scene, camera);
   }
-  function animate() { requestAnimationFrame(animate); scene.rotation.y += 0.003; nodes.forEach(n => n.rotation.x += 0.01); renderer.render(scene, camera); }
   animate();
-  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
 })();
 </script>
 </body>

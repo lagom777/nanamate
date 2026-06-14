@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 4원소와 3특질 — aboutAstrology</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">✨ 표지</a></li>
+    <li><a href="01-what-is.html">1. 점성술이란 무엇인가</a></li>
+    <li><a href="02-zodiac.html">2. 황도 12궁 · 12별자리</a></li>
+    <li><a href="03-elements.html">3. 4원소와 3특질</a></li>
+    <li><a href="04-planets.html">4. 행성의 의미</a></li>
+    <li><a href="05-houses.html">5. 12하우스</a></li>
+    <li><a href="06-natal-chart.html">6. 출생 차트 읽기</a></li>
+    <li><a href="07-big-three.html">7. 태양·달·상승궁 (빅3)</a></li>
+    <li><a href="08-synastry.html">8. 궁합·트랜짓</a></li>
+    <li><a href="09-science.html">9. 점성술의 과학·비판</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>4원소와 3특질</em></h1>
+  <p class="authors">Chapter 3 — Elements &amp; Modalities</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 12별자리 = 4원소 × 3특질 (같은 원소 3개가 삼각형)</span>
+
+<h2>4원소와 3특질 개요</h2>
+<p>점성술은 12별자리를 두 개의 좌표로 분류한다. 하나는 <strong>4원소</strong>(불·흙·공기·물)이고, 다른 하나는 <strong>3특질</strong>(활동·고정·변통)이다. 이 두 축이 교차하면 4×3=12가 되어 각 별자리에 단 하나뿐인 조합이 부여된다. 이 장에서는 원소와 특질이 무엇을 의미하는지, 그리고 둘을 합쳐 별자리를 읽어내는 '문법'이 어떻게 작동하는지를 다룬다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>원소는 별자리의 <em>기질</em>(불=열정, 흙=현실, 공기=지성, 물=감정)을 정하고, 특질은 그 기질이 <em>움직이는 방식</em>(활동=시작, 고정=유지, 변통=적응)을 정한다. 12별자리는 원소 한 개와 특질 한 개를 짝지어 각자 고유한 성격을 얻는다. 예를 들어 양자리는 '불+활동', 황소자리는 '흙+고정', 쌍둥이자리는 '공기+변통'이다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>별자리는 '원소(어떤 기질인가)'와 '특질(어떻게 움직이는가)'을 하나씩 섞어 만든 12개의 조합이다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>점성술에서 별자리 12개를 하나하나 통째로 외우려면 막막하다. 그런데 원소와 특질을 알면 별자리는 '레고 블록'처럼 조립해서 이해할 수 있다. 원소 네 가지와 특질 세 가지만 익히면, 처음 보는 별자리도 두 조각을 합쳐 성격을 짐작할 수 있다. 점성가들은 차트를 읽을 때 늘 이 분류를 먼저 떠올린다. 그만큼 4원소와 3특질은 점성술 해석의 가장 기본이 되는 뼈대다. 이 틀을 잡아두면 이후 행성·하우스 같은 더 복잡한 내용도 훨씬 쉽게 따라갈 수 있다.</p>
+
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>원소(Element)</strong>: 별자리의 타고난 기질을 나누는 네 갈래 — 불·흙·공기·물.</li>
+<li><strong>특질·모드(Modality)</strong>: 기질이 움직이는 방식을 나누는 세 갈래 — 활동·고정·변통.</li>
+<li><strong>활동궁(Cardinal)</strong>: 계절을 여는 자리. 일을 시작하고 추진하는 성향으로 여겨진다.</li>
+<li><strong>고정궁(Fixed)</strong>: 계절의 한가운데. 한번 정한 것을 끝까지 유지하는 성향으로 여겨진다.</li>
+<li><strong>변통궁(Mutable)</strong>: 계절이 바뀌는 자리. 상황에 맞춰 유연하게 적응하는 성향으로 여겨진다.</li>
+</ul></div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>원소를 '재료', 특질을 '쓰임새'라고 생각하면 쉽다. 같은 물이라도 끓는 물(활동), 호수의 물(고정), 흐르는 강물(변통)이 다르게 느껴지는 것과 비슷하다. 불이라는 재료는 똑같이 뜨겁지만, 막 불을 붙이는 불씨(활동)냐, 활활 타는 모닥불(고정)이냐, 바람 따라 번지는 불길(변통)이냐에 따라 성격이 달라진다. 이렇게 '무엇으로 이뤄졌나(원소)'와 '어떻게 행동하나(특질)'를 합치면 한 별자리의 인상이 완성된다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 특질을 계절로 외우면 편하다. 각 계절의 '시작' 달이 활동궁, '한가운데' 달이 고정궁, '끝물' 달이 변통궁이다. 봄을 여는 양자리가 활동, 봄이 무르익은 황소가 고정, 봄에서 여름으로 넘어가는 쌍둥이가 변통인 식이다.</div>
+
+<h3>한 페이지 요약</h3><ul>
+<li>별자리는 원소 1개 + 특질 1개의 조합이며, 4×3=12로 모든 별자리가 고유하다.</li>
+<li>원소는 기질을 정한다: 불(열정·행동), 흙(현실·안정), 공기(지성·소통), 물(감정·직관).</li>
+<li>특질은 움직임을 정한다: 활동(시작·추진), 고정(유지·집중), 변통(적응·유연).</li>
+<li>예시: 양자리=불+활동, 황소=흙+고정, 쌍둥이=공기+변통.</li>
+<li>이 분류는 별자리 해석의 기본 문법으로, 모든 점성술 풀이의 출발점이 된다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>4원소 개념은 점성술 고유의 발명이 아니라 고대 그리스 자연철학에서 빌려온 것이라고 본다. 엠페도클레스가 만물을 불·흙·공기·물의 네 뿌리로 설명했고, 이후 이 사상이 의학과 점성술 전통에 깊이 스며들었다고 전해진다. 점성술은 12별자리를 황도 위 순서대로 불→흙→공기→물의 순환으로 배열한다. 그래서 양자리(불)부터 시작해 황소(흙), 쌍둥이(공기), 게(물)로 이어지고, 이 네 칸짜리 주기가 세 번 반복되어 12별자리를 채운다. 각 원소에는 별자리가 정확히 셋씩 배정되며, 이 셋을 묶어 '삼각자리(트라인·trine)'라 부른다. 한편 특질은 계절의 흐름에서 나온다고 본다. 각 계절의 시작에 활동궁, 한가운데에 고정궁, 끝물에 변통궁이 놓인다. 같은 특질을 공유하는 별자리는 넷씩 묶여 '사각자리(스퀘어 계열)'를 이룬다. 결국 원소(3개씩 4묶음)와 특질(4개씩 3묶음)이 서로 어긋나게 교차하면서, 어떤 두 별자리도 같은 원소와 같은 특질을 동시에 공유하지 않게 된다. 이것이 12별자리가 모두 다른 조합을 갖는 수학적 이유다.</p>
+
+<h3>핵심 메커니즘/교리</h3>
+<div class="info-card"><h4>📐 원소 × 특질의 격자</h4><p>원소를 가로축, 특질을 세로축에 놓으면 4×3 격자가 만들어진다. 각 칸에 별자리가 하나씩 들어간다. 불의 활동=양자리, 불의 고정=사자, 불의 변통=궁수. 흙의 활동=염소, 흙의 고정=황소, 흙의 변통=처녀. 공기의 활동=천칭, 공기의 고정=물병, 공기의 변통=쌍둥이. 물의 활동=게, 물의 고정=전갈, 물의 변통=물고기. 이렇게 두 좌표만 알면 별자리의 자리를 정확히 짚을 수 있다고 본다.</p></div>
+
+<h3>대표 사례·경전</h3>
+<div class="info-card"><h4>📐 사례 1 — 양자리(불+활동)</h4><p>불의 열정과 활동궁의 '시작하는 힘'이 만난다. 그래서 양자리는 새로운 일에 가장 먼저 뛰어드는 개척자형으로 풀이된다. 같은 불이라도 고정궁 사자는 한번 불붙으면 오래 빛나는 자신감으로, 변통궁 궁수는 여기저기 번지는 모험심으로 해석되어, 원소가 같아도 특질에 따라 인상이 달라짐을 보여준다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 황소자리(흙+고정)</h4><p>흙의 현실감과 고정궁의 '유지하는 힘'이 겹친다. 그래서 황소는 안정·끈기·물질적 안정을 중시하는 성향으로 풀이된다고 본다. 흙의 활동궁 염소가 야망을 향해 꾸준히 오르는 추진형, 흙의 변통궁 처녀가 세부를 다듬는 분석형으로 갈리는 것과 대비하면, 같은 흙 안에서도 특질이 방향을 바꾸는 셈이다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>20세기 심리 점성술은 4원소를 성격 유형론과 연결지으려 했다. 융의 사고·감정·감각·직관 네 기능을 공기·물·흙·불에 대응시키려는 시도가 대표적이라고 본다. 오늘날 대중 점성술에서는 '불의 사인이 많은 사람', '물 원소가 부족한 차트'처럼 출생 차트 전체의 원소 균형을 따지는 방식이 널리 쓰인다. 다만 이런 대응은 어디까지나 해석의 틀이며, 학술적으로 검증된 심리학 이론과는 구분해야 한다는 지적도 함께 있다.</p>
+
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> "불의 별자리는 무조건 다혈질, 물의 별자리는 무조건 소심하다"는 식의 단정은 오해다. 점성술 안에서도 원소는 기질의 큰 색조일 뿐이고, 특질·행성·하우스가 함께 작용한다고 본다. 또한 점성술의 4원소는 화학에서 말하는 물질의 상태(고체·액체·기체)나 진짜 원소와는 전혀 다른 상징 체계라는 점을 혼동하지 말아야 한다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>원소와 특질 체계의 진짜 위력은 단순 분류가 아니라 '관계의 기하학'을 만들어내는 데 있다고 본다. 같은 원소를 공유하는 세 별자리는 황도 위에서 서로 120도 떨어져 트라인(삼각)을 이루고, 이 각도는 전통적으로 조화롭고 우호적인 관계로 해석된다. 같은 특질을 공유하는 별자리는 90도(스퀘어)나 180도(어포지션)로 마주 서서 긴장·갈등의 각으로 읽힌다. 다시 말해 원소는 '함께 어울리는 친화의 축', 특질은 '부딪치며 자극하는 긴장의 축'으로 기능하는 셈이다. 여기에 또 하나의 전통적 분류가 겹친다. 점성술은 별자리를 양(陽)·음(陰), 즉 능동(불·공기)과 수용(흙·물)으로도 나누는데, 이 이분법이 원소·특질과 맞물려 더 세밀한 성격 지도를 만든다. 이렇게 세 겹의 분류(원소·특질·양음)가 포개지면, 12별자리는 각각 좌표상 고유한 위치를 갖는 일종의 구조적 언어가 된다. 점성가가 차트를 '읽을' 때 실제로 하는 일은 이 좌표들 사이의 각도와 균형을 해석하는 것이라고 본다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>학술적으로는 별자리 원소가 실제 성격과 상관관계를 갖는지를 두고 여러 검증 연구가 진행되어 왔다. 대규모 표본을 쓴 다수의 통계 연구에서는 출생 별자리 원소와 성격 검사 결과 사이에 의미 있는 상관이 일관되게 나타나지 않았다고 보고된다. 점성술을 옹호하는 쪽에서는 출생 별자리(태양 사인) 하나만으로 판단하는 것은 전통의 본래 방식이 아니며 차트 전체를 봐야 한다고 반론한다. 반면 회의론자들은 표현이 모호해 누구에게나 맞아 보이는 '바넘 효과', 검증 가능한 예측의 부재 등을 이유로 점성술의 원소론을 경험적 이론이 아니라 상징·해석 체계로 보아야 한다고 평가한다. 이 논쟁에서 중요한 점은, 4원소 분류가 풍부한 문화적·심리적 해석의 틀로서는 가치를 인정받더라도, 그것이 곧 검증된 인과 법칙임을 뜻하지는 않는다는 균형 잡힌 시각이라고 본다.</p>
+
+<h3>관련 분야</h3><ul>
+<li><strong>고대 자연철학·의학</strong>: 4원소설과 4체액설의 역사, 점성술과의 교차.</li>
+<li><strong>심리유형론</strong>: 융의 네 기능과 원소 대응을 둘러싼 논의, 그 타당성 검토.</li>
+<li><strong>과학적 회의주의·심리학</strong>: 바넘 효과, 확증 편향, 점성술 검증 연구 방법론.</li>
+</ul>
+
+<h3>더 읽을거리</h3><ul>
+<li>"The Only Astrology Book You'll Ever Need" — Joanna Martine Woolfolk</li>
+<li>"Astrology for the Soul" — Jan Spiller</li>
+<li>"The Inner Sky" — Steven Forrest</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 자신과 가까운 사람 세 명의 태양 별자리를 찾아, 각각의 원소와 특질을 표로 적어보자. 그런 다음 점성술이 말하는 기질(불=열정, 흙=현실, 공기=지성, 물=감정)과 실제 인상이 얼마나 맞는지, 또 어긋나는지를 메모해 보자. 맞는 부분과 빗나가는 부분을 모두 적으면서 '왜 맞아 보이는가/안 보이는가'를 스스로 따져보는 것이 핵심이다.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#c084fc","questions":[{"q":"불 원소에 속하는 별자리는?","choices":["양자리","황소자리","게자리","천칭자리"],"answer":0},{"q":"흙 원소의 기질로 가장 알맞은 것은?","choices":["현실적·안정","열정적·즉흥","감정적·직관","지적·소통"],"answer":0},{"q":"활동(cardinal) 특질 별자리는?","choices":["게자리","사자자리","처녀자리","전갈자리"],"answer":0},{"q":"쌍둥이자리의 원소+특질 조합은?","choices":["공기+변통","불+활동","물+고정","흙+변통"],"answer":0},{"q":"4원소 × 3특질 = 별자리 개수는?","choices":["12개","7개","16개","10개"],"answer":0}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7.5);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const ELC=[0xef4444,0x22c55e,0x38bdf8,0x3b82f6];/*불 흙 공기 물*/const R=3.0;const pts=[];for(let i=0;i<12;i++){const t=i/12*Math.PI*2 - Math.PI/2;pts.push([Math.cos(t)*R,Math.sin(t)*R]);const m=new THREE.Mesh(new THREE.SphereGeometry(0.24,16,16),new THREE.MeshBasicMaterial({color:ELC[i%4]}));m.position.set(Math.cos(t)*R,Math.sin(t)*R,0);s.add(m);}for(let e=0;e<4;e++){const tri=[pts[e],pts[e+4],pts[e+8],pts[e]].map(p=>new THREE.Vector3(p[0],p[1],0));s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(tri),new THREE.LineBasicMaterial({color:ELC[e],transparent:true,opacity:0.55})));}for(let i=0;i<40;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.03+Math.random()*0.04,6,6),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.3+Math.random()*0.5}));m.position.set((Math.random()-0.5)*18,(Math.random()-0.5)*11,(Math.random()-0.5)*18);s.add(m);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.z+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부동산 블로그 글 생성기</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    --bg-0:#07070d; --bg-1:#0d0d18; --bg-2:#15152a;
+    --ink:#e8e8f4; --ink-dim:#9b9bb8;
+    --line:rgba(255,255,255,0.08); --line-strong:rgba(255,255,255,0.18);
+    --accent-1:#7b5cff; --accent-2:#00d4ff; --accent-3:#ff5cb3; --accent-4:#ffd166;
+    --ok:#3ddc97; --warn:#ffb454; --err:#ff6b7d;
+    --easing:cubic-bezier(0.2,0.8,0.2,1);
+  }
+  html,body{
+    background:var(--bg-0); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Pretendard","Noto Sans KR",sans-serif;
+    line-height:1.6; min-height:100vh;
+  }
+  .bg-glow{position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(600px circle at 12% 8%, rgba(123,92,255,0.16), transparent 60%),
+      radial-gradient(700px circle at 90% 80%, rgba(0,212,255,0.12), transparent 60%);}
+  header.top{
+    position:sticky; top:0; z-index:20;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:16px 24px; border-bottom:1px solid var(--line);
+    background:rgba(7,7,13,0.6); backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+  }
+  .brand{display:flex; flex-direction:column;}
+  .brand h1{font-size:17px; font-weight:800; letter-spacing:-0.01em;}
+  .brand h1 em{font-style:normal;
+    background:linear-gradient(120deg,#fff,var(--accent-2));
+    -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .brand p{font-size:11px; color:var(--ink-dim);}
+  .top .right{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end;}
+  .pill{font-size:11px; color:var(--ink-dim); border:1px solid var(--line);
+    padding:5px 10px; border-radius:999px; background:rgba(255,255,255,0.03);}
+  .pill b{color:var(--ink);}
+
+  main{max-width:1180px; margin:0 auto; padding:22px 20px 80px;
+    display:grid; grid-template-columns:minmax(0,420px) minmax(0,1fr); gap:22px; align-items:start;}
+  @media(max-width:920px){ main{grid-template-columns:1fr;} }
+
+  .panel{background:linear-gradient(160deg,rgba(255,255,255,0.045),rgba(255,255,255,0.01));
+    border:1px solid var(--line); border-radius:16px; padding:18px;}
+  .panel h2{font-size:14px; letter-spacing:0.04em; color:var(--ink-dim);
+    text-transform:uppercase; margin-bottom:14px; font-weight:700;}
+  .panel.right h2{display:flex; align-items:center; justify-content:space-between;}
+
+  label{display:block; font-size:12px; color:var(--ink-dim); margin:12px 0 5px; font-weight:600;}
+  label.req::after{content:" *"; color:var(--accent-3);}
+  input,select,textarea{
+    width:100%; background:var(--bg-1); color:var(--ink);
+    border:1px solid var(--line-strong); border-radius:10px;
+    padding:10px 12px; font-size:13px; font-family:inherit; line-height:1.5;
+    transition:border-color .2s var(--easing);}
+  input:focus,select:focus,textarea:focus{outline:none; border-color:var(--accent-1);}
+  textarea{resize:vertical; min-height:84px;}
+  .row{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .hint{font-size:11px; color:var(--ink-dim); margin-top:4px; line-height:1.45;}
+
+  details.settings{border:1px solid var(--line); border-radius:12px; padding:0 14px;
+    background:rgba(255,255,255,0.02); margin-bottom:14px;}
+  details.settings>summary{cursor:pointer; padding:12px 0; font-size:13px; font-weight:700;
+    list-style:none; display:flex; align-items:center; justify-content:space-between;}
+  details.settings>summary::-webkit-details-marker{display:none;}
+  details.settings>summary .chev{color:var(--ink-dim); transition:transform .2s;}
+  details.settings[open]>summary .chev{transform:rotate(180deg);}
+  details.settings .body{padding:0 0 14px;}
+
+  .seg{display:flex; gap:6px; background:var(--bg-1); border:1px solid var(--line-strong);
+    border-radius:10px; padding:4px;}
+  .seg button{flex:1; background:transparent; border:none; color:var(--ink-dim);
+    padding:8px 6px; border-radius:7px; font-size:12px; font-weight:700; cursor:pointer;
+    font-family:inherit; transition:all .2s var(--easing);}
+  .seg button.active{background:linear-gradient(120deg,var(--accent-1),var(--accent-2)); color:#06060c;}
+
+  .btn{width:100%; margin-top:16px; padding:14px; border:none; border-radius:12px;
+    font-size:14px; font-weight:800; cursor:pointer; font-family:inherit; letter-spacing:0.02em;
+    background:linear-gradient(120deg,var(--accent-1),var(--accent-2)); color:#06060c;
+    transition:transform .2s var(--easing), box-shadow .3s var(--easing);
+    box-shadow:0 10px 30px -12px var(--accent-1);}
+  .btn:hover:not(:disabled){transform:translateY(-2px);}
+  .btn:disabled{opacity:.55; cursor:not-allowed; box-shadow:none;}
+  .btn.ghost{background:transparent; border:1px solid var(--line-strong); color:var(--ink);
+    box-shadow:none; margin-top:10px;}
+
+  .note{font-size:11.5px; border-radius:10px; padding:10px 12px; margin-top:12px; line-height:1.5;}
+  .note.info{background:rgba(0,212,255,0.07); border:1px solid rgba(0,212,255,0.22); color:#bdeaff;}
+  .note.warn{background:rgba(255,180,84,0.08); border:1px solid rgba(255,180,84,0.25); color:#ffd9a8;}
+  .note a{color:var(--accent-2);}
+
+  /* output */
+  .right .empty{color:var(--ink-dim); font-size:13px; text-align:center; padding:60px 10px;}
+  .out-block{margin-bottom:20px;}
+  .out-label{font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent-2);
+    font-weight:800; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
+  .titles .title-opt{display:flex; gap:8px; align-items:flex-start; padding:9px 11px; margin-bottom:7px;
+    background:var(--bg-1); border:1px solid var(--line); border-radius:9px; cursor:pointer;
+    font-size:13.5px; line-height:1.45; transition:border-color .2s;}
+  .titles .title-opt:hover{border-color:var(--accent-1);}
+  .titles .title-opt .num{color:var(--accent-4); font-weight:800; flex-shrink:0;}
+  .titles .title-opt .cp{margin-left:auto; font-size:11px; color:var(--ink-dim); flex-shrink:0;}
+
+  .tabs{display:flex; gap:4px; margin-bottom:10px; border-bottom:1px solid var(--line);}
+  .tabs button{background:none; border:none; color:var(--ink-dim); font-family:inherit;
+    font-size:12.5px; font-weight:700; padding:8px 12px; cursor:pointer; border-bottom:2px solid transparent;
+    margin-bottom:-1px;}
+  .tabs button.active{color:var(--ink); border-bottom-color:var(--accent-1);}
+
+  .doc{background:var(--bg-1); border:1px solid var(--line); border-radius:12px; padding:18px 20px;
+    font-size:14px; line-height:1.85; max-height:560px; overflow:auto;}
+  .doc h2{font-size:19px; margin:18px 0 8px; color:var(--ink); letter-spacing:-0.01em; font-weight:800;}
+  .doc h3{font-size:16px; margin:16px 0 6px; color:#d8d8ee; font-weight:700;}
+  .doc h2:first-child,.doc h3:first-child{margin-top:0;}
+  .doc p{margin:0 0 12px;}
+  .doc ul,.doc ol{margin:0 0 12px; padding-left:22px;}
+  .doc li{margin:3px 0;}
+  .doc strong{color:#fff;}
+  .doc table{border-collapse:collapse; width:100%; margin:8px 0 14px; font-size:13px;}
+  .doc th,.doc td{border:1px solid var(--line-strong); padding:7px 10px; text-align:left;}
+  .doc th{background:rgba(123,92,255,0.14); font-weight:700;}
+  .doc pre.plain{white-space:pre-wrap; font-family:inherit; color:var(--ink); margin:0;}
+
+  .chips{display:flex; flex-wrap:wrap; gap:7px;}
+  .chip{font-size:12px; color:#bdeaff; background:rgba(0,212,255,0.08);
+    border:1px solid rgba(0,212,255,0.22); border-radius:999px; padding:5px 11px;}
+  .meta-box{background:var(--bg-1); border:1px solid var(--line); border-radius:10px;
+    padding:12px 14px; font-size:13px; color:var(--ink-dim);}
+
+  /* SNS 요약 */
+  .social{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  @media(max-width:560px){ .social{grid-template-columns:1fr;} }
+  .soc-card{background:var(--bg-1); border:1px solid var(--line); border-radius:11px; padding:12px;}
+  .soc-head{display:flex; align-items:center; justify-content:space-between; font-size:12px;
+    font-weight:800; color:var(--ink); margin-bottom:8px;}
+  .soc-head .cnt{font-size:11px; font-weight:700; color:var(--ink-dim);}
+  .soc-head .cnt.over{color:var(--err);}
+  .soc-text{white-space:pre-wrap; font-family:inherit; font-size:12.5px; line-height:1.6;
+    color:var(--ink); background:rgba(255,255,255,0.02); border:1px solid var(--line);
+    border-radius:8px; padding:9px 10px; min-height:84px; max-height:180px; overflow:auto; margin:0;}
+  .soc-actions{display:flex; gap:6px; margin-top:8px;}
+  .soc-go{flex:1; margin-top:0; padding:9px; font-size:12px;
+    background:linear-gradient(120deg,var(--accent-3),var(--accent-1)); color:#fff; box-shadow:none;}
+  .soc-go:hover{transform:translateY(-1px);}
+  .checklist{list-style:none; padding:0;}
+  .checklist li{position:relative; padding-left:24px; margin:7px 0; font-size:13px; color:#ffd9a8;}
+  .checklist li::before{content:"☐"; position:absolute; left:0; color:var(--warn); font-size:15px;}
+
+  .copybtn{background:rgba(255,255,255,0.06); border:1px solid var(--line-strong); color:var(--ink);
+    font-family:inherit; font-size:11px; font-weight:700; padding:4px 10px; border-radius:7px; cursor:pointer;
+    transition:all .15s;}
+  .copybtn:hover{background:var(--accent-1); color:#06060c; border-color:var(--accent-1);}
+
+  .spinner{display:inline-block; width:15px; height:15px; border:2px solid rgba(255,255,255,0.3);
+    border-top-color:#06060c; border-radius:50%; animation:spin .7s linear infinite; vertical-align:-2px;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .status{font-size:12px; margin-top:10px; min-height:18px;}
+  .status.err{color:var(--err);} .status.ok{color:var(--ok);}
+  @media(prefers-reduced-motion:reduce){.spinner{animation:none;}}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<header class="top">
+  <div class="brand">
+    <h1>🏠 부동산 <em>블로그 글 생성기</em></h1>
+    <p>매물·시세·입지 포스팅 초안을 한 번에 — 게시 전 사람 검수 전제</p>
+  </div>
+  <div class="right">
+    <span class="pill">엔진 <b id="provBadge">Gemini</b></span>
+    <span class="pill">키 <b id="keyBadge">미설정</b></span>
+  </div>
+</header>
+
+<main>
+  <!-- ===================== INPUT ===================== -->
+  <section class="panel left">
+    <h2>① 정보 입력</h2>
+
+    <details class="settings" id="settings">
+      <summary>⚙️ 생성 엔진 · API 키 설정 <span class="chev">▾</span></summary>
+      <div class="body">
+        <label>엔진</label>
+        <div class="seg" id="provSeg">
+          <button data-prov="gemini" class="active">Gemini (무료)</button>
+          <button data-prov="claude">Claude</button>
+          <button data-prov="template">템플릿</button>
+        </div>
+
+        <div id="geminiCfg">
+          <label>Gemini API 키</label>
+          <input id="geminiKey" type="password" placeholder="AIza... (Google AI Studio에서 무료 발급)" autocomplete="off">
+          <div class="hint"><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> → 구글 로그인 → 키 생성 → 복사·붙여넣기. 무료 등급으로 충분합니다.</div>
+          <label>모델</label>
+          <input id="geminiModel" type="text" placeholder="gemini-2.5-flash">
+        </div>
+
+        <div id="claudeCfg" style="display:none;">
+          <label>Claude API 키</label>
+          <input id="claudeKey" type="password" placeholder="sk-ant-..." autocomplete="off">
+          <div class="hint"><a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>에서 발급. 사용량만큼 과금됩니다.</div>
+          <label>모델</label>
+          <input id="claudeModel" type="text" placeholder="claude-sonnet-4-6">
+        </div>
+
+        <div id="templateCfg" style="display:none;">
+          <div class="note info" style="margin-top:12px;">템플릿 모드는 API·키 없이 즉시·오프라인으로 <b>초안 골격</b>을 만듭니다. 문장이 정형화되니 직접 다듬어 쓰세요.</div>
+        </div>
+
+        <label>네이버 블로그 ID <span class="hint" style="display:inline;">(선택 — '네이버 글쓰기 열기'용)</span></label>
+        <input id="naverId" type="text" placeholder="blog.naver.com/ 뒤 아이디 (예: myblog)" autocomplete="off">
+
+        <div class="note warn">🔒 키는 <b>이 브라우저(localStorage)에만</b> 저장되고 해당 AI 제공사로만 전송됩니다. 외부 서버로 안 나갑니다. 키가 박힌 채 이 파일을 공개 배포하지 마세요(입력 방식이라 코드엔 키가 없음). 공용 PC에서는 사용 후 아래 <b>'저장된 키 지우기'</b>를 눌러 주세요.</div>
+        <button class="btn ghost" id="clearKey" type="button">저장된 키 지우기</button>
+      </div>
+    </details>
+
+    <form id="form" autocomplete="off">
+      <label class="req">글 유형</label>
+      <select id="f_type">
+        <option value="listing">매물 소개 (광고형)</option>
+        <option value="price">시세·실거래가 분석</option>
+        <option value="location">동네·입지·학군·교통</option>
+        <option value="subscription">청약·분양 정보</option>
+        <option value="policy">정책·세금·대출 가이드</option>
+        <option value="interior">인테리어·집들이</option>
+        <option value="invest">투자·시장 전망</option>
+        <option value="process">거래 절차·실무</option>
+        <option value="custom">✏️ 자유 주제 (직접 입력)</option>
+      </select>
+
+      <label>자유 주제 <span class="hint" style="display:inline;">(글 유형이 '자유 주제'일 때 사용)</span></label>
+      <input id="f_topic" placeholder="예: 2026 신혼부부 특별공급 자격 총정리 / 재건축 초과이익환수제 쉽게">
+
+      <label class="req">지역 / 주소</label>
+      <input id="f_area" placeholder="예: 서울 송파구 잠실동">
+
+      <label>단지 · 건물명</label>
+      <input id="f_name" placeholder="예: 잠실엘스 / 리센츠">
+
+      <div class="row">
+        <div>
+          <label>거래 유형</label>
+          <select id="f_deal">
+            <option value="">선택 안 함</option>
+            <option>매매</option><option>전세</option><option>월세</option>
+          </select>
+        </div>
+        <div>
+          <label>가격 / 보증금·월세</label>
+          <input id="f_price" placeholder="예: 매매 23.5억">
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>면적</label>
+          <input id="f_size" placeholder="예: 전용 84㎡(34평)">
+        </div>
+        <div>
+          <label>구조 · 층 · 향</label>
+          <input id="f_struct" placeholder="예: 방3 욕실2, 12/25층, 남향">
+        </div>
+      </div>
+
+      <label>교통</label>
+      <input id="f_transit" placeholder="예: 2호선 잠실새내역 도보 5분, 9호선 인접">
+
+      <label>학군 · 생활편의</label>
+      <input id="f_life" placeholder="예: 잠일초 도보 3분, 롯데월드몰·아산병원">
+
+      <label>데이터 기준일 · 출처 <span class="hint" style="display:inline;">(시세 분석에 권장)</span></label>
+      <input id="f_data" placeholder="예: 2026년 5월 국토부 실거래가 / KB시세 기준">
+
+      <label>핵심 키워드 (SEO)</label>
+      <input id="f_kw" placeholder="예: 잠실 84타입 매매 시세">
+
+      <div class="row">
+        <div>
+          <label>대상 독자 · 톤</label>
+          <input id="f_audience" placeholder="예: 신혼부부 실거주자">
+        </div>
+        <div>
+          <label>글 길이</label>
+          <select id="f_len">
+            <option value="short">짧게 (~800자)</option>
+            <option value="mid" selected>보통 (~1500자)</option>
+            <option value="long">길게 (~2500자)</option>
+          </select>
+        </div>
+      </div>
+
+      <label>연락처 · 중개사무소 <span class="hint" style="display:inline;">(매물 소개 말미 CTA, 선택)</span></label>
+      <input id="f_contact" placeholder="예: ○○공인중개사 02-000-0000">
+
+      <label>추가 정보 · 셀링포인트 · 자유 메모</label>
+      <textarea id="f_notes" placeholder="실거래가 표, 임장 후기, 호재, 단점, 강조하고 싶은 점 등 자유롭게. 적을수록 글이 풍부·정확해집니다."></textarea>
+
+      <button class="btn" id="genBtn" type="submit">✨ 블로그 글 생성</button>
+      <div class="status" id="status"></div>
+    </form>
+  </section>
+
+  <!-- ===================== OUTPUT ===================== -->
+  <section class="panel right">
+    <h2>② 결과 <button class="copybtn" id="copyAll" style="display:none;">전체 복사</button></h2>
+    <div id="output">
+      <div class="empty">왼쪽에 정보를 입력하고 <b>생성</b>을 누르면<br>제목 3안 · 본문 · 네이버용 · 해시태그 · 검수 체크리스트가 여기에 나옵니다.</div>
+    </div>
+  </section>
+</main>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const LS = {
+  prov:"reblog_prov", gKey:"reblog_gkey", cKey:"reblog_ckey",
+  gModel:"reblog_gmodel", cModel:"reblog_cmodel", form:"reblog_form", naverId:"reblog_naverid"
+};
+const DEFAULT_GEMINI_MODEL = "gemini-2.5-flash";
+const DEFAULT_CLAUDE_MODEL = "claude-sonnet-4-6";
+
+/* ---------- safe storage (저장소 차단 환경에서도 페이지가 죽지 않도록) ---------- */
+function getLS(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function setLS(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function delLS(k){ try{ localStorage.removeItem(k); }catch(e){} }
+
+/* ---------- state restore ---------- */
+let provider = getLS(LS.prov) || "gemini";
+$("geminiKey").value  = getLS(LS.gKey) || "";
+$("claudeKey").value  = getLS(LS.cKey) || "";
+$("geminiModel").value = getLS(LS.gModel) || DEFAULT_GEMINI_MODEL;
+$("claudeModel").value = getLS(LS.cModel) || DEFAULT_CLAUDE_MODEL;
+$("naverId").value = getLS(LS.naverId) || "";
+
+function setProvider(p){
+  provider = p;
+  document.querySelectorAll("#provSeg button").forEach(b =>
+    b.classList.toggle("active", b.dataset.prov === p));
+  $("geminiCfg").style.display  = p==="gemini"   ? "" : "none";
+  $("claudeCfg").style.display  = p==="claude"   ? "" : "none";
+  $("templateCfg").style.display= p==="template" ? "" : "none";
+  $("provBadge").textContent = p==="gemini"?"Gemini":p==="claude"?"Claude":"템플릿";
+  setLS(LS.prov, p);
+  refreshKeyBadge();
+}
+function refreshKeyBadge(){
+  let ok = provider==="template" ||
+    (provider==="gemini" && !!$("geminiKey").value.trim()) ||
+    (provider==="claude" && !!$("claudeKey").value.trim());
+  $("keyBadge").textContent = provider==="template" ? "불필요" : (ok ? "설정됨" : "미설정");
+  $("keyBadge").style.color = ok ? "var(--ok)" : "var(--ink-dim)";
+}
+document.querySelectorAll("#provSeg button").forEach(b =>
+  b.addEventListener("click", () => setProvider(b.dataset.prov)));
+["geminiKey","claudeKey","geminiModel","claudeModel"].forEach(id =>
+  $(id).addEventListener("input", () => {
+    setLS(LS.gKey, $("geminiKey").value.trim());
+    setLS(LS.cKey, $("claudeKey").value.trim());
+    setLS(LS.gModel, $("geminiModel").value.trim());
+    setLS(LS.cModel, $("claudeModel").value.trim());
+    refreshKeyBadge();
+  }));
+$("naverId").addEventListener("input", () => setLS(LS.naverId, $("naverId").value.trim()));
+$("clearKey").addEventListener("click", () => {
+  [LS.gKey,LS.cKey].forEach(k => delLS(k));
+  $("geminiKey").value=""; $("claudeKey").value="";
+  refreshKeyBadge(); setStatus("저장된 키를 지웠습니다.","ok");
+});
+setProvider(provider);
+
+/* ---------- form fields ---------- */
+const FORM_IDS = ["f_type","f_topic","f_area","f_name","f_deal","f_price","f_size","f_struct",
+  "f_transit","f_life","f_data","f_kw","f_audience","f_len","f_contact","f_notes"];
+(function restoreForm(){
+  try{
+    const saved = JSON.parse(getLS(LS.form) || "{}");
+    FORM_IDS.forEach(id => { if(saved[id] != null && $(id)) $(id).value = saved[id]; });
+  }catch(e){}
+})();
+function saveForm(){
+  const o = {}; FORM_IDS.forEach(id => o[id] = $(id).value);
+  setLS(LS.form, JSON.stringify(o));
+}
+
+/* ---------- helpers ---------- */
+function setStatus(msg, cls){ const s=$("status"); s.className="status "+(cls||""); s.innerHTML=msg||""; }
+function esc(s){ return String(s).replace(/[&<>"']/g, c =>
+  ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+/* minimal, XSS-safe markdown → html (escape first, then format) */
+function mdToHtml(md){
+  const lines = String(md||"").replace(/\r\n/g,"\n").split("\n");
+  let html="", i=0;
+  const inline = t => esc(t).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");
+  while(i < lines.length){
+    let ln = lines[i];
+    if(/^\s*$/.test(ln)){ i++; continue; }
+    let m;
+    if((m=ln.match(/^(#{1,3})\s+(.*)$/))){
+      const tag = m[1].length>=3 ? "h3" : "h2"; // #, ## -> h2 / ### -> h3
+      html += `<${tag}>${inline(m[2])}</${tag}>`; i++; continue;
+    }
+    if(/^\s*\|.*\|\s*$/.test(ln)){
+      const tbl=[]; while(i<lines.length && /^\s*\|.*\|\s*$/.test(lines[i])){ tbl.push(lines[i]); i++; }
+      const rows = tbl.map(r => r.trim().replace(/^\||\|$/g,"").split("|").map(c=>c.trim()));
+      const body = rows.filter(r => !r.every(c => /^:?-{2,}:?$/.test(c) || c===""));
+      if(body.length){
+        html += "<table>";
+        body.forEach((r,idx)=>{
+          const cell = idx===0?"th":"td";
+          html += "<tr>"+r.map(c=>`<${cell}>${inline(c)}</${cell}>`).join("")+"</tr>";
+        });
+        html += "</table>";
+      }
+      continue;
+    }
+    if(/^\s*[-*]\s+/.test(ln)){
+      html+="<ul>"; while(i<lines.length && /^\s*[-*]\s+/.test(lines[i])){
+        html+=`<li>${inline(lines[i].replace(/^\s*[-*]\s+/,""))}</li>`; i++; } html+="</ul>"; continue;
+    }
+    if(/^\s*\d+\.\s+/.test(ln)){
+      html+="<ol>"; while(i<lines.length && /^\s*\d+\.\s+/.test(lines[i])){
+        html+=`<li>${inline(lines[i].replace(/^\s*\d+\.\s+/,""))}</li>`; i++; } html+="</ol>"; continue;
+    }
+    // paragraph: gather until blank
+    const para=[]; while(i<lines.length && !/^\s*$/.test(lines[i])
+      && !/^(#{1,3})\s/.test(lines[i]) && !/^\s*\|.*\|\s*$/.test(lines[i])
+      && !/^\s*[-*]\s+/.test(lines[i]) && !/^\s*\d+\.\s+/.test(lines[i])){
+      para.push(lines[i]); i++;
+    }
+    html += `<p>${para.map(inline).join("<br>")}</p>`;
+  }
+  return html;
+}
+
+/* 첫 완결 JSON 객체를 괄호 균형으로 추출 (문자열 리터럴·이스케이프 고려) */
+function extractFirstObject(t){
+  const start = t.indexOf("{");
+  if(start === -1) return null;
+  let depth=0, inStr=false, escNext=false;
+  for(let i=start; i<t.length; i++){
+    const ch = t[i];
+    if(escNext){ escNext=false; continue; }
+    if(inStr){
+      if(ch === "\\") escNext=true;
+      else if(ch === '"') inStr=false;
+      continue;
+    }
+    if(ch === '"') inStr=true;
+    else if(ch === "{") depth++;
+    else if(ch === "}"){ depth--; if(depth===0) return t.slice(start, i+1); }
+  }
+  return null; // 닫히지 않음
+}
+function parseJsonLoose(text){
+  let t = String(text).trim();
+  t = t.replace(/^```(?:json)?\s*/i,"").replace(/```\s*$/,"").trim();
+  const obj = extractFirstObject(t);
+  if(obj){ try{ return JSON.parse(obj); }catch(e){} }
+  // 폴백: 양끝 중괄호 슬라이스
+  const s=t.indexOf("{"), e=t.lastIndexOf("}");
+  if(s!==-1 && e!==-1 && e>s) return JSON.parse(t.slice(s,e+1));
+  return JSON.parse(t);
+}
+
+/* info_table를 [라벨,값] 쌍 배열로 정규화 (객체/문자열/객체배열 방어) */
+function normalizeInfoTable(it){
+  if(!it) return [];
+  let rows=[];
+  if(Array.isArray(it)){
+    rows = it.map(r=>{
+      if(Array.isArray(r)) return [r[0], r.slice(1).join(" ")];
+      if(r && typeof r==="object") return [r.label??r.key??r.name??Object.keys(r)[0], r.value??r.val??Object.values(r)[0]];
+      if(typeof r==="string"){ const i=r.indexOf(":"); return i>-1?[r.slice(0,i),r.slice(i+1)]:[r,""]; }
+      return null;
+    });
+  } else if(typeof it==="object"){
+    rows = Object.entries(it).map(([k,v])=>[k, (v && typeof v==="object")?JSON.stringify(v):v]);
+  }
+  return rows.filter(r=>r && r[0]!=null && String(r[0]).trim()!=="")
+             .map(r=>[String(r[0]).trim(), String(r[1]??"").trim()]);
+}
+
+/* 마크다운 → 네이버 에디터 붙여넣기용 평문 (제목기호·강조 제거, 표는 라벨:값) */
+function toNaverPlain(md){
+  const lines = String(md||"").replace(/\r\n/g,"\n").split("\n");
+  const out=[]; let i=0;
+  while(i<lines.length){
+    if(/^\s*\|.*\|\s*$/.test(lines[i])){
+      const tbl=[]; while(i<lines.length && /^\s*\|.*\|\s*$/.test(lines[i])){ tbl.push(lines[i]); i++; }
+      let rows = tbl.map(r=>r.trim().replace(/^\||\|$/g,"").split("|").map(c=>c.trim()))
+                    .filter(r=>!r.every(c=>/^:?-{2,}:?$/.test(c)||c===""));
+      if(rows.length){
+        const head=rows[0], data=rows.slice(1);
+        if(head.length<=2){
+          (data.length?data:rows).forEach(r=>out.push(r.filter(Boolean).join(": ")));
+        }else{
+          (data.length?data:[]).forEach(r=>
+            out.push(head.map((h,idx)=>`${h}: ${r[idx]??""}`).join(" / ")));
+        }
+      }
+      out.push(""); continue;
+    }
+    out.push(lines[i].replace(/^\s*#{1,3}\s+/,"").replace(/\*\*(.+?)\*\*/g,"$1"));
+    i++;
+  }
+  return out.join("\n").replace(/\n{3,}/g,"\n\n").trim();
+}
+
+/* 해시태그 정제: # 정리, 특수문자 제거, 중복 제거, 최대 12개 */
+function normalizeHashtags(arr){
+  if(!Array.isArray(arr)) return [];
+  const seen=new Set(), out=[];
+  arr.forEach(raw=>{
+    const t=String(raw||"").replace(/^#+/,"").replace(/[^0-9A-Za-z가-힣]/g,"");
+    if(!t) return;
+    const key=t.toLowerCase();
+    if(seen.has(key)) return;
+    seen.add(key); out.push("#"+t);
+  });
+  return out.slice(0,12);
+}
+
+/* 본문 내 키워드 출현 횟수 (대소문자 무시) */
+function countKw(body, kw){
+  const k=String(kw||"").trim(); if(!k) return null;
+  const hay=String(body||"").toLowerCase(), needle=k.toLowerCase();
+  let n=0, idx=0;
+  while((idx=hay.indexOf(needle,idx))!==-1){ n++; idx+=needle.length; }
+  return n;
+}
+
+async function copyText(txt, btn){
+  let ok=false;
+  try{ await navigator.clipboard.writeText(txt); ok=true; }
+  catch(e){
+    const ta=document.createElement("textarea"); ta.value=txt;
+    ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta);
+    ta.select(); try{ ok=document.execCommand("copy"); }catch(_){ ok=false; } document.body.removeChild(ta);
+  }
+  if(btn){ const o=btn.textContent; btn.textContent= ok ? "복사됨 ✓" : "복사 실패"; setTimeout(()=>btn.textContent=o,1300); }
+  return ok;
+}
+
+/* ---------- prompt building ---------- */
+const TYPE_META = {
+  listing:{ name:"매물 소개(광고형)",
+    structure:"도입 인사 → 단지/매물 개요(표) → 내부 구조·특장점 → 가격·관리비 → 입지·교통·학군 → 솔직한 장점/주의점 → 방문·문의 CTA" },
+  price:{ name:"시세·실거래가 분석",
+    structure:"도입 → 단지 개요 → 실거래가/시세 현황(표, 기준일·출처 명시) → 가격 추이와 요인 분석 → 전세가율·평당가 → 적정가·전망(단정 금지, 근거 기반) → 매수/매도 체크포인트" },
+  location:{ name:"동네·입지·학군·교통 소개",
+    structure:"도입 → 지역 개요 → 교통(직주근접·역·노선·도보) → 학군·학원가 → 생활 인프라(마트·병원·공원) → 개발·교통 호재 → 종합 평가(장단점)" },
+  subscription:{ name:"청약·분양 정보",
+    structure:"도입 → 단지/분양 개요 → 분양가·일정(접수·당첨·계약) → 청약 자격·가점 계산법 → 특별공급 해당 여부 → 경쟁률 전망(근거 기반, 단정 금지) → 자격 자가진단 체크리스트 → 마무리(청약홈 확인 안내)" },
+  policy:{ name:"정책·세금·대출 가이드",
+    structure:"도입(어떤 문제를 해결하는 글인지) → 제도 핵심 요약 → 적용 대상·요건(표) → 계산 예시(수치 가정 명시) → 최신 개정 사항(기준일·시행일 명시) → 자주 묻는 질문 → 마무리(개인 상황은 전문가 상담 권유)" },
+  interior:{ name:"인테리어·집들이",
+    structure:"도입 → 평형/구조·콘셉트 → 공간별 시공 포인트 → 시공 항목·예산(표) → 비포애프터 → 만족점/아쉬운점(솔직하게) → 마무리(업체·비용 참고)" },
+  invest:{ name:"투자·시장 전망",
+    structure:"도입 → 지역/단지 개요 → 시장 현황·데이터(출처·기준일 명시) → 호재 분석 → 리스크 분석(균형) → 투자 포인트(수익 보장·단정 금지, 근거 기반) → 체크리스트 → 마무리(투자 판단·책임은 본인 고지)" },
+  process:{ name:"거래 절차·실무",
+    structure:"도입 → 전체 절차 단계별 정리 → 필요 서류 → 주의사항(전세사기 예방·확정일자·전입신고 등) → 부대비용·세금(중개보수·취득세 등) → 실수 방지 체크리스트 → 마무리" },
+  custom:{ name:"자유 주제",
+    structure:"도입(주제와 이 글로 얻는 것) → 핵심 정보를 소제목+표/리스트로 분할 → 데이터·근거(출처·기준일 명시) → 장단점/주의사항 균형 → 독자 실행 가이드 → 요약·마무리" }
+};
+const LEN_MAP = { short:"공백 제외 약 700~900자, 핵심만 간결하게",
+  mid:"공백 제외 약 1,400~1,700자", long:"공백 제외 약 2,300~2,700자, 깊이 있게" };
+
+function collectFields(){
+  const v = id => $(id).value.trim();
+  const type = v("f_type");
+  const labels = {
+    f_topic:"주제", f_area:"지역/주소", f_name:"단지·건물명", f_deal:"거래유형", f_price:"가격",
+    f_size:"면적", f_struct:"구조/층/향", f_transit:"교통", f_life:"학군·생활편의",
+    f_data:"데이터 기준일·출처", f_kw:"핵심 키워드", f_audience:"대상 독자·톤",
+    f_contact:"연락처·중개사무소", f_notes:"추가 정보·셀링포인트"
+  };
+  const lines=[];
+  Object.keys(labels).forEach(id => {
+    if(id==="f_topic" && type!=="custom") return; // 주제는 '자유 주제' 유형에서만 사용
+    const val=v(id); if(val) lines.push(`- ${labels[id]}: ${val}`);
+  });
+  return { type, topic:v("f_topic"), area:v("f_area"), name:v("f_name"), kw:v("f_kw"), deal:v("f_deal"),
+    len:v("f_len"), notes:v("f_notes"), lines };
+}
+
+const SYSTEM_PROMPT = `당신은 한국 부동산 전문 블로그 카피라이터입니다. 네이버/구글 검색에 잘 노출되면서도 독자에게 진짜 도움이 되는 글을 씁니다.
+
+[문체]
+- 부드러운 존댓말('~합니다/~해요' 자연 혼용), 친근하고 대화하듯.
+- 1인칭 경험 톤 허용('제가 살펴보니'), 단 지어낸 허위 경험은 금지.
+- 어려운 용어는 괄호로 풀어 설명(예: DSR=연소득 대비 원리금 상환 비율).
+
+[신뢰·금칙]
+- 과장·단정·확신 표현 금지('무조건 오른다', '강추', '지금 안 사면 후회').
+- 확인되지 않은 수치를 사실처럼 단정하지 말 것. 입력에 없는 가격/시세/통계를 지어내지 말 것.
+- 투자 수익 보장·시세 예측 단정 금지. 전망은 근거와 함께 '가능성' 수준으로.
+- 시세/실거래가 등 데이터에는 기준일·출처를 본문에 명시하도록 유도. 입력에 출처가 없으면 "(출처·기준일 직접 확인 필요)"처럼 표기.
+
+[SEO]
+- 핵심 키워드를 제목 앞부분과 본문에 자연스럽게 5~7회 배치(부자연스러운 반복 금지).
+- 동의어 병기(전세=임차, 실거래가=실거래 신고가, 역세권=지하철 도보 등).
+
+[출력 형식 — 매우 중요]
+반드시 아래 JSON 객체 '하나만' 출력하세요. 코드펜스/설명/머리말 없이 JSON만.
+{
+  "title_options": ["제목1","제목2","제목3"],   // 25~45자, 지역+단지+키워드 앞배치
+  "body_markdown": "## 소제목\\n문단...",          // 마크다운(##,###, 표 |..|, - 목록, **강조**)
+  "body_naver": "소제목\\n\\n문단...",             // 네이버 에디터 붙여넣기용 plain text(마크다운 기호 없음, 표는 '항목: 값' 줄목록)
+  "info_table": [["거래유형","매매 23.5억"],["전용면적","84㎡(34평)"]],  // 매물 소개일 때 핵심 스펙, 그 외엔 []
+  "hashtags": ["#잠실아파트","#잠실엘스"],         // 8~12개, 지역/단지/평형/거래유형/키워드
+  "meta_description": "검색 스니펫용 1~2문장 요약",
+  "social": { "threads": "Threads용 요약(본문 약 420자 이내, 친근한 존댓말, 핵심+블로그로 유도, 과장 금지)", "x": "X(트위터)용 초압축 요약(본문 약 230자 이내)" },
+  "social_hashtags": ["#짧은태그"],               // 3~5개, SNS용 짧은 태그
+  "review_notes": ["게시 전 직접 확인이 필요한 항목(수치·출처·최신 규제 등)을 2~5개"]
+}
+
+[SNS 요약]
+- social.threads / social.x 는 본문 핵심만 담아 독자가 블로그를 클릭하게 유도하되, 과장·허위·수치 날조 없이 작성. 해시태그가 뒤에 붙으므로 요약 본문은 Threads 약 420자 / X 약 230자 이내로(최종 Threads 500자·X 280자 이하 유지).
+- 정책·세금·대출 / 투자 / 청약 유형의 SNS 요약에는 구체 수치·단정을 넣지 말고, '기준·요건은 블로그에서 확인' 또는 '투자 판단·책임은 본인' 같은 짧은 면책 cue를 1개 포함.`;
+
+function buildUserPrompt(f){
+  const meta = TYPE_META[f.type] || TYPE_META.custom;
+  const typeName = (f.type==="custom" && f.topic) ? `자유 주제 — ${f.topic}` : meta.name;
+  const sensitive = ["policy","invest","subscription"].includes(f.type);
+  const snsNote = sensitive
+    ? `\n[SNS 주의] 이 유형은 social(threads/x) 요약에도 구체 수치·단정을 넣지 말고, 짧은 면책 cue(기준·요건은 블로그 확인 / 투자 판단은 본인 책임)를 1개 포함하세요.` : "";
+  return `[글 유형] ${typeName}
+[권장 구조] ${meta.structure}
+[분량] ${LEN_MAP[f.len]||LEN_MAP.mid}
+[핵심 키워드] ${f.kw || "(미지정 — 주제/지역/단지명 기반으로 적절히 설정)"}${snsNote}
+
+[입력 정보]
+${f.lines.length ? f.lines.join("\n") : "- (구체 정보가 적으니 일반적이고 정확한 정보 위주로, 단정 대신 '확인 권장'으로)"}
+
+위 정보로 "${typeName}" 블로그 글을 작성하세요. 입력에 없는 구체 수치는 지어내지 말고, 필요한 곳은 독자가 직접 확인하도록 안내하세요. JSON 객체 하나만 출력하세요.`;
+}
+
+/* ---------- providers ---------- */
+async function callGemini(system, user){
+  const key = $("geminiKey").value.trim();
+  if(!key) throw new Error("Gemini API 키가 없습니다. ⚙️ 설정에서 입력하세요.");
+  const model = ($("geminiModel").value.trim() || DEFAULT_GEMINI_MODEL);
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
+  const res = await fetch(url, {
+    method:"POST",
+    headers:{ "Content-Type":"application/json", "x-goog-api-key":key },
+    body: JSON.stringify({
+      systemInstruction:{ parts:[{text:system}] },
+      contents:[{ role:"user", parts:[{text:user}] }],
+      generationConfig:{ temperature:0.8, maxOutputTokens:16384, responseMimeType:"application/json",
+        thinkingConfig:{ thinkingBudget:0 } }
+    })
+  });
+  if(!res.ok){ throw new Error(`Gemini 오류 ${res.status}: ${(await res.text()).slice(0,300)}`); }
+  const data = await res.json();
+  const cand = data?.candidates?.[0];
+  const txt = (cand?.content?.parts||[]).filter(p=>typeof p.text==="string").map(p=>p.text).join("");
+  if(!txt) throw new Error(`Gemini 응답이 비어 있습니다. (finishReason: ${cand?.finishReason||"?"} — 안전필터·쿼터·토큰한도 확인)`);
+  return txt;
+}
+async function callClaude(system, user){
+  const key = $("claudeKey").value.trim();
+  if(!key) throw new Error("Claude API 키가 없습니다. ⚙️ 설정에서 입력하세요.");
+  const model = ($("claudeModel").value.trim() || DEFAULT_CLAUDE_MODEL);
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json", "x-api-key":key,
+      "anthropic-version":"2023-06-01", "anthropic-dangerous-direct-browser-access":"true" },
+    body: JSON.stringify({ model, max_tokens:6000, temperature:0.8,
+      system, messages:[{ role:"user", content:user }] })
+  });
+  if(!res.ok){ throw new Error(`Claude 오류 ${res.status}: ${(await res.text()).slice(0,300)}`); }
+  const data = await res.json();
+  const txt = (data?.content||[]).map(b=>b.text||"").join("");
+  if(!txt) throw new Error("Claude 응답이 비어 있습니다.");
+  return txt;
+}
+
+/* ---------- template (offline) ---------- */
+function buildTemplate(f){
+  const meta = TYPE_META[f.type] || TYPE_META.custom;
+  const region = f.area || "해당 지역";
+  const cx = f.name || "이 단지";
+  const kw = f.kw || `${region} ${f.name||"아파트"}`.trim();
+  const v = id => $(id).value.trim();
+  const rows = [
+    ["거래유형", v("f_deal")], ["가격", v("f_price")], ["면적", v("f_size")],
+    ["구조/층/향", v("f_struct")], ["교통", v("f_transit")], ["학군·생활편의", v("f_life")]
+  ].filter(r => r[1]);
+
+  const typeName = (f.type==="custom" && f.topic) ? f.topic : meta.name;
+  const headTitle = (f.type==="custom" && f.topic) ? f.topic : `${cx}, ${region} ${meta.name}`;
+
+  let body = `## ${headTitle} 정리\n\n안녕하세요. 오늘은 ${typeName}에 대해 정리해 보았습니다. 아래 정보는 게시 전 최신 자료로 한 번 더 확인해 주세요.\n\n`;
+  if(rows.length){
+    body += `### 핵심 정보 한눈에\n\n| 항목 | 내용 |\n|---|---|\n` +
+      rows.map(r=>`| ${r[0]} | ${r[1]} |`).join("\n") + `\n\n`;
+  }
+  let notesUsed=false;
+  if(f.type==="price"){
+    body += `### 시세 현황\n\n${v("f_data")?`기준: ${v("f_data")}\n\n`:"※ 실거래가·시세는 국토부 실거래가 공개시스템·KB시세 등에서 기준일을 확인해 기재하세요.\n\n"}현재 ${cx}의 시세 흐름과 평당가, 전세가율을 함께 살펴보면 매수·매도 판단에 도움이 됩니다.\n\n`;
+  } else if(f.type==="location"){
+    body += `### 입지와 생활환경\n\n`;
+    if(v("f_transit")) body += `- 교통: ${v("f_transit")}\n`;
+    if(v("f_life")) body += `- 학군·생활편의: ${v("f_life")}\n`;
+    body += `\n직주근접, 교통, 학군, 생활 인프라를 두루 살펴보면 ${region}의 가치를 가늠할 수 있습니다.\n\n`;
+  } else if(f.type==="listing"){
+    body += `### 이 매물의 매력\n\n`;
+    if(v("f_struct")) body += `- 구조: ${v("f_struct")}\n`;
+    if(v("f_transit")) body += `- 교통: ${v("f_transit")}\n`;
+    body += `\n직접 보시면 더 좋은 매물입니다.\n\n`;
+  } else {
+    body += `### 핵심 내용\n\n${f.notes || "※ 이 주제의 핵심 정보를 채워 주세요. 수치·제도는 출처와 기준일(시행일)을 함께 적으면 신뢰가 올라갑니다."}\n\n`;
+    body += `### 이렇게 구성하면 좋아요\n\n${meta.structure}\n\n`;
+    notesUsed = true;
+  }
+  if(f.notes && !notesUsed) body += `### 참고\n\n${f.notes}\n\n`;
+  body += `### 마무리\n\n도움이 되셨다면 공감·이웃 추가 부탁드려요.`;
+  if(v("f_contact")) body += ` 문의는 ${v("f_contact")}로 주시면 친절히 안내해 드리겠습니다.`;
+
+  const head = (f.type==="custom" && f.topic) ? f.topic : `${region} ${cx} ${typeName}`.replace(/\s+/g," ").trim();
+  const sensitive = ["policy","invest","subscription"].includes(f.type);
+  const cue = f.type==="invest" ? " (투자 판단은 본인 책임)" : sensitive ? " (기준·요건은 블로그에서 확인하세요)" : "";
+  const priceBit = (!sensitive && v("f_price")) ? ` ${v("f_deal")||""} ${v("f_price")}.` : "";
+  const sThreads = `${head} 정리해봤어요.${priceBit} 자세한 내용은 블로그에서 확인하세요${cue} 👇`.replace(/\s+/g," ").trim();
+  const sX = `${head}${(!sensitive && v("f_price"))?` ${v("f_price")}`:""} — 핵심 정리. 블로그에서 자세히${cue} 👇`.replace(/\s+/g," ").trim();
+
+  let titleOpts;
+  if(f.type==="custom" && f.topic){
+    titleOpts = [ f.topic.slice(0,45), `${f.topic} 총정리`.slice(0,45), `${f.topic}, 핵심만 쉽게 정리`.slice(0,45) ];
+  } else {
+    const t1base = `${region} ${cx} ${meta.name} 총정리`;
+    const t1 = (kw && (t1base+` (${kw})`).length<=45) ? `${t1base} (${kw})` : t1base;
+    titleOpts = [ t1,
+      `${cx} ${v("f_deal")||""} ${v("f_size")||""} 핵심만 정리`.replace(/\s+/g," ").trim(),
+      `${region} 부동산, ${cx} 이렇게 보면 됩니다` ];
+  }
+
+  return {
+    title_options: titleOpts,
+    body_markdown: body,
+    body_naver: toNaverPlain(body),
+    info_table: rows,
+    hashtags: [f.area, f.name, v("f_deal"), v("f_size"), kw].filter(Boolean),
+    meta_description: `${head}. 핵심 정보와 체크포인트를 정리했습니다.`,
+    social: { threads: sThreads, x: sX },
+    social_hashtags: [f.area, f.name, v("f_deal"), f.kw].filter(Boolean),
+    review_notes:[
+      "실거래가·시세·평당가 등 모든 수치의 기준일과 출처를 직접 확인하세요.",
+      "최신 부동산 규제(LTV·DSR·세금)가 반영됐는지 확인하세요.",
+      "템플릿 초안이므로 1인칭 경험·현장 사진을 더해 자연스럽게 다듬으세요."
+    ],
+    _template:true
+  };
+}
+
+/* ---------- render ---------- */
+let LAST = null;
+function render(o){
+  LAST = o;
+  const out = $("output");
+  const titles = (o.title_options||[]).map((t,i)=>{
+    const n=String(t||"").length, warn=(n<25||n>45);
+    return `<div class="title-opt" data-copy="${esc(t)}"><span class="num">${i+1}</span><span>${esc(t)}</span>`+
+      `<span class="cp" style="color:${warn?'var(--warn)':'var(--ink-dim)'}">${n}자</span></div>`;
+  }).join("");
+
+  const itable = normalizeInfoTable(o.info_table);
+  const info = itable.length
+    ? `<table>${itable.map(r=>`<tr><th>${esc(r[0])}</th><td>${esc(r[1])}</td></tr>`).join("")}</table>` : "";
+
+  const tagList = normalizeHashtags(o.hashtags);
+  const tags = tagList.map(t=>`<span class="chip">${esc(t)}</span>`).join("");
+
+  /* 검수 체크리스트: 모델/템플릿 항목 + 고정 필수항목(중복 제거) — 모드와 무관하게 보장 */
+  const FIXED_CHECKS = [
+    "직접 찍은 사진·1인칭 현장 경험을 더해 AI 저품질 판정을 피하세요.",
+    "가격·시세·실거래가 등 수치의 기준일과 출처를 본문에 명시했는지 확인하세요.",
+    "최신 부동산 규제(LTV·DSR·세금)가 반영됐는지 확인하세요."
+  ];
+  const mergedChecks = (Array.isArray(o.review_notes)?o.review_notes.map(String):[]);
+  FIXED_CHECKS.forEach(fc=>{ const stub=fc.slice(0,9); if(!mergedChecks.some(c=>c.includes(stub))) mergedChecks.push(fc); });
+  const checks = mergedChecks.map(c=>`<li>${esc(c)}</li>`).join("");
+
+  /* 키워드 노출 횟수 피드백 */
+  const kwN = countKw(o.body_markdown, o._kw);
+  const kwBlock = (kwN!=null) ? (function(){
+    const warn=(kwN<3||kwN>9);
+    return `<div class="out-block"><div class="out-label">🎯 키워드 점검</div>`+
+      `<div class="meta-box">본문 키워드 <b>'${esc(o._kw)}'</b> 노출: `+
+      `<b style="color:${warn?'var(--warn)':'var(--ok)'}">${kwN}회</b> `+
+      `<span class="hint" style="display:inline;">(권장 5~7회 · 과다 반복은 저품질 위험)</span></div></div>`;
+  })() : "";
+
+  /* SNS 요약 (Threads / X) — 인텐트 프리필 */
+  const soc = (o.social && typeof o.social==="object") ? o.social : {};
+  const sTags = normalizeHashtags((o.social_hashtags&&o.social_hashtags.length)?o.social_hashtags:o.hashtags).slice(0,5);
+  const sThreadsTxt = String(soc.threads || soc.summary || o.meta_description || "").trim();
+  const sXTxt = String(soc.x || soc.threads || o.meta_description || "").trim();
+  const threadsFull = (sThreadsTxt + (sTags.length? "\n\n"+sTags.join(" "):"")).trim();
+  const xFull = (sXTxt + (sTags.length? " "+sTags.slice(0,3).join(" "):"")).trim();
+  const tCount=[...threadsFull].length, xCount=[...xFull].length;
+  const socBlock = (sThreadsTxt||sXTxt) ? `
+    <div class="out-block">
+      <div class="out-label">📣 SNS 요약 — 바로 올리기</div>
+      <div class="social">
+        <div class="soc-card">
+          <div class="soc-head">Threads <span class="cnt ${tCount>500?'over':''}">${tCount}/500</span></div>
+          <pre class="soc-text">${esc(threadsFull)}</pre>
+          <div class="soc-actions">
+            <button class="btn ghost soc-go" id="goThreads">Threads에 올리기 ↗</button>
+            <button class="copybtn" id="copyT">복사</button>
+          </div>
+        </div>
+        <div class="soc-card">
+          <div class="soc-head">X (트위터) <span class="cnt ${xCount>280?'over':''}">${xCount}/280</span></div>
+          <pre class="soc-text">${esc(xFull)}</pre>
+          <div class="soc-actions">
+            <button class="btn ghost soc-go" id="goX">X에 올리기 ↗</button>
+            <button class="copybtn" id="copyX">복사</button>
+          </div>
+        </div>
+      </div>
+      ${(tCount>500||xCount>280)?`<div class="note warn" style="margin-top:8px;">⚠️ 글자수 초과 — 게시 시 잘릴 수 있어요. 요약을 줄이거나 해시태그를 빼주세요.</div>`:""}
+      <div class="hint" style="margin-top:8px;">버튼을 누르면 작성창이 글이 채워진 채 열립니다 — 검토 후 '게시'만 누르면 돼요. (완전 자동 게시는 OAuth 앱 등록이 필요해 로컬 도구에선 미지원)</div>
+    </div>` : "";
+
+  out.innerHTML = `
+    ${o._template?`<div class="note warn" style="margin-top:0;">템플릿 초안입니다 — 문장을 다듬고 직접 찍은 사진·실제 경험을 더해 주세요.</div>`:""}
+    <div class="out-block titles">
+      <div class="out-label">📌 제목 3안 <span class="hint" style="text-transform:none;letter-spacing:0;">클릭하면 복사</span></div>
+      ${titles}
+    </div>
+    <div class="out-block">
+      <div class="out-label">📝 본문</div>
+      <div class="tabs">
+        <button data-tab="md" class="active">미리보기</button>
+        <button data-tab="naver">네이버 붙여넣기용</button>
+        <button data-tab="raw">마크다운 원문</button>
+      </div>
+      <div class="doc" id="docView"></div>
+      <button class="copybtn" id="copyBody" style="margin-top:10px;">본문 복사</button>
+      <button class="copybtn" id="naverWrite" style="margin-top:10px;">📝 네이버 글쓰기 열기</button>
+    </div>
+    ${kwBlock}
+    ${socBlock}
+    ${info?`<div class="out-block"><div class="out-label">🏢 매물 핵심 정보</div><div class="doc">${info}</div></div>`:""}
+    <div class="out-block">
+      <div class="out-label">🏷️ 해시태그 <button class="copybtn" id="copyTags">복사</button></div>
+      <div class="chips">${tags||'<span class="hint">없음</span>'}</div>
+    </div>
+    <div class="out-block">
+      <div class="out-label">🔎 메타 설명 <button class="copybtn" id="copyMeta">복사</button></div>
+      <div class="meta-box">${esc(o.meta_description||"")}</div>
+    </div>
+    ${checks?`<div class="out-block"><div class="out-label">✅ 게시 전 검수 체크리스트</div><ul class="checklist">${checks}</ul></div>`:""}
+  `;
+  $("copyAll").style.display="inline-block";
+
+  const docView = $("docView");
+  const naverText = toNaverPlain(o.body_naver || o.body_markdown);
+  const setTab = t => {
+    document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("active",b.dataset.tab===t));
+    if(t==="md") docView.innerHTML = mdToHtml(o.body_markdown);
+    else if(t==="naver") docView.innerHTML = `<pre class="plain">${esc(naverText)}</pre>`;
+    else docView.innerHTML = `<pre class="plain">${esc(o.body_markdown)}</pre>`;
+  };
+  setTab("md");
+  document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.tab)));
+  document.querySelectorAll(".title-opt").forEach(el=>
+    el.addEventListener("click",()=>copyText(el.dataset.copy, el.querySelector(".cp"))));
+  $("copyBody").addEventListener("click", e=>{
+    const active=document.querySelector(".tabs button.active").dataset.tab;
+    copyText(active==="naver"?naverText:o.body_markdown, e.target);
+  });
+  $("naverWrite").addEventListener("click", e=>{
+    const id=$("naverId").value.trim();
+    const url = id ? `https://blog.naver.com/${encodeURIComponent(id)}?Redirect=Write` : "https://blog.naver.com/";
+    window.open(url, "_blank", "noopener,noreferrer");
+    copyText(naverText, e.target); // 네이버용 본문을 클립보드에 → 편집창에서 Ctrl+V
+  });
+  $("copyTags").addEventListener("click", e=>copyText(tagList.join(" "), e.target));
+  $("copyMeta").addEventListener("click", e=>copyText(o.meta_description||"", e.target));
+  const goT=$("goThreads"), goX=$("goX"), cT=$("copyT"), cX=$("copyX");
+  if(goT) goT.addEventListener("click", ()=> window.open("https://www.threads.net/intent/post?text="+encodeURIComponent(threadsFull),"_blank","noopener,noreferrer"));
+  if(goX) goX.addEventListener("click", ()=> window.open("https://twitter.com/intent/tweet?text="+encodeURIComponent(xFull),"_blank","noopener,noreferrer"));
+  if(cT) cT.addEventListener("click", e=>copyText(threadsFull, e.target));
+  if(cX) cX.addEventListener("click", e=>copyText(xFull, e.target));
+}
+$("copyAll").addEventListener("click", e=>{
+  if(!LAST) return;
+  const sns = (LAST.social && (LAST.social.threads||LAST.social.x)) ? `\n\n[SNS 요약]\n${LAST.social.threads||LAST.social.x}` : "";
+  const t = `[제목 후보]\n${(LAST.title_options||[]).join("\n")}\n\n[본문]\n${LAST.body_markdown}\n\n[해시태그]\n${normalizeHashtags(LAST.hashtags).join(" ")}\n\n[메타설명]\n${LAST.meta_description||""}${sns}`;
+  copyText(t, e.target);
+});
+
+/* ---------- submit ---------- */
+$("form").addEventListener("submit", async (e)=>{
+  e.preventDefault();
+  saveForm();
+  const f = collectFields();
+  if(!f.area){ setStatus("⚠️ 지역/주소는 필수입니다.","err"); $("f_area").focus(); return; }
+  const btn=$("genBtn");
+  btn.disabled=true; const orig=btn.innerHTML;
+  btn.innerHTML = `<span class="spinner"></span> 생성 중...`;
+  setStatus(provider==="template" ? "" : "AI가 글을 작성하고 있어요…");
+  try{
+    let obj;
+    if(provider==="template"){
+      obj = buildTemplate(f);
+    }else{
+      const system=SYSTEM_PROMPT, user=buildUserPrompt(f);
+      const raw = provider==="gemini" ? await callGemini(system,user) : await callClaude(system,user);
+      try{ obj = parseJsonLoose(raw); }
+      catch(pe){ throw new Error("AI 응답을 JSON으로 해석하지 못했어요. 다시 시도하거나 모델을 바꿔보세요. (원문 일부: "+raw.slice(0,120)+"…)"); }
+    }
+    obj._kw = f.kw;
+    // 데이터 기준일·출처 미입력 경고 (가격/면적/시세 글에서)
+    const hasNums = $("f_price").value.trim() || $("f_size").value.trim() || ["price","invest","subscription","policy"].includes(f.type);
+    if(!$("f_data").value.trim() && hasNums){
+      obj.review_notes = ["데이터 기준일·출처 미입력 — 본문에 직접 명시가 필요합니다.",
+        ...(Array.isArray(obj.review_notes)?obj.review_notes:[])];
+    }
+    render(obj);
+    setStatus("완료되었습니다. 게시 전 직접 검수해 주세요.","ok");
+    $("output").scrollIntoView({behavior:"smooth",block:"start"});
+  }catch(err){
+    console.error(err);
+    let hint="";
+    if(/Failed to fetch|NetworkError|CORS/i.test(err.message))
+      hint = "<br><span class='hint'>네트워크/CORS 오류일 수 있어요. file://로 열어 막힌다면 터미널에서 <b>python3 -m http.server</b> 후 localhost로 접속해 보세요.</span>";
+    setStatus("❌ "+esc(err.message)+hint,"err");
+  }finally{
+    btn.disabled=false; btn.innerHTML=orig;
+  }
+});
+</script>
+</body>
+</html>

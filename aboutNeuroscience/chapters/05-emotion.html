@@ -2,12 +2,14 @@
 <title>5. 정서와 동기 — aboutNeuroscience</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">🧠 표지</a></li><li><a href="01-neurons.html">1. 뉴런과 시냅스</a></li><li><a href="02-brain-anatomy.html">2. 뇌 해부학</a></li><li><a href="03-sensory.html">3. 감각과 지각</a></li><li><a href="04-memory.html">4. 기억과 학습</a></li><li><a href="05-emotion.html">5. 정서와 동기</a></li><li><a href="06-consciousness.html">6. 의식과 수면</a></li><li><a href="07-neuroplasticity.html">7. 신경가소성</a></li><li><a href="08-disorders.html">8. 뇌질환과 장애</a></li><li><a href="09-neurotech.html">9. 뇌공학과 AI</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>정서와 동기</em></h1><p class="authors">Chapter 5 — Emotion, Motivation & Reward System</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 뉴런 네트워크를 회전하며 탐구하세요</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 보상 중추에서 도파민이 분출되어 보상 경로를 따라 퍼지는 모습입니다</span>
 <h2>정서와 동기 개요</h2><p>Emotion, Motivation & Reward System의 핵심 메커니즘을 3D 시뮬레이션과 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Emotion, Motivation & Reward System</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -44,9 +46,26 @@
   <h3>추가 자료</h3><ul><li>LeDoux, <em>The Emotional Brain</em></li><li>Panksepp, <em>Affective Neuroscience</em></li><li>Feldman Barrett, <em>How Emotions Are Made</em></li></ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 도파민 시스템을 영구히 강화하는 약이 있다면 우리는 더 행복해질까요, 아니면 만성 중독자가 될까요? 동기와 쾌감의 차이를 깊이 생각해 봅시다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#818cf8","questions":[{"q":"안정감과 기분을 조절하는 물질은?","choices":["도파민","코르티솔","세로토닌","편도체"],"answer":2},{"q":"보상과 동기 부여 신호 물질은?","choices":["도파민","세로토닌","코르티솔","GABA"],"answer":0},{"q":"공포와 위험 감지의 중심은?","choices":["측좌핵","전전두엽","해마","편도체"],"answer":3},{"q":"스트레스 호르몬은?","choices":["도파민","코르티솔","세로토닌","멜라토닌"],"answer":1},{"q":"쾌감과 동기의 중심 부위는?","choices":["편도체","해마","측좌핵","소뇌"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-const neurons=[];for(let i=0;i<20;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.15,12,12),new THREE.MeshBasicMaterial({color:0x818cf8}));m.position.set((Math.random()-0.5)*8,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);neurons.push(m);}
-for(let i=0;i<neurons.length-1;i++){const g=new THREE.BufferGeometry().setFromPoints([neurons[i].position,neurons[(i+1+Math.floor(Math.random()*3))%neurons.length].position]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x818cf8,transparent:true,opacity:0.15})));}
-let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});
-function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const vta=new THREE.Mesh(new THREE.SphereGeometry(0.6,18,18),new THREE.MeshBasicMaterial({color:0xf43f5e}));vta.position.set(-3,-1.5,0);s.add(vta);
+  const striatum=new THREE.Mesh(new THREE.SphereGeometry(0.55,18,18),new THREE.MeshBasicMaterial({color:0xf59e0b}));striatum.position.set(0,0.3,0);s.add(striatum);
+  const cortex=new THREE.Mesh(new THREE.SphereGeometry(0.5,18,18),new THREE.MeshBasicMaterial({color:0x6366f1}));cortex.position.set(3,1.6,0);s.add(cortex);
+  const path=[new THREE.Vector3(-3,-1.5,0),new THREE.Vector3(0,0.3,0),new THREE.Vector3(3,1.6,0)];
+  const g=new THREE.BufferGeometry().setFromPoints(path);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xfca5a5,transparent:true,opacity:0.5})));
+  const dops=[];for(let k=0;k<14;k++){const d=new THREE.Mesh(new THREE.SphereGeometry(0.1,8,8),new THREE.MeshBasicMaterial({color:0xfbbf24}));s.add(d);dops.push({m:d,off:k/14});}
+  s.userData.dops=dops;s.userData.path=path;s.userData.vta=vta;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const P=s.userData.path;s.userData.dops.forEach(o=>{let t=((T*0.3)+o.off)%1;let seg=t*2,i=Math.floor(seg),f=seg-i;if(i>1){i=1;f=1;}const p0=P[i],p1=P[i+1];o.m.position.set(p0.x+(p1.x-p0.x)*f,p0.y+(p1.y-p0.y)*f,0.4*Math.sin(t*6));});s.userData.vta.scale.setScalar(1+0.12*Math.sin(T*4));s.rotation.y+=0.003; r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

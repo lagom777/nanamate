@@ -2,16 +2,18 @@
 <title>7. 성장 전략 — aboutStartup</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">🚀 표지</a></li><li><a href="chapters/01-ideation.html">1. 아이디어 발굴</a></li><li><a href="chapters/02-validation.html">2. 시장 검증</a></li><li><a href="chapters/03-business-model.html">3. 비즈니스 모델</a></li><li><a href="chapters/04-funding.html">4. 투자와 펀딩</a></li><li><a href="chapters/05-product.html">5. 제품 개발</a></li><li><a href="chapters/06-team.html">6. 팀 빌딩</a></li><li><a href="chapters/07-growth.html">7. 성장 전략</a></li><li><a href="chapters/08-legal.html">8. 법인 설립/법률</a></li><li><a href="chapters/09-exit.html">9. 엑싯과 IPO</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🚀 표지</a></li><li><a href="01-ideation.html">1. 아이디어 발굴</a></li><li><a href="02-validation.html">2. 시장 검증</a></li><li><a href="03-business-model.html">3. 비즈니스 모델</a></li><li><a href="04-funding.html">4. 투자와 펀딩</a></li><li><a href="05-product.html">5. 제품 개발</a></li><li><a href="06-team.html">6. 팀 빌딩</a></li><li><a href="07-growth.html">7. 성장 전략</a></li><li><a href="08-legal.html">8. 법인 설립/법률</a></li><li><a href="09-exit.html">9. 엑싯과 IPO</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>성장 전략</em></h1><p class="authors">Chapter 7 — Growth Strategy & Scaling</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 급격히 치솟는 하키스틱 성장 곡선과 확장 파동</span>
 <h2>성장 전략</h2><p>Growth Strategy & Scaling의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Growth Strategy & Scaling</p></div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -44,5 +46,21 @@
   <h3>추가 학습 자료</h3><ul><li>"Hacking Growth" — Sean Ellis</li><li>"Loved" — Martina Lauchengco</li><li>Reforge Growth 시리즈 · a16z</li></ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 본인 제품의 채널 × 페르소나 매트릭스를 만들고, 가장 잘 작동하는 한 셀을 가설 → 실험 → 학습 사이클로 4주간 돌려 본 뒤 학습 노트를 정리하세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f97316","questions":[{"q":"성장 진단에서 가장 먼저 볼 것?","choices":["광고 예산","리텐션","채용","서버 비용"],"answer":1},{"q":"바이럴 계수 K의 뜻은?","choices":["광고 단가","이탈률","한 명이 데려오는 수","월 매출"],"answer":2},{"q":"PLG의 대표 사례는?","choices":["쿠팡","배민","넷플릭스","피그마"],"answer":3},{"q":"Balfour의 채널 분류 수는?","choices":["6가지","3가지","9가지","12가지"],"answer":0},{"q":"AARRR의 마지막 단계는?","choices":["획득","추천","매출","활성화"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const P=26;const pts=[];const dots=[];for(let i=0;i<P;i++){const x=(i/(P-1))*5-2.5;const y=Math.exp((i/(P-1))*2.6)*0.18-1.7;pts.push(new THREE.Vector3(x,y,0));const dot=new THREE.Mesh(new THREE.SphereGeometry(0.09,8,8),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.33-i/P*0.33,0.8,0.55)}));dot.position.set(x,y,0);s.add(dot);dots.push({dot,bx:x,by:y});}const curve=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0x33dd88}));s.add(curve);const rings=[];for(let i=0;i<3;i++){const ring=new THREE.Mesh(new THREE.TorusGeometry(0.4,0.025,8,40),new THREE.MeshBasicMaterial({color:0x66ddaa,transparent:true,opacity:0.6}));ring.position.set(2.3,Math.exp(2.6)*0.18-1.7,0);ring.userData={off:i/3};s.add(ring);rings.push(ring);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;dots.forEach((o,i)=>{o.dot.position.z=Math.sin(T*2+i*0.4)*0.12;o.dot.scale.setScalar(1+Math.max(0,Math.sin(T*1.5-i*0.3))*0.6);});rings.forEach(rg=>{const ph=(T*0.5+rg.userData.off)%1;rg.scale.setScalar(0.3+ph*4);rg.material.opacity=0.6*(1-ph);});s.rotation.y=Math.sin(T*0.3)*0.35;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

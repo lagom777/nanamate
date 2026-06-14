@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1장. 수와 집합</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📐 표지 · 소개</a></li>
+    <li><a href="01-numbers-sets.html" style="color:var(--accent);font-weight:600;">1. 수와 집합</a></li>
+    <li><a href="02-algebra.html">2. 대수 — 방정식과 다항식</a></li>
+    <li><a href="03-functions.html">3. 함수와 그래프</a></li>
+    <li><a href="04-geometry.html">4. 기하 — 도형과 피타고라스</a></li>
+    <li><a href="05-trigonometry.html">5. 삼각함수 — 원과 파동</a></li>
+    <li><a href="06-exponential-log.html">6. 지수와 로그</a></li>
+    <li><a href="07-sequences-limits.html">7. 수열과 극한</a></li>
+    <li><a href="08-differentiation.html">8. 미분 — 변화율의 수학</a></li>
+    <li><a href="09-integration.html">9. 적분과 확률·통계</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. 수의 탑 — 자연수에서 실수까지</h2>
+<p>수학의 첫 질문은 "수란 무엇인가"입니다. 인류는 필요할 때마다 수 체계를 확장해 왔습니다. 개수를 세는 <strong>자연수 ℕ</strong> = {1, 2, 3, …}에서 출발해, 빚과 부족을 표현하려고 0과 음수를 더해 <strong>정수 ℤ</strong>를 만들었고, 나눗셈을 자유롭게 하려고 분수 꼴 p/q (q≠0)의 <strong>유리수 ℚ</strong>로 넓혔습니다. 그런데 유리수만으로는 한 변이 1인 정사각형의 대각선 길이 √2조차 표현할 수 없습니다. 이런 <strong>무리수</strong>까지 합쳐 빈틈없는 수직선을 완성한 것이 <strong>실수 ℝ</strong>입니다.</p>
+<p>확장의 순서는 포함 관계로 요약됩니다: <strong>ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ ⊂ ℂ</strong>. 각 단계는 "그 전 단계에서 풀 수 없던 방정식"을 풀기 위한 확장이었습니다. x+5=3은 자연수에서 풀 수 없지만 정수에서 풀리고(x=−2), 3x=2는 정수에서 안 되지만 유리수에서 풀리며(x=2/3), x²=2는 유리수에서 안 되지만 실수에서 풀립니다(x=±√2). 그리고 x²=−1을 풀기 위해 만든 것이 복소수 ℂ — 2장에서 만나게 됩니다.</p>
+</section>
+
+<!-- 3D 학습 시각화: 수직선이 채워지는 과정 — ℕ → ℤ → ℚ → ℝ -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#e8506e;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 수직선 채우기: 자연수 → 정수 → 유리수 → 실수</div>
+  <div id="math3d-01" style="width:100%;height:430px;"></div>
+  <div id="math3d-01-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">자연수부터 시작해 수직선이 채워지는 과정을 봅니다.</div>
+</div>
+
+<section id="sec2">
+<h2>2. 집합의 언어 — 수학의 문법</h2>
+<p>집합(set)은 "명확한 기준으로 모은 대상들의 모임"이며, 현대 수학의 모든 개념(수, 함수, 공간…)이 집합 위에서 정의됩니다. 기본 기호는 다섯 개면 충분합니다. <strong>원소</strong> a∈A (a는 A에 속한다), <strong>부분집합</strong> A⊂B (A의 모든 원소가 B에도 속한다), <strong>합집합</strong> A∪B, <strong>교집합</strong> A∩B, <strong>여집합</strong> Aᶜ (전체집합 U에서 A를 뺀 것).</p>
+<p>집합 연산에는 대수처럼 법칙이 있습니다. 분배법칙 A∩(B∪C) = (A∩B)∪(A∩C), 그리고 시험에 자주 나오는 <strong>드모르간 법칙</strong>: (A∪B)ᶜ = Aᶜ∩Bᶜ, (A∩B)ᶜ = Aᶜ∪Bᶜ. "합집합의 부정은 부정들의 교집합"이라는 이 법칙은 논리학의 "또는(or)의 부정은 그리고(and)의 부정들"과 정확히 같은 구조입니다 — 집합과 논리는 같은 수학의 두 표현입니다.</p>
+<p>원소의 개수에 대해서는 <strong>포함–배제의 원리</strong>가 핵심입니다: n(A∪B) = n(A) + n(B) − n(A∩B). 겹치는 부분을 두 번 세었으니 한 번 빼 주는 것입니다.</p>
+</section>
+
+<section id="sec3">
+<h2>3. 무리수의 발견 — √2는 분수가 아니다</h2>
+<p>기원전 5세기 피타고라스 학파는 "만물은 (자연수의) 비(比)"라고 믿었지만, 자신들의 정리가 그 믿음을 무너뜨렸습니다. 한 변이 1인 정사각형의 대각선은 √2인데, 이것이 분수로 표현될 수 없음이 증명된 것입니다.</p>
+<p>증명은 <strong>귀류법</strong>의 고전입니다. √2 = p/q (서로소인 정수 p, q)라고 가정하면 p² = 2q²이므로 p²은 짝수, 따라서 p도 짝수입니다(홀수의 제곱은 홀수이므로). p = 2k로 놓으면 4k² = 2q², 즉 q² = 2k²이 되어 q도 짝수가 됩니다. p와 q가 모두 짝수라면 서로소라는 가정과 모순 — 따라서 √2는 유리수가 아닙니다.</p>
+<p>흥미로운 사실: 유리수는 수직선 위에서 <strong>조밀</strong>합니다. 어떤 두 유리수 사이에도 또 다른 유리수가 무한히 많습니다. 그런데도 수직선에는 "구멍"이 있고, 그 구멍(√2, π, e 같은 무리수)이 오히려 압도적으로 많습니다. 칸토어는 유리수가 셀 수 있는 무한(ℵ₀)인 반면 실수는 셀 수 없는 무한임을 증명했습니다 — 무한에도 크기가 있다는 충격적 발견입니다.</p>
+</section>
+
+<section id="sec4">
+<h2>4. 왜 수를 확장하는가 — 연산의 닫힘</h2>
+<p>수 체계 확장의 논리는 <strong>닫힘(closure)</strong>이라는 한 단어로 요약됩니다. 어떤 집합이 연산에 대해 닫혀 있다는 것은, 그 집합의 원소끼리 연산한 결과가 다시 그 집합 안에 있다는 뜻입니다. 자연수는 덧셈·곱셈에는 닫혀 있지만 뺄셈에는 닫혀 있지 않습니다(3−5 = ?). 정수는 뺄셈까지 닫혀 있지만 나눗셈에는 아닙니다(2÷3 = ?). 유리수는 사칙연산 전부에 닫혀 있지만, 극한 연산에는 닫혀 있지 않습니다 — 유리수 수열이 무리수로 수렴할 수 있기 때문입니다(7장에서 다시 만납니다).</p>
+<p>실수의 결정적 성질은 <strong>완비성(completeness)</strong>입니다: 수직선에 빈틈이 없다는 것. 이 성질 덕분에 극한, 연속, 미분, 적분이라는 해석학 전체가 실수 위에서 작동합니다. 이 책의 7~9장은 전부 완비성 위에 세워진 건물입니다.</p>
+<div class="formula">ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ ⊂ ℂ &nbsp;&nbsp;|&nbsp;&nbsp; n(A∪B) = n(A)+n(B)−n(A∩B) &nbsp;&nbsp;|&nbsp;&nbsp; (A∪B)ᶜ = Aᶜ∩Bᶜ</div>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="../index.html" style="text-decoration:none;">← 표지</a><a href="02-algebra.html" style="text-decoration:none;">2. 대수 — 방정식과 다항식 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>수는 "풀고 싶은 문제가 생길 때마다" 확장되어 왔어요. 세기 위한 자연수 → 빚을 적기 위한 음수 → 나누기 위한 분수 → 길이를 정확히 재기 위한 무리수. 이 모두를 합친 것이 실수, 즉 빈틈없는 수직선입니다.</p>
+  <h3>왜 중요한가?</h3>
+  <p>① 음수×음수가 왜 양수인지, ② 0.999… = 1이 왜 참인지, ③ √2를 왜 분수로 못 쓰는지 — 전부 수 체계의 구조에서 답이 나옵니다. 구조를 알면 규칙을 외울 필요가 없어집니다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>자연수 ℕ</strong>: 1, 2, 3, … 세는 수</li>
+    <li><strong>정수 ℤ</strong>: …, −2, −1, 0, 1, 2, … 음수와 0 포함</li>
+    <li><strong>유리수 ℚ</strong>: 분수 p/q로 쓸 수 있는 수 (0.5, −3/7, 0.333…)</li>
+    <li><strong>무리수</strong>: 분수로 쓸 수 없는 수 (√2, π, e)</li>
+    <li><strong>실수 ℝ</strong>: 유리수 + 무리수 = 수직선 전체</li>
+    <li><strong>집합</strong>: 명확한 기준으로 모은 모임, ∪(합) ∩(교) ⊂(포함)</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>수직선을 "도로"라고 생각해 보세요. 자연수는 1km마다 세운 이정표, 정수는 반대 방향까지 이정표를 세운 것, 유리수는 그 사이를 아주 촘촘히 나눈 눈금이에요. 놀랍게도 그렇게 촘촘히 찍어도 도로에는 여전히 "포장 안 된 구멍"이 무한히 많고, 그 구멍이 무리수입니다. 구멍까지 전부 메운 매끈한 도로가 실수예요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 수가 나오면 "이 수는 ℕ·ℤ·ℚ·ℝ 중 어디까지 속하지?"라고 분류하는 습관을 들이세요. 예: −3은 ℤ, ℚ, ℝ에 속하지만 ℕ에는 아님. 0.1212…(순환소수)는 ℚ. π는 ℝ뿐. 이 분류 연습이 모든 단원의 기초 체력이 됩니다.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>수 체계는 ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ 순서로 확장 — 매번 "안 풀리던 방정식"을 풀기 위해</li>
+    <li>유리수 = 분수로 표현 가능 = 유한소수 또는 순환소수</li>
+    <li>무리수 = 순환하지 않는 무한소수 (√2, π, e)</li>
+    <li>집합 기호 5개: ∈, ⊂, ∪, ∩, ᶜ — 수학 전체의 문법</li>
+    <li>개수 공식: n(A∪B) = n(A)+n(B)−n(A∩B)</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>유리수와 소수 표현의 관계를 정확히 하면: <strong>유리수 ⟺ 유한소수 또는 순환소수</strong>입니다. p/q를 나눗셈하면 나머지가 0~q−1의 q가지뿐이라 언젠가 반복될 수밖에 없습니다(비둘기집 원리). 역으로 순환소수는 항상 분수로 바꿀 수 있습니다: x = 0.121212…라면 100x = 12.1212…이므로 99x = 12, x = 12/99 = 4/33.</p>
+  <p>집합의 크기로 가면 칸토어의 결과가 기다립니다. 유리수는 자연수와 일대일 대응이 가능한 <strong>가산무한(ℵ₀)</strong>이지만, 실수는 <strong>대각선 논법</strong>으로 가산이 아님이 증명됩니다. 즉 무리수는 유리수보다 "압도적으로 많은" 무한입니다. 조밀함(어디에나 있음)과 많음(크기)은 별개라는 좋은 예입니다.</p>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>🎯 예제 1 — 순환소수를 분수로</h4><p>x = 0.8333… 을 분수로. 10x = 8.333…, 100x = 83.33… 이므로 100x − 10x = 90x = 75, x = 75/90 = 5/6. 일반 규칙: 순환마디 길이만큼 10ⁿ을 곱해 빼면 순환부가 소거됩니다.</p></div>
+  <div class="info-card"><h4>🎯 예제 2 — 포함·배제 활용</h4><p>40명 학급에서 수학을 좋아하는 학생 25명, 영어 18명, 둘 다 9명이면 적어도 하나를 좋아하는 학생은 25+18−9 = 34명, 둘 다 안 좋아하는 학생은 40−34 = 6명. 벤 다이어그램을 그리면 "겹침을 한 번 빼는" 이유가 즉시 보입니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① <strong>데이터베이스</strong>: SQL의 UNION/INTERSECT/EXCEPT는 그대로 집합 연산입니다. ② <strong>확률론</strong>: 사건은 표본공간의 부분집합이고 P(A∪B) = P(A)+P(B)−P(A∩B)는 포함·배제 그 자체입니다. ③ <strong>컴퓨터의 수</strong>: 부동소수점(float)은 실수가 아니라 유한한 유리수의 부분집합이라 0.1+0.2 ≠ 0.3 같은 오차가 생깁니다 — 실수와 그 근사의 차이를 아는 것이 실무 디버깅 능력이 됩니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① "무한소수 = 무리수"가 아닙니다 — 0.333…은 무한소수지만 유리수(1/3). 순환 여부가 기준. ② ∈와 ⊂ 혼동 — 1∈{1,2}이고 {1}⊂{1,2}. 원소와 부분집합은 다른 차원. ③ 공집합 ∅는 모든 집합의 부분집합이라는 사실을 빠뜨림(부분집합 개수는 2ⁿ개). ④ 0은 자연수가 아니라고만 알기 — 한국 교육과정에선 ℕ에 0을 빼지만, 해외 문헌은 포함하는 경우도 많아 문맥 확인 필요.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>실수의 엄밀한 구성은 19세기 해석학의 산물입니다. <strong>데데킨트 절단</strong>(유리수 집합을 두 쪽으로 자르는 모든 방법이 실수 하나에 대응)과 <strong>코시 수열의 동치류</strong>(수렴해야 할 유리수 수열들의 극한을 "새 수"로 선언) 두 구성이 표준이며, 둘은 동형입니다. 핵심 공리는 <strong>완비성</strong>: 위로 유계인 집합은 반드시 상한(supremum)을 가진다. 이 한 줄에서 중간값 정리, 최대·최소 정리, 미적분의 기본정리가 전부 흘러나옵니다.</p>
+  <p>집합론 자체도 공리화가 필요했습니다. "자기 자신을 원소로 갖지 않는 집합들의 집합"이라는 <strong>러셀의 역설</strong>(1901)이 소박한 집합론을 무너뜨렸고, 그 수습책이 현대 수학의 표준 기초인 <strong>ZFC 공리계</strong>(체르멜로–프렝켈 + 선택공리)입니다. 괴델과 코언은 연속체 가설(ℵ₀와 ℝ 크기 사이의 무한이 있는가)이 ZFC에서 증명도 반증도 불가능함을 보였습니다 — 수학에도 "결정 불가능한 문제"가 있다는 사실의 상징입니다.</p>
+  <h3>수학적·정량적 기초</h3>
+  <div class="formula">완비성: S ⊂ ℝ, S ≠ ∅, S가 위로 유계 ⇒ sup S 존재<br>가산성: |ℕ| = |ℤ| = |ℚ| = ℵ₀ &lt; |ℝ| = 2^ℵ₀<br>대각선 논법: 어떤 목록 x₁, x₂, …도 ℝ 전체를 포괄할 수 없다</div>
+  <p>대수적 수(정수 계수 다항식의 근, 예: √2)조차 가산이므로, "거의 모든" 실수는 π, e 같은 초월수입니다. 그런데 구체적으로 초월성이 증명된 수는 놀랄 만큼 적습니다 — e+π가 무리수인지조차 미해결입니다.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>정리 증명 보조기(Lean, Coq)</strong>: ZFC 또는 유형론 위에서 수학 전체를 기계 검증하는 프로젝트(mathlib)가 활발하며, 2024년 이후 Fields상 수상자들도 참여 중. ② <strong>역수학(Reverse Mathematics)</strong>: 각 정리가 정확히 어떤 공리를 필요로 하는지 분류하는 분야. ③ <strong>HoTT(호모토피 유형론)</strong>: 집합론을 대체할 수 있는 새로운 수학 기초 후보.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>해석학</strong>: 완비성 → 극한·연속·미적분 (7~9장)</li>
+    <li><strong>논리학</strong>: 집합 연산 ⟺ 명제 논리, 드모르간 쌍대성</li>
+    <li><strong>전산학</strong>: 부동소수점, 가산성과 계산 가능성(튜링)</li>
+    <li><strong>확률론</strong>: 측도론은 집합론 위에 세운 넓이의 일반화</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Walter Rudin, <em>Principles of Mathematical Analysis</em> 1장 — 실수 구성의 표준</li>
+    <li>📖 Paul Halmos, <em>Naive Set Theory</em> — 집합론 입문의 고전</li>
+    <li>📺 3Blue1Brown — "무한의 크기" 시각화 영상</li>
+    <li>🔬 키워드: Dedekind cut, Cauchy completion, cardinality, ZFC, continuum hypothesis</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> ① √3이 무리수임을 √2 증명을 변형해 직접 증명하기. ② "유리수 + 무리수 = 무리수"를 귀류법으로 증명하기. ③ 0.999… = 1을 세 가지 다른 방법(분수 변환, 등비급수, 완비성)으로 설명해 보기 — 세 번째까지 되면 실수의 구조를 이해한 것입니다.</div>
+</div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f43f5e","questions":[{"q":"분수로 표현할 수 없는 수는?","choices":["자연수","무리수","유리수","정수"],"answer":1},{"q":"수 체계 확장 순서로 옳은 것은?","choices":["ℤ⊂ℕ⊂ℚ","ℚ⊂ℤ⊂ℕ","ℝ⊂ℚ⊂ℤ","ℕ⊂ℤ⊂ℚ"],"answer":3},{"q":"(A∪B)ᶜ와 같은 것은?","choices":["Aᶜ∩Bᶜ","Aᶜ∪Bᶜ","A∩B","A∪B"],"answer":0},{"q":"√2 무리수 증명에 쓰인 방법은?","choices":["귀납법","대각선 논법","귀류법","작도법"],"answer":2},{"q":"실수 완비성의 의미는?","choices":["음수 존재","수직선에 빈틈 없음","분수 표현 가능","원소가 유한"],"answer":1}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('math3d-01');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('math3d-01-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+
+  camera.position.set(0,2.2,12.5);camera.lookAt(0,0.6,0);
+
+  // ---- 수직선 (x축: -6..6) ----
+  scene.add(line(V(-6.6,0,0),V(6.6,0,0),0x39415a,0.9));
+  for(var i=-6;i<=6;i++){
+    scene.add(line(V(i,-0.16,0),V(i,0.16,0),0x39415a,0.7));
+    var tl=lbl(String(i),22,'#647088',0.8);tl.position.set(i,-0.62,0);scene.add(tl);
+  }
+
+  // 자연수 (1..6) — 초록
+  var nats=[];
+  for(var n=1;n<=6;n++){var s=sph(0.22,0x2f9e63,0.95);s.position.set(n,0,0);s.scale.set(0.001,0.001,0.001);scene.add(s);nats.push(s);}
+  var natL=lbl('자연수 ℕ',26,'#2f9e63',1);natL.position.set(3.5,1.5,0);natL.visible=false;scene.add(natL);
+  // 정수 확장 (0, -1..-6) — 파랑
+  var ints=[];
+  for(var m=0;m>=-6;m--){var s2=sph(0.22,0x5b6bd6,0.95);s2.position.set(m,0,0);s2.scale.set(0.001,0.001,0.001);scene.add(s2);ints.push(s2);}
+  var intL=lbl('정수 ℤ — 0과 음수로 확장',26,'#5b6bd6',1);intL.position.set(-3.2,1.5,0);intL.visible=false;scene.add(intL);
+  // 유리수 — 노랑 작은 점들 (분모 2..9)
+  var rats=[];
+  for(var q=2;q<=9;q++){
+    for(var p=Math.ceil(-6*q);p<=6*q;p++){
+      if(p%q===0)continue;
+      if(((p%2)+(q%3))%2===0)continue; // 솎아내기
+      var rs=sph(0.05,0xe0a82e,0.9);rs.position.set(p/q,0,0);rs.visible=false;scene.add(rs);rats.push(rs);
+    }
+  }
+  var ratL=lbl('유리수 ℚ — 조밀하지만 빈틈이 있다',25,'#b07d0a',1);ratL.position.set(0,2.2,0);ratL.visible=false;scene.add(ratL);
+  // 무리수 마커 — 빨강 다이아몬드 + 라벨
+  var irrDefs=[{v:Math.SQRT2,t:'√2'},{v:Math.PI,t:'π'},{v:Math.E,t:'e'},{v:-Math.sqrt(3),t:'−√3'},{v:Math.sqrt(5),t:'√5'},{v:-Math.PI/2,t:'−π/2'}];
+  var irrs=[];
+  irrDefs.forEach(function(d,k){
+    var g=new THREE.Mesh(new THREE.OctahedronGeometry(0.26),mat(0xd6455b,0.95));
+    g.position.set(d.v,0,0);g.visible=false;scene.add(g);
+    var L=lbl(d.t,24,'#d6455b',0.9);L.position.set(d.v,(k%2===0?1.05:1.55),0);L.visible=false;scene.add(L);
+    irrs.push({mesh:g,label:L});
+  });
+  // 실수 연속 막대
+  var realBar=box(13.2,0.1,0.1,0xe8506e,0.0);realBar.position.set(0,0,0);scene.add(realBar);
+  var realL=lbl('실수 ℝ — 빈틈 없는 연속',27,'#e8506e',1.1);realL.position.set(0,2.9,0);realL.visible=false;scene.add(realL);
+  // 포함 관계 링 (마지막 단계)
+  var ringDefs=[{r:1.0,c:0x2f9e63,t:'ℕ'},{r:1.7,c:0x5b6bd6,t:'ℤ'},{r:2.4,c:0xe0a82e,t:'ℚ'},{r:3.1,c:0xe8506e,t:'ℝ'}];
+  var rings=[];
+  ringDefs.forEach(function(d){
+    var tor=new THREE.Mesh(new THREE.TorusGeometry(d.r,0.05,10,60),mat(d.c,0.9));
+    tor.position.set(0,-3.6,0);tor.visible=false;scene.add(tor);
+    var L=lbl(d.t,26,'#'+d.c.toString(16).padStart(6,'0'),0.95);L.position.set(d.r-0.32,-3.6+0.3,0.4);L.visible=false;scene.add(L);
+    rings.push({tor:tor,label:L});
+  });
+
+  function resetAll(){
+    nats.forEach(function(s){s.scale.set(0.001,0.001,0.001);});
+    ints.forEach(function(s){s.scale.set(0.001,0.001,0.001);});
+    rats.forEach(function(s){s.visible=false;});
+    irrs.forEach(function(o){o.mesh.visible=false;o.label.visible=false;});
+    rings.forEach(function(o){o.tor.visible=false;o.label.visible=false;});
+    natL.visible=intL.visible=ratL.visible=realL.visible=false;
+    realBar.material.opacity=0;
+  }
+
+  var phases=[
+    {dur:5,cap:'① 자연수 ℕ = {1, 2, 3, …} — 개수를 세기 위한 수. 수직선 위에 띄엄띄엄 떨어진 점들입니다.',
+     enter:function(){resetAll();natL.visible=true;},
+     update:function(u){var k=Math.floor(u*6.99);for(var i=0;i<nats.length;i++){var s=ez(Math.min(1,Math.max(0,u*7-i)));nats[i].scale.set(s,s,s);}}},
+    {dur:5,cap:'② x+5=3 같은 방정식을 풀려면 0과 음수가 필요합니다 — 정수 ℤ로 확장. 여전히 점 사이는 비어 있습니다.',
+     enter:function(){intL.visible=true;},
+     update:function(u){for(var i=0;i<ints.length;i++){var s=ez(Math.min(1,Math.max(0,u*8-i)));ints[i].scale.set(s,s,s);}}},
+    {dur:6,cap:'③ 나눗셈을 위해 분수(유리수 ℚ)를 추가하면 점들이 조밀하게 들어찹니다. 어떤 두 점 사이에도 또 다른 유리수가 있지만 — 아직 "구멍"이 남아 있습니다.',
+     enter:function(){ratL.visible=true;},
+     update:function(u){var k=Math.floor(ez(u)*rats.length);for(var i=0;i<rats.length;i++)rats[i].visible=i<k;}},
+    {dur:6,cap:'④ √2, π, e … 분수로 쓸 수 없는 무리수가 그 구멍의 정체입니다. 무리수는 유리수보다 압도적으로 많습니다.',
+     enter:function(){},
+     update:function(u){var k=Math.floor(u*irrs.length+0.999);for(var i=0;i<irrs.length;i++){var on=i<k;irrs[i].mesh.visible=on;irrs[i].label.visible=on;if(on)irrs[i].mesh.rotation.y+=0.04;}}},
+    {dur:7,cap:'⑤ 유리수 + 무리수 = 실수 ℝ. 수직선이 빈틈 없이 이어집니다(완비성). 아래 고리: ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ 포함 관계.',
+     enter:function(){realL.visible=true;rings.forEach(function(o){o.tor.visible=true;o.label.visible=true;});},
+     update:function(u){realBar.material.opacity=Math.min(0.85,ez(u)*0.85);rings.forEach(function(o,i){o.tor.rotation.y+=0.01*(i+1);});}}
+  ];
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

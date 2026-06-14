@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="../shared/light-theme.css">
   <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
   <script defer src="../shared/difficulty.js"></script>
 </head>
 <body>
@@ -16,6 +17,7 @@
   <h3>전체 목차</h3>
   <ol>
     <li><a href="index.html">📖 표지 · 소개</a></li>
+    <li><a href="design-structure.html" style="color:var(--accent);font-weight:600;">🏛️ 디자인 구조</a></li>
     <li><a href="chapters/01-html-basics.html">1. HTML 기초</a></li>
     <li><a href="chapters/02-css-layout.html">2. CSS와 레이아웃</a></li>
     <li><a href="chapters/03-javascript-core.html">3. JavaScript 핵심</a></li>
@@ -45,6 +47,25 @@
   각 장을 통해 이론과 실전을 동시에 이해할 수 있습니다.
 </p>
 </div>
+
+<h2 style="margin-top:50px;">🏛️ 시작하기 전에</h2>
+<a href="design-structure.html" style="text-decoration:none;color:inherit;display:block;margin:24px 0 40px 0;">
+  <div style="background:linear-gradient(135deg,rgba(14,165,233,0.1),rgba(139,92,246,0.1));border:1px solid var(--rule);border-radius:14px;padding:28px 32px;transition:all .25s ease;cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 32px rgba(14,165,233,0.15)';this.style.borderColor='var(--accent)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none';this.style.borderColor='var(--rule)';">
+    <div style="font-family:var(--font-mono);font-size:0.72em;letter-spacing:0.25em;color:var(--accent);font-weight:600;">SPECIAL · PREFACE</div>
+    <h3 style="margin:8px 0;font-size:1.4em;color:var(--ink);">디자인 구조 — 프론트엔드 웹 설계의 원리</h3>
+    <p style="margin:6px 0 0 0;color:var(--ink-mute);font-size:0.95em;line-height:1.6;">
+      코드를 짜기 전에 알아야 할 것들. 정보 아키텍처, 레이아웃 패턴 6선, 12컬럼 그리드 시스템,
+      F·Z 시선 흐름, 시각적 위계, 모던 디자인 트렌드, UX 10원칙까지 — 인터랙티브 그리드 시각화 포함.
+    </p>
+    <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
+      <span class="tag tag-blue">IA</span>
+      <span class="tag tag-violet">Layout</span>
+      <span class="tag tag-emerald">Hierarchy</span>
+      <span class="tag tag-amber">Grid</span>
+      <span class="tag tag-rose">UX</span>
+    </div>
+  </div>
+</a>
 
 <h2 style="margin-top:50px;">📚 장별 구성</h2>
 <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:18px; margin:25px 0;">

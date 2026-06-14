@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5. 작괘법 — 점치는 법 — aboutIching</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">☯ 표지 · 점치기</a></li>
+    <li><a href="01-what-is.html">1. 주역이란 무엇인가</a></li>
+    <li><a href="02-yin-yang-yao.html">2. 음양과 효(爻)</a></li>
+    <li><a href="03-eight-trigrams.html">3. 팔괘(八卦)</a></li>
+    <li><a href="04-64-hexagrams.html">4. 64괘의 세계</a></li>
+    <li><a href="05-casting.html">5. 작괘법 — 점치는 법</a></li>
+    <li><a href="06-changing-lines.html">6. 동효와 변괘</a></li>
+    <li><a href="07-interpretation.html">7. 괘 해석법</a></li>
+    <li><a href="08-history.html">8. 주역의 역사와 활용</a></li>
+    <li><a href="09-science.html">9. 주역의 과학·심리</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>작괘법 — 점치는 법</em></h1>
+  <p class="authors">Chapter 5 — Casting a Hexagram</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 동전 3닢을 6번 — 아래(초효)부터 위로 6효를 쌓는다</span>
+
+<h2>작괘법 개요</h2>
+<p>작괘법(作卦法)은 주역으로 점을 칠 때 하나의 괘를 뽑아 세우는 절차를 말한다. 64괘 중 어떤 괘가 나올지를 정하는 방법으로, 전통적으로는 산가지를 헤아리는 시초법(蓍草法)이 정식이고, 후대에는 동전을 던지는 척전법(擲錢法)이 널리 쓰였다. 어떤 방법을 쓰든 아래 초효(初爻)에서 위 상효(上爻)로 여섯 효를 차례로 쌓아 한 괘를 완성한다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>점을 치려면 먼저 질문을 분명히 정하고, 시초법이나 척전법으로 효를 하나씩 얻어 모두 여섯 효를 아래부터 위로 쌓는다. 시초법은 49개의 산가지를 세 차례 변역(變易)하여 한 효를 얻고 이를 여섯 번 반복하니 모두 18변(十八變)으로 한 괘를 이룬다. 척전법은 동전 세 닢을 여섯 번 던져, 한 면을 양(3), 다른 면을 음(2)으로 셈해 세 닢의 합이 6·7·8·9 중 무엇인지로 각 효의 음양과 변효 여부를 정한다. 정성껏 한 번 뽑는 태도가 점법의 바탕이라고 여긴다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>작괘법은 동전이나 산가지로 여섯 개의 효를 하나씩 뽑아 아래에서 위로 쌓아 한 괘를 만드는 과정이다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>주역으로 점을 친다는 것은 결국 64괘 가운데 지금 내 질문에 응하는 한 괘를 뽑아내는 일이다. 그 괘를 어떻게 정하느냐가 바로 작괘법이고, 이 단계가 없으면 해석할 괘 자체가 생기지 않는다. 그래서 작괘법은 점의 첫 단추이자 가장 기본이 되는 절차다. 또한 같은 64괘 체계라도 괘를 뽑는 방법에 따라 노음·노양 같은 변효(變爻)가 나오는지 여부가 갈리고, 이것이 본괘와 변괘를 결정한다. 무엇보다 전통에서는 정성껏 마음을 모아 한 번만 뽑는 태도 자체를 작괘의 핵심으로 여긴다. 방법을 정확히 알아야 그 진지한 자세도 비로소 의미를 가진다.</p>
+
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>작괘(作卦)</strong>: 점칠 때 하나의 괘를 뽑아 세우는 일.</li>
+<li><strong>시초법(蓍草法)</strong>: 50개의 산가지(시초) 중 하나를 빼고 49개를 헤아려 효를 얻는 전통적 정식 방법.</li>
+<li><strong>척전법(擲錢法)</strong>: 동전 세 닢을 던져 효를 얻는 간편한 방법. 동전법이라고도 한다.</li>
+<li><strong>효(爻)</strong>: 괘를 이루는 가로줄 하나. 양효(─)와 음효(╴)가 있으며, 괘마다 여섯 효가 있다.</li>
+<li><strong>변효(變爻)·동효(動爻)</strong>: 음에서 양으로, 또는 양에서 음으로 바뀌려 하는 효. 노음(6)과 노양(9)이 여기에 해당한다.</li>
+</ul></div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>괘를 쌓는 일은 벽돌로 6층 탑을 올리는 것과 비슷하다. 맨 아래 1층(초효)부터 시작해 한 층씩 위로 쌓고, 마지막 6층(상효)을 얹으면 탑 한 채, 곧 한 괘가 완성된다. 동전을 던질 때마다 그 층의 벽돌이 양인지 음인지, 그리고 흔들리는 벽돌(변효)인지가 정해진다고 보면 쉽다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 동전 합이 6 또는 9면 '변효', 7 또는 8이면 '안 변하는 효'다. 짝수 6·8은 음, 홀수 7·9는 양으로 외워두면 음양과 변효를 한 번에 가린다.</div>
+
+<h3>한 페이지 요약</h3><ul>
+<li>작괘법은 64괘 중 한 괘를 뽑아 세우는 절차다.</li>
+<li>여섯 효를 아래 초효부터 위 상효까지 차례로 쌓는다.</li>
+<li>전통적 정식은 49개 산가지를 헤아리는 시초법이다.</li>
+<li>간편한 방법은 동전 세 닢을 여섯 번 던지는 척전법이다.</li>
+<li>질문을 분명히 하고 정성껏 한 번 뽑는 태도가 점법의 바탕이라고 여긴다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>시초법은 주역 점법의 정식으로, 50개의 산가지(시초)를 준비하는 데서 시작한다. 이 가운데 하나를 따로 빼어 쓰지 않고 두니 실제로 운용하는 것은 49개다. 이 49개를 둘로 나누고, 한쪽에서 하나를 덜어내며, 양쪽을 각각 넷씩 헤아려 나머지를 거두는 조작을 거친다. 이렇게 손가락 사이에 거두는 나머지를 모으는 과정을 한 번 마치는 것을 1변(變)이라 한다. 같은 조작을 세 번 거듭하면(3변) 한 효(爻)가 정해지고, 이때 나온 수가 6·7·8·9 중 하나로 갈린다. 한 효를 얻는 데 3변이 들고 한 괘는 여섯 효이므로, 모두 18번의 변역, 곧 십팔변(十八變)으로 한 괘를 완성한다. 그래서 옛 책에서 "십팔변이성괘(十八變而成卦)"라 말한다. 척전법은 이 번거로운 과정을 동전 던지기로 대신한 후대의 간편법으로, 정밀함보다 손쉬움을 택한 방식이다.</p>
+
+<h3>핵심 메커니즘/원리</h3>
+<div class="info-card"><h4>📐 동전 세 닢과 6·7·8·9</h4><p>척전법에서는 동전 세 닢을 한 번에 던진다. 한 면을 양으로 보아 3, 다른 면을 음으로 보아 2로 셈한 뒤 세 닢의 값을 더한다. 세 면이 모두 양이면 3+3+3=9로 노양(老陽, 변효), 모두 음이면 2+2+2=6으로 노음(老陰, 변효)이다. 양 둘에 음 하나면 3+3+2=8로 소음(少陰), 양 하나에 음 둘이면 3+2+2=7로 소양(少陽)이다. 6과 9는 끝까지 차서 반대로 바뀌려는 변효이고, 7과 8은 그대로 머무는 효다. 이렇게 한 번 던질 때마다 한 효의 음양과 변효 여부가 동시에 정해진다.</p></div>
+
+<h3>대표 사례·예시</h3>
+<div class="info-card"><h4>📐 사례 1</h4><p>동전을 여섯 번 던져 아래에서부터 차례로 7, 8, 7, 9, 8, 6이 나왔다고 하자. 초효는 7(소양, 양), 2효는 8(소음, 음), 3효는 7(양), 4효는 9(노양, 양이며 변효), 5효는 8(음), 상효는 6(노음, 음이며 변효)이다. 이렇게 아래부터 위로 양-음-양-양-음-음의 여섯 효가 쌓여 본괘가 만들어지고, 4효와 상효 두 자리가 변효로 표시된다.</p></div>
+<div class="info-card"><h4>📐 사례 2</h4><p>여섯 번 모두 7 또는 8만 나왔다면 변효가 하나도 없다. 이 경우 본괘만 있고 변괘는 생기지 않으니, 해석은 본괘의 괘사(卦辭) 중심으로 본다. 반대로 6이나 9가 여러 개 나오면 변효가 많아 본괘에서 변괘로 옮겨가는 흐름이 강하게 드러난다고 여긴다. 변효의 개수에 따라 어느 효사·괘사를 중심으로 읽을지가 달라지는데, 이는 다음 장 '동효와 변괘'에서 자세히 다룬다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>오늘날에는 동전 세 닢 대신 주사위나 산가지 모형, 또는 컴퓨터·앱의 난수를 이용해 같은 6·7·8·9 분포를 흉내 내기도 한다. 다만 시초법과 척전법은 각 결과가 나올 확률 분포가 서로 달라, 두 방법이 완전히 동등하지는 않다는 점이 알려져 있다. 그래서 전통을 중시하는 이들은 번거롭더라도 시초법을 정식으로 여기고, 일상에서는 간편한 척전법을 두루 쓰는 식으로 나뉜다.</p>
+
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 동전을 여러 번 던져 마음에 드는 괘가 나올 때까지 다시 뽑아도 된다고 여기기 쉽다. 그러나 전통에서는 질문을 분명히 하고 정성껏 단 한 번만 뽑는 것을 원칙으로 삼는다. 거듭 뽑는 행위 자체를 점의 자세에 어긋난다고 본다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>시초법과 척전법은 같은 64괘 체계를 다루지만, 각 효에서 6·7·8·9가 나올 확률은 두 방법이 서로 다르다. 척전법에서 동전 세 닢을 던질 때 각 면이 같은 확률이라고 가정하면, 노음(6)과 노양(9)은 각각 8분의 1, 소양(7)과 소음(8)은 각각 8분의 3의 확률로 나온다. 반면 전통 시초법은 산가지를 넷씩 헤아려 나머지를 거두는 구조 때문에 노음·노양이 상대적으로 덜 나오고 소양·소음이 더 자주 나오는, 비대칭적인 분포를 만든다. 이 차이는 곧 변효가 얼마나 자주 생기느냐의 차이로 이어지고, 결과적으로 본괘에 머무를지 변괘로 옮겨갈지의 경향에도 영향을 준다. 그래서 두 방법은 손쉬움과 정통성이라는 측면뿐 아니라 통계적 성질에서도 구분된다. 점법을 진지하게 다루는 이들은 이 분포 차이를 알고 자신이 어떤 방법을 쓰는지 분명히 의식한다. 다만 어느 쪽이든 점의 결과를 검증 가능한 인과로 단정하지는 않는 것이 신중한 태도다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>학계에서는 작괘의 결과를 미래 예측의 근거로 보기보다, 무작위로 주어진 상징을 매개로 사람이 자기 상황을 반성하고 의미를 부여하는 과정으로 설명하는 시각이 있다. 심리학의 투사(projection) 개념이나, 카를 융이 제안한 동시성(synchronicity) 논의가 이런 맥락에서 거론된다. 한편 척전법과 시초법의 확률 분포 차이를 수리적으로 비교하는 작업도 이어져, 두 방법이 정말 동등한가를 따지는 논의가 있다. 이런 관점들은 점의 효력을 과학적으로 증명하기보다, 사람이 우연한 결과를 어떻게 해석하고 활용하는지에 초점을 둔다.</p>
+
+<h3>관련 분야</h3><ul>
+<li><strong>확률론·통계</strong>: 시초법과 척전법의 6·7·8·9 분포 비교, 변효 발생 빈도 분석.</li>
+<li><strong>심리학</strong>: 투사, 동시성, 우연한 자극에 의미를 부여하는 인지 과정.</li>
+<li><strong>문헌학·역학사</strong>: 『주역』과 「계사전(繫辭傳)」에 담긴 대연지수(大衍之數)와 점법 절차의 문헌 고증.</li>
+</ul>
+
+<h3>더 읽을거리</h3><ul>
+<li>"주역" — 정이천·주희 등의 주석본(전통 점법과 괘사·효사 수록)</li>
+<li>"주역의 이해" — 주역 입문 해설서(시초법·척전법 절차 정리)</li>
+<li>"동시성: 인과율을 넘어서는 원리" — 카를 융</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 동전 세 닢을 던질 때 6·7·8·9가 각각 8분의 1, 3, 3, 1로 나오는 까닭을, 세 닢의 앞뒷면 조합 경우의 수(총 8가지)를 직접 따져 설명해 보라. 그리고 이 분포가 전통 시초법의 분포와 어떻게 다른지 변효 발생 빈도의 관점에서 비교해 보라.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#cf9b34","questions":[{"q":"동전 세 닢을 던지는 점법은?","choices":["시초법","척전법","매화역수","육효법"],"answer":1},{"q":"효는 어디서부터 쌓는가?","choices":["위 상효부터","가운데부터","아래 초효부터","아무 데나"],"answer":2},{"q":"시초법에서 실제 운용하는 산가지 수는?","choices":["18개","36개","49개","50개"],"answer":2},{"q":"동전 합이 9일 때의 효는?","choices":["노양","노음","소양","소음"],"answer":0},{"q":"시초법으로 한 괘를 이루는 변역 수는?","choices":["3변","6변","12변","18변"],"answer":3}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=0xcf9b34;const coins=[];for(let i=0;i<3;i++){const m=new THREE.Mesh(new THREE.CylinderGeometry(0.45,0.45,0.08,24),new THREE.MeshBasicMaterial({color:0xffd34d}));m.rotation.x=Math.PI/2;m.position.set((i-1)*1.1,2.4,0);s.add(m);coins.push(m);}const lines=[];const pat=[1,0,1,1,0,1];for(let j=0;j<6;j++){const grp=new THREE.Group();grp.position.y=(j-2.5)*0.5-0.2;grp.visible=false;if(pat[j]){const b=new THREE.Mesh(new THREE.BoxGeometry(2.2,0.2,0.2),new THREE.MeshBasicMaterial({color:C}));grp.add(b);}else{const l=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.2,0.2),new THREE.MeshBasicMaterial({color:C}));l.position.x=-0.65;grp.add(l);const r2=l.clone();r2.position.x=0.65;grp.add(r2);}s.add(grp);lines.push(grp);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;coins.forEach((m,i)=>m.rotation.y+=0.15+i*0.02);const k=Math.floor((T*0.7)%8);lines.forEach((g,j)=>g.visible=(j<k));r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

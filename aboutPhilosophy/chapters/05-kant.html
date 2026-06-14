@@ -5,7 +5,9 @@
 <link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
@@ -16,7 +18,7 @@
 <li><a href="07-ethics.html">7. 윤리학</a></li><li><a href="08-political.html">8. 정치철학</a></li>
 <li><a href="09-contemporary.html">9. 현대 철학</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>칸트와 독일 관념론</em></h1><p class="authors">Chapter 5 — Kant, Hegel & Schopenhauer</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 인식의 범주 격자가 물자체(중심)를 현상으로 걸러낸다</span>
 <h2>칸트와 독일 관념론 개요</h2><p>이 챕터에서는 칸트와 독일 관념론의 핵심 사상과 철학자들의 관계를 3D로 탐구합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Kant, Hegel & Schopenhauer</p></div>
 
@@ -76,27 +78,30 @@
   </ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 AI에게 칸트의 정언명령을 핵심 윤리 원칙으로 학습시킨다면, 그 AI는 자율적 도덕 주체가 되는가? 정언명령의 핵심은 자유로운 자기 입법이므로, 단지 명령을 따르는 AI는 칸트적 의미에서 도덕 주체가 아닐 수 있습니다. 자율성과 알고리즘의 결정성 사이의 긴장을 어떻게 풀 수 있을까요?</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d4a047","questions":[{"q":"코페르니쿠스적 전환을 말한 철학자는?","choices":["헤겔","쇼펜하우어","칸트","피히테"],"answer":2},{"q":"칸트가 인식 불가능하다고 본 것은?","choices":["현상계","물 자체","시간","공간"],"answer":1},{"q":"변증법으로 역사를 설명한 철학자는?","choices":["헤겔","칸트","쇼펜하우어","셸링"],"answer":0},{"q":"『의지와 표상으로서의 세계』 저자는?","choices":["칸트","헤겔","피히테","쇼펜하우어"],"answer":3},{"q":"칸트 정언명령의 정식은 몇 가지?","choices":["4가지","2가지","3가지","5가지"],"answer":2}]};</script>
 </main></div>
 <script>
-(function() {
-  const container = document.getElementById('sim-scene');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 3, 8);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  container.appendChild(renderer.domElement);
-  const nodes = [];
-  for (let i = 0; i < 8; i++) { const m = new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0), new THREE.MeshBasicMaterial({ color: 0xd4a047, wireframe: true })); m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4); scene.add(m); nodes.push(m); }
-  for (let i=0;i<nodes.length-1;i++){const g=new THREE.BufferGeometry().setFromPoints([nodes[i].position,nodes[i+1].position]);scene.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xd4a047,transparent:true,opacity:0.2})));}
-  let md=false,px=0;
-  container.addEventListener('mousedown',e=>{md=true;px=e.clientX;});
-  container.addEventListener('mouseup',()=>md=false);
-  container.addEventListener('mousemove',e=>{if(md){scene.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
-  container.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});
-  container.addEventListener('touchmove',e=>{scene.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});
-  function animate(){requestAnimationFrame(animate);scene.rotation.y+=0.002;renderer.render(scene,camera);}animate();
-  window.addEventListener('resize',()=>{camera.aspect=container.clientWidth/container.clientHeight;camera.updateProjectionMatrix();renderer.setSize(container.clientWidth,container.clientHeight);});
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // 중심: 물자체(불가지의 어두운 핵), 둘러싼 격자: 인식의 범주 틀
+  const thing=new THREE.Mesh(new THREE.IcosahedronGeometry(1,0),new THREE.MeshBasicMaterial({color:0x5b4b8a,wireframe:true,transparent:true,opacity:0.45}));s.add(thing);
+  const grid=new THREE.Group();const G=4;const step=1.6;
+  for(let gx=0;gx<G;gx++)for(let gy=0;gy<G;gy++){const cell=new THREE.Mesh(new THREE.PlaneGeometry(1.3,1.3),new THREE.MeshBasicMaterial({color:0x9fd0ff,wireframe:true,side:THREE.DoubleSide,transparent:true,opacity:0.55}));
+    cell.position.set((gx-(G-1)/2)*step,(gy-(G-1)/2)*step,2.6);grid.add(cell);}
+  s.add(grid);
+  // 격자를 통과해 나타난 현상(앞쪽 정렬된 노드들)
+  const phen=new THREE.Group();const ps=[];for(let i=0;i<6;i++){const ang=i*Math.PI/3;const m=new THREE.Mesh(new THREE.OctahedronGeometry(0.3,0),new THREE.MeshBasicMaterial({color:0xffd86a}));
+    m.position.set(Math.cos(ang)*2.5,Math.sin(ang)*2.5,3.2);phen.add(m);ps.push(m);}s.add(phen);
+  s.userData.thing=thing;s.userData.grid=grid;s.userData.phen=ps;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.0025;s.userData.thing.rotation.x+=0.008;s.userData.thing.rotation.y+=0.01;s.userData.grid.rotation.z=Math.sin(T*0.4)*0.08;s.userData.phen.forEach((m,i)=>{m.rotation.x+=0.03;m.position.z=3.2+Math.sin(T+i)*0.15;});r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
-</script></body></html>
+</script>
+</body></html>

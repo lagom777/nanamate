@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -17,36 +19,70 @@
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">🌌 표지 · 소개</a></li>
-    <li><a href="01-celestial-mechanics.html">1. 천체 역학</a></li>
+    <li><a href="01-celestial-mechanics.html">1. 천체역학</a></li>
     <li><a href="02-solar-system.html">2. 태양계</a></li>
     <li><a href="03-stars.html">3. 항성</a></li>
     <li><a href="04-galaxies.html">4. 은하</a></li>
-    <li><a href="05-cosmology.html">5. 우주론</a></li>
+    <li><a href="05-cosmology.html" style="color:var(--accent);font-weight:600;">5. 우주론</a></li>
     <li><a href="06-black-holes.html">6. 블랙홀</a></li>
     <li><a href="07-exoplanets.html">7. 외계행성</a></li>
-    <li><a href="08-observational.html">8. 관측 천문학</a></li>
-    <li><a href="09-space-exploration.html">9. 우주 탐사</a></li>
+    <li><a href="08-observational.html">8. 관측천문학</a></li>
+    <li><a href="09-space-exploration.html">9. 우주탐사</a></li>
   </ol>
 </aside>
 <main>
 <header class="paper-header">
-  <h1><em>우주론</em></h1>
-  <p class="authors">Chapter 5 — Cosmology & Big Bang</p>
+  <h1><em>우주론</em>: 우주의 시작과 끝</h1>
+  <p class="authors">Chapter 5 — Big Bang, Cosmic Expansion & Dark Energy</p>
+  <p class="affiliation">3D 우주 팽창 모델 포함</p>
 </header>
 
-<div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
-
-<h2>우주론 개요</h2>
-<p>이 챕터에서는 우주론의 핵심 개념을 3D 시뮬레이션과 함께 학습합니다. 우주를 직접 탐험하세요.</p>
+<h2>빅뱅과 우주의 탄생</h2>
+<p>약 138억 년 전, 우주는 극도로 뜨겁고 밀도 높은 상태에서 시작되었습니다. 이를 <strong>빅뱅(Big Bang)</strong>이라 합니다. 빅뱅은 "폭발"이 아니라, 공간 자체가 팽창하기 시작한 사건입니다. 초기 우주는 쿼크-글루온 플라즈마 상태였으며, 냉각되면서 양성자와 중성자가 형성되고, 약 38만 년 후 원자가 만들어지며 빛이 자유롭게 퍼져나갔습니다. 이 빛이 바로 <strong>우주배경복사(CMB)</strong>입니다.</p>
 
 <div class="info-card">
-  <h4>핵심 개념</h4>
-  <p>Cosmology & Big Bang의 기본 원리와 최신 발견을 다룹니다.</p>
+  <h4>빅뱅의 3대 증거</h4>
+  <p><strong>1)</strong> 허블의 법칙 — 먼 은하일수록 빠르게 멀어진다 (우주 팽창). <strong>2)</strong> 우주배경복사(CMB) — 빅뱅의 잔열이 2.725K 흑체복사로 관측됨. <strong>3)</strong> 가벼운 원소 비율 — 수소 75%, 헬륨 25%의 비율이 빅뱅 핵합성 예측과 일치.</p>
+</div>
+
+<h2>허블의 법칙과 우주 팽창</h2>
+<p>1929년 에드윈 허블은 먼 은하의 적색이동(redshift)이 거리에 비례한다는 것을 발견했습니다. 이는 우주가 팽창하고 있음을 의미합니다.</p>
+<div class="formula">v = H₀ × d &nbsp;&nbsp;&nbsp; (v: 후퇴속도, H₀: 허블상수 ≈ 70 km/s/Mpc, d: 거리)</div>
+<p>허블상수 H₀는 우주 팽창률을 나타내며, 현재 약 67~73 km/s/Mpc로 측정됩니다. 이 값의 역수는 우주의 대략적 나이를 제공합니다.</p>
+
+<div class="info-card wave">
+  <h4>적색이동 (Redshift)</h4>
+  <p>우주 팽창으로 인해 멀어지는 은하에서 오는 빛의 파장이 늘어나 붉게 보입니다. 적색이동 z가 클수록 더 먼(더 과거의) 은하입니다. z = Δλ/λ₀ = v/c (비상대론적 근사).</p>
+</div>
+
+<h2>3D 우주 팽창 모델</h2>
+<p>시간 슬라이더를 움직여 빅뱅 직후부터 먼 미래까지 은하들이 어떻게 퍼져나가는지 관찰하세요. 멀어지는 은하는 적색이동으로 붉어집니다.</p>
+
+<div class="scene-3d" id="cosmo-scene">
+  <div class="scene-controls">
+    <label>우주 시간: <span id="time-val">0.0</span> 억 년</label>
+    <input type="range" id="time-slider" min="0" max="100" value="0" step="1">
+    <label>팽창 속도: <span id="expand-val">1.0</span>x</label>
+    <input type="range" id="expand-slider" min="0.2" max="3" value="1" step="0.1">
+  </div>
+</div>
+<span class="interact-hint">⟳ 마우스 드래그로 회전 · 시간 슬라이더로 우주 팽창 관찰</span>
+
+<h2>암흑에너지와 우주의 미래</h2>
+<p>1998년, 먼 Ia형 초신성 관측을 통해 우주 팽창이 <strong>가속</strong>되고 있다는 놀라운 사실이 밝혀졌습니다. 이 가속을 일으키는 정체불명의 에너지를 <strong>암흑에너지(dark energy)</strong>라 합니다. 현재 우주 에너지 구성의 약 68%를 차지합니다.</p>
+
+<div class="formula">우주 에너지 구성: 암흑에너지 ~68% + 암흑물질 ~27% + 보통물질 ~5%</div>
+
+<h3>우주의 운명</h3>
+<p>암흑에너지가 일정하다면(우주상수 Λ), 우주는 영원히 가속 팽창하여 은하들이 서로 완전히 고립됩니다. 암흑에너지가 시간에 따라 증가한다면 "빅 립(Big Rip)" — 모든 구조가 찢어질 수 있습니다. 반대로 약해진다면 재수축하여 "빅 크런치(Big Crunch)"가 일어날 수도 있습니다.</p>
+
+<div class="info-card quantum">
+  <h4>💡 탐구 과제</h4>
+  <p>시뮬레이터에서 시간을 진행시키며 은하들의 색 변화를 관찰하세요. 멀리 후퇴하는 은하일수록 적색이동이 커져 붉어집니다. 이것이 허블이 발견한 우주 팽창의 직접적 증거입니다.</p>
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -55,133 +91,257 @@
 <div class="difficulty-content" data-level="easy">
   <span class="difficulty-badge easy">하 · 입문</span>
   <h3>한 줄로 이해하기</h3>
-  <p>우주론은 우주 전체가 어떻게 시작되었고, 어떻게 변해 왔으며, 앞으로 어떻게 될지를 연구하는 학문입니다.</p>
+  <p>우주는 약 138억 년 전 빅뱅으로 시작되어 지금도 점점 빠르게 커지고 있으며, 그 이유를 아직 완전히 모릅니다.</p>
   <h3>왜 흥미로운가?</h3>
-  <p>우리가 보는 모든 별과 은하, 우리 자신을 이루는 원자까지 모두 약 138억 년 전 한 점에서 시작되었다는 사실은 놀랍습니다. 또한 우주가 점점 빨리 팽창한다는 발견은 노벨상으로 이어졌고, 우주의 95%를 차지하는 암흑물질·암흑에너지의 정체는 여전히 미스터리입니다.</p>
+  <p>"우주에 시작이 있었나?"는 인류 최대의 질문 중 하나입니다. 빅뱅이론은 이 질문에 과학적으로 답하려는 시도입니다. 밤하늘의 모든 별과 은하는 그 시작에서 비롯되었고, 우리의 존재 자체가 빅뱅의 결과물입니다.</p>
   <div class="info-card">
     <h4>🌱 핵심 용어</h4>
     <ul>
-      <li><strong>빅뱅</strong> — 우주의 시작에 대한 표준 이론</li>
-      <li><strong>우주배경복사</strong> — 빅뱅이 남긴 식은 빛</li>
-      <li><strong>허블 상수</strong> — 우주 팽창 속도 척도</li>
-      <li><strong>암흑에너지</strong> — 우주 가속 팽창의 원인</li>
-      <li><strong>인플레이션</strong> — 초기 우주의 급팽창</li>
+      <li><strong>빅뱅</strong> — 우주의 시작, 공간이 팽창하기 시작한 사건</li>
+      <li><strong>우주배경복사(CMB)</strong> — 빅뱅의 잔열, 2.725K의 전파</li>
+      <li><strong>적색이동</strong> — 멀어지는 천체의 빛이 붉어지는 현상</li>
+      <li><strong>허블상수</strong> — 우주 팽창의 빠르기를 나타내는 값</li>
+      <li><strong>암흑에너지</strong> — 우주 팽창을 가속시키는 미지의 에너지</li>
     </ul>
   </div>
   <h3>핵심 개념 풀어쓰기</h3>
-  <p>우주론의 가장 큰 발견은 우주가 정적인 것이 아니라 점점 커지고 있다는 사실입니다. 1929년 허블은 멀리 있는 은하일수록 빠르게 멀어지는 것을 발견했습니다. 이것을 시간을 거꾸로 돌리면, 모든 것이 한 점에 모여 있던 시점에 도달하게 되고 그것이 빅뱅입니다. 빅뱅 직후 우주는 매우 뜨겁고 밀도가 높았으며, 식어가면서 양성자, 원자, 별, 은하가 차례로 만들어졌습니다. 빅뱅의 가장 강력한 증거는 1965년 우연히 발견된 우주배경복사입니다. 이것은 우주가 약 38만 년 되었을 때 처음으로 빛이 자유롭게 다닐 수 있게 되어 우주에 퍼진 빛이 식어 남은 마이크로파입니다. 또한 1998년에는 우주가 단순히 팽창하는 것을 넘어 점점 빨리 팽창한다는 충격적인 사실이 밝혀졌고, 이를 일으키는 미지의 무언가를 암흑에너지라 부릅니다.</p>
-  <div class="study-tip"><strong>💡 학습 TIP:</strong> "우주의 나이=138억 년"은 허블 상수의 역수 ~140억 년과 거의 같습니다. 우연이 아니라 평균 팽창률을 반영합니다.</div>
+  <p>풍선에 점을 찍고 부풀려 보세요. 점들은 모두 서로 멀어집니다. 어느 점에서 보더라도 다른 점이 멀어지므로 "중심"은 없습니다. 우주 팽창도 마찬가지입니다. 모든 은하가 서로 멀어지지만 특별한 중심은 없습니다. 더 먼 점일수록 더 빠르게 멀어지는데, 이것이 허블의 법칙입니다. 그리고 놀랍게도 이 팽창은 느려지는 것이 아니라 점점 빨라지고 있습니다! 이 가속의 원인을 암흑에너지라 부르며, 우주의 68%를 차지하지만 정체는 아직 미스터리입니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 빅뱅은 어떤 "한 점에서의 폭발"이 아닙니다. 공간 자체가 모든 곳에서 동시에 팽창한 것입니다.</div>
   <h3>요약</h3>
   <ul>
-    <li>우주는 138억 년 전 빅뱅으로 시작했다</li>
-    <li>우주배경복사가 빅뱅의 직접 증거다</li>
-    <li>우주는 점점 빨리 팽창하고 있다</li>
-    <li>전체의 약 27%가 암흑물질, 68%가 암흑에너지다</li>
-    <li>우리가 아는 보통 물질은 5%에 불과하다</li>
+    <li>우주는 약 138억 년 전 빅뱅으로 시작되었다</li>
+    <li>공간 자체가 팽창하여 은하들이 서로 멀어진다</li>
+    <li>멀어지는 은하의 빛은 적색이동된다 (v = H₀d)</li>
+    <li>CMB는 빅뱅의 직접적 증거이다</li>
+    <li>우주 팽창은 암흑에너지에 의해 가속되고 있다</li>
   </ul>
 </div>
 <div class="difficulty-content" data-level="medium">
   <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이</h3>
-  <p>표준 우주론 모형은 ΛCDM이라 불리며, 우주 상수 Λ(암흑에너지)와 차가운 암흑물질(CDM)을 포함합니다. FLRW(Friedmann-Lemaître-Robertson-Walker) 계량은 균일하고 등방한 우주를 기술하며, 아인슈타인 방정식에 대입하면 프리드만 방정식을 얻습니다. 이 방정식이 우주의 팽창 동역학을 결정합니다. 우주 나이, 거리, 적색이동의 관계는 우주의 물질 밀도, 암흑에너지 밀도, 곡률 매개변수에 의해 정해집니다. 빅뱅 핵합성(BBN)은 우주가 1초~3분 사이에 가벼운 원소(수소·헬륨·리튬)를 만든 과정으로, 관측된 원소 비율과 이론 예측이 잘 맞아 빅뱅의 강력한 증거가 됩니다. 우주배경복사의 이방성은 초기 밀도 요동의 화석으로, 그 각도 파워 스펙트럼에서 봉우리들의 위치와 높이가 우주론 매개변수를 결정합니다.</p>
+  <h3>이론 깊이 들어가기</h3>
+  <p>우주론의 수학적 기반은 일반상대성이론의 <strong>프리드만 방정식</strong>입니다. 균질하고 등방한 우주를 가정하면 스케일 팩터 a(t)의 진화를 기술할 수 있습니다. 현재 a=1로 놓으면, 과거에는 a < 1(우주가 작았음), 미래에는 a > 1(우주가 커짐)입니다. 적색이동과의 관계는 1+z = 1/a입니다.</p>
+  <p>허블상수의 정밀 측정은 현대 우주론의 뜨거운 주제입니다. CMB 기반 측정(Planck: ~67.4 km/s/Mpc)과 국소 세페이드/초신성 측정(SH0ES: ~73 km/s/Mpc) 사이의 약 9%의 불일치를 <strong>허블 텐션(Hubble tension)</strong>이라 하며, 새로운 물리의 단서일 수 있습니다.</p>
   <h3>핵심 공식</h3>
-  <div class="formula">프리드만: H² = (8πG/3)ρ - kc²/a² + Λc²/3 &nbsp;|&nbsp; 허블의 법칙: v = H₀d &nbsp;|&nbsp; 적색이동: 1+z = a₀/a</div>
+  <div class="formula">프리드만 방정식: H² = (8πG/3)ρ − k/a² + Λ/3 &nbsp;|&nbsp; v = H₀d &nbsp;|&nbsp; 1+z = a₀/a(t_emit)</div>
   <h3>대표 사례</h3>
-  <div class="info-card"><h4>🌌 사례 1 — Planck 위성</h4><p>2009-13 우주배경복사를 정밀 측정해 H₀=67.4, Ω_m=0.315, Ω_Λ=0.685 등 우주론 매개변수를 1% 정밀도로 결정했습니다.</p></div>
-  <div class="info-card"><h4>🌌 사례 2 — 1A형 초신성과 가속 팽창</h4><p>1998년 두 팀이 멀리 있는 1A형 초신성이 예상보다 어둡다는 것을 발견해 가속 팽창을 규명했고, 2011년 노벨 물리학상으로 이어졌습니다.</p></div>
-  <h3>관측 응용</h3>
-  <p>1A형 초신성의 표준광원성, 바리온 음향 진동의 표준 막대성, 우주배경복사 음향 봉우리, 약한 중력 렌즈 통계 등 다양한 우주론 거리 측정 도구가 사용됩니다.</p>
-  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 빅뱅은 공간상의 한 점에서 일어난 폭발이 아니라, 공간 자체가 모든 곳에서 동시에 팽창하기 시작한 사건입니다.</div>
+  <div class="info-card"><h4>🌌 사례 1 — COBE/WMAP/Planck</h4><p>우주배경복사의 정밀 관측은 초기 우주의 밀도 요동을 10만분의 1 수준까지 측정했습니다. 이 미세한 요동이 오늘날 은하와 은하단의 씨앗이 되었습니다.</p></div>
+  <div class="info-card"><h4>🌌 사례 2 — 1998 초신성 관측</h4><p>Perlmutter와 Riess 팀이 먼 Ia형 초신성이 예상보다 어둡다는 것을 발견하여 우주 가속 팽창을 증명했습니다. 2011년 노벨물리학상 수상.</p></div>
+  <h3>우주 인플레이션</h3>
+  <p>빅뱅 직후 10⁻³⁶초~10⁻³² 초 사이에 우주가 기하급수적으로 팽창한 시기를 인플레이션이라 합니다. 이는 우주의 평탄성, 지평선 문제, 자기홀극 부재를 동시에 설명합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 적색이동은 도플러 효과와 유사하지만, 우주론적 적색이동은 공간 팽창에 의한 것이지 은하의 고유 운동에 의한 것이 아닙니다.</div>
 </div>
 <div class="difficulty-content" data-level="hard">
   <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3>
-  <p>인플레이션 이론은 빅뱅 직후 10⁻³⁶~10⁻³² 초 사이에 우주가 약 10²⁶ 배 지수적으로 팽창했다고 가정해 평탄성·지평선·자기 단극자 문제를 해결합니다. 양자 요동이 인플레이션 동안 거시 스케일로 늘어나 구조 형성의 씨앗이 되며, 슬로우롤 매개변수는 스칼라 스펙트럼 지수와 텐서-스칼라 비를 예측합니다. 우주배경복사의 음향 봉우리는 광자-바리온 유체의 음향 진동이 재결합 시점에 동결된 흔적으로, 첫째 봉우리 위치(l≈220)는 우주의 평탄성을, 둘째·셋째 봉우리는 바리온 밀도와 암흑물질 밀도를 결정합니다. 허블 텐션은 우주배경복사로 결정한 H₀(67.4 km/s/Mpc)와 가까운 우주의 1A형 초신성으로 결정한 H₀(73 km/s/Mpc) 사이의 4-6σ 불일치로, 새로운 물리(early dark energy, 이른 시기 새 입자 등)를 시사할 수도 있습니다. 시그마8 텐션도 비슷한 긴장 관계입니다. 암흑에너지의 본질은 우주 상수일 수도, 동적 스칼라장(quintessence, phantom)일 수도 있으며, 상태방정식 w=p/ρ가 -1인지 정밀 측정하는 것이 차세대 우주론의 핵심 과제입니다. 양자 중력과 연결된 다중 우주론, 영원한 인플레이션, 끈 풍경(string landscape) 시나리오도 활발히 논의됩니다.</p>
-  <h3>유도</h3>
-  <div class="formula">에너지 보존: ρ̇ + 3H(ρ+p) = 0 &nbsp;|&nbsp; 가속 방정식: ä/a = -(4πG/3)(ρ+3p) + Λ/3 &nbsp;|&nbsp; 적색이동-거리: d_L = (1+z)·d_C</div>
+  <h3>전문가 레벨 이해</h3>
+  <p>표준 우주론 모델 ΛCDM은 6개의 자유 파라미터(H₀, Ω_b h², Ω_c h², τ, n_s, A_s)로 기술됩니다. 프리드만-르메트르-로버트슨-워커(FLRW) 메트릭 ds² = -dt² + a(t)²[dr²/(1-kr²) + r²dΩ²]에서 아인슈타인 방정식을 풀면 두 프리드만 방정식을 얻습니다. 밀도 파라미터 Ω = ρ/ρ_c에서 Ω_total = 1이면 평탄 우주(k=0)이며, CMB 관측은 |Ω_total - 1| < 0.01로 매우 평탄함을 보입니다.</p>
+  <p>CMB의 파워 스펙트럼 C_l은 다중극 모멘트 l의 함수로 우주론적 파라미터를 정밀 제약합니다. 첫 번째 피크(l ≈ 220)는 우주의 곡률을, 두 번째와 세 번째 피크의 비율은 바리온과 암흑물질의 비율을 결정합니다. BAO(바리온 음향 진동)는 CMB 요동에서 유래한 물질 분포의 특성 척도(약 150 Mpc)로, 우주 팽창사의 표준자가 됩니다.</p>
+  <h3>핵심 수식</h3>
+  <div class="formula">FLRW: ds² = -dt² + a²(t)[dr²/(1-kr²) + r²dΩ²] &nbsp;|&nbsp; H² = (8πG/3)ρ - k/a² &nbsp;|&nbsp; ä/a = -(4πG/3)(ρ+3P) + Λ/3</div>
   <h3>최신 연구</h3>
-  <p>DESI(Dark Energy Spectroscopic Instrument) 첫 결과(2024)는 암흑에너지 상태방정식이 시간에 따라 변할 가능성을 약 3σ로 제시했습니다. JWST의 고적색이동 은하는 초기 우주의 별 형성을 수정할 수 있는 단서를 제공하며, LiteBIRD·Simons Observatory·CMB-S4는 인플레이션 시대 1차 중력파의 흔적인 B-모드 편광을 탐색합니다. Roman Space Telescope(예정)는 1A형 초신성과 약한 렌즈로 암흑에너지를 정밀 측정합니다.</p>
+  <p>DESI(Dark Energy Spectroscopic Instrument)는 수천만 개 은하와 퀘이사의 적색이동을 측정하여 암흑에너지의 시간 변화를 탐색합니다. CMB-S4 실험은 원시 중력파의 B-모드 편광을 탐지하여 인플레이션 에너지 스케일을 직접 제약할 예정입니다. 허블 텐션 해결을 위한 초기 암흑에너지(EDE), 상호작용 암흑물질 등 다양한 이론이 제안되고 있습니다.</p>
   <h3>관련 분야</h3>
   <ul>
-    <li>고에너지 입자물리학과 초기 우주</li>
-    <li>거대 구조 형성과 N체 시뮬레이션</li>
-    <li>중력파 우주론(원시 중력파)</li>
+    <li>일반상대성이론과 시공간 기하학</li>
+    <li>양자중력과 초기 우주</li>
+    <li>대규모 구조 형성과 N-체 시뮬레이션</li>
   </ul>
-  <h3>추가 자료</h3>
+  <h3>추가 학습 자료</h3>
   <ul>
-    <li>Dodelson & Schmidt, <em>Modern Cosmology</em></li>
+    <li>Ryden, <em>Introduction to Cosmology</em></li>
     <li>Weinberg, <em>Cosmology</em></li>
-    <li>Planck 2018 results 논문 시리즈</li>
+    <li>Dodelson & Schmidt, <em>Modern Cosmology</em></li>
   </ul>
-  <div class="success-box"><strong>🎓 도전 과제:</strong> 프리드만 방정식을 풀어 물질 우세기와 암흑에너지 우세기의 a(t) 해를 구하고, 가속 팽창의 시작점을 계산해 보세요.</div>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 물질 지배 우주, 복사 지배 우주, 암흑에너지 지배 우주 각각에서 스케일 팩터 a(t)의 시간 의존성을 프리드만 방정식으로부터 유도해 보세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7b9fff","questions":[{"q":"우주의 나이는 약 몇 년인가?","choices":["46억 년","100억 년","138억 년","200억 년"],"answer":2},{"q":"빅뱅의 잔열로 관측되는 것은?","choices":["태양풍","우주배경복사","오로라","X선 제트"],"answer":1},{"q":"우주 팽창을 가속시키는 미지의 에너지는?","choices":["암흑에너지","암흑물질","중력","자기장"],"answer":0},{"q":"허블의 법칙을 나타내는 식은?","choices":["E = mc²","F = ma","v = H₀d","T² ∝ a³"],"answer":2},{"q":"우주 에너지 중 암흑에너지의 비율은 약?","choices":["5%","27%","50%","68%"],"answer":3}]};</script>
 </main>
 </div>
 
 <script>
 (function() {
-  const container = document.getElementById('sim-scene');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 5, 12);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  var container = document.getElementById('cosmo-scene');
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 5000);
+  camera.position.set(0, 15, 30);
+  camera.lookAt(0, 0, 0);
+
+  var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
 
-  // Stars background
-  const starGeo = new THREE.BufferGeometry();
-  const starPositions = new Float32Array(1000*3);
-  for (let i = 0; i < 1000; i++) {
-    starPositions[i*3] = (Math.random()-0.5)*100;
-    starPositions[i*3+1] = (Math.random()-0.5)*100;
-    starPositions[i*3+2] = (Math.random()-0.5)*100;
+  var cosmicTime = 0;
+  var expandSpeed = 1.0;
+
+  var timeSlider = document.getElementById('time-slider');
+  var expandSlider = document.getElementById('expand-slider');
+  var timeVal = document.getElementById('time-val');
+  var expandVal = document.getElementById('expand-val');
+
+  timeSlider.addEventListener('input', function() {
+    cosmicTime = parseFloat(timeSlider.value);
+    timeVal.textContent = (cosmicTime * 1.38).toFixed(1);
+  });
+  expandSlider.addEventListener('input', function() {
+    expandSpeed = parseFloat(expandSlider.value);
+    expandVal.textContent = expandSpeed.toFixed(1);
+  });
+
+  // Galaxy particles — each represents a galaxy
+  var NUM_GALAXIES = 300;
+  var galaxyData = [];
+  var galaxyGeo = new THREE.BufferGeometry();
+  var galaxyPositions = new Float32Array(NUM_GALAXIES * 3);
+  var galaxyColors = new Float32Array(NUM_GALAXIES * 3);
+  var galaxySizes = new Float32Array(NUM_GALAXIES);
+
+  for (var i = 0; i < NUM_GALAXIES; i++) {
+    // Initial positions (small volume near origin)
+    var theta = Math.random() * Math.PI * 2;
+    var phi = Math.acos(2 * Math.random() - 1);
+    var r = Math.pow(Math.random(), 0.33) * 5;
+    var baseX = r * Math.sin(phi) * Math.cos(theta);
+    var baseY = r * Math.sin(phi) * Math.sin(theta);
+    var baseZ = r * Math.cos(phi);
+    galaxyData.push({ bx: baseX, by: baseY, bz: baseZ, type: Math.random() });
+    galaxySizes[i] = 2.0 + Math.random() * 3.0;
   }
-  starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-  scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 })));
 
-  // Central body (sun/star)
-  const sun = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), new THREE.MeshBasicMaterial({ color: 0xfbbf24 }));
-  scene.add(sun);
-  scene.add(new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 32), new THREE.MeshBasicMaterial({ color: 0xfbbf24, transparent: true, opacity: 0.15 })));
+  galaxyGeo.setAttribute('position', new THREE.BufferAttribute(galaxyPositions, 3));
+  galaxyGeo.setAttribute('color', new THREE.BufferAttribute(galaxyColors, 3));
 
-  // Orbiting planets
-  const planets = [];
-  const planetColors = [0x60a5fa, 0xef4444, 0x22c55e, 0xa855f7, 0xfb923c];
-  for (let i = 0; i < 5; i++) {
-    const r = 0.15 + i*0.05;
-    const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 16, 16), new THREE.MeshBasicMaterial({ color: planetColors[i] }));
-    const orbit = 3 + i*1.5;
-    planets.push({ mesh, orbit, speed: 0.02/(i+1), angle: Math.random()*Math.PI*2 });
-    scene.add(mesh);
-    // Orbit ring
-    const ring = new THREE.Line(
-      new THREE.BufferGeometry().setFromPoints(Array.from({length:65}, (_,j) => new THREE.Vector3(Math.cos(j/64*Math.PI*2)*orbit, 0, Math.sin(j/64*Math.PI*2)*orbit))),
-      new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1 })
-    );
-    scene.add(ring);
+  var galaxyPoints = new THREE.Points(galaxyGeo, new THREE.PointsMaterial({
+    size: 0.6,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.9,
+    sizeAttenuation: true
+  }));
+  scene.add(galaxyPoints);
+
+  // Background CMB glow (faint sphere)
+  var cmbGeo = new THREE.SphereGeometry(80, 32, 32);
+  var cmbMat = new THREE.MeshBasicMaterial({
+    color: 0x332211,
+    transparent: true,
+    opacity: 0.08,
+    side: THREE.BackSide
+  });
+  var cmbSphere = scene.add(new THREE.Mesh(cmbGeo, cmbMat));
+
+  // Distant background stars
+  var bgGeo = new THREE.BufferGeometry();
+  var bgP = new Float32Array(1000 * 3);
+  for (var i = 0; i < 1000; i++) {
+    bgP[i*3] = (Math.random()-0.5) * 300;
+    bgP[i*3+1] = (Math.random()-0.5) * 300;
+    bgP[i*3+2] = (Math.random()-0.5) * 300;
+  }
+  bgGeo.setAttribute('position', new THREE.BufferAttribute(bgP, 3));
+  scene.add(new THREE.Points(bgGeo, new THREE.PointsMaterial({color: 0xffffff, size: 0.05, transparent: true, opacity: 0.3})));
+
+  function updateGalaxies() {
+    var scaleFactor = 1.0 + (cosmicTime / 100.0) * expandSpeed * 8.0;
+    var positions = galaxyGeo.attributes.position;
+    var colors = galaxyGeo.attributes.color;
+
+    for (var i = 0; i < NUM_GALAXIES; i++) {
+      var g = galaxyData[i];
+      var x = g.bx * scaleFactor;
+      var y = g.by * scaleFactor;
+      var z = g.bz * scaleFactor;
+      positions.setXYZ(i, x, y, z);
+
+      // Redshift: distance from observer determines color
+      var dist = Math.sqrt(x*x + y*y + z*z);
+      var maxDist = 5 * (1 + expandSpeed * 8);
+      var redshiftFactor = Math.min(dist / (maxDist * 0.6), 1.0);
+
+      // Blue-white -> yellow -> red as redshift increases
+      var rr, gg, bb;
+      if (redshiftFactor < 0.3) {
+        rr = 0.7 + redshiftFactor;
+        gg = 0.8 + redshiftFactor * 0.3;
+        bb = 1.0 - redshiftFactor * 0.5;
+      } else if (redshiftFactor < 0.7) {
+        var t = (redshiftFactor - 0.3) / 0.4;
+        rr = 1.0;
+        gg = 0.9 - t * 0.5;
+        bb = 0.85 - t * 0.7;
+      } else {
+        var t = (redshiftFactor - 0.7) / 0.3;
+        rr = 1.0 - t * 0.3;
+        gg = 0.4 - t * 0.3;
+        bb = 0.15 - t * 0.1;
+      }
+      colors.setXYZ(i, rr, gg, bb);
+    }
+    positions.needsUpdate = true;
+    colors.needsUpdate = true;
   }
 
-  let mouseDown = false, prevX = 0, prevY = 0;
-  container.addEventListener('mousedown', e => { mouseDown = true; prevX = e.clientX; prevY = e.clientY; });
-  container.addEventListener('mouseup', () => mouseDown = false);
-  container.addEventListener('mousemove', e => {
+  // Mouse/touch rotation
+  var mouseDown = false, prevX = 0, prevY = 0, rotX = 0.3, rotY = 0;
+  container.addEventListener('mousedown', function(e) { mouseDown = true; prevX = e.clientX; prevY = e.clientY; });
+  window.addEventListener('mouseup', function() { mouseDown = false; });
+  container.addEventListener('mousemove', function(e) {
     if (!mouseDown) return;
-    scene.rotation.y += (e.clientX - prevX)*0.005;
+    rotY += (e.clientX - prevX) * 0.005;
+    rotX += (e.clientY - prevY) * 0.005;
+    rotX = Math.max(-Math.PI/2, Math.min(Math.PI/2, rotX));
     prevX = e.clientX; prevY = e.clientY;
   });
-  container.addEventListener('touchstart', e => { prevX = e.touches[0].clientX; });
-  container.addEventListener('touchmove', e => { scene.rotation.y += (e.touches[0].clientX - prevX)*0.005; prevX = e.touches[0].clientX; });
+  container.addEventListener('touchstart', function(e) { prevX = e.touches[0].clientX; prevY = e.touches[0].clientY; });
+  container.addEventListener('touchmove', function(e) {
+    rotY += (e.touches[0].clientX - prevX) * 0.005;
+    rotX += (e.touches[0].clientY - prevY) * 0.005;
+    rotX = Math.max(-Math.PI/2, Math.min(Math.PI/2, rotX));
+    prevX = e.touches[0].clientX; prevY = e.touches[0].clientY;
+  });
+
+  // Auto-play mode
+  var autoPlay = false;
+  var autoBtn = document.createElement('button');
+  autoBtn.textContent = '▶ 자동 재생';
+  autoBtn.style.cssText = 'margin:4px;padding:4px 12px;cursor:pointer;border-radius:4px;border:1px solid rgba(128,128,128,0.3);background:rgba(0,0,0,0.3);color:#fff;font-size:12px;';
+  container.querySelector('.scene-controls').appendChild(autoBtn);
+  autoBtn.addEventListener('click', function() {
+    autoPlay = !autoPlay;
+    autoBtn.textContent = autoPlay ? '⏸ 일시정지' : '▶ 자동 재생';
+  });
 
   function animate() {
     requestAnimationFrame(animate);
-    planets.forEach(p => { p.angle += p.speed; p.mesh.position.set(Math.cos(p.angle)*p.orbit, 0, Math.sin(p.angle)*p.orbit); });
-    sun.rotation.y += 0.003;
+
+    if (autoPlay) {
+      cosmicTime += 0.15;
+      if (cosmicTime > 100) cosmicTime = 0;
+      timeSlider.value = cosmicTime;
+      timeVal.textContent = (cosmicTime * 1.38).toFixed(1);
+    }
+
+    updateGalaxies();
+
+    var dist = 30 + cosmicTime * 0.3;
+    camera.position.x = dist * Math.sin(rotY) * Math.cos(rotX);
+    camera.position.y = dist * Math.sin(rotX) + 8;
+    camera.position.z = dist * Math.cos(rotY) * Math.cos(rotX);
+    camera.lookAt(0, 0, 0);
+
     renderer.render(scene, camera);
   }
   animate();
-  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+
+  window.addEventListener('resize', function() {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
 })();
 </script>
 </body>

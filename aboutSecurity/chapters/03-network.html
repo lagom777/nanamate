@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3장. 네트워크 보안</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔐 표지 · 소개</a></li>
+    <li><a href="01-basics.html">1. 보안 기초와 위협 모델</a></li>
+    <li><a href="02-crypto.html">2. 암호학 입문</a></li>
+    <li><a href="03-network.html">3. 네트워크 보안</a></li>
+    <li><a href="04-web-vulns.html">4. 웹 취약점 (OWASP Top 10)</a></li>
+    <li><a href="05-auth.html">5. 인증과 권한</a></li>
+    <li><a href="06-system.html">6. 시스템·엔드포인트 보안</a></li>
+    <li><a href="07-pentest.html">7. 침투테스트와 레드팀</a></li>
+    <li><a href="08-incident.html">8. 사고 대응과 포렌식</a></li>
+    <li><a href="09-governance.html">9. 거버넌스·컴플라이언스</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. 네트워크 보안의 출발 — 계층과 경계</h2>
+<p>네트워크 보안은 OSI 7계층과 TCP/IP 4계층 위에서 데이터의 기밀성·무결성·가용성을 지키는 분야입니다. 각 계층마다 위협 모델과 통제 수단이 다릅니다: L2(스위치)에서는 ARP 스푸핑·MAC 플러딩, L3(라우터·IP)에서는 라우팅 하이재킹·IP 스푸핑, L4(TCP/UDP)에서는 SYN flood·세션 하이재킹, L7(애플리케이션)에서는 HTTP 기반 공격이 발생합니다.</p>
+<p>전통적 보안 모델은 "성과 해자(castle &amp; moat)"였습니다. 신뢰 가능한 내부망과 위험한 외부망을 방화벽으로 가르고, 내부는 자유 통행을 허용했죠. 그러나 클라우드·재택근무·SaaS가 보편화되면서 경계가 흐려졌고, 모든 트래픽을 검증하는 <strong>Zero Trust Network Access(ZTNA)</strong>로 패러다임이 이동하고 있습니다.</p>
+</section>
+
+<!-- 3D 학습 시각화: 계층 방어 — 방화벽·IDS·VPN -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 네트워크 계층 방어 시뮬레이션</div>
+  <div id="sec3d-03" style="width:100%;height:430px;"></div>
+  <div id="sec3d-03-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">패킷이 방화벽과 IDS를 차례로 통과하는 과정.</div>
+</div>
+
+
+<section id="sec2">
+<h2>2. 방화벽과 IDS/IPS</h2>
+<p>방화벽은 정책에 따라 패킷을 허용·차단하는 장치입니다. 1세대는 정적 패킷 필터(소스/목적지 IP·포트 기반), 2세대는 상태 기반(stateful, TCP 연결 추적), 3세대는 차세대 방화벽(NGFW)으로 L7 검사·사용자 식별·위협 인텔리전스를 통합합니다.</p>
+<p>IDS(Intrusion Detection System)는 의심 트래픽을 탐지·경보하고, IPS(Prevention)는 능동적으로 차단합니다. 탐지 방식은 ① 시그니처 기반(Snort, Suricata) — 알려진 패턴 매칭, ② 이상 기반(anomaly) — 정상 베이스라인 학습 후 편차 탐지, ③ 행위 기반(behavior) — 공격 행동 패턴 분석으로 나뉩니다. 시그니처는 신뢰도가 높지만 미지의 공격(zero-day)에 약하고, 이상 기반은 그 반대 트레이드오프입니다.</p>
+</section>
+
+<section id="sec3">
+<h2>3. VPN — 안전한 터널</h2>
+<p>VPN(Virtual Private Network)은 공개 인터넷 위에 암호화된 터널을 만들어 사설망처럼 사용합니다. 사이트 간 VPN(branch ↔ HQ)과 원격 접속 VPN(개인 ↔ 회사)이 있고, 프로토콜은 IPsec(L3), OpenVPN/WireGuard(L4 위), TLS-기반 SSL VPN이 주로 쓰입니다.</p>
+<p><strong>WireGuard</strong>(2020년 리눅스 커널 5.6 통합)는 IPsec의 복잡성을 버리고 약 4,000줄의 코드로 구현된 차세대 VPN입니다. Curve25519·ChaCha20·Poly1305·BLAKE2s만 고정 사용하며, 핸드셰이크 1.5-RTT, 모바일 친화적 로밍을 지원합니다. 클라우드와 컨테이너 환경에서 사실상의 표준이 되었습니다. 다만 VPN은 만능 해결책이 아니며, Zero Trust 모델에서는 VPN 자체가 단일 실패 지점이 될 수 있어 ZTNA로 대체되는 추세입니다.</p>
+</section>
+
+<section id="sec4">
+<h2>4. 패킷 분석과 트래픽 가시성</h2>
+<p>보안 사고 대응의 첫걸음은 "무슨 일이 일어났는지" 보는 것입니다. <strong>Wireshark</strong>·<strong>tcpdump</strong>·<strong>Zeek</strong>(구 Bro)는 패킷·플로우 분석의 표준 도구이며, 대규모 환경에서는 NetFlow/sFlow/IPFIX로 메타데이터만 집계해 효율성과 가시성을 균형 잡습니다.</p>
+<p>현대 위협의 대부분은 TLS로 암호화되어 있어 페이로드 검사가 어렵습니다. 이를 위해 ① 기업 환경에서는 TLS 인터셉션(SSL 가시성, 합법적 MITM)을 쓰거나, ② 메타데이터 기반 탐지(JA3/JA4 핑거프린팅, ESNI/ECH 분석, 트래픽 패턴 분석)로 우회합니다. 다만 TLS 인터셉션은 프라이버시·법적 문제가 있어 사용 범위가 점차 축소되고 있습니다.</p>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="02-crypto.html" style="text-decoration:none;">← 2. 암호학 입문</a><a href="04-web-vulns.html" style="text-decoration:none;">4. 웹 취약점 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>네트워크 보안은 "데이터가 컴퓨터 사이를 오갈 때 누가 훔쳐보거나 끼어들지 못하게" 지키는 일이에요. 방화벽이 출입통제, IDS/IPS가 CCTV·경비원, VPN이 비밀 전용 도로 역할을 합니다.</p>
+  <h3>왜 중요한가?</h3>
+  <p>① 회사 사무실에서만 접속되는 사내 시스템이 외부에서는 안 열리는 건 방화벽 덕분이에요. ② 카페 와이파이로 회사 이메일을 봐도 안전한 건 VPN이 만든 암호화 터널 때문. ③ "비정상 로그인 시도가 감지됐다"는 알림이 오는 건 IDS가 패턴을 발견해 알린 것입니다. 즉 우리가 "그냥 잘 동작하는" 네트워크 뒤에는 항상 이런 보안 장치들이 돌고 있어요.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>방화벽(Firewall)</strong>: 정해진 규칙대로 들어오는/나가는 트래픽을 허용·차단하는 장치</li>
+    <li><strong>IDS / IPS</strong>: 의심 트래픽을 탐지(IDS)하거나 자동 차단(IPS)하는 시스템</li>
+    <li><strong>VPN</strong>: 인터넷 위에 만든 암호화된 가상 전용선 — 카페 와이파이에서도 안전하게 회사망 접속</li>
+    <li><strong>DDoS</strong>: 수많은 컴퓨터가 동시에 한 서버에 접속해 마비시키는 공격</li>
+    <li><strong>Zero Trust</strong>: "내부망도 믿지 않는다" — 매 요청마다 신원을 재확인하는 새 패러다임</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>회사 건물에 비유해봅시다. 방화벽은 정문의 출입게이트예요. 사원증이 있는 사람만 들여보내죠. IDS는 천장의 CCTV — 이상한 움직임이 보이면 경비실에 알립니다. IPS는 더 적극적인 경비원 — 의심스러우면 바로 막아요. VPN은 외근 중인 직원이 회사 안 자리에 앉은 것처럼 일하게 해주는 비밀 통로입니다. Zero Trust는 "회사 안에 있어도 매번 사원증을 다시 보여달라"고 요구하는 새로운 정책이에요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> "방화벽=문지기, IDS=감시카메라, IPS=경비원, VPN=비밀통로, Zero Trust=매번재확인" 이 다섯 비유만 박아두세요. 어떤 네트워크 보안 도구도 이 다섯 역할의 변형으로 이해할 수 있어요.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>네트워크 보안 = 데이터 이동 중의 안전 확보</li>
+    <li>방화벽 = 트래픽 허용·차단의 1차 관문</li>
+    <li>IDS는 탐지·경보, IPS는 능동 차단</li>
+    <li>VPN으로 공개 인터넷 위에 사설망 효과</li>
+    <li>Zero Trust = "내부도 안 믿는다", 현대의 새 표준</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>방화벽의 진화는 트래픽 검사 깊이에 비례합니다. 1세대 패킷 필터는 5튜플(src/dst IP·포트, 프로토콜)만 검사하고 무상태이므로 응답 트래픽을 위한 양방향 규칙이 필요합니다. 2세대 stateful inspection은 연결 상태표(connection table)를 유지해 NEW/ESTABLISHED/RELATED를 구분합니다(Linux netfilter, BSD pf의 핵심). 3세대 NGFW는 DPI(Deep Packet Inspection)·애플리케이션 식별·사용자 인식·위협 인텔리전스 피드를 통합하며, Palo Alto·Fortinet·Check Point가 대표적입니다.</p>
+  <p>IDS/IPS의 핵심 지표는 탐지율과 오탐율의 트레이드오프입니다. 시그니처 기반 Suricata·Snort는 ET Open·Talos 같은 룰셋을 받아오며, 다중 스레딩과 하드웨어 오프로딩으로 10Gbps 이상 라인레이트 검사가 가능합니다. 행위/이상 기반 도구로는 Zeek가 사실상 표준이며, 스크립팅 가능한 프레임워크로 자체 탐지 로직을 작성할 수 있습니다.</p>
+  <h3>핵심 코드 — iptables / nftables</h3>
+  <pre><code># 1. 기본 정책: 들어오는 건 모두 차단 (whitelist 방식)
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+
+# 2. 루프백 + 기존 연결 허용
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# 3. SSH(22) — 사내망에서만, 5분당 5회 시도 제한
+iptables -A INPUT -p tcp --dport 22 -s 10.0.0.0/8 -m recent --set
+iptables -A INPUT -p tcp --dport 22 -m recent --update --seconds 300 --hitcount 5 -j DROP
+
+# 4. HTTPS(443) — 누구나 허용
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>🌐 예제 1 — 2016 Mirai 봇넷 DDoS</h4><p>9월 KrebsOnSecurity는 620Gbps, 10월 Dyn DNS는 1.2Tbps의 DDoS를 받았습니다. 공격자는 디폴트 패스워드를 그대로 쓴 IoT 기기(CCTV·DVR) 수십만 대를 봇넷화했죠. 방어자는 ① BGP Anycast로 트래픽을 분산하고, ② Cloudflare·Akamai 같은 CDN의 스크러빙 센터로 우회하고, ③ ISP 수준 BCP38(소스 IP 검증)로 스푸핑을 차단합니다. 단일 호스트 방어로는 절대 막을 수 없다는 교훈을 남긴 사례입니다.</p></div>
+  <div class="info-card"><h4>🌐 예제 2 — TLS 인터셉션과 한계</h4><p>기업은 직원의 HTTPS 트래픽 내부 검사를 위해 내부 CA를 설치하고 프록시에서 인증서를 동적으로 발급합니다. 그러나 ① certificate pinning을 사용하는 모바일 앱은 깨지고, ② QUIC/HTTP3의 UDP+암호화는 인터셉션이 어렵고, ③ ECH(Encrypted Client Hello)가 보급되면 SNI 가시성도 사라집니다. 결국 메타데이터·DNS 가시성 위주의 탐지로 무게중심이 이동 중입니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① <strong>마이크로세그멘테이션</strong>: VMware NSX, Cilium 같은 솔루션으로 워크로드 단위로 정책을 강제합니다. 한 컨테이너가 침해되어도 lateral movement가 차단됩니다. ② <strong>SD-WAN + SASE</strong>: 지점들을 인터넷 위에서 묶고, 보안(SWG·CASB·ZTNA·FWaaS)을 클라우드에서 일괄 제공하는 모델입니다. 가트너가 2019년 명명했고 Cisco·Zscaler·Cato가 주도합니다. ③ <strong>DNS 보안</strong>: DoT(DNS over TLS)·DoH(over HTTPS)로 쿼리 자체를 암호화하고, DNS 필터링(Quad9, Cloudflare 1.1.1.2, Pi-hole)으로 악성 도메인을 차단합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "방화벽만 잘 설정하면 안전하다"는 가정은 위험합니다. 현대 공격의 대부분은 ① 정상 트래픽처럼 보이는 HTTPS 위에서 일어나고, ② 합법 사용자 자격증명을 탈취해 정상 경로로 들어오며, ③ 내부에서 외부로 나가는 트래픽(C2 비콘, 데이터 유출)이 더 위험합니다. egress filtering과 행위 기반 탐지가 함께 필요합니다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>현대 네트워크 보안의 패러다임 전환은 <strong>NIST SP 800-207 (Zero Trust Architecture, 2020)</strong>에 정립되어 있습니다. 핵심 원칙은 ① 모든 데이터 소스·서비스를 자원으로 간주, ② 네트워크 위치와 무관하게 모든 통신을 보호, ③ 세션 단위로 접근 부여, ④ 클라이언트 신원·기기 상태·요청 컨텍스트를 종합한 동적 정책, ⑤ 모든 자산의 무결성·보안 상태를 측정·관찰, ⑥ 인증·인가는 매 요청 동적으로, ⑦ 가능한 한 많은 정보를 수집해 보안 자세를 개선. PDP(Policy Decision Point)와 PEP(Policy Enforcement Point) 분리는 SDN(Software-Defined Networking)의 control/data plane 분리와 구조적으로 유사합니다.</p>
+  <p>BGP 보안은 인터넷 라우팅의 약점입니다. 1989년 정의된 BGP는 신뢰 기반 프로토콜로, AS(Autonomous System) 간의 라우팅 광고를 검증하지 않습니다. 2018년 아마존 Route 53 하이재킹, 2008년 파키스탄 → YouTube 사고가 그 결과죠. 대응책으로 <strong>RPKI(Resource Public Key Infrastructure)</strong>가 IETF RFC 6480-6493에 정의되었고, ROA(Route Origin Authorization)와 BGPsec으로 광고를 암호화 검증합니다. 2025년 기준 IPv4 prefix의 약 50%가 ROA로 보호됩니다.</p>
+  <h3>수학적·정량적 기초</h3>
+  <div class="formula">$$\text{TCP throughput (Mathis): } BW \le \frac{\text{MSS}}{\text{RTT}} \cdot \frac{C}{\sqrt{p}}$$
+  $$\text{Erlang B (회선 차단확률): } B(c, A) = \frac{A^c/c!}{\sum_{k=0}^{c} A^k/k!}$$
+  $$\text{DDoS 증폭계수: } \text{AF} = \frac{\text{Response Size}}{\text{Request Size}} \quad (\text{NTP monlist} \approx 556\times,\; \text{Memcached} \approx 51{,}000\times)$$</div>
+  <p>DDoS 증폭공격의 핵심 수학은 위 증폭계수입니다. UDP 기반 무상태 프로토콜에서 소스 IP를 스푸핑하면, 응답이 피해자에게 폭주합니다. BCP38(RFC 2827, 1998)은 이 문제의 근본 해결책으로 ISP가 자기 네트워크에서 나가는 패킷의 소스 IP를 검증하라는 권고입니다. 그러나 deployment 인센티브가 없어 27년이 지난 지금도 완전 적용되지 않은 상태입니다.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>QUIC와 HTTP/3</strong>: RFC 9000-9114로 표준화. UDP 위에서 TLS 1.3 통합, 0-RTT 재개, 연결 마이그레이션 등을 제공하며 2024년 기준 웹 트래픽의 30%+ 비중입니다. 보안 측면에서 패킷 번호 암호화로 트래픽 분석 저항성이 향상되었지만, 미들박스 가시성은 급감했습니다. ② <strong>eBPF 기반 관측·시행</strong>: Cilium·Tetragon이 커널 내부에서 syscall·socket 수준의 시행을 가능케 하여, 마이크로세그멘테이션과 런타임 위협 탐지의 성능 한계를 돌파하고 있습니다. ③ <strong>PQC migration</strong>: Cloudflare, Google이 2024년부터 X25519MLKEM768 하이브리드 키교환을 기본 활성화. 미래의 양자컴퓨터에 의한 retrospective decryption을 방지하기 위함입니다. ④ <strong>AI 기반 NIDS</strong>: Transformer·GNN을 활용한 트래픽 분류와 anomaly detection이 학술계 핫토픽이며, MIT/IBM의 Auto-IDS 같은 자동 룰 생성도 부상 중입니다.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>분산시스템</strong>: BGP/AS 토폴로지, CAP 정리와 일관성, anycast 라우팅</li>
+    <li><strong>큐잉 이론</strong>: M/M/c 모델, 트래픽 폴리싱·쉐이핑, AQM</li>
+    <li><strong>그래프이론</strong>: 공격 그래프, attack tree, kill chain의 모델링</li>
+    <li><strong>제어이론</strong>: TCP 혼잡제어(BBR, CUBIC)의 안정성 분석</li>
+    <li><strong>경제학</strong>: deployment 인센티브 문제(BCP38, DNSSEC, RPKI의 적용률)</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Stallings, <em>Network Security Essentials</em> (6th ed., 2017)</li>
+    <li>📖 Kurose &amp; Ross, <em>Computer Networking: A Top-Down Approach</em> (8th ed.)</li>
+    <li>📖 NIST SP 800-41 / 800-77 / 800-207</li>
+    <li>📺 SANS SEC503 (Intrusion Detection In-Depth)</li>
+    <li>🔬 실습 환경: GNS3 / EVE-NG / Mininet</li>
+    <li>🔬 키워드: ZTNA, SASE, RPKI, eBPF, QUIC, BBR</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 자신의 공유기/홈랩에 Suricata 또는 Zeek를 설치하고 1주일간 트래픽을 캡처해, ① 어떤 도메인으로 가장 많이 나가는가, ② TLS 1.3/QUIC 비중은 얼마인가, ③ 의심스러운 도메인이 있는가(Ti feed와 매칭)를 직접 분석해보세요. ELK·Grafana로 대시보드까지 만들면 SOC 분석가의 실무 감각을 그대로 체험할 수 있습니다.</div>
+</div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#475569","questions":[{"q":"트래픽을 허용·차단하는 관문은?","choices":["방화벽","VPN","DNS","해시"],"answer":0},{"q":"암호화 터널로 사설망 효과를 주는 것은?","choices":["IDS","IPS","VPN","WAF"],"answer":2},{"q":"'내부망도 안 믿는' 패러다임은?","choices":["성과 해자","Zero Trust","ECB","PKI"],"answer":1},{"q":"탐지만 하고 차단은 안 하는 시스템은?","choices":["IPS","IDS","VPN","NAT"],"answer":1},{"q":"약 4천 줄로 구현된 차세대 VPN은?","choices":["WireGuard","IPsec","OpenVPN","SSL"],"answer":0}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('sec3d-03');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('sec3d-03-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,2.5,13.5);camera.lookAt(0,0.5,0);
+  var extL=lbl('외부 (인터넷)',26,'#7c87a3',1);extL.position.set(-7,4.2,0);scene.add(extL);
+  var intL=lbl('내부망',26,'#2f9e63',1);intL.position.set(6,4.2,0);scene.add(intL);
+  var wall=new THREE.Group();scene.add(wall);
+  var ports={};
+  for(var r=0;r<5;r++)for(var c2=0;c2<2;c2++){
+    var open=(r===1&&c2===0)||(r===3&&c2===1);
+    var cell=box(0.9,1.0,0.4,open?0xf4f6fb:0x5b6bd6,open?0.15:0.85);
+    cell.position.set(-1.5+c2*1.0,r*1.1-1.7,0);wall.add(cell);
+    if(open)ports[r]=cell;
+  }
+  var fwL=lbl('방화벽 (허용 포트만 통과)',25,'#5b6bd6',1);fwL.position.set(-1,4.2,0);scene.add(fwL);
+  var p443=lbl('443',20,'#39415a',0.7);p443.position.set(-1.5,-0.6,0.4);scene.add(p443);
+  var p80=lbl('80',20,'#39415a',0.7);p80.position.set(-0.5,1.6,0.4);scene.add(p80);
+  var ids=new THREE.Mesh(new THREE.TorusGeometry(0.9,0.07,10,40),mat(0xe07a3f,0.9));
+  ids.position.set(2.2,0.5,0);scene.add(ids);
+  var idsL=lbl('IDS/IPS (내용 검사)',24,'#e07a3f',0.95);idsL.position.set(2.2,2.0,0);scene.add(idsL);
+  var server=box(1.4,2.0,1.0,0x2f9e63,0.9);server.position.set(6,0.3,0);scene.add(server);
+  var jail=box(1.0,1.0,1.0,0xd6455b,0.0);jail.position.set(2.2,-2.6,0);scene.add(jail);
+  var jailL=lbl('격리',21,'#d6455b',0.0);jailL.position.set(3.2,-2.6,0);scene.add(jailL);
+  var pk=[];
+  for(var i=0;i<7;i++){var s=sph(0.18,0x2f9e63);s.visible=false;scene.add(s);pk.push(s);}
+  function traffic(u,withIDS){
+    pk.forEach(function(p,i){
+      p.visible=true;
+      var f=(u*1.5+i*0.143)%1;
+      var kind=i%3; // 0 정상, 1 비허용 포트, 2 악성(허용 포트로 위장)
+      if(kind===1){
+        p.material.color.set(0xd6455b);
+        var x=-8+f*6.4;p.position.set(Math.min(x,-1.7),2.7,0);
+        if(x>-1.75)p.material.color.set(0x7c87a3);
+      }else if(kind===0){
+        p.material.color.set(0x2f9e63);
+        p.position.set(-8+f*14,-0.6+Math.sin(f*4)*0.05,0);
+      }else{
+        p.material.color.set(0xe07a3f);
+        if(!withIDS){p.position.set(-8+f*14,-0.6,0);if(f>0.95)server.material.color.set(0xd6455b);}
+        else{
+          if(f<0.72){p.position.set(-8+f/0.72*10.2,-0.6+ (f>0.6? (f-0.6)*9 : 0),0);}
+          else{p.position.lerpVectors(V(2.2,0.5,0),V(2.2,-2.6,0),(f-0.72)/0.28);}
+        }
+      }
+    });
+  }
+  var tube=new THREE.Mesh(new THREE.CylinderGeometry(0.5,0.5,9,14,1,true),mat(0x5b6bd6,0));
+  tube.rotation.z=Math.PI/2;tube.position.set(0.5,-3.6,0);scene.add(tube);
+  var tubeL=lbl('VPN 터널 (암호화된 통로)',23,'#5b6bd6',0);tubeL.position.set(0.5,-4.7,0);scene.add(tubeL);
+  var vp=sph(0.22,0xffc83c);vp.visible=false;scene.add(vp);
+  var phases=[
+    {dur:5,cap:'1차 방어 — 방화벽: 규칙(포트·IP)에 맞는 패킷만 통과. 비허용 포트(빨강)는 벽에서 차단됩니다. 그러나 443으로 위장한 악성 트래픽(주황)은 통과.',
+     enter:function(){server.material.color.set(0x2f9e63);ids.material.opacity=0.15;jail.material.opacity=0;jailL.material.opacity=0;},
+     update:function(u){traffic(u,false);}},
+    {dur:5.5,cap:'2차 방어 — IDS/IPS: 통과한 패킷의 "내용"을 검사합니다. 위장 패킷(주황)이 시그니처에 걸리면 경보 + 격리 — 계층 방어(Defense in Depth).',
+     enter:function(){server.material.color.set(0x2f9e63);ids.material.opacity=0.9;jail.material.opacity=0.5;jailL.material.opacity=1;},
+     update:function(u){traffic(u,true);ids.scale.setScalar(1+0.12*Math.sin(u*20));}},
+    {dur:5,cap:'VPN: 외부의 정당한 사용자는 암호화 터널로 들어옵니다 — 방화벽을 "뚫는" 게 아니라 인증된 별도의 문. 터널 안 내용은 중간자가 볼 수 없습니다.',
+     enter:function(){tube.material.opacity=0.25;tubeL.material.opacity=1;vp.visible=true;},
+     update:function(u){vp.position.set(-4+((u*2)%1)*9,-3.6,0);traffic(u,true);}}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

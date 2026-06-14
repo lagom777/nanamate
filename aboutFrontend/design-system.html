@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>디자인 구조 · aboutFrontend Design System</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+  /* ========= Design system page additions ========= */
+  .ds-hero {
+    background: linear-gradient(135deg, rgba(14,165,233,0.08), rgba(139,92,246,0.08));
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 36px 40px;
+    margin: 32px 0 60px 0;
+  }
+  .ds-section { margin: 80px 0; }
+
+  /* Color swatches */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .color-swatch {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    transition: all 0.25s ease;
+    cursor: pointer;
+    background: var(--paper);
+  }
+  .color-swatch:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(15,23,42,0.12); }
+  .swatch-color { height: 100px; }
+  .swatch-info {
+    padding: 12px 14px;
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+  }
+  .swatch-name {
+    color: var(--ink);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .swatch-value {
+    color: var(--ink-mute);
+    letter-spacing: 0.02em;
+  }
+  .swatch-token { color: var(--accent); font-size: 0.85em; }
+
+  /* Typography spec */
+  .type-spec {
+    border-top: 1px solid var(--rule);
+    padding: 20px 0;
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+    color: var(--ink-mute);
+    line-height: 1.6;
+  }
+  .type-meta strong { color: var(--accent); display: block; }
+  .type-sample { max-width: none; margin: 0; }
+
+  /* Component preview */
+  .component-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 24px 0;
+  }
+  .component-header {
+    background: var(--paper-soft);
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+  }
+  .component-header strong { color: var(--accent); font-weight: 600; }
+  .component-header .badge {
+    background: var(--accent-glow);
+    color: var(--accent-dim);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 500;
+  }
+  .component-body {
+    padding: 28px 24px;
+    background: var(--paper);
+  }
+  .component-code {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 16px 20px;
+    margin: 0;
+    border-radius: 0;
+    border-left: none;
+    box-shadow: none;
+    font-size: 0.82em;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* Spacing scale */
+  .spacing-row {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--rule-soft);
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+  }
+  .spacing-token { width: 100px; color: var(--accent); font-weight: 600; }
+  .spacing-value { width: 90px; color: var(--ink-mute); }
+  .spacing-bar {
+    background: var(--accent);
+    height: 14px;
+    border-radius: 3px;
+    opacity: 0.6;
+  }
+
+  /* Page architecture diagram */
+  .arch-diagram {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 30px;
+    margin: 30px 0;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+    min-height: 360px;
+  }
+  .arch-sidebar {
+    background: var(--paper-soft);
+    border-radius: 8px;
+    padding: 18px;
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+    color: var(--ink-mute);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .arch-sidebar .arch-hub {
+    background: linear-gradient(120deg,#7b5cff,#00d4ff);
+    color: #fff;
+    padding: 8px 10px;
+    border-radius: 6px;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .arch-main {
+    border: 1px dashed var(--rule);
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .arch-block {
+    background: var(--paper-soft);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--accent);
+  }
+
+  /* Token table */
+  .token-table {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+  }
+  .token-table th { font-size: 0.7em; }
+  .token-table td:first-child { color: var(--accent); font-weight: 600; }
+
+  /* 3D inventory grid */
+  .viz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .viz-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s ease;
+  }
+  .viz-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(14,165,233,0.1);
+  }
+  .viz-card .viz-num {
+    font-family: var(--font-mono);
+    font-size: 0.7em;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    font-weight: 600;
+  }
+  .viz-card h5 {
+    margin: 8px 0 6px 0;
+    color: var(--ink);
+    font-size: 1.05em;
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+  .viz-card p {
+    margin: 0;
+    font-size: 0.88em;
+    color: var(--ink-mute);
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="index.html">📖 표지 · 소개</a></li>
+    <li><a href="design-system.html" style="color:var(--accent);font-weight:600;">🎨 디자인 구조</a></li>
+    <li><a href="chapters/01-html-basics.html">1. HTML 기초</a></li>
+    <li><a href="chapters/02-css-layout.html">2. CSS와 레이아웃</a></li>
+    <li><a href="chapters/03-javascript-core.html">3. JavaScript 핵심</a></li>
+    <li><a href="chapters/04-dom-manipulation.html">4. DOM 조작</a></li>
+    <li><a href="chapters/05-react-components.html">5. React와 컴포넌트</a></li>
+    <li><a href="chapters/06-state-management.html">6. 상태관리</a></li>
+    <li><a href="chapters/07-responsive-design.html">7. 반응형 디자인</a></li>
+    <li><a href="chapters/08-performance.html">8. 성능 최적화</a></li>
+    <li><a href="chapters/09-build-deploy.html">9. 빌드도구와 배포</a></li>
+  </ol>
+</aside>
+<main>
+
+<header class="paper-header">
+  <h1>디자인 <em>구조</em>와<br>시스템에<br>관하여</h1>
+  <p class="authors">Design System & Architecture — aboutFrontend의 시각적 언어와 컴포넌트 구조</p>
+  <p class="affiliation">Design Spec  ·  v1.0  ·  May 2026</p>
+</header>
+
+<div class="ds-hero">
+  <p style="margin:0;font-size:1.05em;line-height:1.7;max-width:75ch;">
+    이 페이지는 <strong>aboutFrontend 학습 사이트의 디자인 시스템</strong>을 정리한 명세서입니다.
+    컬러 팔레트, 타이포그래피, 컴포넌트, 레이아웃, 그리고 사이트 전반에 사용된
+    Three.js 3D 비주얼라이제이션의 구조를 한눈에 볼 수 있도록 설계되었습니다.
+    또한 <em>디자인 시스템 자체가 어떻게 만들어지는지</em>에 대한 학습 자료로도 활용할 수 있습니다.
+  </p>
+  <div class="tag-list" style="margin-top:18px;">
+    <span class="tag tag-blue">Design Tokens</span>
+    <span class="tag tag-violet">Atomic Design</span>
+    <span class="tag tag-emerald">Component Library</span>
+    <span class="tag tag-amber">3D Visualization</span>
+    <span class="tag tag-rose">Korean Typography</span>
+  </div>
+</div>
+
+<!-- ============ 1. 디자인 철학 ============ -->
+<section class="ds-section">
+<h2>1. 디자인 철학</h2>
+<p>
+aboutFrontend는 <strong>"코드는 진지하게, 학습은 즐겁게"</strong>라는 철학으로 설계되었습니다.
+모던 코드 에디터의 정밀함, Distill.pub의 학술적 명료함, 그리고 Vercel Docs의 깔끔한 가독성을
+한국어 학습 환경에 맞게 조합했습니다.
+</p>
+
+<div class="kv-list">
+  <dt>① 명료함</dt>
+  <dd>모든 시각 요소는 정보 전달을 우선합니다. 장식은 학습 흐름을 방해하지 않습니다.</dd>
+  <dt>② 입체감</dt>
+  <dd>Three.js 3D 비주얼라이제이션으로 추상적 개념(DOM 트리, 이벤트 루프 등)을 입체적으로 표현합니다.</dd>
+  <dt>③ 인터랙티브</dt>
+  <dd>읽기만 하지 않고 직접 만져보며 배웁니다. 라이브 에디터, 슬라이더, 시뮬레이터.</dd>
+  <dt>④ 한글 가독성</dt>
+  <dd>IBM Plex Sans KR을 본문에 사용하여 한국어 텍스트의 안정적인 가독성을 확보합니다.</dd>
+</div>
+</section>
+
+<!-- ============ 2. 컬러 시스템 ============ -->
+<section class="ds-section">
+<h2>2. 컬러 시스템</h2>
+<p>
+색상은 의미 단위로 토큰화되어 있으며, CSS Custom Properties로 관리됩니다.
+주조색은 <strong>Sky Blue</strong> (#0ea5e9) 계열로, 차분하면서도 디지털적인 인상을 줍니다.
+</p>
+
+<h3>주조색 · Accent</h3>
+<div class="color-grid">
+  <div class="color-swatch">
+    <div class="swatch-color" style="background:#0ea5e9;"></div>
+    <div class="swatch-info">
+      <div class="swatch-name">Accent</div>
+      <div class="swatch-value">#0ea5e9</div>
+      <div class="swatch-token">--accent</div>
+    </div>
+  </div>
+  <div class="color-swatch">
+    <div class="swatch-color" style="background:#0284c7;"></div>
+    <div class="swatch-info">
+      <div class="swatch-name">Accent Dim</div>
+      <div class="swatch-value">#0284c7</div>
+      <div class="swatch-token">--accent-dim</div>
+    </div>
+  </div>
+  <div class="color-swatch">
+    <div class="swatch-color" style="background:#06b6d4;"></div>
+    <div class="swatch-info">
+      <div class="swatch-name">Cyan</div>
+      <div class="swatch-value">#06b6d4</div>
+      <div class="swatch-token">--cyan</div>
+    </div>
+  </div>
+  <div class="color-swatch">
+    <div class="swatch-color" style="background:#8b5cf6;"></div>
+    <div class="swatch-info">
+      <div class="swatch-name">Violet</div>
+      <div class="swatch-value">#8b5cf6</div>
+      <div class="swatch-token">--violet</div>
+    </div>
+  </div>
+</div>
+
+<h3>의미 색상 · Semantic</h3>
+<div class="color-grid">
+  <div class="color-swatch">
+    <div class="swatch-color" style="background:#10b981;"></div>
+    <div class="swatch-info">
+      <div class="swatch-name">Emerald</div>
+      <div class="swatch-value">#10b981</div>
+      <div class="swatch-token">--emerald · 성공</div>
+    </div>
+  </div>
+  <div class="color-swatch">
+    <div class="swatch-color" style="background:#f59e0b;"></div>
+    <div class="swatch-info">
+      <div class="swatch-name">Amber</div>
+      <div class="swatch-value">#f59e0b</div>
+      <div class="swatch-token">--amber · 주의</div>
+    </div>
+  </div>
+  <div class="color-swatch">
+    <div class="swatch-color" style="background:#f43f5e;"></div>
+    <div class="swatch-info">
+      <div class="swatch-name">Rose</div>
+      <div class="swatch-value">#f43f5e</div>
+      <div class="swatch-token">--rose · 오류</div>
+    </div>
+  </div>
+  <div class="color-swatch">
+    <div class="swatch-color" style="background:#f97316;"></div>
+    <div class="swatch-info">
+      <div class="swatch-name">Orange</div>
+      <div class="swatch-value">#f97316</div>
+      <div class="swatch-token">--orange · 경고</div>
+    </div>
+  </div>
+</div>
+
+<h3>중성색 · Neutral</h3>
+<div class="color-grid">
+  <div class="color-swatch">
+    <div class="swatch-color" style="background:#f0f4f8;border-bottom:1px solid var(--rule);"></div>
+    <div class="swatch-info">
+      <div class="swatch-name">Paper</div>
+      <div class="swatch-value">#f0f4f8</div>
+      <div class="swatch-token">--paper · 배경</div>
+    </div>
+  </div>
+  <div class="color-swatch">
+    <div class="swatch-color" style="background:#e8edf3;"></div>
+    <div class="swatch-info">
+      <div class="swatch-name">Paper Soft</div>
+      <div class="swatch-value">#e8edf3</div>
+      <div class="swatch-token">--paper-soft</div>
+    </div>
+  </div>
+  <div class="color-swatch">
+    <div class="swatch-color" style="background:#475569;"></div>
+    <div class="swatch-info">
+      <div class="swatch-name">Ink Mute</div>
+      <div class="swatch-value">#475569</div>
+      <div class="swatch-token">--ink-mute</div>
+    </div>
+  </div>
+  <div class="color-swatch">
+    <div class="swatch-color" style="background:#0f172a;"></div>
+    <div class="swatch-info">
+      <div class="swatch-name">Ink</div>
+      <div class="swatch-value">#0f172a</div>
+      <div class="swatch-token">--ink · 본문</div>
+    </div>
+  </div>
+</div>
+
+<div class="info-box">
+모든 색상은 <code>:root</code> 선택자의 <strong>CSS Custom Properties</strong>로 정의되어 있어,
+한 곳에서 수정하면 사이트 전체에 즉시 반영됩니다. 다크 모드 추가도 변수 오버라이드만으로 가능합니다.
+</div>
+</section>
+
+<!-- ============ 3. 타이포그래피 ============ -->
+<section class="ds-section">
+<h2>3. 타이포그래피</h2>
+<p>
+세 가지 폰트 패밀리를 역할에 따라 분리하여 사용합니다.
+한국어와 영어의 혼용 환경에서 시각적 안정감을 유지하도록 폴백 체인을 신중히 설계했습니다.
+</p>
+
+<div class="type-spec">
+  <div class="type-meta">
+    <strong>Display</strong>
+    Fraunces<br>
+    Variable Serif<br>
+    제목 · 강조
+  </div>
+  <div class="type-sample">
+    <div style="font-family:var(--font-display);font-variation-settings:'opsz' 144,'wght' 500,'SOFT' 30;font-size:3em;line-height:0.95;letter-spacing:-0.035em;">
+      프론트엔드의 <em style="color:var(--accent);">미학</em>
+    </div>
+    <div style="font-family:var(--font-mono);font-size:0.75em;color:var(--ink-mute);margin-top:6px;">
+      h1 · 64px · opsz 144 · wght 500 · letter-spacing -0.035em
+    </div>
+  </div>
+</div>
+
+<div class="type-spec">
+  <div class="type-meta">
+    <strong>Body</strong>
+    IBM Plex Sans KR<br>
+    Sans-serif<br>
+    본문 · UI
+  </div>
+  <div class="type-sample">
+    <p style="margin:0;font-size:1.05em;line-height:1.72;max-width:none;">
+      한국어 본문의 가독성을 최우선으로 합니다. <strong>IBM Plex Sans KR</strong>은
+      라틴 문자와 한글이 시각적 균형을 이루도록 설계되어, 코드와 설명이 섞인 학습 자료에 적합합니다.
+    </p>
+    <div style="font-family:var(--font-mono);font-size:0.75em;color:var(--ink-mute);margin-top:6px;">
+      body · 17px · line-height 1.72 · letter-spacing -0.003em
+    </div>
+  </div>
+</div>
+
+<div class="type-spec">
+  <div class="type-meta">
+    <strong>Mono</strong>
+    JetBrains Mono<br>
+    Monospace<br>
+    코드 · 라벨
+  </div>
+  <div class="type-sample">
+    <code style="display:inline-block;font-size:1em;padding:6px 14px;">const ui = "monospace";</code>
+    <div style="font-family:var(--font-mono);font-size:0.75em;color:var(--ink-mute);margin-top:6px;">
+      code · 0.88em · ligatures on · weight 500
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ============ 4. 3D 비주얼 인벤토리 ============ -->
+<section class="ds-section">
+<h2>4. 3D 비주얼 인벤토리</h2>
+<p>
+사이트 전반에 걸쳐 <strong>9개의 Three.js 3D 비주얼라이제이션</strong>이 분포해 있습니다.
+각 비주얼은 해당 챕터의 핵심 추상 개념을 입체적으로 표현하며,
+모두 r128 버전의 Three.js를 CDN으로 로드해 사용합니다.
+</p>
+
+<div class="scene-3d" id="ds-hero-3d" style="height:380px;"></div>
+<p class="fig-title">그림 1. 디자인 시스템의 핵심 토큰들 — 색상, 컴포넌트, 레이아웃이 3차원으로 조직된 구조.</p>
+
+<div class="viz-grid">
+  <div class="viz-card">
+    <div class="viz-num">VIZ · 00</div>
+    <h5>표지 · 기술 스택 큐브</h5>
+    <p>HTML · CSS · JS 큐브가 궤도를 따라 회전. 배경 파티클로 깊이감 부여.</p>
+  </div>
+  <div class="viz-card">
+    <div class="viz-num">VIZ · 01</div>
+    <h5>1장 · DOM 트리</h5>
+    <p>HTML 문서 구조를 계층적 3D 노드로 시각화. 회전형 트리.</p>
+  </div>
+  <div class="viz-card">
+    <div class="viz-num">VIZ · 03</div>
+    <h5>3장 · 이벤트 루프</h5>
+    <p>Call Stack · Task Queue · Microtask Queue를 원형 트랙으로 표현.</p>
+  </div>
+  <div class="viz-card">
+    <div class="viz-num">VIZ · 04</div>
+    <h5>4장 · DOM 시각화</h5>
+    <p>타입별 색상 코딩(div=blue, p=green, span=amber). 호버 글로우.</p>
+  </div>
+  <div class="viz-card">
+    <div class="viz-num">VIZ · 05</div>
+    <h5>5장 · 컴포넌트 계층</h5>
+    <p>React 컴포넌트 트리를 카드로 배치, props가 파티클로 흐름.</p>
+  </div>
+  <div class="viz-card">
+    <div class="viz-num">VIZ · 06</div>
+    <h5>6장 · Redux 사이클</h5>
+    <p>Action → Reducer → Store → View가 원형 파이프라인으로 순환.</p>
+  </div>
+  <div class="viz-card">
+    <div class="viz-num">VIZ · 08</div>
+    <h5>8장 · 렌더링 파이프라인</h5>
+    <p>Critical Rendering Path 단계를 3D 파이프로 연결.</p>
+  </div>
+  <div class="viz-card">
+    <div class="viz-num">VIZ · 09</div>
+    <h5>9장 · 빌드 팩토리</h5>
+    <p>소스 파일이 컨베이어 벨트를 따라 변환되는 공장형 비주얼.</p>
+  </div>
+  <div class="viz-card">
+    <div class="viz-num">VIZ · DS</div>
+    <h5>디자인 구조 · 토큰 큐브</h5>
+    <p>이 페이지의 디자인 시스템 토큰을 3D 구조로 시각화 (위 ↑).</p>
+  </div>
+</div>
+</section>
+
+<!-- ============ 5. 컴포넌트 라이브러리 ============ -->
+<section class="ds-section">
+<h2>5. 컴포넌트 라이브러리</h2>
+<p>
+재사용 가능한 UI 컴포넌트들입니다. 모두 <code>styles.css</code>에 정의되어 있으며,
+시맨틱 클래스명을 사용해 마크업에서 의미를 명확히 합니다.
+</p>
+
+<div class="component-card">
+  <div class="component-header">
+    <strong>concept-box</strong>
+    <span class="badge">card</span>
+  </div>
+  <div class="component-body">
+    <div class="concept-box" style="margin:0;">
+      <strong>예제 컨셉 카드</strong><br>
+      호버 시 떠오르는 효과와 함께 그림자가 강조됩니다.
+      챕터 인덱스 카드, 핵심 개념 강조 등에 사용.
+    </div>
+  </div>
+  <pre class="component-code"><code>&lt;div class="concept-box"&gt;
+  &lt;strong&gt;제목&lt;/strong&gt;&lt;br&gt;설명 텍스트
+&lt;/div&gt;</code></pre>
+</div>
+
+<div class="component-card">
+  <div class="component-header">
+    <strong>info-box / warning-box</strong>
+    <span class="badge">alert</span>
+  </div>
+  <div class="component-body">
+    <div class="info-box" style="margin:0 0 12px 0;">정보성 메시지. 핵심 팁이나 주의사항을 강조할 때 사용합니다.</div>
+    <div class="warning-box" style="margin:0;">경고 메시지. 안티패턴이나 흔한 실수를 짚어줄 때 사용합니다.</div>
+  </div>
+  <pre class="component-code"><code>&lt;div class="info-box"&gt;...&lt;/div&gt;
+&lt;div class="warning-box"&gt;...&lt;/div&gt;</code></pre>
+</div>
+
+<div class="component-card">
+  <div class="component-header">
+    <strong>code-editor</strong>
+    <span class="badge">interactive</span>
+  </div>
+  <div class="component-body">
+    <div class="code-editor" style="margin:0;">
+      <div class="editor-header">
+        <span class="editor-dot red"></span>
+        <span class="editor-dot yellow"></span>
+        <span class="editor-dot green"></span>
+        <span style="margin-left:8px;">example.js</span>
+      </div>
+      <div class="editor-body">
+        <div class="code-input"><span class="hl-kw">const</span> <span class="hl-fn">greet</span> = (<span class="hl-num">name</span>) =&gt; <span class="hl-str">`안녕, ${name}`</span>;</div>
+      </div>
+    </div>
+  </div>
+  <pre class="component-code"><code>&lt;div class="code-editor"&gt;
+  &lt;div class="editor-header"&gt;...&lt;/div&gt;
+  &lt;div class="editor-body"&gt;
+    &lt;textarea class="code-input"&gt;...&lt;/textarea&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+
+<div class="component-card">
+  <div class="component-header">
+    <strong>tag-list</strong>
+    <span class="badge">chip</span>
+  </div>
+  <div class="component-body">
+    <div class="tag-list" style="margin:0;">
+      <span class="tag tag-blue">JavaScript</span>
+      <span class="tag tag-violet">React</span>
+      <span class="tag tag-emerald">CSS</span>
+      <span class="tag tag-amber">HTML</span>
+      <span class="tag tag-rose">Vite</span>
+    </div>
+  </div>
+  <pre class="component-code"><code>&lt;span class="tag tag-blue"&gt;JavaScript&lt;/span&gt;
+&lt;span class="tag tag-violet"&gt;React&lt;/span&gt;</code></pre>
+</div>
+
+<div class="component-card">
+  <div class="component-header">
+    <strong>slider-row</strong>
+    <span class="badge">control</span>
+  </div>
+  <div class="component-body">
+    <div class="slider-row" style="margin:0;">
+      <label>border-radius</label>
+      <input type="range" min="0" max="40" value="12" id="ds-demo-slider">
+      <span class="slider-value" id="ds-demo-value">12px</span>
+    </div>
+    <div style="margin-top:14px;height:60px;background:var(--accent-glow);border:1px solid var(--accent);transition:border-radius .2s ease;" id="ds-demo-box"></div>
+  </div>
+  <pre class="component-code"><code>&lt;div class="slider-row"&gt;
+  &lt;label&gt;property&lt;/label&gt;
+  &lt;input type="range" min="0" max="40"&gt;
+  &lt;span class="slider-value"&gt;12px&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</section>
+
+<!-- ============ 6. 간격 시스템 ============ -->
+<section class="ds-section">
+<h2>6. 간격 · 모서리</h2>
+<p>
+4px 베이스 그리드를 따르며, 의미 단위로 매핑된 토큰을 사용합니다.
+모든 간격은 4의 배수로, 1.5배(6px)만 예외로 허용합니다.
+</p>
+
+<div style="background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:24px 28px;margin:24px 0;">
+  <div class="spacing-row">
+    <span class="spacing-token">xs</span>
+    <span class="spacing-value">4px</span>
+    <div class="spacing-bar" style="width:4px;"></div>
+  </div>
+  <div class="spacing-row">
+    <span class="spacing-token">sm</span>
+    <span class="spacing-value">8px</span>
+    <div class="spacing-bar" style="width:8px;"></div>
+  </div>
+  <div class="spacing-row">
+    <span class="spacing-token">md</span>
+    <span class="spacing-value">16px</span>
+    <div class="spacing-bar" style="width:16px;"></div>
+  </div>
+  <div class="spacing-row">
+    <span class="spacing-token">lg</span>
+    <span class="spacing-value">24px</span>
+    <div class="spacing-bar" style="width:24px;"></div>
+  </div>
+  <div class="spacing-row">
+    <span class="spacing-token">xl</span>
+    <span class="spacing-value">32px</span>
+    <div class="spacing-bar" style="width:32px;"></div>
+  </div>
+  <div class="spacing-row">
+    <span class="spacing-token">2xl</span>
+    <span class="spacing-value">48px</span>
+    <div class="spacing-bar" style="width:48px;"></div>
+  </div>
+  <div class="spacing-row">
+    <span class="spacing-token">3xl</span>
+    <span class="spacing-value">80px</span>
+    <div class="spacing-bar" style="width:80px;"></div>
+  </div>
+  <div class="spacing-row" style="border-bottom:none;">
+    <span class="spacing-token">4xl</span>
+    <span class="spacing-value">120px</span>
+    <div class="spacing-bar" style="width:120px;"></div>
+  </div>
+</div>
+
+<h3>모서리 반경 · Radius</h3>
+<table class="token-table">
+  <thead><tr><th>토큰</th><th>값</th><th>적용 예</th></tr></thead>
+  <tbody>
+    <tr><td>radius-sm</td><td>4px</td><td>code, badge</td></tr>
+    <tr><td>radius-md</td><td>8px</td><td>button, input</td></tr>
+    <tr><td>radius-lg</td><td>12px</td><td>concept-box, scene-3d</td></tr>
+    <tr><td>radius-xl</td><td>16px</td><td>ds-hero, large card</td></tr>
+    <tr><td>radius-full</td><td>9999px</td><td>tag, chip, dot</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ============ 7. 페이지 아키텍처 ============ -->
+<section class="ds-section">
+<h2>7. 페이지 아키텍처</h2>
+<p>
+모든 챕터 페이지는 동일한 구조를 따릅니다. <strong>300px 사이드바 + 가변 메인</strong>의 그리드 레이아웃이며,
+사이드바는 sticky position으로 스크롤 시에도 고정됩니다.
+</p>
+
+<div class="arch-diagram">
+  <div class="arch-sidebar">
+    <div class="arch-hub">↑ 통합 허브</div>
+    <div>::before "aboutFrontend"</div>
+    <div>h3 전체 목차</div>
+    <div>ol > li × 10</div>
+    <div style="margin-top:auto;font-size:0.7em;opacity:0.6;">300px · sticky · 100vh</div>
+  </div>
+  <div class="arch-main">
+    <div class="arch-block">header.paper-header</div>
+    <div class="arch-block">section · scene-3d (Three.js)</div>
+    <div class="arch-block">section · 본문 + 인터랙티브 데모</div>
+    <div class="arch-block">section · 코드 예제 · concept-box</div>
+    <div class="arch-block">div.chapter-nav (prev / next)</div>
+  </div>
+</div>
+
+<h3>레이아웃 그리드 시스템</h3>
+<pre><code><span class="hl-cm">/* 메인 레이아웃 */</span>
+<span class="hl-kw">.layout</span> {
+  display: grid;
+  grid-template-columns: <span class="hl-num">300px</span> minmax(<span class="hl-num">0</span>, <span class="hl-num">1fr</span>);
+  min-height: <span class="hl-num">100vh</span>;
+}
+
+<span class="hl-cm">/* 반응형: 920px 이하에서 1열로 */</span>
+<span class="hl-fn">@media</span> (max-width: <span class="hl-num">920px</span>) {
+  <span class="hl-kw">.layout</span> { grid-template-columns: <span class="hl-num">1fr</span>; }
+}
+
+<span class="hl-cm">/* 대형 화면: 사이드바 확장 */</span>
+<span class="hl-fn">@media</span> (min-width: <span class="hl-num">1600px</span>) {
+  <span class="hl-kw">.layout</span> { grid-template-columns: <span class="hl-num">340px</span> minmax(<span class="hl-num">0</span>, <span class="hl-num">1fr</span>); }
+}</code></pre>
+</section>
+
+<!-- ============ 8. CSS 토큰 전체 ============ -->
+<section class="ds-section">
+<h2>8. CSS 토큰 전체 목록</h2>
+<p>
+<code>:root</code>에 정의된 디자인 토큰의 전체 목록입니다.
+새로운 컴포넌트를 추가할 때는 하드코딩된 값 대신 항상 토큰을 참조해야 합니다.
+</p>
+
+<table class="token-table">
+  <thead><tr><th>카테고리</th><th>토큰</th><th>값</th></tr></thead>
+  <tbody>
+    <tr><td>color</td><td>--paper</td><td>#f0f4f8</td></tr>
+    <tr><td>color</td><td>--paper-soft</td><td>#e8edf3</td></tr>
+    <tr><td>color</td><td>--ink</td><td>#0f172a</td></tr>
+    <tr><td>color</td><td>--ink-soft</td><td>#1e293b</td></tr>
+    <tr><td>color</td><td>--ink-mute</td><td>#475569</td></tr>
+    <tr><td>color</td><td>--accent</td><td>#0ea5e9</td></tr>
+    <tr><td>color</td><td>--accent-dim</td><td>#0284c7</td></tr>
+    <tr><td>color</td><td>--violet</td><td>#8b5cf6</td></tr>
+    <tr><td>color</td><td>--emerald</td><td>#10b981</td></tr>
+    <tr><td>color</td><td>--amber</td><td>#f59e0b</td></tr>
+    <tr><td>color</td><td>--rose</td><td>#f43f5e</td></tr>
+    <tr><td>color</td><td>--rule</td><td>#cbd5e1</td></tr>
+    <tr><td>font</td><td>--font-display</td><td>Fraunces · serif</td></tr>
+    <tr><td>font</td><td>--font-body</td><td>IBM Plex Sans KR</td></tr>
+    <tr><td>font</td><td>--font-mono</td><td>JetBrains Mono</td></tr>
+    <tr><td>asset</td><td>--grain</td><td>SVG noise texture</td></tr>
+  </tbody>
+</table>
+</section>
+
+<!-- ============ 9. Atomic Design 매핑 ============ -->
+<section class="ds-section">
+<h2>9. Atomic Design 매핑</h2>
+<p>
+Brad Frost의 <strong>Atomic Design</strong> 방법론에 따라 컴포넌트를 5개 계층으로 분류했습니다.
+이는 디자인 시스템을 학습하는 좋은 예시이기도 합니다.
+</p>
+
+<div class="kv-list">
+  <dt>⚛️ Atoms</dt>
+  <dd>가장 작은 빌딩 블록 — <code>code</code>, <code>tag</code>, <code>editor-dot</code>, slider input</dd>
+  <dt>🧬 Molecules</dt>
+  <dd>원자들의 조합 — <code>slider-row</code>(label+input+value), <code>editor-header</code>(dots+filename), <code>tag-list</code></dd>
+  <dt>🦠 Organisms</dt>
+  <dd>독립적으로 의미 있는 단위 — <code>code-editor</code>, <code>concept-box</code>, <code>scene-3d</code>, sidebar</dd>
+  <dt>📄 Templates</dt>
+  <dd>페이지 레이아웃 — <code>.layout</code> (sidebar + main), chapter template</dd>
+  <dt>🌐 Pages</dt>
+  <dd>실제 콘텐츠가 채워진 페이지 — index.html, design-system.html, chapters/*.html</dd>
+</div>
+</section>
+
+<!-- ============ 10. 디자인 토큰을 코드로 ============ -->
+<section class="ds-section">
+<h2>10. 코드로 보는 디자인 시스템</h2>
+<p>
+이론을 코드로 옮겨봅니다. 아래는 <code>styles.css</code>의 토큰 정의 부분입니다.
+하나의 진실 공급원(single source of truth) 패턴을 보여줍니다.
+</p>
+
+<pre><code><span class="hl-kw">:root</span> {
+  <span class="hl-cm">/* ───── Color System ───── */</span>
+  <span class="hl-attr">--paper</span>:       <span class="hl-num">#f0f4f8</span>;
+  <span class="hl-attr">--ink</span>:         <span class="hl-num">#0f172a</span>;
+  <span class="hl-attr">--accent</span>:      <span class="hl-num">#0ea5e9</span>;
+  <span class="hl-attr">--accent-glow</span>: <span class="hl-fn">rgba</span>(<span class="hl-num">14</span>,<span class="hl-num">165</span>,<span class="hl-num">233</span>,<span class="hl-num">0.15</span>);
+
+  <span class="hl-cm">/* ───── Typography ───── */</span>
+  <span class="hl-attr">--font-display</span>: <span class="hl-str">'Fraunces'</span>, Georgia, serif;
+  <span class="hl-attr">--font-body</span>:    <span class="hl-str">'IBM Plex Sans KR'</span>, sans-serif;
+  <span class="hl-attr">--font-mono</span>:    <span class="hl-str">'JetBrains Mono'</span>, monospace;
+
+  <span class="hl-cm">/* ───── Texture ───── */</span>
+  <span class="hl-attr">--grain</span>: <span class="hl-fn">url</span>(<span class="hl-str">"data:image/svg+xml,..."</span>);
+}
+
+<span class="hl-cm">/* 사용 예: 한 번의 정의, 사이트 전체에 적용 */</span>
+<span class="hl-kw">.concept-box</span> {
+  background: <span class="hl-fn">var</span>(<span class="hl-attr">--paper</span>);
+  border: <span class="hl-num">1px</span> solid <span class="hl-fn">var</span>(<span class="hl-attr">--rule</span>);
+  color: <span class="hl-fn">var</span>(<span class="hl-attr">--ink</span>);
+}</code></pre>
+
+<div class="info-box">
+이 패턴 덕분에 <strong>다크 모드 추가</strong>는 <code>:root.dark</code> 선택자에
+변수들을 재정의하는 것만으로 끝납니다. 컴포넌트는 단 한 줄도 수정할 필요가 없습니다.
+</div>
+</section>
+
+<div class="chapter-nav">
+  <a href="index.html">← 표지</a>
+  <a href="chapters/01-html-basics.html">HTML 기초 →</a>
+</div>
+
+</main>
+</div>
+
+<script>
+// ============ 3D Token Cube Visualization ============
+(function() {
+  const container = document.getElementById('ds-hero-3d');
+  if (!container || typeof THREE === 'undefined') return;
+
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 1000);
+  camera.position.set(0, 2, 12);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Lighting
+  const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+  scene.add(ambient);
+  const dir = new THREE.DirectionalLight(0xffffff, 0.8);
+  dir.position.set(5, 8, 5);
+  scene.add(dir);
+
+  // Token colors mapped to design tokens
+  const tokens = [
+    { color: 0x0ea5e9, label: 'accent' },
+    { color: 0x8b5cf6, label: 'violet' },
+    { color: 0x10b981, label: 'emerald' },
+    { color: 0xf59e0b, label: 'amber' },
+    { color: 0xf43f5e, label: 'rose' },
+    { color: 0x06b6d4, label: 'cyan' },
+    { color: 0xf97316, label: 'orange' },
+    { color: 0x0284c7, label: 'accent-dim' }
+  ];
+
+  const cubeGroup = new THREE.Group();
+  scene.add(cubeGroup);
+
+  // Build a 3D grid of token cubes (2x2x2)
+  const positions = [
+    [-1.4, 1.4,  1.4], [ 1.4, 1.4,  1.4],
+    [-1.4, 1.4, -1.4], [ 1.4, 1.4, -1.4],
+    [-1.4,-1.4,  1.4], [ 1.4,-1.4,  1.4],
+    [-1.4,-1.4, -1.4], [ 1.4,-1.4, -1.4]
+  ];
+
+  positions.forEach((pos, i) => {
+    const geom = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+    const mat = new THREE.MeshStandardMaterial({
+      color: tokens[i].color,
+      roughness: 0.4,
+      metalness: 0.2,
+      transparent: true,
+      opacity: 0.92
+    });
+    const cube = new THREE.Mesh(geom, mat);
+    cube.position.set(pos[0], pos[1], pos[2]);
+    cubeGroup.add(cube);
+
+    // Edge highlight
+    const edges = new THREE.EdgesGeometry(geom);
+    const lineMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.4 });
+    const wireframe = new THREE.LineSegments(edges, lineMat);
+    wireframe.position.copy(cube.position);
+    cubeGroup.add(wireframe);
+  });
+
+  // Connecting lines between cubes (showing the grid structure)
+  const lineMat = new THREE.LineBasicMaterial({ color: 0x0ea5e9, transparent: true, opacity: 0.3 });
+  const connections = [
+    [0,1],[2,3],[4,5],[6,7],
+    [0,2],[1,3],[4,6],[5,7],
+    [0,4],[1,5],[2,6],[3,7]
+  ];
+  connections.forEach(([a, b]) => {
+    const pts = [
+      new THREE.Vector3(...positions[a]),
+      new THREE.Vector3(...positions[b])
+    ];
+    const geom = new THREE.BufferGeometry().setFromPoints(pts);
+    const line = new THREE.Line(geom, lineMat);
+    cubeGroup.add(line);
+  });
+
+  // Mouse interaction
+  let mouseX = 0, mouseY = 0;
+  let targetRotX = 0, targetRotY = 0;
+  container.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+    targetRotY = mouseX * 0.6;
+    targetRotX = mouseY * 0.4;
+  });
+
+  // Animation loop
+  function animate() {
+    requestAnimationFrame(animate);
+    cubeGroup.rotation.y += 0.003;
+    cubeGroup.rotation.y += (targetRotY - cubeGroup.rotation.y) * 0.02;
+    cubeGroup.rotation.x += (targetRotX - cubeGroup.rotation.x) * 0.02;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // Resize handler
+  window.addEventListener('resize', () => {
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+})();
+
+// ============ Slider demo ============
+(function() {
+  const slider = document.getElementById('ds-demo-slider');
+  const value = document.getElementById('ds-demo-value');
+  const box = document.getElementById('ds-demo-box');
+  if (!slider) return;
+  slider.addEventListener('input', () => {
+    const v = slider.value;
+    value.textContent = v + 'px';
+    box.style.borderRadius = v + 'px';
+  });
+})();
+
+// ============ Click-to-copy color swatches ============
+(function() {
+  document.querySelectorAll('.color-swatch').forEach(swatch => {
+    swatch.addEventListener('click', () => {
+      const val = swatch.querySelector('.swatch-value')?.textContent;
+      if (!val) return;
+      navigator.clipboard?.writeText(val).then(() => {
+        const orig = swatch.querySelector('.swatch-value').textContent;
+        swatch.querySelector('.swatch-value').textContent = '복사됨!';
+        setTimeout(() => {
+          swatch.querySelector('.swatch-value').textContent = orig;
+        }, 1200);
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

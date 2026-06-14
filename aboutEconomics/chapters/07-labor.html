@@ -2,12 +2,14 @@
 <title>7. 노동경제학 — aboutEconomics</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">📊 표지</a></li><li><a href="01-micro.html">1. 미시경제학</a></li><li><a href="02-macro.html">2. 거시경제학</a></li><li><a href="03-finance.html">3. 금융과 투자</a></li><li><a href="04-trade.html">4. 국제무역</a></li><li><a href="05-behavioral.html">5. 행동경제학</a></li><li><a href="06-development.html">6. 경제발전</a></li><li><a href="07-labor.html">7. 노동경제학</a></li><li><a href="08-public-finance.html">8. 재정학</a></li><li><a href="09-crypto-fintech.html">9. 크립토/핀테크</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>노동경제학</em></h1><p class="authors">Chapter 7 — Labor Markets & Income</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 노동자와 기업이 임금 신호로 짝지어지는 노동시장의 매칭 과정</span>
 <h2>노동경제학 개요</h2><p>Labor Markets & Income의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Labor Markets & Income</p></div>
 
@@ -90,5 +92,22 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 한국 행정 매칭데이터로 AKM 모형을 추정해 산업별 기업효과의 분포를 분석하고 임금격차의 기업프리미엄 비중을 측정해 보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0891b2","questions":[{"q":"노동의 가격을 뜻하는 말은?","choices":["임금","금리","환율","세금"],"answer":0},{"q":"본문에서 노동시장을 비유한 것은?","choices":["경매장","결혼시장","마트","공장"],"answer":1},{"q":"교육과 경험으로 쌓인 능력은?","choices":["노동공급","실업률","임금","인적자본"],"answer":3},{"q":"Card-Krueger 연구에서 고용 변화는?","choices":["크게 감소","소폭 감소","소폭 증가","변화 없음"],"answer":2},{"q":"대기업 임금은 중소기업의 약 몇 배?","choices":["1.2배","1.7배","2.5배","3배"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<6;i++){const h=1+Math.random()*2.5;const m=new THREE.Mesh(new THREE.BoxGeometry(0.5,h,0.5),new THREE.MeshBasicMaterial({color:[0x0891b2,0x06b6d4,0x22d3ee][i%3]}));m.position.set(i*1.5-3.75,h/2,0);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,10);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const NM=5;const workers=[],firms=[],links=[];for(let i=0;i<NM;i++){const y=2.4-i*1.2;const w=new THREE.Mesh(new THREE.SphereGeometry(0.3,16,16),new THREE.MeshBasicMaterial({color:0x38bdf8}));w.position.set(-3.2,y,0);s.add(w);workers.push(w);const fm=new THREE.Mesh(new THREE.BoxGeometry(0.55,0.55,0.55),new THREE.MeshBasicMaterial({color:0xfb923c}));fm.position.set(3.2,y,0);s.add(fm);firms.push(fm);const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints([w.position.clone(),fm.position.clone()]),new THREE.LineBasicMaterial({color:0x10b981}));s.add(ln);links.push({ln,wi:i,fi:i});}
+  s.userData.workers=workers;s.userData.firms=firms;s.userData.links=links;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.workers.forEach((w,i)=>{w.position.x=-3.2+0.25*Math.sin(T*1.2+i);});s.userData.firms.forEach((fm,i)=>{fm.rotation.y+=0.02;fm.position.x=3.2-0.25*Math.sin(T*1.0+i);});s.userData.links.forEach(o=>{const w=s.userData.workers[o.wi].position,fm=s.userData.firms[o.fi].position;const arr=o.ln.geometry.attributes.position;arr.setXYZ(0,w.x,w.y,w.z);arr.setXYZ(1,fm.x,fm.y,fm.z);arr.needsUpdate=true;o.ln.material.color.setHSL(0.4,0.7,0.4+0.2*Math.sin(T*1.5+o.wi));});s.rotation.y=0.22*Math.sin(T*0.3);r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

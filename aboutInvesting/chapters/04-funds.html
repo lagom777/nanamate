@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4. 펀드·ETF·인덱스 — aboutInvesting</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">💰 표지</a></li>
+    <li><a href="01-basics.html">1. 재테크 기초</a></li>
+    <li><a href="02-stocks.html">2. 주식 투자</a></li>
+    <li><a href="03-bonds.html">3. 채권과 금리</a></li>
+    <li><a href="04-funds.html">4. 펀드·ETF·인덱스</a></li>
+    <li><a href="05-realestate.html">5. 부동산</a></li>
+    <li><a href="06-portfolio.html">6. 분산투자·포트폴리오</a></li>
+    <li><a href="07-tax-pension.html">7. 세금·연금</a></li>
+    <li><a href="08-behavioral.html">8. 행동재무학</a></li>
+    <li><a href="09-retirement.html">9. 은퇴·재무설계</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>펀드·ETF·인덱스</em></h1>
+  <p class="authors">Chapter 4 — Funds &amp; ETFs</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 여러 자산이 하나의 바구니로 모이는 펀드의 묶음 구조를 회전시켜 보세요</span>
+
+<h2>펀드·ETF·인덱스 개요</h2>
+<p>펀드는 여러 투자자의 돈을 모아 주식·채권 등 다양한 자산을 한 묶음으로 굴리는 도구다. 운용 방식에 따라 시장을 이기려는 액티브와 시장 전체를 그대로 따라가는 패시브(인덱스)로 나뉜다. ETF는 인덱스펀드를 주식처럼 거래소에 상장시켜 실시간으로 사고팔 수 있게 만든 형태다. 무엇을 고르든 보수(수수료)가 장기 수익에 큰 영향을 미친다는 점이 이 장의 핵심이다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>펀드는 분산과 전문 운용을 손쉽게 해주는 묶음 상품이다. 시장을 그대로 복제하는 저비용 인덱스펀드·ETF는 존 보글이 대중화한 철학으로, 높은 보수를 피하고 넓게 분산하는 것이 장기적으로 유리하다고 본다. ETF는 분배금과 괴리율 같은 고유 개념을 함께 이해해야 한다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>펀드는 여러 사람의 돈을 모아 한 바구니에 담아 굴리는 것이고, ETF는 그 바구니를 주식처럼 사고팔 수 있게 만든 것이다.</p>
+<h3>왜 중요한가?</h3>
+<p>혼자서 수십 개 종목을 사 모으려면 큰돈과 많은 시간이 필요하다. 펀드는 적은 돈으로도 여러 자산에 동시에 나눠 담을 수 있게 해주어 분산을 손쉽게 만든다. 특히 시장 전체를 그대로 따라가는 인덱스펀드는 운용에 손이 덜 가서 수수료가 매우 낮다. 수수료는 작아 보여도 수십 년 쌓이면 수익률을 크게 갉아먹는다. 그래서 비용을 줄이고 넓게 분산하는 전략이 초보자에게 특히 잘 맞는다고 본다.</p>
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>펀드</strong>: 여러 투자자의 돈을 모아 여러 자산에 나눠 투자하는 묶음 상품</li><li><strong>인덱스펀드</strong>: 코스피200·S&amp;P500 같은 시장 지수를 그대로 따라가도록 만든 펀드</li><li><strong>ETF</strong>: 거래소에 상장되어 주식처럼 실시간 매매가 되는 인덱스 상품</li><li><strong>보수(수수료)</strong>: 운용·관리 대가로 떼어가는 비용으로, 수익에서 매년 차감된다</li><li><strong>분산</strong>: 한곳에 몰아넣지 않고 여러 자산에 나눠 위험을 줄이는 것</li></ul></div>
+<h3>핵심 개념 풀어쓰기</h3>
+<p>펀드를 과일 바구니에 비유하면 이해가 쉽다. 사과 하나만 사면 그 사과가 상하면 전부 손해지만, 사과·배·포도를 골고루 담은 바구니는 하나가 상해도 타격이 작다. 인덱스펀드는 시장에 있는 과일을 통째로 담는 셈이고, 액티브펀드는 운용사가 좋은 과일만 골라 담겠다는 약속이다. 다만 고르는 수고만큼 비용이 더 들고, 그렇다고 늘 더 좋은 과일을 고르는 것도 아니다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 같은 지수를 따르는 ETF가 여러 개라면 우선 총보수(연 비용)를 비교해 보면 좋다. 똑같은 시장을 담는데 비용만 낮다면 그만큼 장기 수익에 유리하다고 본다.</div>
+<h3>한 페이지 요약</h3>
+<ul><li>펀드는 여러 자산을 묶어 적은 돈으로도 분산 투자를 가능하게 한다</li><li>액티브는 시장을 이기려 하고, 패시브(인덱스)는 시장을 그대로 따라간다</li><li>ETF는 인덱스펀드를 주식처럼 실시간 거래할 수 있게 상장한 형태다</li><li>보수는 작아 보여도 장기적으로 수익에 큰 영향을 준다</li><li>저비용·분산이 초보 투자자에게 든든한 출발점이 된다고 본다</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>액티브와 패시브의 대립은 단순한 취향 차이가 아니라 시장 효율성에 대한 견해 차이에서 비롯된다. 패시브 진영은 시장 가격에 정보가 충분히 반영되어 있어 평균적으로 시장을 꾸준히 이기기 어렵다고 본다. 그래서 굳이 비싼 비용을 들여 종목을 고르기보다, 시장 전체를 낮은 비용으로 통째로 사는 편이 합리적이라는 결론에 이른다. 반대로 액티브 진영은 가격이 늘 정확하지는 않으며 숙련된 운용으로 초과수익을 낼 여지가 있다고 본다. 다만 비용을 뺀 뒤의 성과를 장기로 보면, 다수의 액티브펀드가 비교 지수를 밑돌았다는 점이 여러 시장에서 관찰되어 왔다. 핵심 변수는 보수다. 연 1~2%의 보수 차이는 한 해에는 미미해 보여도 복리로 수십 년 누적되면 최종 자산을 상당히 갈라놓는다. 인덱스 투자의 창시자로 불리는 존 보글은 바로 이 비용의 무게를 강조하며 저비용 인덱스펀드를 대중화했다. 그는 "비용은 확실하고 수익은 불확실하다"는 취지로, 투자자가 통제할 수 있는 비용부터 낮추라고 권한 것으로 널리 알려져 있다.</p>
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 보수가 복리를 갉아먹는 원리</h4><p>보수는 수익이 났든 안 났든 자산에서 매년 일정 비율로 떼어간다. 같은 원금에 같은 시장 수익률이라도, 보수가 높으면 그만큼 복리로 불어날 원금이 매년 줄어든다. 즉 보수는 단순히 한 해 수익을 깎는 데 그치지 않고, 깎인 금액이 앞으로 불어났을 미래 수익까지 함께 없애는 식으로 장기에 누적된다.</p></div>
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1 — 인덱스펀드의 등장</h4><p>존 보글은 1970년대에 시장 지수를 그대로 추종하는 저비용 인덱스펀드를 일반 투자자에게 선보였다. 초기에는 "평균에 만족하는 투자"라는 비판도 받았지만, 낮은 비용과 넓은 분산이라는 장점이 장기간에 걸쳐 입증되며 오늘날 인덱스 투자는 가장 보편적인 전략 중 하나로 자리 잡았다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — ETF와 괴리율</h4><p>ETF는 거래소 가격(시장가)과 실제 보유 자산의 가치(순자산가치, NAV)가 있다. 둘이 벌어진 정도를 괴리율이라 한다. 보통은 유동성 공급자의 차익거래로 둘이 가깝게 유지되지만, 거래가 한산하거나 시장이 급변할 때는 괴리가 커질 수 있다. 괴리율이 큰 상태에서 사면 자산 가치보다 비싸게 살 위험이 있으므로 참고 지표로 확인하는 것이 좋다.</p></div>
+<h3>현대적 전개</h3>
+<p>오늘날 ETF는 단순 지수 추종을 넘어 채권·원자재·특정 테마·해외시장까지 폭넓게 확장되었다. 분배금(보유 자산에서 나오는 배당·이자를 투자자에게 나눠주는 것)을 지급하는 상품과, 이를 자동 재투자해 규모를 키우는 상품으로도 갈린다. 선택지가 늘어난 만큼, 자신이 어떤 자산에 어떤 비용으로 노출되는지 따져보는 안목이 더 중요해졌다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> "인덱스펀드는 안전하다"는 말은 정확하지 않다. 인덱스 투자는 분산과 저비용의 이점을 주지만, 시장 전체가 하락하면 그만큼 그대로 손실을 본다. 분산은 개별 종목 위험을 줄여줄 뿐, 시장 전반의 변동까지 없애주지는 않는다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>패시브 투자의 우위는 흔히 비용 차감 후 성과로 설명되지만, 그 논리적 뿌리는 윌리엄 샤프가 정리한 단순한 산수에 가깝다. 어떤 시장에서든 모든 투자자의 평균 수익은 시장 수익과 같으며, 액티브 투자자 집단의 평균도 비용을 빼기 전에는 시장 수익과 같을 수밖에 없다. 따라서 비용을 빼고 나면 액티브 집단의 평균은 패시브 집단보다 낮아진다는 것이 핵심 논거다. 다만 이는 집단 평균에 관한 진술이지, 모든 액티브 운용이 열등하다는 뜻은 아니다. 실무에서는 추적오차(인덱스펀드가 지수를 얼마나 정확히 따라가는지), 구성종목 변경 시점에 노출되는 비용, 분배금의 재투자 효율, 그리고 ETF의 괴리율과 유동성이 실제 성과를 가른다. 또한 특정 지수에 자금이 과도하게 몰릴 때의 쏠림, 패시브 비중 증가가 가격 발견 기능에 미치는 영향 같은 구조적 쟁점도 활발히 논의된다. 즉 인덱스 투자는 강력한 출발점이지만, 그 이점이 무비판적 만능 해법은 아니라는 균형 잡힌 시각이 필요하다.</p>
+<h3>최신 연구·쟁점</h3>
+<p>패시브 자금의 비중이 커지면서 시장의 가격 발견 기능이 약해질 수 있다는 우려가 제기된다. 모두가 지수를 따라가기만 하면 개별 기업의 가치를 평가하는 주체가 줄어든다는 논리다. 한편 패시브 운용사가 거대한 의결권을 보유하게 되면서 기업 지배구조에 미치는 영향력도 쟁점이다. 다만 이런 논의들은 아직 결론이 명확하지 않으며, 어느 비중이 임계점인지에 대해서도 합의된 답은 없는 편이다. 이 분야는 단정보다 여러 견해를 함께 살피는 태도가 바람직하다고 본다.</p>
+<h3>관련 분야</h3>
+<ul><li>현대 포트폴리오 이론과 자산배분 — 분산의 수학적 근거</li><li>시장 효율성 가설 — 액티브와 패시브 논쟁의 이론적 배경</li><li>행동재무학 — 비용·쏠림에 대한 투자자 심리의 영향</li></ul>
+<h3>더 읽을거리</h3>
+<ul><li>"모든 주식을 소유하라(The Little Book of Common Sense Investing)" — 존 보글</li><li>"현명한 투자자(The Intelligent Investor)" — 벤저민 그레이엄</li><li>"랜덤워크 투자수업(A Random Walk Down Wall Street)" — 버턴 말킬</li></ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> 같은 지수를 추종하는 ETF 두세 개를 골라 총보수, 추적오차, 최근 괴리율, 분배금 정책을 표로 정리해 보자. 그런 다음 연 보수 차이가 30년 뒤 자산에 얼마나 차이를 만드는지 단순 복리로 계산해, 비용이 장기 수익에 미치는 무게를 직접 체감해 보자.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#16c784","questions":[{"q":"시장 지수를 그대로 따라가는 펀드는?","choices":["액티브펀드","헤지펀드","사모펀드","인덱스펀드"],"answer":3},{"q":"ETF의 가장 큰 특징은?","choices":["실시간 거래","만기 보장","원금 보장","세금 면제"],"answer":0},{"q":"저비용 인덱스펀드를 대중화한 인물은?","choices":["그레이엄","존 보글","버핏","말킬"],"answer":1},{"q":"ETF 시장가와 NAV의 차이를 뜻하는 말?","choices":["추적오차","분배금","괴리율","총보수"],"answer":2},{"q":"장기 수익을 매년 확실히 깎는 것은?","choices":["분배금","배당","지수 상승","보수"],"answer":3}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,10);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // 중앙 바구니(펀드 묶음)=토러스
+  const basket=new THREE.Mesh(new THREE.TorusGeometry(1.2,0.18,16,40),new THREE.MeshBasicMaterial({color:0xffd34d}));s.add(basket);
+  // 여러 자산(주식·채권 등)이 바구니 주위를 돌며 모이는 입자들
+  const assets=[];const NA=20;for(let i=0;i<NA;i++){const col=new THREE.Color().setHSL(0.33+0.2*(i/NA),0.6,0.55);const geoT=i%3;let g;if(geoT===0)g=new THREE.BoxGeometry(0.3,0.3,0.3);else if(geoT===1)g=new THREE.SphereGeometry(0.2,12,12);else g=new THREE.OctahedronGeometry(0.24);const m=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:col}));const ang=(i/NA)*Math.PI*2;m.userData={ang:ang,rad:2.6+(i%4)*0.3,sp:0.5+(i%3)*0.3,ph:i};s.add(m);assets.push(m);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;basket.rotation.z+=0.01;const pull=1.2+0.9*(0.5+0.5*Math.sin(T*0.6));assets.forEach(m=>{const ang=m.userData.ang+T*0.4*m.userData.sp;const rad=m.userData.rad*(pull/2.1);m.position.set(Math.cos(ang)*rad,Math.sin(ang*1.3+m.userData.ph)*0.5,Math.sin(ang)*rad);m.rotation.x+=0.03;m.rotation.y+=0.03;});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

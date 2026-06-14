@@ -5,7 +5,9 @@
 <link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
@@ -16,7 +18,7 @@
 <li><a href="07-ethics.html">7. 윤리학</a></li><li><a href="08-political.html">8. 정치철학</a></li>
 <li><a href="09-contemporary.html">9. 현대 철학</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>중세 철학</em></h1><p class="authors">Chapter 3 — Scholasticism & Islamic Philosophy</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 신앙과 이성이 층층이 쌓여 신을 향해 오르는 존재의 위계</span>
 <h2>중세 철학 개요</h2><p>이 챕터에서는 중세 철학의 핵심 사상과 철학자들의 관계를 3D로 탐구합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Scholasticism & Islamic Philosophy</p></div>
 
@@ -76,27 +78,29 @@
   </ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 강한 AI가 자기 의식을 가진다면, 그것은 안셀무스의 존재론적 증명에서 말하는 "더 큰 것을 생각할 수 없는 존재"에 한 걸음 가까워진 것인가? AI 신학(theology of AI)이라는 새로운 분야가 가능한가?</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d4a047","questions":[{"q":"『고백록』을 쓴 교부 철학자는?","choices":["아퀴나스","오컴","아우구스티누스","이븐 시나"],"answer":2},{"q":"오컴의 면도날이 뜻하는 것은?","choices":["불필요한 가정 배제","신앙 우선","감각 신뢰","권위 존중"],"answer":0},{"q":"『신학대전』의 저자는?","choices":["아우구스티누스","안셀무스","오컴","토마스 아퀴나스"],"answer":3},{"q":"아퀴나스의 신 존재 증명은 몇 가지 길?","choices":["3가지","4가지","5가지","7가지"],"answer":2},{"q":"본질과 존재를 구분한 이슬람 철학자는?","choices":["알 가잘리","이븐 시나","아베로에스","마이모니데스"],"answer":1}]};</script>
 </main></div>
 <script>
-(function() {
-  const container = document.getElementById('sim-scene');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 3, 8);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  container.appendChild(renderer.domElement);
-  const nodes = [];
-  for (let i = 0; i < 8; i++) { const m = new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0), new THREE.MeshBasicMaterial({ color: 0xd4a047, wireframe: true })); m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4); scene.add(m); nodes.push(m); }
-  for (let i=0;i<nodes.length-1;i++){const g=new THREE.BufferGeometry().setFromPoints([nodes[i].position,nodes[i+1].position]);scene.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xd4a047,transparent:true,opacity:0.2})));}
-  let md=false,px=0;
-  container.addEventListener('mousedown',e=>{md=true;px=e.clientX;});
-  container.addEventListener('mouseup',()=>md=false);
-  container.addEventListener('mousemove',e=>{if(md){scene.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
-  container.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});
-  container.addEventListener('touchmove',e=>{scene.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});
-  function animate(){requestAnimationFrame(animate);scene.rotation.y+=0.002;renderer.render(scene,camera);}animate();
-  window.addEventListener('resize',()=>{camera.aspect=container.clientWidth/container.clientHeight;camera.updateProjectionMatrix();renderer.setSize(container.clientWidth,container.clientHeight);});
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,10);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const tower=new THREE.Group();const N=6;const tiers=[];
+  for(let i=0;i<N;i++){const rad=2.4-i*0.32;const y=-3+i*1.1;const col=new THREE.Color().setHSL(0.09+i*0.03,0.5,0.45+i*0.06);
+    const ring=new THREE.Mesh(new THREE.RingGeometry(rad-0.12,rad,28),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.8,side:THREE.DoubleSide}));
+    ring.rotation.x=Math.PI/2;ring.position.y=y;tower.add(ring);tiers.push(ring);}
+  const apex=new THREE.Mesh(new THREE.ConeGeometry(0.45,1.1,4),new THREE.MeshBasicMaterial({color:0xffe08a,wireframe:true}));
+  apex.position.y=-3+N*1.1+0.2;tower.add(apex);
+  const axis=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,-3,0),new THREE.Vector3(0,apex.position.y,0)]);
+  tower.add(new THREE.Line(axis,new THREE.LineBasicMaterial({color:0xffd070,transparent:true,opacity:0.5})));
+  s.add(tower);s.userData.tiers=tiers;s.userData.apex=apex;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.004;s.userData.tiers.forEach((t,i)=>{t.rotation.z+=0.004*(i%2?1:-1);});s.userData.apex.rotation.y+=0.02;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
-</script></body></html>
+</script>
+</body></html>

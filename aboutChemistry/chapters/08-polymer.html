@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8. 고분자 — aboutChemistry</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">⚗️ 표지 · 소개</a></li>
+    <li><a href="01-atomic-structure.html">1. 원자 구조</a></li>
+    <li><a href="02-chemical-bonding.html">2. 화학 결합</a></li>
+    <li><a href="03-chemical-reactions.html">3. 화학 반응</a></li>
+    <li><a href="04-thermochemistry.html">4. 열화학</a></li>
+    <li><a href="05-acid-base.html">5. 산과 염기</a></li>
+    <li><a href="06-redox.html">6. 산화 환원</a></li>
+    <li><a href="07-organic.html">7. 유기 화학</a></li>
+    <li><a href="08-polymer.html" style="color:var(--accent);font-weight:600;">8. 고분자</a></li>
+    <li><a href="09-biochemistry.html">9. 생화학</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>고분자:<br><em>거대</em> 분자의 세계</h1>
+  <p class="authors">Chapter 8 — Polymers & Macromolecules</p>
+  <p class="affiliation">중합 반응 · 고분자 사슬 시뮬레이터</p>
+</header>
+
+<h2>고분자란?</h2>
+<p>고분자는 단위체(모노머)가 반복적으로 결합하여 형성된 거대 분자입니다. 플라스틱, 고무, 섬유, 단백질, DNA 등이 모두 고분자입니다.</p>
+
+<div class="info-card">
+  <h4>첨가 중합</h4>
+  <p>이중결합이 열리면서 단위체가 연속으로 결합. 부산물 없음. 예: 폴리에틸렌, PVC, 폴리스타이렌</p>
+</div>
+<div class="info-card reaction">
+  <h4>축합 중합</h4>
+  <p>두 작용기가 반응하며 물 등의 소분자가 빠져나옴. 예: 나일론, 폴리에스터, 단백질</p>
+</div>
+
+<div class="formula">n CH₂=CH₂ → [-CH₂-CH₂-]ₙ (폴리에틸렌) &nbsp;&nbsp;|&nbsp;&nbsp; 중합도(n) = 수백~수만</div>
+
+<h2>3D 고분자 사슬 시뮬레이터</h2>
+<p>고분자 사슬이 성장하는 과정을 관찰하세요. 사슬 길이와 유연성을 조절할 수 있습니다.</p>
+
+<div class="scene-3d" id="polymer-scene" style="height:450px;">
+  <div class="scene-controls">
+    <label>사슬 길이: <span id="chain-val">30</span></label>
+    <input type="range" id="chain-slider" min="10" max="80" value="30" step="5">
+    <label>유연성: <span id="flex-val">0.5</span></label>
+    <input type="range" id="flex-slider" min="0.1" max="1.5" value="0.5" step="0.1">
+    <button id="rebuild-chain">재생성</button>
+  </div>
+</div>
+<span class="interact-hint">⟳ 드래그로 회전 · 사슬 길이와 유연성을 변경하세요</span>
+
+<h2>고분자의 성질</h2>
+<div class="info-card bond">
+  <h4>열가소성 vs 열경화성</h4>
+  <p>열가소성: 가열하면 녹아 재성형 가능 (PE, PP, PET) | 열경화성: 한 번 성형 후 재가열해도 변형 불가 (에폭시, 베이클라이트)</p>
+</div>
+<div class="info-card acid">
+  <h4>결정성 vs 비결정성</h4>
+  <p>결정성: 규칙적 배열, 불투명, 높은 녹는점 | 비결정성: 무질서 배열, 투명, 넓은 온도 범위에서 연화</p>
+</div>
+
+<h2>생체 고분자</h2>
+<div class="info-card organic">
+  <h4>자연계의 고분자</h4>
+  <p>단백질: 아미노산 중합체 | DNA/RNA: 뉴클레오타이드 중합체 | 다당류: 단당류 중합체 (셀룰로스, 전분) | 천연고무: 아이소프렌 중합체</p>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e896","questions":[{"q":"고분자를 이루는 반복 단위는?","choices":["모노머","원자","이온","전자"],"answer":0},{"q":"첨가 중합의 부산물은?","choices":["물","이산화탄소","없음","산소"],"answer":2},{"q":"폴리에틸렌은 무엇의 중합인가?","choices":["벤젠","메테인","에탄올","에틸렌"],"answer":3},{"q":"가열하면 녹아 재성형 가능한 것은?","choices":["열경화성","열가소성","결정성","비결정성"],"answer":1},{"q":"축합 중합으로 만드는 것은?","choices":["폴리에틸렌","나일론","PVC","폴리스타이렌"],"answer":1}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('polymer-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 5, 12); camera.lookAt(0, 0, 0);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  const chainGroup = new THREE.Group(); scene.add(chainGroup);
+  let parts = [];
+  const colors = [0x00e896, 0x38bdf8, 0xff6b35, 0xa855f7, 0xf59e0b];
+
+  function buildChain(length, flexibility) {
+    parts.forEach(p => chainGroup.remove(p)); parts = [];
+
+    let x = 0, y = 0, z = 0;
+    let prevPos = [0, 0, 0];
+    const positions = [[0, 0, 0]];
+
+    for (let i = 1; i < length; i++) {
+      const theta = (Math.random() - 0.5) * Math.PI * flexibility;
+      const phi = Math.random() * Math.PI * 2;
+      const step = 0.6;
+      x += Math.sin(theta) * Math.cos(phi) * step;
+      y += Math.sin(theta) * Math.sin(phi) * step;
+      z += Math.cos(theta) * step;
+      positions.push([x, y, z]);
+    }
+
+    // Center the chain
+    const cx = positions.reduce((s, p) => s + p[0], 0) / length;
+    const cy = positions.reduce((s, p) => s + p[1], 0) / length;
+    const cz = positions.reduce((s, p) => s + p[2], 0) / length;
+
+    positions.forEach((pos, i) => {
+      pos[0] -= cx; pos[1] -= cy; pos[2] -= cz;
+
+      // Monomer sphere
+      const mesh = new THREE.Mesh(new THREE.SphereGeometry(0.15, 12, 12), new THREE.MeshBasicMaterial({ color: colors[i % colors.length], transparent: true, opacity: 0.8 }));
+      mesh.position.set(...pos); chainGroup.add(mesh); parts.push(mesh);
+
+      // Bond to previous
+      if (i > 0) {
+        const prev = positions[i - 1];
+        const s = new THREE.Vector3(...prev), e = new THREE.Vector3(...pos);
+        const d = e.clone().sub(s), l = d.length();
+        const bond = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, l, 6), new THREE.MeshBasicMaterial({ color: 0x00e896, transparent: true, opacity: 0.35 }));
+        bond.position.copy(s.clone().add(e).multiplyScalar(0.5));
+        bond.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), d.normalize());
+        chainGroup.add(bond); parts.push(bond);
+      }
+    });
+  }
+
+  buildChain(30, 0.5);
+
+  document.getElementById('chain-slider').addEventListener('input', function() {
+    document.getElementById('chain-val').textContent = this.value;
+    buildChain(parseInt(this.value), parseFloat(document.getElementById('flex-slider').value));
+  });
+  document.getElementById('flex-slider').addEventListener('input', function() {
+    document.getElementById('flex-val').textContent = this.value;
+    buildChain(parseInt(document.getElementById('chain-slider').value), parseFloat(this.value));
+  });
+  document.getElementById('rebuild-chain').addEventListener('click', () => {
+    buildChain(parseInt(document.getElementById('chain-slider').value), parseFloat(document.getElementById('flex-slider').value));
+  });
+
+  let rY = 0, rX = 0.3, isDrag = false, pX = 0, pY = 0;
+  container.addEventListener('mousedown', e => { isDrag = true; pX = e.clientX; pY = e.clientY; });
+  window.addEventListener('mouseup', () => isDrag = false);
+  container.addEventListener('mousemove', e => { if (!isDrag) return; rY += (e.clientX-pX)*0.005; rX += (e.clientY-pY)*0.005; pX = e.clientX; pY = e.clientY; });
+  container.addEventListener('wheel', e => { e.preventDefault(); camera.position.z = Math.max(4, Math.min(20, camera.position.z + e.deltaY*0.01)); }, { passive: false });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    chainGroup.rotation.y = rY; chainGroup.rotation.x = rX;
+    renderer.render(scene, camera);
+  }
+  animate();
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+})();
+</script>
+</body>
+</html>

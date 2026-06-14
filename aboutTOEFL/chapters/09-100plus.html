@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9장. 100점 돌파 — 고득점 전략</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🎓 표지 · 소개</a></li>
+    <li><a href="01-overview.html">1. TOEFL iBT 시험 개요와 전략</a></li>
+    <li><a href="02-reading.html">2. Reading 섹션 공략</a></li>
+    <li><a href="03-listening.html">3. Listening 섹션 공략</a></li>
+    <li><a href="04-speaking.html">4. Speaking 섹션 공략</a></li>
+    <li><a href="05-writing.html">5. Writing 섹션 공략</a></li>
+    <li><a href="06-vocabulary.html">6. 학술 어휘 (Academic Word List)</a></li>
+    <li><a href="07-notetaking.html">7. 노트테이킹 기술</a></li>
+    <li><a href="08-mock.html">8. 모의고사와 시간 관리</a></li>
+    <li><a href="09-100plus.html">9. 100점 돌파 — 고득점 전략</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. 100점이 의미하는 것</h2>
+<p>TOEFL 100점은 단순히 숫자가 아닙니다. ① 미국 최상위 대학원 대부분의 최소선, ② CEFR C1 상위 영역, ③ 글로벌 영어 화자 상위 약 5%에 해당. 한국 응시자 평균(88점)에서 100점까지의 12점 간극은 영역별로 약 3점씩 추가 — 단순 양 늘리기로는 어려운 질적 도약 구간입니다.</p>
+<p>100점 돌파의 결정 변수는 ① <strong>Speaking 23+</strong>, ② <strong>Writing 25+</strong>, ③ <strong>R·L 27+ 유지</strong>의 세 가지. R·L은 노력의 한계효과가 큰 영역이라 안정되지만, S·W가 90~95점에서 100+로 도약하는 가장 큰 장벽입니다. 따라서 후반 학습 자원의 70%를 S·W에 투입하는 것이 합리적 전략입니다.</p>
+</section>
+
+<!-- 3D 학습 시각화: 약점 집중 — 100점 돌파의 수학 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 100+ 전략: 어디에 시간을 붓는가</div>
+  <div id="tf3d-09" style="width:100%;height:430px;"></div>
+  <div id="tf3d-09-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">균등 투자와 약점 집중 투자의 점수 차이.</div>
+</div>
+
+
+<section id="sec2">
+<h2>2. 영역별 도약 전략 (90→100+)</h2>
+<p>각 영역의 도약 핵심:</p>
+<p>① <strong>Reading 25 → 28+</strong>: 약점 유형(보통 Inference·Insert Text·Prose Summary) 집중 + AWL 정복 + 시간 관리 자동화. 한 지문 17분 안정 유지.</p>
+<p>② <strong>Listening 22 → 27+</strong>: 강의 3개째 집중력 유지 훈련(체력) + Function·Attitude 유형 보강 + 학술 청해 다독(TED·OCW) 매일 30분 누적.</p>
+<p>③ <strong>Speaking 20 → 24+</strong>: 4문제 템플릿 100% 자동화 + 매일 4문제 + AI 음소·유창성 평가(ELSA, SpeechRater 시뮬레이션). Q4(Lecture Only)가 최약점인 경우 많음 — 강의 노트 → 60초 재구성 훈련 집중.</p>
+<p>④ <strong>Writing 22 → 26+</strong>: Integrated에서 paraphrase + lexical diversity, Academic Discussion에서 자연스러운 토론 톤 + 구체적 예시. 매일 1편 + ChatGPT 점수 추정 + 같은 주제 재작성.</p>
+</section>
+
+<section id="sec3">
+<h2>3. 90일 100+ 도약 플랜</h2>
+<p>90일이면 평균 88~92점 학습자가 100+로 도약하기에 적절한 기간입니다. 표준 플랜:</p>
+<p>① <strong>1~30일</strong>: 약점 진단 + 기초 보강. ETS 공식 모의 1회 → 영역별 약점 식별 → AWL 정복 + 약점 유형 집중 학습. 매일 R·L 정밀 1세트.</p>
+<p>② <strong>31~60일</strong>: Speaking·Writing 집중. 4문제 템플릿 자동화, 매일 S 4문제 + W 1편 + AI 첨삭. ChatGPT/Claude를 24시간 코치로 활용. 격주 풀모의 + 사후 분석.</p>
+<p>③ <strong>61~80일</strong>: 통합 실전. 주 2회 풀 시간 모의 + 약점 영역 정밀 보강. 시간 관리·체력 안정화.</p>
+<p>④ <strong>81~90일</strong>: 컨디션·실전 모드. 매주 ETS 공식 모의 1회 + 가벼운 약점 점검. 시험 3일 전부터 가벼운 복습만, 새 자료 X. 충분한 수면·식사 관리.</p>
+</section>
+
+<section id="sec4">
+<h2>4. 시험 당일 — 점수 1~2점 더 잡는 디테일</h2>
+<p>충분히 준비했어도 시험 당일 디테일이 점수 1~2점을 가릅니다.</p>
+<p><strong>전날</strong>: ① 8시간 수면, ② 시험장 위치·소요 시간 사전 확인, ③ 신분증·voucher 준비, ④ 가벼운 복습만 (새 자료 금지).</p>
+<p><strong>당일 아침</strong>: ① 평소 식사, 카페인 적정, ② 시험 시작 30분 전 도착, ③ 가벼운 stretching, ④ 화장실 미리. <strong>시험 중</strong>: ① Break 10분 적극 활용(Speaking 전 정신 리셋), ② Speaking은 큰소리로 자신 있게(자기 목소리 청취도 점수에 영향), ③ Writing은 결론 1문장이라도 반드시, ④ 시간 압박에 패닉 금지 — 한 문제 손실은 1점 미만, 회복 가능.</p>
+<p><strong>응시 후</strong>: ① 점수 확인까지 6일 — 그동안 학습 멈추지 말기, ② 점수 발표 후 약점 영역 다음 응시 전 정밀 보강, ③ MyBest Score 활용 — 2~3회 응시로 영역별 최고점 합산이 합리적.</p>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="08-mock.html" style="text-decoration:none;">← 8. 모의고사와 시간 관리</a><a href="../index.html" style="text-decoration:none;">표지로 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>TOEFL 100점은 미국 최상위 대학원 최소선이자 글로벌 영어 상위 5%. 90점→100점 12점 도약의 결정 변수는 Speaking 23+ Writing 25+. 90일 집중 플랜과 AI 도구 활용으로 학원 없이도 충분히 가능합니다.</p>
+  <h3>왜 중요한가?</h3>
+  <p>① 100점은 유학·MBA·해외 취업의 사실상 보증서. ② 90점에서 95점까지는 비교적 쉽지만 100점 돌파는 질적 도약 — 그래서 가치가 큼. ③ Speaking·Writing 향상 과정은 실제 영어 사용 능력의 결정적 도약과 일치. ④ MyBest Score 제도로 2~3회 응시 + 영역별 최고점 합산이 합리적.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>100+</strong>: TOEFL 100점 이상 — 최상위 대학원 기준</li>
+    <li><strong>MyBest Score</strong>: 2년 내 응시 중 영역별 최고점 합산</li>
+    <li><strong>S 23+ / W 25+</strong>: 100점 돌파의 결정 임계점</li>
+    <li><strong>Peak 전략</strong>: 시험 직전 컨디션 최고 조절</li>
+    <li><strong>Score Send</strong>: 응시 후 대학에 점수 발송 (4개 무료)</li>
+    <li><strong>Practice effect</strong>: 응시 경험 누적으로 2~3점 자연 향상</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>100점 도약을 산악 등반에 비유하면, 90점까지는 한국에서 한라산 정상, 100점은 알프스 본격 등반이에요. 양쪽 다 노력이 필요하지만 방법이 다릅니다. 90점까지 통하던 "양으로 밀어붙이기"가 100점에선 안 통하고, ① 정밀한 약점 분석, ② AI 도구 활용, ③ 일관된 일일 루틴이 핵심. 학원 의존도가 가장 낮은 구간이기도 합니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 100점 돌파의 단 하나 비결은 "매일 Speaking 30분 + Writing 30분"입니다. 학원 1년치 비용으로 ChatGPT/Claude·ELSA·italki를 함께 활용하면 비교 불가 효과. 시험 3개월 전 시작이 표준, 90일은 인지적·체력적 최적 기간.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>100점 = 미국 최상위 대학원 기준, 글로벌 상위 5%</li>
+    <li>결정 변수: Speaking 23+ Writing 25+</li>
+    <li>90일 플랜: 진단 → S·W 집중 → 통합 모의 → 컨디션</li>
+    <li>AI 도구로 학원 없이 가능</li>
+    <li>MyBest Score 활용한 2~3회 응시 전략</li>
+    <li>시험 당일 디테일이 1~2점을 가름</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>도약 학습의 인지심리학적 원리는 <strong>deliberate practice</strong>(K. Anders Ericsson 1993)입니다. ① 본인 약점 명확 식별, ② 약점에 집중된 훈련, ③ 즉시 피드백, ④ 의식적 반복의 4요소가 모두 작동해야 정체기를 돌파할 수 있습니다. 90점 정체 학습자가 단순히 "더 공부"로는 안 늘고, deliberate practice 사이클로 전환해야 100+로 도약합니다.</p>
+  <p>또한 <strong>plateau effect</strong>(정체기)는 거의 모든 학습 곡선에서 나타나며, 보통 90~95점 영역에서 발생합니다. 정체기 돌파의 정공법은 ① 학습 방식 전환(다른 자료·다른 접근), ② 약점 영역 격리 학습, ③ 짧은 휴식 후 신선한 시각, ④ AI·인간 튜터의 외부 시각 도입입니다. 정체기에 학습량만 늘리면 burnout으로 이어집니다.</p>
+  <h3>핵심 도구 — 90일 도약 매트릭스</h3>
+  <pre><code># 90일 100+ 도약 — 영역별 일일 시간 배분 (총 2시간/일)
+
+[Days 1~30 — 진단 + 기초 보강]
+  R: 20분 (TPO 1지문 정밀)
+  L: 20분 (TPO 1세트 + transcript)
+  S: 20분 (Q1·Q2 매일 1개씩)
+  W: 30분 (Integrated 또는 Academic Discussion 주 3회)
+  AWL: 30분 (sublist 1~3 정복)
+
+[Days 31~60 — S·W 집중 (도약 핵심)]
+  R: 15분 (TPO 1지문, 시간 압박)
+  L: 15분 (TED 1편 + 노트)
+  S: 40분 (4문제 + ELSA/ChatGPT 평가)
+  W: 40분 (1편 + ChatGPT 첨삭 + 재작성)
+  통합: 10분 (오답 노트·약점 정리)
+
+[Days 61~80 — 통합 실전 모의]
+  주 2회 풀모의 (2시간)
+  주 5일 일일 학습 (90분):
+    약점 영역 50% + S·W 30% + R·L 20%
+  매일 모의 사후 분석 30분
+
+[Days 81~90 — 피킹·컨디션]
+  주 1회 ETS 공식 모의
+  매일 60~90분 가벼운 점검
+  마지막 3일: 새 자료 X, 푹 자기, 가벼운 어휘·템플릿 복습</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>🎯 예제 1 — 88점 → 102점 60일 도약 사례</h4><p>실제 학습자 패턴: 진단 88(R25/L23/S19/W21). 60일 집중 후 102(R27/L26/S23/W26). 핵심 변화: ① S 매일 4문제(Q4 노트→60초 재구성 집중), ② W 매일 1편 + ChatGPT 첨삭 + 같은 주제 재작성, ③ L은 매일 TED 1편 다독. AWL은 sublist 1~5만 정밀 학습. 학원 0원, AI 도구·TPO·ETS 공식 모의 합계 약 $80.</p></div>
+  <div class="info-card"><h4>🎯 예제 2 — Plateau 돌파 사례</h4><p>92점에서 3개월 정체 학습자. 분석: 모든 영역 24~25, 어느 한 영역도 26+ 못 감. 해결책: ① 강한 영역(R) 더 강화는 한계효과 미미, ② 약한 영역(S 22)에 자원 70% 재배분, ③ 새 접근법(italki 튜터 + ELSA AI Tutor 동시 활용), ④ 매일 1편 → 매일 2편 + ChatGPT 점수 추정. 6주 후 99점, 8주 후 103점 달성.</p></div>
+  <h3>응용 사례</h3>
+  <p>① <strong>ChatGPT/Claude Custom GPTs</strong>: "TOEFL Speaking Coach", "Integrated Writing Tutor" 같은 전용 GPT 사용. ② <strong>italki·Preply TOEFL Tutor</strong>: 시간당 $15~40, 인간 피드백 백업. ③ <strong>NoteFull·TST Prep Premium</strong>: 유료 강의 + 모범답안 풍부. ④ <strong>스터디 그룹·Discord/Reddit</strong>: r/TOEFL, TOEFL Discord에서 동료 첨삭. ⑤ <strong>ETS Score Reports</strong>: 응시 후 영역별 약점 피드백 활용. ⑥ <strong>MyBest Score</strong>: 첫 응시 → 약점 영역 보강 → 재응시 패턴.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① "100점 한 번에 끝내겠다" → 부담 + 컨디션 무너짐. 2~3회 응시 + MyBest Score 전략이 합리적. ② Speaking·Writing 회피하고 R·L만 늘림 → 절대 100점 못 감. ③ 학원 의존만 → AI 시대에 비용 대비 효율 떨어짐. ④ 무한 모의 → burnout. 모의 1회 + 1주 학습 사이클. ⑤ 시험 직전 새 자료 시작 → 컨디션·자신감 무너짐.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>고득점 학습은 <strong>"기술 자동화 + 메타인지 + 컨디션 관리"</strong>의 3축 통합입니다. ① 기술 자동화 — 어휘·발음·템플릿이 무의식 수준 인출, ② 메타인지 — 자기 약점·강점·전략을 객관적으로 인식·조정, ③ 컨디션 관리 — 수면·식사·스트레스·동기를 일관 유지. 어느 하나만 약해도 100+에서 막힙니다.</p>
+  <p>이는 K. Anders Ericsson의 <strong>peak performance</strong> 연구와 일치합니다. 음악·스포츠·체스에서 세계 정상급 선수의 공통점은 단순 연습 시간이 아닌 ① deliberate practice, ② immediate feedback, ③ progressive overload, ④ rest &amp; recovery의 균형. TOEFL 100+ 학습자도 동일한 패턴을 보이며, "더 많이"가 아닌 "더 정확히 + 더 일관되게"가 답입니다.</p>
+  <h3>수학적·통계적 기초</h3>
+  <div class="formula">$$\text{Score variance per attempt: SEM} \approx 2~3 \text{ points (Total)}$$
+  $$\text{Optimal re-test: 2~3회 응시 시 MyBest Score 평균 } +3~5 \text{ points}$$
+  $$\text{Time investment ROI: Diminishing returns beyond} \sim 200 \text{ hours preparation}$$</div>
+  <p>준비 시간 200시간이 일반적 최적점. 이후는 한계효과 급감하며 burnout 위험. 100+ 도약은 양보다 ① 약점 정밀 분석, ② AI·인간 피드백 통합, ③ 일관된 90일 페이스가 핵심. 응시는 2~3회로 MyBest Score 최적화가 통계적·경제적 합리.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>LLM TOEFL Tutor 통합</strong>: GPT-4o·Claude 3.5 + ELSA + SpeechRater 시뮬레이션 + Grammarly 결합으로 학원의 90% 효과를 0~$30/월로. ② <strong>Adaptive learning platforms</strong>: BestMyTest·Magoosh가 ML로 약점 자동 추적 + 맞춤 커리큘럼. ③ <strong>DET (Duolingo English Test)</strong>: 100% 온라인 1시간 $65, 미국 대학 5,500+ 곳 인정 — TOEFL과 병행 응시로 안전망. ④ <strong>VR/AR 시뮬레이션</strong>: 시험장 가상 체험, 시험 불안 감소 연구. ⑤ <strong>AI 응시 부정 방지</strong>: ETS가 AI 도구 사용 부정 정의 강화, 응시 환경 감독 정밀화.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>인지심리학</strong>: deliberate practice, deliberate rest, plateau effect</li>
+    <li><strong>스포츠과학</strong>: peaking strategies, periodization, taper</li>
+    <li><strong>심리측정학</strong>: SEM, equating, MyBest Score logic</li>
+    <li><strong>의사결정론</strong>: 응시 횟수 최적화, 비용·효익 분석</li>
+    <li><strong>교육공학</strong>: AI tutoring, adaptive learning</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 K. Anders Ericsson, <em>Peak: Secrets from the New Science of Expertise</em></li>
+    <li>📖 Cal Newport, <em>Deep Work</em> (집중 학습 환경)</li>
+    <li>📖 ETS Official Guide + Official Practice Tests Vol. 1·2</li>
+    <li>📺 NoteFull, TST Prep, IntegratedSelf TOEFL</li>
+    <li>🔬 도구: ChatGPT Custom GPT, Claude, ELSA Speak, italki, Grammarly, TPO 40+ sets</li>
+    <li>🔬 키워드: deliberate practice, plateau effect, MyBest Score, peaking, AI tutoring</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 100+ 진검승부 90일 프로젝트: ① Day 1 ETS OPT 진단 + 약점 매핑, ② Days 2~30 약점 영역 deliberate practice + AWL 정복, ③ Days 31~60 S·W 매일 + AI 첨삭, ④ Days 61~80 풀 모의 + 사후 분석, ⑤ Days 81~90 컨디션 피크 + 응시. 응시 후 약점 영역 보강 → 30일 후 재응시 → MyBest Score 100+ 달성. AI 시대에 100점 돌파는 학원 없이도 충분히 가능하다는 것을 자기 사례로 검증하세요.</div>
+</div>
+
+<h2 style="margin-top:80px;">🎓 TOEFL 9챕터 완주 축하합니다</h2>
+<p>이 강의는 시험 개요 → R·L·S·W 4영역 → 학술 어휘 → 노트테이킹 → 모의·시간 관리 → 100점 돌파의 순으로 TOEFL iBT의 전체 그림을 그렸습니다. 핵심 메시지는 단순합니다: <strong>"TOEFL은 영어 시험이 아닌 학습 시스템 설계의 시험"</strong>입니다. AI 시대에 더 이상 학원·해외연수에 의존하지 않고, 자기 약점을 정확히 진단하고, AI 도구를 코치로 활용하며, 90일 일관된 페이스로 100+ 점수에 도달할 수 있습니다. 다음 단계는 ① 실제 응시 → MyBest Score 최적화, ② 점수를 활용한 유학·MBA·해외 취업 진로 설계, ③ 시험이 끝나도 영어를 평생 학습 도구로 유지하기입니다. TOEFL은 끝이 아니라 시작입니다.</p>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#06b6d4","questions":[{"q":"100점 돌파에 필요한 Speaking 점수는?","choices":["20점+","23점+","27점+","30점"],"answer":1},{"q":"TOEFL 100점의 CEFR 수준은?","choices":["A2","B1","B2","C1 상위"],"answer":3},{"q":"100+ 도약 플랜의 표준 기간은?","choices":["30일","60일","90일","180일"],"answer":2},{"q":"후반 학습 자원 70%를 둘 영역은?","choices":["S·W","R·L","어휘만","문법만"],"answer":0},{"q":"준비 시간의 일반적 최적점은?","choices":["100시간","150시간","300시간","200시간"],"answer":3}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('tf3d-09');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('tf3d-09-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,1.8,13.5);camera.lookAt(0,0.6,0);
+  var secs=[
+    {t:'R',full:'Reading',cur:25,c:0x5b6bd6},
+    {t:'L',full:'Listening',cur:24,c:0x2f9e63},
+    {t:'S',full:'Speaking',cur:20,c:0xe07a3f},
+    {t:'W',full:'Writing',cur:22,c:0x9b59b6}
+  ];
+  var SC=0.16;
+  var bars=[],capLs=[];
+  secs.forEach(function(s,i){
+    var x=-5.4+i*2.6;
+    var bg=box(1.3,30*SC,1.3,0xe3e8f2,0.5);bg.position.set(x,30*SC/2,0);scene.add(bg);
+    var b=box(1.24,1,1.24,s.c,0.95);scene.add(b);bars.push(b);
+    var L=lbl(s.full,21,'#39415a',0.85);L.position.set(x,-0.7,0);scene.add(L);
+    var C=lbl(''+s.cur,24,'#39415a',0.95);C.position.set(x,s.cur*SC+0.5,0);scene.add(C);capLs.push(C);
+  });
+  function setBar(i,v){
+    var x=-5.4+i*2.6,h=v*SC;
+    bars[i].scale.y=h;bars[i].position.set(x,h/2,0);
+    var C=capLs[i];C.position.set(x,h+0.5,0);
+  }
+  secs.forEach(function(s,i){setBar(i,s.cur);});
+  var planeG=new THREE.Mesh(new THREE.PlaneGeometry(9.2,0.06),new THREE.MeshBasicMaterial({color:0xd6455b,transparent:true,opacity:0.9}));
+  planeG.position.set(-1.5,25*SC,0.7);scene.add(planeG);
+  var lineL=lbl('목표선: 총점 100 (평균 25)',23,'#d6455b',0.95);lineL.position.set(-1.5,25*SC+0.55,0.7);scene.add(lineL);
+  var totalL=lbl('현재 총점: 91',30,'#39415a',1.2);totalL.position.set(4.6,3.4,0);scene.add(totalL);
+  var lastTotal='';
+  function setTotal(t,c){if(t+c===lastTotal)return;lastTotal=t+c;scene.remove(totalL);if(totalL.material.map)totalL.material.map.dispose();totalL.material.dispose();totalL=lbl('총점: '+t,30,c,1.2);totalL.position.set(4.6,3.4,0);scene.add(totalL);}
+  var parts=[];for(var i=0;i<10;i++){var p=sph(0.11,0xffc83c);p.visible=false;scene.add(p);parts.push(p);}
+  var note=lbl('',22,'#39415a',0.9);scene.add(note);
+  function rainTo(u,targets){
+    parts.forEach(function(p,i){
+      p.visible=true;
+      var ti=targets[i%targets.length];
+      var f=(u*1.8+i*0.1)%1;
+      var x=-5.4+ti*2.6;
+      p.position.set(x+Math.sin(i*2.2)*0.4,5.5-f*3.0,0.4);
+      p.material.opacity=1-f*0.6;
+    });
+  }
+  var vals=[25,24,20,22];
+  var phases=[
+    {dur:4.5,cap:'현재 91점(R25·L24·S20·W22). 목표 100. 어디에 시간을 부어야 할까요? — 빨간 목표선 아래로 가장 깊이 처진 막대를 보세요.',
+     enter:function(){vals=[25,24,20,22];secs.forEach(function(s,i){setBar(i,vals[i]);});setTotal('91','#39415a');parts.forEach(function(p){p.visible=false;});},
+     update:function(u){var k=Math.floor(u*8)%4;bars.forEach(function(b,i){b.material.opacity=i===k?1:0.7;});}},
+    {dur:5.5,cap:'비효율 전략 — 균등 투자: 학습 시간(노란 입자)을 4과목에 똑같이 → 이미 높은 R·L은 +1도 어렵습니다(수확 체감). 결과: 95점, 목표 미달.',
+     enter:function(){bars.forEach(function(b){b.material.opacity=0.95;});},
+     update:function(u){
+       rainTo(u,[0,1,2,3]);
+       var f=ez(u);
+       setBar(0,25+f*1);setBar(1,24+f*1);setBar(2,20+f*1);setBar(3,22+f*1);
+       setTotal(''+Math.round(91+f*4),'#e07a3f');
+     }},
+    {dur:6,cap:'고효율 전략 — 약점 집중: S(20→24)·W(22→26)는 템플릿·첨삭으로 단기 상승 여지가 큽니다. 같은 시간으로 101점 — 목표선 돌파!',
+     enter:function(){vals=[25,24,20,22];secs.forEach(function(s,i){setBar(i,vals[i]);});setTotal('91','#39415a');},
+     update:function(u){
+       rainTo(u,[2,2,3,2,3]);
+       var f=ez(u);
+       setBar(0,25+f*1);setBar(1,24+f*1);setBar(2,20+f*4);setBar(3,22+f*4);
+       var t=Math.round(91+f*10);
+       setTotal(''+t,t>=100?'#2f9e63':'#39415a');
+       if(t>=100)planeG.material.opacity=0.4+0.5*Math.abs(Math.sin(u*10));
+     }},
+    {dur:4,cap:'90일 플랜: 1~30일 약점 진단+기초, 31~75일 약점 섹션 집중(매일 S 3문제·W 1편), 76~90일 실전 모의 — "평균"이 아니라 "최저점"을 끌어올리는 게임입니다.',
+     enter:function(){planeG.material.opacity=0.9;},
+     update:function(){}}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

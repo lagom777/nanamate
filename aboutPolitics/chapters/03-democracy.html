@@ -2,14 +2,16 @@
 <title>3. 민주주의 — aboutPolitics</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">🏛️ 표지</a></li><li><a href="01-intro.html">1. 정치학 개론</a></li><li><a href="02-ideologies.html">2. 정치 이념</a></li><li><a href="03-democracy.html">3. 민주주의</a></li><li><a href="04-institutions.html">4. 정치 제도</a></li><li><a href="05-parties.html">5. 정당과 선거</a></li><li><a href="06-international.html">6. 국제 정치</a></li><li><a href="07-public-policy.html">7. 공공 정책</a></li><li><a href="08-media.html">8. 미디어와 정치</a></li><li><a href="09-contemporary.html">9. 현대 정치</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>민주주의</em></h1><p class="authors">Chapter 3 — Democracy & Its Forms</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
-<h2>민주주의 개요</h2><p>Democracy & Its Forms의 핵심 원리를 3D로 학습합니다.</p>
-<div class="info-card"><h4>핵심 개념</h4><p>Democracy & Its Forms</p></div>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 드래그로 회전 · 하단 캡션이 단계별로 설명합니다</span>
+<h2>민주주의 개요</h2><p>민주주의는 주권이 국민에게 있다는 원칙 위에서, 시민이 직접 또는 선출된 대표를 통해 공동체의 결정을 내리는 정치 체제다. 다수결은 그 절차의 하나일 뿐이며, 소수자의 기본권 보호·법치·권력분립이 함께 갖춰져야 비로소 자유민주주의가 성립한다. 위 3D 장면은 시민의 투표가 대표 선출로 이어지는 과정과, 입법·행정·사법 삼권이 서로 견제하며 균형을 이루는 구조를 단계별로 보여준다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>민주주의의 두 기둥: ① 투표 → 대표 선출 → 책임 추궁이라는 위임의 사슬, ② 입법·행정·사법이 서로를 견제하는 권력분립. 선거가 있어도 견제 장치가 무너지면 민주주의의 질은 급격히 떨어진다.</p></div>
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
@@ -43,5 +45,113 @@
   <h3>관련 분야</h3><ul><li>비교민주주의(comparative democracy)</li><li>헌법학(constitutional law)</li><li>정치문화 연구(political culture studies)</li></ul>
   <h3>추가 자료</h3><ul><li>Robert Dahl, 『On Democracy』</li><li>Arend Lijphart, 『Patterns of Democracy』</li><li>Larry Diamond, 『The Spirit of Democracy』</li></ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 시민들이 충분한 정보를 갖지 못한 상태에서 결정을 내린다면, 그 결정은 여전히 민주적이라고 할 수 있을까요? 정보 격차의 시대, 민주주의의 정당성은 어디에서 찾아야 할까요?</div>
-</div></main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<8;i++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5),new THREE.MeshBasicMaterial({color:[0xdc2626,0x2563eb,0x16a34a][i%3],wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+</div>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#dc2626","questions":[{"q":"민주주의에서 주권은 누구에게 있나?","choices":["대통령","군대","국민","법원"],"answer":2},{"q":"대표를 뽑아 위임하는 민주주의는?","choices":["직접민주주의","대의민주주의","전제정치","과두정치"],"answer":1},{"q":"다수의 횡포를 막는 안전장치는?","choices":["소수자 보호","비밀 투표","군사력","세금"],"answer":0},{"q":"다두제(폴리아키) 개념을 제시한 학자는?","choices":["슘페터","하버마스","토크빌","로버트 달"],"answer":3},{"q":"직접민주주의로 유명한 나라는?","choices":["미국","인도","스위스","일본"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+function start(){
+  const c=document.getElementById('sim-scene');
+  if(!c||typeof THREE==='undefined')return;
+  const W=c.clientWidth||800,H=c.clientHeight||400;
+  const scene=new THREE.Scene();
+  scene.background=new THREE.Color(0xf4f6fb);
+  const cam=new THREE.PerspectiveCamera(50,W/H,0.1,1000);
+  let renderer;try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  c.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.95));
+  const dlight=new THREE.DirectionalLight(0xffffff,0.5);dlight.position.set(5,10,7);scene.add(dlight);
+  const tEl=document.createElement('div');
+  tEl.textContent='3D · 민주주의: 투표 → 대표 → 견제와 균형';
+  tEl.style.cssText='position:absolute;top:10px;left:12px;font:700 11px/1.4 ui-monospace,monospace;letter-spacing:0.1em;color:#5b6bd6;background:rgba(255,255,255,0.88);padding:3px 9px;border-radius:10px;pointer-events:none;z-index:3;';
+  c.appendChild(tEl);
+  const capEl=document.createElement('div');
+  capEl.style.cssText='position:absolute;left:0;right:0;bottom:0;padding:9px 14px;font-size:0.84em;line-height:1.5;color:#26314a;background:rgba(252,253,255,0.92);border-top:1px solid rgba(40,60,110,0.08);pointer-events:none;z-index:3;min-height:2.4em;';
+  c.appendChild(capEl);
+  function cap(t){capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function M(col,o){return new THREE.MeshLambertMaterial({color:col,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,col,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),M(col,o));}
+  function sph(r,col,o){return new THREE.Mesh(new THREE.SphereGeometry(r,20,16),M(col,o));}
+  function cyl(r1,r2,h,col,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,24),M(col,o));}
+  function cone(r,h,col,o){return new THREE.Mesh(new THREE.ConeGeometry(r,h,24),M(col,o));}
+  function tor(r,t,col,o,arc){return new THREE.Mesh(new THREE.TorusGeometry(r,t,14,48,arc===undefined?Math.PI*2:arc),M(col,o));}
+  function line(a,b,col,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:col,transparent:true,opacity:o===undefined?0.6:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||26;const cv=document.createElement('canvas');let ctx=cv.getContext('2d');
+    const font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;cv.width=Math.ceil(ctx.measureText(txt).width)+24;cv.height=fs+20;
+    ctx=cv.getContext('2d');ctx.font=font;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillStyle=color||'#2b3242';ctx.fillText(txt,cv.width/2,cv.height/2);
+    const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    const k=(scl||1)*0.012;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  const root=new THREE.Group();scene.add(root);
+  let sway=0.10;
+
+  cam.position.set(0,1.6,12);cam.lookAt(0,0.5,0);sway=0.07;
+  const gA=new THREE.Group(),gB=new THREE.Group();root.add(gA);root.add(gB);
+  const cits=[];for(let i=0;i<12;i++){const m=sph(0.2,0x5b8def);m.position.set((i%6-2.5)*0.8,-2.1,(Math.floor(i/6))*0.8+0.3);gA.add(m);cits.push(m);}
+  const minority=cits[4];minority.material.color.set(0xe0883f);
+  const cLab=lbl('시민 — 1인 1표',23,'#2b5cb8',0.9);cLab.position.set(0,-2.85,0);gA.add(cLab);
+  const bbox=box(1.5,1.0,1.0,0x44518a);bbox.position.set(0,0.2,0);gA.add(bbox);
+  const slot=box(0.8,0.06,0.2,0xf2f5fb);slot.position.set(0,0.74,0);gA.add(slot);
+  const bLab=lbl('투표함',22,'#39415a',0.85);bLab.position.set(1.7,0.4,0);gA.add(bLab);
+  const ballots=[];for(let i=0;i<12;i++){const b=box(0.26,0.05,0.18,0xffffff);b.position.copy(cits[i].position).add(V(0,0.35,0));gA.add(b);ballots.push({m:b,from:b.position.clone()});}
+  const reps=[];for(let i=0;i<5;i++){const r=cyl(0.16,0.2,1.0,0x2f6db3);r.position.set((i-2)*0.55,2.2,0);r.scale.y=0.01;gA.add(r);reps.push(r);}
+  const rLab=lbl('선출된 대표 (의회)',23,'#2456a8',0.9);rLab.position.set(0,3.2,0);rLab.material.opacity=0;gA.add(rLab);
+  const ring=tor(0.42,0.045,0xe0883f,0.95);ring.rotation.x=Math.PI/2;ring.position.copy(minority.position);ring.scale.set(0.01,0.01,0.01);gA.add(ring);
+  gB.visible=false;
+  const tri=[['입법부 (국회)',0,2.4,0x2f6db3],['행정부 (정부)',-2.7,-1.0,0x1f8a4c],['사법부 (법원)',2.7,-1.0,0x8a5fb0]];
+  const pw=tri.map(d=>{const g=new THREE.Group();const b=box(1.8,1.1,1.1,d[3]);g.add(b);const L=lbl(d[0],24,'#39415a',0.9);L.position.set(0,1.15,0);g.add(L);g.position.set(d[1],d[2],0);gB.add(g);return g;});
+  const chk=[];
+  for(let i=0;i<3;i++)for(let j=0;j<3;j++){
+    if(i===j)continue;
+    const a=pw[i].position.clone(),b=pw[j].position.clone();
+    const mid=a.clone().lerp(b,0.5).multiplyScalar(1.3);
+    const cu=new THREE.QuadraticBezierCurve3(a,mid,b);
+    const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints(cu.getPoints(30)),new THREE.LineBasicMaterial({color:0x8a93ad,transparent:true,opacity:0.5}));
+    gB.add(ln);
+    const p=sph(0.09,0xd6455b);gB.add(p);chk.push({c:cu,p:p,o:Math.random()});
+  }
+  const kLab=lbl('견제와 균형 — 탄핵 · 거부권 · 위헌심사',23,'#b03050',0.9);kLab.position.set(0,-2.55,0);gB.add(kLab);
+  const always=function(t){if(gB.visible)chk.forEach(o=>{o.p.position.copy(o.c.getPoint((t*0.15+o.o)%1));});};
+  const phases=[
+   {dur:5,cap:'① 주권자 — 모든 시민이 동등하게 한 표를 가진다. 보통·평등·직접·비밀 선거가 민주주의의 출발점이다.',enter(){gA.visible=true;gB.visible=false;ballots.forEach(o=>{o.m.position.copy(o.from);});reps.forEach(r=>{r.scale.y=0.01;r.position.y=2.2;});rLab.material.opacity=0;ring.scale.set(0.01,0.01,0.01);},update(u,t){cits.forEach((m,i)=>{const k=1+0.2*Math.sin(t*3+i);m.scale.set(k,k,k);});}},
+   {dur:6,cap:'② 투표 → 대표 — 표가 모여 대표가 선출된다. 수천만 명의 나라에서는 이 위임이 민주주의를 작동시키는 방법이다(대의민주주의).',enter(){cits.forEach(m=>m.scale.set(1,1,1));},update(u){const k=ez(Math.min(1,u*1.6));ballots.forEach(o=>{o.m.position.lerpVectors(o.from,V(0,0.6,0),k);});const g=ez(Math.max(0,(u-0.45)/0.55));reps.forEach(r=>{r.scale.y=Math.max(0.01,g);r.position.y=1.7+0.5*g;});rLab.material.opacity=g;}},
+   {dur:6,cap:'③ 다수결 + 소수자 보호 — 결정은 다수로 하되, 소수(주황 시민)의 기본권은 헌법과 법치가 지킨다. 이것이 빠지면 "다수의 횡포"가 된다(토크빌의 경고).',update(u){const k=ez(Math.min(1,u*2));ring.scale.set(k,k,k);}},
+   {dur:7,cap:'④ 권력분립 — 선출된 권력도 집중되면 위험하다. 입법·행정·사법이 서로 견제(붉은 신호)하며 균형을 이룬다(몽테스키외).',enter(){gA.visible=false;gB.visible=true;}},
+   {dur:5.5,cap:'⑤ 종합 — 투표(위임)와 권력분립(견제)이 함께 갖춰져야 자유민주주의다. 선거만 남고 견제가 무너지면 민주주의는 안에서부터 침식된다.'}
+  ];
+  let uy=0,ux=0,md=false,px=0,py=0;
+  c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup',()=>{md=false;});
+  c.addEventListener('mousemove',e=>{if(md){uy+=(e.clientX-px)*0.005;ux+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    const dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    let ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,now/1000);
+    if(typeof always==='function')always(now/1000);
+    root.rotation.y=uy+Math.sin(now/1000*0.25)*sway;
+    root.rotation.x=ux;
+    renderer.render(scene,cam);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',()=>{const w=c.clientWidth,h=c.clientHeight;if(!w||!h)return;cam.aspect=w/h;cam.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body></html>

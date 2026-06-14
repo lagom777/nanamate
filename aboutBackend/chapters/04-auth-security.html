@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -155,7 +157,7 @@ function authMiddleware(req, res, next) {
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -196,6 +198,11 @@ const token = jwt.sign({sub:user.id}, process.env.SECRET, {expiresIn:'15m'});</c
   <div class="success-box"><strong>🎓 도전 과제:</strong> 자체 인증 시스템에 Passkey(WebAuthn) 로그인을 추가하고 기존 비밀번호 흐름과 위험·UX·운영 비용을 비교 보고서로 작성하세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00ff88","questions":[{"q":"\"당신이 누구인가\"를 확인하는 과정은?","choices":["인가","인증","캐싱","라우팅"],"answer":1},{"q":"JWT 구조에 포함되지 않는 것은?","choices":["Header","Payload","Signature","Session"],"answer":3},{"q":"SQL Injection 방어 방법은?","choices":["Prepared Statement","쿠키 삭제","포트 변경","캐시 사용"],"answer":0},{"q":"서버에 상태를 저장하지 않는 방식은?","choices":["세션 방식","쿠키 방식","JWT 방식","로그 방식"],"answer":2},{"q":"CSRF 방어에 쓰이는 쿠키 설정은?","choices":["Secure","SameSite","MaxAge","Domain"],"answer":1}]};</script>
 </main>
 </div>
 

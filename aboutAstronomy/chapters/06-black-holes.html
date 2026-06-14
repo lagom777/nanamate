@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -17,36 +19,75 @@
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">🌌 표지 · 소개</a></li>
-    <li><a href="01-celestial-mechanics.html">1. 천체 역학</a></li>
+    <li><a href="01-celestial-mechanics.html">1. 천체역학</a></li>
     <li><a href="02-solar-system.html">2. 태양계</a></li>
     <li><a href="03-stars.html">3. 항성</a></li>
     <li><a href="04-galaxies.html">4. 은하</a></li>
     <li><a href="05-cosmology.html">5. 우주론</a></li>
-    <li><a href="06-black-holes.html">6. 블랙홀</a></li>
+    <li><a href="06-black-holes.html" style="color:var(--accent);font-weight:600;">6. 블랙홀</a></li>
     <li><a href="07-exoplanets.html">7. 외계행성</a></li>
-    <li><a href="08-observational.html">8. 관측 천문학</a></li>
-    <li><a href="09-space-exploration.html">9. 우주 탐사</a></li>
+    <li><a href="08-observational.html">8. 관측천문학</a></li>
+    <li><a href="09-space-exploration.html">9. 우주탐사</a></li>
   </ol>
 </aside>
 <main>
 <header class="paper-header">
-  <h1><em>블랙홀</em></h1>
-  <p class="authors">Chapter 6 — Black Holes & Spacetime</p>
+  <h1><em>블랙홀</em>: 빛도 빠져나올 수 없는 곳</h1>
+  <p class="authors">Chapter 6 — Event Horizon, Accretion Disk & Gravitational Lensing</p>
+  <p class="affiliation">3D 블랙홀 강착원반 시뮬레이터 포함</p>
 </header>
 
-<div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
-
-<h2>블랙홀 개요</h2>
-<p>이 챕터에서는 블랙홀의 핵심 개념을 3D 시뮬레이션과 함께 학습합니다. 우주를 직접 탐험하세요.</p>
+<h2>블랙홀이란?</h2>
+<p>블랙홀은 질량이 극도로 작은 부피에 집중되어 탈출 속도가 빛의 속도를 넘는 천체입니다. 아무것도, 심지어 빛조차 블랙홀의 <strong>사건의 지평선(event horizon)</strong>을 벗어날 수 없습니다. 블랙홀은 일반상대성이론에서 시공간의 극도한 휨으로 설명됩니다.</p>
 
 <div class="info-card">
-  <h4>핵심 개념</h4>
-  <p>Black Holes & Spacetime의 기본 원리와 최신 발견을 다룹니다.</p>
+  <h4>슈바르츠실트 반지름</h4>
+  <p>질량 M인 비회전 블랙홀의 사건의 지평선 반지름은 카를 슈바르츠실트가 1916년 아인슈타인 방정식의 정확한 해로 구했습니다:</p>
+</div>
+<div class="formula">r_s = 2GM/c² &nbsp;&nbsp;&nbsp; (태양질량이면 r_s ≈ 3 km, 지구질량이면 r_s ≈ 9 mm)</div>
+
+<div class="info-card energy">
+  <h4>블랙홀의 종류</h4>
+  <p><strong>항성질량 블랙홀</strong> (3~100 M☉) — 무거운 별의 초신성 폭발 잔해. <strong>초대질량 블랙홀</strong> (10⁶~10¹⁰ M☉) — 은하 중심에 존재. <strong>중간질량 블랙홀</strong> — 존재가 최근 확인되기 시작. <strong>원시 블랙홀</strong> — 빅뱅 직후 밀도 요동으로 형성된 가설적 블랙홀.</p>
+</div>
+
+<h2>강착 원반과 제트</h2>
+<p>블랙홀 자체는 보이지 않지만, 주변의 물질이 블랙홀로 떨어지며 형성하는 <strong>강착 원반(accretion disk)</strong>은 극도로 뜨거워져 X선을 방출합니다. 마찰로 인해 물질은 나선 궤도를 그리며 안쪽으로 이동합니다. 일부 물질은 자기장에 의해 블랙홀의 극 방향으로 초광속에 가까운 <strong>제트(jet)</strong>로 분출됩니다.</p>
+
+<h2>중력 렌즈 효과</h2>
+<p>블랙홀의 강한 중력은 주변을 지나는 빛의 경로를 크게 휘게 합니다. 이를 <strong>중력 렌즈 효과</strong>(gravitational lensing)라 합니다. 블랙홀 뒤쪽의 별빛이 블랙홀 주위를 돌아 관측자에게 도달하므로, 배경 별들이 왜곡되어 보입니다.</p>
+
+<h2>3D 블랙홀 시뮬레이터</h2>
+<p>블랙홀과 강착 원반을 관찰하세요. 질량 슬라이더로 슈바르츠실트 반지름을 변경하고, 배경 별들의 중력 렌즈 왜곡을 확인하세요.</p>
+
+<div class="scene-3d" id="bh-scene">
+  <div class="scene-controls">
+    <label>블랙홀 질량: <span id="mass-val">10</span> M☉</label>
+    <input type="range" id="mass-slider" min="3" max="100" value="10" step="1">
+    <label>관측 각도: <span id="angle-val">30</span>°</label>
+    <input type="range" id="angle-slider" min="5" max="85" value="30" step="1">
+    <label>강착률: <span id="accr-val">1.0</span>x</label>
+    <input type="range" id="accr-slider" min="0.2" max="3" value="1" step="0.1">
+  </div>
+</div>
+<span class="interact-hint">⟳ 마우스 드래그로 회전 · 슬라이더로 블랙홀 특성 변경</span>
+
+<h2>호킹 복사</h2>
+<p>1974년 스티븐 호킹은 양자역학적 효과로 인해 블랙홀이 완전히 "검지" 않다는 것을 보였습니다. 사건의 지평선 근처에서 양자 요동으로 생성된 가상 입자 쌍 중 하나가 블랙홀에 떨어지고 다른 하나가 탈출하면, 블랙홀은 에너지를 잃습니다. 이를 <strong>호킹 복사(Hawking radiation)</strong>라 합니다.</p>
+<div class="formula">T_H = ℏc³ / (8πGMk_B) &nbsp;&nbsp;&nbsp; (태양질량 블랙홀: T ≈ 6 × 10⁻⁸ K — 극히 미약)</div>
+
+<h2>중력 시간 지연</h2>
+<p>일반상대성이론에 의하면, 강한 중력장에서는 시간이 느리게 흐릅니다. 블랙홀 근처에서는 이 효과가 극대화됩니다:</p>
+<div class="formula">Δt_∞ = Δt_local / √(1 − r_s/r) &nbsp;&nbsp;&nbsp; (r → r_s이면 시간 지연 → ∞)</div>
+<p>사건의 지평선에 접근하는 물체는 외부 관측자에게 점점 느려지다가 사실상 정지한 것처럼 보이며, 빛은 무한히 적색이동됩니다.</p>
+
+<div class="info-card quantum">
+  <h4>💡 탐구 과제</h4>
+  <p>시뮬레이터에서 질량을 증가시키면 블랙홀(사건의 지평선)이 커지고, 강착 원반도 더 넓어집니다. 배경 별들의 왜곡도 더 심해지는 것을 관찰하세요.</p>
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -55,133 +96,288 @@
 <div class="difficulty-content" data-level="easy">
   <span class="difficulty-badge easy">하 · 입문</span>
   <h3>한 줄로 이해하기</h3>
-  <p>블랙홀은 중력이 너무 강해 빛조차 빠져나오지 못하는, 시공간이 극단적으로 휘어진 영역입니다.</p>
+  <p>블랙홀은 중력이 너무 강해서 빛조차 빠져나올 수 없는 천체이며, 무거운 별이 죽으면서 만들어집니다.</p>
   <h3>왜 흥미로운가?</h3>
-  <p>2019년 인류는 사상 처음으로 블랙홀의 사진을 직접 찍었습니다. M87 은하 중심의 거대한 블랙홀이 마치 도넛 모양의 빛 고리에 둘러싸인 모습이었습니다. 또한 우리 은하수 한가운데에도 태양보다 400만 배 무거운 블랙홀(궁수자리 A*)이 살고 있으며, 우리는 그 주변을 도는 별의 궤도까지 측정해 냈습니다.</p>
+  <p>블랙홀은 SF에서만 볼 법한 존재지만 실제로 우주에 매우 많습니다. 우리은하 중심에도 태양 400만 개 무게의 거대한 블랙홀이 있습니다! 2019년 EHT(Event Horizon Telescope)는 인류 역사상 최초로 블랙홀의 그림자를 직접 촬영하는 데 성공했습니다.</p>
   <div class="info-card">
     <h4>🌱 핵심 용어</h4>
     <ul>
-      <li><strong>사건의 지평선</strong> — 빛도 빠져나올 수 없는 경계</li>
-      <li><strong>특이점</strong> — 중심의 무한 밀도 점</li>
-      <li><strong>강착 원반</strong> — 블랙홀에 빨려드는 가스 원반</li>
-      <li><strong>중력파</strong> — 시공간의 잔물결</li>
-      <li><strong>호킹 복사</strong> — 블랙홀이 미세하게 빛을 내는 양자 효과</li>
+      <li><strong>사건의 지평선</strong> — 블랙홀의 "경계", 이 안으로 들어가면 돌아올 수 없다</li>
+      <li><strong>특이점</strong> — 블랙홀 중심의 밀도가 무한한 점</li>
+      <li><strong>강착 원반</strong> — 블랙홀 주위를 도는 뜨거운 물질의 원반</li>
+      <li><strong>중력 렌즈</strong> — 중력이 빛의 경로를 휘게 하는 현상</li>
+      <li><strong>호킹 복사</strong> — 블랙홀이 극미량의 에너지를 방출하는 현상</li>
     </ul>
   </div>
   <h3>핵심 개념 풀어쓰기</h3>
-  <p>아주 무거운 별이 죽을 때 일부는 자체 중력으로 끝없이 수축해 한 점이 되고, 그 주변에 빛조차 탈출할 수 없는 영역이 생깁니다. 이 영역의 가장자리를 사건의 지평선이라 부릅니다. 일단 이 선을 넘으면 어떤 신호도 바깥으로 보낼 수 없습니다. 블랙홀은 크기에 따라 별 질량 블랙홀(태양의 몇 배~수십 배), 중간 질량 블랙홀, 거대한 초대질량 블랙홀(태양의 백만~십억 배)로 나뉩니다. 모든 큰 은하 중심에는 초대질량 블랙홀이 있는 것으로 보입니다. 블랙홀 자체는 빛을 내지 않지만, 주위에서 가스가 빨려들 때 마찰로 매우 뜨거워져 강한 X선을 방출하며, 이를 통해 블랙홀의 존재를 간접적으로 확인합니다. 또한 블랙홀끼리 충돌하면 시공간이 크게 흔들리며 중력파를 만들어 내고, 우리는 이를 직접 검출했습니다.</p>
-  <div class="study-tip"><strong>💡 학습 TIP:</strong> 사건의 지평선은 물리적인 표면이 아니라 정보의 경계선입니다. 거기에 도달해도 떨어지는 사람은 특별한 것을 느끼지 못합니다.</div>
+  <p>공을 하늘로 던지면 중력 때문에 다시 내려옵니다. 더 세게 던지면 더 높이 올라갑니다. 만약 아주아주 세게 던져서 지구의 탈출 속도(11.2 km/s)를 넘으면 공은 우주로 날아갑니다. 블랙홀에서는 이 탈출 속도가 빛의 속도(30만 km/s)를 넘습니다. 우주에서 빛보다 빠른 것은 없으므로, 아무것도 블랙홀을 탈출할 수 없습니다. 블랙홀 자체는 보이지 않지만, 주변 물질이 빨려 들어가며 엄청난 에너지를 방출하므로 간접적으로 관측됩니다. 또한 블랙홀 근처에서는 시간이 느리게 흐릅니다!</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 블랙홀은 "우주의 청소기"가 아닙니다. 멀리서는 같은 질량의 다른 천체와 중력이 동일합니다. 태양이 블랙홀이 되어도 지구 궤도는 변하지 않습니다.</div>
   <h3>요약</h3>
   <ul>
-    <li>블랙홀은 빛도 못 빠져나오는 영역이다</li>
-    <li>크기는 질량에만 비례한다(슈바르츠실트 반지름)</li>
-    <li>모든 큰 은하 중심에 초대질량 블랙홀이 있다</li>
-    <li>블랙홀 병합은 중력파로 직접 확인된다</li>
-    <li>EHT가 블랙홀 그림자를 처음 촬영했다</li>
+    <li>블랙홀은 탈출 속도가 광속을 넘는 천체</li>
+    <li>사건의 지평선 안에서는 아무것도 나올 수 없다</li>
+    <li>강착 원반이 X선을 방출하여 간접 관측 가능</li>
+    <li>블랙홀 근처에서 빛이 휘어지는 중력 렌즈 효과</li>
+    <li>2019년 EHT가 최초로 블랙홀 그림자를 촬영</li>
   </ul>
 </div>
 <div class="difficulty-content" data-level="medium">
   <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이</h3>
-  <p>일반상대성 이론에서 블랙홀은 슈바르츠실트 해(회전 없음, 전하 없음), 커 해(회전), 라이스너-노드스트룀 해(전하), 커-뉴먼 해(회전+전하)의 네 가지 정상 해로 완전히 기술됩니다. 'No-hair 정리'는 블랙홀이 질량·각운동량·전하 단 세 매개변수로 완전히 결정됨을 말합니다. 슈바르츠실트 반지름 r_s = 2GM/c²은 사건의 지평선의 크기로, 태양 질량 블랙홀에서는 약 3km, 지구 질량 블랙홀에서는 약 9mm입니다. 회전하는 커 블랙홀에는 사건의 지평선 바깥에 에르고권이 존재하며, 펜로즈 과정으로 회전 에너지를 추출할 수 있습니다. 강착 원반에서 가스는 각운동량을 잃으며 안쪽 안정 원궤도(ISCO)까지 나선 운동을 하고, 그 안쪽으로 자유낙하해 사건의 지평선을 넘습니다. 블랙홀 열역학은 사건의 지평선 면적이 엔트로피에 비례함(베켄슈타인-호킹 엔트로피)을 보였고, 호킹 복사는 매우 약한 양자 효과로 블랙홀이 천천히 증발할 수 있음을 예측합니다.</p>
+  <h3>이론 깊이 들어가기</h3>
+  <p>슈바르츠실트 메트릭은 비회전, 비하전 블랙홀의 시공간을 기술합니다. 실제 천체물리학적 블랙홀은 대부분 회전하며, 이는 <strong>커 메트릭(Kerr metric)</strong>으로 기술됩니다. 회전하는 블랙홀은 주변 시공간을 함께 끌고 도는 <strong>프레임 드래깅(frame dragging)</strong> 효과를 일으키며, 사건의 지평선 바깥에 <strong>에르고스피어(ergosphere)</strong>라는 영역이 생깁니다. 에르고스피어에서는 <strong>펜로즈 과정</strong>을 통해 블랙홀의 회전 에너지를 추출할 수 있습니다.</p>
+  <p>블랙홀 주변의 빛의 궤적은 측지선 방정식으로 계산됩니다. 빛이 r = 1.5r_s(광자구)에서 블랙홀을 원형으로 돌 수 있으며, 이보다 안쪽으로 들어오면 블랙홀로 떨어집니다. 이 광자구의 그림자가 EHT가 촬영한 "블랙홀 이미지"의 어두운 원입니다.</p>
   <h3>핵심 공식</h3>
-  <div class="formula">슈바르츠실트 반지름: r_s = 2GM/c² &nbsp;|&nbsp; 호킹 온도: T = ℏc³/(8πGMk_B) &nbsp;|&nbsp; 베켄슈타인-호킹 엔트로피: S = k_B·A/(4ℓ_P²)</div>
+  <div class="formula">r_s = 2GM/c² &nbsp;|&nbsp; T_H = ℏc³/(8πGMk_B) &nbsp;|&nbsp; ISCO(커): r = GM/c²(3+Z₂∓√((3-Z₁)(3+Z₁+2Z₂)))</div>
   <h3>대표 사례</h3>
-  <div class="info-card"><h4>🌌 사례 1 — GW150914</h4><p>2015년 9월 14일 LIGO가 검출한 첫 중력파 사건. 약 36과 29 태양질량의 블랙홀이 병합해 62 태양질량 블랙홀과 3 태양질량의 에너지를 중력파로 방출했습니다.</p></div>
-  <div class="info-card"><h4>🌌 사례 2 — EHT M87* 영상</h4><p>2019년 사건의 지평선 망원경(EHT) 협력단이 M87 은하 중심의 65억 태양질량 블랙홀 그림자를 직접 촬영했습니다. 일반상대성 이론의 또 하나의 검증입니다.</p></div>
-  <h3>관측 응용</h3>
-  <p>X선 쌍성에서 블랙홀의 회전을 측정하고, 시간 변동에서 ISCO 반지름을 추정합니다. VLBI 전파 간섭계로 사건의 지평선 스케일을 분해하며, 중력파 신호의 ringdown으로 최종 블랙홀의 질량과 회전을 결정합니다.</p>
-  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 블랙홀이 주변을 "빨아들이는" 청소기는 아닙니다. 충분히 멀리 있다면 보통 중력처럼 작용합니다. 태양이 갑자기 블랙홀이 되어도 지구 궤도는 변하지 않습니다.</div>
+  <div class="info-card"><h4>🌌 사례 1 — M87* (EHT 최초 촬영)</h4><p>2019년 처녀자리 은하단의 M87 은하 중심 초대질량 블랙홀(65억 M☉)의 그림자가 촬영되었습니다. 지구 크기 가상 망원경을 구현한 VLBI 기술의 쾌거입니다.</p></div>
+  <div class="info-card"><h4>🌌 사례 2 — GW150914</h4><p>2015년 LIGO가 최초로 관측한 중력파 신호로, 36 M☉과 29 M☉의 블랙홀 두 개가 합쳐져 62 M☉ 블랙홀이 되었습니다. 사라진 3 M☉은 중력파 에너지로 방출되었습니다.</p></div>
+  <h3>강착 물리</h3>
+  <p>강착 원반은 점성에 의해 물질이 안쪽으로 이동하는 것으로 모델링됩니다. 표준 박원반 모델(Shakura-Sunyaev)에서 원반 온도는 T ∝ r⁻³/⁴로 안쪽이 더 뜨겁습니다. 가장 안쪽의 안정 원궤도(ISCO)는 비회전 블랙홀에서 3r_s, 최대 회전에서는 r_s/2까지 줄어듭니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 블랙홀 내부의 "특이점"은 현재 물리학의 한계를 나타냅니다. 양자중력이론이 완성되면 특이점은 사라질 수 있습니다.</div>
 </div>
 <div class="difficulty-content" data-level="hard">
   <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3>
-  <p>블랙홀 물리는 일반상대성 이론과 양자장론, 정보이론이 만나는 가장 비옥한 연구 영역입니다. 호킹 복사가 정확히 열적이라면 블랙홀이 완전히 증발할 때 정보가 사라져 양자역학의 유니타리성과 모순됩니다. 이 정보 역설(information paradox)은 50년 가까이 미해결이었으나, 최근 몇 년 사이 양자 극한면(quantum extremal surfaces)과 복제(islands) 공식을 통해 페이지 곡선이 양자역학과 양립함이 보였습니다. AdS/CFT 대응성은 5차원 anti-de Sitter 공간의 중력 이론이 그 경계의 4차원 등각장론과 동등하다는 끈이론의 산물로, 블랙홀 엔트로피의 미시적 기원을 부여합니다. 회전하는 커 블랙홀의 강착 원반에서 일반상대성 효과는 ISCO 반지름과 복사 효율(슈바르츠실트 5.7%, 극단 커 약 42%)을 결정합니다. 블랜포드-즈나젝 메커니즘은 회전 에너지를 자기장으로 추출해 활동 은하핵 제트를 만듭니다. 원시 블랙홀은 빅뱅 초기 밀도 요동이 직접 붕괴해 형성될 가능성이 있으며 암흑물질 후보로 다시 주목받고 있습니다. 양자 중력에서 블랙홀의 미시 상태는 끈 이론의 D-브레인 카운팅(스트로민저-바파)이나 루프 양자 중력의 스핀 망 카운팅으로 정확한 베켄슈타인-호킹 엔트로피를 재현합니다.</p>
-  <h3>유도</h3>
-  <div class="formula">슈바르츠실트 계량: ds² = -(1-r_s/r)c²dt² + (1-r_s/r)⁻¹dr² + r²dΩ² &nbsp;|&nbsp; 측지선: 효과 퍼텐셜 V_eff(r) → ISCO at r=6GM/c²(슈바르츠실트)</div>
+  <h3>전문가 레벨 이해</h3>
+  <p>블랙홀 열역학은 고전 일반상대론과 양자장론의 접점입니다. 베켄슈타인-호킹 엔트로피 S = k_B A/(4 l_P²)는 블랙홀의 엔트로피가 사건의 지평선 면적에 비례함을 보이며, 이는 홀로그래피 원리의 근거가 됩니다. 블랙홀 열역학 4법칙은 일반 열역학 법칙과 정확히 대응됩니다.</p>
+  <p>블랙홀 정보 역설은 양자역학의 유니터리성(정보 보존)과 호킹 복사의 열적 성질 사이의 모순입니다. 최근 Page curve의 재현, 섬(island) 공식, ER=EPR 추측 등 양자중력의 최전선에서 활발히 연구되고 있습니다. 준정규 진동(QNM)은 합병 후 블랙홀이 "울리는" 주파수로, 블랙홀의 질량과 스핀만으로 결정됩니다(무모 정리).</p>
+  <h3>핵심 수식</h3>
+  <div class="formula">슈바르츠실트: ds² = -(1-r_s/r)dt² + dr²/(1-r_s/r) + r²dΩ² &nbsp;|&nbsp; S_BH = k_B c³A/(4Gℏ) &nbsp;|&nbsp; dM = (κ/8πG)dA + ΩdJ + ΦdQ</div>
   <h3>최신 연구</h3>
-  <p>EHT는 2022년 우리 은하 중심 궁수자리 A*의 그림자도 촬영했고, 차세대 EHT(ngEHT)는 시간 분해 영상으로 사건의 지평선 근처 동역학을 추적할 예정입니다. LISA 우주 중력파 검출기(2030년대)는 초대질량 블랙홀 병합과 중간 질량 블랙홀의 극단 질량비 인스피럴(EMRI)을 검출합니다. NANOGrav 등 펄사 타이밍 어레이는 2023년 초저주파 중력파 배경의 첫 증거를 제시했고, 이는 초대질량 블랙홀 쌍의 우주적 모집단을 시사합니다.</p>
+  <p>EHT는 우리은하 중심 Sgr A*의 영상도 공개했으며(2022), 편광 관측으로 자기장 구조를 분석합니다. LISA(우주 중력파 관측소)는 초대질량 블랙홀 합병의 저주파 중력파를 탐지할 예정입니다. 양자 중력 실험실로서 블랙홀 유사체(음향 블랙홀)에서 호킹 복사의 유사체가 관측되고 있습니다.</p>
   <h3>관련 분야</h3>
   <ul>
-    <li>양자 중력과 홀로그래픽 원리</li>
-    <li>중력파 천문학과 다중 신호 천문학</li>
-    <li>고에너지 천체물리(AGN, 감마선 폭발)</li>
+    <li>양자중력: 루프 양자중력, 끈이론의 블랙홀 미세상태</li>
+    <li>수치상대론: 블랙홀 합병 시뮬레이션과 중력파 파형</li>
+    <li>고에너지 천체물리: AGN, 퀘이사, 감마선 폭발</li>
   </ul>
-  <h3>추가 자료</h3>
+  <h3>추가 학습 자료</h3>
   <ul>
-    <li>Misner, Thorne & Wheeler, <em>Gravitation</em></li>
+    <li>Carroll, <em>Spacetime and Geometry</em> Ch.5-6</li>
     <li>Wald, <em>General Relativity</em></li>
-    <li>Carroll, <em>Spacetime and Geometry</em></li>
+    <li>Frolov & Novikov, <em>Black Hole Physics</em></li>
   </ul>
-  <div class="success-box"><strong>🎓 도전 과제:</strong> 슈바르츠실트 측지선에서 ISCO 반지름이 6GM/c²임을 효과 퍼텐셜의 변곡점 조건으로부터 유도해 보세요.</div>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 슈바르츠실트 메트릭에서 광자의 유효 포텐셜을 구하고, 광자구 반지름 r = 3GM/c²을 유도해 보세요. 이것이 EHT 이미지의 "그림자" 크기와 어떻게 관련되는지 설명하세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7b9fff","questions":[{"q":"빛도 빠져나올 수 없는 블랙홀의 경계는?","choices":["광자구","특이점","에르고스피어","사건의 지평선"],"answer":3},{"q":"태양질량 블랙홀의 슈바르츠실트 반지름은?","choices":["약 3 km","약 3 m","약 300 km","약 9 mm"],"answer":0},{"q":"2019년 블랙홀 그림자를 최초 촬영한 것은?","choices":["허블","JWST","EHT","LIGO"],"answer":2},{"q":"호킹 복사가 제안된 해는?","choices":["1916년","1974년","1999년","2019년"],"answer":1},{"q":"강착 원반이 주로 방출하는 전자기파는?","choices":["전파","적외선","가시광선","X선"],"answer":3}]};</script>
 </main>
 </div>
 
 <script>
 (function() {
-  const container = document.getElementById('sim-scene');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 5, 12);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  var container = document.getElementById('bh-scene');
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 2000);
+  camera.position.set(0, 8, 20);
+  camera.lookAt(0, 0, 0);
+
+  var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
 
-  // Stars background
-  const starGeo = new THREE.BufferGeometry();
-  const starPositions = new Float32Array(1000*3);
-  for (let i = 0; i < 1000; i++) {
-    starPositions[i*3] = (Math.random()-0.5)*100;
-    starPositions[i*3+1] = (Math.random()-0.5)*100;
-    starPositions[i*3+2] = (Math.random()-0.5)*100;
+  var bhMass = 10;
+  var viewAngle = 30;
+  var accretionRate = 1.0;
+
+  var massSlider = document.getElementById('mass-slider');
+  var angleSlider = document.getElementById('angle-slider');
+  var accrSlider = document.getElementById('accr-slider');
+  var massVal = document.getElementById('mass-val');
+  var angleVal = document.getElementById('angle-val');
+  var accrVal = document.getElementById('accr-val');
+
+  massSlider.addEventListener('input', function() { bhMass = parseFloat(massSlider.value); massVal.textContent = bhMass; updateBlackHole(); });
+  angleSlider.addEventListener('input', function() { viewAngle = parseFloat(angleSlider.value); angleVal.textContent = viewAngle; });
+  accrSlider.addEventListener('input', function() { accretionRate = parseFloat(accrSlider.value); accrVal.textContent = accretionRate.toFixed(1); });
+
+  // Black hole sphere (event horizon)
+  var bhRadius = 1.0;
+  var bhGeo = new THREE.SphereGeometry(bhRadius, 48, 48);
+  var bhMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+  var blackHole = new THREE.Mesh(bhGeo, bhMat);
+  scene.add(blackHole);
+
+  // Photon sphere glow
+  var glowGeo = new THREE.SphereGeometry(bhRadius * 1.5, 48, 48);
+  var glowMat = new THREE.MeshBasicMaterial({ color: 0xff6600, transparent: true, opacity: 0.08 });
+  var glowSphere = new THREE.Mesh(glowGeo, glowMat);
+  scene.add(glowSphere);
+
+  // Edge ring (photon ring)
+  var ringGeo = new THREE.TorusGeometry(bhRadius * 1.5, 0.03, 16, 64);
+  var ringMat = new THREE.MeshBasicMaterial({ color: 0xff8800, transparent: true, opacity: 0.6 });
+  var photonRing = new THREE.Mesh(ringGeo, ringMat);
+  photonRing.rotation.x = Math.PI / 2;
+  scene.add(photonRing);
+
+  // Accretion disk — torus of particles
+  var DISK_PARTICLES = 6000;
+  var diskGeo = new THREE.BufferGeometry();
+  var diskPositions = new Float32Array(DISK_PARTICLES * 3);
+  var diskColors = new Float32Array(DISK_PARTICLES * 3);
+  var diskData = [];
+
+  for (var i = 0; i < DISK_PARTICLES; i++) {
+    var angle = Math.random() * Math.PI * 2;
+    var rDist = bhRadius * 2.5 + Math.random() * bhRadius * 6;
+    var thickness = (Math.random() - 0.5) * 0.3 * (1.0 + (rDist - bhRadius * 2.5) * 0.1);
+    var speed = 1.0 / Math.sqrt(rDist) * 0.02;
+    diskData.push({ angle: angle, r: rDist, y: thickness, speed: speed });
+
+    // Inner particles hotter (bluer-white), outer cooler (orange-red)
+    var tempFactor = 1.0 - (rDist - bhRadius * 2.5) / (bhRadius * 6);
+    tempFactor = Math.max(0, Math.min(1, tempFactor));
+    diskColors[i * 3] = 1.0;
+    diskColors[i * 3 + 1] = 0.3 + tempFactor * 0.6;
+    diskColors[i * 3 + 2] = 0.1 + tempFactor * 0.8;
   }
-  starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-  scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 })));
 
-  // Central body (sun/star)
-  const sun = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), new THREE.MeshBasicMaterial({ color: 0xfbbf24 }));
-  scene.add(sun);
-  scene.add(new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 32), new THREE.MeshBasicMaterial({ color: 0xfbbf24, transparent: true, opacity: 0.15 })));
+  diskGeo.setAttribute('position', new THREE.BufferAttribute(diskPositions, 3));
+  diskGeo.setAttribute('color', new THREE.BufferAttribute(diskColors, 3));
+  var diskPoints = new THREE.Points(diskGeo, new THREE.PointsMaterial({
+    size: 0.08, vertexColors: true, transparent: true, opacity: 0.85, sizeAttenuation: true
+  }));
+  scene.add(diskPoints);
 
-  // Orbiting planets
-  const planets = [];
-  const planetColors = [0x60a5fa, 0xef4444, 0x22c55e, 0xa855f7, 0xfb923c];
-  for (let i = 0; i < 5; i++) {
-    const r = 0.15 + i*0.05;
-    const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 16, 16), new THREE.MeshBasicMaterial({ color: planetColors[i] }));
-    const orbit = 3 + i*1.5;
-    planets.push({ mesh, orbit, speed: 0.02/(i+1), angle: Math.random()*Math.PI*2 });
-    scene.add(mesh);
-    // Orbit ring
-    const ring = new THREE.Line(
-      new THREE.BufferGeometry().setFromPoints(Array.from({length:65}, (_,j) => new THREE.Vector3(Math.cos(j/64*Math.PI*2)*orbit, 0, Math.sin(j/64*Math.PI*2)*orbit))),
-      new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1 })
-    );
-    scene.add(ring);
+  // Background stars (for lensing visualization)
+  var NUM_BG_STARS = 800;
+  var bgStarData = [];
+  var bgGeo = new THREE.BufferGeometry();
+  var bgPositions = new Float32Array(NUM_BG_STARS * 3);
+  var bgColors = new Float32Array(NUM_BG_STARS * 3);
+
+  for (var i = 0; i < NUM_BG_STARS; i++) {
+    var x = (Math.random() - 0.5) * 120;
+    var y = (Math.random() - 0.5) * 120;
+    var z = -30 - Math.random() * 80;
+    bgStarData.push({ ox: x, oy: y, oz: z });
+    bgPositions[i * 3] = x;
+    bgPositions[i * 3 + 1] = y;
+    bgPositions[i * 3 + 2] = z;
+    bgColors[i * 3] = 0.8 + Math.random() * 0.2;
+    bgColors[i * 3 + 1] = 0.8 + Math.random() * 0.2;
+    bgColors[i * 3 + 2] = 0.9 + Math.random() * 0.1;
   }
 
-  let mouseDown = false, prevX = 0, prevY = 0;
-  container.addEventListener('mousedown', e => { mouseDown = true; prevX = e.clientX; prevY = e.clientY; });
-  container.addEventListener('mouseup', () => mouseDown = false);
-  container.addEventListener('mousemove', e => {
+  bgGeo.setAttribute('position', new THREE.BufferAttribute(bgPositions, 3));
+  bgGeo.setAttribute('color', new THREE.BufferAttribute(bgColors, 3));
+  var bgStars = new THREE.Points(bgGeo, new THREE.PointsMaterial({
+    size: 0.12, vertexColors: true, transparent: true, opacity: 0.7, sizeAttenuation: true
+  }));
+  scene.add(bgStars);
+
+  // Additional foreground ambient stars
+  var fgGeo = new THREE.BufferGeometry();
+  var fgP = new Float32Array(500 * 3);
+  for (var i = 0; i < 500; i++) {
+    fgP[i*3] = (Math.random()-0.5)*150;
+    fgP[i*3+1] = (Math.random()-0.5)*150;
+    fgP[i*3+2] = (Math.random()-0.5)*150;
+  }
+  fgGeo.setAttribute('position', new THREE.BufferAttribute(fgP, 3));
+  scene.add(new THREE.Points(fgGeo, new THREE.PointsMaterial({color: 0xffffff, size: 0.05, transparent: true, opacity: 0.3})));
+
+  function updateBlackHole() {
+    var scale = bhMass / 10.0;
+    blackHole.scale.set(scale, scale, scale);
+    glowSphere.scale.set(scale, scale, scale);
+    photonRing.scale.set(scale, scale, scale);
+  }
+
+  function updateLensing() {
+    var positions = bgGeo.attributes.position;
+    var lensStrength = bhMass * 0.15;
+    for (var i = 0; i < NUM_BG_STARS; i++) {
+      var s = bgStarData[i];
+      // Project to view plane and apply simple lensing displacement
+      var dx = s.ox;
+      var dy = s.oy;
+      var dist2d = Math.sqrt(dx * dx + dy * dy);
+      if (dist2d < 0.5) dist2d = 0.5;
+      var deflection = lensStrength / dist2d;
+      if (dist2d < lensStrength * 3) {
+        // Push stars outward (Einstein ring effect)
+        var nx = dx / dist2d;
+        var ny = dy / dist2d;
+        positions.setXYZ(i, s.ox + nx * deflection, s.oy + ny * deflection, s.oz);
+      } else {
+        positions.setXYZ(i, s.ox, s.oy, s.oz);
+      }
+    }
+    positions.needsUpdate = true;
+  }
+
+  updateBlackHole();
+  updateLensing();
+
+  // Mouse/touch rotation
+  var mouseDown = false, prevX = 0, prevY = 0, rotX = 0.4, rotY = 0;
+  container.addEventListener('mousedown', function(e) { mouseDown = true; prevX = e.clientX; prevY = e.clientY; });
+  window.addEventListener('mouseup', function() { mouseDown = false; });
+  container.addEventListener('mousemove', function(e) {
     if (!mouseDown) return;
-    scene.rotation.y += (e.clientX - prevX)*0.005;
+    rotY += (e.clientX - prevX) * 0.005;
+    rotX += (e.clientY - prevY) * 0.005;
+    rotX = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, rotX));
     prevX = e.clientX; prevY = e.clientY;
   });
-  container.addEventListener('touchstart', e => { prevX = e.touches[0].clientX; });
-  container.addEventListener('touchmove', e => { scene.rotation.y += (e.touches[0].clientX - prevX)*0.005; prevX = e.touches[0].clientX; });
+  container.addEventListener('touchstart', function(e) { prevX = e.touches[0].clientX; prevY = e.touches[0].clientY; });
+  container.addEventListener('touchmove', function(e) {
+    rotY += (e.touches[0].clientX - prevX) * 0.005;
+    rotX += (e.touches[0].clientY - prevY) * 0.005;
+    rotX = Math.max(-Math.PI/2, Math.min(Math.PI/2, rotX));
+    prevX = e.touches[0].clientX; prevY = e.touches[0].clientY;
+  });
 
   function animate() {
     requestAnimationFrame(animate);
-    planets.forEach(p => { p.angle += p.speed; p.mesh.position.set(Math.cos(p.angle)*p.orbit, 0, Math.sin(p.angle)*p.orbit); });
-    sun.rotation.y += 0.003;
+    var t = Date.now() * 0.001;
+    var scale = bhMass / 10.0;
+
+    // Update accretion disk
+    var pos = diskGeo.attributes.position;
+    for (var i = 0; i < DISK_PARTICLES; i++) {
+      var d = diskData[i];
+      d.angle += d.speed * accretionRate;
+      var r = d.r * scale;
+      pos.setXYZ(i,
+        Math.cos(d.angle) * r,
+        d.y * scale,
+        Math.sin(d.angle) * r
+      );
+    }
+    pos.needsUpdate = true;
+
+    // Glow pulsation
+    var pulse = 1.0 + Math.sin(t * 2) * 0.05;
+    glowMat.opacity = 0.06 + Math.sin(t * 3) * 0.03;
+    glowSphere.scale.set(scale * 1.5 * pulse, scale * 1.5 * pulse, scale * 1.5 * pulse);
+
+    // Update lensing on mass change
+    updateLensing();
+
+    // Camera
+    var angleRad = viewAngle * Math.PI / 180;
+    var dist = 18;
+    camera.position.x = dist * Math.sin(rotY) * Math.cos(rotX);
+    camera.position.y = dist * Math.sin(angleRad) + dist * Math.sin(rotX) * 0.5;
+    camera.position.z = dist * Math.cos(rotY) * Math.cos(rotX);
+    camera.lookAt(0, 0, 0);
+
     renderer.render(scene, camera);
   }
   animate();
-  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+
+  window.addEventListener('resize', function() {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
 })();
 </script>
 </body>

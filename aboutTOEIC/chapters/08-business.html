@@ -2,11 +2,13 @@
 <title>8. 비즈니스 영어 — aboutTOEIC</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">📝 표지</a></li><li><a href="chapters/01-listening-part1.html">1. LC Part 1-2</a></li><li><a href="chapters/02-listening-part3.html">2. LC Part 3-4</a></li><li><a href="chapters/03-grammar.html">3. RC 문법</a></li><li><a href="chapters/04-vocabulary.html">4. 핵심 어휘</a></li><li><a href="chapters/05-reading-part5.html">5. RC Part 5-6</a></li><li><a href="chapters/06-reading-part7.html">6. RC Part 7</a></li><li><a href="chapters/07-strategies.html">7. 시험 전략</a></li><li><a href="chapters/08-business.html">8. 비즈니스 영어</a></li><li><a href="chapters/09-practice.html">9. 실전 모의고사</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">📝 표지</a></li><li><a href="01-listening-part1.html">1. LC Part 1-2</a></li><li><a href="02-listening-part3.html">2. LC Part 3-4</a></li><li><a href="03-grammar.html">3. RC 문법</a></li><li><a href="04-vocabulary.html">4. 핵심 어휘</a></li><li><a href="05-reading-part5.html">5. RC Part 5-6</a></li><li><a href="06-reading-part7.html">6. RC Part 7</a></li><li><a href="07-strategies.html">7. 시험 전략</a></li><li><a href="08-business.html">8. 비즈니스 영어</a></li><li><a href="09-practice.html">9. 실전 모의고사</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>비즈니스 영어</em></h1><p class="authors">Chapter 8 — Business English Expressions</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 이메일·회의·전화 등 비즈니스 소통 채널의 허브 구조</span>
 <h2>비즈니스 영어</h2><p>Business English Expressions의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Business English Expressions</p></div>
 
@@ -105,5 +107,24 @@
 
   <div class="success-box"><strong>🎓 만점 도전:</strong> 비즈니스 관용 표현 200개 + 산업별 전문 어휘 300개를 마스터한 학습자는 토익뿐 아니라 외국계 회사 인터뷰·컨설팅 영어·MBA 진학 영어까지 동시 정복 가능합니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f59e0b","questions":[{"q":"토익 문제의 영어 유형은?","choices":["일상 영어","학술 영어","문학 영어","비즈니스 영어"],"answer":3},{"q":"이메일 첫 문장 빈출 표현은?","choices":["Best regards","I'm writing to","Sincerely","See you soon"],"answer":1},{"q":"정중한 요청 표현은?","choices":["Could you please","Tell me","I want","Hey you"],"answer":0},{"q":"\"circle back\"의 뜻은?","choices":["즉시 해결하다","취소하다","다시 논의하다","둥글게 모이다"],"answer":2},{"q":"\"in the black\"의 뜻은?","choices":["적자","파산","합병","흑자"],"answer":3}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // A central business hub (the office) with 5 communication-channel nodes around it (email, meeting, call, presentation, contract); message packets travel inward along each channel
+  const office=new THREE.Mesh(new THREE.BoxGeometry(1.1,1.1,1.1),new THREE.MeshBasicMaterial({color:0x60a5fa,wireframe:true}));s.add(office);
+  const chN=5;const channels=[];const chCol=[0xfbbf24,0xf472b6,0x34d399,0xa78bfa,0xf87171];for(let i=0;i<chN;i++){const ang=i/chN*Math.PI*2;const x=Math.cos(ang)*3.2,y=Math.sin(ang)*3.2;const node=new THREE.Mesh(new THREE.CylinderGeometry(0.4,0.4,0.5,6),new THREE.MeshBasicMaterial({color:chCol[i]}));node.position.set(x,y,0);node.rotation.x=Math.PI/2;s.add(node);const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(x,y,0)]),new THREE.LineBasicMaterial({color:chCol[i],transparent:true,opacity:0.45}));s.add(ln);const pkt=new THREE.Mesh(new THREE.SphereGeometry(0.16,12,12),new THREE.MeshBasicMaterial({color:chCol[i]}));s.add(pkt);channels.push({x:x,y:y,pkt:pkt,phase:i*0.6});}
+  s.userData.office=office;s.userData.channels=channels;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.office.rotation.y+=0.01;s.userData.office.rotation.x+=0.006;s.userData.channels.forEach(ch=>{const f=((Math.sin(T+ch.phase)+1)/2);ch.pkt.position.set(ch.x*(1-f),ch.y*(1-f),0);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

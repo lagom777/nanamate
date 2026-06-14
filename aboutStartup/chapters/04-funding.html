@@ -2,16 +2,18 @@
 <title>4. 투자와 펀딩 — aboutStartup</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">🚀 표지</a></li><li><a href="chapters/01-ideation.html">1. 아이디어 발굴</a></li><li><a href="chapters/02-validation.html">2. 시장 검증</a></li><li><a href="chapters/03-business-model.html">3. 비즈니스 모델</a></li><li><a href="chapters/04-funding.html">4. 투자와 펀딩</a></li><li><a href="chapters/05-product.html">5. 제품 개발</a></li><li><a href="chapters/06-team.html">6. 팀 빌딩</a></li><li><a href="chapters/07-growth.html">7. 성장 전략</a></li><li><a href="chapters/08-legal.html">8. 법인 설립/법률</a></li><li><a href="chapters/09-exit.html">9. 엑싯과 IPO</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🚀 표지</a></li><li><a href="01-ideation.html">1. 아이디어 발굴</a></li><li><a href="02-validation.html">2. 시장 검증</a></li><li><a href="03-business-model.html">3. 비즈니스 모델</a></li><li><a href="04-funding.html">4. 투자와 펀딩</a></li><li><a href="05-product.html">5. 제품 개발</a></li><li><a href="06-team.html">6. 팀 빌딩</a></li><li><a href="07-growth.html">7. 성장 전략</a></li><li><a href="08-legal.html">8. 법인 설립/법률</a></li><li><a href="09-exit.html">9. 엑싯과 IPO</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>투자와 펀딩</em></h1><p class="authors">Chapter 4 — Fundraising, VC & Bootstrapping</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 시드부터 시리즈로 갈수록 커지는 투자 라운드 계단</span>
 <h2>투자와 펀딩</h2><p>Fundraising, VC & Bootstrapping의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Fundraising, VC & Bootstrapping</p></div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -44,5 +46,21 @@
   <h3>추가 학습 자료</h3><ul><li>"Venture Deals" — Brad Feld, Jason Mendelson</li><li>"Secrets of Sand Hill Road" — Scott Kupor</li><li>YC Startup School · NFX Essays</li></ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 본인 회사의 5년 cap table을 모델링하고, 시드→시리즈C까지 시뮬레이션해 창업자 잔여 지분과 직원 옵션 풀 변화를 계산하세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f97316","questions":[{"q":"런웨이의 뜻은?","choices":["버틸 개월 수","회사 가치","지분율","성장률"],"answer":0},{"q":"1억에 10% 팔면 회사 가치는?","choices":["1억","10억","5억","100억"],"answer":1},{"q":"희석이란?","choices":["매출 감소","현금 감소","지분율 감소","가치 감소"],"answer":2},{"q":"VC 펀드에 자금을 대는 주체는?","choices":["GP","CEO","PM","LP"],"answer":3},{"q":"적정 라운드 사이 간격은?","choices":["18-24개월","3-6개월","5-10년","1-2개월"],"answer":0}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const N=5;const bars=[];for(let i=0;i<N;i++){const h=0.8+i*0.85;const bar=new THREE.Mesh(new THREE.CylinderGeometry(0.32,0.32,h,18),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.33-i*0.05,0.7,0.55)}));bar.position.set((i-(N-1)/2)*1.05,h/2-1.6,0);s.add(bar);const cap=new THREE.Mesh(new THREE.CylinderGeometry(0.36,0.36,0.12,18),new THREE.MeshBasicMaterial({color:0xffdd44}));cap.position.set(bar.position.x,h-1.6+0.06,0);s.add(cap);bars.push({bar,cap,h});}const coins=[];for(let i=0;i<14;i++){const coin=new THREE.Mesh(new THREE.CylinderGeometry(0.16,0.16,0.05,16),new THREE.MeshBasicMaterial({color:0xffcc22}));coin.userData={x:(Math.random()-0.5)*4,off:Math.random()*4};coin.rotation.x=Math.PI/2;s.add(coin);coins.push(coin);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;coins.forEach(co=>{let y=((T*0.7+co.userData.off)%4)-1.8;co.position.set(co.userData.x,y,0.4);co.rotation.z+=0.08;});bars.forEach((b,i)=>{b.cap.position.y=b.h-1.6+0.06+Math.sin(T*1.5+i)*0.05;});s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

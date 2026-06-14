@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1. 신화란 무엇인가 — aboutMythology</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🏛️ 표지</a></li>
+    <li><a href="01-what-is.html">1. 신화란 무엇인가</a></li>
+    <li><a href="02-creation.html">2. 창조 신화</a></li>
+    <li><a href="03-olympians.html">3. 올림포스 12신</a></li>
+    <li><a href="04-heroes.html">4. 영웅 신화</a></li>
+    <li><a href="05-trojan-war.html">5. 트로이 전쟁</a></li>
+    <li><a href="06-odyssey.html">6. 오디세이아의 귀환</a></li>
+    <li><a href="07-metamorphoses.html">7. 사랑과 변신</a></li>
+    <li><a href="08-underworld.html">8. 저승과 운명</a></li>
+    <li><a href="09-legacy.html">9. 신화의 유산</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>신화란 무엇인가</em></h1>
+  <p class="authors">Chapter 1 — What Is Myth</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 별자리처럼 이어진 신화의 이야기 그물 — 회전시켜 보세요</span>
+
+<h2>신화란 무엇인가 개요</h2>
+<p>신화(神話, myth)는 한 공동체가 세계와 자연의 기원, 신과 인간의 관계, 삶과 죽음의 의미를 이야기의 형식으로 설명하고 전승해 온 서사다. 단순한 거짓말이나 옛이야기가 아니라, 그 사회가 무엇을 신성하게 여기고 어떤 가치를 옳다고 믿는지를 압축해 담은 문화의 거울이다. 그리스-로마 신화는 호메로스와 헤시오도스, 오비디우스의 손을 거치며 문자로 정착했고, 이후 서양 문학과 예술의 공통 언어가 되었다.</p>
+<div class="info-card">
+  <h4>핵심 한눈에</h4>
+  <p>신화는 세계와 자연을 설명하고(설명 기능), 공동체의 가치와 정체성을 전달하며(사회 기능), 인간 경험을 상징으로 응축한다. 그리스-로마 신화는 호메로스의 『일리아스』·『오디세이아』, 헤시오도스의 『신통기』·『일과 날』, 오비디우스의 『변신 이야기』, 베르길리우스의 『아이네이스』 같은 고전 문헌을 통해 전해지며, 두 문화의 신들은 제우스=유피테르처럼 서로 대응한다.</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>신화는 옛사람들이 "세상은 왜 이런 모습일까?"라는 큰 질문에 이야기로 답한, 공동체가 함께 믿고 전해 온 신성한 서사다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>과학이 없던 시대에도 사람들은 해가 뜨고 지는 까닭, 계절이 바뀌는 이유, 사람이 죽으면 어디로 가는지를 알고 싶어 했다. 신화는 이런 의문에 신들의 이야기로 답하며 세계를 이해 가능한 곳으로 만들어 주었다. 동시에 신화는 "무엇이 옳고 무엇이 금지인가"를 가르치며 공동체의 가치와 정체성을 다음 세대로 전달했다. 그리스-로마 신화는 단지 옛이야기로 그치지 않고, 셰익스피어부터 오늘날의 영화·게임까지 서양 문화 전체에 깊이 스며 있다. 그래서 신화를 알면 수많은 작품과 표현의 뿌리가 한눈에 보인다. 신화를 배우는 것은 곧 인류가 오랫동안 세계를 설명해 온 방식을 배우는 일이다.</p>
+
+<div class="info-card">
+  <h4>🌱 핵심 용어</h4>
+  <ul>
+    <li><strong>신화(myth)</strong>: 세계와 신, 인간의 기원을 설명하며 공동체가 신성하게 여기고 전승하는 이야기.</li>
+    <li><strong>전설(legend)</strong>: 실제 인물이나 사건에서 출발해 과장·각색된 이야기로, 신화보다 역사에 가깝다고 본다.</li>
+    <li><strong>판테온(pantheon)</strong>: 한 문화가 섬기는 신들의 전체 집합. 그리스의 올림포스 신들이 대표적이다.</li>
+    <li><strong>음유시인(吟遊詩人)</strong>: 신화와 영웅 이야기를 노래로 외워 공연하며 전한 고대의 이야기꾼.</li>
+    <li><strong>변신(metamorphosis)</strong>: 신이나 인간이 동물·식물·별 등으로 모습을 바꾸는 신화의 단골 주제.</li>
+  </ul>
+</div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>신화는 한 사회의 '운영체제'에 비유할 수 있다. 컴퓨터가 운영체제 위에서 돌아가듯, 옛 공동체는 신화라는 공통의 이야기 위에서 세계관을 공유했다. 천둥이 치면 "제우스가 화가 났다"고 이해하고, 누군가 오만하게 굴면 "신의 벌을 받을 것"이라며 겸손을 가르쳤다. 이렇게 신화는 자연 현상의 설명서이자 사회의 도덕 교과서 역할을 동시에 했다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 신화를 '사실이냐 거짓이냐'로 따지기보다 '이 이야기는 무엇을 설명하고, 무엇을 가르치려 하는가'를 물으면 훨씬 깊이 이해된다.</div>
+
+<h3>한 페이지 요약</h3>
+<ul>
+  <li>신화는 세계·자연의 기원과 신과 인간의 관계를 이야기로 설명하는 신성한 서사다.</li>
+  <li>신화는 세계를 설명하는 동시에 공동체의 가치와 정체성을 전달한다.</li>
+  <li>전설은 역사에 가깝고, 신화는 신성한 기원과 의미를 다룬다는 점에서 구별된다.</li>
+  <li>그리스-로마 신화는 호메로스·헤시오도스·오비디우스 등을 통해 문자로 전해졌다.</li>
+  <li>신화를 알면 서양 문학·예술·일상 표현의 숨은 뿌리를 읽어 낼 수 있다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>학자들은 신화의 정의를 한 줄로 못 박기보다, 신화가 수행하는 '기능'으로 그 본질에 접근해 왔다. 첫째는 설명 기능이다. 신화는 천체의 운행, 계절의 순환, 인간의 죽음 같은 거대한 현상에 기원 이야기를 부여해 세계를 이해 가능하게 만든다. 둘째는 사회 기능이다. 신화는 무엇이 신성하고 무엇이 금기인지를 규정하며 공동체의 가치와 정체성을 결속한다. 셋째는 심리·상징 기능으로, 사랑과 분노, 질투와 운명 같은 보편적 인간 경험을 신들의 드라마로 형상화한다. 그리스인들은 이런 이야기를 구전으로 노래하다가 점차 문자로 정착시켰다. 호메로스의 『일리아스』와 『오디세이아』가 영웅 서사의 기둥을 세웠고, 헤시오도스의 『신통기』는 신들의 계보를, 『일과 날』은 인간의 노동과 정의를 다루었다. 로마인들은 그리스 신화를 받아들여 자신들의 신과 동일시했고, 오비디우스와 베르길리우스가 이를 라틴 문학의 정점으로 끌어올렸다. 이렇게 신화는 구전에서 기록으로, 그리스에서 로마로 이어지며 변형되고 재해석되었다.</p>
+
+<h3>핵심 메커니즘</h3>
+<div class="info-card">
+  <h4>📐 신화의 세 가지 기능</h4>
+  <p>설명 기능(세계·자연의 기원을 서사로 풀이), 사회 기능(가치·규범·정체성의 전승), 상징 기능(보편적 인간 경험의 형상화)이 맞물려 작동한다. 같은 신화라도 어느 기능에 주목하느냐에 따라 전혀 다른 의미가 드러나며, 한 이야기가 동시에 여러 기능을 수행하는 경우가 많다.</p>
+</div>
+
+<h3>대표 사례</h3>
+<div class="info-card">
+  <h4>📐 사례 1 — 호메로스와 헤시오도스</h4>
+  <p>『일리아스』는 트로이 전쟁의 한 장면을 통해 명예와 분노, 운명을 노래하고, 『오디세이아』는 귀향의 여정에서 지혜와 인내를 그린다. 헤시오도스의 『신통기』는 카오스에서 시작해 가이아·우라노스·크로노스를 거쳐 제우스에 이르는 신들의 계보를 정리하여, 흩어진 신화를 하나의 질서로 엮어 냈다.</p>
+</div>
+<div class="info-card">
+  <h4>📐 사례 2 — 그리스 신과 로마 신의 대응</h4>
+  <p>로마는 그리스 신을 자신들의 신과 동일시했다. 제우스=유피테르, 헤라=유노, 아테나=미네르바, 아프로디테=베누스, 포세이돈=넵투누스, 아레스=마르스 등으로 대응한다. 이름만 바뀐 것이 아니라, 로마의 사회적 맥락 속에서 신의 성격과 숭배 방식도 조금씩 달라졌다.</p>
+</div>
+
+<h3>현대적 전개</h3>
+<p>오비디우스의 『변신 이야기』는 천지창조부터 카이사르의 시대까지 수많은 변신 신화를 하나의 거대한 흐름으로 엮어, 후대 유럽 문학과 미술에 이야기의 보물창고가 되었다. 베르길리우스의 『아이네이스』는 트로이 영웅 아이네아스가 로마 건국의 시조가 되는 과정을 그려, 신화를 로마의 정체성과 결합시켰다. 이렇게 신화는 단순한 옛이야기가 아니라, 정치적 정당성과 문화적 자부심을 담는 그릇으로 끊임없이 재활용되었다.</p>
+
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> "신화는 그저 미신이거나 꾸며 낸 거짓말"이라는 생각은 절반의 진실이다. 신화는 문자 그대로의 사실 보도가 아니라, 한 공동체가 세계를 이해하고 가치를 전하려 한 상징적 진실의 언어로 보는 편이 더 적절하다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>신화 연구는 하나의 이론으로 통일되지 않고, 여러 해석 틀이 서로 경쟁하며 발전해 왔다. 19세기에는 신화를 자연 현상(특히 태양과 새벽)의 알레고리로 읽는 자연신화학파가 유력했으나, 지나친 환원이라는 비판을 받았다. 20세기 들어 말리노프스키는 신화를 사회 제도와 관습을 정당화하는 '헌장(charter)'으로 보는 기능주의적 시각을 제시했다. 반면 레비스트로스는 신화를 인간 정신이 모순을 다루는 구조적 언어로 분석하며, 표면 줄거리가 아니라 대립항의 배열에 주목했다. 한편 엘리아데는 신화를 '성스러운 시간'으로의 회귀를 가능케 하는 종교적 서사로 해석했고, 융 계열에서는 신화 속 인물을 인류 공통의 원형으로 읽었다. 텍스트 비평의 관점에서 보면, 호메로스 서사시는 오랜 구전 전통이 정리된 결과이며 '호메로스 문제'는 그 작자와 형성 과정을 둘러싼 오랜 논쟁이다. 이처럼 신화는 어느 한 렌즈로 다 설명되지 않으며, 여러 관점을 교차시킬 때 비로소 입체적으로 드러난다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>오늘날 신화학은 단일 문화를 넘어 비교신화학과 디지털 인문학으로 확장되고 있다. 여러 문화의 창조 신화와 홍수 신화를 데이터로 비교해 전파와 독립 발생을 가늠하려는 시도가 이어지고, 구전 전통의 형성 과정을 정량적으로 추적하는 연구도 활발하다. 다만 서로 다른 문화의 신화를 단순 대응시켜 '보편 원형'으로 묶는 작업은 맥락을 지운다는 비판을 받으며, 신화가 정치·젠더·권력 구조를 어떻게 반영하고 재생산하는지를 묻는 비판적 독해도 중요한 흐름이다. 신화 해석에는 정답이 하나로 정해져 있지 않으므로, 어떤 이론이든 그 강점과 한계를 함께 살피는 균형 잡힌 태도가 요구된다.</p>
+
+<h3>관련 분야</h3>
+<ul>
+  <li><strong>비교종교학</strong>: 여러 문화의 신화·의례를 비교해 인간의 종교 경험의 공통점과 차이를 탐구한다.</li>
+  <li><strong>문화인류학</strong>: 신화를 사회 구조·친족·권력과 연결해 그 기능과 의미를 해석한다.</li>
+  <li><strong>고전문헌학</strong>: 호메로스·헤시오도스·오비디우스 등 원전의 언어와 전승 과정을 정밀하게 분석한다.</li>
+</ul>
+
+<h3>더 읽을거리</h3>
+<ul>
+  <li>"일리아스" — 호메로스</li>
+  <li>"신통기" — 헤시오도스</li>
+  <li>"변신 이야기" — 오비디우스</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 그리스-로마 신 대응표(제우스=유피테르 등)를 다섯 쌍 이상 정리한 뒤, 그중 한 쌍을 골라 같은 신이 그리스와 로마에서 어떻게 다르게 숭배되었는지 한 문단으로 비교해 보자.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#e0b341","questions":[{"q":"『신통기』를 쓴 작가는?","choices":["호메로스","헤시오도스","오비디우스","베르길리우스"],"answer":1},{"q":"제우스의 로마 이름은?","choices":["마르스","유노","유피테르","미네르바"],"answer":2},{"q":"『변신 이야기』의 작가는?","choices":["오비디우스","호메로스","헤시오도스","베르길리우스"],"answer":0},{"q":"신화의 세 기능이 아닌 것은?","choices":["설명 기능","사회 기능","상징 기능","오락 기능"],"answer":3},{"q":"신화를 '헌장'으로 본 학자는?","choices":["레비스트로스","엘리아데","말리노프스키","융"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // 신화 = 서로 이어진 이야기들의 그물(별자리 네트워크): 노드들을 구면에 배치하고 가까운 노드끼리 선으로 연결
+  const N=14, nodes=[], pos=[];
+  for(let i=0;i<N;i++){const ph=Math.acos(1-2*(i+0.5)/N), th=Math.PI*(1+Math.sqrt(5))*i; const x=3*Math.sin(ph)*Math.cos(th), y=3*Math.cos(ph), z=3*Math.sin(ph)*Math.sin(th); pos.push(new THREE.Vector3(x,y,z)); const col=new THREE.Color().setHSL(0.11,0.7,0.55); const node=new THREE.Mesh(new THREE.IcosahedronGeometry(0.26,0),new THREE.MeshBasicMaterial({color:col})); node.position.set(x,y,z); s.add(node); nodes.push(node);}
+  for(let i=0;i<N;i++){for(let j=i+1;j<N;j++){if(pos[i].distanceTo(pos[j])<3.6){const lc=new THREE.Color().setHSL(0.11,0.6,0.5); s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([pos[i],pos[j]]),new THREE.LineBasicMaterial({color:lc,transparent:true,opacity:0.35})));}}}
+  s.userData.nodes=nodes;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.nodes.forEach((m,i)=>{m.scale.setScalar(0.8+0.35*Math.sin(T*2+i));m.rotation.y+=0.01;});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

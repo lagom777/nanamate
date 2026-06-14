@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 보라 그림자를 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 신경 회로 — 뇌 영역들의 연결과 작동</span>
 
 <h2>신경 메커니즘 개요</h2>
 <p>공포는 뇌 깊숙한 곳의 세 영역 — 편도체, 전전두피질, 해마 — 가 만드는 정교한 협주곡이다. 편도체가 알람을 울리고, 해마가 맥락을 더하고, 전전두피질이 멈춰야 할지 판단한다. 이 세 회로의 협력과 불협이 공포 장애의 전체 스펙트럼을 만든다.</p>
@@ -74,5 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 공포 학습-멸절 회로도를 손으로 그려보자 — 시상·LA·CeA·vmPFC·해마·PAG·시상하부의 연결과 흥분/억제 방향을 표시해야 한다.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#8b5cf6","questions":[{"q":"공포 반응을 억제하는 브레이크 영역은?","choices":["편도체","vmPFC","PAG","시상"],"answer":1},{"q":"사건의 시공간 맥락을 기억하는 구조는?","choices":["소뇌","뇌하수체","해마","편도체"],"answer":2},{"q":"공포 위에 안전 학습을 쌓는 과정은?","choices":["멸절","강화","일반화","응고"],"answer":0},{"q":"노출 전 투여해 멸절을 강화하는 약은?","choices":["카페인","벤조","D-cycloserine","아스피린"],"answer":2},{"q":"공포 기억 재응고를 차단하는 약은?","choices":["인슐린","멜라토닌","도파민","propranolol"],"answer":3}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0x8b5cf6;const parts=[];for(let i=0;i<30;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0x8b5cf6;const brain=new THREE.Mesh(new THREE.SphereGeometry(2.0,20,16),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.35}));s.add(brain);const reg=[];const pts=[[-0.8,-0.3,0.6],[0.8,-0.3,0.6],[0,0.7,-0.4],[0,-0.9,-0.2]];pts.forEach(p=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.26,16,16),new THREE.MeshBasicMaterial({color:0xffe08a}));m.position.set(p[0]*1.5,p[1]*1.5,p[2]*1.5);s.add(m);reg.push(m);});for(let i=0;i<reg.length;i++)for(let j=i+1;j<reg.length;j++)s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([reg[i].position,reg[j].position]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.3})));
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;brain.rotation.y+=0.004;reg.forEach((m,i)=>m.scale.setScalar(0.8+0.3*Math.sin(T*3+i)));s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 황금 보상 입자를 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 일상 — 하루 속 감정의 흐름</span>
 
 <h2>일상에서 다루기 개요</h2>
 <p>기쁨은 행운이 아니라 기술이다. 의도적 습관·환경 설계가 운에 의존하지 않는 안정적 기쁨을 만든다. 감사·운동·햇빛·친절·사회적 접촉이라는 다섯 가지가 가장 잘 연구된 일상 도구다. 작은 행동 변화 하나가 신경전달물질의 흐름을 바꾼다.</p>
@@ -74,5 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 4주간 매일 "savoring 한 가지"를 기록하고 주말마다 회고해 어떤 항목이 가장 큰 정서적 흔적을 남겼는지 분석해보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#fde047","questions":[{"q":"일상 습관이 결정하는 기저 행복은 약 몇 %?","choices":["10%","40%","70%","90%"],"answer":1},{"q":"아침 햇빛이 정상화하는 것은?","choices":["혈당","세로토닌 사이클","근육량","시력"],"answer":1},{"q":"좋은 순간을 의식적으로 음미하는 기술은?","choices":["Savoring","Nudge","Flow","BA"],"answer":0},{"q":"Lyubomirsky 분석에서 유전 비율은?","choices":["10%","40%","50%","90%"],"answer":2},{"q":"Three Good Things 개입 제안자는?","choices":["Bryant","Lyubomirsky","Craske","Seligman"],"answer":3}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0xfde047;const parts=[];for(let i=0;i<40;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xfde047;const ring=new THREE.Mesh(new THREE.TorusGeometry(2.6,0.05,10,72),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.5}));ring.rotation.x=Math.PI/2;s.add(ring);for(let i=0;i<12;i++){const t=i/12*Math.PI*2;const tick=new THREE.Mesh(new THREE.BoxGeometry(0.08,0.08,0.3),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.6}));tick.position.set(Math.cos(t)*2.6,0,Math.sin(t)*2.6);tick.lookAt(0,0,0);s.add(tick);}const sun=new THREE.Mesh(new THREE.SphereGeometry(0.3,16,16),new THREE.MeshBasicMaterial({color:0xffe08a}));s.add(sun);s.userData.sun=sun;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const t=T*0.5;s.userData.sun.position.set(Math.cos(t)*2.6,0,Math.sin(t)*2.6);s.rotation.y+=0.0008;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8장. 사고 대응과 포렌식</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔐 표지 · 소개</a></li>
+    <li><a href="01-basics.html">1. 보안 기초와 위협 모델</a></li>
+    <li><a href="02-crypto.html">2. 암호학 입문</a></li>
+    <li><a href="03-network.html">3. 네트워크 보안</a></li>
+    <li><a href="04-web-vulns.html">4. 웹 취약점 (OWASP Top 10)</a></li>
+    <li><a href="05-auth.html">5. 인증과 권한</a></li>
+    <li><a href="06-system.html">6. 시스템·엔드포인트 보안</a></li>
+    <li><a href="07-pentest.html">7. 침투테스트와 레드팀</a></li>
+    <li><a href="08-incident.html">8. 사고 대응과 포렌식</a></li>
+    <li><a href="09-governance.html">9. 거버넌스·컴플라이언스</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. 사고 대응이 필요한 이유</h2>
+<p>아무리 잘 방어해도 보안 사고는 일어납니다. 2024년 IBM Cost of a Data Breach 보고서는 평균 침해 비용을 $4.88M, 평균 식별·억제 시간을 277일로 보고합니다. <strong>사고 대응(Incident Response, IR)</strong>은 일이 터졌을 때 피해를 최소화하고 빠르게 정상화하기 위한 사전 정의된 프로세스입니다.</p>
+<p>IR의 핵심 가치는 "준비된 조직과 안 준비된 조직"의 차이를 만드는 것입니다. 같은 침해라도 IR 플레이북·연락망·법적 자문이 미리 준비된 조직은 시간당 손실을 1/10까지 줄일 수 있고, 사후 규제 대응에서도 큰 차이가 납니다. NIST SP 800-61(Computer Security Incident Handling Guide)과 SANS의 PICERL 모델이 사실상의 표준 프레임워크입니다.</p>
+</section>
+
+<!-- 3D 학습 시각화: PICERL 사고 대응 사이클 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 사고 대응: 봉쇄가 핵심인 6단계</div>
+  <div id="sec3d-08" style="width:100%;height:430px;"></div>
+  <div id="sec3d-08-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">랜섬웨어 사고가 수습되는 전 과정.</div>
+</div>
+
+
+<section id="sec2">
+<h2>2. PICERL — 사고 대응 6단계</h2>
+<p>SANS가 정립한 <strong>PICERL</strong>은 ① <strong>Preparation</strong>(준비) — 플레이북, 도구, 권한, 연락망, ② <strong>Identification</strong>(식별) — 알람 트리아지, IoC 매칭, 정상/사고 구분, ③ <strong>Containment</strong>(격리) — 단기(네트워크 차단)와 장기(이미지 재생성), ④ <strong>Eradication</strong>(제거) — 멀웨어 제거, 백도어 차단, 자격증명 회수, ⑤ <strong>Recovery</strong>(복구) — 단계적 서비스 복귀, 모니터링 강화, ⑥ <strong>Lessons Learned</strong>(교훈) — 사후 회의, 통제 개선, 플레이북 갱신.</p>
+<p>가장 자주 실수하는 단계는 ③ 격리와 ⑥ 교훈입니다. ③은 너무 일찍 격리하면 공격자에게 발각된 사실을 알려 데이터 파괴를 유발하고, 너무 늦으면 피해가 확산됩니다. ⑥은 사고가 끝나면 "안도감"으로 분석을 미루는 인간 본성과 싸워야 합니다. blameless postmortem 문화가 핵심입니다.</p>
+</section>
+
+<section id="sec3">
+<h2>3. 디지털 포렌식의 원칙과 흐름</h2>
+<p>디지털 포렌식은 사고의 "무엇이 일어났는가"를 법적·기술적으로 검증 가능하게 재구성하는 학문입니다. 4대 원칙은 ① <strong>증거 보존</strong>(원본 변경 금지), ② <strong>연속성(Chain of Custody)</strong>, ③ <strong>재현성</strong>, ④ <strong>전문성·중립성</strong>입니다. 법정 증거로 인정받으려면 모든 단계가 문서화되어야 합니다.</p>
+<p>표준 흐름은 ① <strong>수집(Acquisition)</strong> — write blocker로 디스크 비트 단위 복제(dd, FTK Imager), 메모리 덤프(WinPmem, AVML), ② <strong>보존(Preservation)</strong> — SHA-256 해시로 무결성 봉인, ③ <strong>분석(Examination)</strong> — Autopsy/EnCase/X-Ways로 파일시스템·아티팩트 분석, Volatility로 메모리, Plaso로 타임라인, ④ <strong>보고(Presentation)</strong> — 비전문가도 이해 가능한 서술 + 기술 부록입니다.</p>
+</section>
+
+<section id="sec4">
+<h2>4. 휘발성 순서와 메모리 포렌식</h2>
+<p>증거의 휘발성 순서(Order of Volatility, RFC 3227)는 ① CPU 레지스터·캐시 → ② RAM → ③ 네트워크 연결·라우팅 → ④ 디스크 → ⑤ 원격 로그 → ⑥ 미디어 백업 → ⑦ 물리 구성 순입니다. 휘발성이 높을수록 먼저 수집해야 합니다. 시스템을 무작정 끄면 메모리만 알 수 있는 결정적 증거(C2 연결, 복호화 키, fileless payload)가 사라집니다.</p>
+<p>메모리 포렌식의 가치는 막대합니다. ① 실행 중 프로세스와 부모-자식 트리(<code>pslist/pstree</code>), ② 숨겨진 프로세스(<code>psxview</code>), ③ 코드 인젝션 탐지(<code>malfind</code>), ④ 네트워크 연결(<code>netscan</code>), ⑤ 로그된 사용자(<code>hashdump</code>), ⑥ 사용자가 입력한 명령 이력(<code>cmdline/consoles</code>). Volatility 3, MemProcFS는 사실상의 표준 도구입니다.</p>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="07-pentest.html" style="text-decoration:none;">← 7. 침투테스트와 레드팀</a><a href="09-governance.html" style="text-decoration:none;">9. 거버넌스·컴플라이언스 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>사고 대응은 "해킹이 터졌을 때 119처럼 출동하는 절차"이고, 포렌식은 "범죄 현장 감식처럼 컴퓨터 안 흔적으로 무슨 일이 있었는지 재구성"하는 일이에요. 두 가지가 짝이 되어, 사고를 빨리 끊고 같은 일이 다시 안 일어나게 만듭니다.</p>
+  <h3>왜 중요한가?</h3>
+  <p>① 카드회사가 침해됐다는 뉴스가 나오면, 사실 그 회사는 IR팀이 가동 중이에요. ② 영화 'CSI'의 감식 같은 게 진짜 컴퓨터에도 있고요. ③ 개인적으로도 랜섬웨어 걸렸을 때 패닉으로 PC를 끄면 메모리만 알 수 있던 복호화 키가 날아갑니다. 즉 "끌까 말까"부터가 사고 대응의 첫 결정이에요.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>IR(Incident Response)</strong>: 사고 대응 — 침해가 일어났을 때 따라야 하는 정해진 순서</li>
+    <li><strong>플레이북(Playbook)</strong>: 시나리오별 대응 매뉴얼 — 랜섬웨어, 피싱, DDoS 등 미리 작성</li>
+    <li><strong>IoC(Indicator of Compromise)</strong>: 침해의 흔적 — 악성 IP, 파일 해시, 도메인 등</li>
+    <li><strong>포렌식</strong>: 컴퓨터에 남은 흔적을 분석해 사건 재구성</li>
+    <li><strong>Chain of Custody</strong>: 증거 인수인계 기록 — 법정 인정의 핵심</li>
+    <li><strong>휘발성 순서</strong>: 빨리 사라지는 것부터 수집 — 메모리 먼저, 디스크 나중</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>화재에 비유하면 사고 대응은 ① 화재 감지·신고, ② 대피와 구획화(불이 다른 층으로 안 가게), ③ 진화, ④ 잔불 정리, ⑤ 복구, ⑥ 원인 조사·재발 방지의 6단계입니다. 포렌식은 마지막 단계의 원인 조사예요 — 어디서 어떻게 시작됐는지, 누구의 잘못이 아니라 시스템의 어디가 약했는지를 밝힙니다. blameless 문화가 중요한 이유는, 잘못한 사람을 찾으면 다음 사고 때 사람들이 숨기기 때문이에요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 개인 차원에서도 미니 IR 플레이북을 만들어두세요: ① 의심 시 인터넷부터 끊기(랜선·와이파이 OFF), ② 즉시 끄지 말기(메모리 보존), ③ 비밀번호 전원 변경(다른 깨끗한 기기에서), ④ 백업으로 복원, ⑤ 사후 검토. 이 5단계만 머릿속에 있어도 큰 차이가 납니다.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>사고 대응 = 사고 발생 시 표준 절차 (PICERL 6단계)</li>
+    <li>준비된 조직은 피해를 1/10까지 줄임</li>
+    <li>포렌식 = 디지털 증거 수집·분석으로 사건 재구성</li>
+    <li>증거는 휘발성 순으로 — 메모리부터 보존</li>
+    <li>blameless postmortem이 조직 학습의 핵심</li>
+    <li>NIST SP 800-61이 IR 가이드의 정석</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>현대 IR의 가장 큰 변화는 <strong>SIEM → SOAR → XDR</strong> 자동화 체인입니다. SIEM(Splunk, Elastic, Microsoft Sentinel)이 다중 소스 로그를 상관관계 분석하고, SOAR(Tines, XSOAR, Shuffle)가 정해진 플레이북을 자동 실행합니다. "피싱 의심 메일 신고 → URL/첨부 sandboxing → 동일 메일 받은 전 사용자 식별 → 격리 → 사용자 알림 → 티켓 생성"을 사람 개입 없이 5분 안에 마칠 수 있습니다.</p>
+  <p>로그 정합성과 시간 동기화는 포렌식의 토대입니다. NTP 동기화가 깨진 시스템들의 로그는 타임라인 재구성에서 거의 무용지물이 됩니다. UTC 기준 저장, 호스트별 타임스탬프 보존, monotonic clock 활용, 로그 변조 방지(append-only, WORM, syslog 원격 전송)가 필수입니다. 2024년부터 macOS·Windows는 unified logging으로 통합되었고, 리눅스는 journald + remote shipping이 표준입니다.</p>
+  <h3>핵심 도구 — Volatility로 메모리 분석</h3>
+  <pre><code># 1. 메모리 수집 — WinPmem (Windows) 또는 AVML (Linux)
+winpmem_v3.3.rc3.exe -o memory.raw
+
+# 2. Volatility 3 — 프로세스 트리 / 의심 인젝션
+vol -f memory.raw windows.pslist
+vol -f memory.raw windows.pstree
+vol -f memory.raw windows.malfind
+
+# 3. 네트워크 연결 / 자격증명 / 명령 이력
+vol -f memory.raw windows.netscan
+vol -f memory.raw windows.hashdump
+vol -f memory.raw windows.cmdline
+
+# 4. 파일시스템 타임라인 — Plaso (log2timeline)
+log2timeline.py timeline.plaso /mnt/evidence_image
+psort.py -w timeline.csv timeline.plaso
+# 그 다음 timeline.csv를 Timeline Explorer / Kibana로 시각화</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>🚨 예제 1 — 2017 NotPetya와 Maersk</h4><p>러시아 군정보국이 우크라이나 회계 소프트웨어 M.E.Doc 업데이트를 무기화한 wiper 공격이 전 세계로 확산. Maersk는 4만 5천 대 PC, 4천 대 서버가 마비됐고, 도메인 컨트롤러 154개 중 살아남은 단 1대(가나 지사가 정전으로 꺼져 있었음)로 AD 전체를 복구했습니다. 피해 약 $3억. 교훈: 백업과 복구 계획은 "전 세계 동시 wiper" 시나리오도 가정해야 합니다.</p></div>
+  <div class="info-card"><h4>🚨 예제 2 — 랜섬웨어 IR 표준 흐름</h4><p>① 영향 범위 파악(어느 호스트가 암호화 시작했는가, 횡적 확산은?) → ② 네트워크 분리(VLAN 차단, EDR isolate) → ③ 메모리·디스크 이미지 확보 → ④ 다크웹·KNOWN 그룹 분석(Mandiant/SentinelOne IOC 매칭) → ⑤ 백업 무결성 확인(공격자가 백업을 먼저 지운 경우 多) → ⑥ 단계적 복구 + 자격증명 전수 회수 → ⑦ 외부 신고(KISA, 보험, 규제) → ⑧ post-incident review.</p></div>
+  <h3>응용 사례</h3>
+  <p>① <strong>EDR 기반 IR</strong>: CrowdStrike Real Time Response, Defender Live Response로 원격 cmd·파일수집·격리. ② <strong>Cloud Forensics</strong>: AWS GuardDuty + Detective, Azure Sentinel + Defender for Cloud, GCP SCC. EC2 snapshot으로 즉시 evidence preservation. ③ <strong>Memory-only IR</strong>: Velociraptor, GRR로 대규모 endpoint에서 동시 hunting. ④ <strong>SOAR 플레이북</strong>: Shuffle/Tines 무료 옵션, 자동화로 SOC 분석가 작업 50%+ 절감.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① 사고 의심 시 즉시 종료 → 메모리 증거 손실. ② 자격증명 변경 없이 복구 → 공격자가 즉시 재침투. ③ 백업이 같은 도메인 안에 있어 공격자가 미리 삭제. ④ "감사 로그가 너무 많아 비활성화" → 사고 시 알 수가 없음. ⑤ 외부 노출(언론 발표) 전에 법무·홍보 검토 누락 → 2차 사고. ⑥ post-incident review를 안 함 → 같은 사고 반복.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>현대 DFIR(Digital Forensics &amp; Incident Response)의 패러다임은 <strong>"single endpoint deep dive"</strong>에서 <strong>"fleet-wide hunting"</strong>으로 이동했습니다. Velociraptor(Rapid7 후원, 오픈소스)는 VQL(Velociraptor Query Language)로 수만 대 endpoint에 동시 hunt를 발사하고 결과를 중앙 집계합니다. "현재 모든 호스트에서 Cobalt Strike beacon의 named pipe 패턴이 있는가?"같은 질문을 분 단위로 답할 수 있습니다.</p>
+  <p>위협 사냥(Threat Hunting)은 알람을 기다리지 않고 가설을 세워 능동적으로 IoC와 TTP를 추적하는 활동입니다. 표준 프레임워크는 ① <strong>Sqrrl 사이클</strong>(가설 → 도구·기법 → 발견 → 분석 → 정보화), ② <strong>MITRE ATT&amp;CK 기반 가설</strong>(예: "T1003.001 LSASS dump가 도메인 내에서 발생하고 있는가?"), ③ <strong>Pyramid of Pain</strong>(David Bianco)에 따라 hash/IP보다는 TTP 단위 탐지를 지향합니다.</p>
+  <h3>수학적·정량적 기초</h3>
+  <div class="formula">$$\text{MTTD} + \text{MTTR} = \text{dwell time}, \quad \text{모든 IR KPI의 핵심}$$
+  $$\text{사고 손실: } L = \sum (\text{기간} \times \text{시간당 매출}) + \text{복구비용} + \text{규제 벌금} + \text{평판 손실}$$
+  $$\text{탐지 우선순위 (FAIR): } \text{Risk} = \text{LEF} \times \text{Loss Magnitude}$$</div>
+  <p>Mandiant M-Trends 2024에 따르면 글로벌 평균 dwell time이 10일까지 단축됐지만, 랜섬웨어 그룹의 평균 침입-암호화 간격은 24시간 미만으로 떨어졌습니다. 즉 방어자의 탐지가 빨라진 만큼 공격자도 빨라진 것이고, "탐지→격리까지 60분" 같은 작은 차이가 실질 피해를 결정합니다. SOC SLA의 P1 응답 시간을 15분 → 5분으로 단축하는 운영 투자가 ROI 측면에서 최고 수익을 냅니다.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>LLM-assisted IR</strong>: Microsoft Security Copilot, Google Sec-Gemini, CrowdStrike Charlotte AI가 알람 트리아지·로그 요약·플레이북 추천을 자동화. 2024년 베타·GA가 본격화. ② <strong>eBPF 포렌식</strong>: Tetragon/Aqua/Falco로 컨테이너의 휘발성·짧은 수명 워크로드에서도 syscall 단위 증거 수집. ③ <strong>Sigma Correlation v2</strong>(2024)로 다단계 공격 탐지가 표준화됨. ④ <strong>cloud-native EDR</strong>: SaaS·IaaS의 audit log(CloudTrail, Azure Activity, Workspace Admin)와 endpoint를 연결하는 unified investigation graph. ⑤ <strong>OWASP IR Top 10</strong>(드래프트)은 IR 자체의 실패 패턴을 정리 중.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>운영체제 내부</strong>: 파일시스템 메타데이터(NTFS $MFT, ext4 inode), unified log 구조</li>
+    <li><strong>분산시스템</strong>: 시간 동기화, 분산 로그 정합성, append-only 저장소</li>
+    <li><strong>데이터 분석</strong>: 시계열 anomaly, 그래프 분석, 통계적 베이스라이닝</li>
+    <li><strong>법학</strong>: 디지털 증거능력, GDPR 침해통지 72시간, 개인정보보호법 통지</li>
+    <li><strong>심리학</strong>: blameless postmortem, hindsight bias, just culture</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Anson, <em>Applied Incident Response</em> (2020)</li>
+    <li>📖 Carrier, <em>File System Forensic Analysis</em> (Addison-Wesley)</li>
+    <li>📖 Ligh, <em>The Art of Memory Forensics</em></li>
+    <li>📖 NIST SP 800-61 / SP 800-86 / SANS Incident Handler Handbook</li>
+    <li>📺 SANS FOR508·FOR500, 13Cubed YouTube, DFIR.training</li>
+    <li>🔬 실습: CyberDefenders, DFIR Madness, SANS Holiday Hack, Velociraptor 워크샵</li>
+    <li>🔬 키워드: threat hunting, dwell time, blameless postmortem, SOAR, Sigma correlation</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> CyberDefenders 또는 DFIR Madness의 사례 하나를 골라 ① 메모리·디스크 이미지를 받아 Volatility + Autopsy로 분석, ② 타임라인을 Plaso로 만들기, ③ 발견된 IoC를 Sigma 룰로 변환, ④ Velociraptor에 hunt로 등록해 본인 환경에서 동일 패턴 점검, ⑤ 영문 IR 리포트(executive summary + technical detail) 작성까지 한 사이클로 진행해보세요. SOC L2 분석가 면접 케이스가 그대로 풀립니다.</div>
+</div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#475569","questions":[{"q":"증거 수집 시 가장 먼저 보존할 대상은?","choices":["디스크","백업","RAM(메모리)","로그"],"answer":2},{"q":"침해 흔적(악성 IP·해시)을 뜻하는 말은?","choices":["IoC","KPI","MFA","SLA"],"answer":0},{"q":"SANS의 사고 대응 6단계 모델은?","choices":["STRIDE","PICERL","PDCA","CIA"],"answer":1},{"q":"법정 증거 인수인계 기록을 뜻하는 것은?","choices":["Kill Chain","Playbook","Chain of Custody","Baseline"],"answer":2},{"q":"메모리 포렌식의 표준 도구는?","choices":["Nmap","Burp","Snort","Volatility"],"answer":3}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('sec3d-08');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('sec3d-08-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,2.0,13.5);camera.lookAt(0,0.3,0);
+  var steps=['준비','식별','봉쇄','제거','복구','교훈'];
+  var stepNodes=[];
+  steps.forEach(function(s,i){
+    var a=Math.PI/2-i*(Math.PI*2/6);
+    var p=V(Math.cos(a)*5.6,Math.sin(a)*3.4+0.8,0);
+    var n=sph(0.42,0xe3e8f2,1);n.position.copy(p);scene.add(n);stepNodes.push(n);
+    var L=lbl(s,24,'#39415a',0.95);L.position.set(p.x,p.y+0.85,0);scene.add(L);
+    var a2=Math.PI/2-((i+1)%6)*(Math.PI*2/6);
+    var p2=V(Math.cos(a2)*5.6,Math.sin(a2)*3.4+0.8,0);
+    scene.add(line(p,p2,0xc6cddd,0.5));
+  });
+  var sv=[V(-1.6,0.8,0),V(1.6,1.6,0),V(1.2,-0.6,0)];
+  var sMeshes=[],links=[];
+  sv.forEach(function(p,i){
+    var m=box(1.0,1.3,0.7,0x2f9e63,0.95);m.position.copy(p);scene.add(m);sMeshes.push(m);
+  });
+  links.push(line(sv[0],sv[1],0x5b6bd6,0.8));links.push(line(sv[1],sv[2],0x5b6bd6,0.8));links.push(line(sv[0],sv[2],0x5b6bd6,0.8));
+  links.forEach(function(l){scene.add(l);});
+  var srvL=lbl('사내 서버들',22,'#7c87a3',0.85);srvL.position.set(0,-1.8,0);scene.add(srvL);
+  var spread=sph(0.16,0xd6455b);spread.visible=false;scene.add(spread);
+  var mag=new THREE.Mesh(new THREE.TorusGeometry(0.85,0.06,10,36),mat(0xe07a3f,0));scene.add(mag);
+  var backup=box(0.8,0.8,0.8,0x5b6bd6,0);backup.position.set(-5,-2.6,0);scene.add(backup);
+  var bkL=lbl('백업',20,'#5b6bd6',0);bkL.position.set(-5,-1.8,0);scene.add(bkL);
+  var fbLine=line(stepNodes[5].position,stepNodes[0].position,0x2f9e63,0);scene.add(fbLine);
+  function focus(i){stepNodes.forEach(function(n,k){n.material.color.set(k===i?0xffc83c:0xe3e8f2);n.scale.setScalar(k===i?1.4:1);});}
+  var phases=[
+    {dur:2.5,cap:'PICERL ①준비: 백업·로그·대응 절차를 평시에 갖춥니다. 사고는 "만약"이 아니라 "언제"의 문제.',
+     enter:function(){focus(0);sMeshes.forEach(function(m){m.material.color.set(0x2f9e63);});links.forEach(function(l){l.material.opacity=0.8;});spread.visible=false;mag.material.opacity=0;backup.material.opacity=0.9;bkL.material.opacity=1;fbLine.material.opacity=0;}},
+    {dur:3,cap:'사고 발생 + ②식별: 서버 하나가 랜섬웨어에 감염(빨강). 경보를 보고 "무슨 일이 어디까지"인지 파악합니다.',
+     enter:function(){focus(1);sMeshes[1].material.color.set(0xd6455b);},
+     update:function(u){mag.material.opacity=0.9;mag.position.set(sv[1].x,sv[1].y,0.6);mag.scale.setScalar(1+0.15*Math.sin(u*12));}},
+    {dur:3.5,cap:'③봉쇄(Containment): 감염 서버의 네트워크 선을 끊습니다 — 확산 중이던 멀웨어(빨간 점)가 길을 잃음. 가장 시간이 급한 단계.',
+     enter:function(){focus(2);mag.material.opacity=0;spread.visible=true;},
+     update:function(u){
+       if(u<0.4){spread.position.lerpVectors(sv[1],sv[2],u*2.5);}
+       else{links[1].material.opacity=0.06;links[0].material.opacity=0.06;spread.position.lerpVectors(sv[1],V(sv[1].x+0.5,sv[1].y+0.3,0),0.3);spread.material.opacity=1-(u-0.4);}
+     }},
+    {dur:3,cap:'④제거(Eradication): 멀웨어·백도어·침투 경로를 뿌리뽑습니다. 재감염 경로가 남으면 처음부터 다시.',
+     enter:function(){focus(3);spread.visible=false;},
+     update:function(u){sMeshes[1].material.color.set(Math.sin(u*16)>0?0xe07a3f:0xd6455b);}},
+    {dur:3,cap:'⑤복구(Recovery): 깨끗한 백업(파란 큐브)으로 서비스 재가동 — 연결도 복원. 몸값을 내는 대신 백업이 답인 이유.',
+     enter:function(){focus(4);},
+     update:function(u){
+       backup.position.lerpVectors(V(-5,-2.6,0),sv[1],ez(u));
+       if(u>0.9){sMeshes[1].material.color.set(0x2f9e63);links.forEach(function(l){l.material.opacity=0.8;});}
+     }},
+    {dur:3.5,cap:'⑥교훈(Lessons Learned): "왜 뚫렸나"를 문서화해 준비 단계로 피드백(초록 화살) — 사고 대응은 직선이 아니라 사이클입니다.',
+     enter:function(){focus(5);backup.position.set(-5,-2.6,0);},
+     update:function(u){fbLine.material.opacity=Math.min(0.95,u*2);focus(u>0.7?0:5);}}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

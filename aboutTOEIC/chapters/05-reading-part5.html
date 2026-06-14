@@ -2,11 +2,13 @@
 <title>5. RC Part 5-6 — aboutTOEIC</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">📝 표지</a></li><li><a href="chapters/01-listening-part1.html">1. LC Part 1-2</a></li><li><a href="chapters/02-listening-part3.html">2. LC Part 3-4</a></li><li><a href="chapters/03-grammar.html">3. RC 문법</a></li><li><a href="chapters/04-vocabulary.html">4. 핵심 어휘</a></li><li><a href="chapters/05-reading-part5.html">5. RC Part 5-6</a></li><li><a href="chapters/06-reading-part7.html">6. RC Part 7</a></li><li><a href="chapters/07-strategies.html">7. 시험 전략</a></li><li><a href="chapters/08-business.html">8. 비즈니스 영어</a></li><li><a href="chapters/09-practice.html">9. 실전 모의고사</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">📝 표지</a></li><li><a href="01-listening-part1.html">1. LC Part 1-2</a></li><li><a href="02-listening-part3.html">2. LC Part 3-4</a></li><li><a href="03-grammar.html">3. RC 문법</a></li><li><a href="04-vocabulary.html">4. 핵심 어휘</a></li><li><a href="05-reading-part5.html">5. RC Part 5-6</a></li><li><a href="06-reading-part7.html">6. RC Part 7</a></li><li><a href="07-strategies.html">7. 시험 전략</a></li><li><a href="08-business.html">8. 비즈니스 영어</a></li><li><a href="09-practice.html">9. 실전 모의고사</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>RC Part 5-6</em></h1><p class="authors">Chapter 5 — Incomplete Sentences & Text Completion</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 여러 문장의 빈칸을 순서대로 채워가는 지문 완성 흐름</span>
 <h2>RC Part 5-6</h2><p>Incomplete Sentences & Text Completion의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Incomplete Sentences & Text Completion</p></div>
 
@@ -108,5 +110,25 @@
 
   <div class="success-box"><strong>🎓 만점 도전:</strong> Part 5-6에서 시간 12-13분, 정답률 95% 이상을 안정적으로 유지하면 Part 7 정독 시간이 확보돼 RC 만점(495점)이 현실적 목표가 됩니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f59e0b","questions":[{"q":"Part 5의 문항 수는?","choices":["16문항","25문항","54문항","30문항"],"answer":3},{"q":"Part 6의 총 문항 수는?","choices":["16문항","12문항","30문항","24문항"],"answer":0},{"q":"품사 문제 풀이 요령은?","choices":["문장 전체 해석","빈칸 앞뒤 확인","한국어로 번역","보기 전부 정독"],"answer":1},{"q":"Part 5 목표 풀이 시간은?","choices":["5분","30분","12-15분","50분"],"answer":2},{"q":"\"In view of\"의 뜻은?","choices":["~을 대표하여","~을 대신하여","~을 목적으로","~을 고려하여"],"answer":3}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // Three stacked text rows (a short passage); each row is a sequence of word tiles with periodic blank slots that get filled left-to-right by a sweeping fill marker
+  const rows=3,cols=8;const tiles=[];const gaps=[];for(let rI=0;rI<rows;rI++){for(let i=0;i<cols;i++){const isGap=(i+rI)%4===2;const tw=new THREE.Mesh(new THREE.BoxGeometry(0.62,0.4,0.22),new THREE.MeshBasicMaterial({color:isGap?0xfbbf24:0x60a5fa,wireframe:isGap}));tw.position.set(-3.2+i*0.85,1.4-rI*1.2,0);s.add(tw);tiles.push(tw);if(isGap)gaps.push({m:tw,order:rI*cols+i});}}
+  // baseline under each row
+  for(let rI=0;rI<rows;rI++){const bl=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-3.6,1.15-rI*1.2,0),new THREE.Vector3(3.6,1.15-rI*1.2,0)]),new THREE.LineBasicMaterial({color:0x475569}));s.add(bl);}
+  s.userData.gaps=gaps;s.userData.total=rows*cols;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const sweep=(T*4)%(s.userData.total+6);s.userData.gaps.forEach(g=>{const d=sweep-g.order;const filled=d>0&&d<6;g.m.material.color.setHex(filled?0x34d399:0xfbbf24);g.m.material.wireframe=!filled;g.m.scale.setScalar(filled?1.1:1);});s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

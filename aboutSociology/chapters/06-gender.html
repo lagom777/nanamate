@@ -2,11 +2,13 @@
 <title>6. 젠더와 가족 — aboutSociology</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">👥 표지</a></li><li><a href="chapters/01-intro.html">1. 사회학 개론</a></li><li><a href="chapters/02-culture.html">2. 문화와 사회화</a></li><li><a href="chapters/03-stratification.html">3. 사회 계층</a></li><li><a href="chapters/04-institutions.html">4. 사회 제도</a></li><li><a href="chapters/05-deviance.html">5. 일탈과 범죄</a></li><li><a href="chapters/06-gender.html">6. 젠더와 가족</a></li><li><a href="chapters/07-race.html">7. 인종과 민족</a></li><li><a href="chapters/08-urban.html">8. 도시와 환경</a></li><li><a href="chapters/09-digital.html">9. 디지털 사회</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">👥 표지</a></li><li><a href="01-intro.html">1. 사회학 개론</a></li><li><a href="02-culture.html">2. 문화와 사회화</a></li><li><a href="03-stratification.html">3. 사회 계층</a></li><li><a href="04-institutions.html">4. 사회 제도</a></li><li><a href="05-deviance.html">5. 일탈과 범죄</a></li><li><a href="06-gender.html">6. 젠더와 가족</a></li><li><a href="07-race.html">7. 인종과 민족</a></li><li><a href="08-urban.html">8. 도시와 환경</a></li><li><a href="09-digital.html">9. 디지털 사회</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>젠더와 가족</em></h1><p class="authors">Chapter 6 — Gender, Sexuality & Family</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 서로 얽혀 돌아가는 두 가닥 — 젠더와 가족의 결합 — 회전</span>
 <h2>젠더와 가족</h2><p>Gender, Sexuality & Family의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Gender, Sexuality & Family</p></div>
 
@@ -88,5 +90,22 @@
   </ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 모든 직업과 가사가 완벽히 성중립적으로 분배된다면 사회는 어떻게 변할까? 아이의 양육, 노인의 돌봄, 직장의 권력 구조가 어떻게 재편될지 사고해보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"사회·문화적으로 구성된 성별은?","choices":["섹스","젠더","핵가족","돌봄"],"answer":1},{"q":"남성에 권력이 집중된 구조는?","choices":["모계제","핵가족","가부장제","다문화"],"answer":2},{"q":"부모와 자녀로 구성된 가족은?","choices":["확대 가족","대가족","한부모 가구","핵가족"],"answer":3},{"q":"'제2의 성'을 쓴 사람은?","choices":["보부아르","버틀러","호크실드","코넬"],"answer":0},{"q":"'두 번째 교대' 연구자는?","choices":["크렌쇼","호크실드","파슨스","미드"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const turns=22,beadsA=[],beadsB=[];const colA=new THREE.Color(0xf472b6),colB=new THREE.Color(0x38bdf8);for(let i=0;i<turns;i++){const t=i/turns*Math.PI*4;const y=-3.2+i/turns*6.4;const bA=new THREE.Mesh(new THREE.SphereGeometry(0.22,12,12),new THREE.MeshBasicMaterial({color:colA}));bA.userData.t=t;bA.userData.y=y;s.add(bA);beadsA.push(bA);const bB=new THREE.Mesh(new THREE.SphereGeometry(0.22,12,12),new THREE.MeshBasicMaterial({color:colB}));bB.userData.t=t+Math.PI;bB.userData.y=y;s.add(bB);beadsB.push(bB);if(i%2===0){const rung=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,3.0,6),new THREE.MeshBasicMaterial({color:0xcccccc}));rung.position.y=y;rung.rotation.z=Math.PI/2;rung.userData.t=t;s.add(rung);bA.userData.rung=rung;}}
+  s.userData.beadsA=beadsA;s.userData.beadsB=beadsB;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const R=1.5;s.userData.beadsA.forEach((b)=>{const ang=b.userData.t+T*0.5;b.position.set(Math.cos(ang)*R,b.userData.y,Math.sin(ang)*R);if(b.userData.rung)b.userData.rung.rotation.y=-ang;});s.userData.beadsB.forEach((b)=>{const ang=b.userData.t+T*0.5;b.position.set(Math.cos(ang)*R,b.userData.y,Math.sin(ang)*R);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

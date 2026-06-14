@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -18,169 +20,200 @@
   <ol>
     <li><a href="../index.html">⚗️ 표지 · 소개</a></li>
     <li><a href="01-atomic-structure.html">1. 원자 구조</a></li>
-    <li><a href="02-chemical-bonds.html">2. 화학 결합</a></li>
+    <li><a href="02-chemical-bonding.html">2. 화학 결합</a></li>
     <li><a href="03-chemical-reactions.html">3. 화학 반응</a></li>
-    <li><a href="04-thermochemistry.html">4. 열화학</a></li>
+    <li><a href="04-thermochemistry.html" style="color:var(--accent);font-weight:600;">4. 열화학</a></li>
     <li><a href="05-acid-base.html">5. 산과 염기</a></li>
     <li><a href="06-redox.html">6. 산화 환원</a></li>
     <li><a href="07-organic.html">7. 유기 화학</a></li>
-    <li><a href="08-polymers.html">8. 고분자</a></li>
+    <li><a href="08-polymer.html">8. 고분자</a></li>
     <li><a href="09-biochemistry.html">9. 생화학</a></li>
   </ol>
 </aside>
 <main>
 <header class="paper-header">
-  <h1><em>열화학</em></h1>
-  <p class="authors">Chapter 4 — Thermochemistry & Enthalpy</p>
+  <h1>열화학:<br><em>에너지</em>와 반응</h1>
+  <p class="authors">Chapter 4 — Thermochemistry & Energy Diagrams</p>
+  <p class="affiliation">에너지 다이어그램 · 분자 운동 시뮬레이터</p>
 </header>
 
-<div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
+<h2>열화학이란?</h2>
+<p>열화학은 화학 반응에서 일어나는 에너지 변화를 연구합니다. 반응 중에 열이 방출되거나 흡수되며, 이를 정량적으로 측정하고 예측하는 것이 핵심입니다.</p>
 
-<h2>열화학 개요</h2>
-<p>이 챕터에서는 열화학의 핵심 개념을 3D 시뮬레이션과 함께 학습합니다. 분자 구조를 직접 회전시키고, 반응 과정을 관찰하세요.</p>
+<div class="info-card reaction">
+  <h4>발열 반응 (Exothermic)</h4>
+  <p>열을 방출하는 반응. ΔH &lt; 0. 생성물의 에너지가 반응물보다 낮습니다. 예: 연소, 중화 반응</p>
+</div>
+<div class="info-card bond">
+  <h4>흡열 반응 (Endothermic)</h4>
+  <p>열을 흡수하는 반응. ΔH &gt; 0. 생성물의 에너지가 반응물보다 높습니다. 예: 광합성, 열분해</p>
+</div>
+
+<div class="formula">ΔH = H(생성물) − H(반응물) &nbsp;&nbsp;|&nbsp;&nbsp; q = mcΔT &nbsp;&nbsp;|&nbsp;&nbsp; ΔG = ΔH − TΔS</div>
+
+<h2>3D 에너지 다이어그램 시뮬레이터</h2>
+<p>발열/흡열 반응의 에너지 변화를 3D로 관찰하세요. 활성화 에너지를 조절하고 반응 경로를 따라가 보세요.</p>
+
+<div class="scene-3d" id="energy-scene" style="height:450px;">
+  <div class="scene-controls">
+    <label>반응 유형:</label>
+    <select id="rxn-type">
+      <option value="exo">발열 반응</option>
+      <option value="endo">흡열 반응</option>
+    </select>
+    <label>Ea: <span id="ea-val">60</span></label>
+    <input type="range" id="ea-slider" min="20" max="120" value="60" step="5">
+    <button id="animate-rxn">반응 시작</button>
+  </div>
+</div>
+<span class="interact-hint">⟳ 반응 유형과 활성화 에너지를 변경하여 에너지 프로필 관찰</span>
+
+<h2>헤스의 법칙</h2>
+<p>반응의 총 엔탈피 변화는 반응 경로에 관계없이 일정합니다. 즉 중간 단계를 거치더라도 전체 ΔH는 같습니다.</p>
 
 <div class="info-card">
-  <h4>핵심 개념</h4>
-  <p>Thermochemistry & Enthalpy의 기본 원리와 응용을 다룹니다.</p>
+  <h4>헤스의 법칙 활용</h4>
+  <p>직접 측정이 어려운 반응의 ΔH를 간접적으로 계산할 수 있습니다. 여러 반응식을 더하거나 빼서 목표 반응을 만들면 됩니다.</p>
 </div>
 
-<h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
-<div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
-</div>
+<h2>기체 분자 운동 시뮬레이터</h2>
+<p>온도에 따른 기체 분자의 운동 에너지 변화를 관찰하세요.</p>
 
-<div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
-  <h3>한 줄로 이해하기</h3>
-  <p>열화학은 화학 반응에서 들어오고 나가는 열, 즉 에너지 흐름을 다루는 학문입니다.</p>
-  <h3>왜 중요한가?</h3>
-  <p>열의 흐름을 이해하면 에너지 활용 전반을 설계할 수 있습니다. 첫째, 휴대용 손난로가 따뜻해지는 것은 철이 산소와 만나 발열 반응을 일으키기 때문입니다. 둘째, 냉찜질팩이 시원해지는 것은 질산암모늄이 물에 녹으며 흡열을 하기 때문입니다. 셋째, 자동차 엔진은 휘발유의 연소열을 동력으로 바꾸는 장치입니다.</p>
-  <div class="info-card">
-    <h4>🌱 핵심 용어</h4>
-    <ul>
-      <li><strong>발열 반응</strong>: 열을 내놓는 반응 (ΔH < 0)</li>
-      <li><strong>흡열 반응</strong>: 열을 흡수하는 반응 (ΔH > 0)</li>
-      <li><strong>엔탈피(H)</strong>: 일정 압력에서의 열에너지</li>
-      <li><strong>비열</strong>: 1 g을 1 °C 올리는 데 필요한 열</li>
-    </ul>
+<div class="scene-3d" id="kinetic-scene" style="height:400px;">
+  <div class="scene-controls">
+    <label>온도: <span id="kt-val">300</span>K</label>
+    <input type="range" id="kt-slider" min="100" max="1000" value="300" step="50">
+    <label>분자 수: <span id="kn-val">40</span></label>
+    <input type="range" id="kn-slider" min="10" max="100" value="40" step="10">
   </div>
-  <h3>핵심 개념 풀어쓰기</h3>
-  <p>모든 물질은 자기만의 에너지를 갖고 있습니다. 화학 반응이란 이 에너지의 일부가 다른 형태로 옮겨가는 과정입니다. 반응물의 총 에너지가 생성물보다 크면 차이가 열로 빠져나가 발열 반응이 됩니다. 반대로 생성물이 더 큰 에너지를 가지려면 외부에서 열을 흡수해야 하니 흡열 반응이 됩니다. 이 차이를 엔탈피 변화(ΔH)라고 합니다. 비유하자면, 산 위에서 굴러 떨어지는 돌은 위치 에너지를 운동 에너지로 바꾸어 발열처럼 에너지를 내놓고, 산을 오르려면 외부 힘으로 에너지를 넣어주는 흡열 같은 일을 해야 합니다. 또 같은 양의 열을 받아도 물은 온도가 천천히 오르고 금속은 빨리 오릅니다. 이 차이가 비열이고, 물의 큰 비열 덕분에 지구 기후가 안정적으로 유지됩니다.</p>
-  <div class="study-tip"><strong>💡 학습 TIP:</strong> ΔH의 부호는 '시스템 입장'에서 봅니다. 시스템이 열을 잃으면 -, 얻으면 +. 헷갈리면 손난로(-)와 냉찜질팩(+)을 떠올리세요.</div>
-  <h3>한 페이지 요약</h3>
-  <ul>
-    <li>발열 반응 ΔH<0, 흡열 반응 ΔH>0</li>
-    <li>q = m·c·ΔT 로 열량 계산</li>
-    <li>헤스의 법칙으로 단계별 ΔH 합산 가능</li>
-    <li>물의 큰 비열이 지구 환경을 안정시킴</li>
-  </ul>
+</div>
+<span class="interact-hint">⟳ 온도를 올리면 분자 속도 증가 · 분자 수 조절 가능</span>
+
+<div class="info-card acid">
+  <h4>맥스웰-볼츠만 분포</h4>
+  <p>같은 온도에서도 분자들의 속도는 다양하게 분포합니다. 온도가 높아지면 분포 곡선이 오른쪽으로 이동하고 넓어집니다.</p>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
-  <p>열역학 제1법칙은 ΔU = q + w로 표현되며, 내부 에너지 변화는 시스템에 들어온 열과 시스템에 한 일의 합과 같습니다. 일정 압력에서는 엔탈피 H = U + PV 가 더 편리한 함수이며, ΔH는 일정 압력 반응열입니다. 반응 엔탈피는 표준 생성 엔탈피(ΔH_f°)의 차이로 계산할 수 있고, 헤스의 법칙은 경로에 무관하게 ΔH가 같음을 보여줍니다. 결합 에너지로도 ΔH를 추정할 수 있는데, 끊어진 결합 에너지의 합에서 만들어진 결합 에너지의 합을 뺀 값입니다. 열량계로 측정할 때, 정용 열량계는 ΔU를, 정압 열량계는 ΔH를 측정합니다. 자발성 판단에는 깁스 자유에너지 G = H - TS가 사용됩니다. ΔG < 0이면 자발적이며, 이는 엔트로피 변화도 함께 고려한다는 의미입니다.</p>
-  <h3>핵심 공식과 반응식</h3>
-  <div class="formula">
-    제1법칙: ΔU = q + w<br>
-    엔탈피: ΔH = ΔU + Δ(PV)<br>
-    헤스의 법칙: ΔH_총 = Σ ΔH_단계<br>
-    깁스: ΔG = ΔH - TΔS<br>
-    열량 계산: q = m·c·ΔT
-  </div>
-  <h3>대표 예제</h3>
-  <div class="info-card"><h4>📐 예제 1</h4><p>50 g의 물을 20°C에서 80°C로 올리는 데 필요한 열량은? c=4.18 J/g·°C이므로 q = 50 × 4.18 × 60 = 12,540 J ≈ 12.5 kJ.</p></div>
-  <div class="info-card"><h4>📐 예제 2</h4><p>ΔH=+50 kJ/mol, ΔS=+150 J/mol·K인 반응이 자발적으로 일어나는 최저 온도는? ΔG=0 조건에서 T = ΔH/ΔS = 50,000/150 ≈ 333 K (60°C).</p></div>
-  <h3>응용 사례</h3>
-  <p>발전소의 보일러는 석탄·천연가스의 연소열을 이용해 증기를 만들고 터빈을 돌립니다. 냉장고는 냉매가 증발할 때 흡열을 일으켜 내부를 식힙니다. 인체는 음식물을 산화시켜 ATP의 형태로 화학 에너지를 저장하고, 운동 시 발열로 체온을 유지합니다.</p>
-  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ΔH가 음수라고 무조건 자발적이지는 않습니다. 엔트로피 변화가 크게 음이면 ΔG가 양이 되어 자발적이지 않을 수 있습니다.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
-  <p>고급 열화학은 통계역학과 양자화학의 결합으로 정량화됩니다. 분배함수 Q를 분자의 병진·회전·진동·전자 부분으로 분리하면 표준 생성 엔탈피, 엔트로피, 깁스 자유에너지를 ab initio로 계산할 수 있습니다. 진동 분석은 정상 모드에 대한 Hessian 대각화로 이루어지며, 영점 진동 에너지(ZPE)는 ½Σℏω로 보정됩니다. 이상기체 근사를 넘어 응축상과 용액에서는 활동도 계수, PCM/SMD 같은 연속체 용매 모형, COSMO-RS 등이 사용됩니다. 비평형 열역학에서는 Onsager 상호 관계가 열·물질 흐름을 연결하고, 요동-소산 정리는 거시 열역학과 미시 동역학을 잇습니다. Jarzynski 등식과 Crooks 요동 정리는 비평형 일을 통해 자유에너지 차이를 정확히 계산하는 강력한 도구이며, 단분자 실험과 분자동역학 시뮬레이션에서 활발히 이용됩니다. 또한 화학공정 산업의 열역학 모델로 큐빅 상태 방정식(Peng-Robinson, SRK), 활동도 모델(NRTL, UNIQUAC), 군 기여법(UNIFAC) 등이 표준 도구입니다.</p>
-  <h3>유도와 증명</h3>
-  <div class="formula">
-    분배함수: Q = q^N / N!<br>
-    헬름홀츠: A = -k_B T ln Q<br>
-    화학 퍼텐셜: μ_i = (∂G/∂n_i)_{T,P,n_{j≠i}}<br>
-    Jarzynski: ⟨exp(-W/k_B T)⟩ = exp(-ΔF/k_B T)<br>
-    Onsager: J_i = Σ L_{ij} X_j,  L_{ij} = L_{ji}
-  </div>
-  <h3>최신 연구</h3>
-  <p>비평형 자유에너지 계산 방법(metadynamics, replica exchange, Gaussian accelerated MD)이 단백질 접힘과 결합 자유에너지 예측에서 표준이 되고 있습니다. 또한 머신러닝 기반 열역학 데이터 예측, 양자컴퓨팅으로 분배함수를 직접 계산하는 시도, 그리고 정보 열역학(Maxwell's demon의 정량화)과 양자 열역학이 활발한 연구 주제입니다.</p>
-  <h3>관련 분야 연결</h3>
-  <ul>
-    <li><strong>통계역학</strong>: 미시 상태에서 거시 열역학 양 도출</li>
-    <li><strong>화학공학</strong>: 반응기/증류탑/냉동기 설계</li>
-    <li><strong>생물물리학</strong>: 단백질 접힘 자유에너지</li>
-    <li><strong>지구과학</strong>: 광물 평형, 마그마 분화</li>
-  </ul>
-  <h3>추가 학습 자료</h3>
-  <ul>
-    <li>📖 McQuarrie, Statistical Mechanics</li>
-    <li>📺 MIT OCW 5.60 Thermodynamics & Kinetics</li>
-    <li>🔬 NIST Webbook 열역학 데이터베이스</li>
-  </ul>
-  <div class="success-box"><strong>🎓 도전 과제:</strong> 메테인 연소의 ΔH를 G3, CBS-QB3, W1 같은 복합 양자화학 방법으로 계산해 NIST 실험값과 1 kJ/mol 이내로 일치하는지 확인해 보세요.</div>
-</div>
-
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e896","questions":[{"q":"발열 반응의 ΔH 부호는?","choices":["ΔH > 0","ΔH < 0","ΔH = 0","ΔH = 1"],"answer":1},{"q":"흡열 반응의 예는?","choices":["연소","중화","광합성","녹슴"],"answer":2},{"q":"헤스의 법칙에서 총 ΔH는?","choices":["경로에 무관","경로에 의존","항상 0","음수"],"answer":0},{"q":"온도가 높아지면 속도 분포 곡선은?","choices":["왼쪽 이동","오른쪽 이동","변화 없음","사라짐"],"answer":1},{"q":"발열 반응에서 생성물 에너지는 반응물보다?","choices":["높다","같다","무한","낮다"],"answer":3}]};</script>
 </main>
 </div>
 
 <script>
+// Energy Diagram
 (function() {
-  const container = document.getElementById('sim-scene');
+  const container = document.getElementById('energy-scene');
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 3, 8);
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 2, 8); camera.lookAt(0, 0, 0);
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(container.clientWidth, container.clientHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
 
-  // Molecule-like structure
-  const atoms = [];
-  const numAtoms = 5 + Math.floor(Math.random()*5);
-  for (let i = 0; i < numAtoms; i++) {
-    const r = 0.2 + Math.random()*0.3;
-    const color = [0x00e890, 0xfbbf24, 0xef4444, 0xa78bfa, 0x60a5fa][i % 5];
-    const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 32, 32), new THREE.MeshBasicMaterial({ color }));
-    mesh.position.set((Math.random()-0.5)*4, (Math.random()-0.5)*4, (Math.random()-0.5)*4);
-    scene.add(mesh);
-    atoms.push(mesh);
-  }
-  // Bonds
-  for (let i = 0; i < atoms.length-1; i++) {
-    const points = [atoms[i].position, atoms[i+1].position];
-    const geo = new THREE.BufferGeometry().setFromPoints(points);
-    scene.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0x00e890, transparent: true, opacity: 0.4 })));
-  }
+  const group = new THREE.Group(); scene.add(group);
+  let curveMesh, ballMesh, animating = false, animProgress = 0;
+  let rxnType = 'exo', eaValue = 60;
 
-  let mouseDown = false, prevX = 0, prevY = 0;
-  container.addEventListener('mousedown', e => { mouseDown = true; prevX = e.clientX; prevY = e.clientY; });
-  container.addEventListener('mouseup', () => mouseDown = false);
-  container.addEventListener('mousemove', e => {
-    if (!mouseDown) return;
-    scene.rotation.y += (e.clientX - prevX)*0.005;
-    scene.rotation.x += (e.clientY - prevY)*0.005;
-    prevX = e.clientX; prevY = e.clientY;
-  });
-  container.addEventListener('touchstart', e => { prevX = e.touches[0].clientX; prevY = e.touches[0].clientY; });
-  container.addEventListener('touchmove', e => {
-    scene.rotation.y += (e.touches[0].clientX - prevX)*0.005;
-    scene.rotation.x += (e.touches[0].clientY - prevY)*0.005;
-    prevX = e.touches[0].clientX; prevY = e.touches[0].clientY;
-  });
+  function buildDiagram() {
+    while (group.children.length) group.remove(group.children[0]);
+    const reactantH = 0, productH = rxnType === 'exo' ? -2 : 2, peakH = eaValue / 20;
+    const pts = [];
+    for (let i = 0; i <= 100; i++) {
+      const t = i / 100, x = (t - 0.5) * 8;
+      let y;
+      if (t < 0.15) y = reactantH;
+      else if (t > 0.85) y = productH;
+      else { const mid = (t - 0.15) / 0.7; y = reactantH + (productH - reactantH) * mid + Math.sin(mid * Math.PI) * peakH; }
+      pts.push(new THREE.Vector3(x, y, 0));
+    }
+    group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: 0x00e896 })));
 
-  function animate() { requestAnimationFrame(animate); scene.rotation.y += 0.003; renderer.render(scene, camera); }
+    const rBar = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.08, 0.5), new THREE.MeshBasicMaterial({ color: 0xff6b35, transparent: true, opacity: 0.7 }));
+    rBar.position.set(-3.5, reactantH, 0); group.add(rBar);
+    const pBar = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.08, 0.5), new THREE.MeshBasicMaterial({ color: 0x38bdf8, transparent: true, opacity: 0.7 }));
+    pBar.position.set(3.5, productH, 0); group.add(pBar);
+
+    // Ea arrow
+    group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, reactantH, 0.3), new THREE.Vector3(0, peakH, 0.3)]), new THREE.LineBasicMaterial({ color: 0xf59e0b, transparent: true, opacity: 0.6 })));
+    // ΔH arrow
+    group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(3, reactantH, 0.3), new THREE.Vector3(3, productH, 0.3)]), new THREE.LineBasicMaterial({ color: rxnType === 'exo' ? 0xff6b35 : 0x38bdf8, transparent: true, opacity: 0.6 })));
+
+    ballMesh = new THREE.Mesh(new THREE.SphereGeometry(0.2, 16, 16), new THREE.MeshBasicMaterial({ color: 0x00e896 }));
+    ballMesh.position.copy(pts[0]); ballMesh.userData.pts = pts; group.add(ballMesh);
+  }
+  buildDiagram();
+
+  document.getElementById('rxn-type').addEventListener('change', function() { rxnType = this.value; buildDiagram(); });
+  document.getElementById('ea-slider').addEventListener('input', function() { eaValue = parseInt(this.value); document.getElementById('ea-val').textContent = eaValue; buildDiagram(); });
+  document.getElementById('animate-rxn').addEventListener('click', () => { animating = true; animProgress = 0; });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    if (animating && ballMesh) {
+      animProgress += 0.005; if (animProgress >= 1) { animating = false; animProgress = 1; }
+      const idx = Math.floor(animProgress * (ballMesh.userData.pts.length - 1));
+      ballMesh.position.copy(ballMesh.userData.pts[idx]);
+    }
+    group.rotation.y = Math.sin(Date.now() * 0.0003) * 0.15;
+    renderer.render(scene, camera);
+  }
   animate();
-  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+})();
+
+// Kinetic Energy Scene
+(function() {
+  const container = document.getElementById('kinetic-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 6, 10); camera.lookAt(0, 0, 0);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  const boxSize = 4;
+  scene.add(new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(boxSize*2, boxSize*2, boxSize*2)), new THREE.LineBasicMaterial({ color: 0x00e896, transparent: true, opacity: 0.12 })));
+
+  let molecules = [], temp = 300;
+  const colors = [0x00e896, 0x38bdf8, 0xff6b35, 0xa855f7, 0xf59e0b];
+
+  function createMols(count) {
+    molecules.forEach(m => scene.remove(m)); molecules = [];
+    for (let i = 0; i < count; i++) {
+      const mesh = new THREE.Mesh(new THREE.SphereGeometry(0.12, 12, 12), new THREE.MeshBasicMaterial({ color: colors[i % colors.length], transparent: true, opacity: 0.8 }));
+      mesh.position.set((Math.random()-0.5)*boxSize*1.6, (Math.random()-0.5)*boxSize*1.6, (Math.random()-0.5)*boxSize*1.6);
+      const sp = (temp / 300) * 0.05;
+      mesh.userData = { vel: new THREE.Vector3((Math.random()-0.5)*sp, (Math.random()-0.5)*sp, (Math.random()-0.5)*sp) };
+      scene.add(mesh); molecules.push(mesh);
+    }
+  }
+  createMols(40);
+
+  document.getElementById('kt-slider').addEventListener('input', function() {
+    temp = parseInt(this.value); document.getElementById('kt-val').textContent = temp;
+    molecules.forEach(m => { const l = m.userData.vel.length() || 0.01; m.userData.vel.multiplyScalar((temp/300)*0.05/l); });
+  });
+  document.getElementById('kn-slider').addEventListener('input', function() { document.getElementById('kn-val').textContent = this.value; createMols(parseInt(this.value)); });
+
+  let rY = 0.3, rX = 0.4, isDrag = false, pX = 0, pY = 0;
+  container.addEventListener('mousedown', e => { isDrag = true; pX = e.clientX; pY = e.clientY; });
+  window.addEventListener('mouseup', () => isDrag = false);
+  container.addEventListener('mousemove', e => { if (!isDrag) return; rY += (e.clientX-pX)*0.005; rX += (e.clientY-pY)*0.005; pX = e.clientX; pY = e.clientY; });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    molecules.forEach(m => {
+      m.position.add(m.userData.vel);
+      ['x','y','z'].forEach(a => { if (Math.abs(m.position[a]) > boxSize) { m.position[a] = Math.sign(m.position[a])*boxSize; m.userData.vel[a] *= -1; } });
+    });
+    scene.rotation.y = rY; scene.rotation.x = rX;
+    renderer.render(scene, camera);
+  }
+  animate();
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
 })();
 </script>
 </body>

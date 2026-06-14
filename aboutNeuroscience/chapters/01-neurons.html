@@ -2,12 +2,14 @@
 <title>1. 뉴런과 시냅스 — aboutNeuroscience</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">🧠 표지</a></li><li><a href="01-neurons.html">1. 뉴런과 시냅스</a></li><li><a href="02-brain-anatomy.html">2. 뇌 해부학</a></li><li><a href="03-sensory.html">3. 감각과 지각</a></li><li><a href="04-memory.html">4. 기억과 학습</a></li><li><a href="05-emotion.html">5. 정서와 동기</a></li><li><a href="06-consciousness.html">6. 의식과 수면</a></li><li><a href="07-neuroplasticity.html">7. 신경가소성</a></li><li><a href="08-disorders.html">8. 뇌질환과 장애</a></li><li><a href="09-neurotech.html">9. 뇌공학과 AI</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>뉴런과 시냅스</em></h1><p class="authors">Chapter 1 — Neurons, Synapses & Signal Transmission</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 뉴런 네트워크를 회전하며 탐구하세요</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 두 뉴런이 시냅스 간극을 사이에 두고 신호 펄스를 주고받습니다</span>
 <h2>뉴런과 시냅스 개요</h2><p>Neurons, Synapses & Signal Transmission의 핵심 메커니즘을 3D 시뮬레이션과 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Neurons, Synapses & Signal Transmission</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -31,7 +33,7 @@
   <h3>메커니즘 깊이</h3><p>뉴런의 휴지전위는 약 -70mV로, 세포 내부가 외부보다 음전하 상태입니다. 자극이 역치(약 -55mV)를 넘으면 나트륨 채널이 열리며 +30mV까지 급격히 탈분극되는 활동전위가 발생합니다. 이후 칼륨 채널이 열려 재분극되고, 잠시 과분극 상태를 거쳐 다시 휴지전위로 돌아옵니다. 이 모든 과정은 약 1~2밀리초 내에 일어납니다. 활동전위는 축삭을 따라 미엘린 수초가 있는 부위에서 도약 전도하며 100m/s 이상의 속도로 전달됩니다. 축삭 말단에 도달하면 칼슘 유입에 의해 시냅스 소포가 막과 융합하고, 신경전달물질이 시냅스 간극으로 방출됩니다. 수용체는 이온성과 대사성으로 나뉘며, 흥분성(글루타메이트)과 억제성(GABA)이 균형을 이루어 신경 회로의 출력이 결정됩니다.</p>
   <h3>대표 실험/사례</h3>
   <div class="info-card"><h4>🧠 사례 1</h4><p>호지킨과 헉슬리는 1952년 오징어 거대 축삭을 사용해 활동전위의 이온 메커니즘을 정량화했고, 노벨상을 수상했습니다.</p></div>
-  <div class="info-card"<h4>🧠 사례 2</h4><p>중증 근무력증 환자에서 아세틸콜린 수용체에 대한 자가항체가 시냅스 전달을 차단해 근육 약화를 초래합니다.</p></div>
+  <div class="info-card"><h4>🧠 사례 2</h4><p>중증 근무력증 환자에서 아세틸콜린 수용체에 대한 자가항체가 시냅스 전달을 차단해 근육 약화를 초래합니다.</p></div>
   <h3>실험 방법</h3><p>패치 클램프 기법으로 단일 채널 전류를 측정합니다. 광유전학(Optogenetics)은 채널로돕신을 발현시켜 빛으로 특정 뉴런을 활성화합니다. fMRI는 혈류 변화를 통해 뇌 활동 영역을 시각화합니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "뉴런이 강할수록 신호가 크다"는 잘못된 생각입니다. 활동전위는 전부 또는 전무 법칙을 따르며, 강도가 아닌 발화 빈도로 정보를 인코딩합니다.</div>
 </div>
@@ -44,9 +46,27 @@
   <h3>추가 자료</h3><ul><li>Kandel, <em>Principles of Neural Science</em>, 6판</li><li>Bear, <em>Neuroscience: Exploring the Brain</em></li><li>Allen Brain Atlas (온라인)</li></ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 모든 시냅스의 가소성을 영구히 잠근다면, 우리는 더 이상 새로운 것을 배울 수 없을까요? 단기 기억과 장기 기억 중 어느 쪽이 먼저 사라질지 추론해 봅시다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#818cf8","questions":[{"q":"다른 뉴런의 신호를 받는 가지는?","choices":["축삭","수상돌기","시냅스","세포체"],"answer":1},{"q":"뉴런과 뉴런 사이의 연결 지점은?","choices":["시냅스","축삭","수상돌기","핵"],"answer":0},{"q":"보상과 동기를 만드는 신경전달물질은?","choices":["GABA","세로토닌","도파민","글루타메이트"],"answer":2},{"q":"뉴런의 휴지전위는 약 얼마인가?","choices":["-90mV","-55mV","0mV","-70mV"],"answer":3},{"q":"대표적인 억제성 신경전달물질은?","choices":["글루타메이트","GABA","도파민","아세틸콜린"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-const neurons=[];for(let i=0;i<20;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.15,12,12),new THREE.MeshBasicMaterial({color:0x818cf8}));m.position.set((Math.random()-0.5)*8,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);neurons.push(m);}
-for(let i=0;i<neurons.length-1;i++){const g=new THREE.BufferGeometry().setFromPoints([neurons[i].position,neurons[(i+1+Math.floor(Math.random()*3))%neurons.length].position]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x818cf8,transparent:true,opacity:0.15})));}
-let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});
-function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const somaA=new THREE.Mesh(new THREE.SphereGeometry(0.7,20,20),new THREE.MeshBasicMaterial({color:0x6366f1}));somaA.position.set(-3.2,0,0);s.add(somaA);
+  const somaB=new THREE.Mesh(new THREE.SphereGeometry(0.7,20,20),new THREE.MeshBasicMaterial({color:0xf472b6}));somaB.position.set(3.2,0,0);s.add(somaB);
+  for(let k=0;k<7;k++){const ang=(k/7)*Math.PI*2;const dend=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,1.1,6),new THREE.MeshBasicMaterial({color:0x818cf8}));dend.position.set(-3.2+Math.cos(ang)*0.95,Math.sin(ang)*0.95,0);dend.rotation.z=ang-Math.PI/2;s.add(dend);}
+  for(let k=0;k<7;k++){const ang=(k/7)*Math.PI*2;const dend2=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,1.1,6),new THREE.MeshBasicMaterial({color:0xfb7185}));dend2.position.set(3.2+Math.cos(ang)*0.95,Math.sin(ang)*0.95,0);dend2.rotation.z=ang-Math.PI/2;s.add(dend2);}
+  const axon=new THREE.Mesh(new THREE.CylinderGeometry(0.1,0.1,4.4,10),new THREE.MeshBasicMaterial({color:0x4f46e5}));axon.rotation.z=Math.PI/2;axon.position.set(-0.7,0,0);s.add(axon);
+  const term=new THREE.Mesh(new THREE.ConeGeometry(0.35,0.5,12),new THREE.MeshBasicMaterial({color:0x4f46e5}));term.rotation.z=-Math.PI/2;term.position.set(1.7,0,0);s.add(term);
+  const pulse=new THREE.Mesh(new THREE.SphereGeometry(0.22,12,12),new THREE.MeshBasicMaterial({color:0xfde047}));s.add(pulse);s.userData.pulse=pulse;
+  for(let k=0;k<10;k++){const nt=new THREE.Mesh(new THREE.SphereGeometry(0.07,8,8),new THREE.MeshBasicMaterial({color:0x34d399}));nt.position.set(2.2+Math.random()*0.7,(Math.random()-0.5)*0.9,(Math.random()-0.5)*0.5);s.add(nt);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const ph=(T*0.5)%1;s.userData.pulse.position.set(-2.9+ph*4.6,0,0);s.userData.pulse.material.color.setHSL(0.13,1,0.5+0.2*Math.sin(T*6));s.rotation.y+=0.003; r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

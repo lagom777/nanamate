@@ -7,12 +7,14 @@
 <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">🌍 표지 · 소개</a></li>
@@ -122,7 +124,7 @@
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -185,6 +187,11 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 1차원 에너지 균형 모델(EBM)에 얼음-알베도 피드백을 포함시켜 안정 기후 상태(아이스볼·온난·현재)의 다중 평형해와 임계 강제력을 수치적으로 구해 보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#1565c0","questions":[{"q":"온실효과가 없을 때 지구 평균 기온은?","choices":["-18°C","0°C","+15°C","+5°C"],"answer":0},{"q":"산업혁명 전 CO₂ 농도는?","choices":["180 ppm","280 ppm","420 ppm","700 ppm"],"answer":1},{"q":"파리협정의 기온 억제 목표는?","choices":["0.5°C","1.0°C","3°C","1.5°C"],"answer":3},{"q":"메탄(CH₄)의 주요 배출원은?","choices":["축산·벼농사","화석연료 연소","비료 사용","냉매"],"answer":0},{"q":"20세기 해수면 상승 폭은?","choices":["약 2cm","약 50cm","약 20cm","약 2m"],"answer":2}]};</script>
 </main>
 </div>
 

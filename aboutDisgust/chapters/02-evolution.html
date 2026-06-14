@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 라임색 거품을 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 진화적 기능 — 생존을 도운 적응의 갈래</span>
 
 <h2>진화와 기능 개요</h2>
 <p>혐오는 입에서 시작한 가장 오래된 정서다. 쓴맛을 뱉어내던 미각 혐오가 부패한 동물 혐오로 확장되고, 다시 사회·도덕 혐오로 옮겨가는 점진적 진화의 산물이 오늘날의 혐오다. 다윈이 『인간과 동물의 감정 표현』에서 혐오를 보편 정서로 분류한 이래, 혐오는 인지 진화의 거울로 여겨져 왔다.</p>
@@ -74,5 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 임신·질병·면역 약화 상태에서 혐오 강도가 어떻게 달라지는지 본인 또는 주변 사례를 1주일간 관찰해 기록해보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#84cc16","questions":[{"q":"혐오는 어디서 시작된 정서인가?","choices":["눈","입","손","귀"],"answer":1},{"q":"임신기 혐오가 정점인 시기는?","choices":["출산 직후","수유기","3분기","1분기"],"answer":3},{"q":"혐오를 보편 정서로 분류한 학자는?","choices":["다윈","프로이트","Rozin","Schaller"],"answer":0},{"q":"Rozin·Fallon 진화 3단계의 시작은?","choices":["도덕 혐오","미각 거부","사회 혐오","동물 회피"],"answer":1},{"q":"침팬지·보노보가 보이지 않는 것은?","choices":["시체 회피","배설물 회피","추상적 도덕 혐오","음식 회피"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0x84cc16;const parts=[];for(let i=0;i<32;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0x84cc16;function branch(x,y,len,ang,d){if(d<=0)return;const x2=x+Math.cos(ang)*len,y2=y+Math.sin(ang)*len;s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,y,0),new THREE.Vector3(x2,y2,0)]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.5})));const n=new THREE.Mesh(new THREE.SphereGeometry(0.08+d*0.03,10,10),new THREE.MeshBasicMaterial({color:COL}));n.position.set(x2,y2,0);s.add(n);branch(x2,y2,len*0.72,ang+0.5,d-1);branch(x2,y2,len*0.72,ang-0.5,d-1);}branch(0,-2.6,1.5,Math.PI/2,4);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

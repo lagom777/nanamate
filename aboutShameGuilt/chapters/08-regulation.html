@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 라벤더 안개를 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 조절 — 감정의 온도를 되돌리는 피드백</span>
 
 <h2>조절과 치료 개요</h2>
 <p>Paul Gilbert의 자비 중심 치료(CFT, Compassion Focused Therapy)는 수치 기반 정신병리의 1차 치료법으로 자리잡고 있다. CBT가 인지 왜곡을, DBT가 정서 조절을 표적으로 한다면, CFT는 위협 시스템과 진정 시스템의 불균형을 표적으로 한다. soothing rhythm breathing, compassionate other imagery, compassionate self imagery, compassionate letter writing이 핵심 기술이다. 우울·자해·중독·PTSD에서 RCT로 효과가 검증됐다.</p>
@@ -74,5 +76,21 @@
   <div class="success-box">🎓 도전 과제: 1주일간 매일 저녁 10분, soothing rhythm breathing 5분 + compassionate letter 5분의 루틴을 실천하고, 7일 후 자기 비난 빈도·강도의 사전·사후 변화를 0-10점 척도로 기록해보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#a78bfa","questions":[{"q":"수치 기반 정신병리의 1차 치료는?","choices":["최면","CFT","수술","항생제"],"answer":1},{"q":"CFT가 표적으로 하는 시스템은?","choices":["소화 시스템","면역 시스템","진정 시스템","근육"],"answer":2},{"q":"soothing rhythm breathing 패턴은?","choices":["빠르게 헐떡","숨 참기","입으로만 흡기","4초 흡기 6-8초 호기"],"answer":3},{"q":"CFT를 개발한 학자는?","choices":["Neff","Gilbert","Benedict","Cook"],"answer":1},{"q":"MSC 8주 프로그램 개발자는?","choices":["Gilbert","Porges","Neff & Germer","Cook"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0xa78bfa;const parts=[];for(let i=0;i<32;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xa78bfa;const tube=new THREE.Mesh(new THREE.CylinderGeometry(0.25,0.25,3.4,16,1,true),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.4}));s.add(tube);const bulb=new THREE.Mesh(new THREE.SphereGeometry(0.5,18,18),new THREE.MeshBasicMaterial({color:COL}));bulb.position.y=-1.9;s.add(bulb);const lvl=new THREE.Mesh(new THREE.SphereGeometry(0.3,16,16),new THREE.MeshBasicMaterial({color:0xffe08a}));s.add(lvl);s.userData.lvl=lvl;const loop=new THREE.Mesh(new THREE.TorusGeometry(1.5,0.03,8,48),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.3}));loop.position.x=2.2;s.add(loop);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.lvl.position.y=Math.sin(T*1.2)*1.2*Math.exp(-((T*0.2)%6)*0.0)+0.0;s.userData.lvl.position.y=Math.sin(T)*1.0;s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

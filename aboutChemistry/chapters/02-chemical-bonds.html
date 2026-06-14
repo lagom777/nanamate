@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -46,7 +48,7 @@
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -128,6 +130,11 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 벤젠의 방향족 안정화 에너지를 분자 오비탈 이론으로 유도해 보세요. 휴켈 근사로 6개의 π 전자가 원형 공액계에 들어갈 때 에너지 준위가 -2β, -β, -β, β, β, 2β로 분리됨을 보이고 총 안정화 에너지를 계산하면 됩니다.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e896","questions":[{"q":"이온결합의 예로 옳은 것은?","choices":["H₂O","NaCl","CH₄","CO₂"],"answer":1},{"q":"비금속끼리 전자쌍을 공유하는 결합은?","choices":["금속결합","이온결합","수소결합","공유결합"],"answer":3},{"q":"금속의 전기 전도성 원인은?","choices":["자유전자","양성자","중성자","전자쌍"],"answer":0},{"q":"VSEPR에서 전자쌍 4개의 형태는?","choices":["직선형","평면삼각형","정사면체","정팔면체"],"answer":2},{"q":"ΔEN ≥ 1.7이면 어떤 결합인가?","choices":["무극성공유","극성공유","이온결합","금속결합"],"answer":2}]};</script>
 </main>
 </div>
 

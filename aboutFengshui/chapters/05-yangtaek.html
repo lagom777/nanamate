@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5. 양택 — 집과 공간 — aboutFengshui</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🧭 표지</a></li>
+    <li><a href="01-what-is.html">1. 풍수란 무엇인가</a></li>
+    <li><a href="02-yinyang-five.html">2. 음양오행과 기</a></li>
+    <li><a href="03-form-school.html">3. 형세론 — 산과 물</a></li>
+    <li><a href="04-compass-school.html">4. 이기론 — 나경과 좌향</a></li>
+    <li><a href="05-yangtaek.html">5. 양택 — 집과 공간</a></li>
+    <li><a href="06-eumtaek.html">6. 음택 — 묘지와 명당</a></li>
+    <li><a href="07-interior.html">7. 인테리어·현대 풍수</a></li>
+    <li><a href="08-korea.html">8. 비보풍수와 한국 풍수</a></li>
+    <li><a href="09-science.html">9. 풍수의 과학·비판</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>양택 — 집과 공간</em></h1>
+  <p class="authors">Chapter 5 — Yang Dwellings — Homes</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 집의 배치 — 배산임수, 현관(기구)·안방·부엌</span>
+
+<h2>양택 — 집과 공간 개요</h2>
+<p>양택(陽宅)은 산 사람이 살아가는 집과 공간을 다루는 풍수다. 죽은 이의 자리를 보는 음택과 달리, 매일 잠들고 밥을 먹고 드나드는 생활 공간에 기(氣)가 어떻게 흐르고 머무는지를 살핀다. 이 챕터에서는 대문과 현관, 안방, 부엌과 화장실의 배치 원리, 배산임수와 전저후고 같은 입지 개념, 그리고 이를 현대 아파트 생활에 적용하는 방법까지 차근차근 풀어낸다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>양택 풍수는 기가 드나드는 입구(氣口)인 대문·현관, 사람이 가장 오래 머무는 안방, 그리고 불(火)과 물(水)을 다루는 부엌·화장실의 관계를 중심으로 공간을 읽는다. 좋은 양택은 뒤에 산을 두고 앞에 물을 두는 배산임수, 앞이 낮고 뒤가 높은 전저후고의 지형에 앉으며, 집과 사람을 동사택·서사택으로 나누어 방위의 궁합을 맞추는 팔택(八宅) 이론으로 세부를 조율한다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>양택 풍수는 '내가 사는 집의 어디로 기운이 들어와 어디에 머무는가'를 보며, 잠자리·부엌·화장실을 그 흐름에 맞게 배치하려는 전통 지혜다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>사람은 하루의 절반 이상을 집 안에서 보낸다. 그래서 풍수에서는 무덤 자리보다 산 사람의 집, 곧 양택이 일상에 미치는 영향이 더 직접적이라고 본다. 잠을 자는 안방, 매일 불을 쓰는 부엌, 물을 흘려보내는 화장실은 모두 몸의 건강·휴식·재물과 연결된다고 여겨진다. 양택의 원리를 알면 큰돈을 들이지 않고도 가구 위치나 동선만 바꿔 공간을 더 편안하게 정리할 수 있다. 무엇보다 양택은 추상적 이론이 아니라 현관·침대·가스레인지처럼 우리가 매일 만지는 것들을 다루는, 가장 실생활에 밀착한 풍수다.</p>
+
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>양택(陽宅)</strong>: 산 사람이 사는 집과 생활 공간을 다루는 풍수.</li>
+<li><strong>기구(氣口)</strong>: 기가 드나드는 입구. 대문과 현관이 대표적인 기구다.</li>
+<li><strong>배산임수(背山臨水)</strong>: 뒤로 산을 등지고 앞으로 물을 마주하는 입지.</li>
+<li><strong>전저후고(前低後高)</strong>: 집터의 앞이 낮고 뒤가 높은 지형. 안정감을 준다고 본다.</li>
+<li><strong>팔택(八宅)</strong>: 집과 사람을 여덟 방위로 나눠 궁합을 보는 양택 이론.</li>
+</ul></div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>집을 사람의 몸이라고 생각해 보자. 대문과 현관은 숨을 들이쉬는 코와 입이고, 그곳으로 들어온 기운은 거실이라는 폐를 거쳐 방방마다 퍼진다. 부엌의 불과 화장실의 물은 몸 안의 열과 배설처럼 서로 부딪히지 않게 떨어뜨려 두는 것이 좋다고 본다. 현관문을 열자마자 정면에 거울이 있으면, 들어오던 기운이 그대로 튕겨 나간다고 여겨 피하라고 권한다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 어려운 한자 용어는 '기운이 드나드는 길'이라는 한 가지 이미지로 묶어서 외우면 쉽다. 대문·현관은 들어오는 길, 화장실·배수구는 빠져나가는 길이라고 생각하면 대부분의 양택 원칙이 자연스럽게 이해된다.</div>
+
+<h3>한 페이지 요약</h3><ul>
+<li>양택은 산 사람의 집과 공간을 다루는, 가장 실생활에 가까운 풍수다.</li>
+<li>대문·현관은 기가 드나드는 입구(기구)로, 집 기운의 시작점이다.</li>
+<li>안방은 사람이 가장 오래 머무는 곳이라 위치와 침대 방향을 중요하게 본다.</li>
+<li>부엌의 불(火)과 화장실의 물(水)은 서로 멀리 떨어뜨리는 것이 기본이다.</li>
+<li>현대 아파트에서는 현관 거울, 침대 머리 방향, 싱크대와 가스레인지 배치를 작게 조정하는 식으로 적용한다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>양택 풍수는 전통적으로 '집을 본다(相宅)'는 오랜 관행에서 출발한다. 옛 풍수가들은 집을 하나의 작은 우주로 보고, 바깥의 산천 기운이 집으로 흘러들어와 머물다가 다시 흘러 나가는 과정을 살폈다. 이때 기운이 처음 들어오는 입구를 기구(氣口)라 부르며, 양택에서는 대문과 현관이 가장 중요한 기구로 꼽힌다. 들어온 기운은 곧장 빠져나가지 않고 집 안을 천천히 휘돌며 머무는 것이 좋다고 보아, 현관에서 바로 보이는 곳에 큰 창이나 뒷문, 거울이 있으면 기운이 곧장 통과하거나 반사되어 흩어진다고 여긴다. 양택 이론은 크게 집의 형태와 입지를 보는 형세(形勢)적 시각과, 방위와 좌향을 따지는 이기(理氣)적 시각이 함께 작동한다. 형세 면에서는 배산임수와 전저후고가 기본 원칙으로, 뒤에 든든한 산(또는 높은 지형·건물)을 두고 앞은 트이게 하여 안정감을 얻으려 한다. 이기 면에서는 팔택 이론을 써서 집의 좌향과 사람의 본명궁을 동사택·서사택으로 나누어 궁합을 맞춘다. 안방·부엌·화장실 같은 핵심 공간의 배치는 이 두 시각이 만나는 지점에서 결정된다고 본다. 특히 부엌의 불과 화장실의 물은 오행으로 화(火)와 수(水)에 해당해, 서로 마주 보거나 인접하면 수화상극(水火相剋)이 일어난다고 여겨 떨어뜨려 배치하는 것을 원칙으로 삼는다.</p>
+
+<h3>핵심 메커니즘/교리</h3>
+<div class="info-card"><h4>📐 팔택 — 동사택과 서사택</h4><p>팔택 이론은 집과 사람을 각각 여덟 방위로 나눈다. 진(동)·손(동남)·이(남)·감(북)에 속하면 동사택(東四宅), 건(서북)·곤(서남)·간(동북)·태(서)에 속하면 서사택(西四宅)으로 본다. 집의 좌향이 동사택이면 사람도 동사택 본명궁일 때, 서사택이면 서사택일 때 궁합이 맞는다고 여긴다. 같은 무리에 속하는 길한 방위에 대문·안방·부엌을 두고, 반대 무리의 흉한 방위에는 화장실·창고를 둔다는 식으로 공간을 배분한다.</p></div>
+
+<h3>대표 사례·경전</h3>
+<div class="info-card"><h4>📐 사례 1 — 배산임수와 전저후고의 한옥</h4><p>전통 한옥과 마을 입지는 양택 형세론의 교과서로 자주 거론된다. 뒤로 주산(主山)을 등지고 앞으로 내(川)나 들을 마주하는 배산임수, 그리고 집터 앞이 낮고 뒤가 높은 전저후고는 겨울 북풍을 산이 막아 주고 남쪽으로 햇볕과 물을 받는 실용적 지혜와도 맞닿아 있다고 본다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 불과 물의 자리, 부엌과 화장실</h4><p>양택에서 가장 자주 다루는 실전 주제가 부엌과 화장실이다. 가스레인지(불)와 싱크대(물)가 바로 붙어 있거나 정면으로 마주 보면 수화상극으로 보아, 사이에 조리대를 두거나 'ㄱ'자로 꺾어 배치하기를 권한다. 화장실이 집 중앙이나 현관·부엌 정면에 오는 것도 흉하게 여겨, 동선과 방위를 조정하는 사례로 흔히 인용된다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>오늘날 대다수가 사는 아파트는 좌향과 평면이 이미 정해져 있어 전통 양택을 그대로 적용하기 어렵다. 그래서 현대 풍수는 구조를 바꾸기보다 '배치와 습관의 조정'으로 방향을 튼다. 현관 정면에 거울을 두지 않기, 침대 머리를 안정된 벽 쪽으로 두고 문이나 창을 정면으로 바라보지 않게 하기, 가스레인지와 싱크대 사이에 완충 공간을 두기 같은 실천이 대표적이다. 이는 채광·환기·동선 같은 주거 환경의 상식과도 상당 부분 겹치기 때문에, 미신이라기보다 '오래된 공간 정리법'으로 받아들이는 시각도 늘고 있다.</p>
+
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> '풍수에 맞는 좋은 방위가 모든 사람에게 똑같이 정해져 있다'고 생각하기 쉽다. 그러나 팔택 이론에서는 같은 집이라도 사는 사람의 본명궁(동사택/서사택)에 따라 길흉이 달라진다고 본다. 즉 절대적인 명당 방위가 있는 것이 아니라, 집과 사람의 '궁합'을 맞추는 상대적 개념이라는 점을 놓치기 쉽다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>양택 풍수를 학술적으로 살피면, 그 안에는 형세론과 이기론이라는 두 갈래의 논리가 긴장 속에 공존한다. 형세론은 산천의 형태와 입지를 눈으로 읽는 경험적·환경적 접근이고, 이기론은 나경(羅經)의 방위와 천간·지지, 구성(九星)·팔괘를 동원하는 상수학적 접근이다. 양택에서 두 갈래가 가장 첨예하게 만나는 곳이 팔택과 좌향론이다. 팔택은 집의 좌(坐, 등진 방위)를 기준으로 복위·생기·천의·연년 같은 길성과 화해·육살·오귀·절명 같은 흉성을 여덟 방위에 배당하는 유년(遊年) 체계를 쓰며, 사람의 본명궁과 결합해 안방·부엌·대문의 자리를 정한다. 여기에 시간을 변수로 끌어들이는 현공풍수(玄空風水)는 운(運)에 따라 같은 집의 길흉이 바뀐다고 보아, 정적인 팔택과는 또 다른 시각을 제시한다. 부엌과 화장실의 배치를 수화상극으로 설명하는 논리는 오행 상생상극이라는 상징 체계를 공간에 투사한 것으로, 그 자체가 검증 가능한 인과라기보다 일관된 상징 문법으로 이해하는 것이 학술적으로 타당하다. 또한 배산임수·전저후고처럼 환경적으로 설명 가능한 원칙과, 본명궁 같은 상수학적 원칙은 인식론적 성격이 다르므로, 양택을 논할 때 둘을 뭉뚱그리지 않고 구분하는 태도가 중요하다고 본다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>현대 학계는 양택 풍수를 주로 두 방향에서 다룬다. 하나는 건축·도시계획·환경심리학의 관점에서, 배산임수나 채광·환기·동선 같은 형세적 원칙이 실제 거주 쾌적성과 어느 정도 상관이 있는지를 살피는 경험적 연구다. 이 흐름에서는 풍수의 일부 원칙이 전(前)과학적 환경 적응 지식으로 재해석될 수 있다고 본다. 다른 하나는 종교학·민속학의 관점에서, 팔택·구성 같은 상수학적 부분을 신앙·문화 체계로 분석하는 연구다. 한편 방위 길흉이나 거울·침대 위치의 효과를 통제된 실험으로 입증하려는 시도는 재현성 있는 결과를 내지 못했고, 이에 따라 이기론적 주장은 과학적 가설이라기보다 문화적·상징적 실천으로 보아야 한다는 시각이 우세하다. 양택을 둘러싼 핵심 쟁점은 '환경적으로 설명되는 부분'과 '상징 체계로 남는 부분'을 어떻게 구분하느냐에 있다고 정리할 수 있다.</p>
+
+<h3>관련 분야</h3><ul>
+<li><strong>건축·주거학</strong>: 일조·통풍·동선 등 양택 원칙과 겹치는 거주 환경 설계.</li>
+<li><strong>환경심리학</strong>: 공간 배치가 안정감·휴식·행동에 미치는 영향 연구.</li>
+<li><strong>민속학·종교학</strong>: 팔택·방위 신앙을 문화 현상으로 분석하는 분야.</li>
+</ul>
+
+<h3>더 읽을거리</h3><ul>
+<li>"양택삼요(陽宅三要)" — 조정동(전통 양택 고전)</li>
+<li>"황제택경(黃帝宅經)" — 작자 미상(현존 최고(最古)의 양택 문헌으로 전해짐)</li>
+<li>"한국의 풍수사상" — 최창조</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 지금 살고 있는 집(또는 방)의 현관·침대·가스레인지·화장실 위치를 평면도로 그려 보자. 그런 다음 (1) 현관 정면에 거울이나 큰 창이 있는지, (2) 침대 머리가 안정된 벽을 향하는지, (3) 불(레인지)과 물(싱크대)이 마주 보거나 붙어 있는지를 양택 원칙에 비추어 점검하고, 환경적으로 설명되는 이유와 상징적으로만 설명되는 이유를 각각 구분해 적어 보자.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#14b8a6","questions":[{"q":"기가 드나드는 입구를 부르는 말은?","choices":["명당","파구","기구","혈"],"answer":2},{"q":"부엌의 불과 화장실의 물의 관계는?","choices":["상생","수화상극","동기감응","비보"],"answer":1},{"q":"앞이 낮고 뒤가 높은 지형은?","choices":["배산임수","장풍득수","전저후고","좌향"],"answer":2},{"q":"현관 정면에 두지 말라는 물건은?","choices":["식물","거울","조명","시계"],"answer":1},{"q":"동사택에 속하는 방위는?","choices":["남","서","서북","동북"],"answer":0}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,2.5,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0x14b8a6;const mtn=new THREE.Mesh(new THREE.ConeGeometry(1.6,2.6,18,1,true),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.4}));mtn.position.set(0,0.4,-2.6);s.add(mtn);const house=new THREE.Mesh(new THREE.BoxGeometry(2.4,1.4,2.0),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.7}));s.add(house);const roof=new THREE.Mesh(new THREE.ConeGeometry(1.7,0.9,4),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.5}));roof.position.y=1.15;roof.rotation.y=Math.PI/4;s.add(roof);const cols=[0xffe08a,0xef4444,0x3b82f6];[[-0.6,0,1.05],[0.6,0.2,0],[-0.7,0.2,-0.7]].forEach((p,i)=>{const d=new THREE.Mesh(new THREE.SphereGeometry(0.18,12,12),new THREE.MeshBasicMaterial({color:cols[i]}));d.position.set(p[0],p[1]-0.3,p[2]);s.add(d);});const water=new THREE.Mesh(new THREE.BoxGeometry(5,0.06,1),new THREE.MeshBasicMaterial({color:0x3b82f6,transparent:true,opacity:0.4}));water.position.set(0,-0.85,1.8);s.add(water);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

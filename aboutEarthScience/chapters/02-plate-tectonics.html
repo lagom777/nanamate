@@ -7,12 +7,14 @@
 <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">🌍 표지 · 소개</a></li>
@@ -100,7 +102,7 @@
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -145,7 +147,7 @@
   <h3>전문가 레벨</h3>
   <p>판구조론은 이제 운동학(kinematics) 단계에서 동역학(dynamics) 단계로 진화하고 있습니다. 슬랩 풀(slab pull)이 판 운동의 약 90%를 설명하는 가장 큰 구동력으로 인정되며, 해령 밀기(ridge push)는 약 5–10%에 그칩니다. 맨틀의 능동적 대류와 판의 수동적 응답이 결합된 self-consistent 모델은 점성구조와 슬랩 형상에 매우 민감합니다. 섭입대에서 슬랩은 670km 불연속면에서 종종 정체되거나 통과해 하부 맨틀까지 침강하는데, 이는 슬랩 동역학의 핵심 미해결 문제입니다. 트리플 정션(triple junction)의 안정성은 판 경계의 상대 운동 벡터에 의해 결정되며, 안정/불안정 분류는 McKenzie & Morgan(1969)의 분류법으로 다뤄집니다. 또한 대륙 균열(rifting)에서 해양 형성으로의 전이는 마그마가 풍부한(volcanic margin) 형태와 부족한(non-volcanic margin) 형태로 구분되며, 이는 단열 감압 용융과 깊은 맨틀 온도 분포에 의존합니다. 윌슨 사이클(Wilson Cycle)은 초대륙 형성-분열의 약 4–6억 년 주기를 설명하며, 다음 초대륙(Amasia 또는 Pangaea Ultima)의 형성이 예측되고 있습니다.</p>
   <h3>핵심 모델</h3>
-  <div class="formula">슬랩 풀의 추진력: F_sp = (Δρ)·g·V_slab<br>Δρ: 슬랩과 주변 맨틀의 밀도차, V_slab: 슬랩 부피<br>판 속도와 점성: v ∝ (Δρ·g·h²)/η_m (간단화된 식)<br>나자르 정리: 구면 위의 강체 운동은 단일 회전축(오일러 극)으로 기술 가능</div>
+  <div class="formula">슬랩 풀의 추진력: F_sp = (Δρ)·g·V_slab<br>Δρ: 슬랩과 주변 맨틀의 밀도차, V_slab: 슬랩 부피<br>판 속도와 점성: v ∝ (Δρ·g·h²)/η_m (간단화된 식)<br>오일러 정리: 구면 위의 강체 운동은 단일 회전축(오일러 극)으로 기술 가능</div>
   <h3>최신 연구</h3>
   <p>최근 지진파 단층촬영은 하부 맨틀까지 침강한 'slab graveyard'를 영상화했고, 일부는 핵-맨틀 경계 위에 누적되어 ULVZ와 상호작용한다고 알려졌습니다. 또한 행성 비교 연구에서 금성과 화성에는 현재 판구조 운동이 없고, 지구만 활발한 판운동을 유지하는 이유로 물의 존재와 적절한 맨틀 점성이 지목됩니다. 2024년 연구는 'subduction initiation'(섭입 시작) 메커니즘을 마그마 약화대(melt-weakening)로 설명하는 모델을 제시했습니다.</p>
   <h3>관련 분야</h3>
@@ -163,6 +165,11 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 두 판의 오일러 극이 주어졌을 때, 임의의 위도·경도 지점에서의 상대 속도 벡터(크기와 방향)를 계산하는 알고리즘을 작성해 보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#1565c0","questions":[{"q":"1912년 대륙이동설을 주장한 사람은?","choices":["헤스","베게너","디에츠","모건"],"answer":1},{"q":"두 판이 서로 멀어지는 경계는?","choices":["수렴 경계","변환 경계","발산 경계","섭입대"],"answer":2},{"q":"산안드레아스 단층의 경계 유형은?","choices":["발산 경계","수렴 경계","충돌 경계","변환 경계"],"answer":3},{"q":"판 운동에 가장 크게 기여하는 힘은?","choices":["해령 밀기","섭입대 끌기","맨틀 대류","해저 확장"],"answer":1},{"q":"대륙-대륙 수렴 경계의 결과는?","choices":["해구","호상열도","열곡대","습곡산맥"],"answer":3}]};</script>
 </main>
 </div>
 

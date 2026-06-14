@@ -15,12 +15,14 @@
 <script defer src="../toggle.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">📖 표지 · 초록</a></li>
@@ -145,6 +147,13 @@ Stable Diffusion 3(2024)와 Flux는 이 프레임워크를 채택하였다.
 </div>
 </section>
 
+<!-- 3D 학습 시각화: 확산 모델 — 노이즈에서 데이터로 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · Diffusion: 노이즈 추가와 제거</div>
+  <div id="ai3d-06" style="width:100%;height:430px;"></div>
+  <div id="ai3d-06-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">데이터에 노이즈를 입히고(Forward), 다시 걷어내며(Reverse) 새 샘플을 만듭니다.</div>
+</div>
+
 <svg class="svg-figure" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
   <!-- Generator -->
   <rect x="30" y="80" width="140" height="120" fill="#1a4b8f" rx="8"/>
@@ -178,7 +187,7 @@ Stable Diffusion 3(2024)와 Flux는 이 프레임워크를 채택하였다.
 <div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="05-llm.html" style="text-decoration:none;">← 대규모 언어모델</a><a href="07-rl-multimodal.html" style="text-decoration:none;">강화학습·멀티모달 →</a></div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
@@ -269,7 +278,102 @@ image.save("corgi.png")</code></pre>
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> MNIST에 대해 작은 U-Net 디퓨전 모델을 PyTorch로 구현하고, DDPM과 DDIM 샘플링을 비교 구현해보세요. 그 다음 클래스 조건 임베딩을 추가해 classifier-free guidance를 직접 구현하면 텍스트-이미지 모델의 핵심을 모두 경험할 수 있습니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b8441c","questions":[{"q":"노이즈를 제거하며 생성하는 모델은?","choices":["VAE","GAN","확산 모델","SVM"],"answer":2},{"q":"GAN의 두 구성요소는?","choices":["생성기·판별기","인코더·디코더","쿼리·키","액터·크리틱"],"answer":0},{"q":"GAN의 고질적 문제는?","choices":["메모리 부족","모드 붕괴","토큰 한계","느린 입력"],"answer":1},{"q":"Stable Diffusion의 확산 공간은?","choices":["픽셀 공간","주파수 공간","잠재 공간","시간 공간"],"answer":2},{"q":"VAE가 최적화하는 우도의 하한은?","choices":["MSE","KL 발산","JSD","ELBO"],"answer":3}]};</script>
 </main>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('ai3d-06');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('ai3d-06-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,0,13);camera.lookAt(0,0,0);
+  var N=420;
+  var dataPos=new Float32Array(N*3),noisePos=new Float32Array(N*3),cur=new Float32Array(N*3);
+  for(var i=0;i<N;i++){
+    var t=Math.random()*Math.PI*2,r=Math.sqrt(Math.random());
+    var hx=16*Math.pow(Math.sin(t),3),hy=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+    dataPos[i*3]=hx*0.22*r;dataPos[i*3+1]=hy*0.22*r+0.6;dataPos[i*3+2]=(Math.random()-0.5)*0.6;
+    noisePos[i*3]=(Math.random()-0.5)*13;noisePos[i*3+1]=(Math.random()-0.5)*8;noisePos[i*3+2]=(Math.random()-0.5)*6;
+    cur[i*3]=dataPos[i*3];cur[i*3+1]=dataPos[i*3+1];cur[i*3+2]=dataPos[i*3+2];
+  }
+  var geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(cur,3));
+  var pm=new THREE.PointsMaterial({color:0xd6455b,size:0.16});
+  scene.add(new THREE.Points(geo,pm));
+  var cData=new THREE.Color(0xd6455b),cNoise=new THREE.Color(0x9aa6c0);
+  var barBg=box(10,0.22,0.2,0xe3e8f2,1);barBg.position.set(0,-4.4,0);scene.add(barBg);
+  var bar=box(1,0.24,0.24,0x5b6bd6,1);bar.position.set(-5,-4.4,0);scene.add(bar);
+  var barLbl=lbl('확산 단계 t  (0 = 데이터, T = 순수 노이즈)',24,'#7c87a3',0.9);barLbl.position.set(0,-5.2,0);scene.add(barLbl);
+  function setBar(k){bar.scale.x=Math.max(0.01,k*10);bar.position.x=-5+k*5;}
+  function mix(k,jit){
+    for(var i=0;i<N*3;i++){cur[i]=dataPos[i]+(noisePos[i]-dataPos[i])*k+(Math.random()-0.5)*jit;}
+    geo.attributes.position.needsUpdate=true;
+    pm.color.copy(cData).lerp(cNoise,k);
+    setBar(k);
+  }
+  var phases=[
+    {dur:5,cap:'Forward(확산): 원본 데이터(하트 모양 분포)에 노이즈를 조금씩 수백 번 추가합니다 — 구조가 서서히 사라집니다.',update:function(u){var k=ez(u);mix(k,k*0.25);}},
+    {dur:2,cap:'완전한 가우시안 노이즈 — 원본의 흔적이 전혀 없습니다. 생성은 여기서 시작됩니다.',update:function(u){mix(1,0.25);}},
+    {dur:6,cap:'Reverse(생성): 신경망이 각 단계에서 "어떤 노이즈가 섞였는지"를 예측해 제거 — 노이즈에서 데이터가 태어납니다.',update:function(u){var k=1-ez(u);mix(k,k*0.25);}},
+    {dur:2.5,cap:'완성: 학습된 분포에서 새로운 샘플이 생성되었습니다. Stable Diffusion·DALL·E·Sora가 모두 이 원리입니다.',update:function(u){mix(0,0);}}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
 </body>
 </html>

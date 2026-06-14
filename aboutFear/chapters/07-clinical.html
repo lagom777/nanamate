@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 보라 그림자를 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 임상 — 과하거나 모자랄 때(스펙트럼)</span>
 
 <h2>임상과 병리 개요</h2>
 <p>공포가 정도를 넘으면 임상 영역으로 들어간다. 공황장애·범불안장애·특정 공포증·사회불안장애·외상후 스트레스 장애 — 이 다섯이 공포 스펙트럼의 대표 질환이다. 모두 같은 회로의 다른 변주이며, 정확한 진단이 효과적인 치료의 시작이다.</p>
@@ -74,5 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> GAD-7 자가검사를 직접 시행하고 점수의 의미(0-4 정상, 5-9 경도, 10-14 중등도, 15+ 중증)를 해석한 뒤, 본인 패턴이 어디에 해당하는지 정리해보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#8b5cf6","questions":[{"q":"6개월 이상 만성 걱정이 지속되는 장애는?","choices":["공황장애","범불안장애","PTSD","특정공포증"],"answer":1},{"q":"공황발작은 몇 분 안에 정점에 달하나?","choices":["1시간","1분","10분","6시간"],"answer":2},{"q":"공포 장애의 핵심 유지 기전은?","choices":["회피","노출","호흡","수면"],"answer":0},{"q":"외출 자체가 어려워지는 확산 장애는?","choices":["특정공포증","GAD","광장공포증","강박"],"answer":2},{"q":"범불안 선별에 쓰는 표준 척도는?","choices":["PCL-5","LSAS","BAI","GAD-7"],"answer":3}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0x8b5cf6;const parts=[];for(let i=0;i<30;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0x8b5cf6;const N=15;const bars=[];for(let i=0;i<N;i++){const x=(i-(N-1)/2)*0.42;const col2=new THREE.Color().setHSL(0.0+0.33*(i/(N-1)),0.6,0.55);const b=new THREE.Mesh(new THREE.BoxGeometry(0.3,1,0.3),new THREE.MeshBasicMaterial({color:col2}));b.position.x=x;s.add(b);bars.push(b);}const marker=new THREE.Mesh(new THREE.ConeGeometry(0.22,0.5,12),new THREE.MeshBasicMaterial({color:0xffffff}));marker.position.y=1.4;s.add(marker);s.userData.m=marker;s.userData.N=N;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const N=s.userData.N;const x=Math.sin(T*0.8)*(N-1)/2*0.42;s.userData.m.position.x=x;s.rotation.y+=0.0;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

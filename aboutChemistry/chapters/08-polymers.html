@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -46,7 +48,7 @@
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -129,6 +131,11 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 폴리스타이렌-폴리아이소프렌 다이블록의 χN 값에 따라 어떤 상이 나타나는지 SCFT로 예측하고, 실험 SAXS 데이터와 비교해 보세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e896","questions":[{"q":"고분자를 이루는 반복 단위는?","choices":["모노머","원자","이온","전자"],"answer":0},{"q":"첨가 중합의 부산물은?","choices":["물","이산화탄소","없음","산소"],"answer":2},{"q":"폴리에틸렌은 무엇의 중합인가?","choices":["벤젠","메테인","에탄올","에틸렌"],"answer":3},{"q":"가열하면 녹아 재성형 가능한 것은?","choices":["열경화성","열가소성","결정성","비결정성"],"answer":1},{"q":"축합 중합으로 만드는 것은?","choices":["폴리에틸렌","나일론","PVC","폴리스타이렌"],"answer":1}]};</script>
 </main>
 </div>
 

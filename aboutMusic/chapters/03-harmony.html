@@ -2,11 +2,13 @@
 <title>3. 화성학 — aboutMusic</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">🎵 표지</a></li><li><a href="chapters/01-basics.html">1. 음악 기초</a></li><li><a href="chapters/02-rhythm.html">2. 리듬과 박자</a></li><li><a href="chapters/03-harmony.html">3. 화성학</a></li><li><a href="chapters/04-melody.html">4. 멜로디와 작곡</a></li><li><a href="chapters/05-form.html">5. 음악 형식</a></li><li><a href="chapters/06-genres.html">6. 장르의 이해</a></li><li><a href="chapters/07-production.html">7. 음악 제작</a></li><li><a href="chapters/08-ear-training.html">8. 청음 훈련</a></li><li><a href="chapters/09-modern.html">9. 현대 음악이론</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🎵 표지</a></li><li><a href="01-basics.html">1. 음악 기초</a></li><li><a href="02-rhythm.html">2. 리듬과 박자</a></li><li><a href="03-harmony.html">3. 화성학</a></li><li><a href="04-melody.html">4. 멜로디와 작곡</a></li><li><a href="05-form.html">5. 음악 형식</a></li><li><a href="06-genres.html">6. 장르의 이해</a></li><li><a href="07-production.html">7. 음악 제작</a></li><li><a href="08-ear-training.html">8. 청음 훈련</a></li><li><a href="09-modern.html">9. 현대 음악이론</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>화성학</em></h1><p class="authors">Chapter 3 — Harmony, Chords & Progressions</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 코드 진행 — 3음을 쌓은 4개의 화음 기둥이 차례로 울리는 I-V-vi-IV</span>
 <h2>화성학</h2><p>Harmony, Chords & Progressions의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Harmony, Chords & Progressions</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -63,5 +65,22 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 좋아하는 K-팝 곡 한 곡의 코드 진행을 채보한 뒤, 모든 메이저 코드를 마이너로, 마이너를 메이저로 바꿔 연주해 보고 정서가 어떻게 변하는지 분석해 보라.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ec4899","questions":[{"q":"근음·3음·5음으로 된 기본 코드는?","choices":["7화음","3화음","9화음","텐션"],"answer":1},{"q":"곡의 중심이 되는 음과 코드는?","choices":["딸림음","버금음","으뜸음","이끔음"],"answer":2},{"q":"도·미·솔을 동시에 누르면 무슨 코드?","choices":["A 마이너","G 메이저","D 마이너","C 메이저"],"answer":3},{"q":"V와 vii° 화음의 기능은?","choices":["도미넌트","토닉","서브도미넌트","모달"],"answer":0},{"q":"「캐논 코드」라 불리는 진행은?","choices":["ii-V-I","I-V-vi-IV","I-IV-I-IV","vi-ii-V-I"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const chords=[];const roots=[0,4,5,3];for(let ci=0;ci<4;ci++){const grp=new THREE.Group();grp.position.x=(ci-1.5)*1.9;const hue=(roots[ci]%7)/7;const col=new THREE.Color().setHSL(hue,0.65,0.55);for(let n=0;n<3;n++){const sph=new THREE.Mesh(new THREE.SphereGeometry(0.32,18,18),new THREE.MeshBasicMaterial({color:col}));sph.position.y=(n-1)*0.95;grp.add(sph);const ring=new THREE.Mesh(new THREE.TorusGeometry(0.45,0.04,8,24),new THREE.MeshBasicMaterial({color:col}));ring.position.y=(n-1)*0.95;ring.rotation.x=Math.PI/2;grp.add(ring);}s.add(grp);chords.push(grp);}
+  s.userData.chords=chords;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const cur=Math.floor(T*1.2)%4;s.userData.chords.forEach((g,i)=>{const on=(i===cur);g.scale.setScalar(on?1.25:0.9);g.rotation.y+=on?0.05:0.005;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

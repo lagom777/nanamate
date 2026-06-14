@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5. 트로이 전쟁 — aboutMythology</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🏛️ 표지</a></li>
+    <li><a href="01-what-is.html">1. 신화란 무엇인가</a></li>
+    <li><a href="02-creation.html">2. 창조 신화</a></li>
+    <li><a href="03-olympians.html">3. 올림포스 12신</a></li>
+    <li><a href="04-heroes.html">4. 영웅 신화</a></li>
+    <li><a href="05-trojan-war.html">5. 트로이 전쟁</a></li>
+    <li><a href="06-odyssey.html">6. 오디세이아의 귀환</a></li>
+    <li><a href="07-metamorphoses.html">7. 사랑과 변신</a></li>
+    <li><a href="08-underworld.html">8. 저승과 운명</a></li>
+    <li><a href="09-legacy.html">9. 신화의 유산</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>트로이 전쟁</em></h1>
+  <p class="authors">Chapter 5 — The Trojan War</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 성벽을 사이에 둔 두 진영의 대치와 트로이 목마 — 회전시켜 보세요</span>
+
+<h2>트로이 전쟁 개요</h2>
+<p>트로이 전쟁은 그리스 신화에서 가장 방대하고 영향력 있는 이야기로, 신들의 다툼에서 시작된 사소한 불씨가 한 도시를 멸망으로 몰아간 10년간의 전쟁이다. 가장 아름다운 여신을 가리는 '파리스의 심판', 절세미인 헬레네의 납치, 그리스 연합군의 원정, 그리고 트로이 목마에 의한 함락까지, 사랑과 명예와 운명이 얽힌 서사가 펼쳐진다. 호메로스의 <em>일리아스</em>는 이 긴 전쟁 가운데 아킬레우스의 분노라는 짧은 한 대목만을 깊이 있게 다룬다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>여신들의 미모 경쟁이 헬레네 납치로 이어지고, 그리스 연합군이 10년간 트로이를 포위한다. 아킬레우스·헥토르·오디세우스 등 영웅들이 활약하며, 결국 오디세우스의 목마 계략으로 트로이가 함락된다. 신화적 서사이면서도 슐리만의 발굴 이후 역사적 실재 여부가 함께 논의되는 주제다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>트로이 전쟁은 한 여인을 둘러싼 다툼으로 시작되어 영웅들의 명예와 죽음으로 끝난, 그리스 신화 최대의 전쟁 이야기다.</p>
+<h3>왜 중요한가?</h3>
+<p>트로이 전쟁은 서양 문학의 출발점에 놓인 이야기다. 호메로스의 <em>일리아스</em>와 <em>오디세이아</em>가 모두 이 전쟁을 배경으로 삼으며, 이후 수천 년간 시·연극·회화·영화가 끊임없이 이 소재를 다시 그려 왔다. 또한 이 이야기는 인간이 명예, 사랑, 분노, 운명 앞에서 어떻게 행동하는가를 묻는 거대한 질문집이기도 하다. 영웅들은 신처럼 강하지만 결국 죽음을 피하지 못하는 존재로 그려지며, 그 한계 속에서 빛나는 선택을 한다. 마지막으로 이 전쟁은 신화와 역사의 경계라는 흥미로운 문제를 던진다. 정말로 트로이라는 도시가 있었고 전쟁이 일어났을까 하는 물음이 오늘날까지 이어진다.</p>
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>파리스의 심판</strong>: 가장 아름다운 여신을 고르라는 과제 앞에서 트로이 왕자 파리스가 아프로디테를 선택한 사건. 전쟁의 발단이 된다.</li>
+<li><strong>헬레네</strong>: 세상에서 가장 아름다운 여인으로, 그녀의 납치(혹은 도주)가 그리스 원정의 명분이 된다.</li>
+<li><strong>아킬레우스</strong>: 그리스 최강의 전사. 그의 '분노'가 <em>일리아스</em>의 중심 주제다.</li>
+<li><strong>헥토르</strong>: 트로이의 왕자이자 최고의 수호자. 가족과 도시를 지키는 책임의 상징이다.</li>
+<li><strong>트로이 목마</strong>: 그리스군이 거대한 목마 안에 병사를 숨겨 트로이 성을 함락시킨 계략.</li>
+</ul></div>
+<h3>핵심 개념 풀어쓰기</h3>
+<p>트로이 전쟁을 쉽게 이해하려면 결혼식 자리에 초대받지 못한 손님 한 명을 떠올리면 된다. 불화의 여신이 '가장 아름다운 이에게'라고 적힌 황금 사과 하나를 던지자, 세 여신이 서로 자기 것이라 다툰다. 작은 자존심 싸움이 인간 세상을 끌어들이고, 한 사람의 선택이 도시 하나를 무너뜨린다. 마치 사소한 오해가 눈덩이처럼 커져 돌이킬 수 없는 결과를 낳는 일과 같다. 신화는 이렇게 작은 불씨가 어떻게 거대한 비극으로 번지는지를 극적으로 보여 준다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 등장인물을 '그리스 편'과 '트로이 편'으로 나눠 표를 그려 보자. 아킬레우스·아가멤논·오디세우스는 그리스, 헥토르·파리스·프리아모스는 트로이로 정리하면 줄거리가 훨씬 또렷해진다.</div>
+<h3>한 페이지 요약</h3>
+<ul>
+<li>전쟁은 '파리스의 심판'과 헬레네 납치라는 두 사건에서 시작된다.</li>
+<li>그리스 연합군이 트로이를 10년간 포위하며 전쟁이 길어진다.</li>
+<li>아킬레우스, 헥토르, 오디세우스 등 양편의 영웅들이 활약한다.</li>
+<li>오디세우스의 트로이 목마 계략으로 마침내 트로이가 함락된다.</li>
+<li><em>일리아스</em>는 전쟁 전체가 아니라 아킬레우스의 분노라는 일부만 다룬다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>트로이 전쟁의 서사는 신들의 세계와 인간의 세계가 끊임없이 교차하는 이중 구조로 짜여 있다. 발단은 바다의 여신 테티스와 인간 펠레우스의 결혼식이다. 이 자리에 초대받지 못한 불화의 여신 에리스가 '가장 아름다운 이에게'라 새긴 황금 사과를 던지자, 헤라·아테나·아프로디테가 서로 그 주인임을 주장한다. 제우스는 판단을 트로이 왕자 파리스에게 맡기고, 파리스는 세상에서 가장 아름다운 여인을 주겠다는 아프로디테를 택한다. 그 보상이 스파르타 왕 메넬라오스의 아내 헬레네였고, 파리스가 그녀를 트로이로 데려가면서 그리스 전역의 왕들이 원정에 나선다. 총사령관 아가멤논은 메넬라오스의 형이며, 오디세우스·아이아스·아킬레우스 같은 영웅들이 합류한다. 트로이 쪽에서는 왕 프리아모스의 아들 헥토르가 도시의 방패 역할을 한다. 전쟁은 단숨에 끝나지 않고 무려 10년을 끄는데, 이 긴 교착 속에서 신들도 각자 편을 들어 인간들의 운명에 개입한다. 호메로스의 <em>일리아스</em>는 이 10년 가운데 마지막 해의 며칠을 집중적으로 다루며, 아킬레우스가 아가멤논과 다투고 전투에서 물러난 뒤 벌어지는 사건들을 그린다.</p>
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 분노에서 비극으로 — 일리아스의 구조</h4><p><em>일리아스</em>는 "분노를 노래하소서, 여신이여, 펠레우스의 아들 아킬레우스의 분노를"이라는 구절로 시작된다고 전한다. 아가멤논이 아킬레우스의 전리품을 빼앗자 그는 전투를 거부하고, 그가 빠진 그리스군은 위기에 몰린다. 친구 파트로클로스가 대신 싸우다 헥토르에게 죽자 아킬레우스의 분노는 슬픔과 복수심으로 바뀌고, 그는 헥토르를 죽인다. 작품은 개인의 감정이 전쟁 전체의 향방을 좌우하는 구조를 보여 준다.</p></div>
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1 — 아킬레우스와 헥토르의 대결</h4><p>아킬레우스가 헥토르를 추격해 트로이 성벽 앞에서 쓰러뜨리는 장면은 서사시의 절정으로 꼽힌다. 두 사람은 각각 그리스와 트로이를 대표하며, 한쪽은 명예와 복수를, 다른 한쪽은 가족과 도시를 위해 싸운다. 승리한 아킬레우스조차 곧 자신의 죽음이 다가옴을 알고 있어, 이 대결은 승패를 넘어 인간의 유한함을 비추는 거울이 된다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 트로이 목마</h4><p>10년간 함락되지 않던 트로이는 오디세우스의 계략으로 무너진다. 그리스군은 거대한 목마를 남기고 철수한 척하고, 트로이인들은 이를 전리품으로 성안에 들인다. 밤이 되자 목마 속에 숨었던 병사들이 빠져나와 성문을 열고, 트로이는 하룻밤 사이에 멸망한다. 다만 목마 일화 자체는 <em>일리아스</em>가 아니라 후대의 이야기와 다른 작품들을 통해 전해진다.</p></div>
+<h3>현대적 전개</h3>
+<p>트로이 전쟁은 오늘날에도 끊임없이 재해석된다. 영화와 소설은 헬레네를 단순한 미인이 아니라 주체적 인물로, 아킬레우스를 영웅이자 비극적 인간으로 다시 그리며, 최근에는 브리세이스 같은 주변부 여성의 시선으로 전쟁을 다시 쓰는 시도도 활발하다. 학계에서는 구전 서사로서의 호메로스 시가 어떻게 형성되었는지, 그리고 그 배경에 청동기 시대 에게해 세계가 어떻게 반영되었는지가 계속 연구된다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> <em>일리아스</em>가 트로이 전쟁 전체를 처음부터 끝까지 다룬다고 생각하기 쉽지만, 사실 작품은 전쟁 마지막 해의 짧은 기간만을 다루며 헥토르의 장례로 끝난다. 목마와 트로이 함락, 아킬레우스의 죽음은 모두 작품 바깥의 다른 전승에 담겨 있다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>트로이 전쟁을 깊이 이해하려면 '신화로서의 트로이'와 '역사로서의 트로이'를 구분하면서도 둘의 관계를 함께 살펴야 한다. 호메로스의 서사시는 단일 저자의 창작이라기보다 오랜 구전 전통이 누적된 산물로 보는 견해가 유력하다. 밀먼 패리와 앨버트 로드의 구전 정형구 이론은 <em>일리아스</em>의 반복적 수식어와 정형 구절이 구전 가창의 흔적임을 밝혔다. 한편 트로이 이야기는 <em>일리아스</em>와 <em>오디세이아</em> 외에도 이른바 '서사시 연환(Epic Cycle)'이라 불리는 여러 작품을 통해 전체 줄거리가 완성되었는데, 이들 대부분은 단편으로만 남았다. 비극 작가들은 이 소재를 무대 위로 끌어와, 전쟁이 끝난 뒤 패배한 트로이 여인들의 고통이나 영웅들의 귀환을 비극으로 재구성했다. 따라서 우리가 아는 '트로이 전쟁'은 단일한 텍스트가 아니라 여러 시대의 여러 작품이 겹쳐 만든 거대한 전승의 총합이다. 역사적 측면에서는 19세기 하인리히 슐리만이 오늘날 튀르키예 히사를리크 언덕을 발굴하며 트로이로 비정한 일이 전환점이 되었다. 이후 발굴로 그 자리에 여러 시대에 걸친 도시 층이 겹쳐 있음이 드러났으나, 어느 층이 호메로스의 트로이인지, 실제 전쟁이 있었는지는 여전히 논쟁적이다.</p>
+<h3>최신 연구·쟁점</h3>
+<p>고고학과 문헌학의 진전으로 청동기 후기 에게해와 아나톨리아 세계에 대한 이해가 깊어지면서, 트로이가 위치한 지역이 당시 국제 정치의 요충지였다는 점이 부각된다. 히타이트 문서에 등장하는 지명·인명을 트로이 및 그리스 세계와 연결하려는 시도가 이어지지만, 확정적 결론에는 이르지 못했다. 결국 트로이 전쟁은 '완전한 허구'도 '문자 그대로의 역사'도 아닌, 청동기 시대의 기억과 후대의 문학적 상상이 결합된 복합적 전승으로 보는 신중한 입장이 널리 받아들여진다.</p>
+<h3>관련 분야</h3>
+<ul>
+<li><strong>고전 문헌학</strong>: 호메로스 서사시의 형성 과정과 구전 전통을 연구하는 분야.</li>
+<li><strong>에게해 고고학</strong>: 청동기 시대 미케네·트로이 등 유적을 발굴·해석하는 분야.</li>
+<li><strong>비교신화학</strong>: 여러 문화권의 전쟁·영웅 서사와 그리스 신화를 비교하는 분야.</li>
+</ul>
+<h3>더 읽을거리</h3>
+<ul>
+<li>"일리아스" — 호메로스</li>
+<li>"오디세이아" — 호메로스</li>
+<li>"트로이의 여인들" — 에우리피데스</li>
+</ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> <em>일리아스</em>가 다루는 사건의 시간 범위(전쟁 마지막 해의 며칠)와, 트로이 목마·함락처럼 작품 바깥의 전승에서 전해지는 사건을 각각 구분해 목록으로 정리해 보자. 어디까지가 호메로스의 텍스트이고 어디부터가 후대의 보완인지 스스로 경계를 그어 보면, 신화 전승이 어떻게 누적되는지 직접 체감할 수 있다.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#e0b341","questions":[{"q":"황금 사과를 던진 여신은?","choices":["헤라","아테나","아프로디테","에리스"],"answer":3},{"q":"파리스가 선택한 여신은?","choices":["헤라","아프로디테","아테나","아르테미스"],"answer":1},{"q":"목마 계략을 낸 영웅은?","choices":["오디세우스","아킬레우스","아가멤논","헥토르"],"answer":0},{"q":"『일리아스』의 중심 주제는?","choices":["목마 계략","헬레네의 결혼","아킬레우스의 분노","트로이 함락"],"answer":2},{"q":"트로이를 발굴한 인물은?","choices":["밀먼 패리","슐리만","앨버트 로드","호메로스"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,2,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // 트로이 전쟁: 왼쪽 그리스 진영(붉은 창들) vs 오른쪽 성벽 안의 트로이(원형 성탑) 대치. 가운데 트로이 목마가 성문으로 다가감
+  const greeks=[];for(let i=0;i<7;i++){const sp=new THREE.Mesh(new THREE.ConeGeometry(0.12,1.1,4),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.0,0.6,0.5)})); sp.position.set(-3.6+(i%2)*0.4,-1+(i*0.3),(i-3)*0.5); s.add(sp); greeks.push(sp);}
+  const wallC=new THREE.Color().setHSL(0.09,0.5,0.55);
+  const towers=[];for(let i=0;i<8;i++){const ang=i/8*Math.PI*2; const t=new THREE.Mesh(new THREE.CylinderGeometry(0.25,0.3,1.4,8),new THREE.MeshBasicMaterial({color:wallC})); t.position.set(2.6+Math.cos(ang)*1.4,0,Math.sin(ang)*1.4); s.add(t); towers.push(t);}
+  const wallRing=new THREE.Mesh(new THREE.TorusGeometry(1.4,0.08,8,40),new THREE.MeshBasicMaterial({color:wallC})); wallRing.position.set(2.6,0.6,0); wallRing.rotation.x=Math.PI/2; s.add(wallRing);
+  const horseBody=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.55,0.4),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.1,0.6,0.45)})); const horseHead=new THREE.Mesh(new THREE.BoxGeometry(0.25,0.45,0.25),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.1,0.6,0.45)})); horseHead.position.set(0.45,0.35,0);
+  const horse=new THREE.Group(); horse.add(horseBody); horse.add(horseHead); horse.position.set(-0.6,-0.3,0); s.add(horse);
+  s.userData.greeks=greeks;s.userData.towers=towers;s.userData.horse=horse;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.greeks.forEach((g,i)=>{g.position.y=-1+(i*0.3)+Math.sin(T*2+i)*0.08;});const h=s.userData.horse;h.position.x=-0.6+Math.sin(T*0.4)*0.6;h.position.y=-0.3+Math.abs(Math.sin(T*3))*0.1;s.userData.towers.forEach((t,i)=>{t.scale.y=1+0.05*Math.sin(T*2+i);});s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

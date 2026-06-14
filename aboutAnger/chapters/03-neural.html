@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 붉은 불꽃을 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 신경 회로 — 뇌 영역들의 연결과 작동</span>
 
 <h2>신경 메커니즘 개요</h2>
 <p>분노는 편도체-시상하부-수도주위회백질(PAG)을 잇는 위협 반응 회로에서 시작되고, 복내측 전전두엽(vmPFC)이 그것을 억제하는 두 시스템의 줄다리기다. 세로토닌이 낮을수록 충동적 분노가 늘고, 테스토스테론과 코르티솔의 비율이 분노 표출 양상을 좌우한다. 분노는 뇌의 결함이 아니라 정상 회로의 작동이다.</p>
@@ -74,5 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 다음 2주 동안 분노가 올라오는 순간의 신체 신호 3가지(예: 심박·체온·턱 긴장)를 기록하고, 그것이 분노 폭발보다 평균 몇 초 먼저 나타나는지 측정해보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ef4444","questions":[{"q":"0.2초에 위협을 감지하는 뇌는?","choices":["편도체","소뇌","간","심장"],"answer":0},{"q":"분노 억제 브레이크 역할은?","choices":["편도체","vmPFC","시상하부","해마"],"answer":1},{"q":"충동을 가라앉히는 물질은?","choices":["아드레날린","코르티솔","세로토닌","도파민"],"answer":2},{"q":"LeDoux의 빠른 경로 이름은?","choices":["높은 길","낮은 길","중간 길","옆 길"],"answer":1},{"q":"코르티솔을 분비하는 축은?","choices":["X축","Y축","HPA 축","Z축"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0xef4444;const parts=[];for(let i=0;i<34;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xef4444;const brain=new THREE.Mesh(new THREE.SphereGeometry(2.0,20,16),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.35}));s.add(brain);const reg=[];const pts=[[-0.8,-0.3,0.6],[0.8,-0.3,0.6],[0,0.7,-0.4],[0,-0.9,-0.2]];pts.forEach(p=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.26,16,16),new THREE.MeshBasicMaterial({color:0xffe08a}));m.position.set(p[0]*1.5,p[1]*1.5,p[2]*1.5);s.add(m);reg.push(m);});for(let i=0;i<reg.length;i++)for(let j=i+1;j<reg.length;j++)s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([reg[i].position,reg[j].position]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.3})));
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;brain.rotation.y+=0.004;reg.forEach((m,i)=>m.scale.setScalar(0.8+0.3*Math.sin(T*3+i)));s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

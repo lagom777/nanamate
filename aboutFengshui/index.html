@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>풍수지리 — aboutFengshui</title><link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="index.html">🧭 표지 · 소개</a></li>
+<li><a href="chapters/01-what-is.html">1. 풍수란 무엇인가</a></li>
+<li><a href="chapters/02-yinyang-five.html">2. 음양오행과 기</a></li>
+<li><a href="chapters/03-form-school.html">3. 형세론 — 산과 물</a></li>
+<li><a href="chapters/04-compass-school.html">4. 이기론 — 나경과 좌향</a></li>
+<li><a href="chapters/05-yangtaek.html">5. 양택 — 집과 공간</a></li>
+<li><a href="chapters/06-eumtaek.html">6. 음택 — 묘지와 명당</a></li>
+<li><a href="chapters/07-interior.html">7. 인테리어·현대 풍수</a></li>
+<li><a href="chapters/08-korea.html">8. 비보풍수와 한국 풍수</a></li>
+<li><a href="chapters/09-science.html">9. 풍수의 과학·비판</a></li>
+</ol></aside>
+<main>
+<header class="paper-header">
+  <h1><em>풍수</em>지리</h1>
+  <p class="authors">Feng Shui — Reading the Energy of Land and Home</p>
+  <p class="affiliation">Vol. 26 · Jun 2026 · aboutFengshui Editorial</p>
+</header>
+
+<div class="scene-3d" id="intro-scene"></div>
+<span class="interact-hint">⟳ 마우스로 회전 · 기(氣)의 흐름</span>
+
+<h2>이 과목에 대하여</h2>
+<p>풍수(風水)는 글자 그대로 '바람과 물'입니다. 좋은 땅은 바람을 갈무리하고 물을 얻는다(藏風得水)는 한 문장에서 출발해, 동아시아인은 수천 년간 집과 도시와 무덤의 자리를 정해 왔습니다. 이 과목은 풍수를 미신이 아니라 <strong>기(氣)의 지리학이자 공간 설계의 전통</strong>으로 보고, 이론·실전·과학적 검토까지 9개 챕터로 안내합니다.</p>
+
+<h2>학습 로드맵</h2>
+<div class="info-card"><h4>🧭 챕터 1–4: 이론의 뼈대</h4><p>풍수의 정의와 역사, 음양오행과 기, 그리고 두 큰 학파인 형세론(눈으로 보는 산수)과 이기론(나경으로 재는 방위).</p></div>
+<div class="info-card"><h4>🏠 챕터 5–7: 실전 적용</h4><p>산 사람의 공간(양택)과 조상의 자리(음택), 그리고 오늘의 아파트·사무실에 적용하는 인테리어 풍수.</p></div>
+<div class="info-card"><h4>🔬 챕터 8–9: 한국 풍수와 과학</h4><p>한양 도읍과 비보풍수 등 한국의 전통, 그리고 풍수를 환경심리·실증의 눈으로 비판적으로 검토합니다.</p></div>
+
+<h2>이렇게 학습하세요</h2>
+<p>각 챕터마다 <strong>하 · 중 · 상</strong> 3단계 난이도 탭이 있습니다. "하"에서 한 줄 정의와 생활 속 예시를, "중"에서 이론과 용어를, "상"에서 학파 논쟁과 과학적 검증을 다룹니다. 우측 상단 언어 토글로 다국어 학습도 가능합니다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 풍수는 "길흉을 점치는 법"이기 전에 "햇빛·바람·물·동선을 읽는 법"입니다. 믿고 안 믿고를 떠나, 오늘 내 방의 침대와 책상 위치부터 풍수의 눈으로 다시 보세요.</div>
+
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('intro-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3.5,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=1357990;const TRI=[[1,1,1],[1,1,0],[1,0,1],[1,0,0],[0,1,1],[0,1,0],[0,0,1],[0,0,0]];const ring=new THREE.Mesh(new THREE.TorusGeometry(3.2,0.04,10,80),new THREE.MeshBasicMaterial({color:C,transparent:true,opacity:0.4}));ring.rotation.x=Math.PI/2;s.add(ring);TRI.forEach((tg,i)=>{const ang=i/8*Math.PI*2;const grp=new THREE.Group();grp.position.set(Math.cos(ang)*3.2,0,Math.sin(ang)*3.2);tg.forEach((yang,j)=>{if(yang){const b=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.12,0.12),new THREE.MeshBasicMaterial({color:C}));b.position.y=(j-1)*0.28;grp.add(b);}else{const l=new THREE.Mesh(new THREE.BoxGeometry(0.36,0.12,0.12),new THREE.MeshBasicMaterial({color:C}));l.position.set(-0.27,(j-1)*0.28,0);grp.add(l);const r2=l.clone();r2.position.x=0.27;grp.add(r2);}});grp.lookAt(0,0,0);s.add(grp);});const yy=new THREE.Mesh(new THREE.TorusGeometry(0.7,0.08,12,40),new THREE.MeshBasicMaterial({color:C}));yy.rotation.x=Math.PI/2;s.add(yy);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

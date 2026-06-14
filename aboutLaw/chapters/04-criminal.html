@@ -2,11 +2,13 @@
 <title>4. 형법 기초 — aboutLaw</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">⚖️ 표지</a></li><li><a href="chapters/01-intro.html">1. 법학 개론</a></li><li><a href="chapters/02-constitutional.html">2. 헌법</a></li><li><a href="chapters/03-civil.html">3. 민법 기초</a></li><li><a href="chapters/04-criminal.html">4. 형법 기초</a></li><li><a href="chapters/05-labor.html">5. 근로기준법</a></li><li><a href="chapters/06-property.html">6. 부동산/재산법</a></li><li><a href="chapters/07-consumer.html">7. 소비자 보호법</a></li><li><a href="chapters/08-ip.html">8. 지식재산권</a></li><li><a href="chapters/09-digital-law.html">9. 디지털 법률</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">⚖️ 표지</a></li><li><a href="01-intro.html">1. 법학 개론</a></li><li><a href="02-constitutional.html">2. 헌법</a></li><li><a href="03-civil.html">3. 민법 기초</a></li><li><a href="04-criminal.html">4. 형법 기초</a></li><li><a href="05-labor.html">5. 근로기준법</a></li><li><a href="06-property.html">6. 부동산/재산법</a></li><li><a href="07-consumer.html">7. 소비자 보호법</a></li><li><a href="08-ip.html">8. 지식재산권</a></li><li><a href="09-digital-law.html">9. 디지털 법률</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>형법 기초</em></h1><p class="authors">Chapter 4 — Criminal Law Fundamentals</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 죄형법정주의 — 법봉이 사운드블록을 내리치는 형벌의 선언 — 드래그로 회전</span>
 <h2>형법 기초</h2><p>Criminal Law Fundamentals의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Criminal Law Fundamentals</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -43,5 +45,24 @@
   <h3>추가 자료</h3><ul><li>이재상·장영민·강동범, 『형법총론』 — 한국 형법학의 표준 교과서</li><li>C. Roxin, 『Strafrecht AT』 — 독일 형법 총론의 고전</li><li>Model Penal Code — 미국 모범형법전</li><li>대검찰청 형사사법포털 — 통계와 사례</li></ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 자율주행차가 보행자를 피하기 위해 탑승자를 위험에 빠뜨리는 선택을 했다면, 트롤리 딜레마와 긴급피난 법리는 어떻게 결합되어야 하는지 논해 보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#1d4ed8","questions":[{"q":"법률 없이 형벌 없다는 원칙은?","choices":["죄형법정주의","신의성실 원칙","사적 자치","과잉금지원칙"],"answer":0},{"q":"범죄 성립 3단계가 아닌 것은?","choices":["구성요건","위법성","책임","손해배상"],"answer":3},{"q":"형사미성년자의 기준은?","choices":["만 12세 미만","만 13세 미만","만 14세 미만","만 19세 미만"],"answer":2},{"q":"한국이 사형 집행을 멈춘 해는?","choices":["1987년","1997년","2007년","2017년"],"answer":1},{"q":"교사범은 어떻게 처벌되는가?","choices":["형 면제","형 감경","정범과 같은 형","형 가중"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const gavel=new THREE.Group();const head=new THREE.Mesh(new THREE.CylinderGeometry(0.55,0.55,1.4,20),new THREE.MeshBasicMaterial({color:0x8a5a2b}));head.rotation.z=Math.PI/2;gavel.add(head);[-0.85,0.85].forEach(x=>{const band=new THREE.Mesh(new THREE.CylinderGeometry(0.6,0.6,0.18,20),new THREE.MeshBasicMaterial({color:0xffe08a}));band.rotation.z=Math.PI/2;band.position.x=x;gavel.add(band);});const handle=new THREE.Mesh(new THREE.CylinderGeometry(0.18,0.18,2.4,14),new THREE.MeshBasicMaterial({color:0x8a5a2b}));handle.position.set(0,1.4,0);gavel.add(handle);gavel.position.y=1.4;s.add(gavel);
+  const block=new THREE.Mesh(new THREE.CylinderGeometry(1.1,1.3,0.5,24),new THREE.MeshBasicMaterial({color:0x6b4a26}));block.position.y=-1.6;s.add(block);
+  const ripple=new THREE.Mesh(new THREE.RingGeometry(0.6,0.7,32),new THREE.MeshBasicMaterial({color:0xffd24a}));ripple.rotation.x=-Math.PI/2;ripple.position.y=-1.3;s.add(ripple);
+  s.userData.g=gavel;s.userData.ring=ripple;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const cyc=(T*1.6)%(Math.PI*2);const drop=Math.max(0,Math.sin(cyc));s.userData.g.position.y=1.4-drop*1.6;const ph=((T*1.6)%6.28)/6.28;s.userData.ring.scale.setScalar(0.5+ph*2.2);s.userData.ring.material.opacity=1-ph;s.userData.ring.material.transparent=true;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

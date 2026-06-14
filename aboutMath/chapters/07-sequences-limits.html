@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7장. 수열과 극한</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📐 표지 · 소개</a></li>
+    <li><a href="01-numbers-sets.html">1. 수와 집합</a></li>
+    <li><a href="02-algebra.html">2. 대수 — 방정식과 다항식</a></li>
+    <li><a href="03-functions.html">3. 함수와 그래프</a></li>
+    <li><a href="04-geometry.html">4. 기하 — 도형과 피타고라스</a></li>
+    <li><a href="05-trigonometry.html">5. 삼각함수 — 원과 파동</a></li>
+    <li><a href="06-exponential-log.html">6. 지수와 로그</a></li>
+    <li><a href="07-sequences-limits.html" style="color:var(--accent);font-weight:600;">7. 수열과 극한</a></li>
+    <li><a href="08-differentiation.html">8. 미분 — 변화율의 수학</a></li>
+    <li><a href="09-integration.html">9. 적분과 확률·통계</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. 수열 — 자연수를 입력받는 함수</h2>
+<p><strong>수열</strong>은 자연수 n마다 수 aₙ을 대응시키는 함수입니다(3장의 함수 개념 그대로, 정의역만 ℕ). 두 기본형이 모든 것의 출발점입니다. <strong>등차수열</strong>: 일정한 차 d로 더해감, aₙ = a₁ + (n−1)d, 합 Sₙ = n(a₁+aₙ)/2 — 가우스가 1+2+…+100 = 5050을 즉답한 "앞뒤로 접어 더하기"가 이 공식입니다. <strong>등비수열</strong>: 일정한 비 r로 곱해감, aₙ = a₁rⁿ⁻¹, 합 Sₙ = a₁(1−rⁿ)/(1−r) — 6장의 지수 성장을 이산적으로 본 것입니다.</p>
+<p>점화식 aₙ₊₁ = f(aₙ)은 수열을 "규칙"으로 정의하는 방식입니다. 피보나치 수열 aₙ₊₂ = aₙ₊₁ + aₙ이 대표적이고, 컴퓨터 과학의 재귀, 인구 모델, 이자 계산 모두 점화식의 언어를 씁니다. 이 장의 진짜 주제는 그 다음 질문입니다: <strong>n이 한없이 커지면 aₙ은 어디로 가는가?</strong></p>
+</section>
+
+<!-- 3D 학습 시각화: 수렴 — ε 띠로 보는 극한의 정의, e의 탄생, 무한합 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#e8506e;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 수렴의 풍경: ε 띠 안으로 들어가는 점들, e로 오르는 계단, 1을 채우는 무한합</div>
+  <div id="math3d-07" style="width:100%;height:430px;"></div>
+  <div id="math3d-07-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">수열의 점들이 극한값으로 모여드는 과정을 봅니다.</div>
+</div>
+
+<section id="sec2">
+<h2>2. 극한 — "한없이 가까워진다"를 엄밀하게</h2>
+<p>aₙ = 1/n은 0이 되지는 않지만 0에 <strong>한없이 가까워집니다</strong>. 이 직관을 19세기 수학은 다음과 같이 못 박았습니다(ε-N 정의): <strong>어떤 작은 양수 ε을 잡아도, 어떤 번호 N 이후의 모든 항이 극한 L과의 거리 ε 안에 들어온다</strong>면 aₙ → L. 위 3D의 첫 장면이 이 정의 그 자체입니다 — 띠(ε)를 아무리 좁혀도, 충분히 큰 n부터는 모든 점이 띠 안에 들어옵니다. "무한히 가까이"라는 시적 표현이 "유한 개의 예외만 허용"이라는 검증 가능한 조건으로 바뀐 것이 해석학의 탄생입니다.</p>
+<p>극한은 사칙연산과 사이좋게 지냅니다: aₙ→α, bₙ→β이면 aₙ±bₙ→α±β, aₙbₙ→αβ, aₙ/bₙ→α/β (β≠0). 그리고 <strong>샌드위치 정리</strong>: aₙ ≤ cₙ ≤ bₙ이고 양끝이 같은 L로 가면 가운데도 L로 — 5장의 sin x/x → 1이 이 정리의 작품입니다.</p>
+</section>
+
+<section id="sec3">
+<h2>3. 단조수렴정리와 e — 1장의 완비성이 일하는 순간</h2>
+<p>모든 수열이 수렴하지는 않습니다(1, −1, 1, −1, …은 진동, n²은 발산). 수렴을 보장하는 가장 중요한 정리가 <strong>단조수렴정리</strong>입니다: <strong>증가하면서 위로 유계인 수열은 반드시 수렴한다</strong>. 증명의 엔진이 바로 1장의 실수 완비성(상한의 존재)입니다 — 유리수 세계라면 "수렴할 곳"이 구멍일 수 있어 이 정리가 무너집니다.</p>
+<p>대표 응용이 aₙ = (1 + 1/n)ⁿ입니다. 이항정리로 펼치면 이 수열은 증가하고 3보다 작음을 보일 수 있습니다 — 따라서 수렴하고, 그 극한을 <strong>e ≈ 2.71828</strong>이라 부릅니다. 6장의 "연속 복리"가 여기서 정식 시민권을 얻습니다: 100% 이율을 무한히 잘게 나눠 복리로 불리면 원금의 정확히 e배.</p>
+</section>
+
+<section id="sec4">
+<h2>4. 급수 — 무한히 더한다는 것</h2>
+<p>수열의 항을 무한히 더한 것이 <strong>급수</strong> Σaₙ이고, 그 정의는 "부분합 수열 Sₙ = a₁+…+aₙ의 극한"입니다 — 무한합도 결국 극한입니다. 핵심 사례인 <strong>등비급수</strong>: |r| &lt; 1이면 Σ a rⁿ⁻¹ = a/(1−r). 예컨대 ½ + ¼ + ⅛ + … = 1 — 위 3D의 마지막 장면처럼, 정사각형의 절반, 남은 것의 절반…을 무한히 채우면 정확히 전체가 됩니다. 제논의 "아킬레스는 거북을 못 따라잡는다" 역설은 무한 개의 양수를 더해도 유한할 수 있다는 이 사실로 해소됩니다.</p>
+<p>주의 사례 하나: <strong>조화급수</strong> 1 + ½ + ⅓ + ¼ + …는 항이 0으로 가는데도 <strong>발산</strong>합니다(묶음 비교: ⅓+¼ &gt; ½, ⅕+…+⅛ &gt; ½, …). "항이 0으로 간다"는 수렴의 필요조건일 뿐 충분조건이 아닙니다 — 무한을 다룰 때 직관이 처음으로 배신하는 지점이자, 8~9장의 미적분이 요구하는 엄밀함의 이유입니다.</p>
+<div class="formula">aₙ→L ⟺ ∀ε&gt;0 ∃N: n≥N ⇒ |aₙ−L|&lt;ε &nbsp;|&nbsp; (1+1/n)ⁿ → e &nbsp;|&nbsp; |r|&lt;1 ⇒ Σarⁿ⁻¹ = a/(1−r)</div>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="06-exponential-log.html" style="text-decoration:none;">← 6. 지수와 로그</a><a href="08-differentiation.html" style="text-decoration:none;">8. 미분 — 변화율의 수학 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>수열은 "번호 붙은 수의 줄", 극한은 "그 줄이 결국 도착하는 곳"이에요. 1/2, 1/3, 1/4, …는 0에 도착하지는 않지만, 0이 "도착지"라는 것은 누구나 압니다 — 그 직관을 정확한 약속으로 만든 것이 극한입니다.</p>
+  <h3>왜 중요한가?</h3>
+  <p>스마트폰 화면의 곡선이 매끄러워 보이는 것(픽셀의 극한), 적금의 복리 계산, 0.999… = 1 논쟁, 그리고 다음 두 장(미분·적분)의 모든 정의 — 전부 극한 위에 서 있습니다. 극한은 미적분이라는 건물의 기초 공사입니다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>등차수열</strong>: 같은 수를 더해감 (3, 7, 11, 15, …)</li>
+    <li><strong>등비수열</strong>: 같은 수를 곱해감 (3, 6, 12, 24, …)</li>
+    <li><strong>수렴</strong>: 한 값에 한없이 가까워짐 / <strong>발산</strong>: 그렇지 않음</li>
+    <li><strong>극한값</strong>: 수렴이 도착하는 그 값</li>
+    <li><strong>급수</strong>: 수열을 무한히 더한 것 — 부분합의 극한</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>"한없이 가까워진다"를 게임으로 만들면 극한의 정의가 됩니다. 상대가 "0.001 안으로 들어와 봐"라고 도전하면(ε), 나는 "1001번째 항부터는 전부 들어가 있어"라고 답합니다(N). 상대가 아무리 작은 수로 도전해도 내가 항상 답할 수 있으면 — 그게 "수렴한다"입니다. 위 3D에서 띠가 좁아져도 점들이 결국 다 들어가는 장면이 이 게임의 시각화예요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 수열 문제를 만나면 첫 몇 항을 직접 계산해서 나열해 보세요(최소 4~5개). 등차인지 등비인지, 커지는지 작아지는지, 어디로 가는 것 같은지 — 패턴이 보이면 공식은 따라옵니다. "공식 먼저"가 아니라 "항 먼저"가 정석입니다.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>등차: aₙ = a+(n−1)d, 합 = n(첫항+끝항)/2</li>
+    <li>등비: aₙ = arⁿ⁻¹, |r|&lt;1이면 무한합 = a/(1−r)</li>
+    <li>수렴 = 어떤 ε 띠를 줘도 유한 개 빼고 다 들어감</li>
+    <li>증가 + 위로 막힘 ⇒ 반드시 수렴 (단조수렴정리)</li>
+    <li>½+¼+⅛+… = 1, 하지만 1+½+⅓+…는 발산</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>ε-N 정의로 실제 증명을 한번 써 보면 안개가 걷힙니다. aₙ = (2n+1)/(n+3) → 2의 증명: |aₙ−2| = |(2n+1−2n−6)/(n+3)| = 5/(n+3). ε이 주어지면 5/(n+3) &lt; ε ⟺ n &gt; 5/ε − 3이므로 N = ⌈5/ε⌉로 잡으면 충분합니다. 패턴은 항상 같습니다: |aₙ−L|을 n의 식으로 정리 → ε보다 작아지는 N 찾기.</p>
+  <p>점화식 수열의 극한 구하기 2단계: ① 극한 L이 존재한다고 가정하면 L = f(L)에서 후보를 구함(예: aₙ₊₁ = ½aₙ + 3 → L = ½L+3 → L = 6), ② 존재 자체는 단조수렴정리 등으로 별도 증명. ②를 건너뛰면 함정에 빠집니다 — aₙ₊₁ = 2aₙ에서 L = 2L → L = 0이라고 답하면 틀리는 이유(발산하므로 가정 자체가 거짓).</p>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>🎯 예제 1 — 대출 상환의 등비급수</h4><p>매달 일정액 m을 갚는 원리금균등상환에서, 대출 원금 P는 미래 상환액들의 현재가치 합: P = m/(1+i) + m/(1+i)² + … + m/(1+i)ⁿ — 등비급수 합으로 m = P·i(1+i)ⁿ/((1+i)ⁿ−1). 은행 앱의 월 상환액 계산기가 이 공식입니다.</p></div>
+  <div class="info-card"><h4>🎯 예제 2 — 재귀 알고리즘의 수렴</h4><p>√2를 구하는 바빌로니아법 aₙ₊₁ = (aₙ + 2/aₙ)/2는 a₁=2에서 2, 1.5, 1.41667, 1.414216… 으로 4번 만에 소수 5자리 정확도에 도달합니다. 극한 가정 시 L = (L+2/L)/2 → L² = 2. 뉴턴법(8장)의 원형이자 "수열 = 계산 알고리즘"의 표본입니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① <strong>수치해석</strong>: 모든 반복 알고리즘(경사하강법 포함)의 분석은 "이 수열이 수렴하는가, 얼마나 빨리?"라는 질문입니다. ② <strong>프랙탈</strong>: 망델브로 집합은 zₙ₊₁ = zₙ²+c가 발산하지 않는 c의 집합 — 수렴/발산의 경계가 만드는 무한 복잡성. ③ <strong>경제학</strong>: 승수효과(정부지출 1단위 → 1+c+c²+… = 1/(1−c) 단위의 총수요)는 등비급수입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① "항이 0으로 가면 급수 수렴" — 거짓(조화급수). ② 무한합에 유한합의 직관 적용: 수렴하지 않는 급수의 항 재배열·괄호 치기는 값을 바꿉니다. ③ 등비급수 공식을 |r| ≥ 1에 적용. ④ 점화식에서 극한 존재 증명 생략. ⑤ ∞−∞, ∞/∞를 0이나 1로 단정 — 부정형은 항별 분석이 필요합니다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>수렴의 내재적 판정이 <strong>코시 수열</strong>입니다: 극한값을 모르더라도 "항들끼리의 거리가 임의로 작아지면"(∀ε ∃N: m,n≥N ⇒ |aₘ−aₙ|&lt;ε) 수렴을 보장 — 단, 공간이 <strong>완비</strong>일 때만. ℝ에서는 코시 ⟺ 수렴이지만 ℚ에서는 실패합니다(√2로 가는 유리수열은 코시지만 ℚ 안에 극한이 없음). 1장의 완비성이 "코시 수열의 수렴"으로 재정식화되는 것이며, 이 성질로 ℝ를 구성하는 것이 칸토어의 방법입니다.</p>
+  <p>부분수열의 관점도 필수입니다. <strong>볼차노–바이어슈트라스 정리</strong>: 유계 수열은 수렴하는 부분수열을 가진다 — 최대·최소 정리(9장)와 컴팩트성 개념의 씨앗입니다. 진동하는 1, −1, 1, −1, …도 부분수열은 수렴하며(1로, 또는 −1로), 부분수열 극한들의 집합(집적점)이 수열의 "장기 행동"을 분류합니다.</p>
+  <h3>수학적·정량적 기초</h3>
+  <div class="formula">코시: ∀ε&gt;0 ∃N: m,n≥N ⇒ |aₘ−aₙ| &lt; ε<br>수렴 속도: |aₙ₊₁−L| ≤ C|aₙ−L|^p — p=1 선형, p=2 이차(뉴턴법)<br>Σ1/n² = π²/6 (바젤 문제) &nbsp;|&nbsp; Σ1/n^s = ζ(s)</div>
+  <p>수렴 "속도"는 응용의 생명입니다. 바빌로니아법이 4번 만에 끝나는 이유는 이차 수렴(자릿수가 매번 2배)이기 때문이고, 경사하강법의 선형 수렴과 뉴턴법의 이차 수렴 차이가 최적화 알고리즘 선택을 좌우합니다. 한편 Σ1/n²= π²/6(오일러, 1734)에서 출발한 ζ(s)의 연구는 <strong>리만 가설</strong> — ζ의 비자명 영점은 모두 실부 ½ — 로 이어지며, 이는 현재 수학 최대의 미해결 문제입니다.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>가속 기법</strong>: Aitken Δ², Anderson acceleration — 느린 수열의 수렴을 외삽으로 가속, 딥러닝 옵티마이저(모멘텀, Adam)도 본질적으로 수열 가속. ② <strong>에르고딕 이론</strong>: 수열의 시간 평균과 공간 평균의 일치 — 동역학계와 통계역학의 다리. ③ <strong>초일관 수열 공간</strong>: 발산급수에 값을 주는 보렐 합·체사로 합이 양자장론의 재규격화에서 실제로 쓰입니다(1+2+3+… "=" −1/12의 정체).</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>해석학</strong>: 함수의 극한·연속(8장)은 수열 극한의 쌍둥이</li>
+    <li><strong>수치해석</strong>: 반복법의 수렴 차수, 오차 분석</li>
+    <li><strong>동역학계</strong>: 점화식 = 이산 동역학, 고정점과 카오스</li>
+    <li><strong>정수론</strong>: ζ 함수, 소수 분포와 급수</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Walter Rudin, <em>PMA</em> 3장 — 수열과 급수의 표준</li>
+    <li>📖 김성기·계승혁, <em>해석개론</em> — 한국어 엄밀 해석학 입문</li>
+    <li>📺 3Blue1Brown — "수렴이란 무엇인가", 바젤 문제 시각화</li>
+    <li>🔬 키워드: epsilon-N, Cauchy sequence, monotone convergence, Bolzano–Weierstrass, rate of convergence</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> ① aₙ = n/(n²+1) → 0을 ε-N 정의로 직접 증명하기. ② (1+1/n)ⁿ의 단조증가를 이항정리 또는 AM-GM으로 증명하기. ③ 조화급수의 발산을 묶음 비교법으로 쓰고, Σ1/n²은 수렴함을 1/n² &lt; 1/(n(n−1)) = 1/(n−1) − 1/n 망원합으로 증명하기 — 발산과 수렴의 경계를 손으로 만져보는 경험입니다.</div>
+</div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f43f5e","questions":[{"q":"같은 수를 곱해 가는 수열은?","choices":["등차수열","피보나치 수열","등비수열","조화수열"],"answer":2},{"q":"½+¼+⅛+… 무한합의 값은?","choices":["2","1","½","∞"],"answer":1},{"q":"조화급수 1+½+⅓+…는?","choices":["1로 수렴","0으로 수렴","e로 수렴","발산"],"answer":3},{"q":"단조수렴정리의 조건은?","choices":["증가＋위로 유계","감소＋발산","진동＋유계","증가＋무한"],"answer":0},{"q":"등비급수가 수렴하는 조건은?","choices":["r>1","r=1","|r|<1","r<0"],"answer":2}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('math3d-07');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('math3d-07-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,16,12),mat(c,o));}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+
+  camera.position.set(0.8,1.7,12.2);camera.lookAt(0.8,1.5,0);
+
+  var X0=-5.6,XS=0.42,YS=1.25; // n→x, 값→y 스케일
+  function nx(n){return X0+n*XS;}
+  // 축
+  scene.add(line(V(X0,0,0),V(X0+24.5*XS,0,0),0x39415a,0.85));
+  scene.add(line(V(X0,-0.8,0),V(X0,4.3,0),0x39415a,0.85));
+  var nL=lbl('n →',22,'#647088',0.85);nL.position.set(X0+24.5*XS+0.45,-0.35,0);scene.add(nL);
+
+  // 수열 A: 1/n (파랑)
+  var ptsA=[];
+  for(var n=1;n<=24;n++){
+    var s=sph(0.11,0x5b6bd6,1);s.position.set(nx(n),1/n*YS,0);s.visible=false;scene.add(s);ptsA.push(s);
+  }
+  var aL=lbl('aₙ = 1/n',25,'#5b6bd6',1);aL.position.set(nx(5),2.4,0);aL.visible=false;scene.add(aL);
+  // ε 띠 (limit 0 주변)
+  var band=box(24.5*XS,1,0.06,0xe0a82e,0.0);band.position.set(X0+12.25*XS,0,-0.05);scene.add(band);
+  var epsL=lbl('ε 띠',23,'#b07d0a',0.9);epsL.position.set(X0+23*XS,0.75,0);epsL.visible=false;scene.add(epsL);
+  var Nmark=line(V(0,-0.5,0),V(0,3.2,0),0xd6455b,0.0);scene.add(Nmark);
+  var NL=lbl('N — 이후로는 전부 띠 안',23,'#d6455b',0.9);NL.visible=false;scene.add(NL);
+  function setBand(eps,Nn){
+    band.scale.y=Math.max(0.02,2*eps*YS);
+    band.material.opacity=0.3;
+    Nmark.material.opacity=0.85;
+    Nmark.geometry.setFromPoints([V(nx(Nn),-0.5,0),V(nx(Nn),3.0,0)]);
+    NL.position.set(nx(Nn)+0.2,3.35,0);NL.visible=true;
+    epsL.visible=true;
+    ptsA.forEach(function(p,i){
+      var inside=(1/(i+1))<eps;
+      p.material.color.set(inside?0x2f9e63:0x5b6bd6);
+    });
+  }
+
+  // 수열 B: (1+1/n)^n (초록), 극한 e 점선
+  var ptsB=[];
+  for(var n2=1;n2<=24;n2++){
+    var v=Math.pow(1+1/n2,n2);
+    var s2=sph(0.11,0x2f9e63,1);s2.position.set(nx(n2),v*YS,0);s2.visible=false;scene.add(s2);ptsB.push(s2);
+  }
+  var eline=line(V(X0,Math.E*YS,0),V(X0+24.5*XS,Math.E*YS,0),0xe8506e,0.0);scene.add(eline);
+  var eL=lbl('e ≈ 2.718 — 도달하지 않지만 도착지는 정해져 있다',23,'#e8506e',0.95);eL.position.set(0.8,Math.E*YS+0.5,0);eL.visible=false;scene.add(eL);
+  var bL=lbl('aₙ = (1+1/n)ⁿ — 증가 + 위로 유계 ⇒ 수렴',23,'#2f9e63',0.95);bL.position.set(0.8,1.4,0);bL.visible=false;scene.add(bL);
+
+  // 등비급수 정사각형 (오른쪽 위 공간)
+  var SQ=3.4,SQX=2.2,SQY=0.5; // 정사각형 좌하단
+  var frame=[line(V(SQX,SQY,0),V(SQX+SQ,SQY,0),0x39415a,0.0),line(V(SQX+SQ,SQY,0),V(SQX+SQ,SQY+SQ,0),0x39415a,0.0),
+             line(V(SQX+SQ,SQY+SQ,0),V(SQX,SQY+SQ,0),0x39415a,0.0),line(V(SQX,SQY+SQ,0),V(SQX,SQY,0),0x39415a,0.0)];
+  frame.forEach(function(l){scene.add(l);});
+  // 절반씩 채우는 조각들 (교대로 세로/가로 분할)
+  var pieces=[];var colors=[0xe8506e,0x5b6bd6,0x2f9e63,0xe0a82e,0x8b5cf6,0xd6455b,0x14b8a6,0xf97316];
+  (function(){
+    var x=SQX,y=SQY,w=SQ,h=SQ;
+    for(var k=0;k<8;k++){
+      var p;
+      if(k%2===0){ // 세로 분할: 왼쪽 절반
+        p=box(w/2,h,0.14,colors[k],0.92);p.position.set(x+w/4,y+h/2,0);
+        x=x+w/2;w=w/2;
+      }else{ // 가로 분할: 아래 절반
+        p=box(w,h/2,0.14,colors[k],0.92);p.position.set(x+w/2,y+h/4,0);
+        y=y+h/2;h=h/2;
+      }
+      p.visible=false;scene.add(p);pieces.push(p);
+    }
+  })();
+  var sqTitle=lbl('½ + ¼ + ⅛ + … = 1',26,'#252c3d',1);sqTitle.position.set(SQX+SQ/2,SQY+SQ+0.55,0);sqTitle.visible=false;scene.add(sqTitle);
+  var sumL=null;
+  function setSum(txt){
+    if(sumL)scene.remove(sumL);
+    sumL=lbl(txt,23,'#e8506e',0.95);sumL.position.set(SQX+SQ/2,SQY-0.55,0);scene.add(sumL);
+  }
+
+  function hideSeqA(){ptsA.forEach(function(p){p.visible=false;});aL.visible=false;band.material.opacity=0;Nmark.material.opacity=0;NL.visible=false;epsL.visible=false;}
+  function hideSeqB(){ptsB.forEach(function(p){p.visible=false;});eline.material.opacity=0;eL.visible=false;bL.visible=false;}
+  function hideSquare(){frame.forEach(function(l){l.material.opacity=0;});pieces.forEach(function(p){p.visible=false;});sqTitle.visible=false;if(sumL){scene.remove(sumL);sumL=null;}}
+
+  var epsSteps=[[0.45,3],[0.2,6],[0.09,12]];
+  var phases=[
+    {dur:6,cap:'① 수열 aₙ = 1/n — 점점 0에 가까워지지만 0이 되지는 않습니다. "한없이 가까워진다"를 어떻게 엄밀하게 말할까요?',
+     enter:function(){hideSquare();hideSeqB();hideSeqA();aL.visible=true;},
+     update:function(u){ptsA.forEach(function(p,i){p.visible=u*26>i;});}},
+    {dur:9,cap:'② 극한의 정의: 어떤 ε 띠(노랑)를 잡아도, 어떤 번호 N(빨간 선) 뒤의 모든 점이 띠 안(초록)에 들어옵니다. 띠를 좁혀도 — N이 커질 뿐, 항상 성립. 이것이 "1/n → 0"의 뜻입니다.',
+     enter:function(){},
+     update:function(u){
+       var k=Math.min(epsSteps.length-1,Math.floor(u*epsSteps.length));
+       setBand(epsSteps[k][0],epsSteps[k][1]);
+     }},
+    {dur:8,cap:'③ aₙ = (1+1/n)ⁿ: 2, 2.25, 2.37, … 항상 증가하지만 3을 넘지 못합니다. 단조수렴정리에 의해 반드시 수렴 — 그 극한이 바로 e ≈ 2.718 (연속 복리의 정체).',
+     enter:function(){hideSeqA();bL.visible=true;},
+     update:function(u){
+       ptsB.forEach(function(p,i){p.visible=u*26>i;});
+       eline.material.opacity=Math.min(0.8,u*2);eL.visible=u>0.35;
+     }},
+    {dur:9,cap:'④ 무한히 더해도 유한할 수 있습니다: 정사각형(넓이 1)의 절반, 남은 절반의 절반, … 조각이 무한해도 전체는 정확히 1 — 등비급수 ½+¼+⅛+… = 1.',
+     enter:function(){hideSeqB();frame.forEach(function(l){l.material.opacity=0.85;});sqTitle.visible=true;setSum('S₁ = 1/2');},
+     update:function(u){
+       var k=Math.floor(u*9);
+       var sums=['S₁ = 1/2','S₂ = 3/4','S₃ = 7/8','S₄ = 15/16','S₅ = 31/32','S₆ = 63/64','S₇ = 127/128','S₈ = 255/256','S∞ = 1'];
+       pieces.forEach(function(p,i){p.visible=i<k;});
+       setSum(sums[Math.min(8,k)]);
+     }}
+  ];
+
+  var pi=0,pt=0,last=0;
+  phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

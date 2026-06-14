@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 황금 섬광을 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 신경 회로 — 뇌 영역들의 연결과 작동</span>
 
 <h2>신경 메커니즘 개요</h2>
 <p>놀람의 신경 회로는 세 축으로 이뤄진다. 도파민(예측 오차), 노르에피네프린(각성), 그리고 해마(기억 강화). 새로움이 감지되면 중뇌 도파민 뉴런이 phasic burst를 내보내고, locus coeruleus가 노르에피네프린을 방출해 전체 뇌의 신호 대 잡음비를 끌어올리며, 해마는 그 순간의 사건을 한 번의 노출만으로 장기 기억에 저장한다.</p>
@@ -74,5 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> RPE 신호가 시냅스 차원에서 어떻게 LTP를 유도하는지, 분자 단계(D1 수용체 → cAMP → PKA → CREB)를 손으로 그려보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#fbbf24","questions":[{"q":"예측 오차를 부호화하는 물질?","choices":["도파민","인슐린","멜라토닌","콜라겐"],"answer":0},{"q":"청반(LC)의 전달물질은?","choices":["도파민","노르에피네프린","세로토닌","아세틸콜린"],"answer":1},{"q":"새로움에 민감한 기억 중추?","choices":["소뇌","척수","해마","시신경"],"answer":2},{"q":"도파민 RPE를 발표한 사람?","choices":["Pavlov 1927","Ekman 1969","Freud 1900","Schultz 1997"],"answer":3},{"q":"VTA에 모인 뉴런은?","choices":["도파민 뉴런","운동 뉴런","감각 뉴런","해마 뉴런"],"answer":0}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0xfbbf24;const parts=[];for(let i=0;i<45;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xfbbf24;const brain=new THREE.Mesh(new THREE.SphereGeometry(2.0,20,16),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.35}));s.add(brain);const reg=[];const pts=[[-0.8,-0.3,0.6],[0.8,-0.3,0.6],[0,0.7,-0.4],[0,-0.9,-0.2]];pts.forEach(p=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.26,16,16),new THREE.MeshBasicMaterial({color:0xffe08a}));m.position.set(p[0]*1.5,p[1]*1.5,p[2]*1.5);s.add(m);reg.push(m);});for(let i=0;i<reg.length;i++)for(let j=i+1;j<reg.length;j++)s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([reg[i].position,reg[j].position]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.3})));
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;brain.rotation.y+=0.004;reg.forEach((m,i)=>m.scale.setScalar(0.8+0.3*Math.sin(T*3+i)));s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

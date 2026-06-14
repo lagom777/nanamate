@@ -5,14 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>뇌와 신경계 | 심리학 기초</title>
 <link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../shared/light-theme.css">
   <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
   <script defer src="../shared/difficulty.js"></script>
+  <script defer src="../shared/quizgame3d.js"></script>
 </head>
 <body>
 
 <aside>
-  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h1><a href="index.html">심리학 기초</a></h1>
   <div class="sub">PSYCHOLOGY FROM ZERO</div>
   <nav>
@@ -42,6 +45,18 @@
   <section class="chapter" id="ch2">
     <div class="chap-num">CHAPTER 02</div>
     <h2>뇌와 신경계</h2>
+<span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 뉴런 — 수상돌기로 받아 축삭으로 신호를 보낸다</span>
+<div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');if(!c||!window.THREE)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0xa855f7;const soma=new THREE.Mesh(new THREE.SphereGeometry(0.7,20,20),new THREE.MeshBasicMaterial({color:COL}));soma.position.x=-2;s.add(soma);for(let i=0;i<7;i++){const t=Math.PI*0.6+(i/6-0.5)*1.6;const ex=new THREE.Vector3(-2+Math.cos(t)*1.5,Math.sin(t)*1.5,0);s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-2,0,0),ex]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.6})));}const axon=new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.12,3.6,12),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.7}));axon.rotation.z=Math.PI/2;axon.position.x=0.2;s.add(axon);const term=new THREE.Mesh(new THREE.SphereGeometry(0.3,14,14),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.6}));term.position.x=2.2;s.add(term);const pulse=new THREE.Mesh(new THREE.SphereGeometry(0.2,12,12),new THREE.MeshBasicMaterial({color:0xffe08a}));s.add(pulse);s.userData.pulse=pulse;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const x=-2+((T*1.2)%3.6);s.userData.pulse.position.set(x,0,0);s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script>
+
     <div class="en">Brain and Nervous System</div>
 
     <p>모든 생각, 감정, 기억은 결국 <strong>뇌 속의 전기·화학 신호</strong>입니다. 심리학이 '뇌를 모르고도 마음을 이해할 수 있는가'는 오랜 논쟁이지만, 최소한 뇌의 기본 구조를 알아두면 다른 모든 챕터가 훨씬 쉬워집니다.</p>
@@ -291,6 +306,11 @@
 </div>
 
   <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d97757","questions":[{"q":"시각을 담당하는 뇌 영역은?","choices":["전두엽","후두엽","측두엽","두정엽"],"answer":1},{"q":"뇌의 뉴런 개수는 약?","choices":["860억 개","100개","1만 개","5억 개"],"answer":0},{"q":"부족하면 우울증과 관련된 물질은?","choices":["도파민","GABA","세로토닌","글루타메이트"],"answer":2},{"q":"중추신경계(CNS)를 이루는 것은?","choices":["근육과 뼈","심장과 폐","피부와 혈관","뇌와 척수"],"answer":3},{"q":"긴장·싸우기 반응을 맡는 신경은?","choices":["교감신경","부교감신경","체성신경","감각신경"],"answer":0}]};</script>
 </main>
 
 <script src="js/main.js"></script>

@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -36,7 +38,7 @@
 </header>
 
 <h2>양자역학의 탄생</h2>
-<p>20세기 초, 흑체복사, 광전효과, 수소 스펙트럼 등 고전물리로 설명할 수 없는 현상들이 발견되면서 양자역학이 탄생했습니���.</p>
+<p>20세기 초, 흑체복사, 광전효과, 수소 스펙트럼 등 고전물리로 설명할 수 없는 현상들이 발견되면서 양자역학이 탄생했습니다.</p>
 
 <div class="info-card quantum">
   <h4>플랑크의 양자 가설 (1900)</h4>
@@ -84,7 +86,7 @@
 <p>두 입자가 얽히면, 하나를 측정하는 순간 다른 입자의 상태가 즉시 결정됩니다. 아인슈타인은 이를 "으스스한 원격 작용"이라 불렀지만, 실험으로 확인된 실재입니다.</p>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -119,6 +121,11 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 두 큐비트 벨 상태 |Φ⁺⟩=(|00⟩+|11⟩)/√2의 부분계 환원 밀도행렬을 계산하고, 이것이 최대로 혼합되어 있음을 보이세요(얽힘의 척도).</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00d4ff","questions":[{"q":"|ψ(x)|²의 의미는?","choices":["에너지","확률 밀도","속도","온도"],"answer":1},{"q":"드브로이 파장 공식은?","choices":["λ=h/p","λ=hp","λ=p/h","λ=h+p"],"answer":0},{"q":"불확정성 원리의 식은?","choices":["E=hf","F=ma","ΔxΔp≥ℏ/2","PV=nRT"],"answer":2},{"q":"STM의 원리가 되는 현상은?","choices":["광전효과","핵분열","간섭","양자 터널링"],"answer":3},{"q":"수소 라이먼 알파의 파장은?","choices":["약 600 nm","약 121.6 nm","약 343 nm","약 21 cm"],"answer":1}]};</script>
 </main>
 </div>
 

@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6. 대표 스프레드 — aboutTarot</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🃏 표지</a></li>
+    <li><a href="01-what-is.html">1. 타로란 무엇인가</a></li>
+    <li><a href="02-major.html">2. 메이저 아르카나 22장</a></li>
+    <li><a href="03-minor.html">3. 마이너 아르카나 56장</a></li>
+    <li><a href="04-court.html">4. 코트 카드</a></li>
+    <li><a href="05-reversed.html">5. 정방향과 역방향</a></li>
+    <li><a href="06-spreads.html">6. 대표 스프레드</a></li>
+    <li><a href="07-reading.html">7. 카드 읽는 법</a></li>
+    <li><a href="08-symbolism.html">8. 상징과 융 심리학</a></li>
+    <li><a href="09-ethics.html">9. 타로의 과학·비판·윤리</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>대표 스프레드</em></h1>
+  <p class="authors">Chapter 6 — Tarot Spreads</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 켈틱 크로스 — 자리마다 의미가 부여된 10장의 배열</span>
+
+<h2>대표 스프레드 개요</h2>
+<p>스프레드란 카드를 펼쳐 놓는 배열법을 말한다. 같은 카드라도 어느 자리에 놓이느냐에 따라 의미가 달라지므로, 스프레드는 질문과 카드를 이어 주는 일종의 틀로 본다. 대표적으로 한 장만 뽑는 원카드, 세 장을 펼치는 쓰리카드, 열 장을 배치하는 켈틱 크로스가 널리 쓰인다. 어떤 스프레드를 쓰든 가장 먼저 질문을 명확히 설정하는 것이 핵심이다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>스프레드는 카드의 배열법이며, 각 자리(포지션)에 정해진 의미가 부여된다. 원카드는 간결한 하루의 지침으로, 쓰리카드는 흐름이나 인과를 보는 데, 켈틱 크로스는 한 사안을 종합적으로 살피는 데 참고한다. 무엇을 묻고 싶은지를 또렷이 정해야 어떤 스프레드든 제대로 활용할 수 있다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>스프레드는 카드를 어디에, 몇 장 펼칠지를 정한 배열법이며, 각 자리에는 미리 정해진 의미가 담긴다.</p>
+<h3>왜 중요한가?</h3>
+<p>카드를 아무렇게나 늘어놓으면 무엇이 무엇을 뜻하는지 알기 어렵다. 스프레드는 이 혼란을 줄여 주는 약속된 틀이다. 예컨대 세 장을 뽑아 왼쪽부터 과거·현재·미래로 읽기로 약속하면, 같은 카드라도 위치에 따라 다른 이야기를 들려준다. 또한 스프레드는 질문을 구체화하도록 돕는다. "오늘 하루는 어떨까"라는 가벼운 물음에는 원카드가, "이 일이 어떻게 흘러갈까"에는 쓰리카드가 어울린다. 즉 스프레드 선택 자체가 질문을 정리하는 과정이기도 하다. 그래서 입문자도 자기 물음에 맞는 배열을 고르는 연습부터 시작하면 좋다.</p>
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>스프레드</strong>: 카드를 펼쳐 놓는 배열법. 자리마다 의미가 정해져 있다.</li>
+<li><strong>포지션(자리)</strong>: 스프레드 안에서 각 카드가 놓이는 위치. '과거' '현재'처럼 역할이 부여된다.</li>
+<li><strong>원카드</strong>: 한 장만 뽑는 가장 단순한 방식. 흔히 '오늘의 카드'로 쓴다.</li>
+<li><strong>쓰리카드</strong>: 세 장을 펼치는 방식. 과거-현재-미래 또는 상황-행동-결과로 읽는다.</li>
+<li><strong>켈틱 크로스</strong>: 열 장을 배치하는 대표적 종합 스프레드.</li>
+</ul></div>
+<h3>핵심 개념 풀어쓰기</h3>
+<p>스프레드는 연극 무대의 자리 배치와 비슷하다. 무대에서 같은 배우라도 주인공 자리에 서면 주역으로, 구석에 서면 조연으로 읽히듯, 같은 카드도 '현재' 자리에 놓이면 지금의 상황으로, '미래' 자리에 놓이면 앞으로의 가능성으로 해석된다. 자리가 정해져 있기에 카드 한 장 한 장이 어떤 역할을 맡는지 분명해진다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 처음에는 원카드로 매일 한 장씩 뽑아 보며 '자리가 하나일 때'의 해석에 익숙해지자. 자리 수가 적을수록 카드 자체에 집중하기 쉽다.</div>
+<h3>한 페이지 요약</h3>
+<ul>
+<li>스프레드는 카드의 배열법이고, 각 자리에는 정해진 의미가 있다.</li>
+<li>원카드는 가장 단순한 방식으로 하루의 지침 등에 쓴다.</li>
+<li>쓰리카드는 과거-현재-미래 또는 상황-행동-결과의 흐름을 본다.</li>
+<li>켈틱 크로스는 열 장으로 한 사안을 종합적으로 살핀다.</li>
+<li>어떤 스프레드든 질문을 명확히 정하는 것이 가장 중요하다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>스프레드의 핵심은 '포지션의 의미'와 '카드의 의미'가 만나는 지점에 있다. 각 자리는 질문의 한 측면을 담당하고, 그 자리에 떨어진 카드가 그 측면에 대한 답을 들려주는 구조다. 그래서 같은 카드라도 '장애물' 자리에 있을 때와 '조언' 자리에 있을 때 읽는 방향이 달라진다. 원카드는 자리가 하나뿐이어서 카드의 보편적 의미를 그날의 화두로 받아들이는 데 적합하다. 쓰리카드는 자리 사이의 관계가 생기면서 흐름이나 인과를 읽을 수 있게 된다. 과거-현재-미래로 놓으면 시간의 흐름을, 상황-행동-결과로 놓으면 선택과 그 귀결을 살핀다. 켈틱 크로스는 현재 상황, 그것을 가로지르는 요인, 토대, 가까운 과거와 미래, 자신의 태도와 주변 환경, 희망과 두려움, 최종 전망 등 여러 자리를 두어 한 사안을 입체적으로 본다. 다만 자리가 많아질수록 해석의 자유도가 커지므로, 자리의 의미를 미리 분명히 약속해 두어야 일관된 읽기가 가능하다. 스프레드는 점지가 아니라 생각을 정리하는 틀로 참고하는 편이 건강하다.</p>
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 포지션과 카드의 상호작용</h4><p>해석은 '이 자리는 무엇을 묻는가'와 '이 카드는 무엇을 말하는가'를 곱하듯 결합해 이뤄진다. 자리가 질문을 좁혀 주고, 카드가 그 질문에 답을 내놓는 방식이다. 자리 사이의 대비(예: 현재 vs 장애물, 희망 vs 두려움)도 의미를 만들어 내므로, 카드를 따로따로가 아니라 자리 관계 속에서 함께 읽는 것이 요령이다.</p></div>
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1 — 쓰리카드(상황-행동-결과)</h4><p>"새 일을 시작할까"라는 물음에 세 장을 펼친다. 첫 자리는 지금의 상황, 둘째 자리는 취할 수 있는 행동, 셋째 자리는 그 행동의 예상되는 결과를 가리킨다. 세 자리를 하나의 이야기로 엮으면 막연한 고민이 한결 또렷해진다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 켈틱 크로스의 종합성</h4><p>한 사안을 깊이 들여다보고 싶을 때 열 장을 배치한다. 현재와 그것을 가로지르는 핵심 요인을 중앙 십자로 두고, 주변에 과거·미래·태도·환경·희망과 두려움·전망을 세운다. 자리가 많은 만큼 한 사안의 여러 측면을 두루 살피는 데 참고하기 좋지만, 그만큼 해석에 숙련이 필요하다.</p></div>
+<h3>현대적 전개</h3>
+<p>오늘날에는 전통적 배열 외에도 '관계 스프레드' '연말 결산 스프레드'처럼 목적에 맞춰 자리를 직접 설계하는 흐름이 흔하다. 디지털 앱에서도 같은 배열법을 그대로 구현해 쓴다. 다만 자리를 늘리거나 새로 만들수록, 각 자리가 무엇을 묻는지 스스로 명확히 정의해 두는 일이 더 중요해진다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 카드가 많은 켈틱 크로스가 원카드보다 '더 정확하다'고 여기기 쉽지만, 그렇지 않다. 자리 수는 정확도가 아니라 다루는 범위와 세밀함의 차이일 뿐이다. 단순한 물음에는 단순한 스프레드가 오히려 또렷한 참고가 된다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>숙련 단계에서 스프레드는 고정된 공식이 아니라 질문 설계의 도구로 다뤄진다. 핵심 작업은 '좋은 질문을 자리로 번역하는 일'이다. 모호한 물음("내 미래는 어떨까")은 자리로 옮기기 어렵지만, 구체적 물음("이 제안을 받아들이면 무엇이 달라질까")은 상황·행동·결과 같은 자리로 자연스럽게 분해된다. 그래서 노련한 리더는 카드를 뽑기 전 질문을 다듬는 데 공을 들인다. 켈틱 크로스 같은 대형 스프레드에서는 자리 간 모순(예: 희망과 전망이 어긋날 때)을 해석의 단서로 삼는다. 한편 자리가 많을수록 사후확증이나 자의적 끼워 맞추기의 여지도 커진다는 점을 의식해야 한다. 스프레드의 효용은 미래를 맞히는 데 있다기보다, 질문자가 자신의 상황을 구조화해 바라보도록 돕는 성찰의 틀에 있다고 보는 시각이 일반적이다. 이런 관점에서 해석은 단정보다 '이렇게 볼 수도 있다'는 가능성의 제시에 머무는 편이 바람직하다.</p>
+<h3>최신 연구·쟁점</h3>
+<p>심리학적으로는 타로 해석에서 나타나는 의미 부여가 바넘 효과(누구에게나 들어맞는 듯한 모호한 진술을 자기 것으로 받아들이는 경향)나 확증 편향과 관련 있다는 지적이 꾸준하다. 스프레드의 자리가 많아질수록 이런 효과가 강화될 수 있어, 카드의 예측력과 성찰 도구로서의 가치는 구분해 논의된다. 한편 상담·코칭 맥락에서 스프레드를 대화의 촉매로 활용하는 시도도 보고되는데, 이때도 카드가 답을 '결정'한다기보다 질문자의 자기 탐색을 돕는 매개로 본다.</p>
+<h3>관련 분야</h3>
+<ul>
+<li><strong>융 심리학</strong>: 상징·원형을 통한 자기 성찰의 관점이 스프레드 해석에 영향을 주었다.</li>
+<li><strong>인지심리학</strong>: 바넘 효과·확증 편향 등 해석에 개입하는 인지 경향을 다룬다.</li>
+<li><strong>상담·코칭</strong>: 카드를 자기 탐색과 대화를 여는 도구로 응용하는 흐름.</li>
+</ul>
+<h3>더 읽을거리</h3>
+<ul>
+<li>"Seventy-Eight Degrees of Wisdom" — Rachel Pollack</li>
+<li>"The Tarot: History, Symbolism, and Divination" — Robert M. Place</li>
+<li>"The Pictorial Key to the Tarot" — Arthur Edward Waite</li>
+</ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> 자신이 정말 알고 싶은 한 가지 물음을 골라, 그것을 세 개의 자리(예: 상황-행동-결과)로 직접 번역해 보자. 그다음 그 자리들이 정말 질문을 잘 나누고 있는지, 더 나은 자리 구성은 없는지 따져 보라.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b18cf0","questions":[{"q":"카드를 펼치는 배열법을 부르는 말은?","choices":["스프레드","셔플","리딩","아르카나"],"answer":0},{"q":"켈틱 크로스는 몇 장을 배치하나?","choices":["3장","5장","10장","22장"],"answer":2},{"q":"쓰리카드의 대표적인 읽기 방식은?","choices":["상·중·하","과거-현재-미래","동서남북","길흉화복"],"answer":1},{"q":"스프레드 활용의 가장 중요한 전제는?","choices":["비싼 덱","많은 카드 수","화려한 배열","명확한 질문"],"answer":3},{"q":"자리 수가 많은 스프레드의 의미는?","choices":["더 정확함","범위·세밀함 차이","더 영험함","적중률 상승"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const pos=[[-1.2,0,0,0],[-1.2,0,0.12,Math.PI/2],[-1.2,-1.7,0,0],[-1.2,1.7,0,0],[-3.0,0,0,0],[0.6,0,0,0],[2.7,-2.0,0,0],[2.7,-0.7,0,0],[2.7,0.7,0,0],[2.7,2.0,0,0]];const spread=[];for(let i=0;i<pos.length;i++){const col=new THREE.Color().setHSL(0.72-i*0.03,0.6,0.6);const m=new THREE.Mesh(new THREE.BoxGeometry(1.0,1.5,0.05),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.9}));m.position.set(pos[i][0],pos[i][1],pos[i][2]);m.rotation.z=pos[i][3];m.userData={ph:i*0.45,baseZ:pos[i][2]};spread.push(m);s.add(m);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;spread.forEach((m,i)=>{const lit=(Math.floor(T*0.8)%spread.length===i)?0.6:0;m.position.z=m.userData.baseZ+Math.sin(T*1.5+m.userData.ph)*0.1+lit;});s.rotation.y=Math.sin(T*0.3)*0.25;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

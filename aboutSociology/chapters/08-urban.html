@@ -2,11 +2,13 @@
 <title>8. 도시와 환경 — aboutSociology</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">👥 표지</a></li><li><a href="chapters/01-intro.html">1. 사회학 개론</a></li><li><a href="chapters/02-culture.html">2. 문화와 사회화</a></li><li><a href="chapters/03-stratification.html">3. 사회 계층</a></li><li><a href="chapters/04-institutions.html">4. 사회 제도</a></li><li><a href="chapters/05-deviance.html">5. 일탈과 범죄</a></li><li><a href="chapters/06-gender.html">6. 젠더와 가족</a></li><li><a href="chapters/07-race.html">7. 인종과 민족</a></li><li><a href="chapters/08-urban.html">8. 도시와 환경</a></li><li><a href="chapters/09-digital.html">9. 디지털 사회</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">👥 표지</a></li><li><a href="01-intro.html">1. 사회학 개론</a></li><li><a href="02-culture.html">2. 문화와 사회화</a></li><li><a href="03-stratification.html">3. 사회 계층</a></li><li><a href="04-institutions.html">4. 사회 제도</a></li><li><a href="05-deviance.html">5. 일탈과 범죄</a></li><li><a href="06-gender.html">6. 젠더와 가족</a></li><li><a href="07-race.html">7. 인종과 민족</a></li><li><a href="08-urban.html">8. 도시와 환경</a></li><li><a href="09-digital.html">9. 디지털 사회</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>도시와 환경</em></h1><p class="authors">Chapter 8 — Urban Sociology & Environment</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 도심에서 바깥으로 퍼지는 동심원 도시 지대 모델 — 회전</span>
 <h2>도시와 환경</h2><p>Urban Sociology & Environment의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Urban Sociology & Environment</p></div>
 
@@ -88,5 +90,24 @@
   </ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 모든 도시 거주자가 자신의 동네를 직접 설계하는 권리를 가진다면 도시는 어떻게 변할까? 자본의 논리와 시민의 권리 사이의 긴장을 사고해보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"원주민이 밀려나는 고급화 현상은?","choices":["도시화","교외화","젠트리피케이션","산업화"],"answer":2},{"q":"인구가 도시로 집중되는 현상은?","choices":["도시화","세계화","정보화","고령화"],"answer":0},{"q":"환경 부담의 공평 분배 원칙은?","choices":["기후 적응","환경 정의","탄소 중립","녹색 성장"],"answer":1},{"q":"동심원 이론이 나온 학파는?","choices":["프랑크푸르트학파","빈학파","버밍엄학파","시카고학파"],"answer":3},{"q":"'위험사회'를 쓴 학자는?","choices":["울리히 벡","하비","사센","제이콥스"],"answer":0}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,6,7);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  s.rotation.x=-0.5;
+  const zones=5,rings=[];for(let i=0;i<zones;i++){const inner=0.2+i*0.85,outer=inner+0.78;const col=new THREE.Color().setHSL(0.08+i*0.06,0.55,0.55-i*0.05);const ring=new THREE.Mesh(new THREE.RingGeometry(inner,outer,48),new THREE.MeshBasicMaterial({color:col,side:THREE.DoubleSide}));ring.rotation.x=-Math.PI/2;s.add(ring);rings.push(ring);}
+  const towers=[];const cbd=new THREE.Mesh(new THREE.CylinderGeometry(0.3,0.3,1.6,8),new THREE.MeshBasicMaterial({color:0xfafafa}));cbd.position.y=0.8;s.add(cbd);for(let i=0;i<16;i++){const ang=i/16*Math.PI*2;const rad=1.5+(i%4)*0.9;const h=0.4+Math.abs(Math.sin(i*1.3))*1.0;const t=new THREE.Mesh(new THREE.BoxGeometry(0.22,h,0.22),new THREE.MeshBasicMaterial({color:0x94a3b8}));t.position.set(Math.cos(ang)*rad,h/2,Math.sin(ang)*rad);s.add(t);towers.push(t);}
+  s.userData.cbd=cbd;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.cbd.scale.y=1+0.1*Math.sin(T*1.5);s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

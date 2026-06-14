@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5. 12하우스 — aboutAstrology</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">✨ 표지</a></li>
+    <li><a href="01-what-is.html">1. 점성술이란 무엇인가</a></li>
+    <li><a href="02-zodiac.html">2. 황도 12궁 · 12별자리</a></li>
+    <li><a href="03-elements.html">3. 4원소와 3특질</a></li>
+    <li><a href="04-planets.html">4. 행성의 의미</a></li>
+    <li><a href="05-houses.html">5. 12하우스</a></li>
+    <li><a href="06-natal-chart.html">6. 출생 차트 읽기</a></li>
+    <li><a href="07-big-three.html">7. 태양·달·상승궁 (빅3)</a></li>
+    <li><a href="08-synastry.html">8. 궁합·트랜짓</a></li>
+    <li><a href="09-science.html">9. 점성술의 과학·비판</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>12하우스</em></h1>
+  <p class="authors">Chapter 5 — The 12 Houses</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 출생 차트를 12조각으로 — 인생의 12 영역(하우스)</span>
+
+<h2>12하우스 개요</h2>
+<p>출생 차트는 하늘을 12조각으로 나눈 원형 지도다. 행성과 별자리가 '무엇'을 말한다면, 하우스는 그 에너지가 인생의 '어느 무대'에서 펼쳐지는지를 가리킨다. 12개의 하우스는 각각 자아·재물·소통·가정·연애·일·관계·변형·철학·직업·이상·무의식 같은 삶의 영역에 대응한다. 이 챕터에서는 12하우스의 의미와, 차트의 뼈대를 이루는 네 앵글(ASC·IC·DSC·MC)을 다룬다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>하우스는 출생 차트를 12개의 인생 영역으로 분할한 무대다. 어떤 행성이 어느 하우스에 들어 있는가가 해석의 핵심이며, 1궁(자아)·4궁(가정)·7궁(파트너십)·10궁(직업)의 시작점인 어센던트(ASC)·IC·디센던트(DSC)·MC가 차트의 네 기둥을 이룬다. 별자리가 '성격의 색채'라면 하우스는 그 색채가 '발휘되는 장소'라고 본다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>하우스는 '인생을 12개의 방으로 나눈 집'이고, 각 방마다 자아·돈·사랑·일처럼 서로 다른 삶의 주제가 머문다고 본다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>같은 별자리에 같은 행성이 있어도, 그 행성이 어느 하우스에 자리하느냐에 따라 의미가 크게 달라진다고 여겨진다. 예를 들어 사랑을 상징하는 금성이 '재물'을 다루는 2궁에 있으면 돈과 가치관에서 즐거움을 찾는 식으로 풀이된다. 별자리만으로는 '어떤 성향'까지만 알 수 있지만, 하우스를 보면 그 성향이 '인생의 어느 영역'에서 드러나는지가 잡힌다. 그래서 출생 차트를 입체적으로 읽으려면 하우스 이해가 필수라고 본다. 무엇보다 1궁의 시작점인 어센던트(상승궁)는 태어난 시각과 장소로 정해지므로, 정확한 출생 시간이 하우스 해석의 출발점이 된다.</p>
+
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>하우스(House)</strong>: 출생 차트를 12등분한 인생의 영역. '집' 또는 '궁'이라고도 부른다.</li>
+<li><strong>어센던트(ASC)</strong>: 1궁의 시작점이자 동쪽 지평선. 자아·외모·첫인상을 나타낸다고 본다.</li>
+<li><strong>디센던트(DSC)</strong>: 7궁의 시작점이자 서쪽 지평선. 파트너십과 결혼을 가리킨다고 여겨진다.</li>
+<li><strong>MC(천정·미디엄 코엘리)</strong>: 10궁의 시작점. 직업·사회적 지위·명성을 상징한다고 본다.</li>
+<li><strong>IC(천저)</strong>: 4궁의 시작점. 가정·뿌리·내면의 토대를 나타낸다고 본다.</li>
+</ul></div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>하우스를 12칸짜리 회전 무대라고 생각하면 쉽다. 무대(하우스)는 인생의 장면을 정해 두고, 그 위에 배우(행성)가 의상(별자리)을 입고 올라선다. 같은 배우라도 '직장' 무대에 서면 일 얘기를 하고, '연애' 무대에 서면 사랑 얘기를 한다. 하우스를 읽는다는 건 결국 '어떤 행성이 어느 무대에 서 있는가'를 살피는 일이다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 12하우스는 1궁부터 순서대로 '자아 → 소유 → 소통 → 가정 → 표현 → 봉사 → 관계 → 변형 → 확장 → 성취 → 공동체 → 내면'으로 점점 넓어진다고 보면 흐름이 외워진다. 나에서 출발해 세상으로 나갔다가 다시 무의식으로 돌아오는 여정이다.</div>
+
+<h3>한 페이지 요약</h3>
+<ul>
+<li>하우스는 출생 차트를 12개 인생 영역으로 나눈 무대다.</li>
+<li>핵심은 '어느 행성이 어느 하우스에 있는가'다.</li>
+<li>1·4·7·10궁의 시작점이 각각 ASC·IC·DSC·MC라는 네 앵글이다.</li>
+<li>어센던트(1궁 시작)는 정확한 출생 시각이 있어야 정해진다.</li>
+<li>별자리는 '성향', 하우스는 '그 성향이 발휘되는 장소'를 알려준다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>점성술에서 하우스는 별자리(황도대)와 구분되는 별개의 좌표계다. 황도 12궁이 태양의 1년 경로를 따라 하늘에 고정된 띠라면, 하우스는 특정 시각·장소에서 본 지구의 하루 자전을 기준으로 한 지역적 좌표라고 본다. 그래서 같은 날 태어나도 시각과 출생지가 다르면 하우스 배치가 완전히 달라진다고 여겨진다. 12하우스는 통상 1궁(자아·외모·신체), 2궁(재물·소유·가치관), 3궁(소통·형제·근거리 이동), 4궁(가정·뿌리·부모), 5궁(연애·창조·자기표현), 6궁(일·건강·일상의 봉사), 7궁(파트너십·결혼·계약), 8궁(공유·변형·죽음과 재생), 9궁(철학·고등교육·장거리 여행), 10궁(직업·사회적 지위·명성), 11궁(친구·이상·공동체), 12궁(무의식·고독·해체)으로 정리된다. 네 앵글 가운데 어센던트(ASC)와 디센던트(DSC)는 지평선의 동·서 양 끝을, MC와 IC는 자오선의 위·아래를 나타내며, 이 네 점이 차트를 떠받치는 가장 강력한 지점으로 여겨진다. 하우스를 실제 도수로 나누는 방식은 여러 가지여서, 어떤 '하우스 시스템'을 쓰느냐에 따라 행성의 하우스 소속이 바뀌기도 한다.</p>
+
+<h3>핵심 메커니즘/교리</h3>
+<div class="info-card"><h4>📐 앵글과 하우스의 골격</h4><p>차트의 동쪽 지평선이 어센던트(1궁 커스프), 정반대 서쪽이 디센던트(7궁), 머리 위 자오선이 MC(10궁), 그 아래가 IC(4궁)다. 이 네 앵글이 정해지면 나머지 하우스의 경계(커스프)가 채워진다. 1·4·7·10궁처럼 앵글에서 시작하는 하우스를 '앵귤러 하우스'라 하여 행동력이 가장 강하게 발현되는 자리로 본다.</p></div>
+
+<h3>대표 사례·경전</h3>
+<div class="info-card"><h4>📐 사례 1 — 7궁의 행성</h4><p>관계를 다루는 7궁에 토성이 있다면, 파트너십에서 책임감과 진지함, 때로는 제약을 경험한다고 풀이한다. 같은 토성이 5궁(연애·창조)에 있으면 연애나 창작 활동에서 신중함이 드러나는 식으로, 하우스에 따라 같은 행성의 무대가 바뀐다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 10궁의 강조</h4><p>여러 행성이 직업·사회적 지위를 뜻하는 10궁에 몰려 있으면, 그 사람은 사회적 성취와 커리어에 인생 에너지가 집중되는 경향이 있다고 본다. 특히 MC 근처에 행성이 붙으면 직업적 정체성이 두드러진다고 해석한다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>오늘날 점성 소프트웨어와 앱은 출생 시각·위도·경도를 입력받아 자동으로 하우스를 계산해 준다. 심리 점성술 흐름에서는 하우스를 운명의 고정된 영역이라기보다, 개인이 의식적으로 가꿔 갈 수 있는 '삶의 발달 과제'로 재해석하는 경향이 강하다. 한편 하우스 분할 방식(플라시두스·홀사인·이퀄 등)을 둘러싼 논쟁은 전통과 현대를 막론하고 여전히 진행 중이다.</p>
+
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 하우스와 별자리를 같은 것으로 혼동하기 쉽다. 1궁이 곧 양자리인 것은 아니다. 1궁은 '자아의 영역'이라는 무대이고, 그 무대의 시작점(어센던트)에 어떤 별자리가 걸리느냐는 사람마다 다르다. 또한 '7번째 별자리'와 '7궁'도 다른 개념이므로 분리해서 이해해야 한다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>하우스 체계의 본질적 난제는 '하늘이라는 구를 평면 차트로 어떻게 나눌 것인가'라는 천문·기하학적 문제로 귀결된다. 가장 오래된 방식 중 하나인 홀사인(Whole Sign) 하우스는 어센던트가 걸린 별자리 전체를 1궁으로 삼아, 하우스와 별자리를 1:1로 일치시킨다. 반면 르네상스 이후 널리 쓰인 플라시두스(Placidus)는 시간을 기준으로 천구를 분할하기 때문에 고위도에서는 하우스 크기가 극단적으로 왜곡되고, 극지방 부근에서는 일부 하우스가 계산 불가능해지는 한계가 있다고 본다. 코흐·레지오몬타누스·캄파누스·이퀄 등 수십 종의 시스템이 공존하며, 어느 것을 정통으로 볼지에 대한 합의는 없다. 이 다양성은 점성술 내부의 학파적 차이를 보여 주는 동시에, 비판자들에게는 '검증 가능한 단일 기준이 부재하다'는 약점으로 지적된다. 전통 점성술에서는 하우스를 행성의 영향력 세기(앵귤러·석시던트·케이던트)와 길흉을 가르는 '조이(joy)' 개념으로 정교하게 다뤘으며, 현대 심리 점성술은 같은 구조를 융 심리학의 개성화 과정에 빗대어 재해석한다. 이처럼 동일한 하우스 골격이 시대와 학파에 따라 전혀 다른 의미 체계로 번역되어 온 점이, 하우스론을 이해하는 핵심 열쇠다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>학계의 통제된 연구들에서는 하우스 배치가 성격·직업 등과 통계적으로 유의한 상관을 보인다는 증거가 일관되게 확인되지 않았다고 보고된다. 특히 출생 시각이 몇 분만 달라져도 어센던트와 하우스 커스프가 이동하기 때문에, 재현성 검증이 까다롭다는 점이 방법론적 쟁점으로 거론된다. 점성술 공동체 내부에서도 '어떤 하우스 시스템이 옳은가'를 두고 전통주의 부흥(traditional revival) 진영과 현대 심리 점성술 진영 사이의 논쟁이 이어진다. 객관적 검증과 상징적 해석 체계 사이의 긴장은 하우스론을 둘러싼 가장 큰 현대적 화두라고 할 수 있다.</p>
+
+<h3>관련 분야</h3>
+<ul>
+<li><strong>구면천문학</strong>: 천구 좌표와 하우스 분할의 기하학적 토대.</li>
+<li><strong>점성술사(史)</strong>: 헬레니즘·중세 아랍·르네상스를 거친 하우스 체계의 변천.</li>
+<li><strong>비판적 사고·과학방법론</strong>: 점성술 주장에 대한 검증과 인지 편향(바넘 효과) 분석.</li>
+</ul>
+
+<h3>더 읽을거리</h3>
+<ul>
+<li>"Christian Astrology" — William Lilly</li>
+<li>"The Twelve Houses" — Howard Sasportas</li>
+<li>"Hellenistic Astrology: The Study of Fate and Fortune" — Chris Brennan</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 자신의 출생 차트를 홀사인 방식과 플라시두스 방식으로 각각 계산해, 두 시스템에서 행성들의 하우스 소속이 어떻게 달라지는지 비교해 보자. 그리고 하우스 해석이 '검증 가능한 예측'인지 '의미를 부여하는 상징 언어'인지, 자신의 관점에서 정리해 보자.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#c084fc","questions":[{"q":"하우스의 개수는?","choices":["10개","8개","16개","12개"],"answer":3},{"q":"1궁의 시작점 이름은?","choices":["어센던트","MC","IC","디센던트"],"answer":0},{"q":"10궁이 상징하는 영역은?","choices":["가정","직업","연애","무의식"],"answer":1},{"q":"MC는 몇 궁의 시작점인가?","choices":["4궁","7궁","10궁","1궁"],"answer":2},{"q":"행동력이 강한 하우스의 명칭은?","choices":["케이던트","석시던트","앵귤러","조이"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3.2,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=0xc084fc;const ring=new THREE.Mesh(new THREE.TorusGeometry(3.2,0.05,10,72),new THREE.MeshBasicMaterial({color:C,transparent:true,opacity:0.6}));ring.rotation.x=Math.PI/2;s.add(ring);const inner=new THREE.Mesh(new THREE.TorusGeometry(1.0,0.03,8,48),new THREE.MeshBasicMaterial({color:C,transparent:true,opacity:0.4}));inner.rotation.x=Math.PI/2;s.add(inner);for(let i=0;i<12;i++){const t=i/12*Math.PI*2;const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(Math.cos(t)*1.0,0,Math.sin(t)*1.0),new THREE.Vector3(Math.cos(t)*3.2,0,Math.sin(t)*3.2)]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:C,transparent:true,opacity:0.4})));const mid=(i+0.5)/12*Math.PI*2;const dot=new THREE.Mesh(new THREE.SphereGeometry(0.12,12,12),new THREE.MeshBasicMaterial({color:C,transparent:true,opacity:0.7}));dot.position.set(Math.cos(mid)*2.1,0,Math.sin(mid)*2.1);s.add(dot);}for(let i=0;i<40;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.03+Math.random()*0.04,6,6),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.3+Math.random()*0.5}));m.position.set((Math.random()-0.5)*18,(Math.random()-0.5)*11,(Math.random()-0.5)*18);s.add(m);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

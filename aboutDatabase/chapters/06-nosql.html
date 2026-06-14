@@ -8,12 +8,14 @@
 <script defer src="../toggle.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">📖 표지 · 초록</a></li>
@@ -538,6 +540,11 @@ WHERE  event_id = ? AND bucket_hour = ?;</code></pre>
   </div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d6efd","questions":[{"q":"NoSQL의 의미로 맞는 것은?","choices":["No SQL","Not Only SQL","New SQL","Non SQL"],"answer":1},{"q":"MongoDB는 어떤 유형의 DB인가?","choices":["그래프 DB","키-값 DB","도큐먼트 DB","컬럼 패밀리"],"answer":2},{"q":"Redis는 어떤 유형의 DB인가?","choices":["키-값 DB","도큐먼트 DB","그래프 DB","관계형 DB"],"answer":0},{"q":"MongoDB의 저장 형식은?","choices":["XML","CSV","YAML","BSON"],"answer":3},{"q":"Neo4j의 표준 쿼리 언어는?","choices":["SQL","Cypher","GraphQL","XPath"],"answer":1}]};</script>
 </main>
 </div>
 </body>

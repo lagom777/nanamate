@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 로즈빛 나선을 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 발달 — 나이에 따라 자라는 감정</span>
 
 <h2>발달과 학습 개요</h2>
 <p>자긍심은 18-24개월 영아의 "숙달의 미소(mastery smile)"로 처음 등장하고, 4세부터 사회적 자긍심으로 발달한다. 청소년기는 자기 효능감의 평생 토대가 결정되는 시기다. 발달기에 형성된 자긍심·희망 회로는 성인기 회복탄력성의 핵심 인자가 된다.</p>
@@ -95,14 +97,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 본인의 청소년기 자긍심·희망 사건 5개를 회상하고, 각 사건이 자기 효능감 4원천 중 어떤 것에 해당했는지 분석하라.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f472b6","questions":[{"q":"자긍심이 처음 나타나는 시기는?","choices":["18-24개월","10세","성인기","노년기"],"answer":0},{"q":"Dweck이 권장하는 칭찬 방식은?","choices":["결과 칭찬","노력 칭찬","외모 칭찬","비교 칭찬"],"answer":1},{"q":"능력 발달을 믿는 메타-신념은?","choices":["고정 마인드셋","비관주의","완벽주의","성장 마인드셋"],"answer":3},{"q":"자기 효능감 4원천 중 가장 강력한 것?","choices":["언어 설득","대리 경험","직접 성취","정서 상태"],"answer":2},{"q":"Erikson 청소년기 핵심 과제는?","choices":["신뢰 vs 불신","정체감 vs 혼미","자율 vs 수치","근면 vs 열등"],"answer":1}]};</script>
 </main></div>
-<script>(function(){
-  const c=document.getElementById('sim-scene');const s=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
   const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const COLOR=0xf472b6;const parts=[];
-  for(let i=0;i<36;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}
-  let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
-  function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();
+  const COL=0xf472b6;const line=new THREE.Mesh(new THREE.BoxGeometry(7.5,0.05,0.05),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.4}));line.position.y=-1.3;s.add(line);const st=[];for(let i=0;i<5;i++){const x=(i-2)*1.6;const rad=0.25+i*0.22;const m=new THREE.Mesh(new THREE.SphereGeometry(rad,18,18),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.6+i*0.08}));m.position.set(x,-1.3+rad,0);s.add(m);st.push(m);}const arrow=new THREE.Mesh(new THREE.ConeGeometry(0.18,0.45,12),new THREE.MeshBasicMaterial({color:0xffe08a}));arrow.rotation.z=-Math.PI/2;arrow.position.set(4,-1.3,0);s.add(arrow);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;st.forEach((m,i)=>m.position.y=-1.3+m.geometry.parameters.radius+Math.sin(T*1.5+i)*0.08);s.rotation.y+=0.0;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
-})();</script></body></html>
+})();
+</script>
+</body></html>

@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="../../shared/light-theme.css">
 <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
 <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -75,7 +77,7 @@
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -109,6 +111,11 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 자기 관심 질환(예: 알츠하이머·당뇨)에서 한 세포 타입(microglia·β-cell)을 골라 scRNA-seq 공개 데이터셋으로 클러스터링을 재현하세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e676","questions":[{"q":"모든 생명체의 기본 단위는?","choices":["세포","조직","기관","계통"],"answer":0},{"q":"ATP를 만드는 에너지 공장 소기관은?","choices":["핵","미토콘드리아","골지체","액포"],"answer":1},{"q":"핵막이 없는 세포는?","choices":["진핵세포","식물세포","원핵세포","동물세포"],"answer":2},{"q":"단백질을 합성하는 소기관은?","choices":["골지체","핵","소포체","리보솜"],"answer":3},{"q":"미토콘드리아 내부공생설의 증거는?","choices":["자체 DNA","세포벽","엽록소","편모"],"answer":0}]};</script>
 </main>
 </div>
 

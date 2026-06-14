@@ -2,11 +2,13 @@
 <title>7. 시험 전략 — aboutTOEIC</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">📝 표지</a></li><li><a href="chapters/01-listening-part1.html">1. LC Part 1-2</a></li><li><a href="chapters/02-listening-part3.html">2. LC Part 3-4</a></li><li><a href="chapters/03-grammar.html">3. RC 문법</a></li><li><a href="chapters/04-vocabulary.html">4. 핵심 어휘</a></li><li><a href="chapters/05-reading-part5.html">5. RC Part 5-6</a></li><li><a href="chapters/06-reading-part7.html">6. RC Part 7</a></li><li><a href="chapters/07-strategies.html">7. 시험 전략</a></li><li><a href="chapters/08-business.html">8. 비즈니스 영어</a></li><li><a href="chapters/09-practice.html">9. 실전 모의고사</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">📝 표지</a></li><li><a href="01-listening-part1.html">1. LC Part 1-2</a></li><li><a href="02-listening-part3.html">2. LC Part 3-4</a></li><li><a href="03-grammar.html">3. RC 문법</a></li><li><a href="04-vocabulary.html">4. 핵심 어휘</a></li><li><a href="05-reading-part5.html">5. RC Part 5-6</a></li><li><a href="06-reading-part7.html">6. RC Part 7</a></li><li><a href="07-strategies.html">7. 시험 전략</a></li><li><a href="08-business.html">8. 비즈니스 영어</a></li><li><a href="09-practice.html">9. 실전 모의고사</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>시험 전략</em></h1><p class="authors">Chapter 7 — Test-Taking Strategies & Time Management</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 파트별 시간 배분과 시계바늘로 본 시간 관리 전략</span>
 <h2>시험 전략</h2><p>Test-Taking Strategies & Time Management의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Test-Taking Strategies & Time Management</p></div>
 
@@ -101,5 +103,29 @@
 
   <div class="success-box"><strong>🎓 만점 도전:</strong> 시험 전략을 평소에 자동화하지 못한 학습자는 실력이 990점급이어도 950점에 머무릅니다. 전략은 평소 모의고사 30회 이상으로 체화되어야 시험 당일 무의식적으로 발휘됩니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f59e0b","questions":[{"q":"토익 총 시험 시간은?","choices":["90분","100분","120분","150분"],"answer":2},{"q":"LC의 시험 시간은?","choices":["45분","60분","75분","30분"],"answer":0},{"q":"모르는 문제 찍기 요령은?","choices":["빈칸으로 두기","무작위 찍기","매번 다르게","한 글자 통일"],"answer":3},{"q":"한 문항당 평균 주어진 시간은?","choices":["20초","36초","50초","70초"],"answer":1},{"q":"RC 역순 전략의 시작 파트는?","choices":["Part 5","Part 6","Part 7","Part 1"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // A clock face: outer ring + 12 hour ticks, time-budget arc segments for each RC part, and a sweeping hand showing time running down
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(2.6,0.07,12,80),new THREE.MeshBasicMaterial({color:0x94a3b8}));s.add(ring);
+  for(let i=0;i<12;i++){const ang=i/12*Math.PI*2;const tick=new THREE.Mesh(new THREE.BoxGeometry(0.08,i%3===0?0.45:0.25,0.08),new THREE.MeshBasicMaterial({color:0xcbd5e1}));tick.position.set(Math.cos(ang)*2.3,Math.sin(ang)*2.3,0);tick.rotation.z=ang-Math.PI/2;s.add(tick);}
+  // time-budget segments (Part5=10min, Part6=8min, Part7=57min) shown as colored arc rings of differing radii
+  const budgets=[[0,0.27,0xf472b6],[0.27,0.48,0xfbbf24],[0.48,1,0x34d399]];budgets.forEach((b,k)=>{const arc=new THREE.Mesh(new THREE.RingGeometry(1.55+k*0.35,1.82+k*0.35,48,1,b[0]*Math.PI*2,(b[1]-b[0])*Math.PI*2),new THREE.MeshBasicMaterial({color:b[2],transparent:true,opacity:0.6,side:THREE.DoubleSide}));s.add(arc);});
+  // minute hand
+  const hand=new THREE.Mesh(new THREE.ConeGeometry(0.12,2.1,4),new THREE.MeshBasicMaterial({color:0xffffff}));hand.position.set(0,1.05,0.1);const handPivot=new THREE.Group();handPivot.add(hand);s.add(handPivot);
+  const hub2=new THREE.Mesh(new THREE.SphereGeometry(0.2,16,16),new THREE.MeshBasicMaterial({color:0xffffff}));s.add(hub2);
+  s.userData.hand=handPivot;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.hand.rotation.z=-T*0.6;s.rotation.y+=0.0015;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

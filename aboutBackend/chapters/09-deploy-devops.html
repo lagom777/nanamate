@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -181,7 +183,7 @@ backend-app-7f8b9c-x3  1/1     Running   0          2m
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -228,6 +230,11 @@ CMD ["node","dist/server.js"]</code></pre>
   <div class="success-box"><strong>🎓 도전 과제:</strong> GitHub Actions → Argo Rollouts로 카나리 배포 파이프라인을 직접 구성하고, Prometheus 메트릭 기반 자동 롤백을 검증하세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00ff88","questions":[{"q":"앱과 의존성을 패키징하는 도구는?","choices":["Docker","Redis","Express","Kafka"],"answer":0},{"q":"소수 사용자에게 먼저 배포하는 전략은?","choices":["블루-그린","롤링","카나리","핫픽스"],"answer":2},{"q":"Kubernetes의 기본 배포 전략은?","choices":["블루-그린","카나리","재생성","롤링 업데이트"],"answer":3},{"q":"Docker에서 실행 인스턴스를 뜻하는 것은?","choices":["Image","Container","Volume","Network"],"answer":1},{"q":"트래픽을 한 번에 전환하는 배포는?","choices":["블루-그린","카나리","롤링","점진 배포"],"answer":0}]};</script>
 </main>
 </div>
 

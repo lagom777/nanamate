@@ -2,12 +2,14 @@
 <title>2. 거시경제학 — aboutEconomics</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">📊 표지</a></li><li><a href="01-micro.html">1. 미시경제학</a></li><li><a href="02-macro.html">2. 거시경제학</a></li><li><a href="03-finance.html">3. 금융과 투자</a></li><li><a href="04-trade.html">4. 국제무역</a></li><li><a href="05-behavioral.html">5. 행동경제학</a></li><li><a href="06-development.html">6. 경제발전</a></li><li><a href="07-labor.html">7. 노동경제학</a></li><li><a href="08-public-finance.html">8. 재정학</a></li><li><a href="09-crypto-fintech.html">9. 크립토/핀테크</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>거시경제학</em></h1><p class="authors">Chapter 2 — GDP, Inflation & Monetary Policy</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 호황·후퇴·침체·회복으로 순환하는 경기 사이클과 중앙은행의 금리 조절</span>
 <h2>거시경제학 개요</h2><p>GDP, Inflation & Monetary Policy의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>GDP, Inflation & Monetary Policy</p></div>
 
@@ -90,5 +92,25 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 한국의 2022~2024년 인플레이션 사이클을 신케인지언 PC 곡선으로 추정하고 통화정책 반응함수를 평가해 보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0891b2","questions":[{"q":"GDP가 측정하는 것은?","choices":["국가 총생산","물가 상승률","실업자 수","정책금리"],"answer":0},{"q":"물가가 지속적으로 오르는 현상은?","choices":["디플레이션","경기순환","인플레이션","실업"],"answer":2},{"q":"중앙은행이 정하는 정책금리는?","choices":["환율","실질금리","시장금리","기준금리"],"answer":3},{"q":"인플레이션은 통화량의 함수라고 한 학자는?","choices":["케인즈","프리드먼","솔로우","리카도"],"answer":1},{"q":"2022년 미국 CPI 최고 상승률은?","choices":["3.5%","5.1%","9.1%","12.0%"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<6;i++){const h=1+Math.random()*2.5;const m=new THREE.Mesh(new THREE.BoxGeometry(0.5,h,0.5),new THREE.MeshBasicMaterial({color:[0x0891b2,0x06b6d4,0x22d3ee][i%3]}));m.position.set(i*1.5-3.75,h/2,0);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,2,10);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const wavePts=[];for(let i=0;i<=60;i++){const x=-5+i*(10/60);wavePts.push(new THREE.Vector3(x,0,0));}
+  const wave=new THREE.Line(new THREE.BufferGeometry().setFromPoints(wavePts),new THREE.LineBasicMaterial({color:0x60a5fa}));s.add(wave);s.userData.wave=wave;
+  const trend=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-5,-1.6,0),new THREE.Vector3(5,1.6,0)]),new THREE.LineBasicMaterial({color:0x94a3b8}));s.add(trend);
+  const cb=new THREE.Mesh(new THREE.IcosahedronGeometry(0.7,0),new THREE.MeshBasicMaterial({color:0xfbbf24,wireframe:true}));cb.position.set(0,2.6,0);s.add(cb);s.userData.cb=cb;
+  const ringG=new THREE.Mesh(new THREE.TorusGeometry(1.1,0.04,8,40),new THREE.MeshBasicMaterial({color:0xf59e0b}));ringG.position.copy(cb.position);s.add(ringG);s.userData.ring=ringG;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const w=s.userData.wave;const arr=w.geometry.attributes.position;for(let i=0;i<arr.count;i++){const x=arr.getX(i);arr.setY(i,x*0.32+1.4*Math.sin(x*1.1-T*1.4));}arr.needsUpdate=true;s.userData.cb.rotation.y+=0.02;s.userData.cb.rotation.x+=0.01;s.userData.ring.rotation.z+=0.03;s.rotation.y=0.25*Math.sin(T*0.3);r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

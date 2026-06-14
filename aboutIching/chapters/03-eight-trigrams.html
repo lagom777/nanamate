@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 팔괘(八卦) — aboutIching</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">☯ 표지 · 점치기</a></li>
+    <li><a href="01-what-is.html">1. 주역이란 무엇인가</a></li>
+    <li><a href="02-yin-yang-yao.html">2. 음양과 효(爻)</a></li>
+    <li><a href="03-eight-trigrams.html">3. 팔괘(八卦)</a></li>
+    <li><a href="04-64-hexagrams.html">4. 64괘의 세계</a></li>
+    <li><a href="05-casting.html">5. 작괘법 — 점치는 법</a></li>
+    <li><a href="06-changing-lines.html">6. 동효와 변괘</a></li>
+    <li><a href="07-interpretation.html">7. 괘 해석법</a></li>
+    <li><a href="08-history.html">8. 주역의 역사와 활용</a></li>
+    <li><a href="09-science.html">9. 주역의 과학·심리</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>팔괘(八卦)</em></h1>
+  <p class="authors">Chapter 3 — The Eight Trigrams</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 팔괘 — 효 3개로 만든 8가지 기본 괘(건태리진손감간곤)</span>
+
+<h2>팔괘(八卦) 개요</h2>
+<p>팔괘는 음효(陰爻)와 양효(陽爻) 세 개를 위아래로 쌓아 만든 여덟 가지 기본 기호다. 전설에서는 옛 성인 복희(伏羲)가 하늘과 땅의 이치를 살펴 이 여덟 괘를 그렸다고 전한다. 각각의 괘는 하늘·못·불·우레·바람·물·산·땅이라는 자연물에 대응하며, 동시에 성질·가족·방위 같은 여러 층위의 상징을 함께 담는다. 64괘는 모두 이 여덟 괘를 둘씩 겹쳐 만든 것이므로, 팔괘는 주역 전체를 떠받치는 기초가 된다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>팔괘는 건(乾☰ 하늘)·태(兌☱ 못)·리(離☲ 불)·진(震☳ 우레)·손(巽☴ 바람)·감(坎☵ 물)·간(艮☶ 산)·곤(坤☷ 땅)의 여덟 소성괘를 말한다. 세 효의 음양 조합으로 만들어지며, 각 괘는 자연물·성질·가족 구성원·방위 등 여러 상징을 압축해 담는다. 복희가 그렸다고 전하는 선천팔괘(先天八卦)는 대대(對待)의 짝 배치를, 문왕(文王)이 정했다고 전하는 후천팔괘(後天八卦)는 방위와 계절의 순환을 나타내는 배치로 본다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>팔괘는 음효와 양효 세 줄을 쌓아 만든 여덟 개의 기본 기호로, 하늘·땅·물·불처럼 세상을 이루는 큰 요소들을 압축해 나타낸 것이라고 본다.</p>
+<h3>왜 중요한가?</h3>
+<p>주역의 64괘는 모두 팔괘 두 개를 위아래로 겹쳐 만든다. 그래서 팔괘를 모르면 64괘를 읽을 수 없고, 괘 해석의 출발점도 잡기 어렵다. 여덟 괘만 익히면 어떤 괘를 만나도 위와 아래의 두 부분으로 나누어 의미를 짐작할 수 있다. 또 팔괘는 자연물뿐 아니라 가족·성질·방위까지 함께 상징하므로, 하나의 기호가 여러 갈래로 쓰인다. 이런 다층적 상징은 동아시아의 사상·의학·풍수에까지 폭넓게 퍼졌다. 즉 팔괘는 주역을 넘어 전통 문화 전반을 읽는 작은 열쇠인 셈이다.</p>
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>소성괘(小成卦)</strong>: 효 세 개로 이루어진 기본 괘, 곧 팔괘 하나하나를 가리킨다.</li><li><strong>효(爻)</strong>: 끊기지 않은 한 줄(양효)과 가운데가 끊긴 줄(음효)을 이르는 말로, 괘를 이루는 최소 단위다.</li><li><strong>건(乾☰)과 곤(坤☷)</strong>: 각각 세 효가 모두 양, 모두 음인 괘로 하늘과 땅을 상징한다.</li><li><strong>선천팔괘(先天八卦)</strong>: 복희가 그렸다고 전하는 배치로, 마주 보는 짝의 균형을 강조한다.</li><li><strong>후천팔괘(後天八卦)</strong>: 문왕이 정했다고 전하는 배치로, 방위와 계절의 순환을 강조한다.</li></ul></div>
+<h3>핵심 개념 풀어쓰기</h3>
+<p>팔괘를 색을 섞는 일에 비유하면 쉽다. 양효와 음효라는 두 가지 '재료'를 세 칸에 어떻게 넣느냐에 따라 여덟 가지 결과가 나온다. 세 칸이 모두 양이면 가장 강한 하늘(건)이고, 모두 음이면 가장 부드러운 땅(곤)이다. 그 사이에 음과 양이 섞이면서 못·불·우레·바람·물·산 같은 중간 성질이 만들어진다. 한 가족에 비유하면 건은 아버지, 곤은 어머니, 나머지 여섯 괘는 세 아들과 세 딸에 해당한다고 본다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 여덟 괘를 외울 때는 아래에서 위로 효를 읽는다는 점을 먼저 기억하자. "건삼련(乾三連, 세 줄이 모두 이어짐), 곤삼절(坤三絶, 세 줄이 모두 끊김)"처럼 모양을 짧은 말로 묶어 외우면 헷갈리지 않는다.</div>
+<h3>한 페이지 요약</h3>
+<ul><li>팔괘는 효 세 개로 만든 여덟 개의 기본 괘다.</li><li>건(하늘)·태(못)·리(불)·진(우레)·손(바람)·감(물)·간(산)·곤(땅)으로 이루어진다.</li><li>각 괘는 자연물·성질·가족·방위 등을 함께 상징한다.</li><li>64괘는 모두 팔괘 두 개를 겹쳐 만든다.</li><li>배치에는 선천팔괘(복희)와 후천팔괘(문왕) 두 가지가 전한다.</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>팔괘는 음양 두 효를 세 자리에 배열한 조합으로, 이론상 2의 세제곱인 여덟 가지가 모두 나온다. 가장 아래 자리부터 위로 첫째·둘째·셋째 효라 부르며, 괘를 읽을 때도 아래에서 위로 올라간다. 각 괘에는 고유한 이름·자연물·성질·가족·방위가 짝지어져 있다. 예컨대 건은 하늘이자 강건(剛健)함이며 아버지이고, 곤은 땅이자 유순(柔順)함이며 어머니다. 나머지 여섯 괘는 음양이 섞인 정도와 위치에 따라 자식들에 비유된다. 진(우레)은 맨 아래에 양이 하나 생긴 모습이라 장남, 손(바람)은 맨 아래에 음이 하나 든 모습이라 장녀로 본다. 감(물)은 가운데 양이 든 중남, 리(불)는 가운데 음이 든 중녀로 여긴다. 이처럼 어느 자리에 하나뿐인 효가 들어왔는가를 기준으로 가족 상징이 정해진다는 점이 흥미롭다. 이런 규칙성 덕분에 팔괘는 단순한 그림이 아니라 일관된 논리를 가진 기호 체계가 된다.</p>
+<h3>핵심 메커니즘/원리</h3>
+<div class="info-card"><h4>📐 음양의 조합과 상징의 층위</h4><p>팔괘의 의미는 세 효의 음양 배열에서 나온다. 같은 양효라도 어느 자리에 홀로 있느냐에 따라 가족과 성질이 달라진다. 또 하나의 괘는 자연물(하늘·못 등), 성질(강건·유순·움직임 등), 가족(부모·자녀), 방위(동·서·남·북 등)라는 여러 층위의 상징을 동시에 지닌다. 해석할 때는 점치는 상황에 맞춰 어느 층위를 가져올지 골라 쓴다고 본다.</p></div>
+<h3>대표 사례·예시</h3>
+<div class="info-card"><h4>📐 사례 1 — 건(乾☰)과 곤(坤☷)</h4><p>건은 세 효가 모두 양이라 가장 굳센 기운, 곧 하늘을 상징한다. 강건함·아버지·서북 방위(후천팔괘 기준)와 짝지어진다. 곤은 세 효가 모두 음이라 가장 부드러운 기운, 곧 땅을 상징하며 유순함·어머니·서남 방위에 대응한다. 두 괘는 음과 양의 양 극단으로서 나머지 여섯 괘가 펼쳐지는 바탕이 된다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 감(坎☵)과 리(離☲)</h4><p>감은 가운데만 양이고 위아래가 음인 모습으로 물을 상징한다. 험난함·중남·북방과 짝지어진다고 본다. 리는 가운데만 음이고 위아래가 양인 모습으로 불을 상징하며, 밝음·중녀·남방에 대응한다. 두 괘는 서로 효의 음양이 정확히 뒤집힌 짝으로, 물과 불처럼 대비되는 성질을 잘 보여 준다.</p></div>
+<h3>현대적 전개</h3>
+<p>팔괘의 배치에는 크게 두 가지가 전한다. 복희가 그렸다고 전하는 선천팔괘는 마주 보는 괘끼리 음양이 뒤집히도록 짝지어 배치해 우주의 본래 균형을 나타낸다고 본다. 문왕이 정했다고 전하는 후천팔괘는 같은 여덟 괘를 방위와 계절의 순환에 맞춰 다시 늘어놓아, 만물이 생겨나고 자라며 거두어지는 흐름을 담았다고 여긴다. 오늘날 풍수·한의학·역학에서 쓰이는 방위 개념은 대개 후천팔괘를 바탕으로 한다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 팔괘가 곧 64괘라고 생각하기 쉽지만, 팔괘는 효 세 개로 된 소성괘이고 64괘는 팔괘 두 개를 겹친 대성괘(大成卦)다. 또 선천팔괘와 후천팔괘는 서로 다른 괘가 아니라, 같은 여덟 괘를 다른 원리로 배치한 두 그림일 뿐이다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>팔괘는 음양 이진(二進)의 단위인 효를 세 자리에 배열한 체계로, 여덟 가지 조합이 빠짐없이 나타난다. 각 괘는 자연물·성질·가족·방위·신체·동물 등 여러 상징 계열을 동시에 거느리며, 이 상징 묶음은 후대의 「설괘전(說卦傳)」 같은 글에서 정리되어 전한다. 선천팔괘는 마주 보는 괘끼리 음양이 완전히 뒤집히는 대대(對待) 구조로, 정적인 균형과 본체를 나타낸다고 본다. 반면 후천팔괘는 방위와 사계의 순환에 괘를 배당해 동적인 작용과 변화를 나타낸다고 여긴다. 두 배치는 흔히 '체(體)와 용(用)', 곧 바탕과 쓰임의 관계로 설명된다. 다만 어느 배치가 더 오래되었고 누구의 작품인지는 전승에 따른 것으로, 역사적 고증과는 구분해서 이해하는 편이 좋다. 팔괘를 다룰 때는 이런 상징의 풍부함을 인정하면서도, 그 의미가 고정된 사실이 아니라 해석의 틀임을 함께 기억할 필요가 있다.</p>
+<h3>최신 연구·쟁점</h3>
+<p>오늘날 학계에서는 팔괘를 점술의 결과로 단정하기보다, 고대인이 자연과 인간사를 분류하고 기억하기 위해 만든 상징·기호 체계로 보는 관점이 자주 거론된다. 음양 효의 이진적 구조가 정보 부호화와 닮았다는 점도 흥미롭게 논의된다. 심리학 쪽에서는 팔괘처럼 풍부한 상징을 마주할 때 사람이 자신의 상황을 투영해 의미를 발견하는 경향을 함께 다룬다. 다만 이런 비유는 어디까지나 이해를 돕는 관점이며, 팔괘가 자연 현상을 인과적으로 예측한다는 주장과는 구분되어야 한다.</p>
+<h3>관련 분야</h3>
+<ul><li><strong>풍수지리</strong>: 후천팔괘의 방위 배치를 바탕으로 공간과 방향을 해석한다.</li><li><strong>한의학·기 사상</strong>: 팔괘의 음양 분류가 신체와 자연을 짝짓는 사고와 연결된다.</li><li><strong>기호학·인지과학</strong>: 단순한 단위로 복잡한 의미를 압축하는 상징 체계의 작동 방식을 살핀다.</li></ul>
+<h3>더 읽을거리</h3>
+<ul><li>"주역" — 정이천·주희 주석 계열의 역주본</li><li>"주역 계사전·설괘전 강의" — 동양철학 전공자의 해설서</li><li>"The I Ching or Book of Changes" — Richard Wilhelm 영역, Cary F. Baynes 옮김</li></ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> 여덟 괘를 종이에 그려 놓고, 각 괘에 자연물·성질·가족·방위를 직접 짝지어 표로 만들어 보자. 그다음 선천팔괘와 후천팔괘 두 배치를 나란히 그려, 같은 괘가 어떻게 다른 자리에 놓이는지 비교해 보면 두 배치의 원리 차이가 한눈에 들어온다.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#cf9b34","questions":[{"q":"팔괘 하나를 이루는 효의 개수는?","choices":["2개","3개","6개","8개"],"answer":1},{"q":"팔괘에서 하늘을 상징하는 괘는?","choices":["곤(坤)","감(坎)","건(乾)","리(離)"],"answer":2},{"q":"팔괘를 그렸다고 전하는 인물은?","choices":["복희","문왕","주공","공자"],"answer":0},{"q":"가운데만 양이며 물을 상징하는 괘는?","choices":["리(離)","태(兌)","간(艮)","감(坎)"],"answer":3},{"q":"방위와 계절의 순환을 담은 배치는?","choices":["선천팔괘","후천팔괘","대성괘","호괘"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3.4,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=0xcf9b34;const TRI=[[1,1,1],[1,1,0],[1,0,1],[1,0,0],[0,1,1],[0,1,0],[0,0,1],[0,0,0]];const ring=new THREE.Mesh(new THREE.TorusGeometry(3.2,0.04,10,80),new THREE.MeshBasicMaterial({color:C,transparent:true,opacity:0.35}));ring.rotation.x=Math.PI/2;s.add(ring);TRI.forEach((tg,i)=>{const ang=i/8*Math.PI*2;const grp=new THREE.Group();grp.position.set(Math.cos(ang)*3.2,0,Math.sin(ang)*3.2);tg.forEach((y,j)=>{if(y){const b=new THREE.Mesh(new THREE.BoxGeometry(0.95,0.13,0.13),new THREE.MeshBasicMaterial({color:C}));b.position.y=(j-1)*0.3;grp.add(b);}else{const l=new THREE.Mesh(new THREE.BoxGeometry(0.38,0.13,0.13),new THREE.MeshBasicMaterial({color:C}));l.position.set(-0.29,(j-1)*0.3,0);grp.add(l);const r2=l.clone();r2.position.x=0.29;grp.add(r2);}});grp.lookAt(0,0,0);s.add(grp);});
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

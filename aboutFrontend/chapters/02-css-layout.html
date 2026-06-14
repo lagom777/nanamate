@@ -89,7 +89,7 @@
             font-size: 13px;
             font-weight: 600;
             letter-spacing: 0.04em;
-            text-align: center;
+            text-align:left;
             box-shadow: 0 6px 18px -6px rgba(123, 92, 255, 0.5);
             transition: transform 0.2s ease;
         }
@@ -467,7 +467,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
-            text-align: center;
+            text-align:left;
         }
 
         .nav-btn.prev {
@@ -492,7 +492,9 @@
     </style>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
     <div class="container">
@@ -743,8 +745,17 @@ li:first-child { font-weight: bold; }
                 <a href="03-javascript-core.html" class="nav-btn next">다음: JavaScript 핵심 →</a>
             </div>
 
-            <h2>📚 난이도별 학습</h2>
-            <p>본인 수준에 맞춰 탭 선택. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+            
+
+<!-- 3D 학습 시각화: 박스 모델과 Flexbox -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · CSS: 4겹 박스 + flex 분배 규칙</div>
+  <div id="fe3d-02" style="width:100%;height:430px;"></div>
+  <div id="fe3d-02-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">박스 모델 분해와 justify-content의 4가지 값.</div>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+            <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
             <div class="difficulty-tabs">
                 <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
                 <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -854,7 +865,12 @@ li:first-child { font-weight: bold; }
                     <strong>🎓 도전 과제:</strong> JavaScript 0줄로 이미지 캐러셀(스냅 스크롤 + 페이드 + 인디케이터)을 구현해보세요. <code>scroll-snap</code>·<code>:target</code>·<code>animation-timeline: scroll()</code>이 무기가 됩니다.
                 </div>
             </div>
-        </main>
+        
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0ea5e9","questions":[{"q":"ID 선택자의 특이성 점수는?","choices":["1점","10점","100점","1000점"],"answer":2},{"q":"1차원 레이아웃에 알맞은 것은?","choices":["Grid","Flexbox","Table","Float"],"answer":1},{"q":"박스 모델의 가장 안쪽은?","choices":["margin","border","padding","content"],"answer":3},{"q":"주축 정렬을 담당하는 속성은?","choices":["justify-content","align-items","flex-wrap","gap"],"answer":0},{"q":"60fps 애니메이션에 유리한 속성은?","choices":["width","top","transform","margin"],"answer":2}]};</script>
+</main>
     </div>
 
     <script>
@@ -947,5 +963,128 @@ li:first-child { font-weight: bold; }
             });
         }
     </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('fe3d-02');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('fe3d-02-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,1.6,13);camera.lookAt(0,0.4,0);
+  var margin=box(7.2,5.0,0.3,0xffe9a8,0.5);margin.position.set(-3.4,0.8,-0.6);scene.add(margin);
+  var border=box(5.6,3.6,0.4,0xe07a3f,0.75);border.position.set(-3.4,0.8,-0.3);scene.add(border);
+  var padding=box(4.6,2.7,0.5,0x9be3b8,0.8);padding.position.set(-3.4,0.8,0);scene.add(padding);
+  var content=box(3.2,1.6,0.6,0x5b6bd6,0.95);content.position.set(-3.4,0.8,0.3);scene.add(content);
+  var Ls=[
+    lbl('margin (바깥 여백)',22,'#9a6b00',0.9),
+    lbl('border (테두리)',22,'#b35b1f',0.9),
+    lbl('padding (안쪽 여백)',22,'#1d7a44',0.9),
+    lbl('content (내용)',22,'#ffffff',0.95)
+  ];
+  Ls.forEach(function(l){scene.add(l);});
+  var layers=[margin,border,padding,content];
+  var zBase=[-0.6,-0.3,0,0.3];
+  function explode(k){
+    layers.forEach(function(m,i){
+      m.position.z=zBase[i]+k*(i*1.4-2.1)*1.2;
+      Ls[i].position.set(-3.4+ (i===3?0:2.0+i*0.55)*0, m.position.y+2.8-i*0.0, m.position.z+0.4);
+      Ls[i].position.x=-3.4;
+      Ls[i].position.y=0.8+2.8-i*0.45-(i===3?2.0:0);
+      Ls[i].position.y=(i===0?3.6:(i===1?2.9:(i===2?2.25:0.8)));
+    });
+  }
+  explode(0);
+  // flexbox stage (right)
+  var frame=new THREE.Mesh(new THREE.BoxGeometry(7.0,2.4,0.7),new THREE.MeshBasicMaterial({color:0x39415a,wireframe:true,transparent:true,opacity:0.55}));
+  frame.position.set(3.9,-2.6,0);scene.add(frame);
+  var frL=lbl('flex 컨테이너',22,'#39415a',0.9);frL.position.set(3.9,-1.1,0);scene.add(frL);
+  var items=[],itemW=[1.3,1.3,1.3];
+  for(var i=0;i<3;i++){
+    var it=box(itemW[i],1.3,0.55,[0x5b6bd6,0x2f9e63,0xe07a3f][i],0.95);it.position.set(3.9,-2.6,0);scene.add(it);items.push(it);
+  }
+  var modeL=lbl('justify-content: flex-start',26,'#d6455b',1);modeL.position.set(3.9,-4.3,0);scene.add(modeL);
+  function setMode(t){scene.remove(modeL);modeL=lbl('justify-content: '+t,26,'#d6455b',1);modeL.position.set(3.9,-4.3,0);scene.add(modeL);}
+  var x0=3.9-3.5;
+  var layouts={
+    'flex-start':[x0+0.85,x0+2.25,x0+3.65],
+    'center':[3.9-1.4,3.9,3.9+1.4],
+    'space-between':[x0+0.85,3.9,3.9+2.65],
+    'space-around':[x0+1.35,3.9,3.9+2.15]
+  };
+  var curX=layouts['flex-start'].slice(),tgtX=curX.slice();
+  function target(name){setMode(name);tgtX=layouts[name];}
+  var phases=[
+    {dur:4,cap:'박스 모델: 모든 HTML 요소는 4겹 상자입니다 — content를 padding이, 그걸 border가, 그걸 margin이 감쌉니다. 분해해서 봅시다.',
+     update:function(u){explode(ez(u));}},
+    {dur:4,cap:'다시 조립: 박스 폭(렌더 폭)은 content+padding+border. content-box면 width:100px+padding+border가 박스 폭이고, border-box면 그 합이 100px로 고정됩니다. margin은 박스 밖 여백이라 box-sizing과 무관하게 어느 모드든 별도로 더해집니다.',
+     update:function(u){explode(1-ez(u));}},
+    {dur:3.5,cap:'Flexbox: 컨테이너가 "주축 방향 배치"를 책임집니다. justify-content:flex-start — 아이템이 시작점에 몰립니다.',
+     enter:function(){target('flex-start');}},
+    {dur:3.5,cap:'justify-content:center — 같은 HTML, CSS 한 줄로 가운데 정렬. 아이템을 일일이 움직이는 게 아니라 "분배 규칙"을 바꾸는 것.',
+     enter:function(){target('center');}},
+    {dur:3.5,cap:'space-between — 양 끝에 붙이고 남은 공간을 사이에 균등 분배. 내비게이션 바의 단골 패턴.',
+     enter:function(){target('space-between');}},
+    {dur:3.5,cap:'space-around — 아이템 둘레에 균등한 공간. 이 4가지 값만 알아도 가로 배치의 대부분이 해결됩니다.',
+     enter:function(){target('space-around');}}
+  ];
+  function always(t,dt){
+    items.forEach(function(it,i){
+      curX[i]+=(tgtX[i]-curX[i])*Math.min(1,dt*5);
+      it.position.x=curX[i];
+    });
+  }
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
 </body>
 </html>

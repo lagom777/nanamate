@@ -399,12 +399,14 @@
   </style>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
   <div class="layout-wrapper">
     <aside>
-      <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+      <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
       <h3>전체 목차</h3>
       <ol>
         <li><a href="../index.html">📖 표지 · 소개</a></li>
@@ -963,7 +965,7 @@ REACT_APP_VERSION=1.0.0
       </div>
 
       <h2>📚 난이도별 학습</h2>
-      <p>본인 수준에 맞춰 탭 선택. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+      <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
       <div class="difficulty-tabs">
         <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
         <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -1092,7 +1094,12 @@ export default defineConfig({
           <strong>🎓 도전 과제:</strong> 모노레포에 앱 3개·공용 패키지 5개를 두고 Turborepo + Cloudflare Pages + Sigstore provenance까지 구성해, PR마다 Preview URL이 1분 내에 뜨도록 만들어보세요.
         </div>
       </div>
-    </main>
+    
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0ea5e9","questions":[{"q":"여러 파일을 하나로 묶는 작업은?","choices":["번들링","트랜스파일링","린팅","디버깅"],"answer":0},{"q":"2020년 출시된 빠른 번들러는?","choices":["Webpack","Vite","Grunt","Gulp"],"answer":1},{"q":"JS에 정적 타입을 더한 언어는?","choices":["Babel","CoffeeScript","TypeScript","Dart"],"answer":2},{"q":"pnpm의 Lock 파일은?","choices":["package-lock.json","yarn.lock","lockfile.js","pnpm-lock.yaml"],"answer":3},{"q":"코드 자동 테스트·빌드를 뜻하는 말은?","choices":["CD","CI","HMR","SSR"],"answer":1}]};</script>
+</main>
   </div>
 
   <script>

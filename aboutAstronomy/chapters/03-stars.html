@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="../../shared/light-theme.css">
 <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
 <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -94,7 +96,7 @@
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -128,6 +130,11 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> Hayashi track과 Henyey track를 HR 도표 위에 그려 별의 전주계열 진화를 설명하고, 1M⊙과 20M⊙ 별의 차이를 정리하세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7b9fff","questions":[{"q":"별 일생의 약 90%를 차지하는 단계는?","choices":["원시별","적색거성","주계열","백색왜성"],"answer":2},{"q":"분광형 중 가장 뜨거운 별의 형은?","choices":["M형","G형","K형","O형"],"answer":3},{"q":"태양의 분광형은?","choices":["G2V","O5","M1","A0"],"answer":0},{"q":"백색왜성 핵의 찬드라세카르 한계는?","choices":["0.5M☉","1.4M☉","3M☉","8M☉"],"answer":1},{"q":"철보다 무거운 원소가 만들어지는 곳은?","choices":["행성 대기","주계열성 중심","초신성 폭발","성간 먼지"],"answer":2}]};</script>
 </main>
 </div>
 

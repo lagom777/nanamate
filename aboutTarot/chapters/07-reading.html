@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7. 카드 읽는 법 — aboutTarot</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🃏 표지</a></li>
+    <li><a href="01-what-is.html">1. 타로란 무엇인가</a></li>
+    <li><a href="02-major.html">2. 메이저 아르카나 22장</a></li>
+    <li><a href="03-minor.html">3. 마이너 아르카나 56장</a></li>
+    <li><a href="04-court.html">4. 코트 카드</a></li>
+    <li><a href="05-reversed.html">5. 정방향과 역방향</a></li>
+    <li><a href="06-spreads.html">6. 대표 스프레드</a></li>
+    <li><a href="07-reading.html">7. 카드 읽는 법</a></li>
+    <li><a href="08-symbolism.html">8. 상징과 융 심리학</a></li>
+    <li><a href="09-ethics.html">9. 타로의 과학·비판·윤리</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>카드 읽는 법</em></h1>
+  <p class="authors">Chapter 7 — Reading the Cards</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 카드 사이의 상호작용 — 연결선으로 엮이는 하나의 이야기</span>
+
+<h2>카드 읽는 법 개요</h2>
+<p>카드를 읽는다는 것은 한 장의 그림에 적힌 '정답'을 외워 꺼내는 일이 아니라, 직관과 카드의 상징, 그리고 카드가 놓인 위치(스프레드)와 카드들 사이의 상호작용을 하나의 이야기로 엮어 내는 과정이다. 같은 카드라도 어떤 질문을 던졌는지, 어떤 맥락에 놓였는지에 따라 읽히는 결이 달라진다. 그래서 노련한 리더일수록 한 장만 보고 단정하기보다, 펼쳐진 카드 전체를 연결해 흐름을 본다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>리딩은 '직관 + 상징 + 위치 + 상호작용'을 종합해 이야기로 풀어내는 작업이다. 열린 질문에서 출발하고, 한 장을 따로 떼어 단정하지 않으며, 같은 카드도 질문과 맥락에 따라 의미가 달라진다는 점을 전제로 한다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>카드 읽기는 그림 한 장의 뜻을 암기해 답하는 것이 아니라, 펼쳐진 카드들을 이어 하나의 이야기로 들려주는 일이라고 본다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>카드의 키워드만 줄줄 외워서는 살아 있는 리딩이 되기 어렵다. 같은 '컵 3'이라도 우정에 관한 질문에서 읽힐 때와 일에 관한 질문에서 읽힐 때 가닿는 의미가 달라지기 때문이다. 리딩의 핵심은 카드가 던지는 상징과, 그 카드가 놓인 자리(과거·현재·미래 같은 위치), 그리고 옆에 어떤 카드가 함께 나왔는지를 함께 읽어 내는 데 있다. 이 종합 과정을 익히면 카드를 외우는 부담은 줄고, 질문자의 상황에 맞춰 유연하게 풀어 줄 여유가 생긴다. 또한 한 장만 보고 성급히 결론짓지 않는 태도는, 타로를 점치는 도구가 아니라 생각을 정리하는 참고 도구로 다루는 데도 도움이 된다.</p>
+
+<div class="info-card"><h4>🌱 핵심 용어</h4>
+<ul>
+<li><strong>직관</strong>: 카드 그림을 처음 보았을 때 떠오르는 인상이나 느낌으로, 상징 해석의 출발점이 된다</li>
+<li><strong>상징</strong>: 카드 속 인물·색·사물이 가리키는 보편적 의미로, 카드의 '단어'에 해당한다</li>
+<li><strong>위치(포지션)</strong>: 스프레드에서 카드가 놓인 자리로, 같은 카드도 자리에 따라 다르게 읽힌다</li>
+<li><strong>상호작용</strong>: 함께 펼쳐진 카드들이 서로의 의미를 강화하거나 누그러뜨리는 관계다</li>
+<li><strong>열린 질문</strong>: '예/아니오'로 답하기 어려운, 상황을 넓게 살펴보게 하는 질문이다</li>
+</ul></div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>리딩은 단어를 모아 문장을 만드는 일과 닮았다고 본다. 카드 한 장은 '단어', 카드가 놓인 위치는 그 단어의 '역할(주어인지 결과인지)', 카드들 사이의 관계는 단어를 잇는 '문법'에 가깝다. 단어만 따로 외쳐서는 뜻이 통하지 않듯, 카드도 한 장씩 떼어 두면 이야기가 되지 못한다. 위치와 이웃 카드를 함께 보고 문장으로 엮을 때 비로소 의미가 살아난다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 처음에는 카드를 펼친 뒤 "이 그림에서 가장 먼저 눈에 들어온 것은 무엇인가?"를 소리 내어 말해 보면 직관을 끌어내기 쉽다.</div>
+
+<h3>한 페이지 요약</h3>
+<ul>
+<li>리딩은 직관·상징·위치·상호작용을 종합하는 과정이다</li>
+<li>카드를 외우기보다 이야기로 엮는 연습이 더 중요하다</li>
+<li>한 장만 보고 단정하지 않는다</li>
+<li>같은 카드도 질문과 맥락에 따라 다르게 읽힌다</li>
+<li>열린 질문에서 출발해야 풍부하게 풀어낼 수 있다</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>리딩은 흔히 네 겹의 정보를 겹쳐 읽는 작업으로 설명한다. 첫째는 직관으로, 카드를 펼친 순간의 첫인상이다. 둘째는 카드 자체의 상징으로, 그림에 담긴 인물·도구·풍경·숫자가 가리키는 보편적 의미다. 셋째는 위치로, 스프레드에서 그 카드가 어떤 자리에 놓였는가다. 같은 '죽음' 카드라도 '과거' 자리에 있으면 이미 지나간 변화로, '조언' 자리에 있으면 놓아주라는 권유로 읽는 식이다. 넷째는 카드 간 상호작용으로, 이웃한 카드가 의미를 더하거나 덜어 준다. 리더는 이 네 겹을 따로 보지 않고 하나의 이야기로 묶는다. 이때 핵심 기법이 스토리텔링이다. 카드를 왼쪽에서 오른쪽으로, 혹은 위치 순서대로 따라가며 "그래서 다음에는…"으로 이어 가면 흩어진 카드가 한 편의 서사가 된다. 또한 질문 자체가 결과를 크게 좌우하므로, '예/아니오'보다 상황을 넓게 보게 하는 열린 질문을 권한다. 그리고 어떤 단계에서도 한 장을 떼어 단정하지 않는 것이 원칙이다.</p>
+
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 네 겹 종합과 스토리텔링</h4><p>직관(첫인상) → 상징(카드의 뜻) → 위치(자리의 역할) → 상호작용(이웃 카드)의 순서로 정보를 쌓고, 이를 위치 순서를 따라 한 줄의 이야기로 이어 읽는다. 카드는 '단어', 위치는 '문법', 이야기는 '완성된 문장'에 해당한다고 본다.</p></div>
+
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1</h4><p>세 장 스프레드(과거·현재·미래)에서 같은 '컵 5'가 '과거' 자리에 나오면 이미 겪은 상실이나 후회로 읽고, '미래' 자리에 나오면 앞으로 마주할 아쉬움에 대비하라는 신호로 읽는다. 카드는 같아도 위치가 의미의 방향을 바꾼다.</p></div>
+<div class="info-card"><h4>📐 사례 2</h4><p>'탑'(급격한 변화)이 '별'(희망·회복) 옆에 나오면, 무너짐 뒤에 오는 재건의 이야기로 누그러뜨려 읽을 수 있다. 같은 '탑'이 어두운 분위기의 카드들과 함께 나오면 충격이 강조되는 식으로, 이웃 카드와의 상호작용이 톤을 바꾼다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>오늘날 많은 리더는 타로를 미래를 맞히는 도구라기보다, 질문자가 자기 상황을 다른 각도에서 들여다보도록 돕는 성찰·상담의 보조 도구로 다룬다. 이 흐름에서는 카드의 '고정된 답'을 강요하기보다, 질문자가 카드를 보며 스스로 의미를 길어 올리도록 열린 대화를 이끄는 방식을 참고한다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 카드마다 정해진 '정답 키워드'가 하나씩 있어서 그것만 외우면 된다고 여기기 쉽다. 그러나 같은 카드도 질문·위치·이웃 카드에 따라 읽히는 방향이 달라지므로, 키워드는 출발점일 뿐 종착점이 아니다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>숙련된 리딩은 네 겹의 정보를 순차적으로 쌓는 데 그치지 않고, 카드 전체가 이루는 패턴을 한눈에 조망하는 단계로 나아간다. 예컨대 한 스프레드에 같은 슈트(컵·완드·검·펜타클)가 몰려 있으면 그 영역(감정·열정·사고·물질)이 질문의 중심임을 읽고, 메이저 아르카나가 많이 나오면 본인의 의지로 통제하기 어려운 큰 흐름이 작동한다고 해석하는 식이다. 또한 리더는 자신의 직관적 인상과 카드의 전통적 상징이 어긋날 때 둘을 어떻게 조율할지 끊임없이 판단한다. 이 과정에서 주의할 점은 확증 편향과 콜드 리딩의 위험이다. 질문자의 반응을 보며 해석을 끼워 맞추거나, 누구에게나 들어맞는 모호한 진술(이른바 바넘 효과)로 흐르기 쉽기 때문이다. 그래서 윤리적인 리더는 단정·예언을 피하고, 카드를 '확정된 미래'가 아니라 '지금 상황을 비추는 거울'로 제시하는 태도를 참고한다. 결국 전문성은 더 많은 키워드를 아는 데서 오기보다, 질문을 잘 다듬고 이야기를 책임감 있게 엮으며 한계를 정직하게 인정하는 데서 온다고 본다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>심리학에서는 타로 리딩의 설득력 상당 부분이 바넘·포러 효과, 콜드 리딩, 확증 편향 같은 일반적 인지 기제로 설명된다고 본다. 즉 카드 자체가 미래를 안다기보다, 모호하고 긍정적인 진술이 누구에게나 들어맞게 느껴지는 경향이 작동한다는 관점이다. 한편 상담·표현예술 분야 일부에서는 타로 이미지를 자유 연상과 자기 성찰을 촉발하는 도구로 활용하기도 하는데, 이는 점술적 예측과는 구분해 다룬다. 어느 쪽이든 카드 읽기를 의학·법률·재정 같은 중대한 결정의 근거로 삼는 것은 권하지 않으며, 참고 정도로 한정하는 태도가 강조된다.</p>
+
+<h3>관련 분야</h3>
+<ul>
+<li>인지심리학 — 바넘 효과·확증 편향 등 해석을 그럴듯하게 만드는 기제를 다룬다</li>
+<li>상징학·기호학 — 이미지가 의미를 만들어 내는 방식을 분석한다</li>
+<li>상담·표현예술치료 — 이미지를 매개로 한 자기 성찰 기법과 맞닿는다</li>
+</ul>
+
+<h3>더 읽을거리</h3>
+<ul>
+<li>"Seventy-Eight Degrees of Wisdom" — Rachel Pollack</li>
+<li>"The Tarot: History, Symbolism, and Divination" — Robert M. Place</li>
+<li>"A Complete Guide to the Tarot" — Eden Gray</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 같은 카드 한 장을 골라, 서로 다른 세 가지 질문(예: 일·관계·건강)에 대해 각각 어떻게 다르게 읽힐 수 있는지 짧은 이야기로 적어 보자. 한 장을 단정하지 않고 맥락에 맞춰 푸는 감각을 기르는 연습이다.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b18cf0","questions":[{"q":"리딩에서 권장하는 질문 유형은?","choices":["닫힌 질문","예/아니오 질문","열린 질문","유도 질문"],"answer":2},{"q":"리딩 비유에서 카드 한 장은?","choices":["단어","문법","문장","책"],"answer":0},{"q":"리딩의 기본 태도로 옳은 것은?","choices":["한 장으로 단정","키워드만 암기","정답 강요","이야기로 엮기"],"answer":3},{"q":"죽음 카드가 과거 자리에 나오면?","choices":["임박한 재앙","이미 지나간 변화","금전 손실","새로운 만남"],"answer":1},{"q":"메이저 카드가 많이 나오면?","choices":["사소한 일상","행운 보장","큰 흐름 작동","질문 오류"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const nodeN=6;const nodes=[];const base=[];for(let i=0;i<nodeN;i++){const ang=(i/nodeN)*Math.PI*2;const v=new THREE.Vector3(Math.cos(ang)*3,Math.sin(ang)*3,0);base.push(v);const m=new THREE.Mesh(new THREE.BoxGeometry(0.8,1.2,0.05),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(i/nodeN,0.55,0.6),transparent:true,opacity:0.9}));m.position.copy(v);m.userData={ph:i*0.7};nodes.push(m);s.add(m);}
+  const linePts=[];for(let i=0;i<nodeN;i++)for(let j=i+1;j<nodeN;j++){linePts.push(base[i].clone(),base[j].clone());}
+  const lineGeo=new THREE.BufferGeometry().setFromPoints(linePts);const links=new THREE.LineSegments(lineGeo,new THREE.LineBasicMaterial({color:0xf0c850,transparent:true,opacity:0.3}));s.add(links);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const pa=lineGeo.attributes.position;for(let i=0;i<nodeN;i++){const z=Math.sin(T+nodes[i].userData.ph)*0.6;nodes[i].position.z=z;nodes[i].rotation.y=Math.sin(T*1.2+nodes[i].userData.ph)*0.5;base[i].z=z;}let k=0;for(let i=0;i<nodeN;i++)for(let j=i+1;j<nodeN;j++){pa.setXYZ(k++,base[i].x,base[i].y,base[i].z);pa.setXYZ(k++,base[j].x,base[j].y,base[j].z);}pa.needsUpdate=true;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

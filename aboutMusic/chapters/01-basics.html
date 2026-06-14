@@ -2,11 +2,13 @@
 <title>1. 음악 기초 — aboutMusic</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">🎵 표지</a></li><li><a href="chapters/01-basics.html">1. 음악 기초</a></li><li><a href="chapters/02-rhythm.html">2. 리듬과 박자</a></li><li><a href="chapters/03-harmony.html">3. 화성학</a></li><li><a href="chapters/04-melody.html">4. 멜로디와 작곡</a></li><li><a href="chapters/05-form.html">5. 음악 형식</a></li><li><a href="chapters/06-genres.html">6. 장르의 이해</a></li><li><a href="chapters/07-production.html">7. 음악 제작</a></li><li><a href="chapters/08-ear-training.html">8. 청음 훈련</a></li><li><a href="chapters/09-modern.html">9. 현대 음악이론</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🎵 표지</a></li><li><a href="01-basics.html">1. 음악 기초</a></li><li><a href="02-rhythm.html">2. 리듬과 박자</a></li><li><a href="03-harmony.html">3. 화성학</a></li><li><a href="04-melody.html">4. 멜로디와 작곡</a></li><li><a href="05-form.html">5. 음악 형식</a></li><li><a href="06-genres.html">6. 장르의 이해</a></li><li><a href="07-production.html">7. 음악 제작</a></li><li><a href="08-ear-training.html">8. 청음 훈련</a></li><li><a href="09-modern.html">9. 현대 음악이론</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>음악 기초</em></h1><p class="authors">Chapter 1 — Notes, Scales & Intervals</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 한 옥타브 음계 사다리 — 도에서 도까지 차례로 올라가는 음들</span>
 <h2>음악 기초</h2><p>Notes, Scales & Intervals의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Notes, Scales & Intervals</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -44,7 +46,7 @@
   <div class="info-card"><h4>🎵 작품 1 — 베토벤 「환희의 송가」</h4><p>D장조 음계 안에서 시작하지만 점차 5도권을 따라 전조하며 음역을 확장한다. 단순한 음계 진행이 합창과 결합되면서 보편적 감정을 표현하는 사례다.</p></div>
   <div class="info-card"><h4>🎵 작품 2 — 아이유 「밤편지」</h4><p>F장조의 다이아토닉 음계에 기반하며, 멜로디가 주로 3도 간격으로 움직여 안정감을 주고, 후렴에서는 6도 도약으로 정서적 고조를 만든다.</p></div>
   <h3>실연/제작 응용</h3><p>피아노 초급자가 다(C)장조로 곡을 익혔다면, 같은 운지 패턴을 사(G)장조나 라(D)장조로 옮기는 이조 연습으로 음계 구조를 체득할 수 있다. 작곡가는 단3도 진행을 활용해 발라드의 슬픈 느낌을 만들고, 편곡자는 펜타토닉을 더해 동양적 색채를 부여한다. 또한 보컬 트레이너는 학생의 음역을 측정해 키를 조정함으로써 곡을 더 자연스럽게 부를 수 있게 돕는다.</p>
-  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 음정을 단순히 건반 칸 수로만 세고 음의 이름(도, 레, 미)으로 부르지 않으면 장3도와 단4도처럼 다른 음정을 같은 거리로 착각하기 쉽다. 항상 음 이름과 반음 수를 함께 확인하자.</div>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 음정을 단순히 건반 칸 수로만 세고 음의 이름(도, 레, 미)으로 부르지 않으면 장3도와 감4도(diminished 4th)처럼 다른 음정을 같은 거리로 착각하기 쉽다. 항상 음 이름과 반음 수를 함께 확인하자.</div>
 </div>
 <div class="difficulty-content" data-level="hard">
   <span class="difficulty-badge hard">상 · 심화</span>
@@ -63,5 +65,22 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 좋아하는 곡 하나를 골라 멜로디의 음정 진행을 숫자로 환원하고, 같은 음정 패턴을 다른 모드(예: 도리안)로 이조해 새로운 분위기를 만들어 보라.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ec4899","questions":[{"q":"두 음 사이의 거리를 부르는 말은?","choices":["박자","음정","음계","화성"],"answer":1},{"q":"옥타브 위 같은 음의 진동수 차이는?","choices":["같다","세 배","두 배","절반"],"answer":2},{"q":"장음계(메이저)의 느낌은?","choices":["어둡다","무겁다","느리다","밝다"],"answer":3},{"q":"한 옥타브를 12개 반음으로 나눈 체계는?","choices":["12평균율","순정률","중간음률","5음 음계"],"answer":0},{"q":"완전5도의 진동수 비율은?","choices":["1:2","2:3","3:4","4:5"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,9);cam.lookAt(0,0.5,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const steps=[];for(let i=0;i<8;i++){const hue=i/8;const col=new THREE.Color().setHSL(hue,0.7,0.55);const step=new THREE.Mesh(new THREE.BoxGeometry(0.7,0.25,0.7),new THREE.MeshBasicMaterial({color:col}));step.position.set((i-3.5)*0.85,(i-3.5)*0.42,0);s.add(step);const ball=new THREE.Mesh(new THREE.SphereGeometry(0.24,18,18),new THREE.MeshBasicMaterial({color:col}));ball.position.set((i-3.5)*0.85,(i-3.5)*0.42+0.45,0);s.add(ball);steps.push(ball);}
+  s.userData.steps=steps;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const lit=Math.floor(T*2)%8;s.userData.steps.forEach((b,i)=>{b.scale.setScalar(i===lit?1.5:1);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

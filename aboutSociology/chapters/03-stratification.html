@@ -2,11 +2,13 @@
 <title>3. 사회 계층 — aboutSociology</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">👥 표지</a></li><li><a href="chapters/01-intro.html">1. 사회학 개론</a></li><li><a href="chapters/02-culture.html">2. 문화와 사회화</a></li><li><a href="chapters/03-stratification.html">3. 사회 계층</a></li><li><a href="chapters/04-institutions.html">4. 사회 제도</a></li><li><a href="chapters/05-deviance.html">5. 일탈과 범죄</a></li><li><a href="chapters/06-gender.html">6. 젠더와 가족</a></li><li><a href="chapters/07-race.html">7. 인종과 민족</a></li><li><a href="chapters/08-urban.html">8. 도시와 환경</a></li><li><a href="chapters/09-digital.html">9. 디지털 사회</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">👥 표지</a></li><li><a href="01-intro.html">1. 사회학 개론</a></li><li><a href="02-culture.html">2. 문화와 사회화</a></li><li><a href="03-stratification.html">3. 사회 계층</a></li><li><a href="04-institutions.html">4. 사회 제도</a></li><li><a href="05-deviance.html">5. 일탈과 범죄</a></li><li><a href="06-gender.html">6. 젠더와 가족</a></li><li><a href="07-race.html">7. 인종과 민족</a></li><li><a href="08-urban.html">8. 도시와 환경</a></li><li><a href="09-digital.html">9. 디지털 사회</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>사회 계층</em></h1><p class="authors">Chapter 3 — Social Stratification & Inequality</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 넓은 하층 위로 좁아지는 계층 피라미드 — 불평등의 구조 — 회전</span>
 <h2>사회 계층</h2><p>Social Stratification & Inequality의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Social Stratification & Inequality</p></div>
 
@@ -88,5 +90,22 @@
   </ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 롤스의 '무지의 베일'을 떠올려보세요. 만약 당신이 어떤 계급, 인종, 성별로 태어날지 모른다면, 어떤 사회 제도를 설계하시겠어요? 이 사고 실험은 정의와 공정성의 본질을 탐구하게 해줍니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"계층 간 이동을 뜻하는 말은?","choices":["사회 통제","사회 이동","사회화","아노미"],"answer":1},{"q":"본문 속 계층의 비유는?","choices":["같은 출발선","둥근 탁자","평평한 운동장","높이 다른 출발선"],"answer":3},{"q":"계급을 나누는 주된 기준은?","choices":["외모","나이","경제적 위치","취미"],"answer":2},{"q":"'r>g' 명제를 제시한 학자는?","choices":["피케티","베버","뒤르켐","마르크스"],"answer":0},{"q":"'과시적 소비' 개념의 학자는?","choices":["알튀세르","베블런","부르디외","라이트"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,10);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const layers=5,tiers=[];for(let i=0;i<layers;i++){const w=4.4-i*0.85;const y=-2.5+i*1.05;const col=new THREE.Color().setHSL(0.0+i*0.09,0.6,0.4+i*0.09);const box=new THREE.Mesh(new THREE.BoxGeometry(w,0.85,w),new THREE.MeshBasicMaterial({color:col}));box.position.y=y;s.add(box);const edge=new THREE.Mesh(new THREE.BoxGeometry(w*1.005,0.86,w*1.005),new THREE.MeshBasicMaterial({color:0x222233,wireframe:true}));edge.position.y=y;s.add(edge);tiers.push(box);}
+  const climber=new THREE.Mesh(new THREE.SphereGeometry(0.28,14,14),new THREE.MeshBasicMaterial({color:0xffffff}));s.add(climber);s.userData.climber=climber;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const ph=(Math.sin(T*0.4)*0.5+0.5)*4;s.userData.climber.position.set(2.1-ph*0.42,-2.0+ph*1.05,2.1-ph*0.42);s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 라임색 거품을 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 일상 — 하루 속 감정의 흐름</span>
 
 <h2>일상에서 다루기 개요</h2>
 <p>혐오는 비가역적이라 약화가 쉽지 않다. 분노는 시간이 흐르면 가라앉지만, 혐오는 한번 새겨지면 평생 남는다. 그래서 일상에서 다루는 핵심 도구는 "잊기"가 아니라 직접 접촉·정보 노출·서사 몰입을 통한 의도적 재학습이다.</p>
@@ -74,5 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 본인이 거부하는 집단의 평범한 일상 콘텐츠를 1주일간 매일 10분씩 노출하고, 사전·사후 본인의 정서 변화를 1~10 척도로 기록해보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#84cc16","questions":[{"q":"혐오를 다루는 방식은?","choices":["지우기","덮어쓰기","무시","증폭"],"answer":1},{"q":"회피가 혐오에 미치는 영향은?","choices":["강화","소멸","무관","감소"],"answer":0},{"q":"접촉 가설을 제시한 학자는?","choices":["Rozin","다윈","Allport","Gross"],"answer":2},{"q":"접촉 가설의 4조건이 아닌 것은?","choices":["동등한 지위","공동 목표","협력","경쟁"],"answer":3},{"q":"정서조절서 가장 효과적인 기법은?","choices":["억제","인지 재평가","회피","망각"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0x84cc16;const parts=[];for(let i=0;i<32;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0x84cc16;const ring=new THREE.Mesh(new THREE.TorusGeometry(2.6,0.05,10,72),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.5}));ring.rotation.x=Math.PI/2;s.add(ring);for(let i=0;i<12;i++){const t=i/12*Math.PI*2;const tick=new THREE.Mesh(new THREE.BoxGeometry(0.08,0.08,0.3),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.6}));tick.position.set(Math.cos(t)*2.6,0,Math.sin(t)*2.6);tick.lookAt(0,0,0);s.add(tick);}const sun=new THREE.Mesh(new THREE.SphereGeometry(0.3,16,16),new THREE.MeshBasicMaterial({color:0xffe08a}));s.add(sun);s.userData.sun=sun;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const t=T*0.5;s.userData.sun.position.set(Math.cos(t)*2.6,0,Math.sin(t)*2.6);s.rotation.y+=0.0008;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

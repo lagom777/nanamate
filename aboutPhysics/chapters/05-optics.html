@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -85,7 +87,7 @@
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -120,6 +122,11 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 가우시안 빔의 빔 허리, 레일리 거리, 발산각 사이의 관계를 파동방정식 근축근사로 유도해 보세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00d4ff","questions":[{"q":"진공에서 빛의 속도는?","choices":["3×10⁶ m/s","343 m/s","3×10⁸ m/s","9.8 m/s"],"answer":2},{"q":"반사의 법칙은?","choices":["입사각=반사각","입사각>반사각","입사각<반사각","항상 90°"],"answer":0},{"q":"광섬유의 원리는?","choices":["분산","회절","간섭","전반사"],"answer":3},{"q":"스넬의 법칙 식은?","choices":["n₁cosθ₁=n₂cosθ₂","n₁sinθ₁=n₂sinθ₂","n₁θ₁=n₂θ₂","sinθ₁=sinθ₂"],"answer":1},{"q":"초점 안에 둔 물체의 상은?","choices":["도립 실상","축소 실상","확대 허상","상이 없음"],"answer":2}]};</script>
 </main>
 </div>
 

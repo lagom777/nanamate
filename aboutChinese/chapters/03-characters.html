@@ -2,15 +2,17 @@
 <title>3. 한자 기초 — aboutChinese</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">🇨🇳 표지</a></li><li><a href="chapters/01-pinyin.html">1. 발음과 성조</a></li><li><a href="chapters/02-basic-grammar.html">2. 기초 문법</a></li><li><a href="chapters/03-characters.html">3. 한자 기초</a></li><li><a href="chapters/04-daily.html">4. 일상 회화</a></li><li><a href="chapters/05-hsk3.html">5. HSK 3급 대비</a></li><li><a href="chapters/06-hsk4.html">6. HSK 4급 대비</a></li><li><a href="chapters/07-business.html">7. 비즈니스 중국어</a></li><li><a href="chapters/08-culture.html">8. 중국 문화와 언어</a></li><li><a href="chapters/09-advanced.html">9. 고급 독해와 작문</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🇨🇳 표지</a></li><li><a href="01-pinyin.html">1. 발음과 성조</a></li><li><a href="02-basic-grammar.html">2. 기초 문법</a></li><li><a href="03-characters.html">3. 한자 기초</a></li><li><a href="04-daily.html">4. 일상 회화</a></li><li><a href="05-hsk3.html">5. HSK 3급 대비</a></li><li><a href="06-hsk4.html">6. HSK 4급 대비</a></li><li><a href="07-business.html">7. 비즈니스 중국어</a></li><li><a href="08-culture.html">8. 중국 문화와 언어</a></li><li><a href="09-advanced.html">9. 고급 독해와 작문</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>한자 기초</em></h1><p class="authors">Chapter 3 — Chinese Characters & Radicals</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 부수 조각들이 모여 한 글자를 이루는 한자 구성 원리</span>
 <h2>한자 기초</h2><p>Chinese Characters & Radicals의 핵심을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Chinese Characters & Radicals</p></div>
 <h2>📚 난이도별 학습</h2>
-<p>본인 수준에 맞춰 탭 선택. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -63,5 +65,22 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 부수 '心(마음)'이 들어간 한자 10개를 찾고 의미 공통점을 분석해보세요(忙, 怕, 想, 愛, 念 등).</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ef4444","questions":[{"q":"한자의 약 80%를 차지하는 원리는?","choices":["상형","지사","회의","형성"],"answer":3},{"q":"중국이 간체자를 채택한 해는?","choices":["1956년","1958년","1986년","1949년"],"answer":0},{"q":"부수는 모두 몇 개로 정리되었나?","choices":["50개","214개","540개","3,500개"],"answer":1},{"q":"『说文解字』를 지은 사람은?","choices":["왕희지","주더시","허신","노자"],"answer":2},{"q":"한자의 가장 오래된 기원 문자는?","choices":["금문","소전","예서","갑골문"],"answer":3}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<12;i++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.6,0.6,0.1),new THREE.MeshBasicMaterial({color:[0xef4444,0xfbbf24][i%2],wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*3);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const frame=new THREE.Mesh(new THREE.BoxGeometry(2.6,2.6,0.2),new THREE.MeshBasicMaterial({color:0xff4d4d,wireframe:true}));s.add(frame);
+  const homes=[[-0.7,0.6,0],[0.7,0.6,0],[-0.7,-0.7,0],[0.7,-0.7,0]];const farr=[[-3.5,2.4,1.5],[3.5,2.4,-1.5],[-3.5,-2.4,1.5],[3.5,-2.4,-1.5]];const rads=[];for(let i=0;i<4;i++){const rd=new THREE.Mesh(new THREE.BoxGeometry(1.0,1.0,1.0),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.05+i*0.18,0.65,0.55),transparent:true,opacity:0.9,wireframe:true}));rd.userData.home=homes[i];rd.userData.far=farr[i];s.add(rd);rads.push(rd);}s.userData.rads=rads;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const m2=(Math.sin(T*0.6)+1)/2;s.userData.rads.forEach(rd=>{const h=rd.userData.home,fr=rd.userData.far;rd.position.set(fr[0]+(h[0]-fr[0])*m2,fr[1]+(h[1]-fr[1])*m2,fr[2]+(h[2]-fr[2])*m2);rd.rotation.y+=0.01;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

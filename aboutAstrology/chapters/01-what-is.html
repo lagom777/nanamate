@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1. 점성술이란 무엇인가 — aboutAstrology</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">✨ 표지</a></li>
+    <li><a href="01-what-is.html">1. 점성술이란 무엇인가</a></li>
+    <li><a href="02-zodiac.html">2. 황도 12궁 · 12별자리</a></li>
+    <li><a href="03-elements.html">3. 4원소와 3특질</a></li>
+    <li><a href="04-planets.html">4. 행성의 의미</a></li>
+    <li><a href="05-houses.html">5. 12하우스</a></li>
+    <li><a href="06-natal-chart.html">6. 출생 차트 읽기</a></li>
+    <li><a href="07-big-three.html">7. 태양·달·상승궁 (빅3)</a></li>
+    <li><a href="08-synastry.html">8. 궁합·트랜짓</a></li>
+    <li><a href="09-science.html">9. 점성술의 과학·비판</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>점성술이란 무엇인가</em></h1>
+  <p class="authors">Chapter 1 — What Is Astrology</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 천구와 황도 — 지구에서 본 태양이 1년간 지나는 길</span>
+
+<h2>점성술이란 무엇인가 개요</h2>
+<p>점성술(astrology)은 사람이 태어난 순간 하늘에 펼쳐진 천체—태양·달·행성과 별자리—의 배치가 그 사람의 성격과 삶을 상징적으로 비춘다고 보는 해석 체계다. 이 챕터는 점성술이 무엇을 주장하는 체계인지, 어디에서 비롯되어 어떻게 변해 왔는지, 그리고 과학인 천문학과 어떻게 갈라졌는지를 살펴본다. 점성술은 객관적 사실을 입증하는 과학이 아니라, 하늘을 거울 삼아 인간을 읽으려 한 오랜 상징·문화 현상으로 소개한다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>점성술은 천체 배치를 인간 삶의 상징으로 읽는 전통이다. 바빌로니아의 별점에서 시작해 헬레니즘 그리스에서 체계화되었고, 중세 아랍과 르네상스 유럽을 거쳐 오늘날의 심리점성으로 이어졌다. 한때 천문학과 한 몸이었으나 근대 과학혁명을 거치며 분리되었고, 지금은 과학적 검증 대상이 아니라 의미 부여와 자기 성찰의 문화적 언어로 받아들여진다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3><p>점성술은 "태어난 순간의 하늘 지도를 펼쳐, 그 별과 행성의 배치로 사람을 읽어 보려는" 오래된 상징 언어다.</p>
+  <h3>왜 중요한가?</h3><p>점성술은 수천 년 동안 인류가 하늘을 보며 자기 삶을 이해하려 한 방식이라, 옳고 그름을 떠나 거대한 문화·역사 현상이다. 오늘날에도 많은 사람이 별자리 운세나 출생 차트로 자신을 설명하고 위로받는다. 점성술을 알면 신화·달력·계절·천문학이 어떻게 얽혀 발전해 왔는지가 한눈에 보인다. 또한 점성술과 천문학이 어떻게 한 몸이었다가 갈라졌는지를 이해하면, 과학과 신앙·상징을 구분하는 안목도 자란다. 무엇보다 "하늘이 인간을 비춘다"는 발상이 동서양 문명에서 어떻게 다르게 자랐는지를 비교하며 인류의 사고방식을 들여다볼 수 있다. 그래서 점성술은 믿음의 문제이기 이전에 교양의 문제다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>황도(黃道)</strong>: 1년 동안 태양이 하늘을 지나가는 것처럼 보이는 길이다.</li><li><strong>황도 12궁</strong>: 황도를 30도씩 열둘로 나눈 별자리 구역이다.</li><li><strong>출생 차트(natal chart)</strong>: 태어난 순간 하늘의 천체 배치를 그린 지도다.</li><li><strong>천문학</strong>: 천체의 실제 위치와 운동을 다루는 과학이다.</li><li><strong>점성술</strong>: 천체 배치에 상징적 의미를 부여해 인간을 해석하는 전통이다.</li></ul></div>
+  <h3>핵심 개념 풀어쓰기</h3><p>점성술을 "태어난 날 찍힌 하늘 사진"이라고 생각하면 쉽다. 사진 속 태양·달·행성이 어느 별자리에 있었는지를 보고, 점성가는 마치 그것을 성격표처럼 읽는다. 별이 직접 사람을 조종한다기보다, 하늘 배치를 인간 이야기에 빗대는 일종의 거대한 비유에 가깝다. 그래서 같은 별이라도 문화마다 다른 이야기를 입혀 왔다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 흔히 말하는 "내 별자리"는 태어난 날 <strong>태양</strong>이 위치한 별자리일 뿐이다. 점성술 전체에는 달·행성·상승궁까지 함께 들어간다는 점을 기억하자.</div>
+  <h3>한 페이지 요약</h3><ul><li>점성술은 천체 배치를 인간 삶의 상징으로 읽는 전통이다.</li><li>옳고 그름을 떠나 수천 년 이어진 거대한 문화 현상이다.</li><li>흔한 "내 별자리"는 태양의 위치만 가리킨다.</li><li>점성술은 과학이 아니라 상징·해석의 언어다.</li><li>천문학(사실)과 점성술(상징)은 출발은 같았지만 지금은 다르다.</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3><p>점성술의 뿌리는 기원전 2천년기 바빌로니아의 천체 관측과 별점 기록으로 거슬러 올라간다. 메소포타미아의 서기관들은 행성의 움직임과 일식·월식을 왕과 국가의 운명을 가늠하는 징조로 읽었다. 이 전통이 그리스 세계로 건너가 헬레니즘 시대에 황도 12궁과 행성·하우스를 갖춘 개인 운세 체계로 정교해졌고, 2세기 알렉산드리아의 학자 프톨레마이오스가 쓴 <em>테트라비블로스(Tetrabiblos)</em>가 서양 점성술의 고전적 토대가 되었다. 흥미롭게도 프톨레마이오스는 천문학 대작 <em>알마게스트</em>를 함께 남겨, 당대에는 천문학과 점성술이 한 사람의 두 작업처럼 공존했음을 보여 준다. 중세에 들어 이 지식은 아랍 학자들에게 전해져 보존·발전되었고, 이후 르네상스 유럽으로 다시 흘러들어 왕실과 대학에서 진지하게 다뤄졌다. 그러나 코페르니쿠스·케플러·갈릴레오로 이어진 과학혁명을 거치며, 천체의 실제 운동을 계산하는 천문학과 그 배치에 의미를 부여하는 점성술은 점차 갈라섰다. 20세기에는 카를 융의 심리학과 만나, 운명을 단정하기보다 내면의 원형과 성격을 비추는 도구로 보는 '심리점성(psychological astrology)'이 등장했다.</p>
+  <h3>핵심 메커니즘/교리</h3><div class="info-card"><h4>📐 천체 배치 → 상징 해석</h4><p>점성술의 기본 작동 원리는 "태어난 순간, 어떤 행성이 어떤 별자리·하우스에 있었는가"를 읽는 것이다. 태양·달·행성 각각에 의미(예: 태양=자아, 달=감정)를 부여하고, 12궁(성격의 빛깔)과 12하우스(삶의 영역), 행성 간 각도(아스펙트)를 종합해 한 사람의 그림을 그린다고 본다.</p></div>
+  <h3>대표 사례·경전</h3>
+  <div class="info-card"><h4>📐 사례 1 — 프톨레마이오스의 테트라비블로스</h4><p>서양 점성술의 가장 영향력 있는 고전으로 꼽힌다. 12궁·행성·하우스의 의미와 해석 규칙을 체계적으로 정리해, 이후 천 년 넘게 서양 점성술의 표준 참고서로 여겨졌다.</p></div>
+  <div class="info-card"><h4>📐 사례 2 — 회귀황도와 항성황도</h4><p>서양 점성술은 춘분점을 기준으로 삼는 <strong>회귀황도(tropical zodiac)</strong>를 쓰고, 인도 베다 점성(Jyotisha)은 실제 별의 위치를 기준으로 하는 <strong>항성황도(sidereal zodiac)</strong>를 쓴다. 세차운동 때문에 두 체계는 오늘날 약 24도쯤 어긋나, 같은 사람의 별자리가 두 전통에서 다르게 나오기도 한다.</p></div>
+  <h3>현대적 전개</h3><p>오늘날 점성술은 운명을 단정하는 예언보다, 자기 이해와 대화의 언어로 폭넓게 소비된다. 신문 운세에서 출발해 출생 차트 앱, SNS의 별자리 밈, 심리 상담과 결합한 워크숍까지 형태가 다양하다. 동시에 인도의 베다 점성, 동아시아의 명리·사주 같은 전혀 다른 전통과 나란히 놓이며, '하늘로 인간을 읽으려는' 문화가 지역마다 독자적으로 발전해 왔음을 보여 준다.</p>
+  <div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 점성술의 12별자리와 동양의 28수(宿)·십이지(띠)를 같은 것으로 묶는 경우가 많다. 그러나 동양의 별자리 체계와 띠는 서양 황도 12궁과는 기원·구조가 다른 별개의 전통이다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3><p>점성술을 깊이 들여다보려면 그것을 '믿느냐 마느냐'의 문제로 환원하기보다, 천문학·종교·철학·심리학이 교차해 온 역사적 지층으로 읽는 편이 유익하다. 고대 메소포타미아에서 천체 관측은 종교적 점복과 분리되지 않았고, 별의 운동을 기록하려는 동기 자체가 점성적 필요에서 출발했다는 점은 과학사에서 자주 지적된다. 헬레니즘 점성술은 그리스 철학의 우주론—특히 천상과 지상이 서로 조응한다는 '소우주-대우주(microcosm-macrocosm)' 관념—과 결합하며 정교한 상징 체계로 발전했다. 프톨레마이오스가 천문학과 점성술을 함께 저술했다는 사실은, 근대 이전에 두 영역이 하나의 자연철학 안에 있었음을 보여 준다. 회귀황도와 항성황도의 분기는 단순한 기술적 차이가 아니라, '별자리란 계절의 틀인가 실제 별의 위치인가'라는 우주관의 차이를 반영한다. 근대 과학혁명 이후 점성술은 예측력이 검증되지 않으면서 학문의 영역에서 밀려났지만, 융 심리학과 만나 의미·상징·원형을 다루는 해석학적 실천으로 자기 자리를 다시 찾았다. 따라서 점성술은 '틀린 과학'이라기보다 애초에 다른 종류의 언어—사실의 언어가 아니라 의미의 언어—로 이해하는 것이 더 정확하다.</p>
+  <h3>최신 연구·쟁점</h3><p>과학적 검증의 측면에서 점성술은 일관되게 회의적 평가를 받아 왔다. 가장 자주 인용되는 것은 1985년 숀 칼슨(Shawn Carlson)이 <em>Nature</em>에 발표한 이중맹검 실험으로, 점성가들이 출생 차트와 인물의 성격 프로파일을 짝짓는 능력이 우연 수준에 머물렀다고 보고했다. 또한 사람들이 모호하고 보편적인 성격 묘사를 자기에게 꼭 맞는다고 느끼는 '바넘 효과(Forer effect)'는, 별자리 운세가 설득력 있게 느껴지는 심리적 이유를 설명한다고 여겨진다. 학계 주류는 점성술을 검증 가능한 인과 메커니즘이 없는 사이비과학으로 분류한다. 다만 종교학·문화인류학·과학사 쪽에서는 점성술을 '왜 인간은 하늘에서 의미를 찾는가'라는 물음으로 접근해, 그 사회적·심리적 기능을 진지한 연구 대상으로 삼는 흐름도 뚜렷하다. 즉 "맞느냐"와 "어떤 의미를 갖느냐"는 서로 다른 질문이며, 둘을 구분하는 것이 균형 잡힌 이해의 출발점이다.</p>
+  <h3>관련 분야</h3><ul><li>천문학·과학사(Astronomy &amp; History of Science)</li><li>종교학·문화인류학(Religious Studies &amp; Cultural Anthropology)</li><li>심리학·해석학(Psychology &amp; Hermeneutics)</li></ul>
+  <h3>더 읽을거리</h3><ul><li>"테트라비블로스(Tetrabiblos)" — 클라우디오스 프톨레마이오스</li><li>"점성술의 역사(A History of Western Astrology)" — 니컬러스 캠피온</li><li>"우주의 구조와 인간(Cosmos and Psyche)" — 리처드 타나스</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 신문이나 앱의 별자리 운세 한 편을 골라, 어떤 문장이 '바넘 효과'로 누구에게나 들어맞게 쓰였는지 표시해 보고, 같은 내용을 검증 가능한 주장으로 바꿔 쓸 수 있을지 따져 보자.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#c084fc","questions":[{"q":"흔히 말하는 '내 별자리'의 기준은?","choices":["달","태양","화성","금성"],"answer":1},{"q":"점성술이 시작된 곳은?","choices":["이집트","인도","바빌로니아","중국"],"answer":2},{"q":"출생 차트가 그리는 것은?","choices":["미래 날씨","지구 지형","행성 크기","태어난 순간 하늘"],"answer":3},{"q":"테트라비블로스의 저자는?","choices":["프톨레마이오스","케플러","갈릴레오","융"],"answer":0},{"q":"1985년 네이처 실험을 한 사람은?","choices":["포러","세이건","포퍼","숀 칼슨"],"answer":3}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,2.5,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=0xc084fc;const sky=new THREE.Mesh(new THREE.SphereGeometry(3.3,20,14),new THREE.MeshBasicMaterial({color:C,wireframe:true,transparent:true,opacity:0.18}));s.add(sky);const eclG=new THREE.Group();eclG.rotation.x=0.41;s.add(eclG);const ecl=new THREE.Mesh(new THREE.TorusGeometry(3.3,0.05,10,72),new THREE.MeshBasicMaterial({color:C,transparent:true,opacity:0.75}));ecl.rotation.x=Math.PI/2;eclG.add(ecl);const earth=new THREE.Mesh(new THREE.SphereGeometry(0.45,18,18),new THREE.MeshBasicMaterial({color:0x6ca0ff}));s.add(earth);const sun=new THREE.Mesh(new THREE.SphereGeometry(0.38,18,18),new THREE.MeshBasicMaterial({color:0xffd34d}));eclG.add(sun);for(let i=0;i<60;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.03+Math.random()*0.04,6,6),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.3+Math.random()*0.5}));m.position.set((Math.random()-0.5)*18,(Math.random()-0.5)*11,(Math.random()-0.5)*18);s.add(m);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;sun.position.set(Math.cos(T*0.4)*3.3,0,Math.sin(T*0.4)*3.3);s.rotation.y+=0.0015;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

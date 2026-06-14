@@ -7,12 +7,14 @@
 <link rel="stylesheet" href="../styles.css">
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">🌍 표지 · 소개</a></li>
@@ -89,7 +91,7 @@
 <ul>
 <li><strong>태풍(허리케인)</strong>: 열대 해양에서 발달, 강풍·폭우·폭풍해일</li>
 <li><strong>토네이도</strong>: 강력한 상승기류에 의한 회전 기둥 (순간풍속 500 km/h 가능)</li>
-<li><strong>홍수</strong>: 집중호우, 댐 붕괴, 빙하호 결빙 붕괴 등</li>
+<li><strong>홍수</strong>: 집중호우, 댐 붕괴, 빙하호 붕괴(GLOF) 등</li>
 <li><strong>가뭄</strong>: 장기간 강수 부족 → 수자원·농업 피해</li>
 </ul>
 
@@ -116,7 +118,7 @@
 </div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -179,6 +181,11 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 한반도 양산단층의 갱신 모델 매개변수(평균 재현 주기·표준편차)를 추정해, 향후 30년 내 Mw 6 이상 지진 발생 확률을 BPT 모델로 계산해 보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#1565c0","questions":[{"q":"진원 바로 위의 지표면 지점은?","choices":["진앙","단층","규모","진도"],"answer":0},{"q":"가장 빨라서 먼저 도착하는 지진파는?","choices":["S파","표면파","P파","러브파"],"answer":2},{"q":"태풍이 발달하는 해수 온도 조건은?","choices":["16.5°C 이상","20°C 이상","30°C 이상","26.5°C 이상"],"answer":3},{"q":"심해에서 쓰나미의 속도는?","choices":["70-80 km/h","700-800 km/h","200 km/h","1,500 km/h"],"answer":1},{"q":"완만한 경사의 현무암질 화산은?","choices":["성층화산","칼데라","순상화산","복합화산"],"answer":2}]};</script>
 </main>
 </div>
 

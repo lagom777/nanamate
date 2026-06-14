@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 로즈빛 나선을 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 진화적 기능 — 생존을 도운 적응의 갈래</span>
 
 <h2>진화와 기능 개요</h2>
 <p>자긍심과 희망은 인간 집단 생존의 두 축이다. 자긍심은 성취를 사회 신호로 변환해 지위와 협력 자원을 얻게 하고, 희망은 단기 보상 없이도 장기 목표를 향해 행동을 지속하게 한다. 단기 강화에만 의존하는 다른 동물과 달리, 인간은 희망 덕분에 수년·수십 년의 계획을 수행할 수 있다.</p>
@@ -95,14 +97,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 본인이 최근 6개월간 가졌던 자긍심 사건 5개를 적고, 각 사건이 사회적 어떤 기능(지위·자원·관계)을 했는지 분석하라.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f472b6","questions":[{"q":"자긍심은 성취를 무엇으로 바꾸나?","choices":["사회 신호","물질 자원","신체 능력","언어"],"answer":0},{"q":"장기 목표 지속의 정서 엔진은?","choices":["분노","공포","희망","혐오"],"answer":2},{"q":"자긍심 표정의 특징은?","choices":["문화별 학습","선천적·보편","최근 발명","동물만"],"answer":1},{"q":"Tracy 지위 신호의 두 경로는?","choices":["우월성과 존경","공포와 분노","사랑과 미움","과거와 미래"],"answer":0},{"q":"시각장애인 선수 자긍심 연구자는?","choices":["Bandura","Freud","Snyder","Tracy & Matsumoto"],"answer":3}]};</script>
 </main></div>
-<script>(function(){
-  const c=document.getElementById('sim-scene');const s=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,8);cam.lookAt(0,0,0);
   const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const COLOR=0xf472b6;const parts=[];
-  for(let i=0;i<36;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}
-  let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
-  function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();
+  const COL=0xf472b6;function branch(x,y,len,ang,d){if(d<=0)return;const x2=x+Math.cos(ang)*len,y2=y+Math.sin(ang)*len;s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,y,0),new THREE.Vector3(x2,y2,0)]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.5})));const n=new THREE.Mesh(new THREE.SphereGeometry(0.08+d*0.03,10,10),new THREE.MeshBasicMaterial({color:COL}));n.position.set(x2,y2,0);s.add(n);branch(x2,y2,len*0.72,ang+0.5,d-1);branch(x2,y2,len*0.72,ang-0.5,d-1);}branch(0,-2.6,1.5,Math.PI/2,4);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
-})();</script></body></html>
+})();
+</script>
+</body></html>

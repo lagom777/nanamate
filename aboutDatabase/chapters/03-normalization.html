@@ -103,7 +103,7 @@
     margin: 0 0 10px 0;
     color: #333;
     font-size: 14px;
-    text-align: center;
+    text-align:left;
   }
 
   .mini-table {
@@ -131,7 +131,7 @@
   }
 
   .arrow {
-    text-align: center;
+    text-align:left;
     font-size: 24px;
     color: #7b5cff;
     margin: 20px 0;
@@ -187,12 +187,14 @@
 </style>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">📖 표지 · 초록</a></li>
@@ -263,6 +265,14 @@ Y는 X에 함수 종속이라고 하며 <strong>X → Y</strong>로 표기합니
 </ul>
 </div>
 </section>
+
+<!-- 3D 학습 시각화: 정규화 — 중복 분해 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 정규화: 큰 테이블이 쪼개지는 이유</div>
+  <div id="db3d-03" style="width:100%;height:430px;"></div>
+  <div id="db3d-03-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">중복 셀이 이상(Anomaly)을 만들고, 분해가 그것을 없앱니다.</div>
+</div>
+
 
 <section id="section-2">
 <h2>3.2 제1정규형 (1NF)</h2>
@@ -933,7 +943,132 @@ WHERE  DATE '2024-06-01' BETWEEN n.valid_from AND n.valid_to
   </div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d6efd","questions":[{"q":"정규화의 주된 목적은?","choices":["속도 향상","중복 제거","암호화","백업"],"answer":1},{"q":"한 칸에 하나의 값만 저장하는 정규형은?","choices":["1NF","2NF","3NF","BCNF"],"answer":0},{"q":"이행 종속을 제거하는 정규형은?","choices":["1NF","2NF","3NF","4NF"],"answer":2},{"q":"2NF에서 제거하는 함수 종속은?","choices":["이행 종속","다치 종속","조인 종속","부분 종속"],"answer":3},{"q":"모든 결정자가 후보 키여야 하는 정규형은?","choices":["2NF","BCNF","3NF","4NF"],"answer":1}]};</script>
 </main>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('db3d-03');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('db3d-03-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,1.4,14);camera.lookAt(0,0,0);
+  var head=lbl('주문 테이블 (비정규형): 고객·상품 정보가 행마다 반복',25,'#39415a',1);head.position.set(0,4.6,0);scene.add(head);
+  // big table 5 rows x 5 cols; duplicates colored red-ish
+  var cols=['주문ID','고객명','고객주소','상품명','상품가격'];
+  var dup=[[0,0,0,0,0],[0,1,1,0,0],[0,1,1,1,1],[0,0,0,1,1],[0,1,1,0,0]];
+  var cells=[],colLs=[];
+  for(var c2=0;c2<5;c2++){
+    var L=lbl(cols[c2],19,'#39415a',0.75);L.position.set(-5.2+c2*2.0,3.3,0);scene.add(L);colLs.push(L);
+    for(var r2=0;r2<5;r2++){
+      var isDup=dup[r2][c2]===1;
+      var b=box(1.8,0.55,0.4,isDup?0xf3b6bd:0xdde3ee,0.97);
+      b.position.set(-5.2+c2*2.0,2.6-r2*0.65,0);scene.add(b);
+      cells.push({m:b,c:c2,r:r2,dup:isDup});
+    }
+  }
+  var gaugeL=lbl('중복 셀: 10개',24,'#d6455b',1);gaugeL.position.set(6.8,3.3,0);scene.add(gaugeL);
+  var lastDup=-1;
+  function setDupCount(n){if(n===lastDup)return;lastDup=n;scene.remove(gaugeL);if(gaugeL.material.map)gaugeL.material.map.dispose();gaugeL.material.dispose();gaugeL=lbl('중복 셀: '+n+'개',24,n>0?'#d6455b':'#2f9e63',1);gaugeL.position.set(6.8,3.3,0);scene.add(gaugeL);}
+  var t2=new THREE.Group(),t3=new THREE.Group();scene.add(t2);scene.add(t3);
+  function smallTable(g,x,y,title,rows2,col){
+    var hd=box(2.6,0.5,0.35,col,0.97);hd.position.set(x,y,0);g.add(hd);
+    var hL=lbl(title,19,'#ffffff',0.75);hL.position.set(x,y,0.3);g.add(hL);
+    for(var i=0;i<rows2;i++){var b=box(2.6,0.42,0.3,0xdde3ee,0.97);b.position.set(x,y-0.55-i*0.5,0);g.add(b);}
+  }
+  smallTable(t2,-5.4,-1.2,'고객 (고객ID,이름,주소)',2,0x2f9e63);
+  smallTable(t3,0.2,-1.2,'상품 (상품ID,이름,가격)',3,0xe07a3f);
+  var orderT=new THREE.Group();scene.add(orderT);
+  smallTable(orderT,5.4,-1.2,'주문 (주문ID,고객ID,상품ID)',5,0x5b6bd6);
+  var fk1=line(V(4.1,-1.4,0),V(-4.1,-1.4,0),0x2f9e63,0.9);scene.add(fk1);
+  var fk2=line(V(4.1,-1.7,0),V(1.5,-1.7,0),0xe07a3f,0.9);scene.add(fk2);
+  var fkL=lbl('FK(외래키)로 연결 — 정보는 한 곳에만, 참조는 어디서든',22,'#39415a',0.9);fkL.position.set(0,-4.5,0);scene.add(fkL);
+  function showDecomp(o){[t2,t3,orderT].forEach(function(g){g.children.forEach(function(m){m.material.opacity=o*(m.material.map?0.8:0.97);});});fk1.material.opacity=o*0.9;fk2.material.opacity=o*0.9;fkL.material.opacity=o;}
+  showDecomp(0);
+  var anomaly=lbl('갱신 이상: 고객 주소가 바뀌면 3개 행을 모두 고쳐야 — 하나라도 놓치면 데이터 모순!',23,'#d6455b',1);
+  anomaly.material.opacity=0;anomaly.position.set(0,-4.5,0);scene.add(anomaly);
+  var phases=[
+    {dur:4,cap:'문제 상황: 한 테이블에 모든 걸 담으면 "김철수의 주소"가 주문 수만큼 복제됩니다(분홍 셀) — 저장 낭비보다 무서운 건 모순 가능성.',
+     enter:function(){showDecomp(0);anomaly.material.opacity=0;setDupCount(10);cells.forEach(function(c3){c3.m.material.opacity=0.97;c3.m.position.z=0;});fkL.material.opacity=0;},
+     update:function(u){cells.forEach(function(c3){if(c3.dup)c3.m.material.color.set(Math.sin(u*8+c3.r)>0?0xf3b6bd:0xe88a96);});}},
+    {dur:4,cap:'갱신 이상(Update Anomaly): 주소 변경 시 모든 복제본을 찾아 고쳐야 합니다. 삽입·삭제 이상도 같은 뿌리 — "한 사실이 여러 곳에" 있기 때문.',
+     enter:function(){anomaly.material.opacity=1;},
+     update:function(u){
+       cells.forEach(function(c3){if(c3.c===2&&c3.dup){c3.m.position.z=0.3+Math.sin(u*10)*0.1;}});
+     }},
+    {dur:5,cap:'정규화 = 분해: 고객은 고객 테이블로, 상품은 상품 테이블로(2NF: 부분 종속 제거, 3NF: 이행 종속 제거). 사실 하나당 자리 하나.',
+     enter:function(){anomaly.material.opacity=0;},
+     update:function(u){
+       var f=ez(u);
+       cells.forEach(function(c3){
+         if(c3.dup){c3.m.material.opacity=0.97*(1-f);c3.m.position.y-=f*0.01;}
+       });
+       showDecomp(f);
+       setDupCount(Math.round(10*(1-f)));
+     }},
+    {dur:4.5,cap:'결과: 3개의 작은 테이블 + FK 연결. 주소 변경은 이제 "딱 한 곳" — 중복 0개, 이상 원천 차단. JOIN 비용은 늘지만 무결성이 우선입니다.',
+     update:function(u){
+       fk1.material.opacity=0.5+0.4*Math.abs(Math.sin(u*6));
+       fk2.material.opacity=0.5+0.4*Math.abs(Math.sin(u*6+1));
+     }}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
 </body>
 </html>

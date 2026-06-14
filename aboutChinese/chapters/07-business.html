@@ -2,15 +2,17 @@
 <title>7. 비즈니스 중국어 — aboutChinese</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">🇨🇳 표지</a></li><li><a href="chapters/01-pinyin.html">1. 발음과 성조</a></li><li><a href="chapters/02-basic-grammar.html">2. 기초 문법</a></li><li><a href="chapters/03-characters.html">3. 한자 기초</a></li><li><a href="chapters/04-daily.html">4. 일상 회화</a></li><li><a href="chapters/05-hsk3.html">5. HSK 3급 대비</a></li><li><a href="chapters/06-hsk4.html">6. HSK 4급 대비</a></li><li><a href="chapters/07-business.html">7. 비즈니스 중국어</a></li><li><a href="chapters/08-culture.html">8. 중국 문화와 언어</a></li><li><a href="chapters/09-advanced.html">9. 고급 독해와 작문</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🇨🇳 표지</a></li><li><a href="01-pinyin.html">1. 발음과 성조</a></li><li><a href="02-basic-grammar.html">2. 기초 문법</a></li><li><a href="03-characters.html">3. 한자 기초</a></li><li><a href="04-daily.html">4. 일상 회화</a></li><li><a href="05-hsk3.html">5. HSK 3급 대비</a></li><li><a href="06-hsk4.html">6. HSK 4급 대비</a></li><li><a href="07-business.html">7. 비즈니스 중국어</a></li><li><a href="08-culture.html">8. 중국 문화와 언어</a></li><li><a href="09-advanced.html">9. 고급 독해와 작문</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>비즈니스 중국어</em></h1><p class="authors">Chapter 7 — Business Chinese & Formal Writing</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 두 기업 기둥이 문서를 교환하는 비즈니스 협상 테이블</span>
 <h2>비즈니스 중국어</h2><p>Business Chinese & Formal Writing의 핵심을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Business Chinese & Formal Writing</p></div>
 <h2>📚 난이도별 학습</h2>
-<p>본인 수준에 맞춰 탭 선택. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -63,5 +65,24 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 가상의 협력 제안 메일(중국어 300자)을 작성해보고, 격식체와 일상체 표현을 비교 분석해보세요.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ef4444","questions":[{"q":"모르는 상대에게 쓰는 존칭은?","choices":["你","您","他","我"],"answer":1},{"q":"'报价'의 뜻은?","choices":["명함","계약","견적","협상"],"answer":2},{"q":"계약서에서 '甲方'의 뜻은?","choices":["갑","을","증인","대리인"],"answer":0},{"q":"'我们再研究研究'의 속뜻은?","choices":["적극 수락","추가 투자","즉시 계약","사실상 거절"],"answer":3},{"q":"격식 메일의 올바른 첫인사는?","choices":["您好","你好","拜拜","干杯"],"answer":0}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<12;i++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.6,0.6,0.1),new THREE.MeshBasicMaterial({color:[0xef4444,0xfbbf24][i%2],wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*3);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const pillarL=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,3,6),new THREE.MeshBasicMaterial({color:0x2e86de,wireframe:true}));pillarL.position.set(-3,0.3,0);s.add(pillarL);
+  const pillarR=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,3,6),new THREE.MeshBasicMaterial({color:0xe67e22,wireframe:true}));pillarR.position.set(3,0.3,0);s.add(pillarR);
+  const table=new THREE.Mesh(new THREE.BoxGeometry(8,0.15,2.4),new THREE.MeshBasicMaterial({color:0xaaaaaa,transparent:true,opacity:0.4}));table.position.set(0,-1.6,0);s.add(table);
+  const docs=[];for(let i=0;i<2;i++){const d=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.06,0.7),new THREE.MeshBasicMaterial({color:i===0?0x55ddaa:0xffd166}));d.userData.dir=i;s.add(d);docs.push(d);}s.userData.docs=docs;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.docs.forEach(d=>{const ph=((T*0.45)+d.userData.dir*0.5)%1;const u=d.userData.dir===0?ph:1-ph;d.position.set(-3+6*u,-0.4+Math.sin(u*Math.PI)*1.0,0);d.rotation.y+=0.04;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 핑크빛 유대를 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 신경 회로 — 뇌 영역들의 연결과 작동</span>
 
 <h2>신경 메커니즘 개요</h2>
 <p>사랑의 뇌는 보상 회로(도파민)와 사회 인지 회로(옥시토신·바소프레신)가 결합한 이중 시스템이다. 여기에 내인성 오피오이드가 분리의 고통을 만들고, 전전두피질이 헌신과 자제를 담당한다.</p>
@@ -74,14 +76,21 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 사랑의 신경회로 4~5개 핵심 노드(VTA·NAc·mPFC·hypothalamus·insula)를 도식화하고, 각 노드의 신경전달물질과 기능을 표로 정리한다.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ec4899","questions":[{"q":"분리의 고통을 만드는 시스템은?","choices":["도파민","내인성 오피오이드","옥시토신","세로토닌"],"answer":1},{"q":"유대·신뢰·진정에 관여하는 호르몬은?","choices":["도파민","바소프레신","옥시토신","오피오이드"],"answer":2},{"q":"포옹 몇 초 이상이면 옥시토신 증가?","choices":["2초","20초","10분","1시간"],"answer":1},{"q":"사랑을 3단계로 구분한 학자는?","choices":["Helen Fisher","Bowlby","Aron","Sternberg"],"answer":0},{"q":"이별 충격 후 오는 심장 질환은?","choices":["Takotsubo","협심증","부정맥","심근경색"],"answer":0}]};</script>
 </main></div>
-<script>(function(){
-  const c=document.getElementById('sim-scene');const s=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7);cam.lookAt(0,0,0);
   const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const COLOR=0xec4899;const parts=[];
-  for(let i=0;i<30;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}
-  let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
-  function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();
+  const COL=0xec4899;const brain=new THREE.Mesh(new THREE.SphereGeometry(2.0,20,16),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.35}));s.add(brain);const reg=[];const pts=[[-0.8,-0.3,0.6],[0.8,-0.3,0.6],[0,0.7,-0.4],[0,-0.9,-0.2]];pts.forEach(p=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.26,16,16),new THREE.MeshBasicMaterial({color:0xffe08a}));m.position.set(p[0]*1.5,p[1]*1.5,p[2]*1.5);s.add(m);reg.push(m);});for(let i=0;i<reg.length;i++)for(let j=i+1;j<reg.length;j++)s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([reg[i].position,reg[j].position]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.3})));
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;brain.rotation.y+=0.004;reg.forEach((m,i)=>m.scale.setScalar(0.8+0.3*Math.sin(T*3+i)));s.rotation.y+=0.001;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
-})();</script></body></html>
+})();
+</script>
+</body></html>

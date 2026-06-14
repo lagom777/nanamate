@@ -2,11 +2,13 @@
 <title>1. LC Part 1-2 — aboutTOEIC</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">📝 표지</a></li><li><a href="chapters/01-listening-part1.html">1. LC Part 1-2</a></li><li><a href="chapters/02-listening-part3.html">2. LC Part 3-4</a></li><li><a href="chapters/03-grammar.html">3. RC 문법</a></li><li><a href="chapters/04-vocabulary.html">4. 핵심 어휘</a></li><li><a href="chapters/05-reading-part5.html">5. RC Part 5-6</a></li><li><a href="chapters/06-reading-part7.html">6. RC Part 7</a></li><li><a href="chapters/07-strategies.html">7. 시험 전략</a></li><li><a href="chapters/08-business.html">8. 비즈니스 영어</a></li><li><a href="chapters/09-practice.html">9. 실전 모의고사</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">📝 표지</a></li><li><a href="01-listening-part1.html">1. LC Part 1-2</a></li><li><a href="02-listening-part3.html">2. LC Part 3-4</a></li><li><a href="03-grammar.html">3. RC 문법</a></li><li><a href="04-vocabulary.html">4. 핵심 어휘</a></li><li><a href="05-reading-part5.html">5. RC Part 5-6</a></li><li><a href="06-reading-part7.html">6. RC Part 7</a></li><li><a href="07-strategies.html">7. 시험 전략</a></li><li><a href="08-business.html">8. 비즈니스 영어</a></li><li><a href="09-practice.html">9. 실전 모의고사</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>LC Part 1-2</em></h1><p class="authors">Chapter 1 — Photos & Question-Response</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 사진 묘사 보기와 질문-응답 매칭 구조</span>
 <h2>LC Part 1-2</h2><p>Photos & Question-Response의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Photos & Question-Response</p></div>
 
@@ -105,5 +107,27 @@
 
   <div class="success-box"><strong>🎓 만점 도전:</strong> Part 1-2에서 30문항 이상을 안정적으로 맞추는 학습자는 Part 3-4의 어려운 추론 문제에 더 많은 집중력을 배분할 수 있어 LC 만점(495점) 가능성이 비약적으로 상승합니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f59e0b","questions":[{"q":"Part 1의 문항 수는?","choices":["4문항","6문항","25문항","31문항"],"answer":1},{"q":"Part 2의 보기 개수는?","choices":["3개","4개","5개","2개"],"answer":0},{"q":"사진 속 동작 묘사의 핵심 시제는?","choices":["과거형","미래형","명령문","현재진행형"],"answer":3},{"q":"\"Why don't we ~?\"의 기능은?","choices":["이유 묻기","거절하기","제안하기","사과하기"],"answer":2},{"q":"질문 단어가 보기에 반복되면?","choices":["정답 가능성 큼","오답 확률 높음","무조건 정답","관련 없음"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // Part 1: a photo panel on the left with 4 description-option markers; Part 2: a question node with 3 response arcs on the right
+  const photo=new THREE.Mesh(new THREE.PlaneGeometry(3,2.2),new THREE.MeshBasicMaterial({color:0xfbbf24,transparent:true,opacity:0.22,side:THREE.DoubleSide}));photo.position.set(-3,1,0);s.add(photo);
+  const frame=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-4.5,2.1,0),new THREE.Vector3(-1.5,2.1,0),new THREE.Vector3(-1.5,-0.1,0),new THREE.Vector3(-4.5,-0.1,0),new THREE.Vector3(-4.5,2.1,0)]),new THREE.LineBasicMaterial({color:0xfbbf24}));s.add(frame);
+  const opts=[];for(let i=0;i<4;i++){const correct=i===1;const op=new THREE.Mesh(new THREE.BoxGeometry(0.45,0.45,0.45),new THREE.MeshBasicMaterial({color:correct?0x34d399:0xf87171,wireframe:!correct}));op.position.set(-3,-0.9-i*0.55,0);s.add(op);opts.push(op);}
+  const qNode=new THREE.Mesh(new THREE.OctahedronGeometry(0.6),new THREE.MeshBasicMaterial({color:0x60a5fa,wireframe:true}));qNode.position.set(2.4,1.4,0);s.add(qNode);
+  const resp=[];for(let i=0;i<3;i++){const correct=i===0;const pts=[];for(let t=0;t<=20;t++){const u=t/20;pts.push(new THREE.Vector3(2.4+u*1.6,1.4-u*(1.2+i*1.0),Math.sin(u*Math.PI)*0.5*(i+1)*0.3));}const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:correct?0x34d399:0x94a3b8,transparent:true,opacity:correct?0.95:0.4}));s.add(ln);const end=new THREE.Mesh(new THREE.SphereGeometry(0.18,12,12),new THREE.MeshBasicMaterial({color:correct?0x34d399:0x94a3b8}));end.position.copy(pts[pts.length-1]);s.add(end);resp.push(end);}
+  s.userData.opts=opts;s.userData.q=qNode;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.q.rotation.y+=0.02;s.userData.q.rotation.x+=0.01;s.userData.opts.forEach((o,i)=>{o.scale.setScalar(1+Math.sin(T*2+i)*0.12);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

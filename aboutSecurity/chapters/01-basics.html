@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1장. 보안 기초와 위협 모델</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔐 표지 · 소개</a></li>
+    <li><a href="01-basics.html">1. 보안 기초와 위협 모델</a></li>
+    <li><a href="02-crypto.html">2. 암호학 입문</a></li>
+    <li><a href="03-network.html">3. 네트워크 보안</a></li>
+    <li><a href="04-web-vulns.html">4. 웹 취약점 (OWASP Top 10)</a></li>
+    <li><a href="05-auth.html">5. 인증과 권한</a></li>
+    <li><a href="06-system.html">6. 시스템·엔드포인트 보안</a></li>
+    <li><a href="07-pentest.html">7. 침투테스트와 레드팀</a></li>
+    <li><a href="08-incident.html">8. 사고 대응과 포렌식</a></li>
+    <li><a href="09-governance.html">9. 거버넌스·컴플라이언스</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec1">
+<h2>1. 정보보안이란 무엇인가</h2>
+<p>정보보안(Information Security, InfoSec)은 데이터·시스템·서비스를 의도적·우발적 위협으로부터 보호하는 학문이자 실무 분야입니다. 단순히 해킹을 막는 기술적 활동이 아니라, 위험을 식별·평가하고 조직의 자원으로 감당 가능한 수준까지 줄이는 의사결정 과정입니다.</p>
+<p>현대 보안의 가장 오래된 뼈대는 <strong>CIA Triad</strong>입니다: 기밀성(Confidentiality), 무결성(Integrity), 가용성(Availability). 이 세 가지 속성이 어디서 깨질 수 있는지를 묻는 것이 모든 보안 분석의 출발점입니다.</p>
+</section>
+
+<!-- 3D 학습 시각화: 위협 × 취약점 = 위험 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · CIA 방패와 위험의 발생 구조</div>
+  <div id="sec3d-01" style="width:100%;height:430px;"></div>
+  <div id="sec3d-01-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">위협이 취약점을 만날 때만 위험이 됩니다.</div>
+</div>
+
+
+<section id="sec2">
+<h2>2. 위협 · 취약점 · 위험</h2>
+<p>위협 모델링에서 가장 자주 혼동되는 세 개념은 분명히 구분되어야 합니다. <strong>자산(Asset)</strong>은 보호 대상(데이터·시스템·평판), <strong>위협(Threat)</strong>은 자산을 해칠 수 있는 사건이나 행위자, <strong>취약점(Vulnerability)</strong>은 위협이 실현되도록 허용하는 약점, <strong>위험(Risk)</strong>은 위협이 취약점을 통해 자산에 미칠 가능성×영향입니다.</p>
+<p>실무 공식은 단순합니다: <code>Risk = Threat × Vulnerability × Impact</code>. 셋 중 어느 하나만 0에 가까워도 위험은 사실상 사라집니다. 따라서 통제(Control)는 위협 차단, 취약점 제거, 영향 축소 셋 중 최소 한 곳에 작용해야 합니다.</p>
+</section>
+
+<section id="sec3">
+<h2>3. 위협 모델링 — STRIDE</h2>
+<p>마이크로소프트가 정립한 STRIDE는 시스템 설계 단계에서 위협을 카테고리별로 나열하는 휴리스틱입니다. 각 글자는 침해되는 보안 속성과 짝지어집니다.</p>
+<p>S(Spoofing)는 인증 위협, T(Tampering)는 무결성 위협, R(Repudiation)은 부인 방지 위협, I(Information Disclosure)는 기밀성 위협, D(Denial of Service)는 가용성 위협, E(Elevation of Privilege)는 권한 위협입니다. 데이터 흐름도(DFD)의 각 요소—프로세스·데이터저장소·외부엔티티·데이터흐름—에 STRIDE를 대입해 누락된 통제를 발굴하는 것이 정석적 사용법입니다.</p>
+</section>
+
+<section id="sec4">
+<h2>4. 공격자 관점 (Attacker Mindset)</h2>
+<p>방어자가 빠지기 쉬운 함정은 "내가 만든 시스템은 내가 가장 잘 안다"는 가정입니다. 실제로 공격자는 설계자가 의도하지 않은 입력·순서·환경을 시도하며, 정상 동작의 가정을 깨뜨리는 데서 출발합니다. 이를 "<strong>모든 입력은 적대적이다(All input is hostile)</strong>"라는 격언으로 요약합니다.</p>
+<p>대표적 사고 모델은 록히드 마틴의 <strong>Cyber Kill Chain</strong> (정찰→무기화→전달→익스플로잇→설치→C2→목적 달성)과 MITRE의 <strong>ATT&amp;CK 프레임워크</strong>(전술·기법·절차를 매트릭스화)입니다. 방어자는 이 모델로 자기 조직의 탐지·차단 공백을 시각화할 수 있습니다.</p>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="../index.html" style="text-decoration:none;">← 표지</a><a href="02-crypto.html" style="text-decoration:none;">2. 암호학 입문 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3>
+  <p>정보보안은 "남이 내 정보를 못 보게(기밀성), 못 바꾸게(무결성), 내가 필요할 때 늘 쓸 수 있게(가용성)" 지키는 일이에요. 이 세 가지를 합쳐 'CIA'라고 부르고, 거의 모든 보안 사고는 이 셋 중 하나가 깨진 사건입니다.</p>
+  <h3>왜 중요한가?</h3>
+  <p>일상에서도 이 개념은 늘 작동합니다. ① 카카오톡 대화가 다른 사람에게 새지 않는 건 <strong>기밀성</strong>이 지켜진 것. ② 내가 송금한 금액이 도중에 바뀌지 않는 건 <strong>무결성</strong>. ③ 새벽에도 인터넷뱅킹이 동작하는 건 <strong>가용성</strong>. 보안 사고는 이 셋 중 하나가 깨질 때 일어나요.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+    <li><strong>자산(Asset)</strong>: 지켜야 하는 것 — 개인정보, 돈, 회사 영업비밀, 서비스 가용 시간 등</li>
+    <li><strong>위협(Threat)</strong>: 자산을 해칠 수 있는 일 — 해커, 악성코드, 화재, 내부자 실수</li>
+    <li><strong>취약점(Vulnerability)</strong>: 약점 — 비밀번호가 약하다, 패치를 안 했다, 출입통제가 허술하다</li>
+    <li><strong>위험(Risk)</strong>: 위협이 취약점을 통해 자산에 영향을 줄 가능성 × 영향의 크기</li>
+    <li><strong>CIA Triad</strong>: 기밀성·무결성·가용성, 정보보안의 가장 기본 3원칙</li>
+  </ul></div>
+  <h3>핵심 개념 풀어쓰기</h3>
+  <p>집을 지킨다고 생각해보세요. 자산은 집 안의 물건들이고, 위협은 도둑·화재·물난리, 취약점은 잠기지 않은 창문이나 낡은 자물쇠입니다. 위험은 "도둑이 정말 들 가능성 × 잃을 물건의 가치"예요. 통제(Control)는 잠금을 강화하거나(취약점 제거), 경비를 두거나(위협 차단), 보험을 들거나(영향 축소)하는 모든 활동입니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> "자산 → 위협 → 취약점 → 통제" 이 네 단어의 순서만 머릿속에 박아두세요. 보안 뉴스나 사고 보고서를 볼 때 이 네 칸에 사건의 요소를 채워보면 무엇이 빠졌는지가 보입니다.</div>
+  <h3>한 페이지 요약</h3>
+  <ul>
+    <li>정보보안의 목표 = 기밀성·무결성·가용성(CIA)</li>
+    <li>위험은 위협×취약점×영향으로 평가</li>
+    <li>통제는 위협 차단·취약점 제거·영향 축소 중 최소 한 곳에 작용</li>
+    <li>STRIDE는 설계 단계에서 위협을 빠짐없이 나열하는 체크리스트</li>
+    <li>모든 입력은 적대적이라고 가정해야 안전한 코드를 짤 수 있다</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이 들어가기</h3>
+  <p>CIA Triad는 1970년대 미 국방부의 신뢰 컴퓨터 시스템 평가 기준(TCSEC, Orange Book)에서 정립된 개념입니다. 이후 NIST는 여기에 <strong>인증(Authentication)·인가(Authorization)·감사(Audit·Accountability)</strong>를 더한 'AAA'와 <strong>부인 방지(Non-repudiation)</strong>를 추가해 6대 속성으로 확장했습니다. ISO/IEC 27000 시리즈는 이를 자산 분류·위험 평가·통제 선정의 체계로 발전시켰습니다.</p>
+  <p>위험 평가는 정성적(High/Medium/Low) 방식과 정량적(ALE = SLE × ARO) 방식으로 나뉩니다. SLE(Single Loss Expectancy)는 1회 사고 손실, ARO(Annualized Rate of Occurrence)는 연간 발생 빈도, ALE(Annualized Loss Expectancy)는 연간 기대 손실입니다. 통제 도입 비용이 ALE 감소분보다 작아야 경제적으로 타당합니다.</p>
+  <h3>핵심 개념과 실무</h3>
+  <pre><code># STRIDE 위협 모델링 — 간단한 체크리스트 코드 예시
+threats = {
+    "Spoofing":              "강한 인증(MFA), 인증서 검증",
+    "Tampering":             "해시·서명·체크섬, WORM 저장소",
+    "Repudiation":           "감사 로그, 디지털 서명",
+    "Information Disclosure":"암호화(전송·저장), 접근 통제",
+    "Denial of Service":     "Rate limiting, autoscaling, CDN",
+    "Elevation of Privilege":"최소권한, 권한 분리, 입력 검증",
+}
+
+def review(component, data_flows):
+    for flow in data_flows:
+        for t, mitigation in threats.items():
+            print(f"[{component} → {flow}] {t}: {mitigation}")</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>💼 예제 1 — 2017년 Equifax 사고</h4><p>약 1억 4,800만 명의 개인정보가 유출된 사건의 근본 원인은 Apache Struts의 알려진 취약점(CVE-2017-5638)에 대한 패치 지연이었습니다. 위협(원격 코드 실행 공격자)은 늘 존재했지만, 취약점(미패치)이 닫혀 있었다면 위험은 실현되지 않았을 것입니다. 이는 "취약점 관리(Vulnerability Management)" 프로세스의 중요성을 보여주는 교과서적 사례입니다.</p></div>
+  <div class="info-card"><h4>💼 예제 2 — 가용성 공격(DDoS)</h4><p>2016년 Dyn DNS 사고는 Mirai 봇넷이 IoT 기기 수십만 대를 동원해 DNS 인프라를 마비시킨 사건입니다. 데이터가 유출되지 않았어도 Twitter·Netflix·Spotify가 미국 전역에서 접속 불가가 되면서 CIA 중 '가용성(A)'이 무너졌습니다. 보안은 데이터 보호만이 아니라 서비스 지속성 보장도 포함합니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>실무에서 가장 자주 쓰이는 위협 모델링 프레임워크는 STRIDE 외에도 ① <strong>PASTA</strong>(7단계 위험 중심 모델), ② <strong>OCTAVE</strong>(조직 자산 중심), ③ <strong>VAST</strong>(애자일 환경용), ④ <strong>LINDDUN</strong>(프라이버시 특화)이 있습니다. 시스템 규모와 조직 성숙도에 맞춰 선택하는 것이 핵심입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "보안은 IT 부서 일"이라고 분리하면 실패합니다. 가장 큰 사고의 60% 이상은 사람과 프로세스에서 발생합니다. 피싱·내부자 위협·실수에 의한 설정 오류는 기술적 통제만으로 막을 수 없으며, 정책·교육·문화가 함께 작동해야 합니다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 이해</h3>
+  <p>현대 위협 모델링의 핵심 변화는 "경계 기반 모델(Castle &amp; Moat)"에서 "<strong>Zero Trust</strong>"로의 전환입니다. NIST SP 800-207(2020)이 정립한 Zero Trust Architecture는 'Never trust, always verify'를 원칙으로 하며, 모든 접근 요청을 동적으로 평가하는 정책 결정 지점(PDP)과 정책 시행 지점(PEP) 구조로 설계됩니다. 신뢰는 위치(내부망)나 한 번의 인증으로 부여되지 않고, 매 요청마다 신원·기기 상태·행위 컨텍스트를 종합해 산정됩니다.</p>
+  <p>위협 인텔리전스 측면에서는 MITRE ATT&amp;CK 매트릭스가 사실상의 표준이 되었습니다. 14개 전술(Tactics)과 200여 개 기법(Techniques), 수백 개의 하위 기법(Sub-techniques)으로 구성되며, 각 기법은 실제 APT 그룹의 TTP(Tactics·Techniques·Procedures)에 연결됩니다. 방어자는 자신의 탐지 커버리지를 매트릭스 위에 색칠해 가시화할 수 있고(<em>heatmap</em>), 이를 통해 우선순위 투자를 결정합니다.</p>
+  <h3>수학적 · 정량적 기초</h3>
+  <div class="formula">$$\text{ALE} = \text{SLE} \times \text{ARO}$$
+  $$\text{Residual Risk} = \text{Inherent Risk} - \text{Control Effectiveness}$$
+  $$\text{CVSS Base Score} = f(\text{AV}, \text{AC}, \text{PR}, \text{UI}, \text{S}, \text{C}, \text{I}, \text{A})$$</div>
+  <p>CVSS(Common Vulnerability Scoring System) v3.1은 취약점의 심각도를 0–10 점수로 정량화합니다. AV(공격 벡터), AC(공격 복잡도), PR(필요 권한), UI(사용자 상호작용), S(범위 변경 여부), C/I/A(기밀성·무결성·가용성 영향)의 8개 메트릭으로 계산됩니다. 다만 CVSS는 환경 컨텍스트를 반영하지 않으므로 EPSS(Exploit Prediction Scoring System)와 결합해 실제 익스플로잇 가능성을 함께 평가하는 것이 최신 트렌드입니다.</p>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>AI/LLM 보안</strong>: 프롬프트 인젝션, 모델 추출, 학습 데이터 오염, AI 에이전트의 도구 남용 등 OWASP가 'LLM Top 10'(2023)으로 정리한 새 위협군이 부상하고 있습니다. ② <strong>SBOM(Software Bill of Materials)</strong>: 미국 행정명령 14028(2021) 이후 소프트웨어 공급망의 투명성을 위한 표준이 되었으며, SPDX·CycloneDX 포맷이 정착했습니다. ③ <strong>Post-Quantum Cryptography</strong>: NIST는 2024년 ML-KEM·ML-DSA·SLH-DSA를 PQC 표준으로 확정했고, 'harvest now, decrypt later' 위협에 대비한 마이그레이션이 시작되었습니다.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>리스크 관리</strong>: ISO 31000, COSO ERM 프레임워크와의 정합성</li>
+    <li><strong>행동경제학</strong>: 보안 의사결정의 인지 편향(낙관성·확증·가용성 휴리스틱)</li>
+    <li><strong>게임이론</strong>: 공격자–방어자 동적 게임(Stackelberg Security Game)</li>
+    <li><strong>분산시스템</strong>: BFT 합의, 비잔틴 결함 모델과 신뢰의 정의</li>
+    <li><strong>법학</strong>: GDPR·개인정보보호법·CCPA의 의무 통제 매핑</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Shostack, <em>Threat Modeling: Designing for Security</em> (Wiley, 2014)</li>
+    <li>📖 Anderson, <em>Security Engineering</em> (3rd ed., 2020) — 무료 PDF 공개</li>
+    <li>📖 NIST SP 800-53 / 800-207 / 800-30</li>
+    <li>🔬 MITRE ATT&amp;CK, D3FEND, CAPEC 매트릭스</li>
+    <li>🔬 OWASP Threat Dragon, Microsoft Threat Modeling Tool</li>
+    <li>🔬 키워드: Zero Trust, SBOM, EPSS, PQC, AI Red Teaming</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 본인이 자주 쓰는 웹 서비스 하나(예: 사내 위키, 개인 블로그)를 골라 DFD(Data Flow Diagram)를 그리고, 각 데이터 흐름에 STRIDE 6개 위협을 매핑한 뒤 현재 적용된 통제와 누락된 통제를 표로 정리해보세요. 이 작업 하나로 위협 모델링의 핵심 감각을 얻을 수 있습니다.</div>
+</div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#475569","questions":[{"q":"CIA 3원칙이 아닌 것은?","choices":["기밀성","무결성","가용성","확장성"],"answer":3},{"q":"'모든 입력은 ◯◯이다'의 빈칸은?","choices":["안전","적대적","무결","고정"],"answer":1},{"q":"위험 공식의 요소가 아닌 것은?","choices":["위협","취약점","비용","영향"],"answer":2},{"q":"STRIDE의 S가 위협하는 속성은?","choices":["인증","무결성","가용성","기밀성"],"answer":0},{"q":"ALE 계산식으로 옳은 것은?","choices":["SLE+ARO","SLE×ARO","ARO÷SLE","SLE−ARO"],"answer":1}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('sec3d-01');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('sec3d-01-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,1.8,12);camera.lookAt(0,0.8,0);
+  var asset=box(1.6,1.6,1.6,0xffc83c,0.95);asset.position.set(0,0.8,0);scene.add(asset);
+  var al=lbl('정보 자산',26,'#b98a1a',1);al.position.set(0,-0.6,0);scene.add(al);
+  var shields=[],angles=[Math.PI/2,Math.PI/2+2.09,Math.PI/2+4.19];
+  var names=['기밀성 C','무결성 I','가용성 A'];
+  angles.forEach(function(a,i){
+    var sh=new THREE.Mesh(new THREE.CylinderGeometry(1.4,1.4,2.2,16,1,true,-0.7,1.4),mat(0x5b6bd6,0.55));
+    sh.rotation.y=a-Math.PI/2;sh.position.set(0,0.9,0);sh.scale.setScalar(1.9);scene.add(sh);shields.push(sh);
+    var L=lbl(names[i],25,'#5b6bd6',0.95);L.position.set(Math.cos(a)*3.6,2.4,-Math.sin(a)*3.6);scene.add(L);
+  });
+  var gap=box(0.9,0.9,0.2,0xd6455b,0);gap.position.set(0,0.9,2.65);scene.add(gap);
+  var gapL=lbl('취약점(방패의 틈)',23,'#d6455b',0.9);gapL.position.set(2.4,0.2,2.6);gapL.material.opacity=0;scene.add(gapL);
+  var patch=box(0.95,0.95,0.25,0x2f9e63,0);patch.position.set(0,0.9,8);scene.add(patch);
+  var threats=[];
+  for(var i=0;i<5;i++){
+    var c=new THREE.Mesh(new THREE.ConeGeometry(0.16,0.55,8),mat(0xd6455b,0.95));
+    c.rotation.x=Math.PI/2;c.visible=false;scene.add(c);threats.push(c);
+  }
+  var gaugeBg=box(0.5,4,0.5,0xe3e8f2,1);gaugeBg.position.set(7,1.6,0);scene.add(gaugeBg);
+  var gauge=box(0.54,1,0.54,0xd6455b,0.95);gauge.position.set(7,-0.4,0);scene.add(gauge);
+  var gl2=lbl('위험(Risk)',24,'#39415a',0.95);gl2.position.set(7,4.1,0);scene.add(gl2);
+  var risk=0.1;
+  function setRisk(v){risk=clamp01(v);gauge.scale.y=Math.max(0.02,risk*4);gauge.position.y=-0.4+risk*2;}
+  setRisk(0.1);
+  function fly(u,blocked){
+    threats.forEach(function(c,i){
+      var f=(u*1.3+i*0.21)%1;c.visible=true;
+      var lane=(i%3-1)*1.4;
+      if(!blocked&&Math.abs(lane)<0.1){
+        c.position.set(0,0.9,9-f*9);c.material.color.set(0xd6455b);
+        if(f>0.93)asset.material.color.set(0xd6455b);
+      }else{
+        var z=9-f*6.4;
+        c.position.set(lane,0.9,Math.max(z,2.7));
+        if(z<=2.75)c.material.color.set(0x9aa6c0);else c.material.color.set(0xd6455b);
+      }
+    });
+  }
+  var phases=[
+    {dur:4,cap:'보안의 목표는 자산의 C·I·A(기밀성·무결성·가용성)를 지키는 것. 위협(빨간 화살)은 끊임없이 날아오지만 방패가 막습니다.',
+     enter:function(){gap.material.opacity=0;gapL.material.opacity=0;asset.material.color.set(0xffc83c);setRisk(0.1);},
+     update:function(u){fly(u,true);}},
+    {dur:5,cap:'취약점 발견: 방패에 틈(빨간 사각형)이 생기면, 그 틈을 아는 위협만 관통합니다 — 위험 = 위협 × 취약점 × 자산 가치.',
+     enter:function(){gap.material.opacity=0.9;gapL.material.opacity=1;},
+     update:function(u){fly(u,false);setRisk(0.1+ez(u)*0.8);}},
+    {dur:4.5,cap:'보안 통제(패치·설정·암호화)가 틈을 메우면 같은 위협이 와도 위험이 떨어집니다 — 위협 자체는 없앨 수 없고, 취약점을 줄이는 것이 보안 업무.',
+     enter:function(){asset.material.color.set(0xffc83c);patch.material.opacity=0.95;},
+     update:function(u){
+       patch.position.z=8-ez(Math.min(1,u*2))*5.35;
+       if(u>0.5){gap.material.opacity=0;fly(u,true);setRisk(0.9-ez((u-0.5)*2)*0.7);}
+       else fly(u,false);
+     }},
+    {dur:3.5,cap:'STRIDE 위협 모델링: 스푸핑→인증, 변조→무결성, 정보노출→기밀성, DoS→가용성… 위협 유형마다 깨뜨리려는 속성이 다릅니다.',
+     enter:function(){patch.position.z=2.65;},
+     update:function(u){shields.forEach(function(s,i){s.material.opacity=0.35+0.3*Math.abs(Math.sin(u*6+i*2));});}}
+  ];
+  function always(t){var a=t*0.15;camera.position.set(Math.sin(a)*3,2.2,12);camera.lookAt(0,0.8,0);}
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

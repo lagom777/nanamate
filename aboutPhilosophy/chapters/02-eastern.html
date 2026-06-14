@@ -5,7 +5,9 @@
 <link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
@@ -16,7 +18,7 @@
 <li><a href="07-ethics.html">7. 윤리학</a></li><li><a href="08-political.html">8. 정치철학</a></li>
 <li><a href="09-contemporary.html">9. 현대 철학</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>동양 철학</em></h1><p class="authors">Chapter 2 — Confucius, Laozi & Buddha</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 유가·도가·불교 세 전통이 도(道)의 순환 속에 균형을 이룬다</span>
 <h2>동양 철학 개요</h2><p>이 챕터에서는 동양 철학의 핵심 사상과 철학자들의 관계를 3D로 탐구합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Confucius, Laozi & Buddha</p></div>
 
@@ -76,27 +78,28 @@
   </ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 AI가 무아(無我)를 깨닫는다면, 그것은 자아의 환상에서 벗어난 진정한 지혜인가, 아니면 단지 자아 모듈이 작동하지 않는 결함인가? 불교의 무아 이론은 인공의식 논의에 어떤 새로운 관점을 제공할 수 있을까요?</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d4a047","questions":[{"q":"인(仁)을 핵심 덕목으로 삼은 사상가는?","choices":["노자","공자","붓다","장자"],"answer":1},{"q":"무위자연을 주장한 인물은?","choices":["공자","맹자","붓다","노자"],"answer":3},{"q":"성선설을 주장한 사상가는?","choices":["맹자","순자","노자","공자"],"answer":0},{"q":"묵가의 겸애와 충돌하는 유가의 원리는?","choices":["무위","중도","친친","연기"],"answer":2},{"q":"『중론』에서 공 사상을 정교화한 사상가는?","choices":["주자","나가르주나","왕양명","곽상"],"answer":1}]};</script>
 </main></div>
 <script>
-(function() {
-  const container = document.getElementById('sim-scene');
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
-  camera.position.set(0, 3, 8);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  container.appendChild(renderer.domElement);
-  const nodes = [];
-  for (let i = 0; i < 8; i++) { const m = new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0), new THREE.MeshBasicMaterial({ color: 0xd4a047, wireframe: true })); m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4); scene.add(m); nodes.push(m); }
-  for (let i=0;i<nodes.length-1;i++){const g=new THREE.BufferGeometry().setFromPoints([nodes[i].position,nodes[i+1].position]);scene.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xd4a047,transparent:true,opacity:0.2})));}
-  let md=false,px=0;
-  container.addEventListener('mousedown',e=>{md=true;px=e.clientX;});
-  container.addEventListener('mouseup',()=>md=false);
-  container.addEventListener('mousemove',e=>{if(md){scene.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});
-  container.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});
-  container.addEventListener('touchmove',e=>{scene.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});
-  function animate(){requestAnimationFrame(animate);scene.rotation.y+=0.002;renderer.render(scene,camera);}animate();
-  window.addEventListener('resize',()=>{camera.aspect=container.clientWidth/container.clientHeight;camera.updateProjectionMatrix();renderer.setSize(container.clientWidth,container.clientHeight);});
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const tao=new THREE.Mesh(new THREE.TorusGeometry(3,0.07,12,80),new THREE.MeshBasicMaterial({color:0x6fd0c0,transparent:true,opacity:0.7}));s.add(tao);
+  const trio=new THREE.Group();const geos=[new THREE.BoxGeometry(1.1,1.1,1.1),new THREE.TetrahedronGeometry(0.85,0),new THREE.SphereGeometry(0.75,16,12)];
+  const tri=[];for(let i=0;i<3;i++){const ang=i*Math.PI*2/3;const col=new THREE.Color().setHSL(0.12+i*0.2,0.55,0.6);
+    const m=new THREE.Mesh(geos[i],new THREE.MeshBasicMaterial({color:col,wireframe:true}));
+    m.position.set(Math.cos(ang)*2.4,Math.sin(ang)*2.4,0);trio.add(m);tri.push(m);}
+  for(let i=0;i<3;i++){const j=(i+1)%3;const lg=new THREE.BufferGeometry().setFromPoints([tri[i].position,tri[j].position]);
+    trio.add(new THREE.Line(lg,new THREE.LineBasicMaterial({color:0x99e0d0,transparent:true,opacity:0.5})));}
+  s.add(trio);s.userData.tri=tri;s.userData.tao=tao;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.tao.rotation.z+=0.004;s.rotation.y+=0.003;s.userData.tri.forEach((m,i)=>{m.rotation.x+=0.012;m.rotation.y+=0.01;});r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
-</script></body></html>
+</script>
+</body></html>

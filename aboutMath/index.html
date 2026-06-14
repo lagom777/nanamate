@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수학: 수와 연산부터 미적분까지</title>
+<link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="index.html">📐 표지 · 소개</a></li>
+<li><a href="chapters/01-numbers-sets.html">1. 수와 집합</a></li>
+<li><a href="chapters/02-algebra.html">2. 대수 — 방정식과 다항식</a></li>
+<li><a href="chapters/03-functions.html">3. 함수와 그래프</a></li>
+<li><a href="chapters/04-geometry.html">4. 기하 — 도형과 피타고라스</a></li>
+<li><a href="chapters/05-trigonometry.html">5. 삼각함수 — 원과 파동</a></li>
+<li><a href="chapters/06-exponential-log.html">6. 지수와 로그</a></li>
+<li><a href="chapters/07-sequences-limits.html">7. 수열과 극한</a></li>
+<li><a href="chapters/08-differentiation.html">8. 미분 — 변화율의 수학</a></li>
+<li><a href="chapters/09-integration.html">9. 적분과 확률·통계</a></li>
+</ol></aside>
+<main>
+<header class="paper-header">
+  <h1>수학,<br><em>패턴의 언어</em>를<br>3D로 보다</h1>
+  <p class="authors">Mathematics — From Numbers to Calculus in Three Dimensions</p>
+  <p class="affiliation">Vol. 26 · June 2026 · aboutMath Editorial</p>
+</header>
+
+<!-- 3D 학습 시각화: 수학의 풍경 — 함수가 만드는 곡면 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#e8506e;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 수학의 풍경: 함수 z = sin(r)/r 이 만드는 곡면</div>
+  <div id="math3d-intro" style="width:100%;height:430px;"></div>
+  <div id="math3d-intro-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">하나의 짧은 수식이 만들어내는 풍경 — 수학은 패턴을 기술하는 언어입니다.</div>
+</div>
+
+<h2>이 분야는 무엇을 다루나요</h2>
+<p>수학은 수·공간·변화·구조의 패턴을 다루는 학문이자, 모든 과학의 공통 언어입니다. 본 과정은 고등학교에서 대학 1학년 수준까지의 핵심 줄기 — <strong>수 체계 → 대수 → 함수 → 기하 → 삼각함수 → 지수·로그 → 수열·극한 → 미분 → 적분</strong> — 을 한 흐름으로 따라갑니다. 모든 챕터에는 그 개념을 직접 보여주는 Three.js 3D 시각화가 포함되어, 공식을 외우기 전에 <strong>왜 그렇게 되는지</strong>를 눈으로 확인할 수 있습니다.</p>
+
+<h2>학습 로드맵</h2>
+<div class="outline-grid">
+  <div class="outline-card"><div class="num">CHAPTER 01</div><h4>수와 집합</h4><p>자연수에서 실수까지 — 수직선이 채워지는 과정</p></div>
+  <div class="outline-card"><div class="num">CHAPTER 02</div><h4>대수 — 방정식과 다항식</h4><p>이차방정식의 근, 판별식, 복소수의 탄생</p></div>
+  <div class="outline-card"><div class="num">CHAPTER 03</div><h4>함수와 그래프</h4><p>입력→출력의 대응, 2변수 함수의 곡면</p></div>
+  <div class="outline-card"><div class="num">CHAPTER 04</div><h4>기하 — 도형과 피타고라스</h4><p>넓이로 보는 피타고라스 정리의 시각 증명</p></div>
+  <div class="outline-card"><div class="num">CHAPTER 05</div><h4>삼각함수 — 원과 파동</h4><p>단위원의 회전이 sin·cos 파동을 만든다</p></div>
+  <div class="outline-card"><div class="num">CHAPTER 06</div><h4>지수와 로그</h4><p>폭발적 성장과 그 역함수, y=x 대칭</p></div>
+  <div class="outline-card"><div class="num">CHAPTER 07</div><h4>수열과 극한</h4><p>점들이 한 값으로 수렴하는 과정, e의 탄생</p></div>
+  <div class="outline-card"><div class="num">CHAPTER 08</div><h4>미분 — 변화율의 수학</h4><p>할선이 접선이 되는 순간, 도함수 그리기</p></div>
+  <div class="outline-card"><div class="num">CHAPTER 09</div><h4>적분과 확률·통계</h4><p>리만 합의 수렴, 곡선 아래 넓이 = 확률</p></div>
+</div>
+
+<h2>학습 방법</h2>
+<p>각 챕터는 ① 개념 본문, ② 그 개념을 가르치는 <strong>3D 시각화</strong>(자동으로 단계가 순환하며 한국어 캡션이 갱신됩니다), ③ <strong>난이도별 학습(하·중·상)</strong> 탭으로 구성됩니다. 왼쪽 사이드바에서 난이도와 언어를 조절할 수 있습니다. 순서대로 읽는 것을 권장하지만, 각 챕터는 독립적으로도 읽을 수 있게 구성되어 있습니다.</p>
+</main></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('math3d-intro');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('math3d-intro-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+
+  camera.position.set(0,7.5,13);camera.lookAt(0,0,0);
+
+  // 곡면: z = A * sin(k*r - phase)/r  (sombrero) — 정점을 매 프레임 갱신
+  var SEG=64,SIZE=16;
+  var geo=new THREE.PlaneGeometry(SIZE,SIZE,SEG,SEG);
+  geo.rotateX(-Math.PI/2);
+  var mat=new THREE.MeshLambertMaterial({color:0xe8506e,wireframe:true,transparent:true,opacity:0.55});
+  var mesh=new THREE.Mesh(geo,mat);scene.add(mesh);
+  var grid=new THREE.GridHelper(SIZE,16,0xc3cad8,0xe2e6ee);grid.position.y=-2.6;scene.add(grid);
+  var fl=lbl('z = sin(r) / r',30,'#e8506e',1.2);fl.position.set(0,4.6,0);scene.add(fl);
+
+  var phases=[
+    {dur:8,cap:'하나의 짧은 수식 z = sin(r)/r 이 만들어내는 풍경 — 수학은 패턴을 기술하는 언어입니다.'},
+    {dur:8,cap:'파라미터가 변하면 곡면 전체가 출렁입니다. 9개 챕터에서 함수·기하·미적분이 만드는 이런 구조들을 하나씩 해부합니다.'},
+    {dur:8,cap:'수와 집합에서 시작해 미분과 적분까지 — 왼쪽 목차에서 1장을 눌러 시작하세요.'}
+  ];
+  var pi=0,pt=0,last=0;cap(phases[0].cap);
+  var pos=geo.attributes.position;
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    if(pt>=phases[pi].dur){pt=0;pi=(pi+1)%phases.length;cap(phases[pi].cap);}
+    var t=now/1000;
+    for(var i=0;i<pos.count;i++){
+      var x=pos.getX(i),z=pos.getZ(i);
+      var r=Math.sqrt(x*x+z*z)+0.0001;
+      pos.setY(i,2.4*Math.sin(r*1.6-t*1.4)/r);
+    }
+    pos.needsUpdate=true;
+    mesh.rotation.y=t*0.12;
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

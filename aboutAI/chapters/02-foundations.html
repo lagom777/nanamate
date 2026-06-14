@@ -15,12 +15,14 @@
 <script defer src="../toggle.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">📖 표지 · 초록</a></li>
@@ -210,10 +212,18 @@ PAC-Bayes 경계, 라데마허 복잡도, 그리고 암묵적 정규화(implicit
 
 </div>
 </section>
+
+<!-- 3D 학습 시각화: 경사하강법 — 손실 표면 위의 학습 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 경사하강법: 손실 표면을 내려가는 학습</div>
+  <div id="ai3d-02" style="width:100%;height:430px;"></div>
+  <div id="ai3d-02-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">공이 손실 표면을 내려가는 과정 = 모델 학습.</div>
+</div>
+
 <div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="01-history.html" style="text-decoration:none;">← 서론·역사</a><a href="03-neural.html" style="text-decoration:none;">신경망 →</a></div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
@@ -304,7 +314,106 @@ print("학습된 w:", w)   # ≈ [2.0, -1.0, 0.5]</code></pre>
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> MNIST 데이터에서 선형회귀, 로지스틱 회귀, 다층 퍼셉트론(2층, 3층, 5층)을 직접 NumPy만으로 구현하고, 매개변수 수에 따른 학습/검증 오차 곡선을 그려보세요. Belkin이 발견한 double descent 곡선이 재현되는지 확인하면, 현대 딥러닝의 일반화 미스터리를 직접 체험할 수 있습니다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b8441c","questions":[{"q":"분류 손실로 쓰이는 정보이론 개념은?","choices":["교차엔트로피","상호정보량","조건부확률","공분산"],"answer":0},{"q":"경사하강법을 비유한 상황은?","choices":["바다 수영","산에서 내려가기","사다리 오르기","줄넘기"],"answer":1},{"q":"LLM 훈련의 사실상 표준 최적화기는?","choices":["SGD","RMSProp","AdamW","Adagrad"],"answer":2},{"q":"ℓ2 정규화에 대응하는 사전분포는?","choices":["라플라스","균등 분포","베타 분포","가우시안"],"answer":3},{"q":"이중 하강 현상을 보고한 연구자는?","choices":["Vapnik","Belkin","Valiant","Kingma"],"answer":1}]};</script>
 </main>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('ai3d-02');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('ai3d-02-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  function F(x,z){return 0.13*(x*x+z*z)+0.9*Math.sin(0.9*x)*Math.cos(0.9*z)+1.4;}
+  function gradF(x,z){var e=0.01;return [(F(x+e,z)-F(x-e,z))/(2*e),(F(x,z+e)-F(x,z-e))/(2*e)];}
+  var g=new THREE.PlaneGeometry(13,13,44,44);
+  var pos=g.attributes.position;
+  for(var i=0;i<pos.count;i++){pos.setZ(i,F(pos.getX(i),pos.getY(i)));}
+  g.computeVertexNormals();
+  var surf=new THREE.Mesh(g,new THREE.MeshLambertMaterial({color:0x8fa3e8,transparent:true,opacity:0.5,side:THREE.DoubleSide}));
+  surf.rotation.x=-Math.PI/2;scene.add(surf);
+  var wire=new THREE.Mesh(g.clone(),new THREE.MeshBasicMaterial({color:0x5b6bd6,wireframe:true,transparent:true,opacity:0.15}));
+  wire.rotation.x=-Math.PI/2;scene.add(wire);
+  var sl=lbl('손실 함수 표면 L(w₁,w₂)',28,'#39415a',1);sl.position.set(0,5.6,0);scene.add(sl);
+  var mn=[0,0],mv=1e9;
+  for(var xx=-6;xx<=6;xx+=0.2)for(var zz=-6;zz<=6;zz+=0.2){var v=F(xx,zz);if(v<mv){mv=v;mn=[xx,zz];}}
+  var flag=sph(0.2,0x2f9e63);flag.position.set(mn[0],mv+0.15,mn[1]);scene.add(flag);
+  var fl=lbl('최소 손실 (학습 목표)',25,'#2f9e63',0.95);fl.position.set(mn[0],mv+1.0,mn[1]);scene.add(fl);
+  var ball=sph(0.3,0xd6455b);scene.add(ball);
+  var bLbl=lbl('현재 가중치',24,'#d6455b',0.9);scene.add(bLbl);
+  var trailPts=[],trail=null,bx=4.6,bz=3.4,lr=0.5,stepT=0;
+  function setBall(){ball.position.set(bx,F(bx,bz)+0.32,bz);bLbl.position.set(bx,F(bx,bz)+1.2,bz);}
+  function reset(r){bx=4.6;bz=3.4;lr=r;stepT=0;trailPts.length=0;if(trail){scene.remove(trail);trail=null;}setBall();}
+  function step(){
+    var gr=gradF(bx,bz);bx-=lr*gr[0];bz-=lr*gr[1];
+    bx=Math.max(-6,Math.min(6,bx));bz=Math.max(-6,Math.min(6,bz));setBall();
+    trailPts.push(ball.position.clone());
+    if(trail){scene.remove(trail);trail.geometry.dispose();trail.material.dispose();}
+    if(trailPts.length>1){trail=new THREE.Line(new THREE.BufferGeometry().setFromPoints(trailPts),new THREE.LineBasicMaterial({color:0xd6455b,transparent:true,opacity:0.9}));scene.add(trail);}
+  }
+  function upd(iv){return function(u,dt){stepT+=dt;if(stepT>iv){stepT=0;step();}};}
+  var phases=[
+    {dur:7,cap:'경사하강법 ① 학습률이 너무 작으면: 기울기 반대 방향으로 아주 조금씩 — 올바르지만 수렴이 매우 느립니다.',enter:function(){reset(0.12);},update:upd(0.3)},
+    {dur:7,cap:'② 학습률이 너무 크면: 골짜기를 건너뛰며 진동 — 손실이 줄지 않고 발산할 수 있습니다.',enter:function(){reset(1.9);},update:upd(0.3)},
+    {dur:8,cap:'③ 적절한 학습률: 가파른 곳은 크게, 완만한 곳은 작게 내려가 최소 손실에 수렴 — 이것이 "학습"의 수학적 실체입니다.',enter:function(){reset(0.5);},update:upd(0.24)}
+  ];
+  function always(t){var a=t*0.1;camera.position.set(Math.cos(a)*11,8,Math.sin(a)*11);camera.lookAt(0,1.0,0);}
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
 </body>
 </html>

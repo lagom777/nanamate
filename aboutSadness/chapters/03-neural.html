@@ -3,7 +3,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout">
 <aside>
@@ -29,7 +31,7 @@
 </header>
 
 <div class="scene-3d" id="sim-scene"></div>
-<span class="interact-hint">⟳ 푸른 물방울을 회전시키며 탐구하세요</span>
+<span class="interact-hint">⟳ 신경 회로 — 뇌 영역들의 연결과 작동</span>
 
 <h2>신경 메커니즘 개요</h2>
 <p>슬픔의 회로는 단일 뇌 영역이 아니라 네트워크다. 아래쪽 슬하 전대상피질(sgACC), 섬엽(insula), 편도체(amygdala), 그리고 디폴트 모드 네트워크(DMN)가 함께 움직인다. 우울증은 이 네트워크가 균형을 잃고 sgACC가 과활성화된 상태로 정의된다.</p>
@@ -68,11 +70,27 @@
 <div class="difficulty-content" data-level="hard">
   <span class="difficulty-badge hard">상 · 심화</span>
   <h3>전문가 레벨 이해</h3><p>Helen Mayberg의 1997년 PET 연구는 sgACC(BA25)가 우울증 회로의 허브임을 처음 제시했다. 2005년 이후 sgACC DBS 임상시험은 치료저항성 우울 일부 환자에서 극적 반응을 보였으나, 무작위 시험에서는 효과가 일관되지 않아 표적 정의·전극 위치·환자 표현형의 정밀화가 진행 중이다. 단가 아민 가설의 한계는 ketamine 효과로 분명해졌다. Ketamine은 NMDA 수용체 차단을 통해 글루타메이트 시스템에 작용하며, 수 시간 내 항우울 효과를 낸다. 이로써 글루타메이트·BDNF·시냅스 가소성 가설이 강력해졌다. 신경염증 가설은 만성 스트레스 → 미세아교세포 활성 → IL-6·TNF-α 상승 → sgACC·해마 회로 손상의 경로를 제안한다. 우울증 환자의 약 1/3에서 염증 마커가 상승해 있다는 메타분석이 누적됐다. 정밀 정신의학은 회로 표현형(sgACC 과활성형, 보상 무감형, 불안 우세형 등)에 따라 치료를 매칭하는 방향으로 가고 있다.</p>
-  <h3>최신 연구·동향</h3><p>2023년 JAMA에 실린 Drysdale 등의 fMRI 기반 우울증 4개 biotype 분류가 한 차례 충격을 줬으나 재현성 논쟁이 진행 중이다. Psilocybin 항우울 RCT(NEJM 2022)는 DMN 가소성 증가를 기전으로 제시했다. 한국에서는 KAIST 정용 교수팀의 7T fMRI 우울 회로 연구가 국제 학계에서 인용되고 있다.</p>
+  <h3>최신 연구·동향</h3><p>2017년 Nature Medicine에 실린 Drysdale 등의 fMRI 기반 우울증 4개 biotype 분류가 한 차례 충격을 줬으나 재현성 논쟁이 진행 중이다. Psilocybin 항우울 RCT(NEJM 2022)는 DMN 가소성 증가를 기전으로 제시했다. 한국에서는 KAIST 정용 교수팀의 7T fMRI 우울 회로 연구가 국제 학계에서 인용되고 있다.</p>
   <h3>관련 분야</h3><ul><li>정서신경과학(Affective Neuroscience)</li><li>임상신경영상학(Clinical Neuroimaging)</li><li>정신약리학(Psychopharmacology)</li></ul>
   <h3>추가 학습 자료</h3><ul><li>"The Noonday Demon" — Andrew Solomon</li><li>"Lost Connections" — Johann Hari</li><li>"Affective Neuroscience" — Jaak Panksepp</li></ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 우울증 신경회로도를 sgACC·DMN·편도체·해마·HPA 다섯 노드로 그리고, 각 노드에 SSRI·CBT·운동·TMS·ketamine의 작용점을 색깔로 표시해보자.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#60a5fa","questions":[{"q":"슬픔의 허브로 불리는 뇌 영역은?","choices":["sgACC","해마","소뇌","후두엽"],"answer":0},{"q":"멍할 때 작동하는 자기참조 회로?","choices":["HPA축","DMN","편도체","섬엽"],"answer":1},{"q":"신체 감각과 정서를 잇는 영역은?","choices":["소뇌","해마","섬엽","후두엽"],"answer":2},{"q":"SSRI가 늘리는 신경전달물질은?","choices":["도파민","아세틸콜린","글루타메이트","세로토닌"],"answer":3},{"q":"sgACC DBS 연구로 유명한 학자는?","choices":["Paul Ekman","John Bowlby","Helen Mayberg","Pennebaker"],"answer":2}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);const COLOR=0x60a5fa;const parts=[];for(let i=0;i<36;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1+Math.random()*0.15,12,12),new THREE.MeshBasicMaterial({color:COLOR,transparent:true,opacity:0.4+Math.random()*0.5}));m.position.set((Math.random()-0.5)*7,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);parts.push(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});function a(){requestAnimationFrame(a);s.rotation.y+=0.003;parts.forEach((p,i)=>{p.position.y+=Math.sin(Date.now()*0.001+i)*0.004;});r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0x60a5fa;const brain=new THREE.Mesh(new THREE.SphereGeometry(2.0,20,16),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.35}));s.add(brain);const reg=[];const pts=[[-0.8,-0.3,0.6],[0.8,-0.3,0.6],[0,0.7,-0.4],[0,-0.9,-0.2]];pts.forEach(p=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.26,16,16),new THREE.MeshBasicMaterial({color:0xffe08a}));m.position.set(p[0]*1.5,p[1]*1.5,p[2]*1.5);s.add(m);reg.push(m);});for(let i=0;i<reg.length;i++)for(let j=i+1;j<reg.length;j++)s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([reg[i].position,reg[j].position]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.3})));
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;brain.rotation.y+=0.004;reg.forEach((m,i)=>m.scale.setScalar(0.8+0.3*Math.sin(T*3+i)));s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

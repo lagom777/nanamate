@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 마이너 아르카나 56장 — aboutTarot</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🃏 표지</a></li>
+    <li><a href="01-what-is.html">1. 타로란 무엇인가</a></li>
+    <li><a href="02-major.html">2. 메이저 아르카나 22장</a></li>
+    <li><a href="03-minor.html">3. 마이너 아르카나 56장</a></li>
+    <li><a href="04-court.html">4. 코트 카드</a></li>
+    <li><a href="05-reversed.html">5. 정방향과 역방향</a></li>
+    <li><a href="06-spreads.html">6. 대표 스프레드</a></li>
+    <li><a href="07-reading.html">7. 카드 읽는 법</a></li>
+    <li><a href="08-symbolism.html">8. 상징과 융 심리학</a></li>
+    <li><a href="09-ethics.html">9. 타로의 과학·비판·윤리</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>마이너 아르카나 56장</em></h1>
+  <p class="authors">Chapter 3 — The Minor Arcana</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 4슈트 × 14단계 — 완드·컵·소드·펜타클의 56장 격자</span>
+
+<h2>마이너 아르카나 56장 개요</h2>
+<p>마이너 아르카나는 타로 78장 가운데 56장을 차지하며, 인생의 큰 흐름을 상징하는 메이저 아르카나와 달리 일상의 구체적인 장면을 다룬다. 완드·컵·소드·펜타클이라는 4개의 슈트로 나뉘고, 각 슈트는 에이스부터 10까지의 숫자 카드와 코트 카드로 구성된다. 4원소(불·물·공기·흙)와 1부터 10까지 번호에 담긴 수비(數祕)의 의미가 결합되어, 한 장 한 장이 구체적인 상황을 묘사한다고 본다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>56장은 4슈트(완드·컵·소드·펜타클)로 나뉘며, 각 슈트는 에이스~10의 숫자 카드와 코트 카드로 이루어진다. 슈트는 각각 불·물·공기·흙의 원소와 열정·감정·생각·물질의 영역에 대응하고, 1~10의 번호는 시작에서 완성으로 이어지는 단계를 나타내는 것으로 해석한다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>마이너 아르카나는 56장으로 이루어진, 일상의 구체적인 일들을 그려 보이는 카드 묶음이다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>타로 리딩에서 메이저 아르카나가 "인생의 큰 주제"를 말한다면, 마이너 아르카나는 "지금 당장의 상황"을 말한다고 본다. 일·돈·사랑·갈등처럼 우리가 매일 마주하는 영역을 세밀하게 나누어 보여 주기 때문에, 실제 점을 볼 때 가장 자주 등장하는 카드들이다. 56장이라는 수가 많아 보이지만, 4개의 슈트와 1~10의 번호라는 규칙만 알면 의외로 쉽게 정리된다. 트럼프 카드(서양식 화투)와 구조가 거의 같아서, 카드 놀이를 해 본 사람이라면 더 친숙하게 느낄 수 있다. 이 장을 이해하면 78장 전체의 절반 이상이 한꺼번에 손에 들어오는 셈이다.</p>
+
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>슈트(Suit)</strong>: 카드를 묶는 네 갈래의 종류. 완드·컵·소드·펜타클이 있다.</li>
+<li><strong>완드(Wands)</strong>: 불 원소. 열정, 일, 의욕, 새로운 도전을 상징한다고 본다.</li>
+<li><strong>컵(Cups)</strong>: 물 원소. 감정, 사랑, 관계, 마음의 흐름을 다룬다.</li>
+<li><strong>소드(Swords)</strong>: 공기 원소. 생각, 말, 갈등, 결단을 나타낸다.</li>
+<li><strong>펜타클(Pentacles)</strong>: 흙 원소. 돈, 일의 결실, 건강, 현실적인 물질을 가리킨다.</li>
+</ul></div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>마이너 아르카나를 회사의 부서에 비유해 보면 이해가 쉽다. 완드는 "열정으로 새 일을 벌이는 기획팀", 컵은 "사람의 마음을 챙기는 인사팀", 소드는 "냉정하게 따지고 판단하는 법무팀", 펜타클은 "실제 돈과 살림을 굴리는 재무팀"과 비슷하다. 그리고 에이스(1)는 입사 첫날의 설렘, 10은 그 부서가 이룬 최종 결과물에 해당한다. 같은 번호라도 어느 부서(슈트)에 속하느냐에 따라 의미가 달라진다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 56장을 한꺼번에 외우려 하지 말고, 슈트 하나씩 끊어 보자. 먼저 "완드=불=일", "컵=물=마음"처럼 슈트와 원소·영역만 짝지어 외우면, 나머지 번호 해석은 자연스럽게 따라온다.</div>
+
+<h3>한 페이지 요약</h3>
+<ul>
+<li>마이너 아르카나는 총 56장이며, 일상의 구체적 영역을 다룬다.</li>
+<li>4개 슈트는 완드(불·일), 컵(물·감정), 소드(공기·생각), 펜타클(흙·물질)이다.</li>
+<li>각 슈트는 에이스(1)부터 10까지의 숫자 카드를 갖는다.</li>
+<li>번호는 대체로 시작(1)에서 완성(10)으로 이어지는 흐름을 나타낸다.</li>
+<li>슈트(원소)와 번호(수비)를 조합하면 한 장의 구체적인 뜻이 만들어진다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>마이너 아르카나의 해석은 크게 두 축, 곧 슈트(원소)와 번호(수비)의 교차로 이루어진다고 본다. 슈트는 4원소론에 뿌리를 둔다. 완드는 불로서 에너지·의지·창조를, 컵은 물로서 감정·사랑·직관을, 소드는 공기로서 지성·언어·갈등을, 펜타클은 흙으로서 물질·노동·신체를 상징한다. 번호는 1에서 10까지 일종의 서사 구조를 이룬다고 해석된다. 에이스(1)는 그 원소의 순수한 씨앗이자 잠재력, 2는 균형과 선택, 3은 성장과 협력, 4는 안정과 토대, 5는 갈등과 시련, 6은 회복과 조화, 7은 평가와 노력, 8은 숙련과 추진, 9는 거의 다 이룬 충만함, 10은 완성 또는 한 주기의 끝으로 본다. 따라서 같은 5라도 완드의 5는 '경쟁'으로, 컵의 5는 '상실의 슬픔'으로 갈라진다. 1910년 무렵 발표된 라이더-웨이트-스미스(Rider-Waite-Smith) 덱은 숫자 카드마다 인물과 장면을 그려 넣어, 그림만 보고도 이야기를 떠올릴 수 있게 만든 것이 큰 특징이다.</p>
+
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 슈트 × 번호의 결합</h4><p>한 장의 의미는 "원소가 어떤 단계에 있는가"로 읽는다고 본다. 예를 들어 컵(감정)+3은 '함께 기뻐하는 감정의 성장(축하·우정)'으로, 펜타클(물질)+8은 '꾸준히 갈고닦는 노동(기술 연마)'으로 해석한다. 슈트가 '무엇에 대한 것인지'를, 번호가 '그 일이 어느 국면에 있는지'를 알려 주는 구조다. 이 규칙을 알면 56장을 통째로 외우지 않아도 추론으로 의미를 끌어낼 수 있다.</p></div>
+
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1 — 펜타클 에이스</h4><p>흙 원소의 시작점으로, 새로운 돈벌이·취업·건강 회복의 '씨앗'이 주어진 상황으로 본다. 라이더-웨이트-스미스 덱에서는 구름 속 손이 큼직한 동전 하나를 내미는 그림으로 그려진다. 실현 가능성이 있는 현실적 기회가 막 열렸다는 신호로 참고하는 경우가 많다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 소드 10</h4><p>공기 원소가 10에 이른, 곧 '생각·갈등의 극단적 마무리'로 본다. 그림에서는 등에 여러 자루의 검이 꽂힌 인물이 그려져 있어 고통스러운 종결을 떠올리게 한다. 다만 10은 한 주기의 끝이므로, 더 나빠질 것이 없으니 곧 새벽이 온다는 식의 '바닥과 전환'의 의미로도 함께 참고한다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>오늘날 시중에는 라이더-웨이트-스미스 계열 외에도 펜타클을 '코인(Coin)' 또는 '디스크(Disk)'로, 완드를 '스태프(Staff)'로 부르는 다양한 덱이 있다. 명칭은 달라도 4원소·1~10이라는 뼈대는 대체로 공유한다. 입문자라면 그림이 풍부한 라이더-웨이트-스미스 계열로 시작해 장면을 이야기처럼 익히는 방식이 흔히 권장된다.</p>
+
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> "마이너 아르카나는 메이저보다 덜 중요하다"고 여기기 쉽지만, 실제 리딩에서는 마이너가 구체적 상황을 짚어 주기 때문에 오히려 더 자주, 더 실질적으로 쓰인다. '마이너=사소함'이라는 직역은 오해다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>마이너 아르카나의 그림 기반 해석은 사실 비교적 최근의 발명에 가깝다. 18~19세기까지 마르세유(Marseille) 계열 덱의 숫자 카드는 슈트 상징을 번호 수만큼 나열한 '핍(pip) 카드'였고, 그림 서사가 없어 주로 원소·수비·점성술적 대응으로 해석되었다. 1909년경 아서 에드워드 웨이트(Arthur Edward Waite)의 기획 아래 화가 파멜라 콜먼 스미스(Pamela Colman Smith)가 모든 숫자 카드에 인물 장면을 그려 넣으면서, '그림을 읽는' 직관적 리딩이 대중화되었다. 이 덱은 황금새벽회(Golden Dawn)의 카발라·점성술 체계를 상당 부분 반영하는데, 슈트를 카발라 생명나무의 네 세계(아칠루트·브리아·예치라·아시아)와, 번호를 10개의 세피로트와 대응시키는 해석 틀이 그 배경에 있다. 다만 이런 대응은 단일한 정설이 아니라 전통마다 변주가 크며, 학술적으로 검증된 체계가 아니라 상징 해석의 한 관습으로 보아야 한다. 따라서 전문 독자는 한 가지 대응표를 절대시하기보다, 슈트의 원소·번호의 단계·그림의 서사라는 여러 단서를 함께 견주어 읽는 태도를 중시한다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>심리학적으로 타로 해석은 바넘 효과(누구에게나 들어맞는 듯한 모호한 진술을 자신에게 꼭 맞다고 느끼는 경향)와 확증 편향으로 상당 부분 설명된다는 비판이 있다. 마이너 아르카나의 풍부한 그림은 투사 검사처럼 작용해, 보는 이가 자신의 상황을 그림에 투영하며 의미를 '발견'하게 만든다는 것이다. 이 점은 타로가 미래를 알아맞히는 도구라기보다, 자기 성찰과 대화를 돕는 매개로 쓰일 때 더 건전하게 기능한다는 견해로 이어진다. 어느 쪽이든 마이너 아르카나의 해석은 단정적 예언이 아니라 참고용 상징 언어로 다루는 것이 균형 잡힌 태도로 본다.</p>
+
+<h3>관련 분야</h3>
+<ul>
+<li><strong>수비학(Numerology)</strong>: 1~10의 번호에 단계적 의미를 부여하는 해석의 토대.</li>
+<li><strong>4원소론·점성술</strong>: 불·물·공기·흙의 상징과 슈트의 대응을 설명하는 배경.</li>
+<li><strong>융 심리학</strong>: 그림을 무의식의 투사로 보는 상징·원형 해석의 이론적 틀.</li>
+</ul>
+
+<h3>더 읽을거리</h3>
+<ul>
+<li>"The Pictorial Key to the Tarot" — Arthur Edward Waite</li>
+<li>"Seventy-Eight Degrees of Wisdom" — Rachel Pollack</li>
+<li>"Tarot for Your Self" — Mary K. Greer</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 같은 번호 '5'를 네 슈트(완드·컵·소드·펜타클)에 각각 대입해, 슈트의 원소가 '갈등·시련'이라는 5의 단계와 만났을 때 어떤 구체적 상황이 되는지 한 문장씩 직접 추론해 보자. 외운 뜻과 비교하면 '슈트×번호' 규칙이 몸에 붙는다.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b18cf0","questions":[{"q":"마이너 아르카나는 총 몇 장인가?","choices":["22장","40장","56장","78장"],"answer":2},{"q":"컵 슈트가 대응하는 원소는?","choices":["물","불","공기","흙"],"answer":0},{"q":"펜타클 슈트가 다루는 영역은?","choices":["열정","감정","생각","돈·물질"],"answer":3},{"q":"번호 5가 나타내는 단계는?","choices":["시작","갈등과 시련","완성","안정"],"answer":1},{"q":"숫자 카드에 장면을 그려 넣은 덱은?","choices":["마르세유 덱","비스콘티 덱","라이더-웨이트-스미스","트럼프 덱"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const suitCol=[0xff6b4a,0x4aa8ff,0xc8d0d8,0x6fd08a];const grid=[];const topShape=[new THREE.ConeGeometry(0.16,0.4,4),new THREE.SphereGeometry(0.16,10,8),new THREE.OctahedronGeometry(0.18),new THREE.TorusGeometry(0.14,0.05,8,16)];for(let su=0;su<4;su++){const top=new THREE.Mesh(topShape[su],new THREE.MeshBasicMaterial({color:suitCol[su]}));top.position.set(-3.3+su*2.2,2.7,0.3);s.add(top);for(let n=0;n<14;n++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.4,0.32,0.04),new THREE.MeshBasicMaterial({color:suitCol[su],transparent:true,opacity:n<10?0.85:0.55}));m.position.set(-3.3+su*2.2,2.1-n*0.34,0);m.userData={ph:(su+n)*0.4};grid.push(m);s.add(m);}}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;grid.forEach(m=>{m.position.z=Math.sin(T*1.3+m.userData.ph)*0.25;});s.rotation.y=Math.sin(T*0.3)*0.35;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -2,12 +2,14 @@
 <title>3. 감각과 지각 — aboutNeuroscience</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
 <li><a href="../index.html">🧠 표지</a></li><li><a href="01-neurons.html">1. 뉴런과 시냅스</a></li><li><a href="02-brain-anatomy.html">2. 뇌 해부학</a></li><li><a href="03-sensory.html">3. 감각과 지각</a></li><li><a href="04-memory.html">4. 기억과 학습</a></li><li><a href="05-emotion.html">5. 정서와 동기</a></li><li><a href="06-consciousness.html">6. 의식과 수면</a></li><li><a href="07-neuroplasticity.html">7. 신경가소성</a></li><li><a href="08-disorders.html">8. 뇌질환과 장애</a></li><li><a href="09-neurotech.html">9. 뇌공학과 AI</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>감각과 지각</em></h1><p class="authors">Chapter 3 — Sensory Processing & Perception</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 뉴런 네트워크를 회전하며 탐구하세요</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 다섯 감각 입력이 시상으로 모였다가 대뇌피질로 올라가는 흐름입니다</span>
 <h2>감각과 지각 개요</h2><p>Sensory Processing & Perception의 핵심 메커니즘을 3D 시뮬레이션과 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Sensory Processing & Perception</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -44,9 +46,28 @@
   <h3>추가 자료</h3><ul><li>Goldstein, <em>Sensation and Perception</em></li><li>Wandell, <em>Foundations of Vision</em></li><li>Friston의 자유에너지 논문</li></ul>
   <div class="success-box"><strong>🎓 사고 실험:</strong> 색을 한 번도 본 적 없는 사람이 색에 관한 모든 과학을 안다면, 처음으로 빨강을 보았을 때 새로운 지식을 얻는 것일까요? '메리의 방' 사고 실험을 깊이 들여다봅시다.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#818cf8","questions":[{"q":"감각을 의미 있게 해석하는 과정은?","choices":["감각","역치","주의","지각"],"answer":3},{"q":"자극을 전기 신호로 바꾸는 세포는?","choices":["뉴런","시냅스","수용기","축삭"],"answer":2},{"q":"자극과 다르게 지각되는 현상은?","choices":["역치","착시","지각","주의"],"answer":1},{"q":"시상을 거치지 않는 감각은?","choices":["후각","시각","청각","촉각"],"answer":0},{"q":"시각과 청각이 충돌하는 현상은?","choices":["칵테일파티","착시","공감각","맥거크 효과"],"answer":3}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-const neurons=[];for(let i=0;i<20;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.15,12,12),new THREE.MeshBasicMaterial({color:0x818cf8}));m.position.set((Math.random()-0.5)*8,(Math.random()-0.5)*5,(Math.random()-0.5)*5);s.add(m);neurons.push(m);}
-for(let i=0;i<neurons.length-1;i++){const g=new THREE.BufferGeometry().setFromPoints([neurons[i].position,neurons[(i+1+Math.floor(Math.random()*3))%neurons.length].position]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x818cf8,transparent:true,opacity:0.15})));}
-let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});
-function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const thal=new THREE.Mesh(new THREE.OctahedronGeometry(0.7,0),new THREE.MeshBasicMaterial({color:0x8b5cf6}));thal.position.set(0,-0.5,0);s.add(thal);
+  const cortex=new THREE.Mesh(new THREE.PlaneGeometry(5,1.4),new THREE.MeshBasicMaterial({color:0x6366f1,transparent:true,opacity:0.55,side:THREE.DoubleSide}));cortex.position.set(0,2.6,0);s.add(cortex);
+  const cols=[0xef4444,0xf59e0b,0x10b981,0x06b6d4,0xec4899];const travelers=[];
+  for(let k=0;k<5;k++){const ang=(k/5)*Math.PI*2;const sx=Math.cos(ang)*3.4,sy=-0.5+Math.sin(ang)*2.6;
+    const cone=new THREE.Mesh(new THREE.ConeGeometry(0.35,0.7,10),new THREE.MeshBasicMaterial({color:cols[k]}));cone.position.set(sx,sy,0);cone.lookAt(0,-0.5,0);cone.rotateX(Math.PI/2);s.add(cone);
+    const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(sx,sy,0),new THREE.Vector3(0,-0.5,0)]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:cols[k],transparent:true,opacity:0.4})));
+    const dot=new THREE.Mesh(new THREE.SphereGeometry(0.12,8,8),new THREE.MeshBasicMaterial({color:cols[k]}));s.add(dot);travelers.push({dot:dot,sx:sx,sy:sy,off:k*0.2});}
+  s.userData.tr=travelers;
+  const g2=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,-0.5,0),new THREE.Vector3(0,2.0,0)]);s.add(new THREE.Line(g2,new THREE.LineBasicMaterial({color:0xa78bfa,transparent:true,opacity:0.6})));
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.tr.forEach(t=>{const ph=((T*0.4)+t.off)%1;t.dot.position.set(t.sx*(1-ph),-0.5+t.sy*(1-ph)+0.5*(1-ph)-0.5*(1-ph),0);t.dot.position.x=t.sx*(1-ph);t.dot.position.y=t.sy+(-0.5-t.sy)*ph;});thal.rotation.y+=0.02;s.rotation.y+=0.003; r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

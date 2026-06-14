@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2. 주식 투자 — aboutInvesting</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">💰 표지</a></li>
+    <li><a href="01-basics.html">1. 재테크 기초</a></li>
+    <li><a href="02-stocks.html">2. 주식 투자</a></li>
+    <li><a href="03-bonds.html">3. 채권과 금리</a></li>
+    <li><a href="04-funds.html">4. 펀드·ETF·인덱스</a></li>
+    <li><a href="05-realestate.html">5. 부동산</a></li>
+    <li><a href="06-portfolio.html">6. 분산투자·포트폴리오</a></li>
+    <li><a href="07-tax-pension.html">7. 세금·연금</a></li>
+    <li><a href="08-behavioral.html">8. 행동재무학</a></li>
+    <li><a href="09-retirement.html">9. 은퇴·재무설계</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>주식 투자</em></h1>
+  <p class="authors">Chapter 2 — Stocks</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 오르내리는 주가 캔들 차트를 회전시켜 시장의 변동성을 살펴보세요</span>
+
+<h2>주식 투자 개요</h2>
+<p>주식은 기업 소유권을 잘게 나눈 증서다. 주식 한 주를 사면 그 기업의 아주 작은 일부를 소유하게 되며, 기업이 성장하면 주가 상승과 배당이라는 형태로 그 과실을 나눠 받는다. 그러나 기업의 가치는 끊임없이 변하고 시장의 심리도 출렁이기 때문에, 주식은 높은 기대수익과 함께 큰 변동성과 손실 위험을 함께 안고 있다. 이 장에서는 주가·시가총액·배당·EPS·PER 같은 기초 개념부터 성장주와 가치주의 구분, 그리고 분산과 장기투자라는 위험 관리의 원리까지 살펴본다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>주식은 기업의 소유권 조각이며, 주가는 기업 가치와 시장 심리가 함께 만든 가격이다. EPS·PER·배당 같은 지표로 기업을 가늠하고, 성장주와 가치주처럼 성격이 다른 종목을 이해한다. 변동성과 손실 위험은 분산과 장기투자, 지수 추종으로 다스리며, 잦은 단기 매매는 비용과 위험을 키운다. 이 책은 특정 종목을 추천하지 않으며 판단의 틀을 익히는 데 목적이 있다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>주식은 '기업의 소유권을 잘게 쪼갠 조각'이며, 주식을 산다는 것은 그 기업의 작은 주인이 되는 것이다.</p>
+<h3>왜 중요한가?</h3>
+<p>주식은 개인이 기업의 성장에 직접 동참할 수 있는 가장 대표적인 수단이다. 예금만으로는 물가 상승을 따라잡기 어려운 시대에, 주식은 장기적으로 자산을 불릴 수 있는 통로로 여겨진다. 동시에 주가는 하루에도 크게 오르내리기 때문에, 원리를 모른 채 뛰어들면 손실을 보기 쉽다. 그래서 주식의 본질과 위험을 함께 이해하는 일이 무엇보다 먼저다. 무엇을 사느냐만큼 어떻게 위험을 나누고 얼마나 오래 보유하느냐가 결과를 좌우한다. 이 장은 그 기초 체력을 기르는 출발점이다.</p>
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>주식</strong>: 기업 소유권의 일부를 나타내는 증서. 한 주를 가지면 그만큼 기업의 주인이 된다.</li>
+<li><strong>주가</strong>: 시장에서 거래되는 주식 한 주의 가격. 기업 가치와 투자자 심리에 따라 수시로 변한다.</li>
+<li><strong>시가총액</strong>: 주가에 발행 주식 수를 곱한 값으로, 시장이 매긴 기업 전체의 몸값이다.</li>
+<li><strong>배당</strong>: 기업이 벌어들인 이익의 일부를 주주에게 나눠 주는 돈이다.</li>
+<li><strong>지수</strong>: 코스피·S&amp;P500처럼 여러 종목의 가격을 묶어 시장 전체 흐름을 보여 주는 지표다.</li>
+</ul></div>
+<h3>핵심 개념 풀어쓰기</h3>
+<p>주식을 떠올리기 어렵다면 '동네 빵집을 친구들과 함께 차린다'고 상상해 보자. 가게를 100조각으로 나눠 한 조각씩 나눠 가지면, 각 조각이 곧 주식 한 주다. 빵집이 잘되어 이익이 늘면 내 조각의 가치도 올라가고, 이익의 일부를 나눠 받으면 그것이 배당이다. 반대로 손님이 줄면 조각의 가치도 떨어진다. 주식 시장은 이런 조각을 사고팔 수 있도록 만든 거대한 장터인 셈이다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 주가가 싸 보인다고 좋은 주식이 아니다. 1만 원짜리 주식이 5천 원짜리보다 '비싼' 게 아니라, 기업 가치 대비 가격이 어떤지를 봐야 한다. 가격표 숫자가 아니라 '얼마짜리 기업을 얼마에 사는가'로 생각하자.</div>
+<h3>한 페이지 요약</h3>
+<ul>
+<li>주식은 기업 소유권의 조각이고, 주식을 사면 그 기업의 작은 주인이 된다.</li>
+<li>주가는 기업 가치와 시장 심리가 함께 만드는 가격이라 늘 변동한다.</li>
+<li>배당은 이익을 나눠 받는 돈, 시가총액은 시장이 매긴 기업의 전체 몸값이다.</li>
+<li>코스피·S&amp;P500 같은 지수는 시장 전체의 분위기를 한눈에 보여 준다.</li>
+<li>변동성이 크므로 한 종목에 몰지 말고 나눠 담고, 오래 보유하는 자세가 중요하다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>주가는 본질적으로 '시장이 매긴 기업 가치'이지만, 그 가치는 객관적 실적과 주관적 기대가 뒤섞여 정해진다. 같은 기업이라도 미래 이익에 대한 기대가 커지면 주가는 오르고, 실망이 번지면 떨어진다. 그래서 주가 자체보다 기업이 얼마나 벌고, 그 이익이 주가에 어떻게 반영돼 있는지를 보는 지표가 필요하다. 가장 기본이 되는 것이 주당순이익(EPS)과 주가수익비율(PER)이다. EPS는 기업의 순이익을 발행 주식 수로 나눈 값으로, 주식 한 주가 1년에 벌어들이는 이익을 뜻한다. PER은 주가를 EPS로 나눈 값으로, 지금 이익을 기준으로 투자금을 회수하는 데 몇 년이 걸리는지를 가늠하는 척도다. PER이 높다는 것은 시장이 그 기업의 미래 성장을 크게 기대한다는 뜻일 수도, 단순히 비싸졌다는 뜻일 수도 있다. 배당수익률은 한 해 배당을 주가로 나눈 값으로, 주식에서 나오는 현금 흐름의 크기를 보여 준다. 이런 지표들은 단독으로 쓰기보다 같은 업종의 다른 기업이나 과거 평균과 비교할 때 의미가 살아난다.</p>
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 PER로 기업을 읽는 법</h4><p>PER = 주가 ÷ EPS다. 예를 들어 주가가 5만 원이고 EPS가 5천 원이면 PER은 10으로, 현재 이익이 유지된다면 약 10년이면 투자금만큼을 벌어들이는 셈이다. 다만 PER이 낮다고 무조건 싼 것은 아니다. 성장이 멈춘 기업이라 낮을 수도 있고, 일시적 이익으로 EPS가 부풀려져 PER이 작아 보일 수도 있다. 숫자 하나가 아니라 그 배경을 함께 읽어야 한다.</p></div>
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1 — 성장주</h4><p>성장주는 매출과 이익이 빠르게 늘 것으로 기대되는 기업의 주식이다. 대표적으로 기술·바이오 분야에 많으며, 당장의 이익은 작아도 미래 기대가 커서 PER이 높게 형성되는 경향이 있다. 기대가 충족되면 큰 상승을 주지만, 기대가 꺾이면 낙폭도 크다. 변동성이 큰 영역으로 본다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 가치주</h4><p>가치주는 기업의 실적이나 자산에 비해 주가가 낮게 평가됐다고 보는 주식이다. 성장 속도는 느려도 안정적인 이익과 배당을 주는 경우가 많아, 상대적으로 낮은 PER로 거래되곤 한다. 시장의 관심에서 멀어진 우량 기업이 제값을 찾아갈 것이라는 기대에 투자하는 방식이지만, 저평가가 오래 풀리지 않을 위험도 있다.</p></div>
+<h3>현대적 전개</h3>
+<p>오늘날 많은 투자자는 개별 종목을 고르는 대신 코스피200·S&amp;P500 같은 지수를 그대로 추종하는 인덱스 투자를 택한다. 시장 전체를 통째로 사들이면 한 기업의 부진을 다른 기업이 메워 주어 위험이 자연스럽게 분산되고, 비용도 낮다. 개별 종목 선택이 장기적으로 시장 평균을 꾸준히 앞서기 어렵다는 인식이 퍼지면서, 분산과 장기 보유를 결합한 인덱스 방식이 기본 전략으로 자리 잡았다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> "잦은 단기 매매로 시세 차익을 부지런히 챙기면 더 빨리 돈을 번다"는 생각은 위험하다. 단기 매매는 매번 수수료·세금 같은 거래 비용이 쌓이고, 짧은 가격 움직임은 예측하기 어려워 운에 가깝다. 시장의 큰 상승은 소수의 며칠에 몰리는 경우가 많아, 자주 사고팔다 그 며칠을 놓치면 수익이 크게 줄어든다. 빈번한 매매는 수익률을 끌어올리기보다 갉아먹기 쉽다고 본다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>주식의 가치 평가는 크게 두 갈래로 이해된다. 하나는 미래에 벌어들일 현금흐름을 적절한 할인율로 현재 가치로 환산해 더하는 현금흐름할인(DCF) 방식이고, 다른 하나는 PER·PBR·배당수익률 같은 지표를 동종 기업과 견주는 상대가치 방식이다. 두 방법 모두 미래 이익과 할인율에 대한 가정에 크게 의존하므로, 정답이라기보다 합리적 추정의 범위를 제시할 뿐이다. 학술적으로는 효율적 시장 가설이 오랫동안 영향력을 가졌는데, 주가에 이미 알려진 정보가 충분히 반영돼 있어 꾸준히 시장을 이기기는 어렵다는 주장이다. 이에 대해 가치·소형주·모멘텀 같은 요인(factor)에서 초과수익이 관찰된다는 반론이 제기됐고, 이러한 요인 투자는 현대 포트폴리오 설계의 한 축이 됐다. 한편 위험은 단일 지표로 환원되지 않는다. 일상적 변동성을 넘어, 분산으로도 줄지 않는 시장 전체의 체계적 위험과 드물지만 큰 손실을 주는 꼬리 위험을 함께 고려해야 한다. 분산투자는 종목 고유의 위험을 줄여 주지만 시장 전체의 하락은 막지 못하며, 장기 보유는 변동성을 시간으로 평탄화하되 미래가 과거를 그대로 따른다는 보장은 없다. 결국 전문가의 판단은 확신이 아니라, 가정을 명시하고 그것이 틀렸을 때의 결과까지 헤아리는 절제에 가깝다.</p>
+<h3>최신 연구·쟁점</h3>
+<p>최근에는 패시브(인덱스) 투자의 급격한 확대가 시장의 가격 발견 기능을 약화시키는지에 대한 논쟁이 활발하다. 또 개인 투자자의 정보 접근이 넓어지고 거래 비용이 낮아지면서, 군집 행동과 단기 변동이 어떻게 증폭되는지를 다루는 행동재무학적 연구도 늘고 있다. ESG 요소가 장기 수익과 위험에 실제로 어떤 영향을 주는지에 대해서도 합의는 아직 진행 중이며, 데이터 해석에 따라 결론이 엇갈린다. 이러한 쟁점들은 어느 한쪽이 정설로 확정됐다기보다, 시장 구조 변화 속에서 계속 검증되고 있는 열린 질문으로 보는 편이 정확하다.</p>
+<h3>관련 분야</h3>
+<ul>
+<li><strong>행동재무학</strong>: 손실 회피·군집 심리 등 투자자의 비합리적 행동이 가격에 미치는 영향을 다룬다.</li>
+<li><strong>포트폴리오 이론</strong>: 자산을 어떻게 조합해야 같은 위험에서 더 나은 기대수익을 얻는지를 연구한다.</li>
+<li><strong>거시경제·금리</strong>: 금리·물가·경기 사이클이 기업 이익과 주가 평가에 어떻게 작용하는지를 설명한다.</li>
+</ul>
+<h3>더 읽을거리</h3>
+<ul>
+<li>"현명한 투자자(The Intelligent Investor)" — 벤저민 그레이엄</li>
+<li>"보통주와 비범한 수익(Common Stocks and Uncommon Profits)" — 필립 피셔</li>
+<li>"랜덤워크 투자수업(A Random Walk Down Wall Street)" — 버턴 말킬</li>
+</ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> 관심 있는 상장 기업 한 곳을 골라, 공시된 순이익과 발행 주식 수로 EPS를 직접 계산하고 현재 주가로 PER을 구해 보자. 그 값을 같은 업종 다른 기업이나 과거 평균과 비교하며, 이 숫자가 '성장 기대'에서 비롯됐는지 '저평가'에서 비롯됐는지 가설을 세워 글로 정리해 보자. 단, 이는 학습용 분석일 뿐 매수·매도 권유가 아님을 분명히 하자.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#16c784","questions":[{"q":"주식의 본질은 무엇인가?","choices":["차용 증서","소유권 조각","보험 계약","예금 증서"],"answer":1},{"q":"시가총액은 주가에 무엇을 곱하나?","choices":["발행 주식 수","순이익","배당금","EPS"],"answer":0},{"q":"이익 일부를 주주에게 나누는 것은?","choices":["이자","수수료","배당","보증금"],"answer":2},{"q":"PER의 계산식은?","choices":["EPS÷주가","주가×EPS","배당÷주가","주가÷EPS"],"answer":3},{"q":"PER이 높게 형성되는 경향의 주식은?","choices":["가치주","성장주","배당주","저평가주"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,12);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // 주가 캔들 차트: 시간축을 따라 늘어선 캔들(몸통+심지). 상승=초록, 하락=빨강
+  const candles=[];const NC=12;for(let i=0;i<NC;i++){const up=Math.sin(i*0.9)>(-0.1);const col=up?0x16c784:0xff5d5d;const body=new THREE.Mesh(new THREE.BoxGeometry(0.45,1,0.45),new THREE.MeshBasicMaterial({color:col}));const x=(i-(NC-1)/2)*0.85;body.position.x=x;s.add(body);const wickG=new THREE.BufferGeometry();wickG.setAttribute('position',new THREE.BufferAttribute(new Float32Array([x,-1.5,0, x,1.5,0]),3));const wick=new THREE.Line(wickG,new THREE.LineBasicMaterial({color:col}));s.add(wick);candles.push({m:body,ph:i*0.55,base:(i/NC)*1.4-0.7});}
+  // 추세선: 캔들 위를 잇는 가격 흐름선
+  const trendPts=[];for(let i=0;i<NC;i++){trendPts.push((i-(NC-1)/2)*0.85,(i/NC)*1.4-0.7,0.3);}const trendG=new THREE.BufferGeometry();trendG.setAttribute('position',new THREE.BufferAttribute(new Float32Array(trendPts),3));s.add(new THREE.Line(trendG,new THREE.LineBasicMaterial({color:0xffd34d})));
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;candles.forEach(o=>{const h=0.6+0.9*(0.5+0.5*Math.sin(T*1.6+o.ph));o.m.scale.y=h;o.m.position.y=o.base+(h-1)*0.3;});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

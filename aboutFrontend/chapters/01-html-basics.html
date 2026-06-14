@@ -73,7 +73,7 @@
             border-radius: 8px;
             padding: 1rem;
             margin: 0.5rem;
-            text-align: center;
+            text-align:left;
             font-weight: 600;
             color: #7b5cff;
             position: relative;
@@ -121,7 +121,7 @@
             color: white;
             padding: 1.5rem;
             border-radius: 8px;
-            text-align: center;
+            text-align:left;
         }
 
         .three-d-container {
@@ -222,7 +222,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
-            text-align: center;
+            text-align:left;
         }
 
         .nav-btn.prev {
@@ -328,7 +328,7 @@
             font-size: 13px;
             font-weight: 600;
             letter-spacing: 0.04em;
-            text-align: center;
+            text-align:left;
             box-shadow: 0 6px 18px -6px rgba(123, 92, 255, 0.5);
             transition: transform 0.2s ease;
         }
@@ -339,7 +339,9 @@
     </style>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
     <div class="container">
@@ -536,7 +538,7 @@
             </div>
 
             <h2>📚 난이도별 학습</h2>
-            <p>본인 수준에 맞춰 탭 선택. 우측 상단 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+            <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
             <div class="difficulty-tabs">
                 <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
                 <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -645,7 +647,12 @@ customElements.define('user-card', UserCard);</code></pre>
                     <strong>🎓 도전 과제:</strong> 자바스크립트 없이 HTML/CSS만으로 다단계 폼 위저드를 구현해보세요. <code>&lt;details&gt;</code>·<code>:has()</code>·<code>:target</code> 의사클래스가 핵심 도구입니다.
                 </div>
             </div>
-        </main>
+        
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0ea5e9","questions":[{"q":"HTML의 역할은?","choices":["구조와 내용 정의","스타일 정의","데이터베이스 관리","서버 통신"],"answer":0},{"q":"네비게이션 메뉴에 쓰는 태그는?","choices":["<header>","<nav>","<aside>","<footer>"],"answer":1},{"q":"이미지 설명을 넣는 속성은?","choices":["src","href","alt","title"],"answer":2},{"q":"보조 정보(사이드바)에 알맞은 태그는?","choices":["<main>","<article>","<section>","<aside>"],"answer":3},{"q":"HTML5 표준임을 알리는 선언은?","choices":["DOCTYPE","charset","viewport","lang"],"answer":0}]};</script>
+</main>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1. 글쓰기의 기본 — aboutWriting</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">✍️ 표지</a></li>
+    <li><a href="01-basics.html">1. 글쓰기의 기본</a></li>
+    <li><a href="02-grammar.html">2. 문법과 맞춤법</a></li>
+    <li><a href="03-logic.html">3. 논리적 글쓰기</a></li>
+    <li><a href="04-persuasion.html">4. 설득과 카피</a></li>
+    <li><a href="05-storytelling.html">5. 이야기와 서사</a></li>
+    <li><a href="06-practical.html">6. 실무 글쓰기</a></li>
+    <li><a href="07-essay.html">7. 자기소개서·에세이</a></li>
+    <li><a href="08-editing.html">8. 퇴고와 편집</a></li>
+    <li><a href="09-ai-writing.html">9. AI 시대의 글쓰기</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>글쓰기의 기본</em></h1>
+  <p class="authors">Chapter 1 — Writing Basics</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 문장 → 문단 → 글 — 블록을 쌓듯 글이 만들어진다</span>
+
+<h2>글쓰기의 기본 개요</h2>
+<p>좋은 글은 화려한 표현이 아니라 명확함에서 시작한다. 짧고 분명한 문장, 능동태, 구체적인 단어로 핵심을 먼저 전하면 독자는 힘들이지 않고 뜻을 이해한다. 글쓰기의 기본은 한 번에 완벽하게 쓰는 기술이 아니라, 일단 쓰고 나서 고치는 습관을 익히는 일이다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>좋은 문장은 짧고 명확하며, 능동태와 구체적인 단어를 쓰고 군더더기를 덜어낸다. 주어와 서술어가 호응하고, 한 문단은 하나의 생각만 담으며, 핵심을 앞에 두는 두괄식으로 쓴다. 늘 독자를 떠올리며 막 쓰고 고치는 과정을 반복하는 것이 기본기다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>좋은 글쓰기란 내가 하고 싶은 말을, 읽는 사람이 가장 쉽게 알아듣도록 짧고 분명하게 적는 일이다.</p>
+<h3>왜 중요한가?</h3>
+<p>우리는 하루에도 메시지, 이메일, 보고서, 댓글 등 수많은 글을 쓴다. 그런데 같은 내용이라도 어떻게 쓰느냐에 따라 상대가 단번에 이해하기도 하고, 몇 번을 다시 읽어도 헷갈리기도 한다. 글이 명확하지 않으면 오해가 생기고, 그 오해를 풀기 위해 다시 설명하는 데 시간을 쓴다. 반대로 기본기를 갖춘 글은 적은 노력으로 정확하게 뜻을 전한다. 그래서 글쓰기의 기본은 작가만의 기술이 아니라, 일하고 소통하는 모든 사람에게 필요한 능력이다. 그리고 다행히도, 이 기본은 타고나는 재능이 아니라 연습으로 익히는 습관이다.</p>
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>능동태</strong>: 누가 무엇을 했는지 주어가 직접 행동하는 문장 형태. "보고서가 작성되었다"보다 "내가 보고서를 작성했다"가 능동태다.</li>
+<li><strong>두괄식</strong>: 핵심 결론이나 주장을 글의 맨 앞에 먼저 두는 방식. 바쁜 독자가 첫 문장만 읽어도 요점을 알 수 있다.</li>
+<li><strong>군더더기</strong>: 없어도 뜻이 통하는 불필요한 말. "사실상", "~라고 할 수 있다" 같은 표현이 자주 군더더기가 된다.</li>
+<li><strong>호응</strong>: 주어와 서술어가 문법적으로 짝이 맞는 것. "내 꿈은 의사가 되고 싶다"는 호응이 어긋난 문장이다.</li>
+<li><strong>퇴고</strong>: 다 쓴 글을 다시 읽으며 다듬고 고치는 과정. 좋은 글은 쓰는 단계가 아니라 고치는 단계에서 완성된다.</li>
+</ul></div>
+<h3>핵심 개념 풀어쓰기</h3>
+<p>글쓰기는 짐을 싸는 일과 비슷하다. 처음에는 일단 필요해 보이는 것을 다 가방에 넣는다(막 쓰기). 그다음 가방을 열어 정말 필요한 것만 남기고 무거운 짐을 덜어낸다(군더더기 빼기). 짧고 가벼운 가방이 들고 다니기 편하듯, 짧고 명확한 문장이 읽기 편하다. 또 가장 중요한 물건을 맨 위에 두면 바로 꺼내 쓸 수 있듯, 핵심을 글 앞에 두면 독자가 요점을 곧장 집어낸다.</p>
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 글을 쓴 뒤 소리 내어 읽어 보자. 한 번에 숨이 차거나 어디서 끊어야 할지 헷갈리는 문장은 너무 길다는 신호다. 그런 문장은 둘로 쪼개면 대개 더 명확해진다.</div>
+<h3>한 페이지 요약</h3>
+<ul>
+<li>문장은 짧고 명확하게, 한 문장에 한 가지 뜻만 담는다.</li>
+<li>가능하면 능동태로 쓰고, 두루뭉술한 말 대신 구체적인 단어를 고른다.</li>
+<li>없어도 되는 군더더기를 덜어내고, 주어와 서술어가 호응하는지 확인한다.</li>
+<li>핵심을 앞에 두는 두괄식으로 쓰고, 한 문단에는 하나의 생각만 담는다.</li>
+<li>처음부터 완벽을 노리지 말고, 일단 막 쓴 뒤 고치는 과정을 반복한다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>글쓰기의 기본 원칙들은 결국 하나의 목표를 향한다. 독자의 인지 부담을 줄이는 것이다. 사람은 문장을 읽을 때 주어가 무엇을 하는지, 서술어가 무엇을 가리키는지를 머릿속에서 짜 맞춘다. 문장이 길어지고 수식이 겹칠수록 이 짜 맞추기는 어려워진다. 그래서 짧고 명확한 문장이 좋다는 원칙은 미적 취향이 아니라 읽는 사람의 처리 과정을 배려한 결과다. 능동태를 권하는 이유도 같다. 능동태는 '누가-무엇을-했다'라는 자연스러운 순서를 따르므로, 행위의 주체가 분명해지고 책임 소재도 또렷해진다. 구체적인 단어 역시 마찬가지다. "조치를 취했다"보다 "환불을 처리했다"가 독자의 머릿속에 또렷한 그림을 그려 준다. 군더더기를 덜어내는 일은 정보를 줄이는 것이 아니라, 신호 대비 잡음을 낮춰 핵심 정보가 도드라지게 하는 작업이다. 문단 차원에서는 '한 문단=한 생각', 그리고 핵심을 앞세우는 두괄식이 같은 원리를 확장한 것이다.</p>
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 두괄식과 주의 자원</h4><p>독자는 글의 앞부분에 가장 많은 주의를 쏟고 뒤로 갈수록 집중력이 떨어진다. 두괄식은 이 점을 이용해 핵심 주장이나 결론을 첫 문장에 배치한다. 그러면 독자는 곧바로 글의 방향을 파악하고, 이어지는 근거를 그 결론에 비추어 읽는다. 이는 결론을 마지막에 숨겨 두는 미괄식보다 보고서, 이메일, 업무 문서에서 특히 효율적이다.</p></div>
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1 — 수동태를 능동태로</h4><p>"이번 사고는 점검 부주의에 의해 발생된 것으로 판단된다"는 문장은 누가 부주의했고 누가 판단했는지 흐릿하다. 이를 "정비팀이 점검을 소홀히 해 사고가 났고, 조사위원회가 그렇게 판단했다"로 바꾸면 행위 주체가 분명해지고 문장도 한결 또렷해진다. 능동태는 책임과 행동을 숨기지 않는다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 군더더기 덜어내기</h4><p>"기본적으로 이 부분에 대해서 어느 정도 검토가 필요할 것으로 보인다고 생각된다"에서 '기본적으로', '어느 정도', '~로 보인다고 생각된다'는 모두 군더더기다. "이 부분은 검토가 필요하다"로 줄이면 뜻은 그대로이면서 훨씬 단호하고 명확해진다. 길이를 줄이면 메시지가 또렷해진다.</p></div>
+<h3>현대적 전개</h3>
+<p>오늘날 글쓰기는 종이 위에서 화면으로 옮겨 왔고, 독자는 더 빠르게 훑어 읽는다. 그래서 짧은 문장, 명확한 첫 문장, 적절한 문단 나누기 같은 기본 원칙은 디지털 환경에서 오히려 더 중요해졌다. 메신저와 협업 도구에서는 핵심을 앞세우는 두괄식이 사실상 표준이 되었고, 글쓰기 보조 도구들도 긴 문장과 수동태를 자동으로 짚어 준다. 다만 도구는 어디까지나 점검을 돕는 보조 수단이며, 무엇을 전할지 정하고 독자를 떠올리는 판단은 여전히 쓰는 사람의 몫이다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 문장을 길고 복잡하게 쓰면 더 전문적이고 똑똑해 보인다는 생각은 오해다. 오히려 핵심을 짧고 명확하게 전하는 글이 더 어렵고, 더 잘 읽히며, 더 신뢰를 준다. 어려운 말은 이해의 깊이가 아니라 정리의 부족을 드러내는 경우가 많다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>글쓰기의 기본 원칙들을 더 깊이 보면, 명료함이라는 가치가 늘 절대적이지는 않다는 점을 알게 된다. 짧고 능동적인 문장은 정보 전달에는 최적이지만, 문학과 서사에서는 긴 호흡의 문장이나 의도된 수동태가 특정한 정서나 거리감을 만들어 내기도 한다. 다시 말해 '좋은 문장'의 기준은 장르와 목적, 독자에 따라 달라진다. 그래서 숙련된 글쓴이는 규칙을 맹목적으로 따르기보다, 규칙이 왜 존재하는지를 이해한 뒤 상황에 맞게 적용하고 때로는 의도적으로 어긴다. 군더더기를 덜어내는 일도 무조건 짧게 만드는 것이 아니라, 리듬과 강조를 위해 필요한 반복은 남기는 판단을 포함한다. 두괄식 역시 모든 글에 맞는 만능 형식이 아니며, 긴장과 반전이 핵심인 글에서는 결론을 뒤로 미루는 편이 효과적이다. 결국 기본기란 규칙의 목록이 아니라, 독자와 목적을 기준으로 매번 선택을 내리는 감각이다. 그리고 그 감각은 쓰고-읽고-고치는 순환을 반복하며 길러진다.</p>
+<h3>최신 연구·쟁점</h3>
+<p>최근에는 대규모 언어 모델이 문장을 다듬고 초안을 생성하면서, 글쓰기 교육과 실무 모두에서 'AI를 어떻게 쓸 것인가'가 핵심 쟁점이 되었다. AI는 군더더기 제거나 수동태 점검 같은 기계적 교정은 잘하지만, 무엇을 말할지 정하고 독자의 맥락을 헤아리는 판단은 사람이 맡아야 한다는 견해가 일반적이다. 또한 평이함을 좋게 보는 흐름과, 평이함만 추구하면 글의 개성과 깊이가 사라진다는 우려가 함께 논의된다. 어느 쪽이든 '명확하게 쓰되 생각은 직접 한다'는 원칙은 변하지 않는다.</p>
+<h3>관련 분야</h3>
+<ul>
+<li><strong>수사학</strong>: 독자를 설득하고 글의 효과를 높이는 표현과 배치의 기술을 다룬다.</li>
+<li><strong>편집·교열</strong>: 완성된 글을 독자에게 전하기 전 정확성과 일관성을 다듬는 실무 영역이다.</li>
+<li><strong>인지심리학</strong>: 사람이 글을 어떻게 읽고 이해하는지를 연구해, 명료한 글쓰기 원칙의 근거를 제공한다.</li>
+</ul>
+<h3>더 읽을거리</h3>
+<ul>
+<li>"문장의 일" — 스탠리 피시</li>
+<li>"유혹하는 글쓰기" — 스티븐 킹</li>
+<li>"논문의 기술(They Say / I Say)" — 제럴드 그라프, 캐시 버켄스타인</li>
+</ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> 최근에 쓴 이메일이나 보고서 한 편을 골라, 모든 수동태를 능동태로 바꾸고 군더더기 표현을 절반으로 줄여 보자. 그런 다음 핵심 문장을 맨 앞으로 옮겨 두괄식으로 재배치하고, 고치기 전후를 나란히 읽어 어느 쪽이 더 빨리 이해되는지 비교해 보자.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#38bdf8","questions":[{"q":"좋은 글이 시작되는 지점은?","choices":["화려한 표현","명확함","긴 문장","어려운 단어"],"answer":1},{"q":"핵심을 글 맨 앞에 두는 방식은?","choices":["미괄식","나열식","두괄식","병렬식"],"answer":2},{"q":"한 문단에 담을 생각의 수는?","choices":["하나","둘","셋","넷"],"answer":0},{"q":"긴 문장을 점검하는 좋은 방법은?","choices":["눈으로 훑기","번역해 보기","요약하기","소리 내어 읽기"],"answer":3},{"q":"글쓰기 기본 원칙들의 공통 목표는?","choices":["분량 늘리기","인지 부담 줄이기","전문성 과시","감정 표현"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const COL=0x38bdf8;const rows=[[5,-1.6],[3,-0.4],[1,0.8]];const blocks=[];rows.forEach((rw,ri)=>{for(let i=0;i<rw[0];i++){const b=new THREE.Mesh(new THREE.BoxGeometry(1.1,0.7,0.7),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.55+ri*0.18}));b.position.set((i-(rw[0]-1)/2)*1.3,rw[1],0);s.add(b);blocks.push(b);}});
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;blocks.forEach((b,i)=>b.position.y+=Math.sin(T*1.5+i)*0.002);s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

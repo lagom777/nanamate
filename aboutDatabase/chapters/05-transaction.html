@@ -8,12 +8,14 @@
 <script defer src="../toggle.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
 <aside>
-  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
   <h3>전체 목차</h3>
   <ol>
     <li><a href="../index.html">📖 표지 · 초록</a></li>
@@ -58,6 +60,14 @@
     <p><strong>Atomicity Guarantee:</strong> 트랜잭션 내의 모든 작업이 원자적(atomic)으로 처리되어야 함</p>
   </div>
 </section>
+
+<!-- 3D 학습 시각화: 트랜잭션 — 원자성과 잠금 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 트랜잭션: 이체로 보는 ACID</div>
+  <div id="db3d-05" style="width:100%;height:430px;"></div>
+  <div id="db3d-05-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">계좌 이체가 실패·성공·경합하는 세 가지 시나리오.</div>
+</div>
+
 
 <section id="section-2">
   <h2>2. ACID 속성</h2>
@@ -370,7 +380,138 @@ SELECT pg_try_advisory_lock(hashtext('daily_settlement'));
   </div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d6efd","questions":[{"q":"트랜잭션을 영구 저장하는 명령은?","choices":["BEGIN","ROLLBACK","COMMIT","SAVE"],"answer":2},{"q":"트랜잭션을 시작 전으로 되돌리는 명령은?","choices":["ROLLBACK","COMMIT","DELETE","DROP"],"answer":0},{"q":"다 되거나 다 안 되거나를 뜻하는 속성은?","choices":["일관성","격리성","지속성","원자성"],"answer":3},{"q":"Dirty Read를 허용하는 격리 수준은?","choices":["SERIALIZABLE","READ UNCOMMITTED","REPEATABLE READ","READ COMMITTED"],"answer":1},{"q":"서로의 락을 기다리며 멈추는 상황은?","choices":["핫스팟","팬텀 리드","데드락","더티 리드"],"answer":2}]};</script>
 </main>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('db3d-05');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('db3d-05-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,2.0,13);camera.lookAt(0,0.4,0);
+  function makeAcct(x,name){
+    var base=box(2.4,0.3,1.6,0x9aa6c0,0.9);base.position.set(x,-1.2,0);scene.add(base);
+    var L=lbl(name,25,'#39415a',0.95);L.position.set(x,-2.0,0);scene.add(L);
+    var coins=[];
+    for(var i=0;i<10;i++){
+      var c=cyl(0.55,0.55,0.18,0xffc83c,1);c.position.set(x,-0.95+i*0.22,0);scene.add(c);coins.push(c);
+    }
+    return {x:x,coins:coins};
+  }
+  var A=makeAcct(-4.4,'계좌 A: 100만');
+  var B=makeAcct(2.6,'계좌 B: 50만');
+  function setCoins(acct,n){acct.coins.forEach(function(c,i){c.visible=i<n;});}
+  setCoins(A,10);setCoins(B,5);
+  var st=lbl('BEGIN TRANSACTION',26,'#5b6bd6',1);st.position.set(-1,3.8,0);scene.add(st);
+  function setSt(t,c){scene.remove(st);if(st.material.map)st.material.map.dispose();st.material.dispose();st=lbl(t,26,c,1);st.position.set(-1,3.8,0);scene.add(st);}
+  var moving=[];
+  for(var i=0;i<3;i++){var c=cyl(0.55,0.55,0.18,0xffc83c,1);c.visible=false;scene.add(c);moving.push(c);}
+  var boom=lbl('⚡ 장애 발생!',30,'#d6455b',1.2);boom.material.opacity=0;boom.position.set(-1,1.8,0);scene.add(boom);
+  var lock=lbl('🔒 잠금(Lock)',26,'#d6455b',1);lock.material.opacity=0;lock.position.set(-4.4,1.4,0);scene.add(lock);
+  var t2tok=sph(0.4,0x9b59b6,0.95);t2tok.visible=false;scene.add(t2tok);
+  var t2L=lbl('트랜잭션 T2 (대기)',23,'#9b59b6',0.9);t2L.material.opacity=0;scene.add(t2L);
+  var logSlab=box(2.0,0.4,0.8,0x2f9e63,0);logSlab.position.set(6.4,-1.2,0);scene.add(logSlab);
+  var logL=lbl('WAL 로그 기록',21,'#2f9e63',0);logL.position.set(6.4,-0.4,0);scene.add(logL);
+  function fly(u,n0){
+    moving.forEach(function(c,i){
+      var f=clamp01(u*1.4-i*0.15);
+      c.visible=f>0&&f<1;
+      var fromY=-0.95+(n0-i)*0.22,toY=-0.95+(5+i)*0.22;
+      c.position.set(-4.4+ez(f)*7.0,Math.max(fromY,1.6*Math.sin(ez(f)*Math.PI))+ (fromY+(toY-fromY)*ez(f))*0,0);
+      c.position.y=fromY+(toY-fromY)*ez(f)+Math.sin(ez(f)*Math.PI)*1.8;
+    });
+  }
+  var phases=[
+    {dur:3.2,cap:'시나리오: A→B로 30만 원 이체. ① A에서 차감 — 동전 3개가 떠오릅니다. 아직 B에는 도착 전.',
+     enter:function(){setCoins(A,10);setCoins(B,5);setSt('BEGIN → UPDATE A (-30)','#5b6bd6');boom.material.opacity=0;lock.material.opacity=0;t2tok.visible=false;t2L.material.opacity=0;logSlab.material.opacity=0;logL.material.opacity=0;},
+     update:function(u){
+       var n=10-Math.floor(ez(u)*3.2);setCoins(A,Math.max(7,n));
+       fly(u*0.45,9);
+     }},
+    {dur:2.6,cap:'② 그 순간 서버 다운! 돈이 A에서는 빠졌는데 B에는 안 들어간 "반쪽 상태" — 이대로 두면 30만 원이 증발합니다.',
+     enter:function(){setSt('UPDATE B … ⚡ CRASH','#d6455b');},
+     update:function(u){boom.material.opacity=Math.sin(u*14)>0?1:0.4;moving.forEach(function(c){c.visible=u<0.4;});}},
+    {dur:3.2,cap:'③ ROLLBACK(원자성): DB는 트랜잭션 전체를 취소 — 동전이 A로 복귀. All or Nothing, "반쪽 실행"은 존재할 수 없습니다.',
+     enter:function(){setSt('ROLLBACK','#e07a3f');boom.material.opacity=0;},
+     update:function(u){
+       moving.forEach(function(c,i){var f=1-ez(u);c.visible=f>0.05&&f<0.5;});
+       if(u>0.6)setCoins(A,10);
+     }},
+    {dur:4,cap:'④ 재시도 — 이번엔 성공: A-30 → B+30 → COMMIT. 커밋 직전 WAL 로그가 디스크에 — 전원이 나가도 복구 가능(영속성).',
+     enter:function(){setSt('BEGIN → A-30 → B+30 → COMMIT ✓','#2f9e63');},
+     update:function(u){
+       fly(u,9);
+       if(u>0.5){setCoins(A,7);}
+       if(u>0.75){setCoins(B,5+Math.min(3,Math.floor((u-0.75)*16)));}
+       logSlab.material.opacity=Math.min(0.95,u*1.5);logL.material.opacity=Math.min(1,u*1.5);
+     }},
+    {dur:4.5,cap:'⑤ 동시성: T1이 A를 수정하는 동안 T2(보라)가 같은 계좌에 접근 → 잠금에 막혀 대기. 잠금·격리수준이 "동시에 정확하게"를 보장합니다(격리성).',
+     enter:function(){setSt('T1: UPDATE A … (잠금 보유)','#5b6bd6');lock.material.opacity=1;t2tok.visible=true;t2L.material.opacity=1;},
+     update:function(u){
+       var x=Math.min(-6.6+ez(Math.min(1,u*1.6))*1.4,-6.6+1.4);
+       t2tok.position.set(x,0.2,1.2);t2L.position.set(x+0.4,1.0,1.2);
+       t2tok.material.opacity=0.6+0.35*Math.sin(u*10);
+       if(u>0.75){lock.material.opacity=0;setSt('T1 COMMIT → T2 진행','#2f9e63');t2tok.position.x=-6.6+1.4+(u-0.75)*4;}
+     }}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
 </body>
 </html>

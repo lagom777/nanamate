@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4. 64괘의 세계 — aboutIching</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">☯ 표지 · 점치기</a></li>
+    <li><a href="01-what-is.html">1. 주역이란 무엇인가</a></li>
+    <li><a href="02-yin-yang-yao.html">2. 음양과 효(爻)</a></li>
+    <li><a href="03-eight-trigrams.html">3. 팔괘(八卦)</a></li>
+    <li><a href="04-64-hexagrams.html">4. 64괘의 세계</a></li>
+    <li><a href="05-casting.html">5. 작괘법 — 점치는 법</a></li>
+    <li><a href="06-changing-lines.html">6. 동효와 변괘</a></li>
+    <li><a href="07-interpretation.html">7. 괘 해석법</a></li>
+    <li><a href="08-history.html">8. 주역의 역사와 활용</a></li>
+    <li><a href="09-science.html">9. 주역의 과학·심리</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>64괘의 세계</em></h1>
+  <p class="authors">Chapter 4 — The 64 Hexagrams</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 팔괘 × 팔괘 = 64대성괘 (상괘+하괘)</span>
+
+<h2>64괘의 세계 개요</h2>
+<p>주역은 음양을 세 줄로 쌓은 팔괘(八卦)에서 출발한다. 그 팔괘 둘을 위아래로 겹치면 마침내 64개의 큰 괘, 곧 대성괘(大成卦)가 만들어진다. 8 곱하기 8은 64이며, 이 64괘가 주역이라는 책 전체를 이루는 뼈대다. 각 괘는 여섯 효(爻)로 이루어지고, 괘마다 고유한 이름(괘명)과 모양(괘상)과 풀이말(괘사)을 지닌다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>팔괘 둘을 상괘와 하괘로 겹쳐 8×8=64개의 대성괘를 얻는다. 각 괘는 6효로 구성되며, 괘명·괘상·괘사를 갖춘다. 64괘는 상경 30괘와 하경 34괘로 나뉘고, 만물의 시작인 건(乾)·곤(坤)으로 열려 완성을 뜻하는 기제(旣濟)와 미완성을 뜻하는 미제(未濟)로 끝난다. 괘와 괘 사이에는 종괘(뒤집기)·착괘(음양 바꾸기)·호괘 같은 관계가 그물처럼 얽혀 있어, 64괘는 흩어진 낱개가 아니라 하나의 짜임새 있는 체계로 본다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+<h3>한 줄로 이해하기</h3>
+<p>팔괘 두 개를 위아래로 포개면 64가지 큰 괘가 생기는데, 이 64괘가 주역의 모든 상황을 담는 '그림 사전'이라고 보면 된다.</p>
+
+<h3>왜 중요한가?</h3>
+<p>팔괘만으로는 표현할 수 있는 상황이 여덟 가지뿐이라 세상사를 담기에 너무 단순하다. 그래서 옛사람들은 팔괘를 둘씩 겹쳐 64가지로 가짓수를 크게 늘렸다고 여긴다. 64괘는 마치 우리가 살아가며 마주치는 여러 국면, 곧 시작·갈등·기다림·성취·전환 같은 장면들을 하나하나 칸으로 나누어 둔 것과 같다. 주역이라는 책 자체가 바로 이 64괘에 대한 설명으로 채워져 있어서, 64괘를 모르면 주역을 펼칠 수가 없다. 또한 점을 칠 때 우리가 최종적으로 얻게 되는 답도 결국 이 64괘 가운데 하나다. 그래서 64괘는 주역 공부의 기본 지도이자 출발점이 된다.</p>
+
+<div class="info-card"><h4>🌱 핵심 용어</h4><ul>
+<li><strong>대성괘(大成卦)</strong>: 팔괘 둘을 위아래로 겹쳐 만든 여섯 줄짜리 큰 괘. 64개가 있다.</li>
+<li><strong>상괘·하괘</strong>: 한 괘를 위아래로 나누었을 때 위쪽 세 줄(상괘)과 아래쪽 세 줄(하괘).</li>
+<li><strong>효(爻)</strong>: 괘를 이루는 한 줄. 끊긴 줄은 음, 이어진 줄은 양이며, 한 괘는 6효로 이루어진다.</li>
+<li><strong>괘명(卦名)</strong>: 각 괘에 붙은 고유한 이름. 예컨대 건·곤·태·비 같은 글자다.</li>
+<li><strong>괘사(卦辭)</strong>: 그 괘 전체의 뜻을 풀어 놓은 짧은 풀이말.</li>
+</ul></div>
+
+<h3>핵심 개념 풀어쓰기</h3>
+<p>64괘를 만드는 일은 색을 섞는 것과 비슷하다. 기본 물감(팔괘)이 여덟 가지뿐이어도, 위에 무엇을 칠하고 아래에 무엇을 칠하느냐를 짝지으면 8×8가지의 새로운 조합이 나온다. 위에 올린 팔괘(상괘)와 아래에 깐 팔괘(하괘)가 만나 한 장면을 만들고, 그렇게 만들어진 64장의 그림이 곧 64괘다. 같은 재료라도 위아래 순서가 바뀌면 전혀 다른 괘가 된다는 점이 핵심이다.</p>
+
+<div class="study-tip"><strong>💡 학습 TIP:</strong> 64괘를 한꺼번에 외우려 하지 말고, 먼저 팔괘 여덟 개를 확실히 익혀라. 팔괘만 알면 상괘와 하괘를 짝짓는 방식으로 64괘를 차근차근 읽어 낼 수 있다.</div>
+
+<h3>한 페이지 요약</h3><ul>
+<li>팔괘 둘을 위아래로 겹쳐 8×8=64개의 대성괘를 만든다.</li>
+<li>각 괘는 6개의 효로 이루어지고, 위 세 줄은 상괘, 아래 세 줄은 하괘다.</li>
+<li>괘마다 괘명·괘상·괘사를 갖추어, 이름과 모양과 풀이말이 한 벌로 따라온다.</li>
+<li>64괘는 주역이라는 책의 본문 전체를 이루며, 점의 결과도 이 가운데 하나다.</li>
+<li>건·곤으로 시작해 기제·미제로 끝나, 완성과 미완성으로 마무리되는 순서를 가진다.</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+<h3>이론 깊이 들어가기</h3>
+<p>64괘는 음양 두 종류의 효를 여섯 자리에 쌓아 만든 모든 경우의 수다. 한 자리에 음 또는 양 두 가지가 올 수 있으므로 2를 여섯 번 곱하면 64가지가 나오고, 이는 팔괘 8과 8을 곱한 수와 정확히 맞아떨어진다. 전통에서는 이를 위쪽 팔괘인 상괘와 아래쪽 팔괘인 하괘의 조합으로 풀어 본다. 한 괘를 읽을 때는 보통 아래에서 위로 올라가며 첫째 효부터 여섯째 효까지 차례를 매긴다. 괘마다 붙은 괘명은 그 괘가 상징하는 상황의 이름이고, 괘상은 여섯 줄로 그린 모양이며, 괘사는 그 상황 전체에 대한 풀이말이다. 64괘는 무질서하게 흩어진 것이 아니라, 책 안에서 일정한 순서를 따라 배열되어 있다. 이 순서는 상경 30괘와 하경 34괘로 나뉜다. 첫머리는 순수한 양으로만 이루어진 건(乾)과 순수한 음으로만 이루어진 곤(坤)이 차지하여 하늘과 땅, 곧 만물의 부모로 본다. 그리고 책의 끝은 기제(旣濟)와 미제(未濟)가 맡아, 일이 다 이루어진 완성과 아직 이루어지지 않은 미완성으로 마무리된다. 끝을 완성이 아니라 미완성으로 둔 점은 만물이 끝없이 순환한다는 동양적 세계관을 담은 것으로 흔히 풀이된다.</p>
+
+<h3>핵심 메커니즘/원리</h3>
+<div class="info-card"><h4>📐 괘와 괘 사이의 관계</h4><p>64괘는 서로 떨어진 낱개가 아니라 변형으로 이어져 있다. <strong>종괘(綜卦)</strong>는 한 괘를 위아래로 통째로 뒤집은 괘이고, <strong>착괘(錯卦)</strong>는 여섯 효의 음양을 모두 반대로 바꾼 괘다. 또 <strong>호괘(互卦)</strong>는 한 괘의 가운데 효들을 뽑아 새로 만든, 그 괘 속에 숨은 괘를 가리킨다. 이런 관계를 통해 한 괘를 그와 짝이 되는 다른 괘와 견주어 가며 더 깊이 읽을 수 있다고 본다.</p></div>
+
+<h3>대표 사례·예시</h3>
+<div class="info-card"><h4>📐 사례 1 — 태(泰)와 비(否)</h4><p>태(泰)는 땅을 뜻하는 곤이 위에, 하늘을 뜻하는 건이 아래에 놓인 괘로, 하늘 기운이 올라가고 땅 기운이 내려와 서로 만나므로 막힘없이 통하는 좋은 형국으로 본다. 반대로 비(否)는 건이 위에, 곤이 아래에 놓여 두 기운이 제 갈 길로만 흩어져 서로 통하지 못하는 막힌 형국으로 본다. 같은 두 팔괘라도 위아래 자리만 바뀌면 뜻이 정반대가 된다는 것을 잘 보여 준다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 기제(旣濟)와 미제(未濟)</h4><p>기제는 '이미 물을 건넜다'는 뜻으로 일이 완성된 상태를, 미제는 '아직 건너지 못했다'는 뜻으로 미완성의 상태를 가리킨다. 이 둘은 서로 위아래를 뒤집은 종괘 관계이면서 책의 맨 끝에 나란히 놓여, 64괘의 긴 여정이 완성으로 닫히지 않고 다시 새로운 시작을 향해 열려 있음을 상징하는 것으로 풀이된다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>64괘의 짜임은 오늘날 여러 분야에서 새로운 눈으로 다시 읽히고 있다. 음과 양을 0과 1에 견주어 64괘를 여섯 자리 이진수처럼 바라보는 시도가 대표적인데, 이를 두고 64괘가 이진법의 옛 형태와 닮았다고 흥미롭게 견주는 이야기도 있다. 다만 이는 구조의 유사성에 주목한 비유이지, 옛사람들이 현대적 의미의 이진법을 의도해 만들었다고 단정하기는 어렵다.</p>
+
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 64괘가 단순히 좋은 괘와 나쁜 괘로 깔끔하게 나뉜다고 여기기 쉽지만 그렇지 않다. 같은 괘라도 어느 효가 변하느냐, 어떤 상황에서 나왔느냐에 따라 풀이가 달라진다고 보며, 길흉은 고정된 꼬리표가 아니라 변화 속에서 읽어 내야 할 흐름으로 여긴다.</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+<h3>전문가 레벨 이해</h3>
+<p>64괘 체계를 깊이 들여다보면, 그 배열과 관계망 자체가 하나의 정교한 형식 구조임을 알 수 있다. 여섯 자리에 음양을 채워 만든 2의 6제곱, 곧 64가지 경우의 수는 빠짐도 겹침도 없이 모든 조합을 망라한다. 전통 주역에서 통용되는 배열은 흔히 통행본 순서라 불리며, 건·곤으로 시작해 기제·미제로 끝나는 상경 30괘와 하경 34괘의 짜임을 따른다. 이 배열의 두드러진 특징은 대부분의 괘가 바로 옆 괘와 종괘(뒤집기) 관계로 짝을 이루고, 뒤집어도 모양이 같은 괘는 착괘(음양 바꾸기) 관계로 짝지어진다는 점이다. 즉 64괘는 32쌍의 짝으로 묶이는 셈이다. 여기에 호괘처럼 한 괘 속에 숨은 괘를 읽어 내는 기법이 더해지면, 괘들은 서로 겹겹이 참조하는 관계망을 이룬다. 이러한 구조는 단순한 점술 도구를 넘어, 변화와 대칭에 관한 일종의 사유 모형으로 평가되기도 한다. 다만 이 배열이 어떤 원리로 확정되었는지에 대해서는 전통 안에서도 여러 해석이 있으며, 완전히 합의된 단일한 설명이 있는 것은 아니다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>현대 학계는 64괘를 점술의 대상으로만 보지 않고, 문헌학·고고학·심리학 등 여러 각도에서 접근한다. 출토된 죽간·백서 자료를 통해 괘의 순서나 괘명이 시대에 따라 달랐을 가능성이 논의되고 있으며, 통행본 배열이 후대에 정비된 형태라는 견해도 제기된다. 한편 심리학에서는 융(C. G. Jung)이 주역에 깊은 관심을 보이며 우연 속의 의미를 다루는 동시성(synchronicity) 개념과 연결지어 논한 것이 잘 알려져 있다. 다만 점의 적중을 객관적으로 입증하려는 시도는 과학적으로 재현되지 않았으며, 학계 다수는 괘가 던지는 상징과 물음이 자기 성찰과 의사결정을 돕는 텍스트로서 가치를 가진다고 본다. 64괘를 '미래를 알려 주는 장치'가 아니라 '상황을 비추어 보는 거울'로 이해하는 균형 잡힌 관점이 권장된다.</p>
+
+<h3>관련 분야</h3><ul>
+<li><strong>조합론·이진 표현</strong>: 64괘를 여섯 자리 음양의 모든 조합으로 보는, 수학적 짜임에 대한 분석.</li>
+<li><strong>중국 철학·문헌학</strong>: 괘사와 효사, 괘 배열의 성립 시기와 판본을 다루는 연구.</li>
+<li><strong>분석심리학</strong>: 융의 동시성 개념과 상징 해석을 통해 주역을 읽는 접근.</li>
+</ul>
+
+<h3>더 읽을거리</h3><ul>
+<li>"주역(周易)" — 동양 고전 원전(여러 역주본)</li>
+<li>"The I Ching or Book of Changes" — Richard Wilhelm 역, Cary F. Baynes 영역</li>
+<li>"주역계사 해석에 관한 연구서들" — 여러 국내 역학·철학 저자</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 좋아하는 괘 하나를 골라, 그 괘의 종괘(위아래 뒤집기)와 착괘(음양 모두 바꾸기)를 직접 그려 보라. 그리고 세 괘의 괘명과 뜻을 견주며, 모양의 변형이 의미의 변화와 어떻게 이어지는지 한 문단으로 정리해 보라.</div>
+</div>
+
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#cf9b34","questions":[{"q":"64괘는 무엇을 겹쳐 만드나?","choices":["팔괘 둘","효 셋","사상 둘","태극 둘"],"answer":0},{"q":"대성괘 하나는 몇 개의 효로 되나?","choices":["3개","4개","6개","8개"],"answer":2},{"q":"64괘의 맨 마지막 괘는?","choices":["건(乾)","곤(坤)","기제","미제"],"answer":3},{"q":"한 괘를 위아래로 뒤집은 괘는?","choices":["착괘","종괘","호괘","변괘"],"answer":1},{"q":"상경에 들어 있는 괘의 수는?","choices":["30괘","32괘","34괘","64괘"],"answer":0}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=0xcf9b34;for(let r=0;r<8;r++)for(let cI=0;cI<8;cI++){const gx=(cI-3.5)*1.0,gy=(r-3.5)*0.95;for(let j=0;j<6;j++){const yang=((r*8+cI)>>j)&1;const yy=gy+(j-2.5)*0.11;if(yang){const b=new THREE.Mesh(new THREE.BoxGeometry(0.6,0.06,0.06),new THREE.MeshBasicMaterial({color:C,transparent:true,opacity:0.8}));b.position.set(gx,yy,0);s.add(b);}else{const l=new THREE.Mesh(new THREE.BoxGeometry(0.24,0.06,0.06),new THREE.MeshBasicMaterial({color:C,transparent:true,opacity:0.8}));l.position.set(gx-0.18,yy,0);s.add(l);const r2=l.clone();r2.position.x=gx+0.18;s.add(r2);}}}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

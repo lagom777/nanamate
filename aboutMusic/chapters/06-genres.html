@@ -2,11 +2,13 @@
 <title>6. 장르의 이해 — aboutMusic</title><link rel="stylesheet" href="../styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
-<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="index.html">🎵 표지</a></li><li><a href="chapters/01-basics.html">1. 음악 기초</a></li><li><a href="chapters/02-rhythm.html">2. 리듬과 박자</a></li><li><a href="chapters/03-harmony.html">3. 화성학</a></li><li><a href="chapters/04-melody.html">4. 멜로디와 작곡</a></li><li><a href="chapters/05-form.html">5. 음악 형식</a></li><li><a href="chapters/06-genres.html">6. 장르의 이해</a></li><li><a href="chapters/07-production.html">7. 음악 제작</a></li><li><a href="chapters/08-ear-training.html">8. 청음 훈련</a></li><li><a href="chapters/09-modern.html">9. 현대 음악이론</a></li></ol></aside>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🎵 표지</a></li><li><a href="01-basics.html">1. 음악 기초</a></li><li><a href="02-rhythm.html">2. 리듬과 박자</a></li><li><a href="03-harmony.html">3. 화성학</a></li><li><a href="04-melody.html">4. 멜로디와 작곡</a></li><li><a href="05-form.html">5. 음악 형식</a></li><li><a href="06-genres.html">6. 장르의 이해</a></li><li><a href="07-production.html">7. 음악 제작</a></li><li><a href="08-ear-training.html">8. 청음 훈련</a></li><li><a href="09-modern.html">9. 현대 음악이론</a></li></ol></aside>
 <main><header class="paper-header"><h1><em>장르의 이해</em></h1><p class="authors">Chapter 6 — Genre Studies & Music History</p></header>
-<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 마우스로 회전</span>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 장르 가계도 — 뿌리 장르에서 가지치며 퍼지는 음악의 계통수</span>
 <h2>장르의 이해</h2><p>Genre Studies & Music History의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
 <div class="info-card"><h4>핵심 개념</h4><p>Genre Studies & Music History</p></div>
 <h2>📚 난이도별 학습</h2>
@@ -47,7 +49,7 @@
 </div>
 <div class="difficulty-content" data-level="hard">
   <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3><p>장르 이론은 음악학(musicology)을 넘어 문화 연구·사회학·미디어 연구가 교차하는 분야다. 사이먼 프리스의 『Performing Rites』는 장르가 단순한 음악적 카테고리가 아니라 청자·연주자·산업·비평가의 「수행적 합의」임을 보였다. 패브리스 아 부르디외의 「장(field)」 개념을 음악에 적용하면, 각 장르는 자율성과 종속성, 정통성과 혁신의 갈등 속에서 형성된다. 또한 「장르 융합(genre hybridization)」은 디아스포라, 식민주의, 디지털화의 결과로 나타난다. K-팝 한류는 일본 J-팝의 아이돌 시스템, 미국 R&B/힙합의 음악적 어휘, 한국 발라드 전통이 결합된 문화 융합의 모범 사례다. 음악 정보 검색에서는 자동 장르 분류(automatic genre classification)가 핵심 과제이며, 머신러닝 모델이 멜·스펙트로그램에서 장르를 추정한다.</p>
+  <h3>전문가 레벨</h3><p>장르 이론은 음악학(musicology)을 넘어 문화 연구·사회학·미디어 연구가 교차하는 분야다. 사이먼 프리스의 『Performing Rites』는 장르가 단순한 음악적 카테고리가 아니라 청자·연주자·산업·비평가의 「수행적 합의」임을 보였다. 피에르 부르디외의 「장(field)」 개념을 음악에 적용하면, 각 장르는 자율성과 종속성, 정통성과 혁신의 갈등 속에서 형성된다. 또한 「장르 융합(genre hybridization)」은 디아스포라, 식민주의, 디지털화의 결과로 나타난다. K-팝 한류는 일본 J-팝의 아이돌 시스템, 미국 R&B/힙합의 음악적 어휘, 한국 발라드 전통이 결합된 문화 융합의 모범 사례다. 음악 정보 검색에서는 자동 장르 분류(automatic genre classification)가 핵심 과제이며, 머신러닝 모델이 멜·스펙트로그램에서 장르를 추정한다.</p>
   <h3>분석과 이론</h3><p>유전적 장르 이론(Generic theory)은 장르가 텍스트의 속성이 아니라 청자와 텍스트의 상호작용에서 발생한다고 본다. 장르는 「관습-기대-위반」의 동학으로 진화하며, 새로운 곡은 기존 장르 관습을 차용하면서 동시에 위반함으로써 의미를 만든다. 음악 정보 검색에서는 멜·스펙트로그램, MFCC, 크로마그램 등의 특징 벡터로 장르를 분류하며, 최근 트랜스포머 기반 모델이 인간 평가자와 유사한 정확도를 보이고 있다.</p>
   <h3>최신 트렌드</h3><p>스트리밍 알고리즘은 장르 라벨을 넘어 「무드」, 「상황」, 「에너지」 기반 분류를 도입했고, 이는 「하이퍼팝」, 「로파이」, 「베이퍼웨이브」 같은 인터넷 네이티브 장르의 폭발을 가져왔다. AI 생성 음악은 장르 학습 데이터를 토대로 무한한 변종을 만들어내며, 「장르 자체의 작가성」 논쟁을 일으키고 있다. 또한 K-팝의 글로벌 확장은 장르 정의의 권력 구조를 재편하고 있다.</p>
   <h3>관련 분야</h3><ul>
@@ -62,5 +64,25 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 자신만의 「장르 가계도」를 그려 보라. 좋아하는 K-팝 곡 한 곡을 골라 그 곡에 영향을 준 5개 이상의 장르를 추적하고 도식화해 보라.</div>
 </div>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ec4899","questions":[{"q":"두 장르가 결합된 형태를 부르는 말은?","choices":["스타일","퓨전","마커","모드"],"answer":1},{"q":"즉흥 연주와 스윙 리듬이 핵심인 장르?","choices":["클래식","록","팝","재즈"],"answer":3},{"q":"EDM의 특징적인 구조는?","choices":["빌드업-드롭","벌스-코러스","소나타","론도"],"answer":0},{"q":"재즈가 출발한 도시는?","choices":["뉴욕","시카고","뉴올리언스","런던"],"answer":2},{"q":"「Kind of Blue」를 만든 음악가는?","choices":["존 콜트레인","마일스 데이비스","데이브 브루벡","찰리 파커"],"answer":1}]};</script>
 </main></div>
-<script>(function(){const c=document.getElementById('sim-scene');const s=new THREE.Scene();const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.DodecahedronGeometry(0.25,0),new THREE.MeshBasicMaterial({color:Math.random()*0xffffff,wireframe:true}));m.position.set((Math.random()-0.5)*6,(Math.random()-0.5)*4,(Math.random()-0.5)*4);s.add(m);}let md=false,px=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;});c.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;}});c.addEventListener('touchstart',e=>{px=e.touches[0].clientX;});c.addEventListener('touchmove',e=>{s.rotation.y+=(e.touches[0].clientX-px)*0.005;px=e.touches[0].clientX;});function a(){requestAnimationFrame(a);s.rotation.y+=0.002;r.render(s,cam);}a();window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});})();</script></body></html>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,10);cam.lookAt(0,0.3,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const positions=[[0,-2.6,0],[-2.2,-0.6,0],[2.2,-0.6,0],[-3.4,1.4,0],[-1.1,1.4,0],[1.1,1.4,0],[3.4,1.4,0],[-2.4,3.0,0],[2.4,3.0,0]];
+  const edges=[[0,1],[0,2],[1,3],[1,4],[2,5],[2,6],[3,7],[5,8]];
+  const nodes=[];for(let i=0;i<positions.length;i++){const p=positions[i];const col=new THREE.Color().setHSL((i%9)/9,0.7,0.55);const nd=new THREE.Mesh(new THREE.IcosahedronGeometry(i===0?0.45:0.3,0),new THREE.MeshBasicMaterial({color:col}));nd.position.set(p[0],p[1],p[2]);s.add(nd);nodes.push(nd);}
+  for(const e of edges){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...positions[e[0]]),new THREE.Vector3(...positions[e[1]])]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x99aa88})));}
+  s.userData.nodes=nodes;
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.nodes.forEach((n,i)=>{n.rotation.y+=0.02;n.scale.setScalar(1+Math.sin(T*2+i*0.7)*0.15);});s.rotation.y=Math.sin(T*0.3)*0.4;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

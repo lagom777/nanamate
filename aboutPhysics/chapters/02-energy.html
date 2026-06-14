@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link rel="stylesheet" href="../../shared/light-theme.css">
   <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -86,7 +88,7 @@ v₂' = ((m₂-m₁)v₂ + 2m₁v₁) / (m₁+m₂)
 <div class="formula">W = ΔKE = ½mv₂² − ½mv₁²</div>
 
 <h2>📚 난이도별 학습</h2>
-<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
   <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
   <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
@@ -121,6 +123,11 @@ v₂' = ((m₂-m₁)v₂ + 2m₁v₁) / (m₁+m₂)
   <div class="success-box"><strong>🎓 도전 과제:</strong> 상대론적 콤프턴 산란에서 광자 파장 변화 Δλ = (h/m_e c)(1-cosθ)를 운동량과 에너지 보존만으로 유도해 보세요.</div>
 </div>
 
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00d4ff","questions":[{"q":"운동 에너지의 공식은?","choices":["mgh","½kx²","½mv²","mv"],"answer":2},{"q":"운동량 p의 정의는?","choices":["mv","ma","½mv²","mgh"],"answer":0},{"q":"충격량은 무엇과 같은가?","choices":["에너지 변화","운동량 변화","속도 변화","질량 변화"],"answer":1},{"q":"질량 같은 두 공의 탄성충돌 결과는?","choices":["합체","정지","감속","속도 교환"],"answer":3},{"q":"비탄성 충돌에서 보존되는 것은?","choices":["운동 에너지","위치 에너지","운동량","온도"],"answer":2}]};</script>
 </main>
 </div>
 
