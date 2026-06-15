@@ -99,14 +99,22 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const core=new THREE.Mesh(new THREE.SphereGeometry(0.6,18,18),new THREE.MeshBasicMaterial({color:0xfbbf24}));s.add(core);
   const shells=[];const labels=[1.4,2.2,3.0,3.7];for(let i=0;i<labels.length;i++){const col=new THREE.Color().setHSL(0.58-i*0.12,0.5,0.55);const shell=new THREE.Mesh(new THREE.IcosahedronGeometry(labels[i],1),new THREE.MeshBasicMaterial({color:col,wireframe:true,transparent:true,opacity:0.5-i*0.07}));s.add(shell);shells.push(shell);}
   s.userData.shells=shells;s.userData.core=core;
+  // 개인을 겹겹이 감싸는 사회화의 층 (안→밖)
+  const coreL=lbl('개인(자아)','#d97706');coreL.position.set(0,0.9,0);s.add(coreL);
+  [['가족 — 1차 사회화','#2563eb',1.4],['또래·학교 — 2차 사회화','#0891b2',2.2],['미디어·문화','#7c3aed',3.0],['사회 전체(규범·가치)','#15803d',3.7]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(0,d[2]+0.35,0);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 개인을 겹겹이 감싸는 사회화의 층 — 문화가 자아를 빚어냅니다.','문화는 한 집단이 공유하는 생활 양식·가치·규범의 총체 — 사회화로 내면화됩니다.','미드의 \'일반화된 타자\'·쿨리의 \'거울 자아\' — 자아는 타인의 시선 속에서 형성됩니다.','그람시의 \'헤게모니\' — 지배 문화는 \'상식\'처럼 보이게 만들어 동의를 끌어냅니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.core.scale.setScalar(1+0.12*Math.sin(T*2));s.userData.shells.forEach((sh,i)=>{sh.rotation.y+=0.004*(i%2?-1:1)*(i+1)*0.4;sh.rotation.x+=0.002*(i+1)*0.3;});s.rotation.y+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.core.scale.setScalar(1+0.12*Math.sin(T*2));s.userData.shells.forEach((sh,i)=>{sh.rotation.y+=0.004*(i%2?-1:1)*(i+1)*0.4;sh.rotation.x+=0.002*(i+1)*0.3;});s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
