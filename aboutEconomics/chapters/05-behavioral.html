@@ -101,9 +101,10 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const vPts=[];for(let i=0;i<=60;i++){const x=-3.5+i*(7/60);const v=x>=0?2.2*Math.pow(x/3.5,0.6):-2.2*2.25*Math.pow(-x/3.5,0.6);vPts.push(new THREE.Vector3(x,Math.max(-3,Math.min(3,v)),0));}
   const valueCurve=new THREE.Line(new THREE.BufferGeometry().setFromPoints(vPts),new THREE.LineBasicMaterial({color:0x8b5cf6}));s.add(valueCurve);
   const axH=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-3.8,0,0),new THREE.Vector3(3.8,0,0)]),new THREE.LineBasicMaterial({color:0x94a3b8}));s.add(axH);
@@ -111,8 +112,15 @@
   const ref=new THREE.Mesh(new THREE.SphereGeometry(0.28,18,18),new THREE.MeshBasicMaterial({color:0xfbbf24}));s.add(ref);s.userData.ref=ref;
   const gain=new THREE.Mesh(new THREE.TetrahedronGeometry(0.32),new THREE.MeshBasicMaterial({color:0x22c55e}));s.add(gain);s.userData.gain=gain;
   const loss=new THREE.Mesh(new THREE.TetrahedronGeometry(0.32),new THREE.MeshBasicMaterial({color:0xef4444}));s.add(loss);s.userData.loss=loss;
+  const curveL=lbl('가치함수','#7c3aed');curveL.position.set(2.6,2.4,0);s.add(curveL);
+  const refL=lbl('준거점','#b45309');refL.position.set(0.9,0.5,0);s.add(refL);
+  const gainL=lbl('이익 영역','#15803d');gainL.position.set(3.0,0.45,0);s.add(gainL);
+  const lossL=lbl('손실 영역 (더 가파름)','#b91c1c');lossL.position.set(-2.3,-0.5,0);s.add(lossL);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 준거점을 기준으로 손실을 더 크게 느끼는 전망이론의 비대칭 가치함수.','손실회피: 같은 크기라도 손실이 이익보다 약 2.25배 더 아프게 느껴집니다.','준거점(reference point)을 기준으로 이익과 손실을 따로 평가합니다.','현재편향·앵커링·넛지 — 사람은 합리성에서 체계적으로 벗어납니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const u=0.5+0.5*Math.sin(T*0.9);const gx=u*3.5;s.userData.gain.position.set(gx,2.2*Math.pow(u,0.6),0);const lx=u*3.5;s.userData.loss.position.set(-lx,-2.2*2.25*Math.pow(u,0.6),0);s.userData.gain.rotation.y+=0.04;s.userData.loss.rotation.y+=0.04;s.userData.ref.scale.setScalar(0.9+0.2*Math.sin(T*2));s.rotation.y=0.18*Math.sin(T*0.35);r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const u=0.5+0.5*Math.sin(T*0.9);const gx=u*3.5;s.userData.gain.position.set(gx,2.2*Math.pow(u,0.6),0);const lx=u*3.5;s.userData.loss.position.set(-lx,-2.2*2.25*Math.pow(u,0.6),0);s.userData.gain.rotation.y+=0.04;s.userData.loss.rotation.y+=0.04;s.userData.ref.scale.setScalar(0.9+0.2*Math.sin(T*2));s.rotation.y=0.18*Math.sin(T*0.35);r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
