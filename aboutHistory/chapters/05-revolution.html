@@ -55,16 +55,22 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const gearDefs=[{x:-1.6,y:0.4,R:1.3,teeth:12,dir:1,c:0xb87333},{x:0.9,y:0.9,R:0.95,teeth:9,dir:-1,c:0xc0c0c0},{x:0.8,y:-1.1,R:1.05,teeth:10,dir:-1,c:0xd4af37},{x:-0.4,y:-1.9,R:0.7,teeth:7,dir:1,c:0x8aa0b0}];const gears=[];
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const gearDefs=[{x:-1.6,y:0.4,R:1.3,teeth:12,dir:1,c:0xb87333,name:'산업혁명 (18C 영국)',lc:'#8a4a1a'},{x:0.9,y:0.9,R:0.95,teeth:9,dir:-1,c:0xc0c0c0,name:'증기기관 (와트 1769)',lc:'#555555'},{x:0.8,y:-1.1,R:1.05,teeth:10,dir:-1,c:0xd4af37,name:'프랑스 혁명 (1789)',lc:'#9a7b16'},{x:-0.4,y:-1.9,R:0.7,teeth:7,dir:1,c:0x8aa0b0,name:'미국 독립혁명 (1776)',lc:'#456'}];const gears=[];
   gearDefs.forEach(gd=>{const grp=new THREE.Group();grp.position.set(gd.x,gd.y,0);const body=new THREE.Mesh(new THREE.TorusGeometry(gd.R*0.7,gd.R*0.18,8,24),new THREE.MeshBasicMaterial({color:gd.c,wireframe:true}));grp.add(body);const hub=new THREE.Mesh(new THREE.CylinderGeometry(gd.R*0.18,gd.R*0.18,0.2,10),new THREE.MeshBasicMaterial({color:gd.c,wireframe:true}));hub.rotation.x=Math.PI/2;grp.add(hub);
   for(let t=0;t<gd.teeth;t++){const ang=t/gd.teeth*Math.PI*2;const tooth=new THREE.Mesh(new THREE.BoxGeometry(0.18,0.18,0.22),new THREE.MeshBasicMaterial({color:gd.c,wireframe:true}));tooth.position.set(Math.cos(ang)*gd.R*0.78,Math.sin(ang)*gd.R*0.78,0);grp.add(tooth);}
-  s.add(grp);gears.push({g:grp,d:gd.dir,sp:1.1/gd.R});});
+  s.add(grp);gears.push({g:grp,d:gd.dir,sp:1.1/gd.R});
+  const L=lbl(gd.name,gd.lc);L.position.set(gd.x,gd.y+gd.R*0.9+0.25,0);s.add(L);});
   s.userData.gr=gears;
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 혁명의 시대 — 정치혁명과 산업혁명이 맞물려 근대를 굴립니다.','미국 독립혁명(1776)·프랑스 혁명(1789): 자유·평등·박애와 인권선언.','산업혁명: 와트의 증기기관(1769)이 공장·철도 시대를 열었습니다.','맞물린 톱니처럼 정치·경제·기술 혁명이 서로를 가속합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.gr.forEach(o=>{o.g.rotation.z+=0.02*o.d*o.sp;});r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.gr.forEach(o=>{o.g.rotation.z+=0.02*o.d*o.sp;});r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
