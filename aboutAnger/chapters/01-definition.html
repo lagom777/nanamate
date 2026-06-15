@@ -85,12 +85,26 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const COL=0xef4444;const core=new THREE.Mesh(new THREE.SphereGeometry(0.8,24,24),new THREE.MeshBasicMaterial({color:COL}));s.add(core);const halo=new THREE.Mesh(new THREE.TorusGeometry(1.15,0.04,10,44),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.5}));s.add(halo);const sat=[];const sc=[0xffffff,0xfcd34d,0x93c5fd];for(let i=0;i<3;i++){const t=i/3*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.34,16,16),new THREE.MeshBasicMaterial({color:sc[i]}));s.add(m);sat.push({m,ph:t});s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,0)]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.3})));}
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8.5);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  // 캔버스 텍스트 라벨(스프라이트) — 씬이 무엇을 뜻하는지 가르치기 위함
+  function lbl(txt,color){const fs=34,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+24;cv.height=fs+18;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0075,cv.height*0.0075,1);return sp;}
+  const COL=0xef4444;
+  // 분노 = 느낌·몸(생리)·행동의 묶음 (챕터 핵심) — 핵 + 세 구성요소를 라벨·연결선으로 명시
+  const core=new THREE.Mesh(new THREE.SphereGeometry(0.8,24,24),new THREE.MeshBasicMaterial({color:COL}));s.add(core);
+  const coreTag=lbl('분노','#b91c1c');coreTag.position.set(0,-1.3,0);s.add(coreTag);
+  const halo=new THREE.Mesh(new THREE.TorusGeometry(1.15,0.04,10,44),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.5}));s.add(halo);
+  const comps=[{n:'느낌',col:0xffffff,lc:'#374151'},{n:'몸·생리',col:0xfcd34d,lc:'#92700a'},{n:'행동',col:0x93c5fd,lc:'#1d4ed8'}];
+  const sat=[];
+  for(let i=0;i<comps.length;i++){const ph=i/comps.length*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.34,16,16),new THREE.MeshBasicMaterial({color:comps[i].col}));s.add(m);const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(),new THREE.Vector3()]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.35}));s.add(ln);const tag=lbl(comps[i].n,comps[i].lc);s.add(tag);sat.push({m,ph,ln,tag});}
+  // 캡션 순환 — 씬이 가르치는 내용을 글로 설명
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 분노는 하나의 덩어리가 아니라 세 요소의 묶음입니다.','느낌(주관적 화) · 몸·생리(심박·근긴장 각성) · 행동(표출 충동) — 세 줄기가 분노 핵에 연결됩니다.','세 요소를 나눠 보면 분노가 절반쯤 가라앉습니다 — "지금 느낌·몸·행동 중 무엇이 큰가?"'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;core.scale.setScalar(0.92+0.1*Math.sin(T*2.2));halo.rotation.z+=0.01;sat.forEach((o,i)=>{o.m.position.set(Math.cos(T*0.6+o.ph)*2.4,Math.sin(T*0.4+o.ph)*0.8,Math.sin(T*0.6+o.ph)*2.4);});s.rotation.y+=0.0015;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}core.scale.setScalar(0.92+0.1*Math.sin(T*2.2));halo.rotation.z+=0.01;sat.forEach((o)=>{const x=Math.cos(T*0.6+o.ph)*2.4,y=Math.sin(T*0.4+o.ph)*0.8,z=Math.sin(T*0.6+o.ph)*2.4;o.m.position.set(x,y,z);o.tag.position.set(x,y+0.55,z);o.ln.geometry.setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(x,y,z)]);});s.rotation.y+=0.0015;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
