@@ -55,16 +55,22 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const NN=11;const pts=[];const nodes=[];for(let i=0;i<NN;i++){const ph=Math.acos(1-2*(i+0.5)/NN);const th=Math.PI*(1+Math.sqrt(5))*i;const v=new THREE.Vector3(Math.cos(th)*Math.sin(ph),Math.sin(th)*Math.sin(ph),Math.cos(ph)).multiplyScalar(2.7);pts.push(v);const col=new THREE.Color().setHSL(0.55-i*0.02,0.6,0.6);const n=new THREE.Mesh(new THREE.OctahedronGeometry(0.22),new THREE.MeshBasicMaterial({color:col}));n.position.copy(v);s.add(n);nodes.push(n);}
   const lp=[];for(let i=0;i<NN;i++)for(let j=i+1;j<NN;j++){if(pts[i].distanceTo(pts[j])<3.4){lp.push(pts[i].clone(),pts[j].clone());}}
   const net=new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(lp),new THREE.LineBasicMaterial({color:0x4488cc,transparent:true,opacity:0.5}));s.add(net);
   const lockBody=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.7,0.5),new THREE.MeshBasicMaterial({color:0xffd24a}));s.add(lockBody);const shackle=new THREE.Mesh(new THREE.TorusGeometry(0.32,0.08,10,20,Math.PI),new THREE.MeshBasicMaterial({color:0xffffff}));shackle.position.y=0.5;s.add(shackle);const lock=new THREE.Group();lock.add(lockBody);lock.add(shackle);s.add(lock);
+  const netL=lbl('개인정보 데이터망','#1e6fb8');netL.position.set(0,3.3,0);s.add(netL);
+  const lockL=lbl('프라이버시 보호','#b45309');lockL.position.set(0,-1.2,0);s.add(lockL);
   s.userData.nodes=nodes;s.userData.lock=lock;
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 개인정보 데이터 노드망과 중심의 프라이버시 잠금.','개인정보 = 살아 있는 개인을 식별할 수 있는 정보입니다.','개인정보 유출 시 72시간 이내 신고해야 합니다.','전자서명은 종이 서명과 동등한 법적 효력을 가집니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.nodes.forEach((n,k)=>{n.scale.setScalar(1+Math.sin(T*2+k)*0.3);n.rotation.y+=0.04;});s.userData.lock.scale.setScalar(1+Math.sin(T*2)*0.07);s.rotation.y+=0.004;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.nodes.forEach((n,k)=>{n.scale.setScalar(1+Math.sin(T*2+k)*0.3);n.rotation.y+=0.04;});s.userData.lock.scale.setScalar(1+Math.sin(T*2)*0.07);s.rotation.y+=0.004;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
