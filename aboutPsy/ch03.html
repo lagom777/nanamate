@@ -49,12 +49,17 @@
 <span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 감각 자극이 뇌에서 지각으로 — 빛·소리 → 해석</span>
 <div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
 <script>(function(){
-  const c=document.getElementById('sim-scene');if(!c||!window.THREE)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const COL=0xa855f7;const src=new THREE.Mesh(new THREE.SphereGeometry(0.4,16,16),new THREE.MeshBasicMaterial({color:0xeab308}));src.position.x=-2.8;s.add(src);const rings=[];for(let i=0;i<4;i++){const rg=new THREE.Mesh(new THREE.TorusGeometry(0.3,0.04,8,32),new THREE.MeshBasicMaterial({color:0xeab308,transparent:true,opacity:0.5}));rg.position.x=-2.8;rg.rotation.y=Math.PI/2;s.add(rg);rings.push({m:rg,ph:i});}const brain=new THREE.Mesh(new THREE.IcosahedronGeometry(0.9,1),new THREE.MeshBasicMaterial({color:COL,wireframe:true}));brain.position.x=2.2;s.add(brain);s.userData.brain=brain;
+  [['감각(자극→신경신호)','#fde047',-2.8,1.4,0],['빛·소리·압력','#fef08a',-2.8,-1.2,0],['지각(뇌의 해석)','#e9d5ff',2.2,1.55,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 감각: 감각기관이 빛·소리·압력을 신경 신호로 바꿉니다(데이터를 받는다).','지각: 뇌가 그 신호를 해석·조직화해 의미를 부여합니다(데이터를 이해한다).','망막의 상은 거꾸로 맺히지만, 뇌가 지각하며 똑바로 해석합니다.','게슈탈트 원리·착시는 뇌가 적극적으로 해석한다는 증거입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.brain.rotation.y+=0.012;const k=0.9+0.25*Math.abs(Math.sin(T*2));s.userData.brain.scale.setScalar(k);s.children.forEach(()=>{});s.userData;s.rotation.y+=0;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.brain.rotation.y+=0.012;const k=0.9+0.25*Math.abs(Math.sin(T*2));s.userData.brain.scale.setScalar(k);rings.forEach((o,i)=>{const ph=((T*0.6+i*0.25)%1);o.m.scale.setScalar(0.3+ph*3.2);o.m.material.opacity=0.55*(1-ph);});r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();</script>
 
