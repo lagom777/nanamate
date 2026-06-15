@@ -99,14 +99,20 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,10);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const hubs=[],hubPos=[[-2.2,1.2,0],[2.4,0.6,-1],[0,-2.0,1]];for(let h=0;h<hubPos.length;h++){const hub=new THREE.Mesh(new THREE.IcosahedronGeometry(0.5,0),new THREE.MeshBasicMaterial({color:0x22d3ee}));hub.position.set(hubPos[h][0],hubPos[h][1],hubPos[h][2]);s.add(hub);hubs.push(hub);}
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const hubs=[],hubPos=[[-2.2,1.2,0],[2.4,0.6,-1],[0,-2.0,1]];const hubNames=['플랫폼 허브','플랫폼 허브','플랫폼 허브'];for(let h=0;h<hubPos.length;h++){const hub=new THREE.Mesh(new THREE.IcosahedronGeometry(0.5,0),new THREE.MeshBasicMaterial({color:0x22d3ee}));hub.position.set(hubPos[h][0],hubPos[h][1],hubPos[h][2]);s.add(hub);hubs.push(hub);const L=lbl(hubNames[h],'#0e7490');L.position.set(hubPos[h][0],hubPos[h][1]+0.85,hubPos[h][2]);s.add(L);}
   const followers=[],pulses=[];for(let i=0;i<40;i++){const h=Math.floor(Math.random()*hubs.length);const ang=Math.random()*Math.PI*2,rad=1.2+Math.random()*2.2,el=(Math.random()-0.5)*2.2;const fp=new THREE.Vector3(hubs[h].position.x+Math.cos(ang)*rad,hubs[h].position.y+Math.sin(ang)*rad,hubs[h].position.z+el);const f=new THREE.Mesh(new THREE.SphereGeometry(0.12,10,10),new THREE.MeshBasicMaterial({color:0x818cf8}));f.position.copy(fp);s.add(f);followers.push(f);s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([hubs[h].position,fp]),new THREE.LineBasicMaterial({color:0x4444aa,transparent:true,opacity:0.3})));const p=new THREE.Mesh(new THREE.SphereGeometry(0.07,8,8),new THREE.MeshBasicMaterial({color:0xfde047}));p.userData={from:hubs[h].position.clone(),to:fp,off:Math.random()};s.add(p);pulses.push(p);}
   s.userData.hubs=hubs;s.userData.pulses=pulses;
+  const userL=lbl('사용자','#4f46e5');userL.position.set(-3.0,-2.8,0);s.add(userL);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 거대 허브를 중심으로 정보가 퍼지는 소셜 미디어 망.','카스텔의 \'네트워크 사회\' — 정보 기술이 사회 구조 자체를 재편합니다.','주보프의 \'감시 자본주의\' — 사용자 행동 데이터를 채굴해 예측 상품으로 판매.','필터버블 — 알고리즘이 비슷한 정보만 노출해 시야를 좁힙니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.hubs.forEach((h,i)=>{h.scale.setScalar(1+0.2*Math.sin(T*2+i));h.rotation.y+=0.02;});s.userData.pulses.forEach(p=>{const f=(T*0.5+p.userData.off)%1;p.position.lerpVectors(p.userData.from,p.userData.to,f);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.hubs.forEach((h,i)=>{h.scale.setScalar(1+0.2*Math.sin(T*2+i));h.rotation.y+=0.02;});s.userData.pulses.forEach(p=>{const f=(T*0.5+p.userData.off)%1;p.position.lerpVectors(p.userData.from,p.userData.to,f);});s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
