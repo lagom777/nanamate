@@ -49,12 +49,17 @@
 <span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 조건형성 — 자극(종)과 반응이 연결된다</span>
 <div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
 <script>(function(){
-  const c=document.getElementById('sim-scene');if(!c||!window.THREE)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const COL=0xa855f7;const cs=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.8,0.8),new THREE.MeshBasicMaterial({color:0x3b82f6}));cs.position.set(-2.2,1.1,0);s.add(cs);const us=new THREE.Mesh(new THREE.SphereGeometry(0.5,16,16),new THREE.MeshBasicMaterial({color:0xeab308}));us.position.set(-2.2,-1.1,0);s.add(us);const resp=new THREE.Mesh(new THREE.OctahedronGeometry(0.6),new THREE.MeshBasicMaterial({color:0x22c55e}));resp.position.set(2.2,0,0);s.add(resp);[[-2.2,1.1],[-2.2,-1.1]].forEach(p=>s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(p[0],p[1],0),new THREE.Vector3(2.2,0,0)]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.4}))));s.userData.resp=resp;
+  [['종소리(CS·조건자극)','#93c5fd',-2.2,2.0,0],['음식(US·무조건자극)','#fde047',-2.2,-2.0,0],['침 분비(반응)','#86efac',2.2,1.1,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 고전적 조건형성: 중립 자극(종)이 무조건 자극(음식)과 반복 연합됩니다.','반복되면 종소리(CS)만으로도 침 분비(조건반응)가 일어납니다 — 파블로프의 개.','조작적 조건형성: 행동 뒤의 결과(강화·처벌)가 행동 빈도를 바꿉니다 — 스키너.','관찰학습: 타인의 행동과 결과를 보고 모방합니다 — 반두라의 보보인형.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.resp.rotation.y+=0.02;s.userData.resp.scale.setScalar(0.9+0.15*Math.sin(T*3));s.rotation.y+=0.001;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.resp.rotation.y+=0.02;s.userData.resp.scale.setScalar(0.9+0.15*Math.sin(T*3));s.rotation.y+=0.001;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();</script>
 
