@@ -55,9 +55,11 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const thal=new THREE.Mesh(new THREE.OctahedronGeometry(0.7,0),new THREE.MeshBasicMaterial({color:0x8b5cf6}));thal.position.set(0,-0.5,0);s.add(thal);
   const cortex=new THREE.Mesh(new THREE.PlaneGeometry(5,1.4),new THREE.MeshBasicMaterial({color:0x6366f1,transparent:true,opacity:0.55,side:THREE.DoubleSide}));cortex.position.set(0,2.6,0);s.add(cortex);
   const cols=[0xef4444,0xf59e0b,0x10b981,0x06b6d4,0xec4899];const travelers=[];
@@ -67,8 +69,13 @@
     const dot=new THREE.Mesh(new THREE.SphereGeometry(0.12,8,8),new THREE.MeshBasicMaterial({color:cols[k]}));s.add(dot);travelers.push({dot:dot,sx:sx,sy:sy,off:k*0.2});}
   s.userData.tr=travelers;
   const g2=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,-0.5,0),new THREE.Vector3(0,2.0,0)]);s.add(new THREE.Line(g2,new THREE.LineBasicMaterial({color:0xa78bfa,transparent:true,opacity:0.6})));
+  // 감각 처리 경로 라벨 — 수용기→시상→피질 흐름을 가르치기 위함
+  [['시상(중계)','#6d28d9',0,-1.45,0],['대뇌피질(해석)','#4338ca',0,3.5,0],['시각 수용기','#b91c1c',3.6,2.3,0],['청각 수용기','#b45309',3.8,-0.2,0],['후각 수용기','#047857',-2.0,-2.6,0],['촉각 수용기','#0e7490',-3.9,-0.5,0],['미각 수용기','#be185d',-2.4,2.6,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 다섯 감각 입력이 시상으로 모였다가 피질로 올라갑니다.','수용기가 빛·소리·냄새 같은 자극을 전기 신호로 바꿉니다.','시상은 거의 모든 감각의 중계국이지만, 후각만 시상을 거치지 않습니다.','대뇌피질이 신호를 기억·맥락과 비교해 의미 있게 해석(지각)합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.tr.forEach(t=>{const ph=((T*0.4)+t.off)%1;t.dot.position.set(t.sx*(1-ph),-0.5+t.sy*(1-ph)+0.5*(1-ph)-0.5*(1-ph),0);t.dot.position.x=t.sx*(1-ph);t.dot.position.y=t.sy+(-0.5-t.sy)*ph;});thal.rotation.y+=0.02;s.rotation.y+=0.003; r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.tr.forEach(t=>{const ph=((T*0.4)+t.off)%1;t.dot.position.set(t.sx*(1-ph),-0.5+t.sy*(1-ph)+0.5*(1-ph)-0.5*(1-ph),0);t.dot.position.x=t.sx*(1-ph);t.dot.position.y=t.sy+(-0.5-t.sy)*ph;});thal.rotation.y+=0.02;s.rotation.y+=0.003; r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script></body></html>
