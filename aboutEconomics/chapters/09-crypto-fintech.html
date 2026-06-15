@@ -101,14 +101,21 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,2,11);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const blocks=[];const NB=7;for(let i=0;i<NB;i++){const blk=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.8,0.8),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.13+i*0.02,0.7,0.55),wireframe:true}));blk.position.set(-4.2+i*1.4,(i%2===0?0.4:-0.4),0);s.add(blk);blocks.push(blk);if(i>0){const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints([blocks[i-1].position.clone(),blk.position.clone()]),new THREE.LineBasicMaterial({color:0x10b981}));s.add(ln);}}
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const blocks=[];const NB=7;for(let i=0;i<NB;i++){const blk=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.8,0.8),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.13+i*0.02,0.7,0.55),wireframe:true}));blk.position.set(-4.2+i*1.4,(i%2===0?0.4:-0.4),0);s.add(blk);blocks.push(blk);const bL=lbl('블록 '+(i+1),'#92400e');bL.position.set(blk.position.x,blk.position.y+0.75,0);s.add(bL);if(i>0){const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints([blocks[i-1].position.clone(),blk.position.clone()]),new THREE.LineBasicMaterial({color:0x10b981}));s.add(ln);}}
   s.userData.blocks=blocks;
+  const chainL=lbl('블록체인 · 분산원장','#047857');chainL.position.set(0,2.4,0);s.add(chainL);
+  const hashL=lbl('해시로 연결','#15803d');hashL.position.set(-2.1,-1.4,0);s.add(hashL);
   const ring=new THREE.Mesh(new THREE.TorusGeometry(0.6,0.05,8,32),new THREE.MeshBasicMaterial({color:0xfbbf24}));s.add(ring);s.userData.ring=ring;
+  const newL=lbl('새 블록 추가','#b45309');s.add(newL);s.userData.newL=newL;
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 해시로 연결되어 순차적으로 쌓이는 블록체인 분산원장의 블록 사슬.','각 블록은 앞 블록의 해시를 담아 연결 — 위변조가 매우 어렵습니다.','중개기관 없이 분산된 컴퓨터들이 함께 장부를 검증·기록합니다.','암호화폐·스테이블코인·디파이·CBDC가 이 위에서 작동합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const active=Math.floor(T*0.7)%s.userData.blocks.length;s.userData.blocks.forEach((b,i)=>{b.rotation.x+=0.01;b.rotation.y+=0.015;const sc=i===active?1.35+0.1*Math.sin(T*5):1;b.scale.setScalar(sc);});const ab=s.userData.blocks[active];s.userData.ring.position.copy(ab.position);s.userData.ring.rotation.z+=0.06;s.rotation.y=0.2*Math.sin(T*0.3);r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const active=Math.floor(T*0.7)%s.userData.blocks.length;s.userData.blocks.forEach((b,i)=>{b.rotation.x+=0.01;b.rotation.y+=0.015;const sc=i===active?1.35+0.1*Math.sin(T*5):1;b.scale.setScalar(sc);});const ab=s.userData.blocks[active];s.userData.ring.position.copy(ab.position);s.userData.newL.position.set(ab.position.x,ab.position.y-0.9,0);s.userData.ring.rotation.z+=0.06;s.rotation.y=0.2*Math.sin(T*0.3);r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
