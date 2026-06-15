@@ -101,13 +101,20 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(4,2,9);cam.lookAt(0,0.5,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const steps=[];const NS=6;for(let i=0;i<NS;i++){const h=0.4;const st=new THREE.Mesh(new THREE.BoxGeometry(1.1,h,1.1),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.33-i*0.05,0.55,0.5)}));st.position.set(-2.5+i*1.0,-2+i*0.5,0);s.add(st);steps.push(st);}
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const stepNames=['빈곤의 함정','저소득국','개발도상국','중진국 함정','신흥공업국','선진국'];
+  const stepCols=['#b91c1c','#c2410c','#a16207','#ca8a04','#15803d','#1d4ed8'];
+  const steps=[];const NS=6;for(let i=0;i<NS;i++){const h=0.4;const st=new THREE.Mesh(new THREE.BoxGeometry(1.1,h,1.1),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.33-i*0.05,0.55,0.5)}));st.position.set(-2.5+i*1.0,-2+i*0.5,0);s.add(st);steps.push(st);const sL=lbl(stepNames[i],stepCols[i]);sL.position.set(-2.5+i*1.0,-2+i*0.5-0.55,0);s.add(sL);}
   const climber=new THREE.Mesh(new THREE.IcosahedronGeometry(0.32,0),new THREE.MeshBasicMaterial({color:0xfbbf24,wireframe:true}));s.add(climber);s.userData.climber=climber;s.userData.steps=steps;
+  const climberL=lbl('1인당 GDP','#92400e');s.add(climberL);s.userData.climberL=climberL;
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 저소득에서 고소득으로 올라가는 경제 발전 단계의 성장 사다리.','솔로우 모형: 자본축적과 기술진보가 1인당 소득을 끌어올립니다.','인적자본(교육·건강)과 좋은 제도(재산권·법치)가 성장의 엔진입니다.','빈곤의 함정과 중진국 함정 — 단계마다 성장이 멈출 위험이 있습니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const prog=(T*0.4)%6;const idx=Math.floor(prog);const f=prog-idx;const x=-2.5+(idx+f)*1.0;const y=-2+(idx+f)*0.5+0.45+0.12*Math.sin(f*Math.PI);s.userData.climber.position.set(x,y,0);s.userData.climber.rotation.y+=0.04;s.userData.steps.forEach((st,i)=>{st.scale.y=1+0.15*Math.sin(T*1.5+i*0.7);});s.rotation.y=0.15*Math.sin(T*0.25);r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const prog=(T*0.4)%6;const idx=Math.floor(prog);const f=prog-idx;const x=-2.5+(idx+f)*1.0;const y=-2+(idx+f)*0.5+0.45+0.12*Math.sin(f*Math.PI);s.userData.climber.position.set(x,y,0);s.userData.climberL.position.set(x,y+0.55,0);s.userData.climber.rotation.y+=0.04;s.userData.steps.forEach((st,i)=>{st.scale.y=1+0.15*Math.sin(T*1.5+i*0.7);});s.rotation.y=0.15*Math.sin(T*0.25);r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
