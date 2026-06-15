@@ -87,9 +87,11 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   // 중심: 공동체/주권(리바이어던), 둘레: 계약을 맺은 개인들
   const state=new THREE.Mesh(new THREE.DodecahedronGeometry(1,0),new THREE.MeshBasicMaterial({color:0xffcf5e,wireframe:true}));s.add(state);
   const ring=new THREE.Group();const N=9;const people=[];const r0=3.2;
@@ -98,8 +100,15 @@
     const cg=new THREE.BufferGeometry().setFromPoints([p,new THREE.Vector3(0,0,0)]);ring.add(new THREE.Line(cg,new THREE.LineBasicMaterial({color:0xffcf5e,transparent:true,opacity:0.35})));}
   for(let i=0;i<N;i++){const j=(i+1)%N;const eg=new THREE.BufferGeometry().setFromPoints([people[i],people[j]]);ring.add(new THREE.Line(eg,new THREE.LineBasicMaterial({color:0x7fd0ff,transparent:true,opacity:0.55})));}
   s.add(ring);s.userData.state=state;s.userData.ring=ring;
+  // 중심=주권/공동체(리바이어던), 둘레 노드=개인, 안쪽 연결선=사회계약
+  const lblState=lbl('주권 · 공동체','#b45309');lblState.position.set(0,1.5,0);s.add(lblState);
+  const lblPerson=lbl('개인','#1d4ed8');lblPerson.position.set(people[0].x,people[0].y+0.7,people[0].z);s.add(lblPerson);
+  const lblContract=lbl('사회계약','#6d28d9');lblContract.position.set(1.6,0.6,0);s.add(lblContract);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 사회계약 — 흩어진 개인들이 계약으로 공동체와 주권을 세운다.','홉스: 만인의 만인에 대한 투쟁을 끝내려 절대 주권(리바이어던)에 복종.','로크: 생명·자유·재산의 자연권을 지키는 제한 정부 — 자유주의의 시조.','루소·롤스: 일반 의지와 "무지의 베일"로 정의로운 사회의 원칙을 찾다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.003;s.userData.state.rotation.x+=0.008;s.userData.state.rotation.y+=0.01;s.userData.ring.rotation.z+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.rotation.y+=0.003;s.userData.state.rotation.x+=0.008;s.userData.state.rotation.y+=0.01;s.userData.ring.rotation.z+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
