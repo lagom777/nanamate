@@ -49,12 +49,17 @@
 <span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 기억의 흐름 — 감각기억 → 단기기억 → 장기기억</span>
 <div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
 <script>(function(){
-  const c=document.getElementById('sim-scene');if(!c||!window.THREE)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const COL=0xa855f7;const labels=[0xeab308,0x3b82f6,0x22c55e];const boxes=[];for(let i=0;i<3;i++){const b=new THREE.Mesh(new THREE.BoxGeometry(1.2,1.2,1.2),new THREE.MeshBasicMaterial({color:labels[i],wireframe:true}));b.position.x=(i-1)*2.4;s.add(b);boxes.push(b);if(i<2)s.add(new THREE.Mesh(new THREE.ConeGeometry(0.18,0.4,12),new THREE.MeshBasicMaterial({color:COL})).translateX((i-1)*2.4+1.2).rotateZ(-Math.PI/2));}const flow=[];for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1,8,8),new THREE.MeshBasicMaterial({color:COL}));m.userData={off:Math.random()*4.8};s.add(m);flow.push(m);}s.userData.flow=flow;
+  [['감각기억(1초)','#fde047',-2.4,1.3,0],['단기기억(7±2)','#93c5fd',0,1.3,0],['장기기억(영구)','#86efac',2.4,1.3,0],['주의','#e9d5ff',-1.2,-1.35,0],['부호화','#e9d5ff',1.2,-1.35,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 앳킨슨-시프린 3단계: 감각기억 → 단기기억 → 장기기억.','감각기억은 1초 이내 거의 무한 용량 — 주의를 주면 단기기억으로 넘어갑니다.','단기기억(작업기억)은 7±2 항목·20초 — 청킹으로 용량을 늘립니다.','부호화·시연을 거치면 장기기억에 저장 — 인출 연습이 가장 강력한 공부법입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.flow.forEach(m=>{m.userData.off+=0.03;if(m.userData.off>4.8)m.userData.off=0;m.position.set(-2.4+m.userData.off,Math.sin(m.userData.off*2)*0.2,0);});boxes.forEach((b,i)=>b.rotation.y+=0.01);s.rotation.y+=0;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.flow.forEach(m=>{m.userData.off+=0.03;if(m.userData.off>4.8)m.userData.off=0;m.position.set(-2.4+m.userData.off,Math.sin(m.userData.off*2)*0.2,0);});boxes.forEach((b,i)=>b.rotation.y+=0.01);r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();</script>
 
