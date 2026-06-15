@@ -55,16 +55,23 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,4,7);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const waves=[];const freqs=[1,2,4,7,12];const hues=[0.62,0.55,0.45,0.13,0.0];
   for(let k=0;k<5;k++){const seg=120,pts=[];for(let i=0;i<=seg;i++){const ang=(i/seg)*Math.PI*2;pts.push(new THREE.Vector3(Math.cos(ang)*(0.9+k*0.7),0,Math.sin(ang)*(0.9+k*0.7)));}
     const g=new THREE.BufferGeometry().setFromPoints(pts);const ring=new THREE.Line(g,new THREE.LineBasicMaterial({color:new THREE.Color().setHSL(hues[k],0.8,0.6)}));s.add(ring);waves.push({ring:ring,base:0.9+k*0.7,f:freqs[k],seg:seg});}
   const core=new THREE.Mesh(new THREE.SphereGeometry(0.5,16,16),new THREE.MeshBasicMaterial({color:0xa78bfa}));s.add(core);
   s.userData.waves=waves;s.userData.core=core;
+  // 뇌파 대역 라벨 — 수면 단계별 리듬을 가르치기 위함
+  [['의식 수준(각성)','#7c3aed',0,1.0,0],['델타파 δ (서파수면)','#1e40af',0.9,0,0.9],['세타파 θ','#0369a1',0,0,1.6],['알파파 α','#047857',-2.3,0,0],['베타파 β','#b45309',0,0,-3.0],['감마파 γ (렘수면)','#b91c1c',3.7,0,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 수면 단계마다 뇌파 리듬이 느린 파에서 빠른 파로 바뀝니다.','깊은 서파수면(N3)에서는 느린 델타파가 우세하며 회복이 일어납니다.','렘수면에서는 베타·감마처럼 빠른 파가 나타나 꿈을 꿉니다.','각성·의식 수준은 뇌간이 시상-피질을 깨우면서 유지됩니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.waves.forEach(w=>{const pos=w.ring.geometry.attributes.position;for(let i=0;i<=w.seg;i++){const ang=(i/w.seg)*Math.PI*2;pos.setY(i,Math.sin(ang*w.f+T*2)*0.4);}pos.needsUpdate=true;});const amp=0.5+0.35*Math.sin(T*2);s.userData.core.scale.setScalar(amp/0.5);s.rotation.y+=0.003; r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.waves.forEach(w=>{const pos=w.ring.geometry.attributes.position;for(let i=0;i<=w.seg;i++){const ang=(i/w.seg)*Math.PI*2;pos.setY(i,Math.sin(ang*w.f+T*2)*0.4);}pos.needsUpdate=true;});const amp=0.5+0.35*Math.sin(T*2);s.userData.core.scale.setScalar(amp/0.5);s.rotation.y+=0.003; r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script></body></html>
