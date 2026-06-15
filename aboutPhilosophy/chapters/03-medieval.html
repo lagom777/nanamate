@@ -87,9 +87,11 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,10);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const tower=new THREE.Group();const N=6;const tiers=[];
   for(let i=0;i<N;i++){const rad=2.4-i*0.32;const y=-3+i*1.1;const col=new THREE.Color().setHSL(0.09+i*0.03,0.5,0.45+i*0.06);
     const ring=new THREE.Mesh(new THREE.RingGeometry(rad-0.12,rad,28),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.8,side:THREE.DoubleSide}));
@@ -99,8 +101,15 @@
   const axis=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,-3,0),new THREE.Vector3(0,apex.position.y,0)]);
   tower.add(new THREE.Line(axis,new THREE.LineBasicMaterial({color:0xffd070,transparent:true,opacity:0.5})));
   s.add(tower);s.userData.tiers=tiers;s.userData.apex=apex;
+  // 존재의 위계: 정점=신(神), 아래로 스콜라·이슬람 철학자들이 신앙과 이성으로 신을 향해 오름
+  const apexLbl=lbl('神 (존재의 정점)','#b45309');apexLbl.position.set(0,apex.position.y+0.85,0);s.add(apexLbl);
+  const figLabels=[['아우구스티누스','#7c2d12',tiers[0].position.y],['이븐 시나(아비센나)','#0e7490',tiers[1].position.y],['이븐 루시드(아베로에스)','#0e7490',tiers[2].position.y],['오컴','#6d28d9',tiers[3].position.y],['토마스 아퀴나스','#15803d',tiers[4].position.y]];
+  figLabels.forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(2.7,d[2],0);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 중세 — 신앙과 이성이 층층이 쌓여 신(神)을 향해 오르는 존재의 위계.','아우구스티누스: 교부 철학 — 자유의지로 악의 기원을 설명하고 신앙을 변호.','이븐 시나·이븐 루시드: 그리스 철학을 이슬람 세계로 전하고 이성의 자율을 옹호.','토마스 아퀴나스: 아리스토텔레스를 기독교에 통합한 스콜라 철학의 정점.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.004;s.userData.tiers.forEach((t,i)=>{t.rotation.z+=0.004*(i%2?1:-1);});s.userData.apex.rotation.y+=0.02;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.rotation.y+=0.004;s.userData.tiers.forEach((t,i)=>{t.rotation.z+=0.004*(i%2?1:-1);});s.userData.apex.rotation.y+=0.02;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
