@@ -49,12 +49,16 @@
 <span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 동기와 정서 — 욕구 위계(매슬로)와 감정</span>
 <div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
 <script>(function(){
-  const c=document.getElementById('sim-scene');if(!c||!window.THREE)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const COL=0xa855f7;const cols=[0x3b82f6,0x22c55e,0xeab308,0xf97316,0xec4899];for(let i=0;i<5;i++){const w=3.2-i*0.55;const b=new THREE.Mesh(new THREE.BoxGeometry(w,0.7,w*0.5),new THREE.MeshBasicMaterial({color:cols[i],transparent:true,opacity:0.85}));b.position.y=-1.6+i*0.75;s.add(b);}const top=new THREE.Mesh(new THREE.OctahedronGeometry(0.4),new THREE.MeshBasicMaterial({color:0xffe08a}));top.position.y=2.0;s.add(top);s.userData.top=top;
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const COL=0xa855f7;const cols=[0x3b82f6,0x22c55e,0xeab308,0xf97316,0xec4899];const needs=['생리적 욕구','안전 욕구','소속·사랑','존중 욕구','자아실현'];const tcols=['#93c5fd','#86efac','#fde047','#fdba74','#f9a8d4'];for(let i=0;i<5;i++){const w=3.2-i*0.55;const b=new THREE.Mesh(new THREE.BoxGeometry(w,0.7,w*0.5),new THREE.MeshBasicMaterial({color:cols[i],transparent:true,opacity:0.85}));b.position.y=-1.6+i*0.75;s.add(b);const t=lbl(needs[i],tcols[i]);t.position.set(0,-1.6+i*0.75,w*0.25+0.05);s.add(t);}const top=new THREE.Mesh(new THREE.OctahedronGeometry(0.4),new THREE.MeshBasicMaterial({color:0xffe08a}));top.position.y=2.0;s.add(top);s.userData.top=top;
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 매슬로 욕구위계: 생리적 → 안전 → 소속·사랑 → 존중 → 자아실현 순으로 쌓입니다.','동기 이론: 본능·추동 감소(결핍의 긴장↓)·각성(적정 자극)·유인(외부 보상).','정서 3대 이론: 제임스-랑게(신체→정서)·캐논-바드(동시)·샥터-싱어(각성+해석).','동기는 \'왜 행동하는가\', 정서는 \'무엇을 느끼는가\' — 동전의 양면입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.top.rotation.y+=0.03;s.userData.top.scale.setScalar(0.9+0.2*Math.sin(T*2.5));s.rotation.y+=0.004;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.top.rotation.y+=0.03;s.userData.top.scale.setScalar(0.9+0.2*Math.sin(T*2.5));s.rotation.y+=0.004;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();</script>
 
