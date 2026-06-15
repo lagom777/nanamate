@@ -124,9 +124,10 @@
 
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   // Circulatory loop: vessel torus, pulsing heart at center, red blood cells flowing around
   const vessel=new THREE.Mesh(new THREE.TorusGeometry(3,0.35,16,60),new THREE.MeshBasicMaterial({color:0x991b1b,transparent:true,opacity:0.35}));
   vessel.rotation.x=Math.PI/2;s.add(vessel);
@@ -138,8 +139,13 @@
     cells.push({m:cell,off:i/22*Math.PI*2});s.add(cell);
   }
   s.userData.cells=cells;s.userData.heart=heart;
+  // 생물학 용어 라벨 — 혈액 순환계의 구성을 가르치기 위함
+  [['심장(펌프)','#b91c1c',0,1.6,0],['혈관','#7f1d1d',0,0.2,-3.4],['적혈구(산소 운반)','#dc2626',3.2,0.5,0],['백혈구(면역)','#475569',-3.4,0.5,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 심장이 펌프처럼 박동하며 혈액을 온몸으로 보냅니다.','혈액은 혈관을 따라 끊임없이 한 바퀴 순환합니다.','적혈구는 산소를, 백혈구는 면역(방어)을 담당합니다.','순환계는 항상성 — 몸 안을 일정하게 유지하는 핵심입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const beat=1+Math.max(0,Math.sin(T*3))*0.25;s.userData.heart.scale.setScalar(beat);s.userData.cells.forEach(o=>{const ang=o.off+T*0.6;o.m.position.set(Math.cos(ang)*3,0,Math.sin(ang)*3);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const beat=1+Math.max(0,Math.sin(T*3))*0.25;s.userData.heart.scale.setScalar(beat);s.userData.cells.forEach(o=>{const ang=o.off+T*0.6;o.m.position.set(Math.cos(ang)*3,0,Math.sin(ang)*3);});s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
