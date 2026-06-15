@@ -87,9 +87,11 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   // 텅 빈 세계(공허의 구) 속에 홀로 던져진 실존
   const voidS=new THREE.Mesh(new THREE.SphereGeometry(4,18,14),new THREE.MeshBasicMaterial({color:0x444466,wireframe:true,transparent:true,opacity:0.18}));s.add(voidS);
   const self=new THREE.Mesh(new THREE.TetrahedronGeometry(0.7,0),new THREE.MeshBasicMaterial({color:0xff5e7a,wireframe:true}));s.add(self);
@@ -100,8 +102,15 @@
     choices.add(new THREE.Line(lg,new THREE.LineBasicMaterial({color:0xff9a8a,transparent:true,opacity:0.5})));
     const tip=new THREE.Mesh(new THREE.OctahedronGeometry(0.18,0),new THREE.MeshBasicMaterial({color:0xffd0a0}));tip.position.copy(dir);choices.add(tip);branches.push(tip);}
   s.add(choices);s.userData.self=self;s.userData.choices=choices;s.userData.voidS=voidS;
+  // 핵=실존(현존재), 바깥 구=부조리한 세계, 뻗는 가지=자유로운 선택의 투사
+  const lblSelf=lbl('실존 · 현존재','#ff5e7a');lblSelf.position.set(0,1.1,0);s.add(lblSelf);
+  const lblVoid=lbl('세계 · 부조리','#8888aa');lblVoid.position.set(0,4.35,0);s.add(lblVoid);
+  const lblFree=lbl('자유 · 선택의 투사','#d98a4a');lblFree.position.set(2.9,-2.6,0);s.add(lblFree);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 실존주의 — 세계에 던져진 인간이 스스로 선택으로 자기를 만든다.','사르트르: "실존이 본질에 앞선다" — 인간은 자유롭도록 저주받았다.','키에르케고르: 단독자가 삶을 걸고 결단하는 주체적 진리, 신앙의 도약.','카뮈: 부조리에 굴복하지 않는 반항 — 시지프스가 행복하다 상상하라.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.003;s.userData.voidS.rotation.y-=0.001;s.userData.self.rotation.x+=0.02;s.userData.self.rotation.y+=0.015;s.userData.self.position.y=Math.sin(T*0.8)*0.4;s.userData.choices.rotation.z+=0.002;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.rotation.y+=0.003;s.userData.voidS.rotation.y-=0.001;s.userData.self.rotation.x+=0.02;s.userData.self.rotation.y+=0.015;s.userData.self.position.y=Math.sin(T*0.8)*0.4;s.userData.choices.rotation.z+=0.002;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
