@@ -87,9 +87,11 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   // 중심: 물자체(불가지의 어두운 핵), 둘러싼 격자: 인식의 범주 틀
   const thing=new THREE.Mesh(new THREE.IcosahedronGeometry(1,0),new THREE.MeshBasicMaterial({color:0x5b4b8a,wireframe:true,transparent:true,opacity:0.45}));s.add(thing);
   const grid=new THREE.Group();const G=4;const step=1.6;
@@ -100,8 +102,15 @@
   const phen=new THREE.Group();const ps=[];for(let i=0;i<6;i++){const ang=i*Math.PI/3;const m=new THREE.Mesh(new THREE.OctahedronGeometry(0.3,0),new THREE.MeshBasicMaterial({color:0xffd86a}));
     m.position.set(Math.cos(ang)*2.5,Math.sin(ang)*2.5,3.2);phen.add(m);ps.push(m);}s.add(phen);
   s.userData.thing=thing;s.userData.grid=grid;s.userData.phen=ps;
+  // 핵=물자체(Ding an sich), 격자=인식의 범주(시공간·12범주), 앞쪽 노드=현상계
+  const lblThing=lbl('물자체 (Ding an sich)','#5b4b8a');lblThing.position.set(0,1.55,0);s.add(lblThing);
+  const lblGrid=lbl('인식의 범주 · 시공간','#1d4ed8');lblGrid.position.set(0,3.5,2.6);s.add(lblGrid);
+  const lblPhen=lbl('현상계 (Phänomen)','#b45309');lblPhen.position.set(0,-3.4,3.2);s.add(lblPhen);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 칸트의 코페르니쿠스적 전환 — 마음의 형식이 대상을 구성한다.','물자체: 우리가 결코 알 수 없는 사물 그 자체 — 인식 너머의 어두운 핵.','범주: 시간·공간과 12개 범주라는 "안경"이 경험을 미리 틀 짓는다.','현상계: 범주를 통과해 우리에게 나타난 정돈된 세계 — 우리가 아는 전부.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.0025;s.userData.thing.rotation.x+=0.008;s.userData.thing.rotation.y+=0.01;s.userData.grid.rotation.z=Math.sin(T*0.4)*0.08;s.userData.phen.forEach((m,i)=>{m.rotation.x+=0.03;m.position.z=3.2+Math.sin(T+i)*0.15;});r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.rotation.y+=0.0025;s.userData.thing.rotation.x+=0.008;s.userData.thing.rotation.y+=0.01;s.userData.grid.rotation.z=Math.sin(T*0.4)*0.08;s.userData.phen.forEach((m,i)=>{m.rotation.x+=0.03;m.position.z=3.2+Math.sin(T+i)*0.15;});r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
