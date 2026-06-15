@@ -124,11 +124,13 @@
 
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,11);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   // Taxonomic hierarchy: 7 stacked tiers (kingdom->species), each narrower, with organism nodes
   const tiers=7;
+  const rankNames=['계','문','강','목','과','속','종'];  // 분류 위계 라벨
   const tierGrp=new THREE.Group();s.add(tierGrp);
   const rings=[];
   for(let t=0;t<tiers;t++){
@@ -146,13 +148,17 @@
       node.position.set(Math.cos(ang)*rad,y,Math.sin(ang)*rad);tierGrp.add(node);nodes.push(node);
     }
     rings.push({y:y,nodes:nodes,phase:t});
+    const rl=lbl(rankNames[t],col.getStyle());rl.position.set(rad+0.7,y,0);tierGrp.add(rl);
   }
   // central axis connecting the tiers
   const axis=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,(tiers-1)*0.85+0.5,8),new THREE.MeshBasicMaterial({color:0x94a3b8}));
   axis.position.y=(tiers-1)*0.85/2-2.5;tierGrp.add(axis);
   s.userData.rings=rings;
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 동물은 공통점에 따라 위계적으로 분류됩니다.','맨 위 계(界)는 가장 넓고, 아래로 갈수록 좁아집니다.','계-문-강-목-과-속-종 순서로 점점 세밀하게 나뉩니다.','맨 아래 종(種)이 분류의 가장 작은 기본 단위입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.rings.forEach(rg=>{rg.nodes.forEach(n=>{n.rotation.y+=0.03;n.position.y=rg.y+Math.sin(T*1.5+rg.phase)*0.08;});});s.rotation.y+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.rings.forEach(rg=>{rg.nodes.forEach(n=>{n.rotation.y+=0.03;n.position.y=rg.y+Math.sin(T*1.5+rg.phase)*0.08;});});s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
