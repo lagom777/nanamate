@@ -55,9 +55,11 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const vta=new THREE.Mesh(new THREE.SphereGeometry(0.6,18,18),new THREE.MeshBasicMaterial({color:0xf43f5e}));vta.position.set(-3,-1.5,0);s.add(vta);
   const striatum=new THREE.Mesh(new THREE.SphereGeometry(0.55,18,18),new THREE.MeshBasicMaterial({color:0xf59e0b}));striatum.position.set(0,0.3,0);s.add(striatum);
   const cortex=new THREE.Mesh(new THREE.SphereGeometry(0.5,18,18),new THREE.MeshBasicMaterial({color:0x6366f1}));cortex.position.set(3,1.6,0);s.add(cortex);
@@ -65,8 +67,13 @@
   const g=new THREE.BufferGeometry().setFromPoints(path);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xfca5a5,transparent:true,opacity:0.5})));
   const dops=[];for(let k=0;k<14;k++){const d=new THREE.Mesh(new THREE.SphereGeometry(0.1,8,8),new THREE.MeshBasicMaterial({color:0xfbbf24}));s.add(d);dops.push({m:d,off:k/14});}
   s.userData.dops=dops;s.userData.path=path;s.userData.vta=vta;
+  // 보상 회로 라벨 — 도파민 경로를 가르치기 위함
+  [['복측피개영역(VTA)','#be123c',-3,-2.4,0],['측좌핵(보상 중추)','#b45309',0,1.2,0],['전전두엽(조절)','#4338ca',3,2.5,0],['도파민','#b45309',-1.6,-0.9,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 보상이 들어오면 VTA에서 도파민이 분출됩니다.','도파민은 VTA→측좌핵→전전두엽 경로를 따라 퍼집니다.','도파민은 쾌감 자체보다 동기와 보상 예측 오차를 부호화합니다.','전전두엽은 이 신호를 평가해 충동을 조절합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const P=s.userData.path;s.userData.dops.forEach(o=>{let t=((T*0.3)+o.off)%1;let seg=t*2,i=Math.floor(seg),f=seg-i;if(i>1){i=1;f=1;}const p0=P[i],p1=P[i+1];o.m.position.set(p0.x+(p1.x-p0.x)*f,p0.y+(p1.y-p0.y)*f,0.4*Math.sin(t*6));});s.userData.vta.scale.setScalar(1+0.12*Math.sin(T*4));s.rotation.y+=0.003; r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const P=s.userData.path;s.userData.dops.forEach(o=>{let t=((T*0.3)+o.off)%1;let seg=t*2,i=Math.floor(seg),f=seg-i;if(i>1){i=1;f=1;}const p0=P[i],p1=P[i+1];o.m.position.set(p0.x+(p1.x-p0.x)*f,p0.y+(p1.y-p0.y)*f,0.4*Math.sin(t*6));});s.userData.vta.scale.setScalar(1+0.12*Math.sin(T*4));s.rotation.y+=0.003; r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script></body></html>
