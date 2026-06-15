@@ -55,16 +55,21 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1.5,8.5);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const idea=new THREE.Mesh(new THREE.IcosahedronGeometry(1.0,1),new THREE.MeshBasicMaterial({color:0xffe08a}));s.add(idea);
+  const ideaL=lbl('창작·발명','#b45309');ideaL.position.set(0,1.5,0);s.add(ideaL);
   const geoms=[new THREE.OctahedronGeometry(0.4),new THREE.BoxGeometry(0.6,0.6,0.6),new THREE.ConeGeometry(0.4,0.7,5),new THREE.TetrahedronGeometry(0.5)];
-  const cols=[0x5b8def,0xe0732a,0x4caf78,0xc060d0];const rights=[];
-  for(let i=0;i<4;i++){const node=new THREE.Mesh(geoms[i],new THREE.MeshBasicMaterial({color:cols[i]}));s.add(node);const orbit=new THREE.Mesh(new THREE.TorusGeometry(2.6,0.02,8,48),new THREE.MeshBasicMaterial({color:0x777777}));orbit.rotation.x=Math.PI/2;orbit.rotation.y=i*Math.PI/4;s.add(orbit);const spoke=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(2.6,0,0)]),new THREE.LineBasicMaterial({color:cols[i]}));rights.push({node:node,spoke:spoke,ph:i*Math.PI/2,tilt:i*Math.PI/4});s.add(spoke);}
+  const cols=[0x5b8def,0xe0732a,0x4caf78,0xc060d0];const names=['특허','저작권','상표','디자인권'];const lcols=['#2563eb','#c2510f','#15803d','#9333ea'];const rights=[];
+  for(let i=0;i<4;i++){const node=new THREE.Mesh(geoms[i],new THREE.MeshBasicMaterial({color:cols[i]}));s.add(node);const NL=lbl(names[i],lcols[i]);NL.position.set(0,0.55,0);node.add(NL);const orbit=new THREE.Mesh(new THREE.TorusGeometry(2.6,0.02,8,48),new THREE.MeshBasicMaterial({color:0x777777}));orbit.rotation.x=Math.PI/2;orbit.rotation.y=i*Math.PI/4;s.add(orbit);const spoke=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(2.6,0,0)]),new THREE.LineBasicMaterial({color:cols[i]}));rights.push({node:node,spoke:spoke,ph:i*Math.PI/2,tilt:i*Math.PI/4});s.add(spoke);}
   s.userData.idea=idea;s.userData.rights=rights;
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 하나의 창작을 둘러싼 특허·저작권·상표·디자인권의 궤도.','저작권은 창작 즉시 자동 발생 — 등록이 필요 없습니다.','저작권은 \'아이디어\'가 아니라 \'표현\'을 보호합니다.','특허 3요건: 신규성·진보성·산업상 이용 가능성.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.idea.rotation.y+=0.01;s.userData.idea.rotation.x+=0.006;s.userData.rights.forEach(rt=>{const ang=T*0.7+rt.ph;const x=Math.cos(ang)*2.6,y=Math.sin(ang)*2.6*Math.sin(rt.tilt),z=Math.sin(ang)*2.6*Math.cos(rt.tilt);rt.node.position.set(x,y,z);rt.node.rotation.y+=0.03;const p=rt.spoke.geometry.attributes.position;p.setXYZ(1,x,y,z);p.needsUpdate=true;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.idea.rotation.y+=0.01;s.userData.idea.rotation.x+=0.006;s.userData.rights.forEach(rt=>{const ang=T*0.7+rt.ph;const x=Math.cos(ang)*2.6,y=Math.sin(ang)*2.6*Math.sin(rt.tilt),z=Math.sin(ang)*2.6*Math.cos(rt.tilt);rt.node.position.set(x,y,z);rt.node.rotation.y+=0.03;const p=rt.spoke.geometry.attributes.position;p.setXYZ(1,x,y,z);p.needsUpdate=true;});s.rotation.y+=0.002;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
