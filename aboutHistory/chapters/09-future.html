@@ -57,16 +57,23 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(1.5,0,9);cam.lookAt(1.5,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const cycle=new THREE.Mesh(new THREE.TorusGeometry(1.5,0.05,10,60),new THREE.MeshBasicMaterial({color:0x7f8c8d,transparent:true,opacity:0.7}));s.add(cycle);
   const past=[];for(let i=0;i<8;i++){const ang=i/8*Math.PI*2;const node=new THREE.Mesh(new THREE.SphereGeometry(0.16,10,8),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.58,0.4,0.55),wireframe:true}));node.position.set(Math.cos(ang)*1.5,Math.sin(ang)*1.5,0);cycle.add(node);past.push(node);}
-  const branches=[];const bcol=[0x27ae60,0xf39c12,0xc0392b,0x8e44ad];for(let b=0;b<4;b++){const ang=-0.6+b*0.4;const pts=[new THREE.Vector3(1.5,0,0)];for(let k=1;k<=6;k++){pts.push(new THREE.Vector3(1.5+k*0.4,Math.sin(ang)*k*0.45,Math.cos(ang*1.7)*k*0.2));}const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:bcol[b],transparent:true,opacity:0.7}));s.add(line);
-  const tip=new THREE.Mesh(new THREE.TetrahedronGeometry(0.25),new THREE.MeshBasicMaterial({color:bcol[b],wireframe:true}));tip.position.copy(pts[pts.length-1]);s.add(tip);branches.push(tip);}
+  const cyL=lbl('역사의 순환 (문명 흥망·장기 파동)','#566');cyL.position.set(-1.6,1.9,0);s.add(cyL);
+  const branches=[];const bcol=[0x27ae60,0xf39c12,0xc0392b,0x8e44ad];const bnames=['기술 혁명 (AI·디지털)','인구 천이 (고령화)','기후 변화 (인류세)','장기 파동 (50년 주기)'];const branchLabels=[];for(let b=0;b<4;b++){const ang=-0.6+b*0.4;const pts=[new THREE.Vector3(1.5,0,0)];for(let k=1;k<=6;k++){pts.push(new THREE.Vector3(1.5+k*0.4,Math.sin(ang)*k*0.45,Math.cos(ang*1.7)*k*0.2));}const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:bcol[b],transparent:true,opacity:0.7}));s.add(line);
+  const tip=new THREE.Mesh(new THREE.TetrahedronGeometry(0.25),new THREE.MeshBasicMaterial({color:bcol[b],wireframe:true}));tip.position.copy(pts[pts.length-1]);s.add(tip);branches.push(tip);
+  const L=lbl(bnames[b],'#'+bcol[b].toString(16).padStart(6,'0'));L.position.copy(pts[pts.length-1]);L.position.y+=0.35;s.add(L);branchLabels.push(L);}
   s.userData.cy=cycle;s.userData.pn=past;s.userData.bt=branches;
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 역사로 보는 미래 — 순환하는 과거에서 여러 갈래의 미래로 뻗어 나갑니다.','왼쪽 고리: 문명 흥망(토인비·헌팅턴)과 콘드라티예프 장기 파동의 순환.','오른쪽 분기: 기술 혁명(AI)·인구 천이·기후 변화 등 미래 시나리오.','역사의 패턴을 읽어 더 나은 미래를 선택하는 것이 응용 역사학의 목표.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.cy.rotation.z+=0.005;s.userData.pn.forEach((n,i)=>{n.scale.setScalar(1+0.3*Math.sin(T*2+i*0.7));});s.userData.bt.forEach((t,i)=>{t.rotation.y+=0.03;t.rotation.x+=0.02;t.scale.setScalar(1+0.2*Math.sin(T*1.5+i));});r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.cy.rotation.z+=0.005;s.userData.pn.forEach((n,i)=>{n.scale.setScalar(1+0.3*Math.sin(T*2+i*0.7));});s.userData.bt.forEach((t,i)=>{t.rotation.y+=0.03;t.rotation.x+=0.02;t.scale.setScalar(1+0.2*Math.sin(T*1.5+i));});r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
