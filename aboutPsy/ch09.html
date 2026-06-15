@@ -49,12 +49,17 @@
 <span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 이상과 치료 — 균형에서 벗어났다가 되돌아오기</span>
 <div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
 <script>(function(){
-  const c=document.getElementById('sim-scene');if(!c||!window.THREE)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const COL=0xa855f7;const N=15;for(let i=0;i<N;i++){const x=(i-(N-1)/2)*0.42;const col=new THREE.Color().setHSL(0.33-0.33*(i/(N-1)),0.6,0.55);const b=new THREE.Mesh(new THREE.BoxGeometry(0.3,1,0.3),new THREE.MeshBasicMaterial({color:col}));b.position.x=x;s.add(b);}const mk=new THREE.Mesh(new THREE.ConeGeometry(0.24,0.55,12),new THREE.MeshBasicMaterial({color:0xffffff}));mk.position.y=1.4;s.add(mk);s.userData.mk=mk;s.userData.N=N;
+  [['정상(적응)','#86efac',-3.0,-1.2,0],['이상(부적응)','#fca5a5',3.0,-1.2,0],['지금 상태','#ffffff',0,2.05,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});const mlab=s.children[s.children.length-1];
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 정상과 이상은 칼로 자르듯 나뉘지 않는 연속선(스펙트럼)입니다.','이상의 4D 기준: 일탈(Deviance)·고통(Distress)·기능장애(Dysfunction)·위험(Danger).','D 하나만으로는 부족 — 여러 D가 문화 안에서 부적응적일 때 진단을 고려합니다.','치료(CBT·약물·정신분석)는 균형에서 벗어난 마음을 적응 쪽으로 되돌립니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const N=s.userData.N;const drift=Math.sin(T*0.5);const pull=Math.exp(-((T*0.3)%6))*0;s.userData.mk.position.x=drift*(N-1)/2*0.42*(0.4+0.6*Math.abs(Math.cos(T*0.25)));s.rotation.y+=0;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const N=s.userData.N;const drift=Math.sin(T*0.5);s.userData.mk.position.x=drift*(N-1)/2*0.42*(0.4+0.6*Math.abs(Math.cos(T*0.25)));mlab.position.x=s.userData.mk.position.x;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();</script>
 
