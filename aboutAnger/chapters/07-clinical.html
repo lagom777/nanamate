@@ -85,12 +85,23 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const COL=0xef4444;const N=15;const bars=[];for(let i=0;i<N;i++){const x=(i-(N-1)/2)*0.42;const col2=new THREE.Color().setHSL(0.0+0.33*(i/(N-1)),0.6,0.55);const b=new THREE.Mesh(new THREE.BoxGeometry(0.3,1,0.3),new THREE.MeshBasicMaterial({color:col2}));b.position.x=x;s.add(b);bars.push(b);}const marker=new THREE.Mesh(new THREE.ConeGeometry(0.22,0.5,12),new THREE.MeshBasicMaterial({color:0xffffff}));marker.position.y=1.4;s.add(marker);s.userData.m=marker;s.userData.N=N;
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.3,8.5);cam.lookAt(0,-0.1,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=26,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+20;cv.height=fs+14;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0064,cv.height*0.0064,1);return sp;}
+  const N=15;const span=(N-1)/2*0.42;
+  // 분노 강도 스펙트럼(낮음=초록 → 높음=빨강) + 임상 구역(챕터: 어디부터 '임상'인가)
+  for(let i=0;i<N;i++){const x=(i-(N-1)/2)*0.42;const col2=new THREE.Color().setHSL(0.33*(1-i/(N-1)),0.65,0.5);const b=new THREE.Mesh(new THREE.BoxGeometry(0.3,1,0.3),new THREE.MeshBasicMaterial({color:col2}));b.position.x=x;s.add(b);}
+  const zones=[{n:'정상 범위',x:-span*0.75,lc:'#15803d'},{n:'주의',x:0,lc:'#92700a'},{n:'임상 범위',x:span*0.75,lc:'#b91c1c'}];
+  for(const z of zones){const t=lbl(z.n,z.lc);t.position.set(z.x,-1.15,0);s.add(t);}
+  const marker=new THREE.Mesh(new THREE.ConeGeometry(0.22,0.5,12),new THREE.MeshBasicMaterial({color:0xffffff}));marker.position.y=1.4;s.add(marker);
+  const mTag=lbl('내 분노 강도 (STAXI-2)','#374151');mTag.position.set(0,2.05,0);s.add(mTag);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 분노는 강도 스펙트럼 — 어디부터 "임상"인지 4기준으로 판단합니다.','① 빈도·강도 — 얼마나 자주, 얼마나 세게 터지는가.','② 기능 손상 — 관계·직장이 실제로 무너지는가.','③ 충동 통제 실패 + ④ 동반 장애(우울·외상·중독)를 함께 봅니다.','분노는 두통 같은 신호 — STAXI-2/MOAS로 측정하고 밑의 원인을 찾습니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const N=s.userData.N;const x=Math.sin(T*0.8)*(N-1)/2*0.42;s.userData.m.position.x=x;s.rotation.y+=0.0;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const x=Math.sin(T*0.8)*span;marker.position.x=x;mTag.position.x=x;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
