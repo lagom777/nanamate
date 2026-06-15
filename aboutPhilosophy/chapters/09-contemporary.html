@@ -87,23 +87,32 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,10);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   // 하나의 뿌리에서 세 학파로 분기 → 끝에서 파편으로 해체
   const root=new THREE.Vector3(0,-3.5,0);
   const rootM=new THREE.Mesh(new THREE.IcosahedronGeometry(0.5,0),new THREE.MeshBasicMaterial({color:0xffffff,wireframe:true}));rootM.position.copy(root);s.add(rootM);
   const trunkTop=new THREE.Vector3(0,-1,0);
   s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([root,trunkTop]),new THREE.LineBasicMaterial({color:0xcccccc})));
-  const frags=[];const branchG=new THREE.Group();
-  for(let b=0;b<3;b++){const col=new THREE.Color().setHSL(b/3,0.6,0.6);const end=new THREE.Vector3((b-1)*2.6,2.2,(b-1)*0.8);
+  const frags=[];const branchG=new THREE.Group();const hubEnds=[];
+  for(let b=0;b<3;b++){const col=new THREE.Color().setHSL(b/3,0.6,0.6);const end=new THREE.Vector3((b-1)*2.6,2.2,(b-1)*0.8);hubEnds.push(end);
     branchG.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([trunkTop,end]),new THREE.LineBasicMaterial({color:col})));
     const hub=new THREE.Mesh(new THREE.OctahedronGeometry(0.45,0),new THREE.MeshBasicMaterial({color:col,wireframe:true}));hub.position.copy(end);branchG.add(hub);
     for(let k=0;k<5;k++){const base=end.clone().add(new THREE.Vector3((Math.random()-0.5)*1.6,(Math.random()-0.2)*1.6,(Math.random()-0.5)*1.6));
       const f=new THREE.Mesh(new THREE.TetrahedronGeometry(0.18,0),new THREE.MeshBasicMaterial({color:col}));f.position.copy(base);f.userData={base:base.clone(),ph:Math.random()*6.28};branchG.add(f);frags.push(f);}}
   s.add(branchG);s.userData.frags=frags;s.userData.root=rootM;
+  // 공통 뿌리에서 세 학파로 분기 → 끝에서 파편(개념)으로 해체
+  const rootLbl=lbl('근대 철학 (공통 뿌리)','#555555');rootLbl.position.set(root.x,root.y-0.85,root.z);s.add(rootLbl);
+  const branchLabels=[['분석철학','#b91c1c'],['대륙철학','#15803d'],['포스트모던','#1d4ed8']];
+  for(let b=0;b<3;b++){const t=lbl(branchLabels[b][0],branchLabels[b][1]);t.position.set(hubEnds[b].x,hubEnds[b].y+0.75,hubEnds[b].z);s.add(t);}
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 현대 철학 — 하나의 뿌리가 분석·대륙·포스트모던으로 갈라진다.','분석철학(비트겐슈타인·콰인·크립키): 언어와 논리의 명료화로 문제를 푼다.','대륙철학·포스트모던(푸코·데리다): 권력-지식의 그물망과 의미의 해체.','데리다: 텍스트는 최종 의미에 닿지 못한다 — 해체(deconstruction)와 차연.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.004;s.userData.root.rotation.y+=0.01;s.userData.frags.forEach(f=>{f.rotation.x+=0.04;f.position.x=f.userData.base.x+Math.sin(T+f.userData.ph)*0.18;f.position.y=f.userData.base.y+Math.cos(T*0.8+f.userData.ph)*0.18;});r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.rotation.y+=0.004;s.userData.root.rotation.y+=0.01;s.userData.frags.forEach(f=>{f.rotation.x+=0.04;f.position.x=f.userData.base.x+Math.sin(T+f.userData.ph)*0.18;f.position.y=f.userData.base.y+Math.cos(T*0.8+f.userData.ph)*0.18;});r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
