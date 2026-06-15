@@ -56,17 +56,26 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const world=new THREE.Mesh(new THREE.SphereGeometry(1.6,18,14),new THREE.MeshBasicMaterial({color:0x335544,wireframe:true,transparent:true,opacity:0.4}));s.add(world);
   const powers=[0xc0392b,0x2471a3,0x239b56,0xd4ac0d,0x884ea0];const wedges=[];
   powers.forEach((pc,i)=>{const seg=new THREE.Mesh(new THREE.SphereGeometry(1.65,8,8,i/5*Math.PI*2,Math.PI*2/5,0.3,Math.PI*0.5),new THREE.MeshBasicMaterial({color:pc,wireframe:true,transparent:true,opacity:0.8}));s.add(seg);wedges.push(seg);});
   const blocA=new THREE.Mesh(new THREE.ConeGeometry(0.5,1.1,4),new THREE.MeshBasicMaterial({color:0xc0392b,wireframe:true}));blocA.rotation.z=-Math.PI/2;s.add(blocA);
   const blocB=new THREE.Mesh(new THREE.ConeGeometry(0.5,1.1,4),new THREE.MeshBasicMaterial({color:0x2471a3,wireframe:true}));blocB.rotation.z=Math.PI/2;s.add(blocB);
   s.userData.wd=wedges;s.userData.wo=world;s.userData.bA=blocA;s.userData.bB=blocB;
+  // 라벨: 지구 = 열강의 식민지 분할, 충돌하는 두 진영 = 세계대전
+  const wL=lbl('제국주의 — 열강이 지구를 식민지로 분할','#b03a20');wL.position.set(0,2.3,0);s.add(wL);
+  const aL=lbl('동맹국·추축국','#c0392b');s.add(aL);s.userData.aL=aL;
+  const bL=lbl('연합국','#2471a3');s.add(bL);s.userData.bL=bL;
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 제국주의 — 19C 후반 열강이 지구를 색색의 식민지로 분할합니다.','쌓인 긴장이 1차 세계대전(1914~1918)으로 폭발 — 두 진영이 충돌합니다.','2차 세계대전(1939~1945)과 홀로코스트 — 인류 최악의 전쟁.','전쟁의 참화 끝에 1945년 평화를 위한 UN이 창설됩니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.wo.rotation.y+=0.004;s.userData.wd.forEach(w=>{w.rotation.y+=0.004;});const d=2.6+Math.sin(T*1.2)*1.0;s.userData.bA.position.x=-d;s.userData.bB.position.x=d;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.wo.rotation.y+=0.004;s.userData.wd.forEach(w=>{w.rotation.y+=0.004;});const d=2.6+Math.sin(T*1.2)*1.0;s.userData.bA.position.x=-d;s.userData.bB.position.x=d;s.userData.aL.position.set(-d,0.65,0);s.userData.bL.position.set(d,0.65,0);r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
