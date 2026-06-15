@@ -101,13 +101,20 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,10);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const NM=5;const workers=[],firms=[],links=[];for(let i=0;i<NM;i++){const y=2.4-i*1.2;const w=new THREE.Mesh(new THREE.SphereGeometry(0.3,16,16),new THREE.MeshBasicMaterial({color:0x38bdf8}));w.position.set(-3.2,y,0);s.add(w);workers.push(w);const fm=new THREE.Mesh(new THREE.BoxGeometry(0.55,0.55,0.55),new THREE.MeshBasicMaterial({color:0xfb923c}));fm.position.set(3.2,y,0);s.add(fm);firms.push(fm);const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints([w.position.clone(),fm.position.clone()]),new THREE.LineBasicMaterial({color:0x10b981}));s.add(ln);links.push({ln,wi:i,fi:i});}
   s.userData.workers=workers;s.userData.firms=firms;s.userData.links=links;
+  const wL=lbl('노동공급 (노동자)','#0369a1');wL.position.set(-3.2,3.3,0);s.add(wL);
+  const fL=lbl('노동수요 (기업)','#c2410c');fL.position.set(3.2,3.3,0);s.add(fL);
+  const matchL=lbl('임금으로 매칭','#047857');matchL.position.set(0,0.5,0);s.add(matchL);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 노동자와 기업이 임금 신호로 짝지어지는 노동시장의 매칭 과정.','임금은 노동의 가격 — 노동공급과 노동수요가 만나 결정됩니다.','인적자본(교육·경험)이 높을수록 더 높은 임금으로 매칭됩니다.','탐색·매칭 마찰 때문에 일자리와 사람이 즉시 연결되지는 않습니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.workers.forEach((w,i)=>{w.position.x=-3.2+0.25*Math.sin(T*1.2+i);});s.userData.firms.forEach((fm,i)=>{fm.rotation.y+=0.02;fm.position.x=3.2-0.25*Math.sin(T*1.0+i);});s.userData.links.forEach(o=>{const w=s.userData.workers[o.wi].position,fm=s.userData.firms[o.fi].position;const arr=o.ln.geometry.attributes.position;arr.setXYZ(0,w.x,w.y,w.z);arr.setXYZ(1,fm.x,fm.y,fm.z);arr.needsUpdate=true;o.ln.material.color.setHSL(0.4,0.7,0.4+0.2*Math.sin(T*1.5+o.wi));});s.rotation.y=0.22*Math.sin(T*0.3);r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.workers.forEach((w,i)=>{w.position.x=-3.2+0.25*Math.sin(T*1.2+i);});s.userData.firms.forEach((fm,i)=>{fm.rotation.y+=0.02;fm.position.x=3.2-0.25*Math.sin(T*1.0+i);});s.userData.links.forEach(o=>{const w=s.userData.workers[o.wi].position,fm=s.userData.firms[o.fi].position;const arr=o.ln.geometry.attributes.position;arr.setXYZ(0,w.x,w.y,w.z);arr.setXYZ(1,fm.x,fm.y,fm.z);arr.needsUpdate=true;o.ln.material.color.setHSL(0.4,0.7,0.4+0.2*Math.sin(T*1.5+o.wi));});s.rotation.y=0.22*Math.sin(T*0.3);r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
