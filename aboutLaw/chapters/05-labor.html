@@ -54,17 +54,24 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8.5);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const rim=new THREE.Mesh(new THREE.TorusGeometry(2.4,0.12,16,48),new THREE.MeshBasicMaterial({color:0x5b8def}));s.add(rim);
   for(let i=0;i<12;i++){const th=i/12*Math.PI*2;const work=i<8;const mk=new THREE.Mesh(new THREE.BoxGeometry(0.18,work?0.55:0.3,0.18),new THREE.MeshBasicMaterial({color:work?0xe0732a:0x4caf78}));mk.position.set(Math.cos(th)*2.4,Math.sin(th)*2.4,0);mk.rotation.z=th-Math.PI/2;s.add(mk);}
   const hub=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.2,0.2,16),new THREE.MeshBasicMaterial({color:0xffe08a}));hub.rotation.x=Math.PI/2;s.add(hub);
   const hourH=new THREE.Mesh(new THREE.BoxGeometry(0.14,1.3,0.1),new THREE.MeshBasicMaterial({color:0xffffff}));hourH.geometry.translate(0,0.65,0);s.add(hourH);
   const minH=new THREE.Mesh(new THREE.BoxGeometry(0.09,1.9,0.08),new THREE.MeshBasicMaterial({color:0xffd24a}));minH.geometry.translate(0,0.95,0);s.add(minH);
+  const wL=lbl('근로시간(주 40시간)','#c2510f');wL.position.set(2.2,2.4,0);s.add(wL);
+  const rL=lbl('휴식·휴게','#15803d');rL.position.set(-2.4,-2.0,0);s.add(rL);
+  const cL=lbl('근로기준법','#2563eb');cL.position.set(0,3.1,0);s.add(cL);
   s.userData.h=hourH;s.userData.m=minH;
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 법정 근로시간 주 40시간 — 일과 휴식의 균형을 정한 시계.','근로기준법은 임금·근로시간·휴식·해고를 규율하는 노동 보호의 기준법.','최저임금은 강행규정 — 더 낮은 임금에 합의해도 무효입니다.','연장근로는 당사자 합의가 있어도 주 12시간을 넘을 수 없습니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.m.rotation.z=-T*1.2;s.userData.h.rotation.z=-T*0.1;s.rotation.y+=0.002;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.m.rotation.z=-T*1.2;s.userData.h.rotation.z=-T*0.1;s.rotation.y+=0.002;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
