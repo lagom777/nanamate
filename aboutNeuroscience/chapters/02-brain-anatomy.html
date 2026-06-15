@@ -55,17 +55,24 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
   const lobes=[[-1.6,1.0,0.4,1.5,0x6366f1],[0.4,1.7,0.3,1.4,0xf59e0b],[1.9,0.6,0.2,1.2,0x10b981],[2.0,-0.7,0.3,1.0,0xef4444],[-1.4,-1.4,-0.2,1.1,0x8b5cf6]];
   lobes.forEach(L=>{const lobe=new THREE.Mesh(new THREE.SphereGeometry(L[3]*0.55,16,16),new THREE.MeshBasicMaterial({color:L[4],transparent:true,opacity:0.85}));lobe.position.set(L[0],L[1],L[2]);s.add(lobe);});
   const stem=new THREE.Mesh(new THREE.CylinderGeometry(0.32,0.42,2.0,12),new THREE.MeshBasicMaterial({color:0x64748b}));stem.position.set(-0.2,-1.9,0);stem.rotation.z=0.25;s.add(stem);
   const corpus=new THREE.Mesh(new THREE.TorusGeometry(0.9,0.12,8,24,Math.PI),new THREE.MeshBasicMaterial({color:0xfde68a}));corpus.position.set(0,0,0);corpus.rotation.z=-0.3;s.add(corpus);
   for(let k=0;k<5;k++){const a2=lobes[k],b2=lobes[(k+1)%5];const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(a2[0],a2[1],a2[2]),new THREE.Vector3(b2[0],b2[1],b2[2])]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0x94a3b8,transparent:true,opacity:0.4})));}
   s.position.x=-0.3;
+  // 뇌 부위 라벨 — 기능별 분화를 가르치기 위함
+  [['전두엽(계획·판단)','#4338ca',-1.6,1.85,0.4],['두정엽(공간·촉각)','#b45309',0.4,2.55,0.3],['후두엽(시각)','#047857',2.9,0.6,0.2],['측두엽(청각·기억)','#b91c1c',3.1,-0.7,0.3],['소뇌(운동 협응)','#6d28d9',-1.4,-2.35,-0.2],['뇌간(생명 유지)','#475569',-1.7,-2.0,0],['뇌량(좌우 연결)','#a16207',0,-0.85,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 뇌는 부위마다 맡은 일이 달라 함께 협력합니다.','전두엽은 계획·판단을, 두정엽은 공간·촉각을 담당합니다.','후두엽은 시각, 측두엽은 청각·기억, 소뇌는 운동 협응을 맡습니다.','뇌간은 호흡·심박 등 생명 유지를, 뇌량은 좌우 반구 연결을 담당합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y=0.4*Math.sin(T*0.4); r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.rotation.y=0.4*Math.sin(T*0.4); r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script></body></html>
