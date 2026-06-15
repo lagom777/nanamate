@@ -85,12 +85,20 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1.5,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const COL=0xef4444;const globe=new THREE.Mesh(new THREE.SphereGeometry(1.6,18,14),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.4}));s.add(globe);const faces=[];const fc=[0xffe08a,0x93c5fd,0xfca5a5,0x86efac,0xc4b5fd,0xfdba74];for(let i=0;i<6;i++){const t=i/6*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.28,14,14),new THREE.MeshBasicMaterial({color:fc[i]}));s.add(m);faces.push({m,ph:t});}
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1.2,9);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=26,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+20;cv.height=fs+14;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0064,cv.height*0.0064,1);return sp;}
+  const COL=0xef4444;const globe=new THREE.Mesh(new THREE.SphereGeometry(1.6,18,14),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.35}));s.add(globe);
+  // 분노 표현을 규제하는 6가지 문화 요인(챕터 핵심)
+  const facts=[{n:'표현 규칙',col:0xffe08a,lc:'#92700a'},{n:'명예 문화',col:0xfca5a5,lc:'#b91c1c'},{n:'존엄 문화',col:0x86efac,lc:'#15803d'},{n:'위계',col:0x93c5fd,lc:'#1d4ed8'},{n:'성별 비대칭',col:0xc4b5fd,lc:'#6d28d9'},{n:'SNS 증폭',col:0xfdba74,lc:'#c2410c'}];
+  const faces=[];for(let i=0;i<facts.length;i++){const t=i/facts.length*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.28,14,14),new THREE.MeshBasicMaterial({color:facts[i].col}));s.add(m);const tag=lbl(facts[i].n,facts[i].lc);s.add(tag);faces.push({m,ph:t,tag});}
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 같은 분노라도 문화의 각본에 따라 다르게 표현됩니다.','표현 규칙(display rules): 어디서·누가 화내도 되는지를 문화가 정합니다.','명예 문화는 모욕에 강하게 응징, 존엄 문화는 제도적 해결을 선호합니다.','위계·성별이 누구의 분노가 "단호함"이고 누구의 분노가 "감정적"인지 가릅니다.','SNS는 도덕적 분노를 전 세계로 증폭하는 새 문화의 장입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;globe.rotation.y+=0.005;faces.forEach(o=>{o.m.position.set(Math.cos(T*0.4+o.ph)*2.7,Math.sin(o.ph)*0.6,Math.sin(T*0.4+o.ph)*2.7);});s.rotation.y+=0.001;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}globe.rotation.y+=0.005;faces.forEach(o=>{const x=Math.cos(T*0.4+o.ph)*2.7,y=Math.sin(o.ph)*0.6,z=Math.sin(T*0.4+o.ph)*2.7;o.m.position.set(x,y,z);o.tag.position.set(x,y+0.45,z);});s.rotation.y+=0.001;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
