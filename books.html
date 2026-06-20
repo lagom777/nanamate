@@ -43,7 +43,7 @@
     <p>위기를 먹고 사는 격(格)을 위한 독서 목록. 요약을 누르면 전체 내용이 펼쳐집니다.</p>
   </header>
   <div id="root"></div>
-  <p class="disc">표지 이미지는 Google Books에서 자동으로 불러오며, 불러오지 못하면 제목 표지로 대체됩니다. 추천 사유는 명리(命理) 관점의 해설로 참고용입니다.</p>
+  <p class="disc">표지는 Open Library에서 가져온 이미지이며, 일부는 다른 판본의 표지일 수 있습니다. 불러오지 못한 책은 제목 표지로 대체됩니다. 추천 사유는 명리(命理) 관점의 해설로 참고용입니다.</p>
 </div>
 <script>
 const SECTIONS = [
@@ -101,6 +101,7 @@ const SECTIONS = [
  ]},
 ];
 
+const COVERS={"안티프래질": "https://covers.openlibrary.org/b/id/9180157-M.jpg", "편집광만이 살아남는다": "https://covers.openlibrary.org/b/id/241061-M.jpg", "하드씽": "https://covers.openlibrary.org/b/id/7279515-M.jpg", "블랙 스완": "https://covers.openlibrary.org/b/id/5721840-M.jpg", "리프트오프": "https://covers.openlibrary.org/b/id/11033056-M.jpg", "손자병법 (孫子兵法)": "https://covers.openlibrary.org/b/id/4849549-M.jpg", "한비자 (韓非子)": "https://covers.openlibrary.org/b/id/9077477-M.jpg", "군주론": "https://covers.openlibrary.org/b/id/12726168-M.jpg", "스트레스 테스트": "https://covers.openlibrary.org/b/id/7285073-M.jpg", "대마불사": "https://covers.openlibrary.org/b/id/6714080-M.jpg", "타이탄": "https://covers.openlibrary.org/b/id/12373738-M.jpg", "전쟁론": "https://covers.openlibrary.org/b/id/9933109-M.jpg", "글로벌 카타스트로피": "https://covers.openlibrary.org/b/id/5688262-M.jpg", "헝거 게임": "https://covers.openlibrary.org/b/id/12646537-M.jpg", "명상록": "https://covers.openlibrary.org/b/id/13202688-M.jpg", "숨결이 바람 될 때": "https://covers.openlibrary.org/b/id/11463139-M.jpg", "죽음의 수용소에서": "https://covers.openlibrary.org/b/id/8516506-M.jpg", "1984": "https://covers.openlibrary.org/b/id/9267242-M.jpg", "제3제국의 흥망": "https://covers.openlibrary.org/b/id/6558536-M.jpg", "앵무새 죽이기": "https://covers.openlibrary.org/b/id/14351077-M.jpg", "가난한 찰리의 연감": "https://covers.openlibrary.org/b/id/8337563-M.jpg", "사피엔스 / 호모 데우스": "https://covers.openlibrary.org/b/id/8634250-M.jpg", "이기적 유전자": "https://covers.openlibrary.org/b/id/133936-M.jpg", "제로 투 원": "https://covers.openlibrary.org/b/id/9002334-M.jpg", "인과추론의 과학": "https://covers.openlibrary.org/b/id/8179733-M.jpg", "과학혁명의 구조": "https://covers.openlibrary.org/b/id/6566386-M.jpg", "괴델, 에셔, 바흐": "https://covers.openlibrary.org/b/id/14368453-M.jpg", "장자 (莊子)": "https://covers.openlibrary.org/b/id/9147609-M.jpg", "싯다르타": "https://covers.openlibrary.org/b/id/6562535-M.jpg", "죽음의 부정": "https://covers.openlibrary.org/b/id/4506134-M.jpg", "코스모스": "https://covers.openlibrary.org/b/id/8283901-M.jpg", "투자에 대한 생각": "https://covers.openlibrary.org/b/id/10001222-M.jpg", "라이프 3.0 / 슈퍼인텔리전스": "https://covers.openlibrary.org/b/id/10239283-M.jpg", "시킹 위즈덤": "https://covers.openlibrary.org/b/id/9671797-M.jpg", "주역 (周易)": "https://covers.openlibrary.org/b/id/7135261-M.jpg", "원칙": "https://covers.openlibrary.org/b/id/8315355-M.jpg", "현명한 투자자": "https://covers.openlibrary.org/b/id/36434-M.jpg", "팩트풀니스": "https://covers.openlibrary.org/b/id/8186237-M.jpg", "측정의 기술": "https://covers.openlibrary.org/b/id/1239590-M.jpg", "사피엔스": "https://covers.openlibrary.org/b/id/8634250-M.jpg", "역사의 교훈": "https://covers.openlibrary.org/b/id/7240225-M.jpg", "생각에 관한 생각": "https://covers.openlibrary.org/b/id/13290711-M.jpg"};
 function firstSentence(t){ const m=t.match(/^[^.!?]*[.!?]/); return m?m[0].trim():t; }
 const root=document.getElementById('root');
 SECTIONS.forEach(sec=>{
@@ -109,9 +110,8 @@ SECTIONS.forEach(sec=>{
   const grid=s.querySelector('.grid');
   sec.books.forEach(b=>{
     const card=document.createElement('div'); card.className='book';
-    const q='intitle:'+(b.en.split('·')[0].split('/')[0].trim());
     card.innerHTML=
-      '<div class="cover"><img alt="'+b.ko+' 표지" loading="lazy"><div class="fb">'+b.ko+'</div></div>'+
+      '<div class="cover"><img alt="'+b.ko+' 표지" loading="lazy" src="'+(COVERS[b.ko]||"")+'" onload="this.style.display=\'block\';this.nextElementSibling.style.display=\'none\'" onerror="this.removeAttribute(\'src\')"><div class="fb">'+b.ko+'</div></div>'+
       '<div class="meta">'+
         (b.tag?'<span style="font-size:10px;font-weight:700;color:'+(b.tag==='보완'?'#b45309':'#15803d')+'">['+b.tag+']</span> ':'')+
         '<p class="ko">'+b.ko+'</p>'+
@@ -124,27 +124,11 @@ SECTIONS.forEach(sec=>{
       card.classList.toggle('open');
       card.querySelector('.toggle').textContent=card.classList.contains('open')?'▴ 접기':'▾ 자세히 보기';
     });
-    card.dataset.q=q;
     grid.appendChild(card);
   });
   root.appendChild(s);
 });
 
-// 표지 lazy 로드 (Google Books) + 실패 시 제목 표지 폴백
-const io=new IntersectionObserver((ents,obs)=>{
-  ents.forEach(e=>{ if(!e.isIntersecting)return; obs.unobserve(e.target); loadCover(e.target); });
-},{rootMargin:'200px'});
-document.querySelectorAll('.book').forEach(c=>io.observe(c));
-async function loadCover(card){
-  const img=card.querySelector('.cover img'), fb=card.querySelector('.cover .fb');
-  try{
-    const r=await fetch('https://www.googleapis.com/books/v1/volumes?maxResults=1&q='+encodeURIComponent(card.dataset.q));
-    const d=await r.json();
-    const links=d.items&&d.items[0]&&d.items[0].volumeInfo&&d.items[0].volumeInfo.imageLinks;
-    const url=links&&(links.thumbnail||links.smallThumbnail);
-    if(url){ img.onload=()=>{img.style.display='block';fb.style.display='none';}; img.src=url.replace('http://','https://'); }
-  }catch(e){ /* 폴백(제목 표지) 유지 */ }
-}
 </script>
 </body>
 </html>
