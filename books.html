@@ -18,8 +18,10 @@
   .section > h2{font-size:21px;margin:0 0 6px;padding-bottom:8px;border-bottom:2px solid var(--line);}
   .section > .intro{color:var(--dim);font-size:14px;margin:10px 0 18px;background:#eef1f8;border-left:3px solid #b9c2dd;border-radius:8px;padding:12px 14px;}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
-  .book{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;gap:14px;cursor:pointer;transition:box-shadow .15s,transform .15s;}
-  .book:hover{box-shadow:0 8px 24px rgba(31,40,70,.08);transform:translateY(-2px);}
+  .book{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;gap:14px;cursor:pointer;transition:box-shadow .18s ease,border-color .18s ease,background .18s ease;}
+  .book:hover{box-shadow:0 10px 28px rgba(59,74,120,.16);border-color:#aab6dd;background:#fcfdff;}
+  .book:hover .cover{box-shadow:0 4px 14px rgba(59,74,120,.28);}
+  .book:hover .ko{color:var(--accent);}
   .cover{width:64px;min-width:64px;height:94px;border-radius:6px;overflow:hidden;position:relative;background:linear-gradient(135deg,#3b4a78,#6b7aa8);box-shadow:0 2px 6px rgba(0,0,0,.15);}
   .cover img{width:100%;height:100%;object-fit:cover;display:none;}
   .cover .fb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:6px;color:#fff;font-size:10px;font-weight:700;line-height:1.25;}
