@@ -11,6 +11,7 @@
   <script defer src="../../shared/search.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
   <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -177,6 +178,10 @@ ph.verify(hashed, "user-password-here")   # 일치 시 True, 아니면 예외</c
   <div class="success-box"><strong>🎓 도전 과제:</strong> 본인의 사이드 프로젝트 하나에 Keycloak 또는 Ory를 셋업하고, ① Authorization Code + PKCE로 로그인, ② Passkey 등록·로그인, ③ Refresh token rotation + 도난 탐지, ④ OPA Rego로 RBAC 정책 외부화, ⑤ HIBP API로 침해 비밀번호 차단까지 한 사이클로 구현해보세요. 보안 면접의 '인증·인가' 질문 80%가 직관적으로 답하게 됩니다.</div>
 </div>
 
+<h2>🕹️ 직접 해보기 — 인증·인가 용어 짝맞추기</h2>
+<p>각 용어를 알맞은 설명과 연결하세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#475569","prompt":"용어와 설명을 짝지으세요","pairs":[{"term":"인증(AuthN)","def":"당신이 누구인지 증명"},{"term":"인가(AuthZ)","def":"무엇을 할 수 있는지 결정"},{"term":"MFA","def":"서로 다른 요소 둘 이상 결합"},{"term":"OAuth 2.0","def":"인가 위임 프레임워크"},{"term":"RBAC","def":"역할에 권한을 묶는 모델"}]};</script>
 <h2>🎮 3D 미니게임</h2>
 <p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
 <div id="nm-quiz-host"></div>

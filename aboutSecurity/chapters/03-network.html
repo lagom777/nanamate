@@ -11,6 +11,7 @@
   <script defer src="../../shared/search.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
   <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -161,6 +162,10 @@ iptables -A INPUT -p tcp --dport 443 -j ACCEPT</code></pre>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 자신의 공유기/홈랩에 Suricata 또는 Zeek를 설치하고 1주일간 트래픽을 캡처해, ① 어떤 도메인으로 가장 많이 나가는가, ② TLS 1.3/QUIC 비중은 얼마인가, ③ 의심스러운 도메인이 있는가(Ti feed와 매칭)를 직접 분석해보세요. ELK·Grafana로 대시보드까지 만들면 SOC 분석가의 실무 감각을 그대로 체험할 수 있습니다.</div>
 </div>
 
+<h2>🕹️ 직접 해보기 — 네트워크 도구 분류</h2>
+<p>각 도구를 VPN 프로토콜과 패킷 분석 도구로 나눠보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#475569","prompt":"도구를 알맞은 그룹으로 분류하세요","groups":[{"name":"VPN 프로토콜","items":["IPsec","WireGuard","OpenVPN"]},{"name":"패킷 분석 도구","items":["Wireshark","tcpdump","Zeek"]}]};</script>
 <h2>🎮 3D 미니게임</h2>
 <p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
 <div id="nm-quiz-host"></div>

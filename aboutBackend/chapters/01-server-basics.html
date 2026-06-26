@@ -12,6 +12,7 @@
   <script defer src="../../shared/search.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
   <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -158,6 +159,10 @@ http.createServer((req, res) =&gt; {
 </div>
 
 
+<h2>🕹️ 직접 해보기 — 요청-응답 흐름 순서 맞추기</h2>
+<p>클라이언트의 요청이 서버와 DB를 거쳐 응답으로 돌아오는 순서를 맞춰보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#00ff88","prompt":"요청이 클라이언트에서 출발해 응답으로 돌아오는 순서대로 배열하세요","steps":["클라이언트가 요청 전송","서버가 요청 수신","서버가 DB에 데이터 조회","DB가 서버에 결과 반환","서버가 클라이언트에 응답 전송"]};</script>
 <h2>🎮 3D 미니게임</h2>
 <p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
 <div id="nm-quiz-host"></div>

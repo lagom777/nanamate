@@ -12,6 +12,7 @@
   <script defer src="../../shared/search.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
   <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -181,6 +182,10 @@ app.use((err, req, res, next) =&gt; {
 </div>
 
 
+<h2>🕹️ 직접 해보기 — 미들웨어 체인 순서 맞추기</h2>
+<p>요청이 통과하는 Express 미들웨어 체인의 일반적인 순서를 맞춰보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#00ff88","prompt":"요청이 거치는 미들웨어 체인을 순서대로 배열하세요","steps":["Logger (로깅)","CORS","Parser (본문 파싱)","Auth (인증)","Handler (라우트 핸들러)"]};</script>
 <h2>🎮 3D 미니게임</h2>
 <p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
 <div id="nm-quiz-host"></div>

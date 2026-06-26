@@ -12,6 +12,7 @@
   <script defer src="../../shared/search.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
   <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -431,6 +432,10 @@ SELECT * FROM users WHERE user_id = 12345;</code></pre>
 </div>
 
 
+<h2>🕹️ 직접 해보기 — 다른 하나 찾기</h2>
+<p>같은 묶음에 어울리지 않는 하나를 골라보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#0d6efd","prompt":"성격이 다른 하나를 고르세요","rounds":[{"items":["해시 샤딩","레인지 샤딩","디렉토리 샤딩","복제"],"odd":3,"why":"나머지는 샤딩 방식, 복제는 데이터 복사 기법"},{"items":["일관성","가용성","분할내성","샤딩"],"odd":3,"why":"나머지는 CAP 정리의 세 요소, 샤딩은 분산 기법"},{"items":["마스터-슬레이브","멀티마스터","피어-투-피어","수직 확장"],"odd":3,"why":"나머지는 복제 토폴로지, 수직 확장은 확장 방식"}]};</script>
 <h2>🎮 3D 미니게임</h2>
 <p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
 <div id="nm-quiz-host"></div>

@@ -12,6 +12,7 @@
   <script defer src="../../shared/search.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
   <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -382,6 +383,10 @@ SELECT pg_try_advisory_lock(hashtext('daily_settlement'));
 </div>
 
 
+<h2>🕹️ 직접 해보기 — 다른 하나 찾기</h2>
+<p>같은 묶음에 어울리지 않는 하나를 골라보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#0d6efd","prompt":"성격이 다른 하나를 고르세요","rounds":[{"items":["원자성","일관성","지속성","SERIALIZABLE"],"odd":3,"why":"나머지는 ACID 속성, SERIALIZABLE은 격리 수준"},{"items":["READ COMMITTED","REPEATABLE READ","SERIALIZABLE","원자성"],"odd":3,"why":"나머지는 격리 수준, 원자성은 ACID 속성"},{"items":["공유 잠금","배타 잠금","데드락","COMMIT"],"odd":3,"why":"나머지는 동시성·잠금 개념, COMMIT은 트랜잭션 확정 명령"}]};</script>
 <h2>🎮 3D 미니게임</h2>
 <p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
 <div id="nm-quiz-host"></div>

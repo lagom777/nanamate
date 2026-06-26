@@ -19,6 +19,7 @@
   <script defer src="../../shared/search.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
   <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -286,6 +287,10 @@ for _ in range(500):
   <div class="success-box"><strong>🎓 도전 과제:</strong> Atari Pong 환경에서 PPO를 처음부터 구현해 인간 수준 성능을 달성한 뒤, 같은 모델에 픽셀 외에 보드 위 점수 텍스트(OCR)를 함께 입력하는 멀티모달 변형을 시도해보세요. 다중 모달리티 융합의 효과와 한계를 직접 체감할 수 있습니다.</div>
 </div>
 
+<h2>🕹️ 직접 해보기 — 강화학습 용어 짝맞추기</h2>
+<p>강화학습과 멀티모달 핵심 용어를 설명과 짝지어 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#b8441c","prompt":"용어와 설명을 짝지으세요","pairs":[{"term":"정책(policy)","def":"상태에서 행동을 고르는 규칙"},{"term":"보상(reward)","def":"행동의 좋고 나쁨을 알리는 신호"},{"term":"Q-Learning","def":"행동의 가치(Q값)를 학습"},{"term":"CLIP","def":"이미지와 텍스트를 대조 학습"},{"term":"탐험 vs 활용","def":"새 시도와 기존 최선의 균형"}]};</script>
 <h2>🎮 3D 미니게임</h2>
 <p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
 <div id="nm-quiz-host"></div>

@@ -11,6 +11,7 @@
   <script defer src="../../shared/search.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
   <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -141,6 +142,10 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> ① f(x) = x²의 [0,1] 리만 합 Σ(i/n)²(1/n) = (n+1)(2n+1)/6n²을 직접 유도하고 n→∞에서 1/3을 확인하기(위 3D가 하던 일을 손으로). ② 부분적분으로 ∫ln x dx = x ln x − x + C 유도하기. ③ 동전 100번 던지기에서 앞면 60회 이상의 확률을 CLT 정규근사(μ=50, σ=5, z=2)로 추정해 보기 — "±2σ 바깥 2.5%"가 실제 판단에 쓰이는 경험입니다.</div>
 </div>
 
+<h2>🕹️ 직접 해보기 — 정적분이 만들어지는 순서</h2>
+<p>넓이를 구하는 적분의 흐름을 순서대로 쌓아보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#f43f5e","prompt":"정적분 개념이 만들어지는 순서대로 배열하세요","steps":["곡선 아래를 직사각형으로 자르기","리만 합","정적분 ∫ₐᵇf dx (극한)","원시함수 F 찾기","기본정리 F(b)−F(a)"]};</script>
 <h2>🎮 3D 미니게임</h2>
 <p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
 <div id="nm-quiz-host"></div>

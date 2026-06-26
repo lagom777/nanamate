@@ -12,6 +12,7 @@
   <script defer src="../../shared/search.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
   <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -172,6 +173,10 @@ const result = await circuit.execute(() =&gt;
 </div>
 
 
+<h2>🕹️ 직접 해보기 — 어울리지 않는 하나 고르기</h2>
+<p>각 묶음에서 성격이 다른 하나를 찾아보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#00ff88","prompt":"같은 부류가 아닌 하나를 고르세요","rounds":[{"items":["API Gateway","서킷 브레이커","사가 패턴","모놀리식"],"odd":3,"why":"모놀리식은 아키텍처 유형, 나머지는 마이크로서비스 패턴"},{"items":["Closed","Open","Half-Open","Locked"],"odd":3,"why":"서킷 브레이커 상태는 Closed/Open/Half-Open 세 가지"},{"items":["Consul","etcd","Kubernetes DNS","RabbitMQ"],"odd":3,"why":"RabbitMQ는 메시지 브로커, 나머지는 서비스 디스커버리"}]};</script>
 <h2>🎮 3D 미니게임</h2>
 <p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
 <div id="nm-quiz-host"></div>

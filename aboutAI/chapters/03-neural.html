@@ -19,6 +19,7 @@
   <script defer src="../../shared/search.js"></script>
   <script defer src="../../shared/difficulty.js"></script>
   <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
 </head>
 <body>
 <div class="layout">
@@ -354,6 +355,10 @@ opt.step(); opt.zero_grad()</code></pre>
   <div class="success-box"><strong>🎓 도전 과제:</strong> Karpathy의 micrograd를 끝까지 따라 구현한 뒤, 자동 미분을 직접 만든 다음 CIFAR-10에 작은 ResNet을 적용해보세요. 이 과정에서 PyTorch의 autograd가 어떻게 계산 그래프를 만들고 backward를 호출하는지 완전히 이해할 수 있습니다.</div>
 </div>
 
+<h2>🕹️ 직접 해보기 — 다른 하나 찾기 — 신경망</h2>
+<p>넷 중 성격이 다른 하나를 골라보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#b8441c","prompt":"나머지와 어울리지 않는 하나를 고르세요","rounds":[{"items":["Sigmoid","ReLU","GELU","LSTM"],"odd":3,"why":"LSTM은 순환 신경망 구조, 나머지는 활성화 함수"},{"items":["CNN","RNN","LSTM","ReLU"],"odd":3,"why":"ReLU는 활성화 함수, 나머지는 신경망 아키텍처"},{"items":["지역 연결성","파라미터 공유","풀링","역전파"],"odd":3,"why":"역전파는 학습 알고리즘, 나머지는 CNN의 특성"}]};</script>
 <h2>🎮 3D 미니게임</h2>
 <p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
 <div id="nm-quiz-host"></div>
