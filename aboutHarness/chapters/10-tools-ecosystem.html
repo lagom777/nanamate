@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10. 에이전트 도구 생태계 — aboutHarness</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">🛠️ 표지</a></li>
+<li><a href="01-what-is-harness.html">1. 하네스란 무엇인가</a></li>
+<li><a href="02-agent-loop.html">2. 에이전트 루프</a></li>
+<li><a href="03-tools.html">3. 툴 설계</a></li>
+<li><a href="04-context.html">4. 컨텍스트 엔지니어링</a></li>
+<li><a href="05-verification.html">5. 검증과 목표주도 실행</a></li>
+<li><a href="06-orchestration.html">6. 멀티에이전트 오케스트레이션</a></li>
+<li><a href="07-memory.html">7. 메모리와 상태</a></li>
+<li><a href="08-safety.html">8. 안전·권한·샌드박스</a></li>
+<li><a href="09-failures-frontier.html">9. 실패모드와 프런티어</a></li>
+<li><a href="10-tools-ecosystem.html">10. 에이전트 도구 생태계</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1>에이전트 <em>도구 생태계</em></h1><p class="authors">Chapter 10 — The Agent Tooling Ecosystem</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">🧰 모델 → 코딩 에이전트 → 하네스 → 오케스트레이션</span>
+<h2>실제 도구로 보는 하네스</h2><p>지금까지 하네스의 <strong>원리</strong>(루프·툴·컨텍스트·검증·오케스트레이션)를 배웠습니다. 이번 장에서는 그 원리를 실제로 구현한 <strong>도구·프레임워크·제품</strong>들을 둘러봅니다. 직접 하네스를 짜지 않아도, 잘 만들어진 도구를 골라 쓰는 것 또한 하네스 엔지니어링입니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>도구는 크게 세 층으로 나뉩니다 — <strong>① 코딩 에이전트</strong>(CLI/IDE), <strong>② 그 위에 얹는 하네스·오케스트레이션 레이어</strong>, <strong>③ 직접 만들 때 쓰는 멀티에이전트 프레임워크</strong>.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3><p>에이전트 도구 생태계는 '모델을 실제로 일하게 만드는' 완성품 도구들의 모음입니다 — 직접 안 만들어도 골라 쓸 수 있어요.</p>
+  <h3>왜 흥미로운가?</h3><p>같은 모델이라도 어떤 도구로 감싸느냐에 따라 생산성이 갈립니다. 터미널에서 코드를 짜 주는 Claude Code·Codex, 코드 에디터형 Cursor, 그리고 그 코딩 에이전트 <strong>위에 얹어</strong> 여러 에이전트를 팀처럼 굴리는 oh-my-openagent 같은 하네스까지 — 지금 이 분야가 가장 빠르게 자라는 곳입니다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>코딩 에이전트</strong>: 코드를 직접 읽고 쓰고 실행하는 에이전트(CLI/IDE)</li><li><strong>하네스/오케스트레이션 레이어</strong>: 코딩 에이전트 위에 얹어 여러 에이전트를 조율</li><li><strong>멀티에이전트 프레임워크</strong>: 직접 에이전트를 만들 때 쓰는 도구상자</li><li><strong>MCP</strong>: 도구·데이터 소스를 표준 방식으로 연결(Model Context Protocol)</li><li><strong>OpenCode</strong>: 오픈소스 터미널 코딩 에이전트(여러 하네스의 베이스)</li></ul></div>
+  <h3>개념 풀어쓰기</h3><p>생태계를 카테고리로 보면 쉽습니다. <strong>코딩 에이전트(CLI)</strong>: Claude Code(Anthropic), Codex CLI(OpenAI), Gemini CLI(Google), OpenCode(오픈소스), Aider(깃 연동 페어프로그래밍), Goose(Block), Pi(확장형 터미널 에이전트). <strong>IDE형</strong>: Cursor(AI 우선 코드 에디터). <strong>그 위 하네스</strong>: oh-my-openagent(omo) — 여러 에이전트를 한 팀으로 묶음. <strong>자율 에이전트/플랫폼</strong>: Devin, OpenHands. <strong>프레임워크</strong>: LangGraph, CrewAI, AutoGen — 내 손으로 에이전트를 조립할 때 씁니다. 처음엔 코딩 에이전트 하나로 시작하고, 더 큰 작업이면 그 위에 하네스를 얹는 식으로 발전합니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 새 도구를 만날 때 4가지만 보세요 — (1) CLI냐 IDE냐, (2) 단일 에이전트냐 멀티냐, (3) 확장성·MCP 지원, (4) 멀티모델 지원. 이걸로 정체가 금방 잡힙니다.</p></div>
+  <h3>요약</h3><ul><li>도구는 코딩 에이전트 / 하네스 레이어 / 프레임워크로 나뉩니다.</li><li>코딩 에이전트: Claude Code·Codex·OpenCode·Aider·Cursor·Pi.</li><li>그 위 하네스: oh-my-openagent(omo).</li><li>프레임워크: LangGraph·CrewAI·AutoGen.</li><li>골라 쓰는 것도 하네스 엔지니어링입니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>카테고리 깊이</h3><p><strong>코딩 에이전트</strong>는 터미널/에디터에서 파일을 읽고 쓰고 명령을 실행하는 단일 에이전트입니다(Claude Code, Codex CLI, OpenCode, Aider, Cursor). <strong>하네스/오케스트레이션 레이어</strong>는 그 위에 얹혀 여러 에이전트·훅·MCP·루프를 더해 '팀'으로 만듭니다. <strong>멀티에이전트 프레임워크</strong>(LangGraph·CrewAI·AutoGen)는 라이브러리로, 내가 직접 에이전트 그래프/크루/대화를 코드로 조립할 때 씁니다.</p>
+  <div class="info-card"><h4>🛠️ 사례 1 — oh-my-openagent (omo)</h4><p>code-yeongyu(Sisyphus Labs)의 omo는 OpenCode/Codex 위에 얹는 <strong>멀티모델 오케스트레이션 하네스</strong>입니다. 11개 전문 에이전트(오케스트레이터 Sisyphus, 딥워커 Hephaestus, 플래너 Prometheus, 아키텍트 Oracle 등), Team Mode(리드 + 최대 8명 병렬), Ralph Loop(완료까지 자기참조 반복), <code>ultrawork</code> 한 명령 실행, hashline 안정 편집, 54+ 라이프사이클 훅, 기본 MCP(웹검색 Exa·문서 Context7·코드검색 Grep.app)를 제공합니다. 이 과목에서 배운 루프·툴·컨텍스트·오케스트레이션을 한 제품에 집약한 예입니다.</p></div>
+  <div class="info-card"><h4>🛠️ 사례 2 — Pi</h4><p>Pi(pi.dev)는 터미널 기반 코딩 에이전트로, 통합 LLM API + 에이전트 루프 + TUI를 갖추고 '코어는 최소, 기능은 확장/스킬/패키지로'라는 철학으로 설계됐습니다. 멀티 프로바이더(Anthropic·OpenAI·Google·xAI 등)를 지원하며, 터미널·IDE·디버거를 잇는 oh-my-pi 같은 확장도 있습니다.</p></div>
+  <h3>설계 관점 — 어떻게 고를까</h3><p>작업이 단순하면 코딩 에이전트 하나로 충분합니다. 대규모·복잡 코드베이스이거나 병렬·분업이 필요하면 그 위에 하네스(omo 등)를 얹습니다. 제품을 직접 만든다면 프레임워크(LangGraph·CrewAI·AutoGen)로 조립합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "에이전트는 자율적일수록 좋다"는 생각은 위험합니다. 자율도가 높을수록 8장의 <strong>검증·권한 게이트</strong>가 더 중요해집니다 — 통제 없는 자율은 사고로 직결됩니다.</p></div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 — 하네스를 평가하는 법</h3><p>하네스/도구를 고를 때의 평가 축: (1) 컨텍스트 관리(주입·압축·캐시), (2) 검증 루프(자기수정·게이트), (3) 오케스트레이션 구조(단일/팀/그래프), (4) 확장성(훅·스킬·MCP·플러그인), (5) 멀티모델, (6) 비용·토큰 효율. 좋은 하네스는 코딩 에이전트의 '날 것 능력'을 신뢰성 있는 결과로 바꿔 줍니다.</p>
+  <h3>케이스 스터디 — omo로 보는 1~9장</h3><p>oh-my-openagent는 이 과목 전체를 한 제품에 매핑합니다: <strong>2장 루프</strong>=Ralph Loop, <strong>3장 툴</strong>=MCP·LSP·AST-Grep, <strong>4장 컨텍스트</strong>=계층형 자동 주입·hashline, <strong>5장 검증</strong>=comment-checker·라이프사이클 훅, <strong>6장 오케스트레이션</strong>=Team Mode·11 에이전트 분업, <strong>7장 메모리</strong>=start-work-continuation, <strong>8장 안전</strong>=에이전트별 도구 권한. 하나의 하네스가 9개 원리를 어떻게 엮는지 보여 주는 좋은 교재입니다.</p>
+  <h3>핵심 모델</h3><div class="formula">도구 선택 ≈ f(작업 유형, 기반 모델, 자율도 × 검증 강도, 확장성, 비용/토큰)</div>
+  <h3>최신 흐름</h3><p>코딩 에이전트(OpenCode·Codex) 위에 하네스 레이어(omo)를 얹는 '레이어드' 접근이 부상하고 있습니다. 멀티모델·멀티에이전트, 그리고 'building in public'으로 공개 개발하는 문화가 확산 중입니다.</p>
+  <h3>관련 분야</h3><ul><li>MCP·도구 상호운용성</li><li>멀티에이전트 오케스트레이션(6장)</li><li>에이전트 평가·벤치마크</li></ul>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> OpenCode 위에 당신만의 하네스를 만든다면, 어떤 전문 에이전트 역할들을 두고(1~9장 종합) 어떤 검증 게이트를 넣겠습니까?</div>
+</div>
+<h2>🕹️ 직접 해보기 — 도구와 정체 짝맞추기</h2>
+<p>주요 에이전트 도구와 그 정체를 짝지어 보며 생태계를 정리해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#14b8a6","prompt":"에이전트 도구와 정체를 짝지으세요","pairs":[{"term":"oh-my-openagent(omo)","def":"OpenCode/Codex용 멀티에이전트 하네스"},{"term":"Pi","def":"확장형 터미널 코딩 에이전트"},{"term":"Claude Code","def":"Anthropic 터미널 코딩 에이전트"},{"term":"Cursor","def":"AI 우선 코드 에디터(IDE)"},{"term":"LangGraph","def":"그래프 기반 에이전트 오케스트레이션 프레임워크"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#14b8a6","questions":[{"q":"oh-my-openagent(omo)의 정체는?","choices":["코드 에디터","멀티에이전트 오케스트레이션 하네스","데이터베이스","브라우저"],"answer":1},{"q":"omo가 주로 얹히는 베이스 코딩 에이전트는?","choices":["OpenCode/Codex","Excel","Photoshop","Slack"],"answer":0},{"q":"LangGraph·CrewAI·AutoGen은 어떤 분류인가?","choices":["코딩 에이전트","멀티에이전트 프레임워크","IDE","운영체제"],"answer":1},{"q":"MCP가 하는 일은?","choices":["도구·데이터 소스를 표준 방식으로 연결","파일 압축","영상 편집","결제 처리"],"answer":0},{"q":"에이전트의 자율도가 높을수록 더 중요해지는 것은?","choices":["폰트","검증·권한 게이트","배경색","아이콘"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,11);cam.lookAt(0,0.5,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=22,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 4층 스택: 모델 → 코딩에이전트 → 하네스 → 오케스트레이션
+  const layers=[['모델 (LLM)','#64748b',-3],['코딩 에이전트','#0ea5e9',-1],['하네스 (omo)','#14b8a6',1],['오케스트레이션','#a855f7',3]];
+  layers.forEach(L=>{const m=new THREE.Mesh(new THREE.BoxGeometry(6,1.1,2),new THREE.MeshBasicMaterial({color:parseInt(L[1].slice(1),16),transparent:true,opacity:0.85}));m.position.set(0,L[2],0);s.add(m);const t=lbl(L[0],'#ffffff');t.position.set(0,L[2],1.2);s.add(t);});
+  // 위성: 실제 도구명
+  const tools=['Claude Code','Codex','OpenCode','Aider','Cursor','Pi','LangGraph','CrewAI'];
+  const sats=[];
+  tools.forEach((nm,i)=>{const ang=(i/tools.length)*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.18,12,12),new THREE.MeshBasicMaterial({color:0x2dd4bf}));sats.push({m,ang,rad:5.2,y:(i%4-1.5)});s.add(m);const t=lbl(nm,'#0f766e');t.position.set(0,0,0);t.userData={ang,off:0.6};s.add(t);sats[sats.length-1].t=t;});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['🧰 아래부터: 모델 → 코딩 에이전트 → 하네스 → 오케스트레이션','코딩 에이전트(Claude Code·Codex·OpenCode·Aider·Cursor·Pi) 위에…','하네스(oh-my-openagent)가 얹혀 여러 에이전트를 팀으로 묶습니다.','프레임워크(LangGraph·CrewAI·AutoGen)로 직접 조립할 수도 있습니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}sats.forEach(o=>{const ang=o.ang+T*0.4;o.m.position.set(Math.cos(ang)*o.rad,o.y*0.9+0.5,Math.sin(ang)*o.rad);o.t.position.set(Math.cos(ang)*o.rad,o.y*0.9+0.95,Math.sin(ang)*o.rad);});s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>
