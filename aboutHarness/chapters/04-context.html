@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4. 컨텍스트 엔지니어링 — aboutHarness</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">🛠️ 표지</a></li>
+<li><a href="01-what-is-harness.html">1. 하네스란 무엇인가</a></li>
+<li><a href="02-agent-loop.html">2. 에이전트 루프</a></li>
+<li><a href="03-tools.html">3. 툴 설계</a></li>
+<li><a href="04-context.html">4. 컨텍스트 엔지니어링</a></li>
+<li><a href="05-verification.html">5. 검증과 목표주도 실행</a></li>
+<li><a href="06-orchestration.html">6. 멀티에이전트 오케스트레이션</a></li>
+<li><a href="07-memory.html">7. 메모리와 상태</a></li>
+<li><a href="08-safety.html">8. 안전·권한·샌드박스</a></li>
+<li><a href="09-failures-frontier.html">9. 실패모드와 프런티어</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>컨텍스트</em> 엔지니어링</h1><p class="authors">Chapter 4 — Context Engineering</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 컨텍스트 창에 무엇을 넣고 뺄지 — 토큰 예산을 채우는 블록들</span>
+<h2>컨텍스트 엔지니어링이란</h2><p>컨텍스트 엔지니어링(context engineering)은 모델이 <strong>한 번에 볼 수 있는 정보 묶음(컨텍스트 창)</strong>에 무엇을, 얼마나, 어떤 순서로 담을지 설계하는 일입니다. 창은 토큰 단위로 한정돼 있고, 길어질수록 비용·지연이 늘며 정보가 묻히기 쉽습니다. 그래서 '무엇을 넣을까'만큼 '무엇을 빼고 압축할까'가 중요합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>컨텍스트 창은 <strong>책상</strong>입니다 — 넓어도 무한하지 않습니다. 작업에 꼭 필요한 자료만 올려 두고, 다 쓴 건 치우고, 두꺼운 자료는 요약본으로 바꿔 둬야 일이 빨라집니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3><p>컨텍스트 엔지니어링은 모델에게 '읽을거리'를 잘 골라 주는 일입니다 — 너무 많으면 헤매고, 너무 적으면 모르니, 딱 필요한 것만 정리해서 보여 주는 거예요.</p>
+  <h3>왜 흥미로운가?</h3><p>모델은 사람처럼 '방금 본 페이지'만 기억하는 학생과 비슷합니다. 한 번에 펼쳐 볼 수 있는 분량이 정해져 있어서, 책 전체를 던져 주면 정작 중요한 한 문장을 놓칩니다. 놀랍게도 <strong>같은 질문</strong>도 어떤 자료를 곁들이느냐에 따라 답이 완전히 달라집니다. 정답이 컨텍스트 안에 있느냐 없느냐가 승부를 가르죠.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>컨텍스트 창(Context Window)</strong>: 모델이 한 번에 볼 수 있는 토큰의 최대 분량</li><li><strong>토큰(Token)</strong>: 단어를 잘게 쪼갠 처리 단위(대략 단어 한 개보다 작음)</li><li><strong>요약/압축(Compaction)</strong>: 길어진 대화를 짧게 줄여 자리를 비우는 것</li><li><strong>검색 증강(RAG)</strong>: 질문에 맞는 문서를 찾아 컨텍스트에 넣어 주는 기법</li><li><strong>토큰 예산(Token Budget)</strong>: 이번 호출에 쓸 수 있는 토큰의 한도</li></ul></div>
+  <h3>개념 풀어쓰기</h3><p>책상 위에서 숙제를 한다고 상상해 봅시다. 책상이 아무리 넓어도 교과서, 노트, 참고서, 간식, 휴대폰을 전부 펼쳐 놓으면 정작 풀어야 할 문제집이 어디 있는지 안 보입니다. 모델의 컨텍스트 창이 바로 그 책상입니다. 창이 커졌다고 모든 걸 다 올려 두면, 모델은 필요한 정보를 찾느라 헤매고 비용도 늘어납니다. 좋은 컨텍스트 엔지니어는 ① 이번 작업에 꼭 필요한 자료만 골라 올리고(검색 증강), ② 길어진 대화는 요약본으로 바꿔 자리를 비우고(압축), ③ 가장 중요한 정보는 모델이 잘 보는 위치에 둡니다. 모델은 긴 글의 '가운데'를 자주 놓치기 때문에, 핵심을 앞이나 뒤에 두는 작은 배치 하나가 정답률을 바꿉니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> AI에게 긴 문서를 통째로 붙여넣기 전에, "이 중에서 ○○에 관한 부분만"이라고 먼저 추려 보세요. 컨텍스트를 정리하면 답이 더 정확해지는 걸 직접 느낄 수 있습니다.</div>
+  <h3>요약</h3><ul><li>컨텍스트 창은 모델이 한 번에 보는 정보 묶음으로, 토큰 단위로 한정됩니다.</li><li>다 넣기보다 '필요한 것만' 골라 넣는 게 핵심입니다.</li><li>길어진 대화는 요약(압축)으로 자리를 비웁니다.</li><li>필요한 문서를 찾아 넣는 것이 검색 증강(RAG)입니다.</li><li>모델은 긴 글의 가운데를 자주 놓치므로 배치가 중요합니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>메커니즘 깊이</h3><p>컨텍스트 창은 <strong>유한한 토큰 예산</strong>입니다. 시스템 프롬프트, 도구 정의, 대화 이력, 검색해 온 문서, 모델의 출력 자리까지 모두 같은 예산을 나눠 씁니다. 입력이 길어지면 (1) <strong>비용</strong>이 토큰 수에 비례해 늘고, (2) <strong>첫 토큰까지의 지연</strong>도 길어집니다. 게다가 모델은 입력이 길수록 중간 부분의 정보를 덜 활용하는 경향(이른바 lost-in-the-middle)을 보입니다. 그래서 하네스는 ① 무엇을 넣을지 <strong>선택</strong>하고, ② 이력이 길어지면 <strong>요약/압축(compaction)</strong>으로 오래된 부분을 줄이며, ③ 외부 지식이 필요하면 <strong>검색 증강(RAG)</strong>으로 관련 조각만 가져오고, ④ 변하지 않는 앞부분(시스템 프롬프트·도구 정의)은 <strong>프롬프트 캐시</strong>가 잘 들도록 안정적으로 둡니다.</p>
+  <h3>실전에서 쓰는 패턴</h3>
+  <div class="info-card"><h4>🛠️ 사례 1 — RAG로 필요한 조각만</h4><p>수천 페이지 매뉴얼을 통째로 넣는 대신, 질문과 의미가 가까운 문단 몇 개만 벡터 검색으로 찾아 컨텍스트에 넣습니다. 같은 모델이 더 적은 토큰으로 더 근거 있는 답을 내고, 비용과 지연이 함께 줄어듭니다.</p></div>
+  <div class="info-card"><h4>🛠️ 사례 2 — 압축으로 긴 세션 유지</h4><p>장시간 코딩 세션에서 대화가 창을 넘기기 전에, 오래된 단계를 "지금까지 한 일·결정·미해결" 요약으로 갈아 끼웁니다. 핵심 상태는 보존하면서 토큰을 회수해, 에이전트가 멈추지 않고 계속 일합니다.</p></div>
+  <h3>설계 관점</h3><p>컨텍스트는 '많을수록 좋은' 자원이 아니라 <strong>관리해야 할 예산</strong>입니다. 하네스 엔지니어는 매 호출마다 "지금 작업에 정말 필요한 최소한은 무엇인가"를 묻습니다. 또한 캐시 친화성을 위해 <strong>안정적인 앞부분 + 가변적인 뒷부분</strong> 구조를 즐겨 씁니다 — 앞부분이 그대로면 캐시가 재사용돼 비용·지연이 크게 줄기 때문입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "창이 크니까 그냥 다 넣으면 된다"는 생각은 위험합니다. 무관한 토큰을 채울수록 비용·지연이 늘고, 중요한 정보가 묻히는 context rot(긴 입력에서 품질이 떨어지는 현상)이 심해집니다. 큰 창은 '여유'이지 '쓰레기통'이 아닙니다.</p></div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 — 컨텍스트는 곧 설계다</h3><p>기반 모델이 상향 평준화될수록, 같은 API 위에서 결과를 가르는 건 '무엇을 컨텍스트에 두느냐'입니다. 전문가는 컨텍스트를 정적 텍스트가 아니라 <strong>매 단계 재구성되는 작업 상태</strong>로 봅니다. 핵심 레버: <strong>① 선택(retrieval/selection)</strong> — 관련성 높은 조각만 가져오기, <strong>② 압축(compaction)</strong> — 오래된 이력을 요약으로 치환, <strong>③ 배치(ordering)</strong> — 핵심을 가장자리(앞/뒤)에 두어 lost-in-the-middle 완화, <strong>④ 캐시 정렬</strong> — 불변 접두부를 안정화해 프롬프트 캐시 적중률을 높이기. 이 레버들은 모델 교체 없이도 비용·지연·정확도를 동시에 움직입니다.</p>
+  <h3>핵심 트레이드오프</h3><div class="formula">유효 컨텍스트 ≈ f(관련성, 신선도, 배치) − g(무관 토큰, 길이로 인한 희석)</div>
+  <p>토큰 예산은 비용·지연·품질을 한 줄에 묶는 제약입니다. 입력 토큰은 비용과 prefill 지연을 키우고, 출력 자리를 좁히면 답이 잘리며, 캐시되지 않은 접두부는 매번 재계산됩니다. 따라서 "토큰을 더 쓸 가치가 있는가"는 모든 컨텍스트 결정의 1차 질문입니다.</p>
+  <h3>최신 흐름</h3><p>긴 컨텍스트(롱 컨텍스트) 모델, 프롬프트 캐싱, 검색 증강(RAG)과 재순위화(re-ranking), 에이전트가 스스로 메모를 파일에 적고 필요할 때 다시 읽어 오는 외부 메모리/스크래치패드 방식이 활발합니다. '창을 키우는 것'과 '창을 잘 쓰는 것'은 별개이며, 후자가 하네스의 핵심 기량으로 자리 잡고 있습니다.</p>
+  <h3>관련 분야</h3><ul><li>정보 검색(IR) / 임베딩·벡터 검색 / 재순위화</li><li>요약과 추출 — 손실 압축으로서의 compaction</li><li>메모리와 상태 관리(7장) / 토큰 경제학(비용·지연)</li></ul>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 컨텍스트 창이 지금의 10배로 커진다고 가정합시다. 그래도 "다 넣지 않는" 편이 나은 이유 세 가지를 든다면? (힌트: 비용, lost-in-the-middle, 캐시 적중률)</div>
+</div>
+<h2>🕹️ 직접 해보기 — 컨텍스트 용어 짝맞추기</h2>
+<p>컨텍스트 엔지니어링의 핵심 용어와 그 의미를 짝지어 보며 개념을 정리해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#14b8a6","prompt":"컨텍스트 엔지니어링 용어와 의미를 짝지으세요","pairs":[{"term":"컨텍스트 창","def":"모델이 한 번에 보는 토큰 최대 분량"},{"term":"압축(compaction)","def":"긴 이력을 요약해 자리를 비움"},{"term":"검색 증강(RAG)","def":"관련 문서만 찾아 컨텍스트에 넣음"},{"term":"lost-in-the-middle","def":"긴 입력의 가운데 정보를 덜 활용"},{"term":"프롬프트 캐시","def":"불변 접두부 재사용으로 비용·지연 절감"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#14b8a6","questions":[{"q":"컨텍스트 창을 무엇에 비유했나?","choices":["엔진","책상","바퀴","연료"],"answer":1},{"q":"긴 입력의 가운데 정보를 모델이 덜 활용하는 현상은?","choices":["lost-in-the-middle","오버피팅","환각","토큰화"],"answer":0},{"q":"질문에 맞는 문서를 찾아 컨텍스트에 넣는 기법은?","choices":["압축","검색 증강(RAG)","캐싱","샌드박스"],"answer":1},{"q":"길어진 대화를 요약으로 줄여 자리를 비우는 것은?","choices":["압축(compaction)","재순위화","팬아웃","프리필"],"answer":0},{"q":"프롬프트 캐시 적중률을 높이려면 무엇을 안정적으로 둬야 하나?","choices":["출력 자리","불변 접두부(앞부분)","무관한 토큰","랜덤 시드"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,11);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 컨텍스트 창 = 토큰 예산 프레임
+  const frameW=8,frameH=4.4;
+  const frameMat=new THREE.LineBasicMaterial({color:0x14b8a6});
+  const fg=new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(-frameW/2,-frameH/2,0),new THREE.Vector3(frameW/2,-frameH/2,0),
+    new THREE.Vector3(frameW/2,frameH/2,0),new THREE.Vector3(-frameW/2,frameH/2,0),
+    new THREE.Vector3(-frameW/2,-frameH/2,0)]);
+  s.add(new THREE.Line(fg,frameMat));
+  const winLbl=lbl('컨텍스트 창 (토큰 예산)','#0f766e');winLbl.position.set(0,frameH/2+0.5,0);s.add(winLbl);
+  // 창을 채우는 블록들 — 무엇을 넣을지
+  const blocks=[['시스템 프롬프트','#0ea5e9'],['도구 정의','#22c55e'],['검색 문서(RAG)','#f59e0b'],['대화 요약(압축)','#a855f7'],['최근 대화','#ef4444']];
+  const cells=[];
+  const cols=Math.ceil(blocks.length/2);
+  for(let i=0;i<blocks.length;i++){
+    const col=i%cols,row=Math.floor(i/cols);
+    const bw=frameW/cols-0.4,bh=frameH/2-0.5;
+    const px=-frameW/2+0.2+col*(frameW/cols)+bw/2;
+    const py=frameH/2-0.4-row*(frameH/2)-bh/2;
+    const col16=parseInt(blocks[i][1].slice(1),16);
+    const m=new THREE.Mesh(new THREE.BoxGeometry(bw,bh,0.3),new THREE.MeshBasicMaterial({color:col16,transparent:true,opacity:0.35}));
+    m.position.set(px,py,0);s.add(m);cells.push(m);
+    const t=lbl(blocks[i][0],blocks[i][1]);t.position.set(px,py,0.3);s.add(t);
+  }
+  // 가운데 묻힘 표시 점선 마커
+  const midMark=lbl('↕ 가운데는 묻히기 쉬움','#94a3b8');midMark.position.set(0,0,0.5);s.add(midMark);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 컨텍스트 창은 유한한 토큰 예산입니다.','무엇을 넣을지 골라야 합니다 — 다 넣으면 헤맵니다.','오래된 대화는 요약(압축)으로 자리를 비웁니다.','검색 증강(RAG)이 관련 문서만 가져옵니다.','가운데 정보는 묻히기 쉬워 배치가 중요합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}for(let i=0;i<cells.length;i++){cells[i].material.opacity=0.3+0.18*Math.sin(T*1.5+i);}s.rotation.y+=0.0015;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

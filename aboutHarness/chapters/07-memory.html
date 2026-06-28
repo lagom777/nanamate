@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7. 메모리와 상태 — aboutHarness</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">🛠️ 표지</a></li>
+<li><a href="01-what-is-harness.html">1. 하네스란 무엇인가</a></li>
+<li><a href="02-agent-loop.html">2. 에이전트 루프</a></li>
+<li><a href="03-tools.html">3. 툴 설계</a></li>
+<li><a href="04-context.html">4. 컨텍스트 엔지니어링</a></li>
+<li><a href="05-verification.html">5. 검증과 목표주도 실행</a></li>
+<li><a href="06-orchestration.html">6. 멀티에이전트 오케스트레이션</a></li>
+<li><a href="07-memory.html">7. 메모리와 상태</a></li>
+<li><a href="08-safety.html">8. 안전·권한·샌드박스</a></li>
+<li><a href="09-failures-frontier.html">9. 실패모드와 프런티어</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>메모리</em>와 상태</h1><p class="authors">Chapter 7 — Memory & State</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 단기(컨텍스트) 메모리와 장기(영속) 메모리</span>
+<h2>메모리와 상태</h2><p>모델은 본질적으로 <strong>상태가 없습니다(stateless)</strong>. 매 호출마다 컨텍스트 창에 들어온 것만 '기억'할 뿐, 어제 한 일이나 방금 닫은 세션을 스스로 떠올리지 못합니다. 하네스의 메모리 층은 이 빈틈을 메웁니다 — 무엇을 컨텍스트 안에 잠깐 두고(단기), 무엇을 파일·DB에 영속화하며(장기), 컨텍스트가 한계에 닿으면 어떻게 요약해 넘길지(핸드오프)를 설계합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>모델의 컨텍스트 창은 <strong>책상</strong>이고, 영속 메모리는 <strong>서랍과 노트</strong>입니다 — 책상은 좁아서 자꾸 비워야 하고, 정말 중요한 것은 노트에 적어 두었다가 필요할 때 다시 꺼냅니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3><p>메모리는 AI가 '기억하게' 만드는 장치입니다 — 지금 대화에 잠깐 담아 두는 단기 기억과, 파일·노트에 적어 다음에도 꺼내 쓰는 장기 기억이 있어요.</p>
+  <h3>왜 흥미로운가?</h3><p>모델은 사실 아무것도 스스로 기억하지 못합니다. 매번 '백지'로 깨어나죠. 그런데도 AI 어시스턴트가 며칠 전 정한 규칙을 지키거나, 긴 프로젝트를 이어서 진행하는 것처럼 보이는 이유 — 그게 바로 하네스가 붙여 준 메모리입니다. <strong>같은 모델</strong>이라도 무엇을 적어 두고 무엇을 다시 꺼내느냐에 따라 '기억력 좋은 비서'가 되기도, '매번 까먹는 사람'이 되기도 합니다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>상태 없음(Stateless)</strong>: 모델이 호출 사이에 스스로 기억을 유지하지 못하는 성질</li><li><strong>단기 메모리(컨텍스트)</strong>: 지금 이 호출의 창 안에 담긴 정보</li><li><strong>장기 메모리(영속)</strong>: 파일·DB에 저장해 세션을 넘어 남는 정보</li><li><strong>요약 핸드오프</strong>: 창이 꽉 차기 전 핵심만 압축해 넘기는 것</li><li><strong>회상(Recall)</strong>: 저장해 둔 기억을 필요할 때 다시 컨텍스트로 불러오는 것</li></ul></div>
+  <h3>개념 풀어쓰기</h3><p>공부할 때를 떠올려 봅시다. 책상 위에는 지금 보는 교과서 몇 권만 펼쳐 둘 수 있습니다(단기 메모리=컨텍스트 창). 책상이 좁으니, 다 본 자료는 치우고 새 자료를 올려야 하죠. 대신 정말 중요한 내용은 노트에 적어 서랍에 넣어 둡니다(장기 메모리=파일·DB). 다음에 같은 주제를 공부할 때 그 노트를 다시 꺼내 책상에 올립니다(회상). 책상이 꽉 차면 지금까지의 내용을 한 장으로 요약해 두고 자리를 비웁니다(요약 핸드오프). AI 하네스의 메모리도 똑같습니다 — 모델 자체는 기억하지 못하므로, 하네스가 '무엇을 책상에 둘지, 무엇을 노트에 적을지, 언제 요약할지'를 대신 정해 줍니다. 그래서 '기억력 좋은 AI'의 정체는 대개 '메모리 설계가 잘된 하네스'입니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 평소 쓰는 AI에게 "방금 정한 규칙을 다음 대화에서도 지켜줘"라고 해 보세요. 지켜지면 어딘가에 저장(장기)된 것이고, 새 대화에서 잊는다면 단기 메모리만 쓴 것입니다.</p></div>
+  <h3>요약</h3><ul><li>모델은 상태가 없어 스스로 기억하지 못합니다.</li><li>단기 메모리=컨텍스트 창(좁은 책상), 장기 메모리=파일·DB(노트와 서랍).</li><li>저장해 둔 기억을 다시 꺼내는 것이 회상입니다.</li><li>창이 꽉 차면 핵심만 요약해 넘깁니다(핸드오프).</li><li>'기억력 좋은 AI'는 대개 메모리 설계가 좋은 하네스입니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>메커니즘 깊이</h3><p>하네스의 메모리는 보통 두 층으로 나뉩니다. <strong>① 단기(working) 메모리</strong>는 컨텍스트 창 그 자체입니다 — 시스템 프롬프트, 최근 대화, 도구 결과가 여기 담기며, 창 크기와 비용·지연의 제약을 받습니다. <strong>② 장기(영속) 메모리</strong>는 창 밖의 저장소입니다 — 파일·키값 저장소·벡터DB 등에 두고, 필요할 때만 일부를 회상해 창에 끼워 넣습니다. 핵심 동작은 네 가지입니다. <strong>저장(write)</strong>: 무엇을 남길지 결정(결정·선호·사실), <strong>회상(retrieve)</strong>: 지금 작업에 관련된 것만 가져오기, <strong>요약·압축(compact)</strong>: 길어진 내용을 핵심만 남겨 줄이기, <strong>망각·갱신(update)</strong>: 오래되거나 틀린 기억을 덮어쓰거나 버리기. 무엇이든 다 저장하면 회상 때 노이즈가 되므로, '무엇을 저장하지 않을지'도 똑같이 중요합니다.</p>
+  <h3>실전 패턴</h3>
+  <div class="info-card"><h4>🛠️ 사례 1 — 파일 기반 메모리</h4><p>에이전트가 프로젝트 규칙·진행 메모를 작업 폴더의 마크다운 파일(예: 프로젝트 노트, 할 일 목록)에 적고, 다음 세션 시작 때 그 파일을 다시 읽어 컨텍스트에 올립니다. 사람이 들여다보고 고칠 수 있어 투명하고, 코딩 에이전트에서 널리 쓰입니다.</p></div>
+  <div class="info-card"><h4>🛠️ 사례 2 — 요약 핸드오프</h4><p>긴 대화로 컨텍스트가 한계에 다가오면, 지금까지의 목표·결정·미해결 항목을 한 단락으로 압축해 '인계 메모'를 만들고, 옛 메시지는 버린 뒤 그 메모로 작업을 이어갑니다. 새 세션이나 새 에이전트로 일을 넘길 때도 같은 메모가 출발점이 됩니다.</p></div>
+  <h3>설계 관점</h3><p>좋은 메모리 설계의 핵심 질문은 "<strong>무엇을, 언제 저장하고, 언제 회상하는가</strong>"입니다. 모든 발화를 저장하면 회상이 부정확해지고, 너무 적게 저장하면 맥락을 잃습니다. 그래서 안정적인 사실(사용자 선호, 확정된 결정)은 장기 저장하고, 휘발성 잡담은 흘려보냅니다. 회상은 '지금 작업에 관련된 최소한'만 가져와 책상을 깨끗이 유지합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "컨텍스트 창이 크면 메모리는 필요 없다"는 생각은 틀립니다. 창을 키워도 비용·지연이 늘고, 정보가 많아질수록 '가운데가 묻히는' 현상으로 정작 중요한 내용을 놓칩니다. 큰 창은 단기 메모리를 늘릴 뿐, 세션을 넘는 영속성과 선별적 회상을 대신하지 못합니다.</p></div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 — 메모리는 컨텍스트 관리의 시간축 확장이다</h3><p>메모리 엔지니어링은 컨텍스트 엔지니어링을 '시간'으로 확장한 것입니다. 단일 호출에서 무엇을 창에 둘지가 컨텍스트 설계라면, 호출과 세션을 가로질러 무엇을 보존·압축·회상할지가 메모리 설계입니다. 실무에서는 (1) <strong>저장 정책</strong>(무엇을 영속화할지의 기준), (2) <strong>회상 전략</strong>(최근성 + 관련성 기반 선별), (3) <strong>압축 정책</strong>(요약 시점·압축률·무엇을 보존할지), (4) <strong>신선도/무효화</strong>(오래되거나 모순된 기억의 갱신·삭제)가 결과를 가릅니다. 한 가지 위험은 <strong>요약 손실</strong> — 압축은 항상 정보를 버리므로, 잘못 버리면 나중 단계가 결정적 맥락을 잃습니다. 또 하나는 <strong>오염된 기억</strong> — 틀린 사실이 한번 저장되면 이후 회상마다 잘못을 증폭합니다. 그래서 망각은 결함이 아니라 1급 기능입니다.</p>
+  <h3>핵심 트레이드오프</h3><div class="formula">회상 품질 ≈ f(관련성, 신선도) − 노이즈,  유효 메모리 = min(저장된 것, 회상된 것)</div>
+  <p>저장만 잘해도 회상이 부실하면 무용지물이고, 그 반대도 마찬가지입니다. 신선도(freshness)는 특히 중요합니다 — 오래된 결정이 갱신된 결정을 덮으면 에이전트가 과거에 갇힙니다. 그래서 저장 시 타임스탬프·출처를 함께 남기고, 회상 시 최신·신뢰 가능한 항목을 우선합니다. 압축에서는 '버려도 되는 것(중복·잡담)'과 '보존해야 하는 것(목표·미해결 항목·확정 결정)'을 구분하는 것이 설계의 본질입니다.</p>
+  <h3>최신 흐름</h3><p>장기 자율(long-horizon) 에이전트가 늘면서 메모리는 핵심 주제가 되었습니다. 파일·노트 기반의 투명한 메모리, 검색 증강(RAG)을 통한 외부 지식 회상, 요약 기반 컨텍스트 압축, 그리고 '무엇을 기억할지' 자체를 모델이 판단하게 하는 자기관리형 메모리가 활발히 연구·적용되고 있습니다. 핵심 흐름은 '더 큰 창'이 아니라 '더 똑똑한 선별'입니다.</p>
+  <h3>관련 분야</h3><ul><li>컨텍스트 엔지니어링 / 검색 증강(RAG)·벡터 검색</li><li>요약·압축과 정보 손실 관리</li><li>상태 머신·체크포인트(재현성·재개)</li></ul>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 컨텍스트 창이 무한히 크다고 가정합시다. 그래도 장기 메모리가 여전히 필요한 이유 3가지를 꼽는다면? (힌트: 비용·지연, lost-in-the-middle, 세션·기기를 넘는 영속성)</div>
+</div>
+<h2>🕹️ 직접 해보기 — 메모리 용어 짝맞추기</h2>
+<p>메모리와 상태의 핵심 개념과 그 역할을 짝지어 보며 큰 그림을 익혀 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#14b8a6","prompt":"메모리 개념과 역할을 짝지으세요","pairs":[{"term":"단기 메모리","def":"지금 컨텍스트 창에 담긴 정보"},{"term":"장기 메모리","def":"파일·DB에 영속 저장된 정보"},{"term":"요약 핸드오프","def":"창 한계 시 핵심만 압축해 넘김"},{"term":"회상(Recall)","def":"저장된 기억을 다시 창으로 불러옴"},{"term":"신선도/망각","def":"오래·틀린 기억을 갱신하거나 버림"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#14b8a6","questions":[{"q":"모델이 호출 사이에 스스로 기억을 유지하지 못하는 성질은?","choices":["상태 없음(stateless)","과적합","환각","결정론"],"answer":0},{"q":"세션을 넘어 정보를 남기는 메모리는?","choices":["단기(컨텍스트) 메모리","장기(영속) 메모리","임시 버퍼","토큰 캐시"],"answer":1},{"q":"컨텍스트 창이 한계에 닿을 때 핵심만 압축해 넘기는 것은?","choices":["병렬화","요약 핸드오프","샌딩","롤백"],"answer":1},{"q":"저장해 둔 기억을 필요할 때 다시 컨텍스트로 가져오는 동작은?","choices":["회상(retrieve)","저장(write)","압축(compact)","망각(forget)"],"answer":0},{"q":"'컨텍스트 창이 크면 메모리는 필요 없다'가 틀린 주된 이유는?","choices":["창이 항상 작아서","비용·지연 증가와 lost-in-the-middle 때문","모델이 똑똑해서","랜덤이라서"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,11);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 모델 코어 (상태 없음)
+  const core=new THREE.Mesh(new THREE.IcosahedronGeometry(0.95,1),new THREE.MeshBasicMaterial({color:0x14b8a6,wireframe:true}));core.position.set(0,1.3,0);s.add(core);
+  s.add((function(){const t=lbl('모델 (stateless)','#0f766e');t.position.set(0,2.4,0);return t;})());
+  // 단기 메모리 = 컨텍스트 창 (책상): 모델 가까이 떠 있는 칩들
+  const stm=new THREE.Mesh(new THREE.BoxGeometry(3.4,0.18,2.2),new THREE.MeshBasicMaterial({color:0x2dd4bf,transparent:true,opacity:0.85}));stm.position.set(0,0.2,0);s.add(stm);
+  s.add((function(){const t=lbl('단기 메모리 (컨텍스트 창)','#0d9488');t.position.set(0,0.65,0);return t;})());
+  const chips=[];const chipLabels=['시스템','최근 대화','도구 결과'];
+  for(let i=0;i<3;i++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.7,0.12,0.7),new THREE.MeshBasicMaterial({color:0x5eead4}));m.position.set(-1+i*1,0.4,0.2);s.add(m);chips.push(m);const t=lbl(chipLabels[i],'#0f766e');t.position.set(-1+i*1,0.62,0.2);t.scale.multiplyScalar(0.8);s.add(t);}
+  // 장기 메모리 = 영속 저장 (서랍/노트): 아래쪽 슬래브들
+  const ltm=[['파일/노트','#0ea5e9'],['벡터DB','#a855f7'],['요약 메모','#f59e0b']];
+  const drawers=[];
+  for(let i=0;i<ltm.length;i++){const x=-2.4+i*2.4;const m=new THREE.Mesh(new THREE.BoxGeometry(1.5,0.55,1.1),new THREE.MeshBasicMaterial({color:parseInt(ltm[i][1].slice(1),16),transparent:true,opacity:0.9}));m.position.set(x,-2,0);s.add(m);drawers.push(m);const t=lbl(ltm[i][0],ltm[i][1]);t.position.set(x,-1.4,0);t.scale.multiplyScalar(0.85);s.add(t);}
+  s.add((function(){const t=lbl('장기 메모리 (영속 저장)','#0369a1');t.position.set(0,-2.9,0);return t;})());
+  // 회상(write/recall) 라인: 단기<->장기
+  const recallLines=[];
+  for(let i=0;i<drawers.length;i++){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0.1,0),drawers[i].position.clone().add(new THREE.Vector3(0,0.3,0))]);const ln=new THREE.Line(g,new THREE.LineBasicMaterial({color:0x14b8a6,transparent:true,opacity:0.35}));s.add(ln);recallLines.push(ln);}
+  // 모델 <-> 단기 라인
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0.7,0),new THREE.Vector3(0,1.1,0)]),new THREE.LineBasicMaterial({color:0x2dd4bf,transparent:true,opacity:0.5})));
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 모델은 상태가 없어 스스로 기억하지 못합니다.','단기 메모리=컨텍스트 창(책상): 시스템·대화·도구 결과.','장기 메모리=파일·벡터DB·요약 메모(서랍과 노트).','저장(write)·회상(recall)로 두 메모리를 오갑니다.','창이 꽉 차면 핵심만 요약해 핸드오프합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}core.rotation.x+=0.004;core.rotation.y+=0.006;for(let i=0;i<chips.length;i++)chips[i].position.y=0.4+Math.sin(T*2+i)*0.06;for(let i=0;i<recallLines.length;i++)recallLines[i].material.opacity=0.2+0.25*Math.abs(Math.sin(T*1.5+i));s.rotation.y+=0.0015;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

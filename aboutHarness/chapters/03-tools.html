@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 툴 설계 — aboutHarness</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">🛠️ 표지</a></li>
+<li><a href="01-what-is-harness.html">1. 하네스란 무엇인가</a></li>
+<li><a href="02-agent-loop.html">2. 에이전트 루프</a></li>
+<li><a href="03-tools.html">3. 툴 설계</a></li>
+<li><a href="04-context.html">4. 컨텍스트 엔지니어링</a></li>
+<li><a href="05-verification.html">5. 검증과 목표주도 실행</a></li>
+<li><a href="06-orchestration.html">6. 멀티에이전트 오케스트레이션</a></li>
+<li><a href="07-memory.html">7. 메모리와 상태</a></li>
+<li><a href="08-safety.html">8. 안전·권한·샌드박스</a></li>
+<li><a href="09-failures-frontier.html">9. 실패모드와 프런티어</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>툴</em> 설계</h1><p class="authors">Chapter 3 — Tool Design</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 에이전트와 도구(툴)를 잇는 호출 흐름</span>
+<h2>툴 설계란 무엇인가</h2><p>도구(tool)는 모델이 호출해 외부 세계에 작용하는 능력입니다 — 파일을 읽고, 코드를 실행하고, API를 부르고, 검색합니다. 모델은 도구의 <strong>스키마(이름·설명·매개변수)</strong>만 보고 무엇을 어떻게 부를지 결정하므로, 도구를 어떻게 설계하느냐가 에이전트의 성능을 직접 좌우합니다. 같은 모델이라도 도구가 명확하면 정확히 일하고, 모호하면 헤맵니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>도구의 스키마는 모델을 위한 <strong>사용설명서</strong>입니다 — 사람이 읽기 좋게가 아니라, 모델이 <strong>오해 없이</strong> 부를 수 있게 써야 합니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>한 줄로 이해하기</h3><p>도구(툴)는 모델이 호출해 쓰는 '버튼'이고, 툴 설계는 그 버튼에 무엇을·어떻게 누르라고 적힌 라벨을 잘 붙이는 일입니다.</p>
+  <h3>왜 흥미로운가?</h3><p>사람도 처음 보는 기계 앞에서 버튼 라벨이 헷갈리면 엉뚱한 걸 누릅니다. 모델도 똑같아요. 도구 이름이 모호하거나, 매개변수 설명이 빠졌거나, 에러 메시지가 "오류 발생"뿐이면 모델은 추측하다 실수합니다. 놀라운 건 <strong>모델을 전혀 안 바꾸고도</strong> 도구 라벨만 또렷하게 다시 쓰면 에이전트가 눈에 띄게 똑똑해진다는 점입니다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>도구(Tool)</strong>: 모델이 호출하는 외부 능력(검색·실행·파일)</li><li><strong>스키마(Schema)</strong>: 도구의 이름·설명·매개변수 정의</li><li><strong>입도(Granularity)</strong>: 도구를 얼마나 잘게/크게 나눌지</li><li><strong>멱등성(Idempotency)</strong>: 같은 호출을 여러 번 해도 결과가 같음</li><li><strong>부작용(Side effect)</strong>: 세상을 바꾸는 행동(파일 삭제·메일 발송)</li></ul></div>
+  <h3>개념 풀어쓰기</h3><p>리모컨을 떠올려 봅시다. 버튼이 너무 많고 라벨이 작으면 원하는 기능을 못 찾고, 버튼 하나에 기능 열 개가 묶여 있으면 무엇을 누를지 막막합니다. 좋은 리모컨은 자주 쓰는 동작을 또렷한 라벨로, 적당한 개수로 제공합니다. 도구 설계도 같습니다. <strong>이름</strong>은 동작을 분명히 드러내고(예: 'send_email'은 좋고 'do_action'은 나쁨), <strong>설명</strong>은 언제 쓰는지·언제 쓰지 말지를 알려 주며, <strong>매개변수</strong>는 무엇을 넣어야 하는지 한 글자도 헷갈리지 않게 적습니다. 그리고 실패하면 "오류"가 아니라 "이메일 주소 형식이 잘못됨: '@'가 없음"처럼 <strong>모델이 스스로 고칠 수 있는</strong> 메시지를 돌려줘야 합니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 좋아하는 앱의 버튼·메뉴 이름을 보며 "처음 본 사람이 무슨 일을 하는지 바로 알까?"를 자문해 보세요. 그 직관이 곧 좋은 도구 이름의 기준입니다.</div>
+  <h3>요약</h3><ul><li>도구는 모델이 호출하는 외부 능력입니다.</li><li>모델은 스키마(이름·설명·매개변수)만 보고 부릅니다.</li><li>이름·설명·매개변수가 명확해야 모델이 안 헤맵니다.</li><li>에러는 모델이 고칠 수 있게 구체적으로 돌려줍니다.</li><li>도구를 너무 잘게도, 너무 크게도 나누지 않습니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>메커니즘 깊이</h3><p>모델은 도구를 직접 실행하지 않습니다. 모델이 도구 호출(예: <code>read_file(path="src/app.py")</code>)을 <strong>구조화된 출력</strong>으로 내면, 하네스가 그 인자를 받아 실제 함수를 돌리고 결과를 다시 컨텍스트에 넣습니다. 따라서 도구 설계의 핵심은 세 면입니다. <strong>① 스키마</strong>: 이름·설명·매개변수 타입·필수 여부를 정의해 모델이 '무엇을 어떻게'를 알게 합니다. <strong>② 반환값</strong>: 성공 결과뿐 아니라 실패도 모델이 행동을 교정할 수 있는 형태로 돌려줍니다. <strong>③ 입도</strong>: 한 도구가 책임지는 범위. 너무 잘게 나누면 호출이 폭증하고(왕복마다 토큰·지연 발생), 너무 크게 묶으면 모델이 어떤 모드로 부를지 헷갈립니다. 또한 <strong>멱등성</strong>(같은 호출을 반복해도 안전)과 <strong>부작용</strong>(되돌릴 수 없는 행동) 구분이 중요합니다 — 에이전트는 재시도를 자주 하므로, 멱등하지 않은 부작용 도구는 중복 실행 위험을 안습니다.</p>
+  <div class="info-card"><h4>🛠️ 사례 1 — 에러 메시지가 성능을 바꾼다</h4><p>도구가 실패할 때 "Error"만 돌려주면 모델은 원인을 추측하다 같은 실수를 반복합니다. 대신 "파일을 찾을 수 없음: 'src/app.py'. 디렉터리에 있는 파일: app.js, main.py"처럼 <strong>다음 행동의 단서</strong>를 담으면, 모델은 스스로 경로를 고쳐 재시도합니다. 에러 메시지는 모델을 위한 디버깅 힌트입니다.</p></div>
+  <div class="info-card"><h4>🛠️ 사례 2 — 입도의 균형</h4><p>'한 글자 쓰기'처럼 너무 잘게 나눈 도구는 한 작업에 수백 번 호출을 유발해 느리고 비쌉니다. 반대로 '아무거나 다 하는 do_everything' 도구는 모델이 인자를 어떻게 채울지 몰라 실패합니다. 좋은 입도는 사람이 '한 동작'으로 떠올리는 단위(파일 읽기, 패치 적용, 검색 1회)에 맞춥니다.</p></div>
+  <h3>설계 관점</h3><p>도구는 모델의 '시야'를 정의합니다. 도구가 곧 에이전트가 할 수 있는 일의 경계이므로, 새 능력을 더하는 가장 빠른 길은 모델 교체가 아니라 좋은 도구를 추가하는 것입니다. 동시에 도구 설명은 컨텍스트를 차지하므로, 수십~수백 개 도구를 한꺼번에 노출하면 토큰을 낭비하고 모델의 선택을 어렵게 합니다 — 그래서 대규모 툴셋에서는 도구를 지연 로딩하거나 검색해 필요한 것만 보여 줍니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "도구는 많을수록 좋다"는 틀렸습니다. 도구가 많아질수록 설명이 컨텍스트를 잠식하고, 비슷한 도구끼리 모델을 헷갈리게 하며, 선택 실수가 늘어납니다. 핵심은 개수가 아니라 <strong>각 도구의 명확함과 적절한 입도</strong>입니다.</p></div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨 — 도구는 모델-환경 인터페이스다</h3><p>도구 설계는 사실상 <strong>모델과 환경 사이의 API 설계</strong>입니다. 일반 API와 다른 점은, 사용자가 사람이 아니라 확률적으로 인자를 채우는 모델이라는 것 — 그래서 모호함은 곧 오류율로 직결됩니다. 실전 원칙: (1) <strong>명료한 이름·설명</strong>으로 도구 간 혼동을 없앤다. (2) <strong>실패를 행동 가능한 신호로</strong> 설계한다(원인+다음 단계). (3) <strong>입도를 작업 단위에 맞춘다</strong> — 호출 폭증과 과적재 사이의 균형. (4) <strong>멱등성·부작용을 명시</strong>하고, 되돌릴 수 없는 행동은 확인 게이트나 드라이런을 둔다. (5) <strong>대규모 툴셋은 동적으로 노출</strong>한다(툴 서치·지연 로딩·관련 도구만 주입).</p>
+  <h3>핵심 트레이드오프</h3><div class="formula">툴 호출 성공률 ≈ f(스키마 명료도, 에러 행동성, 입도 적합도, 노출 도구 수의 절제, 부작용 안전장치)</div>
+  <p>입도에는 정량적 긴장이 있습니다. 도구가 N배 잘아지면 같은 작업의 호출 수와 왕복 토큰이 대략 그만큼 늘어 지연·비용이 커지고, 반대로 너무 굵으면 인자 공간이 넓어져 모델의 인자 충전 오류가 늘어납니다. 또한 노출하는 도구 수가 많을수록 스키마가 컨텍스트를 잠식하고, 의미가 겹치는 도구는 선택 분산을 키웁니다. 그래서 '필요한 도구만, 명확하게, 알맞은 크기로'가 설계의 축입니다.</p>
+  <h3>최신 흐름</h3><p>도구 호출(function/tool calling)은 모델 API의 표준 기능이 되었고, MCP(Model Context Protocol) 같은 개방 프로토콜로 도구를 서버처럼 표준화해 연결하는 흐름이 뚜렷합니다. 수백 개 도구를 다루는 에이전트가 늘면서, 모든 도구를 항상 노출하는 대신 <strong>도구를 검색/지연 로딩</strong>해 컨텍스트를 절약하는 기법이 보편화되고 있습니다.</p>
+  <h3>관련 분야</h3><ul><li>API/인터페이스 설계 및 스키마(JSON Schema)</li><li>MCP·함수 호출 등 도구 연결 표준</li><li>분산 시스템의 멱등성·재시도·부작용 처리</li></ul>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 모델은 그대로 두고 도구 세트만 바꿔 에이전트 정확도를 올려야 합니다. 가장 큰 효과를 낼 변경 3가지를 꼽는다면? (힌트: 에러 메시지의 행동성, 입도 재조정, 노출 도구 수 줄이기)</div>
+</div>
+<h2>🕹️ 직접 해보기 — 좋은 툴 vs 나쁜 툴 분류</h2>
+<p>도구 설계 특성을 '좋은 설계'와 '나쁜 설계' 그룹으로 분류하며 핵심 원칙을 익혀 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#14b8a6","prompt":"각 특성을 좋은 툴 설계 / 나쁜 툴 설계로 분류하세요","groups":[{"name":"좋은 툴 설계","items":["동작을 드러내는 명확한 이름","원인과 다음 단계를 담은 에러","작업 단위에 맞는 입도","멱등성·부작용 명시","필요한 도구만 노출"]},{"name":"나쁜 툴 설계","items":["do_action 같은 모호한 이름","\"오류 발생\"뿐인 에러","한 글자씩 쓰는 과도한 잘기","수백 도구 항상 노출","되돌릴 수 없는데 안전장치 없음"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#14b8a6","questions":[{"q":"모델이 도구를 부를 때 실제로 보는 것은?","choices":["도구의 소스 코드","스키마(이름·설명·매개변수)","서버 로그","다른 사용자 기록"],"answer":1},{"q":"도구 실패 시 가장 좋은 에러 메시지는?","choices":["\"Error\"","원인과 다음 단계를 담은 구체적 메시지","빈 문자열","무작위 코드"],"answer":1},{"q":"멱등성(idempotency)이란?","choices":["도구가 빠르게 실행됨","같은 호출을 반복해도 결과가 같음","도구가 많음","에러가 안 남"],"answer":1},{"q":"도구를 너무 잘게 나누면 생기는 문제는?","choices":["호출 폭증으로 느리고 비쌈","항상 더 정확함","부작용이 사라짐","컨텍스트가 줄어듦"],"answer":0},{"q":"수백 개 도구를 다룰 때 권장되는 방식은?","choices":["전부 항상 노출","툴 서치·지연 로딩으로 필요한 것만","도구를 모두 제거","이름을 숨김"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,10);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 에이전트(모델) 코어
+  const core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.0,1),new THREE.MeshBasicMaterial({color:0x14b8a6,wireframe:true}));s.add(core);
+  const coreLbl=lbl('에이전트','#0f766e');coreLbl.position.set(0,1.6,0);s.add(coreLbl);
+  // 도구(툴) 위성 — 실제 도구 이름
+  const tools=[['read_file','#0ea5e9'],['run_code','#f59e0b'],['search','#22c55e'],['send_email','#a855f7'],['apply_patch','#ef4444']];
+  const sats=[];
+  for(let i=0;i<tools.length;i++){const ang=(i/tools.length)*Math.PI*2;const m=new THREE.Mesh(new THREE.BoxGeometry(0.7,0.55,0.55),new THREE.MeshBasicMaterial({color:parseInt(tools[i][1].slice(1),16),wireframe:false}));m.position.set(Math.cos(ang)*4.1,Math.sin(ang)*2.5,0);s.add(m);sats.push({m,ang});const t=lbl(tools[i][0],tools[i][1]);t.position.set(Math.cos(ang)*4.1,Math.sin(ang)*2.5+0.62,0);s.add(t);s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),m.position.clone()]),new THREE.LineBasicMaterial({color:parseInt(tools[i][1].slice(1),16),transparent:true,opacity:0.3})));}
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 에이전트가 여러 도구(툴)를 호출합니다.','모델은 스키마(이름·설명·매개변수)만 보고 부릅니다.','명확한 이름과 행동 가능한 에러가 성공률을 높입니다.','입도와 노출 도구 수의 절제가 핵심입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}core.rotation.x+=0.004;core.rotation.y+=0.006;for(let i=0;i<sats.length;i++){sats[i].m.rotation.y+=0.01;}s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>
