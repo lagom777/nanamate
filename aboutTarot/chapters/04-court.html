@@ -133,12 +133,16 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,9);cam.lookAt(0,0.5,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const suitCol=[0xff6b4a,0x4aa8ff,0xc8d0d8,0x6fd08a];const ranks=[];const rankTop=[new THREE.TetrahedronGeometry(0.2),new THREE.ConeGeometry(0.2,0.5,12),new THREE.OctahedronGeometry(0.22),new THREE.CylinderGeometry(0.05,0.22,0.5,5)];for(let su=0;su<4;su++){for(let rk=0;rk<4;rk++){const h=0.5+rk*0.45;const m=new THREE.Mesh(new THREE.BoxGeometry(0.6,h,0.05),new THREE.MeshBasicMaterial({color:suitCol[su],transparent:true,opacity:0.9}));m.position.set(-2.7+su*1.8,-1.6+h/2,0);s.add(m);ranks.push(m);const cr=new THREE.Mesh(rankTop[rk],new THREE.MeshBasicMaterial({color:0xf0c850}));cr.position.set(-2.7+su*1.8,-1.6+h+0.28,0.1);cr.userData={ph:(su+rk)*0.5};s.add(cr);ranks.push(cr);}}
+  const rankL=[['페이지 · 배움',-0.82],['나이트 · 행동',-0.32],['퀸 · 성숙',0.18],['킹 · 완성',0.68]];rankL.forEach(p=>{const L=lbl(p[0],'#f0d58a');L.position.set(4.5,p[1],0.1);s.add(L);});
+  const suitN=[['완드','#ffb09a'],['컵','#a8d4ff'],['소드','#e2e8f0'],['펜타클','#b5e8c5']];suitN.forEach((p,su)=>{const L=lbl(p[0],p[1]);L.position.set(-2.7+su*1.8,-2.05,0);s.add(L);});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 4슈트 × 4계급 = 코트 카드 16장 — 막대가 높아질수록 성숙한 계급입니다.','페이지는 배움·호기심·새 소식, 나이트는 행동·이동, 퀸은 성숙·내면, 킹은 완성·권위를 상징합니다.','코트 카드는 실제 인물로도, 질문자 내면의 태도나 상황의 발전 단계로도 읽는 이중성이 핵심입니다.','해석 공식: "[슈트의 주제]를 [계급의 성숙도]로 다룬다" — 예: 컵의 퀸은 감정을 성숙하게 품는 사람입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ranks.forEach(m=>{if(m.userData.ph!==undefined)m.rotation.y=T+m.userData.ph;});s.rotation.y=Math.sin(T*0.35)*0.4;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}ranks.forEach(m=>{if(m.userData.ph!==undefined)m.rotation.y=T+m.userData.ph;});s.rotation.y=Math.sin(T*0.35)*0.4;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

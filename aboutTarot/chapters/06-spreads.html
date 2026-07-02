@@ -120,12 +120,15 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const pos=[[-1.2,0,0,0],[-1.2,0,0.12,Math.PI/2],[-1.2,-1.7,0,0],[-1.2,1.7,0,0],[-3.0,0,0,0],[0.6,0,0,0],[2.7,-2.0,0,0],[2.7,-0.7,0,0],[2.7,0.7,0,0],[2.7,2.0,0,0]];const spread=[];for(let i=0;i<pos.length;i++){const col=new THREE.Color().setHSL(0.72-i*0.03,0.6,0.6);const m=new THREE.Mesh(new THREE.BoxGeometry(1.0,1.5,0.05),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.9}));m.position.set(pos[i][0],pos[i][1],pos[i][2]);m.rotation.z=pos[i][3];m.userData={ph:i*0.45,baseZ:pos[i][2]};spread.push(m);s.add(m);}
+  const posL=[['현재',-1.2,0.5,0.9],['가로지르는 요인',-1.2,-0.55,0.9],['토대',-1.2,-2.6,0],['가까운 과거',-3.0,-1.05,0],['가까운 미래',0.6,-1.05,0],['태도',4.25,-2.0,0],['주변 환경',4.25,-0.7,0],['희망·두려움',4.25,0.7,0],['최종 전망',4.25,2.0,0]];posL.forEach(p=>{const L=lbl(p[0],'#e0d5f5');L.position.set(p[1],p[2],p[3]);s.add(L);});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 켈틱 크로스 10장 — 자리(포지션)마다 뜻이 정해져 있어 같은 카드도 자리에 따라 다르게 읽힙니다.','중앙이 현재 상황, 그 위를 가로지르는 카드가 핵심 요인 — 아래는 토대, 좌우는 가까운 과거와 미래입니다.','오른쪽 기둥은 태도·주변 환경·희망과 두려움·최종 전망 — 한 사안을 입체적으로 살피는 배열입니다.','원카드는 하루의 지침, 쓰리카드는 과거-현재-미래의 흐름 — 자리 수는 정확도가 아니라 범위와 세밀함의 차이입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;spread.forEach((m,i)=>{const lit=(Math.floor(T*0.8)%spread.length===i)?0.6:0;m.position.z=m.userData.baseZ+Math.sin(T*1.5+m.userData.ph)*0.1+lit;});s.rotation.y=Math.sin(T*0.3)*0.25;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}spread.forEach((m,i)=>{const lit=(Math.floor(T*0.8)%spread.length===i)?0.6:0;m.position.z=m.userData.baseZ+Math.sin(T*1.5+m.userData.ph)*0.1+lit;});s.rotation.y=Math.sin(T*0.3)*0.25;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

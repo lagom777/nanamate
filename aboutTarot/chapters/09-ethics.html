@@ -120,14 +120,20 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const beam=new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.06,7,8),new THREE.MeshBasicMaterial({color:0xf0c850}));beam.rotation.z=Math.PI/2;s.add(beam);const fulcrum=new THREE.Mesh(new THREE.ConeGeometry(0.4,0.8,4),new THREE.MeshBasicMaterial({color:0xc8c8c8}));fulcrum.position.y=-0.7;s.add(fulcrum);
   const chaos=[];const cg=new THREE.Group();cg.position.set(-2.6,0,0);for(let i=0;i<40;i++){const m=new THREE.Mesh(new THREE.TetrahedronGeometry(0.13),new THREE.MeshBasicMaterial({color:0xd05a6a,transparent:true,opacity:0.8}));m.position.set((Math.random()-0.5)*2,(Math.random()-0.5)*2,(Math.random()-0.5)*2);m.userData={ph:Math.random()*6};chaos.push(m);cg.add(m);}s.add(cg);
   const orderG=new THREE.Group();orderG.position.set(2.6,0,0);for(let x=0;x<4;x++)for(let y=0;y<4;y++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.32,0.32,0.32),new THREE.MeshBasicMaterial({color:0x5ad08a,transparent:true,opacity:0.85}));m.position.set((x-1.5)*0.6,(y-1.5)*0.6,0);orderG.add(m);}s.add(orderG);
+  const LC1=lbl('적중감의 착각','#f0a8b8');LC1.position.set(0,1.65,0);cg.add(LC1);
+  const LC2=lbl('콜드리딩·바넘·확증편향','#d9a8b8');LC2.position.set(0,-1.6,0);cg.add(LC2);
+  const LO=lbl('통제된 검증','#9ae0b5');LO.position.set(0,1.5,0);orderG.add(LO);
+  const LE=lbl('건강·법률·임신·죽음 — 단정 금지','#e0d5f5');LE.position.set(0,-3.3,0);s.add(LE);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 저울 왼쪽의 흩어진 붉은 조각이 적중감의 착각, 오른쪽의 정렬된 초록 격자가 통제된 검증입니다.','적중감은 콜드리딩, 바넘·포러 효과, 확증편향, 사후 해석이 맞물려 만들어 낸 착각일 수 있습니다.','통제된 실험에서 타로의 예언 정확도가 우연 이상이라는 결과는 재현되지 않았습니다.','윤리: 건강·법률·임신·죽음은 단정하지 않고, 의존을 조장하지 않으며, 자기성찰과 대화를 돕는 도구로 씁니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const tilt=Math.sin(T*0.6)*0.18;beam.rotation.z=Math.PI/2+tilt;cg.position.y=Math.sin(T*0.6)*1.2;orderG.position.y=-Math.sin(T*0.6)*1.2;chaos.forEach(m=>{m.position.x+=Math.sin(T*2+m.userData.ph)*0.01;m.rotation.x+=0.04;m.rotation.y+=0.03;});orderG.rotation.y=Math.sin(T*0.4)*0.3;s.rotation.y+=0.0015;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const tilt=Math.sin(T*0.6)*0.18;beam.rotation.z=Math.PI/2+tilt;cg.position.y=Math.sin(T*0.6)*1.2;orderG.position.y=-Math.sin(T*0.6)*1.2;chaos.forEach(m=>{m.position.x+=Math.sin(T*2+m.userData.ph)*0.01;m.rotation.x+=0.04;m.rotation.y+=0.03;});orderG.rotation.y=Math.sin(T*0.4)*0.3;s.rotation.y+=0.0015;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

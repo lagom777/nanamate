@@ -132,14 +132,18 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const nodeN=6;const nodes=[];const base=[];for(let i=0;i<nodeN;i++){const ang=(i/nodeN)*Math.PI*2;const v=new THREE.Vector3(Math.cos(ang)*3,Math.sin(ang)*3,0);base.push(v);const m=new THREE.Mesh(new THREE.BoxGeometry(0.8,1.2,0.05),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(i/nodeN,0.55,0.6),transparent:true,opacity:0.9}));m.position.copy(v);m.userData={ph:i*0.7};nodes.push(m);s.add(m);}
   const linePts=[];for(let i=0;i<nodeN;i++)for(let j=i+1;j<nodeN;j++){linePts.push(base[i].clone(),base[j].clone());}
   const lineGeo=new THREE.BufferGeometry().setFromPoints(linePts);const links=new THREE.LineSegments(lineGeo,new THREE.LineBasicMaterial({color:0xf0c850,transparent:true,opacity:0.3}));s.add(links);
+  const four=['직관 · 첫인상','상징 · 카드의 뜻','위치 · 포지션','상호작용'];four.forEach((t,i)=>{const L=lbl(t,'#f0d58a');L.position.set(0,0.85,0.15);nodes[i].add(L);});
+  const CL=lbl('이야기로 엮기','#ffffff');CL.position.set(0,0,0.6);s.add(CL);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 리딩은 네 겹의 종합 — 직관(첫인상) → 상징(카드의 뜻) → 위치(자리의 역할) → 상호작용(이웃 카드).','카드는 단어, 위치는 문법 — 연결선처럼 카드들을 이어 하나의 이야기로 엮는 스토리텔링이 핵심 기법입니다.','한 장만 떼어 단정하지 않기 — 같은 카드도 질문·위치·이웃 카드에 따라 읽히는 방향이 달라집니다.','예/아니오의 닫힌 질문보다 상황을 넓게 보게 하는 열린 질문에서 출발해야 풍부하게 풀어낼 수 있습니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const pa=lineGeo.attributes.position;for(let i=0;i<nodeN;i++){const z=Math.sin(T+nodes[i].userData.ph)*0.6;nodes[i].position.z=z;nodes[i].rotation.y=Math.sin(T*1.2+nodes[i].userData.ph)*0.5;base[i].z=z;}let k=0;for(let i=0;i<nodeN;i++)for(let j=i+1;j<nodeN;j++){pa.setXYZ(k++,base[i].x,base[i].y,base[i].z);pa.setXYZ(k++,base[j].x,base[j].y,base[j].z);}pa.needsUpdate=true;s.rotation.y+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const pa=lineGeo.attributes.position;for(let i=0;i<nodeN;i++){const z=Math.sin(T+nodes[i].userData.ph)*0.6;nodes[i].position.z=z;nodes[i].rotation.y=Math.sin(T*1.2+nodes[i].userData.ph)*0.5;base[i].z=z;}let k=0;for(let i=0;i<nodeN;i++)for(let j=i+1;j<nodeN;j++){pa.setXYZ(k++,base[i].x,base[i].y,base[i].z);pa.setXYZ(k++,base[j].x,base[j].y,base[j].z);}pa.needsUpdate=true;s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

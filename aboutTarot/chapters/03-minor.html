@@ -133,12 +133,16 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const suitCol=[0xff6b4a,0x4aa8ff,0xc8d0d8,0x6fd08a];const grid=[];const topShape=[new THREE.ConeGeometry(0.16,0.4,4),new THREE.SphereGeometry(0.16,10,8),new THREE.OctahedronGeometry(0.18),new THREE.TorusGeometry(0.14,0.05,8,16)];for(let su=0;su<4;su++){const top=new THREE.Mesh(topShape[su],new THREE.MeshBasicMaterial({color:suitCol[su]}));top.position.set(-3.3+su*2.2,2.7,0.3);s.add(top);for(let n=0;n<14;n++){const m=new THREE.Mesh(new THREE.BoxGeometry(0.4,0.32,0.04),new THREE.MeshBasicMaterial({color:suitCol[su],transparent:true,opacity:n<10?0.85:0.55}));m.position.set(-3.3+su*2.2,2.1-n*0.34,0);m.userData={ph:(su+n)*0.4};grid.push(m);s.add(m);}}
+  const suitL=[['완드 · 불','#ffb09a'],['컵 · 물','#a8d4ff'],['소드 · 공기','#e2e8f0'],['펜타클 · 흙','#b5e8c5']];suitL.forEach((p,su)=>{const L=lbl(p[0],p[1]);L.position.set(-3.3+su*2.2,3.35,0.3);s.add(L);});
+  const rowL=[['에이스(1) 시작',2.1],['10 완성',-0.96],['코트 카드',-1.81]];rowL.forEach(p=>{const L=lbl(p[0],'#c9b8ee');L.position.set(-5.1,p[1],0);s.add(L);});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 네 기둥이 4슈트 — 완드(불·열정), 컵(물·감정), 소드(공기·생각), 펜타클(흙·물질)입니다.','각 슈트는 에이스(1)부터 10까지의 숫자 카드에 코트 카드를 더해 14장씩, 모두 56장입니다.','번호는 단계 — 1 시작, 5 갈등과 시련, 10 완성. 같은 5라도 완드의 5는 경쟁, 컵의 5는 상실로 갈립니다.','슈트(무엇에 관한가) × 번호(어느 국면인가)를 결합하면 56장을 통째로 외우지 않아도 의미를 끌어낼 수 있습니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;grid.forEach(m=>{m.position.z=Math.sin(T*1.3+m.userData.ph)*0.25;});s.rotation.y=Math.sin(T*0.3)*0.35;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}grid.forEach(m=>{m.position.z=Math.sin(T*1.3+m.userData.ph)*0.25;});s.rotation.y=Math.sin(T*0.3)*0.35;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

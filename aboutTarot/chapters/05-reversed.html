@@ -120,14 +120,19 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const flips=[];function makeCard(x,col){const m=new THREE.Mesh(new THREE.BoxGeometry(1.1,1.7,0.06),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.9}));const tri=new THREE.Mesh(new THREE.ConeGeometry(0.3,0.7,3),new THREE.MeshBasicMaterial({color:0xffffff}));tri.position.set(0,0.45,0.06);m.add(tri);m.position.x=x;s.add(m);return m;}
   const up=makeCard(-1.6,0x8ad0a0);const dn=makeCard(1.6,0xd08a9a);flips.push(up,dn);
   const axisGeo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-1.6,2.2,0),new THREE.Vector3(-1.6,-2.2,0),new THREE.Vector3(1.6,2.2,0),new THREE.Vector3(1.6,-2.2,0)]);const axis=new THREE.LineSegments(axisGeo,new THREE.LineBasicMaterial({color:0xf0c850,transparent:true,opacity:0.4}));s.add(axis);
+  const LU=lbl('정방향(업라이트)','#9ae0b5');LU.position.set(-1.6,2.7,0);s.add(LU);
+  const LR=lbl('역방향(리버스)','#f0a8b8');LR.position.set(1.6,2.7,0);s.add(LR);
+  const five=['약화','지연','내면화','과잉','차단'];five.forEach((t,i)=>{const L=lbl(t,'#c9b8ee');L.position.set(-3.2+i*1.6,-2.8,0);s.add(L);});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 왼쪽이 정방향(업라이트), 오른쪽이 역방향(리버스) — 같은 카드가 뒤집히며 의미가 변형됩니다.','역방향은 정반대가 아니라 정방향 에너지의 변형 — 약화·지연·내면화·과잉·차단의 다섯 갈래로 읽습니다.','역방향이 곧 나쁜 카드는 아닙니다 — 정방향이 어려운 카드는 역방향에서 오히려 완화로 읽히기도 합니다.','역방향을 쓸지 말지는 리더의 선택이며, 어떤 갈래로 읽을지는 카드가 놓인 자리와 질문의 맥락이 정합니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;up.rotation.z=Math.PI*(0.5-Math.cos(T*0.9)*0.5);dn.rotation.z=Math.PI*(0.5+Math.cos(T*0.9)*0.5);s.rotation.y=Math.sin(T*0.4)*0.25;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}up.rotation.z=Math.PI*(0.5-Math.cos(T*0.9)*0.5);dn.rotation.z=Math.PI*(0.5+Math.cos(T*0.9)*0.5);s.rotation.y=Math.sin(T*0.4)*0.25;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
