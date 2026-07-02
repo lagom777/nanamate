@@ -146,12 +146,12 @@ Content-Type: application/json
 </div>
 <div class="difficulty-content" data-level="easy">
   <span class="difficulty-badge easy">하 · 입문</span>
-  <h3>한 줄로 이해하기</h3><p>HTTP는 "웹의 공용어"이고, API는 "두 프로그램이 약속한 대화 방식"입니다. 클라이언트와 서버는 HTTP로 약속된 형식의 요청·응답을 주고받습니다.</p>
-  <h3>왜 중요한가?</h3><p>모바일 앱 화면이 새로고침될 때, 카드 결제 승인이 일어날 때, 카카오 로그인을 누를 때 모두 뒤에서 HTTP API가 호출됩니다. API 설계가 깨지면 앱 화면이 멈추고, 외부 연동 파트너가 떠나며, 보안 사고가 납니다.</p>
-  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>HTTP 메서드</strong>: GET(조회), POST(생성), PUT/PATCH(수정), DELETE(삭제)</li><li><strong>상태 코드</strong>: 200 OK, 201 Created, 400/401/403/404, 500</li><li><strong>헤더</strong>: 메타데이터 — Content-Type, Authorization 등</li><li><strong>바디</strong>: 실제 데이터 — 주로 JSON</li><li><strong>엔드포인트</strong>: /api/users/42 처럼 자원을 가리키는 URL</li></ul></div>
-  <h3>핵심 개념 풀어쓰기</h3><p>레스토랑의 메뉴판을 상상해보세요. 메뉴판(API 명세)이 있어야 손님(클라이언트)이 무엇을 어떤 형식으로 주문할 수 있는지 압니다. 잘 만든 메뉴판은 항목별 이름, 가격, 옵션이 명확합니다. API도 마찬가지로 자원(URL), 동작(메서드), 입력/출력 형식, 오류 코드가 일관되어야 좋은 API입니다. REST 스타일은 자원을 URL로 표현하고 동작을 HTTP 메서드로 표현하자는 약속입니다.</p>
-  <div class="study-tip"><strong>💡 학습 TIP:</strong> Postman이나 curl로 공개 API(예: GitHub API)에 직접 요청을 날려보세요. 상태 코드와 헤더를 눈으로 확인하면 감이 빨리 잡힙니다.</div>
-  <h3>한 페이지 요약</h3><ul><li>요청 = 메서드 + URL + 헤더 + 바디</li><li>응답 = 상태 코드 + 헤더 + 바디</li><li>REST는 자원 + 메서드 조합으로 표현</li><li>JSON이 사실상 데이터 형식 표준</li><li>좋은 API는 일관성·예측 가능성이 핵심</li></ul>
+  <h3>🤔 이게 뭐냐면?</h3><p>HTTP는 "웹 세상의 공용어"예요! 🌐 서로 다른 컴퓨터끼리 이 말로 대화해요. API는 "두 프로그램이 미리 정해둔 대화 규칙"이고요. 약속이 있어야 서로 말이 통하겠죠? 🤝</p>
+  <h3>👀 왜 중요할까?</h3><p>앱 화면이 새로고침될 때, 카드 결제가 될 때, 카카오 로그인을 누를 때… 전부 뒤에서 HTTP API가 바쁘게 일해요! 🏃 API가 잘못 만들어지면 앱이 멈추거나 보안 사고가 나요. 😱</p>
+  <div class="info-card"><h4>🌱 이 말은 꼭 알아두자</h4><ul><li><strong>HTTP 메서드</strong>: GET(가져오기), POST(만들기), PUT/PATCH(고치기), DELETE(지우기) ✏️</li><li><strong>상태 코드</strong>: 200=성공 👍, 404=없음 🤷, 500=서버 고장 💥</li><li><strong>헤더</strong>: 편지 봉투에 적는 정보 (Content-Type 등) ✉️</li><li><strong>바디</strong>: 진짜 내용물, 보통 JSON 📦</li><li><strong>엔드포인트</strong>: /api/users/42 처럼 "어디로 갈지" 알려주는 주소 📍</li></ul></div>
+  <h3>🎯 메뉴판으로 이해하기</h3><p>식당 메뉴판을 떠올려봐요! 🍔 메뉴판(API 명세)이 있어야 손님이 뭘 어떻게 시킬지 알 수 있죠. 이름, 가격, 옵션이 딱딱 적혀 있으면 좋은 메뉴판이에요. API도 똑같아요. 주소(URL), 동작(메서드), 주고받는 형식이 깔끔하게 정리돼 있으면 좋은 API! REST는 "물건은 주소로, 동작은 메서드로 표현하자"는 약속이에요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> Postman이나 curl로 진짜 공개 API(예: GitHub API)에 요청을 직접 보내봐요! 상태 코드가 눈에 보이면 금방 감이 와요. 🎮</div>
+  <h3>🍬 한 입 요약</h3><ul><li>요청 = 메서드 + 주소(URL) + 헤더 + 바디</li><li>응답 = 상태 코드 + 헤더 + 바디</li><li>REST = 물건(URL) + 동작(메서드) 조합</li><li>데이터는 거의 다 JSON으로 주고받아요</li><li>좋은 API는 규칙이 일정하고 예측 가능해요</li></ul>
 </div>
 <div class="difficulty-content" data-level="medium">
   <span class="difficulty-badge medium">중 · 응용</span>

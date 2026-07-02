@@ -167,12 +167,12 @@ function authMiddleware(req, res, next) {
 </div>
 <div class="difficulty-content" data-level="easy">
   <span class="difficulty-badge easy">하 · 입문</span>
-  <h3>한 줄로 이해하기</h3><p>인증(Authentication)은 "당신이 누구인가"를 확인하고, 인가(Authorization)는 "그것을 할 권한이 있는가"를 확인합니다. 보안은 이 두 가지를 무너뜨리려는 모든 공격을 막는 일입니다.</p>
-  <h3>왜 중요한가?</h3><p>비밀번호 유출 한 번이 회사를 끝낼 수 있습니다. 2017년 Equifax 사고는 1억 4천만 명의 개인정보가 새어 나갔고, 토스나 카카오 같은 핀테크는 인증·인가 보안이 곧 신뢰의 본체입니다. 백엔드 개발자가 코드를 짤 때 가장 먼저 마음에 새겨야 할 영역입니다.</p>
-  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>해시</strong>: 비밀번호를 되돌릴 수 없는 형태로 변환(bcrypt, Argon2)</li><li><strong>세션</strong>: 서버가 사용자 상태를 기억하는 방식</li><li><strong>JWT</strong>: 클라이언트에 저장 가능한 서명된 토큰</li><li><strong>HTTPS</strong>: TLS로 통신을 암호화한 HTTP</li><li><strong>CSRF/XSS</strong>: 대표적인 웹 공격 유형</li></ul></div>
-  <h3>핵심 개념 풀어쓰기</h3><p>회원가입에서 비밀번호를 그대로 저장하면 DB가 털릴 때 그대로 노출됩니다. 그래서 단방향 해시(bcrypt 등)에 salt와 cost를 더해 저장합니다. 로그인 후 서버는 사용자에게 "당신이 로그인했음"을 증명하는 무언가(세션 ID 또는 토큰)를 줍니다. 클라이언트는 매 요청에 이를 동봉해 신원을 증명합니다. 권한은 그 신원 위에 "어떤 행동을 허락할지" 정하는 별도의 레이어입니다.</p>
-  <div class="study-tip"><strong>💡 학습 TIP:</strong> OWASP Top 10을 한 번 처음부터 끝까지 읽어보세요. 사고의 90%는 거기 적힌 문제에서 옵니다.</div>
-  <h3>한 페이지 요약</h3><ul><li>인증 ≠ 인가, 둘 다 필요</li><li>비밀번호는 절대 평문으로 저장 금지</li><li>HTTPS는 선택이 아닌 필수</li><li>토큰/세션은 만료와 무효화 전략 필수</li><li>최소 권한 원칙(Least Privilege)을 기본으로</li></ul>
+  <h3>🤔 이게 뭐냐면?</h3><p>인증(Authentication)은 "너 진짜 너 맞아?"를 확인하는 거예요. 🪪 인가(Authorization)는 "그걸 해도 되는 권한이 있어?"를 확인하고요. 보안은 이 둘을 뚫으려는 나쁜 공격을 다 막는 일이에요! 🛡️</p>
+  <h3>👀 왜 중요할까?</h3><p>비밀번호가 한 번 새면 회사가 통째로 위험해져요. 😱 2017년 Equifax라는 회사는 무려 1억 4천만 명의 정보가 새어 나갔어요! 토스·카카오 같은 금융 앱은 보안이 곧 믿음이에요. 백엔드 개발자가 가장 먼저 챙겨야 할 부분이랍니다. 💪</p>
+  <div class="info-card"><h4>🌱 이 말은 꼭 알아두자</h4><ul><li><strong>해시</strong>: 비밀번호를 되돌릴 수 없게 뒤섞기 (bcrypt, Argon2) 🔀</li><li><strong>세션</strong>: 서버가 "너 로그인했지" 기억하는 방법 🧠</li><li><strong>JWT</strong>: 내 폰에 저장하는 서명된 출입증 🎫</li><li><strong>HTTPS</strong>: 대화를 암호로 잠근 안전한 HTTP 🔒</li><li><strong>CSRF/XSS</strong>: 대표적인 웹 공격 이름 👾</li></ul></div>
+  <h3>🎯 놀이공원으로 이해하기</h3><p>비밀번호를 그대로 저장하면? DB가 털릴 때 다 들통나요! 😨 그래서 되돌릴 수 없게 뒤섞어(해시) 저장해요. 로그인에 성공하면 서버가 "출입증"(세션 ID나 토큰)을 줘요. 🎟️ 놀이공원 팔찌처럼요! 그다음부터는 매번 이 팔찌를 보여주면 "아, 아까 그 사람!" 하고 알아봐요. 인가는 그 위에서 "이 팔찌는 VIP 구역도 들어갈 수 있나?"를 정하는 별도의 단계예요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> OWASP Top 10을 처음부터 끝까지 한 번 읽어보세요! 보안 사고의 90%가 여기 적힌 문제에서 나와요. 📖</div>
+  <h3>🍬 한 입 요약</h3><ul><li>인증(누구야?) ≠ 인가(해도 돼?), 둘 다 필요해요</li><li>비밀번호는 절대 그대로 저장하면 안 돼요</li><li>HTTPS는 선택이 아니라 필수!</li><li>출입증(토큰·세션)은 만료·취소 규칙이 꼭 필요해요</li><li>딱 필요한 권한만 주기(최소 권한 원칙)</li></ul>
 </div>
 <div class="difficulty-content" data-level="medium">
   <span class="difficulty-badge medium">중 · 응용</span>
