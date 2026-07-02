@@ -60,12 +60,15 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const blocks=[];for(let gx=0;gx<3;gx++){for(let gy=0;gy<3;gy++){const idx=gx*3+gy;const center=(gx===1&&gy===1);const tile=new THREE.Mesh(new THREE.BoxGeometry(1.3,1.3,center?0.5:0.25),new THREE.MeshBasicMaterial({color:center?0xffaa33:new THREE.Color().setHSL(0.5+idx*0.04,0.55,0.55)}));tile.position.set((gx-1)*1.55,(gy-1)*1.55,0);tile.userData={ph:idx*0.7};s.add(tile);blocks.push(tile);const edge=new THREE.Mesh(new THREE.TorusGeometry(0.9,0.02,6,4),new THREE.MeshBasicMaterial({color:0xffffff}));edge.position.copy(tile.position);edge.position.z=0.2;edge.rotation.z=Math.PI/4;s.add(edge);}}
+  const bn=['비용','자원','파트너','채널','가치','활동','수익','고객','관계'];const blbs=blocks.map((b,i)=>{const Lb=lbl(bn[i],i===4?'#c9820a':'#39415a');Lb.position.set(b.position.x,b.position.y,0.55);s.add(Lb);return Lb;});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 비즈니스 모델 캔버스(BMC) 9블록 — 고객·가치·채널·관계·수익·자원·활동·파트너·비용.','가운데 가치 제안(손님이 받는 가장 좋은 점)을 중심으로 9칸이 맞물립니다 — 빠진 칸이 곧 약점입니다.','LTV는 한 손님이 평생 벌어다 주는 돈, CAC는 한 명을 데려오는 데 드는 돈 — LTV가 CAC의 3배면 건강합니다.','토스는 송금 무료로 트래픽을 모은 뒤 광고·증권·보험·대출 비교로 수익을 다각화했습니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;blocks.forEach(b=>{b.position.z=Math.sin(T*1.2+b.userData.ph)*0.25;});s.rotation.y=Math.sin(T*0.3)*0.5;s.rotation.x=Math.sin(T*0.2)*0.2;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}blocks.forEach(b=>{b.position.z=Math.sin(T*1.2+b.userData.ph)*0.25;});blbs.forEach((Lb,i)=>{Lb.position.z=0.55+blocks[i].position.z;});s.rotation.y=Math.sin(T*0.3)*0.5;s.rotation.x=Math.sin(T*0.2)*0.2;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

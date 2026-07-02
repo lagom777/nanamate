@@ -60,12 +60,15 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const N=5;const bars=[];for(let i=0;i<N;i++){const h=0.8+i*0.85;const bar=new THREE.Mesh(new THREE.CylinderGeometry(0.32,0.32,h,18),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.33-i*0.05,0.7,0.55)}));bar.position.set((i-(N-1)/2)*1.05,h/2-1.6,0);s.add(bar);const cap=new THREE.Mesh(new THREE.CylinderGeometry(0.36,0.36,0.12,18),new THREE.MeshBasicMaterial({color:0xffdd44}));cap.position.set(bar.position.x,h-1.6+0.06,0);s.add(cap);bars.push({bar,cap,h});}const coins=[];for(let i=0;i<14;i++){const coin=new THREE.Mesh(new THREE.CylinderGeometry(0.16,0.16,0.05,16),new THREE.MeshBasicMaterial({color:0xffcc22}));coin.userData={x:(Math.random()-0.5)*4,off:Math.random()*4};coin.rotation.x=Math.PI/2;s.add(coin);coins.push(coin);}
+  const rn=['시드','시리즈 A','시리즈 B','시리즈 C','시리즈 D'];bars.forEach((b,i)=>{const Lb=lbl(rn[i],'#1f8a55');Lb.position.set(b.bar.position.x,b.h-1.6+0.55,0);s.add(Lb);});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 시드에서 시리즈 A·B·C로 갈수록 커지는 투자 라운드 계단입니다.','밸류에이션은 회사의 몸값 — 1억을 받고 10%를 주면 몸값은 10억(post-money)이 됩니다.','희석: 새 주식을 찍으면 내 몫 비율이 줄어듭니다 — 시드→시리즈 A 예시는 20% 내외로 관리했습니다.','런웨이는 지금 돈으로 몇 달을 버틸 수 있는지 — 6개월보다 적으면 비상사태입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;coins.forEach(co=>{let y=((T*0.7+co.userData.off)%4)-1.8;co.position.set(co.userData.x,y,0.4);co.rotation.z+=0.08;});bars.forEach((b,i)=>{b.cap.position.y=b.h-1.6+0.06+Math.sin(T*1.5+i)*0.05;});s.rotation.y+=0.004;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}coins.forEach(co=>{let y=((T*0.7+co.userData.off)%4)-1.8;co.position.set(co.userData.x,y,0.4);co.rotation.z+=0.08;});bars.forEach((b,i)=>{b.cap.position.y=b.h-1.6+0.06+Math.sin(T*1.5+i)*0.05;});s.rotation.y+=0.004;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
