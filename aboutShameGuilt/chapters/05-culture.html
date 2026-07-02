@@ -90,12 +90,15 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1.5,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
-  const COL=0xa78bfa;const globe=new THREE.Mesh(new THREE.SphereGeometry(1.6,18,14),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.4}));s.add(globe);const faces=[];const fc=[0xffe08a,0x93c5fd,0xfca5a5,0x86efac,0xc4b5fd,0xfdba74];for(let i=0;i<6;i++){const t=i/6*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.28,14,14),new THREE.MeshBasicMaterial({color:fc[i]}));s.add(m);faces.push({m,ph:t});}
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const COL=0xa78bfa;const globe=new THREE.Mesh(new THREE.SphereGeometry(1.6,18,14),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.4}));s.add(globe);const faces=[];const fc=[0xffe08a,0x93c5fd,0xfca5a5,0x86efac,0xc4b5fd,0xfdba74];const cnm=['수치 문화','죄책감 문화','체면','면자(미엔쯔)','세켄','집단주의'];for(let i=0;i<6;i++){const t=i/6*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.28,14,14),new THREE.MeshBasicMaterial({color:fc[i]}));s.add(m);const L=lbl(cnm[i]);L.position.set(0,0.5,0);m.add(L);faces.push({m,ph:t});}
+  const CL=lbl('문화 가중치','#efe9ff');CL.position.set(0,2.25,0);s.add(CL);
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;globe.rotation.y+=0.005;faces.forEach(o=>{o.m.position.set(Math.cos(T*0.4+o.ph)*2.7,Math.sin(o.ph)*0.6,Math.sin(T*0.4+o.ph)*2.7);});s.rotation.y+=0.001;r.render(s,cam);}a();
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 지구를 도는 여섯 구는 문화별 변주 — 서구의 죄책감 문화와 동아시아의 수치 문화, 체면·면자·세켄이 같은 감정을 다르게 가중합니다.','수치심 강도 ≈ 행동의 가시성 × 청중의 사회적 거리 × 문화 가중치. 한·중·일은 청중 거리가 가깝게 가중됩니다.','Benedict의 "국화와 칼" 이분법은 비판받았고, 현대 연구는 두 정서가 모든 문화에 있되 가중치만 다르다는 결론에 수렴합니다.','중국 면자(체면)는 롄(도덕)과 미엔쯔(사회적 명성)의 이중 구조, 일본 세켄은 세상의 눈을 뜻합니다(집단주의 축).'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}globe.rotation.y+=0.005;faces.forEach(o=>{o.m.position.set(Math.cos(T*0.4+o.ph)*2.7,Math.sin(o.ph)*0.6,Math.sin(T*0.4+o.ph)*2.7);});s.rotation.y+=0.001;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
