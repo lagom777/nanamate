@@ -90,12 +90,15 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1.5,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const COL=0xfbbf24;const globe=new THREE.Mesh(new THREE.SphereGeometry(1.6,18,14),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.4}));s.add(globe);const faces=[];const fc=[0xffe08a,0x93c5fd,0xfca5a5,0x86efac,0xc4b5fd,0xfdba74];for(let i=0;i<6;i++){const t=i/6*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.28,14,14),new THREE.MeshBasicMaterial({color:fc[i]}));s.add(m);faces.push({m,ph:t});}
+  const FN=['보편 표정','감탄사','경외감','display rules','K-콘텐츠'];faces.forEach(function(o,i){if(i<FN.length){var lb=lbl(FN[i],'#39415a');lb.position.set(0,0.5,0);o.m.add(lb);}});var Lg=lbl('문화','#b45309');Lg.position.set(0,2.2,0);s.add(Lg);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 지구 둘레를 도는 구슬이 문화마다 다른 놀람 표현입니다.','눈썹 올리고 입 벌리는 보편 표정은 문화를 넘어 공통입니다.','표현 규범(display rules)이 놀람을 드러낼지 감출지를 정합니다.','감탄사·경외감·K-콘텐츠처럼 놀람은 문화로 채색됩니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;globe.rotation.y+=0.005;faces.forEach(o=>{o.m.position.set(Math.cos(T*0.4+o.ph)*2.7,Math.sin(o.ph)*0.6,Math.sin(T*0.4+o.ph)*2.7);});s.rotation.y+=0.001;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}globe.rotation.y+=0.005;faces.forEach(o=>{o.m.position.set(Math.cos(T*0.4+o.ph)*2.7,Math.sin(o.ph)*0.6,Math.sin(T*0.4+o.ph)*2.7);});s.rotation.y+=0.001;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
