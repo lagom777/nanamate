@@ -128,12 +128,15 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3.4,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const COL=0x14b8a6;for(let k=0;k<3;k++){const ring=new THREE.Mesh(new THREE.TorusGeometry(1.4+k*0.7,0.03,8,72),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.5-k*0.1}));ring.rotation.x=Math.PI/2;s.add(ring);}for(let i=0;i<24;i++){const t=i/24*Math.PI*2;const tick=new THREE.Mesh(new THREE.BoxGeometry(0.05,0.05,0.5),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.8}));tick.position.set(Math.cos(t)*2.8,0,Math.sin(t)*2.8);tick.lookAt(0,0,0);s.add(tick);}const needle=new THREE.Mesh(new THREE.ConeGeometry(0.2,1.6,12),new THREE.MeshBasicMaterial({color:0xef4444}));needle.rotation.x=Math.PI/2;s.add(needle);
+  const LN=lbl('자침','#ffb3b3');LN.position.set(0,1.05,0);needle.add(LN);const L1=lbl('나경(패철)','#8ef0e2');L1.position.set(0,1.7,0);s.add(L1);const L2=lbl('24산 · 한 칸 15도','#c9f7ef');L2.position.set(3.6,0.5,0);s.add(L2);const L3=lbl('향 — 바라보는 방향','#ffe9a8');L3.position.set(0,0.35,3.5);s.add(L3);const L4=lbl('좌 — 등진 방향','#9cc4ff');L4.position.set(0,0.35,-3.5);s.add(L4);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 겹겹의 고리가 나경(패철) — 풍수에서 방위를 재는 나침반입니다.','바깥 눈금 24개가 24산(24방위) — 360도를 24등분해 한 칸이 15도입니다.','좌(坐)는 등진 방향, 향(向)은 바라보는 방향 — 둘은 늘 정반대 짝을 이룹니다.','팔택파는 동사택·서사택의 궁합을, 현공비성파는 삼원구운의 시간 흐름까지 따집니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;needle.rotation.z=Math.sin(T*0.6)*0.5;s.rotation.y+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}needle.rotation.z=Math.sin(T*0.6)*0.5;s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

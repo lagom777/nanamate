@@ -130,12 +130,15 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,2,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const COL=0x14b8a6;const house=new THREE.Mesh(new THREE.BoxGeometry(2.6,1.6,2.2),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.6}));s.add(house);const sun=new THREE.Mesh(new THREE.SphereGeometry(0.5,18,18),new THREE.MeshBasicMaterial({color:0xffd34d}));sun.position.set(-3,2.4,2);s.add(sun);for(let i=0;i<5;i++){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-3+i*0.2,2.4,2),new THREE.Vector3(-0.6,0.2+i*0.1,0.5)]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xffd34d,transparent:true,opacity:0.4})));}const wind=[];for(let i=0;i<14;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.08,8,8),new THREE.MeshBasicMaterial({color:0x9be7dd,transparent:true,opacity:0.6}));m.position.set(2.5,(Math.random()-0.5)*1.5,(Math.random()-0.5)*1.5);m.userData={sp:0.5+Math.random()};s.add(m);wind.push(m);}
+  const LS=lbl('채광(햇빛)','#ffe9a8');LS.position.set(-3,3.2,2);s.add(LS);const LH=lbl('동선·조망','#8ef0e2');LH.position.set(0,1.2,0);s.add(LH);const LW=lbl('통풍(바람길)','#9cc4ff');LW.position.set(0,0.4,0);wind[0].add(LW);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 해는 채광, 흐르는 점은 통풍 — 풍수 처방을 햇빛·바람·동선·조망·배수로 다시 읽을 수 있습니다.','배산임수도 북풍 차단·배수 해결·시야 확보라는 건축·환경적 합리성으로 재해석됩니다.','발복 같은 초자연적 인과는 통제된 실험에서 입증되지 않았습니다.','풍수에 대한 믿음의 상당 부분은 확증편향과 바넘효과로 설명되지만, 정돈된 공간이 주는 심리적 안정은 실재합니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;wind.forEach(m=>{m.position.x-=0.04*m.userData.sp;if(m.position.x<-3)m.position.x=3;});s.rotation.y+=0.0018;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}wind.forEach(m=>{m.position.x-=0.04*m.userData.sp;if(m.position.x<-3)m.position.x=3;});s.rotation.y+=0.0018;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
