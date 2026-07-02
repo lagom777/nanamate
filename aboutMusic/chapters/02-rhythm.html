@@ -78,14 +78,17 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,2.5,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const bars=[];const beats=4,subs=4;for(let b=0;b<beats;b++){for(let sd=0;sd<subs;sd++){const idx=b*subs+sd;const strong=(sd===0);const col=new THREE.Color().setHSL(strong?0.0:0.58,0.7,strong?0.55:0.5);const bar=new THREE.Mesh(new THREE.BoxGeometry(0.4,1,0.4),new THREE.MeshBasicMaterial({color:col}));bar.position.set((idx-7.5)*0.55,0,0);s.add(bar);bars.push({m:bar,strong:strong});}}
   const gridGeo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-4.5,-0.6,0),new THREE.Vector3(4.5,-0.6,0)]);s.add(new THREE.Line(gridGeo,new THREE.LineBasicMaterial({color:0x888888})));
   s.userData.bars=bars;
+  const L1=lbl('강박','#ff8f8f');L1.position.set(-4.1,1.9,0);s.add(L1);const L2=lbl('약박','#8fb8ff');L2.position.set(-3.0,1.5,0);s.add(L2);const L3=lbl('박자표 4/4','#c9d3e6');L3.position.set(0,2.4,0);s.add(L3);const L4=lbl('템포','#c9d3e6');L4.position.set(4.2,1.6,0);s.add(L4);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 빨간 기둥이 강박, 파란 기둥이 약박 — 강박과 약박의 규칙적 반복이 박자(Beat)를 만듭니다.','박자표(Time Signature)는 4/4·3/4처럼 한 마디의 박 수를 정합니다. 6/8·9/8 같은 복합박은 한 박이 셋으로 나뉩니다.','템포(Tempo)는 박이 흐르는 빠르기 — 같은 4/4라도 셔플 리듬은 8분음표를 길게-짧게 묶어 스윙감을 만듭니다.','당김음(Syncopation)은 약박을 강조해 리듬에 긴장을 주고, 폴리리듬은 서로 다른 박자를 동시에 겹칩니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const head=Math.floor(T*4)%16;s.userData.bars.forEach((o,i)=>{const hit=(i===head);const h=hit?(o.strong?2.4:1.7):1;o.m.scale.y=h;o.m.position.y=(h-1)*0.5;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const head=Math.floor(T*4)%16;s.userData.bars.forEach((o,i)=>{const hit=(i===head);const h=hit?(o.strong?2.4:1.7):1;o.m.scale.y=h;o.m.position.y=(h-1)*0.5;});s.rotation.y+=0.002;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

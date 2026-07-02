@@ -83,13 +83,16 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const chords=[];const roots=[0,4,5,3];for(let ci=0;ci<4;ci++){const grp=new THREE.Group();grp.position.x=(ci-1.5)*1.9;const hue=(roots[ci]%7)/7;const col=new THREE.Color().setHSL(hue,0.65,0.55);for(let n=0;n<3;n++){const sph=new THREE.Mesh(new THREE.SphereGeometry(0.32,18,18),new THREE.MeshBasicMaterial({color:col}));sph.position.y=(n-1)*0.95;grp.add(sph);const ring=new THREE.Mesh(new THREE.TorusGeometry(0.45,0.04,8,24),new THREE.MeshBasicMaterial({color:col}));ring.position.y=(n-1)*0.95;ring.rotation.x=Math.PI/2;grp.add(ring);}s.add(grp);chords.push(grp);}
   s.userData.chords=chords;
+  const L1=lbl('I 토닉','#ff9a9a');L1.position.set(-2.85,-1.9,0);s.add(L1);const L2=lbl('V 도미넌트','#9ad0ff');L2.position.set(-0.95,-1.9,0);s.add(L2);const L3=lbl('vi','#c6a8ff');L3.position.set(0.95,-1.9,0);s.add(L3);const L4=lbl('IV 서브도미넌트','#9affc6');L4.position.set(2.85,-1.9,0);s.add(L4);const L5=lbl('3화음','#e6dca8');L5.position.set(-2.85,1.7,0);s.add(L5);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 공 3개를 쌓은 기둥이 3화음(Triad) — 뿌리음 위에 3도씩 쌓은 코드(Chord)입니다.','장조 음계에 화음을 쌓으면 I·ii·iii·IV·V·vi·vii° — I은 토닉(안정), IV는 서브도미넌트(전개), V는 도미넌트(긴장)입니다.','커지는 기둥을 따라가면 코드 진행(Progression) — vi-IV-I-V는 팝 후렴, ii-V-I은 재즈의 대표 진행입니다.','7화음은 3화음에 7도를 더해 색채를 더하고, 전조(modulation)는 곡의 중심 조성을 다른 조로 옮깁니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const cur=Math.floor(T*1.2)%4;s.userData.chords.forEach((g,i)=>{const on=(i===cur);g.scale.setScalar(on?1.25:0.9);g.rotation.y+=on?0.05:0.005;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const cur=Math.floor(T*1.2)%4;s.userData.chords.forEach((g,i)=>{const on=(i===cur);g.scale.setScalar(on?1.25:0.9);g.rotation.y+=on?0.05:0.005;});s.rotation.y+=0.002;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

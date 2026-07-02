@@ -78,15 +78,18 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8.5);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const N=12,R=3;const tones=[];for(let i=0;i<N;i++){const ang=Math.PI/2-i/N*Math.PI*2;const col=new THREE.Color().setHSL(i/N,0.7,0.55);const t=new THREE.Mesh(new THREE.SphereGeometry(0.28,16,16),new THREE.MeshBasicMaterial({color:col}));t.position.set(Math.cos(ang)*R,Math.sin(ang)*R,0);t.userData.ang=ang;s.add(t);tones.push(t);}
   const ringPts=[];for(let i=0;i<=64;i++){const ang=i/64*Math.PI*2;ringPts.push(new THREE.Vector3(Math.cos(ang)*R,Math.sin(ang)*R,0));}s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(ringPts),new THREE.LineBasicMaterial({color:0x778899})));
   const root=tones[0];const spoke=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(root.position.x,root.position.y,0),new THREE.Vector3(0,0,0)]),new THREE.LineBasicMaterial({color:0xffcc33}));s.add(spoke);
   s.userData.tones=tones;s.userData.spoke=spoke;s.userData.root=root;
+  const L1=lbl('으뜸음','#ffcc55');L1.position.set(0,3.6,0);s.add(L1);const L2=lbl('음정','#e6dca8');L2.position.set(0.8,0.4,0);s.add(L2);const L3=lbl('상대음감','#9ad0ff');L3.position.set(-3.9,0,0);s.add(L3);const L4=lbl('절대음감','#ff9a9a');L4.position.set(3.9,0,0);s.add(L4);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 12음을 원으로 배치한 음정 시계 — 으뜸음에서 각 음까지의 거리가 음정(Interval)입니다.','상대음감(Relative Pitch)은 으뜸음 기준의 음 관계를, 절대음감(Absolute Pitch)은 음 자체의 높이를 인식합니다.','코다이(이동도법)는 으뜸음을 늘 「도」로 불러 상대음감을, 픽스드 도(고정도법)는 절대음감을 기릅니다.','받아쓰기(Dictation)는 들은 음을 악보로, 시창(Sight Singing)은 악보를 소리로 옮기는 훈련입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const tgt=Math.floor(T*1.2)%12;const tn=s.userData.tones[tgt];s.userData.spoke.geometry.setFromPoints([new THREE.Vector3(s.userData.root.position.x,s.userData.root.position.y,0),new THREE.Vector3(tn.position.x,tn.position.y,0)]);s.userData.tones.forEach((t,i)=>{t.scale.setScalar((i===tgt||i===0)?1.5:1);});s.rotation.z+=0.001;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const tgt=Math.floor(T*1.2)%12;const tn=s.userData.tones[tgt];s.userData.spoke.geometry.setFromPoints([new THREE.Vector3(s.userData.root.position.x,s.userData.root.position.y,0),new THREE.Vector3(tn.position.x,tn.position.y,0)]);s.userData.tones.forEach((t,i)=>{t.scale.setScalar((i===tgt||i===0)?1.5:1);});s.rotation.z+=0.001;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
