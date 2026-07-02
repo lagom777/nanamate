@@ -125,9 +125,10 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   // 저승과 운명: 위쪽에 운명의 세 여신(모이라이)이 한 가닥 실(선)을 잣고-재고-끊는다. 아래는 스틱스강(어두운 고리)과 케르베로스의 문
   const fateC=[0xd9b441,0xc98f3a,0x8a5a8a];const fates=[];const fx=[-2.2,0,2.2];
   fx.forEach((x,k)=>{const f=new THREE.Mesh(new THREE.OctahedronGeometry(0.45,0),new THREE.MeshBasicMaterial({color:fateC[k]})); f.position.set(x,2.0,0); s.add(f); fates.push(f);});
@@ -137,8 +138,13 @@
   const gate=new THREE.Mesh(new THREE.TorusGeometry(0.6,0.18,8,24,Math.PI),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.0,0.5,0.4)})); gate.position.set(0,-1.4,0); s.add(gate);
   const heads=[];for(let i=0;i<3;i++){const h=new THREE.Mesh(new THREE.SphereGeometry(0.22,10,10),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.0,0.6,0.45)})); h.position.set(-0.4+i*0.4,-1.0,0); s.add(h); heads.push(h);}
   s.userData.fates=fates;s.userData.thread=thread;s.userData.styx=styx;s.userData.heads=heads;s.userData.fx=fx;
+  const fnames=['클로토','라케시스','아트로포스'];fates.forEach((f,k)=>{const L=lbl(fnames[k],'#39415a');L.position.set(fx[k],2.75,0);s.add(L);});
+  const mL=lbl('모이라이 — 운명의 실','#8a6b1a');mL.position.set(0,3.35,0);s.add(mL);
+  const sL=lbl('스틱스강','#2a5f8a');sL.position.set(-3.2,-1.0,0);s.add(sL);
+  const kL=lbl('케르베로스','#a2402a');kL.position.set(0,-0.35,0);s.add(kL);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 위쪽 세 여신이 모이라이 — 클로토가 생명의 실을 잣고, 라케시스가 길이를 재고, 아트로포스가 끊습니다.','올림포스의 신들조차 모이라이가 정한 운명의 질서를 마음대로 뒤집기 어렵다고 여겨졌습니다.','아래 어두운 고리는 스틱스강 — 죽은 영혼은 뱃사공 카론에게 뱃삯을 치르고 강을 건넙니다.','문을 지키는 머리 셋 달린 개가 케르베로스 — 의로운 자는 엘리시온으로, 중죄인은 타르타로스로 갑니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const fx=s.userData.fx;s.userData.fates.forEach((f,k)=>{f.rotation.y+=0.03;f.position.y=2.0+Math.sin(T*1.5+k)*0.12;});const cut=(Math.sin(T*0.7)+1)/2;const mid=new THREE.Vector3(fx[1],2.0+Math.sin(T*3)*0.1,0);const end=new THREE.Vector3(fx[2]*cut,2.0,0);s.userData.thread.geometry.setFromPoints([new THREE.Vector3(fx[0],2.0,0),mid,end]);s.userData.styx.rotation.z+=0.004;s.userData.heads.forEach((h,i)=>{h.scale.setScalar(0.9+0.15*Math.sin(T*4+i));});s.rotation.y+=0.002;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const fx=s.userData.fx;s.userData.fates.forEach((f,k)=>{f.rotation.y+=0.03;f.position.y=2.0+Math.sin(T*1.5+k)*0.12;});const cut=(Math.sin(T*0.7)+1)/2;const mid=new THREE.Vector3(fx[1],2.0+Math.sin(T*3)*0.1,0);const end=new THREE.Vector3(fx[2]*cut,2.0,0);s.userData.thread.geometry.setFromPoints([new THREE.Vector3(fx[0],2.0,0),mid,end]);s.userData.styx.rotation.z+=0.004;s.userData.heads.forEach((h,i)=>{h.scale.setScalar(0.9+0.15*Math.sin(T*4+i));});s.rotation.y+=0.002;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

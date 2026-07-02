@@ -125,17 +125,21 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   // 신화의 유산: 중앙의 신화 핵심에서 미술·천문·심리·대중문화 등 여러 분야로 가지가 방사되고, 가지 끝의 분야 노드가 빛난다
   const core=new THREE.Mesh(new THREE.IcosahedronGeometry(0.8,1),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.13,0.9,0.6)})); s.add(core);
   const halo=new THREE.Mesh(new THREE.TorusGeometry(1.1,0.05,8,50),new THREE.MeshBasicMaterial({color:0xe0b341,transparent:true,opacity:0.4})); s.add(halo);
   const leaves=[];const M=10;
   for(let i=0;i<M;i++){const ph=Math.acos(1-2*(i+0.5)/M), th=Math.PI*(1+Math.sqrt(5))*i; const dir=new THREE.Vector3(Math.sin(ph)*Math.cos(th),Math.cos(ph),Math.sin(ph)*Math.sin(th)); const end=dir.clone().multiplyScalar(3.4); s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([dir.clone().multiplyScalar(0.8),end]),new THREE.LineBasicMaterial({color:0xe0b341,transparent:true,opacity:0.3}))); const leaf=new THREE.Mesh(new THREE.OctahedronGeometry(0.3,0),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(i/M,0.6,0.55)})); leaf.position.copy(end); s.add(leaf); leaves.push({leaf,dir,ph:i});}
   s.userData.core=core;s.userData.halo=halo;s.userData.leaves=leaves;
+  const coreL=lbl('그리스·로마 신화','#8a6b1a');coreL.position.set(0,1.6,0);s.add(coreL);
+  const fields=[[0,'미술'],[3,'천문학'],[6,'심리학'],[9,'대중문화']];const fLs=fields.map(d=>{const L=lbl(d[1],'#39415a');s.add(L);return{L,i:d[0]};});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 중앙의 신화 핵심에서 미술·천문학·심리학·대중문화로 뻗어 나가는 방사 — 신화는 문화적 상징 언어로 살아남았습니다.','보티첼리의 "비너스의 탄생"처럼 르네상스·바로크 미술은 신화를 회화의 단골 주제로 부활시켰습니다.','수성=머큐리, 금성=비너스, 화성=마르스 — 행성 이름에 로마 신들의 이름이 새겨졌습니다.','나르시시즘·오이디푸스 콤플렉스·에로스와 타나토스 — 심리학 용어도 신화 인물에서 왔습니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.core.rotation.y+=0.01;s.userData.core.scale.setScalar(1+0.05*Math.sin(T*2));s.userData.halo.rotation.z+=0.01;s.userData.leaves.forEach(o=>{o.leaf.rotation.y+=0.03;const p=3.0+0.5*Math.sin(T*1.5+o.ph);o.leaf.position.copy(o.dir).multiplyScalar(p);o.leaf.scale.setScalar(0.8+0.3*Math.sin(T*2+o.ph));});s.rotation.y+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.core.rotation.y+=0.01;s.userData.core.scale.setScalar(1+0.05*Math.sin(T*2));s.userData.halo.rotation.z+=0.01;s.userData.leaves.forEach(o=>{o.leaf.rotation.y+=0.03;const p=3.0+0.5*Math.sin(T*1.5+o.ph);o.leaf.position.copy(o.dir).multiplyScalar(p);o.leaf.scale.setScalar(0.8+0.3*Math.sin(T*2+o.ph));});fLs.forEach(o=>{const lf=s.userData.leaves[o.i].leaf;o.L.position.copy(lf.position).multiplyScalar(1.25);});s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

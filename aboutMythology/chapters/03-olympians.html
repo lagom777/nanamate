@@ -125,17 +125,21 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   // 올림포스 12신: 중앙의 제우스를 12개의 신이 원형으로 둘러쌈. 각 신은 서로 다른 색의 정다면체(고유 권능)
   const center=new THREE.Mesh(new THREE.IcosahedronGeometry(0.7,1),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.13,0.9,0.6)})); s.add(center);
   const seats=[], R=3.3, M=12;
   for(let i=0;i<M;i++){const ang=i/M*Math.PI*2; const x=Math.cos(ang)*R, z=Math.sin(ang)*R; const col=new THREE.Color().setHSL(i/M,0.6,0.55); const g=(i%3===0)?new THREE.OctahedronGeometry(0.42,0):(i%3===1)?new THREE.TetrahedronGeometry(0.46,0):new THREE.BoxGeometry(0.6,0.6,0.6); const god=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:col})); god.position.set(x,0,z); s.add(god); seats.push(god); s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(x,0,z)]),new THREE.LineBasicMaterial({color:0xe0b341,transparent:true,opacity:0.25})));}
   const ringG=new THREE.Mesh(new THREE.TorusGeometry(R,0.04,8,80),new THREE.MeshBasicMaterial({color:0xe0b341,transparent:true,opacity:0.4})); ringG.rotation.x=Math.PI/2; s.add(ringG);
   s.userData.seats=seats;s.userData.center=center;
+  const zeusL=lbl('제우스','#8a6b1a');zeusL.position.set(0,1.25,0);s.add(zeusL);
+  const gods=['헤라','포세이돈','데메테르','아테나','아폴론','아르테미스','아레스','아프로디테','헤파이스토스','헤르메스','디오니소스','헤스티아'];seats.forEach((g,i)=>{const L=lbl(gods[i],'#39415a');L.position.set(g.position.x,(i%2?1.45:0.9),g.position.z);s.add(L);});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 중앙의 제우스를 12신이 원형으로 둘러싼 올림포스 — 하늘·바다·전쟁·사랑·지혜 같은 영역을 나눠 맡았습니다.','제우스·포세이돈·하데스 삼형제는 제비뽑기로 하늘·바다·저승을 나눴고, 저승에 거하는 하데스는 보통 12신에서 빠집니다.','각 신은 상징물로 식별됩니다 — 제우스의 번개, 포세이돈의 삼지창, 아테나의 올빼미, 헤르메스의 전령 지팡이(케리케이온).','12번째 자리는 전승에 따라 디오니소스 또는 화로의 여신 헤스티아 — 로마는 유피테르·유노·넵투누스·미네르바로 이어받았습니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.center.rotation.y+=0.01;s.userData.seats.forEach((m,i)=>{m.rotation.x+=0.02;m.rotation.y+=0.015;m.position.y=Math.sin(T*1.5+i*0.5)*0.25;});s.rotation.y+=0.004;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.center.rotation.y+=0.01;s.userData.seats.forEach((m,i)=>{m.rotation.x+=0.02;m.rotation.y+=0.015;m.position.y=Math.sin(T*1.5+i*0.5)*0.25;});s.rotation.y+=0.004;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

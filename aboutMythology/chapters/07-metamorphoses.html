@@ -125,15 +125,19 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   // 사랑과 변신: 세 형상이 '사람(구)' ↔ '나무·꽃(줄기+가지)'로 끊임없이 변신. 줄기가 자라고 머리가 꽃잎으로 펼쳐짐
   const figs=[];const xs=[-2.8,0,2.8];
   xs.forEach((x,k)=>{const g=new THREE.Group(); const stem=new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.16,1.6,6),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.1,0.5,0.4)})); stem.position.y=-0.4; const head=new THREE.Mesh(new THREE.IcosahedronGeometry(0.5,1),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.05,0.5,0.55)})); head.position.y=0.7; const petals=[]; for(let p=0;p<6;p++){const pl=new THREE.Mesh(new THREE.ConeGeometry(0.18,0.5,4),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.92,0.6,0.6)})); const ang=p/6*Math.PI*2; pl.position.set(Math.cos(ang)*0.4,0.7,Math.sin(ang)*0.4); pl.rotation.z=-ang; petals.push(pl); g.add(pl);} g.add(stem); g.add(head); g.position.x=x; s.add(g); figs.push({g,stem,head,petals,ph:k*2});});
   s.userData.figs=figs;
+  const names=['다프네→월계수','나르키소스→수선화','피그말리온→갈라테이아'];xs.forEach((x,k)=>{const L=lbl(names[k],'#39415a');L.position.set(x,k===1?2.2:1.7,0);s.add(L);});
+  const mL=lbl('변신(메타모르포시스)','#8a6b1a');mL.position.set(0,-1.85,0);s.add(mL);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 사람(구)이 줄기와 꽃잎으로 바뀌는 세 형상 — 오비디우스 변신 이야기의 메타모르포시스입니다.','아폴론을 피해 달아난 다프네는 월계수가 되고, 그 잎은 승리와 명예의 상징이 됐습니다.','자기 모습에 빠진 나르키소스는 수선화로 — 나르시시즘이라는 말의 뿌리입니다.','피그말리온의 조각상은 거꾸로 사람 갈라테이아가 — 변신은 욕망·죄·운명이 형상으로 굳은 상징입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.figs.forEach(f=>{const m=(Math.sin(T*0.8+f.ph)+1)/2;f.stem.scale.y=0.7+m*0.9;f.head.scale.setScalar(1-m*0.6);f.head.material.color.setHSL(0.05+m*0.3,0.5+m*0.2,0.55);f.petals.forEach((pl,i)=>{pl.scale.setScalar(m);const ang=i/6*Math.PI*2;const rr=0.2+m*0.5;pl.position.set(Math.cos(ang)*rr,0.7,Math.sin(ang)*rr);});f.g.rotation.y+=0.01;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.figs.forEach(f=>{const m=(Math.sin(T*0.8+f.ph)+1)/2;f.stem.scale.y=0.7+m*0.9;f.head.scale.setScalar(1-m*0.6);f.head.material.color.setHSL(0.05+m*0.3,0.5+m*0.2,0.55);f.petals.forEach((pl,i)=>{pl.scale.setScalar(m);const ang=i/6*Math.PI*2;const rr=0.2+m*0.5;pl.position.set(Math.cos(ang)*rr,0.7,Math.sin(ang)*rr);});f.g.rotation.y+=0.01;});s.rotation.y+=0.002;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

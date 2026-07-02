@@ -133,9 +133,10 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   // 영웅의 여정: 원형 경로(여정의 순환) 위에 시련 표지(뾰족한 콘)들이 박혀 있고, 영웅(빛나는 구)이 길을 따라 돈다
   const R=3, path=new THREE.Mesh(new THREE.TorusGeometry(R,0.05,10,90),new THREE.MeshBasicMaterial({color:0xe0b341,transparent:true,opacity:0.45})); s.add(path);
   const ordeals=[], M=8;
@@ -143,8 +144,13 @@
   const hero=new THREE.Mesh(new THREE.IcosahedronGeometry(0.4,1),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.14,0.9,0.62)})); s.add(hero);
   const home=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.7})); home.position.set(R,0,0); s.add(home);
   s.userData.hero=hero;s.userData.ordeals=ordeals;s.userData.R=R;
+  const heroL=lbl('영웅','#8a6b1a');heroL.position.set(0,0.65,0);hero.add(heroL);
+  const homeL=lbl('집 — 떠남·귀환','#39415a');homeL.position.set(3,-0.75,0);s.add(homeL);
+  const ordealL=lbl('시련','#a2402a');ordealL.position.set(-2.35,2.75,0);s.add(ordealL);
+  const pathL=lbl('영웅의 여정','#8a6b1a');pathL.position.set(0,0,0);s.add(pathL);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 빛나는 구가 영웅 — 집을 떠나 시련을 겪고 성장해 돌아오는 원형의 영웅의 여정입니다.','조지프 캠벨은 여러 문화의 영웅담에서 떠남·시련·귀환이라는 공통 구조를 발견했습니다.','붉은 콘들이 시련 — 헤라클레스의 12과업, 페르세우스의 메두사, 테세우스의 미노타우로스가 대표적입니다.','영웅은 신과 인간 사이에서 태어나 강하지만, 분노·교만·망각 같은 결함 때문에 비극을 맞기도 합니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const ang=T*0.6,RR=s.userData.R;s.userData.hero.position.set(Math.cos(ang)*RR,Math.sin(ang)*RR,0);s.userData.hero.rotation.y+=0.04;s.userData.ordeals.forEach((o,i)=>{o.scale.y=1+0.3*Math.sin(T*3+i);});s.rotation.z+=0.001;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const ang=T*0.6,RR=s.userData.R;s.userData.hero.position.set(Math.cos(ang)*RR,Math.sin(ang)*RR,0);s.userData.hero.rotation.y+=0.04;s.userData.ordeals.forEach((o,i)=>{o.scale.y=1+0.3*Math.sin(T*3+i);});s.rotation.z+=0.001;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
