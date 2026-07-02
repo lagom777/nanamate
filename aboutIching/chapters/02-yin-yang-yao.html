@@ -130,12 +130,15 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,6);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const C=0xcf9b34;const yang=new THREE.Mesh(new THREE.BoxGeometry(3,0.4,0.4),new THREE.MeshBasicMaterial({color:C}));yang.position.y=1.1;s.add(yang);const yl=new THREE.Mesh(new THREE.BoxGeometry(1.2,0.4,0.4),new THREE.MeshBasicMaterial({color:C}));yl.position.set(-0.9,-0.3,0);s.add(yl);const yr=new THREE.Mesh(new THREE.BoxGeometry(1.2,0.4,0.4),new THREE.MeshBasicMaterial({color:C}));yr.position.set(0.9,-0.3,0);s.add(yr);const ring=new THREE.Mesh(new THREE.TorusGeometry(0.7,0.06,12,36),new THREE.MeshBasicMaterial({color:C}));ring.position.y=-1.7;s.add(ring);const d1=new THREE.Mesh(new THREE.SphereGeometry(0.33,16,16),new THREE.MeshBasicMaterial({color:C}));d1.position.set(0,-1.4,0);s.add(d1);const d2=new THREE.Mesh(new THREE.SphereGeometry(0.33,16,16),new THREE.MeshBasicMaterial({color:0xffffff}));d2.position.set(0,-2.0,0);s.add(d2);
+  const L1=lbl('양효(陽爻)','#ffe9b8');L1.position.set(2.4,1.1,0);s.add(L1);const L2=lbl('음효(陰爻)','#ffe9b8');L2.position.set(2.4,-0.3,0);s.add(L2);const L3=lbl('태극(太極)','#ffd34d');L3.position.set(2.0,-1.7,0);s.add(L3);const L4=lbl('효(爻) — 괘의 기본 단위','#ffffff');L4.position.set(0,2.05,0);s.add(L4);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 이어진 막대가 양효(⚊), 끊긴 막대가 음효(⚋) — 괘를 이루는 기본 단위는 이 둘뿐입니다.','음양은 하늘과 땅, 강함과 부드러움, 남과 여처럼 대립하면서도 서로 보완하는 관계입니다.','아래 태극에서 양의(兩儀)가 갈리고, 다시 사상(노양·소양·소음·노음)으로, 그리고 팔괘로 분화합니다.','효 셋이 모이면 소성괘인 팔괘, 여섯이 모이면 대성괘인 64괘가 됩니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.005;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.rotation.y+=0.005;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

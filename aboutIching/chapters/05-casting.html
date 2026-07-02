@@ -130,12 +130,15 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const C=0xcf9b34;const coins=[];for(let i=0;i<3;i++){const m=new THREE.Mesh(new THREE.CylinderGeometry(0.45,0.45,0.08,24),new THREE.MeshBasicMaterial({color:0xffd34d}));m.rotation.x=Math.PI/2;m.position.set((i-1)*1.1,2.4,0);s.add(m);coins.push(m);}const lines=[];const pat=[1,0,1,1,0,1];for(let j=0;j<6;j++){const grp=new THREE.Group();grp.position.y=(j-2.5)*0.5-0.2;grp.visible=false;if(pat[j]){const b=new THREE.Mesh(new THREE.BoxGeometry(2.2,0.2,0.2),new THREE.MeshBasicMaterial({color:C}));grp.add(b);}else{const l=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.2,0.2),new THREE.MeshBasicMaterial({color:C}));l.position.x=-0.65;grp.add(l);const r2=l.clone();r2.position.x=0.65;grp.add(r2);}s.add(grp);lines.push(grp);}
+  const L1=lbl('척전법(擲錢法)','#ffffff');L1.position.set(0,3.15,0);s.add(L1);const L2=lbl('동전 세 닢','#ffd34d');L2.position.set(2.55,2.4,0);s.add(L2);const L3=lbl('합 6·7·8·9','#ffe9b8');L3.position.set(0,1.65,0);s.add(L3);const L4=lbl('여섯 효 — 아래부터 위로','#ffe9b8');L4.position.set(-2.5,-0.2,0);s.add(L4);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 동전 세 닢을 여섯 번 던지는 척전법 — 효를 아래부터 위로 쌓아 한 괘를 만듭니다.','한 면을 양(3), 다른 면을 음(2)으로 셈해 세 닢의 합 6·7·8·9로 효의 음양과 변효 여부를 정합니다.','시초법은 49개의 산가지를 세 차례 변역(變易)해 한 효 — 여섯 번 반복, 모두 18변으로 한 괘를 이룹니다.','질문을 분명히 정하고 정성껏 한 번 뽑는 태도가 점법의 바탕입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;coins.forEach((m,i)=>m.rotation.y+=0.15+i*0.02);const k=Math.floor((T*0.7)%8);lines.forEach((g,j)=>g.visible=(j<k));r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}coins.forEach((m,i)=>m.rotation.y+=0.15+i*0.02);const k=Math.floor((T*0.7)%8);lines.forEach((g,j)=>g.visible=(j<k));r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
