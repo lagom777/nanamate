@@ -975,32 +975,38 @@ REACT_APP_VERSION=1.0.0
       </div>
       <div class="difficulty-content" data-level="easy">
         <span class="difficulty-badge easy">하 · 입문</span>
-        <h3>한 줄로 이해하기</h3>
-        <p>빌드는 개발자가 짠 코드를 브라우저가 빠르게 실행할 수 있는 형태로 묶고 압축하는 과정이고, 배포는 그 결과물을 사용자에게 전달하는 일입니다.</p>
-        <h3>왜 배워야 하나?</h3>
-        <p>실무 사례로 (1) <code>npm run build</code> 한 번으로 수십 개 파일이 자동 최적화·번들링, (2) GitHub에 푸시하면 1분 내 배포가 끝나는 자동화 파이프라인 구축, (3) 새 기능을 일부 사용자에게만 먼저 공개하는 Canary 배포 등이 있습니다. 빌드/배포를 모르면 "내 컴퓨터에선 되는데" 문제로 동료를 괴롭히기 쉽습니다.</p>
+        <h3>🎯 딱 한 줄!</h3>
+        <p>빌드는 내가 짠 코드를 브라우저가 <strong>빠르게 실행하게 묶고 압축</strong>하는 일, 배포는 그걸 <strong>사용자에게 배달</strong>하는 일이에요! 📦🚚</p>
+        <h3>😎 왜 배워요?</h3>
+        <p><code>npm run build</code> 한 번이면 수십 개 파일이 자동으로 정리·압축돼요. GitHub에 올리기만 하면 1분 안에 배포가 끝나는 자동 파이프라인도 만들 수 있고요. 이걸 모르면 "내 컴퓨터에선 되는데…" 하며 친구를 곤란하게 만들기 쉬워요. 😅</p>
         <div class="info-card">
-          <h4>🌱 핵심 용어</h4>
+          <h4>🌱 이 말들만 알아두자</h4>
           <ul>
-            <li><strong>번들러</strong>: 여러 JS 파일을 하나로 합치는 도구(Webpack, Vite)</li>
-            <li><strong>트랜스파일러</strong>: 최신 문법을 구형 브라우저용으로 변환(Babel, SWC)</li>
-            <li><strong>미니파이</strong>: 코드 압축으로 크기 축소</li>
-            <li><strong>CI/CD</strong>: 자동 테스트·자동 배포 파이프라인</li>
-            <li><strong>호스팅</strong>: 배포된 사이트가 살고 있는 서버</li>
+            <li><strong>번들러</strong>: 여러 JS 파일을 하나로 합치는 도구 (Webpack, Vite)</li>
+            <li><strong>트랜스파일러</strong>: 최신 문법을 옛 브라우저용으로 번역 (Babel, SWC)</li>
+            <li><strong>미니파이</strong>: 코드를 꾹 눌러 크기 줄이기</li>
+            <li><strong>CI/CD</strong>: 자동 테스트·자동 배포 파이프라인 🤖</li>
+            <li><strong>호스팅</strong>: 배포된 사이트가 사는 서버 🏠</li>
           </ul>
         </div>
-        <h3>개념 풀어쓰기</h3>
-        <p>빌드와 배포를 이삿짐 회사에 비유해봅시다. 빌드는 흩어진 살림을 박스에 차곡차곡 넣고 라벨을 붙이는 일이고, 배포는 그 박스를 새 집(서버)에 가져다 놓는 일입니다. 좋은 이삿짐 회사일수록 (1) 짐을 적게 부피로 줄이고(미니파이), (2) 트럭 한 대에 효율적으로 싣고(번들링), (3) 자주 쓰는 짐만 먼저 풀고 나머지는 나중에(코드 스플리팅) 처리합니다. 요즘은 Vite 같은 도구가 개발 중에는 빠른 미리보기를 제공하고, <code>vite build</code>로 명령 한 줄에 최적화된 산출물을 만들어 줍니다. Vercel·Netlify·Cloudflare Pages는 깃허브와 연결만 하면 푸시할 때마다 자동으로 빌드·배포해주므로 초보자도 무료로 사이트를 띄울 수 있습니다.</p>
+        <h3>📦 쉽게 풀어보기</h3>
+        <p>빌드와 배포는 <strong>이삿짐 회사</strong>랑 똑같아요! 빌드는 살림을 박스에 차곡차곡 담고 라벨 붙이는 일, 배포는 그 박스를 새 집(서버)에 옮기는 일이에요.</p>
+        <ul>
+          <li>🗜️ 짐을 작게 줄이고 (미니파이)</li>
+          <li>🚚 트럭에 효율적으로 싣고 (번들링)</li>
+          <li>📂 자주 쓰는 짐만 먼저 풀기 (코드 스플리팅)</li>
+        </ul>
+        <p>요즘은 <strong>Vite</strong> 같은 도구가 개발 중엔 빠른 미리보기를 주고, <code>vite build</code> 한 줄로 최적화된 결과물을 만들어줘요. Vercel·Netlify·Cloudflare Pages는 깃허브만 연결하면 올릴 때마다 자동으로 빌드·배포까지! 초보자도 무료로 사이트를 띄울 수 있어요. 🎉</p>
         <div class="study-tip">
-          <strong>💡 학습 TIP:</strong> 작은 프로젝트로 GitHub Pages·Vercel·Cloudflare Pages를 차례로 배포해보면 차이가 한눈에 들어옵니다. 도메인 연결까지 한 번 해보세요.
+          <strong>💡 꿀팁:</strong> 작은 프로젝트를 GitHub Pages → Vercel → Cloudflare Pages 순으로 배포해보면 차이가 한눈에 보여요. 도메인 연결까지 한번 도전! 🌐
         </div>
-        <h3>한 페이지 요약</h3>
+        <h3>📝 오늘의 정리</h3>
         <ul>
           <li>빌드 = 코드 변환 + 번들 + 압축</li>
-          <li>Vite는 ESM 기반으로 개발 시작이 빠름</li>
-          <li>배포는 정적 호스팅 + CDN이 가장 단순</li>
+          <li>Vite는 ESM 기반이라 개발 시작이 빨라요</li>
+          <li>배포는 정적 호스팅 + CDN이 제일 간단</li>
           <li>GitHub Actions로 푸시 → 빌드 → 배포 자동화</li>
-          <li>환경변수(.env)로 설정값을 코드와 분리</li>
+          <li>비밀 설정값은 <code>.env</code>(환경변수)로 코드와 분리 🔐</li>
         </ul>
       </div>
       <div class="difficulty-content" data-level="medium">

@@ -634,32 +634,39 @@
       </div>
       <div class="difficulty-content" data-level="easy">
         <span class="difficulty-badge easy">하 · 입문</span>
-        <h3>한 줄로 이해하기</h3>
-        <p>상태관리는 "여러 컴포넌트가 함께 보는 데이터를 어디에 두고 어떻게 갱신할지"의 약속이며, 앱이 커질수록 중요해집니다.</p>
-        <h3>왜 배워야 하나?</h3>
-        <p>실무 사례로 (1) 로그인한 사용자 정보를 헤더·마이페이지·결제창이 모두 알아야 하는 경우, (2) 장바구니 항목 수를 사이트 전역 배지에 동기화, (3) 다크 모드 설정을 페이지 이동 후에도 유지해야 하는 경우 — 모두 상태관리 도구가 해결합니다. 잘못 설계하면 "내 코드는 분명 맞는데 왜 화면이 안 바뀌지?" 같은 디버그 지옥을 겪습니다.</p>
+        <h3>🎯 딱 한 줄!</h3>
+        <p>상태관리는 <strong>여러 컴포넌트가 함께 보는 데이터를 어디 두고 어떻게 바꿀지</strong> 정하는 약속이에요. 앱이 커질수록 중요해져요! 📚</p>
+        <h3>😎 왜 배워요?</h3>
+        <p>로그인한 내 정보를 헤더·마이페이지·결제창이 모두 알아야 하고, 장바구니 개수를 사이트 곳곳 배지에 똑같이 보여주고, 다크 모드 설정을 페이지를 옮겨도 유지하려면… 전부 상태관리가 필요해요. 잘못하면 "코드는 맞는데 왜 화면이 안 바뀌지?" 디버그 지옥에 빠져요. 😱</p>
         <div class="info-card">
-          <h4>🌱 핵심 용어</h4>
+          <h4>🌱 이 말들만 알아두자</h4>
           <ul>
-            <li><strong>로컬 상태</strong>: 한 컴포넌트만 쓰는 데이터(useState)</li>
-            <li><strong>전역 상태</strong>: 여러 컴포넌트가 공유하는 데이터</li>
-            <li><strong>Props Drilling</strong>: 깊은 자식까지 props로 내려보내는 안티패턴</li>
-            <li><strong>스토어(Store)</strong>: 전역 상태를 보관하는 단일 저장소</li>
-            <li><strong>서버 상태</strong>: API에서 받아와 캐싱·동기화하는 데이터</li>
+            <li><strong>로컬 상태</strong>: 한 컴포넌트만 쓰는 데이터 (<code>useState</code>)</li>
+            <li><strong>전역 상태</strong>: 여러 컴포넌트가 함께 쓰는 데이터</li>
+            <li><strong>Props Drilling</strong>: 깊은 자식까지 props를 계속 내려보내는 나쁜 습관 😵</li>
+            <li><strong>스토어(Store)</strong>: 전역 상태를 모아두는 창고</li>
+            <li><strong>서버 상태</strong>: API에서 받아와 저장(캐싱)하는 데이터</li>
           </ul>
         </div>
-        <h3>개념 풀어쓰기</h3>
-        <p>상태관리를 도서관 시스템에 비유해봅시다. 책 한 권은 한 사람만 보면 책상 서랍(useState)에 두면 됩니다. 그런데 여러 학생이 같은 책을 봐야 한다면 학교 도서관(Context·Zustand·Redux)에 둬야 합니다. 도서관에는 사서(Reducer)가 있어서 "대출/반납"이라는 정해진 절차로만 책을 빌릴 수 있게 합니다. 그래야 책이 어디 갔는지 추적할 수 있고, 두 사람이 동시에 가져가는 사고를 막을 수 있죠. Redux는 사서가 매우 엄격해서 모든 변경 사유(Action)를 기록합니다. Zustand는 사서가 친절하게 "그냥 set하세요" 식으로 절차를 줄였습니다. React Query는 도서관과 별개로 "도서 검색 기록 캐시"를 자동 관리해, 같은 검색을 또 하지 않도록 도와주는 사서 보조원입니다. 처음엔 useState만으로 시작하고, props가 3단계 이상 내려가면 그때 도구를 도입하세요.</p>
-        <div class="study-tip">
-          <strong>💡 학습 TIP:</strong> 작은 앱은 useState/useReducer면 충분합니다. 도구를 미리 도입할수록 코드가 무거워지므로, 필요해질 때 도입하세요.
-        </div>
-        <h3>한 페이지 요약</h3>
+        <h3>📚 쉽게 풀어보기</h3>
+        <p>상태관리는 <strong>도서관 시스템</strong>이랑 똑같아요!</p>
         <ul>
-          <li>로컬 상태 우선, 전역은 정말 필요할 때만</li>
-          <li>Context는 데이터 공유 도구이지 성능 도구가 아님</li>
-          <li>서버 상태는 React Query·SWR로 분리 관리</li>
-          <li>Redux는 큰 팀·복잡한 흐름에 적합</li>
-          <li>Zustand·Jotai는 작은 보일러플레이트로 강력함</li>
+          <li>🗄️ 나 혼자 볼 책 → 내 책상 서랍(<code>useState</code>)에</li>
+          <li>🏫 여러 명이 볼 책 → 학교 도서관(Context·Zustand·Redux)에</li>
+          <li>🧑‍🏫 사서(Reducer)가 "대출/반납" 절차로만 책을 빌려줘요 → 누가 뭘 가져갔는지 추적 OK!</li>
+          <li>Redux = 아주 엄격한 사서(모든 변경을 기록), Zustand = 친절한 사서("그냥 set 하세요")</li>
+          <li>React Query = 검색 기록 캐시를 관리하는 보조원. 같은 검색을 또 안 하게 도와줘요!</li>
+        </ul>
+        <div class="study-tip">
+          <strong>💡 꿀팁:</strong> 처음엔 <code>useState</code>만으로 시작! props가 3단계 넘게 내려가면 그때 도구를 도입하세요. 미리 넣으면 코드만 무거워져요. 🎒
+        </div>
+        <h3>📝 오늘의 정리</h3>
+        <ul>
+          <li>로컬 상태 먼저, 전역은 정말 필요할 때만</li>
+          <li>Context는 데이터 공유 도구지 성능 도구는 아니에요</li>
+          <li>서버 상태는 React Query·SWR로 따로 관리</li>
+          <li>Redux는 큰 팀·복잡한 흐름에 딱</li>
+          <li>Zustand·Jotai는 적은 코드로도 강력해요 💪</li>
         </ul>
       </div>
       <div class="difficulty-content" data-level="medium">

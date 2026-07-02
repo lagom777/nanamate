@@ -474,32 +474,40 @@
       </div>
       <div class="difficulty-content" data-level="easy">
         <span class="difficulty-badge easy">하 · 입문</span>
-        <h3>한 줄로 이해하기</h3>
-        <p>DOM은 브라우저가 HTML을 읽어 메모리에 만든 "조작 가능한 객체 트리"이고, JS는 이 트리를 바꿔 화면을 갱신합니다.</p>
-        <h3>왜 배워야 하나?</h3>
-        <p>실무 사례로 (1) "좋아요" 버튼을 누르면 하트 색이 즉시 바뀌고 카운트가 1 증가, (2) 모달 창을 열고 닫는 클릭 인터랙션, (3) 폼 입력값을 검증해 에러 메시지를 빨갛게 표시하는 등 거의 모든 동적 UI가 DOM 조작으로 만들어집니다. React·Vue도 결국 내부에서 DOM을 조작하므로 원리 이해는 필수입니다.</p>
+        <h3>🎯 딱 한 줄!</h3>
+        <p>DOM은 브라우저가 HTML을 읽어서 만든 <strong>레고 모형</strong>이에요. JS로 이 모형을 바꾸면 화면이 바로 바뀌어요! 🧱</p>
+        <h3>😎 왜 배워요?</h3>
+        <p>"좋아요" 누르면 하트 색이 바뀌고 숫자가 +1, 팝업 창 열고 닫기, 입력이 틀리면 빨간 글씨로 경고… 이런 살아있는 화면은 전부 DOM 조작이에요! React·Vue도 속으로는 결국 DOM을 만지니까 원리를 알면 최고예요. 👍</p>
         <div class="info-card">
-          <h4>🌱 핵심 용어</h4>
+          <h4>🌱 이 말들만 알아두자</h4>
           <ul>
-            <li><strong>노드(Node)</strong>: DOM 트리의 한 점 — 요소·텍스트·주석</li>
-            <li><strong>요소(Element)</strong>: 태그로 만들어진 노드</li>
-            <li><strong>이벤트</strong>: 클릭·입력 같은 사용자/시스템 알림</li>
-            <li><strong>리스너</strong>: 이벤트가 일어났을 때 실행할 함수</li>
-            <li><strong>리플로우/리페인트</strong>: 레이아웃·픽셀을 다시 그리는 비싼 작업</li>
+            <li><strong>노드(Node)</strong>: DOM 트리의 점 하나 (요소·글자·주석)</li>
+            <li><strong>요소(Element)</strong>: 태그로 만든 노드</li>
+            <li><strong>이벤트</strong>: 클릭·입력 같은 신호 🔔</li>
+            <li><strong>리스너</strong>: 이벤트가 오면 실행할 함수 👂</li>
+            <li><strong>리플로우 / 리페인트</strong>: 화면을 다시 그리는 무거운 작업 🐢</li>
           </ul>
         </div>
-        <h3>개념 풀어쓰기</h3>
-        <p>HTML이 도면이라면 DOM은 그 도면대로 지어 놓은 모형이고, JavaScript는 그 모형을 만지작거리는 손입니다. <code>document.querySelector('.btn')</code>은 "BTN이라는 이름표가 붙은 부품을 찾아줘"라는 명령이고, 찾은 부품에 <code>.textContent = '저장됨'</code>이라고 쓰면 글자만 바뀌고, <code>.style.color = 'red'</code>이라고 쓰면 색만 바뀝니다. 이벤트는 모형에 달린 작은 벨과 같아서, <code>addEventListener('click', 함수)</code>로 "이 벨이 울리면 이 함수를 실행해 줘"라고 약속해 둡니다. 부품을 새로 만들고 싶을 때는 <code>createElement</code>로 부품을 빚고 <code>appendChild</code>로 모형에 붙입니다. 단, 부품을 한꺼번에 100개씩 자주 바꾸면 모형 전체를 다시 그리느라 느려질 수 있으니, 한 번에 묶어서 바꾸는 습관이 중요합니다.</p>
-        <div class="study-tip">
-          <strong>💡 학습 TIP:</strong> 크롬 개발자 도구(F12) → Elements 탭에서 직접 노드를 클릭하고 <code>$0</code>로 콘솔에서 조작해보면 즉시 반응을 볼 수 있어 이해가 빠릅니다.
-        </div>
-        <h3>한 페이지 요약</h3>
+        <h3>🧱 쉽게 풀어보기</h3>
+        <p>HTML이 <strong>도면</strong>이라면, DOM은 그 도면대로 만든 <strong>모형</strong>, JS는 모형을 만지는 <strong>손</strong>이에요!</p>
         <ul>
-          <li>DOM = HTML의 객체 트리, JS로 동적 변경</li>
-          <li>조회: <code>querySelector</code>·<code>getElementById</code></li>
-          <li>변경: <code>textContent</code>·<code>classList</code>·<code>setAttribute</code></li>
+          <li>🔎 <code>document.querySelector('.btn')</code> → "btn 이름표 붙은 부품 찾아줘"</li>
+          <li>✏️ <code>.textContent = '저장됨'</code> → 글자만 바꾸기</li>
+          <li>🎨 <code>.style.color = 'red'</code> → 색만 바꾸기</li>
+          <li>🔔 <code>addEventListener('click', 함수)</code> → "이 벨이 울리면 이 함수 실행해줘"</li>
+          <li>➕ <code>createElement</code>로 새 부품을 빚고 <code>appendChild</code>로 붙이기</li>
+        </ul>
+        <p>단, 부품을 한 번에 100개씩 자주 바꾸면 모형 전체를 다시 그리느라 느려져요. 되도록 <strong>묶어서 한 번에</strong> 바꾸는 습관! 🐢➡️🐇</p>
+        <div class="study-tip">
+          <strong>💡 꿀팁:</strong> <strong>F12 → Elements</strong> 탭에서 노드를 클릭한 뒤 콘솔에서 <code>$0</code>로 만져보면 반응이 바로 보여서 이해가 쏙쏙! 👀
+        </div>
+        <h3>📝 오늘의 정리</h3>
+        <ul>
+          <li>DOM = HTML의 객체 트리, JS로 바꿔요</li>
+          <li>찾기: <code>querySelector</code>·<code>getElementById</code></li>
+          <li>바꾸기: <code>textContent</code>·<code>classList</code>·<code>setAttribute</code></li>
           <li>이벤트: <code>addEventListener('click', fn)</code></li>
-          <li>변경은 묶어서 — 빈번한 조작은 성능 저하 원인</li>
+          <li>바꿀 땐 묶어서! 자주 바꾸면 느려져요</li>
         </ul>
       </div>
       <div class="difficulty-content" data-level="medium">

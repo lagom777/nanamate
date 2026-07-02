@@ -764,34 +764,37 @@ li:first-child { font-weight: bold; }
                 <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
             </div>
             <div class="difficulty-content" data-level="easy">
-                <span class="difficulty-badge easy">하 · 입문</span>
-                <h3>한 줄로 이해하기</h3>
-                <p>CSS는 HTML 요소를 어떻게 보여줄지 결정하는 "스타일 규칙"이며, 색·크기·배치를 모두 담당합니다.</p>
-                <h3>왜 배워야 하나?</h3>
-                <p>실무 사례로는 (1) 회사 브랜드 컬러를 사이트 전반에 일관되게 적용, (2) 모바일·태블릿·PC에서 자동으로 레이아웃이 바뀌는 반응형 디자인, (3) 호버 시 버튼이 살짝 떠오르는 마이크로 인터랙션 구현이 있습니다. 잘 짠 CSS는 코드 양을 절반으로 줄이고, 디자이너와의 협업을 부드럽게 만듭니다.</p>
-                <div class="info-card">
-                    <h4>🌱 핵심 용어</h4>
-                    <ul>
-                        <li><strong>선택자(Selector)</strong>: 어떤 요소에 스타일을 적용할지 지정</li>
-                        <li><strong>속성/값(Property/Value)</strong>: <code>color: red;</code>처럼 무엇을 어떻게 바꿀지</li>
-                        <li><strong>박스 모델</strong>: content + padding + border + margin 4겹</li>
-                        <li><strong>Flexbox/Grid</strong>: 1차원·2차원 레이아웃 시스템</li>
-                        <li><strong>캐스케이드</strong>: 여러 규칙이 겹쳤을 때 우선순위 결정 방식</li>
-                    </ul>
-                </div>
-                <h3>개념 풀어쓰기</h3>
-                <p>HTML이 집의 골조라면 CSS는 인테리어입니다. 똑같은 골조여도 페인트 색, 가구 배치, 조명 밝기에 따라 분위기가 완전히 달라지듯, CSS만 바꿔도 동일 HTML이 미니멀 디자인이 되기도 하고 화려한 카드 갤러리가 되기도 합니다. CSS 규칙은 "선택자 { 속성: 값; }" 형태로 단순합니다. 예를 들어 <code>p { color: blue; }</code>는 "모든 p 요소의 글자색을 파랑으로"라는 뜻입니다. 박스 모델은 모든 요소가 양파처럼 4겹의 영역을 가진다는 모델인데, 이를 이해하지 못하면 "왜 여백이 의도와 다르게 생기지?" 같은 문제로 며칠을 헤맬 수 있습니다. Flexbox는 한 줄로 정렬하기 좋고, Grid는 신문처럼 2차원으로 배치할 때 위력을 발휘합니다. 처음엔 두 가지를 동시에 배우려 하지 말고 Flex부터 손에 익히세요.</p>
-                <div class="study-tip">
-                    <strong>💡 학습 TIP:</strong> Flexbox Froggy, Grid Garden 같은 게임형 학습 사이트로 30분만 놀아도 핵심 속성이 손가락에 새겨집니다.
-                </div>
-                <h3>한 페이지 요약</h3>
+              <span class="difficulty-badge easy">하 · 입문</span>
+              <h3>🎯 딱 한 줄!</h3>
+              <p>CSS는 HTML을 <strong>예쁘게 꾸미는</strong> 말이에요. 색깔·크기·위치를 전부 정해줘요! 🎨</p>
+              <h3>😎 왜 배워요?</h3>
+              <p>똑같은 HTML도 CSS만 바꾸면 완전히 다른 느낌이 돼요. 브랜드 색을 사이트 전체에 똑같이 입히고, 폰·태블릿·컴퓨터마다 화면이 착착 바뀌고(반응형), 버튼에 마우스를 올리면 살짝 떠오르는 효과도 CSS가 만들어요! ✨</p>
+              <div class="info-card">
+                <h4>🌱 이 말들만 알아두자</h4>
                 <ul>
-                    <li>CSS는 선택자·속성·값의 조합으로 스타일을 적용</li>
-                    <li>박스 모델은 content/padding/border/margin 4단계</li>
-                    <li>Flexbox = 1차원, Grid = 2차원 레이아웃</li>
-                    <li>캐스케이드와 명시도(specificity)가 우선순위 결정</li>
-                    <li>미디어 쿼리로 반응형 구현, 모바일 우선 권장</li>
+                  <li><strong>선택자(Selector)</strong>: "누구를 꾸밀까?" 대상 고르기 🎯</li>
+                  <li><strong>속성:값</strong>: <code>color: red;</code> "무엇을 → 어떻게"</li>
+                  <li><strong>박스 모델</strong>: 모든 요소는 양파처럼 4겹! 🧅</li>
+                  <li><strong>Flexbox / Grid</strong>: 물건을 줄 세우고 칸 나누는 도구</li>
+                  <li><strong>캐스케이드</strong>: 규칙이 겹칠 때 누가 이기나 정하는 법</li>
                 </ul>
+              </div>
+              <h3>🎨 쉽게 풀어보기</h3>
+              <p>HTML이 집의 <strong>뼈대</strong>라면, CSS는 <strong>인테리어</strong>예요! 벽 색·가구 위치·조명만 바꿔도 방 분위기가 확 달라지죠?</p>
+              <p>규칙은 아주 간단해요: <code>선택자 { 속성: 값; }</code>. 예를 들어 <code>p { color: blue; }</code>는 "모든 <code>p</code> 글자를 파란색으로!"라는 뜻이에요. 🟦</p>
+              <p>박스 모델은 모든 요소가 양파처럼 <strong>content(알맹이) → padding(안쪽 여백) → border(테두리) → margin(바깥 여백)</strong> 4겹이라는 얘기예요. 이걸 모르면 "왜 여백이 이상하지?" 하고 며칠을 헤맬 수 있어요. 😵</p>
+              <p>줄 하나로 정렬할 땐 <strong>Flexbox</strong>, 신문처럼 가로세로 칸을 나눌 땐 <strong>Grid</strong>! 욕심내지 말고 Flex부터 손에 익혀요. 💪</p>
+              <div class="study-tip">
+                <strong>💡 꿀팁:</strong> <strong>Flexbox Froggy</strong>, <strong>Grid Garden</strong> 같은 게임으로 30분만 놀아도 핵심이 손가락에 쏙쏙 새겨져요! 🐸🥕
+              </div>
+              <h3>📝 오늘의 정리</h3>
+              <ul>
+                <li>CSS = 선택자 + 속성 + 값으로 꾸미기</li>
+                <li>박스 모델은 content / padding / border / margin 4겹</li>
+                <li>Flexbox = 한 줄, Grid = 가로세로 칸</li>
+                <li>규칙이 겹치면 캐스케이드·명시도(specificity)로 승자 결정</li>
+                <li>미디어 쿼리로 반응형! 작은 폰부터 만드는 게 추천 📱</li>
+              </ul>
             </div>
             <div class="difficulty-content" data-level="medium">
                 <span class="difficulty-badge medium">중 · 응용</span>

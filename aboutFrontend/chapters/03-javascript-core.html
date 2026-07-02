@@ -717,34 +717,41 @@ dog.speak();  // "뽀삐이 멍멍 울었습니다."
                 <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
             </div>
             <div class="difficulty-content" data-level="easy">
-                <span class="difficulty-badge easy">하 · 입문</span>
-                <h3>한 줄로 이해하기</h3>
-                <p>JavaScript는 웹 페이지에 "동작"을 입히는 프로그래밍 언어로, 클릭·입력·통신 같은 사용자 인터랙션을 처리합니다.</p>
-                <h3>왜 배워야 하나?</h3>
-                <p>실무 사례로 (1) 쇼핑몰 장바구니의 수량 변경과 합계 자동 계산, (2) 로그인 폼의 실시간 유효성 검사, (3) 지도 위 마커를 드래그해 위치를 선택하는 기능 등 거의 모든 동적 동작이 JS의 영역입니다. 프론트엔드뿐 아니라 Node.js로 서버, React Native로 모바일 앱까지 만들 수 있어 한 언어로 많은 일을 해결할 수 있습니다.</p>
-                <div class="info-card">
-                    <h4>🌱 핵심 용어</h4>
-                    <ul>
-                        <li><strong>변수</strong>: <code>let</code>·<code>const</code>로 값을 담는 상자</li>
-                        <li><strong>함수</strong>: 재사용 가능한 코드 묶음</li>
-                        <li><strong>객체/배열</strong>: 여러 값을 묶어 다루는 자료 구조</li>
-                        <li><strong>이벤트</strong>: 클릭·키 입력 등 사용자 행동 알림</li>
-                        <li><strong>비동기</strong>: 시간이 걸리는 작업을 기다리지 않고 처리</li>
-                    </ul>
-                </div>
-                <h3>개념 풀어쓰기</h3>
-                <p>JavaScript를 부엌 도우미 로봇으로 비유해보세요. <code>let 재료 = "양파"</code>는 "재료라는 통에 양파를 담는다"는 뜻이고, <code>function 썰기() { ... }</code>는 "썰기 동작 매뉴얼"을 정의하는 일입니다. 매뉴얼을 만들어 두면 필요할 때마다 <code>썰기()</code>로 호출해 재사용할 수 있습니다. 객체는 "양파라는 카드에 색=흰색, 매운맛=강함을 같이 적은 메모"이고, 배열은 "양파 3개를 한 바구니에 담은 것"입니다. 이벤트 처리는 "주인이 종을 울리면(<code>click</code>) 로봇이 미리 약속한 일을 한다"는 식입니다. 비동기는 특히 중요해서, 라면을 끓이는 동안 도마 정리를 하듯 "기다리지 않고 다음 일을 하다가, 라면이 다 되면 알림을 받아 처리"하는 방식이 <code>async/await</code>입니다. 처음에는 어렵지만 콘솔(F12 → Console)에 직접 코드를 쳐보면 즉시 결과를 보면서 익숙해질 수 있습니다.</p>
-                <div class="study-tip">
-                    <strong>💡 학습 TIP:</strong> 책 한 권을 끝내려 하지 말고, 작은 토이 프로젝트(투두리스트, 계산기, 가위바위보)를 만들면서 필요한 문법을 그때마다 검색하세요.
-                </div>
-                <h3>한 페이지 요약</h3>
+              <span class="difficulty-badge easy">하 · 입문</span>
+              <h3>🎯 딱 한 줄!</h3>
+              <p>JavaScript(JS)는 웹페이지에 <strong>움직임</strong>을 넣는 말이에요. 클릭하면 반응하고, 입력하면 계산하고! 🤖</p>
+              <h3>😎 왜 배워요?</h3>
+              <p>쇼핑몰 장바구니 합계 자동 계산, 로그인할 때 "이메일 형식이 틀렸어요" 알림, 지도에서 마커 끌어 옮기기… 이런 살아있는 동작은 거의 다 JS가 해요! 게다가 JS 하나로 웹, 서버(Node.js), 스마트폰 앱(React Native)까지 만들 수 있어요. 만능 재주꾼! 🛠️</p>
+              <div class="info-card">
+                <h4>🌱 이 말들만 알아두자</h4>
                 <ul>
-                    <li><code>const</code> 우선, 재할당 필요할 때만 <code>let</code></li>
-                    <li>함수는 일급 객체 — 변수에 담고 인자로 전달 가능</li>
-                    <li>배열·객체 메서드(<code>map</code>·<code>filter</code>·<code>reduce</code>) 익히기</li>
-                    <li>이벤트 → 리스너 함수 → 상태 변경 → UI 업데이트 흐름</li>
-                    <li>비동기는 Promise·async/await로 동기적으로 읽히게 작성</li>
+                  <li><strong>변수</strong>: 값을 담는 상자 (<code>let</code>·<code>const</code>) 📦</li>
+                  <li><strong>함수</strong>: 여러 번 다시 쓰는 코드 묶음</li>
+                  <li><strong>객체 / 배열</strong>: 여러 값을 한데 묶는 방법</li>
+                  <li><strong>이벤트</strong>: 클릭·키 입력 같은 사용자 신호 🔔</li>
+                  <li><strong>비동기</strong>: 오래 걸리는 일을 기다리지 않고 처리하기 ⏳</li>
                 </ul>
+              </div>
+              <h3>🤖 쉽게 풀어보기</h3>
+              <p>JS를 <strong>부엌 도우미 로봇</strong>이라고 생각해봐요!</p>
+              <ul>
+                <li>📦 <code>let 재료 = "양파"</code> → "재료 통에 양파를 담아둬"</li>
+                <li>📖 <code>function 썰기() {...}</code> → "썰기 매뉴얼"을 만들어두고, <code>썰기()</code>로 부를 때마다 재사용!</li>
+                <li>🗂️ 객체 = "양파 카드에 색=흰색, 매운맛=강함 적어둔 메모", 배열 = "양파 3개를 한 바구니에"</li>
+                <li>🔔 이벤트 = "주인이 종을 울리면(<code>click</code>) 약속한 일을 하기"</li>
+              </ul>
+              <p>제일 중요한 건 <strong>비동기</strong>! 라면 끓는 동안 멍 때리지 않고 도마를 정리하다가, 라면이 다 되면 알림 받고 처리하는 것과 똑같아요. 이게 바로 <code>async/await</code>예요. 🍜</p>
+              <div class="study-tip">
+                <strong>💡 꿀팁:</strong> 브라우저에서 <strong>F12 → Console</strong>에 코드를 직접 쳐보면 결과가 바로 나와요! 두꺼운 책 대신 작은 프로젝트(투두리스트, 계산기, 가위바위보)를 만들며 필요한 문법을 그때그때 검색하세요. ✂️
+              </div>
+              <h3>📝 오늘의 정리</h3>
+              <ul>
+                <li>기본은 <code>const</code>, 값을 바꿔야 할 때만 <code>let</code></li>
+                <li>함수는 변수에 담고 다른 함수에 넘길 수도 있어요 (일급 객체)</li>
+                <li>배열 도구 <code>map</code>·<code>filter</code>·<code>reduce</code>와 친해지기</li>
+                <li>이벤트 → 리스너 함수 → 상태 변경 → 화면 업데이트 흐름</li>
+                <li>비동기는 Promise·<code>async/await</code>로 깔끔하게!</li>
+              </ul>
             </div>
             <div class="difficulty-content" data-level="medium">
                 <span class="difficulty-badge medium">중 · 응용</span>

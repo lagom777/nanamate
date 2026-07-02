@@ -612,32 +612,37 @@
       </div>
       <div class="difficulty-content" data-level="easy">
         <span class="difficulty-badge easy">하 · 입문</span>
-        <h3>한 줄로 이해하기</h3>
-        <p>React는 화면을 "상태(state)의 함수"로 표현해, 상태가 바뀌면 자동으로 UI를 다시 그리는 라이브러리입니다.</p>
-        <h3>왜 배워야 하나?</h3>
-        <p>실무 사례로 (1) 페이스북·인스타그램·넷플릭스 같은 대규모 SPA의 UI 구성, (2) 한 컴포넌트(예: Button)를 사이트 전체에서 재사용해 유지보수성 향상, (3) 디자인 시스템 라이브러리(Material UI, Chakra) 기반 빠른 개발이 있습니다. 한국 IT 채용 공고의 절반 이상이 React 경험을 요구할 정도로 시장 점유율이 높습니다.</p>
+        <h3>🎯 딱 한 줄!</h3>
+        <p>React는 <strong>화면 = 데이터(state)의 결과</strong>로 만드는 도구예요. 데이터만 바꾸면 화면이 알아서 다시 그려져요! 🪄</p>
+        <h3>😎 왜 배워요?</h3>
+        <p>페이스북·인스타그램·넷플릭스 같은 큰 사이트가 React로 만들어졌어요. 버튼 하나(Button)를 만들어두면 사이트 전체에서 재사용할 수 있어서 편하고요. 한국 개발자 채용 공고의 절반 이상이 React를 원할 만큼 인기 최고예요! 🔥</p>
         <div class="info-card">
-          <h4>🌱 핵심 용어</h4>
+          <h4>🌱 이 말들만 알아두자</h4>
           <ul>
-            <li><strong>컴포넌트</strong>: UI 조각을 캡슐화한 함수</li>
+            <li><strong>컴포넌트</strong>: UI 조각을 담은 함수 🧩</li>
             <li><strong>JSX</strong>: JS 안에서 HTML처럼 쓰는 문법</li>
-            <li><strong>Props</strong>: 부모가 자식에게 내려주는 데이터</li>
-            <li><strong>State</strong>: 컴포넌트가 자체적으로 관리하는 데이터</li>
-            <li><strong>Hook</strong>: 함수형 컴포넌트에 상태/효과를 더하는 함수</li>
+            <li><strong>Props</strong>: 부모가 자식에게 내려주는 데이터 🎁</li>
+            <li><strong>State</strong>: 컴포넌트가 스스로 관리하는 데이터</li>
+            <li><strong>Hook</strong>: 컴포넌트에 기능을 더해주는 함수 (<code>useState</code> 등)</li>
           </ul>
         </div>
-        <h3>개념 풀어쓰기</h3>
-        <p>React 컴포넌트는 "재료(props)를 받아 요리(JSX)를 내놓는 부엌"이라 생각하면 쉽습니다. 같은 부엌이라도 들어오는 재료가 바뀌면 결과 요리도 자동으로 달라집니다. State는 부엌 안의 메모장 같은 것으로, 손님 수(<code>useState(0)</code>)를 적어두면 손님이 한 명 더 올 때마다 메모를 고치는 동시에 메뉴판도 자동으로 갱신됩니다. JSX는 "요리 레시피를 HTML 모양으로 적어둔 메모"이고, Babel이라는 번역가가 이를 <code>React.createElement</code>라는 진짜 명령어로 바꿔 React에 전달합니다. 컴포넌트는 작은 부품(Atom) → 조합 부품(Molecule) → 페이지(Organism)로 키우면 재사용성이 높아져, 회사가 커져도 코드가 엉키지 않습니다.</p>
-        <div class="study-tip">
-          <strong>💡 학습 TIP:</strong> 처음에는 Vite로 <code>npm create vite@latest</code> 한 줄로 프로젝트를 만들고 카운터·투두 → 검색 자동완성 순으로 만들어 보세요. 책보다 손이 빠른 학습법입니다.
-        </div>
-        <h3>한 페이지 요약</h3>
+        <h3>🍳 쉽게 풀어보기</h3>
+        <p>컴포넌트는 <strong>재료(props)를 받아 요리(화면)를 내놓는 부엌</strong>이에요! 같은 부엌이라도 재료가 바뀌면 요리도 자동으로 달라져요.</p>
         <ul>
-          <li>UI = f(state) — 상태가 바뀌면 React가 자동으로 리렌더</li>
-          <li>함수형 컴포넌트 + Hook이 표준</li>
-          <li>Props는 읽기 전용, State는 setState로만 변경</li>
-          <li>JSX는 표현식이며 변수에 담기 가능</li>
-          <li>리스트 렌더 시 <code>key</code> prop 필수</li>
+          <li>📝 State = 부엌의 메모장. 손님 수(<code>useState(0)</code>)를 적어두면, 손님이 늘 때마다 메모를 고치고 메뉴판도 자동 갱신!</li>
+          <li>📖 JSX = HTML 모양으로 적은 레시피. <strong>Babel</strong>이라는 번역가가 진짜 명령어(<code>React.createElement</code>)로 바꿔줘요.</li>
+          <li>🧩 작은 부품 → 조합 부품 → 페이지 순으로 키우면, 사이트가 커져도 코드가 안 엉켜요!</li>
+        </ul>
+        <div class="study-tip">
+          <strong>💡 꿀팁:</strong> <code>npm create vite@latest</code> 한 줄이면 프로젝트 뚝딱! 카운터 → 투두리스트 → 검색 자동완성 순으로 만들어 보세요. 책보다 손이 빨라요. ⚡
+        </div>
+        <h3>📝 오늘의 정리</h3>
+        <ul>
+          <li>UI = f(state) — 상태가 바뀌면 React가 알아서 다시 그려요</li>
+          <li>요즘은 함수형 컴포넌트 + Hook이 표준</li>
+          <li>Props는 읽기 전용, State는 setState로만 바꾸기</li>
+          <li>JSX는 변수에도 담을 수 있어요</li>
+          <li>목록을 그릴 땐 <code>key</code> prop 꼭 넣기! 🔑</li>
         </ul>
       </div>
       <div class="difficulty-content" data-level="medium">
