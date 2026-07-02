@@ -124,9 +124,10 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   // A sentence row of solid word blocks with one empty blank slot (wireframe); 4 part-of-speech candidate tokens float above, the correct one descends into the gap
   const wordCount=5,gapIdx=3;const blocks=[];for(let i=0;i<wordCount;i++){const isGap=i===gapIdx;const w=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.6,0.3),new THREE.MeshBasicMaterial({color:isGap?0xfbbf24:0x60a5fa,wireframe:isGap}));w.position.set(-2.4+i*1.2,-1.2,0);s.add(w);blocks.push(w);}
   // baseline under the sentence
@@ -134,8 +135,10 @@
   // 4 candidate part-of-speech tokens (noun/verb/adj/adv): different shapes, only the correct one is green and aligned over the gap
   const gapX=-2.4+gapIdx*1.2;const geos=[new THREE.SphereGeometry(0.32,16,16),new THREE.TetrahedronGeometry(0.42),new THREE.OctahedronGeometry(0.36),new THREE.ConeGeometry(0.32,0.6,16)];const correctIdx=2;const cands=[];for(let i=0;i<4;i++){const ok=i===correctIdx;const t=new THREE.Mesh(geos[i],new THREE.MeshBasicMaterial({color:ok?0x34d399:0xf87171,wireframe:!ok}));t.position.set(-3+i*2,1.8,0);s.add(t);cands.push(t);}
   s.userData.cands=cands;s.userData.gapBlock=blocks[gapIdx];s.userData.gapX=gapX;s.userData.correctIdx=correctIdx;
+  const L1=lbl('명사','#f87171');L1.position.set(-3,2.5,0);s.add(L1);const L2=lbl('동사','#f87171');L2.position.set(-1,2.5,0);s.add(L2);const L3=lbl('형용사','#34d399');L3.position.set(1,2.5,0);s.add(L3);const L4=lbl('부사','#f87171');L4.position.set(3,2.5,0);s.add(L4);const L5=lbl('품사 자리','#fbbf24');L5.position.set(0,3.3,0);s.add(L5);const L6=lbl('빈칸','#fbbf24');L6.position.set(1.2,-2.15,0);s.add(L6);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 아래 블록 줄이 문장, 노란 뼈대 칸이 빈칸 — 위 네 도형은 명사·동사·형용사·부사 후보이고 초록만 자리에 들어갑니다.','품사 자리 문제는 빈칸 앞뒤만 보면 끝 — the(관사) 뒤엔 명사, be동사 뒤엔 형용사 자리입니다.','시제 단서는 신호등: yesterday는 과거, since는 현재완료, ago는 과거를 알려줍니다.','읽기의 46%가 문법(Part 5+6) — 한 문제 20초 안에 풀어 Part 7 시간을 버는 게 목표!'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const cyc=(Math.sin(T*0.9)+1)/2;s.userData.cands.forEach((t,i)=>{t.rotation.x+=0.012;t.rotation.y+=0.015;if(i===s.userData.correctIdx){t.position.x=s.userData.gapX;t.position.y=1.8-cyc*3.0;}});s.userData.gapBlock.scale.setScalar(1+cyc*0.15);s.rotation.y+=0.0025;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const cyc=(Math.sin(T*0.9)+1)/2;s.userData.cands.forEach((t,i)=>{t.rotation.x+=0.012;t.rotation.y+=0.015;if(i===s.userData.correctIdx){t.position.x=s.userData.gapX;t.position.y=1.8-cyc*3.0;}});s.userData.gapBlock.scale.setScalar(1+cyc*0.15);L3.position.set(s.userData.cands[2].position.x,s.userData.cands[2].position.y+0.7,0);s.rotation.y+=0.0025;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

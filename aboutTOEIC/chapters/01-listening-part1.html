@@ -122,9 +122,10 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   // Part 1: a photo panel on the left with 4 description-option markers; Part 2: a question node with 3 response arcs on the right
   const photo=new THREE.Mesh(new THREE.PlaneGeometry(3,2.2),new THREE.MeshBasicMaterial({color:0xfbbf24,transparent:true,opacity:0.22,side:THREE.DoubleSide}));photo.position.set(-3,1,0);s.add(photo);
   const frame=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-4.5,2.1,0),new THREE.Vector3(-1.5,2.1,0),new THREE.Vector3(-1.5,-0.1,0),new THREE.Vector3(-4.5,-0.1,0),new THREE.Vector3(-4.5,2.1,0)]),new THREE.LineBasicMaterial({color:0xfbbf24}));s.add(frame);
@@ -132,8 +133,10 @@
   const qNode=new THREE.Mesh(new THREE.OctahedronGeometry(0.6),new THREE.MeshBasicMaterial({color:0x60a5fa,wireframe:true}));qNode.position.set(2.4,1.4,0);s.add(qNode);
   const resp=[];for(let i=0;i<3;i++){const correct=i===0;const pts=[];for(let t=0;t<=20;t++){const u=t/20;pts.push(new THREE.Vector3(2.4+u*1.6,1.4-u*(1.2+i*1.0),Math.sin(u*Math.PI)*0.5*(i+1)*0.3));}const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:correct?0x34d399:0x94a3b8,transparent:true,opacity:correct?0.95:0.4}));s.add(ln);const end=new THREE.Mesh(new THREE.SphereGeometry(0.18,12,12),new THREE.MeshBasicMaterial({color:correct?0x34d399:0x94a3b8}));end.position.copy(pts[pts.length-1]);s.add(end);resp.push(end);}
   s.userData.opts=opts;s.userData.q=qNode;
+  const L1=lbl('사진 묘사 (Part 1)','#fbbf24');L1.position.set(-3,2.55,0);s.add(L1);const L2=lbl('정답','#34d399');L2.position.set(-2.2,-1.45,0);s.add(L2);const L3=lbl('오답','#f87171');L3.position.set(-3.85,-0.9,0);s.add(L3);const L4=lbl('WH 의문사 질문 (Part 2)','#60a5fa');L4.position.set(2.4,2.35,0);s.add(L4);const L5=lbl('응답 3개','#94a3b8');L5.position.set(4,-2.45,0);s.add(L5);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 왼쪽 사진 패널이 Part 1(6문항) — 보기 4개 중 사진을 가장 잘 묘사한 문장 1개만 정답입니다.','사람 사진엔 현재진행형(is -ing), 물건 사진엔 There is/are·is being p.p.가 자주 정답이 됩니다.','오른쪽은 Part 2(25문항) — 질문 하나에 응답 3개, 맨 앞 첫 단어(의문사)를 절대 놓치지 마세요.','질문 단어가 보기에 그대로 반복되면 오답 확률이 높고, work/walk·copy/coffee 발음 함정도 조심하세요.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.q.rotation.y+=0.02;s.userData.q.rotation.x+=0.01;s.userData.opts.forEach((o,i)=>{o.scale.setScalar(1+Math.sin(T*2+i)*0.12);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.q.rotation.y+=0.02;s.userData.q.rotation.x+=0.01;s.userData.opts.forEach((o,i)=>{o.scale.setScalar(1+Math.sin(T*2+i)*0.12);});s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

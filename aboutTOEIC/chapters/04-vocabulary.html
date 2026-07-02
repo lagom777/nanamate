@@ -126,15 +126,18 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   // A semantic word web: one central headword with synonym/collocation nodes radiating out, each linked back to the center
   const hub=new THREE.Mesh(new THREE.IcosahedronGeometry(0.85,1),new THREE.MeshBasicMaterial({color:0xfbbf24,wireframe:true}));s.add(hub);
   const N=9;const nodes=[];for(let i=0;i<N;i++){const ph=Math.acos(1-2*(i+0.5)/N);const th=Math.PI*(1+Math.sqrt(5))*i;const rad=3.0;const x=rad*Math.sin(ph)*Math.cos(th),y=rad*Math.cos(ph),z=rad*Math.sin(ph)*Math.sin(th);const col=new THREE.Color().setHSL(0.55+i*0.04,0.6,0.6);const nd=new THREE.Mesh(new THREE.SphereGeometry(0.32,16,16),new THREE.MeshBasicMaterial({color:col}));nd.position.set(x,y,z);s.add(nd);nodes.push(nd);const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(x,y,z)]),new THREE.LineBasicMaterial({color:col,transparent:true,opacity:0.45}));s.add(ln);}
   s.userData.hub=hub;s.userData.nodes=nodes;
+  const L1=lbl('핵심 단어: conduct (수행하다)','#fbbf24');L1.position.set(0,1.4,0);s.add(L1);[['콜로케이션: conduct a survey','#7dd3fc',0],['동의어 그룹: use·utilize·employ','#a5b4fc',2],['implement (시행하다)','#7dd3fc',4],['acquire (인수하다)','#a5b4fc',6],['itinerary (여행 일정표)','#7dd3fc',8]].forEach(function(t){const L=lbl(t[0],t[1]);L.position.copy(nodes[t[2]].position).multiplyScalar(1.22);L.position.y+=0.35;s.add(L);});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 가운데 구가 핵심 단어(예: conduct), 주위 구슬은 함께 다니는 동의어·연어로 이어진 어휘망입니다.','뜻만 외우지 말고 콜로케이션으로: conduct a survey(설문을 하다), have an impact on처럼 짝으로!','비슷한 뜻은 동의어 그룹 한 묶음으로: use·utilize·employ = 사용하다.','핵심 단어 약 2,000개면 70% 정답 가능 — 하루 30개씩 100일이면 3,000개, 800점대 도전!'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.hub.rotation.y+=0.01;s.userData.hub.rotation.x+=0.006;s.userData.nodes.forEach((n,i)=>{n.scale.setScalar(1+Math.sin(T*2+i*0.7)*0.25);});s.rotation.y+=0.004;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.hub.rotation.y+=0.01;s.userData.hub.rotation.x+=0.006;s.userData.nodes.forEach((n,i)=>{n.scale.setScalar(1+Math.sin(T*2+i*0.7)*0.25);});s.rotation.y+=0.004;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

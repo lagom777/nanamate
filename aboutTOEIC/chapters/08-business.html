@@ -121,15 +121,18 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   // A central business hub (the office) with 5 communication-channel nodes around it (email, meeting, call, presentation, contract); message packets travel inward along each channel
   const office=new THREE.Mesh(new THREE.BoxGeometry(1.1,1.1,1.1),new THREE.MeshBasicMaterial({color:0x60a5fa,wireframe:true}));s.add(office);
   const chN=5;const channels=[];const chCol=[0xfbbf24,0xf472b6,0x34d399,0xa78bfa,0xf87171];for(let i=0;i<chN;i++){const ang=i/chN*Math.PI*2;const x=Math.cos(ang)*3.2,y=Math.sin(ang)*3.2;const node=new THREE.Mesh(new THREE.CylinderGeometry(0.4,0.4,0.5,6),new THREE.MeshBasicMaterial({color:chCol[i]}));node.position.set(x,y,0);node.rotation.x=Math.PI/2;s.add(node);const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(x,y,0)]),new THREE.LineBasicMaterial({color:chCol[i],transparent:true,opacity:0.45}));s.add(ln);const pkt=new THREE.Mesh(new THREE.SphereGeometry(0.16,12,12),new THREE.MeshBasicMaterial({color:chCol[i]}));s.add(pkt);channels.push({x:x,y:y,pkt:pkt,phase:i*0.6});}
   s.userData.office=office;s.userData.channels=channels;
+  const L1=lbl('회사 (비즈니스 영어)','#60a5fa');L1.position.set(0,1.15,0);s.add(L1);[['이메일','#fbbf24'],['회의','#f472b6'],['전화','#34d399'],['발표','#a78bfa'],['계약서','#f87171']].forEach(function(t,i){const L=lbl(t[0],t[1]);L.position.set(channels[i].x*1.27,channels[i].y*1.27,0);s.add(L);});const Lp=lbl("I'm writing to ~",'#fde68a');Lp.position.set(0,0.5,0);channels[0].pkt.add(Lp);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 가운데 상자가 회사, 다섯 노드는 이메일·회의·전화·발표·계약서 — 토익은 100% 회사에서 쓰는 영어입니다.',"이메일은 정해진 틀: Dear ~로 시작해 I'm writing to ~로 목적을 밝히고 Best regards로 끝나요.",'공손한 말투가 특징 — Can you 대신 Could you please ~?, I want 대신 I would like.',"거절은 No 대신 I'm afraid ~로 부드럽게 — circle back(다시 논의)·in the red(적자) 같은 표현은 통째로 암기!"];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.office.rotation.y+=0.01;s.userData.office.rotation.x+=0.006;s.userData.channels.forEach(ch=>{const f=((Math.sin(T+ch.phase)+1)/2);ch.pkt.position.set(ch.x*(1-f),ch.y*(1-f),0);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.office.rotation.y+=0.01;s.userData.office.rotation.x+=0.006;s.userData.channels.forEach(ch=>{const f=((Math.sin(T+ch.phase)+1)/2);ch.pkt.position.set(ch.x*(1-f),ch.y*(1-f),0);});s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

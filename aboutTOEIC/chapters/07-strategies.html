@@ -118,9 +118,10 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   // A clock face: outer ring + 12 hour ticks, time-budget arc segments for each RC part, and a sweeping hand showing time running down
   const ring=new THREE.Mesh(new THREE.TorusGeometry(2.6,0.07,12,80),new THREE.MeshBasicMaterial({color:0x94a3b8}));s.add(ring);
   for(let i=0;i<12;i++){const ang=i/12*Math.PI*2;const tick=new THREE.Mesh(new THREE.BoxGeometry(0.08,i%3===0?0.45:0.25,0.08),new THREE.MeshBasicMaterial({color:0xcbd5e1}));tick.position.set(Math.cos(ang)*2.3,Math.sin(ang)*2.3,0);tick.rotation.z=ang-Math.PI/2;s.add(tick);}
@@ -130,8 +131,10 @@
   const hand=new THREE.Mesh(new THREE.ConeGeometry(0.12,2.1,4),new THREE.MeshBasicMaterial({color:0xffffff}));hand.position.set(0,1.05,0.1);const handPivot=new THREE.Group();handPivot.add(hand);s.add(handPivot);
   const hub2=new THREE.Mesh(new THREE.SphereGeometry(0.2,16,16),new THREE.MeshBasicMaterial({color:0xffffff}));s.add(hub2);
   s.userData.hand=handPivot;
+  const L1=lbl('읽기(RC) 75분 시간 분배','#e2e8f0');L1.position.set(0,3.25,0);s.add(L1);const L2=lbl('Part 5 · 12~15분','#f472b6');L2.position.set(0.76,0.88,0.2);s.add(L2);const L3=lbl('Part 6 · 7~8분','#fbbf24');L3.position.set(-1.45,1.45,0.2);s.add(L3);const L4=lbl('Part 7 + 마킹 5분','#34d399');L4.position.set(-0.2,-2.95,0.2);s.add(L4);const L5=lbl('한 문제 36초','#f1f5f9');L5.position.set(0,2.55,0.15);handPivot.add(L5);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 시계가 토익 시험 — 듣기 45분 + 읽기 75분 = 120분에 200문항, 한 문제 평균 36초뿐입니다.','색 호는 읽기 75분 분배: Part 5(12~15분) → Part 6(7~8분) → Part 7, 마킹 5분은 꼭 남기기!','모르는 문제는 빈칸 금지 — 한 글자로 통일해 찍으면 정답률이 약 26%로 올라갑니다.','한 문제에 2분 넘게 붙잡히지 말고 표시 후 다음으로 — 전략에 따라 50점 넘게 차이 납니다!'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.hand.rotation.z=-T*0.6;s.rotation.y+=0.0015;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.hand.rotation.z=-T*0.6;s.rotation.y+=0.0015;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
