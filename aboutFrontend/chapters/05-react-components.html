@@ -793,9 +793,13 @@ export default function LikeButton({ id, initial }) {
     let reactScene, reactCamera, reactRenderer;
     let reactTreeObjects = [];
     let reactAnimationId;
+    let reactHintEl = null, reactCaps = null, reactCapIdx = 0, reactCapT = 0;
+
+    function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
 
     function initReactTreeVisualization() {
       const canvas = document.getElementById('reactTreeCanvas');
+      if (!canvas || typeof THREE === 'undefined') return;
 
       reactScene = new THREE.Scene();
       reactScene.background = new THREE.Color(0x0a0a14);
@@ -803,7 +807,7 @@ export default function LikeButton({ id, initial }) {
       reactCamera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
       reactCamera.position.set(0, 12, 20);
 
-      reactRenderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+      try { reactRenderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); } catch (e) { return; }
       reactRenderer.setSize(canvas.clientWidth, canvas.clientHeight);
       reactRenderer.setPixelRatio(window.devicePixelRatio);
 
@@ -844,6 +848,23 @@ export default function LikeButton({ id, initial }) {
       const listComp = createComponentCard('List', 8, 2, 0, 0x00d4ff, 'cyan');
       reactScene.add(listComp);
       drawComponentLine(sidebarComp, listComp);
+
+      // 본문 용어 라벨 (컴포넌트 트리 · Props 단방향 흐름 · UI = f(state))
+      const L1 = lbl('컴포넌트 트리', '#c9a6ff'); L1.position.set(0, 17.6, 0); L1.scale.multiplyScalar(2); reactScene.add(L1);
+      const L2 = lbl('Props: 부모 → 자식', '#7ddf9a'); L2.position.set(-6.5, 11.8, 0); L2.scale.multiplyScalar(2); reactScene.add(L2);
+      const L3 = lbl('단방향 데이터 흐름', '#8ad2ff'); L3.position.set(6.5, 11.8, 0); L3.scale.multiplyScalar(2); reactScene.add(L3);
+      const L4 = lbl('UI = f(state)', '#00d4ff'); L4.position.set(0, -0.9, 2); L4.scale.multiplyScalar(2); reactScene.add(L4);
+
+      // 한국어 캡션 순환 (.interact-hint)
+      reactHintEl = document.querySelector('.interact-hint');
+      if (!reactHintEl) { reactHintEl = document.createElement('span'); reactHintEl.className = 'interact-hint'; reactHintEl.style.cssText = 'display:inline-block;padding:4px 12px;margin:8px 0;border:1px solid rgba(123,92,255,0.35);border-radius:20px;font-size:0.85em;'; canvas.parentNode.insertBefore(reactHintEl, canvas.nextSibling); }
+      reactCaps = [
+        '⟳ 카드에 마우스를 올려보세요 — React는 UI를 재사용 가능한 컴포넌트로 분할합니다 (App → Header · MainContent · Sidebar).',
+        'Props는 부모에서 자식으로 전달되는 불변 데이터 — 단방향(One-way) 데이터 흐름입니다.',
+        'UI = f(state): 상태(state)가 바뀌면 React가 화면을 자동으로 다시 렌더링합니다 (useState · useEffect).',
+        '컴포넌트는 마운트(Mount) → 업데이트(Update) → 언마운트(Unmount) 생명주기를 거칩니다.'
+      ];
+      reactHintEl.textContent = reactCaps[0];
 
       // Mouse interaction for component highlighting
       canvas.addEventListener('mousemove', (e) => {
@@ -943,6 +964,11 @@ export default function LikeButton({ id, initial }) {
 
     function animateReactTree() {
       reactAnimationId = requestAnimationFrame(animateReactTree);
+
+      if (reactHintEl && reactCaps) {
+        reactCapT += 0.016;
+        if (reactCapT > 4.5) { reactCapT = 0; reactCapIdx = (reactCapIdx + 1) % reactCaps.length; reactHintEl.textContent = reactCaps[reactCapIdx]; }
+      }
 
       reactTreeObjects.forEach((obj) => {
         obj.rotation.x += 0.0005;

@@ -1116,15 +1116,20 @@ export default defineConfig({
 
   <script>
     // Three.js visualization for Build Pipeline (Conveyor Belt)
+    (function () {
     const canvas = document.getElementById('buildCanvas');
+    if (!canvas || typeof THREE === 'undefined') return;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    let renderer;
+    try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); } catch (e) { return; }
 
     renderer.setSize(canvas.clientWidth, canvas.clientHeight);
     renderer.setClearColor(0x0f3460, 1);
     camera.position.z = 10;
     camera.position.y = 2;
+
+    function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
 
     // Build stages
     const stages = [
@@ -1182,11 +1187,33 @@ export default defineConfig({
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
     scene.add(ambientLight);
 
+    // 본문 용어 라벨 (번들링 → 트랜스파일링 → 최적화 → 배포 파이프라인)
+    const L1 = lbl('여러 파일', '#b7a6ff'); L1.position.set(-8, 2.6, 0); L1.scale.multiplyScalar(1.5); scene.add(L1);
+    const L2 = lbl('번들링', '#7fe4ff'); L2.position.set(-4, 3.4, 0); L2.scale.multiplyScalar(1.5); scene.add(L2);
+    const L3 = lbl('트랜스파일링', '#9cc9ff'); L3.position.set(0, 2.6, 0); L3.scale.multiplyScalar(1.5); scene.add(L3);
+    const L4 = lbl('최적화', '#f7b8fd'); L4.position.set(4, 3.4, 0); L4.scale.multiplyScalar(1.5); scene.add(L4);
+    const L5 = lbl('배포', '#8ee6a1'); L5.position.set(8, 2.6, 0); L5.scale.multiplyScalar(1.5); scene.add(L5);
+
+    // 한국어 캡션 순환 (.interact-hint)
+    let hintEl = document.querySelector('.interact-hint');
+    if (!hintEl) { hintEl = document.createElement('span'); hintEl.className = 'interact-hint'; hintEl.style.cssText = 'display:inline-block;padding:4px 12px;margin:8px 0;border:1px solid rgba(123,92,255,0.35);border-radius:20px;font-size:0.85em;'; canvas.parentNode.insertBefore(hintEl, canvas.nextSibling); }
+    const caps = [
+      '⟳ 컨베이어 위 파일이 단계를 지나며 변신합니다 — 번들링: 여러 파일을 하나의 번들로 묶습니다 (Webpack · Vite).',
+      '트랜스파일링: Babel이 최신 JavaScript를 구형 브라우저용 코드로, TypeScript를 JavaScript로 변환합니다.',
+      '최적화: 코드 최소화(minification) · 미사용 코드 제거(tree shaking)로 파일 크기를 줄입니다.',
+      'CI/CD: 테스트를 통과한 코드를 자동으로 배포합니다 — Vercel · Netlify · Cloudflare Pages.'
+    ];
+    let capIdx = 0, capT = 0;
+    hintEl.textContent = caps[0];
+
     // Animation
     let time = 0;
     function animate() {
       requestAnimationFrame(animate);
       time += 0.01;
+
+      capT += 0.016;
+      if (capT > 4.5) { capT = 0; capIdx = (capIdx + 1) % caps.length; hintEl.textContent = caps[capIdx]; }
 
       // Rotate stage boxes
       stageMeshes.forEach((mesh, idx) => {
@@ -1226,6 +1253,7 @@ export default defineConfig({
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
     });
+    })();
 
     // Pipeline Configurator
     const presetRadios = document.querySelectorAll('input[name="preset"]');

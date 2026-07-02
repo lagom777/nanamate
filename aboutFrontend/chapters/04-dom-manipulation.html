@@ -601,9 +601,13 @@ function diff(oldNode, newNode) {
     let domTreeScene, domTreeCamera, domTreeRenderer;
     let domTreeObjects = [];
     let hoveredObject = null;
+    let domHintEl = null, domCaps = null, domCapIdx = 0, domCapT = 0;
+
+    function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
 
     function initDOMTreeVisualization() {
       const canvas = document.getElementById('domTreeCanvas');
+      if (!canvas || typeof THREE === 'undefined') return;
 
       domTreeScene = new THREE.Scene();
       domTreeScene.background = new THREE.Color(0x0a0a14);
@@ -611,7 +615,7 @@ function diff(oldNode, newNode) {
       domTreeCamera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
       domTreeCamera.position.set(0, 15, 20);
 
-      domTreeRenderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+      try { domTreeRenderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); } catch (e) { return; }
       domTreeRenderer.setSize(canvas.clientWidth, canvas.clientHeight);
       domTreeRenderer.setPixelRatio(window.devicePixelRatio);
 
@@ -654,6 +658,23 @@ function diff(oldNode, newNode) {
       const spanNode = createDOMNodeVisualization('span', 1, 0, 2, 0xFFC107);
       domTreeScene.add(spanNode);
       drawLine(pNode, spanNode);
+
+      // 본문 용어 라벨 (루트·부모 노드·자식 노드·형제 노드 — DOM 트리 구조)
+      const L1 = lbl('루트 (documentElement)', '#ffb08a'); L1.position.set(0, 17.2, 0); L1.scale.multiplyScalar(2); domTreeScene.add(L1);
+      const L2 = lbl('부모 노드 (parentNode)', '#8ad2ff'); L2.position.set(-5, 11.9, 0); L2.scale.multiplyScalar(2); domTreeScene.add(L2);
+      const L3 = lbl('형제 노드 (nextSibling)', '#c9a6ff'); L3.position.set(6.5, 6.9, 2); L3.scale.multiplyScalar(2); domTreeScene.add(L3);
+      const L4 = lbl('자식 노드 (children)', '#a0ffa0'); L4.position.set(-2, -2.0, 2); L4.scale.multiplyScalar(2); domTreeScene.add(L4);
+
+      // 한국어 캡션 순환 (.interact-hint)
+      domHintEl = document.querySelector('.interact-hint');
+      if (!domHintEl) { domHintEl = document.createElement('span'); domHintEl.className = 'interact-hint'; domHintEl.style.cssText = 'display:inline-block;padding:4px 12px;margin:8px 0;border:1px solid rgba(123,92,255,0.35);border-radius:20px;font-size:0.85em;'; canvas.parentNode.insertBefore(domHintEl, canvas.nextSibling); }
+      domCaps = [
+        '⟳ 노드에 마우스를 올려 강조해보세요 — DOM은 HTML 문서를 객체 트리 구조로 표현한 API입니다.',
+        '루트 <html>에서 부모 노드 → 자식 노드로 가지를 칩니다 (parentNode · children · nextSibling).',
+        '이벤트 버블링: 클릭 이벤트는 발생한 요소에서 부모 요소로 전파됩니다 — 이벤트 위임의 원리.',
+        '실제 DOM 조작은 리플로우·리페인트 비용이 커서, React는 가상 DOM으로 변경분만 모아 반영합니다.'
+      ];
+      domHintEl.textContent = domCaps[0];
 
       // Mouse interaction
       canvas.addEventListener('mousemove', (e) => {
@@ -723,6 +744,11 @@ function diff(oldNode, newNode) {
 
     function animateDOMTree() {
       requestAnimationFrame(animateDOMTree);
+
+      if (domHintEl && domCaps) {
+        domCapT += 0.016;
+        if (domCapT > 4.5) { domCapT = 0; domCapIdx = (domCapIdx + 1) % domCaps.length; domHintEl.textContent = domCaps[domCapIdx]; }
+      }
 
       domTreeObjects.forEach(obj => {
         if (obj !== hoveredObject) {
@@ -878,6 +904,7 @@ function diff(oldNode, newNode) {
       // Window resize handler
       window.addEventListener('resize', () => {
         const canvas = document.getElementById('domTreeCanvas');
+        if (!canvas || !domTreeRenderer) return;
         const width = canvas.clientWidth;
         const height = canvas.clientHeight;
         domTreeCamera.aspect = width / height;
