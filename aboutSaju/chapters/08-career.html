@@ -98,12 +98,15 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8.5);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const COL=0xff4d8d;const me=new THREE.Mesh(new THREE.SphereGeometry(0.5,20,20),new THREE.MeshBasicMaterial({color:0xffe08a}));s.add(me);const cols=[0x22c55e,0xef4444,0xeab308,0xf1f5f9,0x3b82f6];const nodes=[];for(let i=0;i<10;i++){const t=i/10*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.26,14,14),new THREE.MeshBasicMaterial({color:cols[i%5]}));m.position.set(Math.cos(t)*2.8,0,Math.sin(t)*2.8);s.add(m);nodes.push(m);s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),m.position]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.2})));}
+  const SS=['비견','식신','편재','편관','편인','겁재','상관','정재','정관','정인'];nodes.forEach((n,i)=>{const L=lbl(SS[i],'#ffd6e7');L.position.set(0,0.55,0);n.add(L);});const Li=lbl('일간(나)','#ffe08a');Li.position.set(0,0.9,0);s.add(Li);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 십신 — 가운데 일간(나)을 기준으로 한 10가지 관계 분류. 드래그로 돌려보세요.','같은 색이 한 쌍: 식신·상관=식상(표현·창작의 결), 정재·편재=재성(자원·실용의 결).','정관·편관=관성(책임·조직), 정인·편인=인성(학습·돌봄), 비견·겁재=비겁(협력·경쟁)의 결.','십신 분포는 "일하는 결"의 힌트일 뿐 — 직업을 정해주지 않으며, 선택과 노력이 더 중요합니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.rotation.y+=0.004;nodes.forEach((n,i)=>n.position.y=Math.sin(T*1.5+i)*0.2);r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.rotation.y+=0.004;nodes.forEach((n,i)=>n.position.y=Math.sin(T*1.5+i)*0.2);r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

@@ -98,12 +98,15 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const COL=0xff4d8d;const line=new THREE.Mesh(new THREE.BoxGeometry(8,0.06,0.06),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.5}));s.add(line);const stops=[];for(let i=0;i<8;i++){const x=(i-3.5)*1.1;const m=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.9,0.3),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.7}));m.position.set(x,0.6,0);s.add(m);stops.push(x);}const marker=new THREE.Mesh(new THREE.ConeGeometry(0.28,0.6,16),new THREE.MeshBasicMaterial({color:0xffe08a}));marker.position.y=-0.6;s.add(marker);
+  const Ld=lbl('대운(10년)','#ffb3cd');Ld.position.set(0,1.9,0);s.add(Ld);const Ln=lbl('대운수','#ff9dc0');Ln.position.set(-3.85,1.4,0);s.add(Ln);const Lt=lbl('시간','#cc8fa8');Lt.position.set(4.6,0,0);s.add(Lt);const Ly=lbl('세운(1년)','#ffe08a');Ly.position.set(0,-0.65,0);marker.add(Ly);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 대운 — 약 10년마다 바뀌는 큰 흐름. 여덟 블록이 인생의 물길 구간입니다.','노란 화살표는 세운 — 1년 단위로 흐르며 명식과 만나 그 해의 분위기를 만듭니다.','첫 대운이 시작되는 나이가 대운수, 새 대운에 들어가는 순간이 입운입니다.','길운·흉운도 결과를 정하지 않습니다 — 운은 환경의 결일 뿐, 결과는 선택과 행동이 만듭니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const x=-3.85+((T*0.5)%8)*1.1;marker.position.x=x;s.rotation.y+=0.0;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const x=-3.85+((T*0.5)%8)*1.1;marker.position.x=x;s.rotation.y+=0.0;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

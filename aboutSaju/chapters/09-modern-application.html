@@ -98,12 +98,15 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,9);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const COL=0xff4d8d;for(let i=0;i<8;i++){const x=(i-3.5)*0.7;const b=new THREE.Mesh(new THREE.BoxGeometry(0.45,1,0.45),new THREE.MeshBasicMaterial({color:i<4?COL:0x7b9cff}));b.position.x=x;s.add(b);b.userData={ph:i*0.5};b.name='bar'+i;}const grid=new THREE.Mesh(new THREE.TorusGeometry(3.4,0.02,8,60),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.15}));grid.rotation.x=Math.PI/2;s.add(grid);s.userData.bars=[];s.children.forEach(ch=>{if(ch.name&&ch.name.indexOf('bar')===0)s.userData.bars.push(ch);});
+  const Ls=lbl('통계 분석','#ffb3cd');Ls.position.set(0,2.85,0);s.add(Ls);const Lm=lbl('만세력','#ff9dc0');Lm.position.set(-3.5,-0.9,0);s.add(Lm);const La=lbl('AI 보조 학습','#a9c2ff');La.position.set(3.5,-0.9,0);s.add(La);const Ld=lbl('디지털 도구','#ffd6a0');Ld.position.set(0,-1.8,0);s.add(Ld);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 현대적 활용 — 8글자를 데이터로: 여덟 막대는 명식의 기운 분포를 통계의 눈으로 보는 모습입니다.','만세력 앱은 생년월일시로 명식을 자동 출력 — 두세 곳을 비교하며 절기 적용 방식을 확인하세요.','AI 보조 학습: 챗봇이 용어를 쉽게 풀어주지만, 결과는 결정이 아니라 사고의 출발점입니다.','디지털 도구는 학습 도우미일 뿐 — 자기 점검과 대화의 도구로 쓰는 학술적 태도가 중요합니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.bars.forEach(b=>{const h=1+1.4*(0.5+0.5*Math.sin(T*1.2+b.userData.ph));b.scale.y=h;b.position.y=h/2-0.5;});s.rotation.y+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.bars.forEach(b=>{const h=1+1.4*(0.5+0.5*Math.sin(T*1.2+b.userData.ph));b.scale.y=h;b.position.y=h/2-0.5;});s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
