@@ -202,29 +202,28 @@ Sora(2024), Veo, Kling 등은 잠재 확산과 Transformer 백본을 결합한 �
 
 <div class="difficulty-content" data-level="easy">
   <span class="difficulty-badge easy">하 · 입문</span>
-  <h3>한 줄로 이해하기</h3>
-  <p>강화학습(RL)은 "시행착오로 보상을 최대화하는 법을 배우는 AI"예요. 마치 강아지에게 간식을 주며 훈련시키는 것과 같죠. 멀티모달 AI는 텍스트·이미지·음성·영상 등 여러 종류의 데이터를 동시에 다루는 모델로, GPT-4o·Gemini가 대표적입니다.</p>
-  <h3>왜 중요한가?</h3>
-  <p>① 알파고가 이세돌 9단을 이긴 건 강화학습의 역사적 사건이었어요. ② 자율주행, 로봇 제어, 게임 AI 모두 강화학습을 사용합니다. ③ ChatGPT가 자연스럽게 답하도록 정렬한 RLHF도 강화학습이에요. ④ 멀티모달 AI 덕에 사진을 찍어 "이게 뭐야?"라고 물으면 음성으로 답변받는 일이 가능해졌습니다. ⑤ 시각장애인 보조기기 Be My Eyes·Seeing AI는 카메라 영상을 즉시 해설해줍니다.</p>
-  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
-    <li><strong>에이전트</strong>: 행동을 결정하는 학습자</li>
-    <li><strong>환경</strong>: 에이전트가 상호작용하는 세계</li>
-    <li><strong>상태(state) / 행동(action) / 보상(reward)</strong>: RL의 3대 요소</li>
-    <li><strong>정책(policy)</strong>: "어떤 상황에서 어떤 행동을 할지"의 규칙</li>
-    <li><strong>탐험 vs 활용</strong>: 새로운 길을 시도할까, 알려진 좋은 길을 갈까</li>
-    <li><strong>멀티모달</strong>: 텍스트+이미지+음성 등 여러 모달리티를 함께 처리</li>
-    <li><strong>CLIP</strong>: 이미지와 텍스트를 같은 공간에 매핑하는 모델</li>
-  </ul></div>
-  <h3>핵심 개념 풀어쓰기</h3>
-  <p>강화학습을 비디오 게임에 비유해볼게요. 처음에는 마리오를 어디로 움직여야 할지 몰라 자꾸 죽어요(낮은 보상). 그런데 점프해서 코인을 먹으면 점수가 오르고(높은 보상), 구덩이에 빠지면 죽죠(음의 보상). 수만 번 플레이를 반복하면 "어떤 상황에서 어떻게 움직여야 점수를 최대화할 수 있는지" 자연스럽게 배웁니다. 이게 강화학습이에요. 멀티모달 AI는 "다재다능한 비서"라고 생각하면 됩니다. 사진을 보여주고 음성으로 질문하면 글로 답해주는, 인간처럼 여러 감각 정보를 동시에 처리하는 AI입니다.</p>
-  <div class="study-tip"><strong>💡 학습 TIP:</strong> OpenAI Gym의 CartPole 환경에서 직접 무작위 정책 → DQN → PPO 순으로 실험해보세요. 보상 그래프가 점점 우상향하는 모습을 보면 RL의 본질이 한순간에 와닿습니다. 멀티모달은 직접 ChatGPT 4o, Claude 3.5에 사진을 던져 다양한 질문을 해보는 게 가장 빠른 학습법이에요.</div>
-  <h3>한 페이지 요약</h3>
+  <h3>🎮 한마디로 말하면?</h3>
+  <p>강화학습(RL)은 <strong>이것저것 해보다가 상(보상)을 제일 많이 받는 방법을 스스로 배우는 AI</strong>예요! 강아지한테 간식 주며 훈련시키는 것과 똑같죠 🐶. 멀티모달 AI는 <strong>글·그림·소리·영상을 한꺼번에 다루는</strong> 만능 AI로, GPT-4o·Gemini가 대표예요.</p>
+  <div class="analogy">🍄 마리오 게임 비유! 처음엔 어디로 갈지 몰라 자꾸 죽어요. 그런데 코인 먹으면 점수 올라가고(상), 구덩이에 빠지면 죽죠(벌). 수만 번 하다 보면 "언제 어떻게 움직여야 점수 최고?"를 저절로 배워요. 이게 강화학습!</div>
+  <h3>🌟 우리 생활 어디에 있을까?</h3>
   <ul>
-    <li>RL = 시행착오 + 보상으로 정책 학습</li>
-    <li>3대 알고리즘 패밀리: 가치 기반(DQN), 정책 기반(REINFORCE, PPO), Actor-Critic(A3C, SAC)</li>
-    <li>대표 성과: AlphaGo, AlphaZero, MuZero, AlphaFold, ChatGPT(RLHF)</li>
-    <li>멀티모달 = CLIP·BLIP·LLaVA·GPT-4o 같은 텍스트+이미지+음성 통합 모델</li>
-    <li>응용: 로봇, 자율주행, 게임, 의료영상, 접근성 도구</li>
+    <li>♟️ 알파고가 이세돌 9단을 이겼어요 → 강화학습의 역사적 사건!</li>
+    <li>🚗 자율주행·로봇·게임 AI가 강화학습을 써요.</li>
+    <li>📷 사진 찍고 "이게 뭐야?" 물으면 답해줘요 → 멀티모달!</li>
+  </ul>
+  <div class="info-card"><h4>🌱 이 말만 알면 돼!</h4><ul>
+    <li><strong>에이전트</strong>: 행동을 결정하는 학습자 (게임 캐릭터 같은 것)</li>
+    <li><strong>상태 / 행동 / 보상</strong>: 강화학습의 3대 요소</li>
+    <li><strong>정책(policy)</strong>: "이런 상황엔 이렇게 움직여!"라는 규칙</li>
+    <li><strong>탐험 vs 활용</strong>: 새 길에 도전할까 vs 아는 좋은 길로 갈까</li>
+    <li><strong>멀티모달</strong>: 글·그림·소리를 함께 처리 / <strong>CLIP</strong>: 그림과 글을 같은 공간에 연결</li>
+  </ul></div>
+  <div class="study-tip">💡 <strong>공부 팁:</strong> 강화학습은 게임으로 배우는 게 최고예요! 그리고 멀티모달은 ChatGPT나 Claude에 사진을 던지고 이것저것 물어보는 게 가장 빠른 학습법이에요 📸</div>
+  <h3>✨ 세 줄 정리</h3>
+  <ul>
+    <li>강화학습 = 시행착오 + 보상으로 정책 배우기</li>
+    <li>대표 성과: 알파고, AlphaFold, ChatGPT(RLHF)</li>
+    <li>멀티모달 = 글+그림+소리를 함께 보는 AI (GPT-4o)</li>
   </ul>
 </div>
 

@@ -77,27 +77,31 @@
 
 <div class="difficulty-content" data-level="easy">
   <span class="difficulty-badge easy">하 · 입문</span>
-  <h3>한 줄로 이해하기</h3>
-  <p>네트워크 보안은 "데이터가 컴퓨터 사이를 오갈 때 누가 훔쳐보거나 끼어들지 못하게" 지키는 일이에요. 방화벽이 출입통제, IDS/IPS가 CCTV·경비원, VPN이 비밀 전용 도로 역할을 합니다.</p>
-  <h3>왜 중요한가?</h3>
-  <p>① 회사 사무실에서만 접속되는 사내 시스템이 외부에서는 안 열리는 건 방화벽 덕분이에요. ② 카페 와이파이로 회사 이메일을 봐도 안전한 건 VPN이 만든 암호화 터널 때문. ③ "비정상 로그인 시도가 감지됐다"는 알림이 오는 건 IDS가 패턴을 발견해 알린 것입니다. 즉 우리가 "그냥 잘 동작하는" 네트워크 뒤에는 항상 이런 보안 장치들이 돌고 있어요.</p>
-  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
-    <li><strong>방화벽(Firewall)</strong>: 정해진 규칙대로 들어오는/나가는 트래픽을 허용·차단하는 장치</li>
-    <li><strong>IDS / IPS</strong>: 의심 트래픽을 탐지(IDS)하거나 자동 차단(IPS)하는 시스템</li>
-    <li><strong>VPN</strong>: 인터넷 위에 만든 암호화된 가상 전용선 — 카페 와이파이에서도 안전하게 회사망 접속</li>
-    <li><strong>DDoS</strong>: 수많은 컴퓨터가 동시에 한 서버에 접속해 마비시키는 공격</li>
-    <li><strong>Zero Trust</strong>: "내부망도 믿지 않는다" — 매 요청마다 신원을 재확인하는 새 패러다임</li>
-  </ul></div>
-  <h3>핵심 개념 풀어쓰기</h3>
-  <p>회사 건물에 비유해봅시다. 방화벽은 정문의 출입게이트예요. 사원증이 있는 사람만 들여보내죠. IDS는 천장의 CCTV — 이상한 움직임이 보이면 경비실에 알립니다. IPS는 더 적극적인 경비원 — 의심스러우면 바로 막아요. VPN은 외근 중인 직원이 회사 안 자리에 앉은 것처럼 일하게 해주는 비밀 통로입니다. Zero Trust는 "회사 안에 있어도 매번 사원증을 다시 보여달라"고 요구하는 새로운 정책이에요.</p>
-  <div class="study-tip"><strong>💡 학습 TIP:</strong> "방화벽=문지기, IDS=감시카메라, IPS=경비원, VPN=비밀통로, Zero Trust=매번재확인" 이 다섯 비유만 박아두세요. 어떤 네트워크 보안 도구도 이 다섯 역할의 변형으로 이해할 수 있어요.</div>
-  <h3>한 페이지 요약</h3>
+  <h3>🌐 한마디로 말하면</h3>
+  <p>네트워크 보안은 <strong>데이터가 길을 오갈 때 지켜주는 일</strong>이에요! 데이터도 여행을 다녀요. 그 길에서 누가 훔쳐보거나 끼어들면 안 되겠죠? 그래서 문지기(방화벽), CCTV(IDS/IPS), 비밀 통로(VPN)가 지켜줍니다.</p>
+  <h3>🎮 우리 생활 속 이야기</h3>
   <ul>
-    <li>네트워크 보안 = 데이터 이동 중의 안전 확보</li>
-    <li>방화벽 = 트래픽 허용·차단의 1차 관문</li>
-    <li>IDS는 탐지·경보, IPS는 능동 차단</li>
-    <li>VPN으로 공개 인터넷 위에 사설망 효과</li>
-    <li>Zero Trust = "내부도 안 믿는다", 현대의 새 표준</li>
+    <li>🚪 학교 안에서만 되는 사이트가 밖에선 안 열리는 건 <strong>방화벽</strong> 때문</li>
+    <li>🕵️ "이상한 로그인 시도 감지!" 알림은 <strong>IDS</strong>가 눈치챈 거예요</li>
+    <li>🛣️ 카페 와이파이로도 안전하게 회사망에 들어가는 건 <strong>VPN</strong>이 만든 비밀 통로 덕분</li>
+  </ul>
+  <div class="info-card"><h4>🌱 알아두면 좋은 낱말</h4><ul>
+    <li><strong>방화벽</strong>: 정해진 규칙대로 데이터를 들여보내거나 막는 문지기</li>
+    <li><strong>IDS / IPS</strong>: 수상한 걸 발견(IDS)하거나 바로 막는(IPS) 감시 장치</li>
+    <li><strong>VPN</strong>: 인터넷 위에 만든 나만의 비밀 통로</li>
+    <li><strong>DDoS</strong>: 수많은 컴퓨터가 한꺼번에 몰려가 서버를 멈추게 하는 공격</li>
+    <li><strong>Zero Trust</strong>: "안에 있어도 안 믿어!" 매번 다시 확인하는 새 규칙</li>
+  </ul></div>
+  <h3>🏫 학교 건물로 이해하기</h3>
+  <p>학교로 생각해봐요. <strong>방화벽</strong>은 정문 경비 아저씨예요 — 출입증이 있어야 들여보내요. <strong>IDS</strong>는 복도 CCTV — 이상한 게 보이면 방송으로 알려요. <strong>IPS</strong>는 더 적극적인 경비원 — 수상하면 바로 막아요! <strong>VPN</strong>은 밖에 나가 있어도 교실에 앉은 것처럼 해주는 비밀 통로고요. <strong>Zero Trust</strong>는 "학교 안이어도 매번 출입증 보여줘!"라고 하는 깐깐한 규칙이에요.</p>
+  <div class="study-tip"><strong>💡 꿀팁:</strong> "방화벽=문지기, IDS=CCTV, IPS=경비원, VPN=비밀통로, Zero Trust=매번확인!" 이 다섯 역할만 알면 어려운 장비 이름도 무섭지 않아요. 😎</div>
+  <h3>📌 한 장 요약</h3>
+  <ul>
+    <li>네트워크 보안 = 데이터가 이동 중일 때 안전 지키기</li>
+    <li>방화벽 = 들어오고 나가는 것을 막고 여는 첫 관문</li>
+    <li>IDS는 찾아서 알림, IPS는 바로 막음</li>
+    <li>VPN = 공개 인터넷 위의 나만의 비밀 통로</li>
+    <li>Zero Trust = "안쪽도 안 믿는다"가 요즘 새 표준</li>
   </ul>
 </div>
 

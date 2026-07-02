@@ -199,28 +199,24 @@ Stable Diffusion 3(2024)와 Flux는 이 프레임워크를 채택하였다.
 
 <div class="difficulty-content" data-level="easy">
   <span class="difficulty-badge easy">하 · 입문</span>
-  <h3>한 줄로 이해하기</h3>
-  <p>생성형 AI는 텍스트, 이미지, 음악, 영상을 "처음부터 새로 만들어내는" 모델이에요. 분류·예측만 하던 AI에서 한 발 나아가, 예술가나 작가처럼 새로운 콘텐츠를 만들어냅니다. 대표적으로 DALL·E·Midjourney는 그림을, Suno는 음악을, Sora는 영상을 만들죠.</p>
-  <h3>왜 중요한가?</h3>
-  <p>① 마케터·디자이너는 Midjourney로 광고 시안을 몇 분 만에 만들고, ② 작곡가는 Suno로 데모 음악을 빠르게 시도하며, ③ 영화·게임 업계는 Sora·Runway로 콘텐츠 제작 비용을 크게 줄입니다. ④ 일반 사용자도 카카오톡 프로필 사진을 AI 캐릭터로 만들거나, 가족 사진을 풍경화 스타일로 변환합니다. 한마디로 "창작의 진입 장벽을 낮춘 도구"예요.</p>
-  <div class="info-card"><h4>🌱 핵심 용어</h4><ul>
-    <li><strong>VAE</strong>: 데이터를 잠재공간으로 인코딩하고 다시 복원하는 모델</li>
-    <li><strong>GAN</strong>: 위조범(Generator)과 감식관(Discriminator)이 경쟁하며 학습</li>
-    <li><strong>Diffusion</strong>: 노이즈를 점진적으로 제거해 이미지를 생성하는 방법</li>
-    <li><strong>잠재공간</strong>: 이미지·텍스트의 의미를 압축한 고차원 좌표계</li>
-    <li><strong>CFG (Classifier-Free Guidance)</strong>: 조건(텍스트)과 무조건의 차이로 생성 품질 향상</li>
-    <li><strong>Inpainting / Outpainting</strong>: 일부분만 새로 그리기 / 캔버스 확장</li>
+  <h3>🎨 한마디로 말하면?</h3>
+  <p>생성형 AI는 <strong>텍스트·그림·음악·영상을 처음부터 새로 만들어내는</strong> AI예요! 예전 AI가 "이건 고양이야"라고 알아맞히기만 했다면, 생성형 AI는 <strong>화가·작곡가처럼 직접 창작</strong>해요. DALL·E·Midjourney는 그림 🖼️, Suno는 음악 🎵, Sora는 영상 🎬을 만들어요!</p>
+  <div class="analogy">🌫️ 안개에서 그림 찾기! 깨끗한 사진에 노이즈를 점점 뿌려서 완전 흰 잡음으로 만들어요. 그다음 AI한테 "이 잡음에서 노이즈를 한 단계씩 지워봐!"라고 가르치면, 나중엔 잡음에서 새 그림을 뚝딱 만들어내요. 이게 디퓨전이에요!</div>
+  <h3>🥊 GAN은 두 라이벌의 대결!</h3>
+  <p>위조범(Generator)이 가짜 그림을 그리고, 감식관(Discriminator)이 진짜인지 가짜인지 판단해요. 위조범이 잘 그릴수록 감식관도 까다로워지고, 둘이 끝없이 경쟁하다 보면 <strong>진짜랑 구별 안 되는 그림</strong>이 완성돼요!</p>
+  <div class="info-card"><h4>🌱 이 말만 알면 돼!</h4><ul>
+    <li><strong>VAE</strong>: 데이터를 압축했다가 다시 복원하는 모델</li>
+    <li><strong>GAN</strong>: 위조범 vs 감식관이 경쟁하며 배우는 모델</li>
+    <li><strong>Diffusion</strong>: 노이즈를 한 단계씩 지워서 그림을 만드는 방법</li>
+    <li><strong>잠재공간</strong>: 그림·글의 의미를 압축해둔 고차원 좌표</li>
+    <li><strong>Inpainting / Outpainting</strong>: 일부만 다시 그리기 / 그림 밖으로 넓히기</li>
   </ul></div>
-  <h3>핵심 개념 풀어쓰기</h3>
-  <p>디퓨전 모델을 사진 복원에 비유해볼게요. 깨끗한 사진 위에 점점 노이즈를 뿌려서 결국 흰 잡음으로 만드는 과정을 "정방향(forward)"이라고 해요. 그 다음 모델에게 "이 잡음에서 노이즈를 한 단계씩 지워봐"라고 가르치면, 결국에는 잡음에서 새 이미지를 그려낼 수 있게 됩니다. GAN은 두 명의 라이벌에 비유돼요. 위조범(Generator)이 가짜 그림을 만들고, 감식관(Discriminator)이 진위를 판단합니다. 위조범이 점점 그림을 잘 그리게 되면, 감식관도 더 까다로워지죠. 둘이 끝없이 경쟁하다 보면 결국 진짜와 구별 불가능한 그림이 만들어집니다.</p>
-  <div class="study-tip"><strong>💡 학습 TIP:</strong> 직접 Stable Diffusion이나 ChatGPT 4o의 이미지 생성을 써보면서 프롬프트를 다양하게 바꿔보세요. "사실적인 사진", "유화 스타일", "픽사 애니메이션" 같은 키워드 변화에 따라 결과가 어떻게 달라지는지 체감하면, 모델 내부의 잠재공간 개념이 직관적으로 다가옵니다.</div>
-  <h3>한 페이지 요약</h3>
+  <div class="study-tip">💡 <strong>공부 팁:</strong> 직접 이미지 생성 AI를 써보세요! "사실적인 사진", "유화 스타일", "픽사 애니메이션"처럼 키워드만 바꿔봐도 결과가 확 달라져요. 그러면 잠재공간이 뭔지 몸으로 느껴져요! 🖌️</div>
+  <h3>✨ 세 줄 정리</h3>
   <ul>
-    <li>3대 생성모델 가족: VAE, GAN, Diffusion</li>
-    <li>현재 SOTA는 디퓨전 + Transformer (DiT, Stable Diffusion 3, Sora)</li>
-    <li>텍스트→이미지: CLIP 임베딩으로 조건 정렬, CFG로 품질 향상</li>
-    <li>응용: 이미지·음악·영상·3D 생성, 의료영상 데이터 증강, 약물 분자 설계</li>
-    <li>이슈: 저작권, 딥페이크, 데이터 학습의 윤리</li>
+    <li>생성모델 3대 가족: VAE · GAN · Diffusion</li>
+    <li>지금 최고는 디퓨전 + Transformer (Stable Diffusion, Sora)</li>
+    <li>멋지지만 저작권·딥페이크 같은 조심할 점도 있어요!</li>
   </ul>
 </div>
 
