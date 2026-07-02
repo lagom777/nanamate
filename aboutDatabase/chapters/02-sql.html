@@ -598,37 +598,45 @@ function evaluateCondition(row, condition) {
 
 <div class="difficulty-content" data-level="easy">
   <span class="difficulty-badge easy">하 · 입문</span>
-  <h3>한 줄로 이해하기</h3>
-  <p>SQL은 데이터베이스에 "이런 데이터를 보여줘", "이렇게 바꿔줘"라고 부탁하는 영어 비슷한 언어입니다.</p>
+  <h3>🎮 한 줄로 말하면?</h3>
+  <p>SQL은 데이터베이스한테 <strong>"이거 보여줘!", "이렇게 바꿔줘!"라고 부탁하는 말</strong>이에요. 영어랑 비슷하게 생겼답니다! 🗣️</p>
 
-  <h3>왜 중요한가?</h3>
-  <p>SQL은 50년 넘게 살아남은 "데이터 세계의 영어"입니다. 첫째, 매출 데이터에서 어제 가장 많이 팔린 상품을 단 한 줄의 SELECT로 뽑을 수 있습니다. 둘째, 회원가입 폼이 INSERT 문 한 줄로 데이터베이스에 저장됩니다. 셋째, 잘못 입력된 전화번호를 UPDATE 한 번으로 수만 건 일괄 수정할 수 있습니다.</p>
+  <h3>🤔 이게 왜 중요할까?</h3>
+  <p>SQL은 무려 50년 넘게 살아남은 "데이터 세계의 공용어"예요! 🌍</p>
+  <ul>
+    <li>🏆 어제 제일 많이 팔린 상품을 <strong>SELECT</strong> 딱 한 줄로 뽑아요.</li>
+    <li>✍️ 회원가입하면 <strong>INSERT</strong> 한 줄로 정보가 저장돼요.</li>
+    <li>🔧 잘못 쓴 전화번호 수만 개를 <strong>UPDATE</strong> 한 번에 고쳐요.</li>
+  </ul>
 
   <div class="info-card">
-    <h4>🌱 핵심 용어</h4>
+    <h4>🌱 꼭 기억할 낱말</h4>
     <ul>
-      <li><strong>SELECT</strong>: 데이터를 꺼내 보는 명령. "보여줘"의 뜻.</li>
-      <li><strong>INSERT</strong>: 새로운 행을 추가하는 명령.</li>
-      <li><strong>UPDATE</strong>: 기존 행의 값을 바꾸는 명령.</li>
-      <li><strong>DELETE</strong>: 행을 지우는 명령. WHERE 없이 쓰면 다 지워집니다.</li>
-      <li><strong>WHERE</strong>: 조건절. "이런 행만"을 지정합니다.</li>
+      <li><strong>SELECT</strong>: "보여줘!" 데이터를 꺼내 보는 명령. 👀</li>
+      <li><strong>INSERT</strong>: "추가해!" 새 줄을 넣는 명령. ➕</li>
+      <li><strong>UPDATE</strong>: "바꿔!" 값을 고치는 명령. 🔄</li>
+      <li><strong>DELETE</strong>: "지워!" 줄을 삭제. WHERE 없이 쓰면 전부 사라져요! 😱</li>
+      <li><strong>WHERE</strong>: "이런 것만!" 조건을 정하는 부분. 🎯</li>
     </ul>
   </div>
 
-  <h3>개념 풀어쓰기</h3>
-  <p>SQL은 마치 식당에서 주문서를 쓰는 것과 같습니다. 종업원에게 "오늘의 메뉴 중 매콤한 것만 보여 주세요. 가격은 1만 원 이하로요. 그리고 매운 정도 순으로 정렬해 주세요"라고 말하는 것과 SQL의 SELECT 문은 거의 같은 구조입니다. 무엇을 가져올지(SELECT 절), 어디서 가져올지(FROM 절), 어떤 조건인지(WHERE 절), 어떻게 정렬할지(ORDER BY 절)를 차례로 적습니다. 처음에는 영어 단어가 낯설어 보이지만, 사실 자연스러운 부탁의 순서입니다. INSERT는 새 손님을 명단에 적는 것, UPDATE는 적은 값을 고치는 것, DELETE는 명단에서 지우는 것입니다. 가장 중요한 점은 "한 번에 여러 행을 처리한다"는 것입니다. 한 줄을 일일이 고치는 게 아니라 "20세 미만 회원 모두"라는 식으로 묶음 단위로 명령합니다. 그래서 빠르고 안전합니다. 처음엔 SELECT 한 가지만 자유롭게 다룰 수 있어도 회사에서 요구하는 데이터 분석의 70%는 해낼 수 있습니다.</p>
+  <h3>🍜 식당 주문서로 쉽게!</h3>
+  <p>SQL은 식당에서 주문서 쓰는 거랑 똑같아요!</p>
+  <p>"매콤한 메뉴 중에서(<strong>WHERE</strong>) → 이름이랑 가격만(<strong>SELECT</strong>) → 메뉴판에서(<strong>FROM</strong>) → 매운 순서대로(<strong>ORDER BY</strong>) 보여주세요!"</p>
+  <p>이게 바로 SELECT 문장의 순서랑 거의 똑같아요. 처음엔 영어라 낯설지만, 사실은 자연스러운 부탁 순서랍니다. 😊</p>
+  <p>SQL의 최고 장점은 <strong>한 번에 여러 줄을 처리</strong>하는 것! 한 줄씩 고치는 게 아니라 "20살 미만 회원 전부!"처럼 묶음으로 명령해요. 그래서 빠르고 안전하죠. SELECT 하나만 잘해도 회사 데이터 분석의 70%는 할 수 있대요! 🚀</p>
 
   <div class="study-tip">
-    <strong>💡 학습 TIP:</strong> SQL은 책으로 배우기보다 직접 쳐 보는 게 가장 빠릅니다. SQLite나 온라인 SQL 연습 사이트에 작은 테이블 하나 만들고 SELECT를 50번만 쳐 보세요.
+    <strong>💡 학습 TIP:</strong> SQL은 눈으로 읽기보다 직접 쳐 보는 게 최고! 온라인 SQL 연습 사이트에서 작은 표 하나 만들고 SELECT를 50번만 쳐 보세요. ⌨️
   </div>
 
-  <h3>요약</h3>
+  <h3>✅ 오늘의 정리</h3>
   <ul>
-    <li>SQL은 DB에 명령을 내리는 언어입니다.</li>
-    <li>SELECT는 조회, INSERT/UPDATE/DELETE는 변경.</li>
-    <li>WHERE 절로 대상을 좁힙니다.</li>
-    <li>ORDER BY로 정렬, LIMIT로 개수 제한.</li>
-    <li>한 번에 여러 행을 묶음 처리하는 것이 강점입니다.</li>
+    <li>🗣️ SQL은 DB에 명령을 내리는 언어예요.</li>
+    <li>👀 SELECT는 조회, INSERT·UPDATE·DELETE는 변경!</li>
+    <li>🎯 WHERE로 대상을 좁혀요.</li>
+    <li>↕️ ORDER BY로 정렬, LIMIT로 개수 제한.</li>
+    <li>📦 한 번에 여러 줄 묶음 처리가 강점!</li>
   </ul>
 </div>
 

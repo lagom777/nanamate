@@ -405,37 +405,44 @@ RETURN b.name</code></pre>
 
 <div class="difficulty-content" data-level="easy">
   <span class="difficulty-badge easy">하 · 입문</span>
-  <h3>한 줄로 이해하기</h3>
-  <p>NoSQL은 표 형식이 아닌 다양한 모양으로 데이터를 저장하는 데이터베이스 가족입니다.</p>
+  <h3>🎮 한 줄로 말하면?</h3>
+  <p>NoSQL은 <strong>표(테이블) 말고 다양한 모양으로 데이터를 저장하는 DB 가족</strong>이에요! 🧰</p>
 
-  <h3>왜 중요한가?</h3>
-  <p>NoSQL은 관계형이 잘 못 풀던 문제를 보완합니다. 첫째, 페이스북 같은 SNS는 사용자별로 다른 모양의 프로필을 다루기 좋게 도큐먼트 DB에 저장합니다. 둘째, 실시간 채팅의 메시지 키-값 저장은 키-값 DB(Redis)가 유리합니다. 셋째, 인스타그램의 친구 추천 같은 그래프 탐색은 그래프 DB로 직관적으로 풀 수 있습니다.</p>
+  <h3>🤔 이게 왜 중요할까?</h3>
+  <p>관계형 DB가 잘 못 풀던 문제를 NoSQL이 도와줘요!</p>
+  <ul>
+    <li>📱 SNS 프로필처럼 사람마다 모양이 다른 데이터 → 도큐먼트 DB!</li>
+    <li>💬 실시간 채팅 메시지 저장 → 키-값 DB(Redis)!</li>
+    <li>🕸️ 친구 추천 같은 관계 탐색 → 그래프 DB!</li>
+  </ul>
 
   <div class="info-card">
-    <h4>🌱 핵심 용어</h4>
+    <h4>🌱 꼭 기억할 낱말</h4>
     <ul>
-      <li><strong>도큐먼트 DB</strong>: JSON 같은 문서 단위로 저장 (MongoDB).</li>
-      <li><strong>키-값 DB</strong>: 단순 키와 값 쌍 (Redis, DynamoDB).</li>
-      <li><strong>컬럼 패밀리</strong>: 행+컬럼이지만 유연한 스키마 (Cassandra).</li>
-      <li><strong>그래프 DB</strong>: 노드와 관계를 저장 (Neo4j).</li>
-      <li><strong>스키마리스</strong>: 미리 컬럼을 정의하지 않아도 되는 자유로움.</li>
+      <li><strong>도큐먼트 DB</strong>: JSON 같은 문서 단위로 저장 (MongoDB). 📄</li>
+      <li><strong>키-값 DB</strong>: 단순한 키와 값 짝 (Redis, DynamoDB). 🔑</li>
+      <li><strong>컬럼 패밀리</strong>: 행+열이지만 유연한 스키마 (Cassandra). 📊</li>
+      <li><strong>그래프 DB</strong>: 점(노드)과 선(관계)을 저장 (Neo4j). 🕸️</li>
+      <li><strong>스키마리스</strong>: 칸을 미리 안 정해도 되는 자유로움! 🆓</li>
     </ul>
   </div>
 
-  <h3>개념 풀어쓰기</h3>
-  <p>NoSQL이라는 이름은 "Not Only SQL"의 줄임말입니다. SQL을 부정하는 게 아니라, SQL 외에 다른 데이터 모양도 쓰자는 뜻이죠. 관계형 DB가 잘 정돈된 엑셀 시트라면, NoSQL은 더 자유로운 도구함입니다. 도큐먼트 DB는 마치 종이 카드 한 장에 정보를 적어 카드 상자에 넣는 방식이라, 카드마다 적힌 항목이 달라도 됩니다. 키-값 DB는 사물함처럼 번호만 알면 그 안의 내용을 빠르게 꺼낼 수 있습니다. 컬럼 패밀리 DB는 거대한 분산 표인데, 행마다 갖는 컬럼이 달라도 괜찮습니다. 그래프 DB는 친구 관계도처럼 점과 선을 직접 저장합니다. NoSQL의 강점은 대용량 분산 처리와 유연한 스키마이지만, 트랜잭션과 조인이 약하다는 단점이 있습니다. 그래서 모든 시스템에 NoSQL을 쓰는 게 아니라, 풀고자 하는 문제의 모양에 맞는 도구를 골라 쓰는 것이 핵심입니다. 회원·주문 같은 거래 데이터는 RDBMS, 세션·캐시는 Redis, 추천 그래프는 Neo4j처럼 폴리글랏 퍼시스턴스가 일반적입니다.</p>
+  <h3>🧰 도구함으로 쉽게!</h3>
+  <p>NoSQL은 사실 "Not Only SQL", 즉 <strong>"SQL만 쓰지 말자"</strong>는 뜻이에요. SQL을 미워하는 게 아니라 다른 모양도 같이 쓰자는 거죠!</p>
+  <p>관계형 DB가 잘 정돈된 엑셀 시트라면, NoSQL은 더 자유로운 <strong>도구함</strong>이에요. 도큐먼트 DB는 카드마다 다른 내용을 적어 카드 상자에 넣는 방식! 키-값 DB는 번호만 알면 확 꺼내는 사물함! 컬럼 패밀리는 줄마다 칸이 달라도 되는 거대한 표! 그래프 DB는 친구 관계도처럼 점과 선을 그대로 저장해요.</p>
+  <p>NoSQL은 <strong>대용량 분산 처리</strong>랑 <strong>유연한 스키마</strong>가 강점이에요. 대신 트랜잭션과 조인은 약해요. 그래서 다 NoSQL로 하는 게 아니라 문제 모양에 맞는 도구를 골라 써요. 거래는 RDBMS, 캐시는 Redis, 추천은 Neo4j처럼요. 이렇게 골라 쓰는 걸 <strong>폴리글랏 퍼시스턴스</strong>라고 불러요! 🎨</p>
 
   <div class="study-tip">
-    <strong>💡 학습 TIP:</strong> 처음에는 MongoDB와 Redis 두 가지만 가볍게 다뤄 보세요. 이 두 가지로 NoSQL 패러다임의 80%를 체험할 수 있습니다.
+    <strong>💡 학습 TIP:</strong> 처음엔 MongoDB랑 Redis 딱 두 가지만 가볍게 만져 보세요. 이 둘로 NoSQL의 80%를 체험할 수 있어요! 😊
   </div>
 
-  <h3>요약</h3>
+  <h3>✅ 오늘의 정리</h3>
   <ul>
-    <li>NoSQL은 관계형이 아닌 다양한 데이터 모델의 총칭입니다.</li>
-    <li>도큐먼트, 키-값, 컬럼 패밀리, 그래프 네 종류가 대표.</li>
-    <li>대용량 분산과 유연한 스키마가 강점.</li>
-    <li>트랜잭션과 조인은 약점.</li>
-    <li>문제 종류에 맞춰 골라 쓰는 것이 정석.</li>
+    <li>🧰 NoSQL은 관계형이 아닌 다양한 데이터 모델의 총칭이에요.</li>
+    <li>📄 도큐먼트·🔑 키-값·📊 컬럼 패밀리·🕸️ 그래프 네 종류가 대표!</li>
+    <li>💪 대용량 분산과 유연한 스키마가 강점.</li>
+    <li>😅 트랜잭션과 조인은 약점.</li>
+    <li>🎯 문제 종류에 맞춰 골라 쓰는 게 정석!</li>
   </ul>
 </div>
 
