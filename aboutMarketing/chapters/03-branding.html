@@ -146,12 +146,15 @@
 </div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const brand=new THREE.Mesh(new THREE.TorusKnotGeometry(0.6,0.22,64,8),new THREE.MeshBasicMaterial({color:0xff5a3c,wireframe:true}));s.add(brand);const rings=[];for(let i=0;i<4;i++){const rad=1.4+i*0.7;const ring=new THREE.Mesh(new THREE.RingGeometry(rad,rad+0.04,64),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.08+i*0.05,0.7,0.6),side:THREE.DoubleSide,transparent:true,opacity:0.7-i*0.12}));ring.rotation.x=Math.PI/2;s.add(ring);rings.push(ring);const dot=new THREE.Mesh(new THREE.SphereGeometry(0.14,8,8),new THREE.MeshBasicMaterial({color:0x9bb0ff}));dot.userData={rad:rad,ang:Math.random()*6.28,sp:0.4-i*0.07};s.add(dot);rings.push(dot);}
+  const _l1=lbl('브랜드 아이덴티티',0xc23a20);_l1.position.set(0,1.15,0);s.add(_l1);const _l2=lbl('브랜드 자산',0x5a6bd8);_l2.position.set(2.6,0.4,0);s.add(_l2);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 브랜드는 동심원 시장의 한가운데에 자리잡는 포지셔닝에서 시작합니다.','브랜드 아이덴티티는 우리가 의도한 정체성, 브랜드 이미지는 고객이 실제 인식하는 모습입니다.','인지도·연상·충성도가 쌓이면 브랜드 자산(Brand Equity)이라는 경제적 가치가 됩니다.','일관된 톤 앤 매너와 브랜드 약속이 그 자산을 오래 지켜냅니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;brand.rotation.x+=0.012;brand.rotation.y+=0.016;rings.forEach(o=>{if(o.userData.rad){o.userData.ang+=o.userData.sp*0.016;o.position.set(Math.cos(o.userData.ang)*o.userData.rad,0,Math.sin(o.userData.ang)*o.userData.rad);}});s.rotation.x=0.5;s.rotation.y+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}brand.rotation.x+=0.012;brand.rotation.y+=0.016;rings.forEach(o=>{if(o.userData.rad){o.userData.ang+=o.userData.sp*0.016;o.position.set(Math.cos(o.userData.ang)*o.userData.rad,0,Math.sin(o.userData.ang)*o.userData.rad);}});s.rotation.x=0.5;s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
