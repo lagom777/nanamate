@@ -90,12 +90,15 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#e9defb';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const COL=0x8b5cf6;const layers=[3,4,2];const nodes=[];layers.forEach((cnt,li)=>{const arr=[];for(let i=0;i<cnt;i++){const y=(i-(cnt-1)/2)*1.0;const m=new THREE.Mesh(new THREE.SphereGeometry(0.22,14,14),new THREE.MeshBasicMaterial({color:li===2?0xffe08a:COL}));m.position.set((li-1)*2.4,y,0);s.add(m);arr.push(m);}nodes.push(arr);});for(let li=0;li<nodes.length-1;li++)nodes[li].forEach(p=>nodes[li+1].forEach(q=>s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([p.position,q.position]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.2})))));s.userData.nodes=nodes;
+  const _CL='#e9defb';function _L(t,x,y,cc){var L=lbl(t,cc||_CL);L.position.set(x,y,0);s.add(L);}_L('디지털 표현형',-2.4,1.5);_L('BCI 신경피드백',-2.4,-1.7);_L('AI 코칭',0,2.3,'#ffe9a8');_L('VR 노출치료',2.4,1.4,'#ffe9a8');
+  const hintEl=document.querySelector('.interact-hint');const caps=['미래의 공포·불안 관리는 감정 AI·정서 컴퓨팅과 결합해 점점 개인화됩니다.','VR 노출치료는 안전한 가상 환경에서 두려운 상황을 반복 연습하게 합니다.','스마트워치·디지털 표현형으로 공황을 예측하고, AI 코칭이 24시간 1차 도움을 줍니다.','BCI 신경피드백으로 스스로 진정을 훈련하며, K-디지털 정신건강이 빠르게 성장 중입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const all=s.userData.nodes.flat();all.forEach((m,i)=>m.scale.setScalar(0.8+0.3*Math.sin(T*3+i)));s.rotation.y+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const all=s.userData.nodes.flat();all.forEach((m,i)=>m.scale.setScalar(0.8+0.3*Math.sin(T*3+i)));s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
