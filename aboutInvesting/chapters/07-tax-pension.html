@@ -120,15 +120,18 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,10);cam.lookAt(0,0.5,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   // 3층 연금탑: 아래부터 국민연금(넓고 튼튼)·퇴직연금·개인연금(좁고 높은 위층)
   const floorW=[3.2,2.4,1.6];const floorCol=[0x3d7eff,0x16c784,0xffd34d];let yy=-1.8;const floors=[];for(let i=0;i<3;i++){const f=new THREE.Mesh(new THREE.CylinderGeometry(floorW[i]/2,floorW[i]/2,1,24),new THREE.MeshBasicMaterial({color:floorCol[i]}));f.position.y=yy+0.5;s.add(f);floors.push({m:f,base:f.position.y,ph:i*0.8});yy+=1.15;}
   // 세제 혜택으로 위로 흘러 쌓이는 동전들
   const coins7=[];for(let i=0;i<18;i++){const cn=new THREE.Mesh(new THREE.CylinderGeometry(0.18,0.18,0.05,16),new THREE.MeshBasicMaterial({color:0xffe680}));cn.position.set((Math.random()-0.5)*2.4,-2+Math.random()*4,(Math.random()-0.5)*2.4);cn.userData={sp:0.3+Math.random()*0.7};s.add(cn);coins7.push(cn);}
+  const fn=['국민연금(1층)','퇴직연금(2층)','개인연금(3층)'],fc=['#8fb7ff','#7fe7c0','#ffd34d'];floors.forEach((o,i)=>{const Lf=lbl(fn[i],fc[i]);Lf.position.set(floorW[i]/2+1.15,o.base,0);s.add(Lf);});const Lc=lbl('세액공제','#ffe680');s.add(Lc);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 3층 연금탑 — 국민연금(1층) 위에 퇴직연금(2층)·개인연금(3층)을 쌓아 노후 소득을 두텁게 합니다.','연금저축·IRP에 납입하면 세액공제로 내야 할 세금을 직접 깎아 줍니다 — 절세는 또 하나의 수익.','연금 계좌는 과세이연 — 세금으로 나갈 돈까지 함께 굴러가 복리 효과가 커집니다.','세법과 연금 제도는 자주 바뀌므로 결정 전 최신 기준 확인이 필수입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;floors.forEach(o=>{o.m.position.y=o.base+Math.sin(T*1.0+o.ph)*0.06;});coins7.forEach(m=>{m.position.y+=0.025*m.userData.sp;if(m.position.y>2.2)m.position.y=-2;m.rotation.x+=0.08;});s.rotation.y+=0.004;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}floors.forEach(o=>{o.m.position.y=o.base+Math.sin(T*1.0+o.ph)*0.06;});coins7.forEach(m=>{m.position.y+=0.025*m.userData.sp;if(m.position.y>2.2)m.position.y=-2;m.rotation.x+=0.08;});Lc.position.set(coins7[0].position.x,coins7[0].position.y+0.35,coins7[0].position.z);s.rotation.y+=0.004;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

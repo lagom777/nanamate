@@ -120,15 +120,18 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,12);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   // 주가 캔들 차트: 시간축을 따라 늘어선 캔들(몸통+심지). 상승=초록, 하락=빨강
   const candles=[];const NC=12;for(let i=0;i<NC;i++){const up=Math.sin(i*0.9)>(-0.1);const col=up?0x16c784:0xff5d5d;const body=new THREE.Mesh(new THREE.BoxGeometry(0.45,1,0.45),new THREE.MeshBasicMaterial({color:col}));const x=(i-(NC-1)/2)*0.85;body.position.x=x;s.add(body);const wickG=new THREE.BufferGeometry();wickG.setAttribute('position',new THREE.BufferAttribute(new Float32Array([x,-1.5,0, x,1.5,0]),3));const wick=new THREE.Line(wickG,new THREE.LineBasicMaterial({color:col}));s.add(wick);candles.push({m:body,ph:i*0.55,base:(i/NC)*1.4-0.7});}
   // 추세선: 캔들 위를 잇는 가격 흐름선
   const trendPts=[];for(let i=0;i<NC;i++){trendPts.push((i-(NC-1)/2)*0.85,(i/NC)*1.4-0.7,0.3);}const trendG=new THREE.BufferGeometry();trendG.setAttribute('position',new THREE.BufferAttribute(new Float32Array(trendPts),3));s.add(new THREE.Line(trendG,new THREE.LineBasicMaterial({color:0xffd34d})));
+  const L1=lbl('상승','#7fe7c0');L1.position.set(-2.98,1.95,0);s.add(L1);const L2=lbl('하락','#ff8f8f');L2.position.set(-0.43,1.95,0);s.add(L2);const L3=lbl('주가','#ffd34d');L3.position.set(4.7,1.1,0.3);s.add(L3);const L4=lbl('변동성','#90c6ad');L4.position.set(0,-2.1,0);s.add(L4);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 초록 캔들은 상승, 빨간 캔들은 하락 — 주가는 기업 가치와 시장 심리가 함께 만드는 가격입니다.','주식은 기업 소유권의 조각 — 시가총액은 주가 × 주식 수, 배당은 이익을 주주와 나누는 것입니다.','EPS는 한 주가 버는 이익, PER = 주가 ÷ EPS — 같은 업종·과거 평균과 비교해야 의미가 살아납니다.','출렁이는 변동성과 손실 위험은 분산·장기투자·지수 추종으로 다스립니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;candles.forEach(o=>{const h=0.6+0.9*(0.5+0.5*Math.sin(T*1.6+o.ph));o.m.scale.y=h;o.m.position.y=o.base+(h-1)*0.3;});s.rotation.y+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}candles.forEach(o=>{const h=0.6+0.9*(0.5+0.5*Math.sin(T*1.6+o.ph));o.m.scale.y=h;o.m.position.y=o.base+(h-1)*0.3;});s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

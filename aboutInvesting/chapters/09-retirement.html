@@ -100,17 +100,20 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,12);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   // 생애 자산 곡선: 시간축을 따라 자산이 쌓였다가(축적기·초록) 은퇴 후 헐어 쓰는(인출기·주황) 산 모양
   const N=15;const peak=8;const lifebars=[];for(let i=0;i<N;i++){const t=i/(N-1);const h=2.6*Math.sin(t*Math.PI)*0.9+0.4;const isAcc=i<=peak;const col=isAcc?0x16c784:0xff8a3d;const b=new THREE.Mesh(new THREE.BoxGeometry(0.42,1,0.42),new THREE.MeshBasicMaterial({color:col}));const x=(i-(N-1)/2)*0.7;b.position.x=x;b.scale.y=h;b.position.y=h/2-1.8;s.add(b);lifebars.push({m:b,h:h,base:-1.8,ph:i*0.4});}
   // 은퇴 시점 표식(정점)을 가리키는 토러스
   const mark=new THREE.Mesh(new THREE.TorusGeometry(0.4,0.07,10,30),new THREE.MeshBasicMaterial({color:0xffd34d}));mark.position.set((peak-(N-1)/2)*0.7,1.4,0);s.add(mark);
   // 시간축
   const axG=new THREE.BufferGeometry();axG.setAttribute('position',new THREE.BufferAttribute(new Float32Array([-5.2,-1.8,0, 5.2,-1.8,0]),3));s.add(new THREE.Line(axG,new THREE.LineBasicMaterial({color:0x888888})));
+  const L1=lbl('모으기(적립)','#7fe7c0');L1.position.set(-2.6,2.9,0);s.add(L1);const L2=lbl('꺼내 쓰기(인출)','#ffb37f');L2.position.set(3.2,2.3,0);s.add(L2);const L3=lbl('은퇴','#ffd34d');L3.position.set(0.7,3.4,0);s.add(L3);const L4=lbl('시간','#90c6ad');L4.position.set(5.4,-1.5,0);s.add(L4);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 생애 자산 곡선 — 초록 구간에서 모으고(적립), 은퇴 후 주황 구간에서 꺼내 씁니다(인출).','4% 룰: 첫해 자산의 4%를 쓰고 물가만큼 늘려 쓰는 경험적 인출 기준 — 절대 공식은 아닙니다.','시퀀스 리스크: 같은 평균 수익률이라도 은퇴 초반의 큰 하락이 가장 치명적입니다.','인플레이션·장수·의료비 위험까지 함께 설계하고, 단정보다 점검과 조정이 핵심입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;lifebars.forEach(o=>{const sc=o.h*(1+0.08*Math.sin(T*1.3+o.ph));o.m.scale.y=sc;o.m.position.y=o.base+sc/2;});mark.rotation.z+=0.03;s.rotation.y+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}lifebars.forEach(o=>{const sc=o.h*(1+0.08*Math.sin(T*1.3+o.ph));o.m.scale.y=sc;o.m.position.y=o.base+sc/2;});mark.rotation.z+=0.03;s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

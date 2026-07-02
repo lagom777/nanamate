@@ -100,15 +100,18 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,10);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   // 중앙 바구니(펀드 묶음)=토러스
   const basket=new THREE.Mesh(new THREE.TorusGeometry(1.2,0.18,16,40),new THREE.MeshBasicMaterial({color:0xffd34d}));s.add(basket);
   // 여러 자산(주식·채권 등)이 바구니 주위를 돌며 모이는 입자들
   const assets=[];const NA=20;for(let i=0;i<NA;i++){const col=new THREE.Color().setHSL(0.33+0.2*(i/NA),0.6,0.55);const geoT=i%3;let g;if(geoT===0)g=new THREE.BoxGeometry(0.3,0.3,0.3);else if(geoT===1)g=new THREE.SphereGeometry(0.2,12,12);else g=new THREE.OctahedronGeometry(0.24);const m=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:col}));const ang=(i/NA)*Math.PI*2;m.userData={ang:ang,rad:2.6+(i%4)*0.3,sp:0.5+(i%3)*0.3,ph:i};s.add(m);assets.push(m);}
+  const Lb=lbl('펀드·ETF','#ffd34d');Lb.position.set(0,1.75,0);s.add(Lb);const La1=lbl('주식','#7fe7c0');s.add(La1);const La2=lbl('채권','#8fb7ff');s.add(La2);const Ld=lbl('분산','#90c6ad');Ld.position.set(0,-2.2,0);s.add(Ld);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 주식·채권 등 여러 자산이 하나의 바구니(펀드)로 모입니다 — 적은 돈으로도 손쉬운 분산.','인덱스펀드는 지수를 그대로 따라가고, ETF는 그것을 주식처럼 실시간으로 사고팔게 만든 것입니다.','액티브는 시장을 이기려 하고, 패시브(인덱스)는 시장을 통째로 낮은 비용에 담습니다.','보수(수수료)는 매년 떼여 복리로 누적 — 장기 수익을 가르는 핵심 변수입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;basket.rotation.z+=0.01;const pull=1.2+0.9*(0.5+0.5*Math.sin(T*0.6));assets.forEach(m=>{const ang=m.userData.ang+T*0.4*m.userData.sp;const rad=m.userData.rad*(pull/2.1);m.position.set(Math.cos(ang)*rad,Math.sin(ang*1.3+m.userData.ph)*0.5,Math.sin(ang)*rad);m.rotation.x+=0.03;m.rotation.y+=0.03;});s.rotation.y+=0.003;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}basket.rotation.z+=0.01;const pull=1.2+0.9*(0.5+0.5*Math.sin(T*0.6));assets.forEach(m=>{const ang=m.userData.ang+T*0.4*m.userData.sp;const rad=m.userData.rad*(pull/2.1);m.position.set(Math.cos(ang)*rad,Math.sin(ang*1.3+m.userData.ph)*0.5,Math.sin(ang)*rad);m.rotation.x+=0.03;m.rotation.y+=0.03;});La1.position.set(assets[0].position.x,assets[0].position.y+0.55,assets[0].position.z);La2.position.set(assets[1].position.x,assets[1].position.y+0.5,assets[1].position.z);s.rotation.y+=0.003;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
