@@ -72,12 +72,15 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const ROWS=7;const lineRows=[];for(let row=0;row<ROWS;row++){const grp=new THREE.Group();const yy=2.4-row*0.8;const col=new THREE.Color().setHSL(0.0+row*0.03,0.55,0.6);let xx=-3.5;const wordCount=4+(row%3);for(let w=0;w<wordCount;w++){const wlen=0.5+(w*0.27+row*0.13)%1.1;const glyph=new THREE.Mesh(new THREE.BoxGeometry(wlen,0.32,0.2),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.9}));glyph.position.set(xx+wlen/2,yy,0);grp.add(glyph);xx+=wlen+0.28;}grp.userData.speed=0.2+row*0.04;s.add(grp);lineRows.push(grp);}s.userData.rows=lineRows;
+  const LT=lbl('书面语 (문어체·글말) vs 口语 (구어·입말)','#ffd9d9');LT.position.set(0,3.05,0);s.add(LT);const LP=lbl('段落 (단락)','#8fb8ff');LP.position.set(-2.4,-2.95,0);s.add(LP);const LD=lbl('论点 (논지·주장)','#7fe7c0');LD.position.set(2.4,-2.95,0);s.add(LD);const LC=lbl('成语 (사자성어)','#ffe066');LC.position.set(0,2.05,0);lineRows[1].add(LC);const LX=lbl('修辞 (수사)','#ffc98f');LX.position.set(0,-1.15,0);lineRows[5].add(LX);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 흐르는 문장 행들이 쌓여 단락(段落)이 됩니다 — 고급 단계는 구어(口语)와 문어(书面语)의 구분에서 시작해요.','같은 \"왜냐하면\"도 말할 땐 因为, 글로 쓸 땐 由于·鉴于 — 신문 사설의 성어(成语)·수사(修辞)는 평소 대화에선 거의 안 보여요.','작문 뼈대는 주제문→근거 2~3개→결론 — 논설문(议论文)은 引论→提出论点→论据→反驳→结论의 5단 구조.','평가 지표는 어휘 다양성·응결(cohesion)·일관성(coherence) — 매주 신문 사설 1편 정독 + 단어 10개 정리면 1년에 500단어!'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.rows.forEach(g=>{g.position.x-=g.userData.speed*0.02;if(g.position.x<-3.2)g.position.x=3.2;});s.rotation.y+=0.0015;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.rows.forEach(g=>{g.position.x-=g.userData.speed*0.02;if(g.position.x<-3.2)g.position.x=3.2;});s.rotation.y+=0.0015;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

@@ -79,14 +79,17 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const slotX=[-3.2,0,3.2];const slotHue=[0.58,0.02,0.32];const blocks=[];for(let i=0;i<3;i++){const box=new THREE.Mesh(new THREE.BoxGeometry(1.8,1.4,1.4),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(slotHue[i],0.6,0.55),transparent:true,opacity:0.85,wireframe:true}));box.position.set(slotX[i],0,0);s.add(box);blocks.push(box);}
   for(let i=0;i<2;i++){const lp=[new THREE.Vector3(slotX[i]+0.9,0,0),new THREE.Vector3(slotX[i+1]-0.9,0,0)];const lg=new THREE.BufferGeometry().setFromPoints(lp);s.add(new THREE.Line(lg,new THREE.LineBasicMaterial({color:0xffffff})));}
   const flow=new THREE.Mesh(new THREE.SphereGeometry(0.28,16,16),new THREE.MeshBasicMaterial({color:0xffdd55}));s.add(flow);s.userData.flow=flow;s.userData.slotX=slotX;s.userData.blocks=blocks;
+  const L1=lbl('주어 S (누가)','#8fb8ff');L1.position.set(-3.2,1.5,0);s.add(L1);const L2=lbl('동사 V (한다)','#ff9f9f');L2.position.set(0,1.5,0);s.add(L2);const L3=lbl('목적어 O (무엇을)','#7fe7c0');L3.position.set(3.2,1.5,0);s.add(L3);const L4=lbl('SVO 어순','#ffe066');L4.position.set(0,2.7,0);s.add(L4);const LF=lbl('어순 흐름','#ffd9a0');LF.position.set(0,0.65,0);flow.add(LF);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 중국어 기본 어순은 SVO — 주어(누가)+동사(한다)+목적어(무엇을). 我爱你와 你爱我는 순서만 바꿔도 뜻이 달라집니다.','중국어는 단어가 모양을 바꾸지 않는 고립어(孤立语) — 그래서 어순이 문법의 핵심. 是(shì)는 \"~이다\", 형용사 술어는 是 없이 很과 짝꿍(我很好).','부정은 동사 앞 不(bù), 과거 부정은 没(méi). 질문은 문장 끝에 吗(ma)를 붙이거나 什么(무엇)·哪里(어디)·谁(누구)를 그 자리에 넣으면 끝!','동태조사 了(완료)·过(경험)·着(진행·지속)가 시제 표지 역할을 하고, 把자문은 목적어를 동사 앞으로 끌어와 처치 의미를 강조합니다(我把书放在桌子上).'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const p=(T*0.4)%3;s.userData.flow.position.x=-3.2+(p/3)*6.4;const act=Math.floor(p);s.userData.blocks.forEach((b,i)=>{b.scale.setScalar(i===act?1.25:1.0);});s.rotation.y+=0.002;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const p=(T*0.4)%3;s.userData.flow.position.x=-3.2+(p/3)*6.4;const act=Math.floor(p);s.userData.blocks.forEach((b,i)=>{b.scale.setScalar(i===act?1.25:1.0);});s.rotation.y+=0.002;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

@@ -79,12 +79,15 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const tierCount=[8,6,4];const tiers=[];for(let t=0;t<3;t++){const grp=new THREE.Group();const rad=2.6-t*0.7;const col=new THREE.Color().setHSL(0.33-t*0.12,0.65,0.55);for(let i=0;i<tierCount[t];i++){const ang=(i/tierCount[t])*Math.PI*2;const cube=new THREE.Mesh(new THREE.BoxGeometry(0.6,0.5,0.6),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.9,wireframe:false}));cube.position.set(Math.cos(ang)*rad,-2+t*1.6,Math.sin(ang)*rad);grp.add(cube);}s.add(grp);tiers.push(grp);}s.userData.tiers=tiers;
+  const TL=['HSK 1급','HSK 2급 — 여기까지 300단어','HSK 3급 — 누적 600단어'];const TC=['#8fb8ff','#7fe7c0','#ffe066'];tiers.forEach((g,t)=>{const L=lbl(TL[t],TC[t]);L.position.set(0,-2+t*1.6+0.65,0);g.add(L);});const LE=lbl('듣기 40 · 독해 30 · 쓰기 10 (100분)','#c9d3e6');LE.position.set(0,2.9,0);s.add(LE);const LP=lbl('합격선 180/300','#ff9f9f');LP.position.set(0,-2.9,0);s.add(LP);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 3단 계단 — HSK 3급은 누적 600단어. 300개는 이미 1·2급에서 배운 것이라 새로 외울 건 딱 300개!','시험은 듣기 40·독해 30·쓰기 10문제, 총 100분 — 합격선은 300점 만점에 180점.','단골 문법 ⭐ 비교문(我比他高)·把자문·정도보어(他唱得很好)·이중목적어·연동문 — 비교문에는 很을 쓸 수 없어요(我比他高得多).','접속사 짝꿍: 虽然…但是(비록~지만)·因为…所以(~때문에)·一边…一边(~하면서)·除了…以外(~외에도)·越来越(점점 더).'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.tiers.forEach((g,t)=>{g.rotation.y+=0.004*(t+1);});s.rotation.y+=0.002;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.tiers.forEach((g,t)=>{g.rotation.y+=0.004*(t+1);});s.rotation.y+=0.002;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

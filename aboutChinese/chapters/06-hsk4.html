@@ -79,14 +79,17 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const rings=[];for(let t=0;t<4;t++){const ring=new THREE.Mesh(new THREE.TorusGeometry(2.4-t*0.45,0.16,12,40),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.55-t*0.13,0.65,0.55)}));ring.position.y=-2.4+t*1.6;ring.rotation.x=Math.PI/2;s.add(ring);rings.push(ring);}
   const axisPts=[new THREE.Vector3(0,-3,0),new THREE.Vector3(0,3,0)];const axisg=new THREE.BufferGeometry().setFromPoints(axisPts);s.add(new THREE.Line(axisg,new THREE.LineBasicMaterial({color:0xffffff})));
   s.userData.rings=rings;
+  const RL=['HSK 1급','HSK 2급','HSK 3급 · 600단어','HSK 4급 · 1,200단어'];const RC=['#8fb8ff','#7fe7c0','#ffd9a0','#ff9f9f'];rings.forEach((rg,t)=>{const L=lbl(RL[t],RC[t]);L.position.set(0,0,-0.55);rg.add(L);});const LE=lbl('듣기 45 · 독해 40 · 쓰기 15 (105분)','#c9d3e6');LE.position.set(0,3.25,0);s.add(LE);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 4단 고리 — HSK 4급은 어휘 1,200개, 3급(600개)의 두 배로 확장됩니다.','듣기 45·독해 40·쓰기 15문제, 총 105분 — 합격선 180/300, 영역별로 60점 넘게 골고루가 좋아요.','핵심 문법 ⭐ 被자문 피동(我被老师批评了)·복합 방향보어(走出去·想起来·看起来)·사역동사 让/叫/使·是…的 강조(我是昨天来的).','접속사 6군을 자유자재로 — 因果(由于/因此)·转折(然而)·让步(即使/也)·条件(只要/就)·递进(不但/而且)·无论…都.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.rings.forEach((rg,t)=>{rg.rotation.z+=0.006*(t+1);rg.position.y=-2.4+t*1.6+Math.sin(T+t)*0.12;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.rings.forEach((rg,t)=>{rg.rotation.z+=0.006*(t+1);rg.position.y=-2.4+t*1.6+Math.sin(T+t)*0.12;});s.rotation.y+=0.002;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

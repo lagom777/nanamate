@@ -79,13 +79,16 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const frame=new THREE.Mesh(new THREE.BoxGeometry(2.6,2.6,0.2),new THREE.MeshBasicMaterial({color:0xff4d4d,wireframe:true}));s.add(frame);
   const homes=[[-0.7,0.6,0],[0.7,0.6,0],[-0.7,-0.7,0],[0.7,-0.7,0]];const farr=[[-3.5,2.4,1.5],[3.5,2.4,-1.5],[-3.5,-2.4,1.5],[3.5,-2.4,-1.5]];const rads=[];for(let i=0;i<4;i++){const rd=new THREE.Mesh(new THREE.BoxGeometry(1.0,1.0,1.0),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.05+i*0.18,0.65,0.55),transparent:true,opacity:0.9,wireframe:true}));rd.userData.home=homes[i];rd.userData.far=farr[i];s.add(rd);rads.push(rd);}s.userData.rads=rads;
+  const LT=lbl('한자 汉字 = 모양·소리·뜻','#ffd9d9');LT.position.set(0,2.3,0);s.add(LT);const RN=['부수 部首','의부 义符 (뜻)','성부 声符 (소리)','형성 形声 80%'];const RC=['#8fb8ff','#7fe7c0','#ffe066','#ff9f9f'];rads.forEach((rd,i)=>{const L=lbl(RN[i],RC[i]);L.position.set(0,0.8,0);rd.add(L);});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 부수 조각들이 모여 한 글자로 — 한자(汉字)는 모양(形)·소리(音)·뜻(义)을 함께 담습니다.','육서(六书) 중 형성(形声)이 한자의 약 80% — 뜻 부분(의부)과 소리 부분(성부)을 합칩니다. 예: 妈(엄마) = 女(뜻) + 马(mǎ, 소리).','부수(部首)는 모두 214개, 자주 쓰는 50개만 알아도 충분 — 三点水(氵)가 보이면 河(강)·海(바다)·湖(호수)처럼 물 친구들!','서체는 갑골문→금문→소전→예서→해서로 발전했고, 오늘날 본토는 간체자(简体字), 대만·홍콩은 번체자(繁体字)를 씁니다(學→学).'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const m2=(Math.sin(T*0.6)+1)/2;s.userData.rads.forEach(rd=>{const h=rd.userData.home,fr=rd.userData.far;rd.position.set(fr[0]+(h[0]-fr[0])*m2,fr[1]+(h[1]-fr[1])*m2,fr[2]+(h[2]-fr[2])*m2);rd.rotation.y+=0.01;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const m2=(Math.sin(T*0.6)+1)/2;s.userData.rads.forEach(rd=>{const h=rd.userData.home,fr=rd.userData.far;rd.position.set(fr[0]+(h[0]-fr[0])*m2,fr[1]+(h[1]-fr[1])*m2,fr[2]+(h[2]-fr[2])*m2);rd.rotation.y+=0.01;});s.rotation.y+=0.002;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>

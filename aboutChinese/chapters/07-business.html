@@ -79,15 +79,18 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const pillarL=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,3,6),new THREE.MeshBasicMaterial({color:0x2e86de,wireframe:true}));pillarL.position.set(-3,0.3,0);s.add(pillarL);
   const pillarR=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.7,3,6),new THREE.MeshBasicMaterial({color:0xe67e22,wireframe:true}));pillarR.position.set(3,0.3,0);s.add(pillarR);
   const table=new THREE.Mesh(new THREE.BoxGeometry(8,0.15,2.4),new THREE.MeshBasicMaterial({color:0xaaaaaa,transparent:true,opacity:0.4}));table.position.set(0,-1.6,0);s.add(table);
   const docs=[];for(let i=0;i<2;i++){const d=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.06,0.7),new THREE.MeshBasicMaterial({color:i===0?0x55ddaa:0xffd166}));d.userData.dir=i;s.add(d);docs.push(d);}s.userData.docs=docs;
+  const LL=lbl('甲方 (갑)','#8fb8ff');LL.position.set(-3,2.3,0);s.add(LL);const LR=lbl('乙方 (을)','#ffc98f');LR.position.set(3,2.3,0);s.add(LR);const LT=lbl('谈判 (협상) 테이블','#c9d3e6');LT.position.set(0,-2.2,0);s.add(LT);const D1=lbl('报价 (견적)','#7fe7c0');D1.position.set(0,0.55,0);docs[0].add(D1);const D2=lbl('合同 (계약서)','#ffe066');D2.position.set(0,0.55,0);docs[1].add(D2);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 두 기업이 견적(报价)과 계약서(合同)를 주고받는 협상(谈判) 테이블 — 계약서의 갑은 甲方, 을은 乙方입니다.','첫인사는 请多关照(잘 부탁드립니다)·合作愉快(즐겁게 협력해요) — 명함(名片)은 두 손으로 주고받고 직책·이름을 읽어주는 게 예의!','호칭은 직책+성(王经理 왕 매니저·李总 리 사장), 존댓말은 您 — 격식 메일은 尊敬的…您好로 시작해 此致敬礼로 맺습니다.','협상 키워드는 双赢(윈윈)·让步(양보)·底线(마지노선) — 我们再研究研究(다시 검토해보겠습니다)는 사실상 거절인 경우가 많아요!'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;s.userData.docs.forEach(d=>{const ph=((T*0.45)+d.userData.dir*0.5)%1;const u=d.userData.dir===0?ph:1-ph;d.position.set(-3+6*u,-0.4+Math.sin(u*Math.PI)*1.0,0);d.rotation.y+=0.04;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.docs.forEach(d=>{const ph=((T*0.45)+d.userData.dir*0.5)%1;const u=d.userData.dir===0?ph:1-ph;d.position.set(-3+6*u,-0.4+Math.sin(u*Math.PI)*1.0,0);d.rotation.y+=0.04;});s.rotation.y+=0.002;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
