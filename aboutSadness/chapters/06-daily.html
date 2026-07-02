@@ -90,12 +90,16 @@
 </main></div>
 <script>
 (function(){
-  const c=document.getElementById('sim-scene');if(!c)return;const s=new THREE.Scene();
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,8);cam.lookAt(0,0,0);
-  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
   const COL=0x60a5fa;const ring=new THREE.Mesh(new THREE.TorusGeometry(2.6,0.05,10,72),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.5}));ring.rotation.x=Math.PI/2;s.add(ring);for(let i=0;i<12;i++){const t=i/12*Math.PI*2;const tick=new THREE.Mesh(new THREE.BoxGeometry(0.08,0.08,0.3),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.6}));tick.position.set(Math.cos(t)*2.6,0,Math.sin(t)*2.6);tick.lookAt(0,0,0);s.add(tick);}const sun=new THREE.Mesh(new THREE.SphereGeometry(0.3,16,16),new THREE.MeshBasicMaterial({color:0xffe08a}));s.add(sun);s.userData.sun=sun;
+  const Lsun=lbl('햇빛','#ffe08a');Lsun.position.set(0,0.62,0);sun.add(Lsun);
+  const L1=lbl('운동','#93c5fd');L1.position.set(2.6,0.4,0);s.add(L1);const L2=lbl('수면 위생','#93c5fd');L2.position.set(-2.6,0.4,0);s.add(L2);const L3=lbl('표현적 글쓰기','#bfdbfe');L3.position.set(0,0.4,2.6);s.add(L3);const L4=lbl('사회적 지지','#bfdbfe');L4.position.set(0,0.4,-2.6);s.add(L4);const L5=lbl('행동활성화','#dbeafe');L5.position.set(0,1.5,0);s.add(L5);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 노란 구는 하루를 도는 햇빛 — 아침 햇빛 10분은 몸의 리듬을 되돌리는 자연 항우울제입니다.','고리 위 운동·수면 위생·표현적 글쓰기·사회적 지지는 임상 연구에서 효과가 입증된 일상 회복 도구입니다.','Pennebaker의 표현적 글쓰기: 4일 동안 매일 20분, 힘들었던 경험을 쓰면 정서 회복 효과가 측정됩니다.','행동활성화 — "기분이 좋아지면 움직이자"가 아니라 "움직이면 기분이 좋아진다"로 악순환을 끊습니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
   let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
-  let T=0;function a(){requestAnimationFrame(a);T+=0.016;const t=T*0.5;s.userData.sun.position.set(Math.cos(t)*2.6,0,Math.sin(t)*2.6);s.rotation.y+=0.0008;r.render(s,cam);}a();
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const t=T*0.5;s.userData.sun.position.set(Math.cos(t)*2.6,0,Math.sin(t)*2.6);s.rotation.y+=0.0008;r.render(s,cam);}a();
   window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
 })();
 </script>
