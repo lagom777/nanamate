@@ -1,7 +1,8 @@
 /* 나나메이트 플래그십 3D 게임 — DNA 염기쌍 (aboutBiology/02-dna)
  * 이중나선 한쪽 가닥의 염기(A/T/G/C)가 순서대로 제시되면, 4개 버튼 중 올바른 상보 염기를
  * 클릭해 페어링한다. 샤가프의 규칙(A↔T, G↔C)을 직접 체득. 맞으면 나선에 염기쌍이 채워지고
- * 다음 칸으로, 틀리면 흔들림+페널티. 가닥 전체를 올바르게 페어링하면 클리어.
+ * 다음 칸으로, 틀리면 흔들림+−5점(정답은 알려주지 않고 규칙만 상기). 연속 정답 +2 보너스.
+ * 힌트 버튼(가닥당 2회, −10점)으로 현재 염기의 상보를 확인 가능. 가닥 전체를 페어링하면 클리어.
  * 컨테이너: <div id="nm-dna"></div>. THREE(r128) 필요. WebGL 실패 시 안내문(graceful).
  */
 (function () {
@@ -96,6 +97,9 @@
 
     // 상태
     var lvl = 0, score = 0, idx = 0, picks = [], won = false, locked = false;
+    var streak = 0;             // 연속 정답 수 (연속 정답 보너스용)
+    var hintsUsed = 0;          // 이번 가닥에서 쓴 힌트 수 (최대 2)
+    var HINT_MAX = 2;
     var rungs = []; // 칸별 {tmplMesh, pairMesh, compMesh, y, ang, filled}
     var shakeUntil = 0, shakeMag = 0;
 
@@ -125,6 +129,25 @@
       btn.onclick = function () { pick(b); };
       pad.appendChild(btn); btnEls[b] = btn;
     });
+
+    // 힌트 버튼 — 현재 염기의 상보를 보여준다. 가닥당 최대 2회, 1회 −10점.
+    var hintBtn = document.createElement('button');
+    hintBtn.style.cssText = 'position:absolute;right:12px;top:10px;border:1px solid rgba(253,224,71,.55);border-radius:8px;background:rgba(40,34,12,.85);color:#fde047;font:700 11.5px "Noto Sans KR",sans-serif;padding:5px 9px;cursor:pointer';
+    function updateHintBtn() {
+      hintBtn.textContent = '💡 힌트 −10 (' + (HINT_MAX - hintsUsed) + ')';
+      var out = hintsUsed >= HINT_MAX || locked || won;
+      hintBtn.disabled = out; hintBtn.style.opacity = out ? '0.4' : '1';
+      hintBtn.style.cursor = out ? 'not-allowed' : 'pointer';
+    }
+    hintBtn.onclick = function () {
+      if (locked || won || hintsUsed >= HINT_MAX) return;
+      var s = curStrand(); if (idx >= s.length) return;
+      hintsUsed++;
+      score = Math.max(0, score - 10);
+      updateHintBtn();
+      setHud('힌트: ' + s[idx] + '의 짝은 ' + complement(s[idx]) + ' (−10점)');
+    };
+    host.appendChild(hintBtn);
 
     function curStrand() { return LEVELS[lvl].strand; }
 
@@ -199,15 +222,22 @@
       if (isCorrectPair(s[idx], base)) {
         picks[idx] = base;
         fillRung(idx, base);
+        score += 10;
+        streak++;
+        var bonusMsg = '';
+        // 연속 정답 보너스: 2연속부터 매 정답 +2 (숙련 보상)
+        if (streak >= 2) { score += 2; bonusMsg = ' · 🔥' + streak + '연속 +2'; }
         beep(660 + idx * 60, 0.1, 'sine'); setTimeout(function () { beep(990, 0.1, 'sine'); }, 70);
         idx++;
         if (isStrandComplete(s, picks)) { win(); }
-        else { setHud('짝 성립! 다음 염기'); }
+        else { setHud('짝 성립!' + bonusMsg + ' 다음 염기'); }
       } else {
         score = Math.max(0, score - 5);
+        streak = 0;
         triggerShake(); flashRung(idx);
         beep(140, 0.22, 'square');
-        setHud('상보가 아닙니다 — ' + s[idx] + '의 짝은 ' + complement(s[idx]) + ' (−5점)');
+        // 정답을 알려주지 않고 규칙만 상기 (플래시카드가 아니라 게임)
+        setHud('❌ 규칙: A는 T와, G는 C와 — 다시! (−5점)');
       }
     }
 
@@ -232,14 +262,14 @@
     function triggerShake() { shakeUntil = (typeof performance !== 'undefined' ? performance.now() : Date.now()) + 380; shakeMag = 0.5; }
 
     function win() {
-      won = true; locked = true;
+      won = true; locked = true; updateHintBtn();
       var bonus = 100 + lvl * 50; score += bonus;
       chime();
       rungs.forEach(function (r) { burst(new THREE.Vector3(r.bx, r.by, r.bz), 0x22c55e); });
       lvl++;
       if (lvl >= LEVELS.length) {
         setHud('🎉 모든 가닥 완성! 총 ' + score + '점 클리어');
-        setTimeout(function () { lvl = 0; score = 0; startLevel(); }, 3000);
+        setTimeout(function () { lvl = 0; score = 0; streak = 0; startLevel(); }, 3000);
       } else {
         setHud('가닥 완성! 다음 단계 (+' + bonus + ')');
         setTimeout(function () { startLevel(); }, 1700);
@@ -247,8 +277,8 @@
     }
 
     function startLevel() {
-      idx = 0; picks = []; won = false; locked = false;
-      buildHelix(); setHud();
+      idx = 0; picks = []; won = false; locked = false; hintsUsed = 0;
+      buildHelix(); updateHintBtn(); setHud();
     }
 
     // 회전 드래그(보기용)

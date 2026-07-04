@@ -154,26 +154,33 @@
       slotMeshes.push({ era: era, x: sx, mesh: m, edges: edges, baseColor: hue });
     });
 
-    // 카드 클래스
+    // 카드 클래스 — 연도는 숨김(사건명만). 연도는 힌트/착지 피드백으로만 노출.
     var palette = [0x3b2a52, 0x1e3a5f, 0x14532d, 0x5b2333, 0x4a3520, 0x274046];
     function makeCard(ev) {
-      var tx = makeLabel(ev.label, String(ev.year), 'rgba(20,24,30,0.92)', '#f3f4f6');
+      var tx = makeLabel(ev.label, null, 'rgba(20,24,30,0.92)', '#f3f4f6');
       var sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, transparent: true, depthTest: false }));
       sp.scale.set(3.4, 1.6, 1);
       var lane = railXs[Math.floor(Math.random() * railXs.length)];
       sp.position.set(lane, TOP_Y, 0.4);
       scene.add(sp);
-      return { ev: ev, sprite: sp, vy: -0.0, settled: false };
+      return { ev: ev, sprite: sp, vy: -0.0, settled: false, yearShown: false, holdT: 0 };
+    }
+    // 카드 스프라이트에 연도를 노출(힌트/착지 피드백 공용)
+    function revealYear(sprite, ev) {
+      var tx = makeLabel(ev.label, String(ev.year), 'rgba(20,24,30,0.92)', '#f3f4f6');
+      sprite.material.map.dispose(); sprite.material.map = tx; sprite.material.needsUpdate = true;
     }
 
     // 게임 상태
     var GOAL = 8;            // 목표 정답 개수
     var state = { correct: 0, lives: 3, goal: GOAL };
+    var score = 0;          // 점수: 정답 +10, 연도 힌트 −10
     var totalPlaced = 0;
     var deck = shuffle(LOGIC.EVENTS.slice());
     var deckIdx = 0;
     var active = null;       // 현재 떨어지는 카드
     var fallSpeed = 1.05;    // units/sec, 점차 가속
+    var HOLD_MAX = 4;        // 카드별 드래그 홀드 예산(초) — 무한 붙잡기 스톨 방지
     var running = true;
     var won = false, lost = false;
 
@@ -187,11 +194,25 @@
     host.appendChild(hud);
     var tip = document.createElement('div');
     tip.style.cssText = 'position:absolute;right:12px;bottom:10px;font:600 12px "Noto Sans KR",sans-serif;color:#fcd9a0;text-shadow:0 1px 3px rgba(0,0,0,.7);pointer-events:none;text-align:right;max-width:55%';
-    tip.textContent = '카드를 끌어 올바른 시대 슬롯에 넣으세요 · 놓치면 라이프 감소';
+    tip.textContent = '연도는 숨겨져요 — 사건으로 시대를 추리! 카드를 올바른 시대 슬롯에 넣으세요';
     host.appendChild(tip);
+
+    // 연도 힌트 버튼 — 현재 카드의 연도를 노출(−10점, 횟수 무제한이지만 비쌈)
+    var hintBtn = document.createElement('button');
+    hintBtn.textContent = '💡 연도 힌트 (−10점)';
+    hintBtn.style.cssText = 'position:absolute;right:12px;top:10px;border:1px solid rgba(253,224,71,.55);border-radius:8px;background:rgba(40,34,12,.85);color:#fde047;font:700 12px "Noto Sans KR",sans-serif;padding:5px 10px;cursor:pointer';
+    hintBtn.onclick = function () {
+      if (!active || !running || active.yearShown) return;
+      active.yearShown = true;
+      score = Math.max(0, score - 10);
+      revealYear(active.sprite, active.ev);
+      setHud('힌트: 이 사건은 ' + active.ev.year + '년 (−10점)');
+    };
+    host.appendChild(hintBtn);
+
     function hearts() { var h = ''; for (var i = 0; i < 3; i++) h += i < state.lives ? '❤️' : '🖤'; return h; }
     function setHud(msg) {
-      hud.innerHTML = '🏆 ' + state.correct + '/' + GOAL + ' 정답 · ' + hearts() +
+      hud.innerHTML = '🏆 ' + score + '점 · ' + state.correct + '/' + GOAL + ' 정답 · ' + hearts() +
         '<br><span style="font-size:12px;color:#fcd9a0">총 분류 ' + totalPlaced + '</span>' +
         (msg ? '<br><b style="color:#fff">' + msg + '</b>' : '');
     }
@@ -203,6 +224,7 @@
     function planePt(e) { ray.setFromCamera(ndc(e), cam); var pt = new THREE.Vector3(); ray.ray.intersectPlane(plane, pt); return pt; }
     function onDown(e) {
       if (!active || !running) return;
+      if (active.holdT > HOLD_MAX) return; // 홀드 예산 소진된 카드는 다시 잡을 수 없다(잡았다 놓기 반복 방지)
       var pt = planePt(e); if (!pt) return;
       var p = active.sprite.position;
       if (Math.abs(pt.x - p.x) < 1.9 && Math.abs(pt.y - p.y) < 0.95) {
@@ -215,6 +237,7 @@
       var pt = planePt(e); if (!pt) return;
       var nx = Math.max(XL, Math.min(XR, pt.x + grabDX));
       var ny = Math.max(FAIL_Y + 0.3, Math.min(TOP_Y, pt.y + grabDY));
+      if (active.holdT > HOLD_MAX) ny = Math.min(ny, active.sprite.position.y); // 예산 소진 후엔 위로 못 끌어올림(좌우 조준만 가능)
       active.sprite.position.set(nx, ny, 0.5);
       highlightSlots(nx, ny);
       e.preventDefault();
@@ -245,6 +268,14 @@
     el.addEventListener('mousedown', onDown); window.addEventListener('mousemove', onMove); window.addEventListener('mouseup', onUp);
     el.addEventListener('touchstart', onDown, { passive: false }); el.addEventListener('touchmove', onMove, { passive: false }); el.addEventListener('touchend', onUp, { passive: false });
 
+    // 착지한 카드의 연도를 잠깐 보여준 뒤 제거 (오답이든 정답이든 학습의 순간)
+    function landFeedback() {
+      if (!active) return;
+      var sprite = active.sprite, ev = active.ev; active = null;
+      revealYear(sprite, ev);
+      setTimeout(function () { scene.remove(sprite); }, 850);
+    }
+
     // 카드를 슬롯에 떨어뜨림 → 분류 채점
     function drop(slot) {
       var ev = active.ev;
@@ -253,10 +284,11 @@
       var pos = active.sprite.position.clone();
       if (ok) {
         state.correct++;
+        score += 10;
         flashSlot(slot, 0x22c55e); burst(pos, 0x86efac); beep(880, 0.1, 'sine'); setTimeout(function () { beep(1320, 0.13, 'sine'); }, 80);
-        removeActive();
+        landFeedback();
         if (LOGIC.isWin(state)) return doWin();
-        setHud('정답! ' + ev.year + '년은 ' + slot.era.name);
+        setHud('정답! ' + ev.year + '년은 ' + slot.era.name + ' (+10점)');
         fallSpeed = Math.min(2.6, fallSpeed + 0.06);
         spawn();
       } else {
@@ -265,7 +297,7 @@
         for (var i = 0; i < LOGIC.ERAS.length; i++) if (LOGIC.ERAS[i].key === correctEra) correctName = LOGIC.ERAS[i].name;
         loseLife(ev.year + '년은 ' + correctName + ' (' + slot.era.name + ' 아님)');
         flashSlot(slot, 0xef4444); burst(pos, 0xfca5a5);
-        removeActive();
+        landFeedback();
         if (!lost) spawn();
       }
     }
@@ -287,7 +319,7 @@
       setTimeout(restart, 2600);
     }
     function restart() {
-      state = { correct: 0, lives: 3, goal: GOAL }; totalPlaced = 0; fallSpeed = 1.05;
+      state = { correct: 0, lives: 3, goal: GOAL }; score = 0; totalPlaced = 0; fallSpeed = 1.05;
       won = false; lost = false; running = true; deck = shuffle(LOGIC.EVENTS.slice()); deckIdx = 0;
       setHud('새 게임'); spawn();
     }
@@ -306,15 +338,19 @@
     function loop(ts) {
       requestAnimationFrame(loop);
       var dt = last == null ? 0.016 : Math.min(0.05, (ts - last) / 1000); last = ts;
-      if (running && active && !drag) {
-        active.sprite.position.y -= fallSpeed * dt;
-        if (active.sprite.position.y <= FAIL_Y) {
-          // 통과 = 분류 실패 → 실점
-          var pos = active.sprite.position.clone();
-          burst(pos, 0x94a3b8); totalPlaced++;
-          removeActive();
-          loseLife('놓침! 시대 분류 실패');
-          if (!lost) spawn();
+      if (running && active) {
+        if (drag) active.holdT += dt; // 붙잡은 시간 누적(카드별) — 스톨 방지 예산
+        if (!drag || active.holdT > HOLD_MAX) { // 예산 소진 시 잡고 있어도 낙하 재개
+          active.sprite.position.y -= fallSpeed * dt;
+          if (active.sprite.position.y <= FAIL_Y) {
+            // 통과 = 분류 실패 → 실점
+            var pos = active.sprite.position.clone();
+            burst(pos, 0x94a3b8); totalPlaced++;
+            removeActive();
+            if (drag) { drag = false; rndr.domElement.style.cursor = 'grab'; clearHighlights(); } // 잡은 채 소멸 → 드래그 해제
+            loseLife('놓침! 시대 분류 실패');
+            if (!lost) spawn();
+          }
         }
       }
       // 슬롯 라벨 미세 펄스

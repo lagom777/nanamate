@@ -2,6 +2,7 @@
  * 원자 풀(H·O·C·N)에서 원자를 클릭/드래그로 골라 중심 원자에 결합시켜 목표 분자를 완성한다.
  * 원자가(H=1, O=2, N=3, C=4) 규칙으로 결합 수가 제한된다. 목표: H₂O → CO₂ → NH₃ → CH₄.
  * 정확히 충족되면 명중·폭발·점수·다음 분자. 3D 회전, 결합은 실린더로 표시.
+ * 목표는 분자 이름만 제시(화학식은 단계당 1회 −10점 힌트). 틀린 원소 선택은 −5점+흔들림+교육 문구.
  * 컨테이너: <div id="nm-molecule"></div>. THREE(r128) 전역 필요. WebGL 실패 시 안내문(graceful).
  *
  * 사실성: 원자가/구성은 실제 분자 화학 — H₂O(굽은형, O 단일결합×2),
@@ -19,25 +20,25 @@
   // 원자 배열의 0번은 항상 중심 원자.
   var TARGETS = [
     {
-      key: 'H2O', name: '물 (H₂O)', shape: '굽은형 104.5°',
+      key: 'H2O', name: '물 (H₂O)', kname: '물', formula: 'H₂O', shape: '굽은형 104.5°',
       atoms: ['O', 'H', 'H'],
       bonds: [{ a: 0, b: 1, order: 1 }, { a: 0, b: 2, order: 1 }],
       composition: { O: 1, H: 2 }
     },
     {
-      key: 'CO2', name: '이산화탄소 (CO₂)', shape: '직선형 180°',
+      key: 'CO2', name: '이산화탄소 (CO₂)', kname: '이산화탄소', formula: 'CO₂', shape: '직선형 180°',
       atoms: ['C', 'O', 'O'],
       bonds: [{ a: 0, b: 1, order: 2 }, { a: 0, b: 2, order: 2 }],
       composition: { C: 1, O: 2 }
     },
     {
-      key: 'NH3', name: '암모니아 (NH₃)', shape: '삼각뿔 107°',
+      key: 'NH3', name: '암모니아 (NH₃)', kname: '암모니아', formula: 'NH₃', shape: '삼각뿔 107°',
       atoms: ['N', 'H', 'H', 'H'],
       bonds: [{ a: 0, b: 1, order: 1 }, { a: 0, b: 2, order: 1 }, { a: 0, b: 3, order: 1 }],
       composition: { N: 1, H: 3 }
     },
     {
-      key: 'CH4', name: '메탄 (CH₄)', shape: '정사면체 109.5°',
+      key: 'CH4', name: '메탄 (CH₄)', kname: '메탄', formula: 'CH₄', shape: '정사면체 109.5°',
       atoms: ['C', 'H', 'H', 'H', 'H'],
       bonds: [{ a: 0, b: 1, order: 1 }, { a: 0, b: 2, order: 1 }, { a: 0, b: 3, order: 1 }, { a: 0, b: 4, order: 1 }],
       composition: { C: 1, H: 4 }
@@ -168,15 +169,18 @@
 
     // 게임 상태
     var lvl = 0, score = 0, locked = false;
+    var hintUsed = false;          // 이번 단계에서 화학식 힌트를 썼는가 (단계당 1회 -10점)
+    var shakeUntil = 0, shakeMag = 0; // 오답 흔들림
     var atoms = [];   // { el, mesh, slot }  0번=중심
     var bonds = [];   // { a, b, order, meshes:[] }
     var placedCount = 0; // 중심 외에 배치된 말단 원자 수
+    var ELNAME = { H: '수소', O: '산소', C: '탄소', N: '질소' };
 
     // 트레이(원자 풀) — DOM 버튼으로 어떤 원소를 추가할지 선택
     var tray = document.createElement('div');
     tray.style.cssText = 'position:absolute;left:0;right:0;bottom:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;pointer-events:none';
     host.appendChild(tray);
-    var trayBtns = {};
+    // 모든 원소 버튼은 항상 활성 — 틀린 원소를 고르면 감점 (진짜 선택의 긴장감)
     ['H', 'O', 'N', 'C'].forEach(function (el) {
       var b = document.createElement('button');
       var hex = '#' + ('000000' + COLOR[el].toString(16)).slice(-6);
@@ -184,7 +188,7 @@
       b.textContent = el + ' (' + LOGIC.VALENCE[el] + ')';
       b.style.cssText = 'pointer-events:auto;border:2px solid rgba(255,255,255,.45);border-radius:10px;background:' + hex + ';color:' + txtColor + ';font:800 13px "Noto Sans KR",sans-serif;padding:7px 12px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.4)';
       b.onclick = function () { addAtom(el); };
-      tray.appendChild(b); trayBtns[el] = b;
+      tray.appendChild(b);
     });
 
     // HUD
@@ -193,8 +197,15 @@
     host.appendChild(hud);
     var tip = document.createElement('div');
     tip.style.cssText = 'position:absolute;right:10px;top:10px;font:600 11.5px "Noto Sans KR",sans-serif;color:#cde7da;text-shadow:0 1px 3px rgba(0,0,0,.7);pointer-events:none;text-align:right;max-width:200px';
-    tip.innerHTML = '아래 원자 버튼을 눌러<br>목표 분자를 조립하세요<br>회전: 드래그 · 결합 자동 형성';
+    tip.innerHTML = '아래 원자 버튼을 눌러<br>목표 분자를 조립하세요<br>틀린 원소는 −5점!<br>회전: 드래그 · 결합 자동 형성';
     host.appendChild(tip);
+
+    // 오답 시 화면 붉은 플래시
+    var redFlash = document.createElement('div');
+    redFlash.style.cssText = 'position:absolute;left:0;right:0;top:0;height:' + H + 'px;border-radius:12px;background:rgba(239,68,68,.28);opacity:0;transition:opacity .12s;pointer-events:none';
+    host.appendChild(redFlash);
+    function flashRed() { redFlash.style.opacity = '1'; setTimeout(function () { redFlash.style.opacity = '0'; }, 170); }
+    function triggerShake() { shakeUntil = (typeof performance !== 'undefined' ? performance.now() : Date.now()) + 380; shakeMag = 0.4; }
 
     var resetBtn = document.createElement('button');
     resetBtn.textContent = '↺ 다시';
@@ -202,15 +213,29 @@
     resetBtn.onclick = function () { if (!locked) buildLevel(); };
     host.appendChild(resetBtn);
 
-    function setHud(msg) {
-      var t = TARGETS[lvl];
+    // 화학식 힌트 버튼 — 단계당 1회, -10점. 기본은 분자 이름만 보고 조립해야 한다.
+    var hintBtn = document.createElement('button');
+    hintBtn.textContent = '💡 화학식 힌트 (−10점)';
+    hintBtn.style.cssText = 'position:absolute;right:10px;bottom:84px;pointer-events:auto;border:1px solid rgba(253,224,71,.55);border-radius:8px;background:rgba(40,34,12,.85);color:#fde047;font:700 12px "Noto Sans KR",sans-serif;padding:5px 11px;cursor:pointer';
+    hintBtn.onclick = function () {
+      if (locked || hintUsed) return;
+      hintUsed = true;
+      score = Math.max(0, score - 10);
+      hintBtn.style.opacity = '0.45';
+      setHud('힌트: 화학식은 ' + TARGETS[lvl].formula + ' (−10점)', '#fde047');
+    };
+    host.appendChild(hintBtn);
+
+    function setHud(msg, color) {
+      var t = TARGETS[Math.min(lvl, TARGETS.length - 1)];
       var compNow = LOGIC.composition(atoms.map(function (a) { return a.el; }));
       var compStr = ['C', 'N', 'O', 'H'].filter(function (e) { return compNow[e]; }).map(function (e) { return e + (compNow[e] > 1 ? compNow[e] : ''); }).join('');
-      hud.innerHTML = '🧪 목표: <b>' + t.name + '</b><br>' +
+      hud.innerHTML = '🧪 목표: <b style="font-size:17px;color:#fde047">' + t.kname + '</b><br>' +
         '구조: ' + t.shape + '<br>' +
+        '화학식: ' + (hintUsed ? '<b style="color:#fde047">' + t.formula + '</b>' : '???') + '<br>' +
         '현재: ' + (compStr || '(중심만)') + '<br>' +
-        '🏆 ' + score + '점 · 단계 ' + (lvl + 1) + '/' + TARGETS.length +
-        (msg ? '<br><b style="color:#00e890">' + msg + '</b>' : '');
+        '🏆 ' + score + '점 · 단계 ' + Math.min(lvl + 1, TARGETS.length) + '/' + TARGETS.length +
+        (msg ? '<br><b style="color:' + (color || '#00e890') + '">' + msg + '</b>' : '');
     }
 
     function clearMolecule() {
@@ -250,34 +275,29 @@
         gp.userData.slot = s;
         molGroup.add(gp); ghosts.push(gp);
       }
-      updateTray();
+      hintUsed = false;
+      hintBtn.style.opacity = '1';
       setHud();
     }
     var ghosts = [];
 
     function bondLen(elA, elB) { return RADIUS[elA] + RADIUS[elB] + 0.55; }
 
-    // 원소 버튼 활성/비활성: 더 추가하면 목표 구성을 초과하는 원소는 비활성
-    function updateTray() {
-      var t = TARGETS[lvl];
-      var compNow = LOGIC.composition(atoms.map(function (a) { return a.el; }));
-      ['H', 'O', 'N', 'C'].forEach(function (el) {
-        var need = t.composition[el] || 0;
-        var have = compNow[el] || 0;
-        var disabled = have >= need;
-        trayBtns[el].disabled = disabled;
-        trayBtns[el].style.opacity = disabled ? '0.35' : '1';
-        trayBtns[el].style.cursor = disabled ? 'not-allowed' : 'pointer';
-      });
-    }
-
     function addAtom(el) {
       if (locked) return;
       var t = TARGETS[lvl];
       var compNow = LOGIC.composition(atoms.map(function (a) { return a.el; }));
-      // 목표 구성을 초과하는 원소 추가 차단(잘못된 원자 선택 = 결합 안 됨 피드백)
+      // 틀린 원소(불필요/초과) → 감점 + 흔들림 + 붉은 플래시 + 왜 아닌지 한 줄 교육
       if ((compNow[el] || 0) >= (t.composition[el] || 0)) {
-        beep(150, 0.14, 'square'); flash('잘못된 원자! ' + el + '는 더 필요 없어요'); return;
+        score = Math.max(0, score - 5);
+        triggerShake(); flashRed();
+        beep(150, 0.14, 'square');
+        var need = t.composition[el] || 0;
+        var why = need === 0
+          ? t.kname + '엔 ' + ELNAME[el] + '가 없어요'
+          : t.kname + '의 ' + ELNAME[el] + '는 ' + need + '개면 충분해요';
+        setHud('❌ ' + why + ' (−5점)', '#f87171');
+        return;
       }
       // 다음 빈 슬롯
       var slotIdx = placedCount;
@@ -307,7 +327,6 @@
       // 고스트 숨기기
       if (ghosts[slotIdx]) ghosts[slotIdx].visible = false;
       beep(420 + slotIdx * 60, 0.1, 'triangle');
-      updateTray();
       setHud('결합!');
     }
 
@@ -348,6 +367,7 @@
     function win() {
       if (locked) return;
       locked = true;
+      var t = TARGETS[lvl]; // 완성 메시지용 (버그 수정: 기존 코드는 t 미정의로 ReferenceError)
       score += 100 + (lvl === TARGETS.length - 1 ? 50 : 0);
       // 모든 원자에서 폭발
       atoms.forEach(function (a) { var p = a.mesh.position.clone(); molGroup.localToWorld(p); burst(p, 0x00e890); });
@@ -397,6 +417,10 @@
       requestAnimationFrame(loop);
       var dt = last == null ? 0.016 : Math.min(0.05, (ts - last) / 1000); last = ts;
       if (!dragging && !locked) molGroup.rotation.y += 0.004;
+
+      // 오답 흔들림
+      if (ts < shakeUntil) { molGroup.position.x = (Math.random() - 0.5) * shakeMag; shakeMag *= 0.92; }
+      else molGroup.position.x = 0;
 
       // 날아드는 원자 애니메이션 + 도착 시 결합 생성
       for (var i = 0; i < atoms.length; i++) {
