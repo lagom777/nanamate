@@ -152,6 +152,9 @@
     host.appendChild(rb);
 
     var lvl = 0, score = 0, busy = false;
+    // 승리 연출 타이머 추적: '다시' 로 재진입해도 타이머가 중첩돼 라운드를 건너뛰거나
+    // 같은 라운드를 다시 이겨 +100 을 중복으로 받는 일이 없게 한다.
+    var winTimer = null, resetTimer = null, needScoreReset = false;
     // 각 판의 시작 위치 기준값
     var BASE_X = (PLATE_W / 2) + 0.15; // 경계에서 약간 떨어져 시작
     var startL, startR; // 이번 라운드 시작 위치(분류 기준)
@@ -165,6 +168,9 @@
     function clearLand() { while (landGroup.children.length) { var c = landGroup.children.pop(); landGroup.remove(c); } }
 
     function setupRound() {
+      // 예약된 승리/재시작 타이머 취소 — 어떤 경로로 라운드가 시작되든 오래된 타이머가 남지 않는다.
+      clearTimeout(winTimer); clearTimeout(resetTimer); winTimer = resetTimer = null;
+      if (needScoreReset) { score = 0; needScoreReset = false; } // 전판 클리어 후 새 사이클: 정확히 1회 리셋
       busy = false; clearLand();
       plateL.scale.set(1, 1, 1); plateR.scale.set(1, 1, 1);
       plateL.rotation.set(0, 0, 0); plateR.rotation.set(0, 0, 0);
@@ -251,7 +257,12 @@
     var el = rndr.domElement;
     el.addEventListener('mousedown', onDown); window.addEventListener('mousemove', onMove); window.addEventListener('mouseup', onUp);
     el.addEventListener('touchstart', onDown, { passive: false }); el.addEventListener('touchmove', onMove, { passive: false }); el.addEventListener('touchend', onUp, { passive: false });
-    rb.addEventListener('click', function () { setupRound(); });
+    rb.addEventListener('click', function () {
+      // 승리 확정 후 연출 대기 중이면 '다시' = 즉시 다음으로 진행.
+      // (busy 만 풀고 같은 라운드를 재개하면 같은 라운드 재승리로 +100 중복 + 타이머 중첩으로 라운드 건너뜀)
+      if (winTimer != null) { clearTimeout(winTimer); winTimer = null; advance(); return; }
+      setupRound();
+    });
 
     /* ---- 지형 생성(승리 연출) ---- */
     function spawnMountain() {
@@ -304,14 +315,18 @@
       chime();
       setHud('✅ 정답! ' + R.fact);
       tip.innerHTML = '🛈 ' + R.fact;
-      setTimeout(function () {
-        lvl++;
-        if (lvl >= ROUNDS.length) {
-          lvl = 0;
-          setHud('🎉 모든 단계 클리어! 총 ' + score + '점 — 다시 시작합니다');
-          setTimeout(function () { score = 0; setupRound(); }, 2600);
-        } else { setupRound(); }
-      }, 3000);
+      winTimer = setTimeout(advance, 3000);
+    }
+    /* 승리 연출 뒤 다음 라운드로 진행 (타이머 또는 '다시' 버튼이 호출) */
+    function advance() {
+      winTimer = null;
+      lvl++;
+      if (lvl >= ROUNDS.length) {
+        lvl = 0;
+        setHud('🎉 모든 단계 클리어! 총 ' + score + '점 — 다시 시작합니다');
+        needScoreReset = true; // 점수 리셋은 다음 setupRound 에서 — 대기 중 '다시'를 눌러도 진행 중 점수가 갑자기 지워지지 않는다
+        resetTimer = setTimeout(function () { resetTimer = null; setupRound(); }, 2600);
+      } else { setupRound(); }
     }
     function fail(m) {
       beep(150, 0.18, 'square');

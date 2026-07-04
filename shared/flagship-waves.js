@@ -130,8 +130,8 @@
       var s = document.createElement('input'); s.type = 'range'; s.min = min; s.max = max; s.step = step; s.value = val; s.style.cssText = 'width:140px;accent-color:#00d4ff';
       s.oninput = function () { onIn(parseFloat(s.value)); }; wrap.appendChild(lab); wrap.appendChild(s); ctrl.appendChild(wrap); return s;
     }
-    var dSlider = mkSlider('파원 간격 d', '1', '16', '0.2', String(D_INIT), function (v) { d = v; refresh(); });
-    var phiSlider = mkSlider('위상차 φ (×π)', '0', '2', '0.02', String(PHI_INIT / Math.PI), function (v) { phi = v * Math.PI; refresh(); });
+    var dSlider = mkSlider('파원 간격 d', '1', '16', '0.2', String(D_INIT), function (v) { d = v; refresh(true); });
+    var phiSlider = mkSlider('위상차 φ (×π)', '0', '2', '0.02', String(PHI_INIT / Math.PI), function (v) { phi = v * Math.PI; refresh(true); });
     var rb = document.createElement('button'); rb.textContent = '↺ 리셋'; rb.style.cssText = 'border:1px solid #1c6f8f;border-radius:8px;background:#06283a;color:#bfe6ff;padding:4px 12px;font-weight:700;cursor:pointer';
     rb.onclick = function () { resetLevel(); };
     ctrl.appendChild(rb); host.appendChild(ctrl);
@@ -180,7 +180,9 @@
     }
 
     /* ===== 갱신 + 승리판정 ===== */
-    function refresh() {
+    // checkWin: 슬라이더 입력에서만 true. 표적 드래그(탐색용)는 시각화만 갱신하고 승리판정을 하지 않는다
+    // — 드래그 가능한 영역엔 항상 보강 무늬가 존재하므로, 드래그만으로 전 단계 클리어되는 꼼수 방지.
+    function refresh(checkWin) {
       var S1 = s1(), S2 = s2();
       place(src1, S1.x, S1.y); place(src2, S2.x, S2.y);
       var T = levels[lvl].target;
@@ -190,7 +192,7 @@
       targetMesh.material.color.setHex(amp >= THRESH ? 0x34d399 : 0xfacc15);
       targetMesh.material.emissive.setHex(amp >= THRESH ? 0x065f46 : 0x5b4500);
       setHud();
-      if (!won && Physics.isConstructive(amp, THRESH)) win();
+      if (checkWin && !won && Physics.isConstructive(amp, THRESH)) win();
     }
 
     function resetLevel() {
@@ -211,12 +213,19 @@
       won = true; score += 100; chime();
       burst(targetMesh.position.clone(), 0x34d399);
       setHud('보강간섭! 마루+마루로 진폭 최대 🎉');
-      lvl++;
-      if (lvl >= levels.length) {
+      if (lvl + 1 >= levels.length) {
+        // 마지막 단계: lvl 을 범위 밖(levels.length)으로 올리지 않는다 — rAF 루프가 매 프레임
+        // levels[lvl] 을 읽으므로 3초 대기 동안 TypeError 가 쏟아진다. 컨트롤도 잠가 refresh/setHud 재진입 차단.
         hud.innerHTML = '🎉 모든 단계 클리어! 총 ' + score + '점';
         rndr.domElement.style.pointerEvents = 'none';
-        setTimeout(function () { rndr.domElement.style.pointerEvents = ''; lvl = 0; score = 0; resetLevel(); }, 3000);
+        dSlider.disabled = true; phiSlider.disabled = true; rb.disabled = true;
+        setTimeout(function () {
+          rndr.domElement.style.pointerEvents = '';
+          dSlider.disabled = false; phiSlider.disabled = false; rb.disabled = false;
+          lvl = 0; score = 0; resetLevel();
+        }, 3000);
       } else {
+        lvl++;
         setTimeout(function () { resetLevel(); }, 1500);
       }
     }
