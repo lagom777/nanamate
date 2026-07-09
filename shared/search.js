@@ -256,4 +256,6 @@
   } else {
     init();
   }
+
+  if (typeof module !== 'undefined' && module.exports) { module.exports = { SUBJECTS: SUBJECTS, search: search, basePrefix: basePrefix }; }
 })();
