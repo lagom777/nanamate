@@ -161,3 +161,48 @@ test('waves: 파장/경로차/위상차/보강간섭 판정', () => {
   assert.equal(W.isConstructive(0.5, 0.9), false);
   assert.equal(W.targetWins({ x: 0, y: 5 }, -1, 0, 1, 0, 1, 0, 0.9), true);
 });
+
+test('graph: 포물선 값/레벨 곡선이 자기 코인 전부 일치=승리/오답 곡률/허용오차 경계', () => {
+  const G = load('flagship-graph.js');
+  // vertex form y = a(x−h)² + k
+  assert.equal(G.parabolaY(0.5, 0, 1, 0), 1);   // 꼭짓점
+  assert.equal(G.parabolaY(0.5, -1, 1, 1), 3);  // 0.5·(1−(−1))² + 1 = 3
+  assert.equal(G.parabolaY(-0.6, 1, 6, 1), 6);  // 꼭짓점
+  // 레벨 자신의 (a,h,k)는 그 레벨의 모든 코인을 지난다 → 승리
+  const L0 = G.LEVELS[0];
+  const coins0 = G.levelCoins(L0);
+  assert.equal(coins0.length, 3);
+  assert.equal(G.allCoinsMatched(L0.a, L0.h, L0.k, coins0, 0.3), true);
+  // 곡률 a를 뒤집으면 코인을 못 지난다 → 실패
+  assert.equal(G.allCoinsMatched(-L0.a, L0.h, L0.k, coins0, 0.3), false);
+  // 코인이 없으면 승리 아님
+  assert.equal(G.allCoinsMatched(L0.a, L0.h, L0.k, [], 0.3), false);
+  // 허용오차 0.3 경계: 오차 0.29는 on, 0.31은 off
+  const cy = G.parabolaY(0.5, 0, 1, 2);
+  assert.equal(G.coinOnCurve(0.5, 0, 1, 2, cy + 0.29, 0.3), true);
+  assert.equal(G.coinOnCurve(0.5, 0, 1, 2, cy + 0.31, 0.3), false);
+});
+
+test('projectile: hitScore 감소·바닥/45°=사거리 최대/레벨0 명중·수직 빗나감', () => {
+  const P = load('flagship-projectile.js');
+  // 명중 점수: 발사 수가 적을수록 높고, 60−shots·5가 0 이하면 100으로 바닥
+  assert.equal(P.hitScore(0), 160);
+  assert.equal(P.hitScore(1), 155);
+  assert.ok(P.hitScore(2) < P.hitScore(1));
+  assert.equal(P.hitScore(12), 100);  // 60−60=0
+  assert.equal(P.hitScore(100), 100); // 음수 → 0 바닥
+  // 45°에서 사거리 최대(대칭성): 같은 속력에서 30°·60°보다 멀리 착지한다.
+  // 도달 불가 표적(100,100)을 줘서 항상 miss → 착지 x가 사거리 프록시.
+  const speed = 12;
+  function landing(deg) {
+    const r = deg * Math.PI / 180;
+    return P.simulateShot(speed * Math.cos(r), speed * Math.sin(r), 100, 100, 1 / 240).x;
+  }
+  const r45 = landing(45);
+  assert.ok(r45 > landing(30));
+  assert.ok(r45 > landing(60));
+  // 레벨 0 표적(4,1.6)을 겨냥한 발사는 명중, 수직 발사는 빗나감
+  const L0 = P.LEVELS[0];
+  assert.equal(P.simulateShot(10, 9, L0.x, L0.y, 1 / 240).hit, true);
+  assert.equal(P.simulateShot(0, 5, L0.x, L0.y, 1 / 240).hit, false);
+});

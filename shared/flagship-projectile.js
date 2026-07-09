@@ -4,7 +4,39 @@
  * 컨테이너: <div id="nm-flagship"></div>. THREE(r128) 전역 필요. WebGL 실패 시 안내문으로 graceful.
  */
 (function () {
+  // ───────────────────────────── 순수 로직 (테스트 가능) ─────────────────────────────
+  var G = 16;            // 중력(scene units/s^2)
+  var LX = -6, LY = 0.6; // 대포 발사 지점
+  // 표적 단계(x,y). 대포는 (LX,LY)에서 발사.
+  var LEVELS = [{ x: 4, y: 1.6 }, { x: 6.5, y: 2.4 }, { x: 9, y: 1.2 }, { x: 7.5, y: 3.6 }];
+
+  // 명중 점수: 기본 100 + 발사 수가 적을수록 보너스(최대 60, 음수는 0으로 바닥)
+  function hitScore(shots) { return 100 + Math.max(0, 60 - shots * 5); }
+
+  // 포물선 발사 시뮬레이션(반음함수 오일러 적분). loop()의 스텝·명중(<1.1)·빗나감(y<0.2||x>16||x<-16)을 재현.
+  function simulateShot(vx, vy, targetX, targetY, dt) {
+    dt = dt || 0.016;
+    var x = LX, y = LY, vX = vx, vY = vy;
+    for (var i = 0; i < 20000; i++) {
+      vY -= G * dt; x += vX * dt; y += vY * dt;
+      if (Math.hypot(x - targetX, y - targetY) < 1.1) return { hit: true, x: x, y: y };
+      if (y < 0.2 || x > 16 || x < -16) return { hit: false, x: x, y: y };
+    }
+    return { hit: false, x: x, y: y };
+  }
+
+  var LOGIC = {
+    G: G, LX: LX, LY: LY,
+    LEVELS: LEVELS,
+    hitScore: hitScore,
+    simulateShot: simulateShot
+  };
+  if (typeof module !== 'undefined' && module.exports) { module.exports = LOGIC; }
+  if (typeof window !== 'undefined') { window.NM_PROJECTILE_LOGIC = LOGIC; }
+
+  // ───────────────────────────── 3D 게임 (브라우저 전용) ─────────────────────────────
   function init() {
+    if (typeof document === 'undefined') return;
     var host = document.getElementById('nm-flagship');
     if (!host) return;
     if (typeof THREE === 'undefined') { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">3D를 표시할 수 없는 환경입니다.</p>'; return; }
@@ -31,7 +63,6 @@
     var grid = new THREE.GridHelper(60, 30, 0x2f6b46, 0x225239); grid.position.y = 0.01; scene.add(grid);
 
     // 대포
-    var LX = -6, LY = 0.6;
     var base = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.8, 0.8, 16), new THREE.MeshLambertMaterial({ color: 0x334155 }));
     base.position.set(LX, 0.4, 0); scene.add(base);
     var barrel = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.28, 2.4, 14), new THREE.MeshLambertMaterial({ color: 0x64748b }));
@@ -51,8 +82,6 @@
     var preview = []; for (var i = 0; i < 26; i++) { var d = new THREE.Mesh(new THREE.SphereGeometry(0.07, 6, 6), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.6 })); d.visible = false; scene.add(d); preview.push(d); }
     var trail = [];
 
-    var G = 16; // 중력(scene units/s^2)
-    var levels = [{ x: 4, y: 1.6 }, { x: 6.5, y: 2.4 }, { x: 9, y: 1.2 }, { x: 7.5, y: 3.6 }];
     var lvl = 0, score = 0, shots = 0;
 
     // HUD
@@ -63,9 +92,9 @@
     tip.style.cssText = 'position:absolute;right:10px;bottom:10px;font:600 12px "Noto Sans KR",sans-serif;color:#e5e7eb;text-shadow:0 1px 3px rgba(0,0,0,.6);pointer-events:none;text-align:right';
     tip.textContent = '대포를 당겼다 놓아 표적을 맞히세요 · 45°에서 사거리 최대';
     host.appendChild(tip);
-    function setHud(extra) { hud.innerHTML = '🏆 ' + score + '점 · 단계 ' + (lvl + 1) + '/' + levels.length + ' · 발사 ' + shots + (extra ? '<br>' + extra : ''); }
+    function setHud(extra) { hud.innerHTML = '🏆 ' + score + '점 · 단계 ' + (lvl + 1) + '/' + LEVELS.length + ' · 발사 ' + shots + (extra ? '<br>' + extra : ''); }
 
-    function placeTarget() { var L = levels[lvl]; target.position.set(L.x, L.y, 0); pole.position.set(L.x, L.y / 2, 0); pole.scale.y = L.y / 1.6; }
+    function placeTarget() { var L = LEVELS[lvl]; target.position.set(L.x, L.y, 0); pole.position.set(L.x, L.y / 2, 0); pole.scale.y = L.y / 1.6; }
     placeTarget(); setHud();
 
     // 발사 물리 상태
@@ -111,11 +140,11 @@
     var parts = [];
 
     function hit() {
-      score += 100 + Math.max(0, 60 - shots * 5); beep(880, 0.1, 'sine'); setTimeout(function () { beep(1320, 0.14, 'sine'); }, 90);
+      score += hitScore(shots); beep(880, 0.1, 'sine'); setTimeout(function () { beep(1320, 0.14, 'sine'); }, 90);
       burst(target.position.clone(), 0xfde047);
       resetBall();
       lvl++;
-      if (lvl >= levels.length) { setHud('🎉 모든 표적 명중! 클리어'); chime(); flying = false; el.style.pointerEvents = 'none'; setTimeout(function () { el.style.pointerEvents = ''; lvl = 0; placeTarget(); setHud(); }, 2600); }
+      if (lvl >= LEVELS.length) { setHud('🎉 모든 표적 명중! 클리어'); chime(); flying = false; el.style.pointerEvents = 'none'; setTimeout(function () { el.style.pointerEvents = ''; lvl = 0; placeTarget(); setHud(); }, 2600); }
       else { placeTarget(); setHud('명중! 다음 표적'); }
     }
     function miss(p) { burst(p, 0x94a3b8); beep(150, 0.16, 'square'); resetBall(); setHud('빗나감 — 다시 조준'); }
@@ -142,5 +171,7 @@
     function beep(f, d, type) { if (muted) return; try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); var o = actx.createOscillator(), g = actx.createGain(); o.type = type || 'sine'; o.frequency.value = f; o.connect(g); g.connect(actx.destination); var t = actx.currentTime; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.12, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + d); o.start(t); o.stop(t + d + 0.02); } catch (e) {} }
     function chime() { [523, 659, 784, 1047].forEach(function (f, i) { setTimeout(function () { beep(f, 0.18, 'triangle'); }, i * 110); }); }
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  }
 })();

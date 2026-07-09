@@ -4,7 +4,47 @@
  * 컨테이너: <div id="nm-graph"></div>. THREE(r128) 필요. WebGL 실패 시 안내문(graceful).
  */
 (function () {
+  // ───────────────────────────── 순수 로직 (테스트 가능) ─────────────────────────────
+  // 레벨별 숨은 포물선(vertex form y=a(x−h)²+k)과 코인 x좌표. 코인을 모두 지나면 클리어.
+  var LEVELS = [
+    { a: 0.5, h: -1, k: 1, xs: [-4, 1, 3] },
+    { a: -0.6, h: 1, k: 6, xs: [-2, 1, 4] },
+    { a: 0.8, h: 2, k: 0.5, xs: [-1, 2, 4] }
+  ];
+
+  // 이차함수 y = a(x−h)² + k
+  function parabolaY(a, h, k, x) { return a * (x - h) * (x - h) + k; }
+
+  // 코인 (x,y)가 현재 곡선 위(허용오차 tol)에 있는가
+  function coinOnCurve(a, h, k, x, y, tol) { return Math.abs(parabolaY(a, h, k, x) - y) < tol; }
+
+  // 레벨의 숨은 포물선에서 코인 좌표를 샘플
+  function levelCoins(level) {
+    return level.xs.map(function (cx) { return { x: cx, y: parabolaY(level.a, level.h, level.k, cx) }; });
+  }
+
+  // 승리 판정: 모든 코인이 현재 곡선 위(허용오차 tol)에 있다
+  function allCoinsMatched(a, h, k, coins, tol) {
+    if (!coins || coins.length === 0) return false;
+    for (var i = 0; i < coins.length; i++) {
+      if (!coinOnCurve(a, h, k, coins[i].x, coins[i].y, tol)) return false;
+    }
+    return true;
+  }
+
+  var LOGIC = {
+    LEVELS: LEVELS,
+    parabolaY: parabolaY,
+    coinOnCurve: coinOnCurve,
+    levelCoins: levelCoins,
+    allCoinsMatched: allCoinsMatched
+  };
+  if (typeof module !== 'undefined' && module.exports) { module.exports = LOGIC; }
+  if (typeof window !== 'undefined') { window.NM_GRAPH_LOGIC = LOGIC; }
+
+  // ───────────────────────────── 3D 게임 (브라우저 전용) ─────────────────────────────
   function init() {
+    if (typeof document === 'undefined') return;
     var host = document.getElementById('nm-graph');
     if (!host) return;
     if (typeof THREE === 'undefined') { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">3D를 표시할 수 없는 환경입니다.</p>'; return; }
@@ -39,41 +79,32 @@
     var vtx = new THREE.Mesh(new THREE.SphereGeometry(0.32, 18, 18), new THREE.MeshStandardMaterial({ color: 0x2563eb, emissive: 0x10245e })); scene.add(vtx);
 
     var a = 0.5, h = 0, k = 1;
-    function f(x) { return a * (x - h) * (x - h) + k; }
     function redraw() {
-      var pts = []; for (var x = XMIN; x <= XMAX + 0.001; x += 0.15) { var y = f(x); if (y >= YMIN - 2 && y <= YMAX + 4) pts.push(new THREE.Vector3(x, y, 0)); }
+      var pts = []; for (var x = XMIN; x <= XMAX + 0.001; x += 0.15) { var y = parabolaY(a, h, k, x); if (y >= YMIN - 2 && y <= YMAX + 4) pts.push(new THREE.Vector3(x, y, 0)); }
       curve.geometry.dispose(); curve.geometry = new THREE.BufferGeometry().setFromPoints(pts);
       vtx.position.set(h, k, 0);
       checkCoins();
     }
 
     // 코인(레벨별 숨은 포물선에서 샘플)
-    var levels = [
-      { a: 0.5, h: -1, k: 1, xs: [-4, 1, 3] },
-      { a: -0.6, h: 1, k: 6, xs: [-2, 1, 4] },
-      { a: 0.8, h: 2, k: 0.5, xs: [-1, 2, 4] }
-    ];
     var lvl = 0, score = 0, coins = [];
     function buildCoins() {
       coins.forEach(function (c) { scene.remove(c.mesh); }); coins = [];
-      var L = levels[lvl];
-      L.xs.forEach(function (cx) {
-        var cy = L.a * (cx - L.h) * (cx - L.h) + L.k;
+      levelCoins(LEVELS[lvl]).forEach(function (pt) {
         var m = new THREE.Mesh(new THREE.TorusGeometry(0.34, 0.12, 10, 20), new THREE.MeshStandardMaterial({ color: 0xf59e0b, emissive: 0x5b3a00 }));
-        m.position.set(cx, cy, 0); scene.add(m); coins.push({ x: cx, y: cy, mesh: m, on: false });
+        m.position.set(pt.x, pt.y, 0); scene.add(m); coins.push({ x: pt.x, y: pt.y, mesh: m, on: false });
       });
     }
     function checkCoins() {
-      var all = coins.length > 0;
-      coins.forEach(function (c) { var on = Math.abs(f(c.x) - c.y) < 0.3; c.on = on; c.mesh.material.color.setHex(on ? 0x22c55e : 0xf59e0b); if (!on) all = false; });
+      coins.forEach(function (c) { var on = coinOnCurve(a, h, k, c.x, c.y, 0.3); c.on = on; c.mesh.material.color.setHex(on ? 0x22c55e : 0xf59e0b); });
       setHud();
-      if (all && !won) win();
+      if (allCoinsMatched(a, h, k, coins, 0.3) && !won) win();
     }
     var won = false;
     function win() {
       won = true; score += 100; coins.forEach(function (c) { burst(c.mesh.position, 0x22c55e); }); chime();
       lvl++;
-      if (lvl >= levels.length) { setHud('🎉 모든 단계 클리어! 총 ' + score + '점'); setTimeout(function () { lvl = 0; score = 0; reset(); }, 2800); }
+      if (lvl >= LEVELS.length) { setHud('🎉 모든 단계 클리어! 총 ' + score + '점'); setTimeout(function () { lvl = 0; score = 0; reset(); }, 2800); }
       else { setHud('정답! 다음 단계'); setTimeout(function () { reset(); }, 1400); }
     }
     function reset() { won = false; a = 0.5; h = 0; k = 1; aSlider.value = '0.5'; buildCoins(); redraw(); }
@@ -82,7 +113,7 @@
     var hud = document.createElement('div');
     hud.style.cssText = 'position:absolute;left:10px;top:10px;font:700 13px "Noto Sans KR",sans-serif;color:#1f2430;pointer-events:none;line-height:1.5';
     host.appendChild(hud);
-    function setHud(msg) { hud.innerHTML = 'y = ' + a.toFixed(2) + '(x − ' + h.toFixed(1) + ')² + ' + k.toFixed(1) + '<br>🏆 ' + score + '점 · 단계 ' + (lvl + 1) + '/' + levels.length + ' · 코인 ' + coins.filter(function (c) { return c.on; }).length + '/' + coins.length + (msg ? '<br><b>' + msg + '</b>' : ''); }
+    function setHud(msg) { hud.innerHTML = 'y = ' + a.toFixed(2) + '(x − ' + h.toFixed(1) + ')² + ' + k.toFixed(1) + '<br>🏆 ' + score + '점 · 단계 ' + (lvl + 1) + '/' + LEVELS.length + ' · 코인 ' + coins.filter(function (c) { return c.on; }).length + '/' + coins.length + (msg ? '<br><b>' + msg + '</b>' : ''); }
 
     var ctrl = document.createElement('div');
     ctrl.style.cssText = 'position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:4px;align-items:flex-end;font:600 12px "Noto Sans KR",sans-serif;color:#374151';
@@ -129,5 +160,7 @@
 
     reset();
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+  }
 })();
