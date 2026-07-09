@@ -17,6 +17,7 @@
     {"n": "뇌과학", "e": "Neuroscience", "d": "뉴런, 기억, 의식, 신경가소성, BCI", "u": "aboutNeuroscience/index.html", "c": "자연과학", "a": "#818cf8"},
     {"n": "수학", "e": "Mathematics", "d": "수와 집합부터 미분·적분까지 개념 3D 시각화", "u": "aboutMath/index.html", "c": "자연과학", "a": "#f43f5e"},
     {"n": "인공지능", "e": "Artificial Intelligence", "d": "역사~Transformer, LLM, 생성모델, 안전성", "u": "aboutAI/index.html", "c": "IT", "a": "#7b5cff"},
+    {"n": "하네스 엔지니어링", "e": "Agent Harness Engineering", "d": "루프·툴·컨텍스트·검증·오케스트레이션 + 실전 도구", "u": "aboutHarness/index.html", "c": "IT", "a": "#14b8a6"},
     {"n": "프론트엔드", "e": "Frontend Development", "d": "HTML~React, 빌드도구, 배포 인터랙티브", "u": "aboutFrontend/index.html", "c": "IT", "a": "#0ea5e9"},
     {"n": "백엔드", "e": "Backend Development", "d": "서버, API, 인증, 마이크로서비스, DevOps", "u": "aboutBackend/index.html", "c": "IT", "a": "#22c55e"},
     {"n": "데이터베이스", "e": "Database Systems", "d": "SQL, 정규화, NoSQL, 분산DB, 설계 패턴", "u": "aboutDatabase/index.html", "c": "IT", "a": "#0d6efd"},
