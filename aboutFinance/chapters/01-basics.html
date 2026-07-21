@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1. 재무관리란 무엇인가 — aboutFinance</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">💼 표지</a></li>
+<li><a href="01-basics.html">1. 재무관리란 무엇인가</a></li>
+<li><a href="02-time-value.html">2. 화폐의 시간가치</a></li>
+<li><a href="03-bonds-stocks.html">3. 채권과 주식 평가</a></li>
+<li><a href="04-risk-return.html">4. 위험과 수익률</a></li>
+<li><a href="05-capital-budgeting.html">5. 자본예산: 투자안 평가</a></li>
+<li><a href="06-capital-structure.html">6. 자본비용과 자본구조</a></li>
+<li><a href="07-dividend-policy.html">7. 배당정책</a></li>
+<li><a href="08-working-capital.html">8. 운전자본 관리</a></li>
+<li><a href="09-financial-analysis.html">9. 재무분석과 기업가치</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>재무관리</em>란 무엇인가</h1><p class="authors">Chapter 1 — What Is Financial Management</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 기업가치(코어)를 둘러싼 3대 의사결정</span>
+<h2>재무관리란 무엇인가</h2><p>재무관리(Financial Management)는 기업이 자금을 <strong>조달</strong>하고 <strong>운용</strong>하는 전 과정을 계획·집행·통제해 <strong>기업가치를 극대화</strong>하는 경영 활동입니다. 어떤 사업에 투자할지(투자 의사결정), 필요한 돈을 빚으로 구할지 주식으로 구할지(자본조달 의사결정), 번 돈을 주주에게 나눠줄지 다시 투자할지(배당 의사결정) — 이 세 가지가 재무관리의 뼈대입니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>회계가 돈의 흐름을 '기록'하는 일이라면, 재무관리는 돈의 흐름을 '<strong>설계</strong>'하는 일입니다. 기록은 과거를, 설계는 미래를 봅니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>재무관리는 <strong>회사의 돈을 똑똑하게 굴리는 기술</strong>이에요. 돈을 어디에 쓸지, 어디서 구할지, 남으면 어떻게 나눌지를 정해요.</p>
+  <h3>😮 왜 재밌을까?</h3><p>여러분이 용돈 1만 원을 받았다고 합시다. 떡볶이를 사 먹을까(쓰기)? 저금할까(모으기)? 친구에게 빌려주고 이자를 받을까(불리기)? 🤔 이 고민을 '회사'가 하는 게 재무관리예요. 다만 단위가 억 원, 조 원이라는 것만 달라요!</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>재무관리</strong>: 회사의 돈을 계획하고 굴리는 일</li><li><strong>기업가치</strong>: 회사 전체의 값어치 — 재무관리의 최종 목표</li><li><strong>투자 의사결정</strong>: 돈을 어디에 쓸지 정하기(공장, 신제품)</li><li><strong>자본조달 의사결정</strong>: 돈을 어디서 구할지 정하기(빚 vs 주식)</li><li><strong>배당 의사결정</strong>: 번 돈을 나눠줄지, 다시 투자할지 정하기</li></ul></div>
+  <h3>🍞 쉽게 풀어보기</h3><p>빵집 사장님이 되었다고 상상해 봐요. 🥐 새 오븐을 사서 빵을 더 구울까요? — 이게 <strong>투자</strong> 고민이에요. 오븐 값 3천만 원이 없다면? 은행에서 빌릴까요, 아니면 친구에게 주식을 팔아 함께 주인이 될까요? — 이게 <strong>자본조달</strong> 고민이에요. 연말에 돈이 남았어요. 나눠 가질까요, 가게를 한 칸 더 넓힐까요? — 이게 <strong>배당</strong> 고민이에요.</p><p>이 세 가지를 잘 정하면 빵집의 값어치(기업가치)가 쑥쑥 올라가고, 잘못 정하면 망해요. 그래서 큰 회사에는 이것만 전문으로 하는 <strong>CFO(최고재무책임자)</strong>가 있어요. 💼</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 뉴스에서 "○○사 3조 투자 결정", "△△사 배당 확대" 같은 기사를 찾아보세요. 전부 재무관리 3대 의사결정 이야기예요!</div>
+  <h3>📌 요약</h3><ul><li>재무관리 = 회사의 돈을 굴리는 기술이에요.</li><li>3대 고민: 어디에 쓸까(투자), 어디서 구할까(자본조달), 나눌까 말까(배당).</li><li>목표는 딱 하나, <strong>기업가치 키우기</strong>!</li><li>회계는 기록, 재무관리는 설계예요.</li><li>CFO가 이 일을 책임져요.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>재무관리의 3대 의사결정</h3><p><strong>① 투자 의사결정(자본예산, Capital Budgeting)</strong>: 한정된 자금을 어떤 자산·사업에 배분할지 결정합니다. 신규 설비, 신제품 개발, 인수합병처럼 큰돈이 오래 무이는 선택이라 신중한 평가(NPV·IRR)가 필요합니다. <strong>② 자본조달 의사결정(Capital Structure)</strong>: 필요한 자금을 부채(차입·사채)와 자기자본(주식) 중 어떤 비율로 조달할지 결정합니다. 부채는 이자비용과 상환의무가, 자기자본은 지분 희석이 따릅니다. <strong>③ 배당 의사결정(Dividend Policy)</strong>: 순이익을 주주에게 환원할지, 사내에 유보해 재투자할지를 결정합니다.</p>
+  <h3>기업의 목표: 왜 '이윤 극대화'가 아니라 '가치 극대화'인가</h3>
+  <div class="info-card"><h4>💰 이윤 vs 가치</h4><p>이윤 극대화는 세 가지를 놓칩니다. 첫째, <strong>시간</strong> — 올해 10억과 10년 뒤 10억은 가치가 다릅니다. 둘째, <strong>위험</strong> — 도박성 사업도 기대 이윤은 클 수 있습니다. 셋째, <strong>회계 조작 가능성</strong> — 이윤은 회계 처리에 따라 바뀝니다. 기업가치는 '미래 현금흐름을 위험으로 할인한 값'이라 이 셋을 모두 담습니다.</p></div>
+  <h3>대리인 문제(Agency Problem)</h3><p>주식회사는 주인(주주)과 경영자가 분리되어 있습니다. 경영자가 주주의 부 극대화가 아니라 자기 몸집 불리기(제국 건설, 과다한 접대비)에 나설 수 있는데, 이를 대리인 문제라 합니다. 주주들은 감시·감사 비용을 들이고, 스톡옵션 같은 성과 보상으로 경영자의 이해관계를 주주와 맞추려 합니다. 채권자와 주주 사이에도 갈등이 있습니다 — 주주는 위험한 투자를 좋아하고(오륨면 내가 먹고, 내리면 빚쟁이 손해), 채권자는 안정을 원합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "돈 많이 버는 회사 = 좋은 재무관리"가 아닙니다. 수익성은 좋은데 자금줄이 막혀 망하는 '흑자도산'이 있듯, 재무관리는 수익성·안정성·성장성의 균형입니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>기업가치의 이론적 토대</h3><p>현대 재무관리에서 기업(자산)의 가치는 <strong>미래 자유현금흐름(FCF)의 현재가치 합</strong>으로 정의됩니다. 할인율에는 해당 현금흐름의 위험이 반영되므로, 가치 극대화는 '위험을 감안한 수익의 극대화'를 뜻합니다. 이 프레임 위에 Modigliani–Miller(자본구조 무관련성), CAPM(자본비용), 효율적 시장가설(가격의 정보 반영)이 재무관리의 이론 축을 이룹니다.</p>
+  <div class="formula">기업가치 V = Σₜ FCFₜ / (1 + WACC)ᵗ</div>
+  <h3>대리인 비용과 지배구조</h3><p>Jensen &amp; Meckling(1976)은 대리인 관계를 '위탁자가 대리인에게 의사결정 권한을 부여하는 계약'으로 정의하고, 감시비용(monitoring)·본딩비용(bonding)·잔여손실(residual loss)의 합을 대리인 비용으로 제시했습니다. 자기자본의 대리인 비용(경영자의 과잉유인)과 부채의 대리인 비용(자산 대체, 투자 부족) 사이의 균형이 최적 자본구조 논의로 이어집니다. 이사회 감시, 외부감사, 스톡옵션, 채권 계약(covenant)이 대표적인 완화 장치입니다.</p>
+  <h3>효율적 시장가설(EMH)과의 관계</h3><p>시장이 효율적이라면(가격이 이용 가능한 정보를 반영한다면) 주가는 기업가치의 신뢰할 만한 척도가 되고, '주가 극대화'라는 목표가 성립합니다. 약형(과거 가격)·준강형(공개정보)·강형(비공개정보 포함) 세 단계로 나뉘며, 실무에서는 준강형 수준의 효율성이 논의됩니다. 반대로 행동재무학은 투자자의 비합리성이 가격 괴리를 만든다고 지적합니다.</p>
+  <h3>관련 분야</h3><ul><li>투자론(증권 평가·포트폴리오 이론)</li><li>금융시장론(자본시장·금융중개기관)</li><li>회계학(재무제표 분석은 재무판단의 입력값)</li></ul>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 두 회사의 올해 이익이 똑같이 100억 원입니다. A는 매년 안정적으로 벌고, B는 환율에 따라 들쭉날쭉합니다. 이익이 같은데 왜 시장은 A에 더 높은 가치를 줄까요? (힌트: 할인율에 반영되는 것은?)</div>
+</div>
+<h2>🕹️ 직접 해보기 — 재무관리 3대 의사결정 짝맞추기</h2>
+<p>재무관리의 핵심 개념과 설명을 짝지어 복습해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0f766e","prompt":"재무관리 핵심 개념과 설명을 짝지으세요","pairs":[{"term":"투자 의사결정","def":"어떤 사업·설비에 돈을 쓸지 선택"},{"term":"자본조달 의사결정","def":"부채와 자기자본의 비율 결정"},{"term":"배당 의사결정","def":"이익을 나눠줄지 재투자할지 결정"},{"term":"기업가치 극대화","def":"재무관리의 최종 목표"},{"term":"대리인 문제","def":"주주와 경영자의 이해관계 충돌"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0f766e","questions":[{"q":"재무관리의 최종 목표는 무엇인가?","choices":["이익 극대화","기업가치 극대화","매출액 극대화","시장점유율 극대화"],"answer":1},{"q":"다음 중 재무관리 3대 의사결정이 아닌 것은?","choices":["투자 의사결정","자본조달 의사결정","배당 의사결정","인사 의사결정"],"answer":3},{"q":"새 공장 건설 여부를 평가하는 의사결정은?","choices":["자본조달 의사결정","배당 의사결정","투자 의사결정","회계 의사결정"],"answer":2},{"q":"대리인 문제(agency problem)란?","choices":["주주와 경영자의 이해관계 충돌","은행과 기업의 분쟁","노동자와 사용자의 임금 협상","정부와 기업의 규제 갈등"],"answer":0},{"q":"부채와 자기자본의 비율을 정하는 것은?","choices":["투자 의사결정","자본조달 의사결정","배당 의사결정","예산 의사결정"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,10);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 기업가치 코어
+  const core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.1,1),new THREE.MeshBasicMaterial({color:0x0f766e,wireframe:true}));s.add(core);
+  const coreLbl=lbl('기업가치','#0f766e');coreLbl.position.set(0,1.7,0);s.add(coreLbl);
+  // 3대 의사결정 위성
+  const comps=[['투자','#14b8a6'],['자본조달','#f59e0b'],['배당','#22c55e']];
+  const sats=[];
+  for(let i=0;i<comps.length;i++){const ang=(i/comps.length)*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.45,16,16),new THREE.MeshBasicMaterial({color:parseInt(comps[i][1].slice(1),16)}));m.position.set(Math.cos(ang)*4,Math.sin(ang)*2.4,0);s.add(m);sats.push({m,ang});const t=lbl(comps[i][0],comps[i][1]);t.position.set(Math.cos(ang)*4,Math.sin(ang)*2.4+0.7,0);s.add(t);s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),m.position.clone()]),new THREE.LineBasicMaterial({color:parseInt(comps[i][1].slice(1),16),transparent:true,opacity:0.3})));}
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 가운데 기업가치를 3대 의사결이 둘러쌉니다.','투자: 어떤 사업·설비에 돈을 쓸지 정합니다.','자본조달: 빚과 주식의 비율을 정합니다.','배당: 이익을 나눌지, 다시 투자할지 정합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}core.rotation.x+=0.004;core.rotation.y+=0.006;s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

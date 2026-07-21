@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5. 추리논증: 명제와 논리 기초 — aboutLEET</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">⚖️ 표지</a></li>
+<li><a href="01-about.html">1. LEET이란 무엇인가</a></li>
+<li><a href="02-verbal-basics.html">2. 언어이해: 지문 읽기의 기초</a></li>
+<li><a href="03-verbal-advanced.html">3. 언어이해: 문제 유형 공략</a></li>
+<li><a href="04-legal-texts.html">4. 법률 지문 읽기</a></li>
+<li><a href="05-logic-basics.html">5. 추리논증: 명제와 논리 기초</a></li>
+<li><a href="06-deduction.html">6. 연역논증</a></li>
+<li><a href="07-induction.html">7. 귀납·인과 논증</a></li>
+<li><a href="08-argument.html">8. 논증분석과 평가</a></li>
+<li><a href="09-strategy.html">9. 실전 전략과 학습 계획</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1>추리논증: <em>명제</em>와 논리 기초</h1><p class="authors">Chapter 5 — Propositions and Logical Foundations</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ P→Q 화살표와 대우(¬Q→¬P) 다이어그램</span>
+<h2>명제와 논리 기초</h2><p>추리논증의 출발점은 <strong>명제</strong>입니다 — 참인지 거짓인지를 판별할 수 있는 문장이죠. 그리고 명제를 잇는 가장 중요한 뼈대가 조걸문 <strong>'P이면 Q이다'(P→Q)</strong>입니다. 여기서 P는 Q의 <strong>충분조건</strong>, Q는 P의 <strong>필요조건</strong>이 됩니다. 원명제와 항상 참·거짓이 같은 <strong>대우(¬Q→¬P)</strong>와 달리, <strong>역(Q→P)</strong>과 <strong>이(¬P→¬Q)</strong>는 동치가 아니므로 섣불리 끌어오면 안 됩니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>조걸문 P→Q가 참일 때 보장되는 것은 딱 하나, <strong>대우 ¬Q→¬P</strong>뿐입니다. "땅이 젖었다"고 해서 "비가 온 것"이라고 단정하는 식의 <strong>역의 오류</strong>는 추리논증이 가장 좋아하는 함정입니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>"~이면 ~이다"라는 약속에서 <strong>방향을 거꾸로 읽으면 안 돼요</strong>. 앞은 뒤를 보장하지만, 뒤가 앞을 보장하지는 않아요!</p>
+  <h3>🌧️ 비와 땅 이야기</h3><p>"<strong>비가 오면 땅이 젖는다</strong>"는 약속이 있어요. 🌧️ 비가 오면(P) → 땅이 젖는다(Q). 이 약속이 참이라고 해 봐요. 그런데 밖에 나가 보니 <strong>땅이 젖어 있어요</strong>. 그럼 비가 온 걸까요? 꼭 그렇진 않아요 — 누가 <strong>분무기로 물을 뿌렸을 수도</strong> 있고, 눈이 녹았을 수도 있으니까요! 💦</p><p>반대로 "<strong>땅이 안 젖었다</strong>"면 어떨까요? 그러면 비는 확실히 안 온 거예요. 비가 왔다면 땅이 젖었어야 하는데 안 젖었으니까요. 이게 바로 <strong>대우</strong>예요 — "Q가 아니면 P가 아니다"는 원래 약속과 항상 같이 참이에요. ✨</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>명제</strong>: 참·거짓을 판별할 수 있는 문장 ("오늘은 화요일이다" ⭕ / "문 닫아!" ❌)</li><li><strong>충분조건</strong>: "P이면 Q"에서 P — 이것만 있으면 결론이 보장돼요</li><li><strong>필요조건</strong>: "P이면 Q"에서 Q — 결론이 되려면 꼭 필요해요</li><li><strong>대우</strong>: "Q가 아니면 P가 아니다" — 원래 약속과 항상 참·거짓이 같아요</li><li><strong>역</strong>: "Q이면 P이다" — 원래 약속과 다를 수 있어요 (분무기!)</li></ul></div>
+  <h3>😮 왜 헷갈릴까?</h3><p>우리는 일상에서 "약속하면 만난다"를 들으면 "만났으니 약속했겠네"라고 슬쩍 생각하곤 해요. 🤔 하지만 논리 시험에서는 그게 딱 틀린 선택지예요! 방향을 뒤집는 <strong>역</strong>은 원래 약속과 같은 값어치가 아니에요. "P이면 Q"가 말해 주는 건 "Q가 아니면 P가 아니다"(대우)뿐이에요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 조걸문을 만나면 손가락으로 화살표(P→Q)를 그어 보세요. 그리고 자문해 보세요. "지금 문제가 쓴 건 화살표 방향 그대로? 거꾸로(역)? 아니면 뒤집고 뒤집은 대우?" 대우만 믿으세요. ☝️</div>
+  <h3>📌 요약</h3><ul><li>명제 = 참·거짓을 가릴 수 있는 문장이에요.</li><li>P→Q에서 P는 충분조건, Q는 필요조건이에요. ☔</li><li>땅이 젖었다고 비는 아니에요 — 역(Q→P)은 함정!</li><li>대우(¬Q→¬P)만 원명제와 항상 똑같아요.</li><li>"모든"의 부정은 "하나도 ~아니다"가 아니라 "어떤 것은 ~아니다"예요.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>명제란 무엇인가</h3><p>명제(proposition)는 <strong>참·거짓을 판별할 수 있는 문장</strong>입니다. "서울은 대한민국의 수도이다"(참), "2는 홀수이다"(거짓)는 명제이지만, 명령문("문을 닫아라"), 의문문("몇 시입니까"), 감탄문은 참·거짓을 가릴 수 없으므로 명제가 아닙니다. LEET 추리논증의 지문과 선택지는 결국 이 명제들의 참·거짓 관계를 다루는 문제로 환원됩니다.</p>
+  <h3>조걸문: 충분조건과 필요조건</h3><p>조걸문 <strong>'P이면 Q이다'(P→Q)</strong>가 참이라는 것은 "P가 성립하는 모든 경우에 Q도 성립한다"는 뜻입니다. 이때 <strong>P는 Q의 충분조건</strong> — P이면 그것으로 Q가 보장되기에 '충분'합니다. <strong>Q는 P의 필요조건</strong> — P가 성립하려면 Q가 반드시 성립해야 하기에 '필요'합니다. 헷갈릴 때는 화살표 방향으로 기억하세요. 앞(전건)이 충분조건, 뒤(후건)가 필요조건입니다. 예: "정사각형이면 직사각형이다"가 참일 때, 정사각형인 것은 직사각형이기에 충분하고, 직사각형인 것은 정사각형이기 위한 필요조건입니다(직사각형이 아니면 정사각형일 수 없으므로).</p>
+  <div class="info-card"><h4>📐 조걸문의 네 형태</h4><ul><li><strong>원명제</strong>: P → Q ("비가 오면 땅이 젖는다")</li><li><strong>역</strong>: Q → P ("땅이 젖으면 비가 온다") — 원명제와 동치 <u>아님</u></li><li><strong>이</strong>: ¬P → ¬Q ("비가 안 오면 땅이 안 젖는다") — 원명제와 동치 <u>아님</u></li><li><strong>대우</strong>: ¬Q → ¬P ("땅이 안 젖으면 비가 안 온다") — 원명제와 <strong>항상 동치</strong></li></ul><p>참고로 역과 이는 서로 대우 관계라 둘끼리는 동치입니다.</p></div>
+  <h3>한정사와 부정 명제</h3><p>"<strong>모든</strong> A는 B이다"와 "<strong>어떤</strong>(일부) A는 B이다"의 구분도 필수입니다. '모든 A는 B이다'의 부정은 '모든 A는 B가 아니다'가 아니라 '<strong>어떤 A는 B가 아니다</strong>'입니다 — 반례가 하나라도 있으면 전칭 명제는 성립하지 않으니까요. 마찬가지로 '어떤 A는 B이다'의 부정은 '모든 A는 B가 아니다'입니다. 조걸문 P→Q의 부정은 '¬P→¬Q'가 아니라 '<strong>P이면서 Q가 아닌 경우가 존재한다</strong>(P ∧ ¬Q)'임에 주의하세요.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> ① P→Q에서 Q가 참이라고 P가 참이라 단정하는 '역의 오류', ② P가 거짓이라고 Q가 거짓이라 단정하는 '이의 오류'는 둘 다 근거 없는 전이입니다. ③ 필요조건과 충분조건을 뒤바꾸는 것도 최다 빈출 함정입니다 — "필요조건이면 충분조건"은 절대 성립하지 않습니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>필요조건·충분조건의 혼동 사례</h3><p>수험 현장에서 가장 많이 미끄러지는 지점은 '필요'와 '충분'의 방향입니다. "P는 Q의 필요조건이다"는 Q→P와 같고, "P는 Q의 충분조건이다"는 P→Q와 같습니다. 문장에 등장하는 순서와 화살표 방향이 어긋나는 것이 함정의 핵심이죠. 예컨대 "합격하려면 서류 전형을 통과해야 한다"에서 서류 통과는 합격의 <strong>필요조건</strong>(합격→서류 통과)이지 충분조건이 아닙니다 — 서류를 통과할지라도 합격은 보장되지 않으니까요. 반대로 "합격하면 서류는 통과한 것이다"에서 합격은 서류 통과의 <strong>충분조건</strong>입니다.</p>
+  <h3>함정 표현과 기호화</h3><p>"<strong>오직 P일 때만 Q이다</strong>", "P일 때에만 Q이다"는 Q→P를 뜻합니다 — P가 Q의 필요조건이라는 말이지, P→Q(충분조건)가 아닙니다. 일상어의 어감과 반대라 최다 오답 포인트입니다. 기호로 정리하면: 연언(그리고)은 <strong>∧</strong>, 선언(또는)은 <strong>∨</strong>, 부정은 <strong>¬</strong>, 조걸문은 <strong>→</strong>. "P이거나 Q이다"의 부정은 ¬P ∧ ¬Q(드모르간), "P이고 Q이다"의 부정은 ¬P ∨ ¬Q입니다. 복잡한 지문은 기호화해서 형태만으로 판단하는 습관이 실수를 줄입니다.</p>
+  <div class="formula">대우의 동치성: (P → Q) ↔ (¬Q → ¬P)  ·  조걸문의 부정: ¬(P → Q) ↔ (P ∧ ¬Q)</div>
+  <h3>동치와 근거 없는 전이</h3><p>논증 문제에서 "전제로부터 <strong>필연적으로</strong> 따라오는가"와 "그럴듯해 보이는가"를 구분해야 합니다. 동치 변형(대우, 드모르간, 이중부정)은 항상 허용되지만, 전이(transitivity)는 형태가 갖춰질 때만 유효합니다. P→Q와 Q→R이 있으면 P→R을 얻지만, P→Q와 R→Q로는 P와 R의 관계를 아무것도 얻을 수 없습니다(둘 다 Q의 충분조건일 뿐). "A이면 B, C이면 B, 따라서 A이면 C"는 전형적인 근거 없는 전이이자 역의 오류의 연쇄입니다.</p>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> "시험에 합격하면 공부를 한 것이다"가 참이라고 가정해 봅시다. 이로부터 (a) 공부했으니 합격할 것이다, (b) 공부를 안 했으니 불합격이다, (c) 불합격했으니 공부를 안 한 것이다 — 셋 중 논리적으로 보장되는 것은 무엇일까요? 각각 역·이·대우 중 어느 형태인지 대조해 보세요. (힌트: 보장되는 것은 (c)뿐입니다.)</div>
+</div>
+<h2>🕹️ 직접 해보기 — 논리 기초 용어 짝맞추기</h2><p>명제와 조걸문의 핵심 용어를 설명과 짝지어 복습해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#b91c1c","prompt":"논리 기초 용어와 올바른 설명을 짝지으세요","pairs":[{"term":"명제","def":"참·거짓을 판별할 수 있는 문장"},{"term":"충분조건","def":"P이면 Q에서 P — 성립하면 결론이 보장되는 조건"},{"term":"필요조건","def":"P이면 Q에서 Q — 결론이 성립하려면 반드시 필요한 조건"},{"term":"대우","def":"¬Q→¬P — 원명제와 항상 참·거짓이 같은 명제"},{"term":"역","def":"Q→P — 원명제와 동치가 아닌, 방향을 뒤집은 명제"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b91c1c","questions":[{"q":"'P이면 Q이다'의 대우는?","choices":["Q이면 P이다","P가 아니면 Q가 아니다","Q가 아니면 P가 아니다","P이지만 Q가 아니다"],"answer":2},{"q":"'P이면 Q이다'가 참일 때, P는 Q의 어떤 조건인가?","choices":["충분조건","필요조건","필요충분조건","아무 조건도 아니다"],"answer":0},{"q":"원명제와 항상 동치(참·거짓이 같은) 관계인 것은?","choices":["역","이","부정","대우"],"answer":3},{"q":"다음 중 명제인 것은?","choices":["문을 닫아라.","서울은 대한민국의 수도이다.","지금 몇 시입니까?","아, 정말 아쉽다!"],"answer":1},{"q":"'모든 A는 B이다'의 부정은?","choices":["모든 A는 B가 아니다","어떤 B는 A가 아니다","어떤 A는 B가 아니다","모든 B는 A이다"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,10);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  const titleLbl=lbl('명제: P이면 Q이다','#b91c1c');titleLbl.position.set(0,2.8,0);s.add(titleLbl);
+  // 윗줄: 원명제 P → Q
+  const pBox=new THREE.Mesh(new THREE.BoxGeometry(1.1,1.1,1.1),new THREE.MeshBasicMaterial({color:0xf59e0b}));pBox.position.set(-3.2,1.1,0);s.add(pBox);
+  const qBox=new THREE.Mesh(new THREE.BoxGeometry(1.1,1.1,1.1),new THREE.MeshBasicMaterial({color:0x0ea5e9}));qBox.position.set(3.2,1.1,0);s.add(qBox);
+  const pLbl=lbl('P','#d97706');pLbl.position.set(-3.2,2.0,0);s.add(pLbl);
+  const qLbl=lbl('Q','#0284c7');qLbl.position.set(3.2,2.0,0);s.add(qLbl);
+  const sufLbl=lbl('충분조건','#d97706');sufLbl.position.set(-3.2,0.25,0);s.add(sufLbl);
+  const necLbl=lbl('필요조건','#0284c7');necLbl.position.set(3.2,0.25,0);s.add(necLbl);
+  const arr1=new THREE.ArrowHelper(new THREE.Vector3(1,0,0),new THREE.Vector3(-2.4,1.1,0),4.8,0x64748b,0.5,0.3);s.add(arr1);
+  // 역: Q → P (얇은 점선 느낌, 회색)
+  const revLine=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(2.4,0.72,0),new THREE.Vector3(-2.4,0.72,0)]),new THREE.LineDashedMaterial({color:0x94a3b8,dashSize:0.3,gapSize:0.2}));revLine.computeLineDistances();s.add(revLine);
+  const revLbl=lbl('역: Q→P (동치 아님)','#64748b');revLbl.position.set(0,0.35,0);s.add(revLbl);
+  // 아랫줄: 대우 ¬Q → ¬P (강조, 빨강)
+  const nqBox=new THREE.Mesh(new THREE.BoxGeometry(1.1,1.1,1.1),new THREE.MeshBasicMaterial({color:0x0ea5e9,wireframe:true}));nqBox.position.set(-3.2,-1.7,0);s.add(nqBox);
+  const npBox=new THREE.Mesh(new THREE.BoxGeometry(1.1,1.1,1.1),new THREE.MeshBasicMaterial({color:0xf59e0b,wireframe:true}));npBox.position.set(3.2,-1.7,0);s.add(npBox);
+  const nqLbl=lbl('¬Q','#0284c7');nqLbl.position.set(-3.2,-0.8,0);s.add(nqLbl);
+  const npLbl=lbl('¬P','#d97706');npLbl.position.set(3.2,-0.8,0);s.add(npLbl);
+  const arr2=new THREE.ArrowHelper(new THREE.Vector3(1,0,0),new THREE.Vector3(-2.4,-1.7,0),4.8,0xb91c1c,0.55,0.34);s.add(arr2);
+  const contraLbl=lbl('대우: ¬Q→¬P (동치)','#b91c1c');contraLbl.position.set(0,-2.7,0);s.add(contraLbl);
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(0.95,0.05,10,40),new THREE.MeshBasicMaterial({color:0xb91c1c}));ring.position.set(0,-1.7,0);s.add(ring);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 원명제 P→Q: P는 충분조건, Q는 필요조건입니다.','대우 ¬Q→¬P는 원명제와 항상 동치(참·거짓 동일)입니다.','역(Q→P)·이(¬P→¬Q)는 원명제와 동치가 아닙니다.','땅이 젖었다고 비가 온 것은 아닙니다 — 역의 오류!'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}ring.rotation.z+=0.01;ring.scale.setScalar(1+Math.sin(T*2)*0.06);pBox.rotation.y+=0.008;qBox.rotation.y-=0.008;nqBox.rotation.y+=0.008;npBox.rotation.y-=0.008;s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

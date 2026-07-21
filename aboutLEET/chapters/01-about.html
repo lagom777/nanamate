@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1. LEET이란 무엇인가 — aboutLEET</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">⚖️ 표지</a></li>
+<li><a href="01-about.html">1. LEET이란 무엇인가</a></li>
+<li><a href="02-verbal-basics.html">2. 언어이해: 지문 읽기의 기초</a></li>
+<li><a href="03-verbal-advanced.html">3. 언어이해: 문제 유형 공략</a></li>
+<li><a href="04-legal-texts.html">4. 법률 지문 읽기</a></li>
+<li><a href="05-logic-basics.html">5. 추리논증: 명제와 논리 기초</a></li>
+<li><a href="06-deduction.html">6. 연역논증</a></li>
+<li><a href="07-induction.html">7. 귀납·인과 논증</a></li>
+<li><a href="08-argument.html">8. 논증분석과 평가</a></li>
+<li><a href="09-strategy.html">9. 실전 전략과 학습 계획</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>LEET</em>이란 무엇인가</h1><p class="authors">Chapter 1 — What Is the LEET</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 로스쿨(기둥)을 받치는 두 축: 언어이해 · 추리논증</span>
+<h2>LEET이란 무엇인가</h2><p>LEET(법학적성시험, Legal Education Eligibility Test)은 <strong>로스쿨(법학전문대학원) 입학 전형</strong>의 핵심 요소로, 법학 교육을 성공적으로 수행할 수 있는지를 재는 적성검사입니다. 법학 <strong>지식</strong>이 아니라 두 가지 <strong>능력</strong>을 평가합니다 — 학술·법률 텍스트를 정확히 읽고 이해하는 <strong>언어이해</strong>, 명제와 논증을 논리적으로 다루는 <strong>추리논증</strong>입니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>LEET은 "법을 아는가"가 아니라 "<strong>법을 배울 준비가 되었는가</strong>"를 묻는 시험입니다. 그래서 법학 전공자가 아니어도, 독해와 논리 훈련으로 도전할 수 있습니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>LEET은 <strong>로스쿨에 가려고 치는 시험</strong>이에요. 법을 외웠는지 보는 게 아니라, 글을 잘 읽고 논리적으로 생각하는 힘을 봐요.</p>
+  <h3>😮 왜 재밌을까?</h3><p>요리사를 뽑는데 요리 지식 대신 <strong>칼질 테스트</strong>를 본다고 상상해 봐요. 🔪 "재료를 다룰 기본기가 있나?"를 보는 거죠. LEET도 그래요. 법 조문을 외웠는지가 아니라, "어려운 글을 읽고 핵심을 찾을 수 있나?", "논리의 빈틈을 찾을 수 있나?"를 봐요. 그래서 법을 안 배운 사람도 도전할 수 있어요!</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>LEET(리트)</strong>: 법학적성시험 — 로스쿨 입학 적성검사</li><li><strong>로스쿨</strong>: 법학전문대학원 — 변호사가 되는 3년 과정</li><li><strong>언어이해</strong>: 어려운 글을 읽고 이해·추론하는 능력</li><li><strong>추리논증</strong>: 명제와 논증을 논리로 다루는 능력</li><li><strong>소양 평가</strong>: 지식이 아니라 능력을 재는 시험 방식</li></ul></div>
+  <h3>⚖️ 쉽게 풀어보기</h3><p>시험은 두 과목이에요. 첫째, <strong>언어이해</strong> — 법률·학술 글을 읽고 "글쓴이의 주장은?", "밑줄 친 말의 뜻은?" 같은 문제를 풀어요. 국어 독해의 아주 어려운 버전이라고 생각하면 돼요. 둘째, <strong>추리논증</strong> — "모든 변호사는 법을 공부했다. 철수는 변호사다. 그러므로?" 같은 논리 퍼즐을 풀어요. 🧩</p><p>두 과목 모두 답이 지문과 논리 안에 있어요. 미리 공부한 지식이 아니라, <strong>주어진 것을 읽고 생각하는 힘</strong>이 답을 찾아 줘요. 그래서 준비 방법도 암기가 아니라 '읽기·논리 훈련'이에요. 💪</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> LEET과 비슷한 시험이 두 개 더 있어요. 미국 로스쿨의 <strong>LSAT</strong>, 우리나라 공무원 시험의 <strong>PSAT</strong>! 셋 다 지식이 아니라 '생각하는 힘'을 재는 시험이랍니다.</div>
+  <h3>📌 요약</h3><ul><li>LEET = 로스쿨 가는 길의 적성 시험이에요.</li><li>두 과목: 언어이해(독해) + 추리논증(논리). ⚖️</li><li>법 지식 시험이 아니에요 — 소양(능력) 시험이에요.</li><li>법률 지문이 나와도 묻는 건 독해·논리예요.</li><li>암기보다 훈련이 중요한 시험이에요.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>시험 구조</h3><p>LEET은 하루에 두 교시로 치러집니다. <strong>1교시 언어이해</strong>: 30문항, 70분. 법률·인문·사회·과학 소재의 긴 지문을 읽고 이해·적용·추론하는 문제입니다. <strong>2교시 추리논증</strong>: 40문항, 125분. 명제의 참·거짓 분석, 논증의 구조 파악, 강화·약화, 상황 추론 문제로 이뤄집니다. 성적은 원점수가 아니라 <strong>표준점수와 백분위</strong>로 보고되며, 로스쿨은 이를 학부 성적·자기소개서·면접 등과 함께 전형에 활용합니다.</p>
+  <div class="info-card"><h4>⚖️ LEET 한눈에 보기</h4><ul><li><strong>목적</strong>: 로스쿨(법학전문대학원) 입학 전형</li><li><strong>주관</strong>: 법학전문대학원협의회</li><li><strong>구성</strong>: 1교시 언어이해(30문항·70분) / 2교시 추리논증(40문항·125분)</li><li><strong>성격</strong>: 법학 지식이 아닌 소양(독해·논리) 평가</li><li><strong>성적</strong>: 표준점수·백분위 보고</li></ul></div>
+  <h3>왜 '지식 시험'이 아닌가</h3><p>로스쿨 제도는 다양한 학부 전공자를 뽑는 것을 목표로 합니다. 법학 지식을 묻는 시험이라면 법학 전공자에게만 유리해져 제도 취지가 물 건너가고, 사교육으로 지식 선행학습을 부추기게 됩니다. 그래서 LEET은 평가 대상을 <strong>소양</strong>으로 설계했습니다 — 법률 지문이 등장할지라도, 답의 근거는 지문 안에 있고 필요한 것은 독해·논리 능력뿐입니다. 미국 로스쿨의 LSAT, 한국 국가고시의 PSAT과 같은 계열의 적성검사입니다.</p>
+  <h3>두 영역이 재는 것</h3><p><strong>언어이해</strong>는 긴 텍스트의 구조(주제·논지·근거·전개 방식)를 파악하고, 세부 정보의 일치 여부, 지문에 근거한 추론, 문장 삽입·어휘의 문맥적 의미를 묻습니다. <strong>추리논증</strong>은 명제의 논리 구조(조건·필요충분조건), 연역 추론의 타당성, 귀납·인과 논증의 강도, 논증의 가정과 오류를 묻습니다. 4장~8장에서 각각을 자세히 다룹니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "법학을 미리 공부해 가야 LEET에 유리하다"는 틀렸습니다. 법률 용어에 익숙하면 지문 읽기가 조금 편할 뿐, 법 지식으로 푸는 문제는 없습니다. 독해·논리 훈련이 본질입니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>소양 평가의 설계 논리</h3><p>LEET의 출제 원칙은 '법학 교육 수행에 필요한 능력'의 측정입니다. 언어이해는 법학 학습의 기초 기술인 <strong>분석적 독해</strong> — 조문·판결문·학술 논문처럼 밀도 높은 텍스트에서 논지와 논리 구조를 재구성하는 능력을 겨냥합니다. 추리논증은 법적 사고의 골격인 <strong>규범 적용 능력</strong>(요건—효과 구조의 파악과 사실에의 적용)과 <strong>논증 평가 능력</strong>(전제의 참·타당성 검토)을 겨냥합니다. 즉 영역 이름은 국어·논리지만, 평가 목표는 법학 방법론의 전단계입니다.</p>
+  <div class="formula">문항당 평균 시간: 언어이해 70분/30문 ≈ 2분 20초 · 추리논증 125분/40문 ≈ 3분 8초</div>
+  <h3>유사 시험과의 비교</h3><p>LSAT(미국)이 논리게임·논증·독해로 구성되듯, LEET 추리논증도 상황 추론(조건 배치·매칭)과 논증 평가를 포함합니다. PSAT(행정고시 1차)과도 언어논리·추리 영역이 겹치지만, LEET은 <strong>법률 지문의 비중과 난도</strong>가 높고, 법적 사고방식(요건 분해, 규범의 계층성, 판결의 논증 구조)에 친화적인 지문이 특징입니다. 시험 간 기출을 교차 활용하되, LEET 기출의 지문 유형을 기준으로 삼는 것이 정석입니다.</p>
+  <h3>난도와 변별력</h3><p>LEET은 제한 시간 대비 문항 수가 많아(언어이해 문항당 약 2.3분) <strong>속도와 정확성의 균형</strong>이 관건입니다. 난도는 문항 간 편차가 크게 설계되므로, 쉬운 문제를 빠르고 정확하게 확보하는 전략이 고득점의 출발점입니다. 표준점수 체계상 상위권에서는 한두 문항이 백분위를 크게 바꿉니다.</p>
+  <h3>관련 분야</h3><ul><li>논리학(명제논리·술어논리, 비형식 논리)</li><li>수사학·비판적 읽기</li><li>법학 방법론(법해석학의 입문)</li></ul>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> LEET이 법학 지식 시험이었다면 어떤 일이 벌어질까요? 로스쿨 제도의 목표(다양한 전공 배경의 법조인 양성)와 연결해 생각해 보세요. (힌트: 누구에게 유리한 시험이 되었을까요?)</div>
+</div>
+<h2>🕹️ 직접 해보기 — LEET 핵심 개념 짝맞추기</h2>
+<p>LEET의 구성 요소와 설명을 짝지어 복습해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#b91c1c","prompt":"LEET 핵심 개념과 설명을 짝지으세요","pairs":[{"term":"언어이해","def":"긴 지문을 읽고 이해·추론하는 영역"},{"term":"추리논증","def":"명제와 논증을 논리로 다루는 영역"},{"term":"로스쿨","def":"법학전문대학원 — LEET의 목적지"},{"term":"법학전문대학원협의회","def":"LEET을 주관하는 기관"},{"term":"소양 평가","def":"지식이 아니라 능력을 재는 시험 방식"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b91c1c","questions":[{"q":"LEET이 평가하는 것은?","choices":["법학 지식","언어이해·추리논증 소양","외국어 능력","서예 실력"],"answer":1},{"q":"LEET의 두 영역은?","choices":["언어이해·추리논증","헌법·민법","독해·작문","듣기·말하기"],"answer":0},{"q":"LEET 1교시 언어이해의 문항 수와 시간은?","choices":["20문항·50분","30문항·70분","40문항·125분","50문항·100분"],"answer":1},{"q":"LEET을 치르는 주된 목적은?","choices":["판사 임용","로스쿨 입학 전형","변리사 자격","공무원 승진"],"answer":1},{"q":"법률 지문이 나와도 법 지식이 필요 없는 까닭은?","choices":["지문이 쉽기 때문에","답의 근거가 지문 안에 있고 독해·논리를 평가하기 때문에","선택지가 항상 같기 때문에","시간이 넉넉하기 때문에"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,10);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 기둥(로스쿨)
+  const pillar=new THREE.Mesh(new THREE.CylinderGeometry(0.35,0.5,3.2,16),new THREE.MeshBasicMaterial({color:0xb91c1c,wireframe:true}));pillar.position.y=-0.4;s.add(pillar);
+  const pilLbl=lbl('로스쿨','#b91c1c');pilLbl.position.set(0,-2.6,0);s.add(pilLbl);
+  // 저울 빔 + 양 판
+  const beam=new THREE.Mesh(new THREE.BoxGeometry(7.5,0.16,0.16),new THREE.MeshBasicMaterial({color:0xdc2626}));beam.position.y=1.3;s.add(beam);
+  const left=new THREE.Mesh(new THREE.BoxGeometry(1.0,0.7,0.25),new THREE.MeshBasicMaterial({color:0xf59e0b}));left.position.set(-3.4,0.4,0);s.add(left);
+  const right=new THREE.Mesh(new THREE.IcosahedronGeometry(0.55,0),new THREE.MeshBasicMaterial({color:0x0ea5e9,wireframe:true}));right.position.set(3.4,0.4,0);s.add(right);
+  const leftLbl=lbl('언어이해','#d97706');leftLbl.position.set(-3.4,-0.5,0);s.add(leftLbl);
+  const rightLbl=lbl('추리논증','#0284c7');rightLbl.position.set(3.4,-0.5,0);s.add(rightLbl);
+  [[-3.4,1.3,-3.4,0.75],[3.4,1.3,3.4,0.95]].forEach(v=>{s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(v[0],v[1],0),new THREE.Vector3(v[2],v[3],0)]),new THREE.LineBasicMaterial({color:0x64748b})));});
+  // 소양 평가 코어(빔 위)
+  const core=new THREE.Mesh(new THREE.SphereGeometry(0.28,14,14),new THREE.MeshBasicMaterial({color:0xfde047}));core.position.set(0,1.75,0);s.add(core);
+  const coreLbl=lbl('소양 평가','#a16207');coreLbl.position.set(0,2.5,0);s.add(coreLbl);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 저울의 두 판이 LEET의 두 영역입니다.','언어이해: 법률·학술 지문을 읽고 이해·추론합니다.','추리논증: 명제와 논증을 논리로 다룹니다.','법 지식이 아니라 소양(능력)을 재는 시험입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}beam.rotation.z=Math.sin(T*1.2)*0.06;core.position.y=1.75+Math.sin(T*2)*0.08;s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

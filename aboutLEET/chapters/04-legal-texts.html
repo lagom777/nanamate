@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4. 법률 지문 읽기 — aboutLEET</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">⚖️ 표지</a></li>
+<li><a href="01-about.html">1. LEET이란 무엇인가</a></li>
+<li><a href="02-verbal-basics.html">2. 언어이해: 지문 읽기의 기초</a></li>
+<li><a href="03-verbal-advanced.html">3. 언어이해: 문제 유형 공략</a></li>
+<li><a href="04-legal-texts.html">4. 법률 지문 읽기</a></li>
+<li><a href="05-logic-basics.html">5. 추리논증: 명제와 논리 기초</a></li>
+<li><a href="06-deduction.html">6. 연역논증</a></li>
+<li><a href="07-induction.html">7. 귀납·인과 논증</a></li>
+<li><a href="08-argument.html">8. 논증분석과 평가</a></li>
+<li><a href="09-strategy.html">9. 실전 전략과 학습 계획</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>법률 지문</em> 읽기</h1><p class="authors">Chapter 4 — Reading Legal Texts</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 법전(규범) 위에서 요건→효과로 이어지는 법적 사고의 뼈대</span>
+<h2>법률 지문, 왜 따로 배울까</h2><p>LEET 언어이해에서 <strong>법률 지문</strong>은 빈도와 난도가 모두 높은 유형입니다. 낯선 법 용어와 긴 문장이 장벽처럼 느껴지지만, 법률 지문에는 뚜렷한 <strong>형식</strong>이 있습니다 — <strong>개념어 정의 → 요건 → 효과 → 예외</strong>의 구조, 그리고 "요건을 충족하면 효과가 생긴다"는 사고방식입니다. 이 뼈대를 알면 법률 지문은 '읽는' 지문이 아니라 '<strong>핵심을 뜯어내는</strong>' 지문으로 바뀝니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>법률 지문의 심장은 <strong>규범 → 요건 → 효과</strong>입니다. 규범(조문)이 정한 요건을 사실이 충족하면, 조문이 정한 효과가 발생합니다. 이 구조만 붙들고 읽어도 지문의 절반은 잡은 것입니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>법전은 <strong>우리 사회의 규칙서</strong>예요. 게임 규칙서를 읽듯이 읽으면 돼요 — "이 조건을 채우면, 이 결과가 나온다!"</p>
+  <h3>🎲 게임 규칙서로 읽는 법</h3><p>보드게임 규칙서를 떠올려 봐요. 🎲 "주사위가 6이 나오면, 한 번 더 던질 수 있다." 여기엔 두 가지가 있어요. <strong>조건</strong>(주사위가 6)과 <strong>결과</strong>(한 번 더!)예요. 법 조문도 똑같아요. "조건을 채우면 → 결과가 생긴다." 법에서는 조건을 <strong>요건</strong>, 결과를 <strong>효과</strong>라고 불러요.</p><p>그래서 법전을 읽는다는 건, 커다란 게임 규칙서에서 "어떤 조건이냐", "그러면 어떤 결과냐"를 찾는 일이에요. 어려운 말이 나와도 무서워할 필요 없어요. 조건과 결과, 딱 두 개만 찾으면 되거든요! 🔍</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>규범</strong>: 지켜야 할 규칙 — 법 조문이 대표적이에요</li><li><strong>요건</strong>: 법이 정한 결과가 생기려면 채워야 할 조건</li><li><strong>효과</strong>: 조건을 채웠을 때 법이 주는 결과</li><li><strong>법률관계</strong>: 법이 정해 준 사람과 사람 사이의 관계(빌려준 사람 ↔ 갚아야 할 사람)</li><li><strong>판례</strong>: 법원이 실제 사건에서 내린 판단의 예</li></ul></div>
+  <h3>⚖️ 쉽게 풀어보기</h3><p>예를 들어 볼게요. 규칙서에 이렇게 쓰여 있다고 해요. "밤에 남의 집에 허락 없이 들어가면 안 된다." 이건 조건 없이 <strong>하지 말라는 규칙</strong>(금지)이에요. 또 다른 규칙: "실수로 남의 물건을 망가뜨리면, 물어줘야 한다." 이건 조건(실수로 망가뜨림)을 채우면 결과(물어줌)가 생기는 규칙이에요. 법 읽기는 이 두 가지 — <strong>하지 말라는 것</strong>과 <strong>조건→결과</strong> — 를 구별하는 연습이에요. 💪</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 법률 지문이 나오면 문장마다 물어보세요. "이 문장은 조건(요건)을 말하나, 결과(효과)를 말하나, 아니면 예외를 말하나?" 라벨을 붙이며 읽으면 긴 지문도 구조가 보여요!</div>
+  <h3>📌 요약</h3><ul><li>법전 = 사회 전체가 쓰는 규칙서예요. 📖</li><li>법 읽기의 핵심: 조건(요건)을 채우면 결과(효과) 발생!</li><li>조문의 "~해야 한다"는 의무(반드시!), "~할 수 있다"는 권능(필수 아님)이라는 뜻이에요.</li><li>판례는 실제 사건 → 무엇이 문제? → 어떤 규칙? → 결론 순서로 읽어요.</li><li>어려운 단어보다 구조를 먼저 찾는 게 비결이에요.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>법률 지문의 기본 구조</h3><p>법률 지문은 대개 <strong>개념어 정의 → 요건 → 효과 → 예외</strong>의 순서로 전개됩니다. 먼저 다룰 개념(예: '불법행위')을 정의하고, 그 법적 효과가 발생하기 위한 요건(고의·과실, 위법행위, 손해, 인과관계)을 나열하고, 요건 충족 시의 효과(손해배상 책임)를 밝힌 뒤, 적용되지 않는 예외(정당방위처럼 위법성이 조각되는 경우)를 덧붙입니다. 읽을 때 각 문단이 이 네 가지 중 어디에 해당하는지 표시하면, 세부 정보 문제와 추론 문제 모두에서 근거 문장을 빠르게 찾을 수 있습니다.</p>
+  <div class="info-card"><h4>⚖️ 자주 나오는 법 개념어</h4><ul><li><strong>권리</strong>: 법이 인정하는 이익을 주장할 수 있는 힘(예: 소유권, 채권)</li><li><strong>의무</strong>: 법이 요구하는 행위 또는 부작위 — 위반하면 법적 불이익이 따름</li><li><strong>효력</strong>: 법규범이 구속력을 갖고 실제로 적용되는 상태</li><li><strong>법률관계</strong>: 법에 의해 규율되는 사람들 사이의 권리·의무 관계</li><li><strong>법률행위</strong>: 법률효과의 발생을 목적으로 하는 의사표시(예: 계약, 유언)</li><li><strong>불법행위</strong>: 고의·과실로 타인에게 손해를 가하는 위법한 행위 — 손해배상 책임의 요건이 됨</li></ul></div>
+  <h3>조문 읽기 — 표현 단서 잡기</h3><p>조문은 표현에 법적 의미가 실려 있습니다. <strong>"~해야 한다"</strong>는 <em>의무</em> 규정 — 하지 않으면 제재나 불이익이 따릅니다. <strong>"~할 수 있다"</strong>는 <em>권능</em> 규정 — 할 수도 하지 않을 수도 있는 법적 자격을 줍니다. <strong>"~에 해당하지 아니한다"</strong>는 <em>요건의 부정</em> — 규정 적용을 배제하는 표현입니다. 이 단서를 놓치면 선택지의 '~해야 한다'와 '~할 수 있다' 바꿔치기에 걸립니다. LEET이 가장 즐겨 쓰는 함정입니다.</p>
+  <h3>판례 지문과 요건→효과 사고</h3><p>판례 지문은 <strong>사실관계 → 쟁점 → 법리 → 결론</strong>의 구조를 가집니다. 사실관계(무슨 일이 있었나)가 제시되고, 쟁점(무엇이 다투어졌나)이 좁혀지고, 법리(어떤 법 규칙과 해석이 적용되나)가 전개된 뒤, 결론(어느 쪽이 이기나)이 납니다. 이 전체를 관통하는 사고법이 <strong>요건→효과 사고</strong>입니다 — 규범이 정한 요건을 사실관계가 충족하는지 하나씩 대조하고, 충족되면 효과를, 하나라도 빠지면 효과의 부정을 결론으로 끌어냅니다. 추리논증 영역의 '규범 적용' 문제와도 직결되는 사고법입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "~할 수 있다"를 "~해야 한다"로 읽는 실수가 가장 많습니다. '~할 수 있다'는 <strong>권능</strong>(선택 가능한 자격)이지 의무가 아닙니다. 반대로 '판례는 결론만 중요하다'는 오해도 위험합니다 — 지문 이해 문제는 결론보다 <strong>법리(이유)</strong>를 묻는 경우가 많습니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>규범의 계층</h3><p>법규범에는 위계가 있습니다. <strong>헌법</strong>은 국가의 최고 규범이고, 그 아래에 국회가 제정하는 <strong>법률</strong>, 법률의 위임을 받아 행정부가 제정하는 <strong>명령</strong>(대통령령·총리령·부령)이 놓입니다. 하위 규범은 상위 규범에 위반될 수 없고, 위반하면 무효가 됩니다. 지문에서 규정들이 충돌할 때 "어느 규범이 상위인가"를 묻는 사고가 바로 이 계층 개념입니다.</p>
+  <h3>법 해석의 방법</h3><p>법문의 의미를 확정하는 방법에는 여러 경로가 있습니다. <strong>문언 해석</strong>은 법문에 쓰인 언어의 통상적 의미에 따르는 해석입니다. <strong>논리 해석</strong>(체계 해석)은 다른 규정과의 관계와 논리적 정합성을 따지는 해석입니다. <strong>목적적 해석</strong>은 규정의 입법 목적과 취지에 비추어 의미를 확정하는 해석입니다. 지문에서 "이 조항을 어떻게 해석해야 하는가"를 다투는 대목이 나오면, 어떤 해석 방법이 동원되었는지를 분류하는 것이 이해의 관건입니다.</p>
+  <div class="formula">요건→효과: 규범 = 「요건(사실의 요건적 정형)이 충족되면 → 효과(법률효과)가 발생한다」 — 사실을 요건에 대입하는 작업을 '규범의 적용(소규모 사례: 사실의 규범 포섭)'이라고 함</div>
+  <h3>사실에 규범을 적용하는 연습</h3><p>예를 들어 보겠습니다. 어떤 규범이 "고의 또는 과실로 타인에게 손해를 가한 자는 그 손해를 배상할 책임이 있다"고 정했다고 합시다. 요건으로 분해하면 ① 고의 또는 과실, ② 타인에 대한 손해 발생, ③ 행위와 손해 사이의 연결(인과관계)입니다. 사례: A가 발을 헛디뎌 B의 화분을 깨뜨렸다면 — ① 과실(부주의) 충족, ② 손해(화분 파손) 충족, ③ A의 행동이 원인 충족 → 효과: A는 배상할 책임이 있습니다. 이처럼 <strong>요건 하나하나에 사실을 대조</strong>하는 연습이 LEET 법률 지문의 추론 문제를 푸는 표준 절차입니다.</p>
+  <h3>법학의 초기 개념 지도</h3><p>법은 크게 <strong>공법</strong>과 <strong>사법</strong>으로 나뉩니다. 공법은 국가·공권력과 관련된 법(헌법, 행정법, 형법)이고, 사법은 사인(私人) 사이의 관계를 다루는 법(민법, 상법)입니다. 사건의 성격으로 볼 때는 <strong>민사</strong>와 <strong>형사</strong>의 구분이 중요합니다. 민사는 사인 사이의 분쟁(손해배상, 계약 위반)을 다루고, 형사는 범죄와 형벌 — 국가가 범인을 처벌하는 절차를 다룹니다. 같은 '손해' 사건이라도 민사(배상 청구)와 형사(재물손괴죄 처벌)로 나뉠 수 있다는 점이 초기 개념 지도의 핵심입니다.</p>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> "밤중에 남의 집 담을 넘은 자는 처벌한다"는 규범이 있다고 합시다. A가 불이 난 이웃 집을 구하려고 담을 넘었다면 처벌될까요? 요건(밤중·남의 집·담을 넘음)은 충족하지만, 목적적 해석이나 예외(정당한 사유)가 개입할 여지가 있습니다. 규범의 문언 그대로 적용하는 것과 목적에 따라 예외를 인정하는 것 사이의 긴장을 생각해 보세요.</div>
+</div>
+<h2>🕹️ 직접 해보기 — 규범 적용 순서 배열</h2>
+<p>규범을 사실에 적용하는 절차를 올바른 순서대로 눌러 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#b91c1c","prompt":"규범을 사실에 적용하는 절차를 순서대로 배열하세요","steps":["규범(조문) 확인","요건으로 분해","사실관계 특정","요건 충족 여부 대조","효과(결론) 도출"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b91c1c","questions":[{"q":"법률 지문의 기본 구조로 올바른 것은?","choices":["서론→본론→결론","기→승→전→결","개념어 정의→요건→효과→예외","문제 제기→반박→재반박"],"answer":2},{"q":"법에서 말하는 '요건'의 의미는?","choices":["법적 효과가 발생하기 위해 갖추어야 할 조건","판결에 불복하는 절차","법률을 제정하는 국회의 절차","법관이 되기 위한 자격"],"answer":0},{"q":"판례 지문의 구성 순서로 알맞은 것은?","choices":["법리→쟁점→사실관계→결론","쟁점→결론→법리→사실관계","결론→사실관계→쟁점→법리","사실관계→쟁점→법리→결론"],"answer":3},{"q":"조문에서 '~할 수 있다'는 표현이 나타내는 것은?","choices":["권능(할 수 있는 법적 자격)","의무(반드시 해야 함)","금지(해서는 안 됨)","처벌 조항"],"answer":0},{"q":"'법률관계'의 뜻으로 올바른 것은?","choices":["법을 공부하는 사람들의 모임","법에 의해 규율되는 사람들 사이의 권리·의무 관계","법원과 검찰 사이의 조직 관계","법률 조문의 목차 체계"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,10);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 법전(펼쳐진 책)
+  const bookL=new THREE.Mesh(new THREE.BoxGeometry(1.7,0.22,2.3),new THREE.MeshBasicMaterial({color:0xb91c1c,wireframe:true}));bookL.position.set(-0.9,-1.6,0);bookL.rotation.z=0.1;s.add(bookL);
+  const bookR=new THREE.Mesh(new THREE.BoxGeometry(1.7,0.22,2.3),new THREE.MeshBasicMaterial({color:0xb91c1c,wireframe:true}));bookR.position.set(0.9,-1.6,0);bookR.rotation.z=-0.1;s.add(bookR);
+  const spine=new THREE.Mesh(new THREE.CylinderGeometry(0.09,0.09,2.3,10),new THREE.MeshBasicMaterial({color:0xdc2626}));spine.position.set(0,-1.72,0);spine.rotation.x=Math.PI/2;s.add(spine);
+  const bookLbl=lbl('규범','#b91c1c');bookLbl.position.set(0,-2.6,0);s.add(bookLbl);
+  // 저울(기둥·빔·양 판)
+  const post=new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.1,1.9,12),new THREE.MeshBasicMaterial({color:0x64748b}));post.position.y=0.3;s.add(post);
+  const beam=new THREE.Mesh(new THREE.BoxGeometry(5.4,0.14,0.14),new THREE.MeshBasicMaterial({color:0xdc2626}));beam.position.y=1.3;s.add(beam);
+  const panL=new THREE.Mesh(new THREE.CylinderGeometry(0.55,0.42,0.16,16),new THREE.MeshBasicMaterial({color:0xf59e0b}));panL.position.set(-2.55,0.45,0);s.add(panL);
+  const panR=new THREE.Mesh(new THREE.CylinderGeometry(0.55,0.42,0.16,16),new THREE.MeshBasicMaterial({color:0x0ea5e9}));panR.position.set(2.55,0.45,0);s.add(panR);
+  [[-2.55,1.3,-2.55,0.55],[2.55,1.3,2.55,0.55]].forEach(v=>{s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(v[0],v[1],0),new THREE.Vector3(v[2],v[3],0)]),new THREE.LineBasicMaterial({color:0x64748b})));});
+  const panLLbl=lbl('판례','#d97706');panLLbl.position.set(-2.55,-0.35,0);s.add(panLLbl);
+  const panRLbl=lbl('법률관계','#0284c7');panRLbl.position.set(2.55,-0.35,0);s.add(panRLbl);
+  // 요건→효과 화살표
+  const reqBox=new THREE.Mesh(new THREE.BoxGeometry(0.85,0.85,0.85),new THREE.MeshBasicMaterial({color:0xf59e0b}));reqBox.position.set(-1.9,2.8,0);s.add(reqBox);
+  const effBall=new THREE.Mesh(new THREE.SphereGeometry(0.5,16,16),new THREE.MeshBasicMaterial({color:0xb91c1c}));effBall.position.set(1.9,2.8,0);s.add(effBall);
+  const arrow=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-1.35,2.8,0),new THREE.Vector3(1.3,2.8,0)]),new THREE.LineBasicMaterial({color:0xdc2626}));s.add(arrow);
+  const arrowHead=new THREE.Mesh(new THREE.ConeGeometry(0.16,0.4,10),new THREE.MeshBasicMaterial({color:0xdc2626}));arrowHead.position.set(1.38,2.8,0);arrowHead.rotation.z=-Math.PI/2;s.add(arrowHead);
+  const reqLbl=lbl('요건','#d97706');reqLbl.position.set(-1.9,3.6,0);s.add(reqLbl);
+  const effLbl=lbl('효과','#b91c1c');effLbl.position.set(1.9,3.6,0);s.add(effLbl);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 법전(규범) 위에서 요건→효과의 화살표가 뻗어 있습니다.','규범(조문): 요건과 효과로 이뤄진 사회의 규칙입니다.','요건을 충족하면 효과가 발생합니다 — 요건→효과 사고.','판례는 사실관계→쟁점→법리→결론의 순서로 읽습니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}beam.rotation.z=Math.sin(T*1.2)*0.06;panL.position.y=0.45-Math.sin(T*1.2)*0.15;panR.position.y=0.45+Math.sin(T*1.2)*0.15;const sc=1+Math.sin(T*2.4)*0.12;effBall.scale.set(sc,sc,sc);reqBox.rotation.y+=0.01;s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

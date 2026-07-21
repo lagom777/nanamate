@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2. 언어이해: 지문 읽기의 기초 — aboutLEET</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">⚖️ 표지</a></li>
+<li><a href="01-about.html">1. LEET이란 무엇인가</a></li>
+<li><a href="02-verbal-basics.html">2. 언어이해: 지문 읽기의 기초</a></li>
+<li><a href="03-verbal-advanced.html">3. 언어이해: 문제 유형 공략</a></li>
+<li><a href="04-legal-texts.html">4. 법률 지문 읽기</a></li>
+<li><a href="05-logic-basics.html">5. 추리논증: 명제와 논리 기초</a></li>
+<li><a href="06-deduction.html">6. 연역논증</a></li>
+<li><a href="07-induction.html">7. 귀납·인과 논증</a></li>
+<li><a href="08-argument.html">8. 논증분석과 평가</a></li>
+<li><a href="09-strategy.html">9. 실전 전략과 학습 계획</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>언어이해</em>: 지문 읽기의 기초</h1><p class="authors">Chapter 2 — Foundations of Reading Passages</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 쌓인 단락 카드와 연결어 표지판 — 글의 구조를 한눈에</span>
+<h2>지문 읽기의 기초</h2><p>언어이해 영역의 출발점은 <strong>글의 구조를 보는 눈</strong>입니다. LEET 지문은 문장의 단순한 나열이 아니라 <strong>주제·논지·근거</strong>로 조직된 구조물입니다. <strong>연결어</strong>는 그 구조를 드러내는 신호이고, <strong>단락별 요지 정리</strong>는 이해를 확인하는 절차입니다. 이 장에서는 길고 밀도 높은 지문을 흔들림 없이 읽어 내는 기본 절차를 익힙니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>좋은 독해는 빨리 읽는 것이 아니라 <strong>구조대로 읽는 것</strong>입니다. 주제문을 찾고, 연결어를 따라가며, 단락마다 요지를 확인하면 아무리 긴 지문도 하나의 논지로 모입니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>어려운 글도 <strong>순서를 나눠서</strong> 읽으면 무섭지 않아요. 첫 문단에서 주제를 찾고, 문단마다 "이 문단은 뭐라고 했지?" 한 줄씩 적어 보세요.</p>
+  <h3>🧱 레고 설명서처럼!</h3><p>엄청나게 복잡한 레고 설명서를 생각해 봐요. 처음부터 끝까지 한 번에 본다? 머리가 핑핑 돌아요. 🤯 하지만 <strong>1단계, 2단계, 3단계</strong>로 나눠 본다? 할 수 있어요! 글 읽기도 똑같아요. 글은 <strong>문단</strong>이라는 단계가 하나씩 쌓인 거예요. 한 문단씩 뜯어 본 다음, 마지막에 합치면 돼요.</p><p>그리고 '그러나', '따라서' 같은 말은 <strong>길 안내 표지판</strong>이에요. 🪧 "여기서 방향이 바뀝니다!", "이제 결론입니다!" 하고 알려 주죠. 표지판만 잘 따라가도 길을 잃지 않아요.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>주제문</strong>: 글 전체의 이야기를 담은 가장 중요한 문장 — 보통 첫 문단에 있어요</li><li><strong>논지</strong>: 글쓴이가 정말로 하고 싶은 말(주장)</li><li><strong>근거</strong>: 주장이 맞다고 보여 주는 재료 — 예시, 사실, 통계</li><li><strong>연결어</strong>: 문장과 문장을 이어 주는 표지판 — 그러나, 따라서, 즉, 반면에</li><li><strong>요지</strong>: 문단의 내용을 한 줄로 줄인 것</li></ul></div>
+  <h3>🚦 표지판 익히기</h3><p>표지판 네 개만 외워 봐요. <strong>'그러나'</strong>가 나오면 "앗, 반대 이야기가 나오겠구나!" 하고 주의! 🔄 <strong>'따라서'</strong>는 "결론이다, 집중!" ✅ <strong>'즉'</strong>은 "앞의 어려운 말을 쉽게 다시 말해 주겠다"는 뜻이에요. <strong>'반면에'</strong>는 "다른 쪽 이야기와 비교하겠다"는 신호예요. ⚖️</p><p>읽으면서 표지판을 발견할 때마다 연필로 동그라미 ⭕ 를 쳐 보세요. 동그라미를 다 찾고 나면, 어려웠던 글이 별자리 지도처럼 선명하게 보이기 시작해요! ✨</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 처음에는 느려도 괜찮아요. 문단 하나를 읽을 때마다 손가락으로 덮고 "방금 뭐라고 했지?" 한 줄로 말해 보세요. 말로 나오면 이해한 거예요!</div>
+  <h3>📌 요약</h3><ul><li>긴 글은 문단별로 나눠 읽어요 — 레고 설명서처럼! 🧱</li><li>주제문은 보통 첫 문단에 숨어 있어요.</li><li>연결어는 길 안내 표지판 — 그러나(반전), 따라서(결론), 즉(다시 말하면), 반면에(비교).</li><li>문단마다 요지를 한 줄로 정리해요.</li><li>마지막에 요지들을 모으면 글 전체의 주장(논지)이 보여요.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>지문의 구조 — 주제문·논지·근거</h3><p>분석적 독해의 첫걸음은 글을 세 층위로 분해하는 것입니다. <strong>주제문</strong>은 글 전체를 지배하는 문장으로, 보통 <strong>첫 문단</strong>에 위치합니다(두괄식). 드물게 논의를 전개한 뒤 마지막 문단에서 결론을 내는 미괄식도 있으니, 첫 문장만 보고 성급히 판단해서는 안 됩니다. <strong>논지</strong>는 저자가 지문을 통해 입증하려는 핵심 명제이고, <strong>근거</strong>는 그 논지를 뒷받침하는 재료 — 사실, 통계, 사례, 권위 있는 인용 등입니다. 둘을 구분하는 기준은 "이 문장을 빼면 글의 주장이 무너지는가?"입니다. 주장 자체가 무너지면 논지이고, 주장은 유지되되 설득력만 약해지면 근거입니다.</p>
+  <h3>연결어의 기능</h3><p>연결어는 글의 전개 방향을 알려 주는 신호입니다. <strong>'그러나·하지만'</strong>은 <strong>역접</strong> — 앞의 내용을 뒤집거나 제한하며, 대개 뒤에 오는 내용이 저자의 본론입니다. <strong>'따라서·그러므로'</strong>는 <strong>추론·결론</strong> — 앞의 논의로부터 논지를 이끌어 내는 신호입니다. <strong>'즉·다시 말해'</strong>는 <strong>환원·재진술</strong> — 앞의 내용을 압축하거나 풀어서 다시 말하는 것으로, 핵심 요지가 여기에 담기는 경우가 많습니다. <strong>'반면에'</strong>는 <strong>대조</strong> — 두 입장이나 사례를 나란히 놓는 비교 구조를 표시합니다.</p>
+  <div class="info-card"><h4>🪧 연결어 기능 정리</h4><ul><li><strong>역접</strong>: 그러나, 하지만, 반대로 — 방향 전환, 뒤가 중요</li><li><strong>추론·결론</strong>: 따라서, 그러므로, 결국 — 논지 신호</li><li><strong>환원·재진술</strong>: 즉, 다시 말해, 요컨대 — 요지 압축</li><li><strong>대조</strong>: 반면에, 이와 달리 — 비교 구조</li><li><strong>예시</strong>: 예컨대, 예를 들어 — 근거 신호</li></ul></div>
+  <h3>글의 전개 방식과 단락별 요지</h3><p>학술 지문의 전형적인 전개는 <strong>정의 → 예시 → 반론 → 재반박</strong>의 흐름입니다. 저자는 먼저 핵심 개념을 정의하고, 예시로 구체화한 뒤, 예상되는 반론을 스스로 제기하고 다시 재반박하며 논지를 정교하게 다듬습니다. 이 틀을 알면 "지금 어느 단계를 읽고 있는가"를 파악할 수 있습니다. 여기에 <strong>단락별 요지 정리</strong>를 결합하세요 — 단락 하나를 읽을 때마다 그 단락의 역할과 내용을 한 줄로 압축하는 것입니다. 요지들을 순서대로 이어 붙이면 글 전체의 흐름이 하나의 논리 사슬로 드러납니다.</p>
+  <h3>끊어 읽기 — 긴 문장 처리</h3><p>법률·학술 지문의 문장은 수식어가 길게 얹힌 탓에 한 호흡에 읽기 어렵습니다. 이때는 먼저 <strong>주어와 술어</strong>를 확보해 문장의 뼈대를 세우고, 수식 구절은 괄호로 묶어 <strong>의미 단위로 끊어 읽습니다</strong>. 예컨대 "법률이 정한 요건을 충족한 자는, 그에 상응하는 절차를 거쳐, 권리를 주장할 수 있다"는 "자는 — 주장할 수 있다"가 뼈대이고 나머지는 조건과 절차를 다는 수식입니다. 뼈대를 놓치고 수식에 먼저 빠지면 문장이 산만해집니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "첫 문장이 곧 주제문이다"는 위험한 지름길입니다. 첫 문장은 배경 제시나 화제 던지기일 수 있고, 주제문은 글 전체를 지배하는 문장을 가리킵니다. 또한 모든 문장을 같은 속도로 꼼꼼히 읽으려는 습관도 비효율적입니다 — 주제문과 연결어 직후는 정독, 예시와 배경은 속독으로 강약을 조절하세요.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>고밀도 지문 대처 — 개념어의 문맥 정의</h3><p>법률·학술 지문의 밀도는 <strong>개념어의 정의</strong>에서 옵니다. 이런 지문에서 개념어는 사전적 의미가 아니라 <strong>지문이 자체적으로 부여한 정의</strong>를 따릅니다. "~이란 ~을 말한다", "여기서 ~라 함은 ~이다" 같은 정의 문구를 포착해 그 지문 안의 의미로 고정해야 하며, 평소 알던 용법을 끌어오면 선지 판단이 어긋납니다. 법률 지문은 여기에 더해 <strong>요건—효과 구조</strong>("~하는 경우에는 ~할 수 있다")로 짜여 있으므로, 요건과 효과를 분리해 표시하며 읽는 것이 유효합니다. 밀도가 높을수록 속도를 억지로 올리기보다 구조 표시에 시간을 쓰는 쪽이 전체 소요 시간을 줄입니다.</p>
+  <h3>저자의 태도와 한계 표현 포착</h3><p>고난도 문항은 저자의 <strong>태도</strong>와 <strong>한계 표현</strong>에서 갈립니다. "~는 타당하다", "~는 재고되어야 한다", "~에 불과하다"는 태도 표현이고, "반드시 ~는 아니다", "일정한 범위에서", "~할 수 있다", "다만"은 주장의 적용 범위를 제한하는 한계 표현입니다. 저자가 "~할 수 있다"(가능성)라고 말한 것을 선택지에서 "~이다"(단정)로 바꿔치기하는 오류 유형이 반복 출제되므로, 지문의 한계 표현과 선택지의 단정적 표현("항상", "전혀", "오직")이 충돌하는지 반드시 대조해야 합니다.</p>
+  <h3>읽기 속도와 이해도의 균형</h3><p>언어이해는 문항당 약 2분 20초(70분/30문항)가 주어지는 시험이므로, 균일한 속도의 정독은 성립하지 않습니다. 원리는 <strong>강약 배분</strong>입니다 — 주제문, 연결어 직후, 요지가 응축된 문장은 정독하고, 예시·배경·반복 설명은 속독으로 넘기되 "이 단락에 예시가 있었다"는 위치만 기억해 두었다가 세부 정보 문항에서 회귀합니다.</p>
+  <div class="formula">시간 배분의 예: 지문 정독(구조 파악) 약 1분 + 문항·선택지 검토 약 1분 20초 ≈ 문항당 2분 20초</div>
+  <h3>구조도(마인드맵) 활용</h3><p>복습 단계에서는 지문을 <strong>구조도</strong>로 재구성하세요. 중심에 논지를 놓고, 가지로 단락별 요지를 뻗게 하며, 각 가지 끝에 근거(예시·사실)와 연결어를 달아 둡니다. 구조도를 그려 본 지문은 "내용을 외운" 것이 아니라 "설계를 파악한" 상태가 되어, 논지 판단·문장 삽입·추론 문항 어디에도 대응할 수 있습니다. 처음에는 훈련으로 그리고, 실전에서는 머릿속의 축약된 구조도로 대체합니다.</p>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 어떤 지문에서 연결어를 전부 지운다고 상상해 보세요. 문장의 내용은 하나도 바뀌지 않는데 왜 읽기가 훨씬 어려워질까요? '길 안내 표지판' 비유와 연결해, 연결어가 문장의 <em>내용</em>이 아니라 문장 사이의 <em>관계</em>를 담당한다는 점을 설명해 보세요.</div>
+</div>
+<h2>🕹️ 직접 해보기 — 지문 읽기 순서 배열</h2>
+<p>지문을 읽는 올바른 절차를 순서대로 클릭해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#b91c1c","prompt":"지문 읽기의 올바른 순서대로 클릭하세요","steps":["제목·첫 문단으로 주제 예상","연결어 표시하며 읽기","단락마다 요지 한 줄 정리","전체 논지 한 문장 정리","문제 풀이"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해 보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b91c1c","questions":[{"q":"주제문이 가장 흔히 놓이는 위치는?","choices":["마지막 문단의 끝","첫 문단","각 단락의 마지막 문장","선택지 안"],"answer":1},{"q":"연결어 '그러나'의 기능은?","choices":["앞 내용을 요약한다","같은 말을 바꿔 다시 말한다","앞 내용을 뒤집거나 제한한다(역접)","예시를 제시한다"],"answer":2},{"q":"논지와 근거의 구분으로 옳은 것은?","choices":["논지는 저자의 핵심 주장이고 근거는 그 뒷받침 재료다","논지는 사례이고 근거는 주장이다","둘은 항상 같은 문장에 담긴다","근거는 반드시 통계다"],"answer":0},{"q":"단락별 요지 정리의 효과로 가장 적절한 것은?","choices":["읽기 속도만 빨라진다","암기해야 할 분량이 늘어난다","문단 수가 줄어든다","각 단락의 역할과 글 전체의 흐름이 확인된다"],"answer":3},{"q":"끊어 읽기의 목적은?","choices":["문장을 통째로 암기하기 위해","긴 문장에서 주어·술어를 확보해 의미 단위로 이해하기 위해","지문을 빨리 넘기기 위해","연결어를 지우기 위해"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.3,10);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 단락 카드 3장 적층 (주제·논지·근거)
+  const cardData=[['주제',0xb91c1c,'#b91c1c',1.35],['논지',0xdc2626,'#dc2626',0.0],['근거',0xf59e0b,'#d97706',-1.35]];
+  const cards=[];
+  cardData.forEach(d=>{
+    const card=new THREE.Mesh(new THREE.BoxGeometry(3.4,0.95,0.18),new THREE.MeshBasicMaterial({color:d[1],wireframe:d[0]==='주제'}));
+    card.position.set(-1.3,d[3],0);s.add(card);cards.push(card);
+    const t=lbl(d[0],d[2]);t.position.set(-1.3,d[3],0.4);s.add(t);
+  });
+  // 연결어 푯말 2개 (그러나·따라서)
+  const posts=[['그러나',0.68],['따라서',-0.68]];
+  const signs=[];
+  posts.forEach(p=>{
+    const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,1.0,8),new THREE.MeshBasicMaterial({color:0x64748b}));
+    pole.position.set(2.6,p[1]-0.1,0);s.add(pole);
+    const sign=new THREE.Mesh(new THREE.BoxGeometry(0.95,0.42,0.08),new THREE.MeshBasicMaterial({color:0x0ea5e9}));
+    sign.position.set(2.6,p[1]+0.32,0);s.add(sign);signs.push(sign);
+    const t=lbl(p[0],'#0284c7');t.position.set(2.6,p[1]+0.82,0);s.add(t);
+  });
+  const connLbl=lbl('연결어','#0284c7');connLbl.position.set(2.6,1.95,0);s.add(connLbl);
+  // 요지 상자 (단락 더미 아래)
+  const yo=new THREE.Mesh(new THREE.BoxGeometry(2.3,0.6,0.15),new THREE.MeshBasicMaterial({color:0xfde047}));
+  yo.position.set(-1.3,-2.35,0);s.add(yo);
+  const yoLbl=lbl('요지','#a16207');yoLbl.position.set(-1.3,-2.35,0.4);s.add(yoLbl);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 단락 카드가 차곡차곡 — 지문은 단락의 적층입니다.','주제·논지·근거를 나눠 놓고 보시면 글의 뼈대가 보입니다.','연결어는 표지판: 그러나=반전, 따라서=결론.','단락마다 요지를 한 줄로 정리하며 읽어 보세요.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}cards.forEach((cd,i)=>{cd.position.y=cardData[i][3]+Math.sin(T*1.4+i)*0.05;});yo.position.y=-2.35+Math.sin(T*2)*0.06;s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

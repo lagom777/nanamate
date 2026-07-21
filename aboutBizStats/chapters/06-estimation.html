@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6. 모수추정과 신뢰구간 — aboutBizStats</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">📊 표지</a></li>
+<li><a href="01-basics.html">1. 통계학이란 무엇인가</a></li>
+<li><a href="02-descriptive.html">2. 기술통계: 자료의 요약</a></li>
+<li><a href="03-probability.html">3. 확률의 기초</a></li>
+<li><a href="04-distributions.html">4. 확률분포</a></li>
+<li><a href="05-sampling.html">5. 표본추출과 표본분포</a></li>
+<li><a href="06-estimation.html">6. 모수추정과 신뢰구간</a></li>
+<li><a href="07-hypothesis.html">7. 가설검정</a></li>
+<li><a href="08-regression.html">8. 상관과 회귀분석</a></li>
+<li><a href="09-decision.html">9. 통계적 의사결정</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>모수추정</em>과 신뢰구간</h1><p class="authors">Chapter 6 — Parameter Estimation and Confidence Intervals</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 표본을 여러 번 뽑아 만든 신뢰구간 막대들</span>
+<h2>모수추정과 신뢰구간</h2><p>모수추정(estimation)은 표본의 통계량으로 모집단의 <strong>모수(parameter)</strong> — 모평균 μ, 모비율 p, 모분산 σ² — 를 알아내는 과정입니다. 표본평균 x̄ 하나로 모평균을 찍는 것이 <strong>점추정(point estimation)</strong>이고, "모평균은 이 범위 안에 있을 것이다"라고 폭을 가진 구간으로 제시하는 것이 <strong>구간추정(interval estimation)</strong>입니다. 추정은 본질적으로 불확실하므로, 실무에서는 그 불확실성의 크기까지 함께 밝히는 <strong>신뢰구간(confidence interval)</strong>이 표준입니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>신뢰구간 = 점추정값 ± 오차한계. 모평균의 95% 신뢰구간은 <strong>x̄ ± 1.96·(σ/√n)</strong>이고, 여기서 σ/√n은 표본평균의 표준편차인 <strong>표준오차(standard error)</strong>, 1.96·(σ/√n)은 <strong>오차한계(margin of error)</strong>입니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>모수추정은 <strong>일부(표본)를 보고 전체(모집단)의 평균이나 비율을 맞히는 것</strong>이에요. 하나의 숫자로 콕 찍으면 점추정, 범위로 넉넉하게 말하면 구간추정이에요.</p>
+  <h3>😮 과녁 찍기 vs 링 던지기</h3><p>욕조 물 온도가 궁금해요. 🛁 손을 한 번 넣어 보고 "딱 40도야!"라고 외치는 게 <strong>점추정</strong>이에요. 맞을 수도 있지만 틀리기 쉽죠. 그 대신 "한 38도에서 42도 사이일 거야"라고 말하는 게 <strong>구간추정</strong>이에요. 과녁 한 점을 정확히 맞히는 대신, 과녁을 덮을 만한 <strong>링을 던지는</strong> 거예요. ⭕ 링이 넓을수록 과녁을 덮기 쉽지만 너무 넓으면 "30~50도요"처럼 쓸모가 없어요. 그래서 '넓이'와 '맞힐 자신감' 사이에서 균형을 잡아요.</p>
+  <h3>💯 95% 신뢰란?</h3><p>"95% 신뢰구간"은 <strong>이 방법으로 100번 조사하면 그중 95번은 진짜 모수를 덮는 구간</strong>이 만들어진다는 뜻이에요. 링 던지기 100번 중 95번은 과녁을 덮는 방법이라는 거죠. 그래서 한 번 만든 구간도 꽤 믿을 만하지만, 5번 중 한 번꼴로는 빗나갈 수 있다는 것도 기억해요.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>모수(Parameter)</strong>: 알고 싶은 모집단의 특성값(모평균 μ, 모비율 p)</li><li><strong>점추정</strong>: 하나의 값으로 모수를 추정(표본평균 x̄ → μ)</li><li><strong>구간추정</strong>: 모수가 있을 만한 범위(구간)로 추정</li><li><strong>신뢰구간</strong>: 구간추정 + 얼마나 믿을 수 있는지(신뢰수준) 표시</li><li><strong>표준오차</strong>: 표본평균이 흔들리는 정도, σ/√n</li></ul></div>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 뉴스 여론조사에서 "표본오차 ±3.1%p, 신뢰수준 95%"라는 문구를 찾아보세요. 바로 '지지율 ± 오차한계' 형태의 신뢰구간이에요!</div>
+  <h3>📌 요약</h3><ul><li>모수추정 = 표본으로 모집단의 모수(평균·비율) 맞히기예요.</li><li>점추정은 한 점 찍기, 구간추정은 링 던지기. ⭕</li><li>신뢰구간 = 점추정값 ± 오차한계.</li><li>95% 신뢰 = 100번 중 95번은 맞는 방법.</li><li>표본이 많을수록 링(구간)이 좁아져서 더 정확해져요.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>점추정과 좋은 추정량의 조건</h3><p><strong>점추정(point estimation)</strong>은 표본에서 계산한 하나의 통계량(추정량)으로 모수를 추정합니다 — 모평균 μ에는 표본평균 x̄, 모비율 p에는 표본비율 p̂, 모분산 σ²에는 표본분산 s²를 씁니다. 어떤 추정량이 '좋은' 추정량인지는 세 가지 기준으로 판단합니다. ① <strong>불편성(unbiasedness)</strong>: 추정량의 기댓값이 모수와 같다 — E(x̄) = μ. 표본분산에서 n이 아니라 n−1로 나누는 이유가 바로 불편성을 맞추기 위해서입니다. ② <strong>효율성(efficiency)</strong>: 불편추정량들 중 분산이 가장 작을수록 좋다 — 같은 정보로 더 정밀하게 추정. ③ <strong>일치성(consistency)</strong>: 표본크기 n이 커질수록 추정량이 모수에 가까워진다 — x̄의 분산 σ²/n이 0으로 수렴하므로 x̄는 일치추정량입니다.</p>
+  <h3>모평균의 신뢰구간 (σ를 아는 경우)</h3><p>모집단이 정규분포이거나 표본이 충분히 크면(중심극한정리), 표본평균은 평균 μ, 표준편차 <strong>σ/√n(표준오차)</strong>인 정규분포를 따릅니다. 따라서 모평균의 (1−α)×100% 신뢰구간은 <strong>x̄ ± z<sub>α/2</sub>·(σ/√n)</strong>입니다. 오차한계 E = z·(σ/√n)이 구간의 반폭입니다.</p>
+  <div class="info-card"><h4>📏 신뢰수준별 임계값 z<sub>α/2</sub></h4><ul><li><strong>90%</strong> → z = 1.645</li><li><strong>95%</strong> → z = 1.96 (가장 많이 사용)</li><li><strong>99%</strong> → z = 2.576</li></ul><p>예: 카페 대기시간 n=100, x̄=5.2분, σ=2분이면 95% 신뢰구간 = 5.2 ± 1.96×(2/10) = 5.2 ± 0.392 = <strong>[4.81, 5.59]분</strong>.</p></div>
+  <h3>t분포, 표본크기 결정, 비율 추정</h3><p>모분산 σ²을 <strong>모르고 표본이 작으면</strong>(통상 n&lt;30) 표본표준편차 s를 대신 쓰며, 이때는 z 대신 <strong>t분포(자유도 n−1)</strong>의 임계값을 씁니다: x̄ ± t<sub>α/2,n−1</sub>·(s/√n). 예를 들어 n=16이면 자유도 15, 95% 임계값은 1.96이 아니라 <strong>2.131</strong>로 더 커서 구간이 넓어집니다. 원하는 오차한계 E를 정했을 때 필요한 표본크기는 <strong>n = (z·σ/E)²</strong>이고, 계산값은 항상 올림합니다 — 대기시간 조사에서 σ=2, E=0.5분, 95% 신뢰수준이면 n = (1.96×2/0.5)² = 61.47 → <strong>62명</strong>이 필요합니다. 모비율 추정은 <strong>p̂ ± z·√(p̂(1−p̂)/n)</strong>입니다 — 예: n=400, p̂=0.6이면 오차한계 ≈ 1.96×0.0245 ≈ 0.048, 95% 신뢰구간은 <strong>[0.552, 0.648]</strong>입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "95% 신뢰구간 [4.81, 5.59]가 있으니 모평균이 이 안에 있을 확률이 95%다"는 엄밀하게 틀린 문장입니다. 이미 만들어진 구간은 모수를 포함하거나(100%) 포함하지 않거나(0%) 둘 중 하나입니다. 95%는 <strong>구간을 만드는 절차의 장기 성공률</strong>이지 특정 구간 하나에 붙는 확률이 아닙니다(자세한 내용은 심화 탭).</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>신뢰수준 95%의 올바른 해석</h3><p>빈도주의 통계에서 모수 μ는 <strong>미지의 고정된 상수</strong>이지 확률변수가 아닙니다. 확률이 붙는 대상은 표본추출에 따라 달라지는 <strong>구간의 양 끝점(확률변수)</strong>입니다. 따라서 (1−α)×100% 신뢰수준의 정확한 의미는 "동일한 절차로 표본을 반복 추출해 매번 구간을 만들면, 그 구간들 중 장기적으로 (1−α)의 비율이 μ를 포함한다"는 <strong>절차의 장기 성공률</strong>입니다. 관측된 특정 구간 [4.81, 5.59]에 대해서는 μ가 그 안에 있거나 없거나 — 확률은 1 또는 0이고, 우리가 모를 뿐입니다. "이 구간이 μ를 포함할 확률이 95%"라는 해석이 흔하지만 엄밀한 정의는 아닙니다. 실제로 μ를 확률변수로 다루어 "모수가 이 구간에 있을 확률 95%"를 정당화하는 것은 <strong>베이지안 신용구간(credible interval)</strong>으로, 사전분포가 필요한 별도 체계입니다.</p>
+  <div class="formula">P(x̄ − z<sub>α/2</sub>·σ/√n ≤ μ ≤ x̄ + z<sub>α/2</sub>·σ/√n) = 1 − α &nbsp;—&nbsp; 확률이 붙는 건 μ가 아니라 구간의 끝점</div>
+  <h3>오차한계와 표본크기 결정</h3><p>오차한계 E는 세 요소로 결정됩니다. 신뢰수준 ↑ (z ↑) → 구간이 넓어지고, 표준편차 σ ↑ → 넓어지고, 표본크기 n ↑ → <strong>√n에 반비례</strong>해서 좁아집니다. 정밀도를 2배(E를 절반)로 하려면 표본을 4배로 늘려야 하는 이유가 이 제곱근 구조입니다.</p>
+  <div class="formula">E = z<sub>α/2</sub>·σ/√n &nbsp;&nbsp;&nbsp; ⇐⇒ &nbsp;&nbsp;&nbsp; n = (z<sub>α/2</sub>·σ/E)²</div>
+  <h3>t분포와 정규분포의 관계</h3><p>σ를 모를 때 표본표준편차 s로 표준화한 통계량 t = (x̄ − μ)/(s/√n)은 정규분포가 아니라 <strong>자유도 ν = n−1의 t분포</strong>를 따릅니다(모집단이 정규라는 가정 아래). t분포는 0을 중심으로 대칭이지만 정규분포보다 <strong>꼬리가 두꺼워</strong> 임계값이 더 큽니다 — 자유도 15에서 95% 임계값 2.131 &gt; 1.96. 자유도가 커질수록 t분포는 표준정규분포로 수렴하고, 자유도 30 안팎이면 거의 구분이 안 됩니다. 즉 z는 'σ를 안다'의 임계값, t는 's로 대신한다'는 추가 불확실성의 대가인 셈입니다.</p>
+  <div class="formula">t = (x̄ − μ)/(s/√n) ~ t(n−1) &nbsp;&nbsp;&nbsp; · &nbsp;&nbsp;&nbsp; ν → ∞ 이면 t(ν) → N(0, 1)</div>
+  <h3>비율 추정의 최대 오차한계</h3><p>모비율 신뢰구간 p̂ ± z·√(p̂(1−p̂)/n)에서 p̂(1−p̂)는 p̂ = 0.5일 때 최댓값 0.25를 가집니다. 그래서 여론조사는 보수적으로 p̂ = 0.5를 넣어 표본크기를 설계합니다 — n = z²·0.25/E². E = 3.1%p, 95% 신뢰수준이면 n = 1.96²×0.25/0.031² ≈ 999로, 뉴스에 표본 1,000명이 반복해서 등장하는 이유입니다.</p>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 같은 공장에서 매일 제품 100개를 뽑아 평균 무게의 95% 신뢰구간을 만든다고 해 보세요. 100일치 구간 100개를 겹쳐 그리면 약 95개가 진짜 μ를 지나는 세로선을 포함하고 약 5개는 빗나갑니다. 어느 날 하나가 빗나갔다고 그날의 '계산'이 틀린 게 아닙니다 — 절차가 애초에 5%의 실패율을 허용하도록 설계된 것입니다. 그렇다면 신뢰수준을 99.9%로 올리면 왜 실무에서 잘 쓰지 않을까요? (힌트: 오차한계 E 공식을 보세요)</div>
+</div>
+<h2>🕹️ 직접 해보기 — 신뢰구간 만들기 순서</h2>
+<p>모평균의 신뢰구간을 만드는 절차를 올바른 순서대로 나열해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#7c3aed","prompt":"신뢰구간을 만드는 순서대로 클릭하세요","steps":["① 표본평균 x̄ 계산","② 표준오차 σ/√n 계산","③ 신뢰수준에 맞는 임계값 선택 (z 또는 t)","④ 오차한계 E = 임계값 × 표준오차 계산","⑤ 신뢰구간 x̄ ± E 제시"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해 보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"95% 신뢰수준에서 z 임계값은?","choices":["1.645","1.96","2.576","2.807"],"answer":1},{"q":"신뢰구간이 넓어지는 조건은?","choices":["표본크기를 늘린다","신뢰수준을 낮춘다","신뢰수준을 높인다(95%→99%)","표준오차가 줄어든다"],"answer":2},{"q":"점추정이란?","choices":["하나의 값으로 모수를 추정하는 것","구간으로 모수를 추정하는 것","모수를 확률로 표현하는 것","표본을 두 번 뽑는 것"],"answer":0},{"q":"t분포를 써야 하는 경우는?","choices":["σ를 알고 표본이 클 때","σ를 모르고 표본이 작을 때","비율을 추정할 때","모집단이 이산형일 때"],"answer":1},{"q":"추정량의 불편성이란?","choices":["추정량의 분산이 가장 작다","표본이 커지면 모수에 수렴한다","추정량의 기댓값이 모수와 같다","추정량이 항상 모수보다 크다"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,10);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 중심선: 모평균 μ
+  const muLine=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,-3,0),new THREE.Vector3(0,3,0)]),new THREE.LineBasicMaterial({color:0x1f2430,linewidth:2}));
+  s.add(muLine);
+  const muLbl=lbl('μ (모평균)','#1f2430');muLbl.position.set(0,-3.45,0);s.add(muLbl);
+  const titleLbl=lbl('95% 신뢰수준','#7c3aed');titleLbl.position.set(0,3.35,0);s.add(titleLbl);
+  // 신뢰구간 막대 12개 — 대부분 μ 포함(보라색), 일부 빗나감(빨강)
+  const bars=[];const N=12;let miss=0;
+  for(let i=0;i<N;i++){
+    const cx=(Math.random()-0.5)*2.4;
+    const hw=1.0+Math.random()*0.4;
+    let hit=Math.abs(cx)<=hw;
+    if(!hit)miss++;
+    const geo=new THREE.PlaneGeometry(hw*2,0.2);
+    const mat=new THREE.MeshBasicMaterial({color:hit?0x7c3aed:0xef4444,transparent:true,opacity:0.8,side:THREE.DoubleSide});
+    const bar=new THREE.Mesh(geo,mat);
+    const y=-2.7+i*(5.4/(N-1));
+    bar.position.set(cx,y,0);s.add(bar);
+    const dot=new THREE.Mesh(new THREE.CircleGeometry(0.09,16),new THREE.MeshBasicMaterial({color:0x1f2430}));
+    dot.position.set(cx,y,0.01);s.add(dot);
+    bars.push({bar,dot,y0:y,ph:Math.random()*Math.PI*2,hit});
+  }
+  if(miss===0){const b=bars[N-1];b.bar.position.x=2.0;b.dot.position.x=2.0;b.bar.material.color.setHex(0xef4444);b.hit=false;}
+  // 라벨들
+  const ciLbl=lbl('신뢰구간','#7c3aed');ciLbl.position.set(3.0,2.2,0);s.add(ciLbl);
+  const ptLbl=lbl('점추정 (x̄)','#1f2430');ptLbl.position.set(-2.9,-1.7,0);s.add(ptLbl);
+  const seLbl=lbl('표준오차','#7c3aed');seLbl.position.set(-3.0,0.5,0);s.add(seLbl);
+  const ivLbl=lbl('구간추정','#7c3aed');ivLbl.position.set(3.0,-2.6,0);s.add(ivLbl);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 각 가로 막대가 하나의 신뢰구간, 가운데 점이 점추정값 x̄입니다.','보라색 구간은 모평균 μ를 포함하고, 빨간 구간은 빗나갔습니다.','표본을 100번 뽑으면 약 95개의 구간이 μ를 포함합니다.','신뢰수준을 높이면 구간이 넓어지고, 표본을 키우면 좁아집니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}bars.forEach(o=>{const y=o.y0+Math.sin(T*1.2+o.ph)*0.04;o.bar.position.y=y;o.dot.position.y=y;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

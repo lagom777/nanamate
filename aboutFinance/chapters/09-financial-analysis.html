@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9. 재무분석과 기업가치 — aboutFinance</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">💼 표지</a></li>
+<li><a href="01-basics.html">1. 재무관리란 무엇인가</a></li>
+<li><a href="02-time-value.html">2. 화폐의 시간가치</a></li>
+<li><a href="03-bonds-stocks.html">3. 채권과 주식 평가</a></li>
+<li><a href="04-risk-return.html">4. 위험과 수익률</a></li>
+<li><a href="05-capital-budgeting.html">5. 자본예산: 투자안 평가</a></li>
+<li><a href="06-capital-structure.html">6. 자본비용과 자본구조</a></li>
+<li><a href="07-dividend-policy.html">7. 배당정책</a></li>
+<li><a href="08-working-capital.html">8. 운전자본 관리</a></li>
+<li><a href="09-financial-analysis.html">9. 재무분석과 기업가치</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>재무분석</em>과 기업가치</h1><p class="authors">Chapter 9 — Financial Analysis and Corporate Valuation</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 듀폰 트리(ROE → 3요소)와 재무제표 서류 박스</span>
+<h2>재무분석과 기업가치</h2><p>재무분석(Financial Analysis)은 재무제표를 읽어 기업의 <strong>수익성·안정성·활동성</strong>을 진단하는 일이고, 기업가치평가(Valuation)는 그 진단을 바탕으로 회사의 <strong>값어치</strong>를 매기는 일입니다. 의사가 건강검진 수치로 몸 상태를 판단하듯, 투자자와 경영자는 ROE·유동비율 같은 재무비율로 회사의 건강을 판단하고, DCF·PER 같은 도구로 기업가치를 추정합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>재무제표는 회사의 '<strong>건강검진표</strong>', 재무비율은 '<strong>검진 수치</strong>', 기업가치는 검진 결과를 종합한 '<strong>몸값</strong>'입니다. 숫자 하나하나보다, 숫자들의 <strong>관계</strong>를 읽는 것이 분석의 핵심입니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>재무분석은 <strong>회사의 건강검진표 읽기</strong>, 기업가치 평가는 <strong>회사의 몸값 매기기</strong>예요.</p>
+  <h3>😮 왜 재밌을까?</h3><p>병원 건강검진에서 혈압·혈당·체중을 재면 몸 상태를 알 수 있죠? 🩺 회사도 똑같아요. '이 회사는 돈을 잘 버나?'(<strong>수익성</strong>), '빚을 갚을 힘이 있나?'(<strong>안정성</strong>), '가진 것을 잘 굴리나?'(<strong>활동성</strong>)를 숫자로 재요. 숫자만 볼 줄 알면 뉴스에 나오는 회사의 건강 상태를 스스로 진단할 수 있어요!</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>재무제표</strong>: 회사의 상태를 숫자로 적은 보고서 — 건강검진표</li><li><strong>재무상태표</strong>: 지금 이 순간 가진 것(자산)과 빚(부채)의 사진</li><li><strong>손익계산서</strong>: 한 해 동안 얼마나 벌었는지 적은 성적표</li><li><strong>현금흐름표</strong>: 통장에 실제 돈이 들어오고 나간 기록</li><li><strong>ROE(자기자본이익률)</strong>: 주인 돈으로 얼마나 벌었나 — 순이익 ÷ 자기자본</li><li><strong>듀폰분석</strong>: ROE를 세 조각으로 쪼개 원인을 찾는 기술</li><li><strong>DCF</strong>: 앞으로 벌 돈을 오늘 가치로 바꿔 몸값을 매기는 방법</li><li><strong>IPO(기업공개)</strong>: 회사가 처음으로 주식시장에 주식을 파는 것</li></ul></div>
+  <h3>🍞 쉽게 풀어보기</h3><p>빵집 사장님의 서류철을 열어 볼까요? 🥐 첫째, <strong>재무상태표</strong>는 '오늘' 찍은 사진이에요. 오븐·가게(자산) 1억, 은행 빚(부채) 4천만 원, 내 몫(자본) 6천만 원. 둘째, <strong>손익계산서</strong>는 '올 한 해' 성적표예요. 빵을 팔아 8천만 원을 벌고(매출), 재룟값·월세를 내고 500만 원이 남았어요(순이익). 셋째, <strong>현금흐름표</strong>는 통장 기록이에요. 성적표에 500만 원이 남았다고 적혀 있어도, 손님이 외상으로 사 갔다면 통장에는 돈이 없어요. 그래서 이익이 났는데도 재룟값을 못 내서 문을 닫는 '흑자도산'이 생겨요. 😱</p><p>몸값 매기기도 쉬워요. 이 빵집이 앞으로 매년 500만 원씩 벌 거라면, 그 돈을 전부 오늘 가치로 바꿔 더한 게 회사의 값어치예요 — 이게 <strong>DCF</strong> 생각법이에요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 포털 사이트 금융 페이지에서 아는 회사를 검색해 보세요. PER·PBR·ROE가 바로 나와요. ROE가 10%라는 건, 주인이 넣은 돈 100원으로 1년에 10원을 벌었다는 뜻!</div>
+  <h3>📌 요약</h3><ul><li>재무분석 = 회사의 건강검진표 읽기예요.</li><li>재무제표 3총사: 재무상태표(사진) · 손익계산서(성적표) · 현금흐름표(통장 기록).</li><li>ROE는 '주인 돈으로 얼마나 벌었나'를 보여줘요.</li><li>이익이 나도 현금이 없으면 망할 수 있어요(흑자도산).</li><li>DCF는 앞으로 벌 돈을 오늘 가치로 바꿔 몸값을 매기는 방법이에요.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>재무제표 3종: 분석의 출발점</h3><p><strong>① 재무상태표(Balance Sheet)</strong>: 특정 <strong>시점</strong>의 재무상태를 보여줍니다. 자산 = 부채 + 자기자본이라는 회계등식이 항상 성립하며, 자산은 1년 내 현금화 여부에 따라 유동자산과 비유동자산으로 나뉩니다. <strong>② 손익계산서(Income Statement)</strong>: 일정 <strong>기간</strong>의 경영성과를 보여줍니다. 매출액에서 시작해 매출총이익 → 영업이익 → 당기순이익 순으로 낮아지며, 발생주의 회계(돈이 아니라 거래 발생 시점에 기록)에 따라 작성됩니다. <strong>③ 현금흐름표(Cash Flow Statement)</strong>: 같은 기간 실제 현금의 유입·유출을 영업활동·투자활동·재무활동으로 나눠 보여줍니다. 발생주의와 현금주의의 차이 때문에, 손익계산서의 이익과 현금흐름표의 현금은 어긋날 수 있습니다.</p>
+  <h3>비율분석: 수익성 · 안정성 · 활동성</h3><p><strong>수익성 지표</strong>는 '얼마나 잘 버는가'를 잽니다. <strong>ROE(자기자본이익률) = 순이익 ÷ 자기자본</strong>은 주주 입장의 수익률, <strong>ROA(총자산이익률) = 순이익 ÷ 총자산</strong>은 자산 전체의 효율, <strong>영업이익률 = 영업이익 ÷ 매출액</strong>은 본업의 경쟁력을 봅니다. <strong>안정성 지표</strong>는 '빚을 갚을 힘이 있는가'를 잽니다. <strong>유동비율 = 유동자산 ÷ 유동부채</strong>는 단기 지급능력, <strong>부채비율 = 부채 ÷ 자기자본</strong>은 재무구조의 건전성, <strong>이자보상배율 = 영업이익 ÷ 이자비용</strong>은 이자 감당 여력을 봅니다. <strong>활동성 지표</strong>는 '자산을 잘 굴리는가'를 재며, <strong>총자산회전율 = 매출액 ÷ 총자산</strong>이 대표적입니다.</p>
+  <div class="info-card"><h4>🔢 숫자로 검산해 보기</h4><p>매출 1,000억 · 영업이익 80억 · 순이익 50억 · 총자산 1,000억 · 부채 500억(유동부채 150억) · 자기자본 500억 · 유동자산 300억 · 이자비용 20억인 회사라면 → ROE = 50÷500 = <strong>10%</strong>, ROA = 50÷1,000 = <strong>5%</strong>, 영업이익률 = 80÷1,000 = <strong>8%</strong>, 유동비율 = 300÷150 = <strong>200%</strong>, 부채비율 = 500÷500 = <strong>100%</strong>, 이자보상배율 = 80÷20 = <strong>4배</strong>, 총자산회전율 = 1,000÷1,000 = <strong>1.0회</strong>입니다.</p></div>
+  <h3>듀폰분석과 기업가치평가</h3><p><strong>듀폰분석(DuPont Analysis)</strong>은 ROE를 세 요소의 곱으로 분해합니다. <strong>ROE = (순이익 ÷ 매출액) × (매출액 ÷ 총자산) × (총자산 ÷ 자기자본) = 순이익률 × 총자산회전율 × 재무레버리지</strong>. 위 회사는 5% × 1.0 × 2.0 = 10%로 정확히 일치합니다. ROE가 낮으면 '마진 문제인가, 회전율 문제인가, 레버리지 문제인가'를 추궁할 수 있습니다. <strong>기업가치평가</strong> 방법으로는 ① 미래 현금흐름을 할인율로 현재가치화하는 <strong>DCF(현금흐름할인법)</strong>, ② 비슷한 회사와 배수를 비교하는 <strong>상대가치법</strong> — PER(주가수익비율 = 주가 ÷ 주당순이익), PBR(주가순자산비율 = 주가 ÷ 주당순자산), EV/EBITDA(기업가치 ÷ 상각전영업이익) — 가 있습니다. <strong>IPO(기업공개)</strong>는 비상장기업이 처음으로 주식을 공개시장에 상장하는 과정으로, 이때 공모가를 정하는 데 바로 이 평가 기법들이 쓰입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "ROE가 높으면 무조건 좋은 회사"는 아닙니다. 부채를 많이 쓰면 자기자본이 작아져 재무레버리지가 커지고, 실력이 아니라 빚으로 ROE가 부풀려질 수 있습니다. ROE를 볼 때는 반드시 듀폰 분해로 <strong>출처</strong>를 확인하고, 부채비율·이자보상배율로 대가(위험)도 함께 봐야 합니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>흑자도산: 회계이익과 현금흐름의 괴리</h3><p>손익계산서는 발생주의로, 현금흐름표는 현금주의로 작성됩니다. 매출은 물건을 넘긴 시점에 잡히지만 대금은 외상(외상매출금)으로 몇 달 뒤에 들어오고, 재고자산은 돈은 썼지만 비용이 아직 아닙니다. 매출이 급증할수록 외상매출금·재고가 불어나 현금은 오히려 빠져나가고, 이자와 원금 상환은 기다려주지 않습니다. 이익은 흑자인데 지급불능으로 물러나는 것이 <strong>흑자도산</strong>입니다. 분석가는 그래서 이익 대신 <strong>영업활동현금흐름(OCF)</strong>과 <strong>자유현금흐름(FCF)</strong>을 봅니다.</p>
+  <div class="formula">FCF = 영업활동현금흐름 − 자본적지출(CapEx)</div>
+  <h3>EBITDA의 의미와 한계</h3><p><strong>EBITDA(상각전영업이익) = 영업이익 + 감가상각비 + 무형자산상각비</strong>는 이자(자본구조)·세금(지역 차이)·감가상각(회계정책)의 영향을 걷어내 영업의 현금 창출력에 근사한 지표입니다. 감가상각 정책이 다른 기업 간 비교나 인수 시 EV/EBITDA 배수로 널리 쓰이지만, 설비 재투자(CapEx)와 운전자본 증가를 무시하므로 'EBITDA가 곧 현금'이라는 해석은 위험합니다.</p>
+  <div class="formula">EV(기업가치) = 시가총액 + 순차입금, &nbsp; EV/EBITDA = EV ÷ EBITDA</div>
+  <h3>가치평가의 한계: 가정 민감도</h3><p>DCF의 결과는 할인율(WACC)과 영구성장률(g) 가정에 극도로 민감합니다. 잔여가치(터미널 밸류)는 TV = FCFₙ₊₁ ÷ (WACC − g)로 계산되는데, FCF 100억 · WACC 8%에서 g를 1%에서 2%로 바꾸면 TV는 약 1,429억에서 1,667억으로 <strong>17%</strong>나 뜁니다. 게다가 TV는 전체 기업가치의 절반 이상을 차지하는 경우가 흔해, DCF는 '정답'이 아니라 <strong>가정을 담은 범위 추정</strong>으로 읽어야 하고 민감도 분석(시나리오 표)이 필수입니다. 상대가치법도 비교기업 선정과 시장 과열·침체에 결과가 휘청입니다.</p>
+  <div class="formula">TV = FCFₙ₊₁ / (WACC − g), &nbsp; V = Σₜ FCFₜ / (1 + WACC)ᵗ + TV / (1 + WACC)ⁿ</div>
+  <h3>지배구조와 기업가치: 코리아 디스카운트</h3><p>같은 이익을 내는 기업이라도 지배구조가 취약하면 시장은 할인해서 평가합니다. 한국 증시의 낮은 밸류에이션(PBR 1 미만 기업 다수)을 가리키는 '<strong>코리아 디스카운트</strong>'의 원인으로 지배주주 일가의 사익편취 유인, 낮은 배당 성향, 취약한 소액주주 보호, 지정학적 리스크 등이 꼽힙니다. 이익이 주주에게 돌아오지 않고 오너에게 새면 소액주주가 산 지분가치는 내재가치보다 낮을 수밖에 없습니다 — 가치평가의 마지막 변수는 숫자가 아니라 <strong>거버넌스</strong>입니다.</p>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 두 회사의 올해 순이익이 똑같이 100억 원입니다. A는 현금 장사 위주, B는 외상 매출 위주인데 경기 침체로 거래처 대금 회수가 밀리기 시작했습니다. 둘 중 어느 회사가 먼저 위기에 빠질까요? 그리고 그 위기를 먼저 포착하려면 손익계산서와 현금흐름표 중 어느 것을 봐야 할까요?</div>
+</div>
+<h2>🕹️ 직접 해보기 — 수익성 vs 안정성 분류하기</h2>
+<p>재무비율 지표를 올바른 그룹에 넣으며 복습해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#0f766e","prompt":"재무비율 지표를 수익성과 안정성 그룹으로 분류하세요","groups":[{"name":"수익성 지표","items":["ROE","ROA","영업이익률"]},{"name":"안정성 지표","items":["유동비율","부채비율","이자보상배율"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0f766e","questions":[{"q":"ROE(자기자본이익률)의 정의로 옳은 것은?","choices":["순이익 ÷ 자기자본","영업이익 ÷ 매출액","유동자산 ÷ 유동부채","부채 ÷ 자기자본"],"answer":0},{"q":"듀폰분석에서 ROE를 구성하는 3요소는?","choices":["유동비율·부채비율·이자보상배율","순이익률·총자산회전율·재무레버리지","PER·PBR·EV/EBITDA","매출총이익·영업이익·당기순이익"],"answer":1},{"q":"유동비율이 높을수록 일반적으로 어떤 의미인가?","choices":["수익성이 낮다","성장성이 둔화된다","단기 지급능력이 양호하다","부채가 과다하다"],"answer":2},{"q":"DCF(현금흐름할인법)의 의미로 옳은 것은?","choices":["장부가액으로 기업을 평가하는 방법","주가수익비율로 기업을 평가하는 방법","감가상각 전 이익으로 평가하는 방법","미래 현금흐름을 할인해 현재가치로 평가하는 방법"],"answer":3},{"q":"재무상태표가 보여주는 것은?","choices":["일정 기간의 경영성과","특정 시점의 자산·부채·자기자본 상태","일정 기간의 현금 유입과 유출","미래 예상 매출액"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,10);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 듀폰 트리: ROE 꼭짓점
+  const roe=new THREE.Mesh(new THREE.SphereGeometry(0.7,20,20),new THREE.MeshBasicMaterial({color:0x0f766e}));roe.position.set(0,2.2,0);s.add(roe);
+  const roeLbl=lbl('ROE','#0f766e');roeLbl.position.set(0,3.2,0);s.add(roeLbl);
+  // 3요소 가지
+  const parts=[['순이익률','#14b8a6',-2.8],['총자산회전율','#f59e0b',0],['재무레버리지','#22c55e',2.8]];
+  const nodes=[];
+  for(let i=0;i<parts.length;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.5,16,16),new THREE.MeshBasicMaterial({color:parseInt(parts[i][1].slice(1),16)}));m.position.set(parts[i][2],-0.8,0);s.add(m);nodes.push({m,by:-0.8,ph:i});const t=lbl(parts[i][0],parts[i][1]);t.position.set(parts[i][2],-0.05,0);s.add(t);s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([roe.position.clone(),m.position.clone()]),new THREE.LineBasicMaterial({color:parseInt(parts[i][1].slice(1),16),transparent:true,opacity:0.35})));}
+  // 서류 박스(재무제표 3종) + DCF 라벨
+  const docs=[];
+  for(let i=0;i<3;i++){const b=new THREE.Mesh(new THREE.BoxGeometry(1.2,0.16,1.6),new THREE.MeshBasicMaterial({color:0x94a3b8}));b.position.set(4.6,-1.7+i*0.3,0);b.rotation.y=(i-1)*0.12;s.add(b);docs.push(b);}
+  const dcfLbl=lbl('DCF','#0f766e');dcfLbl.position.set(4.6,-0.55,0);s.add(dcfLbl);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 듀폰 트리: ROE가 세 요소로 분해됩니다.','ROE = 순이익률 × 총자산회전율 × 재무레버리지','서류 박스는 재무제표 3종 — 모든 분석의 출발점입니다.','DCF: 미래 현금흐름을 현재가치로 할인해 기업가치를 매깁니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}roe.rotation.y+=0.01;for(let i=0;i<nodes.length;i++){nodes[i].m.position.y=nodes[i].by+Math.sin(T*2+nodes[i].ph)*0.08;}s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

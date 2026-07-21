@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8. 논증분석과 평가 — aboutLEET</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">⚖️ 표지</a></li>
+<li><a href="01-about.html">1. LEET이란 무엇인가</a></li>
+<li><a href="02-verbal-basics.html">2. 언어이해: 지문 읽기의 기초</a></li>
+<li><a href="03-verbal-advanced.html">3. 언어이해: 문제 유형 공략</a></li>
+<li><a href="04-legal-texts.html">4. 법률 지문 읽기</a></li>
+<li><a href="05-logic-basics.html">5. 추리논증: 명제와 논리 기초</a></li>
+<li><a href="06-deduction.html">6. 연역논증</a></li>
+<li><a href="07-induction.html">7. 귀납·인과 논증</a></li>
+<li><a href="08-argument.html">8. 논증분석과 평가</a></li>
+<li><a href="09-strategy.html">9. 실전 전략과 학습 계획</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1>논증분석과 평가</h1><p class="authors">Chapter 8 — Analyzing and Evaluating Arguments</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 전제 기둥이 결론 지붕을 받칩니다 — 빨간 깃발은 논리적 오류</span>
+<h2>논증분석과 평가란 무엇인가</h2><p>논증(argument)은 <strong>전제(premise)에서 결론(conclusion)을 이끌어 내는 진술의 묶음</strong>입니다. 전제는 근거가 되는 진술이고, 결론은 그 근거로 주장하려는 진술입니다. 추리논증 영역의 후반부 — 가정 찾기, 논증 강화·약화, 오류 식별 — 은 모두 이 구조를 얼마나 정확히 분해하고 평가하느냐를 묻습니다. 5~7장에서 배운 명제·연역·귀납을 실제 논증 평가에 적용하는 종합 단원입니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>논증 평가의 출발점은 구조 파악입니다 — 무엇이 결론이고 무엇이 전제인지, 그리고 둘 사이에 숨어 있는 <strong>가정</strong>은 무엇인지. 구조가 보이면, "전제가 참이어도 결론이 거짓일 수 있는가"라는 <strong>반례</strong> 검토로 논증의 빈틈을 찾을 수 있습니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>논증은 <strong>집</strong>과 같아요. 기둥(전제)이 튼튼해야 지붕(결론)이 물러지지 않아요. 🏠 기둥이 약하거나 빠져 있으면 지붕이 기울어요!</p>
+  <h3>😮 왜 재밌을까?</h3><p>친구가 "숙제를 안 했어. <strong>그러므로</strong> 오늘 놀아도 돼!"라고 말한다고 해 봐요. 이상하지 않나요? 🤔 "그러므로" 뒤에 나온 말이 <strong>결론</strong>, 앞의 이유가 <strong>전제</strong>예요. 그런데 이유(숙제를 안 함)에서 결론(놀아도 됨)이 따라오지 않죠? 이렇게 이유와 결론 사이의 빈틈을 찾는 게 논증분석이에요. 마치 다리가 끊긴 곳을 찾는 탐정 놀이 같아요. 🔍</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>논증</strong>: 이유(전제)를 들어 주장(결론)을 펴는 말 묶음</li><li><strong>전제</strong>: 결론을 뒷받침하는 근거 — 집의 기둥</li><li><strong>결론</strong>: 전제로 주장하려는 내용 — 집의 지붕 ("따라서·그러므로·때문에" 뒤에 자주 나와요)</li><li><strong>가정</strong>: 말하지 않았지만 논증이 성립하려면 참이어야 하는 숨은 전제</li><li><strong>반례</strong>: 전제는 참인데 결론이 거짓인 경우 — 논증의 빈틈을 보여 줘요</li><li><strong>논리적 오류</strong>: 그럴듯해 보이지만 잘못된 논증 방식 (예: 사람을 공격하는 인신공격)</li></ul></div>
+  <h3>🏠 쉽게 풀어보기</h3><p>"모든 새는 날 수 있다. 펭귄은 새다. 그러므로 펭귄은 날 수 있다." — 결론이 틀렸어요! 어디가 문제일까요? 첫 번째 기둥(모든 새는 난다)이 거짓이에요. 기둥이 틀렸으니 지붕도 못 믿어요. 🐧</p><p>또 "너는 어제 거짓말을 했어. 그러니까 네 말은 못 믿어!"처럼 <strong>사람</strong>을 공격해서 주장을 물러지게 하는 건 <strong>인신공격</strong>이라는 오류예요. 말싸움에서 자주 나오는 나쁜 버릇들에 이름표를 붙여 두면, 시험에서 바로 알아볼 수 있어요. 🚩</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 결론을 먼저 찾으세요! "따라서", "그러므로", "그래서 ~해야 한다", "~인 것이다" 같은 표지 뒤에 결론이 숨어 있는 경우가 많아요. 결론을 찾으면 나머지는 전부 그 결론을 받치는 기둥(전제)입니다.</div>
+  <h3>📌 요약</h3><ul><li>논증 = 전제(기둥) + 결론(지붕)이에요. 🏠</li><li>결론은 "따라서·그러므로·때문에" 같은 표지로 찾아요.</li><li>가정은 안 말했지만 참이어야 하는 숨은 기둥이에요.</li><li>반례: 기둥은 튼튼한데 지붕이 물러지는 경우 — 논증이 잘못됐다는 증거예요.</li><li>인신공격·허수아비 같은 오류 이름을 외워 두면 문제가 쉬워져요. 🚩</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>논증의 구조와 결론 찾기</h3><p>논증은 <strong>전제 → 결론</strong>의 구조를 가집니다. 분석의 첫 단계는 결론 식별입니다. 결론 표지에는 <em>따라서·그러므로·그래서·그 결과·그러니까·~인 것이다</em> 등이, 전제 표지에는 <em>왜냐하면·~이므로·~때문에·~이라는 점에서</em> 등이 있습니다. 표지가 없으면 "다른 진술들이 무엇을 뒷받침하는가"를 물어 결론을 판별합니다. 결론이 확정되면 나머지 진술은 전제이며, 각 전제가 결론에 어떻게 연결되는지 도식해 볼 수 있습니다.</p>
+  <h3>가정(숨은 전제) 찾기</h3><p><strong>가정</strong>은 논증에 명시되지 않았지만, 그 논증이 성립하려면 참이어야 하는 전제입니다. 예: "그 약은 부작용이 심하다. 따라서 판매를 금지해야 한다." — 여기에는 "부작용이 심한 약은 (치료 효과를 고려하더라도) 판매를 금지할 만큼 위해하다"는 가정이 숨어 있습니다. 가정 문제의 핵심 기법은 <strong>부정 검사</strong>입니다: 보기를 부정했을 때 논증이 물러진다면, 그 보기가 가정입니다. 위 예에서 "부작용이 심할지라도 치료 효과가 훨씬 커서 금지할 이유가 없다"가 참이면 결론이 성립하지 않으므로, 그 부정(금지할 만큼 위해하다)이 가정임이 확인됩니다.</p>
+  <h3>논증 평가 3질문과 반례</h3><p>논증을 평가할 때 묻는 세 가지 질문은 다음과 같습니다. ① <strong>전제는 참인가</strong> — 근거 자체가 사실인지. ② <strong>결론이 따라오는가</strong> — 전제가 참일 때 결론이 (필연적으로 또는 높은 확률로) 따라오는지. ③ <strong>숨은 가정은 합리적인가</strong> — 논증이 의존하는 가정이 받아들일 만한지. 이 중 ②를 검토하는 도구가 <strong>반례</strong>입니다: 전제가 모두 참인데 결론이 거짓인 상황이 가능하다면, 그 추론은 타당하지 않습니다. 반례 하나면 논증의 연결 고리가 끊어짐을 보일 수 있습니다.</p>
+  <div class="info-card"><h4>⚖️ 비형식 논리 오류 6가지</h4><ul><li><strong>순환논증</strong>: 결론을 전제 안에 미리 넣는 오류 ("A는 옳다. 왜냐하면 A가 옳기 때문이다"와 같은 구조)</li><li><strong>성급한 일반화</strong>: 적거나 편향된 사례에서 전체에 대한 결론을 끌어내는 오류</li><li><strong>인신공격</strong>: 주장의 내용이 아니라 주장하는 사람을 공격해 반박하는 오류</li><li><strong>허수아비</strong>: 상대의 주장을 왜곡·과장한 뒤 그 왜곡된 것을 공격하는 오류</li><li><strong>흑백논리</strong>: 가능한 선택지가 더 있는데 둘 중 하나뿐인 것처럼 몰아가는 오류</li><li><strong>감정 호소</strong>: 논거 대신 동정·공포·분노 등 감정을 자극해 수긍을 이끄는 오류</li></ul></div>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "반례가 있으면 결론이 거짓"이라고 생각하기 쉽지만, 다릅니다. 반례가 보여 주는 것은 <strong>추론 방식의 결함</strong> — 즉 전제에서 결론이 따라오지 않는다는 사실이지, 결론 자체의 거짓이 아닙니다. 연역 논증에서도 반례는 타당성을 깨는 것이지 결론의 참·거짓을 직접 정하지 않습니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>가정 문제와 강화·약화의 관계</h3><p>가정·강화·약화 문제는 한 논증을 서로 다른 방향에서 건드리는 세 유형입니다. <strong>가정</strong>은 논증이 성립하기 위한 필요조건 — 그것이 거짓이면 논증이 물러지는 진술입니다. <strong>약화</strong>는 결론의 신빙성을 낮추는 진술이고, <strong>강화</strong>는 높이는 진술입니다. 관계를 정리하면: 가정의 부정은 강력한 약화 선지가 되고, 가정의 긍정(또는 반례 가능성의 배제)은 강화 선지가 됩니다. 예: "인터뷰에서 불합격한 지원자는 업무 능력이 부족한 것이다. 그러므로 불합격 통보를 받은 그는 업무 능력이 부족하다" — "인터뷰 불합격이 업무 능력 부족 외의 사정(면접 당일 컨디션 등)에서 비롯될 수 있다"는 선지는 약화, 그 가능성을 배제하는 선지는 강화입니다. 다만 약화·강화는 가정과 달리 필요조건일 필요가 없으므로, 부정 검사는 가정 문제에만 적용하는 것이 원칙입니다.</p>
+  <h3>논증 구조도: 직렬·병렬·수렴</h3><p>복잡한 논증은 전제들의 연결 방식으로 도식화합니다. <strong>직렬(연쇄) 구조</strong>는 전제 → 중간결론 → 최종결론으로 이어지는 사슬입니다 — 한 고리라도 끊어지면 전체가 물러집니다. <strong>병렬(독립) 구조</strong>는 여러 전제가 각각 독립적으로 같은 결론을 받칩니다 — 하나가 물러져도 나머지가 결론을 지지할 수 있습니다. <strong>수렴(결합) 구조</strong>는 여러 전제가 합쳐져야 비로소 결론을 받칩니다 — 어느 하나가 빠지면 나머지만으로는 결론이 따라오지 않습니다. 구조를 파악해야 "어느 전제를 공격하면 논증이 가장 크게 약화되는가"를 판단할 수 있고, 강화·약화 문제에서 선지의 작용 지점이 보입니다.</p>
+  <h3>오류 식별 훈련</h3><p>예시 문장에서 오류를 이름 붙여 보세요. ① "이 법은 정의롭다. 왜냐하면 정의로운 법이기 때문이다." → <strong>순환논증</strong>(결론이 전제에 포함). ② "우리 동네 식당 세 곳이 맛없었다. 이 동네 식당은 다 맛없다." → <strong>성급한 일반화</strong>. ③ "저 경제학자의 주장은 믿을 수 없다. 이혼을 두 번이나 했으니까." → <strong>인신공격</strong>. ④ "규제를 완화하자고? 기업이 마음대로 유해 물질을 배출할지라도 좋다는 말이군." → <strong>허수아비</strong>(상대 주장의 왜곡). ⑤ "나를 찍지 않으면 나라가 망한다." → <strong>흑백논리</strong>이자 <strong>감정 호소</strong>(공포). 이처럼 실제 문장에서는 오류가 겹쳐 나타날 수 있음에 유의하세요.</p>
+  <h3>비판적 평가의 한계</h3><p>오류를 지적하는 것과 결론을 반박하는 것은 다릅니다. 인신공격 오류가 담긴 반박이라 할지라도 원래 주장이 옳다는 뜻은 아니며, 논증에 오류가 있어도 결론 자체는 참일 수 있습니다(잘못된 근거로 참에 도달하는 경우). 오류 식별은 "이 논증으로는 결론을 받아들일 수 없다"까지를 말할 뿐, "결론이 거짓이다"를 말하지 않습니다. 오류를 범한 주장 자체가 거짓이라고 단정하는 것 역시 오류('오류의 오류'라고도 불림)라는 점을 기억하세요.</p>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> "대중의 다수가 이 주장을 지지한다. 따라서 이 주장은 옳다." 이 논증의 가정은 무엇이며, 어떤 반례가 가능한가요? 그리고 이 논증에 오류(다수에의 호소)가 있더라도 결론이 참일 가능성은 남아 있을까요? 오류 지적과 결론 반박의 차이를 이 사례로 구분해 보세요.</div>
+</div>
+<h2>🕹️ 직접 해보기 — 논리 오류 짝맞추기</h2>
+<p>비형식 논리 오류의 이름과 설명을 짝지어 복습해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#b91c1c","prompt":"논리 오류와 올바른 설명을 짝지으세요","pairs":[{"term":"순환논증","def":"결론을 전제 안에 미리 포함하는 오류"},{"term":"성급한 일반화","def":"적거나 편향된 사례에서 전체에 대한 결론을 끌어내는 오류"},{"term":"인신공격","def":"주장의 내용이 아니라 주장하는 사람을 공격하는 오류"},{"term":"허수아비","def":"상대의 주장을 왜곡한 뒤 그것을 공격하는 오류"},{"term":"흑백논리","def":"가능한 선택지가 더 있는데 둘뿐인 것처럼 몰아가는 오류"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해 보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b91c1c","questions":[{"q":"논증에서 '가정'이란?","choices":["결론을 반복하는 진술","명시되지 않았지만 논증이 성립하려면 참이어야 하는 숨은 전제","결론을 뒷받침하는 통계 자료","논증과 무관한 배경 지식"],"answer":1},{"q":"반례가 논증 평가에서 하는 역할은?","choices":["전제가 모두 참이어도 결론이 거짓일 수 있음을 보여 추론의 결함을 드러낸다","결론이 거짓임을 직접 증명한다","전제의 개수를 늘린다","논증의 결론을 강화한다"],"answer":0},{"q":"다음 중 순환논증인 것은?","choices":["비가 오므로 우산을 가져가야 한다","상대방이 거짓말쟁이니 그의 주장은 틀렸다","이 법은 정의롭다. 왜냐하면 정의로운 법이기 때문이다","우리 반 친구 세 명이 떨어졌으니 이 시험은 모두가 떨어지는 시험이다"],"answer":2},{"q":"허수아비 오류란?","choices":["감정을 자극해 수긍을 이끄는 오류","선택지가 둘뿐인 것처럼 몰아가는 오류","증거 없이 결론을 단정하는 오류","상대의 주장을 왜곡·과장한 뒤 그 왜곡된 것을 공격하는 오류"],"answer":3},{"q":"논증 평가 3질문에 해당하지 않는 것은?","choices":["전제는 참인가","전제가 참일 때 결론이 따라오는가","숨은 가정은 합리적인가","논증자의 학력은 충분한가"],"answer":3}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,10);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 전제 기둥 3개
+  const pilXs=[-2.6,0,2.6];
+  pilXs.forEach(function(px){const p=new THREE.Mesh(new THREE.CylinderGeometry(0.3,0.42,2.8,16),new THREE.MeshBasicMaterial({color:0xb91c1c,wireframe:true}));p.position.set(px,-0.9,0);s.add(p);});
+  const pilLbl=lbl('전제','#b91c1c');pilLbl.position.set(-2.6,-2.7,0);s.add(pilLbl);
+  // 가정: 숨은 기둥(점선 느낌의 반투명 실선)
+  const hiddenPil=new THREE.Mesh(new THREE.CylinderGeometry(0.24,0.34,2.8,16),new THREE.MeshBasicMaterial({color:0xf59e0b,wireframe:true,transparent:true,opacity:0.7}));hiddenPil.position.set(1.3,-0.9,-1.6);s.add(hiddenPil);
+  const hidLbl=lbl('가정','#d97706');hidLbl.position.set(1.3,-2.7,-1.6);s.add(hidLbl);
+  // 결론 지붕
+  const roof=new THREE.Mesh(new THREE.ConeGeometry(3.4,1.4,4),new THREE.MeshBasicMaterial({color:0xdc2626}));roof.position.y=1.2;roof.rotation.y=Math.PI/4;s.add(roof);
+  const roofLbl=lbl('결론','#b91c1c');roofLbl.position.set(0,2.6,0);s.add(roofLbl);
+  // 반례: 지붕을 흔드는 화살표
+  const arrow=new THREE.Mesh(new THREE.ConeGeometry(0.22,0.9,10),new THREE.MeshBasicMaterial({color:0x0ea5e9}));arrow.position.set(-4.2,1.2,0);arrow.rotation.z=-Math.PI/2;s.add(arrow);
+  const arrowShaft=new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.06,1.2,8),new THREE.MeshBasicMaterial({color:0x0ea5e9}));arrowShaft.position.set(-5.1,1.2,0);arrowShaft.rotation.z=-Math.PI/2;s.add(arrowShaft);
+  const arrLbl=lbl('반례','#0284c7');arrLbl.position.set(-4.6,0.2,0);s.add(arrLbl);
+  // 논리적 오류: 빨간 깃발들
+  const flags=[];
+  [[4.4,-1.6,0.6],[5.2,-0.4,-1.0],[4.0,0.4,1.4]].forEach(function(v){const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,1.6,8),new THREE.MeshBasicMaterial({color:0x64748b}));pole.position.set(v[0],v[1],v[2]);s.add(pole);const flag=new THREE.Mesh(new THREE.PlaneGeometry(0.9,0.5),new THREE.MeshBasicMaterial({color:0xef4444,side:THREE.DoubleSide}));flag.position.set(v[0]+0.48,v[1]+0.55,v[2]);s.add(flag);flags.push(flag);});
+  const flagLbl=lbl('논리적 오류','#dc2626');flagLbl.position.set(4.7,-2.6,0);s.add(flagLbl);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 전제 기둥들이 결론 지붕을 받치는 구조입니다.','가정: 말하지 않았지만 참이어야 하는 숨은 기둥입니다.','반례: 전제는 참인데 결론이 거짓인 경우 — 추론의 빈틈입니다.','빨간 깃발은 인신공격·허수아비 같은 논리적 오류입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',function(e){md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',function(){md=false;});c.addEventListener('mousemove',function(e){if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}roof.position.y=1.2+Math.sin(T*1.5)*0.05;arrow.position.x=-4.2+Math.sin(T*3)*0.15;flags.forEach(function(f,i){f.rotation.y=Math.sin(T*2+i)*0.3;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',function(){cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

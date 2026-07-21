@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4. 확률분포 — aboutBizStats</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">📊 표지</a></li>
+<li><a href="01-basics.html">1. 통계학이란 무엇인가</a></li>
+<li><a href="02-descriptive.html">2. 기술통계: 자료의 요약</a></li>
+<li><a href="03-probability.html">3. 확률의 기초</a></li>
+<li><a href="04-distributions.html">4. 확률분포</a></li>
+<li><a href="05-sampling.html">5. 표본추출과 표본분포</a></li>
+<li><a href="06-estimation.html">6. 모수추정과 신뢰구간</a></li>
+<li><a href="07-hypothesis.html">7. 가설검정</a></li>
+<li><a href="08-regression.html">8. 상관과 회귀분석</a></li>
+<li><a href="09-decision.html">9. 통계적 의사결정</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1>불확실성의 지도, <em>확률분포</em></h1><p class="authors">Chapter 4 — Probability Distributions</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 종형 곡선과 68-95-99.7 구간을 돌려 보세요</span>
+<h2>확률분포</h2><p>확률분포(probability distribution)는 <strong>확률변수가 어떤 값을 어느 정도 확률로 갖는지</strong>를 보여 주는 모형입니다. 결과는 매번 달라져도 그 퍼진 모양에는 규칙이 있습니다. 불량품 수, 콜센터에 걸려오는 전화 건수, 일일 매출처럼 매번 달라지는 수치를 다루는 경영 문제에서 확률분포는 "일어날 수 있는 일과 그 가능성"을 숫자로 정리하는 지도 역할을 합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>셀 수 있는 값(불량 수, 전화 건수)은 <strong>이산분포</strong> — 이항분포·포아송분포, 끊기지 않는 연속적인 값(대기시간, 시험점수)은 <strong>연속분포</strong> — 정규분포·지수분포로 다룹니다. 모든 분포는 <strong>기대값(평균)</strong>과 <strong>분산(퍼짐)</strong>으로 요약할 수 있습니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>확률분포는 <strong>"어떤 값이 얼마나 자주 나오는지"를 그림으로 보여 주는 지도</strong>예요. 결과가 매번 달라져도, 그 퍼진 모양에는 규칙이 있어요. 🗺️</p>
+  <h3>🪙 동전 10번 던지기</h3><p>동전을 10번 던지면 앞면이 몇 번 나올까요? 매번 달라요. 그런데 이 실험을 수천 번 반복해서 기록하면 신기한 일이 생겨요 — <strong>5번 앞면이 제일 많고(약 25%)</strong>, 4~6번 사이가 약 66%, 0번이나 10번처럼 극단적인 결과는 1,000번에 한 번꼴이에요. 이 "자주 나오는 횟수 지도"가 바로 <strong>이항분포</strong>예요.</p>
+  <h3>🔔 종 모양의 비밀</h3><p>전국 학생들의 시험점수를 그래프로 그리면 종 🔔 모양이 돼요. 평균 근처에 학생이 가장 많고, 아주 낮거나 아주 높은 점수는 드물죠. 이걸 <strong>정규분포</strong>라고 해요. 평균이 70점이고 점수가 퍼진 폭(표준편차)이 10점이면, 60~80점 사이에 학생의 약 68%, 50~90점 사이에 약 95%가 들어가요. 요술 같은 <strong>"68-95-99.7 규칙"</strong>이에요! ✨</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>확률변수</strong>: 실험 결과에 붙인 숫자(앞면 횟수)</li><li><strong>이산분포</strong>: 셀 수 있는 값의 분포(이항분포·포아송분포)</li><li><strong>연속분포</strong>: 끊기지 않는 값의 분포(정규분포·지수분포)</li><li><strong>기대값</strong>: 오래 반복했을 때 평균적으로 나오는 값</li><li><strong>표준편차</strong>: 평균에서 얼마나 퍼져 있는지를 재는 자</li></ul></div>
+  <h3>📞 생활 속 분포 찾기</h3><p>콜센터에 1시간에 평균 10통의 전화가 온다면, 어떤 시간은 7통, 어떤 시간은 13통이에요. 이렇게 "일정 시간에 몇 번 일어나는가"의 횟수는 <strong>포아송분포</strong>를 따라요. 그리고 다음 전화가 올 때까지 기다리는 시간은 <strong>지수분포</strong>예요! 분포를 알면 "상담원을 몇 명 배치할까?" 같은 결정을 감이 아니라 숫자로 할 수 있어요. 💪</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 동전 10개를 한꺼번에 던져 앞면 개수를 적는 걸 20번 반복해 보세요. 5에 가까운 숫자가 많이 나올 거예요 — 여러분 손으로 직접 이항분포를 그려 보는 거예요!</div>
+  <h3>📌 요약</h3><ul><li>확률분포 = "어떤 값이 얼마나 자주?"를 보여 주는 지도예요.</li><li>동전 10번의 앞면 횟수 → 이항분포, 기대값은 10×0.5=5번.</li><li>시험점수처럼 종 모양 → 정규분포. 68-95-99.7 규칙을 기억해요!</li><li>시간당 전화 건수처럼 "몇 번?" → 포아송분포.</li><li>분포를 알면 불확실한 미래도 숫자로 준비할 수 있어요.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>확률변수와 기대값</h3><p><strong>확률변수(random variable)</strong>는 확률실험의 각 결과에 숫자를 대응시킨 변수입니다. 동전 10번 던지기의 '앞면 횟수'처럼 셀 수 있는 값은 <strong>이산확률변수</strong>, 대기시간·키처럼 연속적인 값은 <strong>연속확률변수</strong>입니다. 이산확률변수의 기대값은 E(X)=Σx·p(x), 즉 각 값에 확률을 곱해 모두 더한 확률 가중평균입니다. 주사위 한 번의 눈은 E(X)=1×1/6+2×1/6+…+6×1/6=3.5입니다. 기대값은 '가장 잘 나오는 값'이 아니라 '오래 반복했을 때의 평균'이며, 분산 Var(X)=E[(X−μ)²]과 그 제곱근인 표준편차 σ는 평균 주변의 퍼짐 정도를 잡니다.</p>
+  <h3>이산분포 — 이항분포와 포아송분포</h3>
+  <div class="info-card"><h4>📊 주요 확률분포 한눈에 보기</h4><ul><li><strong>이항분포 B(n,p)</strong>: n번 시행의 성공 횟수 — E(X)=np, Var(X)=np(1−p) — 불량품 수</li><li><strong>포아송분포</strong>: 단위시간당 발생 횟수 — E(X)=Var(X)=λ — 시간당 전화 건수</li><li><strong>기하분포</strong>: 첫 성공까지의 시행 횟수 — E(X)=1/p — 첫 불량까지의 검사 개수</li><li><strong>정규분포 N(μ,σ²)</strong>: 종형·대칭 연속분포 — 시험점수·제품 무게</li><li><strong>균등분포</strong>: 구간의 모든 값이 같은 확률밀도 — 난수 생성</li><li><strong>지수분포</strong>: 사건 사이의 대기시간 — E(X)=1/λ — 고장까지 걸리는 시간</li></ul></div>
+  <p>이항분포 B(n,p)는 성공확률이 p로 일정한 시행을 독립적으로 n번 반복할 때의 성공 횟수 분포입니다. 기대값은 np, 분산은 np(1−p)입니다. 불량률 2%인 라인에서 100개를 검사하면 불량품 수는 B(100, 0.02)를 따르고, 기대값 2개·분산 1.96(표준편차 1.4개)입니다. <strong>포아송분포</strong>는 단위시간(또는 단위공간)당 평균 λ회 발생하는 사건의 횟수 분포로, 콜센터 전화·서버 접속·설비 고장 건수처럼 '드문 사건의 횟수'에 적합하며 기대값과 분산이 모두 λ라는 특징이 있습니다.</p>
+  <h3>정규분포와 표준정규분포</h3><p>정규분포는 평균 μ를 중심으로 좌우대칭인 종형 곡선이며, 표준편차 σ가 곡선의 폭을 결정합니다. <strong>68-95-99.7 규칙</strong>: μ±1σ 안에 약 68%, μ±2σ 안에 약 95%, μ±3σ 안에 약 99.7%의 자료가 들어갑니다. 평균 70·표준편차 10인 시험이라면 60~80점 사이에 전체의 약 68%가 있습니다. 서로 다른 정규분포를 비교하기 위해 <strong>Z=(X−μ)/σ</strong>로 표준화하면 평균 0·표준편차 1인 표준정규분포 N(0,1)이 되어, 표준정규분포표 하나로 모든 정규확률을 구할 수 있습니다. 85점은 Z=(85−70)/10=1.5, 즉 '평균보다 1.5σ 위'라는 뜻입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> 68-95-99.7 규칙은 정규분포에 가까운 자료에서만 성립합니다. 소득·대기시간처럼 한쪽 꼬리가 긴 오른쪽 편포 자료에 그대로 적용하면 크게 틀립니다. 또한 기대값이 '실제로 나올 수 있는 값'이라는 뜻도 아닙니다 — 주사위의 기대값 3.5는 결코 나올 수 없는 눈입니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>이항분포의 정규근사와 연속성 수정</h3><p>n이 크면 이항확률을 일일이 계산하기 어렵습니다. np≥5이고 n(1−p)≥5이면 이항분포는 평균 np·분산 np(1−p)의 정규분포로 잘 근사합니다(드무아브르–라플라스 정리, 중심극한정리의 특수한 경우).</p>
+  <div class="formula">B(n,p) ≈ N(np, np(1−p))  (조건: np≥5, n(1−p)≥5)</div>
+  <p>이산분포를 연속분포로 바꾸어 근사하므로 경계에 0.5를 더하거나 빼는 <strong>연속성 수정(continuity correction)</strong>을 적용합니다. n=100, p=0.5에서 P(X≤45)를 구하면 np=50, np(1−p)=25(σ=5)이고, 연속성 수정 적용 시 P(Y≤45.5)=Φ((45.5−50)/5)=Φ(−0.9)≈0.184로 실제 이항확률 0.184와 거의 일치합니다. 수정 없이 Φ(−1)=0.159를 쓰면 오차가 눈에 띄게 커집니다.</p>
+  <div class="formula">P(X≤k) ≈ P(Y≤k+0.5) = Φ((k+0.5−np) / √(np(1−p)))</div>
+  <h3>표준화의 의미</h3><p>표준화 Z=(X−μ)/σ는 단위를 없애고 '평균에서 표준편차 몇 개만큼 떨어져 있는가'로 위치를 재표현하는 것입니다. 덕분에 시험점수(σ=10점)와 키(σ=6cm)처럼 단위가 다른 변수도 Z점수로 직접 비교할 수 있고, 퍼센타일 계산도 표준정규분포표 하나로 통일됩니다. 관리도에서 'μ±3σ 밖의 관측치는 이상 신호'로 보는 품질관리의 기본 판단(밖으로 나갈 확률 약 0.27%)도 이 표준화 사고의 산물입니다.</p>
+  <div class="formula">Z = (X−μ)/σ ~ N(0,1)  ⇔  X = μ + Zσ</div>
+  <h3>경영 응용 — 재고와 대기시간 모델</h3><p>재고관리에서 리드타임 동안의 수요를 정규분포 N(μ,σ²)로 모델링하면 <strong>안전재고 = Z×σ</strong>로 결정합니다. 리드타임 수요가 평균 100개·표준편차 20개일 때 결품률 약 2.3%(상위 꼬리, Z≈2)를 허용하는 정책이라면 안전재고는 2×20=40개, 재주문점은 100+40=140개입니다. 대기시간 분석에서 포아송분포와 지수분포는 짝을 이룹니다 — 시간당 도착이 평균 λ명의 포아송 과정이면 도착 간격은 평균 1/λ의 지수분포입니다. 창구 하나에 시간당 20명 도착(λ)·시간당 25명 처리 가능(μ)한 M/M/1 대기모형에서는 평균 체류시간이 1/(μ−λ)=1/5시간=12분, 시스템 이용률이 λ/μ=80%입니다. μ≤λ이면 대기열이 무한히 길어지므로 μ>λ가 필수 조건입니다.</p>
+  <div class="formula">M/M/1: 평균 체류시간 W = 1/(μ−λ), 이용률 ρ = λ/μ (단, μ>λ)</div>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 두 지점의 일매출이 모두 평균 100만 원이지만 A지점은 σ=5만 원, B지점은 σ=30만 원이라고 합시다. "매출이 80만 원 이하로 떨어지는 날"은 어느 지점에서 더 자주 일어날까요? Z값으로 비교해 보세요. (A: Z=(80−100)/5=−4로 거의 일어나지 않음 / B: Z≈−0.67로 약 25%의 날이 해당 — 평균이 같아도 σ가 크면 하방 리스크가 커집니다)</div>
+</div>
+<h2>🕹️ 직접 핵보기 — 이산분포 vs 연속분포 분류</h2>
+<p>각 확률분포를 알맞은 바구니에 넣어 복습해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#7c3aed","prompt":"각 확률분포를 이산분포·연속분포로 분류하세요","groups":[{"name":"이산분포","items":["이항분포","포아송분포","기하분포"]},{"name":"연속분포","items":["정규분포","균등분포","지수분포"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해 보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"이항분포 B(10, 0.5)의 기대값은?","choices":["2.5","5","10","7.5"],"answer":1},{"q":"정규분포에서 μ±2σ 범위 안에 들어가는 자료는 약 몇 %인가?","choices":["약 50%","약 68%","약 95%","약 99.7%"],"answer":2},{"q":"Z=(X−μ)/σ로 구한 Z값이 2라는 것의 의미는?","choices":["평균보다 값이 2만큼 크다","평균에서 표준편차 2개만큼 떨어져 있다","해당 값이 나올 확률이 2%다","분산이 2라는 뜻이다"],"answer":1},{"q":"포아송분포가 적합한 사례는?","choices":["콜센터에 시간당 걸려오는 전화 건수","전국 학생들의 시험점수","동전 10번 던지기의 앞면 횟수","제품 하나의 무게"],"answer":0},{"q":"확률변수의 정의로 옳은 것은?","choices":["항상 0과 1 사이의 값을 갖는 변수","표본에서 계산한 요약값","확률실험의 각 결과에 숫자를 대응시킨 변수","모집단의 특성을 나타내는 고정된 수"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(1.2,0.5,10);cam.lookAt(1.2,-0.3,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 정규분포 종형 곡선 (x축: -3.5σ ~ +3.5σ)
+  const pts=[];for(let i=0;i<=80;i++){const x=-3.5+i*(7/80);pts.push(new THREE.Vector3(x*0.8,Math.exp(-x*x/2)*2.2,0));}
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0x7c3aed})));
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-3,0,0),new THREE.Vector3(3,0,0)]),new THREE.LineBasicMaterial({color:0x9ca3af,transparent:true,opacity:0.7})));
+  const curveLbl=lbl('정규분포','#6d28d9');curveLbl.position.set(0,2.75,0);s.add(curveLbl);
+  const muLbl=lbl('평균 μ','#7c3aed');muLbl.position.set(0,-0.5,0);s.add(muLbl);
+  const sdLbl=lbl('표준편차 σ','#7c3aed');sdLbl.position.set(1.35,-0.5,0);s.add(sdLbl);
+  // 68-95-99.7 구간 막대 (μ±1σ / μ±2σ / μ±3σ)
+  const mkBar=function(w,y,col,op){const m=new THREE.Mesh(new THREE.BoxGeometry(w,0.16,0.16),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:op}));m.position.set(0,y,0);s.add(m);return m;};
+  const bars=[mkBar(1.6,-1.1,0x7c3aed,0.95),mkBar(3.2,-1.6,0x8b5cf6,0.55),mkBar(4.8,-2.1,0xa78bfa,0.3)];
+  const ruleLbl=lbl('68-95-99.7','#6d28d9');ruleLbl.position.set(0,-2.6,0);s.add(ruleLbl);
+  // 이항분포 B(10,0.5) 히스토그램 (오른쪽): P(X=k)=C(10,k)/1024
+  const probs=[1,10,45,120,210,252,210,120,45,10,1];
+  for(let k=0;k<11;k++){const h=probs[k]/1024*6;const m=new THREE.Mesh(new THREE.BoxGeometry(0.16,h,0.16),new THREE.MeshBasicMaterial({color:0x7c3aed,transparent:true,opacity:0.85}));m.position.set(4.3+(k-5)*0.22,h/2-0.3,0);s.add(m);}
+  const binLbl=lbl('이항분포','#7c3aed');binLbl.position.set(4.3,1.55,0);s.add(binLbl);
+  // 곡선 위를 따라 이동하는 점
+  const tracer=new THREE.Mesh(new THREE.SphereGeometry(0.09,12,12),new THREE.MeshBasicMaterial({color:0xf59e0b}));s.add(tracer);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['정규분포는 평균 μ를 중심으로 좌우대칭인 종형 곡선입니다.','μ±1σ에 약 68%, μ±2σ에 약 95%, μ±3σ에 약 99.7%가 들어갑니다.','Z=(X−μ)/σ로 표준화하면 모든 정규분포가 N(0,1)로 통일됩니다.','오른쪽 막대는 동전 10번 던지기의 앞면 횟수 — 이항분포 B(10, 0.5)입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const u=(T*0.12)%1;const x=-3.5+u*7;tracer.position.set(x*0.8,Math.exp(-x*x/2)*2.2,0);s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

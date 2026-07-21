@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8. 상관과 회귀분석 — aboutBizStats</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">📊 표지</a></li>
+<li><a href="01-basics.html">1. 통계학이란 무엇인가</a></li>
+<li><a href="02-descriptive.html">2. 기술통계: 자료의 요약</a></li>
+<li><a href="03-probability.html">3. 확률의 기초</a></li>
+<li><a href="04-distributions.html">4. 확률분포</a></li>
+<li><a href="05-sampling.html">5. 표본추출과 표본분포</a></li>
+<li><a href="06-estimation.html">6. 모수추정과 신뢰구간</a></li>
+<li><a href="07-hypothesis.html">7. 가설검정</a></li>
+<li><a href="08-regression.html">8. 상관과 회귀분석</a></li>
+<li><a href="09-decision.html">9. 통계적 의사결정</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>상관</em>과 회귀분석</h1><p class="authors">Chapter 8 — Correlation and Regression</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 산점도 점들 사이로 회귀직선을 긋는다</span>
+<h2>상관과 회귀분석</h2><p>두 변수가 함께 움직이는가? <strong>상관분석(correlation)</strong>은 두 변수 사이 <strong>선형 관계의 강도와 방향</strong>을 상관계수 r 하나로 요약하고, <strong>회귀분석(regression)</strong>은 한 걸음 더 나아가 y = a + bx 형태의 <strong>직선(모형)을 만들어 예측</strong>합니다. 광고비를 늘리면 매출이 얼마나 늘까, 매장 면적이 크면 매출이 얼마나 될까 — 경영 의사결정에서 가장 널리 쓰이는 분석 도구입니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>상관계수 r은 −1에서 +1 사이 값이며 절댓값이 클수록 선형 관계가 강합니다. 회귀분석은 <strong>최소제곱법</strong>으로 잔차(실제값 − 예측값)의 제곱합을 최소화하는 직선을 찾고, <strong>결정계수 R²</strong>로 그 직선이 데이터를 얼마나 잘 설명하는지 측정합니다. 단, 상관이 곧 인과는 아닙니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>두 가지가 <strong>같이 오르나 내리는지</strong> 살펴서(상관), 점들 사이에 <strong>가장 잘 어울리는 직선 하나를 그어서</strong>(회귀) 앞날을 예측해요.</p>
+  <h3>😮 왜 재밌을까?</h3><p>여름에 기온이 오르면 아이스크림이 잘 팔려요. 🍦 기온이 x, 판매량이 y예요. 매일의 (기온, 판매량)을 종이에 점으로 찍으면 점들이 <strong>오른쪽 위로 올라가는 모양</strong>이 돼요. 이걸 산점도라고 해요. 그리고 그 점들 한가운데를 지나는 직선 하나를 쭉 그으면, "내일 30도면 몇 개쯤 팔리겠구나"를 미리 알 수 있어요. 그 직선이 바로 회귀직선이에요!</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>산점도(Scatter Plot)</strong>: 두 변수를 점으로 찍은 그림</li><li><strong>상관계수 r</strong>: 같이 움직이는 정도(−1 ~ +1). 1에 가까우면 강한 양의 관계, −1에 가까우면 강한 음의 관계, 0 근처면 관계 없음</li><li><strong>회귀직선</strong>: 점들 사이를 가장 잘 지나는 직선(y = a + bx)</li><li><strong>잔차(Residual)</strong>: 실제 점과 직선 사이의 세로 거리 = 직선이 틀린 만큼</li><li><strong>결정계수 R²</strong>: 직선이 데이터를 설명하는 비율(0 ~ 1). 클수록 잘 맞음</li></ul></div>
+  <h3>🍦 쉽게 풀어보기</h3><p>키와 몸무게를 생각해 보세요. 키가 큰 사람이 몸무게도 많이 나가는 경향이 있죠? 하지만 똑같이 170cm여도 몸무게는 제각각이에요. 그래서 점들이 직선 위에 딱 붙지 않고 퍼져 있어요 — r은 1이 아니라 한 0.7쯤 되는 거예요. 📏</p><p>직선을 그은 뒤 각 점에서 직선까지 세로로 줄을 쫙쫙 그어 보세요. 그 줄 길이가 <strong>잔차</strong>예요. <strong>최소제곱법</strong>은 "이 줄 길이들을 제곱해서 다 더한 값이 가장 작아지는" 직선을 골라 주는 똑똑한 방법이에요. 줄 길이 합이 작다 = 직선이 점들에게 바짝 붙었다 = 예측이 정확하다! 💪</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> "기온과 아이스크림 판매량은 r이 양수, 기온과 난방비는 r이 음수"처럼 주변에서 양의 상관·음의 상관 예를 하나씩 찾아보세요!</div>
+  <h3>📌 요약</h3><ul><li>산점도 = 두 변수를 점으로 찍은 그림이에요.</li><li>상관계수 r은 −1 ~ +1. 절댓값이 클수록 관계가 강해요.</li><li>회귀직선은 점들 한가운데를 지나는 예측용 직선이에요.</li><li>잔차 = 점과 직선의 세로 거리. 최소제곱법은 잔차 제곱합을 최소로 해요.</li><li>같이 움직인다고(상관) 하나가 다른 하나를 만드는 건(인과) 아니에요!</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>산점도와 상관계수 r</h3><p>두 양적 변수의 관계를 보는 첫걸음은 <strong>산점도(scatter plot)</strong>입니다. x축에 설명변수, y축에 반응변수를 놓고 관측값을 점으로 표시합니다. <strong>상관계수(correlation coefficient) r</strong>은 이 관계를 수치화한 것으로, 항상 <strong>−1 ≤ r ≤ +1</strong>입니다. r &gt; 0이면 양의 선형관계(x가 크면 y도 큰 경향), r &lt; 0이면 음의 선형관계이고, <strong>절댓값이 1에 가까울수록</strong> 점들이 직선에 빽빽이 모인 강한 관계입니다. r = ±1이면 모든 점이 한 직선 위에 있는 <strong>완전선형관계</strong>, r ≈ 0이면 선형관계가 거의 없는 것입니다. 경험적으로 |r|이 0.7 이상이면 강하다고 봅니다.</p>
+  <h3>상관은 인과가 아니다</h3>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "r이 높으니 x가 y를 일으킨다"는 틀렸습니다. 아이스크림 판매량과 익사 사고 건수는 강한 양의 상관이지만, 둘 다 일으키는 <strong>제3의 변수(혼재변수, confounding variable)</strong> — 묵더위가 숨어 있을 뿐입니다. 인과를 주장하려면 무작위 실험이나 추가적인 근거가 필요합니다.</div>
+  <p>역으로 r ≈ 0이라고 "관계가 없다"고 단정하는 것도 위험합니다. r은 <strong>선형</strong> 관계만 측정하므로, U자형 같은 뚜렷한 비선형 관계에서도 r은 0에 가깝게 나옵니다. 반드시 산점도를 눈으로 확인하세요.</p>
+  <h3>단순회귀와 최소제곱법</h3><p><strong>단순회귀(simple regression)</strong>는 설명변수 x 하나로 반응변수 y를 예측하는 직선 <strong>y = a + bx + ε</strong>를 만듭니다. a는 절편, b는 기울기, ε은 모형이 설명 못 하는 오차항입니다. 추정에는 <strong>최소제곱법(least squares)</strong>을 씁니다 — 각 관측값의 <strong>잔차(residual, 실제 y − 직선의 예측 ŷ)</strong>를 제곱해 모두 더한 값(잔차 제곱합)이 최소가 되도록 a와 b를 정합니다. 제곱하는 이유는 양·음의 오차가 서로 상쇄되지 않게 하고 큰 오차에 더 큰 벌을 주기 위해서입니다.</p>
+  <h3>결정계수 R²와 회귀계수의 해석</h3><p><strong>결정계수(coefficient of determination) R²</strong>는 종속변수 y의 전체 변동 중 회귀모형이 설명하는 비율(0~1)입니다. R² = 0.64라면 "y 변동의 64%를 이 모형이 설명하고, 나머지 36%는 다른 요인과 오차"라는 뜻입니다. 단순회귀에서는 R² = r²입니다. <strong>기울기 b의 해석</strong>이 실무의 핵심입니다: "x가 한 단위 증가할 때 y가 <strong>평균적으로</strong> b만큼 변한다."</p>
+  <div class="info-card"><h4>📐 숫자로 확인 — 광고비와 매출</h4><p>광고비 x(백만 원) = 1, 2, 3, 4, 5 / 매출 y(억 원) = 2, 4, 5, 4, 6 (n=5). 최소제곱법으로 구하면 <strong>ŷ = 1.8 + 0.8x</strong>, R² ≈ 0.73. 해석: 광고비를 100만 원 더 쓰면 매출은 <strong>평균 0.8억 원</strong> 늘어난다고 예측. 매출 변동의 약 73%를 광고비 하나로 설명하며, 나머지 27%는 상품·계절 등 다른 요인입니다.</p></div>
+  <h3>다중회귀 소개</h3><p>현실의 y는 원인이 여럿입니다. 설명변수가 2개 이상이면 <strong>다중회귀(multiple regression)</strong>: y = a + b₁x₁ + b₂x₂ + ⋯ + ε. 매출을 광고비·매장면적·상권유동인구로 동시에 설명하는 식입니다. 각 계수 bᵢ는 <strong>다른 변수가 일정할 때</strong> xᵢ가 한 단위 늘면 y가 평균 bᵢ만큼 변한다는 뜻으로 해석합니다.</p>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>최소제곱 추정의 공식</h3><p>잔차 제곱합 Σ(yᵢ − a − bxᵢ)²를 a, b에 대해 미분해 0으로 놓으면 정규방정식이 나오고, 해는 다음과 같습니다.</p>
+  <div class="formula">b = Σ(xᵢ−x̄)(yᵢ−ȳ) / Σ(xᵢ−x̄)²,&nbsp;&nbsp; a = ȳ − b·x̄</div>
+  <p>즉 회귀직선은 항상 점 (x̄, ȳ)를 지나고, 기울기는 x와 y의 공변동을 x의 변동으로 나눈 값입니다. 상관계수와의 관계는 r = b·(sₓ/s_y)입니다.</p>
+  <div class="formula">r = Σ(xᵢ−x̄)(yᵢ−ȳ) / √[Σ(xᵢ−x̄)²·Σ(yᵢ−ȳ)²],&nbsp;&nbsp; R² = SSR/SST = 1 − SSE/SST</div>
+  <h3>회귀분석의 4대 가정</h3><p>최소제곱 추정과 그에 따른 t검정·신뢰구간이 유효하려면 오차항 ε에 대한 가정이 필요합니다: ① <strong>선형성</strong>(y와 x의 관계가 실제로 직선), ② <strong>등분산성</strong>(x 수준과 무관하게 오차의 분산이 일정 — 부채꼴 모양이면 위반), ③ <strong>정규성</strong>(오차가 정규분포), ④ <strong>독립성</strong>(오차끼리 상관 없음 — 시계열 자료에서 자기상관이 생기면 위반). 위반 여부는 <strong>잔차 플롯</strong>(잔차 vs 예측값 산점도)으로 진단하며, 위반 시 변수변환(로그 등)이나 다른 추정법을 씁니다.</p>
+  <h3>외삽의 위험과 더미변수</h3><p>회귀직선은 관측된 x 범위 안에서만 검증된 모형입니다. 관측 범위 밖으로 예측하는 <strong>외삽(extrapolation)</strong>은 위험합니다 — 광고비 1~5백만 원으로 만든 모형에 100백만 원을 대입하면, 포화·한계효용 체감을 모형이 전혀 반영하지 못합니다. 한편 성별·지역 같은 범주형 변수는 0/1 <strong>더미변수(dummy variable)</strong>로 바꿔 회귀식에 넣을 수 있고, 그 계수는 해당 범주의 평균 차이(절편 차이)로 해석됩니다.</p>
+  <h3>다중공선성과 R² 해석의 오해</h3><p>다중회귀에서 설명변수끼리 강하게 상관하면(예: 매장면적과 직원 수) <strong>다중공선성(multicollinearity)</strong>이 생겨 계수 추정치가 불안정해지고 부호가 뒤집히기도 합니다. 분산팽창지수(VIF)로 진단합니다. 또한 <strong>R²가 높다고 인과관계가 증명되는 것은 아닙니다</strong> — 혼재변수가 있어도 R²는 높게 나올 수 있습니다. 변수를 계속 추가하면 R²는 기계적으로 오르기만 하므로, 다중회귀에서는 자유도를 반영한 <strong>수정 R²(adjusted R²)</strong>를 함께 봅니다.</p>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 한 도시에서 소방차 출동 대수와 화재 피해액 사이에 r = 0.9, R² = 0.81이라는 매우 강한 양의 상관이 나왔습니다. "소방차가 피해를 키우니 출동을 줄이자"는 결론이 타당할까요? (힌트: 화재 규모라는 혼재변수가 둘을 동시에 움직입니다. R²가 아무리 높아도 인과가 아니며, 회귀는 인과의 방향을 스스로 판별해 주지 못합니다)</div>
+</div>
+<h2>🕹️ 직접 해보기 — 상관·회귀 용어 짝맞추기</h2>
+<p>상관과 회귀분석의 핵심 용어와 설명을 짝지어 복습해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"상관과 회귀분석 용어와 설명을 짝지으세요","pairs":[{"term":"상관계수 r","def":"두 변수 선형관계의 강도와 방향(−1~+1)"},{"term":"회귀직선","def":"x로 y를 예측하는 직선 y=a+bx"},{"term":"최소제곱법","def":"잔차의 제곱합을 최소로 하는 직선을 찾는 방법"},{"term":"결정계수 R²","def":"y의 변동 중 회귀모형이 설명하는 비율"},{"term":"잔차","def":"실제 관측값과 회귀직선 예측값의 차이"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"상관계수 r이 가질 수 있는 값의 범위는?","choices":["0 이상 1 이하","−1 이상 +1 이하","0 이상 100 이하","제한이 없다"],"answer":1},{"q":"아이스크림 판매량과 익사 사고 건수의 상관이 높게 나오는 이유로 옳은 것은?","choices":["아이스크림이 익사를 유발하기 때문","익사 사고가 아이스크림 판매를 늘리기 때문","묵더위라는 제3의 변수(혼재변수)가 둘을 동시에 움직이기 때문","표본이 너무 작기 때문"],"answer":2},{"q":"R² = 0.64의 올바른 해석은?","choices":["종속변수 변동의 64%를 회귀모형이 설명한다","x가 y를 64% 인과적으로 일으킨다","관측값의 64%가 회귀직선 위에 있다","상관계수가 0.64라는 뜻이다"],"answer":0},{"q":"최소제곱법이란 무엇인가?","choices":["데이터에서 가장 작은 값을 고르는 방법","표본의 크기를 최소로 하는 방법","상관계수를 가장 작게 만드는 방법","잔차의 제곱합을 최소로 하는 직선을 찾는 방법"],"answer":3},{"q":"회귀직선 ŷ = 1.8 + 0.8x에서 기울기 0.8의 해석으로 옳은 것은?","choices":["x가 한 단위 증가하면 y는 평균 0.8만큼 증가한다","y가 한 단위 증가하면 x는 평균 0.8만큼 증가한다","x가 0일 때 y는 0.8이다","x와 y의 상관계수는 0.8이다"],"answer":0}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,10);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 산점도 점들 (회귀직선 y=0.6x 주변에 흩어진 관측값)
+  const pts=[[-3,-1.6],[-2.4,-0.9],[-1.8,-1.4],[-1.2,0.3],[-0.6,-0.1],[0,0.4],[0.6,-0.3],[1.2,0.9],[1.8,0.7],[2.4,1.7],[3,2.0]];
+  const dotCols=['#7c3aed','#8b5cf6','#a855f7'];
+  const dots=[];
+  pts.forEach(function(p,i){const d=new THREE.Mesh(new THREE.SphereGeometry(0.13,12,12),new THREE.MeshBasicMaterial({color:parseInt(dotCols[i%3].slice(1),16)}));d.position.set(p[0],p[1],0);s.add(d);dots.push({m:d,base:p,ph:i*0.7});});
+  // 회귀직선 (y = 0.6x)
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-3.4,-2.04,0),new THREE.Vector3(3.4,2.04,0)]),new THREE.LineBasicMaterial({color:0x6d28d9,linewidth:3})));
+  // 잔차 수직선 (점에서 직선까지)
+  pts.forEach(function(p){const yl=0.6*p[0];s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(p[0],p[1],0),new THREE.Vector3(p[0],yl,0)]),new THREE.LineBasicMaterial({color:0xd946ef,transparent:true,opacity:0.55})));});
+  // 축
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-3.8,-2.6,0),new THREE.Vector3(3.8,-2.6,0)]),new THREE.LineBasicMaterial({color:0x9ca3af})));
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-3.8,-2.6,0),new THREE.Vector3(-3.8,2.6,0)]),new THREE.LineBasicMaterial({color:0x9ca3af})));
+  // 라벨
+  const rLbl=lbl('상관계수 r','#7c3aed');rLbl.position.set(-2.7,2.2,0);s.add(rLbl);
+  const lineLbl=lbl('회귀직선','#6d28d9');lineLbl.position.set(2.6,2.6,0);s.add(lineLbl);
+  const resLbl=lbl('잔차','#d946ef');resLbl.position.set(0.35,-1.05,0);s.add(resLbl);
+  const r2Lbl=lbl('결정계수 R²','#7c3aed');r2Lbl.position.set(2.7,-2.0,0);s.add(r2Lbl);
+  const lsLbl=lbl('최소제곱법','#6d28d9');lsLbl.position.set(-2.0,-2.2,0);s.add(lsLbl);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 점들이 산점도, 보라색 선이 회귀직선입니다.','분홍 수직선이 잔차 — 실제값과 예측값의 차이입니다.','최소제곱법은 잔차 제곱합이 가장 작은 직선을 고릅니다.','R²는 y의 변동 중 이 직선이 설명하는 비율입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}dots.forEach(function(o){o.m.position.y=o.base[1]+Math.sin(T*1.5+o.ph)*0.05;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

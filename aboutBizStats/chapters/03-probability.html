@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 확률의 기초 — aboutBizStats</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">📊 표지</a></li>
+<li><a href="01-basics.html">1. 통계학이란 무엇인가</a></li>
+<li><a href="02-descriptive.html">2. 기술통계: 자료의 요약</a></li>
+<li><a href="03-probability.html">3. 확률의 기초</a></li>
+<li><a href="04-distributions.html">4. 확률분포</a></li>
+<li><a href="05-sampling.html">5. 표본추출과 표본분포</a></li>
+<li><a href="06-estimation.html">6. 모수추정과 신뢰구간</a></li>
+<li><a href="07-hypothesis.html">7. 가설검정</a></li>
+<li><a href="08-regression.html">8. 상관과 회귀분석</a></li>
+<li><a href="09-decision.html">9. 통계적 의사결정</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>확률</em>의 기초</h1><p class="authors">Chapter 3 — Basics of Probability</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 확률 나무를 따라 가지 끝까지 가 보자</span>
+<h2>확률의 기초</h2><p>확률(probability)은 <strong>불확실한 사건이 일어날 가능성을 0과 1 사이의 숫자로 나타낸 것</strong>입니다. 어떤 실험이나 관찰에서 일어날 수 있는 모든 결과의 집합을 <strong>표본공간(sample space)</strong>, 그 부분집합인 관심 결과들의 모임을 <strong>사건(event)</strong>이라고 합니다. 주사위를 한 번 던지면 표본공간은 {1, 2, 3, 4, 5, 6}이고, "짝수가 나온다"는 사건은 {2, 4, 6}입니다. 확률의 덧셈·곱셈 법칙과 조건부확률, 베이즈 정리는 이후 모든 추론통계의 언어가 됩니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>확률을 정의하는 세 가지 시각: 모든 경우가 동등하게 가능하다는 <strong>고전적 확률</strong>, 오랫동안 반복했을 때의 비율인 <strong>상대도수 확률</strong>, 믿음의 정도를 수치화한 <strong>주관적 확률</strong>. 어떤 정의든 확률은 항상 0 이상 1 이하이고, 표본공간 전체의 확률은 1입니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>확률은 <strong>어떤 일이 일어날 가능성을 0부터 1까지의 숫자로 말하는 것</strong>이에요. 0이면 "절대 안 일어남", 1이면 "반드시 일어남", 0.5면 "반반이에요".</p>
+  <h3>😮 왜 재밌을까?</h3><p>일기예보에서 "내일 비 올 확률 70%"라는 말, 들어본 적 있죠? 🌧️ 그건 "내일처럼 하늘이 생긴 날 100번 중에 약 70번은 비가 왔다"는 뜻이에요. 비가 확실히 오는 건 아니지만, 우산을 챙길지 말지 숫자로 판단할 수 있게 해 줘요. 확률은 모르는 미래를 숫자로 대화하는 방법이에요!</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>표본공간</strong>: 일어날 수 있는 모든 결과의 모음(주사위라면 1~6)</li><li><strong>사건</strong>: 그중에서 우리가 궁금한 결과(짝수가 나오는 것)</li><li><strong>확률</strong>: 사건이 일어날 가능성, 0~1 사이 숫자</li><li><strong>독립사건</strong>: 한 번의 결과가 다음 결과에 영향을 안 주는 사건</li><li><strong>조건부확률</strong>: "이미 일어난 일을 알고 있을 때"의 확률</li></ul></div>
+  <h3>🎲 쉽게 풀어보기</h3><p>동전을 던지면 앞면이 나올 확률은 1/2이에요. 전체 경우 2가지 중 앞면은 1가지니까요. 주사위에서 6이 나올 확률은 1/6이에요. 🎲 두 번 연속 던져서 둘 다 앞면이 나올 확률은? 1/2 × 1/2 = 1/4 = 0.25예요. 첫 번째 결과가 두 번째에 영향을 주지 않으니까(독립!) 곱하면 돼요. 복권 당첨 확률이 아주아주 낮은 것도 이 곱하기 때문이에요 — 운이 필요한 일이 겹칠수록 확률은 쭉쭉 작아져요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 확률 계산이 헷갈리면 동전이나 주사위로 직접 20번 던져 보세요. 기록한 비율이 횟수가 늘수록 이론 확률에 가까워지는 걸 눈으로 확인할 수 있어요!</div>
+  <h3>📌 요약</h3><ul><li>확률 = 가능성을 0~1 사이 숫자로 나타낸 것이에요.</li><li>표본공간 = 모든 결과, 사건 = 관심 있는 결과예요. 🎲</li><li>독립인 사건이 함께 일어날 확률은 곱해요(앞면 두 번 = 0.25).</li><li>"비 올 확률 70%"는 비슷한 날 중 70번 정도 비가 왔다는 뜻이에요.</li><li>확률은 불확실한 일을 숫자로 판단하게 해 줘요.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>확률의 세 가지 정의</h3><p>확률을 정의하는 방식은 크게 세 가지입니다. <strong>고전적 확률(classical)</strong>은 모든 근원사건이 동등하게 가능하다고 볼 때 "관심 결과 수 ÷ 전체 결과 수"로 계산합니다 — 주사위에서 짝수가 나올 확률은 3/6 = 1/2입니다. <strong>상대도수 확률(relative frequency)</strong>은 같은 실험을 오래 반복했을 때 관찰되는 비율의 안정값입니다 — 공정성을 알 수 없는 동전, 과거 데이터로 보는 고객 이탈률이 여기 해당합니다. <strong>주관적 확률(subjective)</strong>은 반복 실험이 불가능한 일회성 사건("이번 분기 계약 성사 확률")에 대해 판단자의 믿음을 수치화한 것으로, 경영 의사결정에서 널리 쓰입니다.</p>
+  <h3>덧셈법칙과 곱셈법칙</h3>
+  <div class="info-card"><h4>📐 확률의 기본 법칙</h4><ul><li><strong>덧셈법칙(배반사건)</strong>: A와 B가 동시에 일어날 수 없으면 P(A∪B) = P(A) + P(B)</li><li><strong>일반 덧셈법칙</strong>: 겹치는 부분을 빼야 함 — P(A∪B) = P(A) + P(B) − P(A∩B)</li><li><strong>조건부확률</strong>: P(A|B) = P(A∩B) / P(B) — B가 일어났다는 조건 아래 A의 확률</li><li><strong>독립사건의 곱셈법칙</strong>: 독립이면 P(A∩B) = P(A) × P(B)</li><li><strong>베이즈 정리</strong>: P(A|B) = P(B|A) × P(A) / P(B) — 새 정보로 확률을 갱신하는 공식</li></ul></div>
+  <p>예를 들어 카드 한 벌(52장)에서 하트이거나 K일 확률은 P(하트) + P(K) − P(하트 K) = 13/52 + 4/52 − 1/52 = 16/52 ≈ 0.308입니다. 겹치는 하트 K를 한 번 빼 주지 않으면 중복 계산됩니다. 반면 주사위에서 1 또는 6이 나올 확률은 배반사건이므로 그냥 1/6 + 1/6 = 1/3입니다. 두 사건이 <strong>독립(independent)</strong>이라는 것은 한 사건의 발생 여부가 다른 사건의 확률을 바꾸지 않는다는 뜻이고, 이때 조건부확률 P(A|B) = P(A)가 됩니다.</p>
+  <h3>경영에서의 활용</h3><p>리스크 평가(프로젝트 실패 확률), 신용평가(연체 확률), A/B 테스트(전환율 비교의 토대), 수요 예측(재고 부족 확률 계산) 등에서 확률 법칙이 직접 쓰입니다. 특히 베이즈 정리는 스팸 필터, 사기 탐지처럼 "새 증거가 들어올 때마다 판단을 갱신"하는 시스템의 심장입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> 배반이 아닌 사건에 P(A) + P(B)를 그대로 더하면 겹치는 부분이 이중 계산됩니다. 또한 "독립"과 "배반"은 완전히 다른 개념입니다 — 배반사건은 한쪽이 일어나면 다른 쪽은 확률이 0이 되므로 오히려 강하게 <em>종속</em>입니다. 헷갈리지 않도록 주의하세요.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>베이즈 갱신: 질병 검사의 반직관</h3><p>어떤 질병의 유병률이 1%이고, 검사의 민감도(환자를 양성으로 잡아낼 확률)가 99%, 특이도(비환자를 음성으로 잡아낼 확률)가 95%라고 합시다. 검사에서 양성이 나온 사람이 실제로 병에 걸렸을 확률은 얼마일까요? 직관으로는 "99% 아닌가?" 싶지만, 베이즈 정리로 계산하면 전혀 다릅니다. 임의의 10,000명을 생각하면: 환자 100명 중 양성 99명, 비환자 9,900명 중 위양성(5%) 495명. 양성은 총 99 + 495 = 594명이고, 그중 진짜 환자는 99명뿐입니다.</p>
+  <div class="formula">P(질병|양성) = 0.99×0.01 / (0.99×0.01 + 0.05×0.99) = 0.0099 / 0.0594 ≈ 0.167 (약 16.7%)</div>
+  <p>정확한 검사인데도 양성 판정의 약 83%는 오경보입니다. 원인은 <strong>기저율(유병률 1%)이 너무 낮아</strong> 위양성의 절대 수가 진양성을 압도하기 때문입니다. 희귀 질병 검사에서 2차 정밀검사를 요구하는 이유이며, 사기 탐지·불량 선별 등 경영의 스크리닝 문제에도 그대로 적용됩니다.</p>
+  <h3>몬티홀 문제와 조건부확률</h3><p>세 개의 문 중 하나 뒤에 자동차가 있습니다. 당신이 문 1번을 고르면, 진행자가 염소가 있는 문 3번을 열어 보이고 "문 2번으로 바꾸시겠습니까?"라고 묻습니다. 바꾸는 것이 유리할까요? 정답은 <strong>바꾸는 쪽이 유리 — 바꾸면 당첨 확률 2/3, 유지하면 1/3</strong>입니다. 처음 선택이 틀렸을 확률이 2/3인데, 진행자가 정보를 제공해(염소 문을 열어) 나머지 한 문에 그 2/3가 몰리기 때문입니다. 조건부확률이 직관과 어긋나는 대표 사례이며, "진행자가 무작위가 아니라 정답을 알고 문을 연다"는 전제가 핵심입니다.</p>
+  <h3>기대값</h3><p>확률변수 X의 <strong>기대값(expected value)</strong>은 가능한 값에 확률을 가중한 평균으로, 장기 반복 시의 평균 결과를 뜻합니다.</p>
+  <div class="formula">E(X) = Σ x · p(x) &nbsp;&nbsp;예: 주사위 눈의 기대값 = (1+2+3+4+5+6)×(1/6) = 3.5</div>
+  <p>기대값은 의사결정의 기본 도구입니다. 보험료 산정, 투자 수익률 비교, 신제품 출시 판단 모두 "각 시나리오의 결과 × 확률"의 합으로 시작합니다. 다만 기대값이 같아도 위험(분산)은 다를 수 있다는 점이 8장과 9장으로 이어지는 다리입니다.</p>
+  <h3>관련 분야</h3><ul><li>조합론(경우의 수 계산 — 고전적 확률의 도구)</li><li>의사결정이론(기대효용과 위험 회피)</li><li>베이지안 통계(사전확률을 데이터로 갱신하는 추론 체계)</li></ul>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 공항 보안검색대가 테러리스트를 99% 정확히 잡아낸다고 합시다. 실제 테러리스트가 1,000만 명 중 1명꼴이라면, 검색대가 "위험"이라고 경보를 울렸을 때 그 사람이 진짜 위험 인물일 확률은 얼마일까요? 질병 검사 예시와 같은 구조임을 떠올려 보세요 — 이것이 바로 기저율의 함정(base-rate fallacy)입니다.</div>
+</div>
+<h2>🕹️ 직접 핵심 용어 짝맞추기 — 확률 편</h2>
+<p>확률의 기초 용어와 설명을 짝지어 복습해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"확률의 기초 용어와 설명을 짝지으세요","pairs":[{"term":"표본공간","def":"실험에서 일어날 수 있는 모든 결과의 집합"},{"term":"배반사건","def":"동시에 일어날 수 없어 P(A∪B)=P(A)+P(B)인 사건"},{"term":"독립사건","def":"한쪽 발생이 다른 쪽 확률에 영향을 주지 않는 사건"},{"term":"조건부확률","def":"B가 일어났을 때 A의 확률, P(A∩B)/P(B)"},{"term":"베이즈 정리","def":"새 정보로 확률을 갱신하는 공식"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해 보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"동전을 두 번 던져 둘 다 앞면이 나올 확률은?","choices":["0.5","0.25","0.75","1.0"],"answer":1},{"q":"주사위를 한 번 던져 1 또는 6이 나올 확률은?","choices":["1/6","1/12","1/3","1/2"],"answer":2},{"q":"조건부확률 P(A|B)의 정의로 올바른 것은?","choices":["P(A∩B) / P(B)","P(A) × P(B)","P(A∪B) / P(B)","P(B∩A) / P(A)"],"answer":0},{"q":"베이즈 정리의 주된 용도는?","choices":["표본의 크기를 늘리는 것","새로운 정보로 확률을 갱신하는 것","평균과 분산을 계산하는 것","변수의 척도를 구분하는 것"],"answer":1},{"q":"확률이 가질 수 있는 값의 범위는?","choices":["-1 이상 1 이하","0 이상 100 이하","0 이상 1 이하","0 초과 1 미만"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,10);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 확률 나무: 뿌리(표본공간) → 1단 분기(사건 A/아님) → 2단 분기(사건 B/아님)
+  const root=new THREE.Vector3(-4,0,0);
+  const L1=[new THREE.Vector3(-1.4,1.3,0),new THREE.Vector3(-1.4,-1.3,0)];
+  const L2=[[new THREE.Vector3(1.4,1.9,0),new THREE.Vector3(1.4,0.8,0)],[new THREE.Vector3(1.4,-0.8,0),new THREE.Vector3(1.4,-1.9,0)]];
+  const branchMat=new THREE.LineBasicMaterial({color:0x7c3aed,transparent:true,opacity:0.75});
+  L1.forEach(p=>{s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([root,p]),branchMat));});
+  L1.forEach((p,i)=>{L2[i].forEach(q=>{s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([p,q]),branchMat));});});
+  function node(p,col,rad){const m=new THREE.Mesh(new THREE.SphereGeometry(rad,14,14),new THREE.MeshBasicMaterial({color:col}));m.position.copy(p);s.add(m);return m;}
+  const rootMesh=node(root,0x7c3aed,0.22);
+  L1.forEach(p=>node(p,0x8b5cf6,0.17));
+  const leaves=[];L2.forEach(g=>g.forEach(p=>leaves.push(node(p,0xa855f7,0.14))));
+  // 가지 확률 라벨
+  const p1=lbl('0.5','#6d28d9');p1.position.set(-2.8,0.9,0);s.add(p1);
+  const p2=lbl('0.5','#6d28d9');p2.position.set(-2.8,-0.9,0);s.add(p2);
+  const p3=lbl('P(B|A)=0.5','#7c3aed');p3.position.set(0.1,1.85,0);s.add(p3);
+  const p4=lbl('P(A∩B)=0.25','#7c3aed');p4.position.set(2.9,1.9,0);s.add(p4);
+  // 개념 라벨
+  const rootLbl=lbl('표본공간','#6d28d9');rootLbl.position.set(-4,-0.7,0);s.add(rootLbl);
+  const evLbl=lbl('사건','#7c3aed');evLbl.position.set(-1.4,2.0,0);s.add(evLbl);
+  const condLbl=lbl('조건부확률','#7c3aed');condLbl.position.set(0.4,2.7,0);s.add(condLbl);
+  const indLbl=lbl('독립사건: 가지 확률이 서로 영향 없음','#6d28d9');indLbl.position.set(-0.4,-2.6,0);s.add(indLbl);
+  const bayesLbl=lbl('베이즈: 가지 끝에서 거꾸로 추론','#7c3aed');bayesLbl.position.set(1.9,-2.6,0);s.add(bayesLbl);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 확률 나무: 뿌리에서 가지 끝까지 곱하면 경로의 확률입니다.','독립사건이면 각 가지의 확률이 앞 단계와 무관합니다.','조건부확률은 "이 가지를 탔다는 조건" 아래의 확률입니다.','베이즈 정리는 가지 끝의 결과를 보고 출발 가지를 거꾸로 추론합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}leaves.forEach((m,i)=>{const sc=0.14+0.04*Math.sin(T*2+i*1.6);m.scale.set(sc/0.14,sc/0.14,sc/0.14);});rootMesh.rotation.y+=0.01;s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

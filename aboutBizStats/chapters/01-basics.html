@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1. 통계학이란 무엇인가 — aboutBizStats</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">📊 표지</a></li>
+<li><a href="01-basics.html">1. 통계학이란 무엇인가</a></li>
+<li><a href="02-descriptive.html">2. 기술통계: 자료의 요약</a></li>
+<li><a href="03-probability.html">3. 확률의 기초</a></li>
+<li><a href="04-distributions.html">4. 확률분포</a></li>
+<li><a href="05-sampling.html">5. 표본추출과 표본분포</a></li>
+<li><a href="06-estimation.html">6. 모수추정과 신뢰구간</a></li>
+<li><a href="07-hypothesis.html">7. 가설검정</a></li>
+<li><a href="08-regression.html">8. 상관과 회귀분석</a></li>
+<li><a href="09-decision.html">9. 통계적 의사결정</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>통계학</em>이란 무엇인가</h1><p class="authors">Chapter 1 — What Is Statistics</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 모집단 구름에서 표본을 뽑아 추론한다</span>
+<h2>통계학이란 무엇인가</h2><p>통계학(Statistics)은 데이터를 <strong>수집하고, 정리하고, 해석해서 불확실한 상황에서 결론을 내리는</strong> 학문입니다. 관심 대상 전체인 <strong>모집단(population)</strong>을 다 조사할 수 없을 때, 일부인 <strong>표본(sample)</strong>을 뽑아 분석하고 그 결과로 모집단을 추측합니다. 경영통계학은 이 방법론을 고객 조사, 품질관리, 매출 예측 같은 경영 문제에 적용한 것입니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>통계학의 두 기둥: 자료를 정리·요약하는 <strong>기술통계(descriptive)</strong>와, 표본에서 모집단을 추측하는 <strong>추론통계(inferential)</strong>. 이 과목의 앞부분은 기술통계, 뒷부분은 추론통계입니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>통계학은 <strong>숫자로 세상을 알아내는 기술</strong>이에요. 전부 다 조사하기 힘드니까, 일부(표본)만 보고 전체(모집단)를 똑똑하게 추측해요.</p>
+  <h3>😮 왜 재밌을까?</h3><p>간 볼 때 국물 <strong>한 숟가락</strong>만 떠먹어 봐도 냄비 전체의 간을 알 수 있잖아요? 🥄 그게 통계예요! 냄비 전체 = 모집단, 한 숟가락 = 표본. "한 숟가락이 짰으니 다들 짜겠네요" 하고 결론 내리는 게 바로 추론통계예요. 단, 국물을 휘휘 저어야(골고루 뽑아야) 맛이 정확하겠죠?</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>모집단(Population)</strong>: 알고 싶은 대상 전체(냄비 속 국 전부)</li><li><strong>표본(Sample)</strong>: 실제로 조사하는 일부(맛보는 한 숟가락)</li><li><strong>기술통계</strong>: 모은 자료를 표·그래프·평균으로 정리</li><li><strong>추론통계</strong>: 표본 결과로 모집단을 추측</li><li><strong>변수(Variable)</strong>: 사람마다·제품마다 달라지는 값(키, 만족도)</li></ul></div>
+  <h3>🥄 쉽게 풀어보기</h3><p>문구점 사장님이 "우리 동네 학생들이 어떤 볼펜을 좋아할까?" 궁금해해요. 학생이 3,000명이라 다 물어볼 수는 없어요. 그래서 학교 앞에서 100명에게만 물어봐요. 📝 여기서 3,000명이 <strong>모집단</strong>, 100명이 <strong>표본</strong>이에요.</p><p>"100명 중 62명이 검정 볼펜!"이라고 정리하는 건 <strong>기술통계</strong>, "그러니까 동네 전체에서도 한 60%는 검정을 좋아하겠구나"라고 추측하는 건 <strong>추론통계</strong>예요. 사장님은 그 근거로 검정 볼펜을 더 들여놓겠죠 — 이게 바로 데이터로 하는 경영 결정이에요. 💪</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 뉴스의 여론조사 기사에서 "표본 수: 1,000명" 같은 문구를 찾아보세요. 전 국민이 모집단, 1,000명이 표본이에요!</div>
+  <h3>📌 요약</h3><ul><li>통계학 = 숫자로 불확실한 세상을 알아내는 기술이에요.</li><li>모집단 = 전체, 표본 = 맛보는 일부. 🥄</li><li>정리·요약은 기술통계, 추측은 추론통계.</li><li>골고루 뽑은 표본이어야 추측이 맞아요.</li><li>경영 결정의 근거가 되는 게 경영통계학이에요.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>기술통계와 추론통계</h3><p><strong>기술통계(descriptive statistics)</strong>는 수집한 자료 자체를 정리하고 요약합니다 — 평균·중앙값·분산 같은 통계량과 표·그래프가 도구입니다. "우리 반 평균 키는 165cm"는 기술통계입니다. <strong>추론통계(inferential statistics)</strong>는 표본 결과를 근거로 모집단의 특성(모수)을 추정하거나 가설을 검정합니다. "표본평균으로 보아 전체 평균은 164~166cm일 것이다"처럼 불확실성을 수반하는 진술이며, 이 과목의 핵심입니다.</p>
+  <h3>변수의 유형과 측정척도</h3>
+  <div class="info-card"><h4>📏 측정척도 4가지 — 스티븐스(Stevens)</h4><ul><li><strong>명목(nominal)</strong>: 이름만 구분 — 성별, 혈액형, 지역. 순서·계산 불가.</li><li><strong>서열(ordinal)</strong>: 순서만 의미 — 만족도(매우불만~매우만족), 등수. 간격은 불균등.</li><li><strong>등간(interval)</strong>: 간격이 일정, 0이 절대적이지 않음 — 섭씨온도, 지수. 덧뺄셈만 유의미.</li><li><strong>비율(ratio)</strong>: 절대적 0 존재 — 매출액, 무게, 재고량. 사칙연산 모두 유의미.</li></ul></div>
+  <p>변수는 크게 <strong>질적 변수</strong>(범주: 혈액형, 등급)와 <strong>양적 변수</strong>(수치)로 나뉘고, 양적 변수는 다시 세어지는 <strong>이산 변수</strong>(불량품 수)와 연속적인 <strong>연속 변수</strong>(대기시간)로 구분됩니다. 어떤 척도로 측정했는지가 이후에 쓸 수 있는 분석 방법(평균 계산 가능 여부, 검정 선택)을 결정하므로, 자료를 볼 때 가장 먼저 확인해야 할 것입니다.</p>
+  <h3>경영에서의 활용</h3><p>고객 만족도 조사(서열 척도 설문), 생산라인 불량률 관리(표본 검사로 전수검사 대체), 매출 예측(과거 데이터의 경향 분석), 마케팅 캠페인 효과 측정(노출군 vs 비노출군 비교)이 대표 사례입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "표본이 크면 무조건 정확하다"는 틀렸습니다. 1936년 Literary Digest는 200만 표본으로 대선을 틀렸습니다 — 편향된 표본은 커도 틀립니다. 중요한 건 크기보다 <strong>대표성</strong>입니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>통계적 추론의 구조</h3><p>추론통계의 논리 구조는 '모집단(모수 θ) → 확률적 추출 → 표본(통계량 θ̂) → 확률 모형을 통한 역추론'입니다. 표본이 무작위로 뽑혔다는 가정 덕분에 표본의 변동성을 <strong>확률</strong>로 기술할 수 있고, 이것이 추정(신뢰구간)과 검정(p값)의 수학적 토대입니다. 이 과목 뒷부분의 모든 장이 이 구조 위에 놓입니다.</p>
+  <div class="formula">표본(확률로 관찰 가능) ⇄ 모집단(미지, 추론 대상)</div>
+  <h3>표본 편향과 측정 오차</h3><p>통계의 실패는 대부분 계산 실수가 아니라 <strong>설계 실패</strong>에서 옵니다. 선택편향(전화번호부가 부유층 위주였던 Literary Digest 사례), 무응답편향, 생존자편향(폭격기 총탄 자국 분석 — Wald의 유명한 사례), 사회적 바람직성 편향(설문 응답 왜곡)이 대표적입니다. 확률표본추출(probability sampling)만이 편향을 통계적으로 통제 가능하게 합니다.</p>
+  <h3>빅데이터 시대의 통계학</h3><p>"전수 데이터가 있으면 표본 추론이 필요 없다"는 주장이 있지만, 절반만 맞습니다. 전수 데이터도 <strong>측정오차와 생성 과정의 불확실성</strong>은 남고, '지금의 데이터가 아니라 미래의 데이터'를 예측하려면 결국 모형과 불확실성 정량화 — 통계적 사고가 필요합니다. 다만 변수가 수만 개인 환경에서는 다중검정, 과적합 같은 새로운 함정이 생깁니다.</p>
+  <h3>관련 분야</h3><ul><li>확률론(추론통계의 수학적 기초)</li><li>데이터 분석·머신러닝(예측 중심의 확장)</li><li>조사방법론(설문 설계·표본설계)</li></ul>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 한 쇼핑몰이 '앱 사용자 10만 명 전수 데이터'를 갖고 있습니다. 그런데 "앱을 깔지 않은 잠재고객에게도 신상품이 팔릴까?"라는 질문에는 이 전수 데이터가 답을 못 합니다. 왜일까요? (힌트: 관심 모집단이 데이터 밖에 있습니다)</div>
+</div>
+<h2>🕹️ 직접 해보기 — 통계 핵심 용어 짝맞추기</h2>
+<p>통계학의 기초 용어와 설명을 짝지어 복습해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"통계학 기초 용어와 설명을 짝지으세요","pairs":[{"term":"모집단","def":"알고 싶은 관심 대상 전체"},{"term":"표본","def":"모집단에서 실제로 조사하는 일부"},{"term":"기술통계","def":"자료를 표·그래프·평균으로 정리·요약"},{"term":"추론통계","def":"표본 결과로 모집단을 추측"},{"term":"명목척도","def":"이름만 구분하는 측정(성별·혈액형)"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"알고 싶은 관심 대상 전체를 무엇이라 하는가?","choices":["표본","모집단","변수","통계량"],"answer":1},{"q":"자료를 정리·요약하는 통계 분야는?","choices":["추론통계","기술통계","확률론","회귀분석"],"answer":1},{"q":"표본의 결과로 모집단을 추측하는 분야는?","choices":["기술통계","기하학","추론통계","회계학"],"answer":2},{"q":"다음 중 측정척도가 아닌 것은?","choices":["명목척도","서열척도","등간척도","절대척도"],"answer":3},{"q":"국물 한 숟가락으로 간을 보는 것에 비유되는 것은?","choices":["전수조사","표본조사","센서스","실험계획"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,10);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 모집단 구름(왼쪽, 흐린 점들)
+  for(let i=0;i<70;i++){const d=new THREE.Mesh(new THREE.SphereGeometry(0.08,8,8),new THREE.MeshBasicMaterial({color:0xc4b5fd,transparent:true,opacity:0.55}));d.position.set(-2.5+(Math.random()-0.5)*4.5,(Math.random()-0.5)*3.6,(Math.random()-0.5)*2.5);s.add(d);}
+  const popLbl=lbl('모집단','#6d28d9');popLbl.position.set(-2.5,2.4,0);s.add(popLbl);
+  // 표본(오른쪽, 밝은 점들 원형 배치)
+  const sats=[];const sampCols=['#7c3aed','#8b5cf6','#a855f7','#7c3aed','#8b5cf6','#a855f7'];
+  for(let i=0;i<6;i++){const ang=(i/6)*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.24,14,14),new THREE.MeshBasicMaterial({color:parseInt(sampCols[i].slice(1),16)}));m.position.set(2.5+Math.cos(ang)*1.1,Math.sin(ang)*0.8,0);s.add(m);sats.push({m,ang});}
+  const sampLbl=lbl('표본','#7c3aed');sampLbl.position.set(2.5,1.7,0);s.add(sampLbl);
+  // 추론 화살(표본 → 모집단 방향의 점선)
+  const arrowPts=[new THREE.Vector3(1.2,-1.6,0),new THREE.Vector3(-1.2,-1.6,0)];
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(arrowPts),new THREE.LineBasicMaterial({color:0x7c3aed,transparent:true,opacity:0.6})));
+  const infLbl=lbl('표본으로 모집단을 추론','#7c3aed');infLbl.position.set(0,-2.1,0);s.add(infLbl);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 왼쪽 구름이 모집단, 오른쪽 밝은 점이 표본입니다.','모집단 전체를 조사하기는 비용이 너무 큽니다.','무작위로 뽑은 표본은 모집단의 축소판입니다.','표본의 특성으로 모집단을 추측하는 게 추론통계입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}sats.forEach((o,i)=>{const ang=o.ang+T*0.8;o.m.position.set(2.5+Math.cos(ang)*1.1,Math.sin(ang)*0.8,0);});s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

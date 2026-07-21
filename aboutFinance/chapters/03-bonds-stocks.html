@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 채권과 주식 평가 — aboutFinance</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">💼 표지</a></li>
+<li><a href="01-basics.html">1. 재무관리란 무엇인가</a></li>
+<li><a href="02-time-value.html">2. 화폐의 시간가치</a></li>
+<li><a href="03-bonds-stocks.html">3. 채권과 주식 평가</a></li>
+<li><a href="04-risk-return.html">4. 위험과 수익률</a></li>
+<li><a href="05-capital-budgeting.html">5. 자본예산: 투자안 평가</a></li>
+<li><a href="06-capital-structure.html">6. 자본비용과 자본구조</a></li>
+<li><a href="07-dividend-policy.html">7. 배당정책</a></li>
+<li><a href="08-working-capital.html">8. 운전자본 관리</a></li>
+<li><a href="09-financial-analysis.html">9. 재무분석과 기업가치</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>채권</em>과 <em>주식</em> 평가</h1><p class="authors">Chapter 3 — Bond and Stock Valuation</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 금리와 채권가격의 시소 — 드래그로 회전</span>
+<h2>채권과 주식 평가</h2><p>기업이 자금을 조달하는 두 대표 수단이 <strong>채권</strong>(빚)과 <strong>주식</strong>(소유 지분)입니다. 투자자 입장에서 둘은 모두 '사고팔 수 있는 금융자산'이고, 그 값어치는 자산이 앞으로 만들어 줄 <strong>미래 현금흐름을 할인한 현재가치</strong>로 구합니다. 채권의 현금흐름은 이자(쿠폰)와 원금, 주식의 현금흐름은 배당입니다. 평가의 재료만 다를 뿐 원칙은 하나입니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>금융자산의 가치 = 미래 현금흐름의 현재가치. 채권이든 주식이든 이 대원칙 하나로 평가됩니다. 할인율이 오를수록(금리 상승) 현재가치는 작아진다는 점이 채권가격과 금리의 역관계를 만듭니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>채권은 <strong>돈을 빌려주고 받는 차용증</strong>, 주식은 <strong>회사의 주인이 되는 조각</strong>이에요. 둘 다 사고팔 수 있어서 시장에서 '값'이 매겨져요.</p>
+  <h3>😮 왜 재밌을까?</h3><p>친구가 "1,000원 빌려주면 1년 뒤에 1,050원으로 갚을게!"라며 쪽지를 써 줬다고 해 봐요. 그 쪽지가 바로 채권이에요. 📄 1,000원이 <strong>액면가</strong>, 50원의 이자를 정해 준 5%가 <strong>표면금리(쿠폰)</strong>, 1년 뒤가 <strong>만기</strong>예요. 주식은 달라요. 친구네 가게에 돈을 보태고 '공동 주인'이 되는 거예요. 가게가 돈을 벌면 몫대로 나눠 갖는데, 그게 <strong>배당</strong>이에요. 🏪</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>채권</strong>: 돈을 빌려줬다는 증서 — 이자와 원금을 받기로 한 약속</li><li><strong>액면가</strong>: 만기에 돌려받기로 한 기준 금액</li><li><strong>표면금리(쿠폰)</strong>: 액면가에 대해 정기적으로 받기로 한 이자율</li><li><strong>만기</strong>: 빌려준 돈을 돌려받는 날</li><li><strong>주식</strong>: 회사의 주인이 되는 조각</li><li><strong>배당</strong>: 회사가 번 돈을 주인(주주)에게 나눠 주는 것</li></ul></div>
+  <h3>⚖️ 시소처럼 움직이는 금리와 채권가격</h3><p>금리와 채권가격은 시소처럼 반대로 움직여요. 🎠 여러분이 이자 5%짜리 쪽지(채권)를 갖고 있는데, 갑자기 은행이 "이제 맡기면 10% 줄게!"라고 한다면 어떨까요? 아무도 5%짜리 쪽지를 1,000원에 사려 하지 않겠죠. 팔려면 값을 깎아야 해요. 이게 <strong>금리가 오를수록 채권가격은 낮아지는</strong> 이유예요. 반대로 금리가 내리면 예전의 센 이자를 주는 채권이 귀해져서 값이 올라가요. 📈</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 뉴스에서 "금리 인상에 채권값 하락"이라는 기사를 찾아보세요. 금리가 오르는데 왜 채권 '값'은 내릴까요? 시소 그림을 떠올리면 답이 보여요!</div>
+  <h3>📌 요약</h3><ul><li>채권 = 돈 빌려주고 받는 차용증 + 이자.</li><li>채권의 3요소: 액면가, 표면금리(쿠폰), 만기.</li><li>금리와 채권가격은 시소처럼 반대로 움직여요.</li><li>주식 = 회사의 주인이 되는 조각, 배당을 받아요.</li><li>채권·주식의 값은 '미래에 받을 돈'을 오늘 값으로 바꿔 정해요.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>채권의 구조와 가격 계산</h3><p>채권은 발행자(국가·기업)가 자금을 빌리면서 상환 조건을 적어 발행하는 증서입니다. 구조는 세 가지로 요약됩니다. <strong>① 액면가(Face Value)</strong>: 만기에 돌려주기로 한 기준 금액. <strong>② 표면금리(쿠폰, Coupon Rate)</strong>: 액면가에 대해 정기적으로 지급하는 이자율. <strong>③ 만기(Maturity)</strong>: 원금을 상환하는 시점. 채권가격은 이 구조가 만들어 내는 현금흐름(정기적인 이자와 만기 원금)을 시장금리(요구수익률)로 할인한 현재가치의 합입니다. 즉, <strong>채권가격 = 이자(쿠폰)의 현재가치 + 원금의 현재가치</strong>입니다.</p>
+  <div class="info-card"><h4>💰 숫자로 보는 채권가격</h4><p>액면가 10,000원, 표면금리 5%(연 이자 500원), 만기 3년인 채권을 시장금리 6%로 평가해 봅시다. 이자의 현재가치 = 500/1.06 + 500/1.06² + 500/1.06³ ≈ 1,336원, 원금의 현재가치 = 10,000/1.06³ ≈ 8,396원. 합하면 <strong>약 9,733원</strong> — 액면가보다 싼 할인 가격입니다. 시장금리(6%)가 표면금리(5%)보다 높아 이 채권의 매력이 떨어지기 때문입니다.</p></div>
+  <h3>금리와 채권가격의 역관계, 만기수익률(YTM)</h3><p>채권의 현금흐름(이자·원금)은 발행 시점에 고정되어 있습니다. 따라서 시장금리가 오를수록 더 높은 할인율이 적용되어 고정된 현금흐름의 현재가치, 즉 채권가격이 하락합니다. 반대로 금리가 내리면 채권가격은 상승합니다 — 이것이 금리와 채권가격의 <strong>역관계</strong>입니다. <strong>만기수익률(YTM, Yield to Maturity)</strong>은 현재 시장가격에 채권을 사서 만기까지 보유할 때 얻는 수익률로, 채권의 현금흐름 현재가치를 현재 가격과 같게 만드는 할인율(내부수익률)입니다. 시장가격이 액면가보다 쌀수록(할인 채권) YTM은 표면금리보다 높고, 비쌀수록(할증 채권) YTM은 표면금리보다 낮습니다.</p>
+  <h3>주식 평가: 배당할인모형과 PER</h3><p>주식의 가치도 원칙은 같습니다. 주주가 받는 현금흐름은 배당이므로, 주가는 미래 배당의 현재가치 합으로 구합니다 — 이것이 <strong>배당할인모형(DDM)</strong>입니다. 배당이 매년 일정한 비율 g로 성장한다고 가정하면 <strong>정액성장모형(고든 모형)</strong> P = D1 / (r − g) 가 됩니다. 다음 해 배당 D1 = 1,000원, 요구수익률 r = 10%, 배당성장률 g = 5%라면 주가 = 1,000 / (0.10 − 0.05) = <strong>20,000원</strong>입니다. 실무에서는 <strong>PER(주가수익비율) = 주가 ÷ EPS(주당순이익)</strong>도 널리 씁니다. PER은 이익 1원에 대해 시장이 지불하는 가격(배수)으로, 주가 50,000원·EPS 2,500원이면 PER은 20배입니다. 동종 업계와 비교해 고평가·저평가를 가늠하는 지표입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "금리가 오를수록 채권 투자가 유리하다"는 절반만 맞습니다. 새로 사는 채권의 이자는 높아지지만, <strong>이미 보유한 채권의 시장가격은 하락</strong>해 평가손실이 생깁니다. 또한 PER이 낮다고 무조건 저평가는 아닙니다 — 이익이 줄어들 전망이라 PER이 낮은 '가치 함정'일 수 있습니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>듀레이션: 금리 민감도의 척도</h3><p>채권가격이 금리와 반대로 움직인다는 사실을 넘어, <strong>얼마나</strong> 움직이는지를 재는 지표가 듀레이션입니다. 맥콜레이 듀레이션은 각 현금흐름의 현재가치를 가중치로 한 회수 시점의 가중평균이고, 이를 1+y로 나눈 <strong>수정듀레이션(Modified Duration)</strong>이 금리 변화에 대한 가격 민감도를 근사합니다. 만기가 길수록, 표면금리가 낮을수록 듀레이션은 커집니다. 예컨대 수정듀레이션이 4인 채권은 시장금리가 1%p 상승할 때 가격이 약 4% 하락합니다.</p>
+  <div class="formula">채권가격 B = Σₜ C/(1+y)ᵗ + F/(1+y)ⁿ &nbsp;·&nbsp; 가격 변화율 ΔP/P ≈ −D<sub>mod</sub> × Δy</div>
+  <h3>정액성장모형의 성립 조건: 왜 g &lt; r 인가</h3><p>정액성장모형은 무한 등비급수 D1/(1+r) + D1(1+g)/(1+r)² + ⋯ 의 합으로, 이 급수가 수렴하려면 공비 (1+g)/(1+r) &lt; 1, 즉 <strong>g &lt; r</strong>이어야 합니다. g ≥ r이면 분모가 0 이하가 되어 주가가 무한대 또는 음수로 발산해 모형이 성립하지 않습니다. 경제적으로도 한 기업의 영구 성장률이 경제 전체의 성장률을 초과할 수 없으므로 g는 장기 경제성장률 이하로 제한하는 것이 일반적입니다. 또한 g가 r에 가까워질수록 추정 오차에 가치가 극단적으로 민감해진다는 점도 실무상 유의점입니다.</p>
+  <div class="formula">정액성장모형 P₀ = D₁ / (r − g), 단 g &lt; r</div>
+  <h3>성장주 vs 가치주, 채권의 신용위험</h3><p>주식은 평가 결과와 기대에 따라 크게 둘로 나뉩니다. <strong>성장주</strong>는 이익·배당 성장률 g가 높을 것으로 기대되는 주식으로, 시장이 높은 미래 가치를 반영해 PER이 높고 배당은 적게 주고 재투자를 많이 합니다. <strong>가치주</strong>는 장부가치·이익에 비해 시장가격이 낮은(저PER·저PBR) 주식으로, 성숙 기업이 많아 배당 여력이 큰 편입니다. 채권에는 금리위험 외에 <strong>신용위험</strong>이 있습니다 — 발행자가 이자·원금을 갚지 못할 디폴트 위험입니다. 신용평가사의 등급(AAA부터 D까지)으로 측정되며, 등급이 낮을수록 투자자는 더 높은 수익률을 요구합니다. 회사채 수익률과 국고채 수익률의 차이인 <strong>신용스프레드</strong>가 신용위험의 가격이며, 경기 침체기에는 스프레드가 확대됩니다.</p>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 시장금리가 1%p 올랐습니다. 표면금리가 같은 만기 1년 채권과 만기 30년 채권 중 어느 쪽 가격이 더 크게 떨어질까요? (힌트: 어느 쪽의 듀레이션이 더 클지 생각해 보세요.)</div>
+</div>
+<h2>🕹️ 직접 해보기 — 채권·주식 핵심 용어 짝맞추기</h2>
+<p>채권과 주식 평가의 핵심 용어와 설명을 짝지어 복습해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0f766e","prompt":"채권·주식 평가 용어와 올바른 설명을 짝지으세요","pairs":[{"term":"액면가","def":"만기에 돌려받기로 한 채권의 기준 금액"},{"term":"표면금리(쿠폰)","def":"액면가에 대해 정기적으로 지급하기로 약정한 이자율"},{"term":"만기수익률(YTM)","def":"현재 가격에 사서 만기까지 보유할 때의 수익률"},{"term":"배당할인모형","def":"미래 배당의 현재가치 합으로 주식 가치를 구하는 모형"},{"term":"PER","def":"주가를 주당순이익(EPS)으로 나눈 값"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0f766e","questions":[{"q":"시장금리가 상승하면 이미 발행된 채권의 가격은 어떻게 되는가?","choices":["상승한다","하락한다","변동이 없다","액면가로 고정된다"],"answer":1},{"q":"채권이란 무엇인가?","choices":["돈을 빌려주고 이자와 원금을 받기로 한 증서","회사의 소유 지분을 나타내는 증서","물건을 사고팔 때 받는 영수증","은행에만 발행되는 예금 증서"],"answer":0},{"q":"다음 해 배당 D1=1,000원, 요구수익률 r=10%, 배당성장률 g=5%일 때, 정액성장모형 P=D1/(r−g)으로 계산한 주가는?","choices":["10,000원","15,000원","25,000원","20,000원"],"answer":3},{"q":"PER(주가수익비율)은 무엇인가?","choices":["배당금 ÷ 주가","이자 ÷ 액면가","주가 ÷ 주당순이익(EPS)","주가 ÷ 액면가"],"answer":2},{"q":"표면금리(쿠폰금리)란 무엇인가?","choices":["시장에서 매일 변동하는 금리","액면가에 대해 채권이 지급하기로 약정한 이자율","만기까지 보유했을 때의 총수익률","은행 예금에 적용되는 금리"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,10);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 시소 받침대
+  const ful=new THREE.Mesh(new THREE.ConeGeometry(0.6,1.2,4),new THREE.MeshBasicMaterial({color:0x64748b}));ful.position.set(0,-0.9,0);s.add(ful);
+  // 시소 판 그룹 (왼쪽: 금리, 오른쪽: 채권가격)
+  const plank=new THREE.Group();
+  const bar=new THREE.Mesh(new THREE.BoxGeometry(6,0.15,0.8),new THREE.MeshBasicMaterial({color:0x0f766e}));plank.add(bar);
+  const intBall=new THREE.Mesh(new THREE.SphereGeometry(0.42,16,16),new THREE.MeshBasicMaterial({color:0xf59e0b}));intBall.position.set(-2.6,0.55,0);plank.add(intBall);
+  const intLbl=lbl('금리','#f59e0b');intLbl.position.set(-2.6,1.2,0);plank.add(intLbl);
+  const priceBall=new THREE.Mesh(new THREE.SphereGeometry(0.42,16,16),new THREE.MeshBasicMaterial({color:0x0f766e}));priceBall.position.set(2.6,0.55,0);plank.add(priceBall);
+  const priceLbl=lbl('채권가격','#0f766e');priceLbl.position.set(2.6,1.2,0);plank.add(priceLbl);
+  plank.position.set(0,-0.3,0);s.add(plank);
+  // 채권 박스
+  const bond=new THREE.Mesh(new THREE.BoxGeometry(1.7,1,0.6),new THREE.MeshBasicMaterial({color:0x14b8a6,wireframe:true}));bond.position.set(-3.7,-2.4,0);s.add(bond);
+  const cpnLbl=lbl('표면금리(쿠폰)','#14b8a6');cpnLbl.position.set(-3.7,-1.65,0);s.add(cpnLbl);
+  const matLbl=lbl('만기','#64748b');matLbl.position.set(-3.7,-3.15,0);s.add(matLbl);
+  // 주식 박스
+  const stock=new THREE.Mesh(new THREE.BoxGeometry(1.7,1,0.6),new THREE.MeshBasicMaterial({color:0x22c55e,wireframe:true}));stock.position.set(3.7,-2.4,0);s.add(stock);
+  const divLbl=lbl('배당','#22c55e');divLbl.position.set(3.7,-1.65,0);s.add(divLbl);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 시소처럼 금리가 오를수록 채권가격은 낮아집니다.','채권: 액면가·표면금리(쿠폰)·만기가 정해진 차용증입니다.','채권가격 = 이자(쿠폰)의 현재가치 + 원금의 현재가치.','주식의 가치는 미래 배당을 할인해 구합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}plank.rotation.z=Math.sin(T*0.9)*0.18;bond.rotation.y+=0.006;stock.rotation.y-=0.006;s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4. 위험과 수익률 — aboutFinance</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">💼 표지</a></li>
+<li><a href="01-basics.html">1. 재무관리란 무엇인가</a></li>
+<li><a href="02-time-value.html">2. 화폐의 시간가치</a></li>
+<li><a href="03-bonds-stocks.html">3. 채권과 주식 평가</a></li>
+<li><a href="04-risk-return.html">4. 위험과 수익률</a></li>
+<li><a href="05-capital-budgeting.html">5. 자본예산: 투자안 평가</a></li>
+<li><a href="06-capital-structure.html">6. 자본비용과 자본구조</a></li>
+<li><a href="07-dividend-policy.html">7. 배당정책</a></li>
+<li><a href="08-working-capital.html">8. 운전자본 관리</a></li>
+<li><a href="09-financial-analysis.html">9. 재무분석과 기업가치</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>위험</em>과 수익률</h1><p class="authors">Chapter 4 — Risk and Return</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 증권시장선(SML)과 베타 지점을 드래그해 살펴 보세요</span>
+<h2>위험과 수익률</h2><p>투자의 세계에는 바꿀 수 없는 약속이 하나 있습니다. <strong>높은 수익을 원하면 더 큰 위험을 감수해야 한다</strong>는 것입니다. 재무관리에서 위험(risk)은 '수익률이 기대에서 벗어날 가능성', 즉 수익률의 <strong>변동성</strong>을 뜻합니다. 이 챕터에서는 기대수익률과 위험을 숫자로 측정하고, 여러 자산을 섞어 위험을 낮추는 <strong>분산투자</strong>의 원리, 그리고 위험에 걸맞은 요구수익률을 알려 주는 <strong>CAPM</strong>까지 살펴 봅니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>위험은 나쁜 일이 아니라 <strong>가격이 매겨지는 대상</strong>입니다. 시장은 '맡길 수 없는 위험(체계적 위험)'에만 보상을 주고, '스스로 없앨 수 있는 위험(비체계적 위험)'에는 보상을 주지 않습니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>위험은 수익률이 <strong>들쭉날쭉한 정도</strong>예요. 많이 흔들릴수록 위험한 투자, 대신 기대하는 수익도 커져요.</p>
+  <h3>🥚 계란을 한 바구니에 담지 말라</h3><p>계란 10개를 한 바구니에 담아 들고 가다가 넘어지면? 전부 깨져요. 😱 그런데 바구니 두 개에 5개씩 나눠 담으면, 하나를 떨어뜨려도 5개는 살아요. 이게 <strong>분산투자</strong>예요. 돈을 한 회사 주식에 몰빵하지 않고 여러 자산에 나눠 담으면, 한 곳이 망해도 전체가 망하진 않아요.</p>
+  <h3>🎢 위험 = 들쭉날쭉한 정도</h3><p>두 친구의 시험 점수를 비교해 봐요. 철수는 매번 80점 근처(78, 82, 80), 영희는 왔다 갔다(100, 55, 85). 평균은 둘 다 80점쯤이지만, 영희가 더 '위험한' 학생이에요. 📊 주식도 마찬가지! 수익률이 얼마나 출렁이는지를 <strong>표준편차</strong>라는 숫자로 재요. 표준편차가 크면 클수록 위험한 투자예요.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>기대수익률</strong>: 앞으로 평균적으로 기대되는 수익률</li><li><strong>위험</strong>: 실제 수익률이 기대와 달라질 가능성(변동성)</li><li><strong>표준편차</strong>: 수익률이 들쭉날쭉한 정도를 나타내는 숫자</li><li><strong>분산투자</strong>: 여러 자산에 나눠 투자해 위험을 낮추는 방법</li><li><strong>베타(β)</strong>: 내 주식이 시장에 비해 얼마나 민감하게 움직이는지</li></ul></div>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 은행 예금(표준편차 거의 0)과 주식(출렁출렁)을 비교해 보세요. 예금 이자가 낮고 주식 기대수익이 높은 이유가 바로 '위험의 가격' 때문이에요!</div>
+  <h3>📌 요약</h3><ul><li>위험은 수익률이 들쭉날쭉한 정도예요.</li><li>표준편차가 클수록 위험이 커요.</li><li>계란을 한 바구니에 담지 말라 — 분산투자로 위험을 줄일 수 있어요.</li><li>위험이 큰 투자일수록 더 높은 수익률을 요구해요.</li><li>베타는 시장에 대한 민감도예요.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>기대수익률과 위험의 측정</h3><p>미래 수익률은 확률변수이므로, 가능한 시나리오별 수익률에 발생 확률을 곱해 더한 <strong>기대수익률 E(r) = Σ pᵢ·rᵢ</strong>로 요약합니다. 위험은 기대수익률 주변으로 흩어진 정도, 즉 <strong>분산 σ² = Σ pᵢ·(rᵢ − E(r))²</strong>과 그 제곱근인 <strong>표준편차 σ</strong>로 측정합니다. 예: 호황(확률 40%, +20%)·보통(40%, +10%)·불황(20%, −10%)이라면 E(r) = 0.4×20 + 0.4×10 + 0.2×(−10) = <strong>10%</strong>, 분산 = 0.4×(20−10)² + 0.4×(10−10)² + 0.2×(−10−10)² = 120, 표준편차 ≈ <strong>10.95%</strong>입니다.</p>
+  <h3>포트폴리오의 분산효과</h3><p>두 자산을 섞으면 포트폴리오의 기대수익률은 가중평균이 되지만, 위험은 가중평균보다 <strong>작아질 수</strong> 있습니다. 열쇠는 두 자산이 함께 움직이는 정도인 <strong>상관계수 ρ</strong>입니다. ρ = +1이면 분산효과가 없고, ρ가 낮을수록(특히 음수면) 한쪽이 떨어질 때 다른 쪽이 버텨 주어 포트폴리오 전체 변동성이 크게 줄어듭니다. 서로 반대로 움직이는 자산끼리 담을수록 '계란 바구니' 효과가 커지는 것입니다.</p>
+  <h3>체계적 위험 vs 비체계적 위험</h3><p>분산투자로 아무리 종목을 늘려도 없어지지 않는 위험이 있습니다. 금리 변동, 경기 침체, 인플레이션처럼 <strong>시장 전체를 흔드는 위험</strong>을 체계적 위험(systematic risk)이라 하며 분산으로 제거할 수 없습니다. 반면 CEO 리스크, 제품 리콜, 파업처럼 <strong>개별 기업 고유의 위험</strong>은 비체계적 위험(unsystematic risk)이라 하며, 여러 종목에 분산하면 서로 상쇄되어 사실상 제거됩니다. 시장이 보상해 주는 것은 피할 수 없는 체계적 위험뿐입니다.</p>
+  <div class="info-card"><h4>📈 베타와 CAPM</h4><p><strong>베타 β</strong>는 개별 자산의 체계적 위험, 즉 시장 수익률 변화에 대한 민감도입니다. β = 1이면 시장과 동일하게, β = 1.5면 시장보다 1.5배 크게 움직입니다. 자본자산가격결정모형(CAPM)은 자산의 요구수익률을 <strong>E(r) = rf + β(E(rm) − rf)</strong>로 제시합니다. 예: 무위험이자율 3%, β = 1.5, 시장위험프리미엄 6% → 3% + 1.5×6% = <strong>12%</strong>. 이 관계를 베타–수익률 평면에 그린 직선이 <strong>증권시장선(SML)</strong>입니다.</p></div>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "위험이 크면 무조건 수익률이 높다"는 틀렸습니다. 복권처럼 비체계적 위험만 큰 투자는 시장이 보상해 주지 않습니다. 추가 수익률은 오직 분산으로 없앨 수 없는 체계적 위험(베타)을 얼마나 떠안았는지에 비례합니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>공분산과 상관계수</h3><p>두 자산 i, j가 함께 움직이는 정도는 <strong>공분산 σᵢⱼ = Σ p·(rᵢ − E(rᵢ))(rⱼ − E(rⱼ))</strong>로 측정하고, 이를 각 표준편차의 곱으로 나눈 것이 <strong>상관계수 ρᵢⱼ = σᵢⱼ / (σᵢσⱼ)</strong>(−1 ≤ ρ ≤ +1)입니다. 두 자산 포트폴리오의 분산은 다음과 같습니다.</p>
+  <div class="formula">σ²_p = w₁²σ₁² + w₂²σ₂² + 2w₁w₂σ₁₂</div>
+  <p>교차항 2w₁w₂σ₁₂가 ρ에 비례하므로, ρ &lt; 1이기만 합해도 포트폴리오 분산은 개별 위험의 가중평균보다 작아집니다. ρ = −1이면 적절한 비중으로 분산을 이론적으로 0까지 만들 수 있습니다.</p>
+  <h3>효율적 프런티어</h3><p>투자 가능한 모든 자산 조합을 위험–수익률 평면에 그리면 기회집합이 되고, 그중 같은 위험에서 기대수익률이 최대인(또는 같은 수익률에서 위험이 최소인) 조합들의 곡선이 <strong>효율적 프런티어(efficient frontier)</strong>입니다. 무위험자산이 존재하면 rf에서 효율적 프런티어에 접하는 접선 포트폴리오(시장포트폴리오)가 최적 위험자산 조합이 되고, 투자자는 무위험자산과 시장포트폴리오의 비중만 조절하면 됩니다(토빈의 분리정리). 이때 rf와 시장포트폴리오를 잇는 직선이 자본시장선(CML)입니다.</p>
+  <h3>베타의 해석과 CAPM의 가정·한계</h3><p>베타는 개별 수익률을 시장 수익률에 회귀한 기울기로 추정됩니다. <strong>β &gt; 1</strong>이면 시장보다 진폭이 큰 공격적(aggressive) 자산, <strong>0 &lt; β &lt; 1</strong>이면 방어적(defensive) 자산, β &lt; 0이면 시장과 반대로 움직이는 자산입니다. CAPM의 균형 관계는 증권시장선으로 요약됩니다.</p>
+  <div class="formula">E(rᵢ) = rf + βᵢ(E(rm) − rf),&nbsp;&nbsp; βᵢ = σᵢm / σ²_m</div>
+  <p>CAPM은 ① 모든 투자자가 평균–분산 기준으로 합리적 의사결정을 하고, ② 동일한 기대(동질적 기대)와 동일한 투자기간을 가지며, ③ 거래비용·세금이 없고, ④ 무위험이자율로 무제한 대출·차입이 가능하다고 가정합니다. 현실에선 이 가정들이 성립하지 않아 Fama–French의 다요인 모형(규모·가치 요인) 등으로 확장되었고, β만으로 수익률을 설명하는 능력이 약하다는 실증 비판이 있습니다. 그럼에도 자본비용 추정과 투자 평가에서 기준점(benchmark)으로 널리 쓰입니다.</p>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 어떤 신생 바이오 기업의 표준편차가 60%로 매우 큽니다. 그런데 CAPM으로 계산한 요구수익률은 β = 0.8로 시장보다 낮게 나왔습니다. 왜 이런 일이 가능할까요? (힌트: 표준편차에 포함된 위험 중 시장이 보상하는 부분은 무엇일까요? 이 기업의 변동성 대부분이 분산으로 제거되는 종류라면?)</div>
+</div>
+<h2>🕹️ 직접 해보기 — 체계적 vs 비체계적 위험 분류하기</h2>
+<p>각 위험 요인을 체계적 위험과 비체계적 위험으로 분류해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#0f766e","prompt":"각 항목을 체계적 위험과 비체계적 위험으로 분류하세요","groups":[{"name":"체계적 위험 (분산 불가)","items":["금리 변동","경기 침체","인플레이션","환율 변동"]},{"name":"비체계적 위험 (분산 가능)","items":["CEO 리스크","제품 리콜","파업","소송"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0f766e","questions":[{"q":"무위험이자율 3%, 베타 1.5, 시장위험프리미엄 6%일 때 CAPM 요구수익률은?","choices":["9%","10.5%","12%","15%"],"answer":2},{"q":"분산투자로 제거할 수 있는 위험은?","choices":["체계적 위험","비체계적 위험","시장 위험","금리 위험"],"answer":1},{"q":"베타가 1이라는 것의 의미는?","choices":["시장과 무관하게 움직인다","시장보다 2배 민감하다","위험이 전혀 없다","시장과 동일한 민감도로 움직인다"],"answer":3},{"q":"표준편차와 위험의 관계로 옳은 것은?","choices":["표준편차가 클수록 위험이 크다","표준편차가 클수록 위험이 작다","표준편차와 위험은 무관하다","표준편차는 수익률의 평균값이다"],"answer":0},{"q":"다음 중 체계적 위험의 예시는?","choices":["제품 리콜","CEO 리스크","경기 침체","공장 파업"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(2.5,3,11);cam.lookAt(2,3,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 위험(베타)-수익률 축
+  const axMat=new THREE.LineBasicMaterial({color:0x9aa1ad});
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(6.4,0,0)]),axMat));
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(0,7.4,0)]),axMat));
+  const xl=lbl('베타','#6b7280');xl.position.set(6.4,-0.5,0);s.add(xl);
+  const yl=lbl('기대수익률','#6b7280');yl.position.set(0,7.9,0);s.add(yl);
+  // SML: E(r) = rf + β·(프리미엄) → y = 2 + x
+  const smlMat=new THREE.LineBasicMaterial({color:0x0f766e});
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,2,0),new THREE.Vector3(5.4,7.4,0)]),smlMat));
+  const sl=lbl('SML','#0f766e');sl.position.set(5.1,7.9,0);s.add(sl);
+  // 안전자산(rf): β=0
+  const rfPt=new THREE.Mesh(new THREE.SphereGeometry(0.18,16,16),new THREE.MeshBasicMaterial({color:0x22c55e}));rfPt.position.set(0,2,0);s.add(rfPt);
+  const rfL=lbl('안전자산(rf)','#22c55e');rfL.position.set(0,1.2,0);s.add(rfL);
+  // β=0.5 / 1(시장포트폴리오) / 1.5 지점
+  const pts=[[1.5,3.5,'#14b8a6',null],[3,5,'#f59e0b','시장포트폴리오'],[4.5,6.5,'#ef4444',null]];
+  for(let i=0;i<pts.length;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.22,16,16),new THREE.MeshBasicMaterial({color:parseInt(pts[i][2].slice(1),16)}));m.position.set(pts[i][0],pts[i][1],0);s.add(m);if(pts[i][3]){const t=lbl(pts[i][3],pts[i][2]);t.position.set(pts[i][0],pts[i][1]-0.7,0);s.add(t);}s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(pts[i][0],0,0),new THREE.Vector3(pts[i][0],pts[i][1],0)]),new THREE.LineBasicMaterial({color:parseInt(pts[i][2].slice(1),16),transparent:true,opacity:0.25})));}
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ SML 위에서 베타가 클수록 요구수익률이 높아집니다.','안전자산(rf): 베타 0, 무위험이자율에서 출발합니다.','시장포트폴리오: 베타=1, 시장 평균의 위험과 수익률.','β=1.5 지점: 시장보다 1.5배 민감한 공격적 자산.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

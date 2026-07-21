@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2. 화폐의 시간가치 — aboutFinance</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">💼 표지</a></li>
+<li><a href="01-basics.html">1. 재무관리란 무엇인가</a></li>
+<li><a href="02-time-value.html">2. 화폐의 시간가치</a></li>
+<li><a href="03-bonds-stocks.html">3. 채권과 주식 평가</a></li>
+<li><a href="04-risk-return.html">4. 위험과 수익률</a></li>
+<li><a href="05-capital-budgeting.html">5. 자본예산: 투자안 평가</a></li>
+<li><a href="06-capital-structure.html">6. 자본비용과 자본구조</a></li>
+<li><a href="07-dividend-policy.html">7. 배당정책</a></li>
+<li><a href="08-working-capital.html">8. 운전자본 관리</a></li>
+<li><a href="09-financial-analysis.html">9. 재무분석과 기업가치</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1>화폐의 <em>시간가치</em></h1><p class="authors">Chapter 2 — Time Value of Money</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 복리로 계단식으로 커지는 자산과 굴리는 동전</span>
+<h2>화폐의 시간가치란</h2><p>같은 100만 원이라도 <strong>오늘 받는 돈</strong>과 <strong>1년 뒤 받는 돈</strong>의 가치는 다릅니다. 오늘의 100만 원은 은행에 맡겨 이자를 받을 수 있고, 물가가 오르는 만큼 미래의 돈은 살 수 있는 것이 줄며, 약속한 돈을 떼일 위험도 있습니다. 이처럼 <strong>시간이 흐륨에 따라 달라지는 돈의 가치</strong>를 화폐의 시간가치(Time Value of Money)라 하며, 재무관리의 모든 평가 — 투자안 분석, 채권·주식 가치평가, 기업가치 계산 — 는 이 개념 위에 서 있습니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>미래의 돈을 오늘 기준으로 바꾸는 작업을 <strong>할인(discounting)</strong>, 오늘의 돈을 미래 기준으로 키우는 작업을 <strong>복리 계산(compounding)</strong>이라 합니다. 이 둘을 잇는 다리가 <strong>할인율(이자율)</strong>입니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p><strong>오늘의 100만 원이 1년 뒤의 100만 원보다 더 비싸요.</strong> 오늘 받으면 저금해서 이자를 더 받을 수 있기 때문이에요.</p>
+  <h3>❄️ 눈덩이 굴리기 (복리)</h3><p>눈사람을 만들 때 작은 눈덩이를 굴리면 어떻게 되나요? 처음엔 조금씩 커지다가, 눈덩이가 클수록 한 번 굴릴 때마다 <strong>더 많은 눈이 붙어서</strong> 점점 빨리 커지죠. ⛄ 돈도 똑같아요. 원금에 붙은 이자가 다음 해에는 원금과 함께 굴어가며 이자를 또 낳아요. 이걸 <strong>복리</strong>라고 해요.</p><p>반대로 <strong>단리</strong>는 처음 원금에만 이자를 줘요. 눈덩이를 굴리는 게 아니라 옆에 눈을 조금씩 따로 쌓는 셈이죠. 그래서 시간이 지날수록 복리가 단리를 멀리 앞서 나가요!</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>미래가치(FV)</strong>: 오늘의 돈이 미래에 얼마가 되는지</li><li><strong>현재가치(PV)</strong>: 미래의 돈을 오늘 가치로 바꾼 것</li><li><strong>단리</strong>: 원금에만 이자가 붙는 방식</li><li><strong>복리</strong>: 원금+이자에 다시 이자가 붙는 방식</li><li><strong>할인율</strong>: 미래의 돈을 오늘 가치로 바꿀 때 쓰는 이자율</li></ul></div>
+  <h3>🎁 퀴즈처럼 생각해 봐요</h3><p>친구가 이렇게 물어요. "오늘 100만 원 줄까, 1년 뒤에 100만 원 줄까?" 🤔 은행 이자가 연 5%라면 오늘 받은 100만 원은 1년 뒤 105만 원이 돼요. 그러니 1년 뒤의 100만 원과 비교하면 오늘 받는 게 5만 원 이득! 친구가 정말 공평하게 하려면 1년 뒤에는 <strong>105만 원</strong>을 줘야 해요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> "72법칙"을 외워 두세요. 72를 연이율로 나누면 돈이 2배가 되는 데 걸리는 기간이 나와요. 연 8%라면 72÷8 = 약 9년! 암산으로도 금세 감이 와요.</div>
+  <h3>📌 요약</h3><ul><li>오늘의 돈 &gt; 미래의 같은 액수의 돈이에요.</li><li>복리는 눈덩이 굴리기 — 이자가 이자를 낳아요.</li><li>단리는 원금에만 이자가 붙어요.</li><li>미래가치는 '키우기', 현재가치는 '할인하기'예요.</li><li>72법칙: 72÷연이율 = 원금이 2배 되는 기간.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>단리와 복리</h3><p><strong>단리(simple interest)</strong>는 매기 원금에만 이자가 붙습니다. 100만 원을 연 10% 단리로 10년 맡기면 매년 10만 원씩, 만기에 200만 원을 받습니다. <strong>복리(compound interest)</strong>는 원금과 누적 이자를 합한 금액에 다시 이자가 붙습니다. 같은 조건에서 복리라면 만기에 약 259만 원(100×1.1¹⁰)을 받습니다. 30년으로 늘리면 단리는 400만 원인데 복리는 약 1,745만 원 — 기간이 길수록 격차가 기하급수적으로 벌어집니다. 아인슈타인이 복리를 '세계 8대 불가사의'라 불렀다는 일화가 나올 만큼 복리의 힘은 시간의 함수입니다.</p>
+  <h3>미래가치와 현재가치</h3>
+  <div class="formula">미래가치 FV = PV × (1 + r)ⁿ</div>
+  <div class="formula">현재가치 PV = FV / (1 + r)ⁿ</div>
+  <p>r은 기간당 이자율, n은 기간 수입니다. 예를 들어 100만 원을 연 10% 복리로 2년 맡기면 FV = 100×(1.1)² = <strong>121만 원</strong>입니다. 반대로 2년 뒤 받을 121만 원의 현재가치(할인율 10%)는 121/(1.1)² = <strong>100만 원</strong>입니다. 미래가치 계산과 현재가치 계산은 서로 역연산 관계입니다.</p>
+  <h3>연금·영구연금·실효이자율·72법칙</h3><p>매기 일정액이 들어오는 현금흐름을 <strong>연금(annuity)</strong>이라 합니다. 매년 말 100만 원씩 3년 받는 연금의 현재가치(할인율 10%)는 100×[1−(1.1)⁻³]/0.1 ≈ <strong>248.7만 원</strong>, 미래가치는 100×[(1.1)³−1]/0.1 = <strong>331만 원</strong>입니다.</p>
+  <div class="formula">연금 현재가치 PV = C × [1 − (1+r)⁻ⁿ] / r　·　연금 미래가치 FV = C × [(1+r)ⁿ − 1] / r</div>
+  <p>기한 없이 영원히 일정액을 주는 <strong>영구연금(perpetuity)</strong>은 공식이 놀라울 만큼 단순합니다. 매년 5만 원을 영원히 받는 권리가 있다면 금리 5%에서 그 가치는 5/0.05 = <strong>100만 원</strong>입니다.</p>
+  <div class="formula">영구연금 PV = C / r</div>
+  <p>이자 계산 횟수가 연 1회가 아니라 m회(월복리면 12회)이면 실제로 적용되는 <strong>실효이자율</strong>은 표면금리보다 높아집니다. 연 12% 월복리 예금의 실효이자율은 (1+0.12/12)¹²−1 ≈ <strong>12.68%</strong>입니다.</p>
+  <div class="formula">실효이자율 = (1 + r/m)ᵐ − 1</div>
+  <p>마지막으로 실무자가 애용하는 <strong>72법칙</strong>: 원금이 2배가 되는 기간 ≈ 72 ÷ 연이율(%). 연 8%면 약 9년, 연 6%면 약 12년입니다.</p>
+  <div class="info-card"><h4>💰 오늘의 돈이 더 비싼 세 가지 이유</h4><p>① <strong>투자 기회</strong> — 오늘 받으면 이자를 벌 수 있습니다. ② <strong>인플레이션</strong> — 같은 돈으로 살 수 있는 것이 줄어듭니다. ③ <strong>위험(불확실성)</strong> — 미래의 약속은 지켜지지 않을 수 있습니다. 할인율에는 이 셋이 모두 녹아 있습니다.</p></div>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "명목금리 12% = 실제 수익률 12%"가 아닙니다. 월복리라면 실효이자율은 약 12.68%로 더 높습니다. 대출·예금 상품을 비교할 때는 반드시 복리 주기를 확인하고 실효이자율로 환산해 비교해야 합니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>할인율은 곧 기회비용</h3><p>할인율을 단순한 '은행 금리'로 보면 안 됩니다. 어떤 투자안에 돈을 넣으면 <strong>차선책(포기한 최선의 대안)의 수익률</strong>을 포기하는 것이므로, 할인율의 본질은 <strong>기회비용</strong>입니다. 그래서 위험이 큰 현금흐름일수록 더 높은 할인율을 요구합니다 — 위험 프리미엄이 더해지기 때문입니다. 같은 1억 원의 미래 현금흐름이라도 국채에서 나오는 것과 스타트업에서 나오는 것의 현재가치가 다른 이유입니다.</p>
+  <h3>연속복리</h3><p>복리 계산 주기를 무한히 잘게 쪼개면(m→∞) 실효이자율은 eʳ−1에 수렴하고, 미래가치 공식은 지수함수 형태가 됩니다.</p>
+  <div class="formula">연속복리 FV = PV × eʳᵗ</div>
+  <p>연 10% 연속복리로 100만 원을 2년 두면 FV = 100×e⁰·² ≈ <strong>122.14만 원</strong>으로, 연복리(121만 원)보다 아주 조금 큽니다. 파생상품 가격결정(블랙–숄츠 모형) 등 고급 금융이론에서는 계산 편의상 연속복리를 표준으로 씁니다.</p>
+  <h3>모든 가치평가의 기초</h3><p>채권 가격은 이자·원금 현금흐름의 현재가치 합, 주식 가치는 미래 배당의 현재가치 합, 기업가치는 자유현금흐름의 현재가치 합입니다. 투자안 평가의 순현가치(NPV) 역시 같은 골격입니다.</p>
+  <div class="formula">NPV = Σₜ Cₜ / (1 + r)ᵗ − C₀</div>
+  <p>결국 재무관리에서 '가치'를 말하는 거의 모든 공식은 화폐의 시간가치 공식의 응용이며, 할인율과 현금흐름 추정이 평가의 정확도를 좌우합니다. 이 챕터의 공식들이 이후 채권·주식 평가, 자본예산, 기업가치 평가 챕터에서 그대로 재등장하는 이유입니다.</p>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 친구가 "오늘 100만 원"과 "1년 뒤 110만 원" 중 하나를 고르라 합니다. 시중금리가 연 10%일 때 두 선택지의 현재가치는 같습니다(110/1.1=100). 그런데 금리가 연 12%로 오르면 어떻게 될까요? 1년 뒤 110만 원의 현재가치는 110/1.12 ≈ 98.2만 원으로 낮아지니 오늘 100만 원이 유리해집니다. 이처럼 <strong>할인율이 오르면 미래 현금흐름의 현재가치는 떨어진다</strong> — 이 관계가 채권 가격과 금리의 역관계, 금리 인상기 주식시장 약세의 논리로 이어집니다.</div>
+</div>
+<h2>🕹️ 직접 해보기 — 투자 의사결정 순서 배열하기</h2>
+<p>화폐의 시간가치를 이용한 투자 의사결정 절차를 올바른 순서로 배열해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#0f766e","prompt":"현재가치법(NPV)에 따른 투자 의사결정 절차를 순서대로 나열하세요","steps":["미래 현금흐름 추정","할인율 결정","현재가치로 환산","투자액(비용)과 비교","투자 의사결정"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0f766e","questions":[{"q":"100만 원을 연 10% 복리로 2년 예치하면 만기 금액은?","choices":["110만 원","120만 원","121만 원","130만 원"],"answer":2},{"q":"72법칙으로 연이율 8%일 때 원금이 2배가 되는 기간은 약 얼마인가?","choices":["약 9년","약 8년","약 7년","약 6년"],"answer":0},{"q":"매년 5만 원을 영원히 받는 영구연금의 가치는? (금리 연 5%)","choices":["50만 원","75만 원","110만 원","100만 원"],"answer":3},{"q":"단리와 복리의 차이로 올바른 것은?","choices":["복리는 원금에만 이자가 붙는다","복리는 이자에도 다시 이자가 붙는다","1년이면 단리와 복리 차이가 크다","단리가 장기 투자에 항상 유리하다"],"answer":1},{"q":"현재가치(PV)의 정의로 올바른 것은?","choices":["미래에 받을 돈의 액면 금액","오늘 투자한 돈의 원금","미래 현금흐름을 할인율로 할인한 오늘의 가치","물가 상승분을 더한 명목 금액"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,2.2,13);cam.lookAt(0,1.2,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  const g=new THREE.Group();s.add(g);
+  // 복리로 계단식으로 커지는 막대 (원금 + 이자)
+  const H=[1.0,1.21,1.46,1.77,2.14,2.59];const xs=[];for(let i=0;i<H.length;i++)xs.push(-4.5+i*1.8);
+  const baseMat=new THREE.MeshBasicMaterial({color:0x0f766e});const intMat=new THREE.MeshBasicMaterial({color:0x14b8a6});
+  for(let i=0;i<H.length;i++){
+    const b=new THREE.Mesh(new THREE.BoxGeometry(1.2,1,1.2),baseMat);b.position.set(xs[i],0.5,0);g.add(b);
+    if(H[i]>1.01){const ih=H[i]-1;const im=new THREE.Mesh(new THREE.BoxGeometry(1.2,ih,1.2),intMat);im.position.set(xs[i],1+ih/2,0);g.add(im);}
+  }
+  // 막대 꼭짓점을 잇는 복리 성장 곡선
+  const pts=xs.map(function(x,i){return new THREE.Vector3(x,H[i],0);});
+  const curve=new THREE.CatmullRomCurve3(pts);
+  const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(60)),new THREE.LineBasicMaterial({color:0xf59e0b}));g.add(line);
+  // 곡선을 따라 굴리는 동전 구슬
+  const coins=[];for(let i=0;i<3;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.28,20,20),new THREE.MeshBasicMaterial({color:0xf59e0b}));g.add(m);coins.push(m);}
+  // 라벨
+  const l1=lbl('원금','#0f766e');l1.position.set(xs[0],1.55,0);g.add(l1);
+  const l2=lbl('이자','#14b8a6');l2.position.set(xs[2],H[2]+0.5,0);g.add(l2);
+  const l3=lbl('복리','#f59e0b');l3.position.set(0,H[2]+1.35,0);g.add(l3);
+  const l4=lbl('미래가치','#0f766e');l4.position.set(xs[5],H[5]+0.55,0);g.add(l4);
+  const l5=lbl('현재가치','#64748b');l5.position.set(xs[0]-0.5,-0.55,0);g.add(l5);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['복리는 이자가 이자를 낳아 계단식으로 커집니다.','원금 위에 이자가 쌓이며 미래가치가 만들어집니다.','미래의 돈을 할인율로 나누면 현재가치가 됩니다.','동전이 오른쪽으로 굴러갈수록 시간이 흐릅니다. ⟳ 드래그해 보세요.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){g.rotation.y+=(e.clientX-px)*0.005;g.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}
+    for(let i=0;i<coins.length;i++){const u=(T*0.1+i/coins.length)%1;const p=curve.getPoint(u);coins[i].position.set(p.x,p.y+0.28+Math.sin(T*3+i*2)*0.05,p.z);coins[i].rotation.z-=0.05;}
+    g.rotation.y+=0.0015;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

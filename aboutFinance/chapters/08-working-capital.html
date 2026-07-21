@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8. 운전자본 관리 — aboutFinance</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">💼 표지</a></li>
+<li><a href="01-basics.html">1. 재무관리란 무엇인가</a></li>
+<li><a href="02-time-value.html">2. 화폐의 시간가치</a></li>
+<li><a href="03-bonds-stocks.html">3. 채권과 주식 평가</a></li>
+<li><a href="04-risk-return.html">4. 위험과 수익률</a></li>
+<li><a href="05-capital-budgeting.html">5. 자본예산: 투자안 평가</a></li>
+<li><a href="06-capital-structure.html">6. 자본비용과 자본구조</a></li>
+<li><a href="07-dividend-policy.html">7. 배당정책</a></li>
+<li><a href="08-working-capital.html">8. 운전자본 관리</a></li>
+<li><a href="09-financial-analysis.html">9. 재무분석과 기업가치</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>운전자본</em> 관리</h1><p class="authors">Chapter 8 — Working Capital Management</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 현금→재고→외상매출금→현금, 운전자본의 순환 루프</span>
+<h2>운전자본 관리란 무엇인가</h2><p>운전자본(Working Capital)은 기업의 <strong>일상적인 영업 활동을 굴리는 데 필요한 단기 자금</strong>을 말합니다. 유동자산(현금·재고·외상매출금)과 유동부채(외상매입금·단기차입금)를 함께 관리하는 일이며, <strong>순운전자본 = 유동자산 − 유동부채</strong>로 측정합니다. 공장을 짓는 장기 투자와 달리 매일 반복되는 돈의 순환 — 물건을 사고, 만들고, 팔고, 대금을 회수하는 사이클 — 을 얼마나 빠르고 안전하게 돌리느냐가 운전자본 관리의 핵심입니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>기업은 물건을 사서 팔 때까지 돈이 <strong>재고</strong>와 <strong>외상매출금</strong>에 묶여 있습니다. 이 묶이는 기간을 재는 자가 <strong>현금전환주기(CCC, Cash Conversion Cycle)</strong>이고, CCC가 짧을수록 같은 돈으로 더 많이 장사할 수 있습니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>운전자본 관리는 <strong>가게를 매일 굴리는 돈이 끊기지 않게 하는 기술</strong>이에요. 돈이 물건(재고)과 외상(받을 돈)에 묶여 있는 시간을 줄이는 게 핵심이에요.</p>
+  <h3>🏪 문방구 장사로 알아봐요</h3><p>여러분이 문방구 사장님이라고 합시다. ✏️ 공장에서 지우개 100개를 외상으로 사 옵니다 — 이게 <strong>재고</strong>예요. 지우개가 진염대에 있는 동안 돈은 지우개 모양으로 묶여 있어요. 친구들이 "달말에 갚을게!" 하며 외상으로 사 가면 — 이게 <strong>외상매출금</strong>이에요. 그런데 공장에는 다음 주에 지우개 값을 갚아야 해요. 손님에게 받을 돈은 달말인데 갚을 돈은 다음 주! 😱 이렇게 <strong>돈이 텅 비는 기간</strong>이 생기는데, 이 기간을 재는 게 <strong>현금전환주기(CCC)</strong>예요. 이 기간이 길면 어디선가 돈을 빌려 와서 메꿔야 하고, 짧으면 빌릴 필요가 없어요.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>운전자본</strong>: 가게를 매일 굴리는 데 필요한 단기 자금</li><li><strong>순운전자본</strong>: 유동자산 − 유동부채 — 갑자기 돈이 필요할 때 버틸 수 있는 힘</li><li><strong>현금전환주기(CCC)</strong>: 돈이 물건과 외상으로 묶여 있다가 다시 현금으로 돌아오는 데 걸리는 기간</li><li><strong>재고</strong>: 팔려고 쌓아 둔 물건 — 묶여 있는 돈</li><li><strong>외상매출금</strong>: 팔았는데 아직 못 받은 돈</li><li><strong>외상매입금</strong>: 사 왔는데 아직 안 갚은 돈</li></ul></div>
+  <h3>🧮 숫자로 느껴 봐요</h3><p>지우개가 창고에 50일 있고(재고), 손님이 40일 뒤에 돈을 갚고(외상매출), 공장에는 30일 뒤에 갚으면 됩니다(외상매입). 그럼 내 돈이 비는 기간은 <strong>50 + 40 − 30 = 60일</strong>! 이 60일 동안 버틸 돈이 필요해요. 만약 손님이 20일 만에 갚게 하면? 50 + 20 − 30 = 40일로 줄어서, 준비해 둘 돈이 확 줄어요. 💰</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> "돈이 묶인다"는 말을 떠올리세요. 재고는 물건 모양으로 묶인 돈, 외상매출금은 손님 주머니에 묶인 돈이에요. 묶인 시간이 짧을수록 내 지갑은 두둑해져요!</div>
+  <h3>📌 요약</h3><ul><li>운전자본 = 가게를 매일 굴리는 돈이에요.</li><li>순운전자본 = 유동자산 − 유동부채예요.</li><li>현금전환주기(CCC) = 재고 기간 + 받을 돈 기간 − 갚을 돈 기간이에요.</li><li>CCC가 짧을수록 빌릴 돈이 적어져요.</li><li>돈은 재고와 외상에 '묶여' 있다는 걸 기억하세요!</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>순운전자본과 유동성 관리</h3><p><strong>순운전자본(Net Working Capital) = 유동자산 − 유동부채</strong>입니다. 유동자산은 1년 안에 현금화되는 자산(현금·단기금융상품·외상매출금·재고자산), 유동부채는 1년 안에 갚아야 할 부채(외상매입금·단기차입금·미지급금)입니다. 순운전자본이 플러스라는 것은 단기 지급 의무를 갚고도 여유가 있다는 뜻이고, 마이너스가 계속되면 유동성 위기 신호입니다. 다만 순운전자본이 지나치게 크면 그만큼 수익성 낮은 자산에 돈이 묶여 있는 것이므로, <strong>유동성(안정성)과 수익성 사이의 균형</strong>이 운전자본 관리의 본질입니다.</p>
+  <h3>현금전환주기(CCC): 돈이 묶이는 기간 재기</h3><p>영업 사이클에서 기업이 실제로 자기 돈을 조달해야 하는 기간은 <strong>현금전환주기(CCC) = 재고자산보유기간 + 외상매출금 회수기간 − 외상매입금 지급기간</strong>으로 계산합니다. 각 기간은 재고자산보유기간 = 재고자산 ÷ (매출원가/365), 외상매출금 회수기간 = 외상매출금 ÷ (매출액/365), 외상매입금 지급기간 = 외상매입금 ÷ (매출원가/365)로 구합니다. 예를 들어 재고 50일, 회수 40일, 지급 30일이면 CCC = 50 + 40 − 30 = <strong>60일</strong>입니다. 외상매입금은 거래처가 돈을 빌려주는 셈이라 뺍니다. CCC가 60일에서 40일로 줄면, 하루 매출원가가 1천만 원인 기업은 약 2억 원의 자금 조달 부담을 덜 수 있습니다.</p>
+  <h3>재고·외상매출금·현금 관리</h3><p><strong>재고관리</strong>는 재고가 부족해 판매 기회를 놓치는 비용과, 재고를 많이 쌓아 두는 보관·자금 비용 사이의 균형입니다. 대표 모형이 <strong>경제적 주문량(EOQ, Economic Order Quantity)</strong> — 주문비용과 재고유지비용의 합인 총재고비용을 최소화하는 1회 주문량입니다. <strong>외상매출금 관리</strong>는 신용정책이 핵심입니다: 거래처의 지급 능력을 조사하는 <strong>신용조사</strong>, 신용기간·현금할인 등 <strong>신용조건</strong> 설정, 연체 시 대응을 정하는 <strong>회수정책</strong>이 그것입니다. 신용을 느슨하게 풀면 매출은 늘지만 대손(못 받는 돈)이 커지고, 조이면 그 반대입니다. <strong>현금 및 유가증권 관리</strong>는 거래·예비·투기 동기에 필요한 최소 현금만 쥐고, 여유 자금은 단기 유가증권(MMF·CD 등)으로 굴리는 일입니다.</p>
+  <h3>단기자금 조달</h3><p>CCC 동안 부족한 자금은 주로 <strong>은행 단기차입</strong>(당좌대월·운전자금대출), <strong>어음할인</strong>(받을어음을 만기 전에 은행에 팔아 현금화), <strong>상업신용</strong>(외상매입금 — 무이자 조달원)으로 메꿉니다. 상업신용은 싸 보이지만 "10일 내 결제 시 2% 할인" 같은 조건을 포기하면 연환산 이자율이 매우 높아질 수 있어 비용 계산이 필요합니다.</p>
+  <div class="info-card"><h4>📊 CCC 개선(단축)의 세 가지 손잡이</h4><p>① 재고를 빨리 돌린다(적정 재고 유지, JIT) ② 외상매출금을 빨리 회수한다(조기결제 할인, 회수 독려) ③ 외상매입금 지급은 신용이 허락하는 범위에서 늦춘다. 셋 모두 자금 조달 필요액을 줄입니다.</p></div>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "순운전자본은 클수록 좋다"는 틀렸습니다. 순운전자본이 과도하면 수익성 낮은 재고·현금에 자금이 잠겨 수익률이 떨어집니다. 반대로 너무 작으면 지급불능 위험이 커집니다. 목표는 '적정 수준'입니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>공격적 vs 보수적 운전자본 정책</h3><p>유동자산의 자금 조달 방식에 따라 정책이 갈립니다. <strong>공격적 정책</strong>은 유동자산의 상당 부분 — 심하면 고정유동자산(계절과 무관하게 항상 유지해야 하는 최소 재고·매출채권)까지 — 을 단기차입으로 조달합니다. 단기금리가 보통 장기금리보다 낮아 수익성은 좋지만, 차환(refinancing) 때마다 금리 상승·대출 거절 위험에 노출됩니다. <strong>보수적 정책</strong>은 계절적 자금수요의 일부까지 장기자금으로 충당해 유휴 자금이 생기는 시기가 있습니다. 안정적이지만 장기자금 비용 때문에 수익성은 낮아집니다. 즉 <strong>위험–수익 트레이드오프</strong>가 운전자본 정책의 본질입니다.</p>
+  <div class="formula">순운전자본 = 유동자산 − 유동부채 = 장기자금 − 고정자산</div>
+  <h3>자금 만기 매칭 원칙(Maturity Matching)</h3><p>공격·보수 정책의 중간이자 원칙적 합리안이 <strong>만기 매칭</strong>입니다. 자산의 현금화 시점과 자금의 상환 시점을 맞추는 것 — 고정자산과 고정유동자산은 장기자금으로, 계절적으로 변동하는 유동자산만 단기자금으로 조달합니다. 이 원칙이 지켜지면 자금 만기 구조가 현금흐름 구조와 일치해 이자율 변동·차환 위험이 최소화됩니다. 단, 실무에서는 미래 현금흐름의 불확실성 때문에 정확한 매칭이 어려워, 기업은 어느 쪽으로 얼마나 치우칠지를 위험 선호에 따라 정합니다.</p>
+  <h3>EOQ 모형과 총재고비용</h3><p>연간 수요 D, 1회 주문비용 S, 단위당 연간 재고유지비용 H라 하면, 1회 주문량 Q에 대해 연간 주문비용은 (D/Q)·S, 연간 유지비용은 (Q/2)·H입니다. 총비용을 Q로 미분해 0이 되는 지점이 경제적 주문량입니다.</p>
+  <div class="formula">EOQ = √( 2DS / H )</div>
+  <p>예: 연간 수요 10,000개, 주문비용 회당 50,000원, 단위당 연간 유지비용 1,000원이면 EOQ = √(2 × 10,000 × 50,000 / 1,000) = √1,000,000 = <strong>1,000개</strong>입니다. 이때 연간 주문비용(10회 × 50,000원 = 500,000원)과 유지비용(평균재고 500개 × 1,000원 = 500,000원)이 같아 총비용 1,000,000원으로 최소가 됩니다. 모형은 수요 일정·리드타임 확정·재고 소진 즉시 보충을 가정하며, 안전재고·수량할인은 확장 모형에서 다룹니다.</p>
+  <h3>CCC 단축과 현금흐름 효과</h3><p>CCC는 운전자본의 '양'이 아니라 '회전 속도'를 봅니다. CCC가 짧아지면 같은 매출을 유지하면서 필요한 운전자본 투자액이 줄어, 그만큼의 자금이 <strong>현금흐름의 플러스</strong>로 방출됩니다. 반대로 CCC가 길어지면 매출이 늘수록 자금수요가 함께 불어나, 이익이 나는데도 현금이 부족해지는 <strong>성장성 자금난(과속 성장)</strong>이 발생합니다. 그래서 고성장 기업일수록 재고 회전율과 회수 관리가 생존 조건이 됩니다.</p>
+  <div class="formula">CCC = 재고자산보유기간 + 외상매출금 회수기간 − 외상매입금 지급기간</div>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 매출이 연 20%씩 성장하는 유통기업이 있습니다. CCC가 90일로 고정되어 있다면, 이익률이 충분해 보여도 왜 매년 차입금이 눈덩이처럼 불어날까요? CCC를 60일로 줄이면 무엇이 달라질지, '매출 1원당 묶이는 운전자본 = CCC/365 × 원가율' 관점에서 설명해 보세요.</div>
+</div>
+<h2>🕹️ 직접 해보기 — 운전자본 순환 순서 맞추기</h2>
+<p>원자재 구입부터 현금 확보까지, 현금전환주기의 올바른 순서대로 배열해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#0f766e","prompt":"운전자본 순환(현금전환주기)을 올바른 순서대로 배열하세요","steps":["원자재 구입(외상매입)","재고 보유·생산","제품 판매(외상매출)","외상매출금 회수","외상매입금 지급·현금 확보"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0f766e","questions":[{"q":"순운전자본은 어떻게 계산하는가?","choices":["유동자산 + 유동부채","유동자산 − 유동부채","총자산 − 총부채","유동자산 ÷ 유동부채"],"answer":1},{"q":"현금전환주기(CCC)의 공식으로 올바른 것은?","choices":["재고자산보유기간 + 외상매출금 회수기간 − 외상매입금 지급기간","재고자산보유기간 − 외상매출금 회수기간 + 외상매입금 지급기간","외상매출금 회수기간 − 재고자산보유기간 − 외상매입금 지급기간","재고자산보유기간 + 외상매출금 회수기간 + 외상매입금 지급기간"],"answer":0},{"q":"현금전환주기(CCC)가 짧을수록 좋은 이유는?","choices":["재고를 많이 쌓을수록 매출이 늘기 때문에","부채비율이 자동으로 낮아지기 때문에","현금이 묶여 있는 기간이 줄어 자금 조달 부담이 작아지기 때문에","지급 기일을 어겨도 신용에 아무 문제가 없기 때문에"],"answer":2},{"q":"EOQ(경제적 주문량)의 목적은?","choices":["매출액을 최대화하기 위해","주문 횟수를 무조건 줄이기 위해","재고를 항상 가득 채워 두기 위해","주문비용과 재고유지비용의 합을 최소화하기 위해"],"answer":3},{"q":"외상매출금 관리의 신용정책에 해당하지 않는 것은?","choices":["거래처 신용조사 실시","외상매입금 지급 기일 협상","대금 회수정책 수립","신용판매 조건(신용기간·할인) 결정"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.8,9.5);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 순환 루프 링
+  const ringR=3.1;
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(ringR,0.045,12,90),new THREE.MeshBasicMaterial({color:0x0f766e,transparent:true,opacity:0.55}));s.add(ring);
+  // 중앙 CCC 코어
+  const core=new THREE.Mesh(new THREE.IcosahedronGeometry(0.75,1),new THREE.MeshBasicMaterial({color:0x0f766e,wireframe:true}));s.add(core);
+  const coreLbl=lbl('현금전환주기(CCC)','#0f766e');coreLbl.position.set(0,-1.25,0);s.add(coreLbl);
+  // 루프 위 4개 노드
+  const comps=[['현금','#0f766e'],['재고','#f59e0b'],['외상매출금','#3b82f6'],['외상매입금','#ef4444']];
+  for(let i=0;i<comps.length;i++){const ang=Math.PI/2-(i/comps.length)*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.42,16,16),new THREE.MeshBasicMaterial({color:parseInt(comps[i][1].slice(1),16)}));m.position.set(Math.cos(ang)*ringR,Math.sin(ang)*ringR,0);s.add(m);const t=lbl(comps[i][0],comps[i][1]);t.position.set(Math.cos(ang)*(ringR+0.05),Math.sin(ang)*(ringR+0.05)+0.62,0);s.add(t);}
+  // 루프를 도는 펄스
+  const pulse=new THREE.Mesh(new THREE.SphereGeometry(0.2,12,12),new THREE.MeshBasicMaterial({color:0xfde047}));s.add(pulse);
+  const pulse2=new THREE.Mesh(new THREE.SphereGeometry(0.14,12,12),new THREE.MeshBasicMaterial({color:0xf59e0b,transparent:true,opacity:0.8}));s.add(pulse2);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 현금→재고→외상매출금→현금, 운전자본의 순환 루프입니다.','재고에 묶인 돈: 빨리 팔릴수록 자금 부담이 줄어듭니다.','외상매입금은 거래처가 빌려주는 무이자 자금입니다.','현금전환주기(CCC)가 짧을수록 자금 효율이 좋습니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const pa=T*0.55;pulse.position.set(Math.cos(pa)*ringR,Math.sin(pa)*ringR,0);pulse2.position.set(Math.cos(pa-0.5)*ringR,Math.sin(pa-0.5)*ringR,0);core.rotation.x+=0.004;core.rotation.y+=0.006;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5. 표본추출과 표본분포 — aboutBizStats</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">📊 표지</a></li>
+<li><a href="01-basics.html">1. 통계학이란 무엇인가</a></li>
+<li><a href="02-descriptive.html">2. 기술통계: 자료의 요약</a></li>
+<li><a href="03-probability.html">3. 확률의 기초</a></li>
+<li><a href="04-distributions.html">4. 확률분포</a></li>
+<li><a href="05-sampling.html">5. 표본추출과 표본분포</a></li>
+<li><a href="06-estimation.html">6. 모수추정과 신뢰구간</a></li>
+<li><a href="07-hypothesis.html">7. 가설검정</a></li>
+<li><a href="08-regression.html">8. 상관과 회귀분석</a></li>
+<li><a href="09-decision.html">9. 통계적 의사결정</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>표본추출</em>과 표본분포</h1><p class="authors">Chapter 5 — Sampling and Sampling Distributions</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 모집단 구름에서 표본을 뽑아 표본평균의 종곡선을 만든다</span>
+<h2>표본추출과 표본분포</h2><p>모집단 전체를 조사하기 어려울 때 우리는 <strong>표본(sample)</strong>을 뽑습니다. 그런데 어떻게 뽑느냐가 결론의 질을 좌우합니다. 이 장에서는 대표적인 <strong>표본추출 방법</strong>(단순무작위·계통·층화·군집)을 살펴 보고, 표본에서 계산한 통계량 — 특히 <strong>표본평균</strong> — 이 표본마다 어떻게 달라지는지를 나타내는 <strong>표본분포(sampling distribution)</strong>를 공부합니다. 그리고 추론통계 전체의 기둥인 <strong>중심극한정리</strong>를 만납니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>표본평균 X̄도 뽑을 때마다 달라지는 <strong>확률변수</strong>입니다. 그 분포(표본분포)는 모집단이 어떤 모양이든 n이 크면 근사적으로 정규분포 N(μ, σ²/n)이 되고, 그 퍼짐 σ/√n을 <strong>표준오차(SE)</strong>라 부릅니다. 이 사실이 신뢰구간과 가설검정의 출발점입니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>전체를 다 조사하기 힘드니까, 국물을 휘휘 저어 <strong>한 숟가락</strong>만 떠 보고(표본) 전체 간을 알아내요. 그리고 여러 번 떠 볼수록 그 맛(평균)이 비슷해진다는 사실이 통계의 마법이에요.</p>
+  <h3>😮 왜 재밌을까?</h3><p>간 볼 때 국물을 <strong>휘휘 저어서</strong> 한 숟가락 먹어 볼 거예요? 그냥 위에만 떠 먹을 거예요? 🥄 저어야 골고루 섞여서 한 숟가락이 냄비 전체를 대표하죠 — 이게 <strong>무작위 추출</strong>이에요. 그냥 위에만 떠 먹으면 "이 국은 기름지다" 같은 엉뚱한 결론이 나와요. 그리고 한 숟가락을 여러 번 떠 볼수록 그 맛의 평균이 점점 비슷해져요. 이 "평균이 비슷해지는 마법"이 바로 <strong>중심극한정리</strong>예요!</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>모집단(Population)</strong>: 알고 싶은 대상 전체(냄비 속 국 전부)</li><li><strong>표본(Sample)</strong>: 실제로 맛보는 일부(한 숟가락)</li><li><strong>표본평균(Sample mean)</strong>: 표본으로 계산한 평균(한 숟가락의 맛)</li><li><strong>표본분포(Sampling distribution)</strong>: 표본평균을 여러 번 모아 그린 분포</li><li><strong>중심극한정리(CLT)</strong>: 표본이 크면 표본평균은 종 모양(정규분포)을 따라요</li><li><strong>표준오차(SE)</strong>: 표본평균들이 얼마나 흩어져 있는지 나타내는 값</li></ul></div>
+  <h3>🥄 쉽게 풀어보기</h3><p>학교 전체 학생 3,000명의 급식 만족도(5점 만점)가 궁금해요. 전부 물어볼 수는 없으니 무작위로 100명에게 물어봤더니 평균 3.8점! 다른 날 다시 무작위 100명에게 물어보니 3.7점, 또 하니 3.9점. 조사할 때마다 평균이 살짝살짝 달라요. 🎲 이 평균들을 100번 모아 그래프로 그리면 예쁜 종 모양이 돼요. 그리고 100명 대신 400명에게 물어보니 평균의 흔들림이 딱 <strong>절반</strong>으로 줄었어요 — 이게 "표본이 4배면 오차는 절반"이에요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 여론조사 기사에서 "표본오차 ±3.1%p(95% 신뢰수준, 표본 1,000명)"라는 문구를 본 적 있나요? 4,000명을 조사하면 오차는 절반인 ±1.55%p로 줄어요. 오차가 완전히 0이 되는 건 전수조사뿐이에요!</div>
+  <h3>📌 요약</h3><ul><li>국물을 휘휘 젓는 것 = 무작위 추출이에요. 🥄</li><li>한 숟가락 = 표본, 여러 번 떠 본 맛의 평균 = 표본평균들.</li><li>표본평균들을 모으면 종 모양(정규분포) — 중심극한정리!</li><li>조사 인원이 4배면 평균의 흔들림(표준오차)은 절반.</li><li>골고루 뽑은 표본이어야 추측이 맞아요.</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>표본추출 방법 4가지</h3><p>좋은 추론은 좋은 추출에서 시작됩니다. <strong>확률표본추출(probability sampling)</strong>은 모든 개체에 알려진 추출 확률을 부여해 편향을 통계적으로 통제하는 방법으로, 대표적으로 다음 네 가지가 쓰입니다.</p>
+  <div class="info-card"><h4>📋 대표적인 확률추출 방법</h4><ul><li><strong>단순무작위추출(simple random sampling)</strong>: 모든 개체가 동일한 확률로 뽑힘. 난수표·난수 생성기 사용. 가장 기본적인 방법.</li><li><strong>계통추출(systematic sampling)</strong>: 명부에서 시작점만 무작위로 정하고 일정 간격(k=N/n)마다 추출. 간편하지만 명부에 주기성이 있으면 위험.</li><li><strong>층화추출(stratified sampling)</strong>: 모집단을 남김없이 동질적인 층(strata: 학년·지역·직급)으로 나눈 뒤 각 층에서 무작위 추출. 층 간 차이를 반영해 정밀도가 높아짐.</li><li><strong>군집추출(cluster sampling)</strong>: 모집단을 군집(cluster: 학교·지역·지점)으로 나누고 군집을 통째로 무작위 선택해 조사. 비용은 절감되지만 정밀도는 층화추출보다 낮은 편.</li></ul></div>
+  <h3>표본오차와 비표본오차</h3><p><strong>표본오차(sampling error)</strong>는 전체가 아닌 일부만 조사해서 우연히 발생하는 오차로, 표본 크기를 키우면 √n에 반비례하여 줄어듭니다. 반면 <strong>비표본오차(nonsampling error)</strong>는 무응답, 거짓 응답, 모호한 문항, 조사원 실수, 부정확한 표본틀(sampling frame)에서 오는 오차로, 표본을 아무리 키워도 줄지 않습니다. 잘못된 표본틀로 200만 명을 조사한 1936년 Literary Digest 여론조사가 대선 결과를 틀린 것이 대표 사례입니다.</p>
+  <h3>표본평균의 표본분포와 중심극한정리</h3><p>표본평균 X̄는 뽑을 때마다 값이 달라지는 확률변수이며, 그 분포를 <strong>표본평균의 표본분포</strong>라 합니다. E(X̄)=μ이고 SD(X̄)=σ/√n인데, 이 σ/√n을 <strong>표준오차(standard error, SE)</strong>라 부릅니다. <strong>중심극한정리(central limit theorem, CLT)</strong>는 모집단이 어떤 분포를 따르든 n이 충분히 크면(실무 기준 n≥30) X̄의 분포가 근사적으로 N(μ, σ²/n)이 된다고 말해 줍니다. 예를 들어 σ=20이면 n=100에서 SE=2, n=400에서 SE=1 — 표본이 4배가 되면 오차는 절반입니다. 모표준편차 σ를 모를 때는 표본표준편차 s로 대체해 SE의 추정치 s/√n을 사용합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> CLT는 "n이 크면 모집단이 정규분포로 바뀐다"는 뜻이 아닙니다. 모집단 분포는 그대로이고, <strong>표본평균 X̄의 분포</strong>가 정규분포에 가까워지는 것입니다. 또한 n≥30은 경험칙일 뿐, 극심하게 왜곡된 모집단이라면 더 큰 n이 필요합니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>중심극한정리의 의의 — 추론통계의 기초</h3><p>CLT의 진짜 힘은 <strong>모집단 분포를 몰라도 표본평균의 확률적 행동을 알 수 있다</strong>는 데 있습니다. 덕분에 "X̄가 μ에서 얼마나 멀리 떨어질 수 있는가"를 확률로 계산할 수 있고, 이것이 6장의 신뢰구간(μ가 어디쯤 있을까)과 7장의 가설검정(이 차이가 우연일까)의 수학적 토대입니다. 근대 추론통계 전체가 사실상 CLT 위에 서 있습니다.</p>
+  <div class="formula">X̄ ≈ N(μ, σ²/n) (n≥30) · 표준오차 SE = σ/√n · σ 모를 때 SÊ = s/√n</div>
+  <h3>유한모집단 수정(finite population correction)</h3><p>SE=σ/√n은 무한모집단 또는 복원추출을 가정합니다. 유한모집단(크기 N)에서 비복원으로 뽑을 때 표본 비율 n/N이 0.05(5%)를 넘으면, 유한모집단 수정계수를 곱해 SE를 하향 조정해야 합니다. 모집단의 상당 부분을 이미 뽑았다면 불확실성이 그만큼 줄어드는 것이 자연스럽습니다.</p>
+  <div class="formula">SE = (σ/√n) × √((N−n)/(N−1)) — 단, n/N &gt; 0.05일 때 적용</div>
+  <h3>표본분포와 모집단 분포의 구분, 그리고 t분포 예고</h3><p>둘을 혼동하면 안 됩니다. <strong>모집단 분포</strong>는 개별 관측값 X의 분포(표준편차 σ)이고, <strong>표본분포</strong>는 통계량 X̄의 분포(표준편차 σ/√n)입니다. 개별값이 아무리 흩어져 있어도 평균은 √n배만큼 모여 있습니다. 또 σ를 모를 때 표본표준편차 s로 대체하면, 표준화된 통계량 (X̄−μ)/(s/√n)은 정규분포가 아니라 자유도 n−1의 <strong>t분포</strong>를 따릅니다(모집단 정규 가정). 표본이 크면 t분포는 정규분포와 거의 같아지지만, 표본이 작을 때는 t분포의 두꺼운 꼬리를 반드시 고려해야 합니다 — 6장 신뢰구간에서 바로 만나게 됩니다.</p>
+  <h3>관련 개념</h3><ul><li>몬테카를로 시뮬레이션(CLT를 눈으로 확인하는 컴퓨터 실험)</li><li>부트스트랩(재표본화로 표본분포를 근사하는 현대적 방법)</li><li>조사방법론(표본설계의 실무)</li></ul>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 주사위는 1~6이 모두 같은 확률인 균등분포 — 정규분포와 전혀 닮지 않았습니다. 그런데 주사위를 30개씩 던져 평균을 내는 실험을 1,000번 반복하고, 그 평균 1,000개로 히스토그램을 그리면 어떤 모양이 될까요? (힌트: 기댓값 3.5를 중심으로 한 종 모양. 모집단이 균등분포여도 표본평균은 정규에 가까워집니다)</div>
+</div>
+<h2>🕹️ 직접 해보기 — 표본조사 순서 배열하기</h2>
+<p>올바른 표본조사의 진행 순서를 배열해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#7c3aed","prompt":"표본조사의 단계를 올바른 순서로 배열하세요","steps":["모집단 정의","표본설계(추출방법 선택)","무작위 추출","자료 수집","통계량 계산","모수 추론"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"중심극한정리(CLT)의 내용으로 옳은 것은?","choices":["모집단이 정규분포일 때만 표본평균이 정규분포를 따른다","표본 크기 n이 크면 모집단 분포와 무관하게 표본평균의 분포가 근사적으로 정규분포를 따른다","n이 커지면 모집단 자체가 정규분포로 바뀐다","표본평균의 분산은 표본 크기와 무관하다"],"answer":1},{"q":"모표준편차 σ인 모집단에서 크기 n의 표본을 뽑을 때, 표본평균의 표준오차(SE)는?","choices":["σ/n","σ²/√n","σ/√n","σ·√n"],"answer":2},{"q":"모집단을 특성이 비슷한 층(strata)으로 나눈 뒤 각 층에서 무작위로 뽑는 추출 방법은?","choices":["층화추출","군집추출","계통추출","편의추출"],"answer":0},{"q":"표본오차(sampling error)에 대한 설명으로 옳은 것은?","choices":["응답자의 거짓 응답으로 생기는 오차","조사 문항이 모호해서 생기는 오차","전수조사를 해도 남는 오차","전체가 아닌 일부만 조사해서 우연히 생기는 오차"],"answer":3},{"q":"표본 크기 n이 커지면 표준오차 SE는 어떻게 되는가?","choices":["커진다","작아진다","변하지 않는다","n과 무관하게 일정하다"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.3,11);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 모집단 구름(왼쪽, 흐린 점들)
+  const popG=new THREE.Group();
+  for(let i=0;i<80;i++){const d=new THREE.Mesh(new THREE.SphereGeometry(0.07,8,8),new THREE.MeshBasicMaterial({color:0xc4b5fd,transparent:true,opacity:0.55}));d.position.set(-3.4+(Math.random()-0.5)*3.2,0.3+(Math.random()-0.5)*3.4,(Math.random()-0.5)*2.4);popG.add(d);}
+  s.add(popG);
+  const popLbl=lbl('모집단','#6d28d9');popLbl.position.set(-3.4,2.6,0);s.add(popLbl);
+  // 여러 표본(가운데 작은 묶음 3개)
+  const sampGroups=[];const sampCols=['#7c3aed','#8b5cf6','#a855f7'];const sampCtr=[[0,1.1,0],[0.15,0,0],[-0.1,-1.1,0]];
+  for(let g=0;g<3;g++){const grp=new THREE.Group();
+    for(let i=0;i<6;i++){const ang=(i/6)*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.12,10,10),new THREE.MeshBasicMaterial({color:parseInt(sampCols[g].slice(1),16)}));m.position.set(Math.cos(ang)*0.35,Math.sin(ang)*0.35,0);grp.add(m);}
+    grp.position.set(sampCtr[g][0],sampCtr[g][1],sampCtr[g][2]);s.add(grp);sampGroups.push(grp);}
+  const sampLbl=lbl('표본','#7c3aed');sampLbl.position.set(0,2.6,0);s.add(sampLbl);
+  // 표본평균들의 종곡선(오른쪽) — 표본분포
+  const cx=3.2,cy=-0.6;const pts=[];
+  for(let xx=-1.6;xx<=1.601;xx+=0.1){pts.push(new THREE.Vector3(cx+xx,cy+2.2*Math.exp(-xx*xx/0.9),0));}
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0x7c3aed})));
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(cx-1.8,cy,0),new THREE.Vector3(cx+1.8,cy,0)]),new THREE.LineBasicMaterial({color:0x9ca3af})));
+  // 표준오차 구간 표시(곡선 안쪽 가로선)
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(cx-0.95,cy+0.25,0),new THREE.Vector3(cx+0.95,cy+0.25,0)]),new THREE.LineBasicMaterial({color:0xa855f7})));
+  const cltLbl=lbl('중심극한정리','#6d28d9');cltLbl.position.set(cx,2.4,0);s.add(cltLbl);
+  const meanLbl=lbl('표본평균','#7c3aed');meanLbl.position.set(cx,-1.35,0);s.add(meanLbl);
+  const seLbl=lbl('표준오차','#a855f7');seLbl.position.set(cx+1.7,0.7,0);s.add(seLbl);
+  // 추출·평균 계산 흐름선
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-1.9,-2.2,0),new THREE.Vector3(-0.8,-2.2,0)]),new THREE.LineBasicMaterial({color:0x7c3aed,transparent:true,opacity:0.6})));
+  s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0.8,-2.2,0),new THREE.Vector3(1.9,-2.2,0)]),new THREE.LineBasicMaterial({color:0x7c3aed,transparent:true,opacity:0.6})));
+  const tracer=new THREE.Mesh(new THREE.SphereGeometry(0.13,12,12),new THREE.MeshBasicMaterial({color:0xa855f7}));s.add(tracer);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 왼쪽 구름이 모집단, 가운데 작은 묶음들이 여러 개의 표본입니다.','표본마다 표본평균을 구해 모으면 오른쪽 종곡선(표본분포)이 됩니다.','모집단이 어떤 모양이든 n이 크면 표본평균은 정규분포에 가까워집니다.','종곡선의 퍼짐이 표준오차 SE=σ/√n — n이 4배면 오차는 절반!'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}popG.rotation.y+=0.003;sampGroups.forEach((g,i)=>{g.rotation.z=T*(0.6+i*0.2);});const tx=1.55*Math.sin(T*0.9);tracer.position.set(cx+tx,cy+2.2*Math.exp(-tx*tx/0.9)+0.14,0);s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

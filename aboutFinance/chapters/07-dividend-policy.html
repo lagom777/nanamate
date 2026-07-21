@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7. 배당정책 — aboutFinance</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">💼 표지</a></li>
+<li><a href="01-basics.html">1. 재무관리란 무엇인가</a></li>
+<li><a href="02-time-value.html">2. 화폐의 시간가치</a></li>
+<li><a href="03-bonds-stocks.html">3. 채권과 주식 평가</a></li>
+<li><a href="04-risk-return.html">4. 위험과 수익률</a></li>
+<li><a href="05-capital-budgeting.html">5. 자본예산: 투자안 평가</a></li>
+<li><a href="06-capital-structure.html">6. 자본비용과 자본구조</a></li>
+<li><a href="07-dividend-policy.html">7. 배당정책</a></li>
+<li><a href="08-working-capital.html">8. 운전자본 관리</a></li>
+<li><a href="09-financial-analysis.html">9. 재무분석과 기업가치</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1><em>배당</em>정책</h1><p class="authors">Chapter 7 — Dividend Policy</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 이익 파이(배당·유보 2조각)와 주주환원 수단</span>
+<h2>배당정책이란 무엇인가</h2><p>배당정책(Dividend Policy)은 기업이 벌어들인 순이익을 주주에게 얼마만큼 <strong>환원</strong>하고, 얼마만큼 사내에 <strong>유보</strong>해 재투자할지를 정하는 의사결정입니다. 재무관리 3대 의사결정의 하나로, 흔히 '이익 파이를 어떻게 나눌 것인가'의 문제로 비유됩니다. 주주환원 수단에는 현금배당·주식배당·자사주매입이 있고, 배당은 선언 → 배당락 → 기준일 확정 → 지급의 절차를 밟습니다. 그리고 "배당을 많이 하면 기업가치가 올라가는가"라는 질문에는 MM의 무관론부터 신호가설까지 오래된 논쟁이 있습니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>배당은 가치를 '만드는' 일이 아니라 만들어진 가치를 '<strong>나누는</strong>' 일입니다. 완전자본시장에서는 나누는 방식이 기업가치를 바꾸지 못한다는 것이 MM의 결론이고, 세금·정보비대칭·대리인 문제가 존재하는 현실에서 배당정책이 중요해집니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한 줄로 이해하기</h3><p>배당정책은 <strong>회사가 번 돈을 주인(주주)에게 얼마나 나눠줄지 정하는 규칙</strong>이에요.</p>
+  <h3>🏪 가게 이야기</h3><p>여러분이 떡볶이 가게를 열어 올해 100만 원을 벌었다고 상상해 보세요. 🍢 이 돈을 가족(주인들)에게 나눠줄까요? 아니면 새 튀김기를 사서 가게를 키우는 데 다시 쓸까요? 나눠주는 게 <strong>배당</strong>, 가게에 남겨 두는 게 <strong>유보이익</strong>이에요. 배당정책은 "얼마를 나누고 얼마를 남길지"를 정하는 일이에요.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>현금배당</strong>: 돈으로 직접 나눠주기 💵</li><li><strong>주식배당</strong>: 돈 대신 주식을 더 나눠주기 📄</li><li><strong>자사주매입</strong>: 회사가 자기 주식을 사들여 주가를 올려주기 🛒</li><li><strong>유보이익</strong>: 나눠주지 않고 회사 안에 남겨둔 돈 🏦</li><li><strong>배당성향</strong>: 번 돈 중 배당으로 준 비율 (100원 벌어 40원 배당 → 40%)</li><li><strong>배당수익률</strong>: 주가에 비해 배당금이 얼마나 되는지 (주가 5만 원, 배당 2천 원 → 4%)</li></ul></div>
+  <h3>😮 세 가지 방법, 뭐가 다를까?</h3><p><strong>현금배당</strong>은 용돈처럼 바로 쓸 수 있는 돈이 통장에 들어와요. 💸 <strong>주식배당</strong>은 돈은 안 나오지만 내가 가진 가게 지분 조각이 늘어나요. 회사 입장에서는 돈을 안 쓰고도 주주에게 무언가 줄 수 있죠. <strong>자사주매입</strong>은 회사가 시장에서 자기 주식을 사들이는 거예요. 시장에 돌아다니는 주식이 줄면 남은 주식이 희귀해져서 값이 올라가요. 📈 셋 모두 "주주에게 이익을 돌려준다"는 점에서는 같아요!</p><p>연말 뉴스에 나오는 <strong>배당락</strong>도 기억하세요. 배당을 받을 수 있는 마감 날이 지나면, 주가가 배당금만큼 낮아진 상태로 거래가 시작돼요. 배당이라는 선물이 빠진 값으로 거래되는 거예요. 🎁</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 12월 말 증시 뉴스에서 "배당락" 기사를 찾아보세요. 어떤 회사가 얼마를 배당하는지, 배당수익률이 몇 %인지 비교해 보세요!</div>
+  <h3>📌 요약</h3><ul><li>배당 = 번 돈을 주주에게 나눠주는 것이에요.</li><li>방법은 3가지: 현금배당·주식배당·자사주매입.</li><li>나누지 않고 남긴 돈은 유보이익 — 가게 확장(재투자)에 써요.</li><li>배당성향 = 배당금 ÷ 순이익, 배당수익률 = 주당배당금 ÷ 주가.</li><li>배당이 많다고 무조건 좋은 건 아니에요. 잘 크는 회사는 돈을 다시 쓰기도 하니까요!</li></ul>
+</div>
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>주주환원의 세 가지 수단</h3><p><strong>① 현금배당(Cash Dividend)</strong>: 이익을 현금으로 주주에게 지급하는 가장 일반적인 방식입니다. 주주는 즉시 쓸 수 있는 소득을 얻지만, 회사는 그만큼 재투자 재원이 줄어듭니다. <strong>② 주식배당(Stock Dividend)</strong>: 현금 대신 신주를 발행해 나눠줍니다. 회계적으로 이익잉여금이 자본금으로 이동할 뿐 자본총계와 회사 현금은 그대로이며, 주식수가 늘어난 만큼 주당가치는 희석됩니다. <strong>③ 자사주매입(Share Buyback)</strong>: 회사가 시장에서 자기 주식을 사들입니다. 유통주식수가 줄어 주당순이익(EPS)이 오르고 주가가 부양되는 효과가 있어, 현금배당과 함께 대표적인 주주환원 수단으로 꼽힙니다. 참고로 <strong>주식분할</strong>은 액면가를 나눠 주식수만 늘리는 것이라 기업에서 주주에게 가치가 이전되지 않으므로 주주환원이 아닙니다.</p>
+  <h3>배당 절차: 선언일 · 배당락일 · 기준일 · 지급일</h3><p><strong>배당선언일(Declaration Date)</strong>은 이사회가 "주당 얼마를 배당하겠다"고 결의·공표하는 날입니다. <strong>배당기준일(Record Date)</strong>은 배당을 받을 주주를 주주명부 기준으로 확정하는 날로, 우리나라에서는 결산기말(12월 결산이면 12월 31일)이 되는 경우가 많습니다. 주식 매수는 결제에 2영업일이 걸리므로, 기준일에 주주가 되려면 늦어도 기준일 2영업일 전에는 사야 합니다. 그래서 <strong>배당락일(Ex-Dividend Date)</strong> — 이 날 이후에 사면 이번 기의 배당을 받을 수 없는 날 — 은 기준일 직전 영업일이 됩니다. 이론적으로 배당락일에는 주가가 주당배당금만큼 하락한 상태로 시작합니다(종가 50,000원, 주당배당 1,000원이면 49,000원 부근). <strong>지급일(Payment Date)</strong>에 실제 현금이 주주 계좌로 입금됩니다. 실무에서는 기준일(결산기말)이 선언(이사회 결의)보다 앞서는 경우도 많다는 점에 유의하세요.</p>
+  <div class="info-card"><h4>📊 배당 지표 계산</h4><p>당기순이익 1,000억 원, 배당총액 400억 원이면 <strong>배당성향 = 400억 ÷ 1,000억 = 40%</strong>입니다. 주가 50,000원에 주당배당금 2,000원이면 <strong>배당수익률 = 2,000 ÷ 50,000 = 4%</strong>입니다. 배당성향은 "번 돈의 분배 비율", 배당수익률은 "투자금 대비 현금 소득"을 보여 주므로 둘을 함께 봐야 회사의 환원 스타일이 파악됩니다.</p></div>
+  <h3>배당정책 이론: MM 무관론 · 신호가설 · 클라이언텔 효과</h3><p><strong>MM 배당무관론(Miller &amp; Modigliani, 1961)</strong>: 세금과 거래비용이 없고 정보가 대칭인 완전자본시장에서는 배당정책이 기업가치에 영향을 주지 않습니다. 가치는 투자로 창출되는 것이지 분배 방식으로 창출되지 않으며, 현금이 필요한 주주는 스스로 주식을 팔아 '수제 배당(homemade dividend)'을 만들 수 있기 때문입니다. <strong>신호가설(Signaling Hypothesis)</strong>: 현실에서는 경영자가 기업의 미래 전망을 투자자보다 더 잘 아는 정보비대칭이 있습니다. 지속 가능한 이익 증가를 확신하지 않으면 감당하기 어려운 배당 증가는 "미래 실적에 자신 있다"는 신호로 해석되어 주가가 오르고, 배당 감소는 반대 신호가 됩니다. <strong>클라이언텔 효과(Clientele Effect)</strong>: 현금 소득이 필요한 연금 수급자 같은 투자자층은 고배당주를, 과세를 미루고 싶은 고소득 투자자층은 저배당·재투자형 주식을 선호해, 배당정책마다 그에 맞는 '고객층(clientele)'이 형성됩니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "배당수익률이 높으면 무조건 좋은 주식"은 아닙니다. 주가가 급락하면 배당수익률은 기계적으로 올라갑니다(분모가 작아지므로). 또한 고배당이 성장기회 부족의 신호일 수도 있고, 빚을 내서 배당하는 기업은 지속 가능성을 의심해야 합니다. 반대로 무배당이라도 재투자 수익률이 높다면 유보가 주주가치에 더 유리합니다.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>현금배당 vs 자사주매입</h3><p>자사주매입의 핵심 메커니즘은 <strong>유통주식수 감소 → EPS 상승 → 주가 부양</strong>입니다. 당기순이익 100억 원, 유통주식 1,000만 주인 기업의 EPS는 1,000원입니다. 100만 주를 매입·소각하면 900만 주가 되어 EPS는 약 1,111원(+11.1%)으로 오르고, PER이 유지된다면 주가도 같은 비율로 부양됩니다. 세금 측면에서는 현금배당이 모든 주주에게 배당소득으로 과세되지만, 자사주매입에서는 매도를 선택한 주주에게만 자본이득이 귀속되어 주주에게 선택권이 있습니다. 회계상 매입한 자기주식은 자본의 차감 항목으로 처리됩니다.</p>
+  <div class="formula">EPS = 당기순이익 ÷ 유통주식수</div>
+  <h3>잔여배당정책과 성장률</h3><p><strong>잔여배당정책(Residual Dividend Policy)</strong>은 투자기회(자본예산)와 목표 자본구조를 먼저 충족시키고, 남은 잔여 이익만 배당으로 지급하는 정책입니다. 투자기회가 많은 해에는 배당이 줄고 적은 해에는 늘어나므로 배당이 매우 변동적이라는 단점이 있습니다. 유보율(1 − 배당성향)은 성장과 직결됩니다 — ROE 10%인 기업이 이익의 40%를 배당하면, 외부조달 없이 유보만으로 달성 가능한 지속가능성장률은 10% × 0.6 = 6%입니다.</p>
+  <div class="formula">지속가능성장률 g = ROE × (1 − 배당성향),&nbsp;&nbsp; 배당성향 = 배당총액 ÷ 당기순이익</div>
+  <h3>대리인비용 감소와 배당 이중과세</h3><p><strong>자유현금흐름 가설(Jensen, 1986)</strong>: 여유 현금이 많은 기업의 경영자는 수익성 낮은 확장(제국 건설)이나 과다한 경비로 현금을 낭비할 유인이 있습니다. 배당으로 현금을 기업 밖으로 내보내면 낭비 가능한 자금 자체가 줄어 <strong>대리인비용이 감소</strong>하고, 이후 신규 자금조달 시 자본시장의 감시를 받게 되는 부수 효과도 있습니다. <strong>배당의 이중과세</strong>: 기업 이익에는 먼저 법인세가 과세되고, 세후 이익에서 지급된 배당에는 주주 단계에서 배당소득세가 다시 과세됩니다. 같은 이익에 두 번 세금이 붙는 셈입니다. 반면 이자비용은 손금 산입되어 법인세 과세표준에서 제외되므로 부채 조달이 세제상 유리합니다(이자절세 효과). 이런 세제 구조는 배당보다 자사주매입을 선호하게 만드는 요인 중 하나로 꼽힙니다.</p>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> MM의 완전자본시장이라면 이익을 전액 배당하는 기업 A와 전액 유보·재투자하는 기업 B의 주주 부는 같아야 합니다. 그런데 현실에서 기업이 "배당 증액"을 발표하면 주가가 오르는 경우가 많습니다. MM의 세계와 현실 사이를 가르는 요인은 무엇일까요? (힌트: 정보비대칭, 세금, 그리고 경영자의 현금 사용을 감시하려는 주주들)</div>
+</div>
+<h2>🕹️ 직접 해보기 — 배당정책 나머지 셋과 다른 하나 찾기</h2>
+<p>네 가지 보기 중 배당정책의 범주에 속하지 않는 하나를 골라 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#0f766e","prompt":"배당정책과 어울리지 않는 하나를 고르세요","rounds":[{"items":["현금배당","주식배당","자사주매입","주식분할"],"odd":"주식분할","why":"주식분할은 주주환원이 아니라 액면가를 나눠 주식수만 늘리는 것입니다."},{"items":["배당선언일","배당락일","지급일","창립기념일"],"odd":"창립기념일","why":"배당 절차(선언→락→기준→지급)와 무관한 날짜입니다."},{"items":["신호효과","클라이언텔 효과","대리인비용 감소","이자절세"],"odd":"이자절세","why":"이자절세는 배당이 아니라 부채(이자의 손금 처리)의 효과입니다."}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해 보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0f766e","questions":[{"q":"MM 배당무관론의 결론은?","choices":["배당을 늘리면 기업가치가 상승한다","배당을 줄이면 기업가치가 하락한다","완전자본시장에서는 배당정책이 기업가치에 영향을 주지 않는다","배당은 항상 자사주매입보다 유리하다"],"answer":2},{"q":"배당락일의 의미로 옳은 것은?","choices":["이 날 이후에 주식을 사면 해당 기의 배당을 받을 수 없다","배당금이 실제로 입금되는 날","이사회가 배당 지급을 선언하는 날","배당 받을 주주를 주주명부로 확정하는 날"],"answer":0},{"q":"자사주매입의 효과로 옳은 것은?","choices":["유통주식수가 늘어 EPS가 하락한다","회사의 현금이 늘어난다","발행주식수가 증가한다","유통주식수가 줄어 EPS와 주가가 부양된다"],"answer":3},{"q":"신호가설에 따르면 배당 증가는 무엇을 뜻하는가?","choices":["투자기회가 줄었다는 신호","경영자가 미래 실적에 자신 있다는 신호","재무구조가 악화됐다는 신호","아무 의미 없는 이벤트"],"answer":1},{"q":"배당성향의 정의는?","choices":["주당배당금 ÷ 주가","당기순이익 ÷ 자기자본","배당금 ÷ 총자산","배당금 ÷ 당기순이익"],"answer":3}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1.5,11);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  // 이익 파이: 배당 40% + 유보 60%
+  const pie=new THREE.Group();
+  const dTh=Math.PI*0.8;
+  const div=new THREE.Mesh(new THREE.CylinderGeometry(2.2,2.2,0.35,48,1,false,0,dTh),new THREE.MeshBasicMaterial({color:0x0f766e}));
+  const ret=new THREE.Mesh(new THREE.CylinderGeometry(2.2,2.2,0.35,48,1,false,dTh,Math.PI*1.2),new THREE.MeshBasicMaterial({color:0xf59e0b}));
+  div.position.set(Math.sin(dTh/2)*0.16,0,Math.cos(dTh/2)*0.16);
+  ret.position.set(-Math.sin(dTh/2)*0.16,0,-Math.cos(dTh/2)*0.16);
+  pie.add(div);pie.add(ret);pie.rotation.x=-0.35;s.add(pie);
+  const lDiv=lbl('배당성향 40%','#0f766e');lDiv.position.set(Math.sin(dTh/2)*3.1,0.75,Math.cos(dTh/2)*3.1);pie.add(lDiv);
+  const lRet=lbl('유보이익','#d97706');lRet.position.set(-Math.sin(dTh/2)*3.0,0.75,-Math.cos(dTh/2)*3.0);pie.add(lRet);
+  // 주주환원 3총사 노드
+  const nodes=[['현금배당','#22c55e',Math.PI*0.12],['주식배당','#3b82f6',Math.PI*0.4],['자사주매입','#a855f7',Math.PI*0.68]];
+  const edge=new THREE.Vector3(Math.sin(dTh/2)*2.2,0,Math.cos(dTh/2)*2.2);
+  const balls=[];
+  for(let i=0;i<nodes.length;i++){const a2=nodes[i][2];const col=parseInt(nodes[i][1].slice(1),16);const m=new THREE.Mesh(new THREE.SphereGeometry(0.42,16,16),new THREE.MeshBasicMaterial({color:col}));m.position.set(Math.sin(a2)*5.4,0.4+(i%2)*0.5,Math.cos(a2)*5.4);s.add(m);balls.push({m,baseY:m.position.y});const t=lbl(nodes[i][0],nodes[i][1]);t.position.set(m.position.x,m.position.y+0.75,m.position.z);s.add(t);s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([edge.clone(),m.position.clone()]),new THREE.LineBasicMaterial({color:col,transparent:true,opacity:0.35})));}
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 이익 파이를 배당과 유보 두 조각으로 나눕니다.','배당성향 40%: 순이익의 40%를 주주에게 환원합니다.','주주환원 3총사: 현금배당·주식배당·자사주매입.','유보이익은 회사에 남겨 성장에 다시 투자하는 돈입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}pie.rotation.y+=0.004;for(let i=0;i<balls.length;i++){balls[i].m.position.y=balls[i].baseY+Math.sin(T*2+i)*0.12;}s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>
