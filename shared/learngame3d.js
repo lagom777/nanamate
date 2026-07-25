@@ -552,7 +552,9 @@
       // 카드는 알약이 아니라 둥근 사각형(끌어 놓는 슬롯과 같은 계열)이다. 위 .nmg-wrap .nmg-chip과 특이도를 맞춰야 radius·cursor가 실제로 먹는다.
       '.nmg-wrap .nmg-card{border-radius:11px;box-shadow:0 4px 10px rgba(30,41,59,.08);cursor:grab;user-select:none}.nmg-card:active{cursor:grabbing}.nmg-card.dragging{opacity:.45;transform:scale(.96)}',
       '.nmg-core:before{content:"◆";color:#6366f1;margin-right:7px}',
-      '.nmg-def{border-radius:12px;font-weight:600}',
+      // .nmg-card와 같은 이유로 .nmg-wrap 접두 필요 — 정의 칩은 nmg-chip도 함께 갖기 때문에
+      // 특이도가 낮으면 border-radius(999px)·font-weight(700) 둘 다 chip 규칙에 밀려 죽는다.
+      '.nmg-wrap .nmg-def{border-radius:12px;font-weight:600}',
       '.nmg-wrap .nmg-chip:hover{border-color:#818cf8!important;background:#f8fafc!important}.nmg-chip:focus-visible{outline:2px solid #6366f1;outline-offset:2px}',
       '.nmg-wrap .nmg-chip.sel{border-color:#6366f1!important;background:#eef2ff!important}',
       '.nmg-wrap .nmg-chip.ok{background:#dcfce7!important;border-color:#86efac!important;color:#15803d!important;cursor:default}',

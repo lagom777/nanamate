@@ -203,12 +203,12 @@ test('graph: 꼭짓점 형태 표기 — 부호 흡수·0항 생략·자리수 �
   assert.equal(G.vertexFormLabel(1, -2, -4), '1(x + 2)² − 4');
   // 음수 a는 그대로 앞에 붙는다(레벨1: a=-0.6, h=1, k=6)
   const L1 = G.LEVELS[1];
-  assert.equal(G.vertexFormLabel(L1.a, L1.h, L1.k), '-0.6(x − 1)² + 6');
+  assert.equal(G.vertexFormLabel(L1.a, L1.h, L1.k), '−0.6(x − 1)² + 6');
   // digits로 자리수 고정(HUD 실시간 표기) — 부호·0 판정도 반올림 값 기준
   const d = { a: 2, h: 1, k: 1 };
   assert.equal(G.vertexFormLabel(0.5, 0, 1, d), '0.50x² + 1.0');
   assert.equal(G.vertexFormLabel(0.5, -1.25, 1, d), '0.50(x + 1.3)² + 1.0');
-  assert.equal(G.vertexFormLabel(-0.6, 1.24, -3.14, d), '-0.60(x − 1.2)² − 3.1');
+  assert.equal(G.vertexFormLabel(-0.6, 1.24, -3.14, d), '−0.60(x − 1.2)² − 3.1');
   assert.equal(G.vertexFormLabel(0.5, -0.04, 2, d), '0.50x² + 2.0');   // h가 -0.0으로 반올림 → 항 생략
   assert.equal(G.vertexFormLabel(0.5, 1, -0.04, d), '0.50(x − 1.0)²'); // k가 -0.0으로 반올림 → 항 생략
   // 어떤 조합에서도 "− -" / "+ -" 같은 깨진 부호가 나오지 않는다

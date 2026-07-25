@@ -70,7 +70,9 @@
     function round(v, p) { return typeof p === 'number' ? parseFloat(v.toFixed(p)) : v; }
     var hr = round(h, d.h), kr = round(k, d.k);
     var inner = hr === 0 ? 'x' : '(x ' + (hr < 0 ? '+' : '−') + ' ' + fix(Math.abs(hr), d.h) + ')';
-    var body = fix(a, d.a) + inner + '²';
+    // 계수 a의 음수 부호도 h·k와 같은 U+2212(−)로 통일 — toFixed는 ASCII 하이픈을 내므로
+    // 그대로 두면 한 수식 안에서 '-0.60(x − 1)²'처럼 부호 글리프가 섞인다.
+    var body = fix(a, d.a).replace('-', '−') + inner + '²';
     return kr === 0 ? body : body + (kr < 0 ? ' − ' : ' + ') + fix(Math.abs(kr), d.k);
   }
 
