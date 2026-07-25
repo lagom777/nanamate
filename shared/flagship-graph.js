@@ -61,6 +61,19 @@
     return 100 + Math.max(0, lives) * 20 + Math.max(0, Math.ceil(secondsLeft)) * 2;
   }
 
+  // 꼭짓점 형태 y = a(x−h)² + k 의 우변을 수학 표기대로 만든다("(x − -1)"·"+ -3" 방지).
+  // 부호를 흡수(h<0 → (x + |h|), k<0 → − |k|)하고, h=0이면 괄호를, k=0이면 k항을 생략한다.
+  // digits(선택): {a,h,k} 소수점 자리수 고정. 자리수로 반올림한 값으로 부호·0 판정을 한다.
+  function vertexFormLabel(a, h, k, digits) {
+    var d = digits || {};
+    function fix(v, p) { return typeof p === 'number' ? v.toFixed(p) : String(v); }
+    function round(v, p) { return typeof p === 'number' ? parseFloat(v.toFixed(p)) : v; }
+    var hr = round(h, d.h), kr = round(k, d.k);
+    var inner = hr === 0 ? 'x' : '(x ' + (hr < 0 ? '+' : '−') + ' ' + fix(Math.abs(hr), d.h) + ')';
+    var body = fix(a, d.a) + inner + '²';
+    return kr === 0 ? body : body + (kr < 0 ? ' − ' : ' + ') + fix(Math.abs(kr), d.k);
+  }
+
   var LOGIC = {
     LEVELS: LEVELS,
     parabolaY: parabolaY,
@@ -69,7 +82,8 @@
     allCoinsMatched: allCoinsMatched,
     matchedCoinCount: matchedCoinCount,
     parameterHint: parameterHint,
-    roundScore: roundScore
+    roundScore: roundScore,
+    vertexFormLabel: vertexFormLabel
   };
   if (typeof module !== 'undefined' && module.exports) { module.exports = LOGIC; }
   if (typeof window !== 'undefined') { window.NM_GRAPH_LOGIC = LOGIC; }
@@ -220,7 +234,7 @@
       locked = true; feedback = '💥 ' + reason; setHud();
       beep(110, 0.28, 'sawtooth', 0.06);
       var L = LEVELS[lvl];
-      showResult('라운드 실패', reason + ' · 정답은 y = ' + L.a + '(x − ' + L.h + ')² + ' + L.k + ' 입니다.', '이 단계 다시', function () {
+      showResult('라운드 실패', reason + ' · 정답은 y = ' + vertexFormLabel(L.a, L.h, L.k) + ' 입니다.', '이 단계 다시', function () {
         hideResult(); score = checkpointScore; startLevel();
       }, true);
     }
@@ -246,7 +260,7 @@
     function setHud() {
       var hearts = ''; for (var i = 0; i < 3; i++) hearts += i < lives ? '♥' : '♡';
       var matched = coins.filter(function (c) { return c.on; }).length;
-      hud.innerHTML = '<span style="font-size:14px">y = ' + a.toFixed(2) + '(x − ' + h.toFixed(1) + ')² + ' + k.toFixed(1) + '</span>' +
+      hud.innerHTML = '<span style="font-size:14px">y = ' + vertexFormLabel(a, h, k, { a: 2, h: 1, k: 1 }) + '</span>' +
         '<br>🏆 ' + score + '점 · 단계 ' + (lvl + 1) + '/' + LEVELS.length +
         ' · <span style="color:#dc2626;letter-spacing:2px">' + hearts + '</span>' +
         ' · ⏱ ' + Math.max(0, Math.ceil(timeLeft)) + '초' +

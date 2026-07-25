@@ -190,6 +190,36 @@ test('graph: 포물선 값/레벨 곡선이 자기 코인 전부 일치=승리/�
   assert.equal(G.roundScore(2, 9.2), 160);
 });
 
+test('graph: 꼭짓점 형태 표기 — 부호 흡수·0항 생략·자리수 유지', () => {
+  const G = load('flagship-graph.js');
+  // h<0은 (x + |h|)로 흡수, h>0은 (x − h), h=0은 괄호 생략
+  assert.equal(G.vertexFormLabel(0.5, -1, 1), '0.5(x + 1)² + 1');
+  assert.equal(G.vertexFormLabel(0.8, 2, 0.5), '0.8(x − 2)² + 0.5');
+  assert.equal(G.vertexFormLabel(0.5, 0, 1), '0.5x² + 1');
+  // k<0은 − |k|, k=0은 k항 자체를 생략
+  assert.equal(G.vertexFormLabel(1, 3, -3), '1(x − 3)² − 3');
+  assert.equal(G.vertexFormLabel(1, 3, 0), '1(x − 3)²');
+  assert.equal(G.vertexFormLabel(1, 0, 0), '1x²');
+  assert.equal(G.vertexFormLabel(1, -2, -4), '1(x + 2)² − 4');
+  // 음수 a는 그대로 앞에 붙는다(레벨1: a=-0.6, h=1, k=6)
+  const L1 = G.LEVELS[1];
+  assert.equal(G.vertexFormLabel(L1.a, L1.h, L1.k), '-0.6(x − 1)² + 6');
+  // digits로 자리수 고정(HUD 실시간 표기) — 부호·0 판정도 반올림 값 기준
+  const d = { a: 2, h: 1, k: 1 };
+  assert.equal(G.vertexFormLabel(0.5, 0, 1, d), '0.50x² + 1.0');
+  assert.equal(G.vertexFormLabel(0.5, -1.25, 1, d), '0.50(x + 1.3)² + 1.0');
+  assert.equal(G.vertexFormLabel(-0.6, 1.24, -3.14, d), '-0.60(x − 1.2)² − 3.1');
+  assert.equal(G.vertexFormLabel(0.5, -0.04, 2, d), '0.50x² + 2.0');   // h가 -0.0으로 반올림 → 항 생략
+  assert.equal(G.vertexFormLabel(0.5, 1, -0.04, d), '0.50(x − 1.0)²'); // k가 -0.0으로 반올림 → 항 생략
+  // 어떤 조합에서도 "− -" / "+ -" 같은 깨진 부호가 나오지 않는다
+  for (const h of [-2, -0.5, 0, 0.5, 2]) {
+    for (const k of [-3, -0.5, 0, 0.5, 3]) {
+      const s = G.vertexFormLabel(0.5, h, k, d);
+      assert.ok(!/[−+] -/.test(s), s);
+    }
+  }
+});
+
 test('projectile: hitScore 감소·바닥/45°=사거리 최대/레벨0 명중·수직 빗나감', () => {
   const P = load('flagship-projectile.js');
   // 명중 점수: 발사 수가 적을수록 높고, 60−shots·5가 0 이하면 100으로 바닥
