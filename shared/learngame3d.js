@@ -365,13 +365,14 @@
     var timer = null, timeLeft = 100, lives = 3, locked = false, run = 0, choiceBtns = [];
     ctx.shell.setTotal(R);
     function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
+    function heartsText() { return '쉴드 ' + Array(lives + 1).join('♥') + Array(4 - lives).join('♡'); }
     function render() {
       stopTimer(); locked = false; choiceBtns = []; var myRun = ++run;
       ctx.body.className = 'nmg-body nmg-scenario'; ctx.body.innerHTML = '';
       var r = rounds[ri];
       var modebar = el('div', 'nmg-round-hud');
       var round = el('span', 'nmg-kicker'); round.textContent = '🎯 미션 ' + (ri + 1) + '/' + R;
-      var hearts = el('span', 'nmg-hearts'); hearts.textContent = '쉴드 ' + Array(lives + 1).join('♥') + Array(4 - lives).join('♡');
+      var hearts = el('span', 'nmg-hearts'); hearts.textContent = heartsText();
       modebar.appendChild(round); modebar.appendChild(hearts); ctx.body.appendChild(modebar);
       var sit = el('div', 'nmg-situation');
       sit.textContent = '📌 ' + r.situation;
@@ -406,6 +407,7 @@
         var msg = '✅ 정답!' + (r.why ? ' ' + r.why : '');
         var reveal = el('div', 'nmg-reveal'); reveal.textContent = msg; ctx.body.appendChild(reveal);
         lives = Math.min(3, lives + 1);
+        hearts.textContent = heartsText();
         ri++; ctx.shell.progress(ri);
         if (ri === R) { setStatus(ctx, '🎉 완성! ' + msg, 'done'); ctx.shell.win(wrong); }
         else {
@@ -414,7 +416,7 @@
         }
       } else {
         wrong++; lives = Math.max(0, lives - 1); b.disabled = true; b.classList.add('bad'); ctx.shell.bad(b); v.miss(i);
-        hearts.textContent = '쉴드 ' + Array(lives + 1).join('♥') + Array(4 - lives).join('♡');
+        hearts.textContent = heartsText();
         setStatus(ctx, lives ? '❌ 쉴드 손상! 다른 전략을 선택하세요.' : '💥 쉴드 소진! 남은 선택지에서 핵심 단서를 찾아보세요.', 'bad');
       }
     }
