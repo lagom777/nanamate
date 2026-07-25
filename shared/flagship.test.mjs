@@ -181,6 +181,9 @@ test('graph: 포물선 값/레벨 곡선이 자기 코인 전부 일치=승리/�
   const cy = G.parabolaY(0.5, 0, 1, 2);
   assert.equal(G.coinOnCurve(0.5, 0, 1, 2, cy + 0.29, 0.3), true);
   assert.equal(G.coinOnCurve(0.5, 0, 1, 2, cy + 0.31, 0.3), false);
+  assert.equal(G.matchedCoinCount(L0.a, L0.h, L0.k, coins0, 0.3), 3);
+  assert.deepEqual(G.parameterHint(0.5, 0, 1, L0), { parameter: 'h', direction: 'decrease' });
+  assert.equal(G.roundScore(2, 9.2), 160);
 });
 
 test('projectile: hitScore 감소·바닥/45°=사거리 최대/레벨0 명중·수직 빗나감', () => {
