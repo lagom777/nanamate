@@ -32,6 +32,10 @@ test('market: 균형가/수요·공급 단조성/초과 부호/청산 경계', (
   assert.equal(M.excess(model, 19), 5);
   assert.equal(M.isCleared(model, 19, 5), true);
   assert.equal(M.isCleared(model, 19, 4.999), false);
+  assert.equal(M.priceGuidance(model, 25, 5), 'lower'); // 잉여 → 가격 인하
+  assert.equal(M.priceGuidance(model, 5, 5), 'raise');  // 부족 → 가격 인상
+  assert.equal(M.priceGuidance(model, 18, 5), 'clear');
+  assert.equal(M.roundScore(3, 10), 180);
 });
 
 test('dna: 상보(A↔T·G↔C 양방향)/페어/상보가닥/완성판정', () => {
