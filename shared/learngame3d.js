@@ -547,7 +547,8 @@
       '.nmg-bk-name{font-weight:800;font-size:13px;color:var(--text,#1f2430)}',
       '.nmg-placed{font-size:12px;font-weight:700;color:#15803d;background:#dcfce7;border-radius:999px;padding:3px 9px}',
       '.nmg-wrap .nmg-chip{padding:9px 14px;border:1px solid var(--border,#d1d5db)!important;border-radius:999px;background:#fff!important;color:var(--text,#1f2430)!important;font-weight:700;font-size:14px;cursor:pointer;transition:transform .12s ease,background .12s ease,border-color .12s ease,opacity .12s ease;text-align:left}',
-      '.nmg-card{border-radius:11px;box-shadow:0 4px 10px rgba(30,41,59,.08);cursor:grab;user-select:none}.nmg-card:active{cursor:grabbing}.nmg-card.dragging{opacity:.45;transform:scale(.96)}',
+      // 카드는 알약이 아니라 둥근 사각형(끌어 놓는 슬롯과 같은 계열)이다. 위 .nmg-wrap .nmg-chip과 특이도를 맞춰야 radius·cursor가 실제로 먹는다.
+      '.nmg-wrap .nmg-card{border-radius:11px;box-shadow:0 4px 10px rgba(30,41,59,.08);cursor:grab;user-select:none}.nmg-card:active{cursor:grabbing}.nmg-card.dragging{opacity:.45;transform:scale(.96)}',
       '.nmg-core:before{content:"◆";color:#6366f1;margin-right:7px}',
       '.nmg-def{border-radius:12px;font-weight:600}',
       '.nmg-wrap .nmg-chip:hover{border-color:#818cf8!important;background:#f8fafc!important}.nmg-chip:focus-visible{outline:2px solid #6366f1;outline-offset:2px}',
