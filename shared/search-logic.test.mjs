@@ -18,10 +18,12 @@ function load() {
   return { api: module.exports, location };
 }
 
-test('search: 빈 질의는 전체 과목(46) 반환', () => {
+test('search: 빈 질의는 전체 과목 반환', () => {
   const { api } = load();
-  assert.equal(api.search('').length, 46);
-  assert.equal(api.search('   ').length, 46); // 공백만 → 전체
+  const all = api.SUBJECTS.length; // 과목 추가 때마다 리터럴이 드리프트하지 않게 색인에서 도출
+  assert.ok(all >= 46, '과목 수가 줄어들면 색인 유실 — search-index.test.mjs의 허브 1:1 검증도 확인');
+  assert.equal(api.search('').length, all);
+  assert.equal(api.search('   ').length, all); // 공백만 → 전체
 });
 
 test('search: 대소문자 무시 · 부분 문자열(영문/한글)', () => {
