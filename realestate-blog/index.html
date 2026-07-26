@@ -190,7 +190,7 @@
         <div class="seg" id="provSeg">
           <button data-prov="gemini" class="active">Gemini (무료)</button>
           <button data-prov="claude">Claude</button>
-          <button data-prov="template">템플릿</button>
+          <button data-prov="template">로컬 자동 작성</button>
         </div>
 
         <div id="geminiCfg">
@@ -210,7 +210,7 @@
         </div>
 
         <div id="templateCfg" style="display:none;">
-          <div class="note info" style="margin-top:12px;">템플릿 모드는 API·키 없이 즉시·오프라인으로 <b>초안 골격</b>을 만듭니다. 문장이 정형화되니 직접 다듬어 쓰세요.</div>
+          <div class="note info" style="margin-top:12px;">API·키 없이도 입력한 매물 정보로 <b>제목·본문·SNS 글까지 자동 작성</b>합니다. 입력하지 않은 시세나 수치는 만들지 않습니다.</div>
         </div>
 
         <label>네이버 블로그 ID <span class="hint" style="display:inline;">(선택 — '네이버 글쓰기 열기'용)</span></label>
@@ -332,12 +332,14 @@ function setLS(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 function delLS(k){ try{ localStorage.removeItem(k); }catch(e){} }
 
 /* ---------- state restore ---------- */
-let provider = getLS(LS.prov) || "gemini";
+let provider = getLS(LS.prov) || (getLS(LS.gKey) ? "gemini" : getLS(LS.cKey) ? "claude" : "template");
 $("geminiKey").value  = getLS(LS.gKey) || "";
 $("claudeKey").value  = getLS(LS.cKey) || "";
 $("geminiModel").value = getLS(LS.gModel) || DEFAULT_GEMINI_MODEL;
 $("claudeModel").value = getLS(LS.cModel) || DEFAULT_CLAUDE_MODEL;
 $("naverId").value = getLS(LS.naverId) || "";
+if(provider==="gemini" && !$("geminiKey").value.trim()) provider = $("claudeKey").value.trim() ? "claude" : "template";
+if(provider==="claude" && !$("claudeKey").value.trim()) provider = $("geminiKey").value.trim() ? "gemini" : "template";
 
 function setProvider(p){
   provider = p;
@@ -346,7 +348,7 @@ function setProvider(p){
   $("geminiCfg").style.display  = p==="gemini"   ? "" : "none";
   $("claudeCfg").style.display  = p==="claude"   ? "" : "none";
   $("templateCfg").style.display= p==="template" ? "" : "none";
-  $("provBadge").textContent = p==="gemini"?"Gemini":p==="claude"?"Claude":"템플릿";
+  $("provBadge").textContent = p==="gemini"?"Gemini":p==="claude"?"Claude":"로컬";
   setLS(LS.prov, p);
   refreshKeyBadge();
 }
@@ -699,7 +701,7 @@ function buildTemplate(f){
   const typeName = (f.type==="custom" && f.topic) ? f.topic : meta.name;
   const headTitle = (f.type==="custom" && f.topic) ? f.topic : `${cx}, ${region} ${meta.name}`;
 
-  let body = `## ${headTitle} 정리\n\n안녕하세요. 오늘은 ${typeName}에 대해 정리해 보았습니다. 아래 정보는 게시 전 최신 자료로 한 번 더 확인해 주세요.\n\n`;
+  let body = `## ${headTitle} 정리\n\n${typeName} 관련 정보를 찾는 분이 거래 조건과 현장 확인 순서를 한 번에 볼 수 있도록 입력된 내용만 정리했습니다. 실제 상태와 계약 가능 여부는 게시·방문 시점에 다시 확인해 주세요.\n\n`;
   if(rows.length){
     body += `### 핵심 정보 한눈에\n\n| 항목 | 내용 |\n|---|---|\n` +
       rows.map(r=>`| ${r[0]} | ${r[1]} |`).join("\n") + `\n\n`;
@@ -723,7 +725,15 @@ function buildTemplate(f){
     notesUsed = true;
   }
   if(f.notes && !notesUsed) body += `### 참고\n\n${f.notes}\n\n`;
-  body += `### 마무리\n\n도움이 되셨다면 공감·이웃 추가 부탁드려요.`;
+  body += `### 방문·계약 전에 확인할 것\n\n`+
+    `1. 가격·면적·거래 가능 여부가 지금도 유효한지 다시 확인합니다.\n`+
+    `2. 등기부등본과 권리관계, 중개대상물 확인설명서를 계약 전에 대조합니다.\n`+
+    `3. 같은 지역·면적의 최근 실거래와 현재 경쟁 매물을 같은 기준일로 비교합니다.\n`+
+    `4. 관리비, 주차, 입주 가능일과 수리 범위처럼 사진에 보이지 않는 조건을 물어봅니다.\n\n`+
+    `온라인 설명은 현장 확인을 대신할 수 없습니다. 낮과 밤의 채광·소음·생활 동선을 직접 보고, `+
+    `가격 외에 세금·중개보수·이사와 수리비까지 포함한 총비용을 계산해 보세요. `+
+    `정책·세제·대출 기준은 시점에 따라 바뀔 수 있으므로 공식 자료와 전문가 설명을 다시 확인해야 합니다.\n\n`;
+  body += `### 방문·문의\n\n온라인 설명만으로 결론 내리기보다 최신 조건을 확인하고 직접 방문해 장점과 주의점을 함께 비교해 보세요.`;
   if(v("f_contact")) body += ` 문의는 ${v("f_contact")}로 주시면 친절히 안내해 드리겠습니다.`;
 
   const head = (f.type==="custom" && f.topic) ? f.topic : `${region} ${cx} ${typeName}`.replace(/\s+/g," ").trim();
@@ -756,7 +766,7 @@ function buildTemplate(f){
     review_notes:[
       "실거래가·시세·평당가 등 모든 수치의 기준일과 출처를 직접 확인하세요.",
       "최신 부동산 규제(LTV·DSR·세금)가 반영됐는지 확인하세요.",
-      "템플릿 초안이므로 1인칭 경험·현장 사진을 더해 자연스럽게 다듬으세요."
+      "로컬 자동 작성본에 현장 사진과 직접 확인한 내용을 더한 뒤 게시하세요."
     ],
     _template:true
   };
@@ -834,7 +844,7 @@ function render(o){
     </div>` : "";
 
   out.innerHTML = `
-    ${o._template?`<div class="note warn" style="margin-top:0;">템플릿 초안입니다 — 문장을 다듬고 직접 찍은 사진·실제 경험을 더해 주세요.</div>`:""}
+    ${o._template?`<div class="note warn" style="margin-top:0;">키 없이 자동 작성한 글입니다 — 가격·권리관계와 현장 상태를 확인한 뒤 게시하세요.</div>`:""}
     <div class="out-block titles">
       <div class="out-label">📌 제목 3안 <span class="hint" style="text-transform:none;letter-spacing:0;">클릭하면 복사</span></div>
       ${titles}

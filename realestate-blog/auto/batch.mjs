@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // topics.csv 의 여러 주제를 한 번에 글로 생성 + (옵션) Threads 연속 게시.
-// run.mjs의 검증된 Gemini 호출·변환 함수를 재사용.
+// ChatGPT 로그인(Codex CLI), Gemini(API 키/OAuth), 로컬 작성 엔진을 자동 선택.
 // 사용:
 //   node batch.mjs                      (topics.csv 전체 생성 + 설정에 따라 Threads 게시)
 //   node batch.mjs --file my.csv --limit 3 --no-post
@@ -11,6 +11,9 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { dirname, join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { callGemini, loadConfig, parseJsonLoose, toNaverPlain, normalizeHashtags, composeThreads } from "./run.mjs";
+import { createOfflineBatchPost } from "./offline-writer.mjs";
+import { callGeminiOAuth, googleOAuthStatus } from "./google-oauth.mjs";
+import { callCodexChatGPT, codexChatGPTStatus } from "./codex-writer.mjs";
 
 const DIR = dirname(fileURLToPath(import.meta.url));
 const OUT_ROOT = join(DIR, "output");
@@ -115,12 +118,13 @@ function writeOne(obj, row, dir){
 }
 
 function parseArgs(argv){
-  const o={ file:null, limit:Infinity, noPost:false, dry:false };
+  const o={ file:null, limit:Infinity, noPost:false, dry:false, offline:false };
   for(let i=0;i<argv.length;i++){ const a=argv[i];
     if(a==="--file") o.file=argv[++i];
     else if(a==="--limit") o.limit=parseInt(argv[++i],10)||Infinity;
     else if(a==="--no-post") o.noPost=true;
     else if(a==="--dry-run") o.dry=true;
+    else if(a==="--offline") o.offline=true;
   }
   return o;
 }
@@ -139,11 +143,10 @@ async function main(){
     items.forEach((o,i)=>console.log(`\n[${i+1}] ${o.type||"(auto)"} / ${o.topic||o.area||o.name}\n`+buildUserPrompt(o)));
     return;
   }
-  if(!config.geminiKey) die("GEMINI_API_KEY 없음 — config.local.json 또는 환경변수 설정 필요.");
-
   const d=new Date();
   const root=join(OUT_ROOT, `batch-${d.toISOString().slice(0,10)}-${String(d.getHours()).padStart(2,"0")}${String(d.getMinutes()).padStart(2,"0")}`);
   const canPost = !args.noPost && config.autoPostThreads && existsSync(THREADS_AUTH);
+  const codexReady = !args.offline && config.preferChatGPTLogin!==false && codexChatGPTStatus().ready;
   let okCount=0, postCount=0;
 
   for(let i=0;i<items.length;i++){
@@ -151,12 +154,36 @@ async function main(){
     const label=o.topic||o.name||o.area||`#${i+1}`;
     try{
       console.log(`\n[${i+1}/${items.length}] 생성: ${label}`);
-      const raw=await callGemini(config.geminiKey, config.geminiModel||"gemini-2.5-flash", SYSTEM_PROMPT, buildUserPrompt(o));
-      const obj=parseJsonLoose(raw);
+      const model=config.geminiModel||"gemini-2.5-flash";
+      let obj;
+      const userPrompt=buildUserPrompt(o);
+      const failures=[];
+      if(codexReady){
+        try{
+          obj=parseJsonLoose(callCodexChatGPT(SYSTEM_PROMPT, userPrompt));
+          obj._engine="chatgpt-codex-login";
+        }catch(e){ failures.push(`ChatGPT/Codex: ${e.message}`); }
+      }
+      if(!obj && !args.offline && config.geminiKey){
+        try{
+          obj=parseJsonLoose(await callGemini(config.geminiKey, model, SYSTEM_PROMPT, userPrompt));
+          obj._engine="gemini-api-key";
+        }catch(e){ failures.push(`Gemini API: ${e.message}`); }
+      }
+      if(!obj && !args.offline && googleOAuthStatus().ready){
+        try{
+          obj=parseJsonLoose(await callGeminiOAuth(model, SYSTEM_PROMPT, userPrompt));
+          obj._engine="gemini-oauth";
+        }catch(e){ failures.push(`Gemini OAuth: ${e.message}`); }
+      }
+      if(!obj){
+        if(failures.length) console.warn(`  AI 작성 실패 → 로컬 자동 작성: ${failures.join(" / ")}`);
+        obj=createOfflineBatchPost(o);
+      }
       const dir=join(root, `${String(i+1).padStart(2,"0")}-${slug(label)}`);
       writeOne(obj, o, dir);
       okCount++;
-      console.log(`  저장: ${dir}`);
+      console.log(`  저장: ${dir} (작성 엔진: ${obj._engine||"gemini"})`);
       if(canPost){
         const postArgs=[THREADS_POSTER,"--file",join(dir,"threads.txt")];
         if(config.imageForThreads) postArgs.push("--image", config.imageForThreads);

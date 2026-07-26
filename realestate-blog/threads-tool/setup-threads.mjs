@@ -4,6 +4,7 @@
 // 사용법: node setup-threads.mjs   (자세한 사전 설정은 README.md 참고)
 
 import { createServer } from "node:http";
+import { randomBytes } from "node:crypto";
 import { createInterface } from "node:readline";
 import { writeFileSync, existsSync, readFileSync, chmodSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -24,26 +25,41 @@ function extractCode(s){
   return raw || null;
 }
 
+function urlState(s){ try{ return new URL(s).searchParams.get("state"); }catch{ return null; } }
+// 붙여넣은 값에 state가 들어 있으면 발급한 값과 같아야 한다 (없으면 사용자가 직접 전달한 code로 본다)
+function pastedStateOk(s, state){ const q=urlState(s); return q===null || q===state; }
+
 // 로컬 서버 자동 캡처 + 수동 붙여넣기 중 먼저 도착하는 코드 사용
-function getCode(redirect){
+function getCode(redirect, state){
   return new Promise((resolve)=>{
     let done=false, server=null;
     const finish=(code)=>{ if(done) return; done=true; try{ server && server.close(); }catch{} try{ rl.close(); }catch{} resolve(code); };
 
     ask("\n리디렉션된 전체 URL 또는 code 값 붙여넣기 (localhost 자동 인식되면 비워두고 Enter): ")
-      .then(v=>{ if(v) finish(extractCode(v)); });
+      .then(v=>{ if(!v) return;
+        if(!pastedStateOk(v, state)){ console.error("state 가 일치하지 않습니다 — 이 URL은 이 요청의 응답이 아닙니다."); return; }
+        finish(extractCode(v));
+      });
 
     try{
       const u = new URL(redirect);
       if(/^(localhost|127\.0\.0\.1)$/.test(u.hostname)){
         server = createServer((req,res)=>{
-          const code = extractCode("http://x" + req.url);
+          const full = "http://x" + req.url;
+          const code = extractCode(full);
+          // CSRF 방어: 브라우저가 돌려준 state가 우리가 발급한 값과 같을 때만 코드를 받는다
+          if(code && urlState(full)!==state){
+            res.writeHead(400, { "Content-Type":"text/html; charset=utf-8" });
+            res.end("<h2>state 불일치 — 요청을 무시했습니다.</h2>");
+            return;
+          }
           res.writeHead(200, { "Content-Type":"text/html; charset=utf-8" });
           res.end("<h2>인증 완료 — 터미널로 돌아가세요. 이 창은 닫아도 됩니다.</h2>");
           if(code) finish(code);
         });
         server.on("error", ()=>{}); // 포트 충돌 등은 무시 → 수동 붙여넣기로 진행
-        server.listen(Number(u.port) || 80);
+        // 루프백에만 바인드 — 같은 네트워크의 다른 기기가 콜백 서버에 접근하지 못하게
+        server.listen(Number(u.port) || 80, "127.0.0.1");
       }
     }catch{}
   });
@@ -62,14 +78,16 @@ async function main(){
   const redirect  = (await ask(`Redirect URI [${prev.redirect_uri||DEFAULT_REDIRECT}]: `)) || prev.redirect_uri || DEFAULT_REDIRECT;
   if(!appId || !appSecret){ console.error("App ID와 App Secret이 필요합니다."); rl.close(); process.exit(1); }
 
+  const state = randomBytes(16).toString("hex");   // CSRF 방어용 1회용 값
   const authUrl = `https://threads.net/oauth/authorize?client_id=${encodeURIComponent(appId)}`
-    + `&redirect_uri=${encodeURIComponent(redirect)}&scope=${encodeURIComponent(SCOPE)}&response_type=code`;
+    + `&redirect_uri=${encodeURIComponent(redirect)}&scope=${encodeURIComponent(SCOPE)}&response_type=code`
+    + `&state=${state}`;
   console.log("\n① 아래 URL을 브라우저에서 열어 권한을 허용하세요:\n");
   console.log("  " + authUrl + "\n");
   console.log("② 허용하면 Redirect URI로 이동합니다. localhost면 자동 인식되고,");
   console.log("   아니면 이동된 주소창의 URL(또는 code 값)을 복사해 아래에 붙여넣으세요.");
 
-  const code = await getCode(redirect);
+  const code = await getCode(redirect, state);
   if(!code){ console.error("\n인증 코드를 얻지 못했습니다. 다시 시도하세요."); rl.close(); process.exit(1); }
 
   // 1) code → 단기 토큰 + user_id
