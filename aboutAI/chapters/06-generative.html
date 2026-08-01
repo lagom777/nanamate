@@ -280,7 +280,7 @@ image.save("corgi.png")</code></pre>
 <h2>🕹️ 직접 해보기 — 생성모델 계열 분류</h2>
 <p>각 개념이 어느 생성모델에 속하는지 분류해 보세요.</p>
 <div id="nm-game-host"></div>
-<script>window.NANAMATE_GAME={"type":"grouping","color":"#b8441c","prompt":"각 개념을 알맞은 생성모델로 분류하세요","groups":[{"name":"VAE","items":["ELBO","재매개변수화 기법"]},{"name":"GAN","items":["생성자","판별자"]},{"name":"Diffusion","items":["스코어 기반","Stable Diffusion","CFG"]}]};</script>
+<script>window.NANAMATE_GAME={"type":"scenario","color":"#b8441c","prompt":"생성모델 선택 게임 — 상황에 맞는 모델 계열을 고르세요 (맞히면 이유 공개)","rounds":[{"situation":"위조범(생성자)과 감식관(판별자)이 서로 속이려 경쟁하며 가짜 이미지를 진짜처럼 만들고 싶어요.","choices":["VAE","GAN","Diffusion","선형회귀"],"answer":1,"why":"GAN은 생성자 vs 판별자 적대 학습이 핵심이에요."},{"situation":"깨끗한 이미지에 노이즈를 천천히 섞었다가, 반대로 노이즈를 걷어내며 새 이미지를 만들고 싶어요.","choices":["GAN 생성자만","Diffusion","결정 트리","k-NN"],"answer":1,"why":"확산 모델은 노이즈 추가(forward) → 제거(reverse) 과정입니다."},{"situation":"데이터를 압축해 잠재공간(z)에 넣고, 다시 복원하는 동시에 그 z에서 새 샘플을 뽑고 싶어요.","choices":["VAE","SVM","페이지랭크","A* 탐색"],"answer":0,"why":"VAE는 인코더-디코더 + 잠재 분포(ELBO)로 생성합니다."},{"situation":"텍스트 조건으로 고품질 이미지를 안정적으로 뽑는 최신 파이프라인(예: Stable Diffusion 계열)을 고르면?","choices":["순수 기호 규칙 기반","Latent Diffusion + CFG","k-means만","퍼셉트론 1층"],"answer":1,"why":"잠재 확산 + Classifier-Free Guidance가 텍스트-이미지 생성의 주류예요."}]};</script>
 <h2>🎮 3D 미니게임</h2>
 <p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
 <div id="nm-quiz-host"></div>

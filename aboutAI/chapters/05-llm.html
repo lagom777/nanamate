@@ -364,7 +364,7 @@ print(tok.decode(out[0], skip_special_tokens=True))</code></pre>
 <h2>🕹️ 직접 해보기 — LLM 학습 파이프라인</h2>
 <p>LLM이 만들어지는 단계를 순서대로 정렬해 보세요.</p>
 <div id="nm-game-host"></div>
-<script>window.NANAMATE_GAME={"type":"sequence","color":"#b8441c","prompt":"LLM 학습 단계를 순서대로 정렬하세요","steps":["사전학습 (다음 토큰 예측)","지도 미세조정 (SFT)","보상 모델(RM) 학습","PPO를 통한 강화학습"]};</script>
+<script>window.NANAMATE_GAME={"type":"trace","color":"#b8441c","prompt":"챗봇이 ‘말 잘 듣게’ 되는 길 — 사전학습부터 RLHF까지 순서를 따라가세요","stages":[{"name":"사전학습 (다음 토큰 예측)","why":"인터넷 규모 텍스트로 ‘다음에 올 말’을 수조 번 연습."},{"name":"지도 미세조정 (SFT)","why":"지시-응답 예시로 ‘대화 형식’을 익혀요."},{"name":"보상 모델(RM) 학습","why":"사람 선호 비교 데이터로 ‘좋은 답’ 점수를 배워요."},{"name":"PPO 등 강화학습 정렬","why":"보상 점수가 높아지도록 정책을 다듬어요 (RLHF)."},{"name":"추론·도구 사용 (선택)","why":"CoT, RAG, 테스트-타임 스케일링으로 실전 능력을 키워요."}]};</script>
 <h2>🎮 3D 미니게임</h2>
 <p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
 <div id="nm-quiz-host"></div>

@@ -96,6 +96,7 @@
       rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
+    var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'orbit' }) : null;
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:12px;cursor:crosshair;touch-action:none;display:block;background:radial-gradient(circle at 50% 45%,#0b1026,#05060f)';
     host.appendChild(rndr.domElement);
 
@@ -176,10 +177,16 @@
 
     // 단계: 별 질량(mu = G·M 스케일), 충돌반경, 목표 생존시간
     var levels = [
-      { mu: 60, rStar: 2.2, target: 8, name: '가벼운 별' },
+      { mu: 60, rStar: 2.2, target: 6, name: '발견 · 가벼운 별' },
+      { mu: 80, rStar: 2.3, target: 7, name: '연습 · 중간' },
       { mu: 110, rStar: 2.6, target: 8, name: '보통 별' },
-      { mu: 180, rStar: 3.0, target: 10, name: '무거운 별' }
+      { mu: 140, rStar: 2.7, target: 8, name: '도전 · 질량↑' },
+      { mu: 180, rStar: 3.0, target: 10, name: '무거운 별' },
+      { mu: 200, rStar: 2.8, target: 11, name: '긴 생존' },
+      { mu: 240, rStar: 3.2, target: 10, name: '강한 중력' },
+      { mu: 160, rStar: 2.5, target: 12, name: '마스터' }
     ];
+    var TRANSFER_LINE = '원궤도는 옆으로 충분히 빠른 낙하 — 너무 느리면 추락, 너무 빠르면 탈출한다.';
     var R_MAX = 34;           // 이탈 반경(화면 가시 영역 안)
     var EPS = 0.9;            // softening
     var DT = 1 / 120;         // 물리 스텝(고정 스텝 누적)
@@ -436,9 +443,17 @@
       if (lvl >= levels.length) {
         setHud('🎉 모든 궤도 안정화 성공! 클리어');
         el.style.pointerEvents = 'none';
-        setTimeout(function () { el.style.pointerEvents = ''; lvl = 0; attempts = 0; placeRings(); resetPlanet(); }, 2800);
+        if (kernel) {
+          kernel.saveBest(score);
+          kernel.teach({ kind: 'clear', transfer: TRANSFER_LINE, onAgain: function () {
+            el.style.pointerEvents = ''; lvl = 0; attempts = 0; won = false; placeRings(); resetPlanet();
+          }});
+        } else {
+          setTimeout(function () { el.style.pointerEvents = ''; lvl = 0; attempts = 0; placeRings(); resetPlanet(); }, 2800);
+        }
       } else {
         placeRings(); setHud('안정 궤도 성공! 다음 단계');
+        if (kernel) kernel.teach({ kind: 'success', coach: '안정 궤도 — 중력이 계속 안쪽으로 당깁니다' });
         setTimeout(function () { resetPlanet(); }, 1600);
       }
     }
@@ -450,6 +465,7 @@
       if (!RM) { shakeT = shakeDur; shakeAmp = 1.25; }
       boom();
       setHud('💥 별에 추락 — 더 빠르게 옆으로');
+      if (kernel) kernel.teach({ kind: 'fail', outcome: 'crash', coach: '추락 — 옆으로 더 세게 당기세요', coachMid: '원궤도 속도 ≈ √(μ/r) 보다 느리면 떨어집니다', coachDeep: '별 방향이 아니라 접선(옆)으로 속도를 주세요' });
       setTimeout(function () { if (!won) resetPlanet(); }, 1400);
     }
     function escape() {
@@ -459,6 +475,7 @@
       burst(planet.position, 0x60a5fa, 22, escDir);
       fallSweep();
       setHud('🚀 궤도 이탈 — 속도를 줄이세요');
+      if (kernel) kernel.teach({ kind: 'fail', outcome: 'escape', coach: '탈출 — 당김을 줄이세요', coachMid: '너무 빠르면 중력이 붙잡지 못합니다', coachDeep: 'HUD의 적정 원궤도 속도를 기준으로 조금 아래~근처로' });
       setTimeout(function () { if (!won) resetPlanet(); }, 1400);
     }
 

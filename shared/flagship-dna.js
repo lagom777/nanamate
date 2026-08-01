@@ -91,10 +91,18 @@
   // ── 데이터: 실제 유전자에서 따온 짧은 템플릿 가닥들 ────────────────────────
   // 짧고 사실 기반인 서열들. 단계가 올라갈수록 길어진다.
   var LEVELS = [
-    { strand: 'ATGC', note: '시작 코돈 ATG(메티오닌)으로 시작하는 가닥' },
+    { strand: 'ATGC', note: '시작 코돈 ATG 맛보기' },
+    { strand: 'TACG', note: '상보 연습 4염기' },
+    { strand: 'ATGCAT', note: '짧은 반복' },
     { strand: 'TACGGT', note: '주형 가닥 일부' },
-    { strand: 'ATGGCATAC', note: '베타글로빈 유전자 도입부 닮은 서열' }
+    { strand: 'GCTAAC', note: '혼합 서열' },
+    { strand: 'ATGGCA', note: 'ATG 포함' },
+    { strand: 'CGTAATCG', note: '8염기 도전' },
+    { strand: 'ATGGCATAC', note: '베타글로빈 도입부 닮은 서열' },
+    { strand: 'TGCATGCAAT', note: '마스터 10염기' },
+    { strand: 'AATTCCGGAATTCC', note: '제한효소 자리 느낌(교육용 단순화)' }
   ];
+  var TRANSFER_LINE = 'A는 T와, G는 C와 쌍을 이룬다 — 상보가 유전 정보 복사의 규칙이다.';
 
   var BASES = ['A', 'T', 'G', 'C'];
   var BASE_COLOR = { A: 0xef4444, T: 0x3b82f6, G: 0xeab308, C: 0x22c55e };
@@ -114,6 +122,7 @@
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     injectStyle();
     host.innerHTML = ''; host.style.position = 'relative';
+    var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'dna' }) : null;
     // 딥 블루 radial 그라디언트 강화(세포질 느낌).
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:12px;touch-action:none;display:block;background:radial-gradient(ellipse at 50% 38%, #12213b 0%, #0b1220 45%, #05080f 100%)';
     host.appendChild(rndr.domElement);
@@ -351,6 +360,7 @@
         goldTint(0);
         // 정답을 알려주지 않고 규칙만 상기 (플래시카드가 아니라 게임)
         setHud('❌ 규칙: A는 T와, G는 C와 — 다시! (−5점)');
+        if (kernel) kernel.teach({ kind: 'fail', outcome: 'pair', coach: 'A↔T, G↔C — 지금 염기의 짝만 고르세요', coachMid: '템플릿이 A면 T, G면 C입니다', coachDeep: '상보: 퓨린-피리미딘 쌍. A-T 두 수소결합, G-C 세 개(개념)' });
       }
     }
 
@@ -435,7 +445,12 @@
       lvl++;
       if (lvl >= LEVELS.length) {
         setHud('🎉 모든 가닥 완성! 총 ' + score + '점 클리어');
-        setTimeout(function () { lvl = 0; score = 0; streak = 0; startLevel(); }, 3000);
+        if (kernel) {
+          kernel.saveBest(score);
+          kernel.teach({ kind: 'clear', transfer: TRANSFER_LINE, onAgain: function () { lvl = 0; score = 0; streak = 0; startLevel(); } });
+        } else {
+          setTimeout(function () { lvl = 0; score = 0; streak = 0; startLevel(); }, 3000);
+        }
       } else {
         setHud('가닥 완성! 다음 단계 (+' + bonus + ')');
         setTimeout(function () { startLevel(); }, 1700);

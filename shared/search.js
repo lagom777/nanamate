@@ -45,6 +45,7 @@
     {"n": "영어", "e": "General English", "d": "문법, 회화, 작문, 청해 종합 학습", "u": "aboutEnglish/index.html", "c": "실용", "a": "#3b82f6"},
     {"n": "토익", "e": "TOEIC Preparation", "d": "LC/RC 전략, 어휘, 모의고사", "u": "aboutTOEIC/index.html", "c": "실용", "a": "#f59e0b"},
     {"n": "토플", "e": "TOEFL Preparation", "d": "iBT 4영역(R/L/S/W), 어휘, 모의고사", "u": "aboutTOEFL/index.html", "c": "실용", "a": "#06b6d4"},
+    {"n": "텝스", "e": "TEPS Preparation", "d": "청해·어휘·문법·독해, 600점 전략", "u": "aboutTEPS/index.html", "c": "실용", "a": "#7c3aed"},
     {"n": "중국어", "e": "Chinese Language", "d": "발음~HSK, 비즈니스 중국어", "u": "aboutChinese/index.html", "c": "실용", "a": "#ef4444"},
     {"n": "마케팅", "e": "Marketing & Growth", "d": "소비자 심리, 브랜딩, 그로스 해킹", "u": "aboutMarketing/index.html", "c": "실용", "a": "#e040fb"},
     {"n": "창업", "e": "Startup", "d": "아이디어~엑싯, 투자, 팀빌딩", "u": "aboutStartup/index.html", "c": "실용", "a": "#f97316"},

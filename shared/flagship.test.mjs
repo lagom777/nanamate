@@ -72,22 +72,26 @@ test('timeline: 시대 경계/분류 정답 여부', () => {
 
 test('molecule: 완성판정/원자가 충족/구성 일치/결합 상한', () => {
   const C = load('flagship-molecule.js');
-  const H2O = C.TARGETS[0]; // O·H·H, 단일결합 2개
-  const CO2 = C.TARGETS[1]; // C·O·O, 이중결합 2개
+  const byKey = (k) => C.TARGETS.find((t) => t.key === k);
+  const H2O = byKey('H2O'); // O·H·H, 단일결합 2개
+  const CO2 = byKey('CO2'); // C·O·O, 이중결합 2개
+  assert.ok(H2O && CO2);
+  assert.ok(C.TARGETS.length >= 8);
   const waterBonds = [{ a: 0, b: 1, order: 1 }, { a: 0, b: 2, order: 1 }];
   const co2Bonds = [{ a: 0, b: 1, order: 2 }, { a: 0, b: 2, order: 2 }];
   assert.equal(C.isComplete(H2O, H2O.atoms, waterBonds), true);
   assert.equal(C.isComplete(CO2, CO2.atoms, co2Bonds), true);
-  // 결합 하나 빠지면 원자가 미충족 → 미완성
   assert.equal(C.isComplete(H2O, H2O.atoms, [{ a: 0, b: 1, order: 1 }]), false);
   assert.equal(C.allValenceSatisfied(H2O.atoms, waterBonds), true);
   assert.equal(C.allValenceSatisfied(H2O.atoms, [{ a: 0, b: 1, order: 1 }]), false);
   assert.equal(C.sameComposition(C.composition(H2O.atoms), { O: 1, H: 2 }), true);
   assert.equal(C.sameComposition(C.composition(H2O.atoms), { O: 1, H: 1 }), false);
-  // 원자가 상한: H(1)는 이미 단일결합을 쓰면 추가 결합 불가
   assert.equal(C.canBond(H2O.atoms, [], 0, 1, 1), true);
   assert.equal(C.canBond(H2O.atoms, [{ a: 0, b: 1, order: 1 }], 0, 1, 1), false);
-  assert.equal(C.canBond(H2O.atoms, [], 0, 0, 1), false); // 같은 원자끼리 불가
+  assert.equal(C.canBond(H2O.atoms, [], 0, 0, 1), false);
+  assert.ok(C.wrongElementReason(H2O, 'C', ['O']).includes('필요'));
+  assert.ok(C.isComplete(byKey('H2'), ['H', 'H'], [{ a: 0, b: 1, order: 1 }]));
+  assert.ok(C.isComplete(byKey('N2'), ['N', 'N'], [{ a: 0, b: 1, order: 3 }]));
 });
 
 test('tectonics: 운동 분류(수렴/발산/변환)/승리/수렴 지형', () => {
@@ -201,9 +205,8 @@ test('graph: 꼭짓점 형태 표기 — 부호 흡수·0항 생략·자리수 �
   assert.equal(G.vertexFormLabel(1, 3, 0), '1(x − 3)²');
   assert.equal(G.vertexFormLabel(1, 0, 0), '1x²');
   assert.equal(G.vertexFormLabel(1, -2, -4), '1(x + 2)² − 4');
-  // 음수 a는 그대로 앞에 붙는다(레벨1: a=-0.6, h=1, k=6)
-  const L1 = G.LEVELS[1];
-  assert.equal(G.vertexFormLabel(L1.a, L1.h, L1.k), '−0.6(x − 1)² + 6');
+  // 음수 a는 그대로 앞에 붙는다
+  assert.equal(G.vertexFormLabel(-0.6, 1, 6), '−0.6(x − 1)² + 6');
   // digits로 자리수 고정(HUD 실시간 표기) — 부호·0 판정도 반올림 값 기준
   const d = { a: 2, h: 1, k: 1 };
   assert.equal(G.vertexFormLabel(0.5, 0, 1, d), '0.50x² + 1.0');
@@ -222,24 +225,31 @@ test('graph: 꼭짓점 형태 표기 — 부호 흡수·0항 생략·자리수 �
 
 test('projectile: hitScore 감소·바닥/45°=사거리 최대/레벨0 명중·수직 빗나감', () => {
   const P = load('flagship-projectile.js');
-  // 명중 점수: 발사 수가 적을수록 높고, 60−shots·5가 0 이하면 100으로 바닥
   assert.equal(P.hitScore(0), 160);
   assert.equal(P.hitScore(1), 155);
   assert.ok(P.hitScore(2) < P.hitScore(1));
-  assert.equal(P.hitScore(12), 100);  // 60−60=0
-  assert.equal(P.hitScore(100), 100); // 음수 → 0 바닥
-  // 45°에서 사거리 최대(대칭성): 같은 속력에서 30°·60°보다 멀리 착지한다.
-  // 도달 불가 표적(100,100)을 줘서 항상 miss → 착지 x가 사거리 프록시.
+  assert.equal(P.hitScore(12), 100);
+  assert.equal(P.hitScore(100), 100);
   const speed = 12;
   function landing(deg) {
-    const r = deg * Math.PI / 180;
+    const r = (deg * Math.PI) / 180;
     return P.simulateShot(speed * Math.cos(r), speed * Math.sin(r), 100, 100, 1 / 240).x;
   }
   const r45 = landing(45);
   assert.ok(r45 > landing(30));
   assert.ok(r45 > landing(60));
-  // 레벨 0 표적(4,1.6)을 겨냥한 발사는 명중, 수직 발사는 빗나감
   const L0 = P.LEVELS[0];
   assert.equal(P.simulateShot(10, 9, L0.x, L0.y, 1 / 240).hit, true);
   assert.equal(P.simulateShot(0, 5, L0.x, L0.y, 1 / 240).hit, false);
+  assert.ok(P.LEVELS.length >= 10);
+  // 정적 표적(이동 없음) 레벨은 명중 해가 존재
+  for (const L of P.LEVELS) {
+    if (L.moveAmp) continue;
+    const sol = P.levelSolvable(L, 1);
+    assert.equal(sol.ok, true, 'unsolvable level x=' + L.x + ' wind=' + (L.wind || 0));
+  }
+  assert.equal(P.classifyMiss(2, 0.1, 6, 2), 'short');
+  assert.equal(P.classifyMiss(10, 0.1, 6, 2), 'long');
+  assert.ok(P.coachFor('short').coach.length > 4);
+  assert.ok(P.TRANSFER_LINE.includes('45'));
 });

@@ -79,6 +79,7 @@
   // ──────────────────────────────────────────────────────────────────────
   function init() {
     var host = document.getElementById('nm-timeline');
+    var TRANSFER_LINE = '중세는 초기(476–999)·전성(1000–1299)·말기(1300–1453)로 나눈다 — 연도가 시대 감각을 만든다.';
     if (!host) return;
     if (typeof THREE === 'undefined') { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">3D를 표시할 수 없는 환경입니다.</p>'; return; }
 
@@ -94,6 +95,7 @@
       rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
+    var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'timeline' }) : null;
     // 배경: 양피지+횃불 톤 (아래에서 번지는 온기, 위는 어둠)
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:12px;cursor:grab;touch-action:none;display:block;background:' +
       'radial-gradient(120% 70% at 50% 110%,rgba(255,147,41,.30) 0%,rgba(186,94,22,.15) 40%,rgba(0,0,0,0) 70%),' +
@@ -470,6 +472,7 @@
       state.lives--; combo = 0; hideCombo();
       bellSad(); shake(); redFlash();
       setHud(msg);
+      if (kernel) kernel.teach({ kind: 'fail', outcome: 'era', coach: msg, coachMid: '연도로 시대 구간을 떠올리세요', coachDeep: '초기≤999 · 전성 1000–1299 · 말기≥1300' });
       if (LOGIC.isLose(state)) doLose();
     }
     function removeActive() { if (active) { root.remove(active.sprite); disposeSprite(active.sprite); active = null; } }
@@ -477,6 +480,10 @@
     function doWin() {
       won = true; running = false; removeActive();
       setHud('🎉 클리어! ' + GOAL + '개 사건을 올바른 시대로 분류했습니다');
+      if (kernel) {
+        kernel.saveBest(state.correct * 10);
+        kernel.teach({ kind: 'clear', transfer: TRANSFER_LINE, onAgain: restart });
+      }
       chime(); confettiRain();
       // 슬롯 3개 순차 골드 웨이브
       slotMeshes.forEach(function (s, i) {

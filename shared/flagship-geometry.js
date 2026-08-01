@@ -11,11 +11,18 @@
 
   // ───────────────────────────── 순수 로직 (테스트 가능) ─────────────────────────────
   // 목표 단계: 정수 피타고라스 세 쌍. c = 목표 빗변 길이.
+  // snap 상한 42 이내 정수 피타고라스 쌍
   var LEVELS = [
     { a: 3, b: 4, c: 5 },
     { a: 6, b: 8, c: 10 },
-    { a: 5, b: 12, c: 13 }
+    { a: 5, b: 12, c: 13 },
+    { a: 9, b: 12, c: 15 },
+    { a: 8, b: 15, c: 17 },
+    { a: 12, b: 16, c: 20 },
+    { a: 7, b: 24, c: 25 },
+    { a: 20, b: 21, c: 29 }
   ];
+  var TRANSFER_LINE = '직각삼각형에서 a²+b²=c² — 각 변 위 정사각형 넓이의 합이 빗변 정사각형과 같다.';
 
   // 빗변 길이 c = √(a²+b²)
   function hypotenuse(a, b) {
@@ -45,7 +52,7 @@
   }
 
   var LOGIC = {
-    LEVELS: LEVELS,
+    LEVELS: LEVELS, TRANSFER_LINE: TRANSFER_LINE,
     hypotenuse: hypotenuse,
     squares: squares,
     isIntegerHypotenuse: isIntegerHypotenuse,
@@ -75,6 +82,7 @@
       rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
+    var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'geometry' }) : null;
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:12px;cursor:grab;touch-action:none;display:block;background:linear-gradient(180deg,#fff5f7,#fde8ec)';
     host.appendChild(rndr.domElement);
 
@@ -218,9 +226,13 @@
         lvl++;
         if (lvl >= LEVELS.length) {
           setHud('🎉 모든 단계 클리어! 총 ' + score + '점');
-          setTimeout(function () { lvl = 0; score = 0; resetLevel(); }, 2800);
+          if (kernel) {
+            kernel.saveBest(score);
+            kernel.teach({ kind: 'clear', transfer: TRANSFER_LINE, onAgain: function () { lvl = 0; score = 0; resetLevel(); } });
+          } else setTimeout(function () { lvl = 0; score = 0; resetLevel(); }, 2800);
         } else {
           setHud('정답! a² + b² = c² 성립 → 다음 단계');
+          if (kernel) kernel.teach({ kind: 'success', coach: 'a²+b²=c² 성립!' });
           setTimeout(function () { won = false; a = 3; b = 2; redraw(); }, 1500);
         }
       }
@@ -255,7 +267,7 @@
       else { dragMode = 'rotate'; rndr.domElement.style.cursor = 'move'; }
       e.preventDefault();
     }
-    function snap(v) { return Math.max(1, Math.min(13, Math.round(v))); }
+    function snap(v) { return Math.max(1, Math.min(42, Math.round(v))); }
     function onMove(e) {
       if (!dragMode) return;
       if (dragMode === 'rotate') {

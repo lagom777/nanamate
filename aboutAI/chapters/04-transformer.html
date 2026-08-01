@@ -391,7 +391,7 @@ class SelfAttention(nn.Module):
 <h2>🕹️ 직접 해보기 — Transformer 용어 짝맞추기</h2>
 <p>어텐션과 Transformer 핵심 용어를 설명과 짝지어 보세요.</p>
 <div id="nm-game-host"></div>
-<script>window.NANAMATE_GAME={"type":"matching","color":"#b8441c","prompt":"용어와 설명을 짝지으세요","pairs":[{"term":"Self-Attention","def":"문장 내 단어끼리 관계를 계산"},{"term":"Q, K, V","def":"쿼리·키·값으로 어텐션 계산"},{"term":"Positional Encoding","def":"토큰의 위치 정보를 주입"},{"term":"RoPE","def":"회전 기반 상대 위치 임베딩"},{"term":"FlashAttention","def":"어텐션 계산을 빠르게 최적화"}]};</script>
+<script>window.NANAMATE_GAME={"type":"slots","color":"#b8441c","prompt":"Self-Attention 한 방 — 각 역할에 맞는 조각을 슬롯에 조립하세요","slots":[{"label":"Q (Query)","answer":"지금 토큰이 던지는 ‘질문’"},{"label":"K (Key)","answer":"다른 토큰의 ‘이름표’"},{"label":"V (Value)","answer":"가져올 실제 정보"},{"label":"점수 Softmax","answer":"어디를 볼지 비율로 정규화"},{"label":"가중합 출력","answer":"주목한 V들을 섞은 결과"},{"label":"위치 정보","answer":"Positional Encoding 주입"}],"distractors":["풀링 커널 크기","드롭아웃 비율만"]};</script>
 <h2>🎮 3D 미니게임</h2>
 <p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
 <div id="nm-quiz-host"></div>

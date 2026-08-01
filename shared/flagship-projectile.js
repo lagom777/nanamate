@@ -1,35 +1,124 @@
-/* 나나메이트 플래그십 3D 게임 — 포물선 발사 (aboutPhysics/01-mechanics)
- * 마우스/터치로 대포를 "당겨서" 조준(슬링샷) → 놓으면 포물선으로 날아가 표적 명중. 단계별 표적·점수·궤적·폭발·사운드.
- * 포물선 운동(중력 가속도, 발사각 45°에서 사거리 최대)을 직접 체감하며 배운다.
- * 컨테이너: <div id="nm-flagship"></div>. THREE(r128) 전역 필요. WebGL 실패 시 안내문으로 graceful.
+/* 나나메이트 플래그십 3D 게임 — 캐논 랩 / 포물선 발사 (aboutPhysics/01-mechanics)
+ * 슬링샷 조준 → 포물선 명중. 실패 코칭으로 각·속을 배우며, discover→master 10단계.
+ * 컨테이너: <div id="nm-flagship"></div>. THREE(r128). 선택: game-kernel.js (teach 패널).
  */
 (function () {
   // ───────────────────────────── 순수 로직 (테스트 가능) ─────────────────────────────
   var G = 16;            // 중력(scene units/s^2)
   var LX = -6, LY = 0.6; // 대포 발사 지점
-  // 표적 단계(x,y). 대포는 (LX,LY)에서 발사.
-  var LEVELS = [{ x: 4, y: 1.6 }, { x: 6.5, y: 2.4 }, { x: 9, y: 1.2 }, { x: 7.5, y: 3.6 }];
+  // stage: discover|practice|challenge|master · wind=수평 가속도 · shotLimit · moveAmp/moveSpeed
+  var LEVELS = [
+    { x: 4, y: 1.6, stage: 'discover' },
+    { x: 5.5, y: 1.5, stage: 'discover' },
+    { x: 7, y: 1.8, stage: 'practice' },
+    { x: 6.2, y: 3.2, stage: 'practice' },
+    { x: 9, y: 1.4, stage: 'practice' },
+    { x: 7.5, y: 2.4, wind: 2.2, stage: 'challenge' },
+    { x: 8.2, y: 2.0, wind: -2.4, stage: 'challenge' },
+    { x: 6.8, y: 2.2, moveAmp: 1.15, moveSpeed: 1.15, stage: 'challenge' },
+    { x: 9.2, y: 2.8, shotLimit: 3, stage: 'master' },
+    { x: 10, y: 2.2, wind: 1.4, shotLimit: 2, stage: 'master' }
+  ];
+
+  var TRANSFER_LINE = '수평면에 가깝게 쏠 때, 같은 속력이면 약 45° 근처에서 사거리가 가장 길다.';
 
   // 명중 점수: 기본 100 + 발사 수가 적을수록 보너스(최대 60, 음수는 0으로 바닥)
   function hitScore(shots) { return 100 + Math.max(0, 60 - shots * 5); }
 
-  // 포물선 발사 시뮬레이션(반음함수 오일러 적분). loop()의 스텝·명중(<1.1)·빗나감(y<0.2||x>16||x<-16)을 재현.
-  function simulateShot(vx, vy, targetX, targetY, dt) {
+  // 포물선 시뮬. wind = 수평 가속도(바람). 명중 반경 1.1 · 지면 y<0.2 · 경계 |x|>16
+  function simulateShot(vx, vy, targetX, targetY, dt, wind) {
     dt = dt || 0.016;
+    wind = wind || 0;
     var x = LX, y = LY, vX = vx, vY = vy;
     for (var i = 0; i < 20000; i++) {
-      vY -= G * dt; x += vX * dt; y += vY * dt;
+      vY -= G * dt;
+      vX += wind * dt;
+      x += vX * dt;
+      y += vY * dt;
       if (Math.hypot(x - targetX, y - targetY) < 1.1) return { hit: true, x: x, y: y };
       if (y < 0.2 || x > 16 || x < -16) return { hit: false, x: x, y: y };
     }
     return { hit: false, x: x, y: y };
   }
 
+  // 빗나감 원인 분류 → 코칭 키
+  function classifyMiss(endX, endY, targetX, targetY) {
+    if (endY < 0.25) {
+      if (endX < targetX - 1.0) return 'short';
+      if (endX > targetX + 1.0) return 'long';
+      return 'under';
+    }
+    if (endX > 16) return 'long';
+    if (endX < -16) return 'back';
+    return 'miss';
+  }
+
+  function coachFor(outcome, wind) {
+    var w = wind || 0;
+    var map = {
+      short: {
+        coach: '너무 짧아요 — 각을 조금 올리거나 더 세게 당겨 보세요',
+        coachMid: '착지점이 표적보다 앞입니다. 세기↑ 또는 각도↑',
+        coachDeep: '45° 근처에서 같은 세기의 사거리가 가장 깁니다. 지금보다 세게·조금 높게'
+      },
+      long: {
+        coach: '너무 길어요 — 당김을 줄이거나 각을 낮춰 보세요',
+        coachMid: '착지점이 표적보다 뒤입니다. 세기↓',
+        coachDeep: '세기를 눈에 띄게 줄이고, 높은 표적이면 각만 살짝 유지'
+      },
+      under: {
+        coach: '거의 밑을 스쳤어요 — 각을 조금 더 올려 높이 맞춰 보세요',
+        coachMid: '수평 거리는 비슷한 데 높이가 부족합니다. 각도↑',
+        coachDeep: '표적 높이까지 올리려면 같은 거리에서 각을 키우세요'
+      },
+      back: {
+        coach: '뒤로 갔어요 — 대포 반대쪽으로 당기세요(슬링샷)',
+        coachMid: '조준 방향이 반대입니다. 표적 쪽으로 당겼다 놓기',
+        coachDeep: '당긴 방향의 반대로 날아갑니다. 표적 쪽을 향해 당기세요'
+      },
+      miss: {
+        coach: '빗나감 — 궤적 점선을 보고 각·세기를 미세 조정',
+        coachMid: '한 번에 크게 바꾸지 말고 각 또는 세기 하나만 조정',
+        coachDeep: '프리뷰 점선이 표적을 스치게 맞춘 뒤 발사'
+      },
+      wind: {
+        coach: '바람 단계 — 궤적이 옆으로 밀립니다. 바람 반대로 보정',
+        coachMid: w > 0 ? '오른쪽 바람 → 조금 더 세게 또는 왼쪽 여유' : '왼쪽 바람 → 보정 조준',
+        coachDeep: '바람이 수평 속도를 바꿉니다. 프리뷰로 휜 궤적을 확인'
+      },
+      limit: {
+        coach: '발사 횟수 초과 — 신중히. 프리뷰로 궤적을 확인한 뒤',
+        coachMid: '한 발의 가치↑ — 각과 세기를 천천히 맞추세요',
+        coachDeep: '마스터 단계: 프리뷰 끝점이 표적 근처일 때만 놓으세요'
+      }
+    };
+    return map[outcome] || map.miss;
+  }
+
+  // 레벨이 명중 가능한 조준이 있는지 그리드 탐색(테스트·밸런스용)
+  function levelSolvable(level, step) {
+    step = step || 2;
+    var wind = level.wind || 0;
+    var tx = level.x, ty = level.y;
+    for (var spd = 6; spd <= 22; spd += step) {
+      for (var deg = 15; deg <= 75; deg += step) {
+        var r = (deg * Math.PI) / 180;
+        var res = simulateShot(spd * Math.cos(r), spd * Math.sin(r), tx, ty, 1 / 120, wind);
+        if (res.hit) return { ok: true, speed: spd, deg: deg };
+      }
+    }
+    return { ok: false };
+  }
+
   var LOGIC = {
     G: G, LX: LX, LY: LY,
     LEVELS: LEVELS,
+    TRANSFER_LINE: TRANSFER_LINE,
     hitScore: hitScore,
-    simulateShot: simulateShot
+    simulateShot: simulateShot,
+    classifyMiss: classifyMiss,
+    coachFor: coachFor,
+    levelSolvable: levelSolvable
   };
   if (typeof module !== 'undefined' && module.exports) { module.exports = LOGIC; }
   if (typeof window !== 'undefined') { window.NM_PROJECTILE_LOGIC = LOGIC; }
@@ -55,6 +144,10 @@
       rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
+    var kernel =
+      window.NMGameKernel && typeof window.NMGameKernel.create === 'function'
+        ? window.NMGameKernel.create(host, { gameId: 'projectile' })
+        : null;
     // 새벽 하늘: 딥블루 → 호라이즌 오렌지 그라디언트(캔버스 배경, 외부 에셋 0)
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:12px;cursor:crosshair;touch-action:none;display:block;background:linear-gradient(180deg,#0b1026 0%,#1d2b5e 38%,#54387a 62%,#c75b39 82%,#f2a35c 100%)';
     host.appendChild(rndr.domElement);
@@ -153,7 +246,8 @@
     var ring = new THREE.Mesh(new THREE.RingGeometry(0.55, 0.8, 40), new THREE.MeshBasicMaterial({ color: 0xfde047, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, side: THREE.DoubleSide, depthWrite: false }));
     ring.visible = false; scene.add(ring); var ringLife = 0;
 
-    var lvl = 0, score = 0, shots = 0, combo = 0, dispScore = 0, hudExtra = '';
+    var lvl = 0, score = 0, shots = 0, levelShots = 0, combo = 0, dispScore = 0, hudExtra = '';
+    var cleared = false, levelT0 = 0;
 
     // HUD
     var hud = document.createElement('div');
@@ -161,16 +255,30 @@
     host.appendChild(hud);
     var tip = document.createElement('div');
     tip.style.cssText = 'position:absolute;right:10px;bottom:10px;font:600 12px "Noto Sans KR",sans-serif;color:#e5e7eb;text-shadow:0 1px 3px rgba(0,0,0,.6);pointer-events:none;text-align:right';
-    tip.textContent = '대포를 당겼다 놓아 표적을 맞히세요 · 45°에서 사거리 최대';
+    tip.textContent = '당겼다 놓아 조준 · 빗나가면 왜인지 알려줘요 · 45°≈최대 사거리';
     host.appendChild(tip);
-    // 진행 미니 바(단계 n/4, CSS transition)
+    // 진행 미니 바
     var barWrap = document.createElement('div');
     barWrap.style.cssText = 'position:absolute;right:10px;top:12px;width:110px;height:6px;border-radius:3px;background:rgba(255,255,255,.22);overflow:hidden;pointer-events:none';
     var barFill = document.createElement('div');
     barFill.style.cssText = 'height:100%;width:0%;border-radius:3px;background:linear-gradient(90deg,#fbbf24,#f97316);transition:width .5s ease';
     barWrap.appendChild(barFill); host.appendChild(barWrap);
+    function stageLabel(s) {
+      return s === 'discover' ? '발견' : s === 'practice' ? '연습' : s === 'challenge' ? '도전' : s === 'master' ? '마스터' : '';
+    }
     function setBar() { barFill.style.width = Math.round(Math.min(lvl, LEVELS.length) / LEVELS.length * 100) + '%'; }
-    function renderHud() { hud.innerHTML = '🏆 ' + Math.round(dispScore) + '점 · 단계 ' + Math.min(lvl + 1, LEVELS.length) + '/' + LEVELS.length + ' · 발사 ' + shots + (combo >= 2 ? ' · 🔥×' + combo : '') + (hudExtra ? '<br>' + hudExtra : ''); }
+    function renderHud() {
+      var L = LEVELS[Math.min(lvl, LEVELS.length - 1)] || {};
+      var lim = L.shotLimit ? ' · 잔여 ' + Math.max(0, L.shotLimit - levelShots) + '발' : '';
+      var wind = L.wind ? ' · 바람 ' + (L.wind > 0 ? '→' : '←') : '';
+      var best = kernel ? kernel.getBest() : 0;
+      hud.innerHTML =
+        '🏆 ' + Math.round(dispScore) + '점' + (best ? ' · 최고 ' + best : '') +
+        ' · ' + stageLabel(L.stage) + ' ' + Math.min(lvl + 1, LEVELS.length) + '/' + LEVELS.length +
+        ' · 발사 ' + shots + lim + wind +
+        (combo >= 2 ? ' · 🔥×' + combo : '') +
+        (hudExtra ? '<br>' + hudExtra : '');
+    }
     function setHud(extra) { hudExtra = extra || ''; renderHud(); }
 
     // 명중 점수 DOM 팝업(+n) — learngame3d.js floatText 스타일(절대배치+상승+페이드)
@@ -186,7 +294,24 @@
     }
 
     var popT = 1; // 표적 등장 팝(easeOutBack) 진행도
-    function placeTarget() { var L = LEVELS[lvl]; target.position.set(L.x, L.y, 0); pole.position.set(L.x, L.y / 2, 0); pole.scale.y = L.y / 1.6; if (RM) { popT = 1; target.scale.set(1, 1, 1); } else { popT = 0; target.scale.set(0.001, 0.001, 0.001); } }
+    var baseTX = 4, baseTY = 1.6;
+    function placeTarget() {
+      var L = LEVELS[lvl];
+      baseTX = L.x; baseTY = L.y;
+      levelShots = 0;
+      levelT0 = performance.now ? performance.now() : Date.now();
+      target.position.set(L.x, L.y, 0);
+      pole.position.set(L.x, L.y / 2, 0);
+      pole.scale.y = L.y / 1.6;
+      if (RM) { popT = 1; target.scale.set(1, 1, 1); } else { popT = 0; target.scale.set(0.001, 0.001, 0.001); }
+      if (L.wind && kernel) {
+        kernel.teach({ kind: 'hint', coach: coachFor('wind', L.wind).coach });
+      } else if (L.shotLimit && kernel) {
+        kernel.teach({ kind: 'hint', coach: '이번 단계 발사 ' + L.shotLimit + '발 제한 — 프리뷰를 믿으세요' });
+      } else if (L.moveAmp && kernel) {
+        kernel.teach({ kind: 'hint', coach: '표적이 움직입니다 — 궤적과 타이밍을 맞춰 보세요' });
+      }
+    }
     placeTarget(); setBar(); setHud();
 
     // 발사 물리 상태
@@ -226,7 +351,15 @@
     var recoilT = 1, recoilVec = new THREE.Vector2();
 
     function launch(vx, vy) {
-      flying = true; shots++; ball.visible = true;
+      if (cleared) return;
+      var L = LEVELS[lvl];
+      if (L.shotLimit && levelShots >= L.shotLimit) {
+        var limC = coachFor('limit');
+        if (kernel) kernel.teach({ kind: 'fail', outcome: 'limit', coach: limC.coach, coachMid: limC.coachMid, coachDeep: limC.coachDeep });
+        else setHud(limC.coach);
+        return;
+      }
+      flying = true; shots++; levelShots++; ball.visible = true;
       pos.set(LX, LY, 0); ball.position.copy(pos); vel.set(vx, vy, 0);
       hidePreview(); beep(220, 0.12, 'sawtooth'); boom(); setHud();
       var ang = Math.atan2(vy, vx), ax = Math.cos(ang), ay = Math.sin(ang);
@@ -265,24 +398,65 @@
     el.addEventListener('mousedown', onDown); window.addEventListener('mousemove', onMove); window.addEventListener('mouseup', onUp);
     el.addEventListener('touchstart', onDown, { passive: false }); el.addEventListener('touchmove', onMove, { passive: false }); el.addEventListener('touchend', onUp, { passive: false });
 
+    function restartRun() {
+      cleared = false;
+      lvl = 0; combo = 0; shots = 0; score = 0; dispScore = 0;
+      el.style.pointerEvents = '';
+      if (kernel) kernel.resetStreak();
+      placeTarget(); setBar(); setHud();
+    }
     function hit() {
-      var gained = hitScore(shots); // 점수 체계는 hitScore 그대로
+      var gained = hitScore(levelShots);
       score += gained; combo++;
-      var pitch = Math.min(3.2, Math.pow(1.12, combo - 1)); // 콤보 차임 피치 상승(사운드만, 점수 불변)
+      var pitch = Math.min(3.2, Math.pow(1.12, combo - 1));
       beep(880 * pitch, 0.1, 'sine'); setTimeout(function () { beep(1320 * pitch, 0.14, 'sine'); }, 90);
       burst(target.position, goldMat, 30);
       shockwave(target.position); shake(0.22, 0.25); scorePop(gained);
       resetBall();
+      if (kernel) kernel.teach({ kind: 'success', coach: combo >= 2 ? '명중! 콤보 ×' + combo : '명중! 궤적이 표적과 맞았어요' });
       lvl++; setBar();
-      if (lvl >= LEVELS.length) { setHud('🎉 모든 표적 명중! 클리어'); chime(); flying = false; el.style.pointerEvents = 'none'; setTimeout(function () { el.style.pointerEvents = ''; lvl = 0; combo = 0; placeTarget(); setBar(); setHud(); }, 2600); }
-      else { placeTarget(); setHud(combo >= 2 ? '명중! 🔥 콤보 ×' + combo : '명중! 다음 표적'); }
+      if (lvl >= LEVELS.length) {
+        cleared = true;
+        flying = false;
+        el.style.pointerEvents = 'none';
+        chime();
+        if (kernel) {
+          kernel.saveBest(score);
+          kernel.teach({
+            kind: 'clear',
+            transfer: TRANSFER_LINE,
+            onAgain: restartRun
+          });
+        } else {
+          setHud('🎉 클리어! ' + TRANSFER_LINE);
+          setTimeout(restartRun, 3200);
+        }
+      } else {
+        placeTarget();
+        setHud(combo >= 2 ? '명중! 🔥 콤보 ×' + combo : '명중! 다음 표적');
+      }
     }
     function miss(p) {
       combo = 0;
+      var L = LEVELS[lvl] || {};
+      var outcome = classifyMiss(p.x, p.y, target.position.x, target.position.y);
+      if (L.wind && (outcome === 'short' || outcome === 'long' || outcome === 'miss')) {
+        // 바람 단계에서는 바람 코칭을 우선 노출할 때가 많음
+        if (Math.abs(L.wind) >= 1.5 && Math.random() < 0.45) outcome = 'wind';
+      }
+      var c = coachFor(outcome, L.wind);
       burst(p, dustMat, 18);
       puff(p.x, Math.max(0.5, p.y), 0xa78b62); puff(p.x + 0.5, Math.max(0.4, p.y), 0x8a744f); puff(p.x - 0.5, Math.max(0.4, p.y), 0x9c8258);
       dip(0.3); beep(150, 0.16, 'square');
-      resetBall(); setHud('빗나감 — 다시 조준');
+      resetBall();
+      if (kernel) kernel.teach({ kind: 'fail', outcome: outcome, coach: c.coach, coachMid: c.coachMid, coachDeep: c.coachDeep });
+      else setHud(c.coach);
+      if (L.shotLimit && levelShots >= L.shotLimit) {
+        var limC = coachFor('limit');
+        if (kernel) kernel.teach({ kind: 'fail', outcome: 'limit', coach: limC.coach, coachMid: limC.coachMid, coachDeep: limC.coachDeep });
+        levelShots = 0; // 재도전 허용(같은 단계 유지)
+        setHud('발사 소진 — 같은 단계 재도전');
+      }
     }
 
     var last = null;
@@ -299,20 +473,41 @@
       // 포신 반동 복귀
       if (recoilT < 1) { recoilT = Math.min(1, recoilT + dt / 0.55); var rk = 1 - easeOutElastic(recoilT); barrel.position.set(LX + recoilVec.x * rk, LY + recoilVec.y * rk, 0); }
 
-      // 조준 미리보기: 시간 오프셋으로 점이 궤적을 따라 흐른다(marching dots, RM이면 정지)
+      // 조준 미리보기 — 바람 포함 적분(실제 발사와 동일)
       if (aimOn) {
         var phase = RM ? 0 : (ts * 0.0022) % 1;
+        var windP = (LEVELS[Math.min(lvl, LEVELS.length - 1)] || {}).wind || 0;
+        var pvX = aimVX, pvY = aimVY, px = LX, py = LY, step = 0.018;
+        var samples = [];
+        for (var si = 0; si < 80; si++) {
+          pvY -= G * step; pvX += windP * step; px += pvX * step; py += pvY * step;
+          if (py < 0.05 || px > 16 || px < -16) break;
+          samples.push({ x: px, y: py });
+        }
         for (var pd = 0; pd < preview.length; pd++) {
-          var tt = (pd + phase) * 0.06, pxx = LX + aimVX * tt, pyy = LY + aimVY * tt - 0.5 * G * tt * tt;
-          if (pyy < 0.05) { preview[pd].visible = false; continue; }
-          preview[pd].visible = true; preview[pd].position.set(pxx, pyy, 0);
+          var idx = Math.min(samples.length - 1, Math.floor((pd + phase) / preview.length * samples.length));
+          if (!samples.length || idx < 0) { preview[pd].visible = false; continue; }
+          preview[pd].visible = true;
+          preview[pd].position.set(samples[idx].x, samples[idx].y, 0);
         }
       }
 
+      // 이동 표적
+      var Lc = LEVELS[Math.min(lvl, LEVELS.length - 1)] || {};
+      if (Lc.moveAmp && !cleared) {
+        var tsec = ((performance.now ? performance.now() : Date.now()) - levelT0) / 1000;
+        var mx = baseTX + Lc.moveAmp * Math.sin(tsec * (Lc.moveSpeed || 1));
+        target.position.x = mx;
+        pole.position.x = mx;
+      }
+
       if (flying) {
-        // simulateShot()과 동일한 스텝·명중(<1.1)·빗나감(y<0.2||x>±16) — 계약 유지
-        vel.y -= G * dt; pos.addScaledVector(vel, dt); ball.position.copy(pos);
-        ball.rotation.z -= vel.x * dt * 1.4; ball.rotation.x += 2.2 * dt; // 자전
+        // simulateShot()과 동일: 중력 + wind 가속도
+        var windA = Lc.wind || 0;
+        vel.y -= G * dt;
+        vel.x += windA * dt;
+        pos.addScaledVector(vel, dt); ball.position.copy(pos);
+        ball.rotation.z -= vel.x * dt * 1.4; ball.rotation.x += 2.2 * dt;
         if (!RM) { var tp = trailPool[trailHead++ % TRAIL_N]; tp.visible = true; tp.position.copy(pos); tp.userData.life = 1; }
         if (pos.distanceTo(target.position) < 1.1) hit();
         else if (pos.y < 0.2 || pos.x > 16 || pos.x < -16) miss(pos.clone());
@@ -347,12 +542,22 @@
     requestAnimationFrame(loop);
     window.addEventListener('resize', function () { var w = host.clientWidth || 640; cam.aspect = w / H; cam.updateProjectionMatrix(); rndr.setSize(w, H); });
 
-    // 사운드(AudioContext는 첫 사용자 입력 핸들러 안에서 lazy 생성 — init에서 만들지 않음)
-    var actx = null, muted = false;
-    function beep(f, d, type) { if (muted) return; try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); var o = actx.createOscillator(), g = actx.createGain(); o.type = type || 'sine'; o.frequency.value = f; o.connect(g); g.connect(actx.destination); var t = actx.currentTime; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.12, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + d); o.start(t); o.stop(t + d + 0.02); } catch (e) {} }
-    // 발사 "펑": white-noise AudioBuffer + lowpass 스윕 한 겹
+    // 사운드 — kernel 뮤트와 동기
+    var actx = null;
+    function isMuted() { return kernel ? kernel.isMuted() : false; }
+    function beep(f, d, type) {
+      if (isMuted()) return;
+      try {
+        actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+        var o = actx.createOscillator(), g = actx.createGain();
+        o.type = type || 'sine'; o.frequency.value = f; o.connect(g); g.connect(actx.destination);
+        var t = actx.currentTime;
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.12, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+        o.start(t); o.stop(t + d + 0.02);
+      } catch (e) {}
+    }
     function boom() {
-      if (muted) return;
+      if (isMuted()) return;
       try {
         actx = actx || new (window.AudioContext || window.webkitAudioContext)();
         var len = Math.floor(actx.sampleRate * 0.4), buf = actx.createBuffer(1, len, actx.sampleRate), d = buf.getChannelData(0);

@@ -59,6 +59,7 @@
       rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
+    var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'waves' }) : null;
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:12px;cursor:grab;touch-action:none;display:block;background:#04121b';
     host.appendChild(rndr.domElement);
 
@@ -99,12 +100,16 @@
     var SOUND_V = 6;        // 시뮬 단위 파동 속력 (시각화/계산 일관)
     var THRESH = 0.92;      // 보강간섭 판정 임계(정규화 진폭)
     var levels = [
-      // f(진동수), 표적위치(sx,sy), 정답 힌트는 플레이어가 d·φ로 맞춤
-      { f: 1.5, target: { x: 0, y: 7 }, hint: '두 파원을 대칭으로 두면 중앙선 위는 항상 보강' },
-      { f: 2.0, target: { x: 5, y: 6 }, hint: '표적이 한쪽으로 치우치면 간격 d 를 조절' },
-      { f: 2.5, target: { x: -6, y: 4 }, hint: '위상차 φ 로 마루 타이밍을 어긋나게/맞게' },
-      { f: 3.0, target: { x: 4, y: -5 }, hint: '경로차 = (n − φ/2π)·λ 가 되도록 d·φ 미세조정' }
+      { f: 1.5, target: { x: 0, y: 7 }, hint: '대칭 파원 → 중앙선은 보강' },
+      { f: 1.8, target: { x: 2, y: 6 }, hint: '살짝 치우친 표적 — d 미세 조정' },
+      { f: 2.0, target: { x: 5, y: 6 }, hint: '치우친 표적 — 간격 d' },
+      { f: 2.2, target: { x: -4, y: 5 }, hint: '반대쪽 표적' },
+      { f: 2.5, target: { x: -6, y: 4 }, hint: '위상차 φ로 마루 맞추기' },
+      { f: 2.7, target: { x: 3, y: -4 }, hint: '아래쪽 표적 + φ' },
+      { f: 3.0, target: { x: 4, y: -5 }, hint: '경로차 ≈ (n−φ/2π)·λ' },
+      { f: 3.2, target: { x: -5, y: -3 }, hint: '마스터 — d·φ 동시' }
     ];
+    var TRANSFER_LINE = '두 파동이 마루+마루로 만나면 보강간섭, 마루+골이면 상쇄한다.';
     var lvl = 0, score = 0, won = false;
 
     // 조절 변수:  d = 파원 간격(두 파원은 x=±d/2), phi = 위상차
@@ -213,17 +218,27 @@
       won = true; score += 100; chime();
       burst(targetMesh.position.clone(), 0x34d399);
       setHud('보강간섭! 마루+마루로 진폭 최대 🎉');
+      if (kernel) kernel.teach({ kind: 'success', coach: '보강간섭 — 표적 진폭이 최대에 가깝습니다' });
       if (lvl + 1 >= levels.length) {
         // 마지막 단계: lvl 을 범위 밖(levels.length)으로 올리지 않는다 — rAF 루프가 매 프레임
         // levels[lvl] 을 읽으므로 3초 대기 동안 TypeError 가 쏟아진다. 컨트롤도 잠가 refresh/setHud 재진입 차단.
         hud.innerHTML = '🎉 모든 단계 클리어! 총 ' + score + '점';
         rndr.domElement.style.pointerEvents = 'none';
         dSlider.disabled = true; phiSlider.disabled = true; rb.disabled = true;
-        setTimeout(function () {
-          rndr.domElement.style.pointerEvents = '';
-          dSlider.disabled = false; phiSlider.disabled = false; rb.disabled = false;
-          lvl = 0; score = 0; resetLevel();
-        }, 3000);
+        if (kernel) {
+          kernel.saveBest(score);
+          kernel.teach({ kind: 'clear', transfer: TRANSFER_LINE, onAgain: function () {
+            rndr.domElement.style.pointerEvents = '';
+            dSlider.disabled = false; phiSlider.disabled = false; rb.disabled = false;
+            lvl = 0; score = 0; won = false; resetLevel();
+          }});
+        } else {
+          setTimeout(function () {
+            rndr.domElement.style.pointerEvents = '';
+            dSlider.disabled = false; phiSlider.disabled = false; rb.disabled = false;
+            lvl = 0; score = 0; resetLevel();
+          }, 3000);
+        }
       } else {
         lvl++;
         setTimeout(function () { resetLevel(); }, 1500);

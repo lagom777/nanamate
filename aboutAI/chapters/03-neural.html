@@ -358,7 +358,7 @@ opt.step(); opt.zero_grad()</code></pre>
 <h2>🕹️ 직접 해보기 — 다른 하나 찾기 — 신경망</h2>
 <p>넷 중 성격이 다른 하나를 골라보세요.</p>
 <div id="nm-game-host"></div>
-<script>window.NANAMATE_GAME={"type":"oddone","color":"#b8441c","prompt":"나머지와 어울리지 않는 하나를 고르세요","rounds":[{"items":["Sigmoid","ReLU","GELU","LSTM"],"odd":3,"why":"LSTM은 순환 신경망 구조, 나머지는 활성화 함수"},{"items":["CNN","RNN","LSTM","ReLU"],"odd":3,"why":"ReLU는 활성화 함수, 나머지는 신경망 아키텍처"},{"items":["지역 연결성","파라미터 공유","풀링","역전파"],"odd":3,"why":"역전파는 학습 알고리즘, 나머지는 CNN의 특성"}]};</script>
+<script>window.NANAMATE_GAME={"type":"trace","color":"#b8441c","prompt":"신경망이 한 번 배우고 고치는  루프 — 순전파 → 역전파 순서를 따라가세요","stages":[{"name":"입력층에 특징 넣기","why":"숫자 벡터 x가 네트워크로 들어갑니다."},{"name":"은닉층 가중합 + 활성화","why":"Wx+b 후 ReLU 등으로 비선형을 넣어요."},{"name":"출력·예측 계산","why":"마지막 층이 ŷ(확률/점수)를 냅니다."},{"name":"손실 계산","why":"정답 y와 비교해 오차 L을 구해요."},{"name":"역전파로 기울기 전파","why":"연쇄법칙으로 각 가중치의 ∂L/∂θ를 계산."},{"name":"가중치 업데이트","why":"경사하강법: θ ← θ − η∇θ."}]};</script>
 <h2>🎮 3D 미니게임</h2>
 <p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
 <div id="nm-quiz-host"></div>

@@ -67,6 +67,8 @@
       rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
+    var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'chord' }) : null;
+    var TRANSFER_LINE = '장3화음=근음+장3도+완전5도(반음 0·4·7). 귀로 확인하며 쌓는다.';
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:12px;cursor:pointer;touch-action:none;display:block;background:linear-gradient(180deg,#3b0764 0%,#1b0a38 46%,#03010a 100%)';
     host.appendChild(rndr.domElement);
 
@@ -129,12 +131,16 @@
 
     // 단계 정의: 근음(MIDI)과 화음 종류. 사실 정확한 음정만 사용.
     var levels = [
-      { root: 60, type: 'major' },  // C 장3화음 (도-미-솔)
-      { root: 62, type: 'minor' },  // D 단3화음 (레-파-라)
-      { root: 65, type: 'major' },  // F 장3화음 (파-라-도)
-      { root: 60, type: 'dim' },    // C 감3화음 (도-레#-파#)
-      { root: 64, type: 'aug' },    // E 증3화음 (미-솔#-도)  (=라#? 8반음 위 → 64+8=72=도)
-      { root: 60, type: 'dom7' }    // C 속7화음 (도-미-솔-시♭)
+      { root: 60, type: 'major' },  // C 장3
+      { root: 62, type: 'minor' },  // D 단3
+      { root: 65, type: 'major' },  // F 장3
+      { root: 67, type: 'minor' },  // G 단3
+      { root: 60, type: 'dim' },
+      { root: 64, type: 'aug' },
+      { root: 60, type: 'dom7' },
+      { root: 65, type: 'dom7' },   // F7
+      { root: 57, type: 'major' },  // A 장3 (낮은 옥타브 근처)
+      { root: 62, type: 'dom7' }
     ];
     var lvl = 0, score = 0, won = false;
     var target = [];      // 목표 MIDI들
@@ -337,6 +343,7 @@
       if (!ok) {
         dissonance(); // 불협
         setHud('✗ 목표에 없는 음 — 다시 클릭해 해제하세요');
+        if (kernel) kernel.teach({ kind: 'fail', outcome: 'wrong-note', coach: '목표 화음에 없는 음입니다', coachMid: '근음에서 반음 간격을 세어 보세요', coachDeep: '장3=0·4·7, 단3=0·3·7, 속7=0·4·7·10' });
       } else {
         setHud(isChordComplete(selected, target) ? '' : '✓ 좋아요, 계속 쌓으세요');
       }
@@ -426,9 +433,15 @@
       if (lvl >= levels.length) {
         setHud('🎉 모든 화음 완성! 클리어 · 총 ' + score + '점');
         el.style.pointerEvents = 'none';
-        setTimeout(function () { el.style.pointerEvents = ''; lvl = 0; score = 0; loadLevel(); }, 3000);
+        if (kernel) {
+          kernel.saveBest(score);
+          kernel.teach({ kind: 'clear', transfer: TRANSFER_LINE, onAgain: function () {
+            el.style.pointerEvents = ''; lvl = 0; score = 0; loadLevel();
+          }});
+        } else setTimeout(function () { el.style.pointerEvents = ''; lvl = 0; score = 0; loadLevel(); }, 3000);
       } else {
         setHud('🎵 화음 완성! 다음 단계');
+        if (kernel) kernel.teach({ kind: 'success', coach: '화음 구성음이 맞았습니다' });
         setTimeout(function () { loadLevel(); }, 1700);
       }
     }

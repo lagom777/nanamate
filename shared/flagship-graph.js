@@ -8,9 +8,15 @@
   // 레벨별 숨은 포물선(vertex form y=a(x−h)²+k)과 코인 x좌표. 코인을 모두 지나면 클리어.
   var LEVELS = [
     { a: 0.5, h: -1, k: 1, xs: [-4, 1, 3] },
+    { a: 0.4, h: 0, k: 2, xs: [-3, 0, 3] },
     { a: -0.6, h: 1, k: 6, xs: [-2, 1, 4] },
-    { a: 0.8, h: 2, k: 0.5, xs: [-1, 2, 4] }
+    { a: 0.8, h: 2, k: 0.5, xs: [-1, 2, 4] },
+    { a: -0.4, h: -2, k: 4, xs: [-4, -2, 1] },
+    { a: 0.7, h: 1.5, k: 2, xs: [-1, 1.5, 4] },
+    { a: -0.9, h: 0, k: 5, xs: [-3, 0, 2] },
+    { a: 0.55, h: -1.5, k: 0, xs: [-4, -1.5, 2] }
   ];
+  var TRANSFER_LINE = 'y=a(x−h)²+k 에서 h·k는 꼭짓점, a는 폭(열림)을 정한다.';
 
   // 이차함수 y = a(x−h)² + k
   function parabolaY(a, h, k, x) { return a * (x - h) * (x - h) + k; }
@@ -107,6 +113,7 @@
       rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
+    var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'graph' }) : null;
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:16px;cursor:grab;touch-action:none;display:block;background:radial-gradient(circle at 50% 28%,#eff6ff 0%,#dbeafe 42%,#c7d2fe 100%)';
     rndr.domElement.setAttribute('aria-label', '포물선 그래프 조작 영역');
     host.appendChild(rndr.domElement);
@@ -219,13 +226,21 @@
       setTimeout(function () {
         showResult(
           finalLevel ? '🏆 포물선 마스터!' : '✨ 그래프 잠금 성공',
-          finalLevel ? '세 개의 숨은 함수를 모두 복원했어요. 총 ' + score + '점' : 'a·h·k를 조절해 코인 궤도를 정확히 찾았습니다.',
-          finalLevel ? '처음부터 다시' : '다음 함수',
+          finalLevel ? (TRANSFER_LINE + ' · 총 ' + score + '점') : 'a·h·k를 조절해 코인 궤도를 정확히 찾았습니다.',
+          finalLevel ? '한 판 더' : '다음 함수',
           function () {
             hideResult();
-            if (finalLevel) { lvl = 0; score = 0; }
-            else lvl++;
-            startLevel();
+            if (finalLevel) {
+              if (kernel) {
+                kernel.saveBest(score);
+                kernel.teach({ kind: 'clear', transfer: TRANSFER_LINE, onAgain: function () { lvl = 0; score = 0; startLevel(); } });
+              }
+              lvl = 0; score = 0;
+              if (!kernel) startLevel();
+            } else {
+              lvl++;
+              startLevel();
+            }
           }
         );
       }, 850);

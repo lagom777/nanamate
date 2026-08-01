@@ -118,7 +118,9 @@
       rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
-    host.innerHTML = ''; host.style.position = 'relative'; host.style.overflow = 'hidden';
+    host.innerHTML = ''; host.style.position = 'relative';
+    var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'tectonics' }) : null;
+    var TRANSFER_LINE = '수렴→산맥/해구, 발산→해령, 변환→단층 — 판이 움직이는 방식이 지형을 만든다.'; host.style.overflow = 'hidden';
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:12px;cursor:grab;touch-action:none;display:block;background:linear-gradient(180deg,#7fbdf2 0%,#b7e0ff 30%,#eaf6ff 44%,#ffe9c2 54%,#bfe0ff 68%,#9fd0f2 100%)';
     host.appendChild(rndr.domElement);
 
@@ -564,6 +566,7 @@
       chime(); popScore();
       setHud('✅ 정답! 지형이 만들어집니다…');
       showToast(R.fact);
+      if (kernel) kernel.teach({ kind: 'success', coach: R.fact });
       winTimer = setTimeout(advance, 3000);
     }
     /* 승리 연출 뒤 다음 라운드로 진행 (타이머 또는 '다시' 버튼이 호출) */
@@ -571,10 +574,16 @@
       winTimer = null;
       lvl++;
       if (lvl >= ROUNDS.length) {
+        setHud('🎉 모든 단계 클리어! 총 ' + score + '점');
+        if (kernel) {
+          kernel.saveBest(score);
+          kernel.teach({ kind: 'clear', transfer: TRANSFER_LINE, onAgain: function () {
+            lvl = 0; needScoreReset = true; setupRound();
+          }});
+        }
         lvl = 0;
-        setHud('🎉 모든 단계 클리어! 총 ' + score + '점 — 다시 시작합니다');
-        needScoreReset = true; // 점수 리셋은 다음 setupRound 에서 — 대기 중 '다시'를 눌러도 진행 중 점수가 갑자기 지워지지 않는다
-        resetTimer = setTimeout(function () { resetTimer = null; setupRound(); }, 2600);
+        needScoreReset = true;
+        if (!kernel) resetTimer = setTimeout(function () { resetTimer = null; setupRound(); }, 2600);
       } else { setupRound(); }
     }
     function fail(m) {
@@ -582,6 +591,7 @@
       addShake(0.12); flashRed(); springBack(); // 약한 셰이크 + 붉은 플래시 + 스프링 복귀
       var label = { convergent: '수렴(다가감)', divergent: '발산(멀어짐)', transform: '변환(엇갈림)', ambiguous: '대각선 운동' }[m.type] || m.type;
       setHud('❌ 지금은 ' + label + ' 운동이에요. 프롬프트가 요구한 운동으로 다시 시도하세요. (다시 버튼으로 초기화)');
+      if (kernel) kernel.teach({ kind: 'fail', outcome: m.type, coach: '지금은 ' + label + ' — 프롬프트 운동으로', coachMid: ROUNDS[lvl].hint, coachDeep: ROUNDS[lvl].fact });
     }
     /* 오답: 판이 감쇠 스프링 트윈으로 시작 위치 복귀 */
     function springBack() {

@@ -53,6 +53,7 @@
       rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
+    var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'market' }) : null;
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:16px;cursor:ns-resize;touch-action:none;display:block;background:radial-gradient(circle at 50% 20%,#ecfeff 0%,#cffafe 42%,#a5f3fc 100%)';
     rndr.domElement.setAttribute('aria-label', '시장 균형 가격 조절 영역');
     host.appendChild(rndr.domElement);
@@ -127,10 +128,16 @@
     // ── 단계 정의: 선형 수요·공급. 균형이 격자 안에 오도록 설계 ──
     // P* = (a−c)/(b+d). 아래 셋은 각각 P*=5,4,6 / Q*가 0~12 범위.
     var levels = [
-      { name: '동네 장터', a: 11, b: 1.0, c: 1, d: 1.0 },   // P*=(11−1)/2=5,  Q*=11−5=6
-      { name: '수요 급증 시장', a: 12, b: 1.5, c: 2, d: 1.0 },   // P*=(12−2)/2.5=4, Q*=12−6=6
-      { name: '공급 민감 시장', a: 13, b: 0.9, c: 1, d: 1.1 }    // P*=(13−1)/2=6,  Q*=13−5.4=7.6
+      { name: '동네 장터', a: 11, b: 1.0, c: 1, d: 1.0 },
+      { name: '수요 급증', a: 12, b: 1.5, c: 2, d: 1.0 },
+      { name: '공급 민감', a: 13, b: 0.9, c: 1, d: 1.1 },
+      { name: '완만한 수요', a: 14, b: 0.8, c: 0, d: 1.2 },
+      { name: '가파른 공급', a: 12, b: 1.0, c: 0, d: 2.0 },
+      { name: '좁은 균형', a: 10, b: 1.2, c: 2, d: 0.8 },
+      { name: '풍요 시장', a: 15, b: 1.0, c: 1, d: 1.5 },
+      { name: '마스터', a: 16, b: 1.4, c: 0.5, d: 1.1 }
     ];
+    var TRANSFER_LINE = '가격이 오르면 수요는 줄고 공급은 늘어 균형(교차)으로 간다.';
     var TOL = 0.6; // 균형 임계: |Qs−Qd| ≤ 0.6 이면 청산
     var LEVEL_TIME = 38;
     var lvl = 0, score = 0, model = levels[0];
@@ -308,6 +315,13 @@
       feedback = guide === 'lower'
         ? '✗ 재고가 ' + Math.abs(ex).toFixed(1) + ' 남았어요 · 가격을 내려 수요를 늘리세요'
         : '✗ 물건이 ' + Math.abs(ex).toFixed(1) + ' 부족해요 · 가격을 올려 수요를 줄이세요';
+      if (kernel) kernel.teach({
+        kind: 'fail',
+        outcome: guide,
+        coach: guide === 'lower' ? '잉여(공급>수요) — 가격을 내리세요' : '부족(수요>공급) — 가격을 올리세요',
+        coachMid: guide === 'lower' ? '가격↓ → 수요↑·공급↓ 로 격차가 줄어듭니다' : '가격↑ → 수요↓·공급↑',
+        coachDeep: '균형은 Qd=Qs인 가격. 격차 막대가 거의 사라질 때까지 가격선을 움직이세요'
+      });
       flash.style.opacity = '1'; setTimeout(function () { flash.style.opacity = '0'; }, 170);
       shake(0.22, 0.26);
       beep(guide === 'lower' ? 180 : 220, 0.17, 'sawtooth', 0.06);
@@ -332,13 +346,21 @@
       setTimeout(function () {
         showResult(
           finalLevel ? '🏆 시장 설계자!' : '⚖ 시장 청산 성공',
-          finalLevel ? '세 시장의 균형가격을 모두 찾았어요. 총 ' + score + '점' : '잉여와 부족 신호를 읽어 균형가격을 찾았습니다.',
-          finalLevel ? '처음부터 다시' : '다음 시장',
+          finalLevel ? (TRANSFER_LINE + ' · 총 ' + score + '점') : '잉여와 부족 신호를 읽어 균형가격을 찾았습니다.',
+          finalLevel ? '한 판 더' : '다음 시장',
           function () {
             hideResult();
-            if (finalLevel) { lvl = 0; score = 0; }
-            else lvl++;
-            loadLevel();
+            if (finalLevel) {
+              if (kernel) {
+                kernel.saveBest(score);
+                kernel.teach({ kind: 'clear', transfer: TRANSFER_LINE, onAgain: function () { lvl = 0; score = 0; loadLevel(); } });
+              }
+              lvl = 0; score = 0;
+              if (!kernel) loadLevel();
+            } else {
+              lvl++;
+              loadLevel();
+            }
           }
         );
       }, 850);
