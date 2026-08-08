@@ -113,12 +113,16 @@
     if (typeof THREE === 'undefined') { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">3D를 표시할 수 없는 환경입니다.</p>'; return; }
 
     var W = host.clientWidth || 640, H = 380, scene, cam, rndr;
+    var N3 = window.NMP3 || null;
     try {
       scene = new THREE.Scene();
       cam = new THREE.PerspectiveCamera(48, W / H, 0.1, 200);
       cam.position.set(0, 0, 11); cam.lookAt(0, 0, 0);
-      rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      rndr = (N3 && N3.renderer) ? N3.renderer(W, H) : null;
+      if (!rndr) {
+        rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     injectStyle();
     host.innerHTML = ''; host.style.position = 'relative';
@@ -133,8 +137,15 @@
     var goldEl = overlay('background:radial-gradient(ellipse at 50% 45%, rgba(250,204,21,.5), rgba(250,204,21,0) 70%);opacity:0;transition:opacity .45s');
     var redEl = overlay('background:rgba(239,68,68,.28);opacity:0;transition:opacity .12s');
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.85));
-    var dl = new THREE.DirectionalLight(0xffffff, 0.6); dl.position.set(3, 6, 8); scene.add(dl);
+    if (N3 && N3.lightRig) {
+      N3.lightRig(scene, { sky: 0x9fc4ff, ground: 0x0a1424, hemiI: 0.7, keyColor: 0xffd9a8, keyI: 1.0, keyX: 3, keyY: 6, keyZ: 8, rimColor: 0x7aa2ff, rimI: 0.5, rimX: -5, rimY: 3, rimZ: -7 });
+    } else {
+      scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+      var dl = new THREE.DirectionalLight(0xffffff, 0.6); dl.position.set(3, 6, 8); scene.add(dl);
+    }
+    var camBase = { x: 0, y: 0, z: 11 };
+    var cine = (N3 && N3.cineCam) ? N3.cineCam(cam, camBase, { lookAt: { x: 0, y: 0, z: 0 }, dollyY: -1.2, dollyZ: 4.5, driftAmp: 0.12, driftSpd: 0.3 }) : null;
+    var fx = (N3 && N3.particles) ? N3.particles(scene, { max: 120 }) : null;
 
     var helix = new THREE.Group(); scene.add(helix);
 
@@ -167,7 +178,6 @@
     var HINT_MAX = 2;
     var rungs = []; // 칸별 {tnode, cnode, clab, rung, bx,by,bz, ang, filled, fly}
     var backbones = []; // 백본 리본 2줄 — 살아있는 emissive 셰이머용 참조
-    var shakeUntil = 0, shakeMag = 0;
     var wrongCell = -1, wrongUntil = 0;   // 오답 시 현재 '?' 라벨 진동
     var spinBoost = 0, camAnim = null;    // 가닥 완성 회전 가속 / 카메라 줌
 
@@ -403,7 +413,7 @@
     }
 
     function wrongLabel(i) { wrongCell = i; wrongUntil = (typeof performance !== 'undefined' ? performance.now() : Date.now()) + 360; }
-    function triggerShake() { if (RM) return; shakeUntil = (typeof performance !== 'undefined' ? performance.now() : Date.now()) + 400; shakeMag = 0.55; }
+    function triggerShake() { if (cine) cine.shake(0.4, 0.4); }
     function redFlash() { redEl.style.opacity = '1'; setTimeout(function () { redEl.style.opacity = '0'; }, 120); }
     function goldTint(st) { goldEl.style.opacity = st >= 2 ? String(Math.min(0.14, 0.04 + st * 0.02)) : '0'; }
 
@@ -459,7 +469,7 @@
 
     function startLevel() {
       idx = 0; picks = []; won = false; locked = false; hintsUsed = 0;
-      wrongCell = -1; spinBoost = 0; camAnim = null; cam.position.z = 11; goldTint(0);
+      wrongCell = -1; spinBoost = 0; camAnim = null; camBase.z = 11; goldTint(0);
       buildHelix(); updateHintBtn(); setHud();
     }
 
@@ -490,8 +500,9 @@
       p.v = new THREE.Vector3(Math.cos(a) * Math.sin(b), Math.cos(b), Math.sin(a) * Math.sin(b)).multiplyScalar(speed);
       p.life = 0.7 + Math.random() * 0.3; p.g = gravity;
     }
-    function burst(pos, color) { if (RM) return; for (var i = 0; i < 12; i++) spawnParticle(pos, color, 2.6 + Math.random() * 2, 6); }
+    function burst(pos, color) { if (RM) return; if (fx) { fx.burst(pos, color, 12, 3.2, 0.8, 0.55, 0.5); return; } for (var i = 0; i < 12; i++) spawnParticle(pos, color, 2.6 + Math.random() * 2, 6); }
     function confetti() {
+      if (fx) { var fc = [0xef4444, 0x3b82f6, 0xeab308, 0x22c55e, 0xf472b6, 0xfacc15, 0x38bdf8]; for (var fi = 0; fi < 7; fi++) fx.burst({ x: (fi - 3) * 0.6, y: 3.3, z: 0 }, fc[fi], 16, 3.6, 1.1, 0.5, 0.9); return; }
       if (RM) return; // 색종이 대량 버스트는 RM 시 생략
       var cols = [0xef4444, 0x3b82f6, 0xeab308, 0x22c55e, 0xf472b6, 0xfacc15, 0x38bdf8];
       for (var i = 0; i < 80; i++) spawnParticle(new THREE.Vector3((Math.random() - 0.5) * 2, 3 + Math.random() * 1.5, (Math.random() - 0.5) * 2), cols[i % cols.length], 3 + Math.random() * 3.5, 5);
@@ -521,16 +532,18 @@
       if (!md) helix.rotation.y += 0.004 + spinBoost;
       if (spinBoost > 0.0002) spinBoost *= 0.95; else spinBoost = 0;
       // 흔들림 (RM 게이트, 감쇠 노이즈)
-      if (!RM && ts < shakeUntil) { helix.position.x = (Math.random() - 0.5) * shakeMag; helix.rotation.z = (Math.random() - 0.5) * shakeMag * 0.05; shakeMag *= 0.9; }
-      else { helix.position.x = 0; helix.rotation.z = 0; }
+      // manual shake removed; cineCam.shake covers wrong-pick feedback (RM-safe)
       // 카메라 살짝 줌인 후 복귀
       if (camAnim) {
         camAnim.t += dt / 1.2; var cp = camAnim.t, z;
         if (cp < 0.5) z = 11 - easeOutCubic(cp / 0.5) * 2.4;
         else if (cp < 1) z = 8.6 + easeOutCubic((cp - 0.5) / 0.5) * 2.4;
         else { z = 11; camAnim = null; }
-        cam.position.z = z;
+        camBase.z = z;
       }
+      // cine cam drives position+lookAt (intro dolly / idle drift / shake); fallback keeps z-only
+      if (cine) cine.tick(dt, ts / 1000);
+      else cam.position.z = camBase.z;
       // 세포질 부유/반짝임 (RM 시 정지)
       if (!RM && cyto) { cyto.rotation.y += 0.0006; cyto.position.y = Math.sin(ts / 3000) * 0.15; cytoMat.opacity = 0.35 + 0.12 * Math.sin(ts / 900); }
       // 백본 리본 살아있는 글로우(느린 호흡, RM 시 정지)
@@ -568,7 +581,8 @@
         else { rp.mesh.scale.setScalar(0.3 + pp * 3.2); rp.mesh.material.opacity = 0.9 * (1 - pp); }
       }
       // 파티클
-      for (var j = 0; j < pool.length; j++) {
+      if (fx) { fx.tick(dt); }
+      else for (var j = 0; j < pool.length; j++) {
         var pt = pool[j]; if (!pt.active) continue;
         pt.life -= dt;
         if (pt.life <= 0) { pt.active = false; pt.mesh.visible = false; continue; }

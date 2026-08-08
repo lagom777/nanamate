@@ -59,21 +59,30 @@
     try { RM = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) {}
 
     var W = host.clientWidth || 640, H = 360, scene, cam, rndr;
+    var P3 = window.NMP3 || null;
     try {
       scene = new THREE.Scene();
       cam = new THREE.PerspectiveCamera(44, W / H, 0.1, 200);
       cam.position.set(0, 7.5, 11.5); cam.lookAt(0, 0, -0.8);
-      rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      rndr = (P3 && P3.renderer) ? P3.renderer(W, H) : null;
+      if (!rndr) {
+        rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
+    var cine = (P3 && P3.cineCam) ? P3.cineCam(cam, { x: 0, y: 7.5, z: 11.5 }, { lookAt: { x: 0, y: 0, z: -0.8 }, dollyY: -1.0, dollyZ: 4.0, driftAmp: 0.12 }) : null;
     var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'chord' }) : null;
     var TRANSFER_LINE = '장3화음=근음+장3도+완전5도(반음 0·4·7). 귀로 확인하며 쌓는다.';
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:12px;cursor:pointer;touch-action:none;display:block;background:linear-gradient(180deg,#3b0764 0%,#1b0a38 46%,#03010a 100%)';
     host.appendChild(rndr.domElement);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.62));
-    var dl = new THREE.DirectionalLight(0xffffff, 0.4); dl.position.set(3, 9, 6); scene.add(dl);
+    if (P3 && P3.lightRig) {
+      P3.lightRig(scene, { sky: 0xb9a7f5, ground: 0x241043, hemiI: 0.7, keyColor: 0xffd9a0, keyI: 0.9, rimColor: 0x93c5fd, rimI: 0.5 });
+    } else {
+      scene.add(new THREE.AmbientLight(0xffffff, 0.62));
+      var dl = new THREE.DirectionalLight(0xffffff, 0.4); dl.position.set(3, 9, 6); scene.add(dl);
+    }
 
     // 무대 스포트라이트 2개(좌·우). 천천히 스윙 — RM이면 고정.
     function makeSpot(color, x) {
@@ -168,6 +177,7 @@
     function flashWrong(k) {
       pulseEmissive(k, 3.2);
       if (!RM) k.shakeT = 0.32;
+      if (cine) cine.shake(0.08, 0.22);
     }
 
     function loadLevel() {
@@ -447,13 +457,16 @@
     }
 
     // ===== 파티클 (풀링 + 상한) =====
-    var PART_MAX = 90;
-    var partGeo = new THREE.SphereGeometry(0.09, 6, 6);
+    var p3parts = (P3 && P3.particles) ? P3.particles(scene, { max: 90 }) : null;
     var partPool = [];
-    for (var pi = 0; pi < PART_MAX; pi++) {
-      var pm = new THREE.Mesh(partGeo, new THREE.MeshBasicMaterial({ color: 0xa855f7, transparent: true, opacity: 1 }));
-      pm.visible = false; pm.userData = { v: new THREE.Vector3(), life: 0 };
-      scene.add(pm); partPool.push(pm);
+    if (!p3parts) {
+      var PART_MAX = 90;
+      var partGeo = new THREE.SphereGeometry(0.09, 6, 6);
+      for (var pi = 0; pi < PART_MAX; pi++) {
+        var pm = new THREE.Mesh(partGeo, new THREE.MeshBasicMaterial({ color: 0xa855f7, transparent: true, opacity: 1 }));
+        pm.visible = false; pm.userData = { v: new THREE.Vector3(), life: 0 };
+        scene.add(pm); partPool.push(pm);
+      }
     }
     function burst(p, color) {
       if (RM) return;
@@ -470,6 +483,12 @@
         made++;
       }
     }
+    // Prefer the shared premium3d glow pool; fall back to the local fountain.
+    var burstFountain = burst;
+    burst = function (p, color) {
+      if (p3parts) { p3parts.burst(p, color, 16, 2.4, 0.9, 0.5, 1.0); return; }
+      burstFountain(p, color);
+    };
 
     // ===== 루프 (단일 rAF) =====
     var lastTs = null;
@@ -482,6 +501,7 @@
         spotL.target.position.x = -2.4 + Math.sin(ts / 1900) * 3.2;
         spotR.target.position.x = 2.4 + Math.sin(ts / 2300 + 2.1) * 3.2;
       }
+      if (cine) cine.tick(dt, ts / 1000);
       // 트윈 진행
       for (var ti = tweens.length - 1; ti >= 0; ti--) {
         var tw = tweens[ti];
@@ -510,6 +530,7 @@
         }
       });
       // 파티클(풀)
+      if (p3parts) p3parts.tick(dt);
       for (var i = 0; i < partPool.length; i++) {
         var s = partPool[i];
         if (!s.visible) continue;

@@ -85,6 +85,7 @@
 
     // 모션 최소화 선호(learngame3d.js 패턴) — 셰이크/트월링/드리프트/marching/파티클 게이트
     var RM = false; try { RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    var P3 = window.NMP3 || null; // premium3d shared layer (guarded upgrade; legacy fallback kept)
 
     var W = host.clientWidth || 640, H = 380;
     var scene, cam, rndr;
@@ -92,15 +93,22 @@
       scene = new THREE.Scene();
       cam = new THREE.PerspectiveCamera(50, W / H, 0.1, 400);
       cam.position.set(0, 26, 30); cam.lookAt(0, 0, 0);
-      rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      rndr = (P3 && P3.renderer) ? P3.renderer(W, H, { exposure: 1.28 }) : null;
+      if (!rndr) {
+        rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
     var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'orbit' }) : null;
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:12px;cursor:crosshair;touch-action:none;display:block;background:radial-gradient(circle at 50% 45%,#0b1026,#05060f)';
     host.appendChild(rndr.domElement);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    if (P3 && P3.lightRig) {
+      P3.lightRig(scene, { sky: 0x7d90cc, ground: 0x0a0d1f, hemiI: 0.55, keyColor: 0xffc08a, keyI: 0.85, rimColor: 0x7aa2ff, rimI: 0.5 });
+    } else {
+      scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    }
     var pl = new THREE.PointLight(0xfff0c0, 1.8, 0, 2); pl.position.set(0, 0, 0); scene.add(pl);
 
     // ── 캔버스 합성 텍스처(외부 에셋 없음) ──
@@ -395,16 +403,18 @@
     el.addEventListener('touchstart', onDown, { passive: false }); el.addEventListener('touchmove', onMove, { passive: false }); el.addEventListener('touchend', onUp, { passive: false });
 
     // ── 파티클: 고정 풀 + 상한(재할당 없음). RM이면 끔 ──
+    var fx = (P3 && P3.particles) ? P3.particles(scene, { max: 96 }) : null;
     var POOL_N = 96, poolIdx = 0;
     var poolGeo = new THREE.SphereGeometry(0.14, 6, 6);
     var pool = [];
-    for (var pj = 0; pj < POOL_N; pj++) {
+    if (!fx) for (var pj = 0; pj < POOL_N; pj++) {
       var pm = new THREE.Mesh(poolGeo, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 1, blending: THREE.AdditiveBlending, depthWrite: false }));
       pm.visible = false; pm.userData.life = 0; pm.userData.maxLife = 1; pm.userData.v = new THREE.Vector3();
       scene.add(pm); pool.push(pm);
     }
     function burst(pos, color, n, dir) {
       if (RM) return;
+      if (fx) { fx.burst(pos, color, n || 18, 4.2, 0.85, 0.65, dir ? 0.9 : 0.4); return; }
       n = n || 18;
       for (var i = 0; i < n; i++) {
         var s = pool[poolIdx]; poolIdx = (poolIdx + 1) % POOL_N;
@@ -428,6 +438,8 @@
     var CAMX = 0, CAMY = 26, CAMZ = 30;
     var shakeT = 0, shakeDur = 0.65, shakeAmp = 0, zoomT = -1, flashT = 0;
     var escDir = new THREE.Vector3();
+    var camBase = { x: CAMX, y: CAMY, z: CAMZ };
+    var cine = (P3 && P3.cineCam) ? P3.cineCam(cam, camBase, { lookAt: { x: 0, y: 0, z: 0 }, dollyY: -7, dollyZ: 11, driftAmp: 0.55, driftSpd: 0.22, introDur: 1.6 }) : null;
 
     function win() {
       won = true; flying = false;
@@ -462,7 +474,7 @@
       burst(planet.position, 0xff6b35, 26);
       burst(planet.position, 0xffd24a, 12);
       flashT = 1;
-      if (!RM) { shakeT = shakeDur; shakeAmp = 1.25; }
+      if (!RM) { if (cine) cine.shake(1.1, 0.65); else { shakeT = shakeDur; shakeAmp = 1.25; } }
       boom();
       setHud('💥 별에 추락 — 더 빠르게 옆으로');
       if (kernel) kernel.teach({ kind: 'fail', outcome: 'crash', coach: '추락 — 옆으로 더 세게 당기세요', coachMid: '원궤도 속도 ≈ √(μ/r) 보다 느리면 떨어집니다', coachDeep: '별 방향이 아니라 접선(옆)으로 속도를 주세요' });
@@ -540,7 +552,8 @@
       }
 
       // 파티클 풀 갱신
-      for (var i = 0; i < POOL_N; i++) {
+      if (fx) { fx.tick(dt); }
+      else for (var i = 0; i < POOL_N; i++) {
         var s = pool[i];
         if (s.userData.life <= 0) continue;
         s.userData.life -= dt;
@@ -583,14 +596,20 @@
       pl.intensity = 1.8 + flashT * flashT * 10;
       var zk = 0;
       if (zoomT >= 0) { zoomT += dt / 1.3; if (zoomT >= 1) zoomT = -1; else zk = Math.sin(Math.PI * zoomT) * 0.1; }
-      var cs = 1 - zk, ox = 0, oy = 0, oz = 0;
-      if (shakeT > 0) {
-        shakeT -= dt;
-        var sf = Math.max(0, shakeT / shakeDur), sa = shakeAmp * sf * sf;
-        ox = (Math.random() - 0.5) * 2 * sa; oy = (Math.random() - 0.5) * 2 * sa; oz = (Math.random() - 0.5) * 2 * sa;
+      if (cine) {
+        var zc = 1 - zk;
+        camBase.x = CAMX * zc; camBase.y = CAMY * zc; camBase.z = CAMZ * zc;
+        cine.tick(dt, ts / 1000);
+      } else {
+        var cs = 1 - zk, ox = 0, oy = 0, oz = 0;
+        if (shakeT > 0) {
+          shakeT -= dt;
+          var sf = Math.max(0, shakeT / shakeDur), sa = shakeAmp * sf * sf;
+          ox = (Math.random() - 0.5) * 2 * sa; oy = (Math.random() - 0.5) * 2 * sa; oz = (Math.random() - 0.5) * 2 * sa;
+        }
+        cam.position.set(CAMX * cs + ox, CAMY * cs + oy, CAMZ * cs + oz);
+        cam.lookAt(0, 0, 0);
       }
-      cam.position.set(CAMX * cs + ox, CAMY * cs + oy, CAMZ * cs + oz);
-      cam.lookAt(0, 0, 0);
 
       rndr.render(scene, cam);
     }

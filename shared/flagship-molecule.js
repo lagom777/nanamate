@@ -175,12 +175,16 @@
     if (typeof THREE === 'undefined') { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">3D를 표시할 수 없는 환경입니다.</p>'; return; }
 
     var W = host.clientWidth || 640, H = 360, scene, cam, rndr;
+    var N3 = window.NMP3 || null;
     try {
       scene = new THREE.Scene();
       cam = new THREE.PerspectiveCamera(48, W / H, 0.1, 200);
       cam.position.set(0, 1.2, 12); cam.lookAt(0, 0.2, 0);
-      rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      rndr = (N3 && N3.renderer) ? N3.renderer(W, H) : null;
+      if (!rndr) {
+        rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
     var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'molecule' }) : null;
@@ -188,9 +192,14 @@
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:12px;cursor:grab;touch-action:none;display:block;background:radial-gradient(ellipse at 50% 30%,#0b1220,#05080f)';
     host.appendChild(rndr.domElement);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.62));
-    var dl = new THREE.DirectionalLight(0xffffff, 0.85); dl.position.set(4, 8, 10); scene.add(dl);
-    var dl2 = new THREE.DirectionalLight(0x88aaff, 0.4); dl2.position.set(-6, -2, 4); scene.add(dl2);
+    if (N3 && N3.lightRig) {
+      N3.lightRig(scene, { sky: 0xbcd2ff, ground: 0x0a1020, hemiI: 0.62, keyColor: 0xfff1dd, keyI: 0.95, keyX: 4, keyY: 8, keyZ: 10, rimColor: 0x88aaff, rimI: 0.5, rimX: -6, rimY: -2, rimZ: 4 });
+    } else {
+      scene.add(new THREE.AmbientLight(0xffffff, 0.62));
+      var dl = new THREE.DirectionalLight(0xffffff, 0.85); dl.position.set(4, 8, 10); scene.add(dl);
+      var dl2 = new THREE.DirectionalLight(0x88aaff, 0.4); dl2.position.set(-6, -2, 4); scene.add(dl2);
+    }
+    var cine = (N3 && N3.cineCam) ? N3.cineCam(cam, { x: 0, y: 1.2, z: 12 }, { lookAt: { x: 0, y: 0.2, z: 0 }, dollyY: -0.9, dollyZ: 3.5, driftAmp: 0.12, driftSpd: 0.3 }) : null;
 
     // 분자 회전용 그룹(중심·원자·결합 모두 여기에)
     var molGroup = new THREE.Group(); scene.add(molGroup);
@@ -274,7 +283,7 @@
     redFlash.style.cssText = 'position:absolute;left:0;right:0;top:0;height:' + H + 'px;border-radius:12px;background:rgba(239,68,68,.28);opacity:0;transition:opacity .12s;pointer-events:none';
     host.appendChild(redFlash);
     function flashRed() { redFlash.style.opacity = '1'; setTimeout(function () { redFlash.style.opacity = '0'; }, 170); }
-    function triggerShake() { shakeUntil = (typeof performance !== 'undefined' ? performance.now() : Date.now()) + 380; shakeMag = 0.4; }
+    function triggerShake() { if (cine) { cine.shake(0.35, 0.38); return; } shakeUntil = (typeof performance !== 'undefined' ? performance.now() : Date.now()) + 380; shakeMag = 0.4; }
 
     var resetBtn = document.createElement('button');
     resetBtn.textContent = '↺ 다시';
@@ -470,8 +479,10 @@
     el.addEventListener('touchstart', onDown, { passive: false }); el.addEventListener('touchmove', onMove, { passive: false }); el.addEventListener('touchend', onUp, { passive: false });
 
     // 파티클
+    var fx = (N3 && N3.particles) ? N3.particles(scene, { max: 64 }) : null;
     var parts = [];
     function burst(p, color) {
+      if (fx) { fx.burst(p, color, 18, 3.2, 0.85, 0.55, 0.5); return; }
       var lp = molGroup.worldToLocal(p.clone());
       for (var i = 0; i < 16; i++) {
         var s = new THREE.Mesh(new THREE.SphereGeometry(0.11, 6, 6), new THREE.MeshBasicMaterial({ color: color }));
@@ -489,8 +500,10 @@
       if (!dragging && !locked) molGroup.rotation.y += 0.004;
 
       // 오답 흔들림
-      if (ts < shakeUntil) { molGroup.position.x = (Math.random() - 0.5) * shakeMag; shakeMag *= 0.92; }
+      if (cine) cine.tick(dt, ts / 1000);
+      else if (ts < shakeUntil) { molGroup.position.x = (Math.random() - 0.5) * shakeMag; shakeMag *= 0.92; }
       else molGroup.position.x = 0;
+      if (fx) fx.tick(dt);
 
       // 날아드는 원자 애니메이션 + 도착 시 결합 생성
       for (var i = 0; i < atoms.length; i++) {

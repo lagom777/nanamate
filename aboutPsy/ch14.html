@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>심리검사의 세계 | 심리학 기초</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+  <script defer src="../shared/quizgame3d.js"></script>
+  <script defer src="../shared/learngame3d.js"></script>
+</head>
+<body>
+
+<aside>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h1><a href="index.html">심리학 기초</a></h1>
+  <div class="sub">PSYCHOLOGY FROM ZERO</div>
+  <nav>
+    <ol>
+      <li><a href="index.html" class="chap">🏠 목차</a></li>
+      <li><a href="ch01.html" class="chap">1. 심리학이란?</a></li>
+      <li><a href="ch02.html" class="chap">2. 뇌와 신경계</a></li>
+      <li><a href="ch03.html" class="chap">3. 감각과 지각</a></li>
+      <li><a href="ch04.html" class="chap">4. 학습</a></li>
+      <li><a href="ch05.html" class="chap">5. 기억</a></li>
+      <li><a href="ch06.html" class="chap">6. 발달</a></li>
+      <li><a href="ch07.html" class="chap">7. 성격</a></li>
+      <li><a href="ch08.html" class="chap">8. 사회심리학</a></li>
+      <li><a href="ch09.html" class="chap">9. 이상심리·치료</a></li>
+      <li><a href="ch10.html" class="chap">10. 동기와 정서</a></li>
+      <li><a href="ch11.html" class="chap">11. 인지 — 사고·언어·지능</a></li>
+      <li><a href="ch12.html" class="chap">12. 의식 — 수면·꿈·각성</a></li>
+      <li><a href="ch13.html" class="chap">13. 스트레스와 건강심리</a></li>
+      <li><a href="ch14.html" class="chap">14. 심리검사의 세계</a></li>
+      <li><a href="ch15.html" class="chap">15. 긍정심리학</a></li>
+      <li><a href="quiz.html" class="chap">📝 확인 퀴즈</a></li>
+    </ol>
+  </nav>
+  <button id="theme-btn" onclick="toggleTheme()">다크 모드 전환</button>
+</aside>
+
+<main>
+  <div class="page-nav">
+    <a href="index.html">← 목차로</a>
+  </div>
+
+  <section class="chapter" id="ch14">
+    <div class="chap-num">CHAPTER 14</div>
+    <h2>심리검사의 세계 — 마음을 재는 자들의 명함</h2>
+<span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 심리검사 — 신뢰도와 타당도라는 두 개의 과녁</span>
+<div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.6,9);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const rings=[[1.5,0xef4444],[1.0,0xfbbf24],[0.5,0x34d399]];for(let i=0;i<3;i++){const ring=new THREE.Mesh(new THREE.TorusGeometry(rings[i][0],0.08,10,40),new THREE.MeshBasicMaterial({color:rings[i][1],wireframe:false}));ring.position.set(-1.8,0.3,0);s.add(ring);}
+  const dart=new THREE.Mesh(new THREE.ConeGeometry(0.12,0.8,8),new THREE.MeshBasicMaterial({color:0xffffff}));dart.rotation.z=-Math.PI/2;s.add(dart);s.userData.dart=dart;
+  const paper=new THREE.Mesh(new THREE.BoxGeometry(1.6,2.0,0.06),new THREE.MeshBasicMaterial({color:0xe2e8f0,wireframe:true}));paper.position.set(2.4,0.3,0);s.add(paper);
+  const L1=lbl('타당도','#86efac');L1.position.set(-1.8,2.2,0);s.add(L1);const L2=lbl('과녁 = 재는 도구','#cbd5e1');L2.position.set(-1.8,-1.7,0);s.add(L2);const L3=lbl('검사지','#e2e8f0');L3.position.set(2.4,1.75,0);s.add(L3);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 좋은 검사의 두 조건: 신뢰도(같게 재는가)·타당도(맞는 것을 재는가).','지능검사(웩슬러), 객관식 성격검사(MMPI·Big5)는 표준화된 점수를 줍니다.','투사검사(로르샤흐·TAT·HTP)는 애매한 자극에 마음을 비춰 보는 방식 — 타당도는 논쟁 중입니다.','MBTI는 재밌지만 과학적 증거는 약합니다 — 유형보다 연속 점수(Big5)가 정확합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.dart.position.set(-3.6+(Math.sin(T*1.2)+1)*0.9,0.3+Math.cos(T*1.2)*0.1,0);paper.rotation.y=Math.sin(T*0.8)*0.15;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script>
+
+    <div class="en">Psychological Testing</div>
+
+    <p>"당신은 어떤 유형인가요?" 성격 테스트 링크가 단체 채팅방을 도는 날이면 다들 자기 결과를 자랑합니다. 심리검사는 그렇게 일상 깊숙이 들어와 있습니다. 입사 시험의 인적성, 병원의 우울 척도, SNS의 유형 테스트까지 — 그런데 이것들은 전부 같은 '검사'일까요? 심리학에서 <strong>심리검사(psychological test)</strong>는 마음의 특성을 표준화된 절차로 재는 도구를 말하고, 그 도구가 믿을 만한지를 가르는 두 개의 과녁, <strong>신뢰도</strong>와 <strong>타당도</strong>가 있습니다. 이 장은 지능검사에서 성격검사, 그리고 그림을 그리게 하는 투사검사까지, 마음을 재는 도구들의 명함과 한계를 정리합니다.</p>
+
+    <h3>14.1 좋은 검사의 두 과녁 — 신뢰도와 타당도</h3>
+    <p><strong>신뢰도(reliability)</strong>는 '같게 재는가'입니다. 같은 사람을 내일 다시 재면 비슷한 점수가 나와야 하고(검사-재검사), 문항들이 같은 것을 재고 있어야 하며(내적 일관성), 채점자가 바뀌어도 결과가 같아야 합니다. <strong>타당도(validity)</strong>는 '재려던 것을 정말 재는가'입니다. '수학 능력' 검사가 사실은 읽기 능력을 재고 있다면 아무리 점수가 일정해도 쓸모가 없습니다. 비유하면, 신뢰도 높고 타당도 낮은 검사는 5kg 무거운 저울 — 매번 같은 엉터리를 재는 셈입니다. 여기에 <strong>표준화</strong>(누구에게나 같은 절차)와 <strong>규준</strong>(점수를 해석할 비교 집단)이 더해져야 비로소 '검사'가 됩니다.</p>
+
+    <h3>14.2 지능검사 — 가장 오래 닦은 자</h3>
+    <p>현대 심리검사는 1905년 프랑스 <strong>비네(Binet)</strong>가 학습 부진 아동을 가려내기 위해 만든 검사에서 시작했습니다. 그 목적은 '낙인'이 아니라 '도움이 필요한 아이를 찾아 지원'하는 것이었습니다. 이후 웩슬러 척도(WAIS, WISC)가 표준이 되었고, 언어 이해·지각 추론·작업기억·처리속도의 하위 점수로 강점과 약점의 <strong>프로파일</strong>을 그립니다. 지능검사는 심리검사 중 가장 정교하게 닦인 도구지만, 그래도 재는 것은 '검사 상황에서의 인지 수행'일 뿐, 그 사람의 가치나 가능성 전부가 아닙니다. 비네 자신도 점수를 고정된 본질로 쓰는 것을 경계했습니다.</p>
+
+    <h3>14.3 성격검사 — 객관식과 유형의 함정</h3>
+    <p><strong>객관식 성격검사</strong>는 정해진 문항에 응답해 점수를 냅니다. 임상에서 널리 쓰이는 <strong>MMPI</strong>는 수백 문항과 함께 '꾸며내기·방어·모순 응답'을 잡는 타당도 척도를 포함합니다. 연구용 표준은 <strong>NEO(Big 5)</strong>로, 개방성·성실성·외향성·친화성·신경증성의 다섯 차원을 <strong>연속 점수</strong>로 잽니다. 성격이 '유형'이 아니라 '정도'라는 점이 핵심입니다.</p>
+    <p>반면 대중에게 가장 유명한 <strong>MBTI</strong>는 비판이 많습니다. 사람을 16개 상자에 나누는데, 실제 성격 분포는 연속적인 종 곡선이라 대부분은 경계 근처에 몰립니다. 몇 주 뒤 다시 검사하면 유형이 바뀌는 사람이 절반가량이라는 재검사 신뢰도 문제가 반복 보고됩니다. 재미있는 자기 탐색의 출발점으로는 좋지만, 채용·진로 결정의 근거로 쓰는 것은 과학이 지지하지 않습니다. 유형이 아니라 프로파일(차원별 점수)로 자신을 보는 습관이 정확합니다.</p>
+
+    <div class="warning-box">
+      <strong>⚠️ 자주 하는 오해:</strong> SNS의 '몇 문항으로 보는 성격 테스트' 대부분은 검증 절차를 거치지 않았습니다. "당신은 분석적인 리더형"처럼 누구에게나 해당하는 묘사가 맞는 느낌을 주는 것은 <strong>바넘 효과</strong>(Barnum effect) — 점술가가 쓰는 오래된 기술입니다. 검사의 자격은 결과가 그럴듯해 보이는지가 아니라, 신뢰도·타당도 데이터가 공개되어 있는지로 판단하세요.
+    </div>
+
+    <h3>14.4 투사검사 — 그림과 잉크반점에 비친 마음</h3>
+    <p><strong>투사검사(projective test)</strong>는 애매한 자극을 주고 해석을 맡기는 방식입니다. 로르샤흐 잉크반점, 이야기를 지어내게 하는 TAT(주제통각검사), 그리고 집·나무·사람을 그리게 하는 <strong>HTP(House-Tree-Person)</strong>와 KFD(동적 가족화)가 대표적입니다. 아이디어는 직접 물으면 말하지 못하는 것이 '투사'되어 드러난다는 것입니다.</p>
+    <p>투사검사는 상담 현장에서 대화를 여는 문으로 사랑받아 왔습니다. 특히 아동과의 작업에서 그림은 말보다 먼저 나오는 언어입니다. 그러나 과학적 평가는 냉정합니다. 표준화된 채점이 어렵고, 채점자 간 일치율과 타당도가 객관식 검사보다 낮다는 비판이 오래되었습니다. 현대의 균형점은 이렇습니다. 투사검사의 결과를 <strong>'진단'이 아니라 '대화의 실마리·참고 가설'</strong>로 다루는 것입니다. 그림의 크기·위치·압력 같은 특징은 관찰 기록으로 의미가 있지만, 그것만으로 성격이나 상태를 단정해서는 안 됩니다. 해석은 반드시 면담·병력·다른 검사와 함께 삼각 측량해야 합니다.</p>
+
+    <div class="tip">
+      <span class="label">TIP</span>
+      요즘은 AI가 그림을 분석해 주는 앱도 있습니다. 재미로 자신을 돌아보는 데는 좋은 도구지만, 결과는 어디까지나 참고용입니다. AI가 '확신에 찬 어조'로 해석할수록 오히려 경계하세요 — 그 확신은 근거가 아니라 문체일 수 있습니다. 진짜 고민이 있다면 결과지가 아니라 전문가와의 대화가 답입니다.
+    </div>
+
+    <h3>14.5 검사의 윤리</h3>
+    <p>심리검사는 칼과 같아서, 잘 쓰면 도움이 되고 잘못 쓰면 낙인이 됩니다. 결과는 교육받은 사람이 해석하고, 본인에게 알 권리가 있으며, 목적 외 사용(점수로 사람을 줄 세우기)은 금지됩니다. 지능검사의 역사에도 인종 우월을 입증하려 악용된 어두운 페이지가 있습니다. 도구의 정확도만큼이나 중요한 것은, 그 도구를 든 손의 윤리입니다.</p>
+  </section>
+
+  <div class="page-nav-bottom">
+    <a href="ch13.html">← 이전</a>
+    <div class="spacer"></div>
+    <a href="ch15.html">다음 →</a>
+  </div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한마디로 하면?</h3>
+  <p>심리검사는 마음을 재는 <b>자</b>예요. 좋은 자는 ① 언제 재도 같고(신뢰도) ② 재려던 걸 정확히 재요(타당도). 이 둘 없는 테스트는 장난감 자예요! 📏</p>
+
+  <h3>🤔 이게 왜 재밌냐면</h3>
+  <ul>
+    <li>🔮 "당신은 남을 잘 배려하지만 가끔 외로워요" — 누구에게나 맞는 말인데 콕 집은 느낌이죠? 바넘 효과예요!</li>
+    <li>🧩 MBTI를 몇 주 뒤에 다시 하면 유형이 바뀌는 사람이 많아요 — 성격은 상자가 아니라 그래프예요.</li>
+    <li>🎨 아이들의 그림은 말보다 먼저 나오는 언어 — 그래서 상담에서 대화의 문을 열어줘요.</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 이 단어만 알면 돼!</h4>
+    <ul>
+      <li><strong>신뢰도</strong>: 언제 재도 같은 값이 나오는가</li>
+      <li><strong>타당도</strong>: 재려던 것을 정말 재는가</li>
+      <li><strong>규준</strong>: 내 점수를 비교할 기준 집단</li>
+      <li><strong>투사검사</strong>: 애매한 자극에 마음을 비춰 보는 검사 (HTP·로르샤흐)</li>
+      <li><strong>바넘 효과</strong>: 누구에게나 맞는 말이 나만의 해석처럼 느껴지는 현상</li>
+    </ul>
+  </div>
+
+  <h3>📖 쉽게 풀어볼게!</h3>
+  <p>몸무게 저울을 생각해 봐요. 아침저녁으로 재도 늘 5kg가 더 나오는 저울은 <b>신뢰도는 높고 타당도는 낮은</b> 저울이에요 — 매번 같은 엉터리를 재거든요. ⚖️ 심리검사도 마찬가지예요. 유명하다고 좋은 검사가 아니라, 숫자(신뢰도·타당도 데이터)를 공개한 검사가 좋은 검사예요. 그리고 그림 검사 결과는 '진단서'가 아니라 '대화 시작 카드'라고 생각하면 딱 맞아요. 🃏</p>
+
+  <div class="study-tip">
+    <strong>💡 이렇게 해봐:</strong> 다음에 성격 테스트 결과를 보면, "이 중에 <b>나와 다른 점</b>은 뭐지?"를 찾아 보세요. 맞는 부분만 보는 게 바넘 효과의 손짓이에요! 🔍
+  </div>
+
+  <h3>✅ 오늘의 정리</h3>
+  <ul>
+    <li>좋은 검사 = 신뢰도 + 타당도 + 규준! 📏</li>
+    <li>지능검사는 프로파일이지, 사람의 등급이 아니에요.</li>
+    <li>MBTI는 재미, Big5는 연속 점수라 더 정확.</li>
+    <li>HTP 등 투사검사는 '대화의 실마리', 진단 아님.</li>
+    <li>누구에게나 맞는 해석에 속지 말기 (바넘 효과)!</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이</h3>
+  <p>심리측정학(psychometrics)은 검사의 질을 숫자로 평가합니다. 고전 검사 이론(CTT)에서는 관찰 점수 = 참점수 + 오차이고, 신뢰도는 참점수 분산의 비율입니다. 현대에는 항목 반응 이론(IRT)이 문항별 난이도·변별도를 모델링해 맞춤형 검사(CAT)를 가능케 합니다. 타당도는 내용(문항이 영역을 대표하는가), 기준(다른 지표와 얼마나 연관되는가), 구인(이론적 개념을 재는가)의 삼각으로 검증하며, Messick은 이를 '해석의 타당성'으로 통합했습니다. 성격 연구에서 Big5는 요인분석으로 어휘 연구와 질문지 연구 모두에서 반복 재현된 구조이고, MBTI는 이분 범주화·재검사 불안정·예측력 부족의 삼중 비판을 받습니다. 투사검사의 메타분석은 로르샤흐의 일부 지수(Exner 체계)에 제한적 근거를, HTP·KFD의 해석에는 일관성 부족을 보고합니다.</p>
+
+  <h3>고전 실험과 사례</h3>
+  <div class="info-card">
+    <h4>🧠 실험 1 — 포러의 성격 읽기 (1948)</h4>
+    <p>포러(Forer)는 학생 전원에게 동일한 모호한 성격 해석을 나눠 주고 '자기 분석의 정확도'를 평가하게 했더니 평균 4.3/5점을 받았습니다. 누구에게나 해당하는 묘사가 개인화된 통찰로 느껴지는 바넘 효과를 실험으로 보여준 고전입니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>🧠 사례 2 — 비네의 유산과 남용</h4>
+    <p>비네는 검사가 '지원이 필요한 아동'을 돕기 위한 도구라고 강조했지만, 20세기 초 미국에서는 이민자·특정 인종의 '열등'을 입증하는 데 악용되었습니다. 측정 도구가 사회적 편견을 과학의 얼굴로 포장한 대표 사례로, 검사 윤리 교육의 필수 장입니다.</p>
+  </div>
+
+  <h3>임상/실생활 응용</h3>
+  <p>병원에서는 PHQ-9(우울), GAD-7(불안)처럼 짧고 검증된 척도로 선별 후 면담으로 확정합니다. 인사에서는 인적성 대신 구조화 면접·직무 수행 검사의 예측 타당도가 더 높다는 메타분석이 반영됩니다. 아동 상담에서 그림은 '관계 형성과 관찰'의 도구로는 계속 쓰이되, 단독 진단 근거로는 쓰지 않는다는 것이 현대 지침입니다.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ 자주 하는 오해:</strong> "과학적 검사라면 내 미래를 예측할 수 있다"는 기대는 과도합니다. 가장 정교한 검사도 행동 예측은 확률적입니다. 검사는 판정서가 아니라 의사결정에 참고하는 한 증거입니다.
+  </div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨</h3>
+  <p>현대 측정의 최전선은 네 갈래입니다. 첫째, IRT/컴퓨터 적응형 검사는 수험자의 응답에 따라 다음 문항을 고르는 알고리즘으로 측정 효율을 극대화합니다. 둘째, 암묵 연합 검사(IAT)처럼 반응시간 기반 측정은 자기보고의 사회적 바람직성 편향을 우회하려는 시도이나, 예측 타당도 논쟁이 계속됩니다. 셋째, 디지털 표현형(digital phenotyping) — 스마트폰 사용 패턴·타이핑 리듬으로 상태를 추정하는 연구는 새로운 타당도·프라이버시 문제를 동반합니다. 넷째, 머신러닝 기반 성격 추론(텍스트·이미지 분석)은 '예측은 되지만 설명이 안 되는' 블랙박스 문제를 심리학에 던졌습니다. 측정 불변성 검증(집단 간 같은 개념을 재는가) 없는 알고리즘 채점은 공정성 이슈로 직결됩니다.</p>
+
+  <h3>측정과 통계</h3>
+  <p>신뢰도는 크론바흐 α 외에도 분할-반분, 검사-재검사, McDonald의 ω로 추정합니다. 타당도는 요인분석(탐색적/확인적), 다특성-다방법 행렬(MTMM), 기준 연관으로 검증하고, 표준오차(SEM)로 개인 점수의 신뢰구간을 보고합니다. 임상 척도는 민감도·특이도·양성 예측도가 컷오프와 함께 제시되어야 합니다. 최근에는 측정의 '네트워크 모델'(증상들의 상호작용망으로 장애를 보기)이 전통적 잠재변수 모형과 경쟁합니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li><strong>심리측정학</strong>: 검사 이론과 통계</li>
+    <li><strong>임상심리학</strong>: 평가-진단-치료 연계</li>
+    <li><strong>법심리학</strong>: 법정에서의 심리 평가</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>책: 『Standards for Educational and Psychological Testing』(AERA/APA/NCME)</li>
+    <li>책: 『The Cult of Personality Testing』(Paul)</li>
+    <li>저널: Psychological Assessment, Intelligence</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>🎓 사고 실험:</strong> 만약 당신의 성격·지능·정신 상태를 완벽하게 재는 검사가 개발된다면, 그 결과를 당신은 보고 싶은가요? '알 권리'와 '모를 권리' 중 무엇이 더 소중할까요?
+  </div>
+</div>
+
+  <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+
+<h2>🕹️ 직접 해보기 — 신뢰도·타당도 다트</h2>
+<p>세 가지 조건으로 과녁에 다트를 던져 봅니다. ① 흔들리는 손 ② 빗나간 조준기 ③ 교정 완료. 던지는 손은 당신이지만, 조건이 판을 바꿉니다 — 결과 무늬가 곧 신뢰도와 타당도의 정의입니다.</p>
+<div id="pg-dart" style="position:relative;overflow:hidden;border:1px solid rgba(148,163,184,.16);border-radius:18px;padding:18px;background:linear-gradient(165deg,#10182b,#0a0f1d 60%,#0d1226);box-shadow:0 24px 70px rgba(2,6,23,.55);font-family:'Noto Sans KR',sans-serif;color:#e2e8f0;margin:10px 0">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+    <div id="pgd-phase" style="font-weight:900;color:#fbbf24;text-shadow:0 0 12px rgba(251,191,36,.35)">🎯 준비</div>
+    <div style="flex:1"></div>
+    <div id="pgd-darts" style="font-size:12px;font-weight:800;color:#94a3b8"></div>
+  </div>
+  <canvas id="pgd-cv" width="640" height="320" style="width:100%;height:320px;border-radius:14px;background:linear-gradient(180deg,#0a1120,#0e1730);cursor:crosshair;touch-action:none;display:block"></canvas>
+  <div id="pgd-status" style="min-height:22px;margin-top:8px;font-size:13px;font-weight:600;color:#94a3b8">시작하려면 클릭</div>
+</div>
+<script>(function(){
+  var host=document.getElementById('pg-dart');if(!host)return;
+  var cv=host.querySelector('#pgd-cv'),ctx=cv.getContext('2d');
+  var phaseEl=host.querySelector('#pgd-phase'),dartsEl=host.querySelector('#pgd-darts'),statusEl=host.querySelector('#pgd-status');
+  var PHASES=[
+    {name:'① 흔들리는 손',jitter:95,off:0,msg:'다트가 사방에 흩어졌어요 — 같은 곳을 겨눠도 매번 다름 → 신뢰도(일관성) 낮음'},
+    {name:'② 빗나간 조준기',jitter:16,off:-85,msg:'한 곳에 잘 모이는데 과녁이 아닌 곳에 — 신뢰도는 높지만 타당도(정확성) 낮음'},
+    {name:'③ 교정 완료',jitter:16,off:0,msg:'과녁 중심에 촘촘히 — 신뢰도 + 타당도 모두 확보!'}
+  ];
+  var TX=500,TY=160,pi=-1,thrown=[],hits=[],flying=null,mx=TX,my=TY,score=0;
+  function dartStart(){
+    pi=0;thrown=[];hits=[];score=0;phaseEl.textContent=PHASES[0].name;statusEl.textContent='과녁을 겨누고 클릭해서 6발 던지기';updDarts();draw();
+  }
+  function updDarts(){dartsEl.textContent=pi>=0&&pi<3?('남은 다트 '+(6-thrown.length)+' / 6'):'';}
+  function draw(){
+    ctx.clearRect(0,0,640,320);
+    // 과녁
+    var rings=[[66,'#ef4444'],[44,'#f8fafc'],[22,'#ef4444'],[9,'#fbbf24']];
+    rings.forEach(function(r){ctx.beginPath();ctx.arc(TX,TY,r[0],0,Math.PI*2);ctx.fillStyle=r[1];ctx.fill();});
+    // 꽂힌 다트
+    hits.forEach(function(h){
+      ctx.save();ctx.translate(h.x,h.y);ctx.rotate(-0.35);
+      ctx.strokeStyle='#e2e8f0';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-16,0);ctx.lineTo(0,0);ctx.stroke();
+      ctx.fillStyle='#94a3b8';ctx.beginPath();ctx.moveTo(-16,-6);ctx.lineTo(-16,6);ctx.lineTo(-24,0);ctx.closePath();ctx.fill();
+      ctx.restore();
+    });
+    // 날아가는 다트
+    if(flying){
+      ctx.save();ctx.translate(flying.x,flying.y);ctx.rotate(-0.15);
+      ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-22,0);ctx.lineTo(0,0);ctx.stroke();
+      ctx.fillStyle='#fbbf24';ctx.beginPath();ctx.moveTo(-22,-7);ctx.lineTo(-22,7);ctx.lineTo(-32,0);ctx.closePath();ctx.fill();
+      ctx.restore();
+    }
+    // 조준점
+    if(pi>=0&&pi<3&&!flying){
+      ctx.strokeStyle='rgba(251,191,36,.8)';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.arc(mx,my,10,0,Math.PI*2);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(mx-15,my);ctx.lineTo(mx+15,my);ctx.moveTo(mx,my-15);ctx.lineTo(mx,my+15);ctx.stroke();
+    }
+  }
+  function throwDart(){
+    if(pi<0||pi>=3||flying||thrown.length>=6)return;
+    var P=PHASES[pi];
+    var hx=TX+P.off+(Math.random()-0.5)*2*P.jitter;
+    var hy=TY+(Math.random()-0.5)*2*P.jitter;
+    flying={x:60,y:hy,tx:hx,ty:hy};
+    var iv=setInterval(function(){
+      flying.x+=24;
+      if(flying.x>=flying.tx){
+        clearInterval(iv);
+        hits.push({x:flying.tx,y:flying.ty});flying=null;
+        thrown.push(1);updDarts();
+        if(pi===2){var d=Math.hypot(hx-TX,hy-TY);score+=Math.max(0,Math.round(100-d));}
+        if(thrown.length>=6){
+          statusEl.textContent=PHASES[pi].msg;
+          statusEl.style.color=pi===2?'#4ade80':'#fbbf24';
+          setTimeout(function(){
+            pi++;
+            if(pi<3){thrown=[];hits=pi===1?hits:[];phaseEl.textContent=PHASES[pi].name;statusEl.style.color='#94a3b8';statusEl.textContent=pi===1?'같은 곳을 겨누어 보세요 — 이번엔 조준기가 이상합니다':'이번엔 교정된 상태 — 과녁 중앙을 노리세요';updDarts();}
+            else finish();
+          },2200);
+        }
+        draw();
+      } else draw();
+    },16);
+  }
+  function finish(){
+    phaseEl.textContent='🏆 결과';
+    ctx.fillStyle='rgba(2,6,23,.85)';ctx.fillRect(0,0,640,320);
+    ctx.textAlign='center';
+    ctx.fillStyle='#fbbf24';ctx.font='900 24px "Noto Sans KR"';ctx.fillText('정확도 점수: '+score,320,70);
+    ctx.fillStyle='#e2e8f0';ctx.font='700 14px "Noto Sans KR"';
+    ctx.fillText('흩어짐 = 신뢰도 낮음 (언제 재도 다름)',320,120);
+    ctx.fillText('모였는데 빗나감 = 신뢰도 높음 · 타당도 낮음 (5kg 무거운 저울)',320,150);
+    ctx.fillText('모이고 중심 = 신뢰도 + 타당도 (좋은 검사)',320,180);
+    ctx.fillStyle='#94a3b8';ctx.font='600 12px "Noto Sans KR"';
+    ctx.fillText('심리검사의 자격은 이 두 과녁으로 판단합니다. 클릭하면 다시 던지기',320,215);
+    statusEl.textContent='클릭하면 처음부터 다시';
+  }
+  cv.addEventListener('mousemove',function(e){var r=cv.getBoundingClientRect();mx=(e.clientX-r.left)*(640/r.width);my=(e.clientY-r.top)*(320/r.height);draw();});
+  cv.addEventListener('click',function(){if(pi<0){dartStart();}else if(pi>=3){pi=-1;dartStart();}else throwDart();});
+  cv.addEventListener('touchstart',function(e){e.preventDefault();var r=cv.getBoundingClientRect();var t=e.touches[0];mx=(t.clientX-r.left)*(640/r.width);my=(t.clientY-r.top)*(320/r.height);if(pi<0)dartStart();else if(pi>=3){pi=-1;dartStart();}else throwDart();},{passive:false});
+  // 시작 화면
+  ctx.fillStyle='#0e1730';ctx.fillRect(0,0,640,320);
+  ctx.textAlign='center';
+  ctx.fillStyle='#fbbf24';ctx.font='900 26px "Noto Sans KR"';ctx.fillText('🎯 신뢰도·타당도 다트',320,130);
+  ctx.fillStyle='#e2e8f0';ctx.font='700 14px "Noto Sans KR"';ctx.fillText('던지는 결과 무늬가 곧 두 개념의 정의입니다',320,165);
+  ctx.fillStyle='#94a3b8';ctx.font='600 12px "Noto Sans KR"';ctx.fillText('클릭해서 시작',320,200);
+})();</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7b5cff","questions":[{"q":"'재려던 것을 정말 재는가'를 뜻하는 말은?","choices":["신뢰도","타당도","규준","표준화"],"answer":1},{"q":"현대 표준 성격 모형으로, 연속 점수를 쓰는 것은?","choices":["MBTI","사주","Big5","혈액형"],"answer":2},{"q":"집·나무·사람을 그리게 하는 투사검사는?","choices":["HTP","MMPI","WAIS","PHQ-9"],"answer":0},{"q":"누구에게나 해당하는 묘사가 나만의 해석처럼 느껴지는 현상은?","choices":["플린 효과","바넘 효과","후광 효과","닻 내림"],"answer":1},{"q":"투사검사 결과의 올바른 사용법은?","choices":["단독 진단 근거","대화의 실마리·참고 가설","채용 합격 기준","미래 예측"],"answer":1}]};</script>
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>

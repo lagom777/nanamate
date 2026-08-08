@@ -140,8 +140,11 @@
       scene = new THREE.Scene();
       cam = new THREE.PerspectiveCamera(48, W / H, 0.1, 200);
       cam.position.set(CAMX, CAMY, CAMZ); cam.lookAt(1, 2.2, 0);
-      rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      rndr = (window.NMP3 && NMP3.renderer) ? NMP3.renderer(W, H, { exposure: 1.15 }) : null;
+      if (!rndr) {
+        rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
     var kernel =
@@ -158,8 +161,12 @@
 
     // 새벽 조명 + 원경 안개
     scene.fog = new THREE.Fog(0x3b2f5e, 26, 78);
-    scene.add(new THREE.AmbientLight(0xbcc7ff, 0.7));
-    var dl = new THREE.DirectionalLight(0xffc08a, 0.9); dl.position.set(-6, 7, 9); scene.add(dl);
+    if (window.NMP3 && NMP3.lightRig) {
+      NMP3.lightRig(scene, { sky: 0xbcc7ff, ground: 0x3b2f5e, hemiI: 0.7, keyColor: 0xffc08a, keyI: 0.95, keyX: -6, keyY: 7, keyZ: 9, rimColor: 0x8fa8ff, rimI: 0.4 });
+    } else {
+      scene.add(new THREE.AmbientLight(0xbcc7ff, 0.7));
+      var dl = new THREE.DirectionalLight(0xffc08a, 0.9); dl.position.set(-6, 7, 9); scene.add(dl);
+    }
 
     // 캔버스 합성 텍스처(radial-gradient) — 글로우/연기/구름 공용
     function radialTex(stops) {
@@ -239,6 +246,9 @@
     // 연기/흙먼지 퍼프 풀(10개 — 초기화 때 1회 생성, 개별 페이드가 필요해 material만 각자 소유)
     var smokes = [], smokeHead = 0;
     for (var pi0 = 0; pi0 < 10; pi0++) { var smk = new THREE.Sprite(new THREE.SpriteMaterial({ map: softTex, transparent: true, opacity: 0, depthWrite: false })); smk.visible = false; smk.userData.life = 0; scene.add(smk); smokes.push(smk); }
+
+    // NMP3 additive glow particle pool — hit/miss burst upgrade (fallback: shard pool below)
+    var fx = (window.NMP3 && NMP3.particles) ? NMP3.particles(scene, { max: 64 }) : null;
 
     // 머즐 플래시(1개 재사용) + 쇼크웨이브 링(1개 재사용)
     var flash = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, blending: THREE.AdditiveBlending, transparent: true, opacity: 0, depthWrite: false }));
@@ -321,13 +331,16 @@
 
     // 카메라 셰이크(0.25s 감쇠 노이즈)·빗나감 딥
     var shakeT = 0, shakeDur = 1, shakeAmp = 0, dipT = 0, dipDur = 1, dipAmp = 0;
-    function shake(amp, dur) { if (RM) return; shakeAmp = amp; shakeT = dur; shakeDur = dur; }
-    function dip(amp) { if (RM) return; dipAmp = amp; dipT = 0.35; dipDur = 0.35; }
+    // NMP3 cineCam: intro dolly + idle drift + damped shake (fallback: manual shake/dip below)
+    var cine = (window.NMP3 && NMP3.cineCam) ? NMP3.cineCam(cam, { x: CAMX, y: CAMY, z: CAMZ }, { lookAt: { x: 1, y: 2.2, z: 0 } }) : null;
+    function shake(amp, dur) { if (cine) { cine.shake(amp, dur); return; } if (RM) return; shakeAmp = amp; shakeT = dur; shakeDur = dur; }
+    function dip(amp) { if (cine) { cine.shake(amp * 0.6, 0.35); return; } if (RM) return; dipAmp = amp; dipT = 0.35; dipDur = 0.35; }
 
     function shockwave(p) { if (RM) return; ring.position.set(p.x, p.y, 0.15); ring.scale.set(0.5, 0.5, 1); ring.material.opacity = 0.9; ringLife = 1; ring.visible = true; }
 
     function burst(p, mat, n) {
       if (RM) return;
+      if (fx) { fx.burst(p, mat.color ? mat.color.getHex() : 0xfde047, n, 4.2, 0.85, 0.55, 0.9); return; }
       for (var i = 0; i < n && i < shards.length; i++) {
         var s = shards[shardHead++ % shards.length];
         s.visible = true; s.material = mat; s.position.copy(p);
@@ -525,14 +538,21 @@
       // 파편(중력·자전·수명)
       for (var h2 = 0; h2 < shards.length; h2++) { var sd = shards[h2]; if (!sd.visible) continue; sd.userData.life -= dt; if (sd.userData.life <= 0) { sd.visible = false; continue; } sd.userData.v.y -= 9 * dt; sd.position.addScaledVector(sd.userData.v, dt); sd.rotation.x += sd.userData.spin * dt; sd.rotation.z += sd.userData.spin * 0.7 * dt; var ss = Math.min(1, sd.userData.life * 1.6); sd.scale.set(ss, ss, ss); }
 
+      // NMP3 particle tick
+      if (fx) fx.tick(dt);
+
       // 쇼크웨이브 링(확장+페이드)
       if (ring.visible) { ringLife -= dt / 0.5; if (ringLife <= 0) ring.visible = false; else { var rs = 0.5 + (1 - ringLife) * 3.6; ring.scale.set(rs, rs, 1); ring.material.opacity = 0.9 * ringLife; } }
 
       // 카메라 셰이크(감쇠 노이즈)·딥 — 매 프레임 base에서 재계산해 원위치 보장
-      var ox = 0, oy = 0;
-      if (shakeT > 0) { shakeT -= dt; var sk = Math.max(0, shakeT / shakeDur) * shakeAmp; ox += (Math.random() * 2 - 1) * sk; oy += (Math.random() * 2 - 1) * sk; }
-      if (dipT > 0) { dipT -= dt; oy -= Math.sin((1 - Math.max(0, dipT) / dipDur) * Math.PI) * dipAmp; }
-      cam.position.set(CAMX + ox, CAMY + oy, CAMZ);
+      if (cine) {
+        cine.tick(dt, ts / 1000);
+      } else {
+        var ox = 0, oy = 0;
+        if (shakeT > 0) { shakeT -= dt; var sk = Math.max(0, shakeT / shakeDur) * shakeAmp; ox += (Math.random() * 2 - 1) * sk; oy += (Math.random() * 2 - 1) * sk; }
+        if (dipT > 0) { dipT -= dt; oy -= Math.sin((1 - Math.max(0, dipT) / dipDur) * Math.PI) * dipAmp; }
+        cam.position.set(CAMX + ox, CAMY + oy, CAMZ);
+      }
 
       // 점수 카운트업 트윈
       if (dispScore !== score) { if (RM) dispScore = score; else dispScore = Math.min(score, dispScore + Math.max(90 * dt, (score - dispScore) * 7 * dt)); renderHud(); }

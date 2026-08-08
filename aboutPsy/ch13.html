@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스트레스와 건강심리 | 심리학 기초</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+  <script defer src="../shared/quizgame3d.js"></script>
+  <script defer src="../shared/learngame3d.js"></script>
+</head>
+<body>
+
+<aside>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h1><a href="index.html">심리학 기초</a></h1>
+  <div class="sub">PSYCHOLOGY FROM ZERO</div>
+  <nav>
+    <ol>
+      <li><a href="index.html" class="chap">🏠 목차</a></li>
+      <li><a href="ch01.html" class="chap">1. 심리학이란?</a></li>
+      <li><a href="ch02.html" class="chap">2. 뇌와 신경계</a></li>
+      <li><a href="ch03.html" class="chap">3. 감각과 지각</a></li>
+      <li><a href="ch04.html" class="chap">4. 학습</a></li>
+      <li><a href="ch05.html" class="chap">5. 기억</a></li>
+      <li><a href="ch06.html" class="chap">6. 발달</a></li>
+      <li><a href="ch07.html" class="chap">7. 성격</a></li>
+      <li><a href="ch08.html" class="chap">8. 사회심리학</a></li>
+      <li><a href="ch09.html" class="chap">9. 이상심리·치료</a></li>
+      <li><a href="ch10.html" class="chap">10. 동기와 정서</a></li>
+      <li><a href="ch11.html" class="chap">11. 인지 — 사고·언어·지능</a></li>
+      <li><a href="ch12.html" class="chap">12. 의식 — 수면·꿈·각성</a></li>
+      <li><a href="ch13.html" class="chap">13. 스트레스와 건강심리</a></li>
+      <li><a href="ch14.html" class="chap">14. 심리검사의 세계</a></li>
+      <li><a href="ch15.html" class="chap">15. 긍정심리학</a></li>
+      <li><a href="quiz.html" class="chap">📝 확인 퀴즈</a></li>
+    </ol>
+  </nav>
+  <button id="theme-btn" onclick="toggleTheme()">다크 모드 전환</button>
+</aside>
+
+<main>
+  <div class="page-nav">
+    <a href="index.html">← 목차로</a>
+  </div>
+
+  <section class="chapter" id="ch13">
+    <div class="chap-num">CHAPTER 13</div>
+    <h2>스트레스와 건강심리 — 마음이 몸에 새기는 것</h2>
+<span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 스트레스 — 압력이 면역·심장·수면으로 번지는 경로</span>
+<div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.6,9);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const press=new THREE.Mesh(new THREE.ConeGeometry(0.7,1.3,4),new THREE.MeshBasicMaterial({color:0xef4444,wireframe:true}));press.position.set(0,1.9,0);press.rotation.z=Math.PI;s.add(press);
+  const heart=new THREE.Mesh(new THREE.OctahedronGeometry(0.5),new THREE.MeshBasicMaterial({color:0xf472b6,wireframe:true}));heart.position.set(-2.4,-0.9,0);s.add(heart);
+  const immune=new THREE.Mesh(new THREE.IcosahedronGeometry(0.5,0),new THREE.MeshBasicMaterial({color:0x34d399,wireframe:true}));immune.position.set(0,-0.9,0);s.add(immune);
+  const sleep=new THREE.Mesh(new THREE.SphereGeometry(0.5,16,16),new THREE.MeshBasicMaterial({color:0x60a5fa,wireframe:true}));sleep.position.set(2.4,-0.9,0);s.add(sleep);
+  const links=[];const tgts=[[-2.4,-0.9],[0,-0.9],[2.4,-0.9]];for(let i=0;i<3;i++){const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,1.25,0),new THREE.Vector3(tgts[i][0],tgts[i][1],0)]),new THREE.LineBasicMaterial({color:0x94a3b8,transparent:true,opacity:0.6}));s.add(ln);links.push(ln);}
+  const L1=lbl('스트레스','#fca5a5');L1.position.set(0,2.95,0);s.add(L1);const L2=lbl('심장·혈압','#f9a8d4');L2.position.set(-2.4,-1.75,0);s.add(L2);const L3=lbl('면역','#86efac');L3.position.set(0,-1.75,0);s.add(L3);const L4=lbl('수면','#93c5fd');L4.position.set(2.4,-1.75,0);s.add(L4);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 스트레스는 싸움-도주 반응: 아드레날린과 코르티솔이 몸을 전투 태세로 만듭니다.','만성 스트레스는 면역력·혈압·수면을 갉아먹습니다 — 마음의 일이 몸의 일이 됩니다.','라자루스: 스트레스는 사건이 아니라 내가 사건을 평가하는 방식에서 생깁니다.','방패 세 개: 규칙적인 운동, 충분한 수면, 기댈 수 있는 사람(사회적 지지).'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}press.position.y=1.9+Math.sin(T*3)*0.12;heart.scale.setScalar(1+Math.abs(Math.sin(T*4))*0.25);immune.rotation.y+=0.02;sleep.position.y=-0.9+Math.sin(T*1.5)*0.1;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script>
+
+    <div class="en">Stress and Health Psychology</div>
+
+    <p>발표 전날 밤 배가 아프고, 마감이 겹치면 감기에 걸리고, 힘든 시기가 지나면 머리칼이 빠집니다. 우리는 본능적으로 "마음의 일이 몸의 일이 된다"는 걸 압니다. <strong>건강심리학(health psychology)</strong>은 이 연결고리를 과학으로 연구하는 분야입니다. 스트레스는 어떻게 면역·심장·수면을 갉아먹고, 그럼에도 왜 어떤 사람은 쓰러지지 않는지 — 그리고 우리는 무엇으로 스스로를 지킬 수 있는지 살펴봅니다.</p>
+
+    <h3>13.1 스트레스 반응 — 원래는 생존 장치</h3>
+    <p>스트레스 반응은 사실 훌륭한 생존 장치입니다. 위협이 감지되면 시상하부가 두 갈래 경보를 울립니다. 빠른 길은 교감신경이 아드레날린을 분비하게 해 심장 박동·혈압·호흡을 올리는 것이고, 느린 길은 <strong>HPA 축</strong>(시상하부-뇌하수체-부신피질)이 <strong>코르티솔</strong>을 분비해 에너지를 동원하는 것입니다. 근육에 혈액이 몰리고 소화·면역 같은 '나중 일'은 잠시 멈춥니다. 사자를 만난 원시인에게는 완벽한 설정입니다.</p>
+    <p>문제는 현대의 '사자'가 상사의 이메일, 시험, 카드값처럼 <strong>사라지지 않는 위협</strong>이라는 점입니다. 몇 분이면 끝날 반응이 몇 주, 몇 달 이어지면, 일시 정지시킨 체계들이 망가지기 시작합니다. 이것이 셀리에의 일반적응증후군(경고 → 저항 → 소진, 10장 참조)이 오래 지속될 때 일어나는 일입니다.</p>
+
+    <h3>13.2 몸으로 번지는 경로</h3>
+    <ul>
+      <li><strong>면역</strong> — 코르티솔은 면역 반응을 억제합니다. 시험 기간에 감기가 잘 걸리고, 만성 스트레스에서 상처 회복이 느려진다는 연구가 축적되어 있습니다(심리신경면역학, PNI).</li>
+      <li><strong>심혈관</strong> — 만성적인 혈압 상승과 염증은 동맥경화의 위험 인자입니다. 분노가 잦고 적의가 높은 성향(A형 행동 유형의 핵심 독성 요소)이 관상동맥 질환과 연결된다는 연구가 있습니다.</li>
+      <li><strong>수면과 소화</strong> — 스트레스는 수면 잠복기를 늘리고 깊은 잠을 줄이며, 장신경계를 통해 소화 장애·과민성 장증후군과도 연결됩니다. 몸이 긴장하면 수면이 물러나고, 수면 부족은 다시 스트레스 회로를 민감하게 만드는 악순환입니다.</li>
+    </ul>
+
+    <h3>13.3 결정적 변수 — 내가 사건을 읽는 방식</h3>
+    <p>같은 사거이도 사람마다 스트레스가 다릅니다. <strong>라자루스(Lazarus)</strong>는 그 이유를 '평가(appraisal)'에서 찾았습니다. 일차 평가에서 "이건 내게 위협인가, 도전인가"를 가늠하고, 이차 평가에서 "나는 감당할 자원이 있는가"를 따집니다. 시험을 '인생이 걸린 심판'으로 읽으면 혈압이 오르고, '실력 점검 기회'로 읽으면 같은 시험이 적당한 각성으로 바뀝니다. 스트레스는 사건 속에 있는 게 아니라, 사건과 나의 관계 속에 있습니다.</p>
+    <p>대처(coping)에는 세 갈래가 있습니다. 상황을 바꾸는 <strong>문제중심 대처</strong>(계획 수정, 대화, 도움 요청), 감정을 다루는 <strong>정서중심 대처</strong>(명상, 일기, 운동, 털어놓기), 그리고 바꿀 수 없는 일에서 의미를 찾는 <strong>의미중심 대처</strong>(이 시련에서 배우는 것, 종교·가치관)입니다. 상황이 통제 가능하면 문제중심이, 불가능하면 정서·의미중심이 적응적입니다. 최악의 대처는 회피(술, 미루기, 부정)인데, 단기 마취일 뿐 문제를 키워 돌아옵니다.</p>
+
+    <div class="example">
+      <span class="label">EXAMPLE</span>
+      같은 퇴사 통보를 받고 A씨는 "나는 끝났다"로 읽어 며칠을 눕고, B씨는 "맞지 않았던 옷을 벗었다"로 읽어 한 달 뒤 더 맞는 자리를 찾습니다. 사건은 같았지만 일차 평가(위협 vs 기회)와 이차 평가(자원 있음 vs 없음)가 몸에 새겨지는 스트레스의 양을 갈랐습니다. 평가는 마음의 습관이고, 습관은 훈련으로 바뀝니다.
+    </div>
+
+    <h3>13.4 방패를 만드는 법 — 회복탄력성과 건강 행동</h3>
+    <p>수십 년의 추적 연구는 놀라울 정도로 소박한 방패들을 반복해서 가리킵니다. <strong>규칙적인 운동</strong>은 코르티솔을 낮추고 엔도르핀을 올려 스트레스 회로 자체를 튜닝합니다. <strong>충분한 수면</strong>은 정서조절의 하드웨어입니다. <strong>사회적 지지</strong> — 어려울 때 기댈 사람이 한 명이라도 있으면 같은 스트레스에서 병에 걸릴 확률이 유의미하게 낮아집니다. 여기에 <strong>낙관성</strong>(나쁜 일을 일시적·특정적 원인으로 해석하는 습관)과 <strong>회복탄력성(resilience)</strong> — 찰나의 역경에서 원래 형태로 돌아오는 고무줄 같은 힘이 더해집니다. 회복탄력성은 타고나는 특기가 아니라, 작은 극복 경험들이 쌓여 만들어지는 근육입니다.</p>
+
+    <div class="tip">
+      <span class="label">TIP</span>
+      가장 빠른 생리적 스위치는 <strong>호흡</strong>입니다. 들숨 4초-날숨 6초처럼 날숨을 길게 하면 미주신경이 부교감신경을 깨워 심박이 차분해집니다. 발표 1분 전, 화가 치밀어 오른 직후 — 어디서든 쓸 수 있는 휴식 버튼이 이미 몸에 달려 있습니다.
+    </div>
+  </section>
+
+  <div class="page-nav-bottom">
+    <a href="ch12.html">← 이전</a>
+    <div class="spacer"></div>
+    <a href="ch14.html">다음 →</a>
+  </div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한마디로 하면?</h3>
+  <p>스트레스는 원래 사자에게 도망치는 <b>생존 모드</b>예요. 그런데 이메일·시험 같은 '안 끝나는 사자' 때문에 그 모드가 꺼지지 않으면 몸이 녹아내아요. 🦁</p>
+
+  <h3>🤔 이게 왜 재밌냐면</h3>
+  <ul>
+    <li>🤧 시험 기간에 감기가 잘 걸리는 건 우연이 아니에요 — 스트레스 호르몬이 면역을 잠시 멈춰요.</li>
+    <li>🧠 같은 사건이라도 '위협'으로 읽는 사람과 '도전'으로 읽는 사람의 몸은 다르게 반응해요.</li>
+    <li>📞 힘들 때 기댈 사람이 한 명만 있어도 병에 걸릴 확률이 낮아져요.</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 이 단어만 알면 돼!</h4>
+    <ul>
+      <li><strong>코르티솔</strong>: 스트레스 호르몬 (단기엔 연료, 만성엔 독)</li>
+      <li><strong>일차 평가</strong>: 이 사건이 위협인가 도전인가</li>
+      <li><strong>이차 평가</strong>: 나는 감당할 자원이 있는가</li>
+      <li><strong>문제중심 대처</strong>: 상황을 직접 바꾸기</li>
+      <li><strong>정서중심 대처</strong>: 내 감정을 다루기</li>
+    </ul>
+  </div>
+
+  <h3>📖 쉽게 풀어볼게!</h3>
+  <p>몸을 자동차에 비유하면 스트레스 반응은 <b>스포츠 모드</b>예요. 잠깐 추월할 땐 좋지만, 시내 주행 내내 스포츠 모드면 엔진이 달아올라요. 🏎️ 평소엔 에코 모드(휴식·소화·면역)로 돌아와야 하는데, 걱정이 끊이지 않으면 돌아오질 못하는 거죠. 그래서 필요한 건 수동 변속 레버예요 — 깊은 호흡, 산책, 사람과의 대화가 바로 그 레버입니다.</p>
+
+  <div class="study-tip">
+    <strong>💡 이렇게 해봐:</strong> 화가 날 때 들숨 4초-날숨 6초, 딱 다섯 번. 날숨이 길면 몸이 '전투 종료' 신호를 받아요. 정말로 심장이 차분해져요! 🫁
+  </div>
+
+  <h3>✅ 오늘의 정리</h3>
+  <ul>
+    <li>스트레스 반응 = 생존 모드, 문제는 안 꺼진다는 것! 🦁</li>
+    <li>만성 스트레스는 면역·혈압·수면을 갉아먹어요.</li>
+    <li>사건이 아니라 내 '읽는 법'이 스트레스를 만들어요.</li>
+    <li>대처는 바꾸기(문제)·다루기(정서)·의미 찾기.</li>
+    <li>운동·수면·사람 — 소박하지만 과학적인 방패!</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이</h3>
+  <p>스트레스 연구는 셀리에의 일반적응증후군(비특이적 반응)에서 라자루스-포크먼의 거래 모형(사건-평가-대처의 상호작용)으로 옮겨갔고, 최근에는 <strong>알로스타시스 부하(allostatic load)</strong> 개념이 중심입니다. 몸이 변화에 적응하려고 쓴 총비용이 쌓이면, 혈압·코르티솔 일주기·염증 지표(CRP, IL-6)·대사 지표가 동시에 나빠지는 '누적 마모'로 측정됩니다. 심리신경면역학(PNI)은 스트레스-면역 연결을 분자 수준에서 추적하며, Cohen의 감기 바이러스 노출 실험은 만성 스트레스가 감염 위험을 실험실 수준에서 확인한 고전입니다. A형 행동 유형 연구는 초기 '성격 유형' 주장이 후속 연구에서 '적의(hostility)와 분노 표출'만 독성 요소로 좁혀지는 정제 과정을 겪었습니다.</p>
+
+  <h3>고전 실험과 사례</h3>
+  <div class="info-card">
+    <h4>🧠 실험 1 — Cohen의 감기 바이러스 노출 실험</h4>
+    <p>건강한 성인에게 감기 바이러스를 노출시킨 뒤 발병 여부를 관찰했더니, 심리적 스트레스가 높았던 사람일수록 감기에 걸릴 확률이 유의미하게 높았습니다. '스트레스가 면역을 억제한다'는 명제를 바이러스를 직접 변수로 써서 입증한 대표 실험입니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>🧠 실험 2 — 켈리의 부인회복 연구 (결핵 간호사례)</h4>
+    <p>스트레스 상황에 장기 노출된 간호 인력에서 사회적 지지가 높은 집단은 알로스타시스 지표와 번아웃이 모두 낮았습니다. '혼자 견디기'가 아니라 '함께 견디기'가 생리 지표를 바꾼다는 것을 보여주는 계열 연구입니다.</p>
+  </div>
+
+  <h3>임상/실생활 응용</h3>
+  <p>병원에서는 수술 전 스트레스 완화 교육이 회복 속도를 높이고, 직장에서는 번아웃을 '정서적 소진-비인격화-성취감 저하' 3축(Maslach)으로 선별해 조직 개입(업무 재설계, 회복 시간)을 설계합니다. 마음챙김 기반 스트레스 완화(MBSR)는 만성 통증·불안에서 효과 크기가 보고된 표준 프로그램이고, 심폐 바이오피드백(심박변이 훈련)도 재현 가능한 자기조절 기법으로 쓰입니다.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ 자주 하는 오해:</strong> "스트레스를 완전히 없애야 한다"는 목표는 비현실적일 뿐 아니라 바람직하지도 않습니다. 도전으로 평가되는 적정 스트레스(eustress)는 성장의 연료입니다. 문제는 양이 아니라 '회복이 없는 지속'입니다.
+  </div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨</h3>
+  <p>현대 스트레스 연구는 표현유전학까지 낮아졌습니다. 만성 스트레스는 글루코코르티코이드 수용체의 메틸화를 통해 HPA 축 피드백 감도를 바꾸고(Meaney 계열), 텔로미어 단축(세포 노화 지표)과도 연결됩니다(Epel 계열). 단, 텔로미어 연구는 측정 변이가 커서 효과 해석에 주의가 필요합니다. 신경 회로 수준에서는 편도체(위협 감지)-내측전전두엽(억제 조절)-핵마(기억 맥락화) 삼각이 중심 모형이며, 만성 스트레스에서 핵마 부피 감소와 편도체 과활성이 보고됩니다. 회복탄력성 연구는 '단일 보호 인자'에서 '다중계통(개인-가족-지역사회) 적응 과정'으로 이동했고(Masten의 '보통의 마법'), 외상 후 성장(PTG) 연구는 고난이 오히려 의미 체계를 재구성하게 하는 조건을 탐구합니다.</p>
+
+  <h3>측정과 통계</h3>
+  <p>스트레스 측정은 자기보고 척도(PSS, Perceived Stress Scale)에서 시작해 타액 코르티솔의 일주기 곡선(기상 후 반응 CAR), 모발 코르티솔(만성 지표), 심박변이도(HRV, 부교감 지표), 알로스타시스 부하 종합 점수로 확장됩니다. 개입 연구는 무작위 대조군 + 생물지표 사전-사후 설계가 표준이며, 경험표집(ESM)으로 일상 스트레스와 생리 반응의 실시간 결합을 분석합니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li><strong>심리신경면역학(PNI)</strong>: 스트레스-면역 분자 경로</li>
+    <li><strong>행동의학</strong>: 생활 습관과 만성 질환</li>
+    <li><strong>조직건강심리학</strong>: 번아웃과 직무 설계</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>책: 『Why Zebras Don't Get Ulcers』(Sapolsky)</li>
+    <li>책: 『The Body Keeps the Score』(van der Kolk)</li>
+    <li>저널: Psychosomatic Medicine, Brain Behavior and Immunity</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>🎓 사고 실험:</strong> 만약 스트레스 호르몬을 완전히 제거하는 주사가 있다면 맞을까요? 사자가 나타난 순간을 상상해 볼 때, 그리고 카드값 고지서를 본 순간을 상상해 볼 때, 답은 달라질까요?
+  </div>
+</div>
+
+  <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+
+<h2>🕹️ 직접 해보기 — 스트레스 조절관</h2>
+<p>45초 동안 스트레스 게이지를 100 아래로 지키세요. 이벤트가 계속 게이지를 올립니다. 대처 버튼마다 효과·쿨타임이 다르고, <strong>미루기</strong>는 즉효지만 뒤에서 더 크게 돌아옵니다 — 회피의 대가를 몸으로 느껴 보세요.</p>
+<div id="pg-stress" style="position:relative;overflow:hidden;border:1px solid rgba(148,163,184,.16);border-radius:18px;padding:18px;background:linear-gradient(165deg,#10182b,#0a0f1d 60%,#0d1226);box-shadow:0 24px 70px rgba(2,6,23,.55);font-family:'Noto Sans KR',sans-serif;color:#e2e8f0;margin:10px 0">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+    <div id="pgt-time" style="font-weight:900;color:#fbbf24">45초</div>
+    <div style="flex:1;height:16px;border-radius:99px;background:rgba(148,163,184,.14);overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,.4)"><div id="pgt-meter" style="height:100%;width:30%;border-radius:99px;background:linear-gradient(90deg,#34d399,#fbbf24,#ef4444);transition:width .2s"></div></div>
+    <div id="pgt-val" style="font-weight:900;width:38px;text-align:right;color:#4ade80">30</div>
+  </div>
+  <div id="pgt-event" style="min-height:26px;font-size:13px;font-weight:800;color:#fca5a5;text-align:center"></div>
+  <div id="pgt-btns" style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:10px"></div>
+  <div id="pgt-status" style="min-height:22px;margin-top:10px;font-size:13px;font-weight:600;color:#94a3b8;text-align:center"></div>
+</div>
+<script>(function(){
+  var host=document.getElementById('pg-stress');if(!host)return;
+  var meter=host.querySelector('#pgt-meter'),val=host.querySelector('#pgt-val'),timeEl=host.querySelector('#pgt-time'),evEl=host.querySelector('#pgt-event'),btns=host.querySelector('#pgt-btns'),statusEl=host.querySelector('#pgt-status');
+  var ACTIONS=[
+    {id:'breath',label:'🫁 깊은 호흡',drop:8,cd:3,desc:'날숨 길게 — 부교감 스위치'},
+    {id:'walk',label:'🚶 산책',drop:14,cd:7,desc:'몸을 움직여 회로 전환'},
+    {id:'exercise',label:'🏃 운동',drop:20,cd:11,desc:'코르티솔 소모, 강력'},
+    {id:'talk',label:'📞 대화',drop:10,cd:6,buff:5,desc:'사회적 지지 — 상승 둔화 5초'},
+    {id:'avoid',label:'🙈 미루기',drop:18,cd:5,backfire:14,desc:'즉효, 하지만 5초 뒤 +14 (회피의 대가)'}
+  ];
+  var EVENTS=[['📧 상사의 급한 이메일',12],['⏰ 마감 임박',10],['💬 친구와의 갈등',14],['🚗 꽉 막힌 길',8],['💳 카드값 고지서',11]];
+  var stress=30,elapsed=0,running=false,timer=null,cds={},usage={},buffT=0,evT=5,DUR=45;
+  function paint(){
+    stress=Math.max(0,Math.min(100,stress));
+    meter.style.width=stress+'%';
+    val.textContent=Math.round(stress);
+    val.style.color=stress>=80?'#f87171':stress>=55?'#fbbf24':'#4ade80';
+    timeEl.textContent=Math.max(0,Math.ceil(DUR-elapsed))+'초';
+  }
+  function build(){
+    btns.innerHTML='';
+    ACTIONS.forEach(function(a){
+      var b=document.createElement('button');
+      b.id='pgt-'+a.id;
+      b.style.cssText='padding:9px 13px;border-radius:11px;border:1px solid rgba(148,163,184,.22);background:rgba(148,163,184,.08);color:#e2e8f0;font-weight:800;font-size:13px;cursor:pointer';
+      b.textContent=a.label;
+      b.title=a.desc;
+      b.onclick=function(){use(a);};
+      btns.appendChild(b);
+    });
+  }
+  function use(a){
+    if(!running||cds[a.id]>0)return;
+    cds[a.id]=a.cd;usage[a.id]=(usage[a.id]||0)+1;
+    stress-=a.drop;
+    if(a.buff){buffT=a.buff;statusEl.textContent='📞 마음을 나누니 숨이 트여요 — 상승 둔화 '+a.buff+'초';}
+    else if(a.backfire){
+      statusEl.textContent='🙈 잠시 편해졌지만…';
+      setTimeout(function(){if(running){stress+=a.backfire;evEl.textContent='🔥 미룬 일이 더 커져 돌아옴 +'+a.backfire;paint();}},5000);
+    }
+    else statusEl.textContent=a.label+' 효과 -'+a.drop;
+    paint();
+  }
+  function tick(){
+    if(!running)return;
+    elapsed+=0.1;
+    var rate=1.1*(buffT>0?0.5:1);
+    stress+=rate*0.1;
+    if(buffT>0)buffT-=0.1;
+    evT-=0.1;
+    if(evT<=0){
+      var e=EVENTS[Math.floor(Math.random()*EVENTS.length)];
+      stress+=e[1];evEl.textContent=e[0]+' +'+e[1];
+      evT=6+Math.random()*4;
+    }
+    for(var k in cds){if(cds[k]>0){cds[k]-=0.1;
+      var b=document.getElementById('pgt-'+k);
+      if(b){b.style.opacity=cds[k]>0?'0.45':'1';b.textContent=ACTIONS.filter(function(a){return a.id===k;})[0].label+(cds[k]>0?' '+Math.ceil(cds[k])+'초':'');}
+    }}
+    paint();
+    if(stress>=100){end(false);return;}
+    if(elapsed>=DUR){end(true);return;}
+  }
+  function start(){
+    stress=30;elapsed=0;cds={};usage={};buffT=0;evT=4;running=true;
+    evEl.textContent='';statusEl.textContent='대처 버튼으로 게이지를 관리하세요!';
+    build();
+    if(timer)clearInterval(timer);
+    timer=setInterval(tick,100);paint();
+  }
+  function end(win){
+    running=false;clearInterval(timer);
+    var avoids=usage['avoid']||0;
+    var healthy=(usage['breath']||0)+(usage['walk']||0)+(usage['exercise']||0)+(usage['talk']||0);
+    if(win){
+      evEl.textContent='🎉 하루 버티기 성공!';
+      statusEl.innerHTML='건강한 대처 '+healthy+'회 · 미루기 '+avoids+'회 — '
+        +(avoids>healthy?'⚠️ 미루기에 많이 의존했어요. 단기 마취는 다음에 더 크게 돌아옵니다.':'👍 문제·정서중심 대처를 골고루 썼어요. 이게 회복탄력성입니다.');
+      statusEl.style.color='#4ade80';
+    }else{
+      evEl.textContent='💥 게이지 100 — 소진(번아웃)';
+      statusEl.textContent='쌓아두면 언젠가 터집니다. 작을 때 자주 낮추는 게 요령 — 특히 미루기는 빚입니다.';
+      statusEl.style.color='#f87171';
+    }
+    var b=document.createElement('button');
+    b.style.cssText='padding:10px 20px;border-radius:11px;border:none;background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#1c1005;font-weight:900;font-size:14px;cursor:pointer;box-shadow:0 8px 22px rgba(245,158,11,.3);margin-top:10px';
+    b.textContent='다시 하루 버티기 🔁';
+    b.onclick=function(){start();};
+    btns.innerHTML='';btns.appendChild(b);
+  }
+  // 시작 버튼
+  var sb=document.createElement('button');
+  sb.style.cssText='padding:10px 22px;border-radius:11px;border:none;background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#1c1005;font-weight:900;font-size:14px;cursor:pointer;box-shadow:0 8px 22px rgba(245,158,11,.3)';
+  sb.textContent='▶ 하루 시작 (45초)';
+  sb.onclick=function(){start();};
+  btns.appendChild(sb);
+  paint();
+})();</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7b5cff","questions":[{"q":"만성 스트레스의 대표 호르몬은?","choices":["인슐린","코르티솔","멜라토닌","세로토닌"],"answer":1},{"q":"'이 사건이 위협인가 도전인가'를 가늠하는 것은?","choices":["이차 평가","일차 평가","회피 대처","각성 이론"],"answer":1},{"q":"감기 바이러스 노출 실험을 한 심리학자는?","choices":["셀리에","라자루스","Cohen","가드너"],"answer":2},{"q":"문제중심 대처에 해당하는 것은?","choices":["명상하기","계획 다시 짜기","일기 쓰기","운동하기"],"answer":1},{"q":"스트레스로부터 보호하는 요인이 아닌 것은?","choices":["사회적 지지","규칙적인 운동","충분한 수면","회피와 부정"],"answer":3}]};</script>
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>

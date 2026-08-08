@@ -104,13 +104,17 @@
     if (typeof THREE === 'undefined') { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">3D를 표시할 수 없는 환경입니다.</p>'; return; }
     var RM = false;
     try { RM = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e0) {}
+    var NMP3 = window.NMP3 || null;
     var W = host.clientWidth || 640, H = 390, CAM_Y = 3.8, scene, cam, rndr;
     try {
       scene = new THREE.Scene();
       cam = new THREE.PerspectiveCamera(46, W / H, 0.1, 200);
       cam.position.set(0, CAM_Y, 16); cam.lookAt(0, 3.4, 0);
-      rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      rndr = (NMP3 && NMP3.renderer) ? NMP3.renderer(W, H) : null;
+      if (!rndr) {
+        rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
     var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'graph' }) : null;
@@ -118,9 +122,13 @@
     rndr.domElement.setAttribute('aria-label', '포물선 그래프 조작 영역');
     host.appendChild(rndr.domElement);
     scene.fog = new THREE.Fog(0xdbeafe, 18, 31);
-    scene.add(new THREE.AmbientLight(0xffffff, 0.78));
-    var dl = new THREE.DirectionalLight(0xffffff, 0.72); dl.position.set(2, 8, 8); scene.add(dl);
-    var rim = new THREE.PointLight(0x818cf8, 0.65, 32); rim.position.set(-6, 5, 6); scene.add(rim);
+    if (NMP3 && NMP3.lightRig) {
+      NMP3.lightRig(scene, { sky: 0xf4f7ff, ground: 0xccd6f6, hemiI: 0.72, keyColor: 0xfff1d6, keyI: 0.95, keyX: 2, keyY: 8, keyZ: 8, rimColor: 0x818cf8, rimI: 0.55, rimX: -6, rimY: 5, rimZ: 6 });
+    } else {
+      scene.add(new THREE.AmbientLight(0xffffff, 0.78));
+      var dl = new THREE.DirectionalLight(0xffffff, 0.72); dl.position.set(2, 8, 8); scene.add(dl);
+      var rim = new THREE.PointLight(0x818cf8, 0.65, 32); rim.position.set(-6, 5, 6); scene.add(rim);
+    }
 
     var flash = document.createElement('div');
     flash.style.cssText = 'position:absolute;inset:0;border-radius:16px;pointer-events:none;opacity:0;background:radial-gradient(circle,rgba(239,68,68,.05),rgba(239,68,68,.42));transition:opacity .18s;z-index:3';
@@ -333,6 +341,7 @@
     el.addEventListener('touchstart', onDown, { passive: false }); el.addEventListener('touchmove', onMove, { passive: false }); el.addEventListener('touchend', onUp, { passive: false });
 
     // 파티클 — 공유 지오메트리 + 고정 크기 풀 재사용(프레임 중 생성/폐기 0 → 60fps 유지)
+    var fx = (NMP3 && NMP3.particles) ? NMP3.particles(scene, { max: 96 }) : null;
     var partGeo = new THREE.SphereGeometry(0.1, 6, 6);
     var pool = [], POOL = 96, poolIdx = -1;
     for (var pi = 0; pi < POOL; pi++) {
@@ -352,11 +361,12 @@
         return;
       }
     }
-    function burst(p, color) { if (RM) return; for (var i = 0; i < 14; i++) spawnP(p, color); }
+    function burst(p, color) { if (fx) { fx.burst(p, color, 14, 3, 0.7, 0.45, 0.5); return; } if (RM) return; for (var i = 0; i < 14; i++) spawnP(p, color); }
 
     // 카메라 셰이크(감쇠 노이즈) — 오답 임팩트. 6종 플래그십과 동일 패턴.
+    var cine = (NMP3 && NMP3.cineCam) ? NMP3.cineCam(cam, { x: 0, y: CAM_Y, z: 16 }, { lookAt: { x: 0, y: 3.4, z: 0 }, driftAmp: 0.12, driftSpd: 0.3 }) : null;
     var shakeT = 0, shakeDur = 1, shakeAmp = 0;
-    function shake(amp, dur) { if (RM) return; shakeAmp = amp; shakeT = dur; shakeDur = dur; }
+    function shake(amp, dur) { if (cine) { cine.shake(amp, dur); return; } if (RM) return; shakeAmp = amp; shakeT = dur; shakeDur = dur; }
 
     // 점수 팝업(+n) — 월드 좌표를 화면으로 투영해 절대배치 후 상승·페이드.
     function scorePop(worldPos, txt) {
@@ -387,15 +397,23 @@
         c.mesh.scale.setScalar(grow * (1 + Math.sin(c.pulse * Math.PI) * 0.32));
       });
       vtx.scale.setScalar(RM ? 1 : 1 + 0.08 * Math.sin(ts / 300));
-      var sk = 0;
-      if (shakeT > 0) { shakeT = Math.max(0, shakeT - dt); sk = (shakeT / shakeDur) * shakeAmp; }
-      cam.position.set((Math.random() * 2 - 1) * sk, CAM_Y + (Math.random() * 2 - 1) * sk, 16);
-      for (var i = 0; i < POOL; i++) {
-        var s = pool[i]; if (!s.visible) continue;
-        s.userData.life -= dt;
-        if (s.userData.life <= 0) { s.visible = false; continue; }
-        s.userData.v.y -= 7 * dt; s.position.addScaledVector(s.userData.v, dt);
-        s.material.opacity = Math.max(0, s.userData.life);
+      if (cine) {
+        cine.tick(dt, ts / 1000);
+      } else {
+        var sk = 0;
+        if (shakeT > 0) { shakeT = Math.max(0, shakeT - dt); sk = (shakeT / shakeDur) * shakeAmp; }
+        cam.position.set((Math.random() * 2 - 1) * sk, CAM_Y + (Math.random() * 2 - 1) * sk, 16);
+      }
+      if (fx) {
+        fx.tick(dt);
+      } else {
+        for (var i = 0; i < POOL; i++) {
+          var s = pool[i]; if (!s.visible) continue;
+          s.userData.life -= dt;
+          if (s.userData.life <= 0) { s.visible = false; continue; }
+          s.userData.v.y -= 7 * dt; s.position.addScaledVector(s.userData.v, dt);
+          s.material.opacity = Math.max(0, s.userData.life);
+        }
       }
       rndr.render(scene, cam);
     }

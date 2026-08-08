@@ -91,8 +91,11 @@
       scene = new THREE.Scene();
       cam = new THREE.PerspectiveCamera(50, W / H, 0.1, 200);
       cam.position.set(0, 0, 14); cam.lookAt(0, 0, 0);
-      rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      rndr = (window.NMP3 && window.NMP3.renderer) ? window.NMP3.renderer(W, H, { exposure: 1.15 }) : null;
+      if (!rndr) {
+        rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
     var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'timeline' }) : null;
@@ -142,10 +145,15 @@
     // 오답 붉은 플래시 오버레이 (DOM)
     var redVig = document.createElement('div'); redVig.className = 'nmtl-red'; host.appendChild(redVig);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.9));
-    var dl = new THREE.DirectionalLight(0xfff0d0, 0.6); dl.position.set(2, 5, 8); scene.add(dl);
+    // NMP3 3-point light rig — warm candle key + faint cool rim (fallback: original flat ambient)
+    if (window.NMP3 && window.NMP3.lightRig) {
+      window.NMP3.lightRig(scene, { sky: 0xffe2b8, ground: 0x2e1c08, hemiI: 0.7, keyColor: 0xffc08a, keyI: 0.95, keyX: 2, keyY: 5, keyZ: 8, rimColor: 0x8fa8ff, rimI: 0.3 });
+    } else {
+      scene.add(new THREE.AmbientLight(0xffffff, 0.9));
+      var dl = new THREE.DirectionalLight(0xfff0d0, 0.6); dl.position.set(2, 5, 8); scene.add(dl);
+    }
 
-    // 루트 그룹 — 셰이크는 이 그룹 전체를 흔든다
+    // Root group — camera shake is handled by cineCam below (this group no longer shakes)
     var root = new THREE.Group(); scene.add(root);
 
     // 좌표계: x ∈ [-9, 9], y ∈ [위 카드 진입 ~ 아래 슬롯]
@@ -367,9 +375,9 @@
       void redVig.offsetWidth;
       redVig.style.transition = 'opacity .5s ease'; redVig.style.opacity = '0';
     }
-    // 루트 그룹 감쇠 셰이크 (RM 게이트)
-    var shakeT = 0;
-    function shake() { if (RM) return; shakeT = 0.5; }
+    // NMP3 cineCam — intro dolly + idle drift + damped camera shake (lookAt managed by cineCam; RM auto-gated)
+    var cine = (window.NMP3 && window.NMP3.cineCam) ? window.NMP3.cineCam(cam, { x: 0, y: 0, z: 14 }, { lookAt: { x: 0, y: 0, z: 0 }, driftAmp: 0.1 }) : null;
+    function shake() { if (cine) cine.shake(0.22, 0.5); }
 
     // 입력: 카드 드래그 (z=0 평면 레이캐스트)
     var ray = new THREE.Raycaster(), plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), -0.4), drag = false, grabDX = 0, grabDY = 0;
@@ -559,6 +567,8 @@
 
     // 파티클 — 풀링 + 상한 (RM 게이트)
     var parts = [], poolPlain = [], poolCoin = [], MAX_PARTS = 90;
+    // NMP3 additive glow pool — replaces the plain-color burst when present (coin fountain below is kept)
+    var fx = (window.NMP3 && window.NMP3.particles) ? window.NMP3.particles(root, { max: 64 }) : null;
     function acquire(coin) {
       var pool = coin ? poolCoin : poolPlain;
       var s = pool.pop();
@@ -569,6 +579,7 @@
     function releasePart(p) { p.sp.visible = false; root.remove(p.sp); (p.coin ? poolCoin : poolPlain).push(p.sp); }
     function burst(p, color) {
       if (RM) return;
+      if (fx) { fx.burst(p, color, 14, 3.5, 0.7, 0.45, 0.9); return; }
       for (var i = 0; i < 14; i++) {
         if (parts.length >= MAX_PARTS) break;
         var s = acquire(false);
@@ -648,6 +659,8 @@
         if (p2.spin) p2.sp.material.rotation += p2.spin * dt;
         p2.sp.material.opacity = Math.max(0, Math.min(1, p2.life / (p2.max * 0.55)));
       }
+      // NMP3 glow particle tick
+      if (fx) fx.tick(dt);
       // 부유 먼지
       if (dust) {
         var arr = dust.geometry.attributes.position.array;
@@ -670,14 +683,8 @@
           cd.glow.material.opacity = 0.28 + 0.3 * n;
         }
       }
-      // 감쇠 셰이크
-      if (shakeT > 0) {
-        shakeT = Math.max(0, shakeT - dt);
-        var amp = (shakeT / 0.5) * 0.22;
-        root.position.x = (Math.random() * 2 - 1) * amp;
-        root.position.y = (Math.random() * 2 - 1) * amp;
-        if (shakeT === 0) { root.position.x = 0; root.position.y = 0; }
-      }
+      // Cine camera tick — intro dolly + idle drift + shake decay; static cam when NMP3 absent
+      if (cine) cine.tick(dt, ts / 1000);
       rndr.render(scene, cam);
     }
     spawn();

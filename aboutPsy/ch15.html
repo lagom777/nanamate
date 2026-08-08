@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>긍정심리학 | 심리학 기초</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+  <script defer src="../shared/quizgame3d.js"></script>
+  <script defer src="../shared/learngame3d.js"></script>
+</head>
+<body>
+
+<aside>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h1><a href="index.html">심리학 기초</a></h1>
+  <div class="sub">PSYCHOLOGY FROM ZERO</div>
+  <nav>
+    <ol>
+      <li><a href="index.html" class="chap">🏠 목차</a></li>
+      <li><a href="ch01.html" class="chap">1. 심리학이란?</a></li>
+      <li><a href="ch02.html" class="chap">2. 뇌와 신경계</a></li>
+      <li><a href="ch03.html" class="chap">3. 감각과 지각</a></li>
+      <li><a href="ch04.html" class="chap">4. 학습</a></li>
+      <li><a href="ch05.html" class="chap">5. 기억</a></li>
+      <li><a href="ch06.html" class="chap">6. 발달</a></li>
+      <li><a href="ch07.html" class="chap">7. 성격</a></li>
+      <li><a href="ch08.html" class="chap">8. 사회심리학</a></li>
+      <li><a href="ch09.html" class="chap">9. 이상심리·치료</a></li>
+      <li><a href="ch10.html" class="chap">10. 동기와 정서</a></li>
+      <li><a href="ch11.html" class="chap">11. 인지 — 사고·언어·지능</a></li>
+      <li><a href="ch12.html" class="chap">12. 의식 — 수면·꿈·각성</a></li>
+      <li><a href="ch13.html" class="chap">13. 스트레스와 건강심리</a></li>
+      <li><a href="ch14.html" class="chap">14. 심리검사의 세계</a></li>
+      <li><a href="ch15.html" class="chap">15. 긍정심리학</a></li>
+      <li><a href="quiz.html" class="chap">📝 확인 퀴즈</a></li>
+    </ol>
+  </nav>
+  <button id="theme-btn" onclick="toggleTheme()">다크 모드 전환</button>
+</aside>
+
+<main>
+  <div class="page-nav">
+    <a href="index.html">← 목차로</a>
+  </div>
+
+  <section class="chapter" id="ch15">
+    <div class="chap-num">CHAPTER 15</div>
+    <h2>긍정심리학 — 아프지 않은 것과 잘 사는 것은 다르다</h2>
+<span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 긍정심리학 — 행복을 떠받치는 PERMA 다섯 기둥</span>
+<div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.8,9);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const elems=['P','E','R','M','A'];const names=['긍정 정서','몰입','관계','의미','성취'];const cols=[0xfbbf24,0x60a5fa,0x34d399,0xa78bfa,0xf472b6];const tcols=['#fde047','#93c5fd','#86efac','#c4b5fd','#f9a8d4'];
+  for(let i=0;i<5;i++){const pil=new THREE.Mesh(new THREE.CylinderGeometry(0.32,0.38,1.6,10),new THREE.MeshBasicMaterial({color:cols[i],transparent:true,opacity:0.9}));pil.position.set(-2.8+i*1.4,-0.5,0);s.add(pil);const cap=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.22,0.8),new THREE.MeshBasicMaterial({color:cols[i]}));cap.position.set(-2.8+i*1.4,0.42,0);s.add(cap);const t=lbl(elems[i]+' · '+names[i],tcols[i]);t.position.set(-2.8+i*1.4,0.95,0);s.add(t);}
+  const roof=new THREE.Mesh(new THREE.BoxGeometry(7.6,0.3,1.2),new THREE.MeshBasicMaterial({color:0xe2e8f0,wireframe:true}));roof.position.set(0,1.35,0);s.add(roof);
+  const RL=lbl('행복(well-being)','#f1f5f9');RL.position.set(0,1.85,0);s.add(RL);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 셀리그먼의 PERMA: 긍정 정서·몰입·관계·의미·성취 — 행복의 다섯 기둥.','아프지 않은 것(건강)과 잘 사는 것(번영)은 다른 축입니다.','행복 설정점: 좋은 일·나쁜 일에도 우리는 기본선으로 돌아오려 합니다(쾌락 적응).','감사·친절·강점 사용 — 효과가 검증된 실천은 소박합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}roof.position.y=1.35+Math.sin(T*1.8)*0.05;RL.position.y=1.85+Math.sin(T*1.8)*0.05;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script>
+
+    <div class="en">Positive Psychology</div>
+
+    <p>20세기 심리학은 위대했지만 한쪽으로 기울어 있었습니다. 우울·불안·외상처럼 '고치는 학문'이었지, '잘 사는 학문'은 아니었습니다. 1998년 미국심리학회 회장 <strong>마틴 셀리그먼(Seligman)</strong>은 질문을 뒤집습니다. "병을 고치는 것만으로는 부족하다. 무엇이 삶을 살 가치 있게 만드는가?" 이렇게 시작된 <strong>긍정심리학(positive psychology)</strong>은 행복·강점·의미·번영을 과학의 도구로 연구하는 분야입니다. 이 장에서는 행복의 구조(PERMA), 우리를 원위치로 돌려놓는 쾌락 적응, 그리고 효과가 검증된 실천법까지 살펴봅니다.</p>
+
+    <h3>15.1 행복은 한 가지가 아니다 — PERMA</h3>
+    <p>셀리그먼은 잘 사는 삶(well-being)을 다섯 기둥으로 나눴습니다. 이 구분이 중요한 이유는, 어느 하나가 물러나도 다른 기둥으로 버틸 수 있기 때문입니다.</p>
+    <ul>
+      <li><strong>P — 긍정 정서(Positive emotion)</strong> — 기쁨·감사·평온 같은 쾌적한 감정. 가장 눈에 띄지만 행복의 일부일 뿐입니다.</li>
+      <li><strong>E — 몰입(Engagement)</strong> — 시간 가는 줄 모르고 무언가에 빠진 상태(플로우). 이 기둥은 즐거움이 아니라 <em>집중의 깊이</em>에서 옵니다.</li>
+      <li><strong>R — 관계(Relationships)</strong> — 따뜻하고 신뢰하는 인간관계. 행복 연구에서 가장 일관되게 강력한 예측 변수입니다.</li>
+      <li><strong>M — 의미(Meaning)</strong> — 나보다 큰 무언가에 속해 있다는 감각. 가족·일·신념·봉사처럼요.</li>
+      <li><strong>A — 성취(Accomplishment)</strong> — 목표를 향해 나아가고 이루는 경험 자체.</li>
+    </ul>
+
+    <h3>15.2 쾌락 적응 — 왜 좋은 것도 금방 시들해지는가</h3>
+    <p>복권 당첨자도, 사고로 다친 사람도, 시간이 지나면 자신의 행복 기본선 근처로 돌아온다는 유명한 연구가 있습니다. <strong>쾌락 적응(hedonic adaptation)</strong> — 우리는 좋은 변화에도, 나쁜 변화에도 적응합니다. 새 차의 기쁨은 몇 달이면 일상이 되고, 연봉이 오르면 기준선도 함께 올라갑니다. 이를 '쾌락 쳇바퀴'라 부릅니다.</p>
+    <p>연구가 말하는 행복의 구성은 대략 이렇습니다. 유전적 설정점이 상당 부분, 환경(소득·외모·거주지)은 생각보다 작은 부분, 그리고 <strong>의도적 활동</strong> — 무엇을 하고 어떻게 생각하는가 — 가 우리가 움직일 수 있는 가장 큰 몫입니다. 환경을 바꾸는 행복은 빨리 닳지만, 활동하는 행복(감사하기, 배우기, 관계에 투자하기)은 적응이 느립니다.</p>
+
+    <div class="example">
+      <span class="label">EXAMPLE</span>
+      같은 연봉 인상을 두고 A씨는 곧바로 더 비싼 동네로 이사해 생활비를 올렸고, B씨는 그 돈으로 친구들과의 여행·배우고 싶던 악기·저축에 나눠 썼습니다. 1년 뒤 행복감은 B씨가 높습니다. 물건(적응 빠름)보다 경험(기억·관계·성장에 남음)이 쾌락 쳇바퀴를 늦추는 지출이라는 연구와 일치합니다.
+    </div>
+
+    <h3>15.3 강점과 몰입 — '잘하는 것'에서 오는 힘</h3>
+    <p>긍정심리학은 약점 고치기보다 <strong>강점 쓰기</strong>를 권합니다. VIA 분류는 호기심·용기·친절·리더십 같은 24개의 보편적 강점을 정리했고, 자신의 서명 강점을 새로운 방식으로 쓰는 실험에서 행복감 상승·우울 감소가 보고되었습니다. 그리고 강점이 최고로 발휘되는 순간이 바로 <strong>플로우(flow)</strong>입니다. 칙센트미하이(Csíkszentmihályi)가 정리한 플로우의 조건은 명확합니다. ① 과제의 난이도와 내 실력이 맞물릴 것(너무 쉬우면 지루함, 너무 어려우면 불안) ② 목표가 분명할 것 ③ 즉각적인 피드백이 있을 것. 게임·운동·작업·악기 연습이 플로우의 온상인 이유입니다.</p>
+
+    <h3>15.4 회복탄력성과 실천 — 과학이 검증한 소박한 것들</h3>
+    <p>긍정심리학의 실천 목록은 화려하지 않습니다. 그러나 무작위 대조 실험을 거쳤다는 점이 다릅니다.</p>
+    <ul>
+      <li><strong>감사 일기</strong> — 하루에 잘 된 일 세 가지와 그 이유를 적습니다. 수주 후 행복감이 올라가고 우울 증상이 낮아진다는 보고가 반복됩니다.</li>
+      <li><strong>친절 행위</strong> — 남을 돕는 작은 행동이 주는 사람의 기분을 오래 올립니다.</li>
+      <li><strong>강점 사용</strong> — 서명 강점을 일주일간 새로운 방식으로 사용하기.</li>
+      <li><strong>낙관성 훈련</strong> — 나쁜 일을 '일시적·특정적·외부적'으로 해석하는 연습(셀리그먼의 학습된 낙관주의). 영구적·보편적·내재적 해석은 학습된 무기력으로 향하는 길입니다.</li>
+    </ul>
+
+    <div class="warning-box">
+      <strong>⚠️ 균형 잡기:</strong> 긍정심리학은 "무조건 긍정적으로 생각하라"가 아닙니다. 슬픔·분노·두려움도 정상적이고 필요한 정서입니다. 억지 긍정(톡식 포지티비티)은 고통을 부정하게 만들어 오히려 해롭습니다. 긍정심리학의 진짜 주장은 '부정도 안고, 삶의 기둥을 함께 세우자'입니다.
+    </div>
+
+    <h3>15.5 번영(flourishing)을 향하여</h3>
+    <p>긍정심리학의 최종 질문은 "행복한가?"가 아니라 "번영하는가?"입니다. 정신이 아프지 않은 상태(건강)와 온전히 기능하는 상태(번영)는 다른 축이어서, 장애가 없어도 무기력하게 사는 사람(languishing)이 있고, 어려움이 있어도 의미 있게 사는 사람이 있습니다. 15장의 여정 끝에 놓인 이 구분은 심리학 전체의 목표를 다시 씁니다. 고통을 줄이는 것에서 멈추지 않고, 삶을 살 가치 있게 만드는 조건을 설계하는 것까지가 심리학의 일입니다.</p>
+  </section>
+
+  <div class="page-nav-bottom">
+    <a href="ch14.html">← 이전</a>
+    <div class="spacer"></div>
+    <a href="quiz.html">다음 →</a>
+  </div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
+  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
+  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">하 · 입문</span>
+  <h3>🎯 한마디로 하면?</h3>
+  <p>긍정심리학은 '아픈 곳 고치기'가 아니라 <b>'잘 사는 법'</b>을 연구하는 심리학이에요. 행복엔 다섯 기둥(PERMA)이 있고, 그건 연습으로 자랍니다! 🌱</p>
+
+  <h3>🤔 이게 왜 재밌냐면</h3>
+  <ul>
+    <li>🎰 복권 당첨자도 1년 뒤엔 원래 행복으로 돌아와요 — 우리는 좋은 것에도 적응해요.</li>
+    <li>🎮 시간 가는 줄 모르는 몰입(플로우)은 즐거움이 아니라 '실력×난이도'가 맞을 때 생겨요.</li>
+    <li>🙏 자기 전 '오늘 잘 된 일 3가지'를 적는 것만으로 기분이 좋아진다는 실험이 있어요.</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 PERMA 다섯 기둥</h4>
+    <ul>
+      <li><strong>P</strong> 긍정 정서 — 기쁨·감사·평온</li>
+      <li><strong>E</strong> 몰입 — 시간 가는 줄 모르는 상태</li>
+      <li><strong>R</strong> 관계 — 따뜻한 사람들</li>
+      <li><strong>M</strong> 의미 — 나보다 큰 무언가</li>
+      <li><strong>A</strong> 성취 — 목표를 이뤄가는 경험</li>
+    </ul>
+  </div>
+
+  <h3>📖 쉽게 풀어볼게!</h3>
+  <p>행복을 건강에 비유하면, 아프지 않은 것(질병 없음)과 튼튼한 것(체력 좋음)은 달라요. 마음도 마찬가지예요. 그리고 새로 산 물건의 기쁨이 금방 식는 건 뇌가 '새로운 것'에만 반응하기 때문이에요 — 이걸 쾌락 적응이라 해요. 그래서 물건보다 <b>경험·사람·배움</b>에 쓰는 돈이 오래 갑니다. 🎁</p>
+
+  <div class="study-tip">
+    <strong>💡 이렇게 해봐:</strong> 오늘 밤, 잘 되어 준 것 3가지와 <b>왜</b> 잘 됐는지를 적어 보세요. 일주일이면 생각의 채널이 살짝 바뀌는 걸 느낄 거예요! ✍️
+  </div>
+
+  <h3>✅ 오늘의 정리</h3>
+  <ul>
+    <li>긍정심리학 = 잘 사는 법의 과학! 🌱</li>
+    <li>행복의 다섯 기둥: P·E·R·M·A.</li>
+    <li>좋은 것에도 적응해요 (쾌락 적응) — 물건보다 경험!</li>
+    <li>몰입은 실력과 난이도가 딱 맞을 때 찾아와요.</li>
+    <li>감사·친절·강점 사용은 검증된 실천법.</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="medium">
+  <span class="difficulty-badge medium">중 · 응용</span>
+  <h3>이론 깊이</h3>
+  <p>행복 연구는 두 전통이 만난 자리입니다. 쾌락주의(hedonia) 전통의 <strong>주관적 안녕감(SWB)</strong> — 삶의 만족도 + 긍정 정서 - 부정 정서 — 와, 잘 기능하는 삶을 보는 <strong>심리적 안녕감(PWB, Ryff)</strong> — 자율·환경 통제·성장·목적·자기수용·관계 — 입니다. 셀리그먼의 PERMA는 이 둘을 통합하려는 시도입니다. Lyubomirsky의 '행복 아치' 모형은 설정점(유전)·환경·의도적 활동의 비중을 제시했는데, 정확한 비율(50-10-40)은 이후 과장이라는 비판과 재분석이 있었고, 현재는 '방향은 맞지만 비율은 유동적'으로 정리됩니다. 플로우 연구는 도전-기능 균형 외에 자기목적성(autotelic) 성격, 일·놀이에서의 몰입 경로로 확장되었습니다.</p>
+
+  <h3>고전 실험과 사례</h3>
+  <div class="info-card">
+    <h4>🧠 실험 1 — Brickman의 복권 당첨자·사고 피해자 연구 (1978)</h4>
+    <p>복권 당첨자는 기대만큼 행복하지 않았고, 사고 피해자도 예상보다는 행복에 가까웠습니다. 극적인 환경 변화의 행복 효과가 빠르게 적응으로 상쇄된다는 쾌락 적응의 고전입니다(표본은 작았지만 이후 대규모 연구에서 방향은 유지).</p>
+  </div>
+  <div class="info-card">
+    <h4>🧠 실험 2 — Emmons와 McCullough의 감사 일기 실험 (2003)</h4>
+    <p>매주 '감사한 일'을 적은 그룹이 '짜증난 일'이나 '중립적 일'을 적은 그룹보다 낙관성과 삶의 만족도가 높아지고, 신체 증상 호소도 줄었습니다. 소박한 개입의 측정 가능한 효과를 보여준 대표 실험입니다.</p>
+  </div>
+
+  <h3>임상/실생활 응용</h3>
+  <p>긍정 심리치료(PPT)는 우울증 치료에서 증상 완화를 넘어 안녕감을 직접 목표로 삼고, 학교에서는 PERMA 기반 커리큘럼(긍정 교육)이 여러 국가에서 시행됩니다. 직장에서는 강점 기반 피드백과 몰입 설계(과제-기능 매칭, 피드백 속도)가 동기와 성과에 연결되고, 노인학에서는 의미 중심 개입(회고·세대 간 봉사)이 고독감 완화에 쓰입니다.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ 자주 하는 오해:</strong> "행복은 노력으로 언제든 올릴 수 있다"는 과장은 '행복하지 못한 사람의 잘못'이라는 결론으로 미끄러질 수 있습니다. 우울·불안은 의지의 문제가 아니며, 긍정 실천은 치료의 대체가 아닌 보조입니다.
+  </div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">상 · 심화</span>
+  <h3>전문가 레벨</h3>
+  <p>긍정심리학의 현재 쟁점은 네 가지입니다. 첫째, <strong>측정 문제</strong>: 자기보고 행복 척도는 문화 간 비교 가능한가(측정 불변성), 그리고 '기억하는 자아'와 '경험하는 자아'(Kahneman) 중 무엇을 재야 하는가. 둘째, <strong>메타분석적 재평가</strong>: 초기 긍정 개입(PPI)의 효과 크기는 소규모-중간이고 출판 편향 조정 후 더 작아지며, 다만 퇴행 방지와 보조 효과로는 유의하다는 정리가 일반적입니다. 셋째, <strong>비교 문화 연구</strong>: 개인주의-집단주의에 따라 행복의 내용(성취 vs 조화)과 감정 규범이 달라, 서구 모형의 보편화에 주의가 필요합니다. 넷째, <strong>두 번째 물결</strong>: 고통과 번영의 공존(역경 후 성장), 의미의 신경·진화 기반, 그리고 '고통을 피하지 않는 용기'를 포함한 성숙한 긍정심리학으로의 확장입니다.</p>
+
+  <h3>측정과 통계</h3>
+  <p>주요 척도는 삶의 만족도(SWLS), 긍정·부정 정서(PANAS), PERMA-Profiler, 심리적 안녕감(PWBS), 플로우 경험표집(ESM)입니다. 종단 설계와 경험표집의 결합으로 '활동→정서'의 일상 인과를 추정하고, 개입 연구는 등록된 무작위 대조군과 장기 추적(6개월+)이 표준으로 자리잡고 있습니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li><strong>건강심리학</strong>: 안녕감과 신체 건강의 연결</li>
+    <li><strong>교육심리학</strong>: 긍정 교육과 학생 웰빙</li>
+    <li><strong>경제학(행복 경제학)</strong>: 소득과 행복의 곡선</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>책: 『Flourish』(Seligman)</li>
+    <li>책: 『Flow』(Csíkszentmihályi)</li>
+    <li>저널: Journal of Positive Psychology, Journal of Happiness Studies</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>🎓 사고 실험:</strong> 당신의 삶에서 PERMA 다섯 기둥 중 가장 튼튼한 기둥과 가장 얇은 기둥은 무엇인가요? 얇은 기둥 하나를 이번 주에 10분만 보강한다면, 무엇을 할 수 있을까요?
+  </div>
+</div>
+
+  <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+
+<h2>🕹️ 직접 해보기 — PERMA 사원 세우기</h2>
+<p>5일 동안 하루 3개의 활동을 골라 사원의 다섯 기둥(P·E·R·M·A)을 키우세요. 완성도는 <strong>가장 낮은 기둥</strong>이 결정합니다 — 하나만 키우면 사원은 기울어요. SNS의 효과가 쓸수록 줄어드는 것(쾌락 적응)도 관찰해 보세요.</p>
+<div id="pg-perma" style="position:relative;overflow:hidden;border:1px solid rgba(148,163,184,.16);border-radius:18px;padding:18px;background:linear-gradient(165deg,#10182b,#0a0f1d 60%,#0d1226);box-shadow:0 24px 70px rgba(2,6,23,.55);font-family:'Noto Sans KR',sans-serif;color:#e2e8f0;margin:10px 0">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+    <div id="pgp-day" style="font-weight:900;color:#fbbf24;text-shadow:0 0 12px rgba(251,191,36,.35)">DAY 1 / 5</div>
+    <div style="flex:1"></div>
+    <div id="pgp-pick" style="font-size:12px;font-weight:800;color:#94a3b8">오늘의 활동 0 / 3</div>
+  </div>
+  <div id="pgp-pillars" style="display:flex;gap:8px;align-items:flex-end;height:120px;padding:8px;border:1px solid rgba(148,163,184,.12);border-radius:12px;background:rgba(2,6,23,.35);margin-bottom:12px"></div>
+  <div id="pgp-acts" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px"></div>
+  <div id="pgp-status" style="min-height:22px;margin-top:10px;font-size:13px;font-weight:600;color:#94a3b8;text-align:center"></div>
+</div>
+<script>(function(){
+  var host=document.getElementById('pg-perma');if(!host)return;
+  var dayEl=host.querySelector('#pgp-day'),pickEl=host.querySelector('#pgp-pick'),pillarsEl=host.querySelector('#pgp-pillars'),actsEl=host.querySelector('#pgp-acts'),statusEl=host.querySelector('#pgp-status');
+  var PILLARS=[['P','긍정 정서','#fbbf24'],['E','몰입','#60a5fa'],['R','관계','#34d399'],['M','의미','#a78bfa'],['A','성취','#f472b6']];
+  var ACTS=[
+    {label:'🎨 좋아하는 취미',gain:{P:2},desc:'P +2'},
+    {label:'🧗 도전 과제',gain:{E:2,A:1},desc:'E +2 · A +1'},
+    {label:'👨‍👩‍👧 친구·가족과 시간',gain:{R:2,P:1},desc:'R +2 · P +1'},
+    {label:'🕊️ 봉사·의미있는 일',gain:{M:2},desc:'M +2'},
+    {label:'🎯 목표 작업',gain:{A:2},desc:'A +2'},
+    {label:'📱 SNS 무한 스크롤',gain:{P:1},desc:'P +1 — 단, 쓸수록 효과 감소 (쾌락 적응)'}
+  ];
+  var pillars={P:0,E:0,R:0,M:0,A:0},day=1,picked=0,snsUsed=0,log=[];
+  function paintPillars(){
+    pillarsEl.innerHTML='';
+    PILLARS.forEach(function(p){
+      var col=document.createElement('div');
+      col.style.cssText='flex:1;display:flex;flex-direction:column;align-items:center;gap:4px';
+      var h=Math.min(100,pillars[p[0]]*8);
+      col.innerHTML='<div style="font-size:11px;font-weight:900;color:'+p[2]+'">'+p[0]+'</div>'
+        +'<div style="width:70%;height:80px;display:flex;align-items:flex-end;border-radius:6px;background:rgba(148,163,184,.08);overflow:hidden"><div style="width:100%;height:'+h+'%;background:'+p[2]+';box-shadow:0 0 12px '+p[2]+'66;transition:height .4s"></div></div>'
+        +'<div style="font-size:10px;color:#94a3b8">'+p[1]+'</div>';
+      pillarsEl.appendChild(col);
+    });
+  }
+  function paintActs(){
+    actsEl.innerHTML='';
+    ACTS.forEach(function(a){
+      var b=document.createElement('button');
+      b.style.cssText='padding:10px;border-radius:11px;border:1px solid rgba(148,163,184,.22);background:rgba(148,163,184,.07);color:#e2e8f0;font-weight:800;font-size:12.5px;cursor:pointer;text-align:left';
+      b.innerHTML=a.label+'<div style="font-size:10px;font-weight:600;color:#94a3b8;margin-top:3px">'+a.desc+'</div>';
+      b.onclick=function(){pick(a);};
+      actsEl.appendChild(b);
+    });
+  }
+  function pick(a){
+    if(picked>=3)return;
+    var gainText=[];
+    for(var k in a.gain){
+      var g=a.gain[k];
+      if(a.label.indexOf('SNS')>=0){
+        if(snsUsed>=1)g=0; // 쾌락 적응
+      }
+      pillars[k]+=g;
+      gainText.push(k+' +'+g);
+    }
+    if(a.label.indexOf('SNS')>=0){
+      snsUsed++;
+      if(snsUsed===2)statusEl.textContent='📱 처음만 즐겁고 곧 시들해져요 — 이게 쾌락 적응!';
+      else statusEl.textContent='선택: '+gainText.join(' · ');
+    } else statusEl.textContent='선택: '+gainText.join(' · ');
+    picked++;
+    log.push(a.label);
+    pickEl.textContent='오늘의 활동 '+picked+' / 3';
+    paintPillars();
+    if(picked>=3)setTimeout(nextDay,700);
+  }
+  function nextDay(){
+    day++;picked=0;
+    if(day>5){finish();return;}
+    dayEl.textContent='DAY '+day+' / 5';
+    pickEl.textContent='오늘의 활동 0 / 3';
+  }
+  function finish(){
+    var min=99,minK='',sum=0;
+    PILLARS.forEach(function(p){sum+=pillars[p[0]];if(pillars[p[0]]<min){min=pillars[p[0]];minK=p[1];}});
+    dayEl.textContent='🏛️ 완성 평가';
+    pickEl.textContent='';
+    actsEl.innerHTML='';
+    var stable=min>=8;
+    var msg=stable?'균형 잡힌 사원 완성! 다섯 기둥이 모두 튼튼해요. 이게 번영(flourishing)입니다.'
+      :(min>=5?'사원이 살짝 기울어요 — 가장 약한 기둥은 「'+minK+'」. 행복은 최강 기둥이 아니라 최약 기둥이 결정합니다.'
+      :'사원이 무너져요 — 「'+minK+'」 기둥이 거의 없어요. 하나만 키우는 행복은 오래 못 갑니다.');
+    statusEl.innerHTML=msg+'<br><span style="color:#94a3b8;font-size:12px">총 활동: '+log.join(' → ')+'</span>';
+    statusEl.style.color=stable?'#4ade80':'#fbbf24';
+    var rb=document.createElement('button');
+    rb.style.cssText='padding:10px 20px;border-radius:11px;border:none;background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#1c1005;font-weight:900;font-size:14px;cursor:pointer;box-shadow:0 8px 22px rgba(245,158,11,.3)';
+    rb.textContent='다시 짓기 🔁';
+    rb.onclick=function(){pillars={P:0,E:0,R:0,M:0,A:0};day=1;picked=0;snsUsed=0;log=[];dayEl.textContent='DAY 1 / 5';pickEl.textContent='오늘의 활동 0 / 3';statusEl.style.color='#94a3b8';statusEl.textContent='하루 3개씩, 다섯 기둥을 고르게!';paintPillars();paintActs();};
+    actsEl.appendChild(rb);
+  }
+  statusEl.textContent='하루 3개씩, 다섯 기둥을 고르게!';
+  paintPillars();paintActs();
+})();</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7b5cff","questions":[{"q":"긍정심리학을 시작한 학자는?","choices":["프로이트","셀리그먼","피아제","비네"],"answer":1},{"q":"PERMA에서 E가 뜻하는 것은?","choices":["정서","몰입","관계","성취"],"answer":1},{"q":"좋은 변화에도 금방 적응하는 현상은?","choices":["바넘 효과","쾌락 적응","학습된 무기력","플로우"],"answer":1},{"q":"플로우의 조건이 아닌 것은?","choices":["난이도-실력 균형","분명한 목표","즉각적 피드백","높은 보상"],"answer":3},{"q":"검증된 긍정 실천법은?","choices":["억지 긍정 사고","감사 일기 쓰기","부정 정서 억제","물건 구매"],"answer":1}]};</script>
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>

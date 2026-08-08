@@ -115,8 +115,11 @@
       scene = new THREE.Scene();
       cam = new THREE.PerspectiveCamera(46, W / H, 0.1, 200);
       cam.position.set(0, 8.5, 13); cam.lookAt(0, -0.3, 0);
-      rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      rndr = (window.NMP3 && NMP3.renderer) ? NMP3.renderer(W, H, { exposure: 1.15 }) : null;
+      if (!rndr) {
+        rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
     var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'tectonics' }) : null;
@@ -124,8 +127,12 @@
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:12px;cursor:grab;touch-action:none;display:block;background:linear-gradient(180deg,#7fbdf2 0%,#b7e0ff 30%,#eaf6ff 44%,#ffe9c2 54%,#bfe0ff 68%,#9fd0f2 100%)';
     host.appendChild(rndr.domElement);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.85));
-    var dl = new THREE.DirectionalLight(0xfff3df, 0.6); dl.position.set(-4, 10, 6); scene.add(dl);
+    if (window.NMP3 && NMP3.lightRig) {
+      NMP3.lightRig(scene, { sky: 0xcfe4ff, ground: 0x8d6e63, hemiI: 0.75, keyColor: 0xfff0d8, keyI: 0.9, keyX: -5, keyY: 10, keyZ: 7, rimColor: 0x9ec7ff, rimI: 0.35 });
+    } else {
+      scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+      var dl = new THREE.DirectionalLight(0xfff3df, 0.6); dl.position.set(-4, 10, 6); scene.add(dl);
+    }
 
     /* ---- 배경: 태양 글로우 스프라이트 + 캔버스 구름(시차 드리프트) ---- */
     function radialSpriteTex(stops, size) {
@@ -339,10 +346,12 @@
     }
     /* 지속 분출 이미터: {dur, rate, acc, fn} */
     var emitters = [];
+    var fx = (window.NMP3 && NMP3.particles) ? NMP3.particles(scene, { max: 40 }) : null;
 
     /* ---- 카메라 셰이크(감쇠, RM 게이트) ---- */
+    var cine = (window.NMP3 && NMP3.cineCam) ? NMP3.cineCam(cam, { x: 0, y: 8.5, z: 13 }, { lookAt: { x: 0, y: -0.3, z: 0 }, dollyY: -1.6, dollyZ: 4.5, driftAmp: 0.12, driftSpd: 0.3, introDur: 1.4 }) : null;
     var shakeAmp = 0;
-    function addShake(a) { if (RM) return; shakeAmp = Math.min(0.6, shakeAmp + a); }
+    function addShake(a) { if (RM) return; if (cine) cine.shake(a, 0.6); else shakeAmp = Math.min(0.6, shakeAmp + a); }
 
     function roundColors() {
       var R = ROUNDS[lvl];
@@ -563,6 +572,7 @@
       } else if (R.required === 'divergent') { spawnRidge(); addShake(0.22); }
       else if (R.required === 'transform') { spawnTransform(); addShake(0.18); creak(); }
       burst(new THREE.Vector3(0, PLATE_H / 2 + 1, 0), 0xffd54f);
+      if (fx) fx.burst({ x: 0, y: PLATE_H / 2 + 1, z: 0 }, 0xffd54f, 14, 3.2, 0.9, 0.6, 0.6);
       chime(); popScore();
       setHud('✅ 정답! 지형이 만들어집니다…');
       showToast(R.fact);
@@ -588,6 +598,7 @@
     }
     function fail(m) {
       beep(150, 0.18, 'square');
+      if (fx) fx.burst({ x: 0, y: PLATE_H / 2 + 0.5, z: 0 }, 0xff5252, 8, 2.0, 0.55, 0.5, 0.3);
       addShake(0.12); flashRed(); springBack(); // 약한 셰이크 + 붉은 플래시 + 스프링 복귀
       var label = { convergent: '수렴(다가감)', divergent: '발산(멀어짐)', transform: '변환(엇갈림)', ambiguous: '대각선 운동' }[m.type] || m.type;
       setHud('❌ 지금은 ' + label + ' 운동이에요. 프롬프트가 요구한 운동으로 다시 시도하세요. (다시 버튼으로 초기화)');
@@ -642,6 +653,7 @@
         var sc2 = u.size * (1 + u.grow * (1 - lk));
         ps.scale.set(sc2, sc2, sc2);
       }
+      if (fx) fx.tick(dt);
       // 구름 드리프트(시차) + 맨틀 emissive 저주파 펄스 (RM이면 정지)
       if (!RM) {
         for (var cj = 0; cj < clouds.length; cj++) { var c2 = clouds[cj]; c2.position.x += c2.userData.speed * dt; if (c2.position.x > 13) c2.position.x = -13; }
@@ -653,11 +665,14 @@
       if (plateR.userData.tilt) plateR.rotation.z += (plateR.userData.tilt - plateR.rotation.z) * dt * 3;
       if (plateL.userData.dive) { plateL.rotation.z += (-0.5 - plateL.rotation.z) * dt * 2; plateL.position.y += (-0.6 - plateL.position.y) * dt * 2; }
       // 카메라 셰이크(감쇠)
-      if (shakeAmp > 0.002) {
-        shakeAmp *= Math.exp(-3.4 * dt);
-        cam.position.set((Math.random() * 2 - 1) * shakeAmp, 8.5 + (Math.random() * 2 - 1) * shakeAmp * 0.7, 13);
-      } else { shakeAmp = 0; cam.position.set(0, 8.5, 13); }
-      cam.lookAt(0, -0.3, 0);
+      if (cine) { cine.tick(dt, elapsed); }
+      else {
+        if (shakeAmp > 0.002) {
+          shakeAmp *= Math.exp(-3.4 * dt);
+          cam.position.set((Math.random() * 2 - 1) * shakeAmp, 8.5 + (Math.random() * 2 - 1) * shakeAmp * 0.7, 13);
+        } else { shakeAmp = 0; cam.position.set(0, 8.5, 13); }
+        cam.lookAt(0, -0.3, 0);
+      }
       // 점수 카운트업
       if (scoreShown !== score) {
         var sd = score - scoreShown;

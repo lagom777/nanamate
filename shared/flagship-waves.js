@@ -51,20 +51,35 @@
     if (typeof THREE === 'undefined') { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">3D를 표시할 수 없는 환경입니다.</p>'; return; }
 
     var W = host.clientWidth || 640, H = 380, scene, cam, rndr;
+    var P3 = window.NMP3 || null;
     try {
       scene = new THREE.Scene();
       cam = new THREE.PerspectiveCamera(46, W / H, 0.1, 300);
       cam.position.set(0, 16, 20); cam.lookAt(0, 0, 0);
-      rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      rndr = P3 ? P3.renderer(W, H) : null;
+      if (!rndr) {
+        rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
     var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'waves' }) : null;
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:12px;cursor:grab;touch-action:none;display:block;background:#04121b';
     host.appendChild(rndr.domElement);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-    var dl = new THREE.DirectionalLight(0xffffff, 0.6); dl.position.set(4, 12, 6); scene.add(dl);
+    if (P3 && P3.lightRig) {
+      // deep-sea night palette: cool key + blue rim over a dim hemisphere fill
+      P3.lightRig(scene, { sky: 0x9fd4ff, ground: 0x06222f, hemiI: 0.7, keyColor: 0xcfeaff, keyI: 1.15, rimColor: 0x3f8cff, rimI: 0.5 });
+    } else {
+      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+      var dl = new THREE.DirectionalLight(0xffffff, 0.6); dl.position.set(4, 12, 6); scene.add(dl);
+    }
+
+    // cinematic camera: intro dolly + idle drift + damped shake; camBase follows user orbit
+    var camBase = { x: 0, y: 16, z: 20 };
+    var cine = (P3 && P3.cineCam) ? P3.cineCam(cam, camBase, { lookAt: { x: 0, y: 0, z: 0 }, dollyY: -2.5, dollyZ: 6, driftAmp: 0.3, driftSpd: 0.28 }) : null;
+    // additive glow particle pool for win bursts (mesh debris below stays as fallback)
+    var fx = (P3 && P3.particles) ? P3.particles(scene, { max: 48 }) : null;
 
     // 시뮬레이션 평면(월드) 범위:  x∈[-FW/2,FW/2], y∈[-FD/2,FD/2]
     var FW = 24, FD = 24, SEG = 96;
@@ -217,6 +232,7 @@
       if (won) return;
       won = true; score += 100; chime();
       burst(targetMesh.position.clone(), 0x34d399);
+      if (cine) cine.shake(0.25, 0.4);
       setHud('보강간섭! 마루+마루로 진폭 최대 🎉');
       if (kernel) kernel.teach({ kind: 'success', coach: '보강간섭 — 표적 진폭이 최대에 가깝습니다' });
       if (lvl + 1 >= levels.length) {
@@ -270,7 +286,8 @@
         var cx = (e.touches ? e.touches[0].clientX : e.clientX);
         camAng += (cx - rotStartX) * 0.005; rotStartX = cx;
         var R = Math.hypot(20, 0);
-        cam.position.set(Math.sin(camAng) * R, 16, Math.cos(camAng) * R); cam.lookAt(0, 0, 0);
+        if (cine) { camBase.x = Math.sin(camAng) * R; camBase.z = Math.cos(camAng) * R; }
+        else { cam.position.set(Math.sin(camAng) * R, 16, Math.cos(camAng) * R); cam.lookAt(0, 0, 0); }
         e.preventDefault();
       }
     }
@@ -282,6 +299,7 @@
     /* ===== 파티클 ===== */
     var parts = [];
     function burst(p, color) {
+      if (fx) { fx.burst(p, color, 22, 5, 0.9, 0.7, 0.5); return; }
       for (var i = 0; i < 18; i++) {
         var s = new THREE.Mesh(new THREE.SphereGeometry(0.12, 6, 6), new THREE.MeshBasicMaterial({ color: color }));
         s.position.copy(p); var a = Math.random() * Math.PI * 2, b = Math.random() * Math.PI;
@@ -305,6 +323,8 @@
         s.userData.v.y -= 8 * dt; s.position.addScaledVector(s.userData.v, dt);
         s.material.transparent = true; s.material.opacity = Math.max(0, s.userData.life);
       }
+      if (fx) fx.tick(dt);
+      if (cine) cine.tick(dt, ts / 1000);
       rndr.render(scene, cam);
     }
     requestAnimationFrame(loop);

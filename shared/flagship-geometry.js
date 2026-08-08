@@ -75,20 +75,32 @@
     if (typeof THREE === 'undefined') { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">3D를 표시할 수 없는 환경입니다.</p>'; return; }
 
     var W = host.clientWidth || 640, H = 380, scene, cam, rndr;
+    var P3 = window.NMP3 || null;
     try {
       scene = new THREE.Scene();
       cam = new THREE.PerspectiveCamera(46, W / H, 0.1, 400);
-      rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      if (P3) rndr = P3.renderer(W, H);
+      if (!rndr) {
+        rndr = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        rndr.setSize(W, H); rndr.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      }
     } catch (e) { host.innerHTML = '<p style="color:#6b7280;font-size:14px;padding:12px">WebGL 초기화 실패.</p>'; return; }
     host.innerHTML = ''; host.style.position = 'relative';
     var kernel = window.NMGameKernel && window.NMGameKernel.create ? window.NMGameKernel.create(host, { gameId: 'geometry' }) : null;
     rndr.domElement.style.cssText = 'width:100%;height:' + H + 'px;border-radius:12px;cursor:grab;touch-action:none;display:block;background:linear-gradient(180deg,#fff5f7,#fde8ec)';
     host.appendChild(rndr.domElement);
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.85));
-    var dl = new THREE.DirectionalLight(0xffffff, 0.55); dl.position.set(6, 14, 8); scene.add(dl);
-    var dl2 = new THREE.DirectionalLight(0xffffff, 0.25); dl2.position.set(-8, 6, -6); scene.add(dl2);
+    if (P3) {
+      P3.lightRig(scene, {
+        sky: 0xfff1f4, ground: 0xe6c6cf, hemiI: 0.7,
+        keyColor: 0xffe2b0, keyI: 1.0, keyX: 6, keyY: 14, keyZ: 8,
+        rimColor: 0x9fb6ff, rimI: 0.5, rimX: -8, rimY: 6, rimZ: -6
+      });
+    } else {
+      scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+      var dl = new THREE.DirectionalLight(0xffffff, 0.55); dl.position.set(6, 14, 8); scene.add(dl);
+      var dl2 = new THREE.DirectionalLight(0xffffff, 0.25); dl2.position.set(-8, 6, -6); scene.add(dl2);
+    }
 
     // 회전 그룹(전체 도형을 3D 회전)
     var ROOT = new THREE.Group(); scene.add(ROOT);
@@ -223,6 +235,7 @@
       if (LOGIC.isLevelCleared(a, b, L)) {
         won = true; score += 100; chime();
         burst(V(a, 0.5, b), 0xf43f5e); burst(V(a / 2, a, 0), 0x16a34a); burst(V(0, b, b / 2), 0x2563eb);
+        if (cine) cine.shake(0.22, 0.45);
         lvl++;
         if (lvl >= LEVELS.length) {
           setHud('🎉 모든 단계 클리어! 총 ' + score + '점');
@@ -299,11 +312,14 @@
     el.addEventListener('touchend', onUp, { passive: false });
 
     // 카메라 — 도형 전체가 보이도록 위/뒤에서
-    cam.position.set(2, 14, 18); cam.lookAt(2, 3, 2);
+    var cine = P3 ? P3.cineCam(cam, { x: 2, y: 14, z: 18 }, { lookAt: { x: 2, y: 3, z: 2 }, dollyY: -3, dollyZ: 7, driftAmp: 0.12 }) : null;
+    if (!cine) { cam.position.set(2, 14, 18); cam.lookAt(2, 3, 2); }
 
     // ── 파티클 ──
     var parts = [];
+    var fx = P3 ? P3.particles(ROOT, { max: 48 }) : null;
     function burst(p, color) {
+      if (fx) { fx.burst(p, color, 14, 3.4, 0.8, 0.6, 1.0); return; }
       for (var i = 0; i < 14; i++) {
         var s = new THREE.Mesh(new THREE.SphereGeometry(0.12, 6, 6), new THREE.MeshBasicMaterial({ color: color }));
         s.position.copy(p); var ang = Math.random() * Math.PI * 2, el2 = Math.random() * Math.PI;
@@ -316,6 +332,8 @@
     function loop(ts) {
       requestAnimationFrame(loop);
       var dt = last == null ? 0.016 : Math.min(0.05, (ts - last) / 1000); last = ts;
+      if (cine) cine.tick(dt, ts / 1000);
+      if (fx) fx.tick(dt);
       // 핸들 살짝 펄스
       var pulse = 1 + 0.08 * Math.sin(ts / 300);
       aHandle.scale.setScalar(pulse); bHandle.scale.setScalar(pulse);
