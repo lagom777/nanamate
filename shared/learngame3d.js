@@ -1,9 +1,8 @@
-/* 나나메이트 인터랙티브 3D 학습게임 엔진 v5 (data-driven, 7타입 + 게임화 셸)
+/* 나나메이트 인터랙티브 3D 학습게임 엔진 v6 (data-driven, 6타입 + 게임화 셸)
  * 게임화: 점수·콤보·진행바·파티클·효과음(WebAudio)·별점·최고기록(localStorage)·승리 오버레이·색종이.
- * 챕터 데이터(window.NANAMATE_GAME). 기존 4타입 호환 + 교습형 3타입.
+ * 챕터 데이터(window.NANAMATE_GAME). matching(2열 짝맞추기)은 폐기 — 구 페이로드는 scenario로 승격.
  *
  *  ① sequence : { type, color, prompt, steps:[...] }                 // 정답 순서
- *  ② matching : { type, color, prompt, pairs:[{term,def}] }          // 용어↔설명
  *  ③ grouping : { type, color, prompt, groups:[{name,items}] }       // 분류
  *  ④ oddone   : { type, color, prompt, rounds:[{items,odd,why}] }    // 다른 하나
  *  ⑤ trace    : { type, color, prompt, stages:[{name,why}] }         // 순서+단계 설명(교습)
@@ -17,9 +16,9 @@
   function init() {
     var G = window.NANAMATE_GAME, host = document.getElementById('nm-game-host');
     if (!G || !host) return;
+    G = liftMatching(G);
     var type = G.type || 'sequence';
-    var ok = type === 'matching' ? (Array.isArray(G.pairs) && G.pairs.length >= 2) :
-      type === 'grouping' ? (Array.isArray(G.groups) && G.groups.length >= 2) :
+    var ok = type === 'grouping' ? (Array.isArray(G.groups) && G.groups.length >= 2) :
       type === 'oddone' ? (Array.isArray(G.rounds) && G.rounds.length >= 1) :
       type === 'trace' ? (Array.isArray(G.stages) && G.stages.length >= 2) :
       type === 'slots' ? (Array.isArray(G.slots) && G.slots.length >= 2) :
@@ -42,17 +41,32 @@
     host.appendChild(wrap);
     ctx.shell = makeShell(ctx);
 
-    if (type === 'matching') setupMatching(ctx);
-    else if (type === 'grouping') setupGrouping(ctx);
+    if (type === 'grouping') setupGrouping(ctx);
     else if (type === 'oddone') setupOddone(ctx);
     else if (type === 'trace') setupTrace(ctx);
     else if (type === 'slots') setupSlots(ctx);
     else if (type === 'scenario') setupScenario(ctx);
     else setupSequence(ctx);
   }
+  /** 구 matching 페이로드 → scenario (2열 짝맞추기 폐기). 다른 타입은 그대로. */
+  function liftMatching(G) {
+    if (!G || G.type !== 'matching' || !Array.isArray(G.pairs) || G.pairs.length < 2) return G;
+    var pairs = G.pairs;
+    var rounds = pairs.map(function (p) {
+      var choices = shuffle(pairs.map(function (x) { return x.term; }));
+      return {
+        situation: p.def,
+        choices: choices,
+        answer: choices.indexOf(p.term),
+        why: p.term + ' — ' + p.def
+      };
+    });
+    var prompt = String(G.prompt || '');
+    if (!prompt || /짝/.test(prompt)) prompt = '설명을 보고 알맞은 개념을 고르세요';
+    return { type: 'scenario', color: G.color, prompt: prompt, rounds: rounds };
+  }
   function defPrompt(t) {
-    return t === 'matching' ? '용어와 설명을 짝지으세요'
-      : t === 'grouping' ? '항목을 알맞은 그룹으로 분류하세요'
+    return t === 'grouping' ? '항목을 알맞은 그룹으로 분류하세요'
       : t === 'oddone' ? '어울리지 않는 하나를 고르세요'
       : t === 'trace' ? '과정을 올바른 순서로 따라가며 배우세요'
       : t === 'slots' ? '빈 칸에 알맞은 개념을 넣으세요'
@@ -138,20 +152,6 @@
       else { wrong++; ctx.shell.bad(b); setStatus(ctx, '❌ 순서가 아니에요 — 지금까지 ' + next + '/' + N, 'bad'); }
     }
     function reset() { next = 0; wrong = 0; v.clear(); ctx.shell.reset(); ctx.shell.setTotal(N); setStatus(ctx, '아래 용어를 올바른 순서대로 누르세요 (총 ' + N + '단계)'); render(); }
-    ctx.resetBtn.onclick = reset; reset();
-  }
-
-  function setupMatching(ctx) {
-    var pairs = ctx.G.pairs.slice(), N = pairs.length, v = matchViz(ctx, pairs), sel = null, selBtn = null, done = 0, wrong = 0;
-    ctx.shell.setTotal(N);
-    function render() { ctx.body.className = 'nmg-body nmg-match'; ctx.body.innerHTML = ''; var L = el('div', 'nmg-col'), R = el('div', 'nmg-col'); pairs.forEach(function (p, i) { var t = chip(p.term); t.onclick = function () { pickT(i, t); }; L.appendChild(t); }); shuffle(pairs.map(function (p, i) { return { def: p.def, k: i }; })).forEach(function (d) { var x = chip(d.def); x.classList.add('nmg-def'); x.onclick = function () { pickD(d.k, x); }; R.appendChild(x); }); ctx.body.appendChild(L); ctx.body.appendChild(R); }
-    function pickT(k, b) { if (b.disabled) return; if (selBtn) selBtn.classList.remove('sel'); sel = k; selBtn = b; b.classList.add('sel'); setStatus(ctx, '"' + pairs[k].term + '"에 맞는 설명을 고르세요'); }
-    function pickD(k, b) {
-      if (b.disabled) return; if (sel === null) { setStatus(ctx, '먼저 왼쪽에서 용어를 고르세요'); return; }
-      if (k === sel) { b.disabled = true; b.classList.add('ok'); if (selBtn) { selBtn.disabled = true; selBtn.classList.remove('sel'); selBtn.classList.add('ok'); } ctx.shell.good(b); v.link(k); done++; ctx.shell.progress(done); if (done === N) { setStatus(ctx, '🎉 완성! 모든 짝을 맞췄어요.', 'done'); ctx.shell.win(wrong); } else setStatus(ctx, '좋아요! (' + done + '/' + N + ') 다음 용어를 고르세요'); sel = null; selBtn = null; }
-      else { wrong++; var sb = selBtn; ctx.shell.bad(b); if (sb) sb.classList.add('bad'); setStatus(ctx, '❌ 짝이 아니에요 — 다시', 'bad'); setTimeout(function () { if (sb) sb.classList.remove('bad', 'sel'); }, 460); sel = null; selBtn = null; }
-    }
-    function reset() { sel = null; selBtn = null; done = 0; wrong = 0; v.clear(); ctx.shell.reset(); ctx.shell.setTotal(N); setStatus(ctx, '왼쪽 용어를 누른 뒤 오른쪽에서 맞는 설명을 고르세요 (총 ' + N + '쌍)'); render(); }
     ctx.resetBtn.onclick = reset; reset();
   }
 

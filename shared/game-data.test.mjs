@@ -112,6 +112,13 @@ test('NANAMATE_GAME 페이지 열거(grep) 결과 존재', () => {
   assert.ok(FILES.length > 0, 'grep 결과 비어있지 않음');
 });
 
+test('learngame3d: 2열 matching 엔진 폐기, 구 페이로드는 liftMatching으로 승격', () => {
+  const src = readFileSync(resolve(ROOT, 'shared/learngame3d.js'), 'utf8');
+  assert.ok(src.includes('function liftMatching'), 'liftMatching 존재');
+  assert.equal(src.includes('function setupMatching'), false, 'setupMatching 제거');
+  assert.equal(src.includes("if (type === 'matching')"), false, 'matching 디스패치 제거');
+});
+
 /* 신규 3타입(trace·slots·scenario)은 챕터 코퍼스 도입이 아직 진행 중이라, 계약 자체를 픽스처로 고정한다.
  * 코퍼스에 해당 타입이 0개인 순간에도 검증기가 살아있는지(그리고 무력화되지 않았는지) 보장한다.
  * 형태는 learngame3d.js:21 ok-guard 및 setupTrace·setupSlots·setupScenario가 소비하는 것과 1:1. */

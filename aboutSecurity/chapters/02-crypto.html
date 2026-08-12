@@ -171,7 +171,7 @@ assert pt == data</code></pre>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 본인이 자주 쓰는 웹 사이트의 인증서를 `openssl s_client -connect example.com:443 -showcerts`로 가져와, ① 서명 알고리즘, ② 키 종류와 크기, ③ 유효기간, ④ 발급 CA, ⑤ SAN 도메인 목록, ⑥ Certificate Transparency 로그 등록 여부를 직접 추출해보세요. 그리고 동일 사이트의 TLS 1.3 핸드셰이크를 Wireshark로 캡처해 ClientHello의 cipher suite와 key share 곡선을 확인하면 이 챕터의 모든 개념이 한 번에 손에 잡힙니다.</div>
 </div>
 
-<h2>🕹️ 직접 해보기 — 암호 용어 짝맞추기</h2>
+<h2>🕹️ 직접 해보기 — 암호 용어 상황 판단</h2>
 <p>각 암호 도구를 알맞은 설명과 연결하세요.</p>
 <div id="nm-game-host"></div>
 <script>window.NANAMATE_GAME={"type":"matching","color":"#475569","prompt":"암호 용어와 설명을 짝지으세요","pairs":[{"term":"대칭키 암호","def":"같은 키로 빠르게 암복호화"},{"term":"비대칭키 암호","def":"공개키·개인키 쌍 사용"},{"term":"해시 함수","def":"데이터의 일방향 지문"},{"term":"디지털 서명","def":"무결성과 인증을 동시 증명"},{"term":"TLS","def":"인터넷 암호 통신 표준"}]};</script>
