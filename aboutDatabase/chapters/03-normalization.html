@@ -796,13 +796,12 @@ showNormStep(0);
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎮 한 줄로 말하면?</h3>
   <p>정규화는 표 안에 <strong>같은 정보를 두 번 적지 않게 깔끔히 정리하는 규칙</strong>이에요. 방 정리랑 똑같아요! 🧹</p>
 
@@ -845,9 +844,9 @@ showNormStep(0);
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
   <p>정규화는 함수 종속(Functional Dependency, FD)에 기반합니다. X→Y는 "X 값이 같으면 Y 값도 같다"는 뜻이며, 모든 정규형은 FD를 어떻게 분해해 이상 현상을 없애느냐의 문제입니다. 1NF는 원자값 보장, 2NF는 모든 비키 속성이 후보키 전체에 종속(완전 함수 종속)되어야 한다는 규칙, 3NF는 비키 속성이 다른 비키 속성에 종속되면 안 된다는 규칙입니다. BCNF(Boyce-Codd Normal Form)는 모든 결정자가 후보키여야 한다는 더 엄격한 조건이며, 4NF는 다치 종속(Multi-Valued Dependency), 5NF는 조인 종속까지 다룹니다. 분해 시 무손실 분해(Lossless Decomposition)와 종속 보존(Dependency Preservation)을 동시에 만족해야 의미가 보존됩니다. 실무에서는 3NF/BCNF를 목표로 하되, 읽기 성능이 중요한 OLAP 환경에서는 의도적으로 반정규화(Denormalization)하여 조인을 줄입니다.</p>
 
   <h3>실전 SQL/쿼리</h3>
@@ -894,11 +893,8 @@ CREATE TABLE member (
   <div class="warning-box">
     <strong>⚠️ 자주 하는 실수:</strong> 일단 모두 3NF로 만들었는데 조회 성능이 안 나와서 뒤늦게 컬럼을 합치는 일이 많습니다. 처음부터 읽기/쓰기 비율을 고려해 의도적 반정규화를 설계하는 것이 좋습니다.
   </div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3>
+<h3>전문가 레벨</h3>
   <p>BCNF는 3NF보다 엄격해서 일부 종속 보존을 희생할 수 있는 정규형입니다. 예컨대 (학생, 과목, 교수)에서 교수→과목, (학생, 과목)→교수 관계가 동시에 있을 때 BCNF로 분해하면 종속 (학생, 과목)→교수가 보존되지 않습니다. 4NF는 다치 종속을, 5NF(PJNF)는 조인 종속을 다룹니다. 분해의 핵심 정리로 Heath의 정리와 무손실 결합 보장 알고리즘이 있으며, 정규화 결정은 후보키 식별과 닫힘 계산(attribute closure)으로 형식화됩니다. 6NF는 시간성(Temporal) 데이터 모델링에서 중요한 역할을 하며, 모든 비키 속성을 단일 컬럼 테이블로 분리하여 시간 변화를 정확히 추적합니다. NoSQL 등장 이후에는 도메인 주도 설계(DDD)의 애그리게이트 단위로 비정규화를 의도적으로 수용하는 사례가 많아졌습니다. 또한 그래프 데이터베이스에서는 정규화 개념이 노드와 관계의 분리로 자연스럽게 구현됩니다. 분산 환경에서는 정규화된 스키마의 조인 비용이 매우 비싸서, 단일 키 조회로 끝낼 수 있도록 의도적으로 비정규화한 데이터 모델을 채택하는 것이 일반적입니다.</p>
 
   <h3>고급 패턴</h3>

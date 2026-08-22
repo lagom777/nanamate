@@ -77,13 +77,12 @@
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🔐 한마디로 말하면</h3>
   <p>암호학은 <strong>비밀을 지키는 마법</strong>이에요! 마법이 세 가지 있어요. ① 남이 못 읽게 <strong>암호로 바꾸기</strong>, ② 내용이 바뀌었는지 <strong>지문으로 확인하기</strong>, ③ 진짜 그 사람이 맞는지 <strong>도장으로 증명하기</strong>. 카톡, 은행 앱, 자물쇠(🔒 https)가 붙은 사이트가 전부 이 마법으로 돌아가요!</p>
   <h3>🎮 우리 생활 속 이야기</h3>
@@ -112,9 +111,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>대칭키 암호의 사실상 표준은 AES(2001, FIPS 197)입니다. 128/192/256비트 키, 128비트 블록의 SPN(Substitution-Permutation Network) 구조이며, 운용모드(Mode of Operation)에 따라 성격이 달라집니다. ECB는 같은 평문이 같은 암호문이 되어 절대 사용 금지이고, CBC는 IV 누수와 패딩 오라클에 취약합니다. 현재 표준은 인증암호화(AEAD)인 <strong>AES-GCM</strong>과 <strong>ChaCha20-Poly1305</strong>로, 기밀성과 무결성을 한 번에 제공합니다.</p>
   <p>비대칭키 암호는 수학적 어려움(난문제)에 안전성을 의존합니다. RSA는 큰 정수의 소인수분해, DH/ECDH는 이산대수, ECDSA·Ed25519는 타원곡선 이산대수 문제에 기반합니다. 동등 보안 강도를 비교하면 RSA-2048 ≈ ECC-224 ≈ AES-112 수준이며, RSA-3072 ≈ ECC-256 ≈ AES-128입니다. 모바일·IoT 환경에서 ECC가 압도적으로 선호되는 이유입니다.</p>
   <h3>핵심 코드 — Python으로 보는 AEAD</h3>
@@ -137,11 +136,8 @@ assert pt == data</code></pre>
   <h3>응용 사례</h3>
   <p>① <strong>JWT(JSON Web Token)</strong>는 HMAC-SHA256(대칭) 또는 RSA·ECDSA(비대칭) 서명으로 토큰의 무결성과 발급자를 보장합니다. 'alg: none' 취약점이나 약한 키 사용은 자주 발견되는 사고 원인입니다. ② <strong>비밀번호 저장</strong>은 단순 SHA-256이 아니라 <strong>bcrypt·scrypt·Argon2</strong> 같은 의도적으로 느린 KDF를 써야 합니다. 2023년 NIST는 Argon2id를 권장합니다. ③ <strong>파일 서명</strong>: GPG, code signing, sigstore 등은 모두 비대칭 서명의 응용입니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "암호학은 직접 구현하면 안 된다(Don't roll your own crypto)"는 격언이 가장 중요합니다. AES 자체는 안전해도 ECB 모드를 쓰거나, IV/Nonce를 재사용하거나, 비상수시간(non-constant-time) 비교로 키를 누수하거나, 약한 난수원을 쓰면 전부 무력화됩니다. 검증된 라이브러리(libsodium, BoringSSL, Tink)를 쓰세요.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>현대 암호학의 안전성 정의는 <strong>증명가능 보안(provable security)</strong> 패러다임에 기반합니다. 어떤 암호 스킴 $\Pi$가 안전하다는 것은, 임의의 다항시간 적대자 $\mathcal{A}$의 성공 확률을 어떤 수학적 난문제(소인수분해·이산대수·LWE 등)를 푸는 알고리즘으로 환원(reduction)할 수 있음을 보이는 것입니다. 예: IND-CPA, IND-CCA2, EUF-CMA 같은 게임 기반 정의를 통해 적대자 모델을 형식화합니다.</p>
   <p>대칭키 영역의 최신 흐름은 <strong>경량 암호(Lightweight Cryptography)</strong>입니다. NIST는 2023년 IoT·임베디드용 표준으로 <strong>Ascon</strong>을 선정했습니다. AES-GCM보다 메모리·전력 효율이 우수하면서도 충분한 보안 마진을 가집니다.</p>
   <h3>수학적 기초</h3>

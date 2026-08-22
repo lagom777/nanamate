@@ -70,13 +70,12 @@
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🌟 한 줄 요약</h3>
   <p>관람차를 옆에서 보면 한 칸이 빙글빙글 돌죠. 그 칸의 "높이"만 시간에 따라 기록하면 부드러운 물결이 돼요. 그게 sin! "옆으로의 위치"를 기록하면 cos이에요. 삼각함수 = 회전의 그림자!</p>
   <h3>🤔 이걸 왜 배워요?</h3>
@@ -101,9 +100,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>덧셈정리의 가장 깨끗한 증명은 단위원 위 두 점 (cos α, sin α), (cos β, sin β) 사이 거리를 두 방법으로 계산하는 것입니다(거리 공식 vs 코사인법칙). 정리하면 cos(α−β) = cos α cos β + sin α sin β가 나오고, 나머지 공식 전부가 이 한 줄에서 파생됩니다 — β → −β 치환, α → π/2−α 치환의 기계적 작업입니다. "공식 7개"가 아니라 "정리 1개 + 치환 규칙"으로 기억하세요.</p>
   <p>삼각방정식 풀이의 핵심은 <strong>일반해</strong>입니다. sin x = ½의 해는 x = π/6 하나가 아니라 x = π/6 + 2nπ 또는 x = 5π/6 + 2nπ (n∈ℤ) — 단위원에서 높이가 ½인 점이 두 개 있고, 회전은 무한히 반복되기 때문입니다. 방정식을 풀 때 항상 단위원을 그려 "몇 개의 기본해가 있는가"부터 확인하는 것이 정석입니다.</p>
   <h3>대표 예제</h3>
@@ -112,11 +111,8 @@
   <h3>응용 사례</h3>
   <p>① <strong>푸리에 분석</strong>: 모든 주기 신호를 sin·cos의 합으로 분해 — MP3·JPEG 압축, 음성인식 전처리의 수학. ② <strong>컴퓨터 그래픽스</strong>: 회전 행렬 [[cos, −sin],[sin, cos]]이 모든 2D 회전을 담당하고, 3D는 사원수와 함께. ③ <strong>GPS·천문</strong>: 구면 삼각법으로 위경도와 거리 계산. ④ <strong>교류 회로</strong>: 전압·전류의 위상차가 전력을 결정 — 공학자가 매일 쓰는 cos φ(역률).</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① 계산기 모드(DEG/RAD) 불일치 — sin 30 ≠ sin 30°. ② sin(α+β)를 sin α + sin β로 전개 — 함수는 분배되지 않습니다. ③ 일반해에서 sin x = k의 둘째 해 π−x 누락. ④ 주기 혼동: tan의 주기는 2π가 아니라 π. ⑤ sin⁻¹ 표기를 1/sin으로 오독 — 역함수(arcsin)입니다.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>삼각함수의 가장 깊은 정체는 <strong>오일러 공식</strong>입니다: e^(iθ) = cos θ + i sin θ. 복소평면에서 e^(iθ)는 단위원 위의 점이고, 회전은 복소수 곱셈이 됩니다. 덧셈정리는 지수법칙 e^(iα)e^(iβ) = e^(i(α+β))의 실부·허부 비교로 한 줄에 증명됩니다 — 5장의 "공식들"이 사실 지수함수의 그림자였던 것입니다. θ = π를 넣으면 e^(iπ) + 1 = 0, 수학의 다섯 상수가 한 식에 모입니다.</p>
   <p>해석학적으로 sin·cos의 엄밀한 정의는 거듭제곱급수입니다: sin x = x − x³/3! + x⁵/5! − …, cos x = 1 − x²/2! + x⁴/4! − …. 이 급수는 모든 복소수에서 수렴하므로 sin(i) 같은 값도 정의되며, 쌍곡함수와의 관계 sin(ix) = i sinh x가 드러납니다. 기하(원) → 해석(급수) → 대수(지수)로 같은 대상을 세 언어로 보는 것이 수학적 성숙의 지표입니다.</p>
   <h3>수학적·정량적 기초</h3>

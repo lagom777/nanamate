@@ -15,6 +15,7 @@ import { realPriceBrief } from "./realprice.mjs";
 import { createOfflineTrendPost } from "./offline-writer.mjs";
 import { callGeminiOAuth, googleOAuthStatus } from "./google-oauth.mjs";
 import { callCodexChatGPT, codexChatGPTStatus } from "./codex-writer.mjs";
+import { callGrok, grokStatus } from "./grok-writer.mjs";
 
 const DIR = dirname(fileURLToPath(import.meta.url));
 const OUT_ROOT = join(DIR, "output");
@@ -360,15 +361,20 @@ export function loadConfig(){
   const base=JSON.parse(readFileSync(join(DIR,"config.json"),"utf8"));
   let local={}; const lp=join(DIR,"config.local.json");
   if(existsSync(lp)){ try{ local=JSON.parse(readFileSync(lp,"utf8")); }catch{} }
-  return { ...base, ...local, geminiKey: process.env.GEMINI_API_KEY || local.geminiKey || "" };
+  return {
+    ...base,
+    ...local,
+    geminiKey: process.env.GEMINI_API_KEY || local.geminiKey || "",
+    xaiKey: process.env.XAI_API_KEY || local.xaiKey || "",
+  };
 }
 
 async function main(){
   const args=process.argv.slice(2);
   const gatherOnly=args.includes("--gather-only");
   const noPost=args.includes("--no-post");
-  const forceOffline=args.includes("--offline");
   const config=loadConfig();
+  const forceOffline=args.includes("--offline") || config.preferOffline===true;
 
   log("트렌드 수집 시작...");
   const brief=await gather(config);
@@ -381,9 +387,18 @@ async function main(){
   }
   let obj;
   const model=config.geminiModel||"gemini-2.5-flash";
+  const grokModel=config.grokModel||"grok-4-latest";
   const userPrompt=buildUserPrompt(briefToText(brief), config);
   const failures=[];
-  if(!forceOffline && config.preferChatGPTLogin!==false && codexChatGPTStatus().ready){
+  const grok=grokStatus(config);
+  if(!forceOffline && config.preferGrok!==false && grok.ready){
+    try{
+      log(`Grok(${grokModel})로 글 생성 중...`);
+      obj=parseJsonLoose(await callGrok(SYSTEM_PROMPT, userPrompt, { key: grok.key, model: grokModel }));
+      obj._engine="grok-xai";
+    }catch(e){ failures.push(`Grok: ${e.message}`); }
+  }
+  if(!obj && !forceOffline && config.preferChatGPTLogin!==false && codexChatGPTStatus().ready){
     try{
       log("현재 ChatGPT 로그인으로 Codex 글 생성 중...");
       obj=parseJsonLoose(callCodexChatGPT(SYSTEM_PROMPT, userPrompt));

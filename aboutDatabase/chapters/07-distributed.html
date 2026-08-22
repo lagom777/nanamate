@@ -297,13 +297,12 @@ window.addEventListener('resize', () => {
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎮 한 줄로 말하면?</h3>
   <p>분산 데이터베이스는 <strong>데이터를 여러 컴퓨터(노드)에 나눠 두고 다 같이 일하게 하는 시스템</strong>이에요! 🖥️🖥️🖥️</p>
 
@@ -346,9 +345,9 @@ window.addEventListener('resize', () => {
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
   <p>CAP 정리(Brewer)는 네트워크 분할 상황에서 일관성과 가용성 중 하나를 포기해야 한다는 명제입니다. PACELC는 분할이 없을 때도 지연(Latency)과 일관성 중 하나를 골라야 한다는 확장 모델입니다. 일관성 모델은 강한 일관성, 선형성(Linearizability), 순차 일관성, 인과 일관성, 결과적 일관성으로 단계가 있습니다. 복제 토폴로지는 단일 리더(Primary-Replica), 다중 리더(Multi-Master), 리더리스(Dynamo 스타일)로 나뉘며, 각각 충돌 해소 전략이 다릅니다. 샤딩은 범위 기반(Range), 해시 기반(Hash), 디렉토리 기반(Lookup)으로 나뉘며, 핫스팟을 피하고 리밸런싱 비용을 줄이는 설계가 핵심입니다. 합의 알고리즘 Raft와 Paxos는 분산 시스템에서 단일 진실의 원천을 정하는 데 사용되며, etcd, Consul, CockroachDB가 Raft 기반입니다. 분산 트랜잭션은 2PC와 Saga가 대표적이며, 현대 NewSQL은 외부 일관성을 제공하기 위해 정밀한 시계 동기화나 HLC를 활용합니다.</p>
 
   <h3>실전 SQL/쿼리</h3>
@@ -388,11 +387,8 @@ CREATE SUBSCRIPTION sub_orders
   <div class="warning-box">
     <strong>⚠️ 자주 하는 실수:</strong> 샤딩 키를 잘못 고르면 핫스팟이 생겨 한 노드만 죽도록 일합니다. 또 복제 지연을 무시하고 팔로워에서 즉시 조회하면 "방금 저장한 게 안 보여요" 사건이 벌어집니다.
   </div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3>
+<h3>전문가 레벨</h3>
   <p>합의 알고리즘 Paxos는 안전성과 활성을 모두 갖춘 메시지 패싱 모델로, 단일 합의(Single-Decree)와 다중 합의(Multi-Paxos)로 확장됩니다. Raft는 강한 리더 모델과 로그 복제 구조로 구현 난도를 낮췄으며, etcd·Consul·TiKV가 대표 사용처입니다. ZAB은 Zookeeper의 합의 프로토콜로 원자 브로드캐스트에 특화되어 있습니다. 분산 트랜잭션의 외부 일관성을 위해 Spanner는 GPS와 원자시계로 정밀 시간 동기화(TrueTime)를 보장하고, CockroachDB는 HLC로 비교적 저렴하게 인과 순서를 부여합니다. 멀티 리전 ACID는 커밋 대기(commit wait)나 폐쇄형 타임스탬프 같은 기법이 결합됩니다. CRDT(Conflict-free Replicated Data Type)는 카운터·세트·맵·시퀀스를 수학적으로 합치 가능하게 정의해 다중 리더 환경에서도 충돌 없이 수렴합니다. Yjs와 Automerge는 협업 편집기에, Riak DT는 일반 분산 응용에 활용됩니다. 분산 옵티마이저는 데이터 지역성을 고려해 push-down 조인과 분산 윈도우 함수를 실행하며, 데이터 스큐와 네트워크 셔플 비용이 핵심 병목입니다.</p>
 
   <h3>고급 패턴</h3>

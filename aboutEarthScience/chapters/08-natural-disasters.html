@@ -122,12 +122,11 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🌍 한 줄 요약!</h3>
   <p>지진·화산·태풍·홍수처럼 자연의 힘이 사람 사회에 큰 피해를 주는 사건을 자연재해라고 해! ⚠️</p>
   <h3>🤔 왜 알아야 할까?</h3>
@@ -149,9 +148,10 @@
     <li>대비와 조기경보가 피해를 줄임</li>
   </ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이</h3>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
   <p>지진의 규모는 모멘트 규모(Mw)가 표준이며, 단층 면적·미끌림 변위·강성률의 곱인 지진 모멘트 M₀에서 유도됩니다. Mw 1단계 증가는 에너지 약 31.6배 증가에 해당하며, Mw 9급은 Mw 7의 1,000배 에너지를 방출합니다. 지진해일은 해저 단층의 수직 변위가 해수 기둥을 들어올려 발생하며, 깊은 바다에서는 시속 700–800km로 전파되지만 해안에 가까워지면 속도가 느려지고 파고가 급증합니다. 화산 분화 양식은 마그마의 점성과 휘발성 함량에 따라 달라져, 하와이형(점성 낮음, 용암류) → 스트롬볼리·블칸·플리니식(점성 높음, 폭발) 순으로 폭발력이 커집니다. 화산폭발지수(VEI)는 분출량과 분연주 높이로 등급화되며, 1815년 탐보라(VEI 7)는 '여름 없는 해'를 만들었습니다. 태풍은 해수면 온도 26.5°C 이상의 열대 해역에서 형성되며, 사피어-심슨 등급으로 분류됩니다.</p>
   <h3>메커니즘과 모델</h3>
   <div class="info-card"><h4>🌍 사례 1: 2011년 동일본 대지진</h4><p>일본 도호쿠 앞바다 Mw 9.1 지진은 태평양판이 일본 아래로 섭입하는 경계에서 발생했습니다. 단층 미끌림은 50m 이상에 달했고, 발생한 지진해일이 후쿠시마 원전 사고로 이어졌습니다. 사망·실종 약 2만 명의 큰 피해가 발생했습니다.</p></div>
@@ -159,10 +159,8 @@
   <h3>관측 데이터</h3>
   <p>전 지구 지진 관측망(GSN, IRIS)은 24시간 지진 활동을 추적하고, 일본 GEONET·미국 PBO 같은 GPS 어레이는 단층의 변형률 누적을 cm 정밀도로 측정합니다. 화산은 지진계·기울기계·SO₂ 가스·열적외선 위성으로 종합 모니터링되며, 백두산은 한·중·러 다국적 관측 협력의 대상입니다. DART 부이는 깊은 바다에서 쓰나미 파동을 직접 감지해 조기경보에 활용됩니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> '진도'와 '규모'를 혼동하기 쉽습니다. 규모는 지진 자체의 크기(한 사건 = 한 값), 진도는 특정 지점에서 느끼는 흔들림 정도(지점마다 다름)입니다.</div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3>
+
+<h3>전문가 레벨</h3>
   <p>지진 발생은 단층의 마찰 법칙(rate-and-state friction)으로 기술되며, Dieterich-Ruina 모델은 응력 상태와 미끌림 속도에 따른 마찰계수 변화를 매개변수화합니다. 시간의존 지진 위험 평가는 갱신 모델(BPT, Brownian Passage Time)이나 ETAS(Epidemic-Type Aftershock Sequence) 통계로 수행됩니다. 지진해일은 비선형 천수방정식과 분산형 부시네스크 방정식으로 모델링하며, COMCOT·GeoClaw·Tsunami-HySEA 같은 코드가 운영 예측에 사용됩니다. 화산학에서는 마그마 통로의 결정-기체-액체 다상 흐름을 콘듀잇 모델로 시뮬레이션하고, InSAR로 지표 변형을 추적해 마그마방의 부피 변화를 추정합니다. 백두산의 1,000년 전 천년분화(VEI 7급)는 지속적 모니터링 대상이며, 동아시아 광역 화산학적 위협으로 평가됩니다. 산사태 위험은 무한 사면 안정성식과 SHALSTAB·SLIDE 같은 모델로 정량화하고, 강수-위험 한계 곡선(I-D curve)이 조기경보의 기반입니다. 다중재해(multi-hazard) 평가와 캐스케이딩 재해(cascading disaster, 예: 지진→해일→원전) 분석이 최근 핵심 주제입니다.</p>
   <h3>핵심 모델</h3>
   <div class="formula">지진 모멘트: M₀ = μ·A·D, μ: 강성률, A: 단층 면적, D: 평균 변위<br>모멘트 규모: Mw = (2/3)·log₁₀(M₀) − 6.07 (M₀ 단위 N·m)<br>구텐베르크-리히터: log₁₀N = a − b·M (지진 빈도 분포)<br>천수파 속도: c = √(g·h), h: 수심</div>

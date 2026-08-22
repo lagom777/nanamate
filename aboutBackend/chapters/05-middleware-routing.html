@@ -138,12 +138,11 @@ app.use('/api/posts', require('./routes/posts'));</div>
 <h2>📚 난이도별 학습</h2>
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🤔 이게 뭐냐면?</h3><p>미들웨어는 요청과 응답 사이를 지나가는 "통과 게이트"예요! 🚪 라우팅은 "어떤 주소로 온 손님을 어떤 함수한테 보낼지" 정하는 지도고요. 🗺️</p>
   <h3>👀 왜 중요할까?</h3><p>로그인 검사, 기록 남기기, 데이터 정리, 압축 같은 일은 모든 API가 공통으로 필요해요. 🔁 미들웨어로 한곳에 모아두면, 진짜 중요한 일에만 집중할 수 있어서 코드가 깔끔해지고 실수도 줄어요. ✨</p>
   <div class="info-card"><h4>🌱 이 말은 꼭 알아두자</h4><ul><li><strong>미들웨어</strong>: (req, res, next) 모양의 처리 함수 🧩</li><li><strong>next()</strong>: "다음 게이트로 넘겨!" 하는 호출 ➡️</li><li><strong>라우터</strong>: 메서드 + 주소 → 담당 함수 연결 🔗</li><li><strong>경로 매개변수</strong>: /users/:id 의 :id 부분 🏷️</li><li><strong>에러 미들웨어</strong>: 인자가 4개 (err, req, res, next) 🚨</li></ul></div>
@@ -151,9 +150,10 @@ app.use('/api/posts', require('./routes/posts'));</div>
   <div class="study-tip"><strong>💡 학습 TIP:</strong> 미들웨어는 등록한 "순서"가 곧 실행 순서예요! 보통 cors → json 파서 → auth → router → 에러 핸들러 순으로 놓아요. 📋</div>
   <h3>🍬 한 입 요약</h3><ul><li>미들웨어는 (req, res, next) 함수예요</li><li>next()를 불러야 다음으로 넘어가요</li><li>응답을 보내거나 next(err)로 에러를 넘겨요</li><li>등록한 순서 = 실행 순서!</li><li>라우터로 주소별로 갈래를 나눠요</li></ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3><p>Express 미들웨어는 함수 체인 패턴의 단순한 구현이지만, 비동기 흐름·에러 전파·조건부 분기를 다 표현해야 해서 설계가 까다롭습니다. app.use는 전역, router.use는 라우터 범위, app.METHOD는 단일 라우트에 적용됩니다. 라우트 매칭은 path-to-regexp가 담당하며 동적 매개변수(:id), 와일드카드, 옵셔널 세그먼트를 지원합니다. 비동기 핸들러에서 throw된 예외는 Express 4.x까지는 next로 자동 전파되지 않아 express-async-errors 같은 래퍼가 필요했고, 5.x부터 표준에 포함되었습니다. CORS, helmet, compression, morgan은 거의 모든 프로젝트의 기본 셋업입니다.</p>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>Express 미들웨어는 함수 체인 패턴의 단순한 구현이지만, 비동기 흐름·에러 전파·조건부 분기를 다 표현해야 해서 설계가 까다롭습니다. app.use는 전역, router.use는 라우터 범위, app.METHOD는 단일 라우트에 적용됩니다. 라우트 매칭은 path-to-regexp가 담당하며 동적 매개변수(:id), 와일드카드, 옵셔널 세그먼트를 지원합니다. 비동기 핸들러에서 throw된 예외는 Express 4.x까지는 next로 자동 전파되지 않아 express-async-errors 같은 래퍼가 필요했고, 5.x부터 표준에 포함되었습니다. CORS, helmet, compression, morgan은 거의 모든 프로젝트의 기본 셋업입니다.</p>
   <h3>핵심 코드 패턴</h3>
   <pre><code>// 시간 측정 미들웨어
 app.use((req, res, next) =&gt; {
@@ -171,10 +171,8 @@ app.use((err, req, res, next) =&gt; {
   <div class="info-card"><h4>📐 예제 2: 라우터 모듈화</h4><p>routes/v1/index.js에서 모든 v1 라우터를 모으고, app.use('/api/v1', v1Router)로 마운트합니다. 버전 분기와 도메인 분리를 동시에 깔끔하게 해결합니다.</p></div>
   <h3>응용 사례</h3><p>SaaS의 멀티 테넌트 API는 미들웨어로 호스트/서브도메인을 파싱해 req.tenant를 채우고, 이후 모든 쿼리에서 자동으로 테넌트 필터를 적용합니다. 카카오·네이버 API 게이트웨이는 인증·로깅·레이트리밋·서킷브레이커를 모두 미들웨어 체인으로 표현합니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 비동기 미들웨어에서 next()를 호출하기 전에 응답을 보내거나, 에러를 throw만 하고 next(err)로 전파하지 않아 요청이 영원히 매달리는 경우가 흔합니다.</div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3><p>대규모 API에서는 미들웨어 체인 자체가 성능 핫스팟이 됩니다. body 파싱·JSON 직렬화·로깅의 누적 비용이 ms 단위로 쌓이며, 잘못된 미들웨어 한 줄이 RPS를 절반으로 떨어뜨립니다. Fastify는 schema 컴파일 기반의 직렬화로 이를 회피합니다. Koa·NestJS는 미들웨어를 "양파(onion)" 구조로 표현해 응답 직전 후처리를 자연스럽게 표현합니다. 라우팅의 라디스 트리(prefix tree) 구현은 Trie/Radix 기반이며, 매칭 성능이 곧 처리량에 직결됩니다. API 게이트웨이(Kong, Envoy)에서는 미들웨어 개념이 "필터 체인"으로 확장되어 mTLS, JWT 검증, WAF, 추적, 캐싱을 한 곳에서 처리합니다.</p>
+
+<h3>전문가 레벨 이해</h3><p>대규모 API에서는 미들웨어 체인 자체가 성능 핫스팟이 됩니다. body 파싱·JSON 직렬화·로깅의 누적 비용이 ms 단위로 쌓이며, 잘못된 미들웨어 한 줄이 RPS를 절반으로 떨어뜨립니다. Fastify는 schema 컴파일 기반의 직렬화로 이를 회피합니다. Koa·NestJS는 미들웨어를 "양파(onion)" 구조로 표현해 응답 직전 후처리를 자연스럽게 표현합니다. 라우팅의 라디스 트리(prefix tree) 구현은 Trie/Radix 기반이며, 매칭 성능이 곧 처리량에 직결됩니다. API 게이트웨이(Kong, Envoy)에서는 미들웨어 개념이 "필터 체인"으로 확장되어 mTLS, JWT 검증, WAF, 추적, 캐싱을 한 곳에서 처리합니다.</p>
   <h3>최신 연구·동향</h3><p>Cloudflare Workers, Vercel Edge는 미들웨어를 엣지에서 실행해 인증·AB 테스트·캐싱을 origin 호출 없이 끝냅니다. OpenTelemetry는 자동 계측 미들웨어로 모든 요청에 분산 추적을 부여하고, eBPF 기반 관측은 코드 변경 없이 미들웨어 수준 메트릭을 수집합니다.</p>
   <h3>관련 분야</h3><ul><li>API 게이트웨이와 정책 엔진</li><li>분산 추적(Distributed Tracing)</li><li>서킷 브레이커와 백프레셔</li></ul>
   <h3>추가 학습 자료</h3><ul><li>Express 공식 가이드 — Writing middleware</li><li>"Building Microservices" — Sam Newman</li><li>Envoy Proxy 문서 — Filter chains</li></ul>

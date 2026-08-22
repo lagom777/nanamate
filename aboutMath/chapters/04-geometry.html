@@ -73,13 +73,12 @@
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🌟 한 줄 요약</h3>
   <p>피타고라스 정리는 "직각삼각형의 두 짧은 변으로 만든 정사각형 두 개를 합치면, 빗변으로 만든 정사각형이 딱 채워진다"는 넓이 이야기예요. 위 3D의 타일 9칸 + 16칸 = 25칸이 증명 전부!</p>
   <h3>🤔 이걸 왜 배워요?</h3>
@@ -103,9 +102,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>유클리드 <em>원론</em>의 다섯 번째 공준(평행선 공준: 한 점을 지나 주어진 직선에 평행한 직선은 단 하나)은 2000년간 "증명되어야 할 정리"로 의심받았습니다. 19세기에 보여진 답은 충격적이었습니다: 이 공준을 부정해도 모순 없는 기하가 존재합니다. 평행선이 무한히 많은 <strong>쌍곡기하</strong>(로바쳅스키), 하나도 없는 <strong>구면(타원)기하</strong>(리만). 구면 위 삼각형의 내각 합은 180°보다 크고, 그 초과분이 넓이에 비례합니다 — "내각 합 180°"는 진리가 아니라 평탄한 공간의 성질이었던 것입니다.</p>
   <p>피타고라스 정리도 같은 운명입니다. 휘어진 공간에서는 성립하지 않으며, 일반화된 버전(계량 텐서 ds² = gᵢⱼdxⁱdxʲ)이 그 자리를 차지합니다. 아인슈타인의 일반상대성이론은 "중력 = 공간의 휘어짐"을 정확히 이 언어로 씁니다.</p>
   <h3>대표 예제</h3>
@@ -114,11 +113,8 @@
   <h3>응용 사례</h3>
   <p>① <strong>GPS</strong>: 위성까지의 거리들로 위치를 결정하는 삼변측량은 3차원 거리 공식(= 피타고라스) 연립이 핵심입니다. ② <strong>컴퓨터 비전</strong>: 카메라의 원근 투영, 에피폴라 기하 — 전부 닮음과 비례의 산물. ③ <strong>로보틱스</strong>: 관절 로봇의 끝점 위치 계산(순기구학)은 삼각비의 연쇄. ④ <strong>게임 물리</strong>: 충돌 판정의 기본 연산이 거리 공식이며, 제곱근을 피하려고 d² 비교를 쓰는 것이 표준 최적화입니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① 빗변이 아닌 변을 c로 놓기 — 직각의 "맞은편" 변이 빗변. ② 닮음비와 넓이비 혼동 — 길이 2배면 넓이 4배. ③ 원의 방정식에서 반지름 r과 r² 혼동: (x−1)²+y² = 9의 반지름은 3. ④ "내각 합 180°"를 구면(지구) 위 장거리 항로에 적용 — 평면에서만 성립.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>현대적 관점에서 기하학은 클라인의 <strong>에를랑겐 프로그램</strong>(1872)으로 정리됩니다: 기하학이란 "변환군 아래 불변인 성질의 연구"다. 유클리드 기하는 강체 변환(회전·평행이동·반사)군의 불변량(길이·각도), 아핀 기하는 평행성, 사영 기하는 공선성(직선 위에 있음), 위상수학은 연속 변형의 불변량을 다룹니다. 군이 클수록 불변량은 적어지고 기하는 "부드러워"집니다.</p>
 <p>피타고라스 정리의 현대적 자리는 <strong>내적 공간</strong>입니다. 내적 ⟨u,v⟩가 정의된 벡터공간에서 u⊥v이면 ‖u+v‖² = ‖u‖²+‖v‖² — 이것이 추상화된 피타고라스이며, 푸리에 급수의 파스발 항등식(∑|cₙ|² = ‖f‖²)은 "무한차원 피타고라스"입니다. 통계학의 분산 분해(총변동 = 설명된 변동 + 잔차 변동)도 직교 사영의 피타고라스입니다.</p>
   <h3>수학적·정량적 기초</h3>

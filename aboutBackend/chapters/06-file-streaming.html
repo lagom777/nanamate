@@ -132,12 +132,11 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
 <h2>📚 난이도별 학습</h2>
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🤔 이게 뭐냐면?</h3><p>스트리밍은 큰 파일을 한꺼번에 다 안 열고, "조각조각 흘려보내며" 처리하는 기술이에요! 🌊 물을 컵으로 조금씩 따라 마시는 것처럼요. 🥤</p>
   <h3>👀 왜 중요할까?</h3><p>유튜브가 8K 영상을 끊김 없이 보여주고, 디스코드가 목소리를 실시간으로 보내고, 인스타가 큰 사진을 척척 올리는 비결이 다 스트리밍이에요! 🎬 덕분에 메모리가 4GB뿐인 작은 서버로도 100GB짜리 큰 파일을 다룰 수 있어요. 😮</p>
   <div class="info-card"><h4>🌱 이 말은 꼭 알아두자</h4><ul><li><strong>스트림</strong>: 시간에 따라 주르륵 흐르는 데이터 🌊</li><li><strong>청크(Chunk)</strong>: 스트림을 이루는 작은 조각 🧱</li><li><strong>Pipe</strong>: 한 스트림 출구를 다른 스트림 입구에 연결 🔌</li><li><strong>Backpressure</strong>: 너무 빨리 오면 "잠깐 천천히!" 하는 흐름 조절 🚦</li><li><strong>multipart/form-data</strong>: 파일 올릴 때 쓰는 포장 방식 📮</li></ul></div>
@@ -145,9 +144,10 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
   <div class="study-tip"><strong>💡 학습 TIP:</strong> Node.js에서 큰 파일로 fs.readFile과 fs.createReadStream의 메모리 사용량을 비교해보세요! 차이가 100배 넘게 나요. 😲</div>
   <h3>🍬 한 입 요약</h3><ul><li>스트리밍 = 메모리 절약 + 빠른 시작</li><li>스트림 4종: Readable / Writable / Duplex / Transform</li><li>pipe로 스트림을 안전하게 이어요</li><li>업로드는 multer 같은 멀티파트 도구로 처리</li><li>다운로드는 Content-Disposition과 Range로 조절</li></ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3><p>Node.js 스트림은 EventEmitter 기반으로 'data', 'end', 'error', 'drain' 이벤트를 발생시킵니다. highWaterMark 옵션이 내부 버퍼 크기를 결정하며, 기본 16KB입니다. write()가 false를 반환하면 버퍼가 가득 찼다는 신호이고, drain 이벤트를 기다려야 합니다. pipe와 pipeline은 이런 backpressure를 자동으로 처리해줍니다. Transform 스트림은 입력 청크를 변환해 새 청크를 내보내며 압축(gzip), 암호화(crypto), 파싱(JSON Stream)에 쓰입니다. HTTP Range 요청을 처리하면 동영상의 임의 시점부터 전송이 가능해져 시킹(seeking)이 동작합니다.</p>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>Node.js 스트림은 EventEmitter 기반으로 'data', 'end', 'error', 'drain' 이벤트를 발생시킵니다. highWaterMark 옵션이 내부 버퍼 크기를 결정하며, 기본 16KB입니다. write()가 false를 반환하면 버퍼가 가득 찼다는 신호이고, drain 이벤트를 기다려야 합니다. pipe와 pipeline은 이런 backpressure를 자동으로 처리해줍니다. Transform 스트림은 입력 청크를 변환해 새 청크를 내보내며 압축(gzip), 암호화(crypto), 파싱(JSON Stream)에 쓰입니다. HTTP Range 요청을 처리하면 동영상의 임의 시점부터 전송이 가능해져 시킹(seeking)이 동작합니다.</p>
   <h3>핵심 코드 패턴</h3>
   <pre><code>const {pipeline} = require('stream/promises');
 const fs = require('fs');
@@ -162,10 +162,8 @@ await pipeline(
   <div class="info-card"><h4>📐 예제 2: 대용량 업로드</h4><p>multer.diskStorage로 파일을 임시 디렉터리에 저장하면서 동시에 해시를 계산하는 Transform을 끼워 무결성을 검증합니다.</p></div>
   <h3>응용 사례</h3><p>SaaS의 CSV 익스포트 기능은 DB 쿼리 결과를 한 행씩 Transform으로 CSV 직렬화하면서 HTTP 응답으로 흘려보냅니다. 메모리는 일정 수준을 넘지 않고, 사용자는 다운로드가 즉시 시작되는 경험을 얻습니다. 음성/영상 채팅은 WebRTC가 미디어를 SCTP 스트림으로 흘리고, HLS/DASH는 영상을 청크 단위 manifest로 쪼개 HTTP로 흘립니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> stream.on('data', ...) + 동기 처리 패턴은 backpressure를 무시하기 쉽습니다. 가능한 한 pipeline()이나 async iteration(for await)으로 작성하세요.</div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3><p>현대 스트리밍 백엔드는 단일 서버 스트림 처리에서 분산 스트림 처리로 옮겨가고 있습니다. Kafka, Pulsar, Kinesis는 영속화된 분산 로그로서 스트림의 정의 자체를 확장했습니다. 백엔드는 들어오는 미디어 청크를 객체 스토리지(S3 멀티파트)에 멀티파트로 직접 업로드하면서 동시에 메타데이터 파이프라인으로 전송합니다. Range 응답 외에 HTTP/2 server push와 SSE가 부분적으로 쓰이지만, 실시간 양방향은 WebSocket·WebTransport가 표준입니다. ffmpeg 파이프라인으로 트랜스코딩을 GPU 가속하며, HLS의 fMP4 세그먼트, LL-HLS의 partial segment로 글래스 투 글래스 지연을 2초 이내로 줄입니다. CDN의 시그니처드 URL로 핫링킹을 막고 만료 시간을 강제합니다.</p>
+
+<h3>전문가 레벨 이해</h3><p>현대 스트리밍 백엔드는 단일 서버 스트림 처리에서 분산 스트림 처리로 옮겨가고 있습니다. Kafka, Pulsar, Kinesis는 영속화된 분산 로그로서 스트림의 정의 자체를 확장했습니다. 백엔드는 들어오는 미디어 청크를 객체 스토리지(S3 멀티파트)에 멀티파트로 직접 업로드하면서 동시에 메타데이터 파이프라인으로 전송합니다. Range 응답 외에 HTTP/2 server push와 SSE가 부분적으로 쓰이지만, 실시간 양방향은 WebSocket·WebTransport가 표준입니다. ffmpeg 파이프라인으로 트랜스코딩을 GPU 가속하며, HLS의 fMP4 세그먼트, LL-HLS의 partial segment로 글래스 투 글래스 지연을 2초 이내로 줄입니다. CDN의 시그니처드 URL로 핫링킹을 막고 만료 시간을 강제합니다.</p>
   <h3>최신 연구·동향</h3><p>WebTransport는 QUIC 기반으로 신뢰성과 비신뢰성 데이터그램을 함께 제공해 게임·실시간 협업의 새 인프라가 되고 있습니다. MoQ(Media over QUIC)는 IETF에서 표준화 중인 차세대 미디어 전송 프로토콜입니다. AV1·VVC 코덱과 함께 같은 화질을 더 작은 대역폭으로 전달하는 방향이 빠르게 진행 중입니다.</p>
   <h3>관련 분야</h3><ul><li>분산 스트림 처리(Kafka, Flink)</li><li>미디어 코덱과 컨테이너 포맷</li><li>CDN 전략과 엣지 캐싱</li></ul>
   <h3>추가 학습 자료</h3><ul><li>Node.js Stream 공식 문서</li><li>"High Performance Browser Networking" — Ilya Grigorik</li><li>Mux/Cloudflare Stream 블로그</li></ul>

@@ -70,13 +70,12 @@
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🕸️ 한마디로 말하면</h3>
   <p>웹사이트가 해킹당하는 길은 거의 정해져 있어요! ① 남의 정보를 그냥 봐버리거나, ② 입력칸에 몰래 명령을 끼워 넣거나, ③ 비밀번호를 약하게 두거나, ④ 설정을 잘못한 데서 와요. 이 흔한 실수 10가지를 모아둔 게 <strong>OWASP Top 10</strong>이에요. 일종의 "조심 목록" 체크리스트! ✅</p>
   <h3>🎮 우리 생활 속 이야기</h3>
@@ -105,9 +104,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>OWASP Top 10은 단순 순위가 아니라 <strong>CWE(Common Weakness Enumeration)</strong> 매핑입니다. 2021년판 A01에는 CWE-22(Path Traversal), CWE-284(Improper Access Control), CWE-352(CSRF) 등 34개 CWE가 포함됩니다. CWE → CVE(특정 제품 취약점) → CVSS(점수) → KEV(Known Exploited Vulnerabilities, CISA 운영)로 이어지는 체인이 현대 취약점 관리의 표준 어휘입니다.</p>
   <p>SQL Injection의 변형은 시간이 지나며 정교해졌습니다. ① Classic union-based, ② Blind boolean-based, ③ Time-based blind, ④ Out-of-band(DNS/HTTP exfil), ⑤ Second-order(저장 후 다른 쿼리에서 실행). sqlmap은 이 모든 패턴을 자동화하며, WAF 우회 기법(인코딩, 주석, 함수 호출)도 내장합니다. 방어는 prepared statement가 우선이지만, ORM 사용 시에도 raw query·dynamic order by·LIKE 패턴에는 별도 검증이 필요합니다.</p>
   <h3>핵심 코드 — 안전한 입력 처리</h3>
@@ -137,11 +136,8 @@ response.write(f"&lt;div&gt;안녕하세요 {escape(name)}님&lt;/div&gt;")</cod
   <h3>응용 사례</h3>
   <p>① <strong>WAF(Web Application Firewall)</strong>: AWS WAF, Cloudflare, ModSecurity + OWASP CRS는 시그니처·룰 기반 방어. 우회 가능성 때문에 보조 수단으로만 의존해야 합니다. ② <strong>SAST·DAST·IAST</strong>: 정적분석(Semgrep, CodeQL), 동적분석(ZAP, Burp Suite), 인스트루먼테이션 기반(Contrast Security) — 개발 파이프라인에 통합. ③ <strong>SCA(Software Composition Analysis)</strong>: Snyk, Dependabot, Trivy — A06 Vulnerable Components 대응. ④ <strong>CSP nonce/hash</strong>로 인라인 스크립트 차단, ⑤ <strong>SRI(Subresource Integrity)</strong>로 CDN 자원 변조 방지.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① WAF만 믿고 코드 검증을 소홀히 하기, ② "프레임워크가 알아서 막아주겠지" — 실제로는 raw query·dangerouslySetInnerHTML·eval 등이 곳곳에 있음, ③ blacklist 기반 입력 검증(공격 패턴을 막는 방식)은 거의 항상 우회됨 — 반드시 allowlist로, ④ 에러 메시지에 SQL 쿼리·스택 트레이스 노출 — 공격자에게 시스템 구조를 알려주는 셈.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>OWASP Top 10의 한계도 인식해야 합니다. ① 카테고리가 너무 광범위해 구체 가이드로는 부족, ② 데이터 출처 편향(설문 + 공개 데이터셋만), ③ API와 모바일 환경의 새로운 위협 부족 — 이를 보완하기 위해 <strong>OWASP API Security Top 10 (2023)</strong>, <strong>OWASP Mobile Top 10</strong>, <strong>OWASP LLM Top 10 (2023, v2.0 2025)</strong>이 별도로 발표되었습니다.</p>
   <p>특히 <strong>OWASP ASVS(Application Security Verification Standard) v5.0 (2024)</strong>는 Top 10보다 훨씬 세부적인 검증 체크리스트(약 300개)를 Level 1(최소)/2(표준)/3(고위험) 단계로 제공합니다. 실제 보안 감사·인증의 표준 도구이며, NIST SP 800-218(SSDF)과 매핑됩니다. SAMM(Software Assurance Maturity Model)은 조직 차원의 보안 성숙도 측정 프레임워크로 거버넌스·설계·구현·검증·운영의 5도메인 15실천으로 구성됩니다.</p>
   <h3>수학적·정량적 기초</h3>

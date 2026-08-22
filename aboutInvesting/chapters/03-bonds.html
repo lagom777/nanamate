@@ -42,13 +42,12 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
 <h3>😀 한 줄로 말하면?</h3>
 <p>채권은 "내가 돈 빌려줬으니까 이자 주고, 나중에 원금도 꼭 갚아!"라고 적힌 약속 증서야. 📜</p>
 <h3>🤔 왜 배워야 할까?</h3>
@@ -73,8 +72,8 @@
 </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
 <h3>이론 깊이 들어가기</h3>
 <p>채권의 가격은 결국 미래에 받을 모든 현금흐름(이자와 원금)을 현재 가치로 환산해 더한 값이다. 할인에 쓰이는 이자율이 바로 시장금리이므로, 시장금리가 오르면 분모가 커져 현재 가치가 줄고 채권 가격이 내린다. 이것이 가격과 금리가 반대로 움직이는 수학적 이유다. 채권에는 표면금리와 별도로 만기수익률(YTD가 아니라 YTM, Yield to Maturity)이라는 개념이 있는데, 지금 가격에 사서 만기까지 보유할 때 실제로 얻는 연평균 수익률을 뜻한다. 채권을 액면가보다 싸게 사면 만기수익률이 표면금리보다 높고, 비싸게 사면 낮아진다. 같은 금리 변화라도 만기가 길수록 가격 변동이 더 크다. 이 민감도를 정량화한 것이 듀레이션이다. 신용등급이 낮은 채권은 부도 위험을 보상하기 위해 더 높은 금리를 제시하며, 이 추가 금리를 신용 스프레드라고 부른다. 경기가 나빠지면 스프레드가 벌어지고, 안정되면 좁혀지는 경향이 있다.</p>
 <h3>핵심 메커니즘</h3>
@@ -85,10 +84,7 @@
 <h3>현대적 전개</h3>
 <p>오늘날 개인 투자자도 채권형 ETF를 통해 수천 종목의 채권에 손쉽게 분산투자할 수 있게 되었다. 또 국채 금리의 만기별 곡선(수익률 곡선)은 경기를 읽는 지표로 널리 활용되는데, 단기금리가 장기금리보다 높아지는 '장단기 금리 역전'은 흔히 경기 둔화 신호로 해석된다.</p>
 <div class="warning-box"><strong>⚠️ 흔한 오해:</strong> "국채는 안전하니 손실이 없다"는 생각은 절반만 맞다. 발행국이 부도나지 않는 한 만기 원금은 보장되지만, 금리가 오르는 동안 중간에 팔면 가격이 떨어져 손실이 날 수 있다. '신용 위험이 낮다'와 '가격이 변하지 않는다'는 전혀 다른 이야기다.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
 <h3>전문가 레벨 이해</h3>
 <p>채권 가격은 미래 현금흐름의 현재가치 합이므로, 가격과 금리의 관계는 볼록한(convex) 곡선을 그린다. 듀레이션은 이 곡선의 접선 기울기에 해당하는 1차 근사이고, 큰 폭의 금리 변동에서는 컨벡시티(convexity)라는 2차 효과를 함께 고려해야 정확해진다. 컨벡시티가 양(+)이면 금리가 내릴 때 이익이 더 커지고 오를 때 손실이 덜한 비대칭이 생겨 투자자에게 유리하다. 한편 만기수익률은 모든 중간 이자를 같은 금리로 재투자한다고 가정하는데, 실제 금리가 그와 다르면 재투자 위험이 발생한다. 채권 가격을 더 엄밀히 다룰 때는 단일 만기수익률 대신 만기별 무이표채 금리로 구성된 스팟 금리 곡선을 쓴다. 신용채권의 가격에는 부도확률과 회수율로 표현되는 신용위험이 스프레드 형태로 반영되며, 옵션이 붙은 채권(수의상환채 등)은 옵션조정스프레드(OAS)로 평가한다. 인플레이션 위험을 줄이기 위해 원금이 물가에 연동되는 물가연동국채(TIPS류)도 활용된다. 이런 도구들을 종합하면 채권은 단순한 '안전 자산'이 아니라 금리·신용·인플레이션 위험을 정교하게 배분하는 수단임을 알 수 있다.</p>
 <h3>최신 연구·쟁점</h3>

@@ -216,13 +216,12 @@ Transformer 아키텍처와 다음 토큰 예측이라는 단순한 형식주의
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🛡️ 한마디로 말하면?</h3>
   <p>AI 안전성은 <strong>힘 세진 AI가 우리한테 해를 끼치지 않도록 잘 만들고 관리하는 것</strong>이에요! AI는 똑똑해질수록 잘못 쓰이거나 엉뚱하게 행동할 위험도 같이 커져요. 그래서 <strong>정렬·해석가능성·거버넌스</strong>가 중요해졌어요.</p>
   <div class="analogy">🚗 자동차 비유! 엔진(=능력)이 세질수록 브레이크와 안전벨트(=안전장치)도 같이 좋아져야 해요. 안 그러면 빠른 차일수록 사고가 더 크잖아요. AI도 똑같아요!</div>
@@ -248,9 +247,9 @@ Transformer 아키텍처와 다음 토큰 예측이라는 단순한 형식주의
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>AI 안전 연구는 크게 단기(near-term)와 장기(long-term) 위험으로 나뉩니다. 단기 위험은 편향, 할루시네이션, 프라이버시, 오용(딥페이크, 사기, 사이버 공격)이고, 장기 위험은 정렬 실패(misaligned superintelligence), 권력 집중, 통제 상실입니다. Alignment의 형식적 정의는 "AI가 운영자의 의도(intent), 사용자의 목적, 사회의 가치를 모두 반영하도록"입니다(Christiano 2018). RLHF·DPO·Constitutional AI(CAI, Bai 2022)가 현재 주류 정렬 기법이며, 보상 모델 over-optimization과 sycophancy(아첨)가 알려진 실패 모드입니다. Mechanistic interpretability는 학습된 가중치를 features와 circuits 단위로 분해해 내부 인과를 복원하려 합니다. Anthropic의 Sparse Autoencoder(2023~24)는 LLM에서 16M개 features를 추출했고, OpenAI의 Sparse Probing, Google DeepMind의 Gemma Scope이 후속 연구입니다. Robustness 측면에서 adversarial example, jailbreak prompt, prompt injection이 주요 취약점이며, RLHF만으로는 완전 방어가 불가능합니다(Wei 2023). Governance 측면에서 EU AI Act(2024)는 위험 기반 분류로 high-risk AI에 적합성 평가를 의무화하고, US Executive Order 14110(2023)은 frontier model 안전 평가 보고를 요구합니다. 한국 AI 기본법(2024.12 통과)은 2026년 시행 예정입니다.</p>
   <h3>핵심 개념과 코드</h3>
   <pre><code># 간단한 prompt injection 방어 예시
@@ -277,11 +276,8 @@ def sanitize(user_input: str) -> str:
   <h3>응용 사례</h3>
   <p>① 의료 AI: FDA의 SaMD 가이드라인, GMLP(Good Machine Learning Practice)로 안전성 검증. ② 채용 AI: NYC AEDT 법안으로 편향 감사 의무화. ③ 자율주행: ISO 21448(SOTIF)로 의도된 기능의 안전성 평가. ④ 금융: 모델 위험 관리(SR 11-7) 프레임워크. ⑤ 콘텐츠 모더레이션: Meta·YouTube가 멀티모달 모델로 유해 영상 자동 검출하지만 false positive 이슈도 큼.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "AI 안전 = 거부 응답 늘리기"로 오해하기 쉽습니다. 과도한 거부(over-refusal)는 helpfulness를 해치고, 사용자가 jailbreak를 시도하게 만들어 결과적으로 안전성도 떨어뜨립니다. helpfulness-harmlessness-honesty 사이의 균형이 핵심입니다(Anthropic HHH framework).</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>Alignment의 이론적 어려움은 (1) outer alignment — 보상 함수가 진짜 의도를 표현하는가, (2) inner alignment — 학습된 정책이 그 보상을 진짜로 추구하는가(deceptive alignment 위험)로 나뉩니다(Hubinger 2019). Mesa-optimization 가설은 강력한 RL agent가 내부에 또 다른 optimizer를 학습할 수 있다는 우려이며, 이는 distributional shift 시 의도와 다른 행동으로 이어질 수 있습니다. Scalable oversight는 인간이 모델 출력을 직접 평가할 수 없을 때(예: 박사급 수학) 안전을 어떻게 보장할지의 문제이며, debate(Irving 2018), recursive reward modeling(Leike 2018), AI safety via market making, weak-to-strong generalization(Burns 2023)이 제안되었습니다. Mechanistic interpretability는 Anthropic의 Towards Monosemanticity(2023), Scaling Monosemanticity(2024)에서 dictionary learning(SAE)으로 polysemantic neurons를 단일 의미 features로 분해하고, Golden Gate Claude처럼 features를 직접 조작해 행동을 변경하는 데 성공했습니다. Frontier model evaluation은 dangerous capabilities(자율 복제, 무기 합성, 사이버), persuasion, alignment failure를 측정하며, RSP(Responsible Scaling Policy, Anthropic), Preparedness Framework(OpenAI)가 능력 임계점에 따른 추가 안전조치를 명시합니다. AGI 정의 자체가 논쟁적이며, OpenAI는 "대부분의 경제적 가치 작업에서 인간을 능가"로, DeepMind는 6단계 분류(Morris 2023)로 정의합니다.</p>
   <h3>수학적 기초</h3>
   <div class="formula">$$\text{Goodhart's Law (formal): } \text{argmax}_\pi \mathbb{E}[r_\phi(\tau)] \neq \text{argmax}_\pi \mathbb{E}[r^*(\tau)] \text{ as } \|r_\phi - r^*\| \to \infty \text{ in OOD}$$

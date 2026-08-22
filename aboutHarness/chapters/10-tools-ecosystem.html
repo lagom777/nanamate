@@ -28,12 +28,11 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎯 한 줄로 이해하기</h3><p>에이전트 도구 생태계는 '모델을 진짜로 일하게 만드는' <strong>완성품 도구들의 모음</strong>이에요. 직접 안 만들어도 골라 쓸 수 있어요! 🧰</p>
   <h3>😮 왜 재밌을까?</h3><p>같은 모델이라도 어떤 도구로 감싸느냐에 따라 실력이 갈려요. 터미널에서 코드를 짜 주는 Claude Code·Codex, 코드 에디터형 Cursor, 그리고 그 코딩 에이전트 <strong>위에 얹어</strong> 여러 에이전트를 팀처럼 굴리는 oh-my-openagent 같은 하네스까지 — 지금 이 분야가 가장 빠르게 자라는 곳이에요! 🚀</p>
   <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>코딩 에이전트</strong>: 코드를 직접 읽고 쓰고 실행하는 에이전트(CLI/IDE)</li><li><strong>하네스/오케스트레이션 레이어</strong>: 코딩 에이전트 위에 얹어 여러 에이전트를 조율</li><li><strong>멀티에이전트 프레임워크</strong>: 직접 에이전트를 만들 때 쓰는 도구상자</li><li><strong>MCP</strong>: 도구·데이터를 표준 방식으로 연결(Model Context Protocol)</li><li><strong>OpenCode</strong>: 오픈소스 터미널 코딩 에이전트(여러 하네스의 바탕)</li></ul></div>
@@ -41,17 +40,16 @@
   <div class="study-tip"><strong>💡 학습 TIP:</strong> 새 도구를 만나면 4가지만 보세요 — (1) CLI냐 IDE냐, (2) 혼자냐 팀이냐, (3) 확장·MCP 지원되나, (4) 여러 모델 되나. 이걸로 정체가 금방 잡혀요!</div>
   <h3>📌 요약</h3><ul><li>도구는 코딩 에이전트 / 하네스 레이어 / 프레임워크로 나뉘어요. 🧰</li><li>코딩 에이전트: Claude Code·Codex·OpenCode·Aider·Cursor·Pi.</li><li>그 위 하네스: oh-my-openagent(omo).</li><li>프레임워크: LangGraph·CrewAI·AutoGen.</li><li>잘 골라 쓰는 것도 하네스 엔지니어링이에요!</li></ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>카테고리 깊이</h3><p><strong>코딩 에이전트</strong>는 터미널/에디터에서 파일을 읽고 쓰고 명령을 실행하는 단일 에이전트입니다(Claude Code, Codex CLI, OpenCode, Aider, Cursor). <strong>하네스/오케스트레이션 레이어</strong>는 그 위에 얹혀 여러 에이전트·훅·MCP·루프를 더해 '팀'으로 만듭니다. <strong>멀티에이전트 프레임워크</strong>(LangGraph·CrewAI·AutoGen)는 라이브러리로, 내가 직접 에이전트 그래프/크루/대화를 코드로 조립할 때 씁니다.</p>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>카테고리 깊이</h3><p><strong>코딩 에이전트</strong>는 터미널/에디터에서 파일을 읽고 쓰고 명령을 실행하는 단일 에이전트입니다(Claude Code, Codex CLI, OpenCode, Aider, Cursor). <strong>하네스/오케스트레이션 레이어</strong>는 그 위에 얹혀 여러 에이전트·훅·MCP·루프를 더해 '팀'으로 만듭니다. <strong>멀티에이전트 프레임워크</strong>(LangGraph·CrewAI·AutoGen)는 라이브러리로, 내가 직접 에이전트 그래프/크루/대화를 코드로 조립할 때 씁니다.</p>
   <div class="info-card"><h4>🛠️ 사례 1 — oh-my-openagent (omo)</h4><p>code-yeongyu(Sisyphus Labs)의 omo는 OpenCode/Codex 위에 얹는 <strong>멀티모델 오케스트레이션 하네스</strong>입니다. 11개 전문 에이전트(오케스트레이터 Sisyphus, 딥워커 Hephaestus, 플래너 Prometheus, 아키텍트 Oracle 등), Team Mode(리드 + 최대 8명 병렬), Ralph Loop(완료까지 자기참조 반복), <code>ultrawork</code> 한 명령 실행, hashline 안정 편집, 54+ 라이프사이클 훅, 기본 MCP(웹검색 Exa·문서 Context7·코드검색 Grep.app)를 제공합니다. 이 과목에서 배운 루프·툴·컨텍스트·오케스트레이션을 한 제품에 집약한 예입니다.</p></div>
   <div class="info-card"><h4>🛠️ 사례 2 — Pi</h4><p>Pi(pi.dev)는 터미널 기반 코딩 에이전트로, 통합 LLM API + 에이전트 루프 + TUI를 갖추고 '코어는 최소, 기능은 확장/스킬/패키지로'라는 철학으로 설계됐습니다. 멀티 프로바이더(Anthropic·OpenAI·Google·xAI 등)를 지원하며, 터미널·IDE·디버거를 잇는 oh-my-pi 같은 확장도 있습니다.</p></div>
   <h3>설계 관점 — 어떻게 고를까</h3><p>작업이 단순하면 코딩 에이전트 하나로 충분합니다. 대규모·복잡 코드베이스이거나 병렬·분업이 필요하면 그 위에 하네스(omo 등)를 얹습니다. 제품을 직접 만든다면 프레임워크(LangGraph·CrewAI·AutoGen)로 조립합니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "에이전트는 자율적일수록 좋다"는 생각은 위험합니다. 자율도가 높을수록 8장의 <strong>검증·권한 게이트</strong>가 더 중요해집니다 — 통제 없는 자율은 사고로 직결됩니다.</p></div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 — 하네스를 평가하는 법</h3><p>하네스/도구를 고를 때의 평가 축: (1) 컨텍스트 관리(주입·압축·캐시), (2) 검증 루프(자기수정·게이트), (3) 오케스트레이션 구조(단일/팀/그래프), (4) 확장성(훅·스킬·MCP·플러그인), (5) 멀티모델, (6) 비용·토큰 효율. 좋은 하네스는 코딩 에이전트의 '날 것 능력'을 신뢰성 있는 결과로 바꿔 줍니다.</p>
+
+<h3>전문가 레벨 — 하네스를 평가하는 법</h3><p>하네스/도구를 고를 때의 평가 축: (1) 컨텍스트 관리(주입·압축·캐시), (2) 검증 루프(자기수정·게이트), (3) 오케스트레이션 구조(단일/팀/그래프), (4) 확장성(훅·스킬·MCP·플러그인), (5) 멀티모델, (6) 비용·토큰 효율. 좋은 하네스는 코딩 에이전트의 '날 것 능력'을 신뢰성 있는 결과로 바꿔 줍니다.</p>
   <h3>케이스 스터디 — omo로 보는 1~9장</h3><p>oh-my-openagent는 이 과목 전체를 한 제품에 매핑합니다: <strong>2장 루프</strong>=Ralph Loop, <strong>3장 툴</strong>=MCP·LSP·AST-Grep, <strong>4장 컨텍스트</strong>=계층형 자동 주입·hashline, <strong>5장 검증</strong>=comment-checker·라이프사이클 훅, <strong>6장 오케스트레이션</strong>=Team Mode·11 에이전트 분업, <strong>7장 메모리</strong>=start-work-continuation, <strong>8장 안전</strong>=에이전트별 도구 권한. 하나의 하네스가 9개 원리를 어떻게 엮는지 보여 주는 좋은 교재입니다.</p>
   <h3>핵심 모델</h3><div class="formula">도구 선택 ≈ f(작업 유형, 기반 모델, 자율도 × 검증 강도, 확장성, 비용/토큰)</div>
   <h3>최신 흐름</h3><p>코딩 에이전트(OpenCode·Codex) 위에 하네스 레이어(omo)를 얹는 '레이어드' 접근이 부상하고 있습니다. 멀티모델·멀티에이전트, 그리고 'building in public'으로 공개 개발하는 문화가 확산 중입니다.</p>

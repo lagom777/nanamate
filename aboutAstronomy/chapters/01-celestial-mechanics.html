@@ -102,12 +102,11 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🌟 한 줄로 말하면?</h3>
   <p>천체역학은 행성·달·별이 서로 끌어당기는 <strong>중력</strong> 때문에 어떻게 움직이는지 알려주는 과학이에요! 🪐</p>
   <h3>🤔 왜 재밌을까?</h3>
@@ -133,9 +132,10 @@
     <li>뉴턴은 그 법칙들을 '만유인력' 하나로 묶었어요</li>
   </ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>뉴턴의 만유인력 법칙에서 케플러의 세 법칙이 자연스럽게 유도됩니다. 타원 궤도는 역제곱 중심력 문제의 일반해이며, 궤도 방정식은 r(θ) = a(1-e²)/(1+e·cosθ)로 표현됩니다. 여기서 a는 긴반지름, e는 이심률입니다. 면적 속도 일정 법칙은 각운동량 보존 L = r×mv의 직접적 결과입니다. 행성이 근일점에서 빠르고 원일점에서 느린 이유가 여기에 있습니다.</p>
   <h3>핵심 공식</h3>
   <div class="formula">F = GMm/r² &nbsp;&nbsp;|&nbsp;&nbsp; T² = (4π²/GM)a³ &nbsp;&nbsp;|&nbsp;&nbsp; v = √(GM/r)</div>
@@ -143,10 +143,8 @@
   <div class="info-card"><h4>🌌 사례 1 — 해왕성의 발견</h4><p>천왕성 궤도의 미세한 어긋남을 천체역학으로 분석하여 1846년 해왕성의 위치를 예측해 냈습니다. 뉴턴 역학의 극적인 승리입니다.</p></div>
   <div class="info-card"><h4>🌌 사례 2 — 호만 전이 궤도</h4><p>두 원궤도 사이를 최소 에너지로 이동하는 타원 궤도입니다. 화성 탐사선은 이 방법으로 지구 궤도에서 화성 궤도로 전이합니다.</p></div>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 케플러 제3법칙의 a는 평균 거리가 아니라 타원의 긴반지름입니다. 단위를 AU·년으로 쓰면 상수가 1이 되어 계산이 간편해집니다.</div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+
+<h3>전문가 레벨 이해</h3>
   <p>이체 문제는 환산 질량 μ = m₁m₂/(m₁+m₂)를 도입하여 1체 문제로 변환됩니다. 유효 퍼텐셜 V_eff = -GMμ/r + L²/(2μr²)의 분석에서 궤도의 안정성과 종류(원, 타원, 포물선, 쌍곡선)가 결정됩니다. 삼체 문제는 일반해가 존재하지 않으며, 푸앵카레가 카오스의 존재를 처음 보였습니다. 라그랑주 점 L1-L5는 회전 좌표계에서의 효과 퍼텐셜 극값으로, JWST는 L2에 위치합니다.</p>
   <h3>유도</h3>
   <div class="formula">d²r/dt² = -GM·r̂/r² → E = ½v² - GM/r, L = r×v → r(θ) = a(1-e²)/(1+e·cosθ)</div>

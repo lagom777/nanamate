@@ -28,12 +28,11 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎯 한 줄로 이해하기</h3><p>컨텍스트 엔지니어링은 모델에게 '읽을거리'를 잘 골라 주는 일이에요. 너무 많으면 헤매고, 너무 적으면 모르니까 <strong>딱 필요한 것만</strong> 정리해서 보여 줘요. 📚</p>
   <h3>😮 왜 재밌을까?</h3><p>모델은 '방금 펼친 페이지'만 볼 수 있는 학생과 비슷해요. 한 번에 볼 수 있는 양이 정해져 있어서, 책 전체를 한꺼번에 던져 주면 정작 중요한 한 문장을 놓쳐요! 신기하게도 <strong>똑같은 질문</strong>도 어떤 자료를 같이 주느냐에 따라 답이 확 달라져요. 정답이 컨텍스트 안에 있느냐 없느냐가 승부를 가르죠. 🎯</p>
   <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>컨텍스트 창(Context Window)</strong>: 모델이 한 번에 볼 수 있는 최대 분량</li><li><strong>토큰(Token)</strong>: 단어를 잘게 쪼갠 처리 단위(단어보다 작은 조각)</li><li><strong>요약/압축(Compaction)</strong>: 길어진 대화를 짧게 줄여 자리를 비우기</li><li><strong>검색 증강(RAG)</strong>: 질문에 맞는 문서를 찾아 컨텍스트에 넣어 주기</li><li><strong>토큰 예산(Token Budget)</strong>: 이번에 쓸 수 있는 토큰의 한도(용돈 같은 것)</li></ul></div>
@@ -41,18 +40,17 @@
   <div class="study-tip"><strong>💡 학습 TIP:</strong> AI에게 긴 문서를 통째로 붙여넣기 전에 "이 중에서 ○○ 부분만"이라고 먼저 추려 보세요. 정리하면 답이 더 정확해지는 걸 바로 느낄 수 있어요!</div>
   <h3>📌 요약</h3><ul><li>컨텍스트 창은 모델이 한 번에 보는 정보 묶음이고, 토큰 단위로 정해져 있어요.</li><li>다 넣기보다 '필요한 것만' 골라 넣는 게 핵심! 🪑</li><li>길어진 대화는 요약(압축)으로 자리를 비워요.</li><li>필요한 문서를 찾아 넣는 게 검색 증강(RAG)이에요.</li><li>모델은 긴 글의 가운데를 자주 놓치니 배치가 중요해요.</li></ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>메커니즘 깊이</h3><p>컨텍스트 창은 <strong>유한한 토큰 예산</strong>입니다. 시스템 프롬프트, 도구 정의, 대화 이력, 검색해 온 문서, 모델의 출력 자리까지 모두 같은 예산을 나눠 씁니다. 입력이 길어지면 (1) <strong>비용</strong>이 토큰 수에 비례해 늘고, (2) <strong>첫 토큰까지의 지연</strong>도 길어집니다. 게다가 모델은 입력이 길수록 중간 부분의 정보를 덜 활용하는 경향(이른바 lost-in-the-middle)을 보입니다. 그래서 하네스는 ① 무엇을 넣을지 <strong>선택</strong>하고, ② 이력이 길어지면 <strong>요약/압축(compaction)</strong>으로 오래된 부분을 줄이며, ③ 외부 지식이 필요하면 <strong>검색 증강(RAG)</strong>으로 관련 조각만 가져오고, ④ 변하지 않는 앞부분(시스템 프롬프트·도구 정의)은 <strong>프롬프트 캐시</strong>가 잘 들도록 안정적으로 둡니다.</p>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>메커니즘 깊이</h3><p>컨텍스트 창은 <strong>유한한 토큰 예산</strong>입니다. 시스템 프롬프트, 도구 정의, 대화 이력, 검색해 온 문서, 모델의 출력 자리까지 모두 같은 예산을 나눠 씁니다. 입력이 길어지면 (1) <strong>비용</strong>이 토큰 수에 비례해 늘고, (2) <strong>첫 토큰까지의 지연</strong>도 길어집니다. 게다가 모델은 입력이 길수록 중간 부분의 정보를 덜 활용하는 경향(이른바 lost-in-the-middle)을 보입니다. 그래서 하네스는 ① 무엇을 넣을지 <strong>선택</strong>하고, ② 이력이 길어지면 <strong>요약/압축(compaction)</strong>으로 오래된 부분을 줄이며, ③ 외부 지식이 필요하면 <strong>검색 증강(RAG)</strong>으로 관련 조각만 가져오고, ④ 변하지 않는 앞부분(시스템 프롬프트·도구 정의)은 <strong>프롬프트 캐시</strong>가 잘 들도록 안정적으로 둡니다.</p>
   <h3>실전에서 쓰는 패턴</h3>
   <div class="info-card"><h4>🛠️ 사례 1 — RAG로 필요한 조각만</h4><p>수천 페이지 매뉴얼을 통째로 넣는 대신, 질문과 의미가 가까운 문단 몇 개만 벡터 검색으로 찾아 컨텍스트에 넣습니다. 같은 모델이 더 적은 토큰으로 더 근거 있는 답을 내고, 비용과 지연이 함께 줄어듭니다.</p></div>
   <div class="info-card"><h4>🛠️ 사례 2 — 압축으로 긴 세션 유지</h4><p>장시간 코딩 세션에서 대화가 창을 넘기기 전에, 오래된 단계를 "지금까지 한 일·결정·미해결" 요약으로 갈아 끼웁니다. 핵심 상태는 보존하면서 토큰을 회수해, 에이전트가 멈추지 않고 계속 일합니다.</p></div>
   <h3>설계 관점</h3><p>컨텍스트는 '많을수록 좋은' 자원이 아니라 <strong>관리해야 할 예산</strong>입니다. 하네스 엔지니어는 매 호출마다 "지금 작업에 정말 필요한 최소한은 무엇인가"를 묻습니다. 또한 캐시 친화성을 위해 <strong>안정적인 앞부분 + 가변적인 뒷부분</strong> 구조를 즐겨 씁니다 — 앞부분이 그대로면 캐시가 재사용돼 비용·지연이 크게 줄기 때문입니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "창이 크니까 그냥 다 넣으면 된다"는 생각은 위험합니다. 무관한 토큰을 채울수록 비용·지연이 늘고, 중요한 정보가 묻히는 context rot(긴 입력에서 품질이 떨어지는 현상)이 심해집니다. 큰 창은 '여유'이지 '쓰레기통'이 아닙니다.</p></div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 — 컨텍스트는 곧 설계다</h3><p>기반 모델이 상향 평준화될수록, 같은 API 위에서 결과를 가르는 건 '무엇을 컨텍스트에 두느냐'입니다. 전문가는 컨텍스트를 정적 텍스트가 아니라 <strong>매 단계 재구성되는 작업 상태</strong>로 봅니다. 핵심 레버: <strong>① 선택(retrieval/selection)</strong> — 관련성 높은 조각만 가져오기, <strong>② 압축(compaction)</strong> — 오래된 이력을 요약으로 치환, <strong>③ 배치(ordering)</strong> — 핵심을 가장자리(앞/뒤)에 두어 lost-in-the-middle 완화, <strong>④ 캐시 정렬</strong> — 불변 접두부를 안정화해 프롬프트 캐시 적중률을 높이기. 이 레버들은 모델 교체 없이도 비용·지연·정확도를 동시에 움직입니다.</p>
+
+<h3>전문가 레벨 — 컨텍스트는 곧 설계다</h3><p>기반 모델이 상향 평준화될수록, 같은 API 위에서 결과를 가르는 건 '무엇을 컨텍스트에 두느냐'입니다. 전문가는 컨텍스트를 정적 텍스트가 아니라 <strong>매 단계 재구성되는 작업 상태</strong>로 봅니다. 핵심 레버: <strong>① 선택(retrieval/selection)</strong> — 관련성 높은 조각만 가져오기, <strong>② 압축(compaction)</strong> — 오래된 이력을 요약으로 치환, <strong>③ 배치(ordering)</strong> — 핵심을 가장자리(앞/뒤)에 두어 lost-in-the-middle 완화, <strong>④ 캐시 정렬</strong> — 불변 접두부를 안정화해 프롬프트 캐시 적중률을 높이기. 이 레버들은 모델 교체 없이도 비용·지연·정확도를 동시에 움직입니다.</p>
   <h3>핵심 트레이드오프</h3><div class="formula">유효 컨텍스트 ≈ f(관련성, 신선도, 배치) − g(무관 토큰, 길이로 인한 희석)</div>
   <p>토큰 예산은 비용·지연·품질을 한 줄에 묶는 제약입니다. 입력 토큰은 비용과 prefill 지연을 키우고, 출력 자리를 좁히면 답이 잘리며, 캐시되지 않은 접두부는 매번 재계산됩니다. 따라서 "토큰을 더 쓸 가치가 있는가"는 모든 컨텍스트 결정의 1차 질문입니다.</p>
   <h3>최신 흐름</h3><p>긴 컨텍스트(롱 컨텍스트) 모델, 프롬프트 캐싱, 검색 증강(RAG)과 재순위화(re-ranking), 에이전트가 스스로 메모를 파일에 적고 필요할 때 다시 읽어 오는 외부 메모리/스크래치패드 방식이 활발합니다. '창을 키우는 것'과 '창을 잘 쓰는 것'은 별개이며, 후자가 하네스의 핵심 기량으로 자리 잡고 있습니다.</p>

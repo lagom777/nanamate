@@ -70,13 +70,12 @@
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🔑 한마디로 말하면</h3>
   <p>두 개만 구분하면 돼요! <strong>인증(AuthN)</strong>은 "너 누구야?" 확인하기, <strong>인가(AuthZ)</strong>는 "너 뭐 할 수 있어?" 정하기예요. 비밀번호·문자인증·지문·"구글로 로그인"은 전부 인증이고, "이 사람은 관리자니까 회원 목록을 볼 수 있어"는 인가랍니다.</p>
   <h3>🎮 우리 생활 속 이야기</h3>
@@ -106,9 +105,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>OAuth 2.0의 보안 모범사례는 <strong>OAuth 2.0 Security Best Current Practice(RFC 9700, 2025)</strong>로 정립되어 있습니다. 핵심: ① Implicit·ROPC grant 폐기, ② Authorization Code + PKCE를 모든 클라이언트에 의무화(공개·기밀 무관), ③ Redirect URI 엄격 매칭(부분 매칭 금지), ④ state·nonce 파라미터로 CSRF·재전송 방어, ⑤ refresh token 회전(rotation)과 detection, ⑥ DPoP·mTLS로 토큰 도난 방지. OAuth 2.1 드래프트는 이 권고를 통합한 차세대 사양입니다.</p>
   <p>세션 관리도 인증의 핵심입니다. 서버 측 세션(쿠키에 session ID, 서버 메모리/Redis에 상태)과 JWT 같은 stateless 토큰은 트레이드오프가 다릅니다. 서버 세션은 즉시 무효화 가능하지만 수평 확장이 부담, JWT는 stateless라 확장이 쉽지만 로그아웃·권한 변경 즉시 반영이 어렵습니다. 실무는 둘을 혼합합니다: 짧은 access token(15분) + 긴 refresh token(7일~30일) + 서버 측 revocation list.</p>
   <h3>핵심 코드 — JWT 검증</h3>
@@ -147,11 +146,8 @@ ph.verify(hashed, "user-password-here")   # 일치 시 True, 아니면 예외</c
   <h3>응용 사례</h3>
   <p>① <strong>SCIM(System for Cross-domain Identity Management)</strong>: 사용자 프로비저닝·디프로비저닝 표준. Okta·Azure AD·Workspace의 자동화 핵심. ② <strong>Step-up Authentication</strong>: 평소엔 단순 인증, 고위험 작업(송금·설정 변경) 시에만 MFA 재요청. ③ <strong>Risk-based MFA</strong>: 평소와 다른 위치·기기·시간 패턴 감지 시 자동 MFA. ④ <strong>Service Account 관리</strong>: 사람이 아닌 시스템 간 인증은 mTLS · workload identity(SPIFFE/SPIRE) · IAM roles로 자동 발급/회전.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① JWT를 localStorage에 저장 → XSS 한 방에 탈취 (가능하면 HttpOnly cookie). ② Refresh token을 그대로 재사용 (rotation + detection 필수). ③ 인가 결정을 클라이언트에서 (UI 숨김만으로 안전하다고 착각). ④ 비밀번호 재설정 토큰을 무제한 유효로 설정. ⑤ "잠금"이 무차별 대입을 막을 뿐, 분산 공격(credential stuffing)은 못 막음 — HIBP 매칭이 추가로 필요.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>현대 인증·인가의 패러다임은 <strong>Identity-Aware Proxy(IAP)</strong>와 <strong>Zero Trust</strong>로 수렴합니다. 모든 요청은 네트워크 위치와 무관하게 사용자·기기·세션 컨텍스트를 평가받습니다. Google BeyondCorp(2014~)이 산업적 선례를 만들었고, Cloudflare Access·Tailscale·Cisco Duo 등이 대중화했습니다. 핵심 구성은 PDP(정책 결정)·PEP(정책 시행)·PIP(정책 정보)·PAP(정책 관리)의 4요소이며, OPA(Open Policy Agent)와 Rego 언어가 사실상의 표준 PDP가 되었습니다.</p>
   <p>워크로드 신원(Workload Identity)은 사람이 아닌 서비스 간 인증의 새 표준입니다. <strong>SPIFFE/SPIRE</strong>(CNCF 졸업 프로젝트)는 SVID(SPIFFE Verifiable Identity Document, X.509 또는 JWT)를 자동 발급하고 짧은 TTL로 회전합니다. 클라우드 별로는 AWS IAM Roles for Service Accounts, GCP Workload Identity Federation, Azure Managed Identity가 동등한 기능을 제공합니다. 이로써 비밀번호·API 키의 정적 저장이 사라지고, 모든 자격증명이 동적·단기·검증가능해집니다.</p>
   <h3>수학적·정량적 기초</h3>

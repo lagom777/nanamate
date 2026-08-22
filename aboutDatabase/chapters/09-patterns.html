@@ -352,13 +352,12 @@ window.addEventListener('resize', () => {
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎮 한 줄로 말하면?</h3>
   <p>실전 설계 패턴은 <strong>자주 만나는 데이터 문제를 잘 푸는 '검증된 방법 모음집'</strong>이에요! 📖</p>
 
@@ -401,9 +400,9 @@ window.addEventListener('resize', () => {
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
   <p>캐시 전략에는 Cache-Aside, Read-Through, Write-Through, Write-Behind, Refresh-Ahead 다섯 가지가 대표적입니다. Cache-Aside는 애플리케이션이 캐시 미스 시 DB를 조회해 채워 넣는 가장 흔한 패턴이고, Write-Through는 일관성에 강하지만 쓰기 지연이 늘어나는 트레이드오프가 있습니다. TTL 설정과 캐시 무효화는 Phil Karlton의 명언처럼 컴퓨터 과학에서 가장 어려운 문제 중 하나입니다. Saga 패턴은 분산 트랜잭션의 대안으로 보상 이벤트 시퀀스를 정의하며, 오케스트레이션 방식과 코레오그래피 방식이 있습니다. CQRS는 읽기 모델과 쓰기 모델을 분리해 각각의 요구에 맞춘 최적화를 가능케 합니다. 이벤트 소싱은 상태 대신 이벤트 로그를 저장하고, 스냅샷과 함께 운영합니다. 멱등키(Idempotency Key)는 결제·주문 시스템에서 필수이며, 클라이언트가 발급한 UUID를 서버가 일정 기간 캐시해 중복 요청을 무시합니다. 분산 락은 Redlock 알고리즘이나 Zookeeper의 임시 노드, ZAB 기반 임차(lease)로 구현됩니다.</p>
 
   <h3>실전 SQL/쿼리</h3>
@@ -450,11 +449,8 @@ LIMIT  20;</code></pre>
   <div class="warning-box">
     <strong>⚠️ 자주 하는 실수:</strong> 캐시와 DB 사이의 무효화 순서를 잘못 두면 stale 데이터가 영구적으로 남습니다. 또 Outbox 없이 "DB 저장 후 큐 발행"을 분리하면 일관성이 깨집니다.
   </div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3>
+<h3>전문가 레벨</h3>
   <p>Outbox 패턴의 진화형으로 Transactional Outbox + CDC가 사실상 표준입니다. Debezium이 PostgreSQL 논리 복제 슬롯을 구독해 outbox 테이블의 INSERT를 Kafka 토픽으로 자동 발행하며, exactly-once에 가까운 의미를 제공합니다. CQRS 시스템에서는 Projection의 멱등 재구성과 진행 위치(체크포인트) 관리가 중요하며, 이벤트 스트림에 대한 점프와 재처리 전략을 설계해야 합니다. Saga의 코레오그래피는 결합도를 낮추지만 흐름 추적이 어렵고, 오케스트레이션은 명시적이지만 단일 장애점이 될 수 있어 워크플로 엔진(Temporal, Cadence, AWS Step Functions)이 보조 도구로 자주 사용됩니다. 분산 락은 Redlock의 안전성에 대한 논쟁이 있으며, 실무에서는 펜싱 토큰(monotonic increasing token)으로 잠금이 만료된 후의 작업을 거부하는 패턴이 권장됩니다. 멀티리전 ACID 결제 시스템에서는 글로벌 ID(Snowflake/ULID), 시간 동기화, idempotency, 재시도 백오프, 회로차단기를 결합한 안정성 패턴이 표준입니다. 데이터 메시 환경에서는 도메인 이벤트 스키마와 호환성(스키마 레지스트리, Avro/Protobuf)을 강제해 변경에 강하게 만듭니다.</p>
 
   <h3>고급 패턴</h3>

@@ -41,18 +41,17 @@
 <span class="interact-hint">⟳ KPI 막대들이 실시간으로 움직이는 데이터 대시보드</span>
 <h2>데이터 분석 개요</h2>
 <p>이 챕터에서는 데이터 분석의 핵심 전략과 프레임워크를 3D 시각화와 함께 학습합니다.</p>
-<div class="info-card"><h4>핵심 개념</h4><p>Marketing Analytics & KPIs의 원리와 실전 적용법을 다룹니다.</p></div>
+<div class="info-card"><h4>핵심 개념</h4><p>CAC, LTV, ROAS, 코호트 분석 등 핵심 지표(KPI)를 데이터 기반으로 추적하여 마케팅 퍼널의 병목을 해결하고 효율을 극대화합니다.</p></div>
 
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎯 한 줄로 이해하기</h3>
   <p>마케팅 데이터 분석은 "뭐가 잘 되고, 뭘 바꿔야 할까?"를 <strong>숫자로 답하는 일</strong>이에요. 🔢 광고비·매출·손님 행동을 전부 데이터로 보고, 다음에 뭘 할지 결정의 근거를 만들어요.</p>
 
@@ -90,9 +89,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>전략 깊이</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>전략 깊이</h3>
   <p>중급 단계에서는 ‘지표 트리(metric tree)’를 통해 상위 비즈니스 KPI를 하위 행동 지표로 분해합니다. 예를 들어 매출은 (방문자 × 전환율 × 객단가)로 분해되고, 다시 방문자는 (광고 노출 × CTR), 전환율은 (페이지 체류 × 카트 추가율 × 결제 완료율)로 분해됩니다. 이런 분해가 명확해야 ‘어디를 개선해야 매출이 가장 크게 움직이는가’를 데이터로 답할 수 있습니다. 또한 코호트 분석은 신규 사용자 획득 채널의 진짜 가치를 평가하는 핵심 도구이며, ‘N+1주 리텐션 곡선’과 ‘LTV 곡선’을 함께 보면 채널별 진짜 효율이 드러납니다. 한편 A/B 테스트는 단순 ‘이긴 안 채택’이 아니라 통계적 유의성, 실험력(power), 다중 비교 보정, 코호트 간 이질성을 함께 고려해야 신뢰할 수 있는 결정을 내릴 수 있습니다. 또 ‘데이터 인프라(이벤트 트래킹, 트래킹 플랜, 데이터 사전)’가 잘 정리되어야 분석이 빠르고 일관되게 돌아갑니다.</p>
 
   <h3>대표 사례 분석</h3>
@@ -109,11 +108,8 @@
   <p>실무에서는 첫째, 비즈니스 노스 스타 지표 한 개를 정하고 그 아래로 ‘인풋 지표 5~7개’를 묶는 단순한 구조를 만듭니다. 둘째, 매주 동일한 양식의 비즈니스 리뷰 문서를 운영해 의사결정 회의의 인풋을 표준화합니다. 셋째, 실험은 ‘설계 → 사전 등록 → 실행 → 결과 보고서’의 4단계로 운영해 학습이 휘발되지 않도록 시스템화합니다.</p>
 
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 대시보드에 지표가 너무 많으면 누구도 보지 않게 됩니다. 핵심 지표 5개 이하로 압축하고, 그 외는 드릴다운 영역에 넣는 것이 효과적입니다.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3>
+<h3>전문가 레벨</h3>
   <p>심화 분석은 통계학·인과추론·머신러닝의 결합 영역으로 들어갑니다. 단순 상관관계가 아니라 인과관계를 추정하기 위해 ‘반사실(counterfactual)’ 추정 기법이 표준이 되며, 이를 위해 인스트루멘털 변수, 차분의 차분, 회귀 불연속, 합성 통제, 인과 포레스트 같은 도구가 활용됩니다. 또한 LTV 예측은 BG/NBD나 Pareto/NBD 같은 확률 모델에서 시작해 그래디언트 부스팅·딥러닝 기반의 종단(end-to-end) 모델로 진화했고, 가격 민감도 추정에는 베이지안 계층 모델이 점차 표준이 되고 있습니다. 한편 실험 설계 측면에서는 ‘스위처블 실험(switchback)’, 클러스터 무작위 배정, 다중 비교 보정의 정교화가 진행되며, 데이터 신호 손실 환경에서는 ‘프라이버시 보존 측정(privacy-preserving measurement)’ 기술의 중요성이 커지고 있습니다. 결국 전문가 단계의 마케팅 분석가는 분석가이자 통계학자이자 데이터 엔지니어의 역할을 동시에 수행하게 됩니다.</p>
 
   <h3>측정과 분석 모델</h3>

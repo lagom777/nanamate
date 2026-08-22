@@ -195,13 +195,12 @@ Sora(2024), Veo, Kling 등은 잠재 확산과 Transformer 백본을 결합한 �
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎮 한마디로 말하면?</h3>
   <p>강화학습(RL)은 <strong>이것저것 해보다가 상(보상)을 제일 많이 받는 방법을 스스로 배우는 AI</strong>예요! 강아지한테 간식 주며 훈련시키는 것과 똑같죠 🐶. 멀티모달 AI는 <strong>글·그림·소리·영상을 한꺼번에 다루는</strong> 만능 AI로, GPT-4o·Gemini가 대표예요.</p>
   <div class="analogy">🍄 마리오 게임 비유! 처음엔 어디로 갈지 몰라 자꾸 죽어요. 그런데 코인 먹으면 점수 올라가고(상), 구덩이에 빠지면 죽죠(벌). 수만 번 하다 보면 "언제 어떻게 움직여야 점수 최고?"를 저절로 배워요. 이게 강화학습!</div>
@@ -227,9 +226,9 @@ Sora(2024), Veo, Kling 등은 잠재 확산과 Transformer 백본을 결합한 �
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>강화학습은 마르코프 의사결정 과정(MDP) ⟨S, A, P, R, γ⟩로 형식화됩니다. 에이전트는 정책 π(a|s)를 학습해 누적 할인 보상 G_t = Σ γ^k r_(t+k+1)의 기댓값을 최대화합니다. Bellman 방정식 V^π(s) = E[r + γV^π(s')]가 핵심이고, Q-learning은 Q*(s,a) = E[r + γ max_a' Q*(s',a')]를 부트스트래핑합니다. DQN(Mnih 2015)은 신경망으로 Q를 근사하여 Atari 49개 게임에서 인간 수준을 달성했습니다. Policy gradient(REINFORCE)는 ∇J = E[∇log π(a|s) · G_t]로 직접 정책을 업데이트하며, PPO(Schulman 2017)는 clipped objective로 안정성을 확보해 사실상 표준이 되었습니다. AlphaGo(Silver 2016)는 supervised learning + self-play RL + MCTS로 인간 챔피언을 이겼고, AlphaZero(2017)는 인간 데이터 없이도 같은 성능을 달성했습니다. 멀티모달은 CLIP(Radford 2021)이 이미지-텍스트 contrastive learning으로 4억 쌍을 학습해 zero-shot 분류를 가능케 했습니다. LLaVA, BLIP-2는 vision encoder를 LLM에 연결하는 어댑터(Q-Former, MLP projector) 구조이고, GPT-4o, Gemini는 처음부터 통합 토큰화로 학습됩니다.</p>
   <h3>핵심 개념과 코드</h3>
   <pre><code># Stable-Baselines3로 PPO 학습 (CartPole)
@@ -253,11 +252,8 @@ for _ in range(500):
   <h3>응용 사례</h3>
   <p>① 로봇 제어: Boston Dynamics, Tesla Optimus, Figure 01이 RL + sim-to-real로 실세계 동작 학습. ② 자율주행: Wayve, Comma.ai가 end-to-end RL/imitation learning 시도. ③ 추천 시스템: 컨텍스트 밴딧, off-policy RL로 클릭률·체류시간 최적화. ④ ChatGPT의 RLHF는 LLM에 RL을 적용한 가장 큰 상용 사례. ⑤ 멀티모달 의료: 방사선 영상 + 환자 기록을 함께 분석하는 GPT-4 Med, Med-PaLM-M.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> RL은 보상 함수 설계가 가장 어렵습니다. 보상 해킹(reward hacking)으로 의도치 않은 행동을 학습할 수 있어요. 예: 청소 로봇이 쓰레기를 숨기기. 또 sample efficiency가 낮아 시뮬레이터 없이는 비현실적이며, sim-to-real gap도 큽니다.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>현대 RL의 이론적 토대는 dynamic programming(Bellman), 최적제어(Pontryagin), 그리고 stochastic approximation(Robbins-Monro)에 있습니다. Policy gradient theorem(Sutton 1999)은 ∇J(θ) = E_π[Q^π(s,a) ∇log π_θ(a|s)]로, 정책 매개변수에 대한 기대 누적 보상의 기울기를 직접 추정합니다. Actor-Critic은 advantage A(s,a) = Q(s,a) − V(s)로 분산 감소를 시도하고, GAE(Schulman 2016)는 λ-return으로 bias-variance trade-off를 제어합니다. PPO의 clipped surrogate objective L^CLIP = E[min(r_t A_t, clip(r_t, 1−ε, 1+ε) A_t)]는 단순하지만 강력하며, ChatGPT의 RLHF에 직접 사용됩니다. Offline RL(D4RL, Conservative Q-Learning)은 분포 외 행동의 over-estimation을 막는 것이 핵심 이슈입니다. World Model(Ha & Schmidhuber, Dreamer 시리즈)은 환경 모델을 학습하고 내부 simulation으로 정책을 학습하여 sample efficiency를 크게 높입니다. AlphaZero·MuZero(Schrittwieser 2020)는 plan-aware learning의 결정판입니다. 멀티모달은 contrastive(CLIP), generative(BLIP, GPT-4V), interleaved(Flamingo, IDEFICS), unified tokenization(GPT-4o, Chameleon, Gemini) 패러다임으로 진화했습니다. Vision Language Action Model(VLA: RT-2, OpenVLA)은 멀티모달 + 행동 토큰으로 로봇 정책을 LLM처럼 학습합니다.</p>
   <h3>수학적 기초</h3>
   <div class="formula">$$\text{Bellman Optimality: } Q^*(s, a) = \mathbb{E}[r + \gamma \max_{a'} Q^*(s', a')]$$

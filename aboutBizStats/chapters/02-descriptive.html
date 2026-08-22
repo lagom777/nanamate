@@ -27,12 +27,11 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎯 한 줄로 이해하기</h3><p>기술통계는 쌓아 둔 숫자 더미를 <strong>평균 같은 숫자 몇 개와 그림 몇 장으로 찹찹 정리</strong>하는 거예요.</p>
   <h3>😮 왜 재밌을까?</h3><p>직원 9명이 연봉 4천만 원씩 받는 회사가 있어요. 평균도 중앙값도 4천만 원이죠. 그런데 연봉 100억 원의 억만장자 사장님이 딱 들어오는 순간, 평균 연봉은 10억 원이 넘어 버려요(103.6억 ÷ 10명 = 10.36억). 😲 하지만 직원들 지갑은 그대로잖아요! 이때 <strong>중앙값</strong>은 여전히 4천만 원이에요. 그래서 뉴스에서 "평균 연봉"만 말하면 속을 수 있어요. 평균은 큰 값 하나에 끌려가고, 중앙값은 꿈쩍도 안 하거든요.</p>
   <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>평균(Mean)</strong>: 다 더해서 개수로 나눈 값</li><li><strong>중앙값(Median)</strong>: 크기순으로 줄 세웠을 때 한가운데 있는 값</li><li><strong>최빈값(Mode)</strong>: 가장 자주 나온 값</li><li><strong>범위(Range)</strong>: 제일 큰 값 − 제일 작은 값</li><li><strong>표준편차(SD)</strong>: 값들이 평균에서 평균적으로 얼마나 떨어져 있는지</li><li><strong>상자그림(Boxplot)</strong>: 자료를 상자에 포장하듯 위치를 정리한 그림</li></ul></div>
@@ -40,18 +39,17 @@
   <div class="study-tip"><strong>💡 학습 TIP:</strong> 부동산 기사에서 "평균 집값"과 "중위 집값"이 다른 이유를 찾아보세요. 초고가 아파트 몇 채가 평균을 끌어올리기 때문이에요!</div>
   <h3>📌 요약</h3><ul><li>기술통계 = 자료를 숫자 몇 개와 그림으로 요약하는 것이에요.</li><li>평균은 극단적인 값에 끌려가고, 중앙값은 버텨요. 🏋️</li><li>범위·표준편차는 자료가 얼마나 흩어졌는지를 알려줘요.</li><li>상자그림은 자료의 위치를 상자 포장처럼 정리해 줘요.</li><li>꼬리가 한쪽으로 긴 분포에서는 평균과 중앙값이 달라져요.</li></ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>중심경향 측도: 평균·중앙값·최빈값</h3><p><strong>산술평균(mean)</strong>은 Σx/n으로 모든 관측값을 사용하지만 극단치(outlier)에 민감합니다. <strong>중앙값(median)</strong>은 크기순 정렬의 중앙 위치 값으로 극단치에 강건(robust)합니다. <strong>최빈값(mode)</strong>은 도수가 가장 큰 값으로, 범주형 자료에도 쓸 수 있는 유일한 중심 측도입니다. 오른쪽으로 꼬리가 긴 분포(양의 왜도)에서는 일반적으로 <strong>평균 &gt; 중앙값 &gt; 최빈값</strong>이 성립합니다. 소득·자산·주택가격·매출액처럼 경영 데이터는 대부분 오른쪽으로 치우치므로, "평균 근로소득"이 체감보다 높게 나오는 이유가 여기에 있습니다.</p>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>중심경향 측도: 평균·중앙값·최빈값</h3><p><strong>산술평균(mean)</strong>은 Σx/n으로 모든 관측값을 사용하지만 극단치(outlier)에 민감합니다. <strong>중앙값(median)</strong>은 크기순 정렬의 중앙 위치 값으로 극단치에 강건(robust)합니다. <strong>최빈값(mode)</strong>은 도수가 가장 큰 값으로, 범주형 자료에도 쓸 수 있는 유일한 중심 측도입니다. 오른쪽으로 꼬리가 긴 분포(양의 왜도)에서는 일반적으로 <strong>평균 &gt; 중앙값 &gt; 최빈값</strong>이 성립합니다. 소득·자산·주택가격·매출액처럼 경영 데이터는 대부분 오른쪽으로 치우치므로, "평균 근로소득"이 체감보다 높게 나오는 이유가 여기에 있습니다.</p>
   <h3>산포 측도: 범위·분산·표준편차·변동계수</h3>
   <div class="info-card"><h4>📏 예제로 계산해 보기 — 자료: 70, 80, 80, 90, 100</h4><ul><li>평균 x̄ = 420/5 = <strong>84</strong>, 범위 = 100−70 = <strong>30</strong></li><li>편차제곱합 = (−14)²+(−4)²+(−4)²+6²+16² = 196+16+16+36+256 = <strong>520</strong></li><li>표본분산 s² = 520/(5−1) = <strong>130</strong> ← 표본이면 n이 아니라 n−1로 나눕니다</li><li>표본표준편차 s = √130 ≈ <strong>11.40</strong></li><li>변동계수 CV = 11.40/84 ≈ <strong>13.6%</strong></li></ul></div>
   <p><strong>범위(range)</strong>는 최댓값−최솟값으로 간단하지만 양 끝 값 두 개에만 의존합니다. <strong>분산(variance)</strong>은 평균으로부터의 편차제곱의 평균이고, <strong>표준편차(standard deviation)</strong>는 분산의 양의 제곱근으로 원래 자료와 단위가 같아 해석에 유리합니다. <strong>변동계수(coefficient of variation, CV = s/x̄)</strong>는 단위가 없는 상대적 산포 지표라서 단위나 규모가 다른 집단끼리 비교할 수 있습니다. 예: A제품 월매출 평균 100만 원·표준편차 10만 원 → CV 10%, B제품 평균 50만 원·표준편차 8만 원 → CV 16%. 표준편차만 볼 때와 달리 <strong>B제품 매출이 상대적으로 더 불안정</strong>합니다.</p>
   <h3>위치 측도와 분포의 그림</h3><p><strong>백분위수(percentile)</strong>는 자료를 100등분한 위치 값이고, <strong>사분위수(quartile)</strong>는 25%(Q1)·50%(Q2=중앙값)·75%(Q3) 지점입니다. 사분위범위 IQR = Q3−Q1은 가운데 50%의 퍼짐입니다. <strong>상자그림(boxplot)</strong>은 Q1~Q3를 상자로, 상자 안 선으로 중앙값을, 수염(whisker)으로 일반 범위를 그리고, Q1−1.5×IQR 미만 또는 Q3+1.5×IQR 초과 값은 <strong>이상치</strong>로 따로 표시합니다. <strong>히스토그램(histogram)</strong>은 구간별 도수를 막대로 그린 그림으로 분포 모양을 한눈에 보여 줍니다. 분포의 모양은 <strong>왜도(skewness, 비대칭도)</strong>와 <strong>첨도(kurtosis, 뾰족한 정도)</strong>로 수치화합니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "평균이 가장 좋은 대표값"이라고 생각하기 쉽지만, 극단치가 있는 치우친 자료에서는 평균이 실체를 왜곡합니다. 소득처럼 오른쪽 꼬리가 긴 분포에서는 중앙값을 함께 보고, 둘의 차이가 크면 분포가 비대칭이라는 신호로 읽어야 합니다.</div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>왜 표본분산은 n−1로 나누는가: 자유도</h3><p>표본분산의 편차 xᵢ−x̄는 모집단 평균 μ가 아니라 <strong>표본평균 x̄</strong>를 기준으로 계산됩니다. 편차의 합은 항상 0이라는 제약(Σ(xᵢ−x̄)=0) 때문에 n개의 편차 중 n−1개만 자유롭게 정해지고 마지막 하나는 자동 결정됩니다 — 이것이 <strong>자유도(degrees of freedom) n−1</strong>입니다. 편차제곱합을 n으로 나누면 모분산 σ²을 체계적으로 <strong>과소추정</strong>하고, n−1로 나눈 s²이 σ²의 <strong>불편추정량(unbiased estimator)</strong>, 즉 E[s²]=σ²가 됩니다.</p>
+
+<h3>왜 표본분산은 n−1로 나누는가: 자유도</h3><p>표본분산의 편차 xᵢ−x̄는 모집단 평균 μ가 아니라 <strong>표본평균 x̄</strong>를 기준으로 계산됩니다. 편차의 합은 항상 0이라는 제약(Σ(xᵢ−x̄)=0) 때문에 n개의 편차 중 n−1개만 자유롭게 정해지고 마지막 하나는 자동 결정됩니다 — 이것이 <strong>자유도(degrees of freedom) n−1</strong>입니다. 편차제곱합을 n으로 나누면 모분산 σ²을 체계적으로 <strong>과소추정</strong>하고, n−1로 나눈 s²이 σ²의 <strong>불편추정량(unbiased estimator)</strong>, 즉 E[s²]=σ²가 됩니다.</p>
   <div class="formula">s² = Σ(xᵢ − x̄)² / (n − 1),  s = √s²</div>
   <h3>표준화와 Z점수</h3><p>단위나 평균이 다른 자료를 비교하려면 <strong>표준화(standardization)</strong>가 필요합니다. Z점수는 원래 값에서 평균을 빼고 표준편차로 나눈 값으로, "평균으로부터 표준편차 몇 개만큼 떨어져 있는가"를 뜻합니다. 표준화된 변수는 평균 0, 표준편차 1을 가집니다. 예: 수학 80점(평균 70, σ=5) → Z=+2.0, 영어 85점(평균 75, σ=10) → Z=+1.0. 영어 원점수가 높아도 <strong>상대적 위치는 수학이 훨씬 위</strong>입니다.</p>
   <div class="formula">Z = (X − μ) / σ</div>

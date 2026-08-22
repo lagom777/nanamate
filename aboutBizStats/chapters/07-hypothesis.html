@@ -27,12 +27,11 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎯 한 줄로 이해하기</h3><p>가설검정은 <strong>"이게 정말 우연일까?"를 숫자로 따져 보는 방법</strong>이에요. 우연이라고 하기엔 너무 이상한 결과가 나오면, 처음에 믿고 있던 것(귀무가설)을 버려요.</p>
   <h3>😮 왜 재밌을까?</h3><p>법정에서는 <strong>"무죄 추정의 원칙"</strong>이 있어요. 확실한 증거가 없으면 일단 무죄! ⚖️ 가설검정도 똑같아요. <strong>귀무가설 = "무죄(차이 없음)"</strong>, 데이터라는 증거가 아주아주 강력하면 <strong>"유죄 판결 = 귀무가설 기각"</strong>이에요. 무고한 사람을 감옥에 볼 수는 없으니, 유죄 판결의 기준을 아주 엄격하게 미리 정해 두죠 — 그 기준이 바로 <strong>유의수준</strong>이에요.</p>
   <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>귀무가설(H0)</strong>: "차이 없음, 효과 없음"이라고 일단 믿는 가설 — 법정의 '무죄'</li><li><strong>대립가설(H1)</strong>: "차이가 있다!"라고 입증하고 싶은 가설 — 법정의 '유죄' 주장</li><li><strong>유의수준(α)</strong>: 판결을 얼마나 엄격하게 할지 미리 정한 기준(보통 5%)</li><li><strong>p값</strong>: 귀무가설이 맞다고 쳤을 때 이런 결과(또는 더 심한 결과)가 나올 확률</li><li><strong>기각</strong>: "우연이라 하기엔 너무 이상해!" 하며 귀무가설을 버리는 결정</li></ul></div>
@@ -40,18 +39,17 @@
   <div class="study-tip"><strong>💡 학습 TIP:</strong> 뉴스에서 "통계적으로 유의했다"는 표현을 찾아보세요. "우연이라고 보기 어렵다(p값이 작다)"는 뜻이랍니다!</div>
   <h3>📌 요약</h3><ul><li>귀무가설 = 무죄 추정, 증거가 강하면 기각해요. ⚖️</li><li>p값이 작을수록 "우연이라 하기엔 이상한" 결과예요.</li><li>p값 &lt; 유의수준이면 귀무가설 기각!</li><li>참인데 기각 = 1종 오류, 거짓인데 채택 = 2종 오류.</li><li>판정 기준(α)은 검정 전에 미리 정해 두고 시작해요.</li></ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>귀무가설과 대립가설의 설정</h3><p><strong>귀무가설(H0)</strong>은 "차이가 없다, 효과가 없다, 기존 상태와 같다"는 보수적 주장으로, 등호(=)를 포함해 모수의 값을 특정합니다(예: H0: μ = 200g). <strong>대립가설(H1)</strong>은 연구자가 데이터로 입증하고 싶은 상반된 주장입니다(예: H1: μ ≠ 200g). 검정은 H0를 참이라고 전제한 뒤 표본 데이터가 그 전제와 얼마나 모순되는지를 재는 <strong>귀류법적 절차</strong>입니다 — 모순이 크면 전제(H0)를 버리는 것이죠. H1의 방향에 따라 <strong>양측검정</strong>(μ ≠ μ₀, 크든 작든 차이 자체에 관심)과 <strong>단측검정</strong>(μ &gt; μ₀ 또는 μ &lt; μ₀, 방향에 대한 사전적 근거가 있을 때만 사용)으로 나뉩니다.</p>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>귀무가설과 대립가설의 설정</h3><p><strong>귀무가설(H0)</strong>은 "차이가 없다, 효과가 없다, 기존 상태와 같다"는 보수적 주장으로, 등호(=)를 포함해 모수의 값을 특정합니다(예: H0: μ = 200g). <strong>대립가설(H1)</strong>은 연구자가 데이터로 입증하고 싶은 상반된 주장입니다(예: H1: μ ≠ 200g). 검정은 H0를 참이라고 전제한 뒤 표본 데이터가 그 전제와 얼마나 모순되는지를 재는 <strong>귀류법적 절차</strong>입니다 — 모순이 크면 전제(H0)를 버리는 것이죠. H1의 방향에 따라 <strong>양측검정</strong>(μ ≠ μ₀, 크든 작든 차이 자체에 관심)과 <strong>단측검정</strong>(μ &gt; μ₀ 또는 μ &lt; μ₀, 방향에 대한 사전적 근거가 있을 때만 사용)으로 나뉩니다.</p>
   <h3>유의수준, 검정통계량, 기각역, p값</h3><p><strong>검정통계량</strong>은 표본 결과를 표준화한 값이고, <strong>기각역</strong>은 H0가 참일 때 나오기 드문(확률 α 이하) 값들의 영역이며 그 경계를 <strong>임계값(critical value)</strong>이라 합니다. <strong>p값</strong>은 H0가 참일 때 관찰된 검정통계량보다 극단적인 값이 나올 확률로, <strong>p &lt; α이면 H0를 기각</strong>합니다.</p>
   <div class="info-card"><h4>📋 가설검정 5단계 절차</h4><ul><li><strong>1단계</strong>: 가설 설정 — H0와 H1(양측/단측 결정)</li><li><strong>2단계</strong>: 유의수준 α 결정 — 관례적으로 0.05, 엄격하게는 0.01</li><li><strong>3단계</strong>: 검정통계량 계산 — 표본에서 t값 등을 산출</li><li><strong>4단계</strong>: 판정 — 검정통계량이 기각역에 드는지, 또는 p &lt; α인지 확인</li><li><strong>5단계</strong>: 결론 — p &lt; α이면 "H0 기각", 아니면 "기각하지 않음"(H0가 참이라고 '증명'된 것이 아니라 증거 부족으로 기각을 유보하는 것)</li></ul></div>
   <p><strong>예시(단일표본 t검정):</strong> 과자 한 봉지의 표시 중량은 200g입니다. 25봉지를 뽑아 재 보니 표본평균 x̄ = 193g, 표본표준편차 s = 10g이었습니다. H0: μ = 200, H1: μ ≠ 200(양측), α = 0.05라 하면 검정통계량 t = (193 − 200) / (10/√25) = −7/2 = <strong>−3.5</strong>입니다. 자유도 24인 t분포의 양측 임계값은 ±2.064이고 |−3.5| &gt; 2.064이므로 H0를 <strong>기각</strong>합니다. p값 ≈ 0.002 &lt; 0.05로도 같은 결론이며, "평균 중량이 200g과 다르다"고 말할 수 있습니다.</p>
   <h3>1종 오류와 2종 오류</h3><p><strong>1종 오류(Type I error)</strong>는 참인 H0를 기각하는 실수(무고한 사람을 유죄 판결)로, 그 확률이 바로 유의수준 α입니다. <strong>2종 오류(Type II error)</strong>는 거짓인 H0를 기각하지 못하는 실수(유죄인 사람을 무죄 방면)로, 그 확률을 β라 합니다. 표본 크기가 정해져 있으면 α를 낮추면 β가 커지는 <strong>트레이드오프</strong>가 있고, 표본을 늘리면 두 오류를 동시에 줄일 수 있습니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "p = 0.03이면 귀무가설이 참일 확률이 3%다"는 틀렸습니다. p값은 H0가 참이라고 <strong>가정한 조건에서</strong> 데이터가 나올 확률이지, 가설 자체의 확률이 아닙니다. 또 "H0를 기각하지 않았다"는 것은 H0가 참임을 증명한 것이 아니라 <strong>증거 부족</strong>일 뿐입니다.</div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>검정력과 표본크기 설계</h3><p><strong>검정력(power) = 1 − β</strong>는 실제로 효과가 있을 때(H1이 참일 때) 그것을 놓치지 않고 H0를 기각할 확률입니다. β를 줄이는 것만으로는 검정력을 말할 수 없고, 검정력은 효과 크기(실제 차이), 표본 크기, 유의수준 α의 함수입니다 — 효과가 클수록, 표본이 클수록, α를 관대하게 잡을수록 검정력은 올라갑니다. 연구 설계에서는 보통 검정력 0.8(β = 0.2)을 목표로 표본 크기를 역산합니다.</p>
+
+<h3>검정력과 표본크기 설계</h3><p><strong>검정력(power) = 1 − β</strong>는 실제로 효과가 있을 때(H1이 참일 때) 그것을 놓치지 않고 H0를 기각할 확률입니다. β를 줄이는 것만으로는 검정력을 말할 수 없고, 검정력은 효과 크기(실제 차이), 표본 크기, 유의수준 α의 함수입니다 — 효과가 클수록, 표본이 클수록, α를 관대하게 잡을수록 검정력은 올라갑니다. 연구 설계에서는 보통 검정력 0.8(β = 0.2)을 목표로 표본 크기를 역산합니다.</p>
   <div class="formula">단일표본 t검정: t = (x̄ − μ₀) / (s / √n) &nbsp;&nbsp;|&nbsp;&nbsp; 검정력 = 1 − β = P(H0 기각 | H1이 참)</div>
   <h3>p값의 오해와 효과 크기</h3><p>p값은 <strong>효과 크기를 말해 주지 않습니다</strong>. 표본이 충분히 크면 실무적으로 하찮은 차이(예: 중량 0.1g 차이)도 p &lt; 0.001을 만들 수 있고, 반대로 표본이 작으면 큰 효과도 유의하지 않을 수 있습니다. p값은 "데이터 | H0"의 확률이지 "H0 | 데이터"의 확률이 아니므로, H0가 참일 확률이나 결과가 재현될 확률로 해석해서도 안 됩니다. 그래서 실무에서는 p값과 함께 <strong>효과 크기(effect size)와 신뢰구간</strong>을 반드시 함께 보고해야 합니다.</p>
   <h3>통계적 유의성 vs 실무적 중요성, 다중검정 문제</h3><p><strong>통계적으로 유의하다</strong>는 것은 "우연이라 보기 어렵다"는 뜻일 뿐 "경영적으로 중요하다"는 뜻이 아닙니다 — 전환율이 0.01%p 올라도 유의할 수 있지만 그 효과가 캠페인 비용을 정당화하는지는 별개의 문제입니다. 또한 여러 가설을 한꺼번에 검정하면 <strong>다중검정(multiple testing)</strong> 문제가 생깁니다: 모두 참인 H0 20개를 각각 α = 0.05로 검정하면, 하나 이상이 우연히 유의할 확률은 1 − 0.95²⁰ ≈ <strong>0.64</strong>에 달합니다. Bonferroni 보정(α를 검정 수로 나눔)처럼 보정 절차가 필요한 이유입니다.</p>

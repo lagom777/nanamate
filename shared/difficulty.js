@@ -1,5 +1,5 @@
 /* ============================================================
-   nanamate · 난이도 탭 (상/중/하)
+   nanamate · 난이도 탭 (쉬움 / 고급 2단계)
    .difficulty-tabs 와 .difficulty-content 요소 자동 바인딩
    ============================================================ */
 
@@ -70,7 +70,7 @@
         });
       });
 
-      // 첫 번째 탭(하)을 기본 활성화 + 사이드바 미러 동기화
+      // 첫 번째 탭(쉬움)을 기본 활성화 + 사이드바 미러 동기화
       if (buttons.length > 0 && !tabs.querySelector('.difficulty-tab.active')) {
         buttons[0].click();
         const firstTarget = buttons[0].dataset.target;

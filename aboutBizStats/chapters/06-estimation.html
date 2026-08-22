@@ -27,12 +27,11 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎯 한 줄로 이해하기</h3><p>모수추정은 <strong>일부(표본)를 보고 전체(모집단)의 평균이나 비율을 맞히는 것</strong>이에요. 하나의 숫자로 콕 찍으면 점추정, 범위로 넉넉하게 말하면 구간추정이에요.</p>
   <h3>😮 과녁 찍기 vs 링 던지기</h3><p>욕조 물 온도가 궁금해요. 🛁 손을 한 번 넣어 보고 "딱 40도야!"라고 외치는 게 <strong>점추정</strong>이에요. 맞을 수도 있지만 틀리기 쉽죠. 그 대신 "한 38도에서 42도 사이일 거야"라고 말하는 게 <strong>구간추정</strong>이에요. 과녁 한 점을 정확히 맞히는 대신, 과녁을 덮을 만한 <strong>링을 던지는</strong> 거예요. ⭕ 링이 넓을수록 과녁을 덮기 쉽지만 너무 넓으면 "30~50도요"처럼 쓸모가 없어요. 그래서 '넓이'와 '맞힐 자신감' 사이에서 균형을 잡아요.</p>
   <h3>💯 95% 신뢰란?</h3><p>"95% 신뢰구간"은 <strong>이 방법으로 100번 조사하면 그중 95번은 진짜 모수를 덮는 구간</strong>이 만들어진다는 뜻이에요. 링 던지기 100번 중 95번은 과녁을 덮는 방법이라는 거죠. 그래서 한 번 만든 구간도 꽤 믿을 만하지만, 5번 중 한 번꼴로는 빗나갈 수 있다는 것도 기억해요.</p>
@@ -40,17 +39,16 @@
   <div class="study-tip"><strong>💡 학습 TIP:</strong> 뉴스 여론조사에서 "표본오차 ±3.1%p, 신뢰수준 95%"라는 문구를 찾아보세요. 바로 '지지율 ± 오차한계' 형태의 신뢰구간이에요!</div>
   <h3>📌 요약</h3><ul><li>모수추정 = 표본으로 모집단의 모수(평균·비율) 맞히기예요.</li><li>점추정은 한 점 찍기, 구간추정은 링 던지기. ⭕</li><li>신뢰구간 = 점추정값 ± 오차한계.</li><li>95% 신뢰 = 100번 중 95번은 맞는 방법.</li><li>표본이 많을수록 링(구간)이 좁아져서 더 정확해져요.</li></ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>점추정과 좋은 추정량의 조건</h3><p><strong>점추정(point estimation)</strong>은 표본에서 계산한 하나의 통계량(추정량)으로 모수를 추정합니다 — 모평균 μ에는 표본평균 x̄, 모비율 p에는 표본비율 p̂, 모분산 σ²에는 표본분산 s²를 씁니다. 어떤 추정량이 '좋은' 추정량인지는 세 가지 기준으로 판단합니다. ① <strong>불편성(unbiasedness)</strong>: 추정량의 기댓값이 모수와 같다 — E(x̄) = μ. 표본분산에서 n이 아니라 n−1로 나누는 이유가 바로 불편성을 맞추기 위해서입니다. ② <strong>효율성(efficiency)</strong>: 불편추정량들 중 분산이 가장 작을수록 좋다 — 같은 정보로 더 정밀하게 추정. ③ <strong>일치성(consistency)</strong>: 표본크기 n이 커질수록 추정량이 모수에 가까워진다 — x̄의 분산 σ²/n이 0으로 수렴하므로 x̄는 일치추정량입니다.</p>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>점추정과 좋은 추정량의 조건</h3><p><strong>점추정(point estimation)</strong>은 표본에서 계산한 하나의 통계량(추정량)으로 모수를 추정합니다 — 모평균 μ에는 표본평균 x̄, 모비율 p에는 표본비율 p̂, 모분산 σ²에는 표본분산 s²를 씁니다. 어떤 추정량이 '좋은' 추정량인지는 세 가지 기준으로 판단합니다. ① <strong>불편성(unbiasedness)</strong>: 추정량의 기댓값이 모수와 같다 — E(x̄) = μ. 표본분산에서 n이 아니라 n−1로 나누는 이유가 바로 불편성을 맞추기 위해서입니다. ② <strong>효율성(efficiency)</strong>: 불편추정량들 중 분산이 가장 작을수록 좋다 — 같은 정보로 더 정밀하게 추정. ③ <strong>일치성(consistency)</strong>: 표본크기 n이 커질수록 추정량이 모수에 가까워진다 — x̄의 분산 σ²/n이 0으로 수렴하므로 x̄는 일치추정량입니다.</p>
   <h3>모평균의 신뢰구간 (σ를 아는 경우)</h3><p>모집단이 정규분포이거나 표본이 충분히 크면(중심극한정리), 표본평균은 평균 μ, 표준편차 <strong>σ/√n(표준오차)</strong>인 정규분포를 따릅니다. 따라서 모평균의 (1−α)×100% 신뢰구간은 <strong>x̄ ± z<sub>α/2</sub>·(σ/√n)</strong>입니다. 오차한계 E = z·(σ/√n)이 구간의 반폭입니다.</p>
   <div class="info-card"><h4>📏 신뢰수준별 임계값 z<sub>α/2</sub></h4><ul><li><strong>90%</strong> → z = 1.645</li><li><strong>95%</strong> → z = 1.96 (가장 많이 사용)</li><li><strong>99%</strong> → z = 2.576</li></ul><p>예: 카페 대기시간 n=100, x̄=5.2분, σ=2분이면 95% 신뢰구간 = 5.2 ± 1.96×(2/10) = 5.2 ± 0.392 = <strong>[4.81, 5.59]분</strong>.</p></div>
   <h3>t분포, 표본크기 결정, 비율 추정</h3><p>모분산 σ²을 <strong>모르고 표본이 작으면</strong>(통상 n&lt;30) 표본표준편차 s를 대신 쓰며, 이때는 z 대신 <strong>t분포(자유도 n−1)</strong>의 임계값을 씁니다: x̄ ± t<sub>α/2,n−1</sub>·(s/√n). 예를 들어 n=16이면 자유도 15, 95% 임계값은 1.96이 아니라 <strong>2.131</strong>로 더 커서 구간이 넓어집니다. 원하는 오차한계 E를 정했을 때 필요한 표본크기는 <strong>n = (z·σ/E)²</strong>이고, 계산값은 항상 올림합니다 — 대기시간 조사에서 σ=2, E=0.5분, 95% 신뢰수준이면 n = (1.96×2/0.5)² = 61.47 → <strong>62명</strong>이 필요합니다. 모비율 추정은 <strong>p̂ ± z·√(p̂(1−p̂)/n)</strong>입니다 — 예: n=400, p̂=0.6이면 오차한계 ≈ 1.96×0.0245 ≈ 0.048, 95% 신뢰구간은 <strong>[0.552, 0.648]</strong>입니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "95% 신뢰구간 [4.81, 5.59]가 있으니 모평균이 이 안에 있을 확률이 95%다"는 엄밀하게 틀린 문장입니다. 이미 만들어진 구간은 모수를 포함하거나(100%) 포함하지 않거나(0%) 둘 중 하나입니다. 95%는 <strong>구간을 만드는 절차의 장기 성공률</strong>이지 특정 구간 하나에 붙는 확률이 아닙니다(자세한 내용은 심화 탭).</div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>신뢰수준 95%의 올바른 해석</h3><p>빈도주의 통계에서 모수 μ는 <strong>미지의 고정된 상수</strong>이지 확률변수가 아닙니다. 확률이 붙는 대상은 표본추출에 따라 달라지는 <strong>구간의 양 끝점(확률변수)</strong>입니다. 따라서 (1−α)×100% 신뢰수준의 정확한 의미는 "동일한 절차로 표본을 반복 추출해 매번 구간을 만들면, 그 구간들 중 장기적으로 (1−α)의 비율이 μ를 포함한다"는 <strong>절차의 장기 성공률</strong>입니다. 관측된 특정 구간 [4.81, 5.59]에 대해서는 μ가 그 안에 있거나 없거나 — 확률은 1 또는 0이고, 우리가 모를 뿐입니다. "이 구간이 μ를 포함할 확률이 95%"라는 해석이 흔하지만 엄밀한 정의는 아닙니다. 실제로 μ를 확률변수로 다루어 "모수가 이 구간에 있을 확률 95%"를 정당화하는 것은 <strong>베이지안 신용구간(credible interval)</strong>으로, 사전분포가 필요한 별도 체계입니다.</p>
+
+<h3>신뢰수준 95%의 올바른 해석</h3><p>빈도주의 통계에서 모수 μ는 <strong>미지의 고정된 상수</strong>이지 확률변수가 아닙니다. 확률이 붙는 대상은 표본추출에 따라 달라지는 <strong>구간의 양 끝점(확률변수)</strong>입니다. 따라서 (1−α)×100% 신뢰수준의 정확한 의미는 "동일한 절차로 표본을 반복 추출해 매번 구간을 만들면, 그 구간들 중 장기적으로 (1−α)의 비율이 μ를 포함한다"는 <strong>절차의 장기 성공률</strong>입니다. 관측된 특정 구간 [4.81, 5.59]에 대해서는 μ가 그 안에 있거나 없거나 — 확률은 1 또는 0이고, 우리가 모를 뿐입니다. "이 구간이 μ를 포함할 확률이 95%"라는 해석이 흔하지만 엄밀한 정의는 아닙니다. 실제로 μ를 확률변수로 다루어 "모수가 이 구간에 있을 확률 95%"를 정당화하는 것은 <strong>베이지안 신용구간(credible interval)</strong>으로, 사전분포가 필요한 별도 체계입니다.</p>
   <div class="formula">P(x̄ − z<sub>α/2</sub>·σ/√n ≤ μ ≤ x̄ + z<sub>α/2</sub>·σ/√n) = 1 − α &nbsp;—&nbsp; 확률이 붙는 건 μ가 아니라 구간의 끝점</div>
   <h3>오차한계와 표본크기 결정</h3><p>오차한계 E는 세 요소로 결정됩니다. 신뢰수준 ↑ (z ↑) → 구간이 넓어지고, 표준편차 σ ↑ → 넓어지고, 표본크기 n ↑ → <strong>√n에 반비례</strong>해서 좁아집니다. 정밀도를 2배(E를 절반)로 하려면 표본을 4배로 늘려야 하는 이유가 이 제곱근 구조입니다.</p>
   <div class="formula">E = z<sub>α/2</sub>·σ/√n &nbsp;&nbsp;&nbsp; ⇐⇒ &nbsp;&nbsp;&nbsp; n = (z<sub>α/2</sub>·σ/E)²</div>

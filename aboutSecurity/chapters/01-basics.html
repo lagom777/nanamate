@@ -70,13 +70,12 @@
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🍪 한마디로 말하면</h3>
   <p>정보보안은 <strong>내 소중한 것을 지키는 놀이의 규칙</strong>이에요! 딱 세 가지만 기억하면 돼요. 남이 <strong>못 보게</strong>(기밀성), 남이 <strong>못 바꾸게</strong>(무결성), 내가 <strong>필요할 때 늘 쓰게</strong>(가용성). 이 셋을 합쳐 <strong>CIA</strong>라고 불러요. 스파이 조직 CIA랑은 다른 거예요! 😆</p>
   <h3>🎮 우리 생활 속 이야기</h3>
@@ -107,9 +106,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>CIA Triad는 1970년대 미 국방부의 신뢰 컴퓨터 시스템 평가 기준(TCSEC, Orange Book)에서 정립된 개념입니다. 이후 NIST는 여기에 <strong>인증(Authentication)·인가(Authorization)·감사(Audit·Accountability)</strong>를 더한 'AAA'와 <strong>부인 방지(Non-repudiation)</strong>를 추가해 6대 속성으로 확장했습니다. ISO/IEC 27000 시리즈는 이를 자산 분류·위험 평가·통제 선정의 체계로 발전시켰습니다.</p>
   <p>위험 평가는 정성적(High/Medium/Low) 방식과 정량적(ALE = SLE × ARO) 방식으로 나뉩니다. SLE(Single Loss Expectancy)는 1회 사고 손실, ARO(Annualized Rate of Occurrence)는 연간 발생 빈도, ALE(Annualized Loss Expectancy)는 연간 기대 손실입니다. 통제 도입 비용이 ALE 감소분보다 작아야 경제적으로 타당합니다.</p>
   <h3>핵심 개념과 실무</h3>
@@ -133,11 +132,8 @@ def review(component, data_flows):
   <h3>응용 사례</h3>
   <p>실무에서 가장 자주 쓰이는 위협 모델링 프레임워크는 STRIDE 외에도 ① <strong>PASTA</strong>(7단계 위험 중심 모델), ② <strong>OCTAVE</strong>(조직 자산 중심), ③ <strong>VAST</strong>(애자일 환경용), ④ <strong>LINDDUN</strong>(프라이버시 특화)이 있습니다. 시스템 규모와 조직 성숙도에 맞춰 선택하는 것이 핵심입니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "보안은 IT 부서 일"이라고 분리하면 실패합니다. 가장 큰 사고의 60% 이상은 사람과 프로세스에서 발생합니다. 피싱·내부자 위협·실수에 의한 설정 오류는 기술적 통제만으로 막을 수 없으며, 정책·교육·문화가 함께 작동해야 합니다.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>현대 위협 모델링의 핵심 변화는 "경계 기반 모델(Castle &amp; Moat)"에서 "<strong>Zero Trust</strong>"로의 전환입니다. NIST SP 800-207(2020)이 정립한 Zero Trust Architecture는 'Never trust, always verify'를 원칙으로 하며, 모든 접근 요청을 동적으로 평가하는 정책 결정 지점(PDP)과 정책 시행 지점(PEP) 구조로 설계됩니다. 신뢰는 위치(내부망)나 한 번의 인증으로 부여되지 않고, 매 요청마다 신원·기기 상태·행위 컨텍스트를 종합해 산정됩니다.</p>
   <p>위협 인텔리전스 측면에서는 MITRE ATT&amp;CK 매트릭스가 사실상의 표준이 되었습니다. 14개 전술(Tactics)과 200여 개 기법(Techniques), 수백 개의 하위 기법(Sub-techniques)으로 구성되며, 각 기법은 실제 APT 그룹의 TTP(Tactics·Techniques·Procedures)에 연결됩니다. 방어자는 자신의 탐지 커버리지를 매트릭스 위에 색칠해 가시화할 수 있고(<em>heatmap</em>), 이를 통해 우선순위 투자를 결정합니다.</p>
   <h3>수학적 · 정량적 기초</h3>

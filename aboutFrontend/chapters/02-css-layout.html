@@ -759,12 +759,11 @@ li:first-child { font-weight: bold; }
 <h2>📚 난이도별 학습</h2>
             <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
             <div class="difficulty-tabs">
-                <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-                <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-                <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
-            </div>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
             <div class="difficulty-content" data-level="easy">
-              <span class="difficulty-badge easy">하 · 입문</span>
+              <span class="difficulty-badge easy">🟢 쉬움</span>
               <h3>🎯 딱 한 줄!</h3>
               <p>CSS는 HTML을 <strong>예쁘게 꾸미는</strong> 말이에요. 색깔·크기·위치를 전부 정해줘요! 🎨</p>
               <h3>😎 왜 배워요?</h3>
@@ -796,9 +795,10 @@ li:first-child { font-weight: bold; }
                 <li>미디어 쿼리로 반응형! 작은 폰부터 만드는 게 추천 📱</li>
               </ul>
             </div>
-            <div class="difficulty-content" data-level="medium">
-                <span class="difficulty-badge medium">중 · 응용</span>
-                <h3>이론 깊이</h3>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
                 <p>CSS의 핵심은 "캐스케이드(Cascade) + 명시도(Specificity) + 상속(Inheritance)" 세 축입니다. 동일 속성에 여러 규칙이 겹치면 (1) 출처(작성자/사용자/브라우저), (2) <code>!important</code>, (3) 명시도 점수(인라인=1000, ID=100, 클래스=10, 태그=1), (4) 작성 순서 순으로 결정됩니다. <code>box-sizing: border-box</code>를 전역으로 설정하면 padding이 width를 침범하지 않아 레이아웃 계산이 직관적이 됩니다. Flexbox는 <code>justify-content</code>(주축)와 <code>align-items</code>(교차축)의 조합이 핵심이고, Grid는 <code>grid-template-areas</code>로 영역을 ASCII 아트처럼 정의하는 방식이 가독성이 가장 좋습니다. 애니메이션은 transform과 opacity 위주로 작성해 GPU 합성 단계에서 처리되도록 해야 60fps를 유지할 수 있습니다.</p>
                 <h3>핵심 코드 패턴</h3>
                 <pre><code>/* 카드 그리드: 자동으로 열 개수가 늘고 줄어듦 */
@@ -831,10 +831,8 @@ li:first-child { font-weight: bold; }
                 <div class="warning-box">
                     <strong>⚠️ 자주 하는 실수:</strong> margin 충돌(collapsing margins), z-index 남용으로 쌓임 맥락(stacking context) 무너뜨리기, 절대 단위(px)만 사용해 접근성 떨어뜨리기. 가능한 한 <code>rem</code>·<code>em</code>을 사용하세요.
                 </div>
-            </div>
-            <div class="difficulty-content" data-level="hard">
-                <span class="difficulty-badge hard">상 · 심화</span>
-                <h3>전문가 레벨</h3>
+
+<h3>전문가 레벨</h3>
                 <p>브라우저 렌더링 파이프라인은 Style → Layout → Paint → Composite 4단계로 이루어집니다. 너비/위치 변경은 Layout부터 다시 계산되어 비용이 크지만, transform·opacity는 Composite 단계만 거치므로 60fps에 적합합니다. 또한 Layer Promotion을 유발하는 <code>will-change</code>·<code>transform: translateZ(0)</code>을 남용하면 메모리 폭증으로 오히려 성능이 악화될 수 있어 측정 후 적용해야 합니다. 컨테이너 쿼리(Container Queries)는 컴포넌트가 자기 부모 너비에 따라 스스로 모양을 바꿀 수 있게 하여 미디어 쿼리 패러다임을 보완하며, <code>:has()</code> 부모 선택자는 마침내 CSS만으로 "자식 상태에 따라 부모 스타일 변경"을 가능케 했습니다. 캐스케이드 레이어(<code>@layer</code>)는 명시도 전쟁을 끝내는 도구이며, 색 함수 <code>color-mix()</code>·<code>oklch()</code>는 색채 인지 균형 잡힌 팔레트를 만들 때 핵심입니다.</p>
                 <h3>고급 패턴</h3>
                 <pre><code>/* 컨테이너 쿼리 + :has() + 캐스케이드 레이어 */
@@ -869,7 +867,7 @@ li:first-child { font-weight: bold; }
                 <div class="success-box">
                     <strong>🎓 도전 과제:</strong> JavaScript 0줄로 이미지 캐러셀(스냅 스크롤 + 페이드 + 인디케이터)을 구현해보세요. <code>scroll-snap</code>·<code>:target</code>·<code>animation-timeline: scroll()</code>이 무기가 됩니다.
                 </div>
-            </div>
+</div>
         
 <h2>🕹️ 직접 해보기 — 박스 모델 순서 맞추기</h2>
 <p>박스 모델의 네 영역을 안쪽부터 바깥쪽 순서로 배열해 보세요.</p>

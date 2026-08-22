@@ -712,12 +712,11 @@ dog.speak();  // "뽀삐이 멍멍 울었습니다."
             <h2>📚 난이도별 학습</h2>
             <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
             <div class="difficulty-tabs">
-                <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-                <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-                <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
-            </div>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
             <div class="difficulty-content" data-level="easy">
-              <span class="difficulty-badge easy">하 · 입문</span>
+              <span class="difficulty-badge easy">🟢 쉬움</span>
               <h3>🎯 딱 한 줄!</h3>
               <p>JavaScript(JS)는 웹페이지에 <strong>움직임</strong>을 넣는 말이에요. 클릭하면 반응하고, 입력하면 계산하고! 🤖</p>
               <h3>😎 왜 배워요?</h3>
@@ -753,9 +752,10 @@ dog.speak();  // "뽀삐이 멍멍 울었습니다."
                 <li>비동기는 Promise·<code>async/await</code>로 깔끔하게!</li>
               </ul>
             </div>
-            <div class="difficulty-content" data-level="medium">
-                <span class="difficulty-badge medium">중 · 응용</span>
-                <h3>이론 깊이</h3>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
                 <p>JavaScript는 단일 스레드 이벤트 루프 기반 언어로, 콜 스택(Call Stack), 태스크 큐(Task Queue), 마이크로태스크 큐(Microtask Queue)가 협력해 비동기 작업을 처리합니다. <code>Promise.then</code>은 마이크로태스크로, <code>setTimeout</code>은 매크로태스크로 스케줄링되며 마이크로태스크가 항상 우선합니다. 클로저(Closure)는 함수가 선언될 당시의 렉시컬 환경을 기억하는 메커니즘으로 모듈 패턴, 메모이제이션, 커링의 토대가 됩니다. <code>this</code>는 호출 방식(메서드/함수/생성자/화살표)에 따라 결정되며, 화살표 함수는 자체 <code>this</code>가 없어 상위 스코프를 그대로 사용합니다. ES2015 이후 도입된 디스트럭처링·스프레드·템플릿 리터럴·옵셔널 체이닝·널리시 코얼레싱은 가독성을 크게 개선합니다.</p>
                 <h3>핵심 코드 패턴</h3>
                 <pre><code>// 디바운스: 입력 끝나고 N ms 후에만 실행
@@ -787,10 +787,8 @@ async function getJSON(url, signal) {
                 <div class="warning-box">
                     <strong>⚠️ 자주 하는 실수:</strong> <code>==</code> 대신 <code>===</code> 사용하기, 콜백 지옥 피하고 async/await 활용, 배열을 <code>forEach</code>로만 처리하지 말고 변환에는 <code>map</code> 사용, <code>this</code> 바인딩 문제는 화살표 함수로 해결.
                 </div>
-            </div>
-            <div class="difficulty-content" data-level="hard">
-                <span class="difficulty-badge hard">상 · 심화</span>
-                <h3>전문가 레벨</h3>
+
+<h3>전문가 레벨</h3>
                 <p>V8 엔진은 인터프리터(Ignition)와 최적화 컴파일러(TurboFan, Maglev)로 코드를 실행하며, 모노모픽한 객체 형태(Hidden Class)를 유지할 때 가장 빠른 인라인 캐시를 사용합니다. 동일 객체에 동일 순서로 프로퍼티를 추가하고, 객체 형태를 도중에 바꾸지 않는 것이 성능에 유리합니다. 가비지 컬렉션은 세대별 마크-앤-스위프 방식으로, 짧게 사는 객체는 New Space에서, 오래 사는 객체는 Old Space에서 처리됩니다. 메모리 누수의 가장 흔한 원인은 분리된 DOM 노드를 클로저가 잡고 있는 경우와, 전역 이벤트 리스너 미해제입니다. <code>Proxy</code>·<code>Reflect</code>는 Vue·MobX 같은 반응성 시스템의 기반이며, <code>WeakMap</code>·<code>WeakRef</code>는 메모리 친화적 캐시 구현에 필수입니다. 또한 ES Modules의 정적 분석 가능 구조 덕분에 트리 셰이킹과 코드 스플리팅이 가능합니다.</p>
                 <h3>고급 패턴</h3>
                 <pre><code>// Proxy 기반 반응성 시스템 (Vue 3 핵심 아이디어 단순화)
@@ -831,7 +829,7 @@ function trigger(t, k) { /* deps 실행 */ }</code></pre>
                 <div class="success-box">
                     <strong>🎓 도전 과제:</strong> 100ms 안에 60fps로 동작하는 가상 스크롤 컴포넌트를 직접 구현해보세요. RequestAnimationFrame 스케줄링과 풀링 전략이 핵심입니다.
                 </div>
-            </div>
+</div>
         
 <h2>🕹️ 직접 해보기 — 이벤트 루프 분류하기</h2>
 <p>이벤트 루프를 이루는 요소들을 역할별로 분류해 보세요.</p>

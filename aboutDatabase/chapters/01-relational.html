@@ -456,13 +456,12 @@ K를 릴레이션 R의 속성들의 부분집합이라 하자.
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎮 한 줄로 말하면?</h3>
   <p>관계형 데이터베이스(DB)는 <strong>정보를 표(테이블)에 착착 정리해 두고, 표끼리 연결해서 척척 꺼내 쓰는 똑똑한 정리함</strong>이에요! 📦</p>
 
@@ -505,9 +504,9 @@ K를 릴레이션 R의 속성들의 부분집합이라 하자.
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
   <p>관계형 모델은 1970년 E.F. Codd가 발표한 수학적 집합 이론에 기반합니다. 각 테이블은 하나의 릴레이션(관계)이며, 행은 튜플, 열은 속성으로 불립니다. 관계대수와 관계해석이라는 두 가지 형식 언어가 SQL의 이론적 기반이 됩니다. 무결성 제약은 크게 개체 무결성(기본키는 NULL이 될 수 없음), 참조 무결성(외래키가 가리키는 값이 실제 존재해야 함), 도메인 무결성(컬럼 값이 정의된 자료형 범위 안에 있어야 함)으로 나뉩니다. RDBMS는 이러한 무결성을 자동으로 검사하여 잘못된 데이터를 막아 줍니다. 또한 ACID 특성을 통해 트랜잭션이 안전하게 처리되도록 보장합니다. 카디널리티(1:1, 1:N, M:N)에 따라 테이블 간 관계가 정의되며, M:N 관계는 별도의 연결 테이블로 풀어 표현하는 것이 표준 방식입니다.</p>
 
   <h3>실전 SQL/쿼리</h3>
@@ -557,11 +556,8 @@ GROUP  BY s.name;</code></pre>
   <div class="warning-box">
     <strong>⚠️ 자주 하는 실수:</strong> 외래키 제약을 빠뜨리고 운영하다 데이터 정합성이 깨지는 경우가 많습니다. 또 NULL이 허용되는 컬럼을 기본키로 쓰려다 오류를 보는 사례도 흔합니다.
   </div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3>
+<h3>전문가 레벨</h3>
   <p>관계형 데이터베이스의 내부는 스토리지 엔진, 쿼리 옵티마이저, 트랜잭션 매니저, 락 매니저, 로그 매니저로 구성됩니다. InnoDB 같은 스토리지 엔진은 클러스터드 인덱스 구조를 사용해 기본키 순서로 데이터 페이지를 물리적으로 정렬하며, 페이지는 보통 16KB 단위로 관리됩니다. 옵티마이저는 통계(히스토그램, 카디널리티)를 기반으로 비용 모델을 세워 가장 저렴한 실행계획을 선택합니다. 트랜잭션은 WAL(Write-Ahead Logging)을 통해 ACID를 구현하며, REDO/UNDO 로그가 충돌 복구의 핵심입니다. 동시성 제어는 락 기반(2PL) 또는 MVCC(다중 버전 동시성 제어)로 구현되며, PostgreSQL과 Oracle은 MVCC를 표준으로 채택합니다. 분산 환경에서는 행 수준 락 외에도 글로벌 트랜잭션과 2PC가 필요하지만, 성능 손실 때문에 대부분 보상 트랜잭션 패턴으로 대체합니다. 또한 파티셔닝과 샤딩으로 단일 노드의 한계를 넘어서며, 파티션 프루닝과 파티션-와이즈 조인 같은 고급 기법이 옵티마이저에 의해 자동 적용됩니다.</p>
 
   <h3>고급 패턴</h3>

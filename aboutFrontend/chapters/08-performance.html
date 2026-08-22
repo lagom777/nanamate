@@ -728,12 +728,11 @@ self.addEventListener('install', (event) => {
       <h2>📚 난이도별 학습</h2>
       <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
       <div class="difficulty-tabs">
-        <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-        <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-        <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
-      </div>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
       <div class="difficulty-content" data-level="easy">
-        <span class="difficulty-badge easy">하 · 입문</span>
+        <span class="difficulty-badge easy">🟢 쉬움</span>
         <h3>🎯 딱 한 줄!</h3>
         <p>성능 최적화는 사이트가 <strong>빠르게 뜨고 매끄럽게 반응</strong>하게 만드는 일이에요. 느리면 사람들이 바로 나가버려요! 🏃💨</p>
         <h3>😎 왜 배워요?</h3>
@@ -769,9 +768,10 @@ self.addEventListener('install', (event) => {
           <li>캐시·CDN 쓰면 두 번째 방문은 순식간! ⚡</li>
         </ul>
       </div>
-      <div class="difficulty-content" data-level="medium">
-        <span class="difficulty-badge medium">중 · 응용</span>
-        <h3>이론 깊이</h3>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
         <p>브라우저 렌더링은 Critical Rendering Path를 따릅니다. HTML 파싱 → DOM·CSSOM 생성 → Render Tree → Layout → Paint → Composite. 이 경로의 어느 단계가 늦어도 LCP는 미뤄집니다. 가장 흔한 병목은 (1) 렌더 차단 CSS·JS, (2) 큰 동기 JS의 메인 스레드 점유, (3) 거대한 이미지의 디코드 시간, (4) 폰트 로딩 지연으로 인한 FOIT/FOUT입니다. 해결책으로는 <code>defer</code>/<code>async</code>·<code>type="module"</code> 사용, <code>rel="preload"</code>·<code>rel="preconnect"</code> 힌트, <code>fetchpriority="high"</code>로 LCP 이미지 우선순위 부여, AVIF/WebP 포맷 + responsive image, <code>font-display: swap</code> 등이 있습니다. JS 측면에선 코드 스플리팅(route-based, component-based), 트리 셰이킹, lazy import가 핵심이며, INP는 Long Task(50ms 초과) 분할이 관건입니다.</p>
         <h3>핵심 코드 패턴</h3>
         <pre><code>// 코드 스플리팅 + Suspense
@@ -806,10 +806,8 @@ function App() {
         <div class="warning-box">
           <strong>⚠️ 자주 하는 실수:</strong> 합성 점수만 좋게 만들고 실사용자 지표 외면, <code>useMemo</code> 남발로 메모리만 늘리기, 거대한 폰트 패밀리 통째 로딩, 이미지 width/height 미지정으로 CLS 발생.
         </div>
-      </div>
-      <div class="difficulty-content" data-level="hard">
-        <span class="difficulty-badge hard">상 · 심화</span>
-        <h3>전문가 레벨</h3>
+
+<h3>전문가 레벨</h3>
         <p>고급 성능 최적화는 측정 정확도부터 시작합니다. <code>PerformanceObserver</code>로 LCP·INP·CLS를 RUM으로 수집하고, <code>web-vitals</code> 라이브러리를 통해 분포(p75)를 모니터링합니다. 메인 스레드 부담을 줄이려면 React Concurrent Renderer의 <code>useTransition</code>·<code>startTransition</code>으로 우선순위가 낮은 업데이트를 분리하고, Web Worker로 무거운 계산을 오프로드합니다. 네트워크 측면에선 HTTP/3 + 0-RTT, Early Hints(103), Server Timing 헤더로 서버 단계별 시간을 노출시켜 디버깅합니다. 이미지 최적화의 끝판은 BlurHash/LQIP 플레이스홀더 + <code>content-visibility: auto</code> + <code>contain-intrinsic-size</code> 조합으로 화면 밖 콘텐츠를 사실상 렌더하지 않는 것입니다. JS 측면에선 V8의 Hidden Class 안정화, 인라인 캐싱 친화적 객체 형태, ArrayBuffer/SharedArrayBuffer 활용한 zero-copy 통신이 미세 최적화 영역입니다.</p>
         <h3>고급 패턴</h3>
         <pre><code>// Web Worker + Comlink로 무거운 계산 오프로드
@@ -848,7 +846,7 @@ const result = await api.heavyCompute(input);  // 메인 스레드 블록 X
         <div class="success-box">
           <strong>🎓 도전 과제:</strong> 모바일 4G 환경에서 LCP 1.5초·INP 200ms·CLS 0.05 이하의 e-commerce 상품 페이지를 구현하고, Lighthouse 모바일 점수 95+를 달성해보세요.
         </div>
-      </div>
+</div>
     
 <h2>🕹️ 직접 해보기 — 성능 항목 분류하기</h2>
 <p>웹 성능 항목을 측정 지표와 최적화 기법으로 분류해 보세요.</p>

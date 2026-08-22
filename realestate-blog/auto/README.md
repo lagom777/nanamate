@@ -7,7 +7,7 @@
 맥 스케줄러(launchd, 월·목 8:57)
   └─ run.mjs
        ├─ 트렌드 수집 (구글뉴스 RSS 한/영 + Reddit)
-       ├─ 작성 엔진 자동 선택 (ChatGPT 로그인/Codex → Gemini API 키 → Google OAuth → 로컬 작성)
+       ├─ 작성 엔진 자동 선택 (Grok/xAI → ChatGPT 로그인/Codex → Gemini → 로컬 작성)
        ├─ output/<날짜>/ 에 blog.md · naver.txt · threads.txt · sources.md 저장
        ├─ 게시 전 출력 검증 → 통과 + autoPostThreads=true 일 때만 Threads 게시
        └─ 데스크톱 알림 → 네이버는 naver.txt 붙여넣어 발행
@@ -16,9 +16,10 @@
 > 네이버는 글쓰기 API가 없고 자동 게시는 계정 위험이 커서 **의도적으로 수동**입니다. 알림을 받고 `naver.txt`를 복사해 글쓰기창에 붙여넣어 발행하세요.
 
 ## 1. 설정
-1. **현재 ChatGPT 로그인 사용(기본)**: `codex login status`가 `Logged in using ChatGPT`이면 자동으로 Codex CLI를 읽기 전용·일회성 모드로 호출합니다. 브라우저 쿠키나 저장된 자격 증명을 직접 읽지 않습니다. 비활성화하려면 `config.json`의 `preferChatGPTLogin`을 `false`로 바꾸거나 실행할 때 `--offline`을 사용합니다.
-2. **설정 없이 시작**: ChatGPT/Codex 로그인이 없어도 로컬 작성 엔진이 입력 자료만으로 제목·장문 본문·SNS 글을 자동 생성합니다. 입력에 없는 가격·통계는 만들지 않습니다.
-3. **API 키 없이 Gemini 사용(선택)**: Google 공식 OAuth를 연결할 수 있습니다.
+1. **Grok(xAI) 우선**: `XAI_API_KEY` 환경변수 또는 `config.local.json`의 `xaiKey`가 있으면 Grok이 글을 씁니다. 키는 https://console.x.ai 에서 발급. `preferGrok: false` 이면 건너뜁니다.
+2. **ChatGPT 로그인**: `codex login status`가 `Logged in using ChatGPT`이면 Codex CLI를 읽기 전용·일회성 모드로 호출합니다. 비활성화하려면 `preferChatGPTLogin`을 `false`로 바꾸거나 `--offline`을 사용합니다.
+3. **설정 없이 시작**: ChatGPT/Codex 로그인이 없어도 로컬 작성 엔진이 입력 자료만으로 제목·장문 본문·SNS 글을 자동 생성합니다. 입력에 없는 가격·통계는 만들지 않습니다.
+4. **API 키 없이 Gemini 사용(선택)**: Google 공식 OAuth를 연결할 수 있습니다.
    - Google Cloud 프로젝트에서 Generative Language API 활성화
    - OAuth 동의 화면 구성 후 데스크톱 앱 OAuth client JSON 다운로드
    - `node setup-google-oauth.mjs` 실행 → JSON 경로와 프로젝트 ID 입력 → 브라우저에서 Google 계정 1회 승인
@@ -81,7 +82,8 @@ launchctl start com.studywithai.reblog
 # 해제하려면
 launchctl unload ~/Library/LaunchAgents/com.studywithai.reblog.plist
 ```
-- 기본 일정은 **월·목 오전 8:57**. 바꾸려면 plist의 `StartCalendarInterval` 수정 후 unload→load.
+- 기본 일정은 **월·목 오전 8:57**. **매일 오전 9시**는 `com.studywithai.reblog.daily.plist` 를 같은 방식으로 load.
+- 바꾸려면 plist의 `StartCalendarInterval` 수정 후 unload→load.
 - node 경로가 다르면(`which node` 로 확인) plist의 `/opt/homebrew/bin/node` 를 교체하세요.
 - **맥이 켜져·깨어 있어야** 실행됩니다(절전 중이면 깬 뒤 실행). 실행 로그: `run.log`, `launchd.out/err.log`.
 

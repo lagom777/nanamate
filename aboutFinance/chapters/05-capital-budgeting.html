@@ -27,12 +27,11 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎯 한 줄로 이해하기</h3><p>자본예산은 <strong>씨앗을 심기 전에 "이 씨앗이 정말 심을 만한가?"를 따져보는 일</strong>이에요. 씨앗 값보다 항해 수확할 열곡의 값어치가 크면 심고, 아니면 말아요.</p>
   <h3>🌰 씨앗 이야기</h3><p>농부가 되었다고 합시다. 🌱 씨앗 한 봉지가 100만 원이에요. 이걸 심으면 앞으로 3년 동안 항해 쌀을 팔아 돈이 들어와요. 그런데 3년 뒤에 받는 돈과 지금 당장 내는 돈은 값어치가 달라요. 지금의 100만 원이 미래의 100만 원보다 더 귀하거든요(은행에 넣으면 이자가 붙으니까요!).</p><p>그래서 미래에 들어올 돈을 모두 '<strong>지금 값어치</strong>'로 바꿔서 더해요. 그 합계가 씨앗 값 100만 원보다 크면? 🎉 심어요! 이 '남는 차액'이 바로 <strong>NPV(순현재가치)</strong>예요. NPV가 0보다 크면 회사의 값어치가 그만큼 올라가요.</p>
   <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>자본예산</strong>: 큰 투자를 할지 말지 미리 계산하는 일</li><li><strong>초기투자</strong>: 처음에 들어가는 돈(씨앗 값)</li><li><strong>현금흐름</strong>: 투자 후 항해 들어오는 돈(수확)</li><li><strong>할인율</strong>: 미래 돈을 지금 값어치로 바꿀 때 쓰는 비율</li><li><strong>NPV</strong>: 미래 돈의 지금 값어치 합 − 초기투자. 양수면 채택!</li><li><strong>IRR</strong>: NPV가 딱 0이 되는 할인율. 이 투자의 '실제 수익률'</li></ul></div>
@@ -40,17 +39,16 @@
   <div class="study-tip"><strong>💡 학습 TIP:</strong> "돈을 먼저 쓰고, 돌려받는 돈은 나중에 깎아서 계산한다" 이 한 문장만 기억하세요. NPV의 핵심이에요!</div>
   <h3>📌 요약</h3><ul><li>자본예산 = 큰 투자를 하기 전에 따져보는 과정이에요.</li><li>미래에 들어올 돈은 지금 값어치로 바꿔서 비교해요.</li><li>NPV &gt; 0 이면 채택 — 회사 값어치가 올라가요.</li><li>IRR &gt; 요구수익률 이면 채택 — 저금보다 나은 투자예요.</li><li>씨앗(초기투자)보다 수확(현금흐름의 현재가치)이 커야 해요.</li></ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>순현재가치(NPV)법</h3><p>NPV는 투자로 발생하는 미래 현금흐름을 요구수익률(자본비용)로 할인한 현재가치의 합에서 초기투자액을 뺀 값입니다. <strong>NPV &gt; 0이면 채택, NPV &lt; 0이면 기각</strong>합니다. NPV가 양수라는 것은 투자 수익이 자본비용을 초과해 그만큼 기업가치가 증가한다는 뜻입니다. 예를 들어 초기투자 1,000만 원, 1년 뒤 600만 원, 2년 뒤 600만 원이 들어오고 할인율이 10%라면, 현금흐름의 현재가치는 600/1.1 + 600/1.21 ≈ 545 + 496 = 1,041만 원, NPV ≈ +41만 원으로 채택할 만한 투자입니다.</p>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>순현재가치(NPV)법</h3><p>NPV는 투자로 발생하는 미래 현금흐름을 요구수익률(자본비용)로 할인한 현재가치의 합에서 초기투자액을 뺀 값입니다. <strong>NPV &gt; 0이면 채택, NPV &lt; 0이면 기각</strong>합니다. NPV가 양수라는 것은 투자 수익이 자본비용을 초과해 그만큼 기업가치가 증가한다는 뜻입니다. 예를 들어 초기투자 1,000만 원, 1년 뒤 600만 원, 2년 뒤 600만 원이 들어오고 할인율이 10%라면, 현금흐름의 현재가치는 600/1.1 + 600/1.21 ≈ 545 + 496 = 1,041만 원, NPV ≈ +41만 원으로 채택할 만한 투자입니다.</p>
   <h3>내부수익률(IRR)법</h3><p>IRR(Internal Rate of Return)은 <strong>NPV를 정확히 0으로 만드는 할인율</strong>, 즉 투자안 자체가 벌어들이는 내재 수익률입니다. <strong>IRR &gt; 요구수익률이면 채택</strong>합니다. 독립적인 일반 투자안(초기에 유출, 이후 유입)에서는 IRR 판단이 NPV 판단과 일치합니다. 다만 IRR은 방정식의 해를 구하는 문제라 보통 재무 계산기나 시행착오법으로 계산합니다.</p>
   <h3>회수기간법과 수익성지수(PI)</h3><p><strong>회수기간법</strong>은 초기투자액을 현금흐름으로 회수하는 데 걸리는 시간을 재는 방법입니다. 계산이 간단하고 유동성 위험을 직관적으로 보여주지만 두 가지 치명적 단점이 있습니다. ① <strong>화폐의 시간가치를 무시</strong>하고, ② <strong>회수 이후의 현금흐름을 아예 보지 않습니다</strong>. 그래서 장기 수익성이 큰 투자를 놓칠 수 있습니다. <strong>수익성지수(PI)</strong>는 미래 현금흐름 현재가치의 합 ÷ 초기투자액으로, <strong>PI &gt; 1이면 채택</strong>입니다(NPV &gt; 0과 동치). 투자 1원당 창출 가치를 보여줘 자본이 한정된 자본배정 상황에서 유용합니다.</p>
   <div class="info-card"><h4>📐 네 가지 평가 기준 정리</h4><p>NPV: 현재가치 합 − 초기투자, 0 초과면 채택 · IRR: NPV=0인 할인율, 요구수익률 초과면 채택 · 회수기간: 투자금 회수에 걸리는 연수 · PI: 현재가치 합 ÷ 초기투자, 1 초과면 채택. NPV와 PI는 시간가치를 반영하고, 회수기간은 반영하지 못합니다.</p></div>
   <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "회수기간이 짧으면 좋은 투자"는 절반만 맞습니다. 회수가 빨라도 그 뒤에 현금흐름이 끊기는 투자는, 회수는 느려도 이후 큰돈이 들어오는 투자보다 나쁠 수 있습니다. 회수기간은 보조 지표로만 쓰세요.</div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>NPV vs IRR의 충돌: 상호배타 투자안</h3><p>둘 중 하나만 고를 수 있는 <strong>상호배타 투자안</strong>에서는 NPV와 IRR이 서로 다른 순위를 매길 수 있습니다. 원인은 두 가지입니다. ① <strong>규모의 차이</strong> — 소규모 투자는 IRR이 높아도 절대적 가치 창출(NPV)이 작을 수 있습니다. ② <strong>현금흐름 시점의 차이</strong> — 초반에 몰리는 현금흐름은 IRR이 높게 나오지만, 후반에 몰리는 투자는 할인율이 낮을 때 NPV가 더 커집니다. 두 안의 NPV 프로파일이 교차하는 할인율(교차율)을 기준으로 순위가 뒤집히며, 이때는 <strong>NPV 기준을 따라야</strong> 가치 극대화라는 목표와 일치합니다.</p>
+
+<h3>NPV vs IRR의 충돌: 상호배타 투자안</h3><p>둘 중 하나만 고를 수 있는 <strong>상호배타 투자안</strong>에서는 NPV와 IRR이 서로 다른 순위를 매길 수 있습니다. 원인은 두 가지입니다. ① <strong>규모의 차이</strong> — 소규모 투자는 IRR이 높아도 절대적 가치 창출(NPV)이 작을 수 있습니다. ② <strong>현금흐름 시점의 차이</strong> — 초반에 몰리는 현금흐름은 IRR이 높게 나오지만, 후반에 몰리는 투자는 할인율이 낮을 때 NPV가 더 커집니다. 두 안의 NPV 프로파일이 교차하는 할인율(교차율)을 기준으로 순위가 뒤집히며, 이때는 <strong>NPV 기준을 따라야</strong> 가치 극대화라는 목표와 일치합니다.</p>
   <h3>다중 IRR과 MIRR</h3><p>현금흐름의 부호가 두 번 이상 바뀌는 <strong>비정상 현금흐름</strong>(예: 초기 투자 후 유입, 말기에 대규모 복구비용 유출)에서는 NPV=0을 만족하는 할인율이 여러 개 존재할 수 있습니다. 이를 <strong>다중 IRR 문제</strong>라 하며, 이때 IRR은 판단 기준으로 쓸 수 없습니다. 대안인 <strong>MIRR(수정내부수익률)</strong>은 모든 유입을 만기까지 요구수익률로 복리 재투자한 미래가치와, 모든 유출을 현재가치로 환산한 값 사이의 수익률로 정의해 해가 하나로 유일해집니다.</p>
   <div class="formula">NPV = Σₜ CFₜ / (1 + r)ᵗ − 초기투자 &nbsp;&nbsp;|&nbsp;&nbsp; IRR: NPV = 0인 r &nbsp;&nbsp;|&nbsp;&nbsp; PI = Σ PV(현금흐름) / 초기투자 &nbsp;&nbsp;|&nbsp;&nbsp; MIRR: (유입의 미래가치 / 유출의 현재가치)^(1/n) − 1</div>
   <h3>왜 NPV가 이론적으로 우수한가</h3><p>첫째, <strong>가치가산성(value additivity)</strong> — 프로젝트들의 NPV는 단순 합산이 가능해 '회사 가치 = 기존 가치 + 채택 안들의 NPV 합'이 성립합니다. IRR 같은 비율 지표는 합산이 불가능합니다. 둘째, <strong>재투자 가정의 현실성</strong> — NPV는 중간 현금흐름이 요구수익률(자본비용)로 재투자된다고 가정하는데 이는 현실적이지만, IRR은 프로젝트 자체의 IRR로 재투자된다고 가정해 수익률이 높은 안일수록 비현실적으로 과대평가됩니다. 셋째, NPV는 주주부 극대화라는 목표 함수와 직접 일치합니다.</p>

@@ -606,12 +606,11 @@
       <h2>📚 난이도별 학습</h2>
       <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
       <div class="difficulty-tabs">
-        <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-        <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-        <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
-      </div>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
       <div class="difficulty-content" data-level="easy">
-        <span class="difficulty-badge easy">하 · 입문</span>
+        <span class="difficulty-badge easy">🟢 쉬움</span>
         <h3>🎯 딱 한 줄!</h3>
         <p>React는 <strong>화면 = 데이터(state)의 결과</strong>로 만드는 도구예요. 데이터만 바꾸면 화면이 알아서 다시 그려져요! 🪄</p>
         <h3>😎 왜 배워요?</h3>
@@ -645,9 +644,10 @@
           <li>목록을 그릴 땐 <code>key</code> prop 꼭 넣기! 🔑</li>
         </ul>
       </div>
-      <div class="difficulty-content" data-level="medium">
-        <span class="difficulty-badge medium">중 · 응용</span>
-        <h3>이론 깊이</h3>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
         <p>React 렌더링은 (1) 트리거(상태 변경) → (2) 렌더(컴포넌트 함수 호출) → (3) 커밋(DOM 반영) 3단계입니다. <code>useState</code>의 setter는 비동기적으로 큐에 쌓이고 React가 자동으로 배치(batching) 처리하기 때문에, 같은 핸들러 안에서 두 번 setState해도 리렌더는 한 번만 발생합니다. <code>useEffect</code>는 커밋 후 실행되며, 의존성 배열(deps)에 들어간 값이 바뀔 때만 재실행됩니다. cleanup 함수를 반환하면 다음 effect 실행 전·언마운트 시에 호출되므로, 이벤트 리스너·타이머 해제에 사용해야 메모리 누수가 없습니다. <code>useMemo</code>·<code>useCallback</code>은 참조 동일성을 유지해 자식 컴포넌트의 불필요한 리렌더를 막지만, 반대로 메모이제이션 자체에 비용이 들기 때문에 측정 후 적용해야 합니다.</p>
         <h3>핵심 코드 패턴</h3>
         <pre><code>// Custom Hook으로 데이터 페칭 캡슐화
@@ -680,10 +680,8 @@ function useFetch(url) {
         <div class="warning-box">
           <strong>⚠️ 자주 하는 실수:</strong> useEffect 안에서 직접 setState를 호출해 무한 루프, key로 인덱스를 사용해 리스트 갱신 시 입력값 꼬임, props drilling을 방치해 컴포넌트 결합도 상승. Context나 상태 라이브러리로 해결.
         </div>
-      </div>
-      <div class="difficulty-content" data-level="hard">
-        <span class="difficulty-badge hard">상 · 심화</span>
-        <h3>전문가 레벨</h3>
+
+<h3>전문가 레벨</h3>
         <p>React 18 이후 도입된 Concurrent Renderer는 렌더 작업을 중단·재개·폐기할 수 있는 Fiber 아키텍처 위에서 동작합니다. <code>useTransition</code>·<code>useDeferredValue</code>로 우선순위가 낮은 업데이트를 양보(yield)할 수 있어, 무거운 리스트가 입력 응답성을 막지 않게 만듭니다. Suspense와 결합하면 데이터 로딩 중에도 부분적으로 UI를 보여주는 Streaming SSR이 가능합니다. 가장 큰 패러다임 전환은 React Server Components로, 서버에서 렌더된 컴포넌트는 클라이언트 번들에 포함되지 않아 JS 페이로드가 극적으로 줄어듭니다. 이는 Next.js App Router의 기반이며, "use client"·"use server" 디렉티브로 경계를 명시합니다. 내부적으로 Hook은 Fiber 노드의 연결 리스트로 저장되어 호출 순서가 같아야 정확히 매칭되므로, 조건문 안에서 Hook을 호출하면 안 됩니다.</p>
         <h3>고급 패턴</h3>
         <pre><code>// Server Component + Client Boundary (Next.js App Router)
@@ -727,7 +725,7 @@ export default function LikeButton({ id, initial }) {
         <div class="success-box">
           <strong>🎓 도전 과제:</strong> Suspense + Server Components를 활용해 Time to First Byte 200ms 이하인 블로그를 만들고, Lighthouse 100점에 도전해보세요.
         </div>
-      </div>
+</div>
     
 <h2>🕹️ 직접 해보기 — React 용어 상황 판단</h2>
 <p>React 핵심 용어와 설명을 연결해 보며 개념을 정리해 보세요.</p>

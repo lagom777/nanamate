@@ -542,12 +542,11 @@
             <h2>📚 난이도별 학습</h2>
             <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
             <div class="difficulty-tabs">
-                <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-                <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-                <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
-            </div>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
             <div class="difficulty-content" data-level="easy">
-              <span class="difficulty-badge easy">하 · 입문</span>
+              <span class="difficulty-badge easy">🟢 쉬움</span>
               <h3>🎯 딱 한 줄!</h3>
               <p>HTML은 웹페이지의 <strong>뼈대</strong>를 만드는 말이에요. "여기는 제목!", "여기는 사진!" 하고 태그로 이름표를 붙이는 거죠. 🦴</p>
               <h3>😎 왜 배워요?</h3>
@@ -584,9 +583,10 @@
                 <li>HTML5가 지금 쓰는 최신 버전!</li>
               </ul>
             </div>
-            <div class="difficulty-content" data-level="medium">
-                <span class="difficulty-badge medium">중 · 응용</span>
-                <h3>이론 깊이</h3>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
                 <p>HTML 문서는 브라우저에 의해 파싱되어 DOM(Document Object Model) 트리로 변환됩니다. 파서는 토큰화(Tokenization)와 트리 구축(Tree Construction)이라는 두 단계를 거쳐 각 태그를 노드로 만들고 부모-자식 관계를 형성합니다. 이때 <code>&lt;script&gt;</code> 태그는 기본적으로 파싱을 차단하기 때문에, <code>defer</code>나 <code>async</code> 속성으로 로딩 전략을 제어해야 렌더링 성능이 떨어지지 않습니다. <code>&lt;meta charset="UTF-8"&gt;</code>은 가능한 한 head 최상단에 둬야 인코딩 오해석을 막을 수 있고, <code>&lt;meta name="viewport"&gt;</code>는 모바일 반응형의 출발점입니다. 폼은 <code>required</code>, <code>pattern</code>, <code>minlength</code>처럼 브라우저 단계에서 검증을 시도하지만, 보안상 서버 측 검증을 반드시 병행해야 합니다.</p>
                 <h3>핵심 코드 패턴</h3>
                 <pre><code>&lt;!-- 시맨틱 + 접근성을 동시에 챙긴 폼 --&gt;
@@ -613,10 +613,8 @@
                 <div class="warning-box">
                     <strong>⚠️ 자주 하는 실수:</strong> <code>&lt;div&gt;</code>로 모든 영역을 감싸는 "div 수프"는 SEO·접근성에 치명적입니다. 또한 <code>&lt;b&gt;</code>·<code>&lt;i&gt;</code> 대신 의미를 가진 <code>&lt;strong&gt;</code>·<code>&lt;em&gt;</code>을 사용하고, 이미지 <code>alt</code>를 빈 문자열로 두는 것은 장식용 이미지일 때만 허용됩니다.
                 </div>
-            </div>
-            <div class="difficulty-content" data-level="hard">
-                <span class="difficulty-badge hard">상 · 심화</span>
-                <h3>전문가 레벨</h3>
+
+<h3>전문가 레벨</h3>
                 <p>HTML 파서는 WHATWG 명세에 따라 상태 머신(State Machine) 기반으로 동작하며, 잘못된 태그도 가능한 한 복구(error recovery)하도록 설계되었습니다. 이 관용성 때문에 닫지 않은 태그도 렌더링되지만, 결과적으로 DOM 구조가 달라져 CSS 선택자나 JS 쿼리가 의도와 다르게 동작할 수 있습니다. 브라우저는 HTML을 받자마자 Preload Scanner를 가동해 이후 등장할 리소스를 선제 다운로드하므로, <code>rel="preload"</code>·<code>rel="modulepreload"</code>·<code>rel="preconnect"</code> 힌트를 head에 적절히 배치하는 것이 LCP(Largest Contentful Paint) 최적화의 핵심입니다. 또한 Shadow DOM과 결합한 Web Components는 스타일·구조 캡슐화를 제공해 디자인 시스템에 자주 활용되며, <code>&lt;template&gt;</code>·<code>&lt;slot&gt;</code> 요소가 그 기반입니다. 접근성 측면에서는 ARIA를 남용하지 말고 "First rule of ARIA: don't use ARIA"를 따라 네이티브 시맨틱을 우선해야 합니다.</p>
                 <h3>고급 패턴</h3>
                 <pre><code>// Custom Element + Shadow DOM
@@ -656,7 +654,7 @@ customElements.define('user-card', UserCard);</code></pre>
                 <div class="success-box">
                     <strong>🎓 도전 과제:</strong> 자바스크립트 없이 HTML/CSS만으로 다단계 폼 위저드를 구현해보세요. <code>&lt;details&gt;</code>·<code>:has()</code>·<code>:target</code> 의사클래스가 핵심 도구입니다.
                 </div>
-            </div>
+</div>
         
 <h2>🕹️ 직접 해보기 — HTML 핵심 용어 상황 판단</h2>
 <p>HTML 기본 용어와 설명을 연결해 보며 개념을 정리해 보세요.</p>

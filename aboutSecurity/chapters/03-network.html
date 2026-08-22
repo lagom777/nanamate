@@ -70,13 +70,12 @@
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🌐 한마디로 말하면</h3>
   <p>네트워크 보안은 <strong>데이터가 길을 오갈 때 지켜주는 일</strong>이에요! 데이터도 여행을 다녀요. 그 길에서 누가 훔쳐보거나 끼어들면 안 되겠죠? 그래서 문지기(방화벽), CCTV(IDS/IPS), 비밀 통로(VPN)가 지켜줍니다.</p>
   <h3>🎮 우리 생활 속 이야기</h3>
@@ -105,9 +104,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>방화벽의 진화는 트래픽 검사 깊이에 비례합니다. 1세대 패킷 필터는 5튜플(src/dst IP·포트, 프로토콜)만 검사하고 무상태이므로 응답 트래픽을 위한 양방향 규칙이 필요합니다. 2세대 stateful inspection은 연결 상태표(connection table)를 유지해 NEW/ESTABLISHED/RELATED를 구분합니다(Linux netfilter, BSD pf의 핵심). 3세대 NGFW는 DPI(Deep Packet Inspection)·애플리케이션 식별·사용자 인식·위협 인텔리전스 피드를 통합하며, Palo Alto·Fortinet·Check Point가 대표적입니다.</p>
   <p>IDS/IPS의 핵심 지표는 탐지율과 오탐율의 트레이드오프입니다. 시그니처 기반 Suricata·Snort는 ET Open·Talos 같은 룰셋을 받아오며, 다중 스레딩과 하드웨어 오프로딩으로 10Gbps 이상 라인레이트 검사가 가능합니다. 행위/이상 기반 도구로는 Zeek가 사실상 표준이며, 스크립팅 가능한 프레임워크로 자체 탐지 로직을 작성할 수 있습니다.</p>
   <h3>핵심 코드 — iptables / nftables</h3>
@@ -132,11 +131,8 @@ iptables -A INPUT -p tcp --dport 443 -j ACCEPT</code></pre>
   <h3>응용 사례</h3>
   <p>① <strong>마이크로세그멘테이션</strong>: VMware NSX, Cilium 같은 솔루션으로 워크로드 단위로 정책을 강제합니다. 한 컨테이너가 침해되어도 lateral movement가 차단됩니다. ② <strong>SD-WAN + SASE</strong>: 지점들을 인터넷 위에서 묶고, 보안(SWG·CASB·ZTNA·FWaaS)을 클라우드에서 일괄 제공하는 모델입니다. 가트너가 2019년 명명했고 Cisco·Zscaler·Cato가 주도합니다. ③ <strong>DNS 보안</strong>: DoT(DNS over TLS)·DoH(over HTTPS)로 쿼리 자체를 암호화하고, DNS 필터링(Quad9, Cloudflare 1.1.1.2, Pi-hole)으로 악성 도메인을 차단합니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "방화벽만 잘 설정하면 안전하다"는 가정은 위험합니다. 현대 공격의 대부분은 ① 정상 트래픽처럼 보이는 HTTPS 위에서 일어나고, ② 합법 사용자 자격증명을 탈취해 정상 경로로 들어오며, ③ 내부에서 외부로 나가는 트래픽(C2 비콘, 데이터 유출)이 더 위험합니다. egress filtering과 행위 기반 탐지가 함께 필요합니다.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>현대 네트워크 보안의 패러다임 전환은 <strong>NIST SP 800-207 (Zero Trust Architecture, 2020)</strong>에 정립되어 있습니다. 핵심 원칙은 ① 모든 데이터 소스·서비스를 자원으로 간주, ② 네트워크 위치와 무관하게 모든 통신을 보호, ③ 세션 단위로 접근 부여, ④ 클라이언트 신원·기기 상태·요청 컨텍스트를 종합한 동적 정책, ⑤ 모든 자산의 무결성·보안 상태를 측정·관찰, ⑥ 인증·인가는 매 요청 동적으로, ⑦ 가능한 한 많은 정보를 수집해 보안 자세를 개선. PDP(Policy Decision Point)와 PEP(Policy Enforcement Point) 분리는 SDN(Software-Defined Networking)의 control/data plane 분리와 구조적으로 유사합니다.</p>
   <p>BGP 보안은 인터넷 라우팅의 약점입니다. 1989년 정의된 BGP는 신뢰 기반 프로토콜로, AS(Autonomous System) 간의 라우팅 광고를 검증하지 않습니다. 2018년 아마존 Route 53 하이재킹, 2008년 파키스탄 → YouTube 사고가 그 결과죠. 대응책으로 <strong>RPKI(Resource Public Key Infrastructure)</strong>가 IETF RFC 6480-6493에 정의되었고, ROA(Route Origin Authorization)와 BGPsec으로 광고를 암호화 검증합니다. 2025년 기준 IPv4 prefix의 약 50%가 ROA로 보호됩니다.</p>
   <h3>수학적·정량적 기초</h3>

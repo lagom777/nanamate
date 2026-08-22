@@ -90,12 +90,11 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎯 한 마디로!</h3><p>열역학은 "열은 어디로 흐르고, 에너지가 얼마나 일로 바뀔까?"를 알려줘요. 열은 언제나 뜨거운 곳에서 차가운 곳으로 흘러가요!</p>
   <h3>🤔 왜 알아야 할까?</h3><p>뜨거운 코코아가 스르르 식는 것(열의 이동), 자동차 엔진이 기름으로 부릉부릉 달리는 것(열기관), 냉장고가 안을 시원하게 만드는 것(열펌프) 모두 열역학 덕분이에요. ☕❄️</p>
   <div class="info-card"><h4>🌱 이 말만 알면 돼요</h4><ul><li>온도: 분자들이 얼마나 활발히 움직이나</li><li>열: 온도 차이 때문에 옮겨 다니는 에너지</li><li>내부에너지: 물체 안에 담긴 모든 에너지의 합</li><li>엔트로피: 얼마나 어질러졌나 (무질서한 정도)</li><li>비열: 온도를 1도 올리는 데 필요한 열의 양</li></ul></div>
@@ -103,19 +102,18 @@
   <div class="study-tip"><strong>💡 학습 TIP:</strong> 엔트로피는 "더 흔한 상태"로 생각하면 쉬워요. 카드를 던지면 딱 맞게 정렬되는 것보다 흩어지는 경우가 훨씬 많잖아요!</div>
   <h3>⭐ 한눈에 정리!</h3><ul><li>제0법칙: 온도가 같으면 열평형 (열이 안 흘러요)</li><li>제1법칙: ΔU = Q − W (에너지는 사라지지 않아요)</li><li>제2법칙: 세상은 점점 더 무질서해져요</li><li>제3법칙: 아주 아주 추운 절대 0도에선 엔트로피가 0에 가까워요</li><li>기체 규칙: PV = nRT</li></ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3><p>열역학 과정은 등온, 등압, 등적, 단열로 분류됩니다. 등온과정은 PV=일정, 단열과정은 PV^γ=일정 형태로 이상기체에서 표현됩니다. P-V 그래프 위 면적은 한 일을 의미합니다. 카르노 사이클은 두 등온과 두 단열로 구성된 이상적 열기관이며, 효율 η = 1 - T_c/T_h는 두 열저장소만으로 가능한 최대 효율입니다. 이를 넘는 기관은 제2법칙 위반입니다. 엔트로피 변화는 가역과정에서 dS = dQ/T로 정의되며, 비가역 과정에서는 항상 더 큽니다. 클라우지우스 부등식이 이를 정량화합니다.</p>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>열역학 과정은 등온, 등압, 등적, 단열로 분류됩니다. 등온과정은 PV=일정, 단열과정은 PV^γ=일정 형태로 이상기체에서 표현됩니다. P-V 그래프 위 면적은 한 일을 의미합니다. 카르노 사이클은 두 등온과 두 단열로 구성된 이상적 열기관이며, 효율 η = 1 - T_c/T_h는 두 열저장소만으로 가능한 최대 효율입니다. 이를 넘는 기관은 제2법칙 위반입니다. 엔트로피 변화는 가역과정에서 dS = dQ/T로 정의되며, 비가역 과정에서는 항상 더 큽니다. 클라우지우스 부등식이 이를 정량화합니다.</p>
   <h3>핵심 공식과 의미</h3><div class="formula">η_Carnot = 1 - T_c/T_h &nbsp;&nbsp; PV^γ = const &nbsp;&nbsp; dS = δQ_rev/T</div>
   <h3>대표 예제</h3>
   <div class="info-card"><h4>📐 예제 1</h4><p>고온 600 K, 저온 300 K로 작동하는 카르노 기관의 최대 효율은? η = 1 - 300/600 = 0.5, 즉 50%.</p></div>
   <div class="info-card"><h4>📐 예제 2</h4><p>이상기체 1 mol을 등온(300 K)으로 부피를 두 배로 팽창시킬 때 한 일: W = nRT ln(V₂/V₁) ≈ 1729 J.</p></div>
   <h3>응용 사례</h3><p>발전소의 증기터빈 사이클(랭킨 사이클)은 카르노에 가까이 가도록 설계되며, 효율 향상은 곧 연료 절감과 탄소 감소입니다. 냉장고와 에어컨은 역카르노 원리로 작동하며 성능계수 COP로 평가됩니다. 디젤·가솔린 엔진의 효율 차이는 압축비와 사이클 형태에서 옵니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 단열과정과 등온과정의 P-V 곡선을 헷갈리지 마세요. 단열은 더 가파릅니다(γ>1).</div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3><p>통계역학은 거시 열역학을 미시적으로 정당화합니다. 미시정준앙상블에서 엔트로피는 S = k_B ln Ω로, Ω는 접근 가능한 미시상태 수입니다. 정준앙상블에서는 분배함수 Z = Σ exp(-E_i/k_BT)가 모든 열역학 양을 결정합니다. 자유에너지 F = -k_BT ln Z, 평균에너지 ⟨E⟩ = -∂lnZ/∂β 등이 그 예입니다. 비평형 열역학은 온사거 상호관계, 요동-소산 정리로 이어지며 작은 계의 거동을 다룹니다. 양자통계는 입자의 종류에 따라 보즈-아인슈타인, 페르미-디랙 분포로 나뉘며 응집물질의 토대를 만듭니다.</p>
+
+<h3>전문가 레벨 이해</h3><p>통계역학은 거시 열역학을 미시적으로 정당화합니다. 미시정준앙상블에서 엔트로피는 S = k_B ln Ω로, Ω는 접근 가능한 미시상태 수입니다. 정준앙상블에서는 분배함수 Z = Σ exp(-E_i/k_BT)가 모든 열역학 양을 결정합니다. 자유에너지 F = -k_BT ln Z, 평균에너지 ⟨E⟩ = -∂lnZ/∂β 등이 그 예입니다. 비평형 열역학은 온사거 상호관계, 요동-소산 정리로 이어지며 작은 계의 거동을 다룹니다. 양자통계는 입자의 종류에 따라 보즈-아인슈타인, 페르미-디랙 분포로 나뉘며 응집물질의 토대를 만듭니다.</p>
   <h3>유도와 증명</h3><div class="formula">F = -k_B T ln Z, &nbsp; S = -k_B Σ p_i ln p_i (깁스)</div>
   <h3>최신 연구</h3><p>비평형 통계역학의 자르진스키 등식과 크룩스 요동정리는 작은 계에서 두 평형 간 자유에너지 차이를 비평형 일 분포만으로 추출할 수 있게 했습니다. 또한 양자 열기관, 정보 열역학(랜다우어 원리, 맥스웰 도깨비)이 활발한 분야입니다.</p>
   <h3>관련 분야</h3><ul><li>응집물질의 상전이와 임계현상</li><li>블랙홀 열역학과 호킹 복사</li><li>생체분자 모터의 비평형 열역학</li></ul>

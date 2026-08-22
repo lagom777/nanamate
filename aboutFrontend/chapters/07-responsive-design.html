@@ -642,12 +642,11 @@ img {
       <h2>📚 난이도별 학습</h2>
       <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
       <div class="difficulty-tabs">
-        <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-        <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-        <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
-      </div>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
       <div class="difficulty-content" data-level="easy">
-        <span class="difficulty-badge easy">하 · 입문</span>
+        <span class="difficulty-badge easy">🟢 쉬움</span>
         <h3>🎯 딱 한 줄!</h3>
         <p>반응형 디자인은 <strong>코드 한 벌</strong>로 폰·태블릿·컴퓨터 모두에서 예쁘게 보이게 만드는 기술이에요! 📱💻</p>
         <h3>😎 왜 배워요?</h3>
@@ -681,9 +680,10 @@ img {
           <li>터치 버튼은 최소 44×44px! 손가락으로 눌러야 하니까 👆</li>
         </ul>
       </div>
-      <div class="difficulty-content" data-level="medium">
-        <span class="difficulty-badge medium">중 · 응용</span>
-        <h3>이론 깊이</h3>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
         <p>모던 반응형은 미디어 쿼리만으로는 부족하고, 컴포넌트 자체가 자기 크기에 적응해야 합니다. 이를 위해 <code>@container</code> 컨테이너 쿼리가 도입되어 카드가 사이드바에 있을 때와 메인에 있을 때 다른 모양이 되도록 자율 결정을 할 수 있습니다. 글자 크기는 <code>font-size: clamp(1rem, 0.5rem + 1.5vw, 1.5rem)</code>처럼 최소·이상·최대 값을 한 줄로 지정하면 미디어 쿼리 없이 부드럽게 스케일됩니다. 이미지 최적화는 <code>srcset</code>·<code>sizes</code>로 해상도와 너비를 브라우저에 맡기고, <code>picture</code> + <code>source media</code>로 아트 디렉션(모바일에선 세로 사진, 데스크톱에선 가로 사진)을 분리합니다. 접근성 측면에선 <code>prefers-reduced-motion</code>으로 모션을 줄이고, <code>prefers-color-scheme</code>으로 다크 모드를 자동 적용해야 합니다.</p>
         <h3>핵심 코드 패턴</h3>
         <pre><code>/* 컨테이너 쿼리: 카드가 부모 너비에 따라 자율 변형 */
@@ -714,10 +714,8 @@ h1 { font-size: clamp(1.5rem, 1rem + 2vw, 3rem); }
         <div class="warning-box">
           <strong>⚠️ 자주 하는 실수:</strong> 디자이너가 준 PC 시안만 그대로 구현, 절대 px 폰트로 줌 기능 무력화, 가로 스크롤이 생기는 모바일 페이지(<code>overflow-x</code> 디버그 필수), 320px 화면을 안 보고 출시.
         </div>
-      </div>
-      <div class="difficulty-content" data-level="hard">
-        <span class="difficulty-badge hard">상 · 심화</span>
-        <h3>전문가 레벨</h3>
+
+<h3>전문가 레벨</h3>
         <p>반응형의 미래는 "디바이스 기반"에서 "사용자 의도·환경 기반"으로 이동 중입니다. 컨테이너 쿼리는 컴포넌트 컴포지션을 진정한 "재사용 가능"으로 만들었고, <code>@container style()</code>은 부모의 커스텀 프로퍼티 값에 따라 자식 스타일을 바꾸는 단계로 진화 중입니다. <code>aspect-ratio</code> 속성과 <code>view-timeline</code>은 스크롤 기반 애니메이션을 CSS만으로 구현 가능케 하며, <code>@scope</code>는 스타일 격리 문제를 해결합니다. 픽셀 비율(DPR)·OLED 번인·HDR 색역까지 고려해야 하는 시대에는 <code>color: oklch()</code>, <code>display-p3</code> 색공간을 사용해 정확한 색을 보장합니다. 또한 폴더블·롤러블 디바이스 지원을 위한 Viewport Segments API와 Foldable Display Posture API가 진행 중입니다.</p>
         <h3>고급 패턴</h3>
         <pre><code>/* 스크롤 기반 애니메이션 + 컨테이너 쿼리 + scope */
@@ -753,7 +751,7 @@ h1 { font-size: clamp(1.5rem, 1rem + 2vw, 3rem); }
         <div class="success-box">
           <strong>🎓 도전 과제:</strong> 320px·768px·1280px·2560px·울트라와이드(3440px)에서 모두 자연스러운 대시보드를 미디어 쿼리 없이 컨테이너 쿼리만으로 구현해보세요.
         </div>
-      </div>
+</div>
     
 <h2>🕹️ 직접 해보기 — 다른 하나 찾기</h2>
 <p>각 묶음에서 성격이 다른 하나를 골라 보세요.</p>

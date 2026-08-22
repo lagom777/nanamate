@@ -70,13 +70,12 @@
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>💻 한마디로 말하면</h3>
   <p>시스템 보안은 <strong>내 컴퓨터·휴대폰 자체를 지키는 일</strong>이에요! 프로그램마다 할 수 있는 일을 딱 필요한 만큼만 정해주고, 수상한 프로그램의 행동을 지켜봐요. 옛날 백신(안티바이러스)이 똑똑하게 자라난 게 <strong>EDR</strong>이랍니다.</p>
   <h3>🎮 우리 생활 속 이야기</h3>
@@ -106,9 +105,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>EDR의 텔레메트리는 OS 후크 지점에 따라 다릅니다. Windows는 ETW(Event Tracing for Windows), 커널 콜백, AMSI(Anti-Malware Scan Interface)로 PowerShell·.NET·VBScript 등 동적 코드 실행을 가시화합니다. macOS는 Endpoint Security Framework(2019부터 KEXT 대체)로 syscall·파일·프로세스 이벤트를 사용자 공간 에이전트에 전달합니다. 리눅스는 audit, eBPF(가장 유연), kprobes·uprobes·tracepoints를 활용합니다. 2024년 CrowdStrike 사태(BSoD 800만 대) 이후 Microsoft는 커널 모드 의존도 축소를 위한 새 API를 제안 중입니다.</p>
   <p>탐지 로직은 점점 <strong>MITRE ATT&amp;CK 매핑</strong>으로 표준화되었습니다. T1059(Command and Scripting), T1055(Process Injection), T1003(Credential Dumping), T1078(Valid Accounts) 같은 기법별로 탐지 룰이 작성되고, 조직의 ATT&amp;CK 커버리지를 heat map으로 시각화합니다. Atomic Red Team, Caldera는 이 ATT&amp;CK 기법을 안전하게 시뮬레이션해 탐지 공백을 검증합니다.</p>
   <h3>핵심 도구 — 리눅스 강화</h3>
@@ -142,11 +141,8 @@ sudo auditctl -w /etc/passwd -p wa -k passwd-changes</code></pre>
   <h3>응용 사례</h3>
   <p>① <strong>YARA 룰</strong>: 메모리·파일에서 멀웨어 패턴을 매칭하는 사실상의 표준. VT(VirusTotal) Retro Hunt와 결합해 과거 검체에 새 룰을 적용할 수 있습니다. ② <strong>Sigma 룰</strong>: SIEM 중립적 탐지 룰 언어. ATT&amp;CK 기반 커뮤니티 룰셋이 활발. ③ <strong>Sysmon + ELK</strong>: 가난한 SOC의 표준 스택. Sysinternals Sysmon이 풍부한 텔레메트리를, Elastic Stack이 검색·시각화를 담당. ④ <strong>Memory forensics</strong>: Volatility 3, Rekall로 메모리 덤프에서 프로세스·DLL·네트워크 연결·악성 코드를 추출.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① EDR 깔았다고 안심 — 룰 튜닝·alert 처리 없으면 노이즈만 쌓임. ② Antivirus를 끄고 "느려서"라고 변명 — 가장 빈번한 침해 경로. ③ root/Administrator로 일상 작업 — UAC·sudo는 이유가 있음. ④ "내부망이라 패치 안 해도 됨" — 침해는 외부에서만 오지 않음. ⑤ EDR 로그만 보고 SIEM에 안 보냄 — 다중 소스 상관관계가 핵심.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>현대 엔드포인트 보안의 핵심은 <strong>운영체제 그 자체</strong>에 내장된 보안 메커니즘입니다. macOS는 Apple Silicon의 Secure Enclave·Pointer Authentication·PAC를, Windows는 Hyper-V 기반 VBS·HVCI·Credential Guard·Kernel DMA Protection을, 리눅스는 KASLR·SMEP·SMAP·KPTI·BPF LSM을 활용합니다. 이런 하드웨어·OS 레벨 방어는 사용자 모드 EDR보다 훨씬 회피하기 어렵습니다.</p>
   <p>특히 <strong>ROP/JOP/COP</strong> 같은 코드 재사용 공격에 대응하기 위한 CFI(Control Flow Integrity)와 ARMv8.3+ Pointer Authentication, Intel CET(Shadow Stack + IBT)는 메모리 손상 공격의 게임 체인저입니다. 2024년 Linux 6.6부터 x86 Shadow Stack이 일반 사용자도 활용 가능해졌고, Chrome·Firefox는 이미 기본 활성화입니다.</p>
   <h3>수학적·정량적 기초</h3>

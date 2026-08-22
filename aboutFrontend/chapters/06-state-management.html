@@ -628,12 +628,11 @@
       <h2>📚 난이도별 학습</h2>
       <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
       <div class="difficulty-tabs">
-        <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-        <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-        <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
-      </div>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
       <div class="difficulty-content" data-level="easy">
-        <span class="difficulty-badge easy">하 · 입문</span>
+        <span class="difficulty-badge easy">🟢 쉬움</span>
         <h3>🎯 딱 한 줄!</h3>
         <p>상태관리는 <strong>여러 컴포넌트가 함께 보는 데이터를 어디 두고 어떻게 바꿀지</strong> 정하는 약속이에요. 앱이 커질수록 중요해져요! 📚</p>
         <h3>😎 왜 배워요?</h3>
@@ -669,9 +668,10 @@
           <li>Zustand·Jotai는 적은 코드로도 강력해요 💪</li>
         </ul>
       </div>
-      <div class="difficulty-content" data-level="medium">
-        <span class="difficulty-badge medium">중 · 응용</span>
-        <h3>이론 깊이</h3>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
         <p>전역 상태는 크게 세 종류로 분류됩니다. (1) UI 상태(모달 열림 여부, 다크 모드)는 작고 단순하니 Context나 Zustand로 충분합니다. (2) 클라이언트 도메인 상태(장바구니, 폼 위저드 진행 단계)는 변화가 잦고 비즈니스 로직을 포함해 Redux/Zustand가 적합합니다. (3) 서버 상태(상품 목록, 사용자 프로필)는 캐싱·재시도·낙관적 갱신이 필요해 React Query·SWR이 압도적으로 유리합니다. Context는 모든 소비자가 리렌더되기 때문에 자주 바뀌는 값(예: 입력값)을 넣으면 안 됩니다. Zustand는 selector로 구독 부분만 정확히 가져오므로 Context의 성능 문제를 해결합니다. Redux Toolkit은 createSlice로 보일러플레이트를 90% 줄였고, RTK Query를 함께 쓰면 서버 상태까지 일원화됩니다.</p>
         <h3>핵심 코드 패턴</h3>
         <pre><code>// Zustand 스토어 + 셀렉터
@@ -702,10 +702,8 @@ function CartBadge() {
         <div class="warning-box">
           <strong>⚠️ 자주 하는 실수:</strong> 모든 상태를 Redux에 몰아넣어 보일러플레이트 폭발, Context에 자주 바뀌는 객체를 그대로 넣어 전체 트리 리렌더, 서버 데이터를 useState로 직접 캐싱하다 stale 데이터 표시.
         </div>
-      </div>
-      <div class="difficulty-content" data-level="hard">
-        <span class="difficulty-badge hard">상 · 심화</span>
-        <h3>전문가 레벨</h3>
+
+<h3>전문가 레벨</h3>
         <p>상태관리 라이브러리 내부 작동을 이해하면 디버깅이 빨라집니다. Redux는 단방향 흐름(Action → Reducer → Store → View) 위에 미들웨어 체인을 둬 사이드 이펙트(thunk·saga)를 분리합니다. Zustand는 단순한 Pub/Sub과 selector + shallow 비교를, Jotai는 atom-deps DAG를, Recoil은 atom과 selector 그래프를 활용합니다. Context API의 핵심 한계는 "구독 단위가 Provider 전체"라는 점이고, <code>useSyncExternalStore</code>(React 18)가 외부 스토어와 React의 동시성 렌더링을 안전하게 결합해주는 공식 다리입니다. 서버 상태 라이브러리는 Stale-While-Revalidate, Request Deduplication, Window Focus Refetch, Optimistic Update 등의 전략을 내장합니다. 또한 CRDT(Yjs, Automerge)는 협업 앱에서 충돌 없는 분산 상태 동기화를 가능케 하는 차세대 패러다임입니다.</p>
         <h3>고급 패턴</h3>
         <pre><code>// useSyncExternalStore로 커스텀 외부 스토어를 React에 안전 연결
@@ -748,7 +746,7 @@ function useStore(selector) {
         <div class="success-box">
           <strong>🎓 도전 과제:</strong> Yjs로 동시 편집 가능한 협업 메모 앱을 만들고, 오프라인 변경 사항이 다시 연결됐을 때 자동 병합되는지 검증해보세요.
         </div>
-      </div>
+</div>
     
 <h2>🕹️ 직접 해보기 — 상태 관리 도구 분류하기</h2>
 <p>상태 관리 라이브러리를 전역 상태용과 서버 상태용으로 분류해 보세요.</p>

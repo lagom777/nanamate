@@ -70,13 +70,12 @@
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🚑 한마디로 말하면</h3>
   <p>사고 대응은 <strong>해킹이 터졌을 때 119처럼 출동하는 순서</strong>예요! 포렌식은 <strong>범죄 현장 감식처럼 컴퓨터 속 흔적으로 무슨 일이 있었는지 알아내는 일</strong>이고요. 둘이 짝이 되어 사고를 빨리 끊고, 같은 일이 다시 안 일어나게 만들어요.</p>
   <h3>🎮 우리 생활 속 이야기</h3>
@@ -106,9 +105,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>현대 IR의 가장 큰 변화는 <strong>SIEM → SOAR → XDR</strong> 자동화 체인입니다. SIEM(Splunk, Elastic, Microsoft Sentinel)이 다중 소스 로그를 상관관계 분석하고, SOAR(Tines, XSOAR, Shuffle)가 정해진 플레이북을 자동 실행합니다. "피싱 의심 메일 신고 → URL/첨부 sandboxing → 동일 메일 받은 전 사용자 식별 → 격리 → 사용자 알림 → 티켓 생성"을 사람 개입 없이 5분 안에 마칠 수 있습니다.</p>
   <p>로그 정합성과 시간 동기화는 포렌식의 토대입니다. NTP 동기화가 깨진 시스템들의 로그는 타임라인 재구성에서 거의 무용지물이 됩니다. UTC 기준 저장, 호스트별 타임스탬프 보존, monotonic clock 활용, 로그 변조 방지(append-only, WORM, syslog 원격 전송)가 필수입니다. 2024년부터 macOS·Windows는 unified logging으로 통합되었고, 리눅스는 journald + remote shipping이 표준입니다.</p>
   <h3>핵심 도구 — Volatility로 메모리 분석</h3>
@@ -135,11 +134,8 @@ psort.py -w timeline.csv timeline.plaso
   <h3>응용 사례</h3>
   <p>① <strong>EDR 기반 IR</strong>: CrowdStrike Real Time Response, Defender Live Response로 원격 cmd·파일수집·격리. ② <strong>Cloud Forensics</strong>: AWS GuardDuty + Detective, Azure Sentinel + Defender for Cloud, GCP SCC. EC2 snapshot으로 즉시 evidence preservation. ③ <strong>Memory-only IR</strong>: Velociraptor, GRR로 대규모 endpoint에서 동시 hunting. ④ <strong>SOAR 플레이북</strong>: Shuffle/Tines 무료 옵션, 자동화로 SOC 분석가 작업 50%+ 절감.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① 사고 의심 시 즉시 종료 → 메모리 증거 손실. ② 자격증명 변경 없이 복구 → 공격자가 즉시 재침투. ③ 백업이 같은 도메인 안에 있어 공격자가 미리 삭제. ④ "감사 로그가 너무 많아 비활성화" → 사고 시 알 수가 없음. ⑤ 외부 노출(언론 발표) 전에 법무·홍보 검토 누락 → 2차 사고. ⑥ post-incident review를 안 함 → 같은 사고 반복.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>현대 DFIR(Digital Forensics &amp; Incident Response)의 패러다임은 <strong>"single endpoint deep dive"</strong>에서 <strong>"fleet-wide hunting"</strong>으로 이동했습니다. Velociraptor(Rapid7 후원, 오픈소스)는 VQL(Velociraptor Query Language)로 수만 대 endpoint에 동시 hunt를 발사하고 결과를 중앙 집계합니다. "현재 모든 호스트에서 Cobalt Strike beacon의 named pipe 패턴이 있는가?"같은 질문을 분 단위로 답할 수 있습니다.</p>
   <p>위협 사냥(Threat Hunting)은 알람을 기다리지 않고 가설을 세워 능동적으로 IoC와 TTP를 추적하는 활동입니다. 표준 프레임워크는 ① <strong>Sqrrl 사이클</strong>(가설 → 도구·기법 → 발견 → 분석 → 정보화), ② <strong>MITRE ATT&amp;CK 기반 가설</strong>(예: "T1003.001 LSASS dump가 도메인 내에서 발생하고 있는가?"), ③ <strong>Pyramid of Pain</strong>(David Bianco)에 따라 hash/IP보다는 TTP 단위 탐지를 지향합니다.</p>
   <h3>수학적·정량적 기초</h3>

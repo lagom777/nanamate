@@ -70,13 +70,12 @@
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🌟 한 줄 요약</h3>
   <p>미분은 "지금 이 순간 얼마나 빨리 변하고 있나?"를 재는 도구예요. 그래프에 돋보기를 대고 한 점을 쭉 확대하면 곡선이 직선처럼 보이는데, 그 직선(접선)의 기울기가 바로 미분값이에요.</p>
   <h3>🤔 이걸 왜 배워요?</h3>
@@ -101,9 +100,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>정의로 직접 한 번은 계산해야 합니다. f(x) = x²: f′(x) = lim ( (x+h)² − x² )/h = lim (2xh + h²)/h = lim (2x + h) = 2x. 0/0 꼴이 인수분해·약분로 해소되는 것 — 2장의 대수 기술이 극한 계산의 도구가 되는 순간입니다. 미분가능하면 연속이지만 역은 거짓: |x|는 x = 0에서 연속이나 좌우 기울기가 −1, +1로 달라 미분 불가능(뾰족점). "매끄러움"은 연속보다 강한 조건입니다.</p>
   <p>이론의 중심 기둥은 <strong>평균값 정리(MVT)</strong>입니다: [a,b]에서 연속이고 (a,b)에서 미분가능하면 f′(c) = (f(b)−f(a))/(b−a)인 c가 존재 — "평균 속도와 같은 순간 속도가 어딘가에 반드시 있다". 구간 단속 카메라의 원리이고, "f′ = 0이면 f는 상수", "f′ &gt; 0이면 증가" 같은 모든 정리가 MVT에서 나옵니다.</p>
   <h3>대표 예제</h3>
@@ -112,11 +111,8 @@
   <h3>응용 사례</h3>
   <p>① <strong>물리</strong>: 위치를 미분하면 속도, 속도를 미분하면 가속도 — F = ma는 2계 미분방정식. ② <strong>경제</strong>: 한계비용·한계수입 = 비용·수입 함수의 도함수, "한계 = marginal = 미분". ③ <strong>딥러닝</strong>: 손실함수의 gradient를 연쇄법칙으로 계산(역전파)해 파라미터를 갱신 — GPT의 학습도 본질은 f′ 계산. ④ <strong>그래픽스</strong>: 곡선의 법선·곡률 계산, 베지어 곡선의 매끄러운 연결 조건이 도함수 일치입니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① (fg)′ = f′g′ — 곱의 법칙은 f′g + fg′. ② 연쇄법칙에서 속미분 누락: (sin 2x)′ = 2cos 2x. ③ f′(a) = 0이면 무조건 극값 — 거짓(f(x) = x³의 x = 0은 극값 아님, 부호 변화 확인 필수). ④ 분수함수를 몫의 법칙 없이 항별 미분. ⑤ 극값(local)과 최값(global) 혼동 — 끝점 비교를 잊지 말 것.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>미분의 현대적 정의는 "선형 근사"입니다: f(a+h) = f(a) + f′(a)h + o(h) — 미분가능이란 <strong>국소적으로 일차함수(선형사상)로 근사된다</strong>는 뜻이고, f′(a)는 그 선형사상입니다. 이 관점이어야 다변수로 일반화됩니다: 도함수는 수가 아니라 야코비 행렬이라는 선형사상이 되고, 연쇄법칙은 "선형사상의 합성 = 행렬 곱"이라는 한 줄이 됩니다.</p>
   <p>더 밀면 테일러 전개: f(a+h) = Σ f⁽ⁿ⁾(a)hⁿ/n! — 매끄러운 함수를 다항식의 극한으로 복원합니다. sin, cos, eˣ의 급수(5장)가 이렇게 나오며, "함수의 모든 정보가 한 점의 미분계수들에 담긴다"는 해석함수의 강성(rigidity)으로 이어집니다. 단 주의: 모든 도함수가 존재해도 급수가 함수와 다를 수 있습니다(e^{−1/x²}의 유명한 반례 — 매끄러움 ≠ 해석성).</p>
   <h3>수학적·정량적 기초</h3>

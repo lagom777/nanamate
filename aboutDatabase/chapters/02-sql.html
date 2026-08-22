@@ -591,13 +591,12 @@ function evaluateCondition(row, condition) {
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎮 한 줄로 말하면?</h3>
   <p>SQL은 데이터베이스한테 <strong>"이거 보여줘!", "이렇게 바꿔줘!"라고 부탁하는 말</strong>이에요. 영어랑 비슷하게 생겼답니다! 🗣️</p>
 
@@ -640,9 +639,9 @@ function evaluateCondition(row, condition) {
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
   <p>SQL은 선언적 언어입니다. "어떻게" 가져올지가 아니라 "무엇을" 가져올지를 기술하면, 옵티마이저가 가장 효율적인 실행계획을 만들어 냅니다. 따라서 같은 결과를 만드는 쿼리도 작성 방식에 따라 성능이 천차만별입니다. SQL 표준은 ANSI SQL로 정의되며 ISO에서도 관리하지만, 각 RDBMS는 자체 방언을 갖습니다. SQL의 큰 줄기는 DDL(Data Definition Language: CREATE, ALTER, DROP), DML(Data Manipulation Language: SELECT, INSERT, UPDATE, DELETE), DCL(Data Control Language: GRANT, REVOKE), TCL(Transaction Control: COMMIT, ROLLBACK)로 나뉩니다. 조인은 INNER, LEFT, RIGHT, FULL 네 가지가 표준이며, 자기 자신을 조인하는 셀프 조인은 조직도나 카테고리 트리 같은 계층 구조 표현에 쓰입니다. 그룹화는 GROUP BY와 HAVING이 핵심이고, 윈도우 함수(OVER 절)는 그룹화하지 않고도 누적·순위·이동평균을 계산하게 해 줍니다.</p>
 
   <h3>실전 SQL/쿼리</h3>
@@ -686,11 +685,8 @@ GROUP  BY m.member_id, m.name;</code></pre>
   <div class="warning-box">
     <strong>⚠️ 자주 하는 실수:</strong> WHERE 절에 함수를 씌우면 인덱스를 못 타는 경우가 많습니다. WHERE DATE(created_at) = '2025-01-01' 대신 범위 비교(BETWEEN)를 쓰세요. 또한 SELECT *는 운영 환경에서 피해야 할 1순위 습관입니다.
   </div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3>
+<h3>전문가 레벨</h3>
   <p>SQL 옵티마이저는 파서, 리라이터, 플래너, 익스큐터 단계로 쿼리를 처리합니다. 플래너는 통계(pg_statistic, dba_tab_columns)를 바탕으로 비용 모델을 계산해 Nested Loop, Hash Join, Merge Join 중 최적을 선택합니다. 옵티마이저 힌트(Oracle의 /*+ INDEX(...) */, MySQL의 USE INDEX)는 마지막 보루이며, 본질적으로는 통계 갱신과 인덱스 설계가 우선입니다. 실행계획에서 자주 마주치는 함정으로는 함수 인덱스 미사용, 암묵적 형변환으로 인한 풀스캔, 카디널리티 추정 오류가 있습니다. CTE(Common Table Expression)는 PostgreSQL 12 이전에는 옵티마이저 펜스로 작용해 별도 임시결과를 만들었지만, 12 이후로는 인라이닝이 기본입니다. 윈도우 함수의 프레임 절(ROWS, RANGE, GROUPS)은 정확한 의미가 다르며, 시계열 분석에서는 GROUPS 모드가 동률을 묶어 처리합니다. 재귀 CTE는 그래프 탐색과 BOM(자재 명세서) 전개에 강력하며, UNION ALL 형태로 종료 조건을 반드시 명시해야 무한 루프를 피할 수 있습니다.</p>
 
   <h3>고급 패턴</h3>

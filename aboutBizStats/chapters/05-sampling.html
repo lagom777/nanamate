@@ -27,12 +27,11 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎯 한 줄로 이해하기</h3><p>전체를 다 조사하기 힘드니까, 국물을 휘휘 저어 <strong>한 숟가락</strong>만 떠 보고(표본) 전체 간을 알아내요. 그리고 여러 번 떠 볼수록 그 맛(평균)이 비슷해진다는 사실이 통계의 마법이에요.</p>
   <h3>😮 왜 재밌을까?</h3><p>간 볼 때 국물을 <strong>휘휘 저어서</strong> 한 숟가락 먹어 볼 거예요? 그냥 위에만 떠 먹을 거예요? 🥄 저어야 골고루 섞여서 한 숟가락이 냄비 전체를 대표하죠 — 이게 <strong>무작위 추출</strong>이에요. 그냥 위에만 떠 먹으면 "이 국은 기름지다" 같은 엉뚱한 결론이 나와요. 그리고 한 숟가락을 여러 번 떠 볼수록 그 맛의 평균이 점점 비슷해져요. 이 "평균이 비슷해지는 마법"이 바로 <strong>중심극한정리</strong>예요!</p>
   <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>모집단(Population)</strong>: 알고 싶은 대상 전체(냄비 속 국 전부)</li><li><strong>표본(Sample)</strong>: 실제로 맛보는 일부(한 숟가락)</li><li><strong>표본평균(Sample mean)</strong>: 표본으로 계산한 평균(한 숟가락의 맛)</li><li><strong>표본분포(Sampling distribution)</strong>: 표본평균을 여러 번 모아 그린 분포</li><li><strong>중심극한정리(CLT)</strong>: 표본이 크면 표본평균은 종 모양(정규분포)을 따라요</li><li><strong>표준오차(SE)</strong>: 표본평균들이 얼마나 흩어져 있는지 나타내는 값</li></ul></div>
@@ -40,17 +39,16 @@
   <div class="study-tip"><strong>💡 학습 TIP:</strong> 여론조사 기사에서 "표본오차 ±3.1%p(95% 신뢰수준, 표본 1,000명)"라는 문구를 본 적 있나요? 4,000명을 조사하면 오차는 절반인 ±1.55%p로 줄어요. 오차가 완전히 0이 되는 건 전수조사뿐이에요!</div>
   <h3>📌 요약</h3><ul><li>국물을 휘휘 젓는 것 = 무작위 추출이에요. 🥄</li><li>한 숟가락 = 표본, 여러 번 떠 본 맛의 평균 = 표본평균들.</li><li>표본평균들을 모으면 종 모양(정규분포) — 중심극한정리!</li><li>조사 인원이 4배면 평균의 흔들림(표준오차)은 절반.</li><li>골고루 뽑은 표본이어야 추측이 맞아요.</li></ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>표본추출 방법 4가지</h3><p>좋은 추론은 좋은 추출에서 시작됩니다. <strong>확률표본추출(probability sampling)</strong>은 모든 개체에 알려진 추출 확률을 부여해 편향을 통계적으로 통제하는 방법으로, 대표적으로 다음 네 가지가 쓰입니다.</p>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>표본추출 방법 4가지</h3><p>좋은 추론은 좋은 추출에서 시작됩니다. <strong>확률표본추출(probability sampling)</strong>은 모든 개체에 알려진 추출 확률을 부여해 편향을 통계적으로 통제하는 방법으로, 대표적으로 다음 네 가지가 쓰입니다.</p>
   <div class="info-card"><h4>📋 대표적인 확률추출 방법</h4><ul><li><strong>단순무작위추출(simple random sampling)</strong>: 모든 개체가 동일한 확률로 뽑힘. 난수표·난수 생성기 사용. 가장 기본적인 방법.</li><li><strong>계통추출(systematic sampling)</strong>: 명부에서 시작점만 무작위로 정하고 일정 간격(k=N/n)마다 추출. 간편하지만 명부에 주기성이 있으면 위험.</li><li><strong>층화추출(stratified sampling)</strong>: 모집단을 남김없이 동질적인 층(strata: 학년·지역·직급)으로 나눈 뒤 각 층에서 무작위 추출. 층 간 차이를 반영해 정밀도가 높아짐.</li><li><strong>군집추출(cluster sampling)</strong>: 모집단을 군집(cluster: 학교·지역·지점)으로 나누고 군집을 통째로 무작위 선택해 조사. 비용은 절감되지만 정밀도는 층화추출보다 낮은 편.</li></ul></div>
   <h3>표본오차와 비표본오차</h3><p><strong>표본오차(sampling error)</strong>는 전체가 아닌 일부만 조사해서 우연히 발생하는 오차로, 표본 크기를 키우면 √n에 반비례하여 줄어듭니다. 반면 <strong>비표본오차(nonsampling error)</strong>는 무응답, 거짓 응답, 모호한 문항, 조사원 실수, 부정확한 표본틀(sampling frame)에서 오는 오차로, 표본을 아무리 키워도 줄지 않습니다. 잘못된 표본틀로 200만 명을 조사한 1936년 Literary Digest 여론조사가 대선 결과를 틀린 것이 대표 사례입니다.</p>
   <h3>표본평균의 표본분포와 중심극한정리</h3><p>표본평균 X̄는 뽑을 때마다 값이 달라지는 확률변수이며, 그 분포를 <strong>표본평균의 표본분포</strong>라 합니다. E(X̄)=μ이고 SD(X̄)=σ/√n인데, 이 σ/√n을 <strong>표준오차(standard error, SE)</strong>라 부릅니다. <strong>중심극한정리(central limit theorem, CLT)</strong>는 모집단이 어떤 분포를 따르든 n이 충분히 크면(실무 기준 n≥30) X̄의 분포가 근사적으로 N(μ, σ²/n)이 된다고 말해 줍니다. 예를 들어 σ=20이면 n=100에서 SE=2, n=400에서 SE=1 — 표본이 4배가 되면 오차는 절반입니다. 모표준편차 σ를 모를 때는 표본표준편차 s로 대체해 SE의 추정치 s/√n을 사용합니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> CLT는 "n이 크면 모집단이 정규분포로 바뀐다"는 뜻이 아닙니다. 모집단 분포는 그대로이고, <strong>표본평균 X̄의 분포</strong>가 정규분포에 가까워지는 것입니다. 또한 n≥30은 경험칙일 뿐, 극심하게 왜곡된 모집단이라면 더 큰 n이 필요합니다.</div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>중심극한정리의 의의 — 추론통계의 기초</h3><p>CLT의 진짜 힘은 <strong>모집단 분포를 몰라도 표본평균의 확률적 행동을 알 수 있다</strong>는 데 있습니다. 덕분에 "X̄가 μ에서 얼마나 멀리 떨어질 수 있는가"를 확률로 계산할 수 있고, 이것이 6장의 신뢰구간(μ가 어디쯤 있을까)과 7장의 가설검정(이 차이가 우연일까)의 수학적 토대입니다. 근대 추론통계 전체가 사실상 CLT 위에 서 있습니다.</p>
+
+<h3>중심극한정리의 의의 — 추론통계의 기초</h3><p>CLT의 진짜 힘은 <strong>모집단 분포를 몰라도 표본평균의 확률적 행동을 알 수 있다</strong>는 데 있습니다. 덕분에 "X̄가 μ에서 얼마나 멀리 떨어질 수 있는가"를 확률로 계산할 수 있고, 이것이 6장의 신뢰구간(μ가 어디쯤 있을까)과 7장의 가설검정(이 차이가 우연일까)의 수학적 토대입니다. 근대 추론통계 전체가 사실상 CLT 위에 서 있습니다.</p>
   <div class="formula">X̄ ≈ N(μ, σ²/n) (n≥30) · 표준오차 SE = σ/√n · σ 모를 때 SÊ = s/√n</div>
   <h3>유한모집단 수정(finite population correction)</h3><p>SE=σ/√n은 무한모집단 또는 복원추출을 가정합니다. 유한모집단(크기 N)에서 비복원으로 뽑을 때 표본 비율 n/N이 0.05(5%)를 넘으면, 유한모집단 수정계수를 곱해 SE를 하향 조정해야 합니다. 모집단의 상당 부분을 이미 뽑았다면 불확실성이 그만큼 줄어드는 것이 자연스럽습니다.</p>
   <div class="formula">SE = (σ/√n) × √((N−n)/(N−1)) — 단, n/N &gt; 0.05일 때 적용</div>

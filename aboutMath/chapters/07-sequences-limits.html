@@ -70,13 +70,12 @@
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🌟 한 줄 요약</h3>
   <p>수열은 "번호가 붙은 수의 줄", 극한은 "그 줄이 결국 도착하는 곳"이에요. 1/2, 1/3, 1/4, …는 0에 딱 닿지는 않아도 "0으로 간다"는 건 누구나 알죠? 그 느낌을 정확한 약속으로 만든 게 극한이에요.</p>
   <h3>🤔 이걸 왜 배워요?</h3>
@@ -101,9 +100,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>ε-N 정의로 실제 증명을 한번 써 보면 안개가 걷힙니다. aₙ = (2n+1)/(n+3) → 2의 증명: |aₙ−2| = |(2n+1−2n−6)/(n+3)| = 5/(n+3). ε이 주어지면 5/(n+3) &lt; ε ⟺ n &gt; 5/ε − 3이므로 N = ⌈5/ε⌉로 잡으면 충분합니다. 패턴은 항상 같습니다: |aₙ−L|을 n의 식으로 정리 → ε보다 작아지는 N 찾기.</p>
   <p>점화식 수열의 극한 구하기 2단계: ① 극한 L이 존재한다고 가정하면 L = f(L)에서 후보를 구함(예: aₙ₊₁ = ½aₙ + 3 → L = ½L+3 → L = 6), ② 존재 자체는 단조수렴정리 등으로 별도 증명. ②를 건너뛰면 함정에 빠집니다 — aₙ₊₁ = 2aₙ에서 L = 2L → L = 0이라고 답하면 틀리는 이유(발산하므로 가정 자체가 거짓).</p>
   <h3>대표 예제</h3>
@@ -112,11 +111,8 @@
   <h3>응용 사례</h3>
   <p>① <strong>수치해석</strong>: 모든 반복 알고리즘(경사하강법 포함)의 분석은 "이 수열이 수렴하는가, 얼마나 빨리?"라는 질문입니다. ② <strong>프랙탈</strong>: 망델브로 집합은 zₙ₊₁ = zₙ²+c가 발산하지 않는 c의 집합 — 수렴/발산의 경계가 만드는 무한 복잡성. ③ <strong>경제학</strong>: 승수효과(정부지출 1단위 → 1+c+c²+… = 1/(1−c) 단위의 총수요)는 등비급수입니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① "항이 0으로 가면 급수 수렴" — 거짓(조화급수). ② 무한합에 유한합의 직관 적용: 수렴하지 않는 급수의 항 재배열·괄호 치기는 값을 바꿉니다. ③ 등비급수 공식을 |r| ≥ 1에 적용. ④ 점화식에서 극한 존재 증명 생략. ⑤ ∞−∞, ∞/∞를 0이나 1로 단정 — 부정형은 항별 분석이 필요합니다.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>수렴의 내재적 판정이 <strong>코시 수열</strong>입니다: 극한값을 모르더라도 "항들끼리의 거리가 임의로 작아지면"(∀ε ∃N: m,n≥N ⇒ |aₘ−aₙ|&lt;ε) 수렴을 보장 — 단, 공간이 <strong>완비</strong>일 때만. ℝ에서는 코시 ⟺ 수렴이지만 ℚ에서는 실패합니다(√2로 가는 유리수열은 코시지만 ℚ 안에 극한이 없음). 1장의 완비성이 "코시 수열의 수렴"으로 재정식화되는 것이며, 이 성질로 ℝ를 구성하는 것이 칸토어의 방법입니다.</p>
   <p>부분수열의 관점도 필수입니다. <strong>볼차노–바이어슈트라스 정리</strong>: 유계 수열은 수렴하는 부분수열을 가진다 — 최대·최소 정리(9장)와 컴팩트성 개념의 씨앗입니다. 진동하는 1, −1, 1, −1, …도 부분수열은 수렴하며(1로, 또는 −1로), 부분수열 극한들의 집합(집적점)이 수열의 "장기 행동"을 분류합니다.</p>
   <h3>수학적·정량적 기초</h3>

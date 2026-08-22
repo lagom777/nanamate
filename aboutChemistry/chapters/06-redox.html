@@ -56,13 +56,12 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🔋 산화·환원이 뭐예요?</h3>
   <p>전자를 주고받는 게임이에요! ⚡ 전자를 <strong>잃으면 산화</strong>, 전자를 <strong>얻으면 환원</strong>이에요. 재밌는 건 이 둘은 <strong>항상 같이</strong> 일어나요. 누군가 전자를 버리면 반드시 그걸 줍는 친구가 있어야 하니까요! 🤲</p>
   <h3>🔑 외우는 마법 주문: "OIL RIG"</h3>
@@ -93,9 +92,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>산화·환원 반응은 두 개의 반쪽반응(half-reaction)으로 나눠 분석합니다. 산화 반쪽반응은 전자를 잃는 쪽, 환원 반쪽반응은 전자를 얻는 쪽이며, 두 반쪽반응에서 주고받는 전자 수가 같아야 전체 반응식이 균형을 이룹니다. 갈바니(볼타) 전지에서는 산화가 일어나는 전극이 음극(anode), 환원이 일어나는 전극이 양극(cathode)입니다. 전자는 도선을 따라 음극에서 양극으로 흐르고, 염다리(salt bridge)는 이온을 이동시켜 두 용액의 전기적 중성을 유지합니다. 각 반쪽반응이 얼마나 환원되기 쉬운지는 표준 환원 전위(E°)로 나타내며, 표준 수소 전극(SHE)을 0 V로 잡고 측정합니다. 전지의 표준 기전력은 E°_cell = E°(양극, 환원) − E°(음극, 환원)로 계산하고, 이 값이 양수면 그 반응은 자발적입니다. 자유에너지와의 관계는 ΔG° = −nFE°_cell이며, E°가 양수일 때 ΔG°가 음수가 되어 자발성을 확인할 수 있습니다.</p>
   <h3>핵심 공식과 반응식</h3>
   <div class="formula">
@@ -110,11 +109,8 @@
   <h3>응용 사례</h3>
   <p>리튬이온 배터리는 충전 시 외부 전기로 비자발적 산화·환원을 강제(전기분해와 같은 원리)하고, 방전 시 자발적 반응으로 전기를 내놓습니다. 전기 도금은 전기분해를 이용해 금속 표면에 다른 금속 층을 입히고, 알루미늄 제련(홀-에루법)도 산화알루미늄을 녹여 전기분해합니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 전지에서 양극(cathode)과 음극(anode)의 +/− 부호는 전지 종류에 따라 달라집니다. 갈바니 전지에서는 환원이 일어나는 cathode가 (+)극이지만, 전기분해(전해조)에서는 cathode가 (−)극입니다. "산화=anode, 환원=cathode"라는 정의는 항상 같지만 극성 부호는 바뀌니 주의하세요.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>전기화학을 정량적으로 다루면 평형과 속도론이 모두 등장합니다. 평형 측면에서는 네른스트 식이 핵심이며, E°_cell과 평형상수의 관계는 ΔG° = −nFE°_cell = −RT ln K로 연결되어 표준 전위 측정만으로 반응의 평형상수를 구할 수 있습니다. 동역학 측면에서는 전극 표면에서의 전자 전달 속도가 버틀러-볼머(Butler-Volmer) 식으로 기술되며, 과전압(overpotential)이 전류 밀도를 지수적으로 좌우합니다. 전극 반응이 빠를 때는 물질 전달이 율속이 되어 확산을 다루는 코트렐(Cottrell) 식이나 순환 전압전류법(cyclic voltammetry)의 랜들스-셰브치크 해석이 쓰입니다. 마커스(Marcus) 이론은 균일 용액 내 외권(outer-sphere) 전자 전달 속도를 재배열 에너지 λ와 자유에너지 변화 ΔG°로 설명하며, 정상 영역과 역전 영역(inverted region)의 존재를 예측해 1992년 노벨화학상으로 이어졌습니다. 부식, 배터리, 연료전지, 전기촉매 설계는 모두 이 열역학·속도론의 균형 위에서 작동합니다.</p>
   <h3>유도와 증명</h3>
   <div class="formula">

@@ -317,13 +317,12 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎮 한 줄로 말하면?</h3>
   <p>인덱스는 <strong>책 뒤에 있는 '찾아보기(색인)'처럼, 원하는 데이터를 순식간에 찾게 해주는 정렬된 목록</strong>이에요! 🔍</p>
 
@@ -366,9 +365,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
   <p>인덱스는 검색 시간복잡도를 O(N)에서 O(log N)으로 낮춥니다. B-트리(B+ 트리)는 디스크 I/O 친화적인 다진 균형 트리이며, 노드 한 개가 페이지(보통 16KB) 크기와 일치합니다. PostgreSQL은 B-트리, GIN, GiST, BRIN, Hash 등 다양한 인덱스를 제공합니다. 인덱스를 타려면 SARGable한 조건이어야 하며, WHERE 절에 함수가 씌워지거나 형변환이 발생하면 인덱스가 무력화됩니다. 복합 인덱스의 컬럼 순서는 매우 중요해서, 가장 선택도가 높은(distinct 값이 많은) 컬럼이 앞에 와야 효과적입니다. 다만 등호 조건과 범위 조건이 섞이면 등호→범위 순서가 일반적인 권장입니다. 커버링 인덱스(Covering Index)는 SELECT 절의 모든 컬럼을 포함해 테이블 접근을 생략하게 해 주는 최적화입니다. 부분 인덱스(Partial Index)는 WHERE 조건을 만족하는 행만 인덱싱해 크기와 비용을 줄입니다.</p>
 
   <h3>실전 SQL/쿼리</h3>
@@ -411,11 +410,8 @@ LIMIT  10;</code></pre>
   <div class="warning-box">
     <strong>⚠️ 자주 하는 실수:</strong> 모든 컬럼에 인덱스를 만들면 INSERT/UPDATE가 급격히 느려집니다. 또 LIKE '%abc%'처럼 앞쪽 와일드카드는 인덱스를 못 탑니다. 이런 경우엔 trigram 인덱스나 검색엔진을 검토해야 합니다.
   </div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3>
+<h3>전문가 레벨</h3>
   <p>인덱스 내부는 B+ 트리, LSM 트리, R-트리, 비트맵, 해시 등 다양한 자료구조로 구현됩니다. InnoDB는 클러스터드 인덱스(테이블 자체가 PK 순서대로 정렬)와 세컨더리 인덱스(PK를 가리키는 포인터)로 나뉘며, 따라서 PK 길이가 길수록 모든 인덱스가 함께 비대해집니다. PostgreSQL은 힙 + 보조 인덱스 구조로 PK도 별도 인덱스이며, HOT(Heap-Only Tuples) 업데이트로 인덱스 갱신을 줄입니다. LSM 트리(RocksDB, Cassandra)는 쓰기를 메모리 메모테이블에 모아 SSTable로 컴팩션하는 방식으로 쓰기 처리량을 극대화합니다. 옵티마이저는 비용 모델로 인덱스 스캔, 비트맵 인덱스 스캔, 인덱스 온리 스캔, 시퀀셜 스캔을 비교합니다. 카디널리티 추정 오류로 옵티마이저가 풀스캔을 잘못 선택하면 통계를 ANALYZE로 갱신하거나 확장 통계(extended statistics)로 컬럼 간 상관관계를 학습시켜야 합니다. 함수 인덱스, 표현식 인덱스, 다중 컬럼 GIN, 트리그램 GIN(pg_trgm)은 풀텍스트와 LIKE 검색을 가속합니다. 또한 Z-ordering, BRIN min/max 인덱스, Bloom 필터 인덱스는 데이터 레이크하우스 환경에서 핵심 최적화 도구입니다.</p>
 
   <h3>고급 패턴</h3>

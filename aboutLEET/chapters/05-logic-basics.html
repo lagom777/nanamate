@@ -27,12 +27,11 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎯 한 줄로 이해하기</h3><p>"~이면 ~이다"라는 약속에서 <strong>방향을 거꾸로 읽으면 안 돼요</strong>. 앞은 뒤를 보장하지만, 뒤가 앞을 보장하지는 않아요!</p>
   <h3>🌧️ 비와 땅 이야기</h3><p>"<strong>비가 오면 땅이 젖는다</strong>"는 약속이 있어요. 🌧️ 비가 오면(P) → 땅이 젖는다(Q). 이 약속이 참이라고 해 봐요. 그런데 밖에 나가 보니 <strong>땅이 젖어 있어요</strong>. 그럼 비가 온 걸까요? 꼭 그렇진 않아요 — 누가 <strong>분무기로 물을 뿌렸을 수도</strong> 있고, 눈이 녹았을 수도 있으니까요! 💦</p><p>반대로 "<strong>땅이 안 젖었다</strong>"면 어떨까요? 그러면 비는 확실히 안 온 거예요. 비가 왔다면 땅이 젖었어야 하는데 안 젖었으니까요. 이게 바로 <strong>대우</strong>예요 — "Q가 아니면 P가 아니다"는 원래 약속과 항상 같이 참이에요. ✨</p>
   <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>명제</strong>: 참·거짓을 판별할 수 있는 문장 ("오늘은 화요일이다" ⭕ / "문 닫아!" ❌)</li><li><strong>충분조건</strong>: "P이면 Q"에서 P — 이것만 있으면 결론이 보장돼요</li><li><strong>필요조건</strong>: "P이면 Q"에서 Q — 결론이 되려면 꼭 필요해요</li><li><strong>대우</strong>: "Q가 아니면 P가 아니다" — 원래 약속과 항상 참·거짓이 같아요</li><li><strong>역</strong>: "Q이면 P이다" — 원래 약속과 다를 수 있어요 (분무기!)</li></ul></div>
@@ -40,17 +39,16 @@
   <div class="study-tip"><strong>💡 학습 TIP:</strong> 조걸문을 만나면 손가락으로 화살표(P→Q)를 그어 보세요. 그리고 자문해 보세요. "지금 문제가 쓴 건 화살표 방향 그대로? 거꾸로(역)? 아니면 뒤집고 뒤집은 대우?" 대우만 믿으세요. ☝️</div>
   <h3>📌 요약</h3><ul><li>명제 = 참·거짓을 가릴 수 있는 문장이에요.</li><li>P→Q에서 P는 충분조건, Q는 필요조건이에요. ☔</li><li>땅이 젖었다고 비는 아니에요 — 역(Q→P)은 함정!</li><li>대우(¬Q→¬P)만 원명제와 항상 똑같아요.</li><li>"모든"의 부정은 "하나도 ~아니다"가 아니라 "어떤 것은 ~아니다"예요.</li></ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>명제란 무엇인가</h3><p>명제(proposition)는 <strong>참·거짓을 판별할 수 있는 문장</strong>입니다. "서울은 대한민국의 수도이다"(참), "2는 홀수이다"(거짓)는 명제이지만, 명령문("문을 닫아라"), 의문문("몇 시입니까"), 감탄문은 참·거짓을 가릴 수 없으므로 명제가 아닙니다. LEET 추리논증의 지문과 선택지는 결국 이 명제들의 참·거짓 관계를 다루는 문제로 환원됩니다.</p>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>명제란 무엇인가</h3><p>명제(proposition)는 <strong>참·거짓을 판별할 수 있는 문장</strong>입니다. "서울은 대한민국의 수도이다"(참), "2는 홀수이다"(거짓)는 명제이지만, 명령문("문을 닫아라"), 의문문("몇 시입니까"), 감탄문은 참·거짓을 가릴 수 없으므로 명제가 아닙니다. LEET 추리논증의 지문과 선택지는 결국 이 명제들의 참·거짓 관계를 다루는 문제로 환원됩니다.</p>
   <h3>조걸문: 충분조건과 필요조건</h3><p>조걸문 <strong>'P이면 Q이다'(P→Q)</strong>가 참이라는 것은 "P가 성립하는 모든 경우에 Q도 성립한다"는 뜻입니다. 이때 <strong>P는 Q의 충분조건</strong> — P이면 그것으로 Q가 보장되기에 '충분'합니다. <strong>Q는 P의 필요조건</strong> — P가 성립하려면 Q가 반드시 성립해야 하기에 '필요'합니다. 헷갈릴 때는 화살표 방향으로 기억하세요. 앞(전건)이 충분조건, 뒤(후건)가 필요조건입니다. 예: "정사각형이면 직사각형이다"가 참일 때, 정사각형인 것은 직사각형이기에 충분하고, 직사각형인 것은 정사각형이기 위한 필요조건입니다(직사각형이 아니면 정사각형일 수 없으므로).</p>
   <div class="info-card"><h4>📐 조걸문의 네 형태</h4><ul><li><strong>원명제</strong>: P → Q ("비가 오면 땅이 젖는다")</li><li><strong>역</strong>: Q → P ("땅이 젖으면 비가 온다") — 원명제와 동치 <u>아님</u></li><li><strong>이</strong>: ¬P → ¬Q ("비가 안 오면 땅이 안 젖는다") — 원명제와 동치 <u>아님</u></li><li><strong>대우</strong>: ¬Q → ¬P ("땅이 안 젖으면 비가 안 온다") — 원명제와 <strong>항상 동치</strong></li></ul><p>참고로 역과 이는 서로 대우 관계라 둘끼리는 동치입니다.</p></div>
   <h3>한정사와 부정 명제</h3><p>"<strong>모든</strong> A는 B이다"와 "<strong>어떤</strong>(일부) A는 B이다"의 구분도 필수입니다. '모든 A는 B이다'의 부정은 '모든 A는 B가 아니다'가 아니라 '<strong>어떤 A는 B가 아니다</strong>'입니다 — 반례가 하나라도 있으면 전칭 명제는 성립하지 않으니까요. 마찬가지로 '어떤 A는 B이다'의 부정은 '모든 A는 B가 아니다'입니다. 조걸문 P→Q의 부정은 '¬P→¬Q'가 아니라 '<strong>P이면서 Q가 아닌 경우가 존재한다</strong>(P ∧ ¬Q)'임에 주의하세요.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> ① P→Q에서 Q가 참이라고 P가 참이라 단정하는 '역의 오류', ② P가 거짓이라고 Q가 거짓이라 단정하는 '이의 오류'는 둘 다 근거 없는 전이입니다. ③ 필요조건과 충분조건을 뒤바꾸는 것도 최다 빈출 함정입니다 — "필요조건이면 충분조건"은 절대 성립하지 않습니다.</div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>필요조건·충분조건의 혼동 사례</h3><p>수험 현장에서 가장 많이 미끄러지는 지점은 '필요'와 '충분'의 방향입니다. "P는 Q의 필요조건이다"는 Q→P와 같고, "P는 Q의 충분조건이다"는 P→Q와 같습니다. 문장에 등장하는 순서와 화살표 방향이 어긋나는 것이 함정의 핵심이죠. 예컨대 "합격하려면 서류 전형을 통과해야 한다"에서 서류 통과는 합격의 <strong>필요조건</strong>(합격→서류 통과)이지 충분조건이 아닙니다 — 서류를 통과할지라도 합격은 보장되지 않으니까요. 반대로 "합격하면 서류는 통과한 것이다"에서 합격은 서류 통과의 <strong>충분조건</strong>입니다.</p>
+
+<h3>필요조건·충분조건의 혼동 사례</h3><p>수험 현장에서 가장 많이 미끄러지는 지점은 '필요'와 '충분'의 방향입니다. "P는 Q의 필요조건이다"는 Q→P와 같고, "P는 Q의 충분조건이다"는 P→Q와 같습니다. 문장에 등장하는 순서와 화살표 방향이 어긋나는 것이 함정의 핵심이죠. 예컨대 "합격하려면 서류 전형을 통과해야 한다"에서 서류 통과는 합격의 <strong>필요조건</strong>(합격→서류 통과)이지 충분조건이 아닙니다 — 서류를 통과할지라도 합격은 보장되지 않으니까요. 반대로 "합격하면 서류는 통과한 것이다"에서 합격은 서류 통과의 <strong>충분조건</strong>입니다.</p>
   <h3>함정 표현과 기호화</h3><p>"<strong>오직 P일 때만 Q이다</strong>", "P일 때에만 Q이다"는 Q→P를 뜻합니다 — P가 Q의 필요조건이라는 말이지, P→Q(충분조건)가 아닙니다. 일상어의 어감과 반대라 최다 오답 포인트입니다. 기호로 정리하면: 연언(그리고)은 <strong>∧</strong>, 선언(또는)은 <strong>∨</strong>, 부정은 <strong>¬</strong>, 조걸문은 <strong>→</strong>. "P이거나 Q이다"의 부정은 ¬P ∧ ¬Q(드모르간), "P이고 Q이다"의 부정은 ¬P ∨ ¬Q입니다. 복잡한 지문은 기호화해서 형태만으로 판단하는 습관이 실수를 줄입니다.</p>
   <div class="formula">대우의 동치성: (P → Q) ↔ (¬Q → ¬P)  ·  조걸문의 부정: ¬(P → Q) ↔ (P ∧ ¬Q)</div>
   <h3>동치와 근거 없는 전이</h3><p>논증 문제에서 "전제로부터 <strong>필연적으로</strong> 따라오는가"와 "그럴듯해 보이는가"를 구분해야 합니다. 동치 변형(대우, 드모르간, 이중부정)은 항상 허용되지만, 전이(transitivity)는 형태가 갖춰질 때만 유효합니다. P→Q와 Q→R이 있으면 P→R을 얻지만, P→Q와 R→Q로는 P와 R의 관계를 아무것도 얻을 수 없습니다(둘 다 Q의 충분조건일 뿐). "A이면 B, C이면 B, 따라서 A이면 C"는 전형적인 근거 없는 전이이자 역의 오류의 연쇄입니다.</p>

@@ -27,12 +27,11 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎯 한 줄로 이해하기</h3><p>두 가지가 <strong>같이 오르나 내리는지</strong> 살펴서(상관), 점들 사이에 <strong>가장 잘 어울리는 직선 하나를 그어서</strong>(회귀) 앞날을 예측해요.</p>
   <h3>😮 왜 재밌을까?</h3><p>여름에 기온이 오르면 아이스크림이 잘 팔려요. 🍦 기온이 x, 판매량이 y예요. 매일의 (기온, 판매량)을 종이에 점으로 찍으면 점들이 <strong>오른쪽 위로 올라가는 모양</strong>이 돼요. 이걸 산점도라고 해요. 그리고 그 점들 한가운데를 지나는 직선 하나를 쭉 그으면, "내일 30도면 몇 개쯤 팔리겠구나"를 미리 알 수 있어요. 그 직선이 바로 회귀직선이에요!</p>
   <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>산점도(Scatter Plot)</strong>: 두 변수를 점으로 찍은 그림</li><li><strong>상관계수 r</strong>: 같이 움직이는 정도(−1 ~ +1). 1에 가까우면 강한 양의 관계, −1에 가까우면 강한 음의 관계, 0 근처면 관계 없음</li><li><strong>회귀직선</strong>: 점들 사이를 가장 잘 지나는 직선(y = a + bx)</li><li><strong>잔차(Residual)</strong>: 실제 점과 직선 사이의 세로 거리 = 직선이 틀린 만큼</li><li><strong>결정계수 R²</strong>: 직선이 데이터를 설명하는 비율(0 ~ 1). 클수록 잘 맞음</li></ul></div>
@@ -40,9 +39,10 @@
   <div class="study-tip"><strong>💡 학습 TIP:</strong> "기온과 아이스크림 판매량은 r이 양수, 기온과 난방비는 r이 음수"처럼 주변에서 양의 상관·음의 상관 예를 하나씩 찾아보세요!</div>
   <h3>📌 요약</h3><ul><li>산점도 = 두 변수를 점으로 찍은 그림이에요.</li><li>상관계수 r은 −1 ~ +1. 절댓값이 클수록 관계가 강해요.</li><li>회귀직선은 점들 한가운데를 지나는 예측용 직선이에요.</li><li>잔차 = 점과 직선의 세로 거리. 최소제곱법은 잔차 제곱합을 최소로 해요.</li><li>같이 움직인다고(상관) 하나가 다른 하나를 만드는 건(인과) 아니에요!</li></ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>산점도와 상관계수 r</h3><p>두 양적 변수의 관계를 보는 첫걸음은 <strong>산점도(scatter plot)</strong>입니다. x축에 설명변수, y축에 반응변수를 놓고 관측값을 점으로 표시합니다. <strong>상관계수(correlation coefficient) r</strong>은 이 관계를 수치화한 것으로, 항상 <strong>−1 ≤ r ≤ +1</strong>입니다. r &gt; 0이면 양의 선형관계(x가 크면 y도 큰 경향), r &lt; 0이면 음의 선형관계이고, <strong>절댓값이 1에 가까울수록</strong> 점들이 직선에 빽빽이 모인 강한 관계입니다. r = ±1이면 모든 점이 한 직선 위에 있는 <strong>완전선형관계</strong>, r ≈ 0이면 선형관계가 거의 없는 것입니다. 경험적으로 |r|이 0.7 이상이면 강하다고 봅니다.</p>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>산점도와 상관계수 r</h3><p>두 양적 변수의 관계를 보는 첫걸음은 <strong>산점도(scatter plot)</strong>입니다. x축에 설명변수, y축에 반응변수를 놓고 관측값을 점으로 표시합니다. <strong>상관계수(correlation coefficient) r</strong>은 이 관계를 수치화한 것으로, 항상 <strong>−1 ≤ r ≤ +1</strong>입니다. r &gt; 0이면 양의 선형관계(x가 크면 y도 큰 경향), r &lt; 0이면 음의 선형관계이고, <strong>절댓값이 1에 가까울수록</strong> 점들이 직선에 빽빽이 모인 강한 관계입니다. r = ±1이면 모든 점이 한 직선 위에 있는 <strong>완전선형관계</strong>, r ≈ 0이면 선형관계가 거의 없는 것입니다. 경험적으로 |r|이 0.7 이상이면 강하다고 봅니다.</p>
   <h3>상관은 인과가 아니다</h3>
   <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "r이 높으니 x가 y를 일으킨다"는 틀렸습니다. 아이스크림 판매량과 익사 사고 건수는 강한 양의 상관이지만, 둘 다 일으키는 <strong>제3의 변수(혼재변수, confounding variable)</strong> — 묵더위가 숨어 있을 뿐입니다. 인과를 주장하려면 무작위 실험이나 추가적인 근거가 필요합니다.</div>
   <p>역으로 r ≈ 0이라고 "관계가 없다"고 단정하는 것도 위험합니다. r은 <strong>선형</strong> 관계만 측정하므로, U자형 같은 뚜렷한 비선형 관계에서도 r은 0에 가깝게 나옵니다. 반드시 산점도를 눈으로 확인하세요.</p>
@@ -50,10 +50,8 @@
   <h3>결정계수 R²와 회귀계수의 해석</h3><p><strong>결정계수(coefficient of determination) R²</strong>는 종속변수 y의 전체 변동 중 회귀모형이 설명하는 비율(0~1)입니다. R² = 0.64라면 "y 변동의 64%를 이 모형이 설명하고, 나머지 36%는 다른 요인과 오차"라는 뜻입니다. 단순회귀에서는 R² = r²입니다. <strong>기울기 b의 해석</strong>이 실무의 핵심입니다: "x가 한 단위 증가할 때 y가 <strong>평균적으로</strong> b만큼 변한다."</p>
   <div class="info-card"><h4>📐 숫자로 확인 — 광고비와 매출</h4><p>광고비 x(백만 원) = 1, 2, 3, 4, 5 / 매출 y(억 원) = 2, 4, 5, 4, 6 (n=5). 최소제곱법으로 구하면 <strong>ŷ = 1.8 + 0.8x</strong>, R² ≈ 0.73. 해석: 광고비를 100만 원 더 쓰면 매출은 <strong>평균 0.8억 원</strong> 늘어난다고 예측. 매출 변동의 약 73%를 광고비 하나로 설명하며, 나머지 27%는 상품·계절 등 다른 요인입니다.</p></div>
   <h3>다중회귀 소개</h3><p>현실의 y는 원인이 여럿입니다. 설명변수가 2개 이상이면 <strong>다중회귀(multiple regression)</strong>: y = a + b₁x₁ + b₂x₂ + ⋯ + ε. 매출을 광고비·매장면적·상권유동인구로 동시에 설명하는 식입니다. 각 계수 bᵢ는 <strong>다른 변수가 일정할 때</strong> xᵢ가 한 단위 늘면 y가 평균 bᵢ만큼 변한다는 뜻으로 해석합니다.</p>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>최소제곱 추정의 공식</h3><p>잔차 제곱합 Σ(yᵢ − a − bxᵢ)²를 a, b에 대해 미분해 0으로 놓으면 정규방정식이 나오고, 해는 다음과 같습니다.</p>
+
+<h3>최소제곱 추정의 공식</h3><p>잔차 제곱합 Σ(yᵢ − a − bxᵢ)²를 a, b에 대해 미분해 0으로 놓으면 정규방정식이 나오고, 해는 다음과 같습니다.</p>
   <div class="formula">b = Σ(xᵢ−x̄)(yᵢ−ȳ) / Σ(xᵢ−x̄)²,&nbsp;&nbsp; a = ȳ − b·x̄</div>
   <p>즉 회귀직선은 항상 점 (x̄, ȳ)를 지나고, 기울기는 x와 y의 공변동을 x의 변동으로 나눈 값입니다. 상관계수와의 관계는 r = b·(sₓ/s_y)입니다.</p>
   <div class="formula">r = Σ(xᵢ−x̄)(yᵢ−ȳ) / √[Σ(xᵢ−x̄)²·Σ(yᵢ−ȳ)²],&nbsp;&nbsp; R² = SSR/SST = 1 − SSE/SST</div>

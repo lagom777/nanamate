@@ -13,18 +13,17 @@
 <main><header class="paper-header"><h1><em>금융과 투자</em></h1><p class="authors">Chapter 3 — Financial Markets & Investment</p></header>
 <div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 중심 포트폴리오를 둘러싼 자산들 — 분산투자로 위험과 수익을 배분합니다</span>
 <h2>금융과 투자 개요</h2><p>Financial Markets & Investment의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
-<div class="info-card"><h4>핵심 개념</h4><p>Financial Markets & Investment</p></div>
+<div class="info-card"><h4>핵심 개념</h4><p>주식·채권·파생상품 시장의 작동 원리와 포트폴리오 분산투자, 리스크-수익률 트레이드오프를 탐구합니다.</p></div>
 
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎯 한마디로!</h3>
   <p>금융과 투자는 "지금의 돈"과 "미래의 돈"을 바꾸는 시간 여행이에요. ⏳</p>
   <h3>🤔 왜 중요할까?</h3>
@@ -52,9 +51,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
   <p>현대 투자이론의 출발점은 마코위츠(Markowitz)의 평균-분산 최적화 모형입니다. 위험과 수익을 분산-기댓값으로 정량화하고 효율적 프론티어 위의 포트폴리오를 선택하면 동일 위험에서 최고 수익을 얻을 수 있습니다. 여기에 무위험자산을 추가하면 토빈의 분리정리에 따라 모든 투자자는 시장포트폴리오와 무위험자산의 조합으로 표현됩니다. 이로부터 자본자산가격결정모형(CAPM)이 도출되며, 개별자산의 기대수익률은 무위험금리에 시장위험프리미엄에 베타를 곱한 값이 더해진 형태로 결정됩니다. 효율적 시장가설(EMH)은 가격이 모든 공개정보를 반영한다고 주장하며, 약형·준강형·강형으로 구분됩니다. 채권가격은 만기·쿠폰·수익률곡선에 따라 결정되며 듀레이션은 금리변동에 대한 가격 민감도를 측정합니다. 옵션가격은 블랙-숄즈 모형으로 평가합니다.</p>
   <h3>핵심 모델/공식</h3>
   <div class="formula">CAPM: E(Ri) = Rf + βi(E(Rm) − Rf)<br>샤프비율: SR = (E(Rp) − Rf)/σp<br>채권 듀레이션: D = Σ t·CFt/(1+y)^t / P<br>현재가치: PV = Σ CFt/(1+r)^t</div>
@@ -70,11 +69,8 @@
   <h3>현실 응용</h3>
   <p>퇴직연금 DC형 계좌에서는 TDF(Target Date Fund)를 활용해 연령에 맞춰 주식·채권 비중을 자동 조정할 수 있습니다. 미국 증시 투자 시 환헷지 ETF와 비헷지 ETF의 선택은 환율 전망에 따라 달라지며, 채권 듀레이션은 금리 사이클 후반에 길게 가져가는 전략이 유효합니다. 부동산은 레버리지로 베타를 키운 자산이라 금리에 민감합니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 과거 수익률을 미래 기대수익률로 단순 외삽. 평균회귀와 밸류에이션 부담을 함께 보아야 합니다.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3>
+<h3>전문가 레벨</h3>
   <p>CAPM의 한계가 드러나면서 Fama-French 3요인(시장·SMB·HML), 5요인(수익성·투자), Carhart의 모멘텀 요인을 더한 다요인 모형이 표준이 되었습니다. 차익거래가격결정모형(APT)은 다수의 거시요인이 자산가격을 설명한다는 일반화된 틀을 제공합니다. 옵션가격결정에서 블랙-숄즈는 로그정규 가정 하에 도출되지만, 실제 시장에는 변동성 미소(volatility smile)와 텀구조가 존재해 Heston, SABR 같은 확률변동성 모형이 사용됩니다. 신용리스크는 Merton 모형을 출발점으로 KMV, CreditMetrics, 코퓰라 모형으로 발전했고, 2008년 위기에서 가우시안 코퓰라의 한계가 드러나 모델리스크 관리가 강화되었습니다. 행동재무는 효율적 시장가설의 한계를 지적하며, 군집행동·과신·전망이론 기반의 가격 이상현상을 설명합니다. 시장미시구조는 호가창 동학, 정보거래자, 시장조성자의 역할을 분석하며 고빈도매매(HFT)의 영향을 다룹니다.</p>
   <h3>수리 모델</h3>
   <div class="formula">블랙-숄즈: ∂V/∂t + ½σ²S²∂²V/∂S² + rS∂V/∂S − rV = 0<br>이토 보조정리: dF = (∂F/∂t + μ∂F/∂S + ½σ²∂²F/∂S²)dt + σ∂F/∂S dW<br>VaR: Pr(Lp > VaRα) = 1 − α<br>Fama-French: Ri − Rf = αi + βi(Rm−Rf) + si SMB + hi HML + εi</div>

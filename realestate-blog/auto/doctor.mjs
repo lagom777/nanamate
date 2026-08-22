@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { codexChatGPTStatus } from "./codex-writer.mjs";
+import { grokStatus } from "./grok-writer.mjs";
 
 const DIR = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(DIR, "..");           // realestate-blog/
@@ -26,10 +27,13 @@ const gKey = process.env.GEMINI_API_KEY || local.geminiKey;
 const googleAuth = readJSON(join(DIR,".google-oauth.json"));
 const oauthReady=!!(googleAuth?.client_id && googleAuth?.refresh_token && googleAuth?.project_id);
 const codexLogin=codexChatGPTStatus();
-if(cfg.preferChatGPTLogin!==false && codexLogin.ready) add("ok", "글 작성 엔진", "현재 ChatGPT 로그인 사용(Codex CLI)");
+const grok=grokStatus({ xaiKey: process.env.XAI_API_KEY || local.xaiKey });
+if(cfg.preferOffline===true) add("ok", "글 작성 엔진", "로컬 자동 작성 (크레딧·Codex 없음)");
+else if(cfg.preferGrok!==false && grok.ready) add("ok", "글 작성 엔진", `Grok/xAI 우선 (${cfg.grokModel||"grok-4-latest"})`);
+else if(cfg.preferChatGPTLogin!==false && codexLogin.ready) add("ok", "글 작성 엔진", "현재 ChatGPT 로그인 사용(Codex CLI)");
 else if(gKey) add("ok", "글 작성 엔진", "Gemini API 키 사용");
 else if(oauthReady) add("ok", "글 작성 엔진", `Google OAuth 사용 (${googleAuth.project_id})`);
-else add("warn", "글 작성 엔진", "로컬 자동 작성 사용 — ChatGPT/Codex 로그인, Google OAuth 또는 API 키를 선택 연결 가능");
+else add("warn", "글 작성 엔진", "로컬 자동 작성 사용 — Grok(XAI_API_KEY), ChatGPT/Codex, Gemini 중 하나 연결 가능");
 
 // 3. Threads 토큰 (선택)
 const authPath=join(ROOT,"threads-tool",".threads-auth.json");

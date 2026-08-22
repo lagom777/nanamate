@@ -28,12 +28,11 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎯 한 줄로 이해하기</h3><p>실패모드는 에이전트가 '망가지는 단골 방식'이고, 프런티어는 '아직 잘 못 하지만 다들 도전 중인 어려운 부분'이에요. 🚧</p>
   <h3>😮 왜 재밌을까?</h3><p>에이전트가 멋지게 일하다가 갑자기 엉뚱한 짓을 할 때, 원인은 대개 '모델이 멍청해서'가 아니라 <strong>정해진 방식으로 어긋났기</strong> 때문이에요. 실패가 패턴을 따른다는 건 곧 <strong>미리 대비할 수 있다</strong>는 뜻이죠! 거짓 사실 하나가 다음 단계로 번지고, 긴 답이 끝까지 안 나오고, 같은 행동을 무한 반복하는 일 — 이름을 알면 막을 수 있어요. 💪</p>
   <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>환각 전파(hallucination propagation)</strong>: 지어낸 사실이 다음 단계로 굳어져 번짐</li><li><strong>silent truncation(조용한 누락)</strong>: 출력이 한계에서 잘렸는데 경고가 없음</li><li><strong>lost-in-the-middle</strong>: 긴 글의 가운데 정보가 잘 안 쓰임</li><li><strong>자기보고 과신(self-report overconfidence)</strong>: 모델이 자기 진행도를 부풀려 보고</li><li><strong>툴 스프롤(tool sprawl)</strong>: 도구가 너무 많아 뭘 고를지 헷갈림</li><li><strong>무한루프</strong>: 멈출 조건을 못 만나 같은 행동을 계속 반복</li></ul></div>
@@ -41,18 +40,17 @@
   <div class="study-tip"><strong>💡 학습 TIP:</strong> 에이전트가 실수할 때 "모델이 틀렸네"에서 멈추지 말고 "어떤 실패모드지?"를 물어보세요. 환각? 누락? 무한루프? 이름을 붙이는 순간 해결책이 보여요!</div>
   <h3>📌 요약</h3><ul><li>실패는 패턴을 따르니 이름을 붙여 대비할 수 있어요. 🚧</li><li>환각은 다음 단계로 번지고, 출력은 조용히 잘릴 수 있어요.</li><li>긴 글의 가운데는 묻히고, 모델은 자기 확신을 부풀려요.</li><li>도구가 너무 많거나 멈출 조건이 허술하면 길을 잃거나 못 멈춰요.</li><li>프런티어는 '오래 혼자 일하기(장기 자율)'와 '믿을 수 있게 만들기(신뢰성)'예요.</li></ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>메커니즘 깊이</h3><p>실패모드는 대부분 <strong>피드백 부재</strong>나 <strong>경계 무시</strong>에서 비롯됩니다. <strong>① 환각 전파</strong>: 검증 게이트(5장) 없이 모델 출력을 그대로 다음 입력으로 흘리면, 오류가 누적·증폭됩니다. 완화책은 단계 사이에 '근거 확인·실행 검증'을 끼워 오류를 조기에 끊는 것입니다. <strong>② silent truncation</strong>: API의 <em>finish_reason</em>(예: length)·길이 메타데이터를 하네스가 확인하지 않으면, 잘린 JSON·중단된 코드가 멀쩡한 척 통과합니다. 완화책은 종료 사유를 검사하고, 잘렸으면 이어쓰기(continuation)나 재시도를 트리거하는 것입니다. <strong>③ lost-in-the-middle</strong>: 컨텍스트가 길수록 중간 위치의 정보 활용도가 떨어지는 경향이 관찰됩니다. 완화책은 핵심 자료를 앞·뒤에 배치하고, 관련 부분만 추려 넣는 컨텍스트 엔지니어링(4장)입니다. <strong>④ 자기보고 과신</strong>: 모델의 '완료/확신' 자기보고는 외부 검증을 대체하지 못합니다 — 테스트·실행 같은 객관 신호로 게이트해야 합니다. <strong>⑤ 툴 스프롤</strong>: 도구 수가 늘수록 선택·이름 충돌·설명 길이가 컨텍스트를 잡아먹고 오선택이 늘어, 도구를 묶거나 단계별로 노출(scoping)합니다. <strong>⑥ 무한루프</strong>: 명확한 종료 조건·최대 반복 한도·진척도 점검이 없으면 동일 행동을 반복합니다.</p>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>메커니즘 깊이</h3><p>실패모드는 대부분 <strong>피드백 부재</strong>나 <strong>경계 무시</strong>에서 비롯됩니다. <strong>① 환각 전파</strong>: 검증 게이트(5장) 없이 모델 출력을 그대로 다음 입력으로 흘리면, 오류가 누적·증폭됩니다. 완화책은 단계 사이에 '근거 확인·실행 검증'을 끼워 오류를 조기에 끊는 것입니다. <strong>② silent truncation</strong>: API의 <em>finish_reason</em>(예: length)·길이 메타데이터를 하네스가 확인하지 않으면, 잘린 JSON·중단된 코드가 멀쩡한 척 통과합니다. 완화책은 종료 사유를 검사하고, 잘렸으면 이어쓰기(continuation)나 재시도를 트리거하는 것입니다. <strong>③ lost-in-the-middle</strong>: 컨텍스트가 길수록 중간 위치의 정보 활용도가 떨어지는 경향이 관찰됩니다. 완화책은 핵심 자료를 앞·뒤에 배치하고, 관련 부분만 추려 넣는 컨텍스트 엔지니어링(4장)입니다. <strong>④ 자기보고 과신</strong>: 모델의 '완료/확신' 자기보고는 외부 검증을 대체하지 못합니다 — 테스트·실행 같은 객관 신호로 게이트해야 합니다. <strong>⑤ 툴 스프롤</strong>: 도구 수가 늘수록 선택·이름 충돌·설명 길이가 컨텍스트를 잡아먹고 오선택이 늘어, 도구를 묶거나 단계별로 노출(scoping)합니다. <strong>⑥ 무한루프</strong>: 명확한 종료 조건·최대 반복 한도·진척도 점검이 없으면 동일 행동을 반복합니다.</p>
   <h3>사례로 보기</h3>
   <div class="info-card"><h4>🛠️ 사례 1 — 잘린 JSON이 통과하다</h4><p>에이전트가 큰 설정 파일을 한 번에 생성하다 토큰 한계에서 끊겼습니다. 하네스가 종료 사유를 검사하지 않아 '닫히지 않은 JSON'이 다음 단계로 넘어갔고, 파서가 실패할 때까지 원인을 몰랐습니다. 종료 사유 검사 + 이어쓰기로 해결됩니다 — silent truncation의 전형입니다.</p></div>
   <div class="info-card"><h4>🛠️ 사례 2 — 멈추지 못하는 수정 루프</h4><p>테스트를 통과시키려 코드를 고치는 에이전트가, 같은 오류에 같은 패치를 반복하며 진척 없이 토큰만 태웠습니다. '최대 반복 횟수'와 '직전 시도 대비 진척(통과 테스트 수) 점검'을 종료 조건에 넣자 루프가 끊겼습니다.</p></div>
   <h3>설계 관점</h3><p>좋은 하네스는 실패를 '예외'가 아니라 <strong>설계 입력</strong>으로 다룹니다. 각 단계마다 (a) 검증 게이트, (b) 종료 사유·길이 검사, (c) 반복 한도와 진척도 측정, (d) 도구 노출 범위 제한을 기본값으로 둡니다. 관측성(로그·트레이스)을 갖춰 어느 실패모드가 발생했는지 사후에 분류할 수 있어야 개선이 누적됩니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "모델이 '완료했다'고 했으니 됐다"는 위험합니다. 자기보고는 신호일 뿐 증거가 아닙니다 — 테스트·실행·외부 확인 같은 객관 게이트로 닫아야 합니다.</p></div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 — 신뢰성이 프런티어다</h3><p>기반 모델 성능이 상향 평준화될수록 차이를 만드는 곳은 <strong>신뢰성 엔지니어링</strong>입니다. 한 단계의 정확도가 높아도, 단계가 길어지면 오류가 곱으로 쌓여 전체 성공률이 급락합니다. 그래서 장기 자율(long-horizon autonomy)에서는 '단계 정확도'보다 '오류를 검출·복구하는 능력'이 결정적입니다. 핵심 레버: <strong>오류 조기 검출</strong>(단계별 검증), <strong>복구 경로</strong>(재시도·롤백·체크포인트), <strong>진척 모니터링</strong>(루프가 나아가는지 측정), <strong>관측성</strong>(무엇이 어디서 깨졌는지 추적).</p>
+
+<h3>전문가 레벨 — 신뢰성이 프런티어다</h3><p>기반 모델 성능이 상향 평준화될수록 차이를 만드는 곳은 <strong>신뢰성 엔지니어링</strong>입니다. 한 단계의 정확도가 높아도, 단계가 길어지면 오류가 곱으로 쌓여 전체 성공률이 급락합니다. 그래서 장기 자율(long-horizon autonomy)에서는 '단계 정확도'보다 '오류를 검출·복구하는 능력'이 결정적입니다. 핵심 레버: <strong>오류 조기 검출</strong>(단계별 검증), <strong>복구 경로</strong>(재시도·롤백·체크포인트), <strong>진척 모니터링</strong>(루프가 나아가는지 측정), <strong>관측성</strong>(무엇이 어디서 깨졌는지 추적).</p>
   <h3>왜 오류가 곱으로 쌓이나</h3><div class="formula">P(전체 성공) ≈ p<sub>step</sub><sup>N</sup> &nbsp;→&nbsp; 검출·복구가 있으면 P ≈ (p<sub>step</sub> + p<sub>recover</sub>·(1−p<sub>step</sub>))<sup>N</sup></div>
   <p>여기서 N은 단계 수, p<sub>step</sub>은 단계 성공률입니다(개략 모델). 검출·복구(p<sub>recover</sub>)가 없으면 N이 커질수록 성공률이 지수적으로 무너집니다 — 그래서 '한 번 잘하기'보다 '틀렸을 때 알아채고 되돌리기'가 장기 자율의 핵심입니다.</p>
   <h3>최신 흐름</h3><p>장기 자율 에이전트, 단계별 자기검증·자기수정, 멀티에이전트 교차검증(critic·verifier 분리), 도구 사용의 점진적 노출, 그리고 에이전트 평가(eval)·관측성 표준화가 활발합니다. 모델이 좋아져도 신뢰성은 공짜로 따라오지 않으므로, 하네스가 검출·복구·종료를 책임지는 독립 엔지니어링 분야로 굳어지고 있습니다 — 즉 하네스가 제품의 차별점입니다.</p>

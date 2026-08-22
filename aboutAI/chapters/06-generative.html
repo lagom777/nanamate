@@ -192,13 +192,12 @@ Stable Diffusion 3(2024)와 Flux는 이 프레임워크를 채택하였다.
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎨 한마디로 말하면?</h3>
   <p>생성형 AI는 <strong>텍스트·그림·음악·영상을 처음부터 새로 만들어내는</strong> AI예요! 예전 AI가 "이건 고양이야"라고 알아맞히기만 했다면, 생성형 AI는 <strong>화가·작곡가처럼 직접 창작</strong>해요. DALL·E·Midjourney는 그림 🖼️, Suno는 음악 🎵, Sora는 영상 🎬을 만들어요!</p>
   <div class="analogy">🌫️ 안개에서 그림 찾기! 깨끗한 사진에 노이즈를 점점 뿌려서 완전 흰 잡음으로 만들어요. 그다음 AI한테 "이 잡음에서 노이즈를 한 단계씩 지워봐!"라고 가르치면, 나중엔 잡음에서 새 그림을 뚝딱 만들어내요. 이게 디퓨전이에요!</div>
@@ -220,9 +219,9 @@ Stable Diffusion 3(2024)와 Flux는 이 프레임워크를 채택하였다.
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>VAE(Kingma & Welling, 2013)는 인코더 q_φ(z|x)와 디코더 p_θ(x|z)를 함께 학습하며, ELBO 손실 L = E_q[log p_θ(x|z)] − KL(q_φ(z|x)||p(z))를 최적화합니다. 잠재변수 z를 가우시안으로 reparameterize하여 미분 가능하게 만듭니다. GAN(Goodfellow 2014)은 minimax 게임 min_G max_D E_x[log D(x)] + E_z[log(1−D(G(z)))]로, 생성기 G가 D의 판별을 속이는 과정에서 데이터 분포를 학습합니다. 그러나 모드 붕괴(mode collapse)와 학습 불안정성이 큰 문제였고, WGAN(2017), StyleGAN(2019)이 이를 개선했습니다. Diffusion Model(Ho et al., DDPM 2020)은 forward process q(x_t|x_(t-1)) = N(√(1-β_t)x_(t-1), β_t I)로 데이터에 노이즈를 점진적으로 추가하고, reverse process p_θ(x_(t-1)|x_t)를 학습해 샘플링합니다. 학습 목표는 단순한 MSE 노이즈 예측 손실 L = E[||ε − ε_θ(x_t, t)||²]입니다. Score-based view(Song & Ermon, 2019)는 ∇_x log p(x)를 추정하는 것으로 동치입니다. 텍스트-이미지는 CLIP(Radford 2021)으로 조건 임베딩을 만들고, classifier-free guidance(CFG)로 conditional/unconditional 차이를 증폭합니다.</p>
   <h3>핵심 개념과 코드</h3>
   <pre><code># Hugging Face diffusers로 Stable Diffusion 사용
@@ -244,11 +243,8 @@ image.save("corgi.png")</code></pre>
   <h3>응용 사례</h3>
   <p>① 광고·디자인: Midjourney·SDXL로 콘셉트 아트 빠른 반복. ② 영상 제작: Runway Gen-3, Sora, Veo로 텍스트 → 비디오. ③ 신약 개발: 분자 디퓨전 모델(DiffDock, Genie)이 단백질-리간드 결합을 예측. ④ 의료 영상 합성: GAN/디퓨전으로 학습 데이터 증강, rare disease 케이스 보강. ⑤ 게임·메타버스: 3D 생성(DreamFusion, GET3D), 캐릭터 텍스처 자동화.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> CFG scale을 너무 높이면(15+) 이미지가 "타버린" 듯이 채도가 과해지고 디테일이 무너집니다. 보통 7~12가 무난합니다. 또 디퓨전 모델은 텍스트를 잘 못 그리고 손가락 개수를 자주 틀립니다. SDXL, FLUX, GPT-4o image gen은 이를 개선했지만 여전히 약점입니다.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>Diffusion model의 수학적 기초는 stochastic differential equation(SDE)입니다. Song et al.(2021)는 forward process를 dx = f(x,t)dt + g(t)dW로, reverse process를 dx = [f(x,t) − g(t)²∇_x log p_t(x)]dt + g(t)dW̄로 형식화했습니다. score function ∇_x log p_t(x)를 신경망으로 추정하는 게 score-based generative model의 본질입니다. DDPM은 이 SDE의 discretization이고, DDIM은 동일한 score를 공유하는 deterministic ODE를 만들어 샘플링 스텝을 10~50으로 줄입니다. Consistency Model(Song 2023)과 Rectified Flow(Liu 2023)는 한두 스텝 샘플링을 가능케 했고, FLUX, SD3 Turbo의 빠른 추론에 적용됩니다. Diffusion Transformer(DiT, Peebles & Xie 2023)는 U-Net을 Transformer로 대체하여 스케일링 법칙이 더 잘 적용됨을 보였고, 이는 Sora의 백본이 되었습니다. Classifier-free guidance는 ε̃ = (1+w)·ε(x,c) − w·ε(x,∅)로 정렬도-다양성 트레이드오프를 제어합니다. Optimal Transport(OT) 관점에서 Schrödinger Bridge, Flow Matching(Lipman 2023)은 디퓨전을 일반화하며 학습을 단순화합니다. Latent Consistency Model, Streaming Diffusion은 실시간 비디오 생성을 가능케 합니다.</p>
   <h3>수학적 기초</h3>
   <div class="formula">$$\text{Forward SDE: } d\mathbf{x} = \mathbf{f}(\mathbf{x}, t)\,dt + g(t)\,d\mathbf{w}$$

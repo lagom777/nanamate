@@ -271,13 +271,12 @@ RAG의 구성요소: 임베딩 모델, 벡터 데이터베이스(FAISS, Milvus),
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>💬 한마디로 말하면?</h3>
   <p>대규모 언어모델(LLM)은 <strong>인터넷에 있는 어마어마한 글을 읽고 "다음 단어 맞히기" 게임을 수십억 번 반복</strong>한 거대 신경망이에요! ChatGPT, Claude, Gemini가 모두 LLM이에요. 이름의 "Large(라지)"는 기억 단위(매개변수)가 <strong>수십억~수조 개</strong>라는 뜻! 😮</p>
   <div class="analogy">📖 빈칸 채우기 비유! 어린이한테 빈칸 뚫린 책 1조 권을 주고 "여기 들어갈 단어 뭘까?"를 계속 물어봐요. 처음엔 아무거나 찍지만, 수억 번 하다 보면 문맥에 딱 맞는 단어를 척척 맞혀요. 그러다 문법·상식·코딩·농담까지 저절로 익히죠!</div>
@@ -303,9 +302,9 @@ RAG의 구성요소: 임베딩 모델, 벡터 데이터베이스(FAISS, Milvus),
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>LLM의 학습 파이프라인은 (1) 사전학습(pretraining), (2) 지도 미세조정(SFT), (3) 선호 정렬(RLHF/DPO), (4) 평가·배포로 구성됩니다. 사전학습은 next-token prediction objective L = −Σ log p(x_t | x_(<t))로 진행되며, 이 단순한 목표만으로도 모델이 문법·상식·코드·번역까지 학습합니다. Brown et al.(2020)의 GPT-3는 175B 매개변수로 in-context learning과 few-shot 능력을 emergent property로 보였습니다. Wei et al.(2022)는 chain-of-thought prompting이 추론 능력을 촉발함을 보였고, Kaplan et al.(2020)과 Hoffmann et al.(Chinchilla, 2022)은 매개변수와 데이터의 최적 스케일링 비율을 도출했습니다. RLHF(Ouyang 2022)는 (1) SFT 모델 학습, (2) 보상 모델(RM) 학습 — 사람이 선호한 응답에 높은 점수, (3) PPO로 RM 보상을 최대화하면서 KL(π||π_SFT)을 정칙화. DPO(Rafailov 2023)는 RM 없이 직접 선호 쌍으로 학습하여 단순화했습니다. 추론 시 sampling 전략(temperature, top-k, top-p, beam search)이 출력 다양성/품질을 결정합니다.</p>
   <h3>핵심 개념과 코드</h3>
   <pre><code># Hugging Face transformers로 LLM 사용
@@ -328,11 +327,8 @@ print(tok.decode(out[0], skip_special_tokens=True))</code></pre>
   <h3>응용 사례</h3>
   <p>① RAG(Retrieval-Augmented Generation): 외부 문서를 벡터 검색으로 가져와 LLM이 참조하게 함. 사내 지식, 최신 뉴스 등 학습 데이터에 없는 정보 활용. ② 에이전트 시스템(AutoGPT, LangChain, Claude tool use): LLM이 도구(검색, 계산기, 코드 실행)를 호출해 복잡 작업 수행. ③ 코드 어시스턴트(Copilot, Cursor, Cline): IDE 내부에서 코드 생성·디버깅·리팩터링. ④ 의료/법률 특화 모델: Med-PaLM, Harvey AI는 도메인 특화 사전학습 + RLHF로 전문가 수준에 도달.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> LLM 출력을 사실로 그대로 신뢰하면 위험합니다. 특히 인용·통계·법률·의학 정보는 반드시 검증하세요. 또 prompt injection으로 외부 데이터의 악성 지시가 모델 행동을 바꿀 수 있으니, 시스템 프롬프트와 사용자 프롬프트의 분리, output sanitization이 필요합니다.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>Scaling laws의 함수형은 L(N, D) = E + A/N^α + B/D^β로, 매개변수 N, 데이터 D에 대해 멱함수 감쇠를 보입니다. Chinchilla(Hoffmann 2022)는 compute-optimal frontier에서 N과 D가 거의 같은 비율로 증가해야 함을 도출했고, GPT-3(175B + 300B토큰)가 데이터 부족 상태였음을 보였습니다. 이후 Llama 2/3, Mistral, DeepSeek는 훨씬 많은 데이터(1T~15T)를 사용합니다. Emergent abilities(Wei 2022)는 일정 스케일을 넘어서야 능력이 갑자기 나타나는 현상으로, 일부는 평가 메트릭의 비연속성으로 인한 착시(Schaeffer 2023)이지만 in-context learning, multi-step reasoning은 진짜 emergent로 보입니다. RLHF의 한계는 RM의 over-optimization(Goodhart's law), reward hacking, mode collapse입니다. DPO는 closed-form 손실 −log σ(β log(π(y_w)/π_ref(y_w)) − β log(π(y_l)/π_ref(y_l)))로 단순화했지만 base model 품질에 더 민감합니다. Constitutional AI(Anthropic, Bai 2022)는 사람 라벨 대신 AI가 헌법 원칙으로 자기 비판·재작성하는 RLAIF를 제안했습니다. Inference 측면에서 KV cache, speculative decoding, FlashAttention, paged attention(vLLM), continuous batching이 throughput을 좌우합니다. Test-time scaling(o1, R1)은 inference compute를 늘려 reasoning 성능을 향상시키며, train-time scaling과 직교하는 새 차원입니다.</p>
   <h3>수학적 기초</h3>
   <div class="formula">$$\text{Pretraining: } \mathcal{L} = -\sum_{t} \log p_\theta(x_t \mid x_{<t})$$

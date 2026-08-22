@@ -245,13 +245,12 @@ updateDisplay();
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎮 한 줄로 말하면?</h3>
   <p>트랜잭션은 <strong>"다 같이 성공! 아니면 다 같이 취소!"</strong> 하는 데이터 변경 묶음이에요. 봉투에 담는다고 생각해요! ✉️</p>
 
@@ -294,9 +293,9 @@ updateDisplay();
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
   <p>SQL 표준은 4단계 격리 수준을 정의합니다. READ UNCOMMITTED는 더티 리드를 허용하며, READ COMMITTED는 커밋된 값만 읽지만 같은 트랜잭션 내 두 번 읽었을 때 값이 바뀌는 Non-Repeatable Read가 발생할 수 있습니다. REPEATABLE READ는 같은 행을 다시 읽어도 같은 값이지만 팬텀 리드(범위 조건의 결과 행 수가 바뀜)가 가능하며, SERIALIZABLE은 모든 이상을 막지만 성능 비용이 큽니다. PostgreSQL의 기본은 READ COMMITTED, MySQL InnoDB는 REPEATABLE READ가 기본입니다. 동시성 제어는 비관적 락(2PL: Two-Phase Locking)과 낙관적 락(MVCC) 두 갈래로 나뉘며, MVCC는 읽기와 쓰기가 서로를 막지 않는 것이 핵심 장점입니다. 데드락은 두 트랜잭션이 서로의 락을 기다리는 상황으로, RDBMS는 그래프 기반 데드락 디텍터로 한쪽을 자동 롤백시킵니다. 분산 트랜잭션은 2PC(Two-Phase Commit)로 구현하지만, 코디네이터 단일 장애점과 블로킹 문제로 실무에서는 사가(Saga) 패턴이 더 자주 채택됩니다.</p>
 
   <h3>실전 SQL/쿼리</h3>
@@ -339,11 +338,8 @@ COMMIT;</code></pre>
   <div class="warning-box">
     <strong>⚠️ 자주 하는 실수:</strong> 트랜잭션을 너무 길게 끌면 락이 오래 잡혀 시스템 전체가 느려집니다. 외부 API 호출은 트랜잭션 밖에서 처리하는 게 원칙입니다. 또 격리 수준을 무작정 올리는 것은 데드락을 늘립니다.
   </div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3>
+<h3>전문가 레벨</h3>
   <p>MVCC(Multi-Version Concurrency Control)는 각 트랜잭션에 스냅샷을 부여하고, 행마다 xmin/xmax 같은 버전 메타데이터로 가시성을 판단합니다. PostgreSQL은 dead tuple을 VACUUM이 정리하고, MySQL InnoDB는 언두 로그를 통해 과거 버전을 복원합니다. SSI(Serializable Snapshot Isolation)는 PostgreSQL 9.1부터 도입된 직렬화 보장 알고리즘으로, 위험한 종속성 사이클을 감지해 한쪽을 abort합니다. WAL(Write-Ahead Logging)은 변경을 먼저 로그에 적고 데이터 페이지에 반영하기 전에 동기화해 충돌 복구의 정확성을 보장하며, 체크포인트와 함께 동작합니다. 분산 트랜잭션의 2PC는 블로킹과 코디네이터 단일 장애점 문제가 있어 Spanner는 TrueTime API를, CockroachDB는 HLC(Hybrid Logical Clock)를 활용해 외부 일관성을 구현합니다. 사가는 보상 트랜잭션 시퀀스로 분산 일관성을 달성하지만, 보상의 멱등성과 순서 보장이 필수입니다. 결정성 데이터베이스(Calvin, FaunaDB)는 트랜잭션 순서를 사전에 결정해 락 경쟁을 줄이며, HTAP는 OLTP와 OLAP을 한 시스템에서 처리하기 위한 격리·복제 기술이 핵심입니다.</p>
 
   <h3>고급 패턴</h3>

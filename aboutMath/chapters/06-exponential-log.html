@@ -70,13 +70,12 @@
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🌟 한 줄 요약</h3>
   <p>지수는 "한 칸마다 ×2"처럼 곱하기로 쑥쑥 자라는 함수, 로그는 거꾸로 "몇 번 곱했어?"를 묻는 함수예요. 종이를 42번만 접으면 달까지 닿는 게 지수의 힘이에요!</p>
   <h3>🤔 이걸 왜 배워요?</h3>
@@ -101,9 +100,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>지수·로그 방정식과 부등식의 모든 기술은 두 가지로 환원됩니다: ① <strong>밑을 통일</strong>하고 지수를 비교 (a^f = a^g ⟺ f = g), ② <strong>치환</strong> t = aˣ (t &gt; 0!)으로 2장의 다항방정식으로 변환. 부등식에서는 밑이 1보다 작으면 부등호가 뒤집힌다는 것(감소함수)이 유일한 함정입니다. 로그 방정식은 항상 <strong>진수 조건(진수 &gt; 0)</strong>을 먼저 적고 시작하세요 — 답의 절반은 조건에서 걸러집니다.</p>
   <p>상용로그의 구조: log 3700 = log(3.7×10³) = 3 + log 3.7. 정수 부분(지표)이 자릿수−1, 소수 부분(가수)이 숫자 배열을 결정합니다. "2¹⁰⁰은 몇 자리 수인가?" → 100 log 2 ≈ 30.1 → 31자리. 거대 수의 크기를 로그가 즉시 알려줍니다.</p>
   <h3>대표 예제</h3>
@@ -112,11 +111,8 @@
   <h3>응용 사례</h3>
   <p>① <strong>알고리즘 복잡도</strong>: 이진 탐색이 O(log n)인 이유 — 한 번에 절반씩 줄이면 "몇 번 만에 1이 되나" = log₂n. ② <strong>정보이론</strong>: 정보량 = −log₂(확률) 비트, 엔트로피의 정의. ③ <strong>머신러닝</strong>: 크로스 엔트로피 손실, 로그 우도 — 확률의 곱을 로그로 합으로 바꿔 계산 안정성 확보. ④ <strong>금융</strong>: 로그 수익률 ln(P₁/P₀)은 기간 합산이 가능해 표준으로 쓰입니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ① log(M+N) ≠ log M + log N — 로그가 더하기로 바꾸는 건 "곱셈"입니다. ② (log M)² 과 log M² 혼동. ③ 치환 t = 2ˣ 후 t ≤ 0인 근을 답에 포함. ④ 로그 부등식에서 진수 조건 누락. ⑤ 0.5ˣ 같은 감소 밑에서 부등호 방향 유지하는 실수.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>해석학에서는 순서를 뒤집어 <strong>로그를 먼저 정의</strong>하는 것이 깔끔합니다: ln x = ∫₁ˣ dt/t (9장의 적분). 이 정의에서 ln(xy) = ln x + ln y가 치환적분으로 증명되고, eˣ는 ln의 역함수로 정의됩니다. "반복 곱셈"이라는 소박한 출발점이 적분 기반의 엄밀한 구조물로 재건되는 것 — 수학이 자기 기초를 다시 놓는 전형적 방식입니다.</p>
   <p>지수함수의 본질적 특성화: f(x+y) = f(x)f(y)를 만족하는 연속함수는 f(x) = aˣ뿐입니다(코시 함수방정식). 즉 지수함수는 "덧셈을 곱셈으로 옮기는 유일한 연속 동형사상" — 군론의 언어로 (ℝ,+) → (ℝ⁺,×)의 동형입니다. 로그는 그 역동형이고, 5장의 오일러 공식 e^(iθ)는 이 동형을 복소수로 확장한 것입니다.</p>
   <h3>수학적·정량적 기초</h3>

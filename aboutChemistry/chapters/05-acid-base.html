@@ -87,13 +87,12 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🍋🧼 산과 염기가 뭐예요?</h3>
   <p><strong>산</strong>은 물에 녹으면 <strong>신맛</strong>이 나요! 레몬, 식초처럼요. 🍋 화학적으로는 <strong>H⁺(수소 이온)</strong>를 내놓는 물질이에요.</p>
   <p><strong>염기</strong>는 만지면 <strong>미끈미끈</strong>해요. 비누처럼요! 🧼 염기는 H⁺를 받거나 OH⁻를 내놓아요.</p>
@@ -124,9 +123,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>원리 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>원리 깊이 들어가기</h3>
   <p>물은 스스로 약하게 이온화합니다(자체 이온화): 2H₂O ⇌ H₃O⁺ + OH⁻. 25°C에서 이온곱 상수는 Kw = [H⁺][OH⁻] = 1.0×10⁻¹⁴이며, 여기서 pH + pOH = 14가 유도됩니다. 산의 세기는 산해리상수 Ka로 정량화됩니다. 약산 HA ⇌ H⁺ + A⁻에서 Ka = [H⁺][A⁻]/[HA]이고, Ka가 클수록(pKa = −log Ka가 작을수록) 강한 산입니다. 강산(HCl, HNO₃, H₂SO₄)은 사실상 완전히 해리되어 [H⁺] ≈ 산의 농도가 됩니다. 약산은 일부만 해리되므로 [H⁺] = √(Ka·C) 같은 근사로 구합니다.</p>
   <p>중화 반응의 본질은 H⁺ + OH⁻ → H₂O이며, 25°C에서 강산-강염기 중화열은 약 −57.1 kJ/mol로 일정합니다. 완충 용액은 약산 HA와 그 짝염기 A⁻(또는 약염기와 짝산)가 함께 있을 때 작동합니다. 외부에서 H⁺가 들어오면 A⁻가 흡수하고, OH⁻가 들어오면 HA가 중화하여 pH 변화를 완화합니다. 이때 Henderson-Hasselbalch 식 pH = pKa + log([A⁻]/[HA])로 pH를 계산하며, [A⁻] = [HA]일 때 pH = pKa이고 완충 능력이 최대가 됩니다.</p>
   <h3>핵심 공식</h3>
@@ -142,11 +141,8 @@
   <h3>응용 사례</h3>
   <p>산-염기 적정에서는 당량점 부근에서 pH가 급격히 변하며, 페놀프탈레인·메틸오렌지 같은 지시약의 변색 범위(보통 pKa ± 1)를 이용해 종말점을 잡습니다. 약산을 강염기로 적정할 때 반당량점에서 pH = pKa가 되는 점은 Ka를 실험적으로 구하는 데 쓰입니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> pH가 작다고 해서 항상 "강산"인 것은 아닙니다. 농도가 높은 약산도 pH가 낮을 수 있습니다. 산의 세기는 농도가 아니라 Ka(해리 정도)로 정해집니다. 또한 √(Ka·C) 근사는 해리도가 클 때(약 5% 초과) 오차가 커지므로 이차방정식으로 풀어야 합니다.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>정확한 산-염기 평형 계산은 단순한 근사식을 넘어 질량 보존(물질 수지), 전하 균형(전하 중성 조건), 그리고 양성자 균형(proton condition)을 연립해 푸는 것입니다. 이를 통해 다양성자산(H₃PO₄ 등, Ka1·Ka2·Ka3)이나 양쪽성 물질(HCO₃⁻)처럼 단일 근사가 깨지는 계도 엄밀히 다룰 수 있습니다. 실제 농도가 높은 용액에서는 농도 대신 활동도(activity) a = γ·C를 써야 하며, 활동도 계수 γ는 Debye-Hückel 이론이나 Davies 식, 고이온세기에서는 Pitzer 모델로 추정합니다. 따라서 엄밀한 정의는 pH = −log a(H⁺)이며, 표준 pH는 정해진 완충 표준액과 전위차계(유리전극) 측정에 기반해 IUPAC가 운영적으로 정의합니다.</p>
   <p>산 세기의 미시적 이해는 평형뿐 아니라 구조-반응성 관계로 확장됩니다. 유발효과(전자끌개 치환기가 짝염기를 안정화 → Ka 증가)와 공명 안정화(카복실산 vs 알코올의 산도 차이), 용매 효과 등이 pKa를 결정합니다. 비수용매나 초강산(magic acid, HF–SbF₅ 등) 영역에서는 Hammett 산도 함수 H₀로 산 세기를 정량화합니다.</p>
   <h3>핵심 평형식</h3>

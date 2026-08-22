@@ -120,12 +120,11 @@ Server listening on port 3000
 <h2>📚 난이도별 학습</h2>
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🤔 이게 뭐냐면?</h3><p>서버는 "절대 잠들지 않는 심부름꾼 프로그램"이에요! 🖥️ 우리가 "이거 줘!"라고 부탁(요청)하면, 서버가 척척 찾아서 돌려줘요(응답).</p>
   <h3>👀 왜 중요할까?</h3><p>인스타에 사진 올리기, 카톡 보내기, 유튜브 영상 보기… 전부 서버가 해주는 일이에요! 📱 우리가 매일 쓰는 앱은 거의 다 서버 위에서 돌아가요. 그래서 백엔드 공부는 "서버 알기"부터 시작해요.</p>
   <div class="info-card"><h4>🌱 이 말은 꼭 알아두자</h4><ul><li><strong>클라이언트</strong>: 부탁하는 쪽 (내 폰, 브라우저) 🙋</li><li><strong>서버</strong>: 부탁을 들어주는 프로그램 🤖</li><li><strong>요청(Request)</strong>: "이거 해줘!" 하고 보내는 말 📨</li><li><strong>응답(Response)</strong>: 서버가 "여기 있어!" 하고 주는 답 📬</li><li><strong>포트(Port)</strong>: 한 컴퓨터 안의 여러 창구를 나누는 번호 🚪</li></ul></div>
@@ -133,9 +132,10 @@ Server listening on port 3000
   <div class="study-tip"><strong>💡 학습 TIP:</strong> 내 컴퓨터에 아주 작은 서버를 직접 띄워볼 수 있어요! Node.js나 Python으로 몇 줄이면 뚝딱이에요. 🚀</div>
   <h3>🍬 한 입 요약</h3><ul><li>서버 = 요청 받고 응답 주는 프로그램</li><li>클라이언트와 서버는 네트워크로 연결돼요</li><li>포트로 한 컴퓨터의 여러 서비스를 구분해요</li><li>요청→응답이 백엔드의 가장 기본!</li><li>바빠지면 스케일 업/아웃으로 힘을 키워요</li></ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3><p>서버는 TCP/IP 4계층 모델 기준으로 응용 계층(HTTP)에서 요청을 처리합니다. OS는 listen 시스템 콜로 포트를 열어 두고 accept로 연결을 받아들입니다. 동시에 여러 클라이언트를 처리하기 위해 동시성 모델이 필요합니다. 멀티 프로세스(Apache prefork), 멀티 스레드(Tomcat), 이벤트 루프(Node.js, Nginx) 세 가지가 대표적입니다. 멀티 프로세스는 안정적이지만 메모리 비용이 큽니다. 멀티 스레드는 효율적이지만 동기화 이슈가 있습니다. 이벤트 루프는 단일 스레드로 수만 연결을 비동기 처리해 I/O 위주 서비스에 유리합니다. 실무에서는 Nginx 같은 리버스 프록시 뒤에 애플리케이션 서버를 두는 구조가 일반적입니다.</p>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>서버는 TCP/IP 4계층 모델 기준으로 응용 계층(HTTP)에서 요청을 처리합니다. OS는 listen 시스템 콜로 포트를 열어 두고 accept로 연결을 받아들입니다. 동시에 여러 클라이언트를 처리하기 위해 동시성 모델이 필요합니다. 멀티 프로세스(Apache prefork), 멀티 스레드(Tomcat), 이벤트 루프(Node.js, Nginx) 세 가지가 대표적입니다. 멀티 프로세스는 안정적이지만 메모리 비용이 큽니다. 멀티 스레드는 효율적이지만 동기화 이슈가 있습니다. 이벤트 루프는 단일 스레드로 수만 연결을 비동기 처리해 I/O 위주 서비스에 유리합니다. 실무에서는 Nginx 같은 리버스 프록시 뒤에 애플리케이션 서버를 두는 구조가 일반적입니다.</p>
   <h3>핵심 코드 패턴</h3>
   <pre><code>// Node.js 기본 HTTP 서버
 const http = require('http');
@@ -148,10 +148,8 @@ http.createServer((req, res) =&gt; {
   <div class="info-card"><h4>💻 예제 2: 리버스 프록시 구성</h4><p>Nginx가 80/443에서 외부 요청을 받아 내부 3000번 Node 앱으로 전달합니다. SSL 종단, 정적 파일 서빙, gzip 압축을 프록시 계층에서 분리합니다.</p></div>
   <h3>응용 사례</h3><p>대형 커머스는 트래픽 폭증 시간을 대비해 오토스케일링을 씁니다. CPU 70%를 넘으면 인스턴스를 자동으로 추가하고 트래픽이 줄면 줄입니다. 글로벌 서비스는 지역별 엣지 로케이션에 서버를 분산해 응답 속도를 줄입니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 이벤트 루프에서 동기 블로킹 코드를 호출해 전체 서버가 멈추는 경우가 흔합니다. CPU 집약 작업은 워커 스레드로 분리하세요.</div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3><p>대규모 분산 서버에서는 단일 노드 성능보다 노드 간 일관성·가용성이 더 큰 도전입니다. CAP 정리에 따라 네트워크 분할 시 일관성과 가용성 중 하나만 선택해야 합니다. 결제 시스템은 강한 일관성을, 피드 시스템은 최종 일관성으로 분리 설계합니다. C10K, C10M 문제는 epoll, kqueue, io_uring 같은 OS 수준 비동기 I/O로 풉니다. TCP backlog, SO_REUSEPORT, TCP_NODELAY 같은 소켓 옵션 튜닝이 처리량에 직접적 영향을 줍니다. 컨센서스 알고리즘(Raft, Paxos)으로 리더 선출과 상태 복제를 안전하게 수행하고, 벡터 클럭이나 CRDT로 분산 상태 충돌을 해소합니다.</p>
+
+<h3>전문가 레벨 이해</h3><p>대규모 분산 서버에서는 단일 노드 성능보다 노드 간 일관성·가용성이 더 큰 도전입니다. CAP 정리에 따라 네트워크 분할 시 일관성과 가용성 중 하나만 선택해야 합니다. 결제 시스템은 강한 일관성을, 피드 시스템은 최종 일관성으로 분리 설계합니다. C10K, C10M 문제는 epoll, kqueue, io_uring 같은 OS 수준 비동기 I/O로 풉니다. TCP backlog, SO_REUSEPORT, TCP_NODELAY 같은 소켓 옵션 튜닝이 처리량에 직접적 영향을 줍니다. 컨센서스 알고리즘(Raft, Paxos)으로 리더 선출과 상태 복제를 안전하게 수행하고, 벡터 클럭이나 CRDT로 분산 상태 충돌을 해소합니다.</p>
   <h3>최신 연구·동향</h3><p>Kubernetes가 컨테이너 오케스트레이션 표준이 되었고, eBPF는 커널에서 안전하게 코드를 실행해 Cilium 같은 사이드카리스 L7 네트워킹을 가능하게 했습니다. 서버리스(AWS Lambda, Cloudflare Workers)는 V8 isolate를 활용해 ms 단위 콜드 스타트를 달성합니다. 엣지 컴퓨팅은 사용자 가장 가까운 PoP에서 동적 코드를 실행해 글로벌 레이턴시를 줄입니다.</p>
   <h3>관련 분야</h3><ul><li>분산 시스템(Consensus, Replication)</li><li>네트워크 프로그래밍(소켓, RDMA, QUIC)</li><li>SRE/Observability(OpenTelemetry, eBPF)</li></ul>
   <h3>추가 학습 자료</h3><ul><li>"Designing Data-Intensive Applications" — Martin Kleppmann</li><li>"The Linux Programming Interface" — Michael Kerrisk</li><li>Google SRE Book(무료 공개)</li></ul>

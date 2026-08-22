@@ -56,13 +56,12 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🔥❄️ 열화학이 뭐예요?</h3>
   <p>화학 반응이 일어날 때 <strong>열(에너지)</strong>이 밖으로 나오기도 하고, 안으로 들어가기도 해요. 이 열이 어디로 오가는지 연구하는 게 <strong>열화학</strong>이에요!</p>
   <p>열을 <strong>내뿜는</strong> 반응은 <strong>발열 반응</strong>이에요(손난로처럼 뜨끈🔥). 열을 <strong>빨아들이는</strong> 반응은 <strong>흡열 반응</strong>이죠(냉찜질팩처럼 차가움❄️).</p>
@@ -91,9 +90,9 @@
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>엔탈피 H는 H = U + PV로 정의되며, 일정 압력 조건에서 반응열은 ΔH = q_p와 같습니다. 결합을 끊으려면 에너지가 필요하고(흡열), 결합을 만들면 에너지가 방출되므로(발열), 전체 ΔH는 끊은 결합 에너지 합에서 만들어진 결합 에너지 합을 뺀 값으로 근사할 수 있습니다. 표준 생성 엔탈피 ΔH°_f를 이용하면 ΔH°_rxn = Σ ΔH°_f(생성물) − Σ ΔH°_f(반응물)로 임의 반응의 엔탈피를 구합니다. 헤스의 법칙은 엔탈피가 상태 함수라는 사실에서 직접 따라 나옵니다. 즉 ΔH는 경로가 아니라 시작과 끝 상태에만 의존하므로, 측정하기 어려운 반응(예: C + ½O₂ → CO)을 여러 측정 가능한 반응의 합·차로 만들어 계산할 수 있습니다. 열역학 제1법칙 ΔU = q + w는 에너지 보존을 나타내며, 부피가 일정하면 ΔU = q_v, 압력이 일정하면 ΔH = q_p가 됩니다. 자발성은 엔탈피만으로는 정해지지 않고, 무질서도를 나타내는 엔트로피 S와 함께 깁스 자유에너지 ΔG = ΔH − TΔS로 판단합니다. ΔG &lt; 0이면 자발적입니다.</p>
   <h3>핵심 공식과 반응식</h3>
   <div class="formula">
@@ -108,11 +107,8 @@
   <h3>응용 사례</h3>
   <p>로켓 추진제 설계는 추진제가 연소할 때의 ΔH와 생성 기체 몰수를 최적화하는 일입니다. 폭발물은 매우 큰 음의 ΔH와 빠른 반응 속도를 동시에 갖습니다. 식품 영양 표시의 열량은 봄베 열량계로 측정한 연소열입니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 발열 반응이라고 항상 자발적인 것은 아닙니다. 자발성은 ΔH가 아니라 ΔG로 판단해야 하며, TΔS 항이 부호를 뒤집을 수 있습니다(예: 흡열인 얼음 녹음도 상온에서는 자발적).</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>열화학은 통계역학과 화학열역학의 다리 위에 서 있습니다. 거시적 상태 함수인 엔탈피·엔트로피·자유에너지는 미시적 분배 함수(partition function) Q로부터 유도됩니다. 예컨대 헬름홀츠 자유에너지 A = −k_B T ln Q에서 모든 열역학량을 미분으로 얻을 수 있고, 엔트로피는 볼츠만 식 S = k_B ln W로 미시 상태수 W와 연결됩니다. 표준 생성 엔탈피와 절대 엔트로피는 열역학 제3법칙(완전 결정의 절대 0K 엔트로피 = 0)을 기준으로 정의되며, 온도 의존성은 키르히호프 식 (∂ΔH/∂T)_p = ΔC_p로 다룹니다. 화학 평형 상수는 ΔG° = −RT ln K로 자유에너지와 직접 연결되고, 반트 호프 식 d(ln K)/dT = ΔH°/(RT²)로 온도 의존성을 기술합니다. 계산화학에서는 양자화학으로 분자의 전자 에너지·진동 주파수를 구한 뒤, 강체 회전자-조화 진동자(RRHO) 근사로 열적 보정과 엔트로피를 더해 ΔH, ΔG, ΔS를 ab initio로 예측합니다. 등온 적정 열량법(ITC)은 결합 반응의 ΔH를 직접 측정해 단일 실험에서 ΔH, K, ΔS를 동시에 추출합니다.</p>
   <h3>유도와 증명</h3>
   <div class="formula">

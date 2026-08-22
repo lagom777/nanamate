@@ -682,6 +682,7 @@ npm install --save-dev webpack
 yarn add --dev webpack
 pnpm add -D webpack
 </div>
+        </div>
       </section>
 
       <!-- Section 9.5 -->
@@ -969,12 +970,11 @@ REACT_APP_VERSION=1.0.0
       <h2>📚 난이도별 학습</h2>
       <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
       <div class="difficulty-tabs">
-        <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-        <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-        <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
-      </div>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
       <div class="difficulty-content" data-level="easy">
-        <span class="difficulty-badge easy">하 · 입문</span>
+        <span class="difficulty-badge easy">🟢 쉬움</span>
         <h3>🎯 딱 한 줄!</h3>
         <p>빌드는 내가 짠 코드를 브라우저가 <strong>빠르게 실행하게 묶고 압축</strong>하는 일, 배포는 그걸 <strong>사용자에게 배달</strong>하는 일이에요! 📦🚚</p>
         <h3>😎 왜 배워요?</h3>
@@ -1009,9 +1009,10 @@ REACT_APP_VERSION=1.0.0
           <li>비밀 설정값은 <code>.env</code>(환경변수)로 코드와 분리 🔐</li>
         </ul>
       </div>
-      <div class="difficulty-content" data-level="medium">
-        <span class="difficulty-badge medium">중 · 응용</span>
-        <h3>이론 깊이</h3>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
         <p>모던 번들러는 모듈 그래프를 만들고, 진입점부터 의존성을 따라가며 최종 산출물을 생성합니다. 이때 트리 셰이킹은 ESM의 정적 분석성을 활용해 사용되지 않는 export를 제거합니다. 코드 스플리팅은 동적 <code>import()</code>·라우트 단위로 청크를 분리해 초기 로드를 줄이고, 청크는 콘텐츠 해시 파일명으로 장기 캐싱이 가능합니다. CSS는 PostCSS 파이프라인으로 자동 prefix·중첩 처리를 거쳐 산출되며, 사용 안 된 클래스는 PurgeCSS로 제거합니다. CI/CD는 (1) 의존성 설치 캐싱, (2) 병렬 테스트, (3) 산출물 캐시, (4) 환경별 배포(스테이징·프로덕션) 단계로 구성되며, GitHub Actions·CircleCI·GitLab CI가 표준입니다. 배포 전략으로는 Blue-Green, Canary, Feature Flag(LaunchDarkly·Unleash)가 안전망 역할을 합니다.</p>
         <h3>핵심 코드 패턴</h3>
         <pre><code># .github/workflows/deploy.yml
@@ -1047,10 +1048,8 @@ jobs:
         <div class="warning-box">
           <strong>⚠️ 자주 하는 실수:</strong> <code>.env</code>를 깃에 커밋해 비밀키 노출, <code>node_modules</code> 캐시 미설정으로 CI 시간 폭발, 빌드 산출물에 source map 포함되어 코드 그대로 노출, 캐시 무효화 안 해서 옛 청크 로드 실패.
         </div>
-      </div>
-      <div class="difficulty-content" data-level="hard">
-        <span class="difficulty-badge hard">상 · 심화</span>
-        <h3>전문가 레벨</h3>
+
+<h3>전문가 레벨</h3>
         <p>고도화된 빌드 시스템은 의존성 그래프 분석, 영속 캐시(persistent cache), 분산 빌드를 활용합니다. esbuild·SWC는 Go·Rust로 작성돼 Babel 대비 10–100배 빠르고, Turbopack은 함수 단위 증분 컴파일로 변경 부분만 다시 빌드합니다. ESM·CJS 듀얼 패키지를 정확히 출력하려면 <code>exports</code> 필드의 condition(import/require/types)을 정밀 설정해야 하며, "subpath patterns"로 트리 셰이킹 단위를 잘게 쪼갤 수 있습니다. 배포 측면에선 Edge SSR(Cloudflare Workers·Vercel Edge·Deno Deploy)이 PoP에서 페이지를 즉시 생성해 TTFB 50ms 이하를 달성합니다. 보안은 SRI(Subresource Integrity), CSP(Content Security Policy), Trusted Types로 XSS 표면을 줄이고, Sigstore·SLSA로 빌드 공급망 무결성을 보증하는 것이 표준화되고 있습니다.</p>
         <h3>고급 패턴</h3>
         <pre><code>// vite.config.ts — 라이브러리 모드 + ESM/CJS 듀얼 출력
@@ -1101,7 +1100,7 @@ export default defineConfig({
         <div class="success-box">
           <strong>🎓 도전 과제:</strong> 모노레포에 앱 3개·공용 패키지 5개를 두고 Turborepo + Cloudflare Pages + Sigstore provenance까지 구성해, PR마다 Preview URL이 1분 내에 뜨도록 만들어보세요.
         </div>
-      </div>
+</div>
     
 <h2>🕹️ 직접 해보기 — 빌드·배포 순서 맞추기</h2>
 <p>프론트엔드 빌드부터 배포까지의 단계를 순서대로 배열해 보세요.</p>

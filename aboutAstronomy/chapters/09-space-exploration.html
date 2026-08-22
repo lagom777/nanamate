@@ -116,12 +116,11 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인의 수준에 맞춰 탭을 선택하세요.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🌟 한 줄로 말하면?</h3>
   <p>우주탐사는 <strong>로켓</strong>으로 지구 중력을 이기고 우주로 나가 다른 천체를 탐험하는 인류의 모험이에요! 🚀</p>
   <h3>🤔 왜 흥미로울까?</h3>
@@ -148,9 +147,10 @@
     <li>1957년 스푸트니크 → 달 착륙 → 화성 탐사 → 성간 탐사까지!</li>
   </ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>모든 로켓 설계의 출발점은 <strong>치올코프스키 로켓 방정식</strong> Δv = v_e ln(m₀/m_f)입니다. 여기서 핵심은 속도 증가량이 질량비에 로그로 의존한다는 점입니다. 즉 같은 Δv를 얻으려면 연료를 기하급수적으로 늘려야 하므로, 단번에 모든 임무를 수행하는 단일 로켓은 비효율적입니다. 이 때문에 빈 연료 탱크를 분리하는 <strong>다단 로켓</strong>이 필수입니다. 궤도역학에서 원궤도 속도는 v = √(GM/r)로 고도가 높을수록 느리며, 한 지점에서의 총 역학적 에너지는 비스-비바(vis-viva) 방정식 v² = GM(2/r − 1/a)로 주어집니다. 엔진의 효율은 <strong>비추력(I_sp = v_e/g₀, 초 단위)</strong>으로 나타내며, 화학 로켓은 약 300~450초, 이온 엔진은 수천 초에 이릅니다.</p>
   <h3>핵심 메커니즘</h3>
   <div class="info-card"><h4>🔄 호만 전이 궤도</h4><p>두 원궤도 사이를 잇는 가장 연료 효율적인 경로입니다. 출발 궤도에서 가속(Δv₁)해 타원 전이 궤도에 진입하고, 원지점에 도달하면 다시 가속(Δv₂)해 목표 원궤도로 원형화합니다. 총 Δv는 두 기동의 합이며, 대신 비행 시간이 가장 깁니다.</p></div>
@@ -161,10 +161,8 @@
   <h3>현대적 전개</h3>
   <p>오늘날에는 화학 로켓의 한계를 넘기 위한 다양한 추진 기술이 실용화·연구되고 있습니다. 이온·홀 추력기 같은 전기 추진은 추력은 약하지만 비추력이 매우 높아 장기 심우주 임무에 쓰입니다. 또한 팰컨 9으로 대표되는 <strong>재사용 발사체</strong>는 1단 로켓을 회수·재사용하여 발사 비용을 크게 낮추며 우주 접근성을 바꾸어 놓았습니다.</p>
   <div class="warning-box"><strong>⚠️ 주의:</strong> 호만 전이는 가장 연료 효율적이지만 가장 느립니다. 시간이 중요한 임무에서는 더 많은 Δv를 쓰는 빠른 궤적을 택하거나, 추력이 약한 이온 엔진의 경우 호만 근사가 들어맞지 않아 별도의 저추력 궤적 설계가 필요합니다.</div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+
+<h3>전문가 레벨 이해</h3>
   <p>실제 행성 간 궤도 설계는 다체 문제이지만, 1차 근사로 <strong>패치드 코닉(patched conic)</strong> 기법을 씁니다. 비행을 세 구간(출발 행성 영향권, 태양 중심 전이, 도착 행성 영향권)으로 나누고, 각 구간을 하나의 지배 천체에 대한 이체 문제(원뿔곡선)로 풀어 영향권 경계에서 연결합니다. <strong>중력 보조(gravity assist)</strong>는 행성 중심 좌표계에서는 쌍곡선 통과로 속력 크기가 보존되지만 방향이 바뀌고, 태양 중심 좌표계에서는 행성의 막대한 궤도 에너지 중 극히 일부를 주고받아 탐사선이 가속되거나 감속됩니다. 추력이 약한 임무에서는 <strong>저추력 궤적(low-thrust trajectory)</strong>을 사용하며, 연료 최소화 같은 최적 제어 문제는 변분법과 폰트랴긴 최대 원리로 다룹니다.</p>
   <h3>핵심 수식</h3>
   <div class="formula">Δv = v_e ln(m₀/m_f) &nbsp;|&nbsp; v² = GM(2/r − 1/a) &nbsp;|&nbsp; v_∞² = v_탈출 좌표계² (중력 보조 시 방향 전환)</div>

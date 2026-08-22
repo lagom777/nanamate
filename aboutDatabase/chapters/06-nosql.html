@@ -398,13 +398,12 @@ RETURN b.name</code></pre>
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎮 한 줄로 말하면?</h3>
   <p>NoSQL은 <strong>표(테이블) 말고 다양한 모양으로 데이터를 저장하는 DB 가족</strong>이에요! 🧰</p>
 
@@ -446,9 +445,9 @@ RETURN b.name</code></pre>
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
   <p>NoSQL 운동은 2000년대 후반 구글의 Bigtable 논문, 아마존의 Dynamo 논문에서 시작되었습니다. CAP 정리는 분산 시스템이 일관성·가용성·분할허용성 셋 중 둘만 동시에 만족할 수 있다는 명제이며, NoSQL은 대부분 AP 또는 CP 진영을 선택합니다. BASE(Basically Available, Soft state, Eventual consistency)는 ACID의 대안으로 제시된 약한 일관성 모델입니다. 도큐먼트 DB는 임베디드 도큐먼트로 조인을 줄이고, MongoDB는 BSON 형식으로 JSON을 확장한 바이너리 문서를 저장합니다. 컬럼 패밀리 DB(Cassandra)는 LSM 트리 기반으로 쓰기 성능이 뛰어나며, 파티션 키와 클러스터링 키 설계가 성능을 좌우합니다. 키-값 DB는 인메모리(Redis)와 디스크(DynamoDB) 계열로 나뉘며, Redis는 자료구조 서버로서 큐·세트·해시·정렬세트·스트림까지 제공합니다. 그래프 DB는 인덱스 프리 인접성(Index-free Adjacency)으로 다단계 탐색이 빠릅니다.</p>
 
   <h3>실전 SQL/쿼리</h3>
@@ -494,11 +493,8 @@ CREATE TABLE sensor_data (
   <div class="warning-box">
     <strong>⚠️ 자주 하는 실수:</strong> 트랜잭션과 조인이 필요한 데이터를 NoSQL에 강제로 넣다가 일관성 사고를 겪는 경우가 흔합니다. 또 MongoDB의 무차별 임베딩은 도큐먼트 크기 한계(16MB)에 부딪힙니다.
   </div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨</h3>
+<h3>전문가 레벨</h3>
   <p>Dynamo 스타일 시스템은 일관성 해싱으로 데이터를 노드에 분산하고, 가상 노드(vnode)로 로드 균형을 맞춥니다. 복제는 N개의 복제본을 두고, R+W>N이면 강한 일관성, 그 미만이면 결과적 일관성을 갖습니다. 충돌 해소는 Last-Write-Wins나 벡터 클럭, CRDT(Conflict-free Replicated Data Type) 등이 사용됩니다. Cassandra는 LSM 트리 + Merkle 트리 기반 anti-entropy 복구, 힌티드 핸드오프, 리드 리페어로 가용성을 극대화합니다. MongoDB는 4.0부터 다중 도큐먼트 트랜잭션을 도입했지만, 단일 샤드 트랜잭션이 권장 사용 패턴입니다. DynamoDB의 글로벌 테이블은 멀티 리전 active-active 복제를 제공하며, 시간 기반 충돌 해소를 사용합니다. 그래프 DB는 다단계 패턴 매칭의 효율을 위해 인접 리스트를 디스크에 클러스터링합니다. 벡터 DB는 HNSW 그래프 인덱스로 ANN(Approximate Nearest Neighbor) 검색을 수행하며, 메타데이터 필터링과 결합한 하이브리드 검색이 표준이 되었습니다.</p>
 
   <h3>고급 패턴</h3>

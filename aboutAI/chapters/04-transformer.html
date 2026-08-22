@@ -293,13 +293,12 @@ Pre-LayerNorm(Xiong et al., 2020)은 훈련 안정성을 크게 향상시켜 GPT
 <p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
 
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🔎 한마디로 말하면?</h3>
   <p>Transformer는 문장 속 <strong>모든 단어가 서로서로 쳐다보면서</strong> "누가 누구랑 관련 있지?"를 한꺼번에 알아내는 신경망이에요! 2017년 구글의 논문 "Attention is All You Need"에서 처음 나왔고, 지금 <strong>GPT, Claude, Gemini의 뼈대</strong>가 됐어요 🦴</p>
   <div class="analogy">📚 도서관 비유! "사과 색깔이 뭐지?"라는 질문(Query)을 들고 도서관에 가요. 책마다 제목표(Key)와 내용(Value)이 있죠. 내 질문과 가장 비슷한 제목표를 가진 책을 찾아 읽으면 끝! 문장 속 단어들이 이렇게 서로의 책을 동시에 찾아봐요.</div>
@@ -325,9 +324,9 @@ Pre-LayerNorm(Xiong et al., 2020)은 훈련 안정성을 크게 향상시켜 GPT
   </ul>
 </div>
 
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>이론 깊이 들어가기</h3>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
   <p>Vaswani et al.(2017)의 핵심 통찰은 "RNN의 순환 구조 없이도 시퀀스 모델링이 가능하다"였습니다. Self-attention은 입력 시퀀스 X ∈ R^(n×d)에 대해 세 개의 선형 변환 Q = XW_Q, K = XW_K, V = XW_V를 만들고, Attention(Q, K, V) = softmax(QK^T/√d_k)V로 가중합을 계산합니다. √d_k 스케일링은 dot-product의 분산 폭주를 막아 softmax의 그래디언트 안정성을 확보합니다. Multi-Head Attention은 h개의 attention을 병렬로 수행한 뒤 concat하고 선형변환합니다. 각 head가 서로 다른 관계 패턴(문법, 의미, 공참조 등)을 학습하도록 유도하는 효과가 있습니다. Position 정보는 sin/cos 기반 절대 인코딩(원논문) 또는 RoPE(Rotary Position Embedding, Su et al., 2021), ALiBi 같은 상대 인코딩으로 주입합니다. Transformer 블록은 (1) Multi-Head Self-Attention, (2) Position-wise Feed-Forward Network(FFN), 그리고 각각의 Residual + LayerNorm으로 구성됩니다. FFN은 dim_model → 4·dim_model → dim_model로 확장-축소되며, 사실 매개변수의 약 2/3가 여기 있습니다.</p>
   <h3>핵심 개념과 코드</h3>
   <pre><code>import torch, math
@@ -356,11 +355,8 @@ class SelfAttention(nn.Module):
   <h3>응용 사례</h3>
   <p>① 코드 생성(GitHub Copilot, Cursor)은 GPT 계열 디코더로 다음 토큰을 예측해 코드를 자동완성합니다. ② 단백질 구조 예측 AlphaFold 2의 Evoformer는 Transformer의 변종으로 MSA(Multiple Sequence Alignment)와 pair representation을 동시에 처리합니다. ③ 음성 합성(VALL-E, Bark)은 오디오 토큰화 후 Transformer로 생성합니다. ④ 추천 시스템에서도 SASRec, BERT4Rec 같이 사용자의 클릭 시퀀스를 Transformer로 모델링합니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> Self-attention의 시간·메모리 복잡도는 O(n²d)입니다. 시퀀스 길이가 8K, 32K가 되면 메모리가 폭증하므로 FlashAttention, sliding window, Mamba 같은 효율 기법이 필요합니다. 또 Layer Norm 위치(pre-LN vs post-LN)에 따라 학습 안정성이 크게 달라집니다.</div>
-</div>
 
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 이해</h3>
+<h3>전문가 레벨 이해</h3>
   <p>Self-attention은 dynamic weight를 가진 그래프 신경망의 한 형태로 해석할 수 있습니다. 각 토큰이 노드이고, attention 가중치가 동적으로 결정되는 edge weight입니다. 이론적으로 Transformer는 Universal Approximator이며(Yun et al., 2020), 충분한 깊이와 폭이 주어지면 임의의 sequence-to-sequence 함수를 근사할 수 있습니다. Mechanistic interpretability 관점에서 Anthropic의 Transformer Circuits 연구(Elhage 2021, Olsson 2022)는 attention head를 induction head, copying head, name mover head 등으로 분해하고, in-context learning이 induction head에 의해 구현됨을 보였습니다. RoPE(Rotary Position Embedding)는 회전 행렬 R_(θm)을 Q, K에 곱하여 상대 위치 m-n을 내적에 자연스럽게 삽입합니다. 이는 long context 일반화의 핵심이 되었고, NTK-aware scaling, YaRN, Position Interpolation 같은 후속 기법으로 RoPE 기반 모델의 컨텍스트 확장이 가능해졌습니다. FlashAttention(Dao 2022, 2023)은 SRAM 친화적 타일링으로 attention의 HBM IO를 표준 어텐션의 Θ(n²)에서 Θ(n²d²/M)로 줄여(SRAM 크기 M이 d²보다 충분히 클 때 이득) 실효 속도를 2-4배 높였습니다. Sparse attention(Longformer, BigBird), linear attention(Performer, Linformer), 그리고 SSM(Mamba, S5)는 quadratic complexity를 우회하는 다른 접근들입니다.</p>
   <h3>수학적 기초</h3>
   <div class="formula">$$\text{Scaled Dot-Product Attention: } \text{Attn}(Q, K, V) = \text{softmax}\!\left(\frac{QK^T}{\sqrt{d_k}}\right) V$$

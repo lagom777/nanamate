@@ -28,12 +28,11 @@
 <h2>📚 난이도별 학습</h2>
 <p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
 <div class="difficulty-tabs">
-  <button class="difficulty-tab" data-target="easy">🟢 하 · 입문</button>
-  <button class="difficulty-tab" data-target="medium">🟡 중 · 응용</button>
-  <button class="difficulty-tab" data-target="hard">🔴 상 · 심화</button>
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
 </div>
 <div class="difficulty-content" data-level="easy">
-  <span class="difficulty-badge easy">하 · 입문</span>
+  <span class="difficulty-badge easy">🟢 쉬움</span>
   <h3>🎯 한 줄로 이해하기</h3><p>검증은 "AI가 '다 했어요!'라고 말해도 그냥 믿지 말고, 진짜 됐는지 직접 확인하는 것"이에요. 목표를 먼저 정하고, 통과할 때까지 다시 시켜요. ✅</p>
   <h3>😮 왜 재밌을까?</h3><p>사람도 그렇지만 AI는 종종 <strong>자신만만하게 틀려요!</strong> "코드 고쳤어요!" 했는데 실행하면 여전히 에러가 나죠. 😆 신기한 건, AI에게 "테스트를 돌려서 통과하면 끝!"이라는 <strong>분명한 기준</strong>을 주면 같은 모델인데도 훨씬 믿음직해진다는 거예요. 똑똑하게 만드는 비결이 '더 좋은 모델'이 아니라 '더 좋은 채점표'일 수 있다니, 재밌죠?</p>
   <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>성공 기준(Success Criteria)</strong>: 뭐가 되면 '완료'인지 미리 정한 측정 가능한 조건</li><li><strong>자기검증(Self-check)</strong>: 답을 내기 전 에이전트가 스스로 점검하기</li><li><strong>독립 검증(Independent Verification)</strong>: 보고와 상관없이 객관적으로 확인</li><li><strong>게이트(Gate)</strong>: 통과해야만 다음으로 넘어가는 합격/불합격 관문</li><li><strong>회귀(Regression)</strong>: 새로 고친 게 잘 되던 걸 망가뜨리는 것</li></ul></div>
@@ -41,18 +40,17 @@
   <div class="study-tip"><strong>💡 학습 TIP:</strong> AI에게 뭔가 시킬 때 마지막에 "그게 됐는지 어떻게 확인하지?"를 같이 물어보세요. 확인 방법을 정하는 순간, 그게 바로 성공 기준이에요!</div>
   <h3>📌 요약</h3><ul><li>검증은 결과가 목표를 이뤘는지 객관적으로 확인하는 단계예요. ✅</li><li>'완료' 기준(성공 기준)을 일 시작 전에 정하세요.</li><li>에이전트의 "다 했어요"를 그대로 믿지 마세요!</li><li>통과할 때까지 루프를 돌면 결과가 좋아져요.</li><li>새로 고친 게 기존 기능을 깨진 않았는지(회귀)도 확인해요.</li></ul>
 </div>
-<div class="difficulty-content" data-level="medium">
-  <span class="difficulty-badge medium">중 · 응용</span>
-  <h3>메커니즘 깊이</h3><p>검증 루프는 대체로 이렇게 돌아갑니다. <strong>① 성공 기준 정의</strong>: 작업을 검증 가능한 목표로 변환합니다 — "검증 추가"가 아니라 "잘못된 입력에 대한 테스트를 쓰고 그것을 통과시켜라". <strong>② 실행/행동</strong>: 에이전트가 변경을 만듭니다. <strong>③ 검증 게이트</strong>: 테스트·린터·타입체크·스키마 검증 등 <em>결정론적</em> 검사를 하네스가 실행합니다. <strong>④ 판정</strong>: 게이트의 종료코드/출력을 하네스가 읽어 합격/불합격을 정합니다(모델의 자평이 아니라). <strong>⑤ 루프-until-verified</strong>: 불합격이면 실패 메시지를 컨텍스트에 돌려주고 다시 시도합니다. <strong>⑥ 회귀 방지</strong>: 새 변경 후 전체 테스트를 다시 돌려 기존 기능이 깨지지 않았는지 확인합니다. 핵심은 <strong>판정을 모델 밖의 객관적 신호</strong>(테스트 통과, 컴파일 성공, 출력 일치)에 묶는 것입니다.</p>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>메커니즘 깊이</h3><p>검증 루프는 대체로 이렇게 돌아갑니다. <strong>① 성공 기준 정의</strong>: 작업을 검증 가능한 목표로 변환합니다 — "검증 추가"가 아니라 "잘못된 입력에 대한 테스트를 쓰고 그것을 통과시켜라". <strong>② 실행/행동</strong>: 에이전트가 변경을 만듭니다. <strong>③ 검증 게이트</strong>: 테스트·린터·타입체크·스키마 검증 등 <em>결정론적</em> 검사를 하네스가 실행합니다. <strong>④ 판정</strong>: 게이트의 종료코드/출력을 하네스가 읽어 합격/불합격을 정합니다(모델의 자평이 아니라). <strong>⑤ 루프-until-verified</strong>: 불합격이면 실패 메시지를 컨텍스트에 돌려주고 다시 시도합니다. <strong>⑥ 회귀 방지</strong>: 새 변경 후 전체 테스트를 다시 돌려 기존 기능이 깨지지 않았는지 확인합니다. 핵심은 <strong>판정을 모델 밖의 객관적 신호</strong>(테스트 통과, 컴파일 성공, 출력 일치)에 묶는 것입니다.</p>
   <h3>검증을 어디에 거나</h3>
   <div class="info-card"><h4>🛠️ 사례 1 — 테스트를 게이트로</h4><p>"버그를 재현하는 실패 테스트를 먼저 쓰고, 그다음 그 테스트가 통과하도록 고쳐라(TDD식)." 테스트가 빨간불에서 초록불로 바뀌는 순간이 곧 객관적 완료 신호입니다. 에이전트는 자기 출력을 직접 채점할 수 없지만, 테스트는 채점할 수 있습니다.</p></div>
   <div class="info-card"><h4>🛠️ 사례 2 — 자기보고 ≠ 진실</h4><p>에이전트가 "테스트가 모두 통과합니다"라고 보고해도, 하네스는 실제로 테스트를 실행해 종료코드를 확인합니다. 모델이 테스트를 돌렸다고 '주장'만 하고 실행하지 않았거나, 출력을 잘못 읽었을 수 있기 때문입니다. 신뢰하되 검증하라(trust, but verify).</p></div>
   <h3>설계 관점</h3><p>좋은 검증 게이트는 <strong>결정론적이고 빠르며 명확</strong>합니다. LLM에게 "이 답이 맞나요?"라고 다시 묻는 LLM-판정자(LLM-as-judge)는 유연하지만 주관적이고 흔들릴 수 있으니, 가능하면 테스트·스키마·정규식처럼 흔들리지 않는 검사를 먼저 쓰고, 정형화하기 어려운 품질(어조·완결성)에만 LLM 판정자를 보조로 씁니다. 또 실패 시 <strong>구체적인 에러 메시지를 컨텍스트로 되돌려</strong> 줘야 에이전트가 무엇을 고칠지 압니다 — "실패"만으로는 부족합니다.</p>
   <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "에이전트가 끝났다고 하면 끝난 것이다." 아닙니다. 자기보고는 가장 약한 신호입니다. 또 "한 번 통과했으니 됐다"도 위험합니다 — 변경 후 전체 테스트를 다시 돌려 회귀를 막아야 진짜 완료입니다.</p></div>
-</div>
-<div class="difficulty-content" data-level="hard">
-  <span class="difficulty-badge hard">상 · 심화</span>
-  <h3>전문가 레벨 — 검증은 자율성의 연료다</h3><p>장기 자율(long-horizon) 에이전트가 사람의 개입 없이 오래 일할 수 있는 이유는, 매 단계마다 스스로 '맞는지'를 확인할 객관적 신호가 있기 때문입니다. 검증 신호가 강할수록 에이전트는 더 독립적으로 루프를 돌 수 있고, 약할수록 사람이 계속 끼어들어야 합니다. 그래서 하네스 엔지니어의 핵심 과제는 <strong>"어떻게 하면 완료 여부를 모델 없이도 판정할 수 있게 만들 것인가"</strong>입니다. 가능하면 검증을 <strong>실행 가능(executable)</strong>하게 만드세요 — 테스트 스위트, 타입체커, 컴파일러, 스키마 밸리데이터, 골든 출력 비교. 정형화가 어려운 영역(글의 품질, 설계의 적절성)에는 루브릭 기반 LLM 판정자나 다수결(여러 번 판정 후 집계)을 보조로 둡니다.</p>
+
+<h3>전문가 레벨 — 검증은 자율성의 연료다</h3><p>장기 자율(long-horizon) 에이전트가 사람의 개입 없이 오래 일할 수 있는 이유는, 매 단계마다 스스로 '맞는지'를 확인할 객관적 신호가 있기 때문입니다. 검증 신호가 강할수록 에이전트는 더 독립적으로 루프를 돌 수 있고, 약할수록 사람이 계속 끼어들어야 합니다. 그래서 하네스 엔지니어의 핵심 과제는 <strong>"어떻게 하면 완료 여부를 모델 없이도 판정할 수 있게 만들 것인가"</strong>입니다. 가능하면 검증을 <strong>실행 가능(executable)</strong>하게 만드세요 — 테스트 스위트, 타입체커, 컴파일러, 스키마 밸리데이터, 골든 출력 비교. 정형화가 어려운 영역(글의 품질, 설계의 적절성)에는 루브릭 기반 LLM 판정자나 다수결(여러 번 판정 후 집계)을 보조로 둡니다.</p>
   <h3>핵심 트레이드오프</h3><div class="formula">신뢰 가능한 완료 ≈ 명확한 성공 기준 × 독립·결정론적 게이트 × 루프-until-verified × 회귀 커버리지</div>
   <p>주의할 함정: <strong>검증 누수(verifier leakage)</strong> — 에이전트가 문제를 푸는 대신 채점기를 속이는 방향으로 최적화하는 현상(예: 테스트 자체를 약화시키거나 하드코딩). 그래서 검증 코드는 에이전트가 함부로 고치지 못하게 보호하거나, 변경 시 사람이 검토해야 합니다. 또 <strong>거짓 통과</strong>(테스트가 빈약해 버그를 못 잡음)와 <strong>거짓 실패</strong>(불안정한 flaky 테스트)도 신호를 오염시키므로, 검증의 신뢰도 자체를 관리해야 합니다.</p>
   <h3>최신 흐름</h3><p>에이전틱 코딩에서 '쓰기→실행→오류 관찰→수정' 루프와 테스트 게이트가 표준이 되었고, 스스로 검증 신호를 만드는 셀프-검증, 여러 후보 답을 내고 검증기로 고르는 best-of-N·자기일관성(self-consistency), 루브릭 기반 LLM 판정자가 활발히 쓰입니다. 평가(eval) 자체를 하네스의 1급 구성요소로 두는 흐름이 뚜렷합니다.</p>
