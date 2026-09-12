@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1. 뉴런과 시냅스 — aboutNeuroscience</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">🧠 표지</a></li><li><a href="01-neurons.html">1. 뉴런과 시냅스</a></li><li><a href="02-brain-anatomy.html">2. 뇌 해부학</a></li><li><a href="03-sensory.html">3. 감각과 지각</a></li><li><a href="04-memory.html">4. 기억과 학습</a></li><li><a href="05-emotion.html">5. 정서와 동기</a></li><li><a href="06-consciousness.html">6. 의식과 수면</a></li><li><a href="07-neuroplasticity.html">7. 신경가소성</a></li><li><a href="08-disorders.html">8. 뇌질환과 장애</a></li><li><a href="09-neurotech.html">9. 뇌공학과 AI</a></li></ol></aside>
+<main><header class="paper-header"><h1><em>뉴런과 시냅스</em></h1><p class="authors">Chapter 1 — Neurons, Synapses & Signal Transmission</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 두 뉴런이 시냅스 간극을 사이에 두고 신호 펄스를 주고받습니다</span>
+<h2>뉴런과 시냅스 개요</h2><p>Neurons, Synapses & Signal Transmission의 핵심 메커니즘을 3D 시뮬레이션과 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>뉴런의 구조(축삭·수상돌기), 막전위와 활동전위의 발생 원리, 신경전달물질을 통한 시냅스 신호 전달 메커니즘을 다룹니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🧠 한 줄로 이해하기</h3><p>뉴런은 뇌 속 작은 <strong>전기 배달부</strong>예요! 시냅스는 배달부끼리 메시지를 건네는 <strong>다리</strong>고요. 🌉</p>
+  <h3>😲 왜 재밌을까?</h3><p>아침에 알람을 손으로 탁 끄는 것도 뉴런들이 힘을 합친 거예요. 친구 얼굴을 보고 이름이 딱 떠오를 때, 시냅스 수천 개가 동시에 불을 켜요. ✨ 매운 걸 먹고 땀이 삐질 나는 것도 신호가 전달된 증거! 우리 생각과 기분은 전부 뉴런들의 수다에서 시작돼요. 🗣️</p>
+  <div class="info-card"><h4>🌱 꼭 알아둘 말</h4><ul><li><strong>뉴런(Neuron)</strong>: 뇌를 이루는 기본 세포 🧩</li><li><strong>시냅스(Synapse)</strong>: 뉴런과 뉴런을 잇는 연결 다리 🌉</li><li><strong>도파민(Dopamine)</strong>: "좋았어, 또 하고 싶어!"를 만드는 물질 🎉</li><li><strong>수상돌기(Dendrite)</strong>: 신호를 받는 안테나 가지 📡</li><li><strong>축삭(Axon)</strong>: 신호를 멀리 보내는 긴 전선 🔌</li></ul></div>
+  <h3>💬 쉽게 풀어보기</h3><p>뉴런을 <strong>전화 통신망</strong>이라고 생각해봐요! ☎️ 우리 집(세포체)에서 나온 전화선(축삭)이 다른 집까지 쭉 이어져요. 그런데 선이 딱 붙어있진 않아요. 끝에 있는 작은 우체통(시냅스)에 편지를 톡 넣어요. 📬 그 편지(화학물질)를 상대방의 안테나(수상돌기)가 받아요. 편지가 충분히 쌓이면 그 친구도 전화를 걸기 시작하죠! 우리 뇌에는 이런 배달부가 무려 <strong>약 860억 개</strong>! 각자 수천 명의 친구와 연결돼 있어요. 😳 어떤 배달부는 "가자!"(흥분), 어떤 배달부는 "잠깐!"(진정) 메시지를 보내요. 신기한 건, <strong>자주 쓰는 길은 점점 굵어지고 안 쓰는 길은 사라진다</strong>는 것! 그래서 여러 번 복습하면 진짜 기억에 남는 거예요. 💪</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 뉴런을 직접 그려봐요! 세포체 → 수상돌기 → 축삭 → 시냅스 순서로 화살표를 그리면 신호가 어디로 가는지 머리에 쏙 들어와요. ✏️</div>
+  <h3>📌 요약</h3><ul><li>뉴런은 뇌의 정보 배달부예요.</li><li>시냅스는 뉴런끼리 메시지를 주고받는 다리예요.</li><li>신호는 전기와 화학 형태로 바뀌며 전달돼요.</li><li>자주 쓰는 연결은 강해지고, 안 쓰면 약해져요.</li><li>도파민, 세로토닌 같은 물질이 편지를 배달해요. 💌</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>메커니즘 깊이</h3><p>뉴런의 휴지전위는 약 -70mV로, 세포 내부가 외부보다 음전하 상태입니다. 자극이 역치(약 -55mV)를 넘으면 나트륨 채널이 열리며 +30mV까지 급격히 탈분극되는 활동전위가 발생합니다. 이후 칼륨 채널이 열려 재분극되고, 잠시 과분극 상태를 거쳐 다시 휴지전위로 돌아옵니다. 이 모든 과정은 약 1~2밀리초 내에 일어납니다. 활동전위는 축삭을 따라 미엘린 수초가 있는 부위에서 도약 전도하며 100m/s 이상의 속도로 전달됩니다. 축삭 말단에 도달하면 칼슘 유입에 의해 시냅스 소포가 막과 융합하고, 신경전달물질이 시냅스 간극으로 방출됩니다. 수용체는 이온성과 대사성으로 나뉘며, 흥분성(글루타메이트)과 억제성(GABA)이 균형을 이루어 신경 회로의 출력이 결정됩니다.</p>
+  <h3>대표 실험/사례</h3>
+  <div class="info-card"><h4>🧠 사례 1</h4><p>호지킨과 헉슬리는 1952년 오징어 거대 축삭을 사용해 활동전위의 이온 메커니즘을 정량화했고, 노벨상을 수상했습니다.</p></div>
+  <div class="info-card"><h4>🧠 사례 2</h4><p>중증 근무력증 환자에서 아세틸콜린 수용체에 대한 자가항체가 시냅스 전달을 차단해 근육 약화를 초래합니다.</p></div>
+  <h3>실험 방법</h3><p>패치 클램프 기법으로 단일 채널 전류를 측정합니다. 광유전학(Optogenetics)은 채널로돕신을 발현시켜 빛으로 특정 뉴런을 활성화합니다. fMRI는 혈류 변화를 통해 뇌 활동 영역을 시각화합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "뉴런이 강할수록 신호가 크다"는 잘못된 생각입니다. 활동전위는 전부 또는 전무 법칙을 따르며, 강도가 아닌 발화 빈도로 정보를 인코딩합니다.</div>
+
+<h3>전문가 레벨</h3><p>분자 수준에서 시냅스 가소성은 NMDA 수용체를 통한 칼슘 유입과 CaMKII 자가인산화에 의해 시작됩니다. 장기강화(LTP)는 AMPA 수용체의 막 삽입을 통해 시냅스 강도를 증가시키며, 이는 학습과 기억의 세포적 기반으로 여겨집니다. 시스템 수준에서는 흥분-억제 균형이 임계 상태(critical state)를 유지해 정보 전달의 효율을 극대화합니다. 계산신경과학에서는 적분-발화 모델, 호지킨-헉슬리 모델, 그리고 스파이킹 신경망(SNN)으로 뉴런의 동역학을 시뮬레이션합니다. 시냅스에는 단기 가소성, 항상성 가소성, 메타가소성 등 다층적 조절 기제가 존재하며, 이들이 신경 회로의 안정성과 학습 능력을 동시에 보장합니다. 최근에는 별아교세포가 시냅스 기능에 능동적으로 참여한다는 트라이파타이트 시냅스 개념이 확립되었습니다. 또한 시냅스 단백질 PSD-95, 셰인크 등의 결함이 자폐 스펙트럼 장애와 연결된다는 연구가 늘고 있습니다.</p>
+  <h3>핵심 모델</h3><div class="formula">호지킨-헉슬리 방정식: C dV/dt = -g_Na m³h(V-E_Na) - g_K n⁴(V-E_K) - g_L(V-E_L) + I</div>
+  <h3>최신 연구</h3><p>뇌 오가노이드를 사용해 인간 뉴런 회로의 발달과 질병 모델을 구축하는 연구가 활발합니다. 광유전학과 화학유전학을 결합한 회로 매핑은 특정 행동의 신경 기반을 정밀하게 추적합니다. 단일세포 RNA 시퀀싱을 통해 수백 가지 뉴런 아형이 분류되며, 이는 정신질환의 분자 표적 발굴에 기여합니다.</p>
+  <h3>관련 분야</h3><ul><li>분자생물학과 단백질 구조 연구</li><li>계산신경과학과 인공지능</li><li>신경약리학과 정신의학</li></ul>
+  <h3>추가 자료</h3><ul><li>Kandel, <em>Principles of Neural Science</em>, 6판</li><li>Bear, <em>Neuroscience: Exploring the Brain</em></li><li>Allen Brain Atlas (온라인)</li></ul>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 모든 시냅스의 가소성을 영구히 잠근다면, 우리는 더 이상 새로운 것을 배울 수 없을까요? 단기 기억과 장기 기억 중 어느 쪽이 먼저 사라질지 추론해 봅시다.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 신호 전달 순서</h2>
+<p>뉴런이 신호를 전달하는 순서를 직접 맞춰보며 구조를 익혀보세요. 용어 칩을 올바른 순서대로 누르면 3D 경로가 채워지고 신호 펄스가 이동합니다.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#818cf8","prompt":"뉴런이 신호를 전달하는 순서대로 용어를 클릭하세요","steps":["수상돌기","세포체","축삭","축삭 말단","신경전달물질","다음 뉴런"]};</script>
+
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#818cf8","questions":[{"q":"다른 뉴런의 신호를 받는 가지는?","choices":["축삭","수상돌기","시냅스","세포체"],"answer":1},{"q":"뉴런과 뉴런 사이의 연결 지점은?","choices":["시냅스","축삭","수상돌기","핵"],"answer":0},{"q":"보상과 동기를 만드는 신경전달물질은?","choices":["GABA","세로토닌","도파민","글루타메이트"],"answer":2},{"q":"뉴런의 휴지전위는 약 얼마인가?","choices":["-90mV","-55mV","0mV","-70mV"],"answer":3},{"q":"대표적인 억제성 신경전달물질은?","choices":["글루타메이트","GABA","도파민","아세틸콜린"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.3,9.5);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=24,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.006,cv.height*0.006,1);return sp;}
+  const somaA=new THREE.Mesh(new THREE.SphereGeometry(0.7,20,20),new THREE.MeshBasicMaterial({color:0x6366f1}));somaA.position.set(-3.2,0,0);s.add(somaA);
+  const somaB=new THREE.Mesh(new THREE.SphereGeometry(0.7,20,20),new THREE.MeshBasicMaterial({color:0xf472b6}));somaB.position.set(3.2,0,0);s.add(somaB);
+  for(let k=0;k<7;k++){const ang=(k/7)*Math.PI*2;const dend=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,1.1,6),new THREE.MeshBasicMaterial({color:0x818cf8}));dend.position.set(-3.2+Math.cos(ang)*0.95,Math.sin(ang)*0.95,0);dend.rotation.z=ang-Math.PI/2;s.add(dend);}
+  for(let k=0;k<7;k++){const ang=(k/7)*Math.PI*2;const dend2=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,1.1,6),new THREE.MeshBasicMaterial({color:0xfb7185}));dend2.position.set(3.2+Math.cos(ang)*0.95,Math.sin(ang)*0.95,0);dend2.rotation.z=ang-Math.PI/2;s.add(dend2);}
+  const axon=new THREE.Mesh(new THREE.CylinderGeometry(0.1,0.1,4.4,10),new THREE.MeshBasicMaterial({color:0x4f46e5}));axon.rotation.z=Math.PI/2;axon.position.set(-0.7,0,0);s.add(axon);
+  const term=new THREE.Mesh(new THREE.ConeGeometry(0.35,0.5,12),new THREE.MeshBasicMaterial({color:0x4f46e5}));term.rotation.z=-Math.PI/2;term.position.set(1.7,0,0);s.add(term);
+  const pulse=new THREE.Mesh(new THREE.SphereGeometry(0.22,12,12),new THREE.MeshBasicMaterial({color:0xfde047}));s.add(pulse);s.userData.pulse=pulse;
+  for(let k=0;k<10;k++){const nt=new THREE.Mesh(new THREE.SphereGeometry(0.07,8,8),new THREE.MeshBasicMaterial({color:0x34d399}));nt.position.set(2.2+Math.random()*0.7,(Math.random()-0.5)*0.9,(Math.random()-0.5)*0.5);s.add(nt);}
+  // 부위 라벨 — 구조를 가르치기 위함
+  [['세포체(soma)','#4338ca',-3.2,1.25,0],['수상돌기(입력)','#4f46e5',-4.5,-1.0,0],['축삭(전도)','#4f46e5',-0.7,-1.0,0],['축삭 말단','#3730a3',1.6,1.15,0],['시냅스 간극','#374151',2.2,1.5,0],['신경전달물질','#15803d',2.6,-1.15,0],['다음 뉴런','#be185d',3.2,1.25,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 뉴런은 전기(축삭)+화학(시냅스) 신호로 정보를 전달합니다.','수상돌기가 입력을 받아 세포체에서 합산합니다.','문턱을 넘으면 활동전위가 축삭을 따라 말단까지 전도됩니다(노란 펄스).','말단에서 신경전달물질(초록)이 시냅스 간극으로 방출돼 다음 뉴런을 자극합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const ph=(T*0.5)%1;s.userData.pulse.position.set(-2.9+ph*4.6,0,0);s.userData.pulse.material.color.setHSL(0.13,1,0.5+0.2*Math.sin(T*6));s.rotation.y+=0.002; r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

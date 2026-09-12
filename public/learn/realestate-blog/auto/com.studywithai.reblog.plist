@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.studywithai.reblog</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/node</string>
+    <string>/Users/kg/coding/studywithai/realestate-blog/auto/run.mjs</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/kg/coding/studywithai/realestate-blog/auto</string>
+
+  <!-- 월·목 오전 8:57 — launchd Weekday: 0=일, 1=월, 2=화, 3=수, 4=목, 5=금, 6=토 -->
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict><key>Weekday</key><integer>1</integer><key>Hour</key><integer>8</integer><key>Minute</key><integer>57</integer></dict>
+    <dict><key>Weekday</key><integer>4</integer><key>Hour</key><integer>8</integer><key>Minute</key><integer>57</integer></dict>
+  </array>
+
+  <key>StandardOutPath</key>
+  <string>/Users/kg/coding/studywithai/realestate-blog/auto/launchd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/kg/coding/studywithai/realestate-blog/auto/launchd.err.log</string>
+</dict>
+</plist>

@@ -1,0 +1,637 @@
+/* ============================================================
+   aboutEarthScience — Interactive Earth Science
+   Aesthetic: 지구과학 × Three.js × 인터랙티브 학습
+   Deep ocean blues, volcanic reds, mineral greens, warm earth tones
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  --paper:       #f0f4f8;
+  --paper-soft:  #e8eef5;
+  --paper-shade: #dae3ed;
+  --ink:         #0d1b2a;
+  --ink-soft:    #1b2d44;
+  --ink-mute:    #3d5a80;
+  --ink-faint:   #7a98b8;
+
+  --ocean:       #1565c0;
+  --ocean-dim:   #0d47a1;
+  --volcanic:    #d84315;
+  --volcanic-dim:#bf360c;
+  --earth:       #5d4037;
+  --mineral:     #2e7d32;
+  --atmosphere:  #0288d1;
+  --magma:       #e65100;
+
+  --rule:        #b0c4de;
+  --rule-soft:   #cfd8e4;
+
+  --font-display: 'Fraunces', 'Apple SD Gothic Neo', 'Noto Serif KR', Georgia, serif;
+  --font-body:    'IBM Plex Sans KR', 'Pretendard Variable', -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', 'D2Coding', 'Consolas', monospace;
+
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.06  0 0 0 0 0.08  0 0 0 0 0.12  0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  background-image: var(--grain);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.72;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.003em;
+}
+
+/* ================= Layout ================= */
+.layout {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+aside {
+  background: linear-gradient(180deg, #0d1b2a 0%, #1b2d44 100%);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  padding: 54px 28px 40px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  font-size: 0.9em;
+  color: #e0e8f0;
+}
+aside::before {
+  content: '🌍 Earth Science';
+  display: block;
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 144, 'wght' 700, 'SOFT' 0, 'WONK' 1;
+  font-size: 1.6em;
+  color: #64b5f6;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+aside h3 {
+  font-family: var(--font-mono);
+  font-size: 0.7em;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #7a98b8;
+  margin: 28px 0 14px 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+aside ol { list-style: none; padding: 0; margin: 0; counter-reset: chap; }
+aside li {
+  margin: 3px 0;
+  counter-increment: chap;
+}
+aside > h3 + ol > li { position: relative; padding-left: 26px; }
+aside > h3 + ol > li::before {
+  content: counter(chap, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.75em;
+  color: #5a7a9a;
+  font-weight: 500;
+}
+aside a {
+  color: #c8d8e8;
+  text-decoration: none;
+  display: block;
+  padding: 6px 8px;
+  border-radius: 4px;
+  transition: all 0.18s ease;
+  font-weight: 400;
+}
+aside a:hover {
+  color: #64b5f6;
+  background: rgba(100,181,246,0.1);
+  transform: translateX(2px);
+}
+
+/* ================= Main ================= */
+main {
+  padding: 80px clamp(32px, 6vw, 110px);
+  max-width: 1320px;
+  width: 100%;
+  position: relative;
+}
+
+/* ================= Paper header ================= */
+header.paper-header {
+  text-align: left;
+  padding: 20px 0 50px 0;
+  margin-bottom: 50px;
+  border-bottom: none;
+  position: relative;
+}
+header.paper-header::before {
+  content: '※ 지구과학  ·  2026';
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  letter-spacing: 0.3em;
+  color: var(--ocean);
+  font-weight: 500;
+  margin-bottom: 28px;
+  text-transform: uppercase;
+}
+header.paper-header::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ocean), var(--volcanic));
+  margin-top: 32px;
+  border-radius: 2px;
+}
+header.paper-header h1 {
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 144, 'wght' 500, 'SOFT' 30, 'WONK' 0;
+  font-size: clamp(2.4em, 5.5vw, 4.2em);
+  line-height: 0.98;
+  margin: 0 0 24px 0;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  max-width: 18ch;
+}
+header.paper-header h1 em {
+  font-style: italic;
+  font-variation-settings: 'opsz' 144, 'wght' 400, 'SOFT' 100, 'WONK' 1;
+  color: var(--ocean);
+}
+.authors {
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 14, 'wght' 400;
+  font-style: italic;
+  font-size: 1.05em;
+  color: var(--ink-soft);
+  margin: 0 0 8px 0;
+  max-width: 55ch;
+}
+.affiliation {
+  font-family: var(--font-mono);
+  font-size: 0.78em;
+  color: var(--ink-mute);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ================= Headings ================= */
+h2 {
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 60, 'wght' 600, 'SOFT' 0, 'WONK' 1;
+  font-size: clamp(1.9em, 3.2vw, 2.6em);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  margin: 96px 0 26px 0;
+  padding: 0;
+  border: none;
+  color: var(--ink);
+  position: relative;
+  max-width: 22ch;
+}
+h2::before {
+  content: '§';
+  display: inline-block;
+  color: var(--ocean);
+  font-variation-settings: 'opsz' 60, 'wght' 400;
+  margin-right: 14px;
+  font-style: italic;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 24, 'wght' 600, 'SOFT' 20;
+  font-size: 1.45em;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 50px 0 14px 0;
+  color: var(--ink);
+  max-width: 28ch;
+}
+h3::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--ocean), var(--atmosphere));
+  margin-bottom: 14px;
+  border-radius: 1px;
+}
+
+h4 {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ocean-dim);
+  margin: 32px 0 12px 0;
+  font-style: normal;
+}
+
+/* ================= Text ================= */
+p {
+  margin: 14px 0;
+  text-align: left;
+  hyphens: auto;
+  max-width: 68ch;
+}
+p, li { word-break: keep-all; line-break: strict; }
+
+a {
+  color: var(--ocean);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  transition: all 0.15s ease;
+}
+a:hover {
+  color: var(--volcanic);
+  background: var(--paper-shade);
+}
+
+strong { font-weight: 700; color: var(--ink); }
+em {
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 14, 'wght' 500;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--paper-shade);
+  padding: 2px 7px;
+  border-radius: 3px;
+  color: var(--ocean-dim);
+  font-weight: 500;
+}
+pre {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 22px 26px;
+  border-radius: 6px;
+  border-left: 4px solid var(--ocean);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  line-height: 1.62;
+  margin: 26px 0;
+  box-shadow: 0 8px 24px rgba(13,27,42,0.2);
+}
+pre code { background: none; padding: 0; color: inherit; font-weight: 400; }
+
+blockquote {
+  border: none;
+  border-left: 3px solid var(--ocean);
+  padding: 8px 0 8px 24px;
+  margin: 26px 0;
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 24, 'wght' 400;
+  font-style: italic;
+  font-size: 1.15em;
+  color: var(--ink-soft);
+  background: transparent;
+  max-width: 60ch;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 28px 0;
+  font-size: 0.94em;
+}
+th, td {
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  padding: 12px 14px;
+  text-align: left;
+}
+thead tr { border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+th {
+  background: transparent;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.78em;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ocean);
+}
+tbody tr:hover td { background: var(--paper-soft); }
+
+ul, ol {
+  padding-left: 26px;
+  max-width: 68ch;
+}
+li { margin: 7px 0; }
+ul li::marker { color: var(--ocean); }
+ol li::marker {
+  color: var(--ocean);
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+/* ================= 3D Canvas container ================= */
+.threejs-container {
+  width: 100%;
+  height: 500px;
+  margin: 32px 0;
+  background: radial-gradient(ellipse at center, #0a1628 0%, #050d18 100%);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(13,27,42,0.3);
+}
+.threejs-container::before {
+  content: attr(data-label);
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  font-family: var(--font-mono);
+  font-size: 0.65em;
+  letter-spacing: 0.3em;
+  color: var(--ocean);
+  font-weight: 500;
+  z-index: 10;
+  text-transform: uppercase;
+}
+.threejs-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+.threejs-controls {
+  position: absolute;
+  bottom: 14px;
+  left: 18px;
+  right: 18px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  z-index: 10;
+}
+.threejs-controls button,
+.threejs-controls label {
+  background: rgba(13,27,42,0.8);
+  border: 1px solid rgba(100,181,246,0.3);
+  color: #e0e8f0;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+}
+.threejs-controls button:hover {
+  background: rgba(21,101,192,0.6);
+  border-color: var(--ocean);
+}
+.threejs-controls input[type="range"] {
+  width: 120px;
+  accent-color: var(--ocean);
+}
+.threejs-info {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: rgba(13,27,42,0.85);
+  border: 1px solid rgba(100,181,246,0.3);
+  color: #e0e8f0;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+  max-width: 200px;
+  line-height: 1.5;
+}
+
+/* ================= Concept card ================= */
+.concept-box {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 22px 24px;
+  margin: 24px 0;
+  position: relative;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(13,27,42,0.08);
+}
+.concept-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(21,101,192,0.15);
+  border-color: var(--ocean);
+}
+.concept-box strong { color: var(--ocean); }
+
+/* ================= Info box ================= */
+.info-box {
+  background: var(--paper-soft);
+  border: 1.5px solid var(--ocean);
+  border-radius: 8px;
+  padding: 26px 30px;
+  margin: 26px 0 36px 0;
+  font-size: 1.02em;
+  line-height: 1.82;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(21,101,192,0.1);
+  max-width: 72ch;
+}
+.info-box::before {
+  content: '💡 핵심 개념';
+  position: absolute;
+  top: -11px;
+  left: 20px;
+  background: var(--paper);
+  padding: 0 10px;
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  letter-spacing: 0.15em;
+  color: var(--ocean);
+  font-weight: 600;
+}
+.info-box strong { color: var(--ocean-dim); }
+
+/* ================= Interactive panel ================= */
+.interactive-panel {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1b2d44 100%);
+  border: 1px solid rgba(100,181,246,0.2);
+  border-radius: 10px;
+  padding: 30px;
+  margin: 32px 0;
+  color: #e0e8f0;
+}
+.interactive-panel h4 {
+  color: #64b5f6;
+  margin-top: 0;
+  font-size: 0.85em;
+}
+.interactive-panel .slider-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+.interactive-panel .slider-group label {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  min-width: 120px;
+  color: #b0c4de;
+}
+.interactive-panel .slider-group input[type="range"] {
+  flex: 1;
+  accent-color: #64b5f6;
+}
+.interactive-panel .slider-group .value {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  min-width: 50px;
+  color: #64b5f6;
+}
+
+/* ================= Figure caption ================= */
+.fig-title {
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 14, 'wght' 400;
+  font-style: italic;
+  text-align: center;
+  font-size: 0.94em;
+  color: var(--ink-soft);
+  margin: 12px auto 30px;
+  max-width: 62ch;
+  line-height: 1.55;
+}
+.fig-title::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  background: var(--ocean);
+  vertical-align: middle;
+  margin-right: 10px;
+  opacity: 0.6;
+  border-radius: 1px;
+}
+
+/* ================= Data table ================= */
+.data-table {
+  background: var(--paper);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  box-shadow: 0 4px 12px rgba(13,27,42,0.06);
+  margin: 28px 0;
+}
+.data-table table {
+  margin: 0;
+}
+
+/* ================= Chapter nav (prev/next) ================= */
+.chapter-nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 80px 0 20px 0;
+  padding: 24px 0;
+  border-top: 2px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  letter-spacing: 0.05em;
+}
+.chapter-nav a {
+  color: var(--ink);
+  border: none;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+.chapter-nav a:hover {
+  color: var(--ocean);
+  background: var(--paper-shade);
+}
+
+/* ================= Responsive ================= */
+@media (max-width: 920px) {
+  .layout { grid-template-columns: 1fr; }
+  aside {
+    position: static;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 30px 20px;
+  }
+  main { padding: 40px 22px; }
+  .threejs-container { height: 350px; }
+  header.paper-header h1 { font-size: 2.4em; }
+}
+
+@media (min-width: 1600px) {
+  .layout { grid-template-columns: 340px minmax(0, 1fr); }
+  main { padding: 100px clamp(60px, 7vw, 150px); max-width: 1520px; }
+}
+
+/* Smooth fade-in */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+main > *, section > * { animation: rise 0.5s ease both; }
+
+/* Selection */
+::selection { background: var(--ocean); color: #fff; }
+
+/* ================= Quiz ================= */
+.quiz-box {
+  background: var(--paper-soft);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 24px;
+  margin: 24px 0;
+}
+.quiz-box h4 {
+  color: var(--mineral);
+  margin-top: 0;
+}
+.quiz-option {
+  display: block;
+  padding: 10px 16px;
+  margin: 8px 0;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.94em;
+}
+.quiz-option:hover {
+  border-color: var(--ocean);
+  background: rgba(21,101,192,0.05);
+}
+.quiz-option.correct {
+  border-color: var(--mineral);
+  background: rgba(46,125,50,0.1);
+}
+.quiz-option.wrong {
+  border-color: var(--volcanic);
+  background: rgba(216,67,21,0.1);
+}

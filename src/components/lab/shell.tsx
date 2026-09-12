@@ -17,6 +17,9 @@ export function LabHeader({ compact = false }: { compact?: boolean }) {
         </span>
       </Link>
       <div className="flex items-center gap-3 text-sm">
+        <a href="/learn/" className="hidden text-muted no-underline hover:text-fg sm:inline">
+          강의 노트
+        </a>
         {!compact && (
           <span className="hidden text-muted sm:inline">{GAMES.length}과목 · 각 9장</span>
         )}

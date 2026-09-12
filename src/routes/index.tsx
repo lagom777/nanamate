@@ -49,7 +49,11 @@ function Home() {
         </h1>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted">
           퀴즈 스킨이 아닙니다. 각 장의 개념을 손으로 한 번 해봐야 남습니다.
-          수능은 기본·심화 두 난이도. 깬 과목 {cleared}/{GAMES.length}.
+          수능은 기본·심화 두 난이도. 깬 과목 {cleared}/{GAMES.length}.{" "}
+          <a href="/learn/" className="text-fg underline-offset-2 hover:underline">
+            기존 강의 노트
+          </a>
+          도 그대로 둡니다.
         </p>
 
         <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

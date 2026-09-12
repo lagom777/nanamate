@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>심리학이란? | 심리학 기초</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+  <script defer src="../shared/quizgame3d.js"></script>
+  <script defer src="../shared/learngame3d.js"></script>
+</head>
+<body>
+
+<aside>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h1><a href="index.html">심리학 기초</a></h1>
+  <div class="sub">PSYCHOLOGY FROM ZERO</div>
+  <nav>
+    <ol>
+      <li><a href="index.html" class="chap">🏠 목차</a></li>
+      <li><a href="ch01.html" class="chap">1. 심리학이란?</a></li>
+      <li><a href="ch02.html" class="chap">2. 뇌와 신경계</a></li>
+      <li><a href="ch03.html" class="chap">3. 감각과 지각</a></li>
+      <li><a href="ch04.html" class="chap">4. 학습</a></li>
+      <li><a href="ch05.html" class="chap">5. 기억</a></li>
+      <li><a href="ch06.html" class="chap">6. 발달</a></li>
+      <li><a href="ch07.html" class="chap">7. 성격</a></li>
+      <li><a href="ch08.html" class="chap">8. 사회심리학</a></li>
+      <li><a href="ch09.html" class="chap">9. 이상심리·치료</a></li>
+      <li><a href="ch10.html" class="chap">10. 동기와 정서</a></li>
+      <li><a href="ch11.html" class="chap">11. 인지 — 사고·언어·지능</a></li>
+      <li><a href="ch12.html" class="chap">12. 의식 — 수면·꿈·각성</a></li>
+      <li><a href="ch13.html" class="chap">13. 스트레스와 건강심리</a></li>
+      <li><a href="ch14.html" class="chap">14. 심리검사의 세계</a></li>
+      <li><a href="ch15.html" class="chap">15. 긍정심리학</a></li>
+      <li><a href="quiz.html" class="chap">📝 확인 퀴즈</a></li>
+    </ol>
+  </nav>
+  <button id="theme-btn" onclick="toggleTheme()">다크 모드 전환</button>
+</aside>
+
+<main>
+  <div class="page-nav">
+    <a href="index.html">← 목차로</a>
+  </div>
+
+  <section class="chapter" id="ch1">
+    <div class="chap-num">CHAPTER 01</div>
+    <h2>심리학이란 무엇인가?</h2>
+<span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 심리학의 여러 관점 — 마음을 보는 다섯 갈래</span>
+<div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const COL=0xa855f7;const mind=new THREE.Mesh(new THREE.IcosahedronGeometry(0.85,1),new THREE.MeshBasicMaterial({color:COL,wireframe:true}));s.add(mind);const mlab=lbl('마음·행동·정신과정','#e9d5ff');mlab.position.set(0,1.35,0);s.add(mlab);
+  const cols=[0xef4444,0x22c55e,0x3b82f6,0xeab308,0xec4899];const persp=[['행동주의','#fca5a5'],['신경과학','#86efac'],['인지','#93c5fd'],['인본주의','#fde047'],['정신분석','#f9a8d4']];const nodes=[];for(let i=0;i<5;i++){const t=i/5*Math.PI*2;const m=new THREE.Mesh(new THREE.SphereGeometry(0.32,16,16),new THREE.MeshBasicMaterial({color:cols[i]}));s.add(m);const tag=lbl(persp[i][0],persp[i][1]);s.add(tag);nodes.push({m,ph:t,tag});s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,0)]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.25})));}
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 심리학은 마음·행동·정신과정을 과학적으로 연구합니다.','다섯 관점이 하나의 마음을 서로 다른 각도로 설명합니다.','행동주의는 관찰 가능한 행동, 인지는 정보처리, 신경과학은 뇌를 봅니다.','정신분석은 무의식, 인본주의는 자기실현 — 현대는 이를 통합(생물-심리-사회)합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}mind.rotation.y+=0.01;nodes.forEach((o,i)=>{const px2=Math.cos(T*0.5+o.ph)*2.6,py2=Math.sin(o.ph)*0.7,pz2=Math.sin(T*0.5+o.ph)*2.6;o.m.position.set(px2,py2,pz2);o.tag.position.set(px2,py2+0.55,pz2);});s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script>
+
+    <div class="en">What is Psychology?</div>
+
+    <h3>1.1 심리학의 정의 — 가장 기초</h3>
+    <p>심리학은 한 문장으로 이렇게 정의됩니다.</p>
+    <div class="quote">심리학(Psychology)은 <b>인간과 동물의 행동과 정신 과정</b>을 <b>과학적</b>으로 연구하는 학문이다.</div>
+
+    <p>이 정의에는 세 가지 핵심어가 숨어 있습니다.</p>
+    <div class="term">
+      <span class="word">① 행동 (Behavior)</span>
+      겉으로 관찰할 수 있는 모든 것. 말, 표정, 몸짓, 심박수, 뇌파까지 포함됩니다. <b>측정할 수 있어야</b> 과학이 됩니다.
+    </div>
+    <div class="term">
+      <span class="word">② 정신 과정 (Mental Process)</span>
+      눈에 보이지 않는 안쪽 세계. 생각, 감정, 기억, 꿈, 의사결정. 직접 볼 수는 없지만 <b>행동을 통해 간접적으로 추론</b>합니다.
+    </div>
+    <div class="term">
+      <span class="word">③ 과학적 (Scientific)</span>
+      "왠지 그럴 것 같다"가 아니라 <b>체계적인 관찰·측정·실험</b>을 통해 증거를 모읍니다. 개인의 직관이나 상식과 다를 수 있습니다.
+    </div>
+
+    <div class="example">
+      <span class="label">예시</span>
+      "친구가 화났다"라는 말은 심리학에서는 이렇게 바뀝니다 → "친구의 <b>심박수가 증가</b>하고(행동), <b>눈썹이 찌푸려지며</b>(행동), <b>'나 너무 짜증나'라고 보고한다</b>(언어 보고를 통한 정신 과정 추론)."
+    </div>
+
+    <h3>1.2 심리학의 4가지 목표</h3>
+    <p>심리학자들이 연구를 할 때 추구하는 네 가지 목표가 있습니다. 이걸 알면 '심리학이 무엇을 하려는 학문인지'가 선명해집니다.</p>
+    <table class="compare">
+      <tr><th style="width:18%">목표</th><th style="width:32%">질문</th><th>예시 (고소공포증)</th></tr>
+      <tr><td><b>기술</b> (Describe)</td><td>무슨 일이 일어나는가?</td><td>"A는 10m 이상에서 심박수가 2배로 뛰고 손을 떤다"</td></tr>
+      <tr><td><b>설명</b> (Explain)</td><td>왜 일어나는가?</td><td>"어릴 적 추락 경험이 공포 조건형성으로 학습되었을 것"</td></tr>
+      <tr><td><b>예측</b> (Predict)</td><td>앞으로 어떻게 될까?</td><td>"이 사람은 번지점프 영상만 봐도 심박수가 오를 것"</td></tr>
+      <tr><td><b>통제·변화</b> (Control)</td><td>어떻게 바꿀 수 있는가?</td><td>"점진적 노출 치료를 통해 공포 반응을 줄일 수 있다"</td></tr>
+    </table>
+
+    <h3>1.3 심리학의 역사 — 한눈에 보는 타임라인</h3>
+    <p>심리학이 '철학의 일부'에서 '독립된 과학'이 되기까지의 흐름을 핵심 사건만 뽑아 봅시다.</p>
+
+    <figure class="figure">
+      <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+        <line x1="40" y1="110" x2="660" y2="110" stroke="#5b4b8a" stroke-width="3"/>
+        <circle cx="80" cy="110" r="8" fill="#5b4b8a"/>
+        <text x="80" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="#5b4b8a">1879</text>
+        <text x="80" y="138" text-anchor="middle" font-size="11" fill="#2b2b2b">분트 실험실</text>
+        <text x="80" y="154" text-anchor="middle" font-size="9" fill="#6b6b6b">과학적 심리학</text>
+        <text x="80" y="168" text-anchor="middle" font-size="9" fill="#6b6b6b">탄생</text>
+
+        <circle cx="180" cy="110" r="8" fill="#d97757"/>
+        <text x="180" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="#d97757">1900</text>
+        <text x="180" y="138" text-anchor="middle" font-size="11" fill="#2b2b2b">프로이트</text>
+        <text x="180" y="154" text-anchor="middle" font-size="9" fill="#6b6b6b">꿈의 해석</text>
+        <text x="180" y="168" text-anchor="middle" font-size="9" fill="#6b6b6b">(정신분석)</text>
+
+        <circle cx="290" cy="110" r="8" fill="#5b4b8a"/>
+        <text x="290" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="#5b4b8a">1913</text>
+        <text x="290" y="138" text-anchor="middle" font-size="11" fill="#2b2b2b">왓슨 선언</text>
+        <text x="290" y="154" text-anchor="middle" font-size="9" fill="#6b6b6b">행동주의</text>
+
+        <circle cx="400" cy="110" r="8" fill="#d97757"/>
+        <text x="400" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="#d97757">1950s</text>
+        <text x="400" y="138" text-anchor="middle" font-size="11" fill="#2b2b2b">매슬로우·로저스</text>
+        <text x="400" y="154" text-anchor="middle" font-size="9" fill="#6b6b6b">인본주의</text>
+
+        <circle cx="510" cy="110" r="8" fill="#5b4b8a"/>
+        <text x="510" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="#5b4b8a">1960s</text>
+        <text x="510" y="138" text-anchor="middle" font-size="11" fill="#2b2b2b">인지혁명</text>
+        <text x="510" y="154" text-anchor="middle" font-size="9" fill="#6b6b6b">마음=정보처리</text>
+
+        <circle cx="610" cy="110" r="8" fill="#d97757"/>
+        <text x="610" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="#d97757">1998</text>
+        <text x="610" y="138" text-anchor="middle" font-size="11" fill="#2b2b2b">셀리그만</text>
+        <text x="610" y="154" text-anchor="middle" font-size="9" fill="#6b6b6b">긍정심리학</text>
+      </svg>
+      <figcaption>심리학의 주요 분기점 — 각 학파는 "마음을 어떻게 연구할 것인가"에 대한 서로 다른 답입니다.</figcaption>
+    </figure>
+
+    <h3>1.4 주요 학파 한눈에 비교</h3>
+    <table class="compare">
+      <tr><th>학파</th><th>대표 학자</th><th>연구 대상</th><th>한마디</th></tr>
+      <tr><td>구성주의</td><td>분트</td><td>의식의 기본 요소</td><td>"마음을 원자처럼 쪼개자"</td></tr>
+      <tr><td>기능주의</td><td>제임스</td><td>의식의 역할</td><td>"마음은 무엇을 위해 있는가"</td></tr>
+      <tr><td>정신분석</td><td>프로이트</td><td>무의식, 성적 충동</td><td>"보이지 않는 힘이 나를 움직인다"</td></tr>
+      <tr><td>행동주의</td><td>왓슨·스키너</td><td>관찰 가능한 행동</td><td>"마음은 블랙박스, 행동만 보자"</td></tr>
+      <tr><td>인본주의</td><td>매슬로우·로저스</td><td>성장·자아실현</td><td>"사람은 원래 선하고 성장하려 한다"</td></tr>
+      <tr><td>인지주의</td><td>나이서</td><td>사고·기억·언어</td><td>"뇌는 정보를 처리하는 컴퓨터"</td></tr>
+      <tr><td>생물학적</td><td>—</td><td>뇌·신경전달물질</td><td>"모든 마음은 결국 뇌에서 온다"</td></tr>
+    </table>
+
+    <h3>1.5 연구 방법 — 심리학은 어떻게 증거를 모으나</h3>
+    <ul>
+      <li><strong>사례 연구</strong>: 한 사람을 깊이 관찰 (예: 뇌손상 환자 H.M.의 기억)</li>
+      <li><strong>자연 관찰</strong>: 실제 환경에서 행동을 있는 그대로 관찰</li>
+      <li><strong>조사/설문</strong>: 많은 사람에게 질문해 경향을 파악</li>
+      <li><strong>상관 연구</strong>: 두 변수의 관계 (−1 ≤ r ≤ +1)</li>
+      <li><strong>실험</strong>: 독립변인(원인)을 조작해 종속변인(결과)을 측정 — <b>인과관계를 밝힐 수 있는 유일한 방법</b></li>
+    </ul>
+    <div class="warn">
+      <span class="label">주의</span>
+      <b>상관관계 ≠ 인과관계.</b> 아이스크림 판매량과 익사 사고는 양의 상관이 있지만, 아이스크림이 익사를 일으키는 게 아닙니다(공통 원인=여름). 인과를 주장하려면 반드시 통제된 <b>실험</b>이 필요합니다.
+    </div>
+  </section>
+
+  <div class="page-nav-bottom">
+    <a href="index.html">🏠 목차</a>
+    <div class="spacer"></div>
+    <a href="ch02.html">다음 → 뇌와 신경계</a>
+  </div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한마디로 하면?</h3>
+  <p>심리학은 사람의 <b>마음</b>과 <b>행동</b>을 알아내는 탐정 놀이예요! 🕵️ 우리가 왜 웃고, 왜 화내고, 왜 그렇게 행동하는지를 하나씩 파헤치는 학문이죠.</p>
+
+  <h3>🤔 이게 왜 재밌냐면</h3>
+  <p>심리학은 사실 매일 우리 곁에 숨어 있어요.</p>
+  <ul>
+    <li>😡 친구랑 다퉜을 때 <b>왜 화가 나는지</b> 알면 마음을 다스리기 쉬워져요.</li>
+    <li>😴 공부하는데 <b>왜 자꾸 졸린지</b> 알면 공부 작전을 짤 수 있어요.</li>
+    <li>📱 SNS에서 '좋아요'를 받으면 <b>왜 기분이 좋아지는지</b>도 심리학이 설명해 줘요!</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 이 단어만 알면 돼!</h4>
+    <ul>
+      <li><strong>행동(Behavior)</strong>: 밖으로 보이는 모든 것 (말·표정·몸짓)</li>
+      <li><strong>인지(Cognition)</strong>: 머릿속 생각·판단·기억</li>
+      <li><strong>정서(Emotion)</strong>: 기쁨·슬픔·화 같은 감정</li>
+      <li><strong>과학적 방법(Scientific Method)</strong>: "그냥 느낌"이 아니라 진짜 실험으로 확인하기</li>
+      <li><strong>관찰(Observation)</strong>: 사람을 있는 그대로 지켜보고 기록하기</li>
+    </ul>
+  </div>
+
+  <h3>📖 쉽게 풀어볼게!</h3>
+  <p>많은 사람이 "심리학 = 독심술 아냐?" 하고 오해해요. 근데 정반대예요! 🙅 마음은 눈에 안 보이니까 <b>오히려 더 꼼꼼한 방법</b>이 필요하거든요. 의사 선생님이 X-ray로 뼈 속을 들여다보듯, 심리학자는 <b>관찰·실험·설문</b>이라는 도구로 마음을 살펴봐요.</p>
+  <p>예를 들어 시험 직전에 가슴이 두근두근했던 적 있죠? 그건 뇌가 "어? 위험한가?" 하고 몸에 신호를 보낸 거예요. 운동선수가 경기 전에 긴장하는 거랑 똑같답니다! 🏃 이렇게 심리학은 멀리 있는 게 아니라, 지금 이 순간 내 머릿속에서 벌어지는 일을 다루는 친근한 학문이에요.</p>
+
+  <div class="study-tip">
+    <strong>💡 이렇게 해봐:</strong> 어려운 용어가 나오면 "내 일상에서 이런 적 언제 있었지?" 하고 떠올려 봐요. 내 이야기랑 연결하면 기억이 두 배로 쏙쏙!
+  </div>
+
+  <h3>✅ 오늘의 정리</h3>
+  <ul>
+    <li>심리학 = 마음과 행동을 과학적으로 연구하는 학문 🧠</li>
+    <li>독심술이 아니라 관찰·실험·설문으로 알아내요.</li>
+    <li>일상의 작은 감정과 행동도 다 연구 대상!</li>
+    <li>핵심 영역: 행동, 인지, 정서, 사회</li>
+    <li>내 경험이랑 연결하면 훨씬 잘 외워져요.</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>현대 심리학은 19세기 후반 빌헬름 분트(Wilhelm Wundt)가 1879년 라이프치히에 첫 심리학 실험실을 세우면서 독립된 학문으로 출발했습니다. 이후 윌리엄 제임스의 기능주의, 프로이트의 정신분석, 왓슨과 스키너의 행동주의, 인본주의 심리학(매슬로, 로저스), 그리고 1950년대 이후의 인지혁명까지 다섯 번의 큰 흐름을 거쳤습니다. 각 학파는 마음을 바라보는 관점이 달랐는데, 행동주의는 관찰 가능한 행동만을 다루었고, 인지심리학은 정보처리 과정을 다루며, 신경과학적 접근은 뇌의 구조와 활동에 초점을 맞춥니다. 오늘날의 심리학은 어느 한 관점이 아니라 다층적 통합(생물-심리-사회 모형)을 추구합니다. 즉, 우울증을 이해하려면 신경전달물질(생물), 부정적 사고(심리), 가족 관계(사회) 모두를 봐야 한다는 것이죠. 또한 심리학은 기초 연구(이론 발전)와 응용 연구(임상, 산업, 교육 현장 적용)로 나뉘며, 임상심리학자, 상담심리학자, 산업조직심리학자 등 다양한 전문 분야가 존재합니다. 이처럼 심리학은 단일 분야가 아니라 여러 하위 분야가 어우러진 거대한 지식 네트워크입니다.</p>
+
+  <h3>고전 실험과 사례</h3>
+  <div class="info-card">
+    <h4>🧠 실험 1 — 분트의 반응 시간 연구(1879)</h4>
+    <p>분트는 빛이나 소리에 반응하는 시간을 측정해 '의식의 요소'를 분석하려 했습니다. 단순 반응(자극 → 반응)과 변별 반응(자극을 인식한 뒤 반응)의 시간 차이를 통해 정신 과정의 속도를 추정했죠. 이 연구는 마음을 측정 가능한 대상으로 본 첫 시도로, 실험심리학의 출발점이 되었습니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>🧠 실험 2 — 왓슨의 어린 앨버트 실험(1920)</h4>
+    <p>존 왓슨은 9개월 된 영아 앨버트에게 흰 쥐를 보여주며 동시에 큰 소음을 내어 공포 반응을 학습시켰습니다. 결국 앨버트는 소음 없이도 흰 쥐, 토끼, 털 코트에까지 공포를 일반화했습니다. 행동주의의 강력한 사례지만, 동시에 현대 연구윤리(IRB)가 왜 필요한지를 보여 주는 비판 사례이기도 합니다.</p>
+  </div>
+
+  <h3>임상/실생활 응용</h3>
+  <p>심리학은 임상 현장에서 인지행동치료(CBT)로 우울·불안을 다루고, 학교에서는 학습 동기 부여와 학급 운영 전략으로 활용됩니다. 기업에서는 산업조직심리학자가 채용 평가, 리더십 코칭, 조직 문화 진단을 담당하며, 광고와 UX 설계에서는 소비자 의사결정 모형을 적용해 사용자 경험을 개선합니다. 스포츠 심리학은 선수의 멘탈 루틴을, 법심리학은 목격자 진술의 신뢰성을 다루기도 합니다.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ 자주 하는 오해:</strong> "심리학은 상식이다"라는 말은 부분적으로만 맞습니다. 사람들의 직관은 종종 통계적 사실과 어긋나며(예: 비행기 추락 공포가 자동차 사고 공포보다 큼), 심리학 연구의 상당수는 우리의 상식을 뒤집는 결과를 보여 줍니다.
+  </div>
+
+<h3>전문가 레벨</h3>
+  <p>현대 심리학은 단순한 행동 관찰을 넘어 다층적 인과 모형을 구축합니다. 마음을 설명하는 데에는 환원적(reductive) 접근과 창발적(emergent) 접근이 충돌하는데, 신경과학자들은 의식조차 뉴런 활동의 산물이라 보고, 인지과학자들은 정신적 표상과 계산을 독립된 분석 수준으로 둡니다. 데이비드 마(David Marr)의 세 수준 분석(계산-알고리즘-구현)은 인지과학 통합 틀로 자주 인용되며, 베이지안 뇌 가설(Friston의 자유에너지 원리)은 지각·학습·정서를 단일 원리로 설명하려는 야심찬 시도입니다. 한편 임상 영역에서는 RDoC(Research Domain Criteria) 같은 프레임워크가 DSM의 범주적 진단을 차원적·신경회로 기반으로 재구성하려고 합니다. 사회심리 영역에서는 문화심리학과 진화심리학이 인간 본성의 보편성과 다양성을 두고 논쟁하며, 발달심리학은 종단 연구를 통해 유전과 환경의 상호작용(GxE)을 정밀화하고 있습니다. 이러한 흐름들이 모여 심리학은 통합과학(consilience)을 향해 나아가고 있습니다.</p>
+
+  <h3>측정과 통계</h3>
+  <p>심리측정(psychometrics)은 신뢰도(test-retest, Cronbach's α)와 타당도(구성·준거·내용)로 도구의 품질을 검증합니다. 효과크기는 Cohen's d, η², r 등으로 표현되며, p-값에만 의존하던 전통은 베이즈 요인(Bayes Factor), 사전·사후 분포 분석으로 보완되고 있습니다. 다층모형(multilevel modeling), 구조방정식(SEM), 메타분석은 표준 도구이며, 최근에는 정밀한 인과 추론을 위해 DAG와 도구변수(IV) 기법도 활발히 사용됩니다.</p>
+
+  <h3>최신 연구</h3>
+  <p>첫째, 재현성 위기(replication crisis): Open Science Collaboration(2015) 이후 사전등록(preregistration)과 다중연구 등록보고서(registered reports)가 표준이 되었습니다. 둘째, 디지털 표현형(digital phenotyping): 스마트폰의 키 입력, 위치, 음성 패턴으로 우울·자살 위험을 조기 탐지하는 연구가 활발합니다. 셋째, 빅데이터 심리학과 머신러닝: 텍스트 마이닝과 LLM을 활용해 성격, 감정, 정신건강을 대규모로 분석하는 계산심리학(computational psychology)이 빠르게 성장 중입니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li><strong>인지신경과학</strong>: 뇌영상(fMRI, EEG)으로 인지 과정을 추적</li>
+    <li><strong>행동경제학</strong>: 카네만·트버스키 이후 의사결정 편향 연구</li>
+    <li><strong>계산정신의학</strong>: 정신질환을 수학 모형으로 형식화</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>책: 『Thinking, Fast and Slow』(Kahneman)</li>
+    <li>책: 『Behave』(Sapolsky) — 생물·심리·사회 통합</li>
+    <li>저널: Psychological Science, Nature Human Behaviour</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>🎓 사고 실험:</strong> 만약 누군가 당신의 모든 행동을 30년간 기록한 데이터셋이 있다고 해봅시다. 그 데이터만으로 '당신'을 충분히 설명할 수 있을까요? 무엇이 빠져 있을까요? 이 질문은 행동주의의 한계와 의식 연구의 본질을 가르쳐 줍니다.
+  </div>
+</div>
+
+  <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+
+<h2>🕹️ 직접 해보기 — 심리학 역사 타임라인</h2>
+<p>심리학이 과학으로 자리 잡기까지의 흐름을 시대순으로 맞춰보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#d97757","prompt":"심리학 주요 사건을 시대순으로 배열하세요","steps":["분트 실험실(과학적 심리학 탄생)","프로이트 꿈의 해석(정신분석)","왓슨 선언(행동주의)","매슬로우·로저스(인본주의)","인지혁명(마음=정보처리)","셀리그만(긍정심리학)"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d97757","questions":[{"q":"심리학의 연구 대상은?","choices":["행동과 정신 과정","별과 행성","화학 반응","암석 구조"],"answer":0},{"q":"1879년 첫 심리학 실험실을 세운 사람은?","choices":["프로이트","분트","왓슨","제임스"],"answer":1},{"q":"인과관계를 밝히는 유일한 방법은?","choices":["설문","사례 연구","실험","자연 관찰"],"answer":2},{"q":"관찰 가능한 행동만 다룬 학파는?","choices":["분트","매슬로우","나이서","왓슨·스키너"],"answer":3},{"q":"'마음=정보처리'로 보는 학파는?","choices":["인지주의","정신분석","인본주의","구성주의"],"answer":0}]};</script>
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>

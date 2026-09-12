@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7. 궁합 — aboutSaju</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">🔮 표지</a></li>
+<li><a href="01-basics.html">1. 사주명리 기초</a></li><li><a href="02-heavenly-stems.html">2. 천간</a></li>
+<li><a href="03-earthly-branches.html">3. 지지</a></li><li><a href="04-five-elements.html">4. 오행</a></li>
+<li><a href="05-reading-chart.html">5. 명식 해석</a></li><li><a href="06-luck-cycles.html">6. 대운과 세운</a></li>
+<li><a href="07-compatibility.html">7. 궁합</a></li><li><a href="08-career.html">8. 직업과 재물</a></li>
+<li><a href="09-modern-application.html">9. 현대적 활용</a></li></ol></aside>
+<main><header class="paper-header"><h1><em>궁합</em></h1><p class="authors">Chapter 7 — Compatibility & Relationships</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 두 사람의 사주 궁합 — 8글자 대 8글자</span>
+<h2>궁합 개요</h2><p>이 챕터에서는 궁합의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>상대방과의 일간 조화, 오행의 상호 보완성, 지지 삼합·육합을 바탕으로 한 인간관계와 궁합의 원리를 탐구합니다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능. 본 자료는 전통 명리학 이론을 학술적으로 다루며, 운명을 단정하기보다 사고의 도구로 활용하는 것을 권장합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>💞 한 줄 요약!</h3>
+  <p><strong>궁합</strong>은 두 사람의 명식을 나란히 놓고, 서로 어떻게 닮고 다른지 살펴보는 거예요. "우리 왜 이렇게 다를까?"를 이해하는 관계 돋보기랍니다! 🔍</p>
+  <h3>🎮 이거 왜 재밌을까?</h3>
+  <p>같은 일에도 누구는 "당장 하자!" 🏃, 누구는 "천천히 생각해보자" 🐢 하죠? 궁합을 알면 이런 차이를 이해해서 다툼이 줄어요. 가족·친구랑 "우리는 왜 이럴까?" 대화하기에도 딱이에요.</p>
+  <div class="info-card"><h4>🌱 꼭 기억할 말</h4><ul>
+    <li><strong>일주(日柱)</strong>: 나를 나타내는 기둥 🏛️</li>
+    <li><strong>일지(日支)</strong>: 흔히 "배우자 자리"로 보는 글자 💑</li>
+    <li><strong>오행 균형</strong>: 두 명식을 합쳤을 때 기운 분포 ⚖️</li>
+    <li><strong>합과 충</strong>: 두 명식 사이 글자들의 작용 ✨💥</li>
+    <li><strong>대화의 도구</strong>: 결정이 아니라 이해의 시작점! 💬</li>
+  </ul></div>
+  <h3>🖼️ 쉽게 풀어보기</h3>
+  <p>궁합을 "맞다 / 안 맞다" 딱 둘로만 생각하기 쉽지만, 사실은 더 입체적이에요! 두 사람이 만나면 두 명식이 합쳐진 <strong>한 폭의 풍경</strong>이 만들어진다고 봐요. 🏞️</p>
+  <p>그 풍경 안에서 어떤 기운이 세지고 어떤 기운이 약해지는지 살펴요. 내게 부족한 오행을 상대가 가지고 있으면? 함께 있을 때 서로 <strong>채워주는</strong> 거예요! 🤝 반대로 부딪치는 글자가 많으면? 같은 일도 다른 방향으로 갈 수 있으니 대화 방식을 미리 챙겨보는 거죠.</p>
+  <p>제일 중요한 건, "누가 좋고 누가 나쁘다"가 아니에요. 서로의 <strong>차이를 알아차리고 맞춰가는</strong> 도구랍니다! 😊</p>
+  <div class="study-tip"><strong>💡 꿀팁:</strong> 가족 명식을 함께 보면서 "왜 우리 집은 이런 분위기지?" 이야기해 보세요. 궁합 공부가 자연스레 즐거운 대화가 돼요! 🗣️</div>
+  <h3>📦 한입 정리</h3>
+  <ul>
+    <li>궁합 = 두 명식을 비교하는 방법! 💞</li>
+    <li>"맞다/안 맞다"가 아니라 차이의 결을 봐요.</li>
+    <li>서로 채워주기(보완)와 부딪힘(충)을 모두 살펴요.</li>
+    <li>관계를 정하는 게 아니라 이해하는 도구예요.</li>
+    <li>대화의 시작점으로 쓰면 최고! 💬</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3><p>궁합 분석에서는 두 명식의 일주를 가장 먼저 비교합니다. 일간의 오행이 서로 도와주는 관계인지, 견제하는 관계인지, 같은 오행인지에 따라 첫 결이 달라집니다. 가령 한 사람의 일간이 갑목이고 다른 사람의 일간이 정화라면 목생화의 흐름으로 자연스러운 도움 관계가 형성된다고 봅니다. 반면 일간끼리 충 관계라면 자기주장이 두드러지는 만남이라 대화 방식의 조율이 필요하다고 해석합니다. 다음으로 일지를 봅니다. 두 사람의 일지가 합을 이루면 정서적 친밀의 가능성이, 충을 이루면 환경 변화나 자극의 가능성이 검토됩니다. 또한 두 명식이 합쳐졌을 때의 오행 분포를 그려 보아 어느 기운이 강화되고 어느 기운이 부족해지는지도 점검합니다. 십신 관점에서도 한쪽의 정관이 다른 쪽 일간에 어떻게 작용하는지 등을 살피며 사회적 역할 분담을 사고할 수 있습니다. 이러한 분석은 단순 등급 판정이 아니라 관계의 입체적 이해를 위한 작업입니다.</p>
+  <h3>실전 풀이</h3>
+  <div class="info-card"><h4>📅 사례 1</h4><p>한 사람의 명식에 화 기운이 강하고 수가 약한데, 상대의 명식이 수 기운이 풍부한 구조라면 함께 있을 때 균형이 맞춰지는 흐름으로 해석되기도 합니다. 이는 '서로의 부족을 채우는 관계'라는 비유적 설명으로 학습 자료에 자주 등장합니다.</p></div>
+  <div class="info-card"><h4>📅 사례 2</h4><p>두 사람의 일지가 자수와 오화로 자오충 관계를 이루는 경우, 한 사람의 안정 지향과 다른 사람의 활동 지향이 부딪칠 가능성으로 해석됩니다. 다만 충이 곧 흉이 아니며, 차이를 인지하면 오히려 보완적 협력이 가능하다는 시각이 강조됩니다.</p></div>
+  <h3>대운/세운 응용</h3><p>두 사람이 어떤 시기에 만났는가는 관계의 색채를 이해하는 데 도움이 됩니다. 한 사람이 새로운 인성 대운에 들어선 시기에 만난 인연은 학습과 성장의 키워드로 자리잡기 쉽다고 보는 시각이 있습니다. 또한 같은 세운에서 두 명식이 동일한 주제(예: 변화·표현·정리)를 만나면 함께 비슷한 결의 한 해를 보낼 가능성이 검토됩니다. 어디까지나 가능성의 흐름이며 결정론이 아닙니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> 궁합이 좋다고 평가된 두 사람도 노력 없이 좋은 관계가 유지되는 것은 아니며, 궁합이 나쁘다고 평가된 두 사람도 충분히 행복한 관계를 만들 수 있습니다. 명리학은 결정 도구가 아니라 이해의 도구입니다.</div>
+
+<h3>전문가 레벨</h3><p>심화 단계의 궁합 분석은 두 명식 사이의 십신 작용과 격국·용신 비교까지 확장됩니다. 한 사람의 용신을 다른 사람이 가지고 있는지를 보아 보완 가능성을 살피는 관점이 있고, 두 명식의 격국이 서로 어울리는지 충돌하는지를 통해 사회적 역할의 어울림을 평가하기도 합니다. 또한 일주 사이의 천간합과 지지합·충, 일지 안의 지장간이 상대 일간과 어떻게 관계를 맺는지를 정밀하게 살핍니다. 두 사람이 함께 보는 운에서 같은 글자가 동시에 들어오는 시기는 관계의 변곡점이 되는 시기로 해석되기도 합니다. 또한 비겁 동조형, 식상 협력형, 재관 보완형 등 관계의 패턴을 십신 분포로 분류하는 방법도 학파에 따라 정리되어 있습니다. 이러한 정밀 분석은 단편적 단정이 아니라 관계의 다층적 윤곽을 그리는 작업이며, 두 사람 모두의 동의 아래 학술적 호기심으로 다룰 때 가장 의미가 있습니다.</p>
+  <h3>고전 이론과 학파</h3><p>전통적으로 궁합은 결혼 의례의 일부로 다루어졌고, 『자평진전』 이후 명리 체계 안에서도 두 명식의 비교 분석 방법이 정리되었습니다. 『적천수』는 두 명식의 청탁이 결합할 때의 흐름을, 『궁통보감』은 조후의 보완 가능성을 다룹니다. 한국에서는 사주궁합과 함께 띠궁합이 민속적으로 결합되어 사용되어 왔으며, 일본에서는 추명학적 관점에서 궁합 해석의 분류 체계가 발전했습니다. 학파에 따라 비중 두는 요소가 다르므로, 한 가지 체계에 매몰되지 않는 비교 학습이 권장됩니다.</p>
+  <h3>현대적 해석</h3><p>현대 관계심리학과 비교하면 명리적 궁합은 애착 유형, 갈등 해결 양식, 자기개방 차원과 부분적으로 매핑됩니다. 또 가족치료의 관점에서 명식은 가족 체계의 의사소통 자료로 활용될 수 있습니다. 다만 어떤 비교도 절대화하지 않고 은유적 참고로 다루는 태도가 중요합니다.</p>
+  <h3>관련 분야</h3><ul>
+    <li><strong>관계심리학</strong>: 애착 유형, 갈등 해결 양식</li>
+    <li><strong>가족치료</strong>: 가족 체계와 의사소통 분석</li>
+    <li><strong>사회학</strong>: 결혼 의례와 문화 연구</li>
+    <li><strong>인류학</strong>: 통과의례로서의 궁합</li>
+  </ul>
+  <h3>추가 자료</h3><ul>
+    <li>『자평진전』의 부부 관련 논의</li>
+    <li>『적천수천미』의 청탁 비교</li>
+    <li>『궁통보감』 조후 관련 장</li>
+    <li>현대 관계심리학 입문서</li>
+  </ul>
+  <div class="success-box"><strong>🎓 학술적 탐구:</strong> 명리적 궁합과 현대 관계심리학의 결과를 같은 사례에 적용해 비교해 보면, 다른 어휘로 같은 인간 현상을 설명하는 두 학문의 만남을 체험할 수 있습니다.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 다른 하나 찾기</h2>
+<p>네 보기 중 성격이 다른 하나를 찾아보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#ff4d8d","prompt":"넷 중 성격이 다른 하나를 고르세요","rounds":[{"items":["일주 비교","일지 합충","오행 균형","길흉 단정"],"odd":3,"why":"궁합은 단정이 아니라 이해의 도구"},{"items":["이해의 도구","대화의 시작점","차이 인식","등급 판정"],"odd":3,"why":"궁합은 등급을 매기는 판정이 아님"},{"items":["일지","월지","연지","일간"],"odd":3,"why":"일간만 천간, 나머지는 지지"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ff4d8d","questions":[{"q":"궁합에서 가장 먼저 비교하는 것은?","choices":["시주","연주","일주","월주"],"answer":2},{"q":"배우자 자리로 다루는 글자는?","choices":["일지","월지","연지","시지"],"answer":0},{"q":"궁합의 올바른 활용 방식은?","choices":["결정 도구","등급 판정","길흉 단정","이해의 도구"],"answer":3},{"q":"갑목과 정화 일간의 관계는?","choices":["화극금","목생화","수극화","금생수"],"answer":1},{"q":"자수와 오화 일지의 관계는?","choices":["육합","삼합","자오충","방합"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  function chart(cx,col){const g=new THREE.Group();g.position.x=cx;for(let i=0;i<4;i++){const x=(i-1.5)*0.7;const gan=new THREE.Mesh(new THREE.BoxGeometry(0.55,0.5,0.2),new THREE.MeshBasicMaterial({color:col}));gan.position.set(x,0.35,0);g.add(gan);const ji=new THREE.Mesh(new THREE.BoxGeometry(0.55,0.5,0.2),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.6}));ji.position.set(x,-0.3,0);g.add(ji);}s.add(g);return g;}chart(-2.4,0xff4d8d);chart(2.4,0x7b9cff);for(let i=0;i<4;i++){const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-2.4+(i-1.5)*0.7,0,0.2),new THREE.Vector3(2.4+(i-1.5)*0.7,0,0.2)]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:0.2})));}
+  const La=lbl('내 명식','#ffb3cd');La.position.set(-2.4,1.2,0);s.add(La);const Lb=lbl('상대 명식','#a9c2ff');Lb.position.set(2.4,1.2,0);s.add(Lb);const Lj1=lbl('일지','#ffe08a');Lj1.position.set(-2.05,-1.0,0);s.add(Lj1);const Lj2=lbl('일지','#ffe08a');Lj2.position.set(2.75,-1.0,0);s.add(Lj2);const Lh=lbl('합과 충','#ff9dc0');Lh.position.set(0,0.5,0.3);s.add(Lh);const Lo=lbl('오행 균형','#ffd6a0');Lo.position.set(0,-1.8,0);s.add(Lo);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 궁합 — 두 사람의 명식 8글자를 나란히 놓고 비교합니다. 먼저 일주(일간)끼리의 관계부터.','가운데 선은 글자들 사이의 합과 충 — 합은 친밀의 가능성, 충은 차이와 자극의 가능성입니다.','일지는 흔히 배우자 자리로 보는 글자 — 두 사람의 일지가 합인지 충인지 살핍니다.','두 명식을 합쳤을 때의 오행 균형을 보며, 맞다/안 맞다가 아니라 서로 채워주는 결을 읽습니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.rotation.y+=0.0025;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

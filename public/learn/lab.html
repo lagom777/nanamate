@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nanamate Lab · 시그니처 게임</title>
+<link rel="stylesheet" href="hub.css">
+<link rel="stylesheet" href="hub-light.css">
+<link rel="stylesheet" href="shared/light-theme.css">
+<style>
+  .lab-wrap { max-width: 1000px; margin: 0 auto; padding: 32px 20px 80px; }
+  .lab-wrap h1 { font-size: 1.75rem; margin: 0 0 8px; }
+  .lab-sub { color: var(--muted, #64748b); margin: 0 0 28px; line-height: 1.55; font-size: 0.95rem; }
+  .lab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+  .lab-card {
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 16px; border-radius: 14px;
+    border: 1px solid var(--border, #e2e8f0);
+    background: var(--surface, #fff);
+    text-decoration: none; color: inherit;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .lab-card:hover { border-color: var(--accent, #2563eb); box-shadow: 0 6px 20px rgba(37,99,235,.12); }
+  .lab-card .tag { font-size: 11px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--accent, #2563eb); }
+  .lab-card h2 { margin: 0; font-size: 1.05rem; }
+  .lab-card p { margin: 0; font-size: 13px; color: var(--muted, #64748b); line-height: 1.45; }
+  .lab-card .meta { font-size: 12px; font-weight: 700; color: var(--muted, #94a3b8); }
+  .learned {
+    margin-top: 36px; padding: 16px; border-radius: 14px;
+    border: 1px dashed var(--border, #cbd5e1); background: var(--surface-2, #f8fafc);
+  }
+  .learned h3 { margin: 0 0 10px; font-size: 0.95rem; }
+  .learned li { font-size: 13.5px; line-height: 1.5; margin: 6px 0; }
+  .back { display: inline-block; margin-bottom: 18px; font-weight: 800; font-size: 13px; color: var(--accent, #2563eb); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="lab-wrap">
+  <a class="back" href="index.html">← 통합 허브</a>
+  <h1>🎮 Nanamate Lab</h1>
+  <p class="lab-sub">
+    과목 개념을 <b>손으로</b> 익히는 시그니처 게임 전부.
+    빗나가면 왜인지 알려 주고, 클리어하면 가져갈 한 줄이 남습니다.
+  </p>
+
+  <div class="lab-grid" id="lab-grid">
+    <a class="lab-card" href="aboutPhysics/chapters/01-mechanics.html" data-id="projectile">
+      <span class="tag">물리학 · 캐논 랩</span>
+      <h2>포물선 발사</h2>
+      <p>슬링샷·바람·이동 표적·발사 제한 10단계. 45° 사거리 직관.</p>
+      <span class="meta" data-best>—</span>
+    </a>
+    <a class="lab-card" href="aboutPhysics/chapters/04-waves.html" data-id="waves">
+      <span class="tag">물리학 · 파동</span>
+      <h2>파동 간섭</h2>
+      <p>파원 간격·위상차로 보강간섭 맞추기.</p>
+      <span class="meta" data-best>—</span>
+    </a>
+    <a class="lab-card" href="aboutChemistry/chapters/02-chemical-bonds.html" data-id="molecule">
+      <span class="tag">화학 · 원자가 공방</span>
+      <h2>분자 조립</h2>
+      <p>H₂~HCN — 원자가를 채우며 조립. 틀린 원소는 이유 설명.</p>
+      <span class="meta" data-best>—</span>
+    </a>
+    <a class="lab-card" href="aboutBiology/chapters/02-dna.html" data-id="dna">
+      <span class="tag">생물학 · 이중나선</span>
+      <h2>DNA 염기쌍</h2>
+      <p>A–T / G–C 상보 10가닥. 규칙은 알려 주고 정답은 스포일러 안 함.</p>
+      <span class="meta" data-best>—</span>
+    </a>
+    <a class="lab-card" href="aboutAstronomy/chapters/01-celestial-mechanics.html" data-id="orbit">
+      <span class="tag">천문학 · 궤도 관제</span>
+      <h2>궤도 잡기</h2>
+      <p>느리면 추락, 빠르면 탈출 — 원궤도 감각 8단계.</p>
+      <span class="meta" data-best>—</span>
+    </a>
+    <a class="lab-card" href="aboutMath/chapters/03-functions.html" data-id="graph">
+      <span class="tag">수학 · 곡선 공방</span>
+      <h2>포물선 그래프</h2>
+      <p>a·h·k로 코인 궤도를 맞추는 vertex form 8단계.</p>
+      <span class="meta" data-best>—</span>
+    </a>
+    <a class="lab-card" href="aboutMath/chapters/04-geometry.html" data-id="geometry">
+      <span class="tag">수학 · 직각</span>
+      <h2>피타고라스</h2>
+      <p>a·b 드래그로 a²+b²=c² 정수 쌍 8단계.</p>
+      <span class="meta" data-best>—</span>
+    </a>
+    <a class="lab-card" href="aboutEconomics/chapters/01-micro.html" data-id="market">
+      <span class="tag">경제학 · 청산</span>
+      <h2>시장 균형</h2>
+      <p>가격선으로 잉여·부족을 없애 균형 8시장.</p>
+      <span class="meta" data-best>—</span>
+    </a>
+    <a class="lab-card" href="aboutEarthScience/chapters/02-plate-tectonics.html" data-id="tectonics">
+      <span class="tag">지구과학 · 판</span>
+      <h2>판을 밀어라</h2>
+      <p>수렴·발산·변환 → 산맥·해령·단층.</p>
+      <span class="meta" data-best>—</span>
+    </a>
+    <a class="lab-card" href="aboutMusic/chapters/03-harmony.html" data-id="chord">
+      <span class="tag">음악 · 화음</span>
+      <h2>화음 쌓기</h2>
+      <p>장·단·감·증·속7 — 귀로 확인하며 10화음.</p>
+      <span class="meta" data-best>—</span>
+    </a>
+    <a class="lab-card" href="aboutHistory/chapters/03-medieval.html" data-id="timeline">
+      <span class="tag">역사 · 시대선</span>
+      <h2>연표 디펜스</h2>
+      <p>중세 사건을 초기·전성·말기 레일로 분류.</p>
+      <span class="meta" data-best>—</span>
+    </a>
+  </div>
+
+  <section class="learned" aria-labelledby="learned-h">
+    <h3 id="learned-h">📝 내가 배운 것</h3>
+    <ul id="learned-list"><li style="color:#94a3b8">게임을 클리어하면 전이 문장이 여기에 쌓입니다.</li></ul>
+  </section>
+</div>
+<script>
+(function () {
+  function load(k) {
+    try { return localStorage.getItem(k); } catch (e) { return null; }
+  }
+  document.querySelectorAll('.lab-card[data-id]').forEach(function (card) {
+    var id = card.getAttribute('data-id');
+    var best = parseInt(load('nm-lab-best:' + id) || '0', 10) || 0;
+    var el = card.querySelector('[data-best]');
+    if (el && best) el.textContent = '최고 ' + best + '점';
+    else if (el) el.textContent = '플레이 →';
+  });
+  try {
+    var raw = load('nm-lab-learned');
+    var arr = raw ? JSON.parse(raw) : [];
+    var ul = document.getElementById('learned-list');
+    if (Array.isArray(arr) && arr.length && ul) {
+      ul.innerHTML = arr.slice(0, 20).map(function (x) {
+        return '<li><strong>' + (x.gameId || '') + '</strong> — ' + (x.transfer || '') + '</li>';
+      }).join('');
+    }
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>

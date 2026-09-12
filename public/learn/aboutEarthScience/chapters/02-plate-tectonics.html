@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2장. 판구조론</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+  <script defer src="../../shared/game-kernel.js"></script>
+  <script defer src="../../shared/premium3d.js"></script>
+  <script defer src="../../shared/flagship-tectonics.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🌍 표지 · 소개</a></li>
+    <li><a href="01-structure.html">1. 지구의 구조</a></li>
+    <li><a href="02-plate-tectonics.html">2. 판구조론</a></li>
+    <li><a href="03-minerals-rocks.html">3. 광물과 암석</a></li>
+    <li><a href="04-atmosphere.html">4. 대기과학</a></li>
+    <li><a href="05-oceanography.html">5. 해양학</a></li>
+    <li><a href="06-climate-change.html">6. 기후변화</a></li>
+    <li><a href="07-geological-time.html">7. 지질시대</a></li>
+    <li><a href="08-natural-disasters.html">8. 자연재해</a></li>
+    <li><a href="09-resources-environment.html">9. 자원과 환경</a></li>
+  </ol>
+</aside>
+<main>
+<h2>2. 판구조론</h2>
+
+<div class="info-box">
+<p><strong>판구조론은 지구 표면이 여러 개의 거대한 판(plate)으로 나뉘어 있으며, 이 판들이 맨틀 대류에 의해 움직인다는 이론입니다.</strong></p>
+<p>아래 시뮬레이션에서 판의 경계 유형을 선택하고, 판이 어떻게 상호작용하는지 관찰해보세요.</p>
+</div>
+
+<div class="threejs-container" data-label="판 경계 시뮬레이션" id="plate-sim" style="height:500px;">
+  <div class="threejs-controls">
+    <button id="btn-divergent" class="active">발산 경계</button>
+    <button id="btn-convergent">수렴 경계</button>
+    <button id="btn-transform">변환 경계</button>
+    <button id="btn-speed">속도 ×2</button>
+  </div>
+  <div class="threejs-info" id="plate-info">발산 경계: 두 판이 서로 멀어짐</div>
+</div>
+<p class="fig-title">그림 2.1. 판 경계 유형 시뮬레이션. 버튼으로 경계 유형을 전환하세요.</p>
+
+<h3>2.1 판구조론의 발전</h3>
+<p>판구조론은 1960년대에 확립된 지구과학의 통합 이론입니다. 그 기원은 1912년 알프레드 베게너(Alfred Wegener)의 <strong>대륙이동설</strong>까지 거슬러 올라갑니다.</p>
+<p>베게너는 남아메리카와 아프리카 해안선의 일치, 양 대륙에서 발견되는 동일한 화석(메소사우르스, 글로소프테리스 등), 빙하 흔적의 분포를 근거로 과거에 모든 대륙이 하나(판게아, Pangaea)였다고 주장했습니다.</p>
+
+<h3>2.2 판의 경계 유형</h3>
+<p>지구의 암석권은 약 15개의 주요 판으로 나뉘며, 판의 경계에서 지진과 화산활동이 집중됩니다.</p>
+
+<h4>발산 경계 (Divergent Boundary)</h4>
+<p>두 판이 서로 멀어지는 경계입니다. 맨틀 물질이 올라와 새로운 해양 지각을 형성합니다. 대표 사례: <strong>대서양 중앙해령</strong>, 동아프리카 열곡대.</p>
+
+<h4>수렴 경계 (Convergent Boundary)</h4>
+<p>두 판이 서로 다가가는 경계입니다. 세 가지 하위 유형이 있습니다:</p>
+<ul>
+<li><strong>해양-대륙 수렴</strong>: 해양판이 대륙판 아래로 섭입 → 해구 + 화산호 (안데스 산맥)</li>
+<li><strong>해양-해양 수렴</strong>: 오래된 해양판이 섭입 → 해구 + 호상열도 (일본, 필리핀)</li>
+<li><strong>대륙-대륙 수렴</strong>: 양쪽 모두 가벼워 섭입 불가 → 습곡산맥 (히말라야)</li>
+</ul>
+
+<h4>변환 경계 (Transform Boundary)</h4>
+<p>두 판이 서로 수평으로 스쳐 지나가는 경계입니다. 대표 사례: <strong>산안드레아스 단층</strong>(태평양판과 북아메리카판).</p>
+
+<h3>2.3 판을 움직이는 힘</h3>
+<p>판 이동의 구동력은 여러 메커니즘이 복합적으로 작용합니다:</p>
+<ul>
+<li><strong>맨틀 대류(Mantle Convection)</strong>: 핵에서 가열된 맨틀 물질의 순환</li>
+<li><strong>해령 밀기(Ridge Push)</strong>: 해령에서 새로 생성된 뜨거운 암석권이 미끄러져 내려감</li>
+<li><strong>섭입대 끌기(Slab Pull)</strong>: 차갑고 밀도 높은 섭입판이 중력에 의해 당겨짐 (가장 큰 기여)</li>
+</ul>
+
+<h3>2.4 증거</h3>
+<p>판구조론을 뒷받침하는 주요 증거:</p>
+<ul>
+<li><strong>해저 확장</strong>: 해령에서 멀어질수록 해저 암석의 나이가 증가</li>
+<li><strong>고지자기 줄무늬</strong>: 해령 양쪽으로 대칭적인 자기 이상 패턴</li>
+<li><strong>GPS 측정</strong>: 현재 판 이동을 직접 관측 (연간 1-10 cm)</li>
+<li><strong>지진 분포</strong>: 판 경계를 따라 집중된 지진 분포</li>
+<li><strong>열점(Hot Spot)</strong>: 하와이 제도처럼 판 위를 이동한 화산 흔적</li>
+</ul>
+
+<div class="quiz-box">
+<h4>🧪 확인 문제</h4>
+<p>히말라야 산맥이 형성된 판 경계 유형은?</p>
+<div class="quiz-option" onclick="this.classList.add('wrong')">① 발산 경계</div>
+<div class="quiz-option" onclick="this.classList.add('wrong')">② 해양-대륙 수렴 경계</div>
+<div class="quiz-option" onclick="this.classList.add('correct')">③ 대륙-대륙 수렴 경계</div>
+<div class="quiz-option" onclick="this.classList.add('wrong')">④ 변환 경계</div>
+</div>
+
+<div class="chapter-nav">
+  <a href="01-structure.html">← 지구의 구조</a>
+  <a href="03-minerals-rocks.html">광물과 암석 →</a>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🌍 한 줄 요약!</h3>
+  <p>지구 껍데기는 커다란 퍼즐 조각(판)으로 나뉘어 있어! 🧩 이 조각들이 천천히 움직이면서 산·바다·지진·화산을 만들어.</p>
+  <h3>🤔 왜 알아야 할까?</h3>
+  <p>일본·인도네시아·칠레에서 큰 지진과 화산이 왜 자주 날까? 바로 그곳이 <strong>판 경계</strong>에 있기 때문이야! 히말라야 산맥은 매년 약 1cm씩 쑥쑥 자라고, 대서양은 매년 몇 cm씩 넓어져. 전부 판이 움직여서 그래. 우리가 보는 큰 지형은 다 판구조론으로 설명돼!</p>
+  <div class="info-card"><h4>🌱 꼭 기억할 말</h4><ul>
+    <li><strong>판(Plate)</strong>: 지구 표면을 덮는 단단한 암석 조각</li>
+    <li><strong>발산 경계</strong>: 두 판이 멀어지는 곳</li>
+    <li><strong>수렴 경계</strong>: 두 판이 부딪치는 곳</li>
+    <li><strong>변환 경계</strong>: 두 판이 옆으로 스쳐 지나가는 곳</li>
+  </ul></div>
+  <h3>✨ 쉽게 풀어볼게!</h3>
+  <p>지구 표면을 깨진 삶은 달걀이라고 생각해 봐! 🥚 껍질이 한 덩어리가 아니라 여러 조각으로 갈라져 있고, 그 조각들이 따뜻한 흰자(맨틀) 위를 아주 천천히 떠다녀. 두 조각이 멀어지면? 그 틈으로 마그마가 솟아올라 새 땅이 생겨! 두 조각이 쾅 부딪치면? 한쪽이 아래로 쑥 들어가거나, 둘 다 위로 솟구쳐 산맥이 돼. 옆으로 쓱 스치면? 마찰이 쌓이다가 뚝 풀리면서 큰 지진이 나. 놀랍게도 1억 년 전 인도는 지구 반대편에 있었는데, 천천히 북쪽으로 이사 와서 아시아와 부딪쳐 히말라야를 만들었어. 그리고 지금도 계속 움직이는 중이야!</p>
+  <div class="study-tip"><strong>💡 꿀팁:</strong> 세 가지 경계를 손으로 표현해 봐! ✋ 손등 두 개를 멀리 떼면 발산, 부딪치면 수렴, 옆으로 미끄러뜨리면 변환!</div>
+  <h3>📌 오늘의 정리</h3>
+  <ul>
+    <li>지구 표면은 약 15개의 큰 판으로 나뉨</li>
+    <li>판은 맨틀 대류로 움직임</li>
+    <li>판 경계는 발산·수렴·변환 세 종류</li>
+    <li>지진과 화산은 대부분 판 경계에 몰려 있음</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>판구조론은 1960년대 해저 확장설(Hess, Dietz)과 고지자기 줄무늬 발견(Vine-Matthews-Morley)을 통해 통합 이론으로 정립되었습니다. 지구의 암석권은 약 7개의 주요 판(태평양·북미·남미·유라시아·아프리카·인도-호주·남극판)과 그 외 다수의 작은 판으로 구성됩니다. 판은 평균 100km 두께의 단단한 외각이며, 그 아래 연약권 위에서 미끄러져 움직입니다. 발산 경계에서는 해령(MOR)이 형성되어 새 해양 지각이 만들어지고, 수렴 경계에서는 섭입대가 형성되어 오래된 해양 지각이 맨틀로 재흡수됩니다. 변환 경계에서는 횡적 미끄러짐이 일어나며, 가장 유명한 예가 산안드레아스 단층과 북대서양의 변환 단층들입니다. 판 이동의 평균 속도는 연 1–10cm로, 판마다 다릅니다.</p>
+  <h3>메커니즘과 모델</h3>
+  <div class="info-card"><h4>🌍 사례 1: 일본 열도와 환태평양 화산대</h4><p>태평양판이 유라시아판과 필리핀해판 아래로 섭입하면서 일본 열도가 형성되었습니다. 섭입판이 약 100km 깊이에 도달하면 함수광물이 분해되며 물을 방출하고, 이 물이 위 맨틀의 융점을 낮춰 마그마를 만들어 호상열도와 화산호를 형성합니다.</p></div>
+  <div class="info-card"><h4>🌍 사례 2: 동아프리카 열곡대</h4><p>아프리카 대륙이 두 개로 갈라지는 진행 중인 발산 경계입니다. 미래에는 새로운 해양이 형성될 것으로 예측되며, 현재도 매년 약 7mm씩 벌어지고 있습니다. 케냐·에티오피아의 활발한 화산 활동이 이를 보여줍니다.</p></div>
+  <h3>관측 데이터</h3>
+  <p>GPS 측지 관측망은 판의 절대 운동을 mm 단위로 측정합니다. 예: 태평양판은 하와이 기준점에서 연 약 7cm 북서 방향으로 이동합니다. 또한 해령 양쪽의 자기이상 줄무늬는 지구 자기장 역전 기록과 정확히 대칭을 이루어, 해저가 양쪽으로 균일하게 확장한다는 직접 증거입니다. 해저 시추 결과 해령에서 멀어질수록 퇴적층 아래 현무암의 나이가 선형적으로 증가합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 판은 '대륙'과 같지 않습니다. 한 판 안에 대륙과 해양이 모두 들어 있을 수 있습니다(예: 북미판은 북미 대륙과 그 서쪽 해양 일부를 포함).</div>
+
+<h3>전문가 레벨</h3>
+  <p>판구조론은 이제 운동학(kinematics) 단계에서 동역학(dynamics) 단계로 진화하고 있습니다. 슬랩 풀(slab pull)이 판 운동의 약 90%를 설명하는 가장 큰 구동력으로 인정되며, 해령 밀기(ridge push)는 약 5–10%에 그칩니다. 맨틀의 능동적 대류와 판의 수동적 응답이 결합된 self-consistent 모델은 점성구조와 슬랩 형상에 매우 민감합니다. 섭입대에서 슬랩은 670km 불연속면에서 종종 정체되거나 통과해 하부 맨틀까지 침강하는데, 이는 슬랩 동역학의 핵심 미해결 문제입니다. 트리플 정션(triple junction)의 안정성은 판 경계의 상대 운동 벡터에 의해 결정되며, 안정/불안정 분류는 McKenzie & Morgan(1969)의 분류법으로 다뤄집니다. 또한 대륙 균열(rifting)에서 해양 형성으로의 전이는 마그마가 풍부한(volcanic margin) 형태와 부족한(non-volcanic margin) 형태로 구분되며, 이는 단열 감압 용융과 깊은 맨틀 온도 분포에 의존합니다. 윌슨 사이클(Wilson Cycle)은 초대륙 형성-분열의 약 4–6억 년 주기를 설명하며, 다음 초대륙(Amasia 또는 Pangaea Ultima)의 형성이 예측되고 있습니다.</p>
+  <h3>핵심 모델</h3>
+  <div class="formula">슬랩 풀의 추진력: F_sp = (Δρ)·g·V_slab<br>Δρ: 슬랩과 주변 맨틀의 밀도차, V_slab: 슬랩 부피<br>판 속도와 점성: v ∝ (Δρ·g·h²)/η_m (간단화된 식)<br>오일러 정리: 구면 위의 강체 운동은 단일 회전축(오일러 극)으로 기술 가능</div>
+  <h3>최신 연구</h3>
+  <p>최근 지진파 단층촬영은 하부 맨틀까지 침강한 'slab graveyard'를 영상화했고, 일부는 핵-맨틀 경계 위에 누적되어 ULVZ와 상호작용한다고 알려졌습니다. 또한 행성 비교 연구에서 금성과 화성에는 현재 판구조 운동이 없고, 지구만 활발한 판운동을 유지하는 이유로 물의 존재와 적절한 맨틀 점성이 지목됩니다. 2024년 연구는 'subduction initiation'(섭입 시작) 메커니즘을 마그마 약화대(melt-weakening)로 설명하는 모델을 제시했습니다.</p>
+  <h3>관련 분야</h3>
+  <ul>
+    <li>지구동역학(Geodynamics) — 맨틀-판 결합 시뮬레이션</li>
+    <li>고지자기학(Paleomagnetism) — 과거 판 위치 복원</li>
+    <li>측지학(Geodesy) — GPS·VLBI를 통한 판 운동 정밀 측정</li>
+    <li>해양지질학(Marine Geology) — 해저 확장과 해령 구조</li>
+  </ul>
+  <h3>추가 자료</h3>
+  <ul>
+    <li>Turcotte & Schubert (2014), <em>Geodynamics</em>, Cambridge</li>
+    <li>Stern, R.J. (2002), <em>Subduction Zones</em>, Reviews of Geophysics</li>
+    <li>NUVEL-1A 판 운동 모델 (DeMets et al., 1994)</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 두 판의 오일러 극이 주어졌을 때, 임의의 위도·경도 지점에서의 상대 속도 벡터(크기와 방향)를 계산하는 알고리즘을 작성해 보세요.</div>
+</div>
+
+<h2>🚀 초고급 3D 게임 — 판 구조</h2>
+<p>두 지각판을 직접 드래그해 수렴·발산·변환 운동을 만들고, 프롬프트가 요구하는 지형(산맥·해령·변환단층·해구)을 솟아오르게 하세요.</p>
+<div id="nm-tectonics"></div>
+<h2>🕹️ 직접 해보기 — 다른 하나 찾기</h2>
+<p>각 묶음에서 성격이 다른 하나를 골라보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#1565c0","prompt":"어울리지 않는 하나를 고르세요","rounds":[{"items":["발산 경계","수렴 경계","변환 경계","연약권"],"odd":3,"why":"연약권은 판 경계 종류가 아니라 판이 미끄러지는 맨틀 층이다"},{"items":["해령","섭입대","산안드레아스 단층","열곡대"],"odd":2,"why":"산안드레아스 단층은 변환 경계, 나머지는 발산·수렴 지형이다"},{"items":["슬랩 풀","해령 밀기","맨틀 대류","고지자기 줄무늬"],"odd":3,"why":"고지자기 줄무늬는 판 운동의 증거이지 구동력이 아니다"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#1565c0","questions":[{"q":"1912년 대륙이동설을 주장한 사람은?","choices":["헤스","베게너","디에츠","모건"],"answer":1},{"q":"두 판이 서로 멀어지는 경계는?","choices":["수렴 경계","변환 경계","발산 경계","섭입대"],"answer":2},{"q":"산안드레아스 단층의 경계 유형은?","choices":["발산 경계","수렴 경계","충돌 경계","변환 경계"],"answer":3},{"q":"판 운동에 가장 크게 기여하는 힘은?","choices":["해령 밀기","섭입대 끌기","맨틀 대류","해저 확장"],"answer":1},{"q":"대륙-대륙 수렴 경계의 결과는?","choices":["해구","호상열도","열곡대","습곡산맥"],"answer":3}]};</script>
+</main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  const container = document.getElementById('plate-sim');
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x050d18);
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 100);
+  camera.position.set(0, 3, 5);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  container.appendChild(renderer.domElement);
+
+  // Lighting
+  scene.add(new THREE.AmbientLight(0x404060, 0.6));
+  const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  dirLight.position.set(3, 5, 3);
+  scene.add(dirLight);
+
+  let mode = 'divergent';
+  let speed = 1;
+  let time = 0;
+
+  // Plate materials
+  const plateMat1 = new THREE.MeshPhongMaterial({ color: 0x5d4037, flatShading: true });
+  const plateMat2 = new THREE.MeshPhongMaterial({ color: 0x4e342e, flatShading: true });
+  const magmaMat = new THREE.MeshPhongMaterial({ color: 0xff6d00, emissive: 0xff3d00, emissiveIntensity: 0.5 });
+  const oceanMat = new THREE.MeshPhongMaterial({ color: 0x0d47a1, transparent: true, opacity: 0.4 });
+
+  // Create plates
+  const plate1 = new THREE.Mesh(new THREE.BoxGeometry(3, 0.4, 4), plateMat1);
+  const plate2 = new THREE.Mesh(new THREE.BoxGeometry(3, 0.4, 4), plateMat2);
+  const magma = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 4), magmaMat);
+  magma.rotation.x = -Math.PI / 2;
+  magma.position.y = -0.1;
+
+  // Mantle arrows (particles)
+  const arrowGroup = new THREE.Group();
+  for (let i = 0; i < 20; i++) {
+    const arrowGeo = new THREE.ConeGeometry(0.05, 0.2, 8);
+    const arrowMat = new THREE.MeshPhongMaterial({ color: 0xff6d00, emissive: 0xff3d00, emissiveIntensity: 0.3 });
+    const arrow = new THREE.Mesh(arrowGeo, arrowMat);
+    arrow.position.set((Math.random() - 0.5) * 2, -0.5 - Math.random() * 1.5, (Math.random() - 0.5) * 3);
+    arrowGroup.add(arrow);
+  }
+
+  scene.add(plate1, plate2, magma, arrowGroup);
+
+  function setupDivergent() {
+    mode = 'divergent';
+    plate1.scale.set(1, 1, 1);
+    plate2.scale.set(1, 1, 1);
+    plate1.position.set(-1.5, 0, 0);
+    plate2.position.set(1.5, 0, 0);
+    plate1.rotation.set(0, 0, 0);
+    plate2.rotation.set(0, 0, 0);
+    magma.visible = true;
+    magma.position.set(0, -0.1, 0);
+    document.getElementById('plate-info').textContent = '발산 경계: 두 판이 서로 멀어지며 새 지각 생성';
+  }
+
+  function setupConvergent() {
+    mode = 'convergent';
+    plate1.position.set(-1.2, 0, 0);
+    plate2.position.set(1.2, -0.3, 0);
+    plate1.rotation.set(0, 0, 0);
+    plate2.rotation.set(0, 0, 0.15);
+    magma.visible = true;
+    magma.position.set(-0.5, 0.3, 0);
+    document.getElementById('plate-info').textContent = '수렴 경계: 해양판이 대륙판 아래로 섭입';
+  }
+
+  function setupTransform() {
+    mode = 'transform';
+    plate1.position.set(0, 0, -1);
+    plate2.position.set(0, 0, 1);
+    plate1.rotation.set(0, 0, 0);
+    plate2.rotation.set(0, 0, 0);
+    magma.visible = false;
+    document.getElementById('plate-info').textContent = '변환 경계: 두 판이 수평으로 스쳐 지나감';
+  }
+
+  setupDivergent();
+
+  document.getElementById('btn-divergent').addEventListener('click', setupDivergent);
+  document.getElementById('btn-convergent').addEventListener('click', setupConvergent);
+  document.getElementById('btn-transform').addEventListener('click', setupTransform);
+  document.getElementById('btn-speed').addEventListener('click', function() {
+    speed = speed === 1 ? 2 : 1;
+    this.textContent = speed === 1 ? '속도 ×2' : '속도 ×1';
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    time += 0.01 * speed;
+
+    if (mode === 'divergent') {
+      const offset = Math.sin(time) * 0.3 + 1.5;
+      plate1.position.x = -offset;
+      plate2.position.x = offset;
+    } else if (mode === 'convergent') {
+      const offset = Math.sin(time) * 0.2;
+      plate1.position.x = -1.2 + offset;
+      plate2.position.x = 1.2 - offset;
+      plate2.rotation.z = 0.15 + Math.sin(time) * 0.05;
+    } else if (mode === 'transform') {
+      plate1.position.x = Math.sin(time) * 0.3;
+      plate2.position.x = -Math.sin(time) * 0.3;
+    }
+
+    // Animate mantle arrows
+    arrowGroup.children.forEach((arrow, i) => {
+      arrow.position.y += 0.005 * speed;
+      if (arrow.position.y > -0.2) {
+        arrow.position.y = -2;
+        arrow.position.x = (Math.random() - 0.5) * 2;
+      }
+    });
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

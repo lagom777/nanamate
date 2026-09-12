@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>마케팅: 성장의 과학을 3D로 배우다</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="index.html">📈 표지 · 소개</a></li>
+    <li><a href="chapters/01-fundamentals.html">1. 마케팅 기초</a></li>
+    <li><a href="chapters/02-consumer-psychology.html">2. 소비자 심리</a></li>
+    <li><a href="chapters/03-branding.html">3. 브랜딩 전략</a></li>
+    <li><a href="chapters/04-digital-marketing.html">4. 디지털 마케팅</a></li>
+    <li><a href="chapters/05-social-media.html">5. 소셜 미디어</a></li>
+    <li><a href="chapters/06-content-marketing.html">6. 콘텐츠 마케팅</a></li>
+    <li><a href="chapters/07-advertising.html">7. 광고와 캠페인</a></li>
+    <li><a href="chapters/08-analytics.html">8. 데이터 분석</a></li>
+    <li><a href="chapters/09-growth-hacking.html">9. 그로스 해킹</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>마케팅,<br><em>성장</em>의 과학을<br>3D로 배우다</h1>
+  <p class="authors">Interactive Marketing Lab — Growth Science in 3D</p>
+  <p class="affiliation">Vol. 11 · May 2026 · aboutMarketing Editorial</p>
+</header>
+<div class="scene-3d" id="intro-scene"></div>
+<span class="interact-hint">📈 퍼널과 전환 흐름을 시각화합니다</span>
+<h2>마케팅이란?</h2>
+<p>마케팅은 고객의 니즈를 파악하고, 가치를 전달하여 성장을 만들어내는 과학이자 예술입니다. 디지털 시대의 마케팅은 데이터 분석, 소비자 심리, 콘텐츠 전략이 결합된 복합 학문입니다.</p>
+</main>
+</div>
+<script>
+(function(){
+  const c=document.getElementById('intro-scene');if(!c)return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const C=15235577;const f=new THREE.Mesh(new THREE.ConeGeometry(2.2,3,28,1,true),new THREE.MeshBasicMaterial({color:C,wireframe:true,transparent:true,opacity:0.5,side:THREE.DoubleSide}));s.add(f);const ps=[];for(let i=0;i<40;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.08,6,6),new THREE.MeshBasicMaterial({color:C}));m.userData={a:Math.random()*6.28,y:Math.random()*3-1.5};s.add(m);ps.push(m);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ps.forEach(p=>{p.userData.y-=0.02;if(p.userData.y<-1.5)p.userData.y=1.5;const rr=(p.userData.y+1.5)/3*2.0+0.1;p.position.set(Math.cos(p.userData.a)*rr,p.userData.y,Math.sin(p.userData.a)*rr);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body>
+</html>

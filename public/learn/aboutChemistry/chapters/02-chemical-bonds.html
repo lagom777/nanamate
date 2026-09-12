@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2. 화학 결합 — aboutChemistry</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+  <script defer src="../../shared/game-kernel.js"></script>
+  <script defer src="../../shared/premium3d.js"></script>
+  <script defer src="../../shared/flagship-molecule.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">⚗️ 표지 · 소개</a></li>
+    <li><a href="01-atomic-structure.html">1. 원자 구조</a></li>
+    <li><a href="02-chemical-bonds.html">2. 화학 결합</a></li>
+    <li><a href="03-chemical-reactions.html">3. 화학 반응</a></li>
+    <li><a href="04-thermochemistry.html">4. 열화학</a></li>
+    <li><a href="05-acid-base.html">5. 산과 염기</a></li>
+    <li><a href="06-redox.html">6. 산화 환원</a></li>
+    <li><a href="07-organic.html">7. 유기 화학</a></li>
+    <li><a href="08-polymers.html">8. 고분자</a></li>
+    <li><a href="09-biochemistry.html">9. 생화학</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>화학 결합</em></h1>
+  <p class="authors">Chapter 2 — Chemical Bonding & Molecular Geometry</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
+
+<h2>화학 결합 개요</h2>
+<p>이 챕터에서는 화학 결합의 핵심 개념을 3D 시뮬레이션과 함께 학습합니다. 분자 구조를 직접 회전시키고, 반응 과정을 관찰하세요.</p>
+
+<div class="info-card">
+  <h4>핵심 개념</h4>
+  <p>이온 결합, 공유 결합, 금속 결합의 전자 공유 및 이동 원리를 파악하고, VSEPR 이론을 통해 분자의 3차원 입체 구조와 극성을 해석합니다.</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🤝 화학 결합이 뭐예요?</h3>
+  <p>원자들은 혼자 있으면 불안해요. 그래서 서로 <strong>손을 잡아</strong> 더 편안한 상태가 되려고 해요. 이렇게 원자끼리 손잡는 걸 <strong>화학 결합</strong>이라고 불러요! 🤝 방법은 전자를 <strong>주고받거나</strong> <strong>나눠 쓰는</strong> 거예요.</p>
+  <h3>🎯 왜 손을 잡을까?</h3>
+  <p>원자는 가장 바깥 껍질에 전자를 <strong>8개</strong> 채우면 마음이 편해져요. 이걸 <strong>옥텟 규칙</strong>이라고 해요(수소는 2개). 8개를 채우려고 결합을 하는 거예요!</p>
+  <div class="info-card">
+    <h4>🌱 꼭 알아둘 말</h4>
+    <ul>
+      <li><strong>이온 결합</strong>: 전자를 주고받아 (+)와 (−)가 서로 끌어당김</li>
+      <li><strong>공유 결합</strong>: 전자를 함께 나눠 쓰는 결합</li>
+      <li><strong>금속 결합</strong>: 자유 전자가 금속 사이를 떠도는 결합</li>
+      <li><strong>전기음성도</strong>: 원자가 전자를 끌어당기는 힘 💪</li>
+    </ul>
+  </div>
+  <h3>🧂 결합 3형제</h3>
+  <p><strong>① 주고받기(이온 결합)</strong>: 나트륨은 전자 1개가 남아서 귀찮고, 염소는 1개가 부족해요. 그래서 나트륨이 전자를 염소에게 <strong>쏙</strong> 넘겨주면 둘 다 편안해져요! 한쪽은 (+), 한쪽은 (−)가 되어 자석처럼 딱 붙죠. 이게 바로 소금이에요. 🧂</p>
+  <p><strong>② 나눠 쓰기(공유 결합)</strong>: 수소 두 개가 만나면 각자 전자 1개씩 내놓아 <strong>같이</strong> 써요. 서로 양보하는 착한 친구들이죠. 🙂</p>
+  <p><strong>③ 자유 전자 바다(금속 결합)</strong>: 금속 원자들은 전자를 모두에게 풀어놔요. 전자들이 바다처럼 자유롭게 헤엄쳐서 전기와 열이 쌩쌩 잘 통해요! 🌊⚡</p>
+  <h3>💎 같은 탄소인데 왜 달라요?</h3>
+  <p>다이아몬드와 연필심(흑연)은 둘 다 탄소예요. 그런데 손잡는 방식이 달라서 하나는 세상에서 제일 단단하고, 하나는 미끄러워요! 결합 방식이 성질을 정하는 거죠. 💎✏️</p>
+  <div class="study-tip"><strong>💡 꿀팁:</strong> 점 8개를 채우는 퍼즐(루이스 점 그림)을 그려 보세요. 전자를 어떻게 나누는지 눈에 확 들어와요! ✏️</div>
+  <h3>📝 한눈에 정리</h3>
+  <ul>
+    <li>결합하는 이유 = 전자 8개 채우기(옥텟 규칙)</li>
+    <li>이온 결합 = 주고받기, 공유 결합 = 나눠 쓰기</li>
+    <li>전기음성도 차이가 크면 이온 결합, 작으면 공유 결합</li>
+    <li>금속 결합의 자유 전자 덕분에 전기·열이 잘 통해요</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
+  <p>화학 결합의 본질을 가장 잘 설명하는 이론은 발렌스 결합이론(VB)과 분자 오비탈 이론(MO)입니다. VB 이론은 결합을 원자 오비탈의 겹침으로 보고, sp³, sp², sp 같은 혼성화 개념을 도입합니다. 메테인의 정사면체 구조는 탄소의 2s와 2p 오비탈이 sp³로 혼성화되어 109.5° 각도로 배치되기 때문입니다. 반면 MO 이론은 원자 오비탈이 결합성·반결합성 분자 오비탈을 만든다고 봅니다. 산소 분자의 상자성은 MO 이론으로만 설명됩니다. VSEPR 이론은 중심 원자 주변 전자쌍이 반발을 최소화하도록 배치된다는 단순한 원리이지만, 물(굽은형), 암모니아(삼각뿔), 메테인(정사면체)의 모양을 잘 예측합니다. 결합의 극성은 전기음성도 차이로 정해지며, 전체 분자의 극성은 결합 극성의 벡터 합으로 결정됩니다. CO₂는 결합은 극성이지만 분자는 무극성입니다.</p>
+  <h3>핵심 공식과 반응식</h3>
+  <div class="formula">
+    결합 차수 = (결합성 전자 - 반결합성 전자) / 2<br>
+    쌍극자 모멘트: μ = q · d<br>
+    결합 에너지(Born-Haber): ΔH_f = ΔH_sub + ½D + IE - EA - U
+  </div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>NH₃의 결합각이 107°인 이유를 설명하시오. 답: 질소는 sp³ 혼성으로 4개의 전자쌍이 있지만, 그중 한 쌍이 비공유 전자쌍이라 결합쌍을 더 강하게 밀어 109.5°보다 작은 107°가 됩니다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>O₂의 자기적 성질을 예측하시오. 답: MO 이론으로 풀면 π* 오비탈에 홀전자가 2개 있어 상자성을 띠며, 액체 산소가 자석에 붙는 실험으로 확인됩니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>다이아몬드의 sp³ 결합은 4방향 정사면체 구조로 결합이 모두 강해 가장 단단한 천연 물질이 됩니다. 흑연은 sp² 평면 구조에 자유 전자가 있어 도전성을 보이고, 그래핀과 탄소 나노튜브의 기반이 됩니다. 의약품 설계에서는 분자의 입체 구조와 수소 결합 패턴이 약효를 좌우합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 결합의 극성과 분자 전체의 극성은 다릅니다. 결합 쌍극자가 대칭으로 상쇄되면 분자는 무극성이 됩니다.</div>
+
+<h3>전문가 레벨 이해</h3>
+  <p>화학 결합의 정량적 기술은 양자역학의 다전자 슈뢰딩거 방정식에서 출발합니다. 보른-오펜하이머 근사로 핵과 전자를 분리한 뒤, Hartree-Fock 방법으로 단일 행렬식 파동함수를 구하면 평균장 근사 수준의 결합 에너지를 얻습니다. 그러나 전자상관(correlation) 효과를 다루려면 후속 방법인 Møller-Plesset 섭동(MP2), 결합 클러스터(CCSD(T)), 다중 참조 CASSCF/CASPT2 등이 필요합니다. CCSD(T)는 화학적 정밀도(1 kcal/mol)에 도달할 수 있어 “gold standard”로 불립니다. 한편 밀도범함수이론(DFT)은 코헨-셤 방정식으로 전자밀도만 다루어 계산 비용을 크게 줄였고, B3LYP, PBE 등의 교환-상관 범함수가 널리 쓰입니다. 결합의 분석에는 자연 결합 오비탈(NBO), QTAIM의 전자밀도 위상 분석, ELF/LOL 등이 활용됩니다. 비공유 상호작용(반데르발스, 수소결합, π-π 적층)은 분산력을 포함하는 D3·D4 보정이나 비국소 vdW-DF 범함수로 정확히 다룰 수 있습니다.</p>
+  <h3>유도와 증명</h3>
+  <div class="formula">
+    수소 분자 H₂ 변분 결합 에너지:<br>
+    ψ_± = (φ_A ± φ_B) / √(2 ± 2S),  S = ⟨φ_A|φ_B⟩<br>
+    E_± = (H_AA ± H_AB) / (1 ± S)<br>
+    Hartree-Fock 방정식: F̂ φ_i = ε_i φ_i<br>
+    Kohn-Sham: [-½∇² + v_eff(r)] φ_i = ε_i φ_i
+  </div>
+  <h3>최신 연구</h3>
+  <p>2020년대 들어 머신러닝 퍼텐셜(MLIP)이 ab initio 정확도와 고전 분자동역학의 속도를 결합해 결합 동역학을 수백만 원자 규모로 시뮬레이션하고 있습니다. 또한 단분자 결합 강도를 AFM으로 측정하는 단일분자 역학 실험이 발전했고, 양자컴퓨터를 이용한 변분 양자 고유값 솔버(VQE)로 작은 분자의 결합 에너지를 계산하는 시도도 활발합니다.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>양자화학</strong>: 결합의 정량적 계산 도구</li>
+    <li><strong>고체물리</strong>: 밴드 이론으로 확장되는 금속/반도체 결합</li>
+    <li><strong>구조생물학</strong>: 단백질 접힘과 효소 활성의 비공유 결합</li>
+    <li><strong>나노과학</strong>: 그래핀, MOF, COF 등 결합 설계 기반 신소재</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Szabo & Ostlund, Modern Quantum Chemistry</li>
+    <li>📺 Coursera Computational Chemistry 시리즈</li>
+    <li>🔬 Psi4, ORCA, Gaussian 같은 양자화학 패키지 실습</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 벤젠의 방향족 안정화 에너지를 분자 오비탈 이론으로 유도해 보세요. 휴켈 근사로 6개의 π 전자가 원형 공액계에 들어갈 때 에너지 준위가 -2β, -β, -β, β, β, 2β로 분리됨을 보이고 총 안정화 에너지를 계산하면 됩니다.</div>
+</div>
+
+
+<h2>🚀 초고급 3D 게임 — 분자 조립</h2>
+<p>원자 풀에서 원자를 골라 중심 원자에 결합시켜 목표 분자(H₂O·CO₂·NH₃·CH₄)를 완성하세요. 원자가(H=1·O=2·N=3·C=4) 규칙에 맞게 결합해야 클리어됩니다.</p>
+<div id="nm-molecule"></div>
+<h2>🕹️ 직접 해보기 — 결합 용어 상황 판단</h2>
+<p>화학 결합 용어와 그 설명을 알맞게 연결하세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#00e896","prompt":"결합 용어와 설명을 짝지으세요","pairs":[{"term":"이온 결합","def":"전자를 주고받아 형성되는 +/- 인력"},{"term":"공유 결합","def":"전자를 함께 나눠 갖는 결합"},{"term":"금속 결합","def":"자유 전자가 양이온 사이를 떠도는 결합"},{"term":"전기음성도","def":"원자가 전자를 끌어당기는 힘"},{"term":"옥텟 규칙","def":"바깥 껍질을 8개로 채우려는 경향"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e896","questions":[{"q":"이온결합의 예로 옳은 것은?","choices":["H₂O","NaCl","CH₄","CO₂"],"answer":1},{"q":"비금속끼리 전자쌍을 공유하는 결합은?","choices":["금속결합","이온결합","수소결합","공유결합"],"answer":3},{"q":"금속의 전기 전도성 원인은?","choices":["자유전자","양성자","중성자","전자쌍"],"answer":0},{"q":"VSEPR에서 전자쌍 4개의 형태는?","choices":["직선형","평면삼각형","정사면체","정팔면체"],"answer":2},{"q":"ΔEN ≥ 1.7이면 어떤 결합인가?","choices":["무극성공유","극성공유","이온결합","금속결합"],"answer":2}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('sim-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 3, 8);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Molecule-like structure
+  const atoms = [];
+  const numAtoms = 5 + Math.floor(Math.random()*5);
+  for (let i = 0; i < numAtoms; i++) {
+    const r = 0.2 + Math.random()*0.3;
+    const color = [0x00e890, 0xfbbf24, 0xef4444, 0xa78bfa, 0x60a5fa][i % 5];
+    const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 32, 32), new THREE.MeshBasicMaterial({ color }));
+    mesh.position.set((Math.random()-0.5)*4, (Math.random()-0.5)*4, (Math.random()-0.5)*4);
+    scene.add(mesh);
+    atoms.push(mesh);
+  }
+  // Bonds
+  for (let i = 0; i < atoms.length-1; i++) {
+    const points = [atoms[i].position, atoms[i+1].position];
+    const geo = new THREE.BufferGeometry().setFromPoints(points);
+    scene.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0x00e890, transparent: true, opacity: 0.4 })));
+  }
+
+  let mouseDown = false, prevX = 0, prevY = 0;
+  container.addEventListener('mousedown', e => { mouseDown = true; prevX = e.clientX; prevY = e.clientY; });
+  container.addEventListener('mouseup', () => mouseDown = false);
+  container.addEventListener('mousemove', e => {
+    if (!mouseDown) return;
+    scene.rotation.y += (e.clientX - prevX)*0.005;
+    scene.rotation.x += (e.clientY - prevY)*0.005;
+    prevX = e.clientX; prevY = e.clientY;
+  });
+  container.addEventListener('touchstart', e => { prevX = e.touches[0].clientX; prevY = e.touches[0].clientY; });
+  container.addEventListener('touchmove', e => {
+    scene.rotation.y += (e.touches[0].clientX - prevX)*0.005;
+    scene.rotation.x += (e.touches[0].clientY - prevY)*0.005;
+    prevX = e.touches[0].clientX; prevY = e.touches[0].clientY;
+  });
+
+  function animate() { requestAnimationFrame(animate); scene.rotation.y += 0.003; renderer.render(scene, camera); }
+  animate();
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+})();
+</script>
+</body>
+</html>

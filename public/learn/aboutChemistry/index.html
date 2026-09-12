@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>화학: 분자의 세계를 3D로 탐험하다</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="index.html">⚗️ 표지 · 소개</a></li>
+    <li><a href="chapters/01-atomic-structure.html">1. 원자 구조</a></li>
+    <li><a href="chapters/02-chemical-bonds.html">2. 화학 결합</a></li>
+    <li><a href="chapters/03-chemical-reactions.html">3. 화학 반응</a></li>
+    <li><a href="chapters/04-thermochemistry.html">4. 열화학</a></li>
+    <li><a href="chapters/05-acid-base.html">5. 산과 염기</a></li>
+    <li><a href="chapters/06-redox.html">6. 산화 환원</a></li>
+    <li><a href="chapters/07-organic.html">7. 유기 화학</a></li>
+    <li><a href="chapters/08-polymers.html">8. 고분자</a></li>
+    <li><a href="chapters/09-biochemistry.html">9. 생화학</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>화학,<br>분자의 <em>세계</em>를<br>3D로 탐험하다</h1>
+  <p class="authors">Interactive Chemistry Lab — Molecular World in Three Dimensions</p>
+  <p class="affiliation">Vol. 04 · May 2026 · aboutChemistry Editorial</p>
+</header>
+
+<div class="scene-3d" id="intro-scene"></div>
+<span class="interact-hint">⟳ 마우스로 드래그하여 회전 · 스크롤로 확대/축소</span>
+
+<h2>화학이란?</h2>
+<p>화학은 물질의 구조, 성질, 변환을 연구하는 학문입니다. 원자들이 어떻게 결합하여 분자를 이루고, 분자들이 어떻게 반응하여 새로운 물질을 만들어내는지를 탐구합니다.</p>
+
+<p>이 학습 사이트에서는 Three.js를 활용한 3D 시뮬레이션으로 원자 모델, 분자 구조, 화학 반응을 직접 체험합니다. 전자 배치를 조작하고, 결합을 형성하며, 반응의 에너지 변화를 눈으로 확인하세요.</p>
+
+<h2>학습 로드맵</h2>
+
+<div class="info-card">
+  <h4>⚛️ 챕터 1–2: 원자와 결합</h4>
+  <p>보어 모델에서 양자역학적 오비탈까지. 이온결합, 공유결합, 금속결합을 3D로 시각화합니다.</p>
+</div>
+
+<div class="info-card reaction">
+  <h4>🔥 챕터 3–4: 반응과 에너지</h4>
+  <p>화학 반응식 균형, 반응 속도론, 열화학. 발열/흡열 반응의 에너지 다이어그램을 인터랙티브로 탐구합니다.</p>
+</div>
+
+<div class="info-card acid">
+  <h4>💧 챕터 5–6: 산염기와 산화환원</h4>
+  <p>pH 척도, 중화 반응, 전자 이동. 전기화학 전지의 작동 원리를 시뮬레이션합니다.</p>
+</div>
+
+<div class="info-card organic">
+  <h4>🧬 챕터 7–9: 유기·고분자·생화학</h4>
+  <p>탄소 화합물, 중합 반응, DNA·단백질 구조. 3D 분자 모델을 회전하며 구조를 파악합니다.</p>
+</div>
+
+<h2>화학의 핵심 공식들</h2>
+<div class="formula">PV = nRT &nbsp;&nbsp;|&nbsp;&nbsp; ΔG = ΔH − TΔS &nbsp;&nbsp;|&nbsp;&nbsp; pH = −log[H⁺]</div>
+
+<p>각 챕터에서는 이 공식들이 실제로 어떤 현상을 설명하는지 직접 눈으로 확인할 수 있습니다. 왼쪽 사이드바에서 챕터를 선택하여 학습을 시작하세요.</p>
+
+</main>
+</div>
+
+<script>
+// Intro 3D Scene - 회전하는 분자 구조
+(function() {
+  const container = document.getElementById('intro-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 3, 8);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Create molecule group
+  const molecule = new THREE.Group();
+  scene.add(molecule);
+
+  // Central atom (Carbon-like)
+  const centerGeo = new THREE.SphereGeometry(0.6, 32, 32);
+  const centerMat = new THREE.MeshBasicMaterial({ color: 0x00e896, transparent: true, opacity: 0.9 });
+  const center = new THREE.Mesh(centerGeo, centerMat);
+  molecule.add(center);
+
+  // Glow
+  const glowGeo = new THREE.SphereGeometry(0.85, 32, 32);
+  const glowMat = new THREE.MeshBasicMaterial({ color: 0x00e896, transparent: true, opacity: 0.15 });
+  molecule.add(new THREE.Mesh(glowGeo, glowMat));
+
+  // Surrounding atoms in tetrahedral arrangement
+  const atomPositions = [
+    [0, 1.8, 0],
+    [1.7, -0.6, 0],
+    [-0.85, -0.6, 1.47],
+    [-0.85, -0.6, -1.47]
+  ];
+  const atomColors = [0xff6b35, 0x38bdf8, 0xa855f7, 0xf59e0b];
+
+  atomPositions.forEach((pos, i) => {
+    // Atom sphere
+    const atomGeo = new THREE.SphereGeometry(0.4, 24, 24);
+    const atomMat = new THREE.MeshBasicMaterial({ color: atomColors[i], transparent: true, opacity: 0.85 });
+    const atom = new THREE.Mesh(atomGeo, atomMat);
+    atom.position.set(...pos);
+    molecule.add(atom);
+
+    // Bond cylinder
+    const start = new THREE.Vector3(0, 0, 0);
+    const end = new THREE.Vector3(...pos);
+    const direction = end.clone().sub(start);
+    const length = direction.length();
+    const bondGeo = new THREE.CylinderGeometry(0.06, 0.06, length, 8);
+    const bondMat = new THREE.MeshBasicMaterial({ color: 0x00e896, transparent: true, opacity: 0.4 });
+    const bond = new THREE.Mesh(bondGeo, bondMat);
+    bond.position.copy(start.clone().add(end).multiplyScalar(0.5));
+    bond.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize());
+    molecule.add(bond);
+  });
+
+  // Floating electron clouds
+  const electrons = [];
+  for (let i = 0; i < 20; i++) {
+    const eGeo = new THREE.SphereGeometry(0.05, 8, 8);
+    const eMat = new THREE.MeshBasicMaterial({ color: 0x00e896, transparent: true, opacity: 0.6 });
+    const eMesh = new THREE.Mesh(eGeo, eMat);
+    const radius = 2.5 + Math.random() * 2;
+    const speed = 0.5 + Math.random() * 1;
+    const phase = Math.random() * Math.PI * 2;
+    const tiltX = (Math.random() - 0.5) * Math.PI;
+    const tiltZ = (Math.random() - 0.5) * Math.PI;
+    electrons.push({ mesh: eMesh, radius, speed, phase, tiltX, tiltZ });
+    scene.add(eMesh);
+  }
+
+  // Hexagonal grid (chemistry motif)
+  const gridMat = new THREE.LineBasicMaterial({ color: 0x00e896, transparent: true, opacity: 0.06 });
+  for (let row = -3; row <= 3; row++) {
+    for (let col = -3; col <= 3; col++) {
+      const hex = new THREE.Group();
+      const x = col * 1.8 + (row % 2) * 0.9;
+      const z = row * 1.56;
+      const points = [];
+      for (let k = 0; k <= 6; k++) {
+        const angle = (k / 6) * Math.PI * 2;
+        points.push(new THREE.Vector3(Math.cos(angle) * 0.5 + x, -3, Math.sin(angle) * 0.5 + z));
+      }
+      const geo = new THREE.BufferGeometry().setFromPoints(points);
+      scene.add(new THREE.Line(geo, gridMat));
+    }
+  }
+
+  // Mouse interaction
+  let mouseX = 0, mouseY = 0;
+  container.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = Date.now() * 0.001;
+
+    molecule.rotation.y = t * 0.3;
+    molecule.rotation.x = Math.sin(t * 0.2) * 0.2;
+
+    electrons.forEach(e => {
+      const angle = t * e.speed + e.phase;
+      e.mesh.position.x = Math.cos(angle) * e.radius;
+      e.mesh.position.y = Math.sin(angle + e.tiltX) * 1.5;
+      e.mesh.position.z = Math.sin(angle) * e.radius;
+    });
+
+    camera.position.x += (mouseX * 3 - camera.position.x) * 0.02;
+    camera.position.y += (-mouseY * 2 + 3 - camera.position.y) * 0.02;
+    camera.lookAt(0, 0, 0);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

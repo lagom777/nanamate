@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2장. SQL 핵심</title>
+<link rel="stylesheet" href="../styles.css">
+<script defer src="../toggle.js"></script>
+<style>
+  .sql-editor {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 16px;
+    border-radius: 8px;
+    margin: 15px 0;
+    font-family: 'Courier New', monospace;
+  }
+  .sql-editor textarea {
+    width: 100%;
+    height: 120px;
+    background: #252526;
+    color: #d4d4d4;
+    border: 1px solid #3e3e42;
+    padding: 12px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    resize: vertical;
+  }
+  .sql-editor textarea:focus {
+    outline: none;
+    border-color: #007acc;
+    box-shadow: 0 0 8px rgba(0, 122, 204, 0.3);
+  }
+  .run-btn {
+    background: linear-gradient(120deg, #00d4ff, #7b5cff);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 12px;
+    transition: transform 0.2s;
+  }
+  .run-btn:hover {
+    transform: translateY(-2px);
+  }
+  .run-btn:active {
+    transform: translateY(0);
+  }
+  .sql-result {
+    margin-top: 16px;
+    padding: 16px;
+    background: #f5f7fa;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  .result-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .result-table th {
+    background: #e3f2fd;
+    color: #1976d2;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #90caf9;
+    font-weight: 600;
+  }
+  .result-table td {
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+  }
+  .result-table tr:nth-child(even) {
+    background: #fafafa;
+  }
+  .error-msg {
+    color: #d32f2f;
+    padding: 12px;
+    background: #ffebee;
+    border: 1px solid #f44336;
+    border-radius: 4px;
+    margin-top: 12px;
+  }
+  .result-count {
+    color: #666;
+    font-size: 13px;
+    margin-top: 10px;
+  }
+  .interactive-demo {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 4px solid #00d4ff;
+    margin: 20px 0;
+  }
+</style>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📖 표지 · 초록</a></li>
+    <li><a href="01-relational.html">1. 관계형 DB 기초</a></li>
+    <li><a href="02-sql.html"><strong>2. SQL 핵심</strong></a></li>
+    <li><a href="03-normalization.html">3. 정규화</a></li>
+    <li><a href="04-index.html">4. 인덱스와 최적화</a></li>
+    <li><a href="05-transaction.html">5. 트랜잭션과 동시성</a></li>
+    <li><a href="06-nosql.html">6. NoSQL</a></li>
+    <li><a href="07-distributed.html">7. 분산 DB</a></li>
+    <li><a href="08-modeling.html">8. 데이터 모델링</a></li>
+    <li><a href="09-patterns.html">9. 실전 설계 패턴</a></li>
+  </ol>
+</aside>
+<main>
+
+<h1>2장. SQL 핵심</h1>
+
+<section id="section-1">
+<h2>2.1 SQL이란?</h2>
+
+<div class="easy-version">
+<div class="easy-box">
+<h3>🎯 쉽게 이해하기</h3>
+<p>
+<strong>SQL(Structured Query Language)</strong>은 데이터베이스와 대화하는 언어입니다.
+마치 우리가 한국어로 대화하듯이, SQL로 데이터베이스에게 명령을 내릴 수 있어요.
+</p>
+<p style="margin-top:15px;"><strong>예시:</strong></p>
+<p style="background:#f0f7ff; padding:12px; border-left:4px solid #1976d2; border-radius:4px; font-family:monospace;">
+SELECT name FROM students WHERE grade = 2;
+</p>
+<p style="margin-top:10px;">위 명령은 "students 테이블에서 grade가 2인 학생의 name을 보여줘"라는 뜻입니다.</p>
+</div>
+</div>
+
+<div class="paper-version">
+<h3>📚 학술 정의</h3>
+<p>
+SQL은 1974년 Donald Chamberlin과 Raymond Boyce가 IBM에서 SEQUEL(Structured English Query Language)로 처음 개발했으며,
+이후 SQL(Structured Query Language)로 표준화되었습니다. 1986년에 ANSI(American National Standards Institute)에서 표준을 공식화했고,
+1987년에 ISO(International Organization for Standardization)에 채택되었습니다.
+</p>
+<p><strong>SQL의 특징:</strong></p>
+<ul>
+  <li><strong>선언적(Declarative):</strong> "무엇을" 할지 명시하지만, "어떻게" 할지는 DBMS가 결정</li>
+  <li><strong>절차적이 아님(Non-procedural):</strong> 단계별 알고리즘을 지정하지 않음</li>
+  <li><strong>집합 지향(Set-oriented):</strong> 한 번에 여러 행을 처리</li>
+</ul>
+<p><strong>SQL의 세 가지 부분(Three Sub-languages):</strong></p>
+<ul>
+  <li><strong>DDL(Data Definition Language):</strong> CREATE, ALTER, DROP. 구조 정의</li>
+  <li><strong>DML(Data Manipulation Language):</strong> SELECT, INSERT, UPDATE, DELETE. 데이터 조작</li>
+  <li><strong>DCL(Data Control Language):</strong> GRANT, REVOKE. 권한 관리</li>
+</ul>
+</div>
+</section>
+
+<!-- 3D 학습 시각화: SQL 논리적 실행 순서 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · SQL: 행이 6개의 게이트를 통과한다</div>
+  <div id="db3d-02" style="width:100%;height:430px;"></div>
+  <div id="db3d-02-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">FROM부터 ORDER BY까지, 행이 걸러지고 묶이고 정렬되는 과정.</div>
+</div>
+
+
+<section id="section-2">
+<h2>2.2 데이터 정의(DDL)</h2>
+
+<div class="easy-version">
+<div class="easy-box">
+<h3>🎯 쉽게 이해하기</h3>
+<p>
+DDL은 데이터베이스의 <strong>구조를 만들고 수정하는</strong> 명령어들입니다.
+</p>
+<ul>
+  <li><strong>CREATE TABLE:</strong> 새로운 테이블 만들기</li>
+  <li><strong>ALTER TABLE:</strong> 기존 테이블 수정하기 (열 추가, 삭제, 타입 변경 등)</li>
+  <li><strong>DROP TABLE:</strong> 테이블 삭제하기</li>
+</ul>
+<p style="margin-top:15px;"><strong>CREATE TABLE 예시:</strong></p>
+<pre style="background:#f0f7ff; padding:12px; border-radius:4px; overflow-x:auto; font-family:monospace; font-size:13px;">
+CREATE TABLE students (
+  student_id INT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  grade INT,
+  department VARCHAR(30)
+);
+</pre>
+</div>
+</div>
+
+<div class="paper-version">
+<h3>📚 형식적 정의</h3>
+<p>
+<strong>CREATE TABLE 구문:</strong>
+</p>
+<pre style="background:#f0f7ff; padding:12px; border-radius:4px; overflow-x:auto; font-family:monospace; font-size:12px;">
+CREATE TABLE TableName (
+  ColName1 DataType Constraint,
+  ColName2 DataType Constraint,
+  ...
+  TableConstraint
+);
+</pre>
+<p><strong>데이터 타입(주요):</strong></p>
+<ul>
+  <li><strong>INT, BIGINT:</strong> 정수</li>
+  <li><strong>FLOAT, DECIMAL(p,s):</strong> 실수 (p=전체자리수, s=소수자리수)</li>
+  <li><strong>VARCHAR(n), CHAR(n):</strong> 문자열 (n=최대 길이)</li>
+  <li><strong>DATE, TIMESTAMP:</strong> 날짜/시간</li>
+  <li><strong>BOOLEAN:</strong> TRUE/FALSE</li>
+</ul>
+<p><strong>제약조건(Constraints):</strong></p>
+<ul>
+  <li><strong>NOT NULL:</strong> 반드시 값이 있어야 함</li>
+  <li><strong>UNIQUE:</strong> 같은 값이 중복되지 않음</li>
+  <li><strong>PRIMARY KEY:</strong> NOT NULL + UNIQUE + 기본 식별자</li>
+  <li><strong>FOREIGN KEY:</strong> 다른 테이블의 PRIMARY KEY 참조</li>
+  <li><strong>CHECK:</strong> 조건식이 참인 값만 허용</li>
+  <li><strong>DEFAULT:</strong> 지정되지 않으면 기본값 사용</li>
+</ul>
+<p><strong>ALTER TABLE 예시:</strong></p>
+<pre style="background:#f0f7ff; padding:12px; border-radius:4px; overflow-x:auto; font-family:monospace; font-size:12px;">
+ALTER TABLE students ADD COLUMN email VARCHAR(100);
+ALTER TABLE students MODIFY COLUMN grade INT NOT NULL;
+ALTER TABLE students DROP COLUMN email;
+</pre>
+</div>
+</section>
+
+<section id="section-3">
+<h2>2.3 데이터 조작(DML)</h2>
+
+<div class="easy-version">
+<div class="easy-box">
+<h3>🎯 쉽게 이해하기</h3>
+<p>
+DML은 테이블의 <strong>데이터를 추가, 조회, 수정, 삭제하는</strong> 명령어들입니다. CRUD라고도 부릅니다:
+</p>
+<ul>
+  <li><strong>Create = INSERT:</strong> 새로운 데이터 추가</li>
+  <li><strong>Read = SELECT:</strong> 데이터 조회</li>
+  <li><strong>Update = UPDATE:</strong> 기존 데이터 수정</li>
+  <li><strong>Delete = DELETE:</strong> 데이터 삭제</li>
+</ul>
+<p style="margin-top:15px;"><strong>SELECT 기본 구조:</strong></p>
+<pre style="background:#f0f7ff; padding:12px; border-radius:4px; overflow-x:auto; font-family:monospace; font-size:13px;">
+SELECT 열1, 열2
+FROM 테이블
+WHERE 조건
+ORDER BY 열 ASC|DESC;
+</pre>
+<p style="margin-top:15px;"><strong>JOIN으로 두 테이블 연결하기:</strong></p>
+<p>학생의 정보와 그들이 수강하는 과목 정보를 함께 보고 싶을 때 JOIN을 사용합니다.</p>
+<pre style="background:#f0f7ff; padding:12px; border-radius:4px; overflow-x:auto; font-family:monospace; font-size:12px;">
+SELECT s.name, c.course_name
+FROM students s
+INNER JOIN enrollments e ON s.student_id = e.student_id
+INNER JOIN courses c ON e.course_id = c.course_id;
+</pre>
+</div>
+</div>
+
+<div class="paper-version">
+<h3>📚 형식적 정의</h3>
+<p>
+<strong>SELECT 쿼리 처리 순서(Execution Order):</strong>
+</p>
+<ol>
+  <li><strong>FROM:</strong> 데이터 소스 결정</li>
+  <li><strong>WHERE:</strong> 행 필터링 (T ⊆ R)</li>
+  <li><strong>GROUP BY:</strong> 그룹 분할</li>
+  <li><strong>HAVING:</strong> 그룹 필터링</li>
+  <li><strong>SELECT:</strong> 열 선택 및 계산</li>
+  <li><strong>DISTINCT:</strong> 중복 제거</li>
+  <li><strong>ORDER BY:</strong> 정렬</li>
+  <li><strong>LIMIT/OFFSET:</strong> 페이징</li>
+</ol>
+<p><strong>JOIN의 유형:</strong></p>
+<ul>
+  <li><strong>INNER JOIN:</strong> R₁ ⋈ R₂ = {(t₁,t₂) | t₁ ∈ R₁ ∧ t₂ ∈ R₂ ∧ 조건}. 공통 부분만</li>
+  <li><strong>LEFT OUTER JOIN:</strong> R₁의 모든 행 + 매치되는 R₂ 행들</li>
+  <li><strong>RIGHT OUTER JOIN:</strong> R₂의 모든 행 + 매치되는 R₁ 행들</li>
+  <li><strong>FULL OUTER JOIN:</strong> R₁과 R₂의 모든 행</li>
+  <li><strong>CROSS JOIN:</strong> R₁ × R₂ (카티션 곱)</li>
+</ul>
+<p><strong>집계 함수(Aggregate Functions):</strong></p>
+<ul>
+  <li><strong>COUNT(expr):</strong> NULL이 아닌 행 개수. COUNT(*) = 전체 행 개수</li>
+  <li><strong>SUM(expr):</strong> ∑ expr</li>
+  <li><strong>AVG(expr):</strong> (∑ expr) / COUNT(expr)</li>
+  <li><strong>MIN(expr), MAX(expr):</strong> 최소값, 최대값</li>
+  <li><strong>GROUP_CONCAT(expr):</strong> 문자열 연결</li>
+</ul>
+<p><strong>윈도우 함수(Window Functions):</strong></p>
+<pre style="background:#f0f7ff; padding:12px; border-radius:4px; overflow-x:auto; font-family:monospace; font-size:12px;">
+SELECT
+  name,
+  salary,
+  ROW_NUMBER() OVER (ORDER BY salary DESC) AS rank,
+  LAG(salary) OVER (ORDER BY salary DESC) AS prev_salary,
+  LEAD(salary) OVER (ORDER BY salary DESC) AS next_salary
+FROM employees;
+</pre>
+</div>
+</section>
+
+<section id="section-4">
+<h2>2.4 서브쿼리와 집계</h2>
+
+<div class="easy-version">
+<div class="easy-box">
+<h3>🎯 쉽게 이해하기</h3>
+<p>
+<strong>서브쿼리</strong> = "질문 안에 질문" 넣기
+</p>
+<p style="margin-top:10px;">예를 들어, "평균 학점 이상인 학생을 찾아줘"라는 요청은:</p>
+<pre style="background:#f0f7ff; padding:12px; border-radius:4px; overflow-x:auto; font-family:monospace; font-size:12px;">
+SELECT name
+FROM students
+WHERE grade >= (SELECT AVG(grade) FROM students);
+</pre>
+<p style="margin-top:15px;"><strong>집계 함수</strong> = 많은 데이터를 요약하는 것</p>
+<ul>
+  <li><strong>COUNT:</strong> 몇 명인가? → 50명</li>
+  <li><strong>SUM:</strong> 총합은? → 총점 4500점</li>
+  <li><strong>AVG:</strong> 평균은? → 평균 학점 3.5</li>
+  <li><strong>MAX/MIN:</strong> 최고/최저는? → 최고 학점 4.5</li>
+</ul>
+<p style="margin-top:15px;"><strong>GROUP BY로 그룹 나누기:</strong></p>
+<p>"전공별로 학생 수를 세어줘"</p>
+<pre style="background:#f0f7ff; padding:12px; border-radius:4px; overflow-x:auto; font-family:monospace; font-size:12px;">
+SELECT department, COUNT(*) as student_count
+FROM students
+GROUP BY department;
+</pre>
+</div>
+</div>
+
+<div class="paper-version">
+<h3>📚 형식적 정의</h3>
+<p>
+<strong>서브쿼리(Subquery, Inner Query):</strong>
+다른 쿼리 내에 포함된 SELECT 문.
+</p>
+<p><strong>상관 서브쿼리(Correlated Subquery):</strong></p>
+<pre style="background:#f0f7ff; padding:12px; border-radius:4px; overflow-x:auto; font-family:monospace; font-size:12px;">
+SELECT e1.name, e1.salary
+FROM employees e1
+WHERE e1.salary > (
+  SELECT AVG(e2.salary)
+  FROM employees e2
+  WHERE e2.department = e1.department
+);
+</pre>
+<p>외부 쿼리의 각 행에 대해 서브쿼리가 실행됨. 성능이 낮을 수 있음.</p>
+<p><strong>IN/EXISTS 연산자:</strong></p>
+<ul>
+  <li><strong>IN:</strong> WHERE col IN (SELECT ...)</li>
+  <li><strong>EXISTS:</strong> WHERE EXISTS (SELECT ... FROM ... WHERE ...)</li>
+  <li><strong>NOT IN, NOT EXISTS:</strong> 반대 조건</li>
+</ul>
+<p><strong>윈도우 함수의 구조:</strong></p>
+<pre style="background:#f0f7ff; padding:12px; border-radius:4px; overflow-x:auto; font-family:monospace; font-size:12px;">
+function_name(expr) OVER (
+  [PARTITION BY col1, col2, ...]
+  [ORDER BY col3 [ASC|DESC]]
+  [ROWS|RANGE BETWEEN ...]
+)
+</pre>
+<ul>
+  <li><strong>ROW_NUMBER():</strong> 순위 (중복 허용 안 함)</li>
+  <li><strong>RANK():</strong> 순위 (중복 허용)</li>
+  <li><strong>DENSE_RANK():</strong> 순위 (밀집)</li>
+  <li><strong>LAG(col, offset):</strong> 이전 행의 값</li>
+  <li><strong>LEAD(col, offset):</strong> 다음 행의 값</li>
+  <li><strong>FIRST_VALUE(), LAST_VALUE():</strong> 첫/마지막 값</li>
+</ul>
+</div>
+</section>
+
+<section id="interactive">
+<h2>2.5 SQL 실습 시뮬레이터</h2>
+<p>아래에서 직접 SQL 쿼리를 작성하고 실행해 보세요. 데이터는 메모리에서 처리됩니다.</p>
+
+<div class="interactive-demo">
+  <h3>🔍 SQL 실습 시뮬레이터</h3>
+  <p style="font-size:14px; color:#666;">기본 SELECT, WHERE, JOIN, GROUP BY 등을 지원합니다.</p>
+
+  <div class="sql-editor">
+    <textarea id="sql-input" placeholder="예시: SELECT * FROM students WHERE grade > 2;">SELECT * FROM students;</textarea>
+    <button class="run-btn" onclick="runSQL()">▶ 실행</button>
+  </div>
+
+  <div class="sql-result" id="sql-output">
+    <p style="color:#999;">쿼리를 실행하면 결과가 표시됩니다.</p>
+  </div>
+</div>
+
+<script>
+// In-memory database
+const tables = {
+  students: [
+    { student_id: 1, name: '김철수', grade: 4, department: '컴퓨터공학' },
+    { student_id: 2, name: '이영희', grade: 3, department: '경영학' },
+    { student_id: 3, name: '박민준', grade: 4, department: '컴퓨터공학' },
+    { student_id: 4, name: '최수진', grade: 2, department: '경영학' },
+    { student_id: 5, name: '정재훈', grade: 3, department: '수학' }
+  ],
+  courses: [
+    { course_id: 101, course_name: '데이터베이스', instructor: '김교수' },
+    { course_id: 102, course_name: '알고리즘', instructor: '이교수' },
+    { course_id: 103, course_name: '경제학개론', instructor: '박교수' }
+  ],
+  enrollments: [
+    { enrollment_id: 1, student_id: 1, course_id: 101, grade: 'A' },
+    { enrollment_id: 2, student_id: 1, course_id: 102, grade: 'A+' },
+    { enrollment_id: 3, student_id: 2, course_id: 101, grade: 'B' },
+    { enrollment_id: 4, student_id: 3, course_id: 102, grade: 'A' },
+    { enrollment_id: 5, student_id: 2, course_id: 103, grade: 'B+' }
+  ]
+};
+
+function runSQL() {
+  const sqlInput = document.getElementById('sql-input').value.trim();
+  const output = document.getElementById('sql-output');
+
+  if (!sqlInput) {
+    output.innerHTML = '<div class="error-msg">쿼리를 입력해주세요.</div>';
+    return;
+  }
+
+  try {
+    const result = executeSQLQuery(sqlInput);
+
+    if (Array.isArray(result) && result.length > 0) {
+      const headers = Object.keys(result[0]);
+      let html = '<table class="result-table"><thead><tr>';
+
+      headers.forEach(h => {
+        html += `<th>${h}</th>`;
+      });
+      html += '</tr></thead><tbody>';
+
+      result.forEach(row => {
+        html += '<tr>';
+        headers.forEach(h => {
+          html += `<td>${row[h]}</td>`;
+        });
+        html += '</tr>';
+      });
+
+      html += '</tbody></table>';
+      html += `<div class="result-count">결과: ${result.length}개 행</div>`;
+      output.innerHTML = html;
+    } else if (Array.isArray(result) && result.length === 0) {
+      output.innerHTML = '<p style="color:#999;">결과가 없습니다.</p>';
+    } else {
+      output.innerHTML = `<p style="color:#666;">${result}</p>`;
+    }
+  } catch (e) {
+    output.innerHTML = `<div class="error-msg">오류: ${e.message}</div>`;
+  }
+}
+
+function executeSQLQuery(sql) {
+  const upperSql = sql.toUpperCase().trim();
+
+  // Simple SELECT parser
+  if (upperSql.startsWith('SELECT')) {
+    const selectMatch = sql.match(/SELECT\s+(.*?)\s+FROM\s+(\w+)/i);
+    if (!selectMatch) throw new Error('올바른 SELECT 문법이 아닙니다.');
+
+    const columns = selectMatch[1].split(',').map(c => c.trim());
+    const tableName = selectMatch[2];
+
+    if (!tables[tableName]) {
+      throw new Error(`테이블 '${tableName}'을(를) 찾을 수 없습니다.`);
+    }
+
+    let result = tables[tableName].map(row => ({ ...row }));
+
+    // WHERE clause
+    const whereMatch = sql.match(/WHERE\s+(.*?)(?:ORDER\s+BY|GROUP\s+BY|$)/i);
+    if (whereMatch) {
+      const whereCondition = whereMatch[1].trim();
+      result = result.filter(row => evaluateCondition(row, whereCondition));
+    }
+
+    // GROUP BY clause (simple)
+    const groupMatch = sql.match(/GROUP\s+BY\s+(\w+)/i);
+    if (groupMatch) {
+      const groupCol = groupMatch[1];
+      const grouped = {};
+      result.forEach(row => {
+        const key = row[groupCol];
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push(row);
+      });
+      result = Object.entries(grouped).map(([key, rows]) => ({
+        [groupCol]: key,
+        count: rows.length
+      }));
+    }
+
+    // ORDER BY clause
+    const orderMatch = sql.match(/ORDER\s+BY\s+(\w+)(?:\s+(ASC|DESC))?/i);
+    if (orderMatch) {
+      const orderCol = orderMatch[1];
+      const orderDir = (orderMatch[2] || 'ASC').toUpperCase();
+      result.sort((a, b) => {
+        if (typeof a[orderCol] === 'string') {
+          return orderDir === 'ASC'
+            ? a[orderCol].localeCompare(b[orderCol])
+            : b[orderCol].localeCompare(a[orderCol]);
+        }
+        return orderDir === 'ASC'
+          ? a[orderCol] - b[orderCol]
+          : b[orderCol] - a[orderCol];
+      });
+    }
+
+    // SELECT columns
+    if (columns[0] !== '*') {
+      result = result.map(row => {
+        const newRow = {};
+        columns.forEach(col => {
+          const trimCol = col.trim();
+          newRow[trimCol] = row[trimCol];
+        });
+        return newRow;
+      });
+    }
+
+    return result;
+  }
+
+  throw new Error('SELECT 쿼리만 지원합니다.');
+}
+
+function evaluateCondition(row, condition) {
+  // Simple condition evaluator (very basic)
+  const match = condition.match(/(\w+)\s*([><=!]+)\s*(.+)/);
+  if (!match) return true;
+
+  const [, col, op, value] = match;
+  const rowValue = row[col];
+  let compareValue = value.trim();
+
+  if (compareValue.startsWith("'") && compareValue.endsWith("'")) {
+    compareValue = compareValue.slice(1, -1);
+  } else {
+    compareValue = isNaN(compareValue) ? compareValue : Number(compareValue);
+  }
+
+  switch (op) {
+    case '>': return rowValue > compareValue;
+    case '<': return rowValue < compareValue;
+    case '>=': return rowValue >= compareValue;
+    case '<=': return rowValue <= compareValue;
+    case '=': return rowValue == compareValue;
+    case '!=':
+    case '<>': return rowValue != compareValue;
+    default: return true;
+  }
+}
+</script>
+
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--rule);">
+  <a href="01-relational.html" style="text-decoration:none;">← 관계형 DB</a>
+  <a href="03-normalization.html" style="text-decoration:none;">정규화 →</a>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎮 한 줄로 말하면?</h3>
+  <p>SQL은 데이터베이스한테 <strong>"이거 보여줘!", "이렇게 바꿔줘!"라고 부탁하는 말</strong>이에요. 영어랑 비슷하게 생겼답니다! 🗣️</p>
+
+  <h3>🤔 이게 왜 중요할까?</h3>
+  <p>SQL은 무려 50년 넘게 살아남은 "데이터 세계의 공용어"예요! 🌍</p>
+  <ul>
+    <li>🏆 어제 제일 많이 팔린 상품을 <strong>SELECT</strong> 딱 한 줄로 뽑아요.</li>
+    <li>✍️ 회원가입하면 <strong>INSERT</strong> 한 줄로 정보가 저장돼요.</li>
+    <li>🔧 잘못 쓴 전화번호 수만 개를 <strong>UPDATE</strong> 한 번에 고쳐요.</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 꼭 기억할 낱말</h4>
+    <ul>
+      <li><strong>SELECT</strong>: "보여줘!" 데이터를 꺼내 보는 명령. 👀</li>
+      <li><strong>INSERT</strong>: "추가해!" 새 줄을 넣는 명령. ➕</li>
+      <li><strong>UPDATE</strong>: "바꿔!" 값을 고치는 명령. 🔄</li>
+      <li><strong>DELETE</strong>: "지워!" 줄을 삭제. WHERE 없이 쓰면 전부 사라져요! 😱</li>
+      <li><strong>WHERE</strong>: "이런 것만!" 조건을 정하는 부분. 🎯</li>
+    </ul>
+  </div>
+
+  <h3>🍜 식당 주문서로 쉽게!</h3>
+  <p>SQL은 식당에서 주문서 쓰는 거랑 똑같아요!</p>
+  <p>"매콤한 메뉴 중에서(<strong>WHERE</strong>) → 이름이랑 가격만(<strong>SELECT</strong>) → 메뉴판에서(<strong>FROM</strong>) → 매운 순서대로(<strong>ORDER BY</strong>) 보여주세요!"</p>
+  <p>이게 바로 SELECT 문장의 순서랑 거의 똑같아요. 처음엔 영어라 낯설지만, 사실은 자연스러운 부탁 순서랍니다. 😊</p>
+  <p>SQL의 최고 장점은 <strong>한 번에 여러 줄을 처리</strong>하는 것! 한 줄씩 고치는 게 아니라 "20살 미만 회원 전부!"처럼 묶음으로 명령해요. 그래서 빠르고 안전하죠. SELECT 하나만 잘해도 회사 데이터 분석의 70%는 할 수 있대요! 🚀</p>
+
+  <div class="study-tip">
+    <strong>💡 학습 TIP:</strong> SQL은 눈으로 읽기보다 직접 쳐 보는 게 최고! 온라인 SQL 연습 사이트에서 작은 표 하나 만들고 SELECT를 50번만 쳐 보세요. ⌨️
+  </div>
+
+  <h3>✅ 오늘의 정리</h3>
+  <ul>
+    <li>🗣️ SQL은 DB에 명령을 내리는 언어예요.</li>
+    <li>👀 SELECT는 조회, INSERT·UPDATE·DELETE는 변경!</li>
+    <li>🎯 WHERE로 대상을 좁혀요.</li>
+    <li>↕️ ORDER BY로 정렬, LIMIT로 개수 제한.</li>
+    <li>📦 한 번에 여러 줄 묶음 처리가 강점!</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>SQL은 선언적 언어입니다. "어떻게" 가져올지가 아니라 "무엇을" 가져올지를 기술하면, 옵티마이저가 가장 효율적인 실행계획을 만들어 냅니다. 따라서 같은 결과를 만드는 쿼리도 작성 방식에 따라 성능이 천차만별입니다. SQL 표준은 ANSI SQL로 정의되며 ISO에서도 관리하지만, 각 RDBMS는 자체 방언을 갖습니다. SQL의 큰 줄기는 DDL(Data Definition Language: CREATE, ALTER, DROP), DML(Data Manipulation Language: SELECT, INSERT, UPDATE, DELETE), DCL(Data Control Language: GRANT, REVOKE), TCL(Transaction Control: COMMIT, ROLLBACK)로 나뉩니다. 조인은 INNER, LEFT, RIGHT, FULL 네 가지가 표준이며, 자기 자신을 조인하는 셀프 조인은 조직도나 카테고리 트리 같은 계층 구조 표현에 쓰입니다. 그룹화는 GROUP BY와 HAVING이 핵심이고, 윈도우 함수(OVER 절)는 그룹화하지 않고도 누적·순위·이동평균을 계산하게 해 줍니다.</p>
+
+  <h3>실전 SQL/쿼리</h3>
+  <pre><code>-- 카테고리별 매출 상위 3위까지 추출 (윈도우 함수)
+WITH ranked AS (
+  SELECT category,
+         product_name,
+         SUM(amount) AS total_sales,
+         RANK() OVER (
+           PARTITION BY category
+           ORDER BY SUM(amount) DESC
+         ) AS rnk
+  FROM   sales
+  WHERE  sold_at >= '2025-01-01'
+  GROUP  BY category, product_name
+)
+SELECT category, product_name, total_sales
+FROM   ranked
+WHERE  rnk <= 3
+ORDER  BY category, rnk;
+
+-- 외부 조인으로 주문이 없는 회원도 포함
+SELECT m.member_id, m.name, COUNT(o.order_id) AS order_cnt
+FROM   member m
+LEFT   JOIN orders o ON m.member_id = o.member_id
+GROUP  BY m.member_id, m.name;</code></pre>
+
+  <h3>예제</h3>
+  <div class="info-card">
+    <h4>💻 예제 1: 월별 활성 사용자(MAU) 계산</h4>
+    <p>로그 테이블에서 DATE_TRUNC('month', logged_at)로 월 단위 그룹을 만들고 COUNT(DISTINCT user_id)로 중복을 제거합니다. 마케팅 대시보드의 가장 기본 지표입니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>💻 예제 2: 코호트 잔존율</h4>
+    <p>가입 월별 회원을 묶고, 이후 N개월차에 활동한 비율을 계산합니다. CASE WHEN과 GROUP BY 조합으로 코호트 매트릭스를 만들 수 있습니다.</p>
+  </div>
+
+  <h3>실무 응용</h3>
+  <p>광고 분석 시스템에서는 일별 로그가 수억 건 쌓이며, GROUP BY와 윈도우 함수가 ETL 파이프라인의 중심이 됩니다. 또한 결제 정산 시스템은 트랜잭션 안에서 INSERT와 UPDATE를 함께 실행해 일관성을 보장합니다. BI 도구(Looker, Metabase)는 SQL을 자동 생성해 비개발자도 분석할 수 있게 해 주며, 데이터 엔지니어는 dbt로 SQL 모델을 버전 관리합니다.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ 자주 하는 실수:</strong> WHERE 절에 함수를 씌우면 인덱스를 못 타는 경우가 많습니다. WHERE DATE(created_at) = '2025-01-01' 대신 범위 비교(BETWEEN)를 쓰세요. 또한 SELECT *는 운영 환경에서 피해야 할 1순위 습관입니다.
+  </div>
+
+<h3>전문가 레벨</h3>
+  <p>SQL 옵티마이저는 파서, 리라이터, 플래너, 익스큐터 단계로 쿼리를 처리합니다. 플래너는 통계(pg_statistic, dba_tab_columns)를 바탕으로 비용 모델을 계산해 Nested Loop, Hash Join, Merge Join 중 최적을 선택합니다. 옵티마이저 힌트(Oracle의 /*+ INDEX(...) */, MySQL의 USE INDEX)는 마지막 보루이며, 본질적으로는 통계 갱신과 인덱스 설계가 우선입니다. 실행계획에서 자주 마주치는 함정으로는 함수 인덱스 미사용, 암묵적 형변환으로 인한 풀스캔, 카디널리티 추정 오류가 있습니다. CTE(Common Table Expression)는 PostgreSQL 12 이전에는 옵티마이저 펜스로 작용해 별도 임시결과를 만들었지만, 12 이후로는 인라이닝이 기본입니다. 윈도우 함수의 프레임 절(ROWS, RANGE, GROUPS)은 정확한 의미가 다르며, 시계열 분석에서는 GROUPS 모드가 동률을 묶어 처리합니다. 재귀 CTE는 그래프 탐색과 BOM(자재 명세서) 전개에 강력하며, UNION ALL 형태로 종료 조건을 반드시 명시해야 무한 루프를 피할 수 있습니다.</p>
+
+  <h3>고급 패턴</h3>
+  <pre><code>-- 재귀 CTE로 조직도 계층 탐색
+WITH RECURSIVE org_tree AS (
+  SELECT employee_id, manager_id, name, 1 AS depth
+  FROM   employee
+  WHERE  manager_id IS NULL  -- CEO
+  UNION  ALL
+  SELECT e.employee_id, e.manager_id, e.name, t.depth + 1
+  FROM   employee e
+  JOIN   org_tree t ON e.manager_id = t.employee_id
+)
+SELECT depth, name FROM org_tree ORDER BY depth, name;
+
+-- LATERAL 조인으로 회원별 최근 주문 N건
+SELECT m.member_id, m.name, recent.order_id, recent.amount
+FROM   member m
+CROSS  JOIN LATERAL (
+  SELECT order_id, amount
+  FROM   orders o
+  WHERE  o.member_id = m.member_id
+  ORDER  BY o.created_at DESC
+  LIMIT  3
+) recent;</code></pre>
+
+  <h3>최신 동향</h3>
+  <p>BigQuery, Snowflake, Databricks는 SQL을 분산 분석 엔진의 표준 인터페이스로 채택했습니다. 또한 DuckDB는 단일 노드에서 컬럼나 분석을 수행하는 임베디드 OLAP 엔진으로 데이터 사이언스 영역에서 빠르게 확산 중입니다. SQL/JSON 표준은 JSON 데이터를 1급 시민으로 다루며, PostgreSQL의 JSONB와 jsonpath가 대표 구현입니다. LLM 기반 Text-to-SQL(예: Vanna, sqlcoder)도 떠오르는 분야로, 자연어 질의를 SQL로 변환합니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li>쿼리 옵티마이저 이론(Volcano/Cascades 프레임워크).</li>
+    <li>컬럼나 스토리지와 벡터화 실행.</li>
+    <li>스트리밍 SQL(Flink SQL, ksqlDB).</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>"SQL Performance Explained" — Markus Winand.</li>
+    <li>"Use The Index, Luke!" 사이트.</li>
+    <li>PostgreSQL Wiki의 SlowQueryQuestions 페이지.</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>🎓 도전 과제:</strong> 1억 행 규모의 주문 테이블에서 월별 고객 코호트 잔존율을 윈도우 함수와 재귀 CTE를 모두 사용하지 않고 계산하는 SQL을 작성해 보세요. 이후 윈도우 함수 버전을 만들어 두 실행계획을 비교 분석합니다.
+  </div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — SELECT 처리 순서</h2>
+<p>SELECT 쿼리가 실제로 처리되는 순서대로 절을 배치해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#0d6efd","prompt":"SELECT 쿼리 처리 순서대로 놓으세요","steps":["FROM","WHERE","GROUP BY","HAVING","SELECT","ORDER BY"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d6efd","questions":[{"q":"데이터를 조회하는 SQL 명령은?","choices":["INSERT","DELETE","SELECT","DROP"],"answer":2},{"q":"CREATE, ALTER, DROP이 속한 언어는?","choices":["DDL","DML","DCL","TCL"],"answer":0},{"q":"행을 필터링하는 조건절은?","choices":["ORDER BY","GROUP BY","HAVING","WHERE"],"answer":3},{"q":"SELECT 문 실행 시 가장 먼저 처리되는 절은?","choices":["SELECT","FROM","WHERE","ORDER BY"],"answer":1},{"q":"GRANT, REVOKE가 속한 언어는?","choices":["DDL","DML","DCL","CRUD"],"answer":2}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('db3d-02');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('db3d-02-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,1.6,14);camera.lookAt(0,0.2,0);
+  var qL=lbl('SELECT dept, AVG(sal) FROM emp WHERE sal>300 GROUP BY dept HAVING AVG>400 ORDER BY AVG',23,'#39415a',1.0);
+  qL.position.set(0,4.7,0);scene.add(qL);
+  var stages=['FROM','WHERE','GROUP BY','HAVING','SELECT','ORDER BY'];
+  var gates=[];
+  stages.forEach(function(s,i){
+    var g=box(1.8,0.6,1.0,0xe3e8f2,1);g.position.set(-7+i*2.85,3.4,0);scene.add(g);gates.push(g);
+    var L=lbl((i+1)+'. '+s,21,'#39415a',0.85);L.position.set(-7+i*2.85,3.4,0.6);scene.add(L);
+  });
+  var noteL=lbl('작성 순서는 SELECT부터지만, 실행은 FROM부터!',24,'#d6455b',1);noteL.position.set(0,-4.4,0);scene.add(noteL);
+  // rows: 9 rows, 3 depts
+  var deptCols=[0x5b6bd6,0x2f9e63,0xe07a3f];
+  var rowsData=[[0,520],[0,510],[1,450],[1,280],[1,610],[2,330],[2,290],[0,470],[2,350]];
+  var rows=[];
+  rowsData.forEach(function(rd,i){
+    var b=box(1.5,0.45,0.8,deptCols[rd[0]],0.95);scene.add(b);
+    rows.push({m:b,dept:rd[0],sal:rd[1],alive:true});
+  });
+  var groups=[];
+  function layoutStart(){
+    rows.forEach(function(r,i){
+      r.alive=true;r.m.visible=true;r.m.material.opacity=0.95;r.m.scale.set(1,1,1);
+      r.m.position.set(-7+(i%3)*1.7-1.7+1.7,1.6-Math.floor(i/3)*0.6,0);
+      r.m.position.x=-8.4+(i%3)*1.7;
+      r.m.position.y=1.7-Math.floor(i/3)*0.62;
+    });
+    groups.forEach(function(g){scene.remove(g.m);if(g.l)scene.remove(g.l);});groups=[];
+  }
+  layoutStart();
+  function gate(i){gates.forEach(function(g,k){g.material.color.set(k===i?0xffc83c:(k<i?0xc8d2e8:0xe3e8f2));});}
+  var phases=[
+    {dur:2.5,cap:'① FROM emp: 테이블의 모든 행(9건)을 가져옵니다. 색 = 부서(dept). 여기가 진짜 시작점입니다.',
+     enter:function(){layoutStart();gate(0);},
+     update:function(u){rows.forEach(function(r){r.m.position.z=Math.sin(u*6)*0.05;});}},
+    {dur:3.5,cap:'② WHERE sal>300: 조건에 맞지 않는 행이 탈락(아래로 떨어짐). 집계 전에 행 단위로 거릅니다.',
+     enter:function(){gate(1);},
+     update:function(u){
+       rows.forEach(function(r){
+         if(r.sal<=300){var f=ez(clamp01(u*1.6));r.m.position.y-= f*0.12;r.m.material.opacity=0.95*(1-f);if(f>0.98)r.alive=false;}
+       });
+     }},
+    {dur:3.5,cap:'③ GROUP BY dept: 남은 행들이 부서별 더미로 합쳐집니다 — 이제 단위는 "행"이 아니라 "그룹".',
+     enter:function(){gate(2);},
+     update:function(u){
+       var cx=[-2.6,0,2.6];
+       rows.forEach(function(r){
+         if(!r.alive)return;
+         var f=ez(u);
+         var tx=cx[r.dept],ty=0.6;
+         r.m.position.x+= (tx-r.m.position.x)*f*0.25;
+         r.m.position.y+= (ty-r.m.position.y)*f*0.25;
+       });
+       if(u>0.9&&!groups.length){
+         var avg=[500,530,340];
+         for(var d=0;d<3;d++){
+           var m=box(1.9,1.0,1.0,deptCols[d],0.98);m.position.set(cx[d],0.6,0.2);scene.add(m);
+           var L=lbl('dept'+(d+1)+' AVG='+avg[d],20,'#ffffff',0.8);L.position.set(cx[d],0.6,0.8);scene.add(L);
+           groups.push({m:m,l:L,avg:avg[d],x:cx[d]});
+           rows.forEach(function(r){if(r.alive&&r.dept===d)r.m.visible=false;});
+         }
+       }
+     }},
+    {dur:3,cap:'④ HAVING AVG>400: 이번엔 "그룹"이 걸러집니다(dept3 탈락) — WHERE는 행을, HAVING은 그룹을 거른다!',
+     enter:function(){gate(3);},
+     update:function(u){
+       groups.forEach(function(g){
+         if(g.avg<=400){var f=ez(clamp01(u*1.4));g.m.position.y=0.6-f*2.4;g.m.material.opacity=0.98*(1-f);g.l.material.opacity=0.8*(1-f);}
+       });
+     }},
+    {dur:2.5,cap:'⑤ SELECT dept, AVG: 이제서야 "어떤 컬럼을 보여줄지" 선택 — 그룹 블록이 얇아집니다(컬럼 2개만).',
+     enter:function(){gate(4);},
+     update:function(u){
+       groups.forEach(function(g){if(g.avg>400){g.m.scale.z=1-ez(u)*0.5;}});
+     }},
+    {dur:3,cap:'⑥ ORDER BY AVG DESC: 마지막으로 정렬 — dept2(530)가 dept1(500) 앞으로. SELECT 별칭을 ORDER BY에서만 쓸 수 있는 이유가 이 순서 때문입니다.',
+     enter:function(){gate(5);},
+     update:function(u){
+       if(groups.length>=2){
+         var f=ez(u);
+         groups[0].m.position.x=-2.6+f*2.6;groups[0].l.position.x=-2.6+f*2.6;
+         groups[1].m.position.x=0-f*2.6;groups[1].l.position.x=0-f*2.6;
+       }
+     }}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

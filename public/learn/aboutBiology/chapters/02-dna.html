@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2. DNA와 유전학 — aboutBiology</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+  <script defer src="../../shared/game-kernel.js"></script>
+  <script defer src="../../shared/premium3d.js"></script>
+  <script defer src="../../shared/flagship-dna.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🧬 표지 · 소개</a></li>
+    <li><a href="01-cell.html">1. 세포 · 생명의 단위</a></li>
+    <li><a href="02-dna.html" style="color:var(--accent);font-weight:600;">2. DNA와 유전학</a></li>
+    <li><a href="03-evolution.html">3. 진화</a></li>
+    <li><a href="04-ecology.html">4. 생태학</a></li>
+    <li><a href="05-physiology.html">5. 인체생리학</a></li>
+    <li><a href="06-microbiology.html">6. 미생물학</a></li>
+    <li><a href="07-botany.html">7. 식물학</a></li>
+    <li><a href="08-zoology.html">8. 동물학</a></li>
+    <li><a href="09-biotech.html">9. 생명공학</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>DNA와 유전학</em></h1>
+  <p class="authors">Chapter 2 — DNA, Genes & Heredity</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ DNA 이중나선 — 두 가닥과 염기쌍(A-T·G-C) 사다리 구조</span>
+
+<h2>DNA와 유전학 개요</h2>
+<p>DNA는 모든 생명의 설계도입니다. 이 챕터에서는 이중나선 구조부터 복제·전사·번역, 그리고 멘델의 유전 법칙까지 — 유전 정보가 어떻게 저장되고 다음 세대로 전달되는지 살펴봅니다.</p>
+
+<div class="info-card">
+  <h4>핵심 개념</h4>
+  <p>DNA의 이중나선 구조와 염기 서열(A-T, G-C)은 생명의 모든 유전 정보를 암호화하며, 복제·전사·번역 과정을 거쳐 생명 활동에 필요한 단백질을 합성합니다.</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🔍 한 줄로 이해하기</h3>
+  <p>DNA는 내 몸을 만드는 "설계도"이고, 유전학은 이 설계도가 부모에서 자식에게 어떻게 전달되는지를 공부하는 거예요!</p>
+  <h3>🤔 왜 중요할까?</h3>
+  <p>가족끼리 눈 색깔이나 키가 닮은 이유? 바로 DNA를 물려받았기 때문이에요. 어떤 사람이 특정 병에 잘 걸리는 것도 DNA에 적힌 정보 탓일 수 있고요. 심지어 탐정 드라마에서 머리카락 한 가닥으로 범인을 찾아내는 것도 DNA 분석 덕분이랍니다! 🕵️</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4>
+    <ul>
+      <li><strong>DNA</strong>: 유전 정보를 담은 이중 나선 모양의 분자</li>
+      <li><strong>유전자</strong>: 특정 단백질 정보가 적힌 DNA의 한 구간</li>
+      <li><strong>염색체</strong>: DNA가 단백질과 함께 돌돌 꼬여 만든 구조</li>
+      <li><strong>대립유전자</strong>: 같은 자리에 들어갈 수 있는 다른 형태의 유전자</li>
+      <li><strong>돌연변이</strong>: DNA 서열에 생긴 변화</li>
+    </ul>
+  </div>
+  <h3>💡 쉽게 풀어보기</h3>
+  <p>DNA를 아주 두꺼운 "요리책"이라고 상상해 보세요! 📖 이 책에는 내 몸을 만드는 모든 레시피가 적혀 있고, 레시피 한 페이지 한 페이지가 바로 유전자예요. 부모님은 자식에게 이 책의 절반씩을 물려줘요. 그래서 나는 엄마 아빠의 특징이 섞여 나타나는 거죠. 가끔 책의 글자가 잘못 적히기도 하는데, 그게 바로 돌연변이예요. 대부분은 별일 없지만, 어떤 건 새로운 능력이나 병을 만들기도 해요. 놀랍게도 DNA의 글자는 딱 네 개(A, T, G, C)뿐이지만, 이 순서가 수십억 번 이어지면서 사람마다 완전히 다른 책이 만들어진답니다!</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> A-T, G-C 짝을 외울 때 'Apple Tree(사과나무), Green Car(초록 차)'처럼 그림으로 떠올리면 잘 안 잊혀요! 🍎🚗</div>
+  <h3>📌 한 페이지 요약</h3>
+  <ul>
+    <li>DNA는 생명의 설계도예요.</li>
+    <li>유전자는 DNA의 기능 단위예요.</li>
+    <li>부모는 자식에게 DNA를 절반씩 물려줘요.</li>
+    <li>돌연변이는 진화와 병의 원인이 돼요.</li>
+    <li>유전 정보는 단백질로 나타나요.</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
+  <p>DNA의 이중 나선은 1953년 왓슨과 크릭이 로잘린드 프랭클린의 X선 회절 사진을 토대로 제안했습니다. 두 가닥은 상보적으로 결합하며 A-T, G-C 쌍을 이룹니다. DNA 복제는 반보존적으로 일어나, 새 가닥 하나와 옛 가닥 하나가 짝을 이룹니다. 유전자 발현은 전사(DNA→RNA)와 번역(RNA→단백질)으로 이어지는 중심 원리(Central Dogma)에 따릅니다. 멘델의 분리·독립의 법칙은 단일 유전자 형질을 잘 설명하지만, 실제 형질 대부분은 여러 유전자와 환경의 상호작용으로 결정됩니다. X 염색체 연관 유전, 불완전 우성, 공동 우성, 다인자 유전 등의 개념은 이 복잡성을 설명합니다.</p>
+  <h3>메커니즘과 사례</h3>
+  <div class="info-card"><h4>🔬 사례 1 — 겸상 적혈구 빈혈증</h4><p>헤모글로빈 유전자의 한 글자 변화(A→T)가 적혈구 모양을 바꾸어 빈혈을 일으키지만, 동시에 말라리아 저항성을 부여합니다.</p></div>
+  <div class="info-card"><h4>🔬 사례 2 — ABO 혈액형</h4><p>한 유전자에 세 종류의 대립유전자가 존재하며, A와 B는 서로 공동 우성을 보여 AB형이 가능합니다.</p></div>
+  <h3>실험과 관찰</h3>
+  <p>PCR(중합효소연쇄반응)로 미세한 DNA를 증폭해 분석할 수 있고, 전기영동으로 크기에 따라 분리합니다. 가족 계보(pedigree) 분석은 유전 양상을 추적하는 고전적 도구이며, 친자감별과 유전질환 진단에 쓰입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> '유전자 = 형질'이 아닙니다. 하나의 형질에 여러 유전자가 관여하고, 환경 요인도 함께 작용합니다.</div>
+
+<h3>전문가 레벨 이해</h3>
+  <p>유전체는 단순히 정적 서열이 아니라, 후성유전적 표지(DNA 메틸화, 히스톤 변형)를 통해 조직별로 다르게 발현됩니다. 전사 인자가 인핸서·프로모터에 결합해 RNA 중합효소 II의 모집을 조절하고, 크로마틴 리모델링 복합체가 접근성을 변화시킵니다. 비암호 RNA(miRNA, lncRNA)는 mRNA 안정성과 번역을 미세 조정합니다. 텔로미어와 텔로머라제는 노화와 암 모두에 관련되어 있고, DNA 손상 반응(DDR) 경로(p53, ATM, BRCA1/2)는 게놈 안정성을 보장합니다. 다인자 유전 형질은 GWAS(전장 유전체 연관 분석)와 다유전자 점수(PRS)로 정량화됩니다. 게놈 임프린팅과 X 염색체 비활성화 같은 비멘델 유전 현상은 표현형의 다양성과 질병 양상을 설명합니다.</p>
+  <h3>최신 연구</h3>
+  <p>CRISPR-Cas9와 베이스 에디팅, 프라임 에디팅이 단일 염기 수준의 정밀 교정을 가능하게 했습니다. 단일세포 ATAC-seq는 세포별 크로마틴 접근성 지도를 제공하며, 장거리 시퀀싱 기술(PacBio HiFi, Oxford Nanopore)은 반복 서열과 구조변이를 정확히 해독합니다. T2T(Telomere-to-Telomere) 컨소시엄은 인간 유전체의 100% 완성을 보고했고, AlphaMissense 같은 AI 모델은 변이의 병원성을 예측합니다.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>법의학</strong>: STR 마커를 이용한 신원 확인</li>
+    <li><strong>인류학</strong>: 고대 DNA로 인류 이동 경로 추적</li>
+    <li><strong>약학</strong>: 약물유전체학 기반 맞춤 의료</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Genes XII — Benjamin Lewin</li>
+    <li>📺 HHMI BioInteractive 유전학 영상</li>
+    <li>🔬 NCBI Gene/dbSNP 데이터베이스</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 동일한 유전체를 가진 일란성 쌍둥이가 시간이 지날수록 다른 표현형을 보이는 이유를 후성유전학으로 설명해 보세요.</div>
+</div>
+
+
+<h2>🚀 초고급 3D 게임 — DNA 염기쌍</h2>
+<p>회전하는 이중나선의 한쪽 가닥이 순서대로 제시됩니다. 각 염기의 올바른 상보(A↔T, G↔C)를 클릭해 사다리를 채우고 가닥을 완성하세요.</p>
+<div id="nm-dna"></div>
+<h2>🕹️ 직접 해보기 — 유전정보의 흐름</h2>
+<p>중심 원리(Central Dogma)에 따라 유전 정보가 전달되는 순서를 맞춰 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#00e676","prompt":"중심 원리에 따라 올바른 순서로 배열하세요","steps":["DNA","복제","전사","RNA","번역","단백질"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e676","questions":[{"q":"DNA 염기 A와 짝을 이루는 것은?","choices":["A","G","T","C"],"answer":2},{"q":"DNA의 염기 글자는 몇 개인가?","choices":["4개","2개","6개","8개"],"answer":0},{"q":"DNA의 기본 구조는?","choices":["단일 가닥","이중 나선","삼중 나선","원형"],"answer":1},{"q":"이중나선을 1953년 제안한 사람은?","choices":["멘델","다윈","플레밍","왓슨과 크릭"],"answer":3},{"q":"미세한 DNA를 증폭하는 기술은?","choices":["PCR","전기영동","염색","배양"],"answer":0}]};</script>
+</main>
+</div>
+
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  // DNA double helix: two backbone strands + colored base-pair rungs
+  const helix=new THREE.Group();s.add(helix);
+  const N=26, turns=2.2, span=8;
+  const strandA=[],strandB=[];
+  for(let i=0;i<N;i++){
+    const t=i/(N-1), ang=t*Math.PI*2*turns, y=(t-0.5)*span;
+    const ax=Math.cos(ang)*1.3, az=Math.sin(ang)*1.3;
+    const bx=Math.cos(ang+Math.PI)*1.3, bz=Math.sin(ang+Math.PI)*1.3;
+    const na=new THREE.Mesh(new THREE.SphereGeometry(0.22,12,12),new THREE.MeshBasicMaterial({color:0x3b82f6}));
+    na.position.set(ax,y,az);helix.add(na);strandA.push(na);
+    const nb=new THREE.Mesh(new THREE.SphereGeometry(0.22,12,12),new THREE.MeshBasicMaterial({color:0x22c55e}));
+    nb.position.set(bx,y,bz);helix.add(nb);strandB.push(nb);
+    // base pair rung (A-T amber, G-C pink alternating)
+    const pair=(i%2===0)?0xeab308:0xec4899;
+    const dx=bx-ax,dz=bz-az,len=Math.hypot(dx,dz);
+    const rung=new THREE.Mesh(new THREE.CylinderGeometry(0.07,0.07,len,8),new THREE.MeshBasicMaterial({color:pair}));
+    rung.position.set((ax+bx)/2,y,(az+bz)/2);
+    rung.rotation.z=Math.PI/2;rung.rotation.y=-Math.atan2(dz,dx);
+    helix.add(rung);
+  }
+  s.userData.helix=helix;
+  // 생물학 용어 라벨 — DNA 이중나선의 구조를 가르치기 위함
+  [['당-인산 골격','#1d4ed8',-2.3,3.4,0],['상보 가닥','#15803d',2.3,3.0,0],['염기쌍 A-T','#a16207',2.6,0.6,0],['염기쌍 G-C','#be185d',-2.6,-0.9,0],['이중나선','#1f2430',0,-3.7,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ DNA는 두 가닥이 마주 보며 꼬인 이중나선입니다.','바깥의 당-인산 골격이 두 가닥을 지탱합니다.','안쪽 염기는 A-T, G-C로만 짝(상보)을 이룹니다.','이 염기 서열이 곧 유전 정보 — 유전자·염색체의 바탕입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.helix.rotation.y+=0.006;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body>
+</html>

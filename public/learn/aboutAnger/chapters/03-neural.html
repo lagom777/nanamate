@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 신경 메커니즘 — aboutAnger</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔴 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>신경 메커니즘</em></h1>
+  <p class="authors">Chapter 3 — Neural Mechanisms</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 신경 회로 — 뇌 영역들의 연결과 작동</span>
+
+<h2>신경 메커니즘 개요</h2>
+<p>분노는 편도체-시상하부-수도주위회백질(PAG)을 잇는 위협 반응 회로에서 시작되고, 복내측 전전두엽(vmPFC)이 그것을 억제하는 두 시스템의 줄다리기다. 세로토닌이 낮을수록 충동적 분노가 늘고, 테스토스테론과 코르티솔의 비율이 분노 표출 양상을 좌우한다. 분노는 뇌의 결함이 아니라 정상 회로의 작동이다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>분노의 신경 회로는 (1) 편도체의 빠른 위협 감지, (2) 시상하부와 PAG의 자율신경 활성화, (3) vmPFC와 전대상피질(ACC)의 조절 시도로 구성된다. 좌측 전두엽 비대칭은 접근 동기로서의 분노 특성을 반영한다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>😤 딱 한 줄로!</h3><p>화는 뇌 속 "비상벨(편도체)"과 "브레이크(전두엽)"가 부딪치는 순간이야. 🔔🛑</p>
+  <h3>🤔 왜 알아야 하냐면</h3><p>화날 때 "내가 왜 그랬지?" 하고 후회한 적 있지? 사실 화가 확 나면, 생각을 담당하는 뇌(전두엽)가 잠깐 전원이 꺼진 것처럼 돼. 그래서 그때 내린 결정은 거의 다 후회로 이어져. 이걸 알면 "화가 최고로 났을 땐 아무 결정도 하지 않기"라는 규칙이 왜 중요한지 알게 돼. 화 참기는 마음이 약해서 못 하는 게 아니라, 뇌 회로의 문제거든! 그러니까 자책은 그만! 🧠</p>
+  <div class="info-card"><h4>🌱 알아두면 좋은 말들</h4><ul><li><strong>편도체</strong>: 0.2초 만에 "위험!"을 알아채는 초고속 경보기. 🔔</li><li><strong>vmPFC</strong>: 화를 눌러주는 뇌의 브레이크(전두엽 대장).</li><li><strong>교감신경</strong>: 심장을 쿵쿵 뛰게 하는 "싸울까 도망갈까" 스위치.</li><li><strong>세로토닌</strong>: 흥분을 가라앉혀 주는 안정 물질.</li><li><strong>HPA 축</strong>: 스트레스 호르몬(코르티솔)을 내보내는 통로.</li></ul></div>
+  <h3>🎈 쉽게 풀어보자</h3><p>화재경보기는 연기만 봐도 삐용삐용 울리지? 근데 그게 진짜 불인지, 아니면 토스트 탄 건지 판단하는 건 사람이야. 🍞 뇌도 똑같아. 편도체는 경보기, 전두엽은 판단하는 사람이야. 화가 폭발하는 건, 경보기가 너무 빨리 울려서 판단하는 사람이 도착하기도 전에 몸이 먼저 튀어 나간 상태야. 그런데 딱 6초만 멈추면? 판단하는 사람이 도착할 시간이 생겨! 그래서 "6초 참기"는 진짜 과학이야. ⏱️</p>
+  <div class="study-tip"><strong>💡 오늘의 미션:</strong> 다음에 화날 때, 심장·얼굴 열·주먹 중 뭐가 제일 먼저 변하는지 관찰해 봐. 그게 네 몸의 "화 경보"야.</div>
+  <h3>📌 한 장 요약</h3><ul><li>편도체는 0.2초 만에 위험을 알아채. 🔔</li><li>vmPFC(전두엽)가 화를 눌러주는 브레이크야.</li><li>교감신경이 심장·혈압을 확 끌어올려.</li><li>세로토닌이 부족하면 욱하는 화가 늘어.</li><li>화가 최고조일 땐 전두엽이 잠깐 꺼져 있어.</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>분노의 신경 회로는 LeDoux의 dual pathway 모델로 잘 설명된다. 시상 → 편도체로 가는 "낮은 길(low road)"은 빠르고 정밀하지 않으며, 시상 → 피질 → 편도체로 가는 "높은 길(high road)"은 느리지만 정교하다. 분노 폭발은 낮은 길이 높은 길을 앞질러 행동을 유발한 결과다. HPA 축은 시상하부 → 뇌하수체 → 부신피질 → 코르티솔 분비로 이어지며, 만성 분노는 만성 코르티솔 상승으로 면역 저하와 심혈관 위험을 만든다. MAOA 유전자 다형성 연구에서 저활성 변이(MAOA-L)는 어린 시절 학대와 결합될 때 충동적 공격성 위험을 크게 높인다는 사실이 밝혀졌다(Caspi et al., 2002). 테스토스테론은 도전 반응을 자극하지만, 코르티솔과의 비율이 더 중요한 변수다. 높은 테스토스테론 + 낮은 코르티솔 조합이 가장 강한 공격성과 연결된다.</p>
+  <h3>핵심 메커니즘</h3><div class="info-card"><h4>📐 분노 회로 흐름도</h4><p>위협 자극 → 시상 → 편도체(빠른 활성) → 시상하부·PAG → 교감신경·HPA 축 → 신체 반응. 동시에 시상 → 피질 → vmPFC → 편도체로 가는 조절 회로가 뒤따른다. 둘의 시간차가 곧 "6초의 창"이다.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>운전 중 갑작스러운 끼어들기에 핸들을 거칠게 꺾는 행동은 낮은 길이 먼저 작동한 결과다. 1~2초 후 "굳이 이럴 필요 없었네"라는 생각은 높은 길의 뒤늦은 도착이다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>잠을 못 잔 날 평소와 같은 자극에도 분노가 폭발하는 이유는 수면 부족이 vmPFC 기능을 떨어뜨려 편도체 억제력이 약해졌기 때문이다. 분노 관리는 수면 관리에서 시작된다.</p></div>
+  <h3>응용 사례</h3><p>한국 분노조절장애 진료 통계는 2014년 5천 명에서 2020년대 2만 명을 넘어섰다. 임상 현장에서는 SSRI(세로토닌 재흡수 억제제)와 인지행동치료를 결합하는 접근이 표준화되고 있다. 또한 직장 EAP에서는 분노 발생 시 신체 신호 모니터링(심박 변이도, HRV)을 활용한 바이오피드백 훈련을 도입하는 사례가 늘고 있다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "분노는 의지로 참으면 된다"는 통념은 vmPFC가 피로·수면 부족·알코올에 매우 취약하다는 사실을 무시한다.</div>
+
+<h3>전문가 레벨 이해</h3><p>Davidson의 approach-withdrawal 모델은 정서를 단순 valence(쾌-불쾌)가 아닌 접근-회피 동기 차원으로 본다. 슬픔·공포는 우측 전두엽 활성과 회피 동기, 분노·기쁨은 좌측 전두엽 활성과 접근 동기와 연결된다. 이 점에서 분노는 부정 정서이면서도 회로상 기쁨에 더 가깝다는 역설이 있다. 전대상피질(ACC), 특히 dorsal ACC는 갈등 모니터링과 정서 조절 자원 할당을 담당한다. dACC 활성 증가는 분노 억제 노력의 신경적 비용을 반영한다. Coccaro 연구진의 fMRI 데이터는 간헐적 폭발성 장애(IED) 환자에서 화난 얼굴 자극에 편도체 과활성과 vmPFC 저활성이 동시에 나타남을 보였다. 또한 5-HTTLPR(세로토닌 수송체) 다형성이 분노 반응성 개인차의 일부를 설명한다. 최근에는 안와전두피질(OFC) 손상이 사회적 부적절 행동과 충동적 분노로 이어진다는 결과(Phineas Gage 케이스에서 현대 신경영상까지)가 일관되게 보고된다. 결국 분노 회로는 단일 영역이 아닌 네트워크 차원에서 이해해야 한다.</p>
+  <h3>최신 연구·동향</h3><p>최근에는 default mode network(DMN)과 salience network 간 동적 연결성이 분노 반추(anger rumination)와 연관된다는 결과가 늘고 있다. 또한 신경자극(tDCS) 기반 분노 조절 개입 연구가 진행 중이며, 좌측 dlPFC 자극이 분노 반응을 감소시킨다는 예비 데이터가 보고됐다.</p>
+  <h3>관련 분야</h3><ul><li>정서신경과학(Affective Neuroscience)</li><li>신경내분비학(Neuroendocrinology)</li><li>행동유전학(Behavioral Genetics)</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"The Emotional Brain" — Joseph LeDoux</li><li>"Why We Snap" — Douglas Fields</li><li>"Behave" — Robert Sapolsky</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 다음 2주 동안 분노가 올라오는 순간의 신체 신호 3가지(예: 심박·체온·턱 긴장)를 기록하고, 그것이 분노 폭발보다 평균 몇 초 먼저 나타나는지 측정해보자.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 분노 회로 순서</h2>
+<p>분노가 작동하는 신경 회로의 순서를 맞춰보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#ef4444","prompt":"분노 회로의 작동 순서대로 클릭하세요","steps":["위협 자극","편도체 위협 감지","시상하부·PAG 활성","교감신경·HPA 축","신체 반응","vmPFC 조절 시도"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ef4444","questions":[{"q":"0.2초에 위협을 감지하는 뇌는?","choices":["편도체","소뇌","간","심장"],"answer":0},{"q":"분노 억제 브레이크 역할은?","choices":["편도체","vmPFC","시상하부","해마"],"answer":1},{"q":"충동을 가라앉히는 물질은?","choices":["아드레날린","코르티솔","세로토닌","도파민"],"answer":2},{"q":"LeDoux의 빠른 경로 이름은?","choices":["높은 길","낮은 길","중간 길","옆 길"],"answer":1},{"q":"코르티솔을 분비하는 축은?","choices":["X축","Y축","HPA 축","Z축"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7.5);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=28,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+22;cv.height=fs+16;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0068,cv.height*0.0068,1);return sp;}
+  const COL=0xef4444;const brain=new THREE.Mesh(new THREE.SphereGeometry(2.0,20,16),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.3}));s.add(brain);
+  // 분노 신경 회로: 편도체(경보)→시상하부·PAG(몸)→vmPFC·ACC(조절)
+  const regs=[{n:'편도체 (위협 경보)',p:[-0.8,-0.3,0.6],col:0xf87171,lc:'#b91c1c'},{n:'시상하부·PAG (자율신경)',p:[0,-0.9,-0.2],col:0xfcd34d,lc:'#92700a'},{n:'vmPFC (조절)',p:[0.8,-0.3,0.6],col:0x93c5fd,lc:'#1d4ed8'},{n:'ACC 전대상 (갈등 감지)',p:[0,0.7,-0.4],col:0x60a5fa,lc:'#1e40af'}];
+  const reg=[];
+  for(const g of regs){const v=new THREE.Vector3(g.p[0]*1.5,g.p[1]*1.5,g.p[2]*1.5);const m=new THREE.Mesh(new THREE.SphereGeometry(0.26,16,16),new THREE.MeshBasicMaterial({color:g.col}));m.position.copy(v);s.add(m);const tag=lbl(g.n,g.lc);tag.position.set(v.x,v.y+0.5,v.z);s.add(tag);reg.push(m);}
+  for(let i=0;i<reg.length;i++)for(let j=i+1;j<reg.length;j++)s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([reg[i].position,reg[j].position]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.22})));
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 분노 신경 회로 — 경보→몸→조절의 3단계.','편도체가 위협을 0.1초 만에 감지해 경보를 울립니다(빠른 길).','시상하부·PAG가 심박·근긴장 등 자율신경을 켜 몸을 싸움 준비시킵니다.','vmPFC·ACC(전두엽)가 "진짜 위협인가" 판단해 제동을 겁니다 — 6초는 이 판단자가 도착할 시간.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}brain.rotation.y+=0.004;reg.forEach((m,i)=>m.scale.setScalar(0.85+0.25*Math.sin(T*3+i)));s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

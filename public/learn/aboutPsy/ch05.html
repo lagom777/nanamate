@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>기억 | 심리학 기초</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+  <script defer src="../shared/quizgame3d.js"></script>
+  <script defer src="../shared/learngame3d.js"></script>
+</head>
+<body>
+
+<aside>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h1><a href="index.html">심리학 기초</a></h1>
+  <div class="sub">PSYCHOLOGY FROM ZERO</div>
+  <nav>
+    <ol>
+      <li><a href="index.html" class="chap">🏠 목차</a></li>
+      <li><a href="ch01.html" class="chap">1. 심리학이란?</a></li>
+      <li><a href="ch02.html" class="chap">2. 뇌와 신경계</a></li>
+      <li><a href="ch03.html" class="chap">3. 감각과 지각</a></li>
+      <li><a href="ch04.html" class="chap">4. 학습</a></li>
+      <li><a href="ch05.html" class="chap">5. 기억</a></li>
+      <li><a href="ch06.html" class="chap">6. 발달</a></li>
+      <li><a href="ch07.html" class="chap">7. 성격</a></li>
+      <li><a href="ch08.html" class="chap">8. 사회심리학</a></li>
+      <li><a href="ch09.html" class="chap">9. 이상심리·치료</a></li>
+      <li><a href="ch10.html" class="chap">10. 동기와 정서</a></li>
+      <li><a href="ch11.html" class="chap">11. 인지 — 사고·언어·지능</a></li>
+      <li><a href="ch12.html" class="chap">12. 의식 — 수면·꿈·각성</a></li>
+      <li><a href="ch13.html" class="chap">13. 스트레스와 건강심리</a></li>
+      <li><a href="ch14.html" class="chap">14. 심리검사의 세계</a></li>
+      <li><a href="ch15.html" class="chap">15. 긍정심리학</a></li>
+      <li><a href="quiz.html" class="chap">📝 확인 퀴즈</a></li>
+    </ol>
+  </nav>
+  <button id="theme-btn" onclick="toggleTheme()">다크 모드 전환</button>
+</aside>
+
+<main>
+  <div class="page-nav">
+    <a href="index.html">← 목차로</a>
+  </div>
+
+  <section class="chapter" id="ch5">
+    <div class="chap-num">CHAPTER 05</div>
+    <h2>기억 — 어떻게 저장되고 왜 잊히는가</h2>
+<span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 기억의 흐름 — 감각기억 → 단기기억 → 장기기억</span>
+<div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const COL=0xa855f7;const labels=[0xeab308,0x3b82f6,0x22c55e];const boxes=[];for(let i=0;i<3;i++){const b=new THREE.Mesh(new THREE.BoxGeometry(1.2,1.2,1.2),new THREE.MeshBasicMaterial({color:labels[i],wireframe:true}));b.position.x=(i-1)*2.4;s.add(b);boxes.push(b);if(i<2)s.add(new THREE.Mesh(new THREE.ConeGeometry(0.18,0.4,12),new THREE.MeshBasicMaterial({color:COL})).translateX((i-1)*2.4+1.2).rotateZ(-Math.PI/2));}const flow=[];for(let i=0;i<10;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.1,8,8),new THREE.MeshBasicMaterial({color:COL}));m.userData={off:Math.random()*4.8};s.add(m);flow.push(m);}s.userData.flow=flow;
+  [['감각기억(1초)','#fde047',-2.4,1.3,0],['단기기억(7±2)','#93c5fd',0,1.3,0],['장기기억(영구)','#86efac',2.4,1.3,0],['주의','#e9d5ff',-1.2,-1.35,0],['부호화','#e9d5ff',1.2,-1.35,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 앳킨슨-시프린 3단계: 감각기억 → 단기기억 → 장기기억.','감각기억은 1초 이내 거의 무한 용량 — 주의를 주면 단기기억으로 넘어갑니다.','단기기억(작업기억)은 7±2 항목·20초 — 청킹으로 용량을 늘립니다.','부호화·시연을 거치면 장기기억에 저장 — 인출 연습이 가장 강력한 공부법입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.flow.forEach(m=>{m.userData.off+=0.03;if(m.userData.off>4.8)m.userData.off=0;m.position.set(-2.4+m.userData.off,Math.sin(m.userData.off*2)*0.2,0);});boxes.forEach((b,i)=>b.rotation.y+=0.01);r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script>
+
+    <div class="en">Memory</div>
+
+    <p>기억은 하나의 '저장소'가 아닙니다. 심리학에서 가장 널리 쓰이는 모델은 <strong>앳킨슨과 시프린(1968)</strong>의 3단계 모델입니다. 정보가 감각기관을 거쳐 장기기억에 저장되기까지, 세 개의 방을 통과하는 셈이죠.</p>
+
+    <h3>5.1 기억의 3단계 모델</h3>
+
+    <figure class="figure">
+      <svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg">
+        <text x="30" y="105" font-size="11" fill="#6b6b6b">자극</text>
+        <path d="M 58 100 L 85 100" stroke="#5b4b8a" stroke-width="2" marker-end="url(#mArr)"/>
+
+        <rect x="90" y="60" width="140" height="85" rx="8" fill="#dce9f5" stroke="#4a7ba6" stroke-width="2.5"/>
+        <text x="160" y="85" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a7ba6">감각기억</text>
+        <text x="160" y="105" text-anchor="middle" font-size="10" fill="#6b6b6b">1초 이내</text>
+        <text x="160" y="120" text-anchor="middle" font-size="10" fill="#6b6b6b">거의 무한 용량</text>
+        <text x="160" y="135" text-anchor="middle" font-size="10" fill="#6b6b6b">모든 감각 정보</text>
+
+        <path d="M 235 102 L 270 102" stroke="#5b4b8a" stroke-width="2" marker-end="url(#mArr)"/>
+        <text x="253" y="94" text-anchor="middle" font-size="9" fill="#5b4b8a">주의</text>
+
+        <rect x="275" y="60" width="145" height="85" rx="8" fill="#fff0cc" stroke="#c9a227" stroke-width="2.5"/>
+        <text x="348" y="85" text-anchor="middle" font-size="13" font-weight="bold" fill="#c9a227">단기기억</text>
+        <text x="348" y="105" text-anchor="middle" font-size="10" fill="#6b6b6b">7±2 항목, 20초</text>
+        <text x="348" y="120" text-anchor="middle" font-size="10" fill="#6b6b6b">'작업 공간'</text>
+        <text x="348" y="135" text-anchor="middle" font-size="10" fill="#6b6b6b">의식적 처리</text>
+
+        <path d="M 425 102 L 460 102" stroke="#5b4b8a" stroke-width="2" marker-end="url(#mArr)"/>
+        <text x="442" y="94" text-anchor="middle" font-size="9" fill="#5b4b8a">부호화</text>
+
+        <rect x="465" y="60" width="180" height="85" rx="8" fill="#e0f0dc" stroke="#5e8b5e" stroke-width="2.5"/>
+        <text x="555" y="85" text-anchor="middle" font-size="13" font-weight="bold" fill="#5e8b5e">장기기억</text>
+        <text x="555" y="105" text-anchor="middle" font-size="10" fill="#6b6b6b">사실상 무한 용량</text>
+        <text x="555" y="120" text-anchor="middle" font-size="10" fill="#6b6b6b">영구 저장</text>
+        <text x="555" y="135" text-anchor="middle" font-size="10" fill="#6b6b6b">수년~평생</text>
+
+        <path d="M 555 148 Q 450 210 348 148" stroke="#d97757" stroke-width="2" fill="none" stroke-dasharray="5,3" marker-end="url(#mArr2)"/>
+        <text x="450" y="210" text-anchor="middle" font-size="10" font-weight="bold" fill="#d97757">인출</text>
+
+        <path d="M 310 60 Q 280 25 335 25 Q 380 25 355 60" stroke="#5b4b8a" stroke-width="2" fill="none" marker-end="url(#mArr)"/>
+        <text x="335" y="40" text-anchor="middle" font-size="9" fill="#5b4b8a">시연 (반복)</text>
+
+        <path d="M 160 148 L 160 185" stroke="#d97757" stroke-width="2" marker-end="url(#mArr2)"/>
+        <text x="175" y="175" font-size="10" fill="#d97757">소실</text>
+        <path d="M 348 148 L 348 185" stroke="#d97757" stroke-width="2" marker-end="url(#mArr2)"/>
+        <text x="362" y="175" font-size="10" fill="#d97757">망각</text>
+
+        <defs>
+          <marker id="mArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#5b4b8a"/>
+          </marker>
+          <marker id="mArr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97757"/>
+          </marker>
+        </defs>
+      </svg>
+      <figcaption>앳킨슨-시프린 기억 모델 — 세 개의 저장소를 거치며 정보가 걸러지고 저장됩니다.</figcaption>
+    </figure>
+
+    <div class="term">
+      <span class="word">감각기억</span>
+      바로 지금 눈·귀·피부로 들어온 모든 정보. 찰나(시각 0.5초, 청각 3~4초)에 사라지지만, 그동안 <b>주의</b>를 기울인 것만 단기기억으로 넘어갑니다.
+    </div>
+    <div class="term">
+      <span class="word">단기기억 (작업기억)</span>
+      의식 속에서 '지금 붙잡고 있는' 정보. 용량은 <b>7±2 항목</b>. 시연(반복)하지 않으면 20초 안에 사라집니다. 전화번호를 외우는 동안 속으로 중얼거리는 게 바로 시연입니다.
+    </div>
+    <div class="term">
+      <span class="word">장기기억</span>
+      수분, 수년, 평생까지 저장. 용량이 사실상 무한하고, 새 지식이 들어와도 기존 기억을 밀어내지 않습니다.
+    </div>
+
+    <div class="tip">
+      <span class="label">공부 팁 — 청킹(Chunking)</span>
+      단기기억의 용량은 7±2 "항목"입니다. 그런데 '항목'을 어떻게 묶느냐에 따라 저장량이 달라집니다.<br>
+      · <b>0 1 0 1 2 3 4 5 6 7 8</b> → 11개 숫자 (외우기 어려움)<br>
+      · <b>010-1234-5678</b> → 3개 덩어리 (쉬움)<br>
+      이처럼 묶어서 단위를 줄이는 것을 <b>청킹</b>이라 합니다.
+    </div>
+
+    <h3>5.2 장기기억의 종류</h3>
+    <ul>
+      <li><strong>외현기억 (Explicit)</strong> — 의식적으로 떠올릴 수 있는 기억
+        <ul>
+          <li><b>일화기억</b>: 개인적 경험 (어제 저녁 메뉴, 첫 키스)</li>
+          <li><b>의미기억</b>: 일반 지식 (서울은 한국의 수도)</li>
+        </ul>
+      </li>
+      <li><strong>암묵기억 (Implicit)</strong> — 말로 설명하기 어려운 기억
+        <ul>
+          <li><b>절차기억</b>: 몸이 기억하는 것 (자전거 타기, 신발 끈 묶기)</li>
+          <li><b>점화</b>: 앞서 본 것이 뒤의 반응에 영향 (광고 효과)</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3>5.3 망각 곡선 — 에빙하우스</h3>
+    <p>독일의 심리학자 <strong>에빙하우스</strong>는 자기 자신에게 무의미 철자를 외우게 하고 시간이 지나면서 얼마나 기억하는지 측정했습니다. 결과는 충격적이었습니다. <b>하루만 지나도 2/3를 잊는다</b>는 것.</p>
+
+    <figure class="figure">
+      <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+        <text x="250" y="22" text-anchor="middle" font-size="14" font-weight="bold" fill="#5b4b8a">에빙하우스 망각 곡선</text>
+        <g stroke="#e5e1d8" stroke-width="1">
+          <line x1="60" y1="95" x2="460" y2="95"/>
+          <line x1="60" y1="145" x2="460" y2="145"/>
+          <line x1="60" y1="195" x2="460" y2="195"/>
+        </g>
+        <line x1="60" y1="250" x2="460" y2="250" stroke="#5b4b8a" stroke-width="2"/>
+        <line x1="60" y1="45" x2="60" y2="250" stroke="#5b4b8a" stroke-width="2"/>
+        <text x="53" y="50" text-anchor="end" font-size="10" fill="#6b6b6b">100%</text>
+        <text x="53" y="100" text-anchor="end" font-size="10" fill="#6b6b6b">75%</text>
+        <text x="53" y="150" text-anchor="end" font-size="10" fill="#6b6b6b">50%</text>
+        <text x="53" y="200" text-anchor="end" font-size="10" fill="#6b6b6b">25%</text>
+        <text x="53" y="253" text-anchor="end" font-size="10" fill="#6b6b6b">0%</text>
+        <text x="25" y="145" text-anchor="middle" font-size="11" font-weight="bold" fill="#5b4b8a" transform="rotate(-90,25,145)">기억 유지율</text>
+        <text x="80" y="268" text-anchor="middle" font-size="10" fill="#6b6b6b">직후</text>
+        <text x="140" y="268" text-anchor="middle" font-size="10" fill="#6b6b6b">20분</text>
+        <text x="210" y="268" text-anchor="middle" font-size="10" fill="#6b6b6b">1시간</text>
+        <text x="280" y="268" text-anchor="middle" font-size="10" fill="#6b6b6b">1일</text>
+        <text x="350" y="268" text-anchor="middle" font-size="10" fill="#6b6b6b">6일</text>
+        <text x="420" y="268" text-anchor="middle" font-size="10" fill="#6b6b6b">1개월</text>
+        <text x="255" y="290" text-anchor="middle" font-size="11" font-weight="bold" fill="#5b4b8a">경과 시간</text>
+        <path d="M 80 45 Q 110 105 140 138 Q 180 168 210 183 Q 260 203 280 213 Q 330 225 350 230 Q 400 238 420 242"
+              stroke="#d97757" stroke-width="3" fill="none"/>
+        <circle cx="80" cy="45" r="4" fill="#5b4b8a"/>
+        <circle cx="140" cy="138" r="4" fill="#5b4b8a"/>
+        <circle cx="210" cy="183" r="4" fill="#5b4b8a"/>
+        <circle cx="280" cy="213" r="4" fill="#5b4b8a"/>
+        <circle cx="350" cy="230" r="4" fill="#5b4b8a"/>
+        <circle cx="420" cy="242" r="4" fill="#5b4b8a"/>
+      </svg>
+      <figcaption>학습 직후부터 망각은 급격히 일어나고, 시간이 지날수록 그 속도가 느려집니다.</figcaption>
+    </figure>
+
+    <h3>5.4 기억을 잘 저장하는 법 (증거 기반)</h3>
+    <ul>
+      <li><strong>분산 학습</strong>(Spacing effect) — 한 번에 몰아서 하지 말고, 시간 간격을 두고 여러 번 반복. 같은 시간 공부해도 효과가 2배 이상.</li>
+      <li><strong>인출 연습</strong>(Testing effect) — 읽기만 하지 말고 <b>책을 덮고 떠올리기</b>. 퀴즈·자가 테스트가 핵심.</li>
+      <li><strong>정교화</strong> — 새 정보를 기존 지식과 <b>연결</b>. "왜 그럴까?" "이건 뭐랑 비슷하지?"</li>
+      <li><strong>청킹</strong> — 큰 정보를 의미 단위로 묶기.</li>
+      <li><strong>수면</strong> — 잠자는 동안 기억이 통합됩니다. 시험 전날 밤샘은 최악.</li>
+    </ul>
+  </section>
+
+  <div class="page-nav-bottom">
+    <a href="ch04.html">← 이전</a>
+    <div class="spacer"></div>
+    <a href="ch06.html">다음 →</a>
+  </div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한마디로 하면?</h3>
+  <p>기억은 정보를 <b>저장했다가 다시 꺼내는</b> 능력이에요. 우리가 어떤 사람인지도 사실 '무엇을 기억하느냐'로 만들어진답니다. 🧠💾</p>
+
+  <h3>🤔 이게 왜 재밌냐면</h3>
+  <p>기억은 은근히 이상하게 작동해요.</p>
+  <ul>
+    <li>🤯 친구 이름이 <b>혀끝에서 맴도는데</b> 안 떠오른 적 있죠? ('설단현상')</li>
+    <li>🎵 어릴 때 외운 노래는 몇 년이 지나도 술술 나와요.</li>
+    <li>🏘️ 옛날 살던 동네에 가면 잊고 있던 추억이 갑자기 쏟아져요.</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 이 단어만 알면 돼!</h4>
+    <ul>
+      <li><strong>부호화(Encoding)</strong>: 정보를 기억에 넣을 수 있게 바꾸기</li>
+      <li><strong>저장(Storage)</strong>: 정보를 간직해 두기</li>
+      <li><strong>인출(Retrieval)</strong>: 저장한 정보를 다시 꺼내기</li>
+      <li><strong>단기기억(Short-term Memory)</strong>: 몇십 초만 유지되는 작은 창고 (약 7개)</li>
+      <li><strong>장기기억(Long-term Memory)</strong>: 거의 무한대로 오래 저장하는 큰 창고</li>
+    </ul>
+  </div>
+
+  <h3>📖 쉽게 풀어볼게!</h3>
+  <p>기억을 <b>도서관</b>이라고 생각해 봐요! 📚 부호화는 사서가 책을 분류하는 일, 저장은 책을 책장에 꽂아두는 일, 인출은 필요한 책을 다시 찾는 일이에요. 분류를 잘해두면 책을 쏙 찾지만, 대충 꽂으면 있어도 못 찾죠. 그래서 <b>대충 외우기보다 뜻을 이해하며</b> 공부하면 나중에 훨씬 잘 떠올라요.</p>
+  <p>단기기억은 한 번에 약 <b>7개</b>밖에 못 담아요. 그래서 전화번호를 <b>010-1234-5678</b>처럼 덩어리로 묶으면 외우기 쉬워요. 이걸 '청킹'이라고 해요! 그리고 에빙하우스 박사의 실험에 따르면, 배운 걸 <b>하루만 지나도 3분의 2를 잊어버려요.</b> 😱 그래서 잊기 전에 여러 번 복습하고, 밤새우지 말고 푹 자는 게 최고예요. 자는 동안 뇌가 기억을 단단하게 정리하거든요! 😴</p>
+
+  <div class="study-tip">
+    <strong>💡 이렇게 해봐:</strong> 그냥 외우려 하지 말고 친구에게 <b>가르치듯 설명</b>해 봐요. 말로 풀어내면 기억이 훨씬 오래가요!
+  </div>
+
+  <h3>✅ 오늘의 정리</h3>
+  <ul>
+    <li>기억은 부호화 → 저장 → 인출 3단계! 🔑</li>
+    <li>단기기억은 작고 짧고, 장기기억은 크고 오래가요.</li>
+    <li>뜻을 이해하며 깊게 처리하면 더 잘 외워져요.</li>
+    <li>정보를 덩어리로 묶는 '청킹'이 꿀팁!</li>
+    <li>잠이 기억을 완성해요. 밤샘은 최악!</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>앳킨슨-쉬프린의 다중저장 모형은 감각기억-단기기억-장기기억의 3단계를 제시했습니다. 이후 배들리는 단기기억을 작업기억(working memory)으로 재개념화해 음운루프, 시공간잡기장, 중앙집행기, 일화완충기 4구성 요소로 정리했습니다. 작업기억은 단순 저장이 아니라 정보 조작의 작업대 역할을 하죠. 장기기억은 선언적 기억(의미·일화)과 절차 기억으로 나뉘며, 신경회로도 다릅니다. 일화기억은 해마와 내측 측두엽이, 절차기억은 기저핵과 소뇌가 담당합니다. 부호화 특수성 원리는 학습 시의 맥락(장소, 기분, 향기)이 인출에 영향을 준다고 봅니다. 망각은 단순한 소실이 아니라 간섭(interference)과 인출 실패가 주요 원인이며, 에빙하우스의 망각곡선은 시간이 지날수록 가파르게 떨어지다 평탄해지는 형태를 보여 줍니다. 분산학습(spaced practice)과 자기 시험(retrieval practice)은 가장 강력한 효과 크기를 갖는 학습 기법으로, 메타분석에서 일관되게 입증되었습니다.</p>
+
+  <h3>고전 실험과 사례</h3>
+  <div class="info-card">
+    <h4>🧠 실험 1 — 로프터스의 자동차 충돌 실험(1974)</h4>
+    <p>같은 사고 영상을 본 사람들에게 "차들이 부딪쳤을 때(hit)"와 "차들이 박살났을 때(smashed)"로 단어만 바꿔 묻자, 후자 그룹이 더 빠른 속도를 보고했고 일주일 뒤 깨진 유리를 본 적이 있다고 잘못 기억했습니다. 사후 정보가 기억을 변형시킨다는 결정적 증거입니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>🧠 실험 2 — H.M.의 절차기억</h4>
+    <p>해마가 절제된 H.M.은 새로운 사건을 기억하지 못했지만, 거울 글쓰기 같은 운동 기술은 매일 향상되었습니다. 본인은 "오늘 처음 한다"라고 말하면서도 수행은 점점 좋아져, 의식적 기억과 절차 기억이 분리됨을 보여 주었습니다.</p>
+  </div>
+
+  <h3>임상/실생활 응용</h3>
+  <p>임상에서는 알츠하이머 환자의 일화기억 손상에 회상치료(reminiscence therapy), 외상 기억의 재공고화 차단을 위한 EMDR이 활용됩니다. 교육 분야에서는 분산학습, 인출연습, 끼워넣기(interleaving) 등 인지심리학 기반 학습법이 점점 널리 적용되며, 형사 사법에서는 목격자 진술의 신뢰성을 높이기 위해 인지 면담(cognitive interview) 기법을 사용합니다.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ 자주 하는 오해:</strong> "내 기억은 비디오테이프처럼 정확하다"는 믿음은 위험합니다. 기억은 매 인출마다 재구성되며, 강한 확신과 정확성은 별개입니다.
+  </div>
+
+<h3>전문가 레벨</h3>
+  <p>현대 기억 연구는 시냅스 가소성에서 시스템 응고화까지 다층적 분석을 통합합니다. 장기 강화(LTP)는 NMDA 수용체 활성화와 AMPA 수용체 삽입을 통해 시냅스 효율을 증가시키며, 칼슘 신호와 CaMKII, PKA, CREB 같은 신호 캐스케이드가 단백질 합성을 촉발해 장기기억을 형성합니다. 시스템 응고화는 해마-신피질의 점진적 전이로 모형화되며, 보완학습 시스템 가설(McClelland)은 해마의 빠른 학습과 신피질의 느린 통계학습이 상호보완한다고 봅니다. 일화기억의 패턴 분리(pattern separation, 치아이랑)와 패턴 완성(pattern completion, CA3)은 비슷한 사건들을 구분하면서도 부분 단서로 전체를 회복하는 핵심 회로입니다. 재공고화(reconsolidation) 가설은 회상된 기억이 일시적으로 불안정해진다는 점을 활용해 PTSD 치료 표적이 되었습니다. 한편 가짜기억과 자전적 기억의 신경상관, 망각의 능동적 기제(active forgetting)에 대한 연구도 빠르게 발전하고 있습니다.</p>
+
+  <h3>측정과 통계</h3>
+  <p>기억 측정에는 자유회상, 단서회상, 재인 절차가 사용되며, 신호탐지이론으로 민감도(d')와 편향을 분리합니다. 다항모형(MPT, Multinomial Processing Tree)은 기억 처리의 잠재 단계를 분해하고, ROC 곡선은 친숙성과 회상의 이중 과정을 평가합니다. 신경 데이터에서는 RSA로 표상 유사성을 분석하고, 다변량 디코딩으로 기억 내용 복원이 시도됩니다.</p>
+
+  <h3>최신 연구</h3>
+  <p>첫째, 광유전학 기반 엔그램 조작: Tonegawa 연구실은 특정 기억의 신경 앙상블을 활성화·억제해 가짜기억 이식, 우울증의 양성 기억 회복 같은 결과를 보였습니다. 둘째, 디지털 외부기억과 인지: 스마트폰 의존이 메타기억과 주의에 미치는 영향 연구. 셋째, AI 메모리 모델: Transformer 기반 LLM의 컨텍스트 윈도우와 retrieval-augmented generation이 인간 기억 모형과 비교되고 있습니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li><strong>분자기억학</strong>: 시냅스 단백질과 LTP 기제</li>
+    <li><strong>인지신경과학</strong>: 해마-신피질 상호작용</li>
+    <li><strong>교육인지과학</strong>: 학습법의 실험적 검증</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>책: 『The Seven Sins of Memory』(Schacter)</li>
+    <li>책: 『Make It Stick』(Brown, Roediger, McDaniel)</li>
+    <li>저널: Memory & Cognition, Hippocampus</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>🎓 사고 실험:</strong> 만약 어떤 사건의 기억을 한 번의 회상도 없이 50년 동안 보관할 수 있다면, 그 기억은 변형 없이 보존될까요? 회상이 곧 변형이라는 가설을 어떻게 검증할 수 있을까요?
+  </div>
+</div>
+
+  <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+
+<h2>🕹️ 직접 해보기 — 다른 하나 찾기</h2>
+<p>넷 중 성격이 다른 하나를 골라보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#d97757","prompt":"넷 중 다른 하나를 고르세요","rounds":[{"items":["일화기억","의미기억","외현기억","절차기억"],"odd":3,"why":"절차기억만 암묵기억(나머지는 외현)"},{"items":["분산 학습","인출 연습","청킹","밤샘 벼락치기"],"odd":3,"why":"밤샘은 기억에 최악, 나머지는 효과적 전략"},{"items":["감각기억","단기기억","장기기억","망각 곡선"],"odd":3,"why":"망각 곡선은 저장소가 아니라 잊는 현상"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d97757","questions":[{"q":"단기기억의 용량은 약?","choices":["7±2 항목","100항목","1항목","무한"],"answer":0},{"q":"큰 정보를 의미 단위로 묶는 것은?","choices":["시연","청킹","인출","부호화"],"answer":1},{"q":"망각 곡선을 연구한 학자는?","choices":["앳킨슨","파블로프","에빙하우스","피아제"],"answer":2},{"q":"자전거 타기 같은 몸의 기억은?","choices":["일화기억","의미기억","감각기억","절차기억"],"answer":3},{"q":"책을 덮고 떠올리는 공부법은?","choices":["인출 연습","분산 학습","청킹","정교화"],"answer":0}]};</script>
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>

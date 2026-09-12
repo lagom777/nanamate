@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 브랜딩 전략 — aboutMarketing</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📈 표지 · 소개</a></li>
+    <li><a href="01-fundamentals.html">1. 마케팅 기초</a></li>
+    <li><a href="02-consumer-psychology.html">2. 소비자 심리</a></li>
+    <li><a href="03-branding.html">3. 브랜딩 전략</a></li>
+    <li><a href="04-digital-marketing.html">4. 디지털 마케팅</a></li>
+    <li><a href="05-social-media.html">5. 소셜 미디어</a></li>
+    <li><a href="06-content-marketing.html">6. 콘텐츠 마케팅</a></li>
+    <li><a href="07-advertising.html">7. 광고와 캠페인</a></li>
+    <li><a href="08-analytics.html">8. 데이터 분석</a></li>
+    <li><a href="09-growth-hacking.html">9. 그로스 해킹</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>브랜딩 전략</em></h1>
+  <p class="authors">Chapter 3 — Branding & Positioning</p>
+</header>
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 동심원 시장 속 중심에 자리잡은 브랜드 포지셔닝</span>
+<h2>브랜딩 전략 개요</h2>
+<p>이 챕터에서는 브랜딩 전략의 핵심 전략과 프레임워크를 3D 시각화와 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>명확한 브랜드 아이덴티티와 가치 제안을 수립하여 고객의 마음에 차별화된 인식을 심고 브랜드 자산(Brand Equity)을 구축합니다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한 줄로 이해하기</h3>
+  <p>브랜딩은 "이 이름 들으면 딱 떠오르는 느낌"을 <strong>일부러 만드는 일</strong>이에요. ✨ 그냥 예쁜 로고 그리기가 아니라, 약속·이미지·경험을 차곡차곡 쌓아서 만드는 '성격' 같은 거예요.</p>
+
+  <h3>🤔 왜 중요할까?</h3>
+  <p>이름만 들어도 느낌이 떠오르면 그게 바로 돈이 돼요!</p>
+  <ul>
+    <li>🍎 <strong>애플</strong>은 '다르게 생각하라'로 그냥 컴퓨터 회사가 아니라 멋진 라이프스타일 브랜드가 됐어요.</li>
+    <li>🏔️ <strong>파타고니아</strong>는 '지구를 지키자'는 가치 덕에 옷이 비싸도 팬이 안 떠나요.</li>
+    <li>🌙 <strong>마켓컬리</strong>는 '새벽배송'이란 말을 자기 것으로 만들어서, 새벽배송 하면 컬리가 딱 떠오르게 했어요.</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 꼭 알아둘 말</h4>
+    <ul>
+      <li><strong>브랜드 아이덴티티</strong>: 우리가 '이렇게 보이고 싶다'고 만든 정체성. 🎭</li>
+      <li><strong>브랜드 이미지</strong>: 고객이 '실제로' 느끼는 모습. (둘이 같아야 성공!)</li>
+      <li><strong>브랜드 자산(Brand Equity)</strong>: 인지도·연상·충성도가 쌓여 만드는 진짜 돈값. 💎</li>
+      <li><strong>톤 앤 매너</strong>: 브랜드가 말하는 방식과 분위기. 😊</li>
+      <li><strong>브랜드 약속(Promise)</strong>: 고객에게 늘 변함없이 지키는 핵심 가치. 🤝</li>
+    </ul>
+  </div>
+
+  <h3>🧑‍🎤 브랜드는 '친구의 성격'!</h3>
+  <p>브랜드를 한 명의 친구라고 생각해 보세요. 친구를 떠올리면 말투, 옷차림, 성격이 한 번에 그려지죠?</p>
+  <ul>
+    <li>👕 <strong>색깔·폰트</strong> = 옷차림</li>
+    <li>💬 <strong>카피 말투</strong> = 말투</li>
+    <li>🙋 <strong>고객 응대</strong> = 평소 매너</li>
+  </ul>
+  <p>이게 안 흔들리고 <strong>계속 똑같이 반복</strong>되면, 사람들 머릿속에 진짜 친구처럼 남아요. 브랜딩에선 '남다름'보다 '한결같음'이 더 중요해요! 자꾸 컨셉이 바뀌는 브랜드는 아무 인상도 못 남기고 사라져요. 반대로 같은 메시지를 오래 지키면 그 분야의 대표가 돼요. (다이슨 = 프리미엄 가전, 무인양품 = 덜어낸 디자인처럼요!) 🏆</p>
+
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 좋아하는 브랜드 3개를 골라 '만약 사람이라면 어떤 친구일까?'를 한 문단씩 써 보세요. 좋은 브랜드는 사람처럼 그려진답니다. 🧑‍🤝‍🧑</div>
+
+  <h3>✅ 기억해요</h3>
+  <ul>
+    <li>브랜드는 로고가 아니라 '인상'의 합이에요. 🖼️</li>
+    <li>한결같음이 최강의 무기! 💪</li>
+    <li>브랜드 자산은 오래갈수록 값진 재산이에요.</li>
+    <li>브랜드는 '한 사람의 성격'처럼 다뤄요.</li>
+    <li>약속을 지킬수록 믿음이 커져요. 🤝</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>전략 깊이</h3>
+  <p>중급 단계에서는 브랜드를 ‘아키텍처’로 바라봅니다. 마스터 브랜드와 서브 브랜드의 관계(브랜드 하우스 vs 하우스 오브 브랜드), 브랜드 확장의 위험과 시너지, 라인 익스텐션의 카니발리제이션 효과까지 모두 의식적인 의사결정의 대상입니다. 또한 데이비드 아커의 브랜드 자산 모델은 인지도, 충성도, 지각된 품질, 브랜드 연상, 기타 자산의 다섯 축으로 자산을 분해해 측정 가능한 형태로 제시했고, 케빈 켈러의 CBBE 모델은 브랜드 인지부터 공명까지 4단계 피라미드로 정리했습니다. 브랜드 포지셔닝 스테이트먼트는 글로벌 기업의 표준 양식이며, 이 한 문장이 모든 광고와 제품 결정의 헌법이 됩니다. 또 디지털 시대에는 ‘브랜드 코드(코어 컬러, 사운드 시그니처, 모션 그래픽)’를 시스템화해 콘텐츠 양산 시 일관성을 유지하는 운영 능력이 점점 중요해지고 있습니다.</p>
+
+  <h3>대표 사례 분석</h3>
+  <div class="info-card">
+    <h4>📈 사례 1 — 에어비앤비 ‘Belong Anywhere’</h4>
+    <p>에어비앤비는 단순한 숙박 비교 사이트에서 ‘어디든 내 집처럼’이라는 정서적 약속을 핵심에 두며 브랜드를 재정의했고, Bélo 로고와 호스트 스토리 콘텐츠로 그 약속을 시각·서사적으로 강화했습니다. 이는 기능적 차별화가 어려워진 시장에서 정서적 자산이 어떻게 경쟁력으로 전환되는지를 보여줍니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>📈 사례 2 — 무신사의 카테고리 코드</h4>
+    <p>무신사는 ‘무신사 추천’이라는 단순한 라벨을 정교한 큐레이션과 결합해 패션 초심자에게 안전한 선택지를 제공했고, 이로 인해 ‘무신사가 추천하면 신뢰할 만하다’는 브랜드 자산이 자연스럽게 축적되었습니다. 단순 e커머스가 아니라 큐레이션 권위 브랜드로 자리잡은 사례입니다.</p>
+  </div>
+
+  <h3>실무 응용</h3>
+  <p>실무에서는 첫째, 브랜드 오딧을 통해 현재 인지·연상·태도를 정량화한 후 둘째, 포지셔닝 스테이트먼트와 메시지 하우스를 재정비합니다. 셋째, 브랜드 가이드라인과 콘텐츠 운영 시스템(브랜드 OS)을 구축해 채널이 늘어나도 일관성이 흔들리지 않도록 만듭니다. 이때 핵심은 ‘무엇을 하지 않을 것인지’를 명확히 정하는 작업이며, 무엇을 빼느냐가 브랜드의 인격을 결정합니다.</p>
+
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 단기 매출 압박으로 브랜드 톤과 다른 프로모션을 남발하면 단기 효과는 있지만 장기 자산이 빠르게 침식됩니다. ‘프로모션은 마약, 브랜드는 면역’이라는 격언을 기억해야 합니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>심화 단계의 브랜딩은 정량 모델링과 결합합니다. Interbrand와 Kantar BrandZ의 브랜드 가치 평가 방법론은 재무, 시장 점유율, 소비자 인식 데이터를 결합해 브랜드를 자산으로 회계화하며, 이는 M&A와 IR에 직접 영향을 미칩니다. 또한 ‘카테고리 엔트리 포인트(CEP)’ 분석은 소비자가 카테고리를 떠올리는 다양한 상황 중 어느 지점에서 우리 브랜드가 떠오르는지 매핑해, 브랜드 성장 기회를 정량화합니다. 더 나아가 ‘distinctive brand assets’ 이론은 로고·컬러·음성 시그니처 같은 비언어적 자산이 광고 회상률과 매출에 미치는 영향을 분리 측정하며, 광고 자본의 효율을 극대화하는 단서를 제공합니다. 마지막으로 ESG와 퍼포스 브랜딩이 단순 PR을 넘어 자본시장의 평가지표로 통합되면서, 브랜드 약속이 곧 기업 거버넌스의 핵심이 되는 흐름이 강해지고 있습니다. 결국 전문가 단계의 브랜드는 마케팅 부서의 자산이 아니라 CFO와 CEO가 함께 관리해야 하는 전략 자본입니다.</p>
+
+  <h3>측정과 분석 모델</h3>
+  <p>브랜드 자산 측정은 비보조 인지도(top-of-mind), 보조 인지도, 고려 집합(consideration set), 선호도, 충성도의 다층 지표로 구성됩니다. 트래킹 서베이는 이 지표들의 시계열을 안정적으로 수집하고, 미디어 노출과의 인과 관계는 마케팅 믹스 모델링으로 추정합니다. 또한 NPS(Net Promoter Score)와 브랜드 모먼텀(brand momentum) 지표는 미래 매출 성장과 상관이 높다는 연구가 다수 발표되어 있습니다. 디지털 환경에서는 검색량(브랜드 SOV), 직접 트래픽 비율, 소셜 멘션 톤 분석이 보조 지표로 결합되며, 인과 식별을 위해 지오 기반 실험과 합성 통제 기법이 점점 표준이 되고 있습니다.</p>
+
+  <h3>최신 트렌드</h3>
+  <p>첫째, 생성형 AI를 활용한 ‘브랜드 보이스 자동화’가 빠르게 도입되며, 수천 개 콘텐츠를 일관된 톤으로 양산하는 운영 모델이 자리잡고 있습니다. 둘째, 가상 인플루언서·디지털 아바타가 브랜드 마스코트로 진화하며 새로운 IP 자산화 경로가 생겼습니다. 셋째, 윤리적·환경적 메시지의 ‘그린워싱’ 리스크가 커지면서, 검증 가능한 데이터에 기반한 임팩트 보고가 브랜드 신뢰의 새로운 기준이 되었습니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li>경영전략과 기업 거버넌스</li>
+    <li>디자인 시스템과 모션 브랜딩</li>
+    <li>문화기호학(semiotics)과 미디어 이론</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>David Aaker, <em>Aaker on Branding</em></li>
+    <li>Kevin Lane Keller, <em>Strategic Brand Management</em></li>
+    <li>Marty Neumeier, <em>The Brand Gap</em></li>
+  </ul>
+
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 가상의 D2C 브랜드를 설정하고, CEP 5개를 도출한 뒤 각각에 매칭되는 크리에이티브 컨셉과 KPI를 정량화한 ‘브랜드 성장 플랜’을 설계해 보세요.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 어울리지 않는 하나</h2>
+<p>각 묶음에서 성격이 다른 하나를 골라보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#e040fb","prompt":"성격이 다른 하나를 고르세요","rounds":[{"items":["브랜드 아이덴티티","브랜드 이미지","톤 앤 매너","새벽배송"],"odd":3,"why":"나머지는 브랜드 개념 용어, 새벽배송은 컬리의 사례 단어"},{"items":["데이비드 아커","케빈 켈러","마티 뉴마이어","바이런 샤프"],"odd":3,"why":"나머지는 브랜드 자산 모델 학자, 샤프는 How Brands Grow 저자"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#e040fb","questions":[{"q":"'새벽배송' 단어를 차지한 브랜드는?","choices":["쿠팡","무신사","마켓컬리","오늘의집"],"answer":2},{"q":"고객이 실제 인식하는 브랜드 모습은?","choices":["아이덴티티","브랜드 이미지","톤 앤 매너","브랜드 약속"],"answer":1},{"q":"브랜딩에서 '다름'보다 중요한 것은?","choices":["화려함","가격","규모","일관됨"],"answer":3},{"q":"CBBE 피라미드 모델을 만든 학자는?","choices":["케빈 켈러","데이비드 아커","바이런 샤프","마티 뉴마이어"],"answer":0},{"q":"Belong Anywhere의 브랜드는?","choices":["무신사","에어비앤비","파타고니아","애플"],"answer":1}]};</script>
+</main>
+</div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const brand=new THREE.Mesh(new THREE.TorusKnotGeometry(0.6,0.22,64,8),new THREE.MeshBasicMaterial({color:0xff5a3c,wireframe:true}));s.add(brand);const rings=[];for(let i=0;i<4;i++){const rad=1.4+i*0.7;const ring=new THREE.Mesh(new THREE.RingGeometry(rad,rad+0.04,64),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.08+i*0.05,0.7,0.6),side:THREE.DoubleSide,transparent:true,opacity:0.7-i*0.12}));ring.rotation.x=Math.PI/2;s.add(ring);rings.push(ring);const dot=new THREE.Mesh(new THREE.SphereGeometry(0.14,8,8),new THREE.MeshBasicMaterial({color:0x9bb0ff}));dot.userData={rad:rad,ang:Math.random()*6.28,sp:0.4-i*0.07};s.add(dot);rings.push(dot);}
+  const _l1=lbl('브랜드 아이덴티티',0xc23a20);_l1.position.set(0,1.15,0);s.add(_l1);const _l2=lbl('브랜드 자산',0x5a6bd8);_l2.position.set(2.6,0.4,0);s.add(_l2);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 브랜드는 동심원 시장의 한가운데에 자리잡는 포지셔닝에서 시작합니다.','브랜드 아이덴티티는 우리가 의도한 정체성, 브랜드 이미지는 고객이 실제 인식하는 모습입니다.','인지도·연상·충성도가 쌓이면 브랜드 자산(Brand Equity)이라는 경제적 가치가 됩니다.','일관된 톤 앤 매너와 브랜드 약속이 그 자산을 오래 지켜냅니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}brand.rotation.x+=0.012;brand.rotation.y+=0.016;rings.forEach(o=>{if(o.userData.rad){o.userData.ang+=o.userData.sp*0.016;o.position.set(Math.cos(o.userData.ang)*o.userData.rad,0,Math.sin(o.userData.ang)*o.userData.rad);}});s.rotation.x=0.5;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body>
+</html>

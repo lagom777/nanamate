@@ -1,0 +1,350 @@
+/* ============================================================
+   aboutAstronomy — Interactive Astronomy Lab
+   Aesthetic: 깊은 우주 × 별빛 × 인터랙티브 시뮬레이션
+   Deep navy base, starlight gold/purple accents, cosmic textures
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  --bg:          #050714;
+  --bg-panel:    #0a0d1f;
+  --bg-card:     #0f1328;
+  --bg-elevated: #151a35;
+  --text:        #e8ecf8;
+  --text-dim:    #9aa3c4;
+  --text-mute:   #5c6488;
+  --accent:      #7b9fff;
+  --accent-dim:  #4a6fcc;
+  --accent-glow: rgba(123, 159, 255, 0.12);
+  --stellar:     #ffcc44;
+  --stellar-dim: #cc9900;
+  --galaxy:      #b06cff;
+  --blackhole:   #ff4466;
+  --explore:     #22ddaa;
+  --nebula:      rgba(176, 108, 255, 0.08);
+  --grid:        rgba(123, 159, 255, 0.03);
+  --border:      rgba(123, 159, 255, 0.10);
+  --border-soft: rgba(255,255,255,0.04);
+
+  --font-display: 'Space Grotesk', 'IBM Plex Sans KR', sans-serif;
+  --font-body:    'IBM Plex Sans KR', -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(123, 159, 255, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(176, 108, 255, 0.02) 0%, transparent 40%),
+    radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 65%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 25%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 45%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 45% 90%, rgba(255,255,255,0.2) 0%, transparent 100%);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ================= Layout ================= */
+.layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+aside {
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border);
+  padding: 40px 24px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+aside::before {
+  content: 'aboutAstronomy';
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.6em;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
+aside::after {
+  content: '천문학 — 우주 탐험 실험실';
+  display: block;
+  font-size: 0.78em;
+  color: var(--text-mute);
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+aside h3 {
+  font-size: 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-mute);
+  margin: 0 0 12px;
+}
+
+aside ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+aside ol li { margin-bottom: 4px; }
+aside ol li a {
+  display: block;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.88em;
+  transition: all 0.2s;
+}
+aside ol li a:hover {
+  background: var(--accent-glow);
+  color: var(--accent);
+}
+
+.hub-back-link {
+  display: block;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  background: linear-gradient(135deg, var(--accent), var(--galaxy));
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(123,159,255,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.hub-back-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(123,159,255,0.4);
+}
+
+/* ================= Main ================= */
+main {
+  padding: 60px 80px 100px;
+  max-width: 900px;
+}
+
+/* ================= Header ================= */
+.paper-header {
+  margin-bottom: 60px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+}
+.paper-header h1 {
+  font-family: var(--font-display);
+  font-size: 3.2em;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text);
+  margin: 0 0 16px;
+}
+.paper-header h1 em {
+  color: var(--accent);
+  font-style: normal;
+}
+.paper-header .authors {
+  color: var(--text-dim);
+  font-size: 0.95em;
+  margin: 0 0 8px;
+}
+.paper-header .affiliation {
+  color: var(--text-mute);
+  font-size: 0.82em;
+  font-family: var(--font-mono);
+}
+
+/* ================= 3D Scene ================= */
+.scene-3d {
+  width: 100%;
+  height: 400px;
+  margin: 40px 0;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  overflow: hidden;
+  position: relative;
+}
+.scene-3d canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+.scene-controls {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(5, 7, 20, 0.88);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.scene-controls label {
+  font-size: 0.75em;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+.scene-controls input[type="range"] {
+  flex: 1;
+  min-width: 80px;
+  accent-color: var(--accent);
+}
+.scene-controls button {
+  padding: 6px 14px;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.scene-controls button:hover { opacity: 0.85; }
+
+/* ================= Content ================= */
+h2 {
+  font-family: var(--font-display);
+  font-size: 1.8em;
+  font-weight: 700;
+  margin: 60px 0 20px;
+  color: var(--text);
+  position: relative;
+  padding-left: 20px;
+}
+h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 4px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: 1.3em;
+  font-weight: 600;
+  margin: 40px 0 14px;
+  color: var(--stellar);
+}
+
+p {
+  margin: 0 0 18px;
+  color: var(--text-dim);
+}
+
+/* Formula blocks */
+.formula {
+  display: block;
+  padding: 20px 24px;
+  margin: 24px 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-family: var(--font-mono);
+  font-size: 1.1em;
+  color: var(--accent);
+  text-align:left;
+  overflow-x: auto;
+}
+
+/* Info cards */
+.info-card {
+  padding: 20px 24px;
+  margin: 24px 0;
+  background: var(--bg-elevated);
+  border-radius: 12px;
+  border-left: 4px solid var(--accent);
+}
+.info-card.stellar { border-left-color: var(--stellar); }
+.info-card.galaxy { border-left-color: var(--galaxy); }
+.info-card.blackhole { border-left-color: var(--blackhole); }
+.info-card.explore { border-left-color: var(--explore); }
+
+.info-card h4 {
+  font-family: var(--font-display);
+  font-size: 0.95em;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+.info-card p {
+  margin: 0;
+  font-size: 0.9em;
+}
+
+/* Interactive hint */
+.interact-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: var(--accent-glow);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 0.75em;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  margin: 8px 0;
+}
+
+/* Planet/object tooltip */
+.object-label {
+  position: absolute;
+  padding: 4px 10px;
+  background: rgba(5, 7, 20, 0.9);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.72em;
+  color: var(--stellar);
+  font-family: var(--font-mono);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* ================= Responsive ================= */
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  aside {
+    position: static;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 24px;
+  }
+  main {
+    padding: 40px 24px 80px;
+  }
+  .paper-header h1 { font-size: 2.2em; }
+  .scene-3d { height: 300px; }
+}

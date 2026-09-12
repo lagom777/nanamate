@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2. 태양계 — aboutAstronomy</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🌌 표지 · 소개</a></li>
+    <li><a href="01-celestial-mechanics.html">1. 천체역학</a></li>
+    <li><a href="02-solar-system.html" style="color:var(--accent);font-weight:600;">2. 태양계</a></li>
+    <li><a href="03-stars.html">3. 항성</a></li>
+    <li><a href="04-galaxies.html">4. 은하</a></li>
+    <li><a href="05-cosmology.html">5. 우주론</a></li>
+    <li><a href="06-black-holes.html">6. 블랙홀</a></li>
+    <li><a href="07-exoplanets.html">7. 외계행성</a></li>
+    <li><a href="08-observational.html">8. 관측천문학</a></li>
+    <li><a href="09-space-exploration.html">9. 우주탐사</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>태양계:<br>우리의 <em>우주</em> 이웃</h1>
+  <p class="authors">Chapter 2 — The Solar System</p>
+  <p class="affiliation">8행성 궤도 시뮬레이터 · 행성 클릭 정보</p>
+</header>
+
+<h2>태양계의 구조</h2>
+<p>태양계는 약 46억 년 전 거대한 분자 구름이 중력 수축하면서 형성되었습니다. 중심의 태양은 전체 질량의 99.86%를 차지하며, 나머지 물질이 행성, 위성, 소행성, 혜성을 이루고 있습니다.</p>
+
+<div class="info-card">
+  <h4>🪨 지구형 행성 (내행성)</h4>
+  <p>수성, 금성, 지구, 화성 — 암석 표면, 작은 크기, 적은 위성. 눈선(frost line) 안쪽에서 형성되어 휘발성 물질이 적습니다.</p>
+</div>
+
+<div class="info-card stellar">
+  <h4>🌬️ 목성형 행성 (외행성)</h4>
+  <p>목성, 토성 — 가스 거인. 천왕성, 해왕성 — 얼음 거인. 수소/헬륨 대기, 다수의 위성과 고리 시스템을 가집니다.</p>
+</div>
+
+<h2>태양계 3D 시뮬레이터</h2>
+<p>행성을 클릭하면 정보가 표시됩니다. 시간 슬라이더로 공전 속도를 조절하세요.</p>
+
+<div class="scene-3d" id="solar-scene">
+  <div class="scene-controls">
+    <label>시간 속도: <span id="time-val">1</span>x</label>
+    <input type="range" id="time-slider" min="0" max="50" value="10">
+    <button id="reset-btn">↺ 리셋</button>
+  </div>
+  <div id="planet-info" style="display:none;position:absolute;top:16px;right:16px;padding:14px 18px;background:rgba(5,7,20,0.92);backdrop-filter:blur(10px);border:1px solid rgba(123,159,255,0.2);border-radius:10px;font-size:0.82em;color:#e8ecf8;max-width:240px;font-family:var(--font-body);">
+    <div id="info-name" style="font-weight:700;font-size:1.1em;margin-bottom:6px;color:#7b9fff;"></div>
+    <div id="info-details" style="line-height:1.6;color:#9aa3c4;"></div>
+  </div>
+</div>
+<span class="interact-hint">🖱️ 행성을 클릭하여 정보 확인 · 슬라이더로 시간 조절</span>
+
+<h2>행성 비교</h2>
+<div class="formula">
+수성 0.39AU · 금성 0.72AU · 지구 1.00AU · 화성 1.52AU · 목성 5.20AU · 토성 9.58AU · 천왕성 19.2AU · 해왕성 30.1AU
+</div>
+
+<h3>눈선과 행성 형성</h3>
+<p>태양으로부터 약 2.7AU 거리의 눈선(frost line)을 기준으로, 안쪽에서는 암석과 금속만 응축되어 작고 단단한 지구형 행성이, 바깥에서는 얼음까지 응축되어 빠르게 핵이 성장하고 가스를 끌어당겨 거대 행성이 형성되었습니다.</p>
+
+<div class="info-card galaxy">
+  <h4>🌊 소행성대와 카이퍼 벨트</h4>
+  <p>화성과 목성 사이의 소행성대, 해왕성 너머의 카이퍼 벨트, 그리고 가장 바깥의 오르트 구름까지 — 태양의 중력 영향권은 약 2광년에 달합니다.</p>
+</div>
+
+<h3>케플러의 법칙과 행성 운동</h3>
+<div class="formula">
+제1법칙: 타원 궤도 &nbsp;|&nbsp; 제2법칙: 면적 속도 일정 &nbsp;|&nbsp; 제3법칙: T² = (4π²/GM)a³
+</div>
+<p>위 시뮬레이터에서 행성들의 공전 주기가 거리에 따라 어떻게 달라지는지 직접 확인하세요. 안쪽 행성은 빠르게, 바깥 행성은 느리게 공전합니다.</p>
+
+<h2>주요 탐사 임무</h2>
+<div class="info-card explore">
+  <h4>🛰️ 보이저 1·2호 (1977~)</h4>
+  <p>인류가 보낸 가장 먼 탐사선. 보이저 1호는 2012년 성간 공간에 진입했으며, 현재 태양에서 약 160AU 거리에 있습니다.</p>
+</div>
+<div class="info-card">
+  <h4>🔭 카시니-하위헌스 (1997–2017)</h4>
+  <p>토성계를 13년간 탐사하며 엔셀라두스의 간헐천과 타이탄의 메탄 호수를 발견했습니다.</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🌟 한 줄로 말하면?</h3><p>태양계는 <strong>태양</strong>과, 태양 중력에 붙잡혀 함께 도는 식구들(행성·왜소행성·소행성·혜성)이 모인 '우주 가족'이에요! ☀️</p>
+  <h3>🤔 왜 중요할까?</h3><p>지구는 태양에서 딱 알맞은 거리에 있어서 생명이 살 수 있어요. 옆 동네 화성·금성을 보면, 위치가 조금만 달라도 행성 운명이 확 바뀐다는 걸 알 수 있죠. 지금까지 인류의 우주 탐험은 거의 다 이 태양계 안에서 일어났고, 다른 별을 이해하는 첫 출발점이기도 해요. 🚀</p>
+  <div class="info-card"><h4>🌱 꼭 알아둘 말들</h4><ul><li><strong>천문단위(AU)</strong> — 지구에서 태양까지 거리 (약 1.5억 km!) 📏</li><li><strong>지구형 행성</strong> — 수성·금성·지구·화성 (작고 단단한 돌덩이)</li><li><strong>목성형 행성</strong> — 목성·토성·천왕성·해왕성 (크고 가벼운 가스·얼음 거인)</li><li><strong>왜소행성</strong> — 명왕성·세레스처럼 좀 작은 행성</li><li><strong>오르트 구름</strong> — 태양계를 감싼 혜성 창고 ❄️</li></ul></div>
+  <h3>💡 쉽게 풀어보기</h3><p>태양계를 교실이라고 생각해 봐요. 안쪽 자리엔 작고 단단한 4명(지구형 행성)이, 바깥쪽 자리엔 덩치 크고 폭신한 4명(목성형 행성)이 앉아 있어요. 그 사이엔 자잘한 돌들이 모인 소행성대가, 해왕성 너머엔 카이퍼 벨트가, 제일 바깥엔 오르트 구름이 있죠. 모두 태양 중력에 붙잡혀 빙글빙글 돌지만, 거리도 온도도 재료도 제각각이에요. 지구는 태양에서 1AU 떨어진 <strong>골디락스 존(habitable zone)</strong>에 있어서 물이 얼지도 끓지도 않고 찰랑거릴 수 있답니다! 💧</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> "수금지화 / 목토천해" 순서로 외워요. 앞쪽 넷은 작고 단단, 뒤쪽 넷은 크고 가벼워요! 🪐</div>
+  <h3>📌 요약 3초 컷</h3><ul><li>태양 + 행성 8개 + 위성 + 소행성 + 혜성이 한 가족</li><li>지구형(작고 단단) vs 목성형(크고 가벼움) 성격이 뚜렷</li><li>골디락스 존이어야 액체 물이 존재해요</li><li>탐사선이 이미 모든 행성을 방문했어요</li><li>외계 생명 후보지: 화성·유로파·엔셀라두스·타이탄 👽</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>태양계 형성은 약 46억 년 전 거대한 가스·먼지 원반(원시 태양 성운)이 중력 수축하면서 시작되었습니다. 중앙에 태양이, 주변 원반에 미행성체들이 응집해 행성이 만들어졌습니다. 안쪽은 온도가 높아 휘발성 물질이 날아가 단단한 행성이, 바깥쪽은 차가워 얼음·가스를 가둘 수 있어 거대 행성이 형성되었습니다. 행성 운동은 케플러 3법칙(T² ∝ a³)과 뉴턴 만유인력으로 정확히 기술됩니다. 행성 이동(Grand Tack, Nice 모델)으로 현재 배열을 설명합니다.</p>
+  <h3>핵심 공식과 의미</h3><div class="formula">T² = (4π²/GM) a³ &nbsp;&nbsp;&nbsp; v_escape = √(2GM/r)</div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1: 화성 공전 주기</h4><p>화성 a = 1.52 AU → T = √(1.52³) ≈ 1.87년. 실측 1.88년과 거의 일치.</p></div>
+  <div class="info-card"><h4>📐 예제 2: 탈출 속도</h4><p>지구 11.2 km/s, 목성 59.5 km/s. 무거울수록 탈출이 어려워 대기 보존 능력 차이로 이어짐.</p></div>
+  <h3>응용 사례</h3><p>스페이스X·NASA는 행성 간 hohmann transfer를 이용해 화성에 탐사선을 보냅니다. 소행성 채굴 기업(Planetary Resources, Asteroid Mining Corp)은 백금족 금속이 풍부한 근지구 소행성을 자원으로 보고 있습니다. 한국은 KASS·다누리(달 궤도선)로 태양계 탐사에 본격 합류했습니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 행성 궤도는 거의 원이지만 정확히 원은 아닙니다. 모두 타원이고 이심률이 다릅니다(수성 0.21, 지구 0.017).</div>
+
+<h3>전문가 레벨 이해</h3><p>태양계 동역학은 다체 문제로 해석적 해가 존재하지 않습니다. 수치 적분(symplectic integrator)으로 수억 년 진화를 시뮬레이션하며, 작은 섭동의 누적이 long-term 안정성에 영향을 줍니다. 명왕성-해왕성의 3:2 평균 운동 공명, 라플라스 공명(이오·유로파·가니메데 1:2:4) 같은 공명은 안정성과 동시에 조석 가열을 일으켜 유로파 지하 바다의 가능성을 만듭니다. Nice 모델은 초기 거대 행성의 이동이 LHB(후기 대폭격)와 카이퍼 벨트 분포를 설명한다고 제안합니다. 외행성 너머 가설적 "9번째 행성"의 신호로 일부 TNO 궤도의 군집화가 보고되었습니다. 우주생물학적으로 유로파·엔셀라두스의 지하 바다, 타이탄의 메탄 호수, 화성의 옛 강 흔적이 표적입니다.</p>
+  <h3>최신 연구·동향</h3><p>NASA Europa Clipper(2024 발사), JUICE(2023 발사) 임무가 거대 행성 위성의 거주 가능성을 직접 조사 중입니다. 화성에서는 Perseverance가 시료를 채취 중이며 MSR(Mars Sample Return)이 다음 단계입니다. 소행성 충돌 방어 실험 DART(2022)는 실제 궤도 변경에 성공했습니다.</p>
+  <h3>관련 분야</h3><ul><li>천체역학과 카오스 이론</li><li>행성 과학과 우주생물학</li><li>우주 탐사 공학</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"Planetary Sciences" — de Pater & Lissauer</li><li>NASA Eyes on the Solar System</li><li>JAXA, ESA, KARI 임무 페이지</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> hohmann transfer 공식으로 지구 → 화성 최소 에너지 궤도의 ΔV와 비행 시간을 계산하고, 발사 윈도우(약 26개월)가 왜 생기는지 설명하세요.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 행성 분류하기</h2>
+<p>각 행성을 지구형·목성형 행성으로 나눠 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#7b9fff","prompt":"각 행성을 지구형/목성형으로 분류하세요","groups":[{"name":"지구형 행성","items":["수성","금성","지구","화성"]},{"name":"목성형 행성","items":["목성","토성","해왕성"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7b9fff","questions":[{"q":"태양계가 형성된 시기는 약 몇 년 전인가?","choices":["46억 년","138억 년","100만 년","4500만 년"],"answer":0},{"q":"다음 중 지구형 행성이 아닌 것은?","choices":["수성","금성","화성","목성"],"answer":3},{"q":"지구와 태양 사이 거리는 몇 AU인가?","choices":["0.39AU","1.00AU","1.52AU","5.20AU"],"answer":1},{"q":"눈선(frost line)은 태양에서 약 몇 AU인가?","choices":["2.7AU","1.0AU","5.2AU","9.6AU"],"answer":0},{"q":"2012년 성간 공간에 진입한 탐사선은?","choices":["카시니","보이저 2호","보이저 1호","퍼서비어런스"],"answer":2}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('solar-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 500);
+  camera.position.set(0, 8, 18);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // 별 배경
+  const starGeo = new THREE.BufferGeometry();
+  const starPos = new Float32Array(800 * 3);
+  for (let i = 0; i < 800 * 3; i++) starPos[i] = (Math.random() - 0.5) * 200;
+  starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+  scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.12 })));
+
+  // 태양
+  const sunGeo = new THREE.SphereGeometry(1.2, 32, 32);
+  const sunMat = new THREE.MeshBasicMaterial({ color: 0xffdd44 });
+  const sun = new THREE.Mesh(sunGeo, sunMat);
+  scene.add(sun);
+  const sunGlow = new THREE.Mesh(
+    new THREE.SphereGeometry(1.6, 32, 32),
+    new THREE.MeshBasicMaterial({ color: 0xffaa00, transparent: true, opacity: 0.1 })
+  );
+  scene.add(sunGlow);
+
+  // 행성 데이터
+  const planetData = [
+    { name: '수성', nameEn: 'Mercury', dist: 2.5, size: 0.1, color: 0xbbbbbb, speed: 4.15, info: '지름: 4,879km\n태양 거리: 0.39AU\n공전 주기: 88일\n특징: 태양계에서 가장 작은 행성, 대기 거의 없음' },
+    { name: '금성', nameEn: 'Venus', dist: 3.3, size: 0.18, color: 0xffcc66, speed: 3.24, info: '지름: 12,104km\n태양 거리: 0.72AU\n공전 주기: 225일\n특징: 두꺼운 CO₂ 대기, 표면 온도 462°C' },
+    { name: '지구', nameEn: 'Earth', dist: 4.2, size: 0.19, color: 0x4488ff, speed: 2.60, info: '지름: 12,742km\n태양 거리: 1.00AU\n공전 주기: 365일\n특징: 액체 물, 산소 대기, 생명체 존재' },
+    { name: '화성', nameEn: 'Mars', dist: 5.2, size: 0.14, color: 0xff4422, speed: 2.00, info: '지름: 6,779km\n태양 거리: 1.52AU\n공전 주기: 687일\n특징: 붉은 표면(산화철), 올림푸스 산(25km)' },
+    { name: '목성', nameEn: 'Jupiter', dist: 7.2, size: 0.55, color: 0xffaa44, speed: 1.10, info: '지름: 139,820km\n태양 거리: 5.20AU\n공전 주기: 11.9년\n특징: 태양계 최대, 대적점 폭풍, 위성 95개+' },
+    { name: '토성', nameEn: 'Saturn', dist: 9.0, size: 0.45, color: 0xddbb66, speed: 0.80, info: '지름: 116,460km\n태양 거리: 9.58AU\n공전 주기: 29.5년\n특징: 화려한 고리 시스템, 밀도가 물보다 낮음' },
+    { name: '천왕성', nameEn: 'Uranus', dist: 11.0, size: 0.30, color: 0x66dddd, speed: 0.55, info: '지름: 50,724km\n태양 거리: 19.2AU\n공전 주기: 84년\n특징: 자전축이 98° 기울어짐, 얼음 거인' },
+    { name: '해왕성', nameEn: 'Neptune', dist: 12.8, size: 0.28, color: 0x4466ff, speed: 0.40, info: '지름: 49,244km\n태양 거리: 30.1AU\n공전 주기: 165년\n특징: 최고 풍속 2,100km/h, 트리톤 역행 위성' },
+  ];
+
+  const planets = [];
+  const planetMeshes = [];
+
+  planetData.forEach((p, i) => {
+    // 궤도 링
+    const points = [];
+    for (let j = 0; j <= 128; j++) {
+      const a = (j / 128) * Math.PI * 2;
+      points.push(new THREE.Vector3(Math.cos(a) * p.dist, 0, Math.sin(a) * p.dist));
+    }
+    const orbitGeo = new THREE.BufferGeometry().setFromPoints(points);
+    const orbitMat = new THREE.LineBasicMaterial({ color: 0x6688cc, transparent: true, opacity: 0.12 });
+    scene.add(new THREE.Line(orbitGeo, orbitMat));
+
+    // 행성
+    const geo = new THREE.SphereGeometry(p.size, 24, 24);
+    const mat = new THREE.MeshBasicMaterial({ color: p.color });
+    const mesh = new THREE.Mesh(geo, mat);
+    scene.add(mesh);
+
+    const phase = (i / planetData.length) * Math.PI * 2;
+    const obj = { mesh, ...p, phase, angle: phase };
+    planets.push(obj);
+    planetMeshes.push(mesh);
+
+    // 토성 고리
+    if (i === 5) {
+      const ringGeo = new THREE.RingGeometry(p.size * 1.3, p.size * 2.0, 32);
+      const ringMat = new THREE.MeshBasicMaterial({ color: 0xddcc88, transparent: true, opacity: 0.35, side: THREE.DoubleSide });
+      const ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.rotation.x = Math.PI / 2.5;
+      mesh.add(ring);
+    }
+
+    // 지구 달
+    if (i === 2) {
+      const moonGeo = new THREE.SphereGeometry(0.04, 12, 12);
+      const moonMat = new THREE.MeshBasicMaterial({ color: 0xcccccc });
+      const moon = new THREE.Mesh(moonGeo, moonMat);
+      obj.moon = moon;
+      scene.add(moon);
+    }
+  });
+
+  // 시간 컨트롤
+  const timeSlider = document.getElementById('time-slider');
+  const timeVal = document.getElementById('time-val');
+  let timeSpeed = 1.0;
+  timeSlider.addEventListener('input', () => {
+    timeSpeed = timeSlider.value / 10;
+    timeVal.textContent = timeSpeed.toFixed(1);
+  });
+  document.getElementById('reset-btn').addEventListener('click', () => {
+    planets.forEach((p, i) => { p.angle = (i / planets.length) * Math.PI * 2; });
+    timeSlider.value = 10;
+    timeSpeed = 1.0;
+    timeVal.textContent = '1.0';
+  });
+
+  // 클릭으로 행성 선택
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  const infoPanel = document.getElementById('planet-info');
+  const infoName = document.getElementById('info-name');
+  const infoDetails = document.getElementById('info-details');
+
+  container.addEventListener('click', (e) => {
+    const rect = container.getBoundingClientRect();
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(planetMeshes);
+
+    if (intersects.length > 0) {
+      const hit = intersects[0].object;
+      const pData = planets.find(p => p.mesh === hit);
+      if (pData) {
+        infoName.textContent = pData.name + ' (' + pData.nameEn + ')';
+        infoDetails.innerHTML = pData.info.replace(/\n/g, '<br>');
+        infoPanel.style.display = 'block';
+        // 하이라이트
+        planetMeshes.forEach(m => { m.material.opacity = 1; });
+        hit.scale.set(1.3, 1.3, 1.3);
+        setTimeout(() => hit.scale.set(1, 1, 1), 400);
+      }
+    } else {
+      infoPanel.style.display = 'none';
+    }
+  });
+
+  // 마우스 카메라
+  let mouseX = 0, mouseY = 0;
+  container.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const dt = 0.016 * timeSpeed;
+
+    planets.forEach(p => {
+      p.angle += p.speed * dt * 0.15;
+      p.mesh.position.x = Math.cos(p.angle) * p.dist;
+      p.mesh.position.z = Math.sin(p.angle) * p.dist;
+      p.mesh.position.y = Math.sin(p.angle * 0.3) * 0.15;
+      p.mesh.rotation.y += 0.02;
+
+      if (p.moon) {
+        const moonAngle = p.angle * 13;
+        p.moon.position.x = p.mesh.position.x + Math.cos(moonAngle) * 0.4;
+        p.moon.position.z = p.mesh.position.z + Math.sin(moonAngle) * 0.4;
+        p.moon.position.y = p.mesh.position.y;
+      }
+    });
+
+    sun.rotation.y += 0.003;
+
+    camera.position.x += (mouseX * 5 - camera.position.x) * 0.015;
+    camera.position.y += (-mouseY * 3 + 8 - camera.position.y) * 0.015;
+    camera.lookAt(0, 0, 0);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

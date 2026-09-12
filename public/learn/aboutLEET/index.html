@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEET 법학적성시험: 로스쿨의 문을 여는 소양 시험</title><link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="index.html">⚖️ 표지 · 소개</a></li>
+<li><a href="chapters/01-about.html">1. LEET이란 무엇인가</a></li>
+<li><a href="chapters/02-verbal-basics.html">2. 언어이해: 지문 읽기의 기초</a></li>
+<li><a href="chapters/03-verbal-advanced.html">3. 언어이해: 문제 유형 공략</a></li>
+<li><a href="chapters/04-legal-texts.html">4. 법률 지문 읽기</a></li>
+<li><a href="chapters/05-logic-basics.html">5. 추리논증: 명제와 논리 기초</a></li>
+<li><a href="chapters/06-deduction.html">6. 연역논증</a></li>
+<li><a href="chapters/07-induction.html">7. 귀납·인과 논증</a></li>
+<li><a href="chapters/08-argument.html">8. 논증분석과 평가</a></li>
+<li><a href="chapters/09-strategy.html">9. 실전 전략과 학습 계획</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1>LEET,<br><em>로스쿨</em>의 문을 여는<br>소양 시험</h1>
+<p class="authors">Legal Education Eligibility Test — Reading and Reasoning for Law School</p>
+<p class="affiliation">Vol. 49 · July 2026 · aboutLEET Editorial</p></header>
+<div class="scene-3d" id="intro-scene"></div>
+<span class="interact-hint">⚖️ LEET의 두 축: 언어이해 · 추리논증</span>
+<h2>LEET란?</h2>
+<p>LEET(법학적성시험, Legal Education Eligibility Test)은 <strong>로스쿨(법학전문대학원) 입학</strong>을 위해 치르는 적성검사입니다. 법학 지식을 묻는 시험이 아니라, 법학 교육을 따라갈 <strong>소양</strong> — 글을 깊이 있게 읽는 힘(<strong>언어이해</strong>)과 논리적으로 추론하는 힘(<strong>추리논증</strong>)을 평가합니다.</p>
+<div class="info-card"><h4>법 시험인데 법 지식이 필요 없다고?</h4><p>그렇습니다. 법률 <em>소재</em>의 지문이 자주 나오지만, 묻는 것은 법 조문 지식이 아니라 <strong>지문을 읽고 이해·추론하는 능력</strong>입니다. 요리사 선발 시험에 칼질 테스트가 있듯, LEET은 '법 공부를 소화할 기초 체력'을 봅니다.</p></div>
+</main></div>
+<script>
+(function() {
+  const container = document.getElementById('intro-scene');
+  if (!container || typeof THREE === 'undefined') return;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 2.4, 11); camera.lookAt(0, 0, 0);
+  let renderer; try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); } catch(e){ return; }
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // 기둥(로스쿨)
+  const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.5, 3.2, 16), new THREE.MeshBasicMaterial({ color: 0xb91c1c, wireframe: true }));
+  pillar.position.y = -0.4; scene.add(pillar);
+  // 저울 빔
+  const beam = new THREE.Mesh(new THREE.BoxGeometry(7.5, 0.16, 0.16), new THREE.MeshBasicMaterial({ color: 0xdc2626 }));
+  beam.position.y = 1.3; scene.add(beam);
+  // 양쪽 판: 언어이해(책) / 추리논증(톱니 대신 정육면체)
+  const left = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.7, 0.25), new THREE.MeshBasicMaterial({ color: 0xf59e0b }));
+  left.position.set(-3.4, 0.4, 0); scene.add(left);
+  const right = new THREE.Mesh(new THREE.IcosahedronGeometry(0.55, 0), new THREE.MeshBasicMaterial({ color: 0x0ea5e9, wireframe: true }));
+  right.position.set(3.4, 0.4, 0); scene.add(right);
+  // 줄 연결
+  [[-3.4, 1.3, -3.4, 0.75], [3.4, 1.3, 3.4, 0.95]].forEach(v => {
+    scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(v[0], v[1], 0), new THREE.Vector3(v[2], v[3], 0)]), new THREE.LineBasicMaterial({ color: 0x64748b })));
+  });
+  // 위성: 기출·시간관리·오답
+  const sats = [];
+  const satColors = [0x22c55e, 0xa855f7, 0xef4444];
+  for (let i = 0; i < 3; i++) {
+    const a = (i/3)*Math.PI*2;
+    const c = new THREE.Mesh(new THREE.SphereGeometry(0.22, 12, 12), new THREE.MeshBasicMaterial({ color: satColors[i] }));
+    scene.add(c); sats.push({m: c, ang: a});
+  }
+  let t = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    t += 0.006;
+    beam.rotation.z = Math.sin(t*1.2)*0.06;
+    sats.forEach((o,i)=>{ const a=o.ang+t*1.3; o.m.position.set(Math.cos(a)*2.6, -1.6+Math.sin(a*2)*0.3, Math.sin(a)*1.2); });
+    scene.rotation.y = Math.sin(t*0.5)*0.18;
+    renderer.render(scene, camera);
+  }
+  animate();
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+})();
+</script></body></html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 화학 반응 — aboutChemistry</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">⚗️ 표지 · 소개</a></li>
+    <li><a href="01-atomic-structure.html">1. 원자 구조</a></li>
+    <li><a href="02-chemical-bonds.html">2. 화학 결합</a></li>
+    <li><a href="03-chemical-reactions.html" style="color:var(--accent);font-weight:600;">3. 화학 반응</a></li>
+    <li><a href="04-thermochemistry.html">4. 열화학</a></li>
+    <li><a href="05-acid-base.html">5. 산과 염기</a></li>
+    <li><a href="06-redox.html">6. 산화 환원</a></li>
+    <li><a href="07-organic.html">7. 유기 화학</a></li>
+    <li><a href="08-polymers.html">8. 고분자</a></li>
+    <li><a href="09-biochemistry.html">9. 생화학</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>화학 반응:<br><em>물질</em>의 변환</h1>
+  <p class="authors">Chapter 3 — Chemical Reactions & Kinetics</p>
+  <p class="affiliation">반응 시뮬레이션 · 반응 속도론</p>
+</header>
+
+<h2>화학 반응의 유형</h2>
+<p>화학 반응은 반응물의 원자가 재배열되어 새로운 생성물을 만드는 과정입니다. 반응 전후의 원자 종류와 수는 보존됩니다(질량 보존 법칙).</p>
+
+<div class="info-card">
+  <h4>합성 반응 (결합)</h4>
+  <p>두 개 이상의 물질이 결합하여 하나의 새로운 물질을 만듭니다. A + B → AB</p>
+</div>
+<div class="info-card reaction">
+  <h4>분해 반응</h4>
+  <p>하나의 물질이 두 개 이상의 물질로 분해됩니다. AB → A + B</p>
+</div>
+<div class="info-card acid">
+  <h4>치환 반응</h4>
+  <p>한 원소가 화합물 속의 다른 원소를 대체합니다. A + BC → AC + B</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>✨ 화학 반응이 뭐예요?</h3>
+  <p>원자들이 손잡은 걸 풀고 <strong>짝을 바꿔</strong> 완전히 새로운 물질이 되는 것! 이게 화학 반응이에요. 신기한 건, 원자는 절대 사라지거나 새로 생기지 않아요. 그냥 <strong>자리만</strong> 바꿔요. (원자의 종류와 개수는 그대로!) 🔄</p>
+  <h3>🍳 요리 레시피랑 똑같아요!</h3>
+  <p>화학 반응식은 요리 레시피랑 판박이예요. "달걀 2개 + 밀가루 1컵 → 팬케이크 2장"처럼요! 🥞</p>
+  <div class="formula">2H₂ + O₂ → 2H₂O</div>
+  <p>이건 "수소 2 + 산소 1 → 물 2"라는 뜻이에요. 화살표 <strong>왼쪽</strong>은 재료(반응물), <strong>오른쪽</strong>은 결과물(생성물)이죠. 요리할 때 재료가 뿅 사라지지 않듯, 반응에서도 원자는 절대 없어지지 않아요(질량 보존). ⚖️</p>
+  <div class="info-card">
+    <h4>🌱 꼭 알아둘 말</h4>
+    <ul>
+      <li><strong>반응물</strong>: 반응 전 재료(화살표 왼쪽)</li>
+      <li><strong>생성물</strong>: 반응 후 결과물(화살표 오른쪽)</li>
+      <li><strong>계수</strong>: 분자 앞에 붙는 숫자(양쪽 개수 맞추기용)</li>
+      <li><strong>촉매</strong>: 자기는 안 변하고 반응만 빠르게! ⚡</li>
+      <li><strong>화학 평형</strong>: 앞으로 가는 속도와 뒤로 가는 속도가 같아진 상태</li>
+    </ul>
+  </div>
+  <h3>🔥 반응 속도는 '불의 세기'</h3>
+  <p>요리할 때 불을 세게 하면 빨리 익죠? 화학 반응도 <strong>온도를 올리면</strong> 더 빨라져요. 🔥 그리고 <strong>촉매</strong>는 압력솥 같아요. 자기는 하나도 안 줄면서 요리 시간을 확 줄여준답니다!</p>
+  <div class="study-tip"><strong>💡 꿀팁:</strong> 반응식 균형을 맞출 땐 양쪽 원자 개수를 표로 세어 보세요. 개수가 같아질 때까지 <strong>앞의 숫자(계수)만</strong> 바꿔요. 화학식 속 작은 숫자(첨자)는 절대 건드리면 안 돼요! 🚫</div>
+  <h3>📝 한눈에 정리</h3>
+  <ul>
+    <li>반응물 → 생성물, 원자는 그대로 보존(질량 보존 법칙)</li>
+    <li>반응식은 계수로 양쪽 개수를 맞춰요</li>
+    <li>주요 유형 = 합성·분해·치환·연소·중화</li>
+    <li>온도↑·농도↑·촉매 → 반응이 더 빨라져요</li>
+    <li>가역 반응은 평형에 도달해요(르샤틀리에 원리로 방향 예측)</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
+  <p>화학량론은 균형 반응식의 계수가 분자(또는 몰) 수의 비율임을 이용해 양적 관계를 계산하는 분야입니다. 예를 들어 2H₂ + O₂ → 2H₂O에서 수소 2몰과 산소 1몰이 반응해 물 2몰이 생기므로, 주어진 반응물 양에서 한계 반응물을 찾고 이론 수득량을 구할 수 있습니다. 반응 속도론은 반응이 얼마나 빠른지를 다룹니다. 속도 법칙 v = k[A]ᵐ[B]ⁿ에서 지수 m, n은 반응 차수로, 반드시 계수와 같지는 않으며 실험으로 결정됩니다. 속도 상수 k는 아레니우스 식 k = Ae^(−Ea/RT)를 따라 온도가 오르면 지수적으로 커집니다. 촉매는 활성화 에너지 Ea를 낮추는 다른 반응 경로를 제공해 정반응과 역반응을 모두 빠르게 하지만, 평형 위치 자체는 바꾸지 않습니다. 화학 평형에서는 정반응과 역반응 속도가 같아져 농도가 일정해지며, 평형 상수 K = [생성물]/[반응물](각각 계수만큼 거듭제곱)로 표현됩니다. K는 온도에만 의존하고 농도나 촉매에는 변하지 않습니다.</p>
+  <h3>핵심 공식과 반응식</h3>
+  <div class="formula">
+    속도 법칙: v = k[A]ᵐ[B]ⁿ<br>
+    아레니우스 식: k = A·e^(−Ea/RT)<br>
+    평형 상수: K = [C]ᶜ[D]ᵈ / ([A]ᵃ[B]ᵇ)<br>
+    반응 지수: Q vs K → Q&lt;K 정반응, Q&gt;K 역반응
+  </div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1 (화학량론)</h4><p>N₂ + 3H₂ → 2NH₃ 반응에서 N₂ 28 g(1몰)과 H₂ 4 g(2몰)이 있을 때 한계 반응물과 최대 생성량을 구하시오. 답: H₂ 2몰은 N₂ 2/3몰과만 반응하므로 H₂가 한계 반응물이고, NH₃는 (2/3)×2 = 4/3몰, 즉 약 22.7 g이 생성됩니다.</p></div>
+  <div class="info-card"><h4>📐 예제 2 (반응 속도)</h4><p>어떤 반응의 Ea가 50 kJ/mol일 때 온도를 300 K에서 310 K로 올리면 속도가 약 몇 배가 되는가? 답: 아레니우스 식으로 k₂/k₁ = exp[(Ea/R)(1/T₁ − 1/T₂)] ≈ exp(0.65) ≈ 1.9배로, 흔히 "온도 10도 상승에 반응 속도 약 2배"라는 경험칙과 일치합니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>하버-보슈 공정(N₂ + 3H₂ ⇌ 2NH₃)은 화학량론·평형·촉매가 모두 적용되는 대표 사례입니다. 발열·부피 감소 반응이라 르샤틀리에 원리상 저온·고압이 유리하지만, 저온에서는 속도가 너무 느려 철 촉매와 약 400~500 ℃, 200기압 정도의 타협 조건을 씁니다. 자동차 삼원촉매는 백금·로듐으로 배기가스의 CO와 NOₓ 산화·환원 속도를 높입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 반응 차수(m, n)를 반응식 계수와 같다고 단정하지 마세요. 차수는 메커니즘에 따라 달라지며 실험으로만 결정됩니다. 또한 촉매는 평형 상수 K를 바꾸지 않고 평형 도달 시간만 단축시킵니다.</div>
+
+<h3>전문가 레벨 이해</h3>
+  <p>거시적 속도 법칙은 여러 단계로 이루어진 반응 메커니즘에서 유도됩니다. 율속 단계(가장 느린 단계)가 전체 속도를 지배하며, 빠른 전평형 단계에는 정상 상태 근사(steady-state approximation)나 전평형 근사를 적용합니다. 효소 반응의 미카엘리스-멘텐 식이나 단분자 반응의 린데만-힌셸우드 메커니즘이 대표적 예입니다. 온도 의존성은 아레니우스 식보다 정밀한 아이링(Eyring) 전이 상태 이론으로 기술되며, 활성화 깁스 에너지 ΔG‡, 활성화 엔탈피 ΔH‡, 활성화 엔트로피 ΔS‡로 속도를 분해합니다. 평형은 ΔG° = −RT ln K로 열역학과 연결되고, ΔG° = ΔH° − TΔS°에서 온도에 따른 K의 변화는 반트호프 식 d(ln K)/dT = ΔH°/(RT²)로 정량화됩니다. 미세 가역성 원리에 따라 평형에서 모든 소단계의 정·역 속도가 각각 균형을 이루며(상세 균형), 이로부터 정반응과 역반응 속도 상수의 비가 평형 상수와 같다는 관계가 나옵니다.</p>
+  <h3>유도와 증명</h3>
+  <div class="formula">
+    아이링 식: k = (k_B T / h)·e^(−ΔG‡/RT) = (k_B T / h)·e^(ΔS‡/R)·e^(−ΔH‡/RT)<br>
+    정상 상태 근사: d[I]/dt ≈ 0 → [I] 소거 → v 도출<br>
+    반트호프 식: d(ln K)/dT = ΔH° / (RT²)<br>
+    열역학-속도 연결: K = k_정 / k_역,  ΔG° = −RT ln K
+  </div>
+  <h3>최신 연구</h3>
+  <p>2020년대에는 머신러닝 퍼텐셜과 메타동역학(metadynamics)으로 반응 경로와 자유에너지 장벽을 ab initio 정확도로 탐색하는 연구가 활발합니다. 펨토초 분광법과 자유전자 레이저(XFEL)는 전이 상태와 결합 절단 순간을 실시간으로 포착하고 있으며, 흐름 화학(flow chemistry)과 자율 실험 로봇이 반응 조건을 자동 최적화합니다. 또한 광촉매·전기촉매를 이용한 CO₂ 환원, 그린 암모니아 합성 등 지속가능 촉매 반응이 주목받고 있습니다.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>화학 반응공학</strong>: 반응기 설계, 체류 시간 분포, 규모 확대</li>
+    <li><strong>전기화학</strong>: 패러데이 법칙과 전극 반응 속도(버틀러-볼머 식)</li>
+    <li><strong>대기·환경화학</strong>: 오존층 파괴, 광화학 스모그의 연쇄 반응</li>
+    <li><strong>생화학</strong>: 효소 동역학과 대사 경로 조절</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Atkins, Physical Chemistry (반응 속도론·평형 단원)</li>
+    <li>📖 Steinfeld, Francisco & Hase, Chemical Kinetics and Dynamics</li>
+    <li>🔬 COPASI, Cantera 등 반응 동역학 시뮬레이션 도구 실습</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 린데만-힌셸우드 메커니즘에서 정상 상태 근사를 적용해, 단분자 반응이 고압에서는 1차, 저압에서는 2차 반응으로 거동함을 유도해 보세요. A + A ⇌ A* + A, A* → P 단계에서 [A*]에 정상 상태를 두고 압력(=[A])에 따른 속도 표현의 극한을 분석하면 됩니다.</div>
+</div>
+
+<h2>3D 반응 시뮬레이터</h2>
+<p>분자들이 충돌하고 반응하는 과정을 3D로 관찰하세요. 온도를 조절하면 분자의 운동 속도가 변합니다.</p>
+
+<div class="scene-3d" id="reaction-scene" style="height:450px;">
+  <div class="scene-controls">
+    <label>온도: <span id="temp-val">300</span>K</label>
+    <input type="range" id="temp-slider" min="100" max="800" value="300" step="50">
+    <button id="reset-reaction">초기화</button>
+    <span id="reaction-count" style="font-size:0.75em;color:var(--accent);font-family:var(--font-mono);">반응 횟수: 0</span>
+  </div>
+</div>
+<span class="interact-hint">⟳ 온도를 올리면 분자 속도 증가 → 충돌 빈도 증가 → 반응 촉진</span>
+
+<h2>반응 속도론</h2>
+<div class="formula">반응 속도 = k[A]ᵐ[B]ⁿ &nbsp;&nbsp;|&nbsp;&nbsp; k = Ae^(−Ea/RT) (아레니우스 식)</div>
+
+<div class="info-card">
+  <h4>활성화 에너지 (Ea)</h4>
+  <p>반응이 일어나기 위해 반응물이 넘어야 하는 최소한의 에너지 장벽입니다. 촉매는 이 장벽을 낮춰 반응 속도를 빠르게 합니다.</p>
+</div>
+
+<h2>화학 평형</h2>
+<div class="formula">K = [생성물]ⁿ / [반응물]ᵐ &nbsp;&nbsp;|&nbsp;&nbsp; K > 1: 생성물 우세 &nbsp;|&nbsp; K < 1: 반응물 우세</div>
+
+<div class="info-card organic">
+  <h4>르샤틀리에 원리</h4>
+  <p>평형 상태의 계에 변화(농도, 압력, 온도)를 가하면, 그 변화를 상쇄하는 방향으로 평형이 이동합니다.</p>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 반응 개념 분류</h2>
+<p>각 항목이 '반응 속도를 높이는 요인'인지 '화학 평형 관련 개념'인지 알맞은 그룹으로 분류하세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#00e896","prompt":"반응 속도 요인과 평형 개념으로 분류하세요","groups":[{"name":"속도를 높이는 요인","items":["온도 상승","농도 증가","촉매"]},{"name":"화학 평형 관련","items":["르샤틀리에 원리","평형 상수 K","정반응·역반응 속도 같음"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e896","questions":[{"q":"A + B → AB 는 무슨 반응인가?","choices":["합성 반응","분해 반응","치환 반응","중화 반응"],"answer":0},{"q":"AB → A + B 는 무슨 반응인가?","choices":["합성 반응","분해 반응","치환 반응","산화 반응"],"answer":1},{"q":"촉매의 역할은?","choices":["온도 상승","질량 증가","활성화E 낮춤","평형 제거"],"answer":2},{"q":"르샤틀리에 원리는 무엇에 관한가?","choices":["원자 구조","전자 배치","결합 종류","평형 이동"],"answer":3},{"q":"K > 1 일 때 우세한 것은?","choices":["반응물","생성물","촉매","용매"],"answer":1}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('reaction-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 8, 12); camera.lookAt(0, 0, 0);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  const boxSize = 5;
+  const edges = new THREE.EdgesGeometry(new THREE.BoxGeometry(boxSize*2, boxSize*2, boxSize*2));
+  scene.add(new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x00e896, transparent: true, opacity: 0.15 })));
+
+  let molecules = [], reactionCount = 0, temperature = 300;
+
+  function createMol(type, pos) {
+    const colors = { A: 0xff6b35, B: 0x38bdf8, C: 0xa855f7 };
+    const sizes = { A: 0.2, B: 0.25, C: 0.35 };
+    const mesh = new THREE.Mesh(new THREE.SphereGeometry(sizes[type], 16, 16), new THREE.MeshBasicMaterial({ color: colors[type], transparent: true, opacity: 0.85 }));
+    mesh.position.copy(pos || new THREE.Vector3((Math.random()-0.5)*boxSize*1.6, (Math.random()-0.5)*boxSize*1.6, (Math.random()-0.5)*boxSize*1.6));
+    const sp = (temperature / 300) * (0.02 + Math.random() * 0.03);
+    mesh.userData = { type, velocity: new THREE.Vector3((Math.random()-0.5)*sp, (Math.random()-0.5)*sp, (Math.random()-0.5)*sp) };
+    scene.add(mesh); return mesh;
+  }
+
+  function init() {
+    molecules.forEach(m => scene.remove(m)); molecules = []; reactionCount = 0;
+    document.getElementById('reaction-count').textContent = '반응 횟수: 0';
+    for (let i = 0; i < 15; i++) molecules.push(createMol('A'));
+    for (let i = 0; i < 15; i++) molecules.push(createMol('B'));
+  }
+  init();
+
+  document.getElementById('temp-slider').addEventListener('input', function() {
+    temperature = parseInt(this.value); document.getElementById('temp-val').textContent = temperature;
+    molecules.forEach(m => { const len = m.userData.velocity.length() || 0.01; m.userData.velocity.multiplyScalar((temperature/300)*0.03/len); });
+  });
+  document.getElementById('reset-reaction').addEventListener('click', init);
+
+  let rY = 0.3, rX = 0.5, isDrag = false, pX = 0, pY = 0;
+  container.addEventListener('mousedown', e => { isDrag = true; pX = e.clientX; pY = e.clientY; });
+  window.addEventListener('mouseup', () => isDrag = false);
+  container.addEventListener('mousemove', e => { if (!isDrag) return; rY += (e.clientX-pX)*0.005; rX += (e.clientY-pY)*0.005; pX = e.clientX; pY = e.clientY; });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    molecules.forEach(m => {
+      m.position.add(m.userData.velocity);
+      ['x','y','z'].forEach(a => { if (Math.abs(m.position[a]) > boxSize) { m.position[a] = Math.sign(m.position[a])*boxSize; m.userData.velocity[a] *= -1; } });
+    });
+    for (let i = molecules.length - 1; i >= 0; i--) {
+      for (let j = i - 1; j >= 0; j--) {
+        const a = molecules[i], b = molecules[j];
+        if (!a || !b || a.userData.type === b.userData.type || a.userData.type === 'C' || b.userData.type === 'C') continue;
+        if (a.position.distanceTo(b.position) < 0.5) {
+          const mid = a.position.clone().add(b.position).multiplyScalar(0.5);
+          scene.remove(a); scene.remove(b); molecules.splice(i, 1); if (j < molecules.length) molecules.splice(j, 1);
+          molecules.push(createMol('C', mid)); reactionCount++;
+          document.getElementById('reaction-count').textContent = '반응 횟수: ' + reactionCount; break;
+        }
+      }
+    }
+    scene.rotation.y = rY; scene.rotation.x = rX;
+    renderer.render(scene, camera);
+  }
+  animate();
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+})();
+</script>
+</body>
+</html>

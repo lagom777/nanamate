@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2. 에너지와 운동량 — aboutPhysics</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔬 표지 · 소개</a></li>
+    <li><a href="01-mechanics.html">1. 역학 · 뉴턴의 세계</a></li>
+    <li><a href="02-energy.html" style="color:var(--accent);font-weight:600;">2. 에너지와 운동량</a></li>
+    <li><a href="03-thermodynamics.html">3. 열역학</a></li>
+    <li><a href="04-waves.html">4. 파동과 소리</a></li>
+    <li><a href="05-optics.html">5. 빛과 광학</a></li>
+    <li><a href="06-electromagnetism.html">6. 전자기학</a></li>
+    <li><a href="07-modern.html">7. 현대물리 · 상대성</a></li>
+    <li><a href="08-quantum.html">8. 양자역학</a></li>
+    <li><a href="09-nuclear.html">9. 핵물리와 입자</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>에너지와<br><em>운동량</em></h1>
+  <p class="authors">Chapter 2 — Energy Conservation & Momentum</p>
+  <p class="affiliation">탄성 충돌 시뮬레이터 포함</p>
+</header>
+
+<h2>에너지 보존 법칙</h2>
+<p>고립된 계에서 총 에너지는 항상 보존됩니다. 에너지는 형태만 바뀔 뿐 새로 생기거나 사라지지 않습니다.</p>
+
+<div class="formula">E_total = KE + PE = ½mv² + mgh = 일정</div>
+
+<div class="info-card">
+  <h4>운동 에너지 (Kinetic Energy)</h4>
+  <p>물체의 운동 상태에 의한 에너지: KE = ½mv²</p>
+</div>
+
+<div class="info-card energy">
+  <h4>위치 에너지 (Potential Energy)</h4>
+  <p>중력에 의한 위치 에너지: PE = mgh, 탄성 위치 에너지: PE = ½kx²</p>
+</div>
+
+<h2>충돌 시뮬레이터</h2>
+<p>두 공의 질량을 조절하고 충돌을 관찰하세요. 탄성 충돌에서 운동량과 운동 에너지가 모두 보존됩니다.</p>
+
+<div class="scene-3d" id="collision-scene">
+  <div class="scene-controls">
+    <label>질량1: <span id="m1-val">2</span>kg</label>
+    <input type="range" id="m1-slider" min="1" max="5" value="2">
+    <label>질량2: <span id="m2-val">3</span>kg</label>
+    <input type="range" id="m2-slider" min="1" max="5" value="3">
+    <button id="collide-btn">💥 충돌</button>
+  </div>
+</div>
+<span class="interact-hint">💥 질량을 조절하고 충돌 버튼을 누르세요</span>
+
+<h2>운동량 보존</h2>
+<div class="formula">p = mv &nbsp;&nbsp;&nbsp; Σp_before = Σp_after</div>
+
+<p>외력이 없는 계에서, 충돌 전후 총 운동량은 보존됩니다. 탄성 충돌에서는 운동 에너지도 보존되고, 비탄성 충돌에서는 운동 에너지 일부가 열이나 소리로 변환됩니다.</p>
+
+<h3>탄성 충돌 공식</h3>
+<div class="formula">
+v₁' = ((m₁-m₂)v₁ + 2m₂v₂) / (m₁+m₂)
+<br>
+v₂' = ((m₂-m₁)v₂ + 2m₁v₁) / (m₁+m₂)
+</div>
+
+<div class="info-card quantum">
+  <h4>💡 탐구 과제</h4>
+  <p>질량이 같은 두 공이 충돌하면 속도가 완전히 교환됩니다! 시뮬레이터에서 m₁=m₂로 설정해 확인해보세요.</p>
+</div>
+
+<h2>일-에너지 정리</h2>
+<p>물체에 한 일은 운동 에너지의 변화량과 같습니다:</p>
+<div class="formula">W = ΔKE = ½mv₂² − ½mv₁²</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한 마디로!</h3><p>에너지는 "무언가를 할 수 있는 힘"이고, 운동량은 "움직임의 양"이에요. 둘 다 사라지지 않고 모습만 바뀐답니다!</p>
+  <h3>🤔 왜 알아야 할까?</h3><p>롤러코스터가 높은 곳에서 쌩~ 빨리 내려오는 것(높이→속도), 자동차가 부딪힐 때 에어백이 펑! 하고 몸을 지켜 주는 것(운동량), 햇빛을 받은 식물이 쑥쑥 자라는 것(빛→양분) 모두 에너지가 변신하는 순간이에요. 🌱</p>
+  <div class="info-card"><h4>🌱 이 말만 알면 돼요</h4><ul><li>운동에너지: 움직이는 물건이 가진 힘</li><li>위치에너지: 높이 올라가거나 눌린 상태에 저장된 힘</li><li>역학적 에너지: 운동에너지 + 위치에너지</li><li>운동량: 질량 × 속도 (얼마나 세게 움직이나)</li><li>충격량: 힘 × 시간 = 운동량이 바뀐 양</li></ul></div>
+  <h3>📖 이야기로 쉽게!</h3><p>그네를 타 볼까요? 가장 높이 올라간 순간엔 잠깐 멈춰요. 이때는 "높이 에너지"가 꽉 찼죠. 가장 아래를 지날 땐 제일 빨라요. 이번엔 "속도 에너지"가 꽉 찬 거예요. 신기하게도 둘을 합치면 언제나 똑같답니다! 그리고 당구공 두 개가 딱! 부딪혀도, 부딪히기 전과 후의 "움직임의 양"은 그대로예요. 자동차 앞부분을 일부러 찌그러지게 만든 것도 비밀이 있어요. 부딪히는 시간을 늘려서 충격을 확 줄여 주거든요. 그래서 사람이 덜 다쳐요! 🚗💨</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> "에너지가 보존된다"는 양이 그대로란 뜻이고, "운동량이 보존된다"는 방향까지 그대로란 뜻이에요!</div>
+  <h3>⭐ 한눈에 정리!</h3><ul><li>운동에너지 KE = ½mv², 위치에너지 PE = mgh</li><li>한 일 = 운동에너지가 바뀐 만큼</li><li>운동량 p = mv, 충격량 J = 힘×시간 = 운동량 변화</li><li>부딪혀도 운동량은 그대로, 에너지는 조금 사라질 수도 있어요</li><li>탱탱볼처럼 완전히 튀는 충돌은 에너지도 그대로!</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>일은 힘이 변위에 작용한 결과입니다. W = F·s cosθ로, 힘과 변위의 내적입니다. 보존력(중력, 탄성력)은 경로에 무관하게 일이 결정되며 위치에너지를 정의할 수 있습니다. 비보존력(마찰력)은 경로에 따라 일이 다르며, 역학적 에너지의 손실로 나타납니다. 운동량 보존은 외력이 0이거나 충돌처럼 외력의 충격량이 무시될 때 성립합니다. 충돌은 탄성, 비탄성, 완전비탄성으로 나뉘며 반발계수 e로 분류됩니다. 1차원 탄성충돌의 결과는 두 질량의 비로 결정되며, 같은 질량의 정면 탄성충돌은 속도 교환이라는 흥미로운 결과를 줍니다.</p>
+  <h3>핵심 공식과 의미</h3><div class="formula">P = dW/dt = F·v &nbsp;&nbsp; e = -(v₁'-v₂')/(v₁-v₂)</div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>10 m 높이에서 떨어진 5 kg 공의 충돌 직전 속도는? √(2gh) ≈ 14 m/s.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>2 kg과 3 kg의 정면 완전비탄성충돌(각 4 m/s, -2 m/s)의 최종속도: (2·4+3·(-2))/5 = 0.4 m/s.</p></div>
+  <h3>응용 사례</h3><p>로켓 추진은 운동량 보존의 대표 예로, 가스를 뒤로 분사한 만큼 로켓이 앞으로 가속됩니다. 발전소의 터빈은 유체의 운동에너지를 회전에너지로 바꾸고, 다시 전기에너지로 변환합니다. 자동차 안전벨트와 에어백은 충돌 시간을 늘려 평균 충격력을 줄입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 운동에너지는 항상 양수이지만 운동량은 벡터라 음수가 가능합니다. 부호와 방향을 헷갈리면 답이 틀립니다.</div>
+
+<h3>전문가 레벨 이해</h3><p>에너지와 운동량의 보존은 노에터 정리에 의해 시간 병진 대칭성과 공간 병진 대칭성에서 직접 도출됩니다. 일반화하면 어떤 연속대칭이 보존량을 낳는지 명확히 보입니다. 상대론적 영역에서는 에너지와 운동량이 4-벡터 (E/c, p)로 결합되며, E² = (pc)² + (mc²)²라는 관계가 핵심입니다. 양자역학에서는 정류자 [x, p] = iℏ가 운동량을 위치 공간의 미분 연산자로 만들고, 운동량 고유상태는 평면파입니다. 충돌 이론은 산란 단면적, 미분 단면적, 라보러토리 프레임과 질량중심 프레임 사이의 운동학으로 정교하게 발전합니다.</p>
+  <h3>유도와 증명</h3><div class="formula">{H, p} = -∂H/∂x = 0 ⇔ p 보존 (해밀턴 역학)</div>
+  <h3>최신 연구</h3><p>고에너지 입자물리에서는 LHC 충돌의 운동학 분석이 새 입자 발견의 기초입니다. 메조스코픽 시스템에서는 에너지-운동량 분산관계가 위상물질의 특성을 결정합니다. 또한 비선형 광학에서 광자의 운동량 보존(위상 정합)은 주파수 변환의 핵심 조건입니다.</p>
+  <h3>관련 분야</h3><ul><li>유체역학의 베르누이 방정식과 보존법칙</li><li>입자물리 충돌 운동학과 산란 이론</li><li>플라즈마 물리의 자기유체역학</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>Taylor, "Classical Mechanics"</li><li>Jackson, "Classical Electrodynamics" 12장</li><li>edX MIT 8.01 Lecture Notes</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 상대론적 콤프턴 산란에서 광자 파장 변화 Δλ = (h/m_e c)(1-cosθ)를 운동량과 에너지 보존만으로 유도해 보세요.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 에너지 용어 상황 판단</h2>
+<p>에너지·운동량 용어와 설명을 보고 알맞은 답을 고르세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#00d4ff","prompt":"용어와 설명을 짝지으세요","pairs":[{"term":"운동 에너지","def":"움직이는 물체가 가진 에너지"},{"term":"위치 에너지","def":"높이나 변형에 저장된 에너지"},{"term":"운동량","def":"질량 × 속도"},{"term":"충격량","def":"힘 × 작용시간 = 운동량 변화"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00d4ff","questions":[{"q":"운동 에너지의 공식은?","choices":["mgh","½kx²","½mv²","mv"],"answer":2},{"q":"운동량 p의 정의는?","choices":["mv","ma","½mv²","mgh"],"answer":0},{"q":"충격량은 무엇과 같은가?","choices":["에너지 변화","운동량 변화","속도 변화","질량 변화"],"answer":1},{"q":"질량 같은 두 공의 탄성충돌 결과는?","choices":["합체","정지","감속","속도 교환"],"answer":3},{"q":"비탄성 충돌에서 보존되는 것은?","choices":["운동 에너지","위치 에너지","운동량","온도"],"answer":2}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('collision-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 5, 12);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  const grid = new THREE.GridHelper(20, 20, 0x1a2340, 0x0f1526);
+  scene.add(grid);
+
+  // Track line
+  const track = new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-8,0,0), new THREE.Vector3(8,0,0)]),
+    new THREE.LineBasicMaterial({ color: 0x00d4ff, transparent: true, opacity: 0.3 })
+  );
+  scene.add(track);
+
+  let ball1, ball2;
+  let v1 = 3, v2 = -2;
+  let m1 = 2, m2 = 3;
+  let animating = false;
+  let collided = false;
+
+  function createBalls() {
+    if (ball1) scene.remove(ball1);
+    if (ball2) scene.remove(ball2);
+
+    const r1 = 0.3 + m1 * 0.15;
+    const r2 = 0.3 + m2 * 0.15;
+    ball1 = new THREE.Mesh(new THREE.SphereGeometry(r1, 32, 32), new THREE.MeshBasicMaterial({ color: 0x00d4ff }));
+    ball2 = new THREE.Mesh(new THREE.SphereGeometry(r2, 32, 32), new THREE.MeshBasicMaterial({ color: 0xff6b35 }));
+    ball1.position.set(-5, r1, 0);
+    ball2.position.set(5, r2, 0);
+    scene.add(ball1);
+    scene.add(ball2);
+  }
+
+  createBalls();
+
+  const m1Slider = document.getElementById('m1-slider');
+  const m2Slider = document.getElementById('m2-slider');
+  const m1Val = document.getElementById('m1-val');
+  const m2Val = document.getElementById('m2-val');
+  const collideBtn = document.getElementById('collide-btn');
+
+  m1Slider.addEventListener('input', () => { m1 = parseInt(m1Slider.value); m1Val.textContent = m1; createBalls(); });
+  m2Slider.addEventListener('input', () => { m2 = parseInt(m2Slider.value); m2Val.textContent = m2; createBalls(); });
+
+  collideBtn.addEventListener('click', () => {
+    if (animating) return;
+    createBalls();
+    v1 = 3; v2 = -2;
+    animating = true;
+    collided = false;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    if (animating) {
+      const r1 = 0.3 + m1 * 0.15;
+      const r2 = 0.3 + m2 * 0.15;
+
+      ball1.position.x += v1 * 0.02;
+      ball2.position.x += v2 * 0.02;
+
+      // Check collision
+      if (!collided && ball1.position.x + r1 >= ball2.position.x - r2) {
+        collided = true;
+        const newV1 = ((m1 - m2) * v1 + 2 * m2 * v2) / (m1 + m2);
+        const newV2 = ((m2 - m1) * v2 + 2 * m1 * v1) / (m1 + m2);
+        v1 = newV1;
+        v2 = newV2;
+      }
+
+      if (ball1.position.x < -10 && ball2.position.x > 10) animating = false;
+    }
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

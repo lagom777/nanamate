@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6장. 기후변화</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🌍 표지 · 소개</a></li>
+    <li><a href="01-structure.html">1. 지구의 구조</a></li>
+    <li><a href="02-plate-tectonics.html">2. 판구조론</a></li>
+    <li><a href="03-minerals-rocks.html">3. 광물과 암석</a></li>
+    <li><a href="04-atmosphere.html">4. 대기과학</a></li>
+    <li><a href="05-oceanography.html">5. 해양학</a></li>
+    <li><a href="06-climate-change.html">6. 기후변화</a></li>
+    <li><a href="07-geological-time.html">7. 지질시대</a></li>
+    <li><a href="08-natural-disasters.html">8. 자연재해</a></li>
+    <li><a href="09-resources-environment.html">9. 자원과 환경</a></li>
+  </ol>
+</aside>
+<main>
+<h2>6. 기후변화</h2>
+
+<div class="info-box">
+<p><strong>기후변화는 장기간에 걸친 기후 패턴의 변화를 의미합니다.</strong> 현재 지구는 산업혁명 이후 인간 활동에 의한 급격한 온난화를 경험하고 있습니다.</p>
+<p>아래 인터랙티브 패널에서 온실가스 농도를 조절하고 그 영향을 관찰해보세요.</p>
+</div>
+
+<div class="interactive-panel" id="climate-sim">
+  <h4>🌡️ 기후 변수 조절 실험</h4>
+  <div class="slider-group">
+    <label>CO₂ 농도 (ppm)</label>
+    <input type="range" id="co2-slider" min="280" max="1000" value="420">
+    <span class="value" id="co2-value">420</span>
+  </div>
+  <div class="slider-group">
+    <label>메탄 (ppb)</label>
+    <input type="range" id="ch4-slider" min="700" max="5000" value="1900">
+    <span class="value" id="ch4-value">1900</span>
+  </div>
+  <div class="slider-group">
+    <label>태양 활동 (%)</label>
+    <input type="range" id="solar-slider" min="95" max="105" value="100">
+    <span class="value" id="solar-value">100</span>
+  </div>
+  <div class="slider-group">
+    <label>빙하 면적 (%)</label>
+    <input type="range" id="ice-slider" min="0" max="100" value="70">
+    <span class="value" id="ice-value">70</span>
+  </div>
+  <div style="margin-top:20px; padding:16px; background:rgba(0,0,0,0.3); border-radius:6px;">
+    <p style="color:#ffd54f; font-size:1.1em; margin:0; max-width:none;"><strong>예상 온도 변화: <span id="temp-result">+1.2°C</span></strong> (산업혁명 대비)</p>
+    <p style="color:#b0c4de; font-size:0.88em; margin:8px 0 0 0; max-width:none;" id="climate-feedback">현재 수준: 파리협정 1.5°C 목표에 근접</p>
+  </div>
+</div>
+
+<div class="threejs-container" data-label="온실 효과 시각화" id="greenhouse-viz" style="height:400px;">
+  <div class="threejs-info">적외선 복사와 온실가스 상호작용</div>
+</div>
+<p class="fig-title">그림 6.1. 온실 효과 메커니즘. CO₂ 농도에 따라 적외선 흡수/재방출이 변합니다.</p>
+
+<h3>6.1 온실 효과</h3>
+<p><strong>온실 효과(Greenhouse Effect)</strong>는 대기 중 온실가스가 지표에서 방출되는 적외선을 흡수하고 재방출하여 지구를 따뜻하게 유지하는 현상입니다.</p>
+<p>자연적 온실 효과 없이는 지구 평균 기온이 -18°C가 됩니다 (현재 +15°C). 문제는 인간 활동으로 온실가스가 급증하여 '강화된 온실 효과'가 발생한다는 것입니다.</p>
+
+<h3>6.2 주요 온실가스</h3>
+<table>
+<thead><tr><th>온실가스</th><th>산업혁명 전</th><th>현재 (2024)</th><th>지구온난화지수(GWP)</th><th>주요 배출원</th></tr></thead>
+<tbody>
+<tr><td>CO₂</td><td>280 ppm</td><td>~424 ppm</td><td>1</td><td>화석연료, 산림파괴</td></tr>
+<tr><td>CH₄</td><td>700 ppb</td><td>~1,900 ppb</td><td>28</td><td>축산, 벼농사, 천연가스</td></tr>
+<tr><td>N₂O</td><td>270 ppb</td><td>~336 ppb</td><td>265</td><td>비료, 산업공정</td></tr>
+<tr><td>CFCs</td><td>0</td><td>~500 ppt</td><td>5,000-10,000</td><td>냉매 (현재 규제)</td></tr>
+</tbody>
+</table>
+
+<h3>6.3 기후변화의 증거</h3>
+<ul>
+<li><strong>기온 상승</strong>: 산업혁명 이후 ~1.2°C 상승 (2024년 기준)</li>
+<li><strong>해수면 상승</strong>: 20세기에 ~20cm 상승, 가속 중</li>
+<li><strong>빙하 후퇴</strong>: 전 세계 산악 빙하 감소, 북극 해빙 감소</li>
+<li><strong>극단 기상</strong>: 폭염, 폭우, 가뭄의 빈도와 강도 증가</li>
+<li><strong>해양 산성화</strong>: pH 0.1 감소 (산업혁명 이후)</li>
+<li><strong>생물계 변화</strong>: 종의 분포 이동, 물후학적 변화</li>
+</ul>
+
+<h3>6.4 기후 피드백</h3>
+<p>기후 시스템에는 변화를 증폭하거나 억제하는 피드백 메커니즘이 있습니다:</p>
+<ul>
+<li><strong>양의 피드백 (증폭)</strong>: 빙하-알베도 피드백, 수증기 피드백, 영구동토 메탄 방출</li>
+<li><strong>음의 피드백 (억제)</strong>: 복사 냉각(온도↑→적외선 방출↑), 식물 성장 촉진</li>
+</ul>
+
+<h3>6.5 대응 전략</h3>
+<ul>
+<li><strong>감축(Mitigation)</strong>: 온실가스 배출 감소 — 재생에너지, 에너지 효율, 탄소 포집</li>
+<li><strong>적응(Adaptation)</strong>: 변화에 대한 대비 — 방재 시설, 작물 품종 개량, 해안 보호</li>
+<li><strong>파리협정</strong>: 산업혁명 대비 1.5°C(최대 2°C) 이내 억제 목표</li>
+</ul>
+
+<div class="quiz-box">
+<h4>🧪 확인 문제</h4>
+<p>지구온난화지수(GWP)가 가장 높은 온실가스는?</p>
+<div class="quiz-option" onclick="this.classList.add('wrong')">① CO₂</div>
+<div class="quiz-option" onclick="this.classList.add('wrong')">② CH₄ (메탄)</div>
+<div class="quiz-option" onclick="this.classList.add('wrong')">③ N₂O (아산화질소)</div>
+<div class="quiz-option" onclick="this.classList.add('correct')">④ CFCs (프레온가스)</div>
+</div>
+
+<div class="chapter-nav">
+  <a href="05-oceanography.html">← 해양학</a>
+  <a href="07-geological-time.html">지질시대 →</a>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🌍 한 줄 요약!</h3>
+  <p>지구 평균 기온이 사람의 활동(주로 화석연료 사용) 때문에 지난 100년간 빠르게 오르는 것, 그게 기후변화야! 🌡️</p>
+  <h3>🤔 왜 알아야 할까?</h3>
+  <p>요즘 한국도 폭염·집중호우·이상한파가 늘고 봄꽃이 더 빨리 펴. 북극곰은 살 곳이 줄어들고, 작은 섬나라는 해수면 상승으로 잠길 위기에 놓였어. 전부 기후변화 때문이야! 우리 밥상·에너지·건강에 바로 영향을 줘.</p>
+  <div class="info-card"><h4>🌱 꼭 기억할 말</h4><ul>
+    <li><strong>온실효과</strong>: 대기가 열을 가둬 지구를 따뜻하게 만드는 현상</li>
+    <li><strong>온실가스</strong>: 이산화탄소·메탄 등 열을 가두는 기체</li>
+    <li><strong>탄소중립</strong>: 배출과 흡수를 같게 만드는 것</li>
+    <li><strong>지구온난화</strong>: 지구 평균 기온의 상승</li>
+  </ul></div>
+  <h3>✨ 쉽게 풀어볼게!</h3>
+  <p>여름날 뙤약볕에 주차된 자동차를 떠올려 봐! 🚗 햇빛은 창문으로 쏙 들어오는데 열은 잘 못 빠져나가서 차 안이 푹푹 쪄. 그런데 창문이 점점 두꺼워진다면? 안의 온도가 계속 올라가겠지! 지구 대기가 바로 이 창문 역할을 해. 이산화탄소·메탄 같은 온실가스는 열을 가두는데, 사람이 화석연료를 태울수록 이 가스가 늘어나 지구가 점점 더워져. 산업혁명 전엔 280ppm이던 CO₂ 농도가 지금은 420ppm을 넘었어! 그 바람에 평균 기온이 약 1.2°C 올랐고, 빙하가 녹고 바닷물이 오르고 강한 폭풍이 잦아졌어. 작아 보여도 지구 전체로 보면 정말 거대한 변화야.</p>
+  <div class="study-tip"><strong>💡 꿀팁:</strong> 주요 온실가스 4가지 'CO₂·CH₄·N₂O·CFCs'를 외우고, 각각의 배출원(에너지·축산·비료·냉매)과 짝지어 기억해 봐!</div>
+  <h3>📌 오늘의 정리</h3>
+  <ul>
+    <li>지구 기온은 100년간 약 1.2°C 상승</li>
+    <li>주원인은 사람의 화석연료 사용</li>
+    <li>해수면 상승·폭염·홍수 증가</li>
+    <li>탄소중립이 국제 사회의 목표</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>지구의 에너지 균형은 들어오는 단파 태양복사(약 340 W/m²)와 나가는 장파 적외복사가 일치할 때 유지됩니다. 온실가스는 적외선을 흡수·재방출해 지표면 온도를 약 33°C 끌어올리며, 이것이 자연적 온실효과입니다. 인간 활동에 의한 추가 온실가스(주로 CO₂, CH₄, N₂O)가 이 균형을 깨뜨려 약 +2.7 W/m²의 복사강제력을 만들어내고 있습니다. IPCC AR6에 따르면, 2010년대 표면 온도는 1850–1900 평균 대비 약 1.1°C 높습니다. 양의 피드백(얼음-알베도, 수증기, 영구동토 메탄 방출)과 음의 피드백(플랑크 복사, 일부 구름)이 결합되어 기후 민감도를 결정합니다. 평형 기후 민감도(ECS)는 CO₂ 농도 2배 증가 시 평형 온도 상승값으로, IPCC AR6 평가는 likely 2.5–4°C 범위입니다.</p>
+  <h3>메커니즘과 모델</h3>
+  <div class="info-card"><h4>🌍 사례 1: 북극 증폭(Arctic Amplification)</h4><p>북극 지역 온도는 전 지구 평균의 2–4배 빠르게 상승합니다. 해빙이 줄어들면 어두운 해수가 햇빛을 흡수해 더 따뜻해지고, 이는 추가 해빙 감소를 유발하는 양의 피드백을 만듭니다. 이는 중위도 한파의 극단성을 증가시킬 수 있습니다.</p></div>
+  <div class="info-card"><h4>🌍 사례 2: 한반도 기후 변화</h4><p>한반도 100년간 평균기온은 약 1.6°C 상승해 전 지구 평균보다 빠릅니다. 봄꽃 개화는 평균 1주일 앞당겨졌고, 여름 폭염일수는 3배로 늘었으며, 겨울 한파는 지속 기간이 짧지만 강도는 더 극단적이 되고 있습니다.</p></div>
+  <h3>관측 데이터</h3>
+  <p>마우나로아 관측소의 킬링 곡선은 1958년부터 CO₂ 농도의 단조 증가와 계절 변동을 동시에 보여줍니다. 빙하 코어(보스토크·EPICA·돔C)는 80만 년 동안의 CO₂·CH₄·온도 기록을 제공해, 자연적 변동 폭(180–280ppm)을 훨씬 넘는 현재 농도를 입증합니다. 위성 기반 GRACE 미션은 그린란드·남극의 빙상 질량 손실(연 약 -270, -150 Gt)을 직접 측정합니다. 위성 고도계는 해수면이 1993년 이후 연 약 3.4mm 상승했음을 보여줍니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> '날씨와 기후를 혼동'하는 경우가 많습니다. 날씨는 매일의 변화, 기후는 30년 이상의 평균 상태입니다. 추운 겨울 하루가 있다고 지구온난화가 거짓이라는 결론은 잘못된 것입니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>현대 기후 모델은 대기·해양·해빙·육지·생물권을 결합한 지구시스템 모델(ESM)이며, CMIP6 다중모델 앙상블이 IPCC 평가의 정량 기반입니다. 미래 시나리오는 SSP-RCP 조합으로 표현되어 사회경제적 경로와 강제력을 함께 다룹니다(SSP1-1.9, SSP2-4.5, SSP5-8.5 등). 검출-원인규명(D&A) 분석은 관측된 변화에서 인위적 신호와 자연 변동성을 분리하며, 핑거프린트 기법으로 인간 영향을 통계적으로 입증합니다. 기후 민감도의 불확실성은 주로 구름 피드백(특히 저층운)에서 발생하며, 이는 모델 격자 크기보다 작은 미세물리과정의 매개변수화에 의존합니다. 티핑 포인트(tipping point) 연구는 AMOC 붕괴, 아마존 사바나화, 영구동토 탄소 방출, 서남극 빙상 후퇴 등 비가역적 임계 현상을 다룹니다. 탄소순환 피드백은 해양·육지의 자연 흡수원이 미래에 약화될 가능성을 보여주며, 이는 동일 배출량에서 더 큰 농도 상승을 의미합니다.</p>
+  <h3>핵심 모델</h3>
+  <div class="formula">복사강제력 (CO₂): RF = 5.35 · ln(C/C₀) W/m²<br>0차 에너지 균형: (1−α)·S/4 = εσT⁴<br>α: 알베도, S: 태양상수, ε: 방출률, σ: 슈테판-볼츠만 상수<br>탄소 수지: dCO₂/dt = E_FF + E_LUC − S_ocean − S_land</div>
+  <h3>최신 연구</h3>
+  <p>2024년 NOAA·NASA 분석은 2023–2024년이 관측사상 가장 따뜻한 해로 기록되었음을 확인했습니다. 일부 연구는 에어로졸 감소(특히 IMO 2020 해운 연료 규제)가 수반된 단기 가속 온난화를 시사합니다. AI 기반 기후 다운스케일링과 디지털 트윈(EU Destination Earth)은 km 규모 지역 기후 예측을 현실화하고 있습니다. 또한 영구동토 메탄·이산화탄소 방출이 모델 예상보다 빠르다는 보고가 누적되고 있습니다.</p>
+  <h3>관련 분야</h3>
+  <ul>
+    <li>지구시스템과학(ESS) — 통합 모델링</li>
+    <li>고기후학(Paleoclimate) — 빙하코어·고생물 프록시</li>
+    <li>탄소순환 — 해양·육지·대기 결합</li>
+    <li>기후정책·기후공학 — 완화·적응·CDR</li>
+  </ul>
+  <h3>추가 자료</h3>
+  <ul>
+    <li>IPCC AR6 (2021–2023) — WG I/II/III Reports</li>
+    <li>Pierrehumbert (2010), <em>Principles of Planetary Climate</em></li>
+    <li>NOAA Global Monitoring Lab (CO₂·CH₄ 데이터)</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 1차원 에너지 균형 모델(EBM)에 얼음-알베도 피드백을 포함시켜 안정 기후 상태(아이스볼·온난·현재)의 다중 평형해와 임계 강제력을 수치적으로 구해 보세요.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 기후 대응 분류하기</h2>
+<p>각 대책을 감축(배출 줄이기)과 적응(변화 대비)으로 분류해보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#1565c0","prompt":"기후변화 대책을 감축·적응으로 분류하세요","groups":[{"name":"감축(Mitigation)","items":["재생에너지","에너지 효율","탄소 포집"]},{"name":"적응(Adaptation)","items":["방재 시설","작물 품종 개량","해안 보호"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#1565c0","questions":[{"q":"온실효과가 없을 때 지구 평균 기온은?","choices":["-18°C","0°C","+15°C","+5°C"],"answer":0},{"q":"산업혁명 전 CO₂ 농도는?","choices":["180 ppm","280 ppm","420 ppm","700 ppm"],"answer":1},{"q":"파리협정의 기온 억제 목표는?","choices":["0.5°C","1.0°C","3°C","1.5°C"],"answer":3},{"q":"메탄(CH₄)의 주요 배출원은?","choices":["축산·벼농사","화석연료 연소","비료 사용","냉매"],"answer":0},{"q":"20세기 해수면 상승 폭은?","choices":["약 2cm","약 50cm","약 20cm","약 2m"],"answer":2}]};</script>
+</main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// Climate variable simulation
+(function() {
+  const co2Slider = document.getElementById('co2-slider');
+  const ch4Slider = document.getElementById('ch4-slider');
+  const solarSlider = document.getElementById('solar-slider');
+  const iceSlider = document.getElementById('ice-slider');
+
+  function updateClimate() {
+    const co2 = parseInt(co2Slider.value);
+    const ch4 = parseInt(ch4Slider.value);
+    const solar = parseInt(solarSlider.value);
+    const ice = parseInt(iceSlider.value);
+
+    document.getElementById('co2-value').textContent = co2;
+    document.getElementById('ch4-value').textContent = ch4;
+    document.getElementById('solar-value').textContent = solar;
+    document.getElementById('ice-value').textContent = ice;
+
+    // Simplified climate model
+    const co2Forcing = 5.35 * Math.log(co2 / 280); // W/m²
+    const ch4Forcing = 0.036 * (Math.sqrt(ch4) - Math.sqrt(700));
+    const solarForcing = (solar - 100) * 0.1;
+    const iceForcing = (70 - ice) * 0.02;
+
+    const sensitivity = 0.8; // °C per W/m²
+    const totalForcing = co2Forcing + ch4Forcing + solarForcing + iceForcing;
+    const tempChange = totalForcing * sensitivity;
+
+    document.getElementById('temp-result').textContent =
+      (tempChange >= 0 ? '+' : '') + tempChange.toFixed(1) + '°C';
+
+    let feedback = '';
+    if (tempChange < 1.5) feedback = '파리협정 1.5°C 목표 이내';
+    else if (tempChange < 2.0) feedback = '⚠️ 1.5°C 초과, 2°C 이내';
+    else if (tempChange < 3.0) feedback = '심각한 영향 예상';
+    else feedback = '대재앙 수준의 온난화';
+    document.getElementById('climate-feedback').textContent = feedback;
+  }
+
+  [co2Slider, ch4Slider, solarSlider, iceSlider].forEach(s =>
+    s.addEventListener('input', updateClimate)
+  );
+  updateClimate();
+})();
+
+// Greenhouse effect 3D visualization
+(function() {
+  const container = document.getElementById('greenhouse-viz');
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x050d18);
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 100);
+  camera.position.set(0, 0, 6);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  container.appendChild(renderer.domElement);
+
+  scene.add(new THREE.AmbientLight(0x203040, 0.4));
+
+  // Ground (Earth surface)
+  const groundGeo = new THREE.PlaneGeometry(8, 3);
+  const groundMat = new THREE.MeshPhongMaterial({ color: 0x2e7d32 });
+  const ground = new THREE.Mesh(groundGeo, groundMat);
+  ground.position.y = -2;
+  ground.rotation.x = -0.3;
+  scene.add(ground);
+
+  // Atmosphere layers
+  const atmosGeo = new THREE.PlaneGeometry(8, 4);
+  const atmosMat = new THREE.MeshPhongMaterial({
+    color: 0x4fc3f7, transparent: true, opacity: 0.1, side: THREE.DoubleSide
+  });
+  const atmos = new THREE.Mesh(atmosGeo, atmosMat);
+  atmos.position.y = 0.5;
+  scene.add(atmos);
+
+  // Sun rays (incoming solar)
+  const sunRays = [];
+  for (let i = 0; i < 5; i++) {
+    const geo = new THREE.CylinderGeometry(0.02, 0.02, 3, 8);
+    const mat = new THREE.MeshBasicMaterial({ color: 0xffd54f });
+    const ray = new THREE.Mesh(geo, mat);
+    ray.position.set(-2 + i * 1, 2, 0);
+    ray.rotation.z = 0.3;
+    ray.userData = { baseY: 2, phase: i * 0.5 };
+    scene.add(ray);
+    sunRays.push(ray);
+  }
+
+  // IR rays (outgoing from ground, some trapped)
+  const irRays = [];
+  for (let i = 0; i < 8; i++) {
+    const geo = new THREE.CylinderGeometry(0.015, 0.015, 2, 8);
+    const mat = new THREE.MeshBasicMaterial({ color: 0xff5722, transparent: true, opacity: 0.7 });
+    const ray = new THREE.Mesh(geo, mat);
+    ray.position.set(-3 + i * 0.9, -0.5, 0);
+    ray.userData = { baseY: -0.5, phase: i * 0.4, trapped: i % 3 === 0 };
+    scene.add(ray);
+    irRays.push(ray);
+  }
+
+  // CO2 molecules
+  const co2Group = new THREE.Group();
+  for (let i = 0; i < 12; i++) {
+    const molGeo = new THREE.SphereGeometry(0.08, 16, 16);
+    const molMat = new THREE.MeshPhongMaterial({ color: 0x9e9e9e });
+    const mol = new THREE.Mesh(molGeo, molMat);
+    mol.position.set((Math.random() - 0.5) * 6, (Math.random() - 0.5) * 2 + 0.5, (Math.random() - 0.5) * 2);
+    mol.userData = { basePos: mol.position.clone(), phase: Math.random() * Math.PI * 2 };
+    co2Group.add(mol);
+  }
+  scene.add(co2Group);
+
+  let time = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    time += 0.02;
+
+    // Animate sun rays coming down
+    sunRays.forEach(ray => {
+      ray.position.y = ray.userData.baseY - Math.abs(Math.sin(time + ray.userData.phase)) * 1.5;
+    });
+
+    // Animate IR rays going up (some trapped)
+    irRays.forEach(ray => {
+      if (ray.userData.trapped) {
+        ray.position.y = ray.userData.baseY + Math.abs(Math.sin(time * 0.7 + ray.userData.phase)) * 1.5;
+        ray.rotation.z = Math.sin(time + ray.userData.phase) * 0.3;
+      } else {
+        ray.position.y = ray.userData.baseY + ((time * 0.5 + ray.userData.phase) % 4);
+        if (ray.position.y > 3) ray.position.y = -0.5;
+      }
+    });
+
+    // Jiggle CO2 molecules
+    co2Group.children.forEach(mol => {
+      const bp = mol.userData.basePos;
+      mol.position.x = bp.x + Math.sin(time * 2 + mol.userData.phase) * 0.1;
+      mol.position.y = bp.y + Math.cos(time * 1.5 + mol.userData.phase) * 0.1;
+    });
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8. 조절과 치료 — aboutFear</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🟣 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>조절과 치료</em></h1>
+  <p class="authors">Chapter 8 — Regulation &amp; Treatment</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 조절 — 감정의 온도를 되돌리는 피드백</span>
+
+<h2>조절과 치료 개요</h2>
+<p>공포 치료의 황금 표준은 노출 기반 인지행동치료(CBT)다. 약물은 보조이며, 두 가지를 결합할 때 효과가 극대화된다. 최근에는 MDMA·psilocybin 보조 치료가 PTSD에서 임상 진입을 시작하면서 정신의학의 새 시대가 열리고 있다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>치료의 1차선: 노출 기반 CBT. 2차선: SSRI/SNRI 약물. 3차선: EMDR, ACT, 사이코델릭 보조 치료. 어떤 경우에도 회피를 깨는 노출 요소가 핵심이며, 약물은 그 과정을 견디게 돕는 보조다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>한 줄로 이해하기 🔑</h3><p>공포 치료의 핵심은 도망 대신 조금씩 마주하기(노출)야. 약은 그걸 견디게 도와주는 도우미! 💊</p>
+  <h3>왜 중요할까? 🤔</h3><p>어떤 사람은 약만으로 공포를 없애려다 실망하고, 어떤 사람은 약을 무조건 싫어해서 치료가 늦어져. 둘 다 아쉬워. 😅 마주하기 연습(노출)은 공포 회로를 진짜로 바꾸는 훈련이고, 약은 그 훈련이 잘 되도록 몸 상태를 도와주는 거야. 둘을 잘 합치면 가장 빨리 나아져! 그러니까 공포는 "고칠 수 있는 것"이라는 걸 꼭 기억해. 🌟</p>
+  <div class="info-card"><h4>🌱 꼭 알아둘 말</h4><ul><li><strong>노출치료</strong>: 피해온 무서운 것에 한 걸음씩 다가가기. 👣</li><li><strong>인지 재구성</strong>: 무서운 생각을 다시 살펴보고 고쳐 생각하기. 💭</li><li><strong>SSRI/SNRI</strong>: 불안에 가장 먼저 쓰는 도우미 약. 💊</li><li><strong>EMDR</strong>: 눈을 좌우로 움직이며 무서운 기억을 정리하는 치료. 👀</li><li><strong>MDMA 보조치료</strong>: PTSD에 새로 등장한 치료 방법. 🆕</li></ul></div>
+  <h3>쉽게 풀어보기 🧩</h3><p>공황장애에서 약은 발작을 줄여주는 데 잘 들어. 하지만 약만 끊으면 다시 오기 쉬워. 반대로 마주하기 연습(노출 CBT)은 효과가 천천히 나타나지만, 치료가 끝난 뒤에도 오래오래 간다는 장점이 있어. 🐢➡️🏆 그래서 보통은 "연습 + 약을 몇 주 함께 → 약은 천천히 줄이고 연습은 계속"하는 방법을 써. PTSD엔 EMDR 같은 치료가 첫 번째로 쓰여. 무서움도 연습하면 이길 수 있어! 💪</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 만약 가족이나 내가 치료를 고민한다면 "가장 먼저 권하는 치료가 뭐예요?"라고 의사 선생님께 물어보자. 궁금한 걸 묻는 건 똑똑한 거야! 🙋</div>
+  <h3>한 장 요약 📌</h3><ul><li>첫 번째 치료는 마주하기(노출) CBT! 👣</li><li>약(SSRI/SNRI)은 든든한 도우미. 💊</li><li>PTSD엔 EMDR·PE 같은 치료가 첫 번째. 👀</li><li>MDMA 같은 새 치료도 등장하는 중. 🆕</li><li>연습과 약을 함께 쓰면 더 빨리 나아져! 🚀</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>Edna Foa의 Prolonged Exposure(PE)는 PTSD 치료의 황금 표준 중 하나다. PE는 in vivo 노출(실제 회피 자극)과 imaginal 노출(외상 기억을 음성 녹음으로 반복 회상)을 결합한 8~15회기 프로토콜이다. 메타분석은 PE가 PTSD 증상 약 70% 감소를 가져옴을 보였다. Cognitive Processing Therapy(CPT)는 외상이 만든 부정적 자기·세계·미래 신념을 직접 다루는 인지 치료로, PE와 효과 크기가 비슷하다. EMDR(Shapiro)은 양측성 안구 운동을 동반한 외상 기억 처리법으로 작용 기전 논쟁이 있으나 RCT 효과는 견고하다 — 최근 가설은 작업기억 과부하가 외상 기억의 정서 강도를 약화시킨다는 working memory 모델이다. 약물 측면에서 SSRI(파록세틴·세르트랄린)은 모든 불안장애·PTSD의 FDA 1차 적응증이며, SNRI(벤라팍신)·미르타자핀이 2차다. 벤조다이아제핀은 빠른 효과가 있으나 의존성 위험으로 단기·구조적 사용에 제한한다. D-cycloserine은 NMDA 부분 작용제로 노출치료 직전 투여 시 멸절 학습을 강화하는 cognitive enhancer로 연구되고 있다.</p>
+  <h3>핵심 메커니즘</h3><div class="info-card"><h4>📐 노출치료 = 멸절 학습</h4><p>노출치료의 분자 기전은 vmPFC-편도체 시냅스에서의 NMDA 매개 가소성이다. 반복 노출이 안전 학습을 응고시켜 편도체 활성을 억제한다. D-cycloserine·yohimbine은 이 분자 과정을 증강한다.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>군 PTSD 환자가 12회 PE 프로토콜로 외상 기억을 음성 녹음 → 반복 청취 → 작성 → 재해석 단계를 거치면 PCL-5 점수가 평균 25~30점 감소한다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>VR(가상현실) 노출치료는 9·11 생존자, 이라크전 참전 군인 치료에 사용되어 in vivo 노출이 어려운 외상 상황을 안전하게 재현했다. 메타분석은 효과 크기 d ≈ 0.9로 매우 강하다.</p></div>
+  <h3>응용 사례</h3><p>한국에서는 EMDR 한국협회(EMDR Korea)가 자격 교육과 임상 보급을 담당한다. 국립정신건강센터·서울아산병원·삼성서울병원이 노출 기반 CBT 클리닉을 운영한다. 보훈처는 군 PTSD에 대해 PE·CPT를 표준 치료로 도입했다. 정신과 외래에서는 SSRI 8주 + 인지행동치료 12회기가 공황·사회불안의 표준 프로토콜로 자리잡았다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 외상 직후 강제적 정서 노출(예: 디브리핑)을 시도하는 것 — 오히려 PTSD 위험을 높일 수 있어 현재는 권장되지 않는다.</div>
+
+<h3>전문가 레벨 이해</h3><p>MDMA-assisted therapy for PTSD는 사이코델릭 정신의학의 선두 주자다. MAPS(Multidisciplinary Association for Psychedelic Studies)의 phase 3 임상에서 12주 치료 후 67%가 PTSD 진단 기준을 더 이상 만족하지 않았으며, 21%가 완전 관해되었다 — 기존 치료 30~40% 관해율을 크게 상회한다. MDMA는 세로토닌·노르에피네프린·옥시토신 방출을 증가시켜 외상 기억을 회상하면서도 공포·수치심 없이 처리할 수 있는 "치료 창(therapeutic window)"을 만든다. FDA는 2017년 breakthrough therapy로 지정했으나, 2024년 8월 승인을 보류하고 추가 3상 임상시험을 요구해 현재 재신청을 준비 중이다. Psilocybin은 치료저항성 우울·말기 환자 죽음 불안에 효과를 보였으며, Johns Hopkins와 Imperial College London 연구가 선두다. 일반 SSRI 효과 크기 d ≈ 0.3 대비 psilocybin의 d ≈ 1.2~1.5는 극적이다. 작용 기전은 5-HT2A 수용체 활성화를 통한 default mode network 일시 와해와 신경가소성 증강으로 추정된다. 비약물 영역에서는 closed-loop neurofeedback for PTSD가 부상한다. 실시간 fMRI 또는 EEG로 편도체 활성을 모니터링하며 환자가 자발적으로 활성을 낮추는 훈련이다. 또한 transcranial magnetic stimulation(TMS)을 vmPFC에 적용해 멸절 학습을 강화하는 시도가 진행 중이다.</p>
+  <h3>최신 연구·동향</h3><p>한국 식약처는 2024년 에스케타민(스프라바토)을 치료저항성 우울증에 한정해 승인했고, 불안장애 적응증 확장도 논의 중이다. 또한 한국 임상에서는 디지털 치료제 승인 절차가 정비되어 VR 노출치료가 곧 처방 가능 디지털 치료제로 진입할 전망이다.</p>
+  <h3>관련 분야</h3><ul><li>사이코델릭 정신의학(Psychedelic Psychiatry)</li><li>신경자극(Neurostimulation, TMS·tDCS)</li><li>디지털 치료제(Digital Therapeutics)</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"Prolonged Exposure Therapy for PTSD" — Edna Foa</li><li>"How to Change Your Mind" — Michael Pollan</li><li>"Trauma and Recovery" — Judith Herman</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 본인이 가진 공포 1개에 대해 SUDS 기준 8단계의 점진 노출 위계(hierarchy)를 직접 설계하고, 각 단계에서 시도할 수 있는 구체적 행동을 적어보자.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 공포 치료법 상황 판단</h2>
+<p>치료법과 설명을 알맞게 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#8b5cf6","prompt":"공포 치료법과 설명을 짝지으세요","pairs":[{"term":"노출치료","def":"회피 자극에 단계적으로 접근"},{"term":"인지 재구성","def":"공포 유발 사고를 재해석"},{"term":"SSRI/SNRI","def":"불안장애 1차 약물"},{"term":"EMDR","def":"안구 운동 활용 외상 처리"},{"term":"MDMA 보조치료","def":"PTSD 사이코델릭 기반 치료"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#8b5cf6","questions":[{"q":"공포 치료의 1차 치료는?","choices":["벤조","노출 기반 CBT","수술","입원"],"answer":1},{"q":"불안장애의 1차 약물은?","choices":["항생제","진통제","SSRI/SNRI","수면제"],"answer":2},{"q":"안구 운동을 활용한 외상 처리 치료는?","choices":["EMDR","CBT","PE","CPT"],"answer":0},{"q":"Foa가 만든 PTSD 황금표준 노출치료는?","choices":["EMDR","MBSR","Prolonged Exposure","DBS"],"answer":2},{"q":"MDMA 치료 12주 후 진단 미충족률은?","choices":["10%","30%","90%","67%"],"answer":3}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#e9defb';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const COL=0x8b5cf6;const tube=new THREE.Mesh(new THREE.CylinderGeometry(0.25,0.25,3.4,16,1,true),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.4}));s.add(tube);const bulb=new THREE.Mesh(new THREE.SphereGeometry(0.5,18,18),new THREE.MeshBasicMaterial({color:COL}));bulb.position.y=-1.9;s.add(bulb);const lvl=new THREE.Mesh(new THREE.SphereGeometry(0.3,16,16),new THREE.MeshBasicMaterial({color:0xffe08a}));s.add(lvl);s.userData.lvl=lvl;const loop=new THREE.Mesh(new THREE.TorusGeometry(1.5,0.03,8,48),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.3}));loop.position.x=2.2;s.add(loop);
+  const _CL='#e9defb';{var _lv=lbl('노출치료','#ffe9a8');_lv.position.set(0,0.55,0);lvl.add(_lv);}{var _lp=lbl('멸절 학습',_CL);_lp.position.set(2.2,0,0);s.add(_lp);}function _L(t,x,y){var L=lbl(t,_CL);L.position.set(x,y,0);s.add(L);}_L('인지 재구성',-2.4,1.4);_L('SSRI/SNRI',-2.4,-0.2);
+  const hintEl=document.querySelector('.interact-hint');const caps=['공포·불안 조절은 감정의 온도를 안전 범위로 되돌리는 피드백 과정입니다.','1차 치료는 노출치료 — 마주하기를 통한 멸절(안전 재학습) CBT입니다.','인지 재구성으로 위협 해석을 바꾸고, SSRI/SNRI 약물이 이를 뒷받침합니다.','PTSD엔 EMDR·지속노출이 우선이며, MDMA 보조치료 같은 새 접근도 연구되고 있습니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.lvl.position.y=Math.sin(T*1.2)*1.2*Math.exp(-((T*0.2)%6)*0.0)+0.0;s.userData.lvl.position.y=Math.sin(T)*1.0;s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

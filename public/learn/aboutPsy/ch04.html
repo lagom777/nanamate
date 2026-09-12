@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>학습 | 심리학 기초</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+  <script defer src="../shared/quizgame3d.js"></script>
+  <script defer src="../shared/learngame3d.js"></script>
+</head>
+<body>
+
+<aside>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h1><a href="index.html">심리학 기초</a></h1>
+  <div class="sub">PSYCHOLOGY FROM ZERO</div>
+  <nav>
+    <ol>
+      <li><a href="index.html" class="chap">🏠 목차</a></li>
+      <li><a href="ch01.html" class="chap">1. 심리학이란?</a></li>
+      <li><a href="ch02.html" class="chap">2. 뇌와 신경계</a></li>
+      <li><a href="ch03.html" class="chap">3. 감각과 지각</a></li>
+      <li><a href="ch04.html" class="chap">4. 학습</a></li>
+      <li><a href="ch05.html" class="chap">5. 기억</a></li>
+      <li><a href="ch06.html" class="chap">6. 발달</a></li>
+      <li><a href="ch07.html" class="chap">7. 성격</a></li>
+      <li><a href="ch08.html" class="chap">8. 사회심리학</a></li>
+      <li><a href="ch09.html" class="chap">9. 이상심리·치료</a></li>
+      <li><a href="ch10.html" class="chap">10. 동기와 정서</a></li>
+      <li><a href="ch11.html" class="chap">11. 인지 — 사고·언어·지능</a></li>
+      <li><a href="ch12.html" class="chap">12. 의식 — 수면·꿈·각성</a></li>
+      <li><a href="ch13.html" class="chap">13. 스트레스와 건강심리</a></li>
+      <li><a href="ch14.html" class="chap">14. 심리검사의 세계</a></li>
+      <li><a href="ch15.html" class="chap">15. 긍정심리학</a></li>
+      <li><a href="quiz.html" class="chap">📝 확인 퀴즈</a></li>
+    </ol>
+  </nav>
+  <button id="theme-btn" onclick="toggleTheme()">다크 모드 전환</button>
+</aside>
+
+<main>
+  <div class="page-nav">
+    <a href="index.html">← 목차로</a>
+  </div>
+
+  <section class="chapter" id="ch4">
+    <div class="chap-num">CHAPTER 04</div>
+    <h2>학습 — 경험이 행동을 바꾸는 법</h2>
+<span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 조건형성 — 자극(종)과 반응이 연결된다</span>
+<div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const COL=0xa855f7;const cs=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.8,0.8),new THREE.MeshBasicMaterial({color:0x3b82f6}));cs.position.set(-2.2,1.1,0);s.add(cs);const us=new THREE.Mesh(new THREE.SphereGeometry(0.5,16,16),new THREE.MeshBasicMaterial({color:0xeab308}));us.position.set(-2.2,-1.1,0);s.add(us);const resp=new THREE.Mesh(new THREE.OctahedronGeometry(0.6),new THREE.MeshBasicMaterial({color:0x22c55e}));resp.position.set(2.2,0,0);s.add(resp);[[-2.2,1.1],[-2.2,-1.1]].forEach(p=>s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(p[0],p[1],0),new THREE.Vector3(2.2,0,0)]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.4}))));s.userData.resp=resp;
+  [['종소리(CS·조건자극)','#93c5fd',-2.2,2.0,0],['음식(US·무조건자극)','#fde047',-2.2,-2.0,0],['침 분비(반응)','#86efac',2.2,1.1,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 고전적 조건형성: 중립 자극(종)이 무조건 자극(음식)과 반복 연합됩니다.','반복되면 종소리(CS)만으로도 침 분비(조건반응)가 일어납니다 — 파블로프의 개.','조작적 조건형성: 행동 뒤의 결과(강화·처벌)가 행동 빈도를 바꿉니다 — 스키너.','관찰학습: 타인의 행동과 결과를 보고 모방합니다 — 반두라의 보보인형.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.resp.rotation.y+=0.02;s.userData.resp.scale.setScalar(0.9+0.15*Math.sin(T*3));s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script>
+
+    <div class="en">Learning</div>
+
+    <p>심리학에서 <strong>학습</strong>은 단순히 '공부'가 아닙니다. <b>경험을 통해 행동이 비교적 지속적으로 변하는 것</b>, 그게 학습입니다. 개가 종소리에 침을 흘리게 되는 것도, 아이가 칭찬에 숙제를 더 열심히 하는 것도 학습입니다.</p>
+
+    <h3>4.1 고전적 조건형성 — 파블로프의 개</h3>
+    <p>1890년대, 러시아의 생리학자 <strong>파블로프</strong>는 개의 소화를 연구하던 중 이상한 일을 발견했습니다. 음식을 주기도 전에, 조수의 발자국 소리만 들려도 개가 침을 흘리는 것이었죠. 이 우연한 관찰이 심리학의 가장 유명한 실험으로 이어졌습니다.</p>
+
+    <figure class="figure">
+      <svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg">
+        <text x="100" y="20" text-anchor="middle" font-size="13" font-weight="bold" fill="#d97757">1단계: 조건형성 전</text>
+        <rect x="20" y="35" width="80" height="52" rx="8" fill="#fff0cc" stroke="#5b4b8a" stroke-width="2"/>
+        <text x="60" y="60" text-anchor="middle" font-size="11" fill="#2b2b2b">음식</text>
+        <text x="60" y="76" text-anchor="middle" font-size="9" fill="#6b6b6b">(US)</text>
+        <path d="M 105 62 L 135 62" stroke="#5b4b8a" stroke-width="2" marker-end="url(#arrCC)"/>
+        <rect x="140" y="35" width="80" height="52" rx="8" fill="#dce9f5" stroke="#5b4b8a" stroke-width="2"/>
+        <text x="180" y="60" text-anchor="middle" font-size="11" fill="#2b2b2b">침 분비</text>
+        <text x="180" y="76" text-anchor="middle" font-size="9" fill="#6b6b6b">(UR)</text>
+
+        <rect x="20" y="115" width="80" height="52" rx="8" fill="#f3efe6" stroke="#888" stroke-width="2" stroke-dasharray="3,2"/>
+        <text x="60" y="140" text-anchor="middle" font-size="11" fill="#2b2b2b">종소리</text>
+        <text x="60" y="156" text-anchor="middle" font-size="9" fill="#6b6b6b">(NS)</text>
+        <path d="M 105 142 L 135 142" stroke="#888" stroke-width="2" stroke-dasharray="3,2" marker-end="url(#arrCC2)"/>
+        <rect x="140" y="115" width="80" height="52" rx="8" fill="#f3efe6" stroke="#888" stroke-width="2" stroke-dasharray="3,2"/>
+        <text x="180" y="145" text-anchor="middle" font-size="10" fill="#6b6b6b">반응 없음</text>
+
+        <text x="350" y="20" text-anchor="middle" font-size="13" font-weight="bold" fill="#d97757">2단계: 반복 연합</text>
+        <rect x="270" y="75" width="100" height="52" rx="8" fill="#f3efe6" stroke="#5b4b8a" stroke-width="2"/>
+        <text x="320" y="95" text-anchor="middle" font-size="10" fill="#2b2b2b">종 + 음식</text>
+        <text x="320" y="115" text-anchor="middle" font-size="9" fill="#6b6b6b">(NS + US)</text>
+        <path d="M 375 102 L 405 102" stroke="#5b4b8a" stroke-width="2" marker-end="url(#arrCC)"/>
+        <rect x="410" y="75" width="80" height="52" rx="8" fill="#dce9f5" stroke="#5b4b8a" stroke-width="2"/>
+        <text x="450" y="100" text-anchor="middle" font-size="11" fill="#2b2b2b">침 분비</text>
+        <text x="450" y="116" text-anchor="middle" font-size="9" fill="#6b6b6b">(UR)</text>
+        <text x="380" y="150" text-anchor="middle" font-size="10" fill="#6b6b6b" font-style="italic">(여러 번 반복)</text>
+
+        <text x="590" y="20" text-anchor="middle" font-size="13" font-weight="bold" fill="#d97757">3단계: 조건형성 완료</text>
+        <rect x="510" y="35" width="80" height="52" rx="8" fill="#e0f0dc" stroke="#5b4b8a" stroke-width="2"/>
+        <text x="550" y="60" text-anchor="middle" font-size="11" fill="#2b2b2b">종소리</text>
+        <text x="550" y="76" text-anchor="middle" font-size="9" fill="#6b6b6b">(CS)</text>
+        <path d="M 595 62 L 625 62" stroke="#5b4b8a" stroke-width="2" marker-end="url(#arrCC)"/>
+        <rect x="630" y="35" width="50" height="52" rx="8" fill="#dce9f5" stroke="#5b4b8a" stroke-width="2"/>
+        <text x="655" y="58" text-anchor="middle" font-size="10" fill="#2b2b2b">침</text>
+        <text x="655" y="74" text-anchor="middle" font-size="9" fill="#6b6b6b">(CR)</text>
+
+        <g font-size="10.5" fill="#6b6b6b">
+          <text x="20" y="205" font-weight="bold" fill="#5b4b8a">용어 정리</text>
+          <text x="20" y="222">· US (무조건 자극): 원래부터 반응을 일으키는 자극 — 음식</text>
+          <text x="20" y="240">· UR (무조건 반응): 학습 없이도 나오는 반응 — 음식 앞의 침</text>
+          <text x="20" y="258">· NS (중성 자극): 원래는 그 반응을 못 일으키던 자극 — 종소리 (처음)</text>
+          <text x="20" y="276">· CS (조건 자극): 반복 연합 후 반응을 일으키게 된 자극 — 종소리 (나중)</text>
+          <text x="20" y="294">· CR (조건 반응): 학습된 반응 — 종소리만 듣고도 침</text>
+        </g>
+        <defs>
+          <marker id="arrCC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#5b4b8a"/>
+          </marker>
+          <marker id="arrCC2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#888"/>
+          </marker>
+        </defs>
+      </svg>
+      <figcaption>파블로프의 고전적 조건형성 — 중성 자극이 무조건 자극과 반복해서 짝지어지면 조건 자극이 됩니다.</figcaption>
+    </figure>
+
+    <div class="example">
+      <span class="label">일상 예시</span>
+      · 레몬 사진만 봐도 입에 침이 고인다(레몬 맛의 기억 = CS).<br>
+      · 병원 냄새만 맡아도 긴장된다(주사의 아픔과 연합된 냄새 = CS).<br>
+      · 특정 노래를 들으면 옛 연인이 떠오른다(노래 = CS, 정서 반응 = CR).
+    </div>
+
+    <h3>4.2 조작적 조건형성 — 스키너의 상자</h3>
+    <p>파블로프가 <b>자극 → 반응</b>을 연구했다면, <strong>스키너</strong>는 <b>반응 → 결과</b>를 연구했습니다. 행동의 뒤에 어떤 결과가 따라오느냐에 따라 그 행동이 늘거나 줄어든다는 것이죠.</p>
+
+    <p>핵심은 두 축입니다.</p>
+    <ul>
+      <li><b>정(+) vs 부(−)</b>: 뭔가를 <b>주는가</b>, 아니면 <b>빼앗는가</b>?</li>
+      <li><b>강화 vs 처벌</b>: 그 결과로 행동이 <b>늘어나는가</b>, <b>줄어드는가</b>?</li>
+    </ul>
+
+    <figure class="figure">
+      <svg viewBox="0 0 540 360" xmlns="http://www.w3.org/2000/svg">
+        <text x="270" y="22" text-anchor="middle" font-size="14" font-weight="bold" fill="#5b4b8a">조작적 조건형성 4가지</text>
+        <text x="200" y="55" text-anchor="middle" font-size="12" font-weight="bold" fill="#d97757">제공 (+)</text>
+        <text x="390" y="55" text-anchor="middle" font-size="12" font-weight="bold" fill="#d97757">제거 (−)</text>
+        <text x="65" y="140" text-anchor="middle" font-size="12" font-weight="bold" fill="#d97757">행동</text>
+        <text x="65" y="156" text-anchor="middle" font-size="12" font-weight="bold" fill="#d97757">증가</text>
+        <text x="65" y="265" text-anchor="middle" font-size="12" font-weight="bold" fill="#d97757">행동</text>
+        <text x="65" y="281" text-anchor="middle" font-size="12" font-weight="bold" fill="#d97757">감소</text>
+
+        <rect x="110" y="70" width="180" height="115" rx="8" fill="#e0f0dc" stroke="#5e8b5e" stroke-width="2"/>
+        <text x="200" y="95" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">정적 강화</text>
+        <text x="200" y="113" text-anchor="middle" font-size="11" fill="#6b6b6b">좋은 것을 "줌"</text>
+        <text x="200" y="145" text-anchor="middle" font-size="11" fill="#2b2b2b">예) 숙제 다 하면</text>
+        <text x="200" y="162" text-anchor="middle" font-size="11" fill="#2b2b2b">칭찬 스티커</text>
+
+        <rect x="300" y="70" width="180" height="115" rx="8" fill="#e0f0dc" stroke="#5e8b5e" stroke-width="2"/>
+        <text x="390" y="95" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">부적 강화</text>
+        <text x="390" y="113" text-anchor="middle" font-size="11" fill="#6b6b6b">싫은 것을 "없앰"</text>
+        <text x="390" y="145" text-anchor="middle" font-size="11" fill="#2b2b2b">예) 안전벨트 매면</text>
+        <text x="390" y="162" text-anchor="middle" font-size="11" fill="#2b2b2b">경고음 멈춤</text>
+
+        <rect x="110" y="200" width="180" height="115" rx="8" fill="#fde8dc" stroke="#d97757" stroke-width="2"/>
+        <text x="200" y="225" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">정적 처벌</text>
+        <text x="200" y="243" text-anchor="middle" font-size="11" fill="#6b6b6b">싫은 것을 "줌"</text>
+        <text x="200" y="275" text-anchor="middle" font-size="11" fill="#2b2b2b">예) 과속하면</text>
+        <text x="200" y="292" text-anchor="middle" font-size="11" fill="#2b2b2b">범칙금 부과</text>
+
+        <rect x="300" y="200" width="180" height="115" rx="8" fill="#fde8dc" stroke="#d97757" stroke-width="2"/>
+        <text x="390" y="225" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">부적 처벌</text>
+        <text x="390" y="243" text-anchor="middle" font-size="11" fill="#6b6b6b">좋은 것을 "뺏음"</text>
+        <text x="390" y="275" text-anchor="middle" font-size="11" fill="#2b2b2b">예) 거짓말하면</text>
+        <text x="390" y="292" text-anchor="middle" font-size="11" fill="#2b2b2b">게임기 압수</text>
+
+        <text x="270" y="340" text-anchor="middle" font-size="10" fill="#6b6b6b" font-style="italic">
+          "정/부"는 주는가·빼는가, "강화/처벌"은 행동이 늘어나는가·줄어드는가.
+        </text>
+      </svg>
+      <figcaption>조작적 조건형성의 4가지 — '정/부'는 자극의 제시 여부, '강화/처벌'은 행동 변화 방향.</figcaption>
+    </figure>
+
+    <div class="warn">
+      <span class="label">흔한 오해</span>
+      "부적 강화"를 <b>처벌</b>이라고 오해하는 경우가 많습니다. 하지만 '부적'은 '빼앗는다'는 뜻이고, '강화'는 '행동이 늘어난다'는 뜻입니다. <b>싫은 것을 없애주니 행동이 늘어난다</b> — 이게 부적 강화입니다.
+    </div>
+
+    <h3>4.3 관찰학습 — 반두라의 보보인형</h3>
+    <p>파블로프와 스키너 모두 학습을 '직접 경험'으로 설명했습니다. 하지만 <strong>반두라</strong>는 물었습니다. "사람은 직접 해보지 않고도, 남이 하는 걸 보기만 해도 배우지 않는가?"</p>
+    <p>1961년 <strong>보보인형 실험</strong>: 아이들에게 어른이 인형을 때리는 영상을 보여줬더니, 아이들도 인형에게 공격적으로 행동했습니다. <b>관찰만으로 학습이 일어난다</b>는 증거였죠.</p>
+    <p>관찰학습의 4단계: <strong>주의</strong>(봐야 함) → <strong>파지</strong>(기억해야 함) → <strong>운동 재생</strong>(몸으로 따라 해야 함) → <strong>동기</strong>(할 이유가 있어야 함).</p>
+    <div class="example">
+      <span class="label">일상 예시</span>
+      아이가 부모의 말투를 따라 하고, 운전 배울 때 유튜브 영상을 먼저 보고, 신입사원이 선배의 업무 방식을 보고 따라 하는 것 — 모두 관찰학습입니다.
+    </div>
+  </section>
+
+  <div class="page-nav-bottom">
+    <a href="ch03.html">← 이전</a>
+    <div class="spacer"></div>
+    <a href="ch05.html">다음 →</a>
+  </div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한마디로 하면?</h3>
+  <p>학습은 단순히 '공부'가 아니에요! <b>경험을 통해 행동이 오래 바뀌는 것</b>이 바로 학습이에요. 강아지가 앉기를 배우는 것도, 내가 젓가락질을 익힌 것도 전부 학습이랍니다. 🐶🥢</p>
+
+  <h3>🤔 이게 왜 재밌냐면</h3>
+  <p>우리는 매일 세 가지 방법으로 배우고 있어요.</p>
+  <ul>
+    <li>🍖 강아지가 간식 봉지 소리만 들어도 침 흘리기 → <b>고전적 조건형성</b></li>
+    <li>🎮 게임에서 보상을 받으려고 미션을 반복하기 → <b>조작적 조건형성</b></li>
+    <li>👀 친구가 자전거 타는 걸 보고 따라 배우기 → <b>관찰학습</b></li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 이 단어만 알면 돼!</h4>
+    <ul>
+      <li><strong>조건형성(Conditioning)</strong>: 자극과 반응을 연결해서 배우기</li>
+      <li><strong>강화(Reinforcement)</strong>: 행동을 <b>늘리는</b> 결과 (보상)</li>
+      <li><strong>처벌(Punishment)</strong>: 행동을 <b>줄이는</b> 결과</li>
+      <li><strong>관찰학습(Observational Learning)</strong>: 남이 하는 걸 보고 배우기</li>
+      <li><strong>소거(Extinction)</strong>: 보상이 사라지면 배운 반응이 점점 약해지는 것</li>
+    </ul>
+  </div>
+
+  <h3>📖 쉽게 풀어볼게!</h3>
+  <p>옛날 러시아의 파블로프 박사가 개를 연구하다가 신기한 걸 발견했어요. 밥 주기도 전에 <b>발자국 소리</b>만 들어도 개가 침을 흘린 거예요! 🐕 소리와 밥이 자꾸 함께 나오니까, 개 머릿속에서 둘이 딱 붙어버린 거죠. 우리도 레몬 사진만 봐도 입에 침이 고이잖아요? 똑같은 원리예요! 🍋</p>
+  <p>우리 뇌는 <b>패턴 찾기 선수</b>예요. 보상이 따라온 행동은 강해지고, 벌이 따라온 행동은 줄어들어요. 재밌는 건, 보상을 <b>가끔씩</b> 줄 때 행동이 제일 끈질겨진다는 거예요. 슬롯머신을 계속 당기게 되는 이유랑 똑같답니다! 🎰</p>
+
+  <div class="study-tip">
+    <strong>💡 이렇게 해봐:</strong> 새 습관을 만들고 싶으면 작은 행동에 <b>즉시 작은 보상</b>을 붙여줘요. 큰 상보다 '자주' 주는 게 훨씬 효과적이에요!
+  </div>
+
+  <h3>✅ 오늘의 정리</h3>
+  <ul>
+    <li>학습 = 경험으로 행동이 오래 바뀌는 것 🔁</li>
+    <li>고전적·조작적·관찰학습, 이 셋이 핵심!</li>
+    <li>강화는 행동을 늘리고, 처벌은 줄여요.</li>
+    <li>가끔 주는 보상이 행동을 제일 끈질기게 만들어요.</li>
+    <li>보고 따라 하는 것도 아주 강력한 배움이에요.</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>고전적 조건형성은 무조건자극(US)과 중성자극을 반복적으로 짝지어 중성자극이 조건자극(CS)이 되고, 조건반응(CR)을 유발하게 만드는 과정입니다. 핵심 변수는 시간 인접성과 우연성(contingency)이며, 단순한 동시 발생이 아니라 '자극이 결과를 예측한다'는 정보가 중요하다는 점을 레스콜라-와그너(Rescorla-Wagner) 모형이 정리했습니다. 조작적 조건형성은 손다이크의 효과의 법칙에서 출발해 스키너가 체계화했으며, 정적 강화·부적 강화·정적 처벌·부적 처벌의 2x2 구조를 갖습니다. 강화 스케줄은 고정비율, 변동비율, 고정간격, 변동간격으로 나뉘는데, 변동비율 스케줄이 가장 높은 반응률과 소거 저항을 보입니다. 반두라의 사회학습 이론은 직접 경험 없이 모델 관찰만으로 학습이 가능함을 보여 주며, 주의-기억-운동재생-동기의 4단계가 필요합니다. 인지적 측면에서는 톨먼의 잠재학습과 인지지도, 그리고 메타학습(learning to learn)이 추가됩니다.</p>
+
+  <h3>고전 실험과 사례</h3>
+  <div class="info-card">
+    <h4>🧠 실험 1 — 파블로프의 종소리</h4>
+    <p>음식을 줄 때마다 종을 함께 울리자, 곧 종소리만 들어도 개가 침을 흘렸습니다. 무조건자극(음식)과 중성자극(종)이 짝지어져 종이 조건자극으로 변했음을 보여 주는 학습 연구의 출발점입니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>🧠 실험 2 — 반두라의 보보인형</h4>
+    <p>아이들에게 어른이 인형을 때리는 영상을 보여 준 뒤 같은 방에 두자, 영상을 본 아이들이 인형을 더 공격했습니다. 폭력적 미디어가 행동에 영향을 줄 수 있다는 사회학습 이론의 결정적 증거입니다.</p>
+  </div>
+
+  <h3>임상/실생활 응용</h3>
+  <p>임상에서는 공포증 치료에 노출치료(체계적 둔감화)가 사용되고, 토큰 경제는 정신과 병동, 학교, 자폐 아동 행동 치료에서 강화 원리를 응용합니다. 마케팅은 브랜드를 즐거운 이미지와 짝지어 호감을 형성하고, 게임 디자인은 변동비율 스케줄로 사용자의 몰입을 극대화합니다. 운동 코칭에서는 즉각 피드백과 모델링을 결합해 기술 습득을 가속화합니다.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ 자주 하는 오해:</strong> 처벌이 학습의 강력한 도구라는 생각은 부분적입니다. 처벌은 어떤 행동을 해야 하는지 가르치지 못하며, 두려움과 공격성을 유발할 수 있습니다. 바람직한 행동에 대한 강화가 더 효과적입니다.
+  </div>
+
+<h3>전문가 레벨</h3>
+  <p>현대 학습 이론은 행동주의를 강화학습(reinforcement learning)이라는 계산 틀로 일반화했습니다. 시간차 학습(TD learning)은 도파민 신호가 보상 예측 오차를 인코딩한다는 슐츠의 발견(1997)과 정확히 부합하며, 모형 기반(model-based)과 모형 자유(model-free) 학습의 이중체계 가설로 발전했습니다. 측좌핵, 복측피개영역(VTA), 안와전두피질, 배외측 전전두피질이 가치 평가와 행동 선택의 회로를 구성하고, 해마는 모델 기반 추론에 필수적입니다. 한편 메타학습(learning to learn)은 사전 지식을 새로운 과제에 빠르게 전이하는 능력을 다루며, AI의 few-shot 학습 알고리즘에 영감을 주었습니다. 임상에서는 두려움 학습의 신경회로(편도체-내측전전두엽)가 PTSD와 불안장애 치료의 표적이 되며, 재공고화 차단(reconsolidation blockade)은 외상 기억을 약화시키는 새 패러다임입니다.</p>
+
+  <h3>측정과 통계</h3>
+  <p>학습곡선은 누적반응 그래프로 표현되며, 멱함수와 지수함수 적합으로 학습률을 추정합니다. 강화학습 모형 적합에는 학습률(α), 할인율(γ), 탐색-활용 균형(softmax temperature) 같은 자유 파라미터가 사용되고, 베이지안 위계 모형으로 개인차를 추정합니다. 신호탐지이론과 DDM(drift-diffusion model)은 의사결정의 정확도와 반응시간을 통합 분석합니다.</p>
+
+  <h3>최신 연구</h3>
+  <p>첫째, 인간 RL과 머신 RL의 융합: AlphaGo, MuZero의 알고리즘이 인간 학습 모델로 역수입되고 있습니다. 둘째, 사회적 학습의 신경기제: 거울뉴런 시스템, 멘탈라이징 네트워크가 모방과 가르침의 토대가 됩니다. 셋째, 디지털 학습 분석(learning analytics): 클릭 스트림과 적응형 학습 시스템으로 개인 맞춤 교수법이 자동 생성됩니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li><strong>행동신경과학</strong>: 학습의 시냅스·회로 기제</li>
+    <li><strong>교육공학</strong>: 학습 원리의 교실 응용</li>
+    <li><strong>강화학습 AI</strong>: 보상 기반 알고리즘 설계</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>책: 『Reinforcement Learning: An Introduction』(Sutton & Barto)</li>
+    <li>책: 『The Power of Habit』(Duhigg)</li>
+    <li>저널: Journal of Experimental Psychology: Animal Learning</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>🎓 사고 실험:</strong> 만약 모든 행동에 처벌이 없는 사회를 설계한다면, 학습과 협력은 어떻게 유지될까요? 강화만으로 사회를 운영할 수 있는지 생각해 보세요.
+  </div>
+</div>
+
+  <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+
+<h2>🕹️ 직접 해보기 — 학습 이론 분류하기</h2>
+<p>키워드를 알맞은 학습 이론으로 분류해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#d97757","prompt":"각 키워드를 해당하는 학습 이론으로 분류하세요","groups":[{"name":"고전적 조건형성(파블로프)","items":["종소리(CS)","무조건 자극(US)"]},{"name":"조작적 조건형성(스키너)","items":["강화","처벌","스키너 상자"]},{"name":"관찰학습(반두라)","items":["보보인형","주의·파지·재생·동기"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d97757","questions":[{"q":"종소리에 침 흘리는 개 실험 학자는?","choices":["파블로프","스키너","반두라","왓슨"],"answer":0},{"q":"반응 뒤 결과로 행동이 변하는 학습은?","choices":["고전적 조건형성","조작적 조건형성","관찰학습","잠재학습"],"answer":1},{"q":"보보인형 실험을 한 학자는?","choices":["파블로프","프로이트","반두라","스키너"],"answer":2},{"q":"싫은 것을 없애 행동이 느는 것은?","choices":["정적 강화","정적 처벌","부적 처벌","부적 강화"],"answer":3},{"q":"관찰학습 4단계 중 첫 단계는?","choices":["동기","주의","파지","운동 재생"],"answer":1}]};</script>
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>

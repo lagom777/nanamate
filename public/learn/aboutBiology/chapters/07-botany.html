@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7. 식물학 — aboutBiology</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🧬 표지 · 소개</a></li>
+    <li><a href="01-cell.html">1. 세포 · 생명의 단위</a></li>
+    <li><a href="02-dna.html">2. DNA와 유전학</a></li>
+    <li><a href="03-evolution.html">3. 진화</a></li>
+    <li><a href="04-ecology.html">4. 생태학</a></li>
+    <li><a href="05-physiology.html">5. 인체생리학</a></li>
+    <li><a href="06-microbiology.html">6. 미생물학</a></li>
+    <li><a href="07-botany.html" style="color:var(--accent);font-weight:600;">7. 식물학</a></li>
+    <li><a href="08-zoology.html">8. 동물학</a></li>
+    <li><a href="09-biotech.html">9. 생명공학</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>식물학:<br><em>초록</em> 생명</h1>
+  <p class="authors">Chapter 7 — Botany: Green Life</p>
+  <p class="affiliation">3D 광합성 시뮬레이터 포함</p>
+</header>
+
+<h2>식물의 세계</h2>
+<p>식물은 지구 생태계의 근간을 이루는 생명체입니다. 광합성을 통해 태양 에너지를 화학 에너지로 전환하며, 지구 대기의 산소를 공급하고, 모든 먹이사슬의 출발점이 됩니다. 약 50만 종 이상의 식물이 지구 곳곳에 분포하며, 사막에서 열대우림, 극지방에서 깊은 바다까지 다양한 환경에 적응하여 살아가고 있습니다.</p>
+
+<div class="info-card">
+  <h4>식물 세포의 특징</h4>
+  <p>식물 세포는 동물 세포와 구별되는 세 가지 핵심 구조를 가지고 있습니다:</p>
+  <ul>
+    <li><strong>세포벽</strong> — 셀룰로오스로 구성된 단단한 외벽으로 세포의 형태를 유지하고 보호합니다</li>
+    <li><strong>엽록체</strong> — 엽록소를 포함하며 광합성이 일어나는 이중막 세포소기관입니다</li>
+    <li><strong>액포</strong> — 세포 부피의 90%까지 차지할 수 있는 거대한 저장 공간으로, 물과 영양분을 저장합니다</li>
+  </ul>
+</div>
+
+<div class="info-card ecology">
+  <h4>광합성 — 빛 에너지를 화학 에너지로</h4>
+  <p>광합성은 식물이 빛 에너지를 이용해 이산화탄소와 물을 포도당과 산소로 전환하는 과정입니다. 이 반응은 엽록체의 틸라코이드 막에서 시작되어 스트로마에서 완성됩니다. 명반응에서는 물을 분해하여 ATP와 NADPH를 생성하고, 캘빈 회로(암반응)에서는 이를 이용해 CO₂를 고정하여 포도당을 합성합니다.</p>
+</div>
+
+<div class="formula">
+  6CO₂ + 6H₂O + 빛에너지 → C₆H₁₂O₆ + 6O₂
+</div>
+
+<div class="scene-3d" id="photosynthesis-scene"></div>
+<div class="scene-controls">
+  <label>빛 강도: <input type="range" id="light-intensity" min="0" max="100" value="50"></label>
+  <label>포도당: <span id="glucose-count">0</span></label>
+  <button id="daynight-btn">☀️ 낮/밤 전환</button>
+</div>
+<span class="interact-hint">🌿 빛 강도를 조절하여 광합성 속도를 관찰하세요</span>
+
+<h2>식물의 구조</h2>
+<p>식물의 몸은 크게 뿌리, 줄기, 잎의 세 기관으로 나뉩니다. <strong>뿌리</strong>는 토양 속에서 물과 무기 양분을 흡수하고, 식물체를 단단히 고정합니다. 뿌리털은 표면적을 극대화하여 흡수 효율을 높입니다. <strong>줄기</strong>는 물과 양분의 운반 통로이자 식물체를 지탱하는 구조물입니다. 물관(xylem)은 물을 위로 운반하고, 체관(phloem)은 광합성 산물을 아래로 운반합니다. <strong>잎</strong>은 광합성이 일어나는 주된 장소로, 엽록체가 집중되어 있으며 기공을 통해 가스 교환을 합니다.</p>
+
+<h3>식물의 생식</h3>
+<div class="info-card dna">
+  <h4>꽃의 구조와 수분</h4>
+  <p>꽃은 식물의 유성 생식 기관입니다. 수술에서 만들어진 꽃가루가 암술의 주두에 도달하는 과정을 수분이라 합니다. 수분 매개체로는 바람, 곤충, 새, 물 등이 있으며, 꽃의 색깔, 향기, 꿀은 곤충을 유인하기 위한 적응의 결과입니다. 수분 후 꽃가루관이 자라 배낭까지 도달하면 수정이 이루어지고, 씨앗과 열매가 발달합니다.</p>
+</div>
+
+<div class="formula">
+  물의 상승: 증산작용 + 모세관 현상 + 근압
+</div>
+
+<p>식물은 지구 생태계에서 없어서는 안 될 존재입니다. 산소를 공급하고, 탄소를 고정하며, 토양 침식을 방지합니다. 인류의 식량, 의약품, 건축 자재의 대부분이 식물에서 유래합니다. 식물의 다양성을 보전하는 것은 곧 인류의 미래를 보전하는 일입니다.</p>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🔍 한 줄로 이해하기</h3><p>식물학은 "햇빛으로 스스로 밥을 지어 먹고, 한자리에 가만히 서 있는 생물"인 식물의 구조·기능·진화를 공부하는 학문이에요! 🌱</p>
+  <h3>🤔 왜 중요할까?</h3><p>지구의 산소는 대부분 식물(과 조류)이 만들어요. 🌍 우리가 매일 먹는 쌀·밀·옥수수, 마시는 공기, 입는 면 옷, 사는 나무 집까지 전부 식물에서 왔죠. 게다가 기후 변화 시대에 식물은 이산화탄소를 붙잡아 두는 "탄소 저장고" 역할까지 한답니다!</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4><ul><li><strong>광합성</strong>: 빛 + CO₂ + H₂O → 포도당 + O₂ (식물의 요리법!)</li><li><strong>증산작용</strong>: 잎에서 물이 수증기로 빠져나가는 것</li><li><strong>관다발</strong>: 물(물관)과 양분(체관)이 지나가는 통로</li><li><strong>수분</strong>: 꽃가루가 암술에 도착하는 것</li><li><strong>호르몬</strong>: 옥신·지베렐린·에틸렌 같은 식물의 신호 물질</li></ul></div>
+  <h3>💡 쉽게 풀어보기</h3><p>식물은 움직일 수 없으니까 한 자리에서 모든 걸 해결해야 해요. 그래서 햇빛을 받으려고 위로 쭉쭉 자라고, 물을 얻으려고 아래로 뿌리를 뻗어요. 🌿 잎에서는 광합성으로 햇빛을 포도당(화학 에너지)으로 바꾸고, 동시에 산소를 내뿜어 동물이 숨 쉴 수 있게 해 줘요. 꽃은 번식을 위한 기관이고, 곤충·바람·새가 꽃가루를 옮겨 주는 배달부(수분 매개자) 역할을 한답니다. 🐝</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 집에서 직접 채소를 길러 보세요! 빛·물·온도 중 딱 하나만 바꿔도 며칠 안에 자라는 차이가 보여요. 세상에서 가장 생생한 식물학 실험이랍니다! 🪴</div>
+  <h3>📌 한 페이지 요약</h3><ul><li>광합성으로 스스로 양분을 만들어요</li><li>뿌리·줄기·잎·꽃·열매가 기본 구조</li><li>물관-체관(관다발)이 운반 시스템</li><li>호르몬으로 성장·개화·열매를 조절</li><li>지구 산소와 탄소 순환의 핵심</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>광합성은 명반응(틸라코이드 막)과 암반응(스트로마)으로 나뉩니다. 명반응에서는 광계 II와 광계 I가 물을 분해해 O₂를 내보내고 ATP·NADPH를 만듭니다. 암반응(캘빈 회로)은 이 ATP·NADPH로 CO₂를 고정해 G3P를 만듭니다. C3·C4·CAM 광합성은 환경 적응의 결과로, C4(옥수수·사탕수수)는 광호흡을 줄여 고온에서 효율이 좋고, CAM(다육식물)은 야간에 CO₂를 흡수해 건조 환경에 적응합니다. 물의 상승은 증산작용에 의한 음압이 주된 동력이고, 모세관과 근압이 보조합니다.</p>
+  <h3>핵심 공식과 원리</h3><div class="formula">6CO₂ + 6H₂O + 빛 → C₆H₁₂O₆ + 6O₂</div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1: 옥신과 굴광성</h4><p>옥신은 식물 줄기의 그늘 쪽에 축적되어 그쪽 세포 신장 → 식물이 빛 쪽으로 굽음.</p></div>
+  <div class="info-card"><h4>📐 예제 2: 에틸렌과 후숙</h4><p>바나나를 사과와 함께 두면 사과의 에틸렌이 바나나의 후숙을 가속화.</p></div>
+  <h3>응용 사례</h3><p>스마트 농업은 수경·LED·정밀 관수로 단위 면적 수확량을 5-10배 끌어올립니다. CRISPR 작물(유전자 가위 토마토)이 일본·미국에서 상용화되었습니다. 한국은 K-푸드 수출 확대와 함께 종자 주권·기능성 작물 연구가 활발합니다. 도시 농업·옥상 정원은 도시 열섬을 완화합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 광합성과 호흡은 동시에 일어납니다. 밤에는 광합성이 멈추지만 호흡은 계속되어 식물도 CO₂를 내뿜습니다.</div>
+
+<h3>전문가 레벨 이해</h3><p>현대 식물학은 분자생물학과 합쳐져 식물 시스템 생물학으로 발전했습니다. 광합성의 양자 효율은 거의 100%에 가깝게 측정되며, 빛 포집 단백질 복합체의 결맞음(quantum coherence) 가설이 활발히 연구됩니다. 식물 면역은 PTI(패턴 면역)와 ETI(이펙터 면역)의 2-층 모형으로 정리되었고, 식물도 휘발성 화합물·균사 네트워크로 서로 신호를 주고받음이 밝혀졌습니다. RuBisCO 효율 개선, 광호흡 우회, C4 회로 도입 등 합성 광합성 연구가 진행 중이고, 인공 광합성(태양광 → 연료)은 화학·재료과학과 융합되는 차세대 영역입니다.</p>
+  <h3>최신 연구·동향</h3><p>2025-2026 식물 단일세포 옴믹스와 공간 전사체학으로 잎·뿌리 발달 지도를 정밀하게 그리고 있습니다. 기후 회복력 작물(가뭄·염해 내성) 연구가 속도를 내고, CRISPR-Cas12·base editing이 작물 개량의 표준 도구가 되었습니다. 한국 농진청은 K-종자, 기능성 쌀 개발에 집중합니다.</p>
+  <h3>관련 분야</h3><ul><li>식물 분자생물학과 농업 생명공학</li><li>식물 생태학과 생물지리학</li><li>합성 광합성과 식량 안보</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>Taiz & Zeiger, "Plant Physiology and Development"</li><li>The Plant Cell, Nature Plants</li><li>Kew Royal Botanic Gardens 온라인 자료</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> C3와 C4 식물의 일중 광합성 효율을 광·온도·CO₂ 조건별로 모델링하고, 한국 기후 변화 시나리오에서 어떤 작물이 유리해지는지 분석하세요.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 식물학 용어 상황 판단</h2>
+<p>각 용어와 알맞은 설명을 연결해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#00e676","prompt":"용어와 설명을 짝지으세요","pairs":[{"term":"광합성","def":"빛으로 포도당을 합성"},{"term":"엽록체","def":"광합성이 일어나는 소기관"},{"term":"물관","def":"물을 위로 운반"},{"term":"체관","def":"광합성 산물을 운반"},{"term":"증산작용","def":"잎에서 물이 빠져나감"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e676","questions":[{"q":"빛으로 포도당을 만드는 과정은?","choices":["광합성","호흡","증산","발효"],"answer":0},{"q":"광합성이 일어나는 소기관은?","choices":["액포","엽록체","세포벽","핵"],"answer":1},{"q":"물을 위로 운반하는 통로는?","choices":["체관","물관","기공","뿌리털"],"answer":1},{"q":"광합성으로 나오는 기체는?","choices":["이산화탄소","질소","수소","산소"],"answer":3},{"q":"식물을 빛 쪽으로 굽게 하는 호르몬은?","choices":["에틸렌","지베렐린","옥신","아브시스산"],"answer":2}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  var container = document.getElementById('photosynthesis-scene');
+  if (!container) return;
+
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x87CEEB);
+  var camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 4, 12);
+  camera.lookAt(0, 0, 0);
+  var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  /* Lighting */
+  var ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(ambientLight);
+  var sunLight = new THREE.DirectionalLight(0xffdd44, 1.0);
+  sunLight.position.set(5, 10, 5);
+  scene.add(sunLight);
+
+  /* Leaf – elliptical disc */
+  var leafShape = new THREE.Shape();
+  leafShape.moveTo(0, -2);
+  leafShape.quadraticCurveTo(2.5, -1, 2, 1);
+  leafShape.quadraticCurveTo(0.5, 2.5, 0, 2.5);
+  leafShape.quadraticCurveTo(-0.5, 2.5, -2, 1);
+  leafShape.quadraticCurveTo(-2.5, -1, 0, -2);
+  var leafGeo = new THREE.ShapeGeometry(leafShape, 32);
+  var leafMat = new THREE.MeshPhongMaterial({
+    color: 0x22aa22, side: THREE.DoubleSide,
+    transparent: true, opacity: 0.85, shininess: 30
+  });
+  var leaf = new THREE.Mesh(leafGeo, leafMat);
+  leaf.rotation.x = -Math.PI / 6;
+  scene.add(leaf);
+
+  /* Leaf vein */
+  var veinMat = new THREE.LineBasicMaterial({ color: 0x116611 });
+  var veinGeo = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(0, -1.8, 0.01), new THREE.Vector3(0, 2.3, 0.01)
+  ]);
+  var vein = new THREE.Line(veinGeo, veinMat);
+  vein.rotation.x = -Math.PI / 6;
+  scene.add(vein);
+
+  /* Particle arrays */
+  var photons = [], waterP = [], co2P = [], o2P = [], glucoseP = [];
+  var glucoseCount = 0, lightIntensity = 50, isDay = true;
+  var photonTimer = 0, reactionTimer = 0;
+
+  var glucoseSpan = document.getElementById('glucose-count');
+  var slider = document.getElementById('light-intensity');
+  var daynightBtn = document.getElementById('daynight-btn');
+
+  slider.addEventListener('input', function() { lightIntensity = parseInt(this.value); });
+
+  daynightBtn.addEventListener('click', function() {
+    isDay = !isDay;
+    this.textContent = isDay ? '☀️ 낮/밤 전환' : '🌙 낮/밤 전환';
+    scene.background = new THREE.Color(isDay ? 0x87CEEB : 0x1a1a3e);
+    sunLight.intensity = isDay ? 1.0 : 0.1;
+    ambientLight.intensity = isDay ? 0.5 : 0.12;
+  });
+
+  function mkParticle(color, size) {
+    var g = new THREE.SphereGeometry(size, 8, 8);
+    var m = new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 0.9 });
+    return new THREE.Mesh(g, m);
+  }
+
+  function spawn(arr, color, size, x, y, z, vy, life) {
+    var p = mkParticle(color, size);
+    p.position.set(x, y, z);
+    p.userData = { vy: vy, vx: (Math.random() - 0.5) * 0.01, life: life };
+    scene.add(p);
+    arr.push(p);
+  }
+
+  function kill(arr, i) { scene.remove(arr[i]); arr.splice(i, 1); }
+
+  /* Mouse drag rotation */
+  var md = false, px = 0, py = 0;
+  container.addEventListener('mousedown', function(e) { md = true; px = e.clientX; py = e.clientY; });
+  container.addEventListener('mouseup', function() { md = false; });
+  container.addEventListener('mouseleave', function() { md = false; });
+  container.addEventListener('mousemove', function(e) {
+    if (!md) return;
+    scene.rotation.y += (e.clientX - px) * 0.005;
+    scene.rotation.x += (e.clientY - py) * 0.005;
+    px = e.clientX; py = e.clientY;
+  });
+  container.addEventListener('touchstart', function(e) { px = e.touches[0].clientX; py = e.touches[0].clientY; });
+  container.addEventListener('touchmove', function(e) {
+    scene.rotation.y += (e.touches[0].clientX - px) * 0.005;
+    scene.rotation.x += (e.touches[0].clientY - py) * 0.005;
+    px = e.touches[0].clientX; py = e.touches[0].clientY;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    var eff = isDay ? lightIntensity : lightIntensity * 0.05;
+    var rate = eff / 100;
+
+    /* Spawn photons */
+    photonTimer++;
+    if (photonTimer > Math.max(1, 6 - rate * 5) && photons.length < 60) {
+      spawn(photons, 0xffdd00, 0.12,
+        (Math.random() - 0.5) * 4, 8, (Math.random() - 0.5) * 2,
+        -0.05 - Math.random() * 0.03, 220);
+      photonTimer = 0;
+    }
+
+    /* Update photons */
+    for (var i = photons.length - 1; i >= 0; i--) {
+      var p = photons[i];
+      p.position.y += p.userData.vy;
+      p.userData.life--;
+      if (p.position.y < 1.2 && p.position.y > -0.8 && Math.abs(p.position.x) < 2.2) {
+        kill(photons, i);
+        if (Math.random() < 0.5) spawn(waterP, 0x3388ff, 0.1, (Math.random()-0.5)*3, -5, (Math.random()-0.5)*2, 0.04+Math.random()*0.02, 180);
+        if (Math.random() < 0.5) spawn(co2P, 0xff3333, 0.08, (Math.random()-0.5)*4, 7, (Math.random()-0.5)*2, -0.03-Math.random()*0.02, 200);
+        reactionTimer++;
+      } else if (p.userData.life <= 0 || p.position.y < -6) {
+        kill(photons, i);
+      }
+    }
+
+    /* Update water */
+    for (var i = waterP.length - 1; i >= 0; i--) {
+      waterP[i].position.y += waterP[i].userData.vy;
+      waterP[i].userData.life--;
+      if (waterP[i].position.y > 0.5 || waterP[i].userData.life <= 0) kill(waterP, i);
+    }
+
+    /* Update CO2 */
+    for (var i = co2P.length - 1; i >= 0; i--) {
+      co2P[i].position.y += co2P[i].userData.vy;
+      co2P[i].userData.life--;
+      if (co2P[i].position.y < 1.2 || co2P[i].userData.life <= 0) kill(co2P, i);
+    }
+
+    /* Produce outputs */
+    if (reactionTimer >= 3) {
+      reactionTimer = 0;
+      spawn(o2P, 0x44ff88, 0.1, (Math.random()-0.5)*2, 1, (Math.random()-0.5)*1, 0.03+Math.random()*0.02, 200);
+      spawn(o2P, 0x44ff88, 0.1, (Math.random()-0.5)*2, 1, (Math.random()-0.5)*1, 0.03+Math.random()*0.02, 200);
+      if (Math.random() < 0.4) {
+        spawn(glucoseP, 0xff8800, 0.15, (Math.random()-0.5)*2, 0, (Math.random()-0.5)*1, -0.02, 300);
+        glucoseCount++;
+        glucoseSpan.textContent = glucoseCount;
+      }
+    }
+
+    /* Update O2 */
+    for (var i = o2P.length - 1; i >= 0; i--) {
+      o2P[i].position.y += o2P[i].userData.vy;
+      o2P[i].position.x += o2P[i].userData.vx || 0;
+      o2P[i].userData.life--;
+      o2P[i].material.opacity = Math.max(0, o2P[i].userData.life / 200);
+      if (o2P[i].userData.life <= 0 || o2P[i].position.y > 9) kill(o2P, i);
+    }
+
+    /* Update glucose */
+    for (var i = glucoseP.length - 1; i >= 0; i--) {
+      var g = glucoseP[i];
+      if (g.position.y > -3.5) g.position.y += g.userData.vy;
+      g.userData.life--;
+      if (g.userData.life <= 0) kill(glucoseP, i);
+    }
+
+    /* Leaf glow */
+    leafMat.emissive = new THREE.Color(0x005500);
+    leafMat.emissiveIntensity = 0.1 + rate * 0.3;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', function() {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

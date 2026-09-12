@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9장. 자원과 환경</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🌍 표지 · 소개</a></li>
+    <li><a href="01-structure.html">1. 지구의 구조</a></li>
+    <li><a href="02-plate-tectonics.html">2. 판구조론</a></li>
+    <li><a href="03-minerals-rocks.html">3. 광물과 암석</a></li>
+    <li><a href="04-atmosphere.html">4. 대기과학</a></li>
+    <li><a href="05-oceanography.html">5. 해양학</a></li>
+    <li><a href="06-climate-change.html">6. 기후변화</a></li>
+    <li><a href="07-geological-time.html">7. 지질시대</a></li>
+    <li><a href="08-natural-disasters.html">8. 자연재해</a></li>
+    <li><a href="09-resources-environment.html">9. 자원과 환경</a></li>
+  </ol>
+</aside>
+<main>
+<h2>9. 자원과 환경</h2>
+
+<div class="info-box">
+<p><strong>지구의 자원은 유한합니다.</strong> 에너지 자원, 광물 자원, 수자원 등 인류 문명의 기반이 되는 자원들의 형성 과정과 지속가능한 이용 방법을 이해하는 것이 중요합니다.</p>
+<p>아래 3D 시각화에서 전 세계 자원 분포를 탐색해보세요.</p>
+</div>
+
+<div class="threejs-container" data-label="지구 자원 분포" id="resource-globe" style="height:500px;">
+  <div class="threejs-controls">
+    <button id="btn-fossil">화석연료</button>
+    <button id="btn-mineral-res">광물자원</button>
+    <button id="btn-water">수자원</button>
+    <button id="btn-renewable">재생에너지</button>
+  </div>
+  <div class="threejs-info" id="resource-info">화석연료: 석유, 천연가스, 석탄 분포</div>
+</div>
+<p class="fig-title">그림 9.1. 전 지구 자원 분포 시각화. 자원 유형을 선택하여 분포 패턴을 관찰하세요.</p>
+
+<h3>9.1 에너지 자원</h3>
+<h4>화석연료</h4>
+<p>화석연료는 과거 생물의 유해가 지질학적 시간에 걸쳐 변환된 것입니다:</p>
+<ul>
+<li><strong>석탄</strong>: 고대 식물(주로 석탄기 숲) → 이탄 → 갈탄 → 역청탄 → 무연탄</li>
+<li><strong>석유</strong>: 해양 미생물 유해 → 케로젠 → 원유 (근원암 → 저류암 이동)</li>
+<li><strong>천연가스</strong>: 석유와 유사한 과정, 더 높은 온도/압력에서 형성</li>
+</ul>
+
+<h4>재생에너지</h4>
+<ul>
+<li><strong>태양에너지</strong>: 태양 복사 이용 (광전지, 태양열)</li>
+<li><strong>풍력</strong>: 대기 순환(기압 차)에 의한 바람 에너지</li>
+<li><strong>수력</strong>: 물의 위치에너지 → 전기</li>
+<li><strong>지열</strong>: 지구 내부 열에너지 (아이슬란드, 뉴질랜드)</li>
+<li><strong>조력/파력</strong>: 달의 인력에 의한 조석, 해양 파도</li>
+</ul>
+
+<h3>9.2 광물 자원</h3>
+<p>광물 자원은 경제적 가치가 있는 광물의 집중 분포(광상)입니다.</p>
+<table>
+<thead><tr><th>광상 유형</th><th>형성 과정</th><th>대표 광물</th></tr></thead>
+<tbody>
+<tr><td>마그마 광상</td><td>마그마 냉각 시 분리</td><td>크롬, 백금, 니켈</td></tr>
+<tr><td>열수 광상</td><td>열수 용액에서 침전</td><td>금, 은, 구리, 아연</td></tr>
+<tr><td>퇴적 광상</td><td>풍화·퇴적 과정</td><td>철광석, 알루미늄(보크사이트)</td></tr>
+<tr><td>변성 광상</td><td>변성작용</td><td>석면, 활석, 대리석</td></tr>
+<tr><td>증발 광상</td><td>염수 증발</td><td>소금, 석고, 칼리</td></tr>
+</tbody>
+</table>
+
+<h3>9.3 수자원</h3>
+<p>지구의 물 중 담수는 약 2.5%에 불과하며, 그 중 대부분은 빙하나 심부 지하수에 저장되어 있습니다.</p>
+<ul>
+<li><strong>지표수</strong>: 하천, 호수 (접근 가능한 담수의 극소량)</li>
+<li><strong>지하수</strong>: 대수층에 저장 (농업·생활용수의 주요 원천)</li>
+<li><strong>빙하</strong>: 전체 담수의 ~69% (기후변화로 감소 중)</li>
+</ul>
+<p>물 순환(수문 순환): 증발 → 응결(구름) → 강수 → 유출/침투 → 해양으로 복귀</p>
+
+<h3>9.4 토양</h3>
+<p><strong>토양</strong>은 암석의 풍화산물, 유기물, 물, 공기의 혼합체로, 생태계의 기반입니다.</p>
+<ul>
+<li><strong>O층</strong>: 유기물층 (낙엽, 부식질)</li>
+<li><strong>A층</strong>: 표토 (유기물 풍부, 용탈 발생)</li>
+<li><strong>B층</strong>: 심토 (용탈된 물질 집적)</li>
+<li><strong>C층</strong>: 모재 (풍화된 기반암)</li>
+<li><strong>R층</strong>: 기반암</li>
+</ul>
+
+<h3>9.5 환경 문제와 지속가능성</h3>
+<ul>
+<li><strong>자원 고갈</strong>: 화석연료 유한성, 광물자원 감소, 지하수 과다 취수</li>
+<li><strong>환경오염</strong>: 대기·수질·토양 오염, 플라스틱 오염, 방사성 폐기물</li>
+<li><strong>생태계 파괴</strong>: 삼림 벌채, 서식지 단편화, 생물다양성 감소</li>
+<li><strong>지속가능한 발전</strong>: 미래 세대의 필요를 충족할 능력을 손상하지 않으면서 현재 세대의 필요를 충족하는 발전 (브룬트란트 보고서, 1987)</li>
+</ul>
+
+<h3>9.6 한국의 지질과 자원</h3>
+<ul>
+<li><strong>지질 특성</strong>: 선캄브리아 변성암(경기 변성암 복합체), 고생대 퇴적암(태백산 분지), 중생대 화강암·화산암</li>
+<li><strong>광물 자원</strong>: 텅스텐(상동), 석회석(충청·강원), 고령토, 규석</li>
+<li><strong>에너지</strong>: 화석연료 부족 → 수입 의존 / 재생에너지 확대 중</li>
+</ul>
+
+<div class="quiz-box">
+<h4>🧪 확인 문제</h4>
+<p>전체 담수의 약 69%가 저장되어 있는 곳은?</p>
+<div class="quiz-option" onclick="this.classList.add('wrong')">① 지하수</div>
+<div class="quiz-option" onclick="this.classList.add('wrong')">② 하천과 호수</div>
+<div class="quiz-option" onclick="this.classList.add('correct')">③ 빙하와 만년설</div>
+<div class="quiz-option" onclick="this.classList.add('wrong')">④ 대기 중 수증기</div>
+</div>
+
+<div class="chapter-nav">
+  <a href="08-natural-disasters.html">← 자연재해</a>
+  <a href="../index.html">표지로 →</a>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🌍 한 줄 요약!</h3>
+  <p>지구가 우리에게 주는 자원(에너지·금속·물·토양)은 한정돼 있어! 🌱 환경을 해치지 않고 슬기롭게 써야 해.</p>
+  <h3>🤔 왜 알아야 할까?</h3>
+  <p>전기차의 리튬, 휴대폰의 코발트, 태양광 패널의 실리콘은 전부 광물 자원이야! 매일 마시는 물은 지표수와 지하수에서 오고, 밥상의 곡식은 비옥한 토양에서 자라. 이 자원이 바닥나거나 오염되면 일상이 무너져. 그래서 자원과 환경 문제는 모두의 문제야.</p>
+  <div class="info-card"><h4>🌱 꼭 기억할 말</h4><ul>
+    <li><strong>화석연료</strong>: 석탄·석유·천연가스</li>
+    <li><strong>재생에너지</strong>: 태양·풍력·수력 등 고갈되지 않는 에너지</li>
+    <li><strong>지하수</strong>: 땅속 빈 공간에 저장된 물</li>
+    <li><strong>지속가능성</strong>: 미래 세대도 쓸 수 있게 자원을 관리하는 것</li>
+  </ul></div>
+  <h3>✨ 쉽게 풀어볼게!</h3>
+  <p>지구를 커다란 저금통이라고 생각해 봐! 🐷 수억 년 동안 햇빛 에너지가 식물에 차곡차곡 저장됐고, 그 식물이 죽어 땅속에 묻혀 석탄·석유·천연가스가 됐어. 그런데 우리는 이 저금통을 200년도 안 되는 사이에 절반 가까이 비웠어! 한 번 쓰면 다시 안 생겨서 이걸 '비재생' 자원이라고 해. 반대로 햇빛·바람·강물은 매일 새롭게 공급되니까 '재생' 자원이야. 광물 자원도 한정돼 있고, 광산을 파면 환경이 망가져. 물도 늘 많아 보이지만 깨끗한 마실 물은 지구 물의 1%도 안 돼! 흙도 한번 파괴되면 1cm가 다시 만들어지는 데 100년이나 걸려. 그래서 우리는 자원을 아끼고, 다시 쓰고, 재생에너지로 바꾸고, 환경을 지켜야 미래 세대도 살 수 있어!</p>
+  <div class="study-tip"><strong>💡 꿀팁:</strong> 'Reduce-Reuse-Recycle' 3R에 'Refuse-Repair' 두 개를 더한 5R을 오늘부터 일상에서 실천해 봐!</div>
+  <h3>📌 오늘의 정리</h3>
+  <ul>
+    <li>자원은 재생/비재생으로 구분</li>
+    <li>화석연료는 한정된 자원</li>
+    <li>재생에너지로의 전환이 핵심</li>
+    <li>물·토양·생태계 보호 필수</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>광상은 광물이 경제적으로 채광 가능한 농도로 농집된 곳을 말하며, 마그마 분화·열수 작용·풍화·퇴적 등 다양한 과정으로 형성됩니다. 정마그마광상(크롬·백금족), 열수광상(구리·금·은), 잔류광상(보크사이트), 퇴적광상(철광상·석탄), 사광상(다이아몬드·금)이 대표 유형입니다. 화석연료 형성에는 수백만 년이 필요해, 현재 사용 속도는 형성 속도보다 약 10⁶배 빠릅니다. 신재생에너지는 태양광·풍력·수력·지열·바이오매스로 분류되며, 발전단가(LCOE)가 화석연료와 경쟁력 있는 수준에 도달했습니다. 수자원은 지표수·지하수로 구성되고, 지하수 함양과 양수의 균형이 깨지면 지하수면이 하강해 지반 침하·해수 침입을 유발합니다. 토양은 모암 풍화와 유기물 축적으로 형성되며, A·B·C층의 단면 구조를 가집니다. 환경 오염은 대기·수질·토양·소음·방사능 등으로 분류되며, 각각 측정 지표와 규제 기준이 다릅니다.</p>
+  <h3>메커니즘과 모델</h3>
+  <div class="info-card"><h4>🌍 사례 1: 리튬과 에너지 전환</h4><p>전기차·ESS의 핵심 원료인 리튬은 페그마타이트 광상(호주)과 염호(칠레·아르헨티나) 두 형태로 채굴됩니다. 2024년 세계 수요는 2020년 대비 약 3배 증가했으며, 공급망 다변화와 재활용이 중요 이슈로 부상했습니다.</p></div>
+  <div class="info-card"><h4>🌍 사례 2: 한국의 자원 현황</h4><p>한국은 광물 자원이 부족해 대부분 수입에 의존(자급률 1% 미만)하지만, 동해 가스전(2004–2021)에서 천연가스 일부를 자체 생산했습니다. 최근 2025년 동해 심해 가스·석유 탐사가 새로운 주목을 받고 있습니다.</p></div>
+  <h3>관측 데이터</h3>
+  <p>국제에너지기구(IEA)와 USGS의 광물 통계는 매년 자원 생산·소비·매장량을 정량 보고합니다. 위성 기반 지하수 관측(GRACE/GRACE-FO)은 mm 단위 지구 중력 변화를 통해 대수층 변화량을 직접 측정합니다. 한국 환경부의 대기질 관측망(에어코리아)은 PM2.5·O₃·NO₂를 시간 단위로 공개하며, 글로벌 탄소 프로젝트는 매년 국가별 배출량과 흡수량을 발표합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> '재생에너지는 환경에 피해를 주지 않는다'는 단순화는 옳지 않습니다. 풍력·태양광 시설도 토지·생태계 영향을 주며, 배터리 광물 채굴도 환경 부담이 큽니다. 라이프사이클 평가(LCA)가 필요합니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>경제광상학에서 광체의 평가는 grade-tonnage 분포와 cut-off grade 결정으로 이루어지며, 광상 모델(porphyry copper, IOCG, VMS, MVT 등)에 따라 탐사 전략이 달라집니다. 화석연료의 P50/P10/P90 매장량 분류는 SPE-PRMS 기준에 따르며, 동해 가스전은 약 5,000억 ft³의 입증 매장량을 가졌었습니다. 에너지 전환 시나리오 분석에는 IEA Net Zero 2050, IPCC SSP1-1.9 같은 통합평가모델(IAM)이 사용되어 기술 보급 곡선과 탄소 가격을 추정합니다. 지하수 동역학은 다르시 법칙과 부시네스크 방정식으로 모델링하며, MODFLOW가 표준 도구입니다. 광물 임계자원(critical minerals)의 공급망 위험은 Herfindahl-Hirschman 지수와 USGS 위험 평가로 정량화되며, 미국 IRA·EU CRMA 같은 정책이 공급망 다변화를 추진합니다. 토양 탄소(SOC)는 4 per 1,000 이니셔티브의 핵심 대상으로, 농업 관행에 따라 연 0.4% 증가가 가능하다고 평가됩니다. 환경 영향평가(EIA)·전략환경평가(SEA)는 개발과 보전을 통합하는 제도적 도구이며, ESG 평가가 광산·에너지 기업에 의무화되는 추세입니다.</p>
+  <h3>핵심 모델</h3>
+  <div class="formula">다르시 법칙: q = -K · (dh/dl), q: 비유속, K: 수리전도도<br>허버트 곡선: P(t) = 2·P_max / [1 + cosh(b·(t − t_max))] (피크오일 모델)<br>발전단가(LCOE): LCOE = Σ(I_t + O_t + F_t)/(1+r)^t / Σ E_t/(1+r)^t<br>탄소 가격 모델 (DICE): 사회적 비용 = ∂C/∂E (한계 환경 비용)</div>
+  <h3>최신 연구</h3>
+  <p>2024년 IEA Renewables 보고서는 재생에너지 설치 용량이 2030년까지 3배 증가할 전망이라 분석했습니다. 직접 공기 포집(DAC)과 광물화 저장(in-situ mineralization in basalt) 같은 CDR 기술이 상용화되기 시작했으며, 아이슬란드 Climeworks Mammoth(2024)는 연 36,000톤 CO₂ 포집 규모로 가동 중입니다. 또한 심해저 망간단괴 채굴은 환경 영향 평가의 핵심 쟁점으로, 국제해저기구(ISA) 규정 제정이 진행 중입니다. 한국에서는 2025년 동해 심해 가스·석유 탐사(대왕고래 프로젝트)가 본격화되었습니다.</p>
+  <h3>관련 분야</h3>
+  <ul>
+    <li>경제광상학·자원공학</li>
+    <li>에너지시스템학 — 전력망·수소경제</li>
+    <li>수문지질학 — 지하수 관리</li>
+    <li>환경경제학·정책 — 탄소시장·ESG</li>
+  </ul>
+  <h3>추가 자료</h3>
+  <ul>
+    <li>Robb, L. (2020), <em>Introduction to Ore-Forming Processes</em></li>
+    <li>IEA World Energy Outlook (annual)</li>
+    <li>USGS Mineral Commodity Summaries (annual)</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 한국의 2050 탄소중립 시나리오에서 재생에너지 비중·전력 수요·CCUS 용량을 정합적으로 설계하고, 광물 임계자원 수요량을 산출해 공급망 위험을 평가해 보세요.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 에너지 분류하기</h2>
+<p>각 에너지를 화석연료와 재생에너지로 분류해보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#1565c0","prompt":"에너지를 화석연료·재생에너지로 분류하세요","groups":[{"name":"화석연료","items":["석탄","석유","천연가스"]},{"name":"재생에너지","items":["태양에너지","풍력","지열"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#1565c0","questions":[{"q":"지구의 물 중 담수의 비율은?","choices":["약 2.5%","약 10%","약 25%","약 50%"],"answer":0},{"q":"재생에너지가 아닌 것은?","choices":["태양광","석탄","풍력","지열"],"answer":1},{"q":"유기물이 풍부한 표토층은?","choices":["O층","B층","A층","R층"],"answer":2},{"q":"열수 광상의 대표 광물은?","choices":["크롬·백금","철광석","소금·석고","금·은·구리"],"answer":3},{"q":"석유의 근원 물질은?","choices":["고대 식물","해양 미생물 유해","광물 침전","토양 유기물"],"answer":1}]};</script>
+</main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  const container = document.getElementById('resource-globe');
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x050d18);
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 100);
+  camera.position.set(0, 1, 3.5);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  container.appendChild(renderer.domElement);
+
+  scene.add(new THREE.AmbientLight(0x404060, 0.5));
+  const light = new THREE.DirectionalLight(0xffffff, 0.8);
+  light.position.set(3, 2, 3);
+  scene.add(light);
+
+  const globeGroup = new THREE.Group();
+  scene.add(globeGroup);
+
+  // Earth globe
+  const earthGeo = new THREE.SphereGeometry(1, 64, 64);
+  const earthMat = new THREE.MeshPhongMaterial({
+    color: 0x1a237e, transparent: true, opacity: 0.6, shininess: 20
+  });
+  globeGroup.add(new THREE.Mesh(earthGeo, earthMat));
+
+  // Wireframe
+  const wireGeo = new THREE.SphereGeometry(1.001, 24, 24);
+  const wireMat = new THREE.MeshBasicMaterial({ color: 0x1565c0, wireframe: true, transparent: true, opacity: 0.2 });
+  globeGroup.add(new THREE.Mesh(wireGeo, wireMat));
+
+  // Resource markers
+  const resourceSets = {
+    fossil: [
+      { lat: 25, lon: 50, size: 0.08, label: '중동 석유' },
+      { lat: 60, lon: 70, size: 0.06, label: '러시아 천연가스' },
+      { lat: 35, lon: -100, size: 0.05, label: '미국 셰일' },
+      { lat: -20, lon: -50, size: 0.04, label: '브라질 심해유전' },
+      { lat: 35, lon: 110, size: 0.06, label: '중국 석탄' },
+      { lat: -25, lon: 135, size: 0.04, label: '호주 석탄' }
+    ],
+    mineral: [
+      { lat: -25, lon: 25, size: 0.07, label: '남아공 금/다이아몬드' },
+      { lat: -15, lon: -70, size: 0.06, label: '칠레 구리' },
+      { lat: -20, lon: 120, size: 0.06, label: '호주 철광석' },
+      { lat: 0, lon: 25, size: 0.05, label: '콩고 코발트' },
+      { lat: 35, lon: 105, size: 0.05, label: '중국 희토류' },
+      { lat: 60, lon: 100, size: 0.04, label: '러시아 니켈' }
+    ],
+    water: [
+      { lat: 0, lon: -60, size: 0.08, label: '아마존 유역' },
+      { lat: 50, lon: -90, size: 0.06, label: '오대호' },
+      { lat: 60, lon: 90, size: 0.07, label: '바이칼 호' },
+      { lat: -35, lon: -65, size: 0.04, label: '과라니 대수층' },
+      { lat: 30, lon: 80, size: 0.05, label: '히말라야 빙하' }
+    ],
+    renewable: [
+      { lat: 25, lon: 0, size: 0.07, label: '사하라 태양광' },
+      { lat: 55, lon: 5, size: 0.05, label: '북해 풍력' },
+      { lat: 65, lon: -20, size: 0.06, label: '아이슬란드 지열' },
+      { lat: -20, lon: 50, size: 0.04, label: '동아프리카 지열' },
+      { lat: 35, lon: -120, size: 0.04, label: '캘리포니아 태양광' }
+    ]
+  };
+
+  let currentMarkers = [];
+  const markerColor = {
+    fossil: 0xff5722,
+    mineral: 0xffd54f,
+    water: 0x42a5f5,
+    renewable: 0x66bb6a
+  };
+
+  function latLonToVec3(lat, lon, radius) {
+    const phi = (90 - lat) * Math.PI / 180;
+    const theta = (lon + 180) * Math.PI / 180;
+    return new THREE.Vector3(
+      -radius * Math.sin(phi) * Math.cos(theta),
+      radius * Math.cos(phi),
+      radius * Math.sin(phi) * Math.sin(theta)
+    );
+  }
+
+  function showResources(type) {
+    // Remove current markers
+    currentMarkers.forEach(m => globeGroup.remove(m));
+    currentMarkers = [];
+
+    const data = resourceSets[type];
+    const color = markerColor[type];
+
+    data.forEach(d => {
+      const pos = latLonToVec3(d.lat, d.lon, 1.02);
+      const geo = new THREE.SphereGeometry(d.size, 16, 16);
+      const mat = new THREE.MeshPhongMaterial({
+        color: color, emissive: color, emissiveIntensity: 0.5, transparent: true, opacity: 0.8
+      });
+      const marker = new THREE.Mesh(geo, mat);
+      marker.position.copy(pos);
+      globeGroup.add(marker);
+      currentMarkers.push(marker);
+
+      // Pulse ring
+      const ringGeo = new THREE.RingGeometry(d.size, d.size + 0.02, 16);
+      const ringMat = new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 0.4, side: THREE.DoubleSide });
+      const ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.position.copy(pos);
+      ring.lookAt(0, 0, 0);
+      ring.userData = { baseScale: 1, phase: Math.random() * Math.PI * 2 };
+      globeGroup.add(ring);
+      currentMarkers.push(ring);
+    });
+
+    const labels = { fossil: '화석연료: 석유, 천연가스, 석탄 분포', mineral: '광물자원: 금속·비금속 광물 분포', water: '수자원: 주요 담수 저장소', renewable: '재생에너지: 태양광, 풍력, 지열 잠재력' };
+    document.getElementById('resource-info').textContent = labels[type];
+  }
+
+  showResources('fossil');
+
+  document.getElementById('btn-fossil').addEventListener('click', () => showResources('fossil'));
+  document.getElementById('btn-mineral-res').addEventListener('click', () => showResources('mineral'));
+  document.getElementById('btn-water').addEventListener('click', () => showResources('water'));
+  document.getElementById('btn-renewable').addEventListener('click', () => showResources('renewable'));
+
+  // Mouse rotation
+  let isDragging = false, prevMouse = { x: 0, y: 0 };
+  container.addEventListener('mousedown', (e) => {
+    if (e.target.tagName === 'BUTTON') return;
+    isDragging = true; prevMouse = { x: e.clientX, y: e.clientY };
+  });
+  container.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    globeGroup.rotation.y += (e.clientX - prevMouse.x) * 0.01;
+    globeGroup.rotation.x += (e.clientY - prevMouse.y) * 0.01;
+    prevMouse = { x: e.clientX, y: e.clientY };
+  });
+  container.addEventListener('mouseup', () => { isDragging = false; });
+  container.addEventListener('mouseleave', () => { isDragging = false; });
+
+  let time = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    time += 0.02;
+
+    // Pulse markers
+    currentMarkers.forEach(m => {
+      if (m.userData && m.userData.baseScale) {
+        const s = 1 + Math.sin(time * 2 + m.userData.phase) * 0.3;
+        m.scale.set(s, s, s);
+      }
+    });
+
+    if (!isDragging) globeGroup.rotation.y += 0.002;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

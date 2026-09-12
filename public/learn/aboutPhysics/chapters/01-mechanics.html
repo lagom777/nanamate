@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1. 역학 · 뉴턴의 세계 — aboutPhysics</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+  <script defer src="../../shared/game-kernel.js"></script>
+  <script defer src="../../shared/premium3d.js"></script>
+  <script defer src="../../shared/flagship-projectile.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔬 표지 · 소개</a></li>
+    <li><a href="01-mechanics.html" style="color:var(--accent);font-weight:600;">1. 역학 · 뉴턴의 세계</a></li>
+    <li><a href="02-energy.html">2. 에너지와 운동량</a></li>
+    <li><a href="03-thermodynamics.html">3. 열역학</a></li>
+    <li><a href="04-waves.html">4. 파동과 소리</a></li>
+    <li><a href="05-optics.html">5. 빛과 광학</a></li>
+    <li><a href="06-electromagnetism.html">6. 전자기학</a></li>
+    <li><a href="07-modern.html">7. 현대물리 · 상대성</a></li>
+    <li><a href="08-quantum.html">8. 양자역학</a></li>
+    <li><a href="09-nuclear.html">9. 핵물리와 입자</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>역학:<br><em>뉴턴</em>의 세계</h1>
+  <p class="authors">Chapter 1 — Classical Mechanics & Newton's Laws</p>
+  <p class="affiliation">포물선 운동 시뮬레이터 포함</p>
+</header>
+
+<h2>뉴턴의 운동 법칙</h2>
+<p>아이작 뉴턴은 세 가지 운동 법칙으로 고전역학의 기초를 세웠습니다. 이 법칙들은 일상 규모의 거의 모든 운동을 정확하게 설명합니다.</p>
+
+<div class="info-card">
+  <h4>제1법칙 (관성의 법칙)</h4>
+  <p>외부 힘이 작용하지 않으면, 정지한 물체는 정지해 있고, 운동하는 물체는 등속 직선 운동을 계속한다.</p>
+</div>
+
+<div class="info-card energy">
+  <h4>제2법칙 (가속도의 법칙)</h4>
+  <p>물체에 작용하는 알짜힘은 질량과 가속도의 곱과 같다.</p>
+</div>
+
+<div class="formula">F = ma &nbsp;&nbsp;→&nbsp;&nbsp; a = F/m</div>
+
+<div class="info-card wave">
+  <h4>제3법칙 (작용-반작용의 법칙)</h4>
+  <p>모든 작용에는 크기가 같고 방향이 반대인 반작용이 존재한다.</p>
+</div>
+
+<h2>포물선 운동 시뮬레이터</h2>
+<p>아래 시뮬레이터에서 발사 각도와 초기 속도를 조절하여 포물선 운동을 관찰하세요. 공기 저항을 무시한 이상적인 경우입니다.</p>
+
+<div class="scene-3d" id="projectile-scene">
+  <div class="scene-controls">
+    <label>각도: <span id="angle-val">45</span>°</label>
+    <input type="range" id="angle-slider" min="10" max="80" value="45">
+    <label>속도: <span id="speed-val">15</span>m/s</label>
+    <input type="range" id="speed-slider" min="5" max="30" value="15">
+    <button id="launch-btn">🚀 발사</button>
+  </div>
+</div>
+<span class="interact-hint">🎯 각도와 속도를 조절하고 발사 버튼을 누르세요</span>
+
+<h2>등가속도 운동</h2>
+<p>중력 가속도 g = 9.8 m/s² 아래에서, 수평 성분과 수직 성분은 독립적으로 운동합니다:</p>
+
+<div class="formula">
+x(t) = v₀ cos θ · t &nbsp;&nbsp;&nbsp; y(t) = v₀ sin θ · t − ½gt²
+</div>
+
+<h3>도달 거리와 최고 높이</h3>
+<p>발사 각도 θ, 초기 속도 v₀일 때:</p>
+<div class="formula">
+R = v₀² sin(2θ) / g &nbsp;&nbsp;&nbsp; H = v₀² sin²θ / (2g)
+</div>
+
+<div class="info-card quantum">
+  <h4>💡 탐구 과제</h4>
+  <p>시뮬레이터에서 같은 속도로 30°와 60°에서 발사하면 도달 거리가 같은 이유를 생각해보세요. sin(2×30°) = sin(2×60°)이기 때문입니다!</p>
+</div>
+
+<h2>원운동과 구심력</h2>
+<p>등속 원운동에서 물체는 원의 중심을 향하는 구심 가속도를 받습니다:</p>
+<div class="formula">a_c = v²/r &nbsp;&nbsp;&nbsp; F_c = mv²/r</div>
+<p>인공위성, 자동차의 커브, 놀이공원의 회전 놀이기구 등이 모두 원운동의 예입니다.</p>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한 마디로!</h3><p>역학은 "왜 물건이 움직이고, 왜 멈출까?"를 알려주는 이야기예요. 밀면 빨라지고, 아무도 안 건드리면 하던 대로 계속 가요!</p>
+  <h3>🤔 왜 알아야 할까?</h3><p>버스가 갑자기 서면 몸이 앞으로 휘청! 하죠(관성). 자전거 페달을 힘껏 밟으면 쌩~ 빨라져요(가속). 무거운 가방일수록 드는 데 힘이 더 들고요(힘=질량×가속도). 전부 역학이 숨어 있는 순간이에요. 😆</p>
+  <div class="info-card"><h4>🌱 이 말만 알면 돼요</h4><ul><li>속도: 얼마나 빠른지 (위치가 바뀌는 빠르기)</li><li>가속도: 속도가 바뀌는 빠르기 (점점 빨라지거나 느려짐)</li><li>힘: 물건을 밀거나 당기는 작용</li><li>질량: 변화를 싫어하는 정도 (무거울수록 꿈쩍 안 해요)</li><li>중력: 지구가 모든 걸 아래로 끌어당기는 힘</li></ul></div>
+  <h3>📖 이야기로 쉽게!</h3><p>축구공을 뻥 차면 왜 굴러갈까요? 발이 공에 힘을 줬기 때문이에요. 그런데 공이 점점 느려지는 건? 땅과 공기가 반대로 힘을 주는 "마찰력" 때문이죠. 옛날에 뉴턴이라는 과학자가 이 모든 걸 딱 세 가지 규칙으로 정리했어요. ① 아무 힘도 없으면 물건은 하던 대로! ② 힘을 주면 빨라져요! ③ 내가 밀면, 상대도 나를 똑같이 밀어요! 로켓이 아래로 불을 뿜으면 그 반대로 하늘로 솟는 게 딱 세 번째 규칙이에요. 🚀</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> "가만히 있는 것"도 사실은 힘겨루기 중이에요! 책상 위 책은 중력(아래로)과 책상이 받치는 힘(위로)이 똑같아서 안 움직이는 거랍니다.</div>
+  <h3>⭐ 한눈에 정리!</h3><ul><li>속도 = 간 거리 ÷ 걸린 시간</li><li>가속도 = 속도 변화 ÷ 걸린 시간</li><li>F = ma (힘 = 질량 × 가속도)</li><li>관성: 물건은 하던 대로 있고 싶어 해요</li><li>작용-반작용은 언제나 짝꿍! 둘이 함께 생겨요</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>운동학과 동역학을 구분하는 것이 첫걸음입니다. 운동학은 힘을 따지지 않고 위치, 속도, 가속도의 관계만 다룹니다. 동역학은 힘이 어떻게 운동을 바꾸는지 설명합니다. 등가속도 직선운동은 v = v₀ + at, s = v₀t + ½at²로 기술됩니다. 2차원 운동, 즉 포물선 운동은 수평 방향과 수직 방향을 분리해 다룹니다. 수평 방향은 등속, 수직 방향은 중력에 의한 등가속도 운동입니다. 두 성분을 따로 풀고 합쳐서 궤적을 얻습니다. 원운동은 항상 중심을 향한 구심 가속도가 필요하며, 이 가속도를 만드는 힘이 구심력입니다.</p>
+  <h3>핵심 공식과 의미</h3><div class="formula">v² = v₀² + 2as &nbsp;&nbsp; a_c = v²/r &nbsp;&nbsp; W = Fs cosθ</div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>30 m/s로 차가 달리다 5초간 일정하게 감속해 멈춥니다. 가속도와 이동거리는? a = -6 m/s², s = 75 m.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>20 m/s로 45° 각도로 발사한 공의 최대 도달 거리: R = v²sin(2θ)/g ≈ 40.8 m.</p></div>
+  <h3>응용 사례</h3><p>자동차 ABS는 마찰계수와 정지거리의 관계를 이용해 설계됩니다. 인공위성 궤도는 중력과 구심력이 같다는 조건에서 결정됩니다. 놀이공원의 롤러코스터 루프는 최저 속도 조건 v² ≥ gr을 만족해야 안전합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 원운동에서 구심력은 새로운 힘이 아니라 중력, 장력, 마찰력 등이 "역할로서" 구심력이 되는 것입니다.</div>
+
+<h3>전문가 레벨 이해</h3><p>고전역학의 정수는 라그랑지안과 해밀토니안 형식주의에 있습니다. 뉴턴의 F=ma는 힘 중심의 기술이지만, 라그랑지안 L = T - V는 에너지 관점에서 운동을 기술합니다. 오일러-라그랑주 방정식 d/dt(∂L/∂q̇) - ∂L/∂q = 0은 일반화 좌표에서 자연스럽게 운동방정식을 도출합니다. 이 형식은 제약조건이 있는 시스템(진자, 강체)을 다루기에 압도적으로 유리합니다. 해밀토니안 H = T + V는 에너지 보존이 자명하게 드러나며, 정준변환과 푸아송 괄호로 이어져 양자역학의 기반이 됩니다. 노에터 정리는 대칭성과 보존량이 같다는 깊은 통찰을 줍니다.</p>
+  <h3>유도와 증명</h3><div class="formula">δS = δ∫L dt = 0 &nbsp;⇒&nbsp; d/dt(∂L/∂q̇) = ∂L/∂q</div>
+  <h3>최신 연구</h3><p>비선형 동역학과 카오스 이론은 단순한 결정론적 방정식에서도 초기조건에 대한 민감성이 어떻게 예측 불가능성을 낳는지 연구합니다. 또한 다체 문제(N-body)의 수치적 시뮬레이션은 천체역학과 분자동역학에서 활발하며, 적분기 안정성 연구가 진행 중입니다.</p>
+  <h3>관련 분야</h3><ul><li>천체역학과 위성 궤도 설계</li><li>로봇공학 역기구학과 제어이론</li><li>구조역학과 진동공학</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>Goldstein, "Classical Mechanics"</li><li>Landau & Lifshitz, "Mechanics"</li><li>MIT OCW 8.01 Classical Mechanics</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 이중진자의 라그랑지안을 구하고, 작은 진동 근사에서 정상모드를 찾아보세요.</div>
+</div>
+
+
+<h2>🚀 초고급 3D 게임 — 포물선 발사</h2>
+<p>대포를 마우스(또는 손가락)로 <strong>당겼다 놓아</strong> 표적을 맞혀 보세요. 당긴 반대 방향으로, 당긴 만큼 세게 날아갑니다. 발사각·세기를 바꿔 가며 <strong>45°에서 사거리가 최대</strong>가 되는 포물선 운동을 직접 체감해 보세요. 단계별 표적·점수·궤적·폭발 이펙트가 있습니다.</p>
+<div id="nm-flagship"></div>
+
+<h2>🕹️ 직접 해보기 — 포물선 운동 순서</h2>
+<p>포물선 운동이 진행되는 순서대로 클릭해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#00d4ff","prompt":"포물선 운동의 진행 순서를 클릭하세요","steps":["발사","상승","최고점","하강","착지"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00d4ff","questions":[{"q":"뉴턴 제2법칙의 공식은?","choices":["E=mc²","F=ma","v=fλ","PV=nRT"],"answer":1},{"q":"관성의 법칙은 제 몇 법칙인가?","choices":["제2법칙","제3법칙","제1법칙","제0법칙"],"answer":2},{"q":"질량은 무엇의 크기인가?","choices":["속도","에너지","열","관성"],"answer":3},{"q":"구심 가속도의 공식은?","choices":["v²/r","v/r","r/v²","mv²"],"answer":0},{"q":"라그랑지안 L의 정의는?","choices":["T+V","T−V","V−T","T×V"],"answer":1}]};</script>
+</main>
+</div>
+
+<script>
+// Projectile Motion 3D Simulator
+(function() {
+  const container = document.getElementById('projectile-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(15, 8, 15);
+  camera.lookAt(10, 3, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Ground grid
+  const grid = new THREE.GridHelper(40, 40, 0x1a2340, 0x0f1526);
+  scene.add(grid);
+
+  // Ground plane
+  const groundGeo = new THREE.PlaneGeometry(40, 40);
+  const groundMat = new THREE.MeshBasicMaterial({ color: 0x0f1526, transparent: true, opacity: 0.5 });
+  const ground = new THREE.Mesh(groundGeo, groundMat);
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.y = -0.01;
+  scene.add(ground);
+
+  // Launcher
+  const launcherGeo = new THREE.CylinderGeometry(0.15, 0.2, 1.5, 8);
+  const launcherMat = new THREE.MeshBasicMaterial({ color: 0x00d4ff });
+  const launcher = new THREE.Mesh(launcherGeo, launcherMat);
+  launcher.position.set(0, 0.5, 0);
+  scene.add(launcher);
+
+  // Projectile
+  const ballGeo = new THREE.SphereGeometry(0.25, 16, 16);
+  const ballMat = new THREE.MeshBasicMaterial({ color: 0xff6b35 });
+  const ball = new THREE.Mesh(ballGeo, ballMat);
+  ball.visible = false;
+  scene.add(ball);
+
+  // Trail
+  const trailPoints = [];
+  let trailLine = null;
+
+  // Axis labels (simple lines)
+  const xAxis = new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), new THREE.Vector3(25,0,0)]),
+    new THREE.LineBasicMaterial({ color: 0x00d4ff, transparent: true, opacity: 0.3 })
+  );
+  scene.add(xAxis);
+  const yAxis = new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), new THREE.Vector3(0,15,0)]),
+    new THREE.LineBasicMaterial({ color: 0xff6b35, transparent: true, opacity: 0.3 })
+  );
+  scene.add(yAxis);
+
+  // Controls
+  const angleSlider = document.getElementById('angle-slider');
+  const speedSlider = document.getElementById('speed-slider');
+  const angleVal = document.getElementById('angle-val');
+  const speedVal = document.getElementById('speed-val');
+  const launchBtn = document.getElementById('launch-btn');
+
+  angleSlider.addEventListener('input', () => {
+    angleVal.textContent = angleSlider.value;
+    updateLauncher();
+  });
+  speedSlider.addEventListener('input', () => {
+    speedVal.textContent = speedSlider.value;
+  });
+
+  function updateLauncher() {
+    const angle = parseFloat(angleSlider.value) * Math.PI / 180;
+    launcher.rotation.z = angle - Math.PI/2;
+  }
+  updateLauncher();
+
+  // Launch animation
+  let animating = false;
+  let t = 0;
+  let v0, theta, g = 9.8;
+
+  launchBtn.addEventListener('click', () => {
+    if (animating) return;
+    theta = parseFloat(angleSlider.value) * Math.PI / 180;
+    v0 = parseFloat(speedSlider.value);
+    t = 0;
+    animating = true;
+    ball.visible = true;
+
+    // Clear old trail
+    if (trailLine) scene.remove(trailLine);
+    trailPoints.length = 0;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    if (animating) {
+      t += 0.03;
+      const x = v0 * Math.cos(theta) * t;
+      const y = v0 * Math.sin(theta) * t - 0.5 * g * t * t;
+
+      if (y < 0) {
+        animating = false;
+        ball.position.set(x, 0, 0);
+      } else {
+        ball.position.set(x, y, 0);
+        trailPoints.push(new THREE.Vector3(x, y, 0));
+
+        if (trailLine) scene.remove(trailLine);
+        if (trailPoints.length > 1) {
+          const geo = new THREE.BufferGeometry().setFromPoints(trailPoints);
+          trailLine = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0xff6b35, transparent: true, opacity: 0.6 }));
+          scene.add(trailLine);
+        }
+      }
+    }
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

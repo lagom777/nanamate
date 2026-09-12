@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6. 전자기학 — aboutPhysics</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔬 표지 · 소개</a></li>
+    <li><a href="01-mechanics.html">1. 역학 · 뉴턴의 세계</a></li>
+    <li><a href="02-energy.html">2. 에너지와 운동량</a></li>
+    <li><a href="03-thermodynamics.html">3. 열역학</a></li>
+    <li><a href="04-waves.html">4. 파동과 소리</a></li>
+    <li><a href="05-optics.html">5. 빛과 광학</a></li>
+    <li><a href="06-electromagnetism.html" style="color:var(--accent);font-weight:600;">6. 전자기학</a></li>
+    <li><a href="07-modern.html">7. 현대물리 · 상대성</a></li>
+    <li><a href="08-quantum.html">8. 양자역학</a></li>
+    <li><a href="09-nuclear.html">9. 핵물리와 입자</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>전자기학</em>:<br>보이지 않는 힘</h1>
+  <p class="authors">Chapter 6 — Electromagnetism & Maxwell's Equations</p>
+  <p class="affiliation">전기장/자기장 시뮬레이터 포함</p>
+</header>
+
+<h2>전기장과 쿨롱의 법칙</h2>
+<p>두 전하 사이에는 인력 또는 척력이 작용합니다. 이 힘은 전하의 크기에 비례하고 거리의 제곱에 반비례합니다.</p>
+<div class="formula">F = k × q₁q₂ / r² &nbsp;&nbsp;&nbsp; (k = 8.99 × 10⁹ N·m²/C²)</div>
+
+<div class="info-card">
+  <h4>전기장 E</h4>
+  <p>단위 양전하가 받는 힘: E = F/q = kQ/r². 양전하에서 나가고, 음전하로 들어갑니다.</p>
+</div>
+
+<h2>전기장 시뮬레이터</h2>
+<p>양전하(+)와 음전하(−)가 만드는 전기장 선을 3D로 관찰하세요. 마우스로 회전 가능합니다.</p>
+
+<div class="scene-3d" id="efield-scene">
+  <div class="scene-controls">
+    <label>전하1: <span id="q1-val">+</span></label>
+    <button id="toggle-q1">전환</button>
+    <label>전하2: <span id="q2-val">−</span></label>
+    <button id="toggle-q2">전환</button>
+  </div>
+</div>
+<span class="interact-hint">⚡ 전하 부호를 바꿔서 전기력선 변화를 관찰하세요</span>
+
+<h2>자기장</h2>
+<p>움직이는 전하(전류)는 자기장을 만듭니다. 자기장 속에서 움직이는 전하는 로렌츠 힘을 받습니다.</p>
+<div class="formula">F = qv × B &nbsp;&nbsp;&nbsp; |F| = qvB sinθ</div>
+
+<h2>맥스웰 방정식</h2>
+<p>전자기학의 4대 방정식은 전기와 자기 현상을 통합합니다:</p>
+
+<div class="info-card energy">
+  <h4>가우스 법칙 (전기)</h4>
+  <p>∇ · E = ρ/ε₀ — 전하가 전기장의 원천</p>
+</div>
+<div class="info-card quantum">
+  <h4>가우스 법칙 (자기)</h4>
+  <p>∇ · B = 0 — 자기 단극자는 존재하지 않음</p>
+</div>
+<div class="info-card wave">
+  <h4>패러데이 법칙</h4>
+  <p>∇ × E = −∂B/∂t — 변하는 자기장이 전기장을 유도</p>
+</div>
+<div class="info-card">
+  <h4>앙페르-맥스웰 법칙</h4>
+  <p>∇ × B = μ₀J + μ₀ε₀∂E/∂t — 전류와 변위전류가 자기장을 생성</p>
+</div>
+
+<h3>전자기파</h3>
+<p>맥스웰 방정식으로부터 전기장과 자기장이 서로를 만들며 공간을 전파하는 파동, 즉 전자기파가 예측됩니다. 빛도 전자기파입니다!</p>
+<div class="formula">c = 1/√(μ₀ε₀) = 3 × 10⁸ m/s</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한 마디로!</h3><p>전자기학은 "전기와 자기는 사실 한 형제!"라는 걸 알려줘요. 우리가 쓰는 전자제품과 빛까지 전부 여기서 나와요.</p>
+  <h3>🤔 왜 알아야 할까?</h3><p>스마트폰, 선풍기 모터, 발전소, 와이파이, 병원의 MRI까지 전부 전자기학으로 움직여요. 겨울에 손잡이 잡을 때 찌릿한 정전기부터 밤하늘 별빛까지 다 전자기 현상이랍니다! ⚡</p>
+  <div class="info-card"><h4>🌱 이 말만 알면 돼요</h4><ul><li>전하: 전기 현상을 일으키는 근원 (+와 −)</li><li>전기장: 전하 주변에 생기는 힘의 공간</li><li>자기장: 움직이는 전하(전류)가 만드는 공간</li><li>전압: 전하를 밀어 주는 힘</li><li>전류: 1초에 흐르는 전하의 양</li></ul></div>
+  <h3>📖 이야기로 쉽게!</h3><p>겨울에 문손잡이를 잡으면 찌릿! 하죠? 몸에 모여 있던 전하가 순간적으로 확 흘러서 그래요. 자석을 가까이 대면 착 붙거나 밀어내는 힘, 그게 자기장이에요. 옛날에 외르스테드라는 과학자가 전선에 전류를 흘렸더니 옆에 있던 나침반 바늘이 홱 돌아가는 걸 봤어요. 전기와 자기가 연결되어 있다는 첫 증거였죠! 패러데이는 코일 속에서 자석을 흔들면 전기가 생긴다는 걸 발견했어요. 이게 바로 모든 발전소의 원리예요. 마지막으로 맥스웰이 이 모든 걸 딱 4개의 식으로 정리했는데, 놀랍게도 "빛도 전자기파"라는 것까지 알아냈답니다! 💡</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> "옴의 법칙 V=IR"에서 전압은 밀어 주는 원인, 전류는 흐른 결과, 저항은 흐름을 방해하는 것이라고 생각하면 쉬워요!</div>
+  <h3>⭐ 한눈에 정리!</h3><ul><li>쿨롱 법칙: 전하끼리는 F = kq₁q₂/r² 로 밀고 당겨요</li><li>전류가 흐르면 그 둘레에 자기장이 생겨요 (오른손 법칙)</li><li>자석을 흔들면(자속 변화) 전기가 생겨요 (전자기 유도)</li><li>맥스웰 방정식이 전기와 자기를 하나로 묶었어요</li><li>빛도 전자기파! 진공에서 속도는 c</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>가우스 법칙은 전기장 선속이 내부 전하 총량에 비례함을 말하며, 대칭적 전하 분포의 전기장을 손쉽게 계산하게 해줍니다. 앙페르 법칙은 자기장의 닫힌 적분이 둘러싸인 전류에 비례함을 보입니다. 패러데이 법칙은 자속의 시간 변화가 기전력을 만든다는 것이고, 맥스웰은 변위전류항을 추가해 자속이 없어도 변하는 전기장이 자기장을 만든다고 했습니다. 이 네 식이 맥스웰 방정식입니다. RC, RL, RLC 회로의 시간 응답은 미분방정식 해로, 충전·방전과 공진 현상을 정량화합니다. AC 회로 분석은 임피던스와 페이저로 단순화됩니다.</p>
+  <h3>핵심 공식과 의미</h3><div class="formula">∮E·dA = Q/ε₀, &nbsp; ∮B·dl = μ₀(I + ε₀ dΦ_E/dt)</div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>1 μC 두 점전하가 1 m 거리에 있을 때 힘: F = 9·10⁹·(10⁻⁶)²/1 = 9 mN.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>저항 100 Ω, 인덕터 0.1 H를 12 V 전원에 연결할 때 시정수 τ = L/R = 1 ms.</p></div>
+  <h3>응용 사례</h3><p>변압기는 패러데이 유도로 전압을 바꾸어 송전 손실을 줄입니다. 발전기는 회전운동을 전기로 바꾸고, 모터는 그 반대입니다. 무선충전은 두 코일 사이 자속 결합을 활용합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 자기력은 운동하는 전하에만 일을 하지 않습니다. 일은 전기력이 합니다. 모터 회전의 일은 외부 전압원에서 옵니다.</div>
+
+<h3>전문가 레벨 이해</h3><p>맥스웰 방정식은 4-벡터 형식으로 ∂_μ F^μν = μ₀ J^ν, ∂_[α F_βγ] = 0으로 압축됩니다. 이는 전자기학이 본질적으로 상대론적임을 보여줍니다. 게이지 변환 A → A + ∇χ, φ → φ - ∂χ/∂t은 물리적 장 E,B를 바꾸지 않고, 이 게이지 자유도가 양자전기역학(QED)의 게이지 대칭성으로 일반화됩니다. 매질에서는 D = ε₀E + P, H = B/μ₀ - M로 분극과 자화를 분리하며, 광학·플라즈마·초전도의 거동을 결정합니다. 복사 이론은 가속하는 전하가 ∝ a²의 비율로 에너지를 방출함을 보입니다(라모어 공식).</p>
+  <h3>유도와 증명</h3><div class="formula">L = -¼ F_μν F^μν - J_μ A^μ &nbsp;⇒&nbsp; 맥스웰 방정식</div>
+  <h3>최신 연구</h3><p>위상 절연체와 천 절연체는 전자기 응답에 토폴로지컬 항을 더해 가장자리 모드를 보장합니다. 캐스파 효과·진공 복사 같은 양자 전자기 현상은 정밀 측정 기술의 시험대입니다. 메타물질은 음의 굴절률, 클로킹 등을 인공적으로 구현합니다.</p>
+  <h3>관련 분야</h3><ul><li>플라즈마 물리와 자기유체역학</li><li>고에너지 가속기와 방사 광원</li><li>응집물질의 광응답과 분광학</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>Griffiths, "Introduction to Electrodynamics"</li><li>Jackson, "Classical Electrodynamics"</li><li>Zangwill, "Modern Electrodynamics"</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 정지좌표계의 점전하의 쿨롱 장을 로런츠 변환해, 빠르게 움직이는 좌표계에서 자기장이 생기는 것을 직접 계산해 보세요.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 맥스웰 방정식 상황 판단</h2>
+<p>맥스웰 방정식과 그 의미를을 보고 알맞은 답을 고르세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#00d4ff","prompt":"맥스웰 방정식과 의미를 짝지으세요","pairs":[{"term":"가우스 법칙(전기)","def":"전하가 전기장의 원천"},{"term":"가우스 법칙(자기)","def":"자기 단극자는 없다"},{"term":"패러데이 법칙","def":"변하는 자기장이 전기장 유도"},{"term":"앙페르-맥스웰","def":"전류와 변위전류가 자기장 생성"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00d4ff","questions":[{"q":"쿨롱 힘은 거리의 무엇에 반비례?","choices":["제곱","세제곱","제곱근","거리 자체"],"answer":0},{"q":"∇·B = 0의 의미는?","choices":["전하 보존","자기 단극자 없음","광속 일정","에너지 보존"],"answer":1},{"q":"전자기 유도를 발견한 사람은?","choices":["뉴턴","맥스웰","패러데이","외르스테드"],"answer":2},{"q":"로렌츠 힘의 크기는?","choices":["qE","mv²/r","kq/r²","qvB sinθ"],"answer":3},{"q":"변하는 자기장이 유도하는 것은?","choices":["전기장","중력장","온도","질량"],"answer":0}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('efield-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 4, 10);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  let q1Sign = 1, q2Sign = -1;
+
+  // Charges
+  const charge1 = new THREE.Mesh(
+    new THREE.SphereGeometry(0.4, 32, 32),
+    new THREE.MeshBasicMaterial({ color: 0xff6b35 })
+  );
+  charge1.position.set(-3, 0, 0);
+  scene.add(charge1);
+
+  const charge2 = new THREE.Mesh(
+    new THREE.SphereGeometry(0.4, 32, 32),
+    new THREE.MeshBasicMaterial({ color: 0x00d4ff })
+  );
+  charge2.position.set(3, 0, 0);
+  scene.add(charge2);
+
+  // Field lines
+  let fieldLines = [];
+
+  function createFieldLines() {
+    fieldLines.forEach(l => scene.remove(l));
+    fieldLines = [];
+
+    const numLines = 12;
+    for (let i = 0; i < numLines; i++) {
+      const angle = (i / numLines) * Math.PI * 2;
+      const points = [];
+      let x = -3 + Math.cos(angle) * 0.5;
+      let y = Math.sin(angle) * 0.5;
+      let z = 0;
+
+      for (let step = 0; step < 100; step++) {
+        points.push(new THREE.Vector3(x, y, z));
+
+        // Calculate field direction
+        const dx1 = x - (-3), dy1 = y, dz1 = z;
+        const r1 = Math.sqrt(dx1*dx1 + dy1*dy1 + dz1*dz1) + 0.01;
+        const dx2 = x - 3, dy2 = y, dz2 = z;
+        const r2 = Math.sqrt(dx2*dx2 + dy2*dy2 + dz2*dz2) + 0.01;
+
+        let Ex = q1Sign * dx1/(r1*r1*r1) + q2Sign * dx2/(r2*r2*r2);
+        let Ey = q1Sign * dy1/(r1*r1*r1) + q2Sign * dy2/(r2*r2*r2);
+        let Ez = q1Sign * dz1/(r1*r1*r1) + q2Sign * dz2/(r2*r2*r2);
+
+        const mag = Math.sqrt(Ex*Ex + Ey*Ey + Ez*Ez) + 0.001;
+        x += (Ex/mag) * 0.15;
+        y += (Ey/mag) * 0.15;
+        z += (Ez/mag) * 0.15;
+
+        if (Math.abs(x) > 8 || Math.abs(y) > 6) break;
+        if (Math.sqrt((x-3)*(x-3) + y*y) < 0.5) break;
+      }
+
+      if (points.length > 2) {
+        const geo = new THREE.BufferGeometry().setFromPoints(points);
+        const line = new THREE.Line(geo, new THREE.LineBasicMaterial({
+          color: 0x00d4ff, transparent: true, opacity: 0.4
+        }));
+        scene.add(line);
+        fieldLines.push(line);
+      }
+    }
+  }
+  createFieldLines();
+
+  // Controls
+  document.getElementById('toggle-q1').addEventListener('click', () => {
+    q1Sign *= -1;
+    document.getElementById('q1-val').textContent = q1Sign > 0 ? '+' : '−';
+    charge1.material.color.set(q1Sign > 0 ? 0xff6b35 : 0x00d4ff);
+    createFieldLines();
+  });
+  document.getElementById('toggle-q2').addEventListener('click', () => {
+    q2Sign *= -1;
+    document.getElementById('q2-val').textContent = q2Sign > 0 ? '+' : '−';
+    charge2.material.color.set(q2Sign > 0 ? 0xff6b35 : 0x00d4ff);
+    createFieldLines();
+  });
+
+  // Mouse rotation
+  let mouseDown = false, prevX = 0;
+  container.addEventListener('mousedown', (e) => { mouseDown = true; prevX = e.clientX; });
+  container.addEventListener('mouseup', () => { mouseDown = false; });
+  container.addEventListener('mousemove', (e) => {
+    if (!mouseDown) return;
+    const dx = e.clientX - prevX;
+    scene.rotation.y += dx * 0.005;
+    prevX = e.clientX;
+  });
+  container.addEventListener('touchstart', (e) => { prevX = e.touches[0].clientX; });
+  container.addEventListener('touchmove', (e) => {
+    const dx = e.touches[0].clientX - prevX;
+    scene.rotation.y += dx * 0.005;
+    prevX = e.touches[0].clientX;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

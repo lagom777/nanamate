@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5. 빛과 광학 — aboutPhysics</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔬 표지 · 소개</a></li>
+    <li><a href="01-mechanics.html">1. 역학 · 뉴턴의 세계</a></li>
+    <li><a href="02-energy.html">2. 에너지와 운동량</a></li>
+    <li><a href="03-thermodynamics.html">3. 열역학</a></li>
+    <li><a href="04-waves.html">4. 파동과 소리</a></li>
+    <li><a href="05-optics.html" style="color:var(--accent);font-weight:600;">5. 빛과 광학</a></li>
+    <li><a href="06-electromagnetism.html">6. 전자기학</a></li>
+    <li><a href="07-modern.html">7. 현대물리 · 상대성</a></li>
+    <li><a href="08-quantum.html">8. 양자역학</a></li>
+    <li><a href="09-nuclear.html">9. 핵물리와 입자</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>빛</em>과<br>광학의 세계</h1>
+  <p class="authors">Chapter 5 — Light, Optics & Electromagnetic Spectrum</p>
+  <p class="affiliation">렌즈 굴절 시뮬레이터 포함</p>
+</header>
+
+<h2>빛의 본질</h2>
+<p>빛은 전자기파의 일종으로, 진공에서 약 3×10⁸ m/s의 속도로 이동합니다. 파동과 입자(광자)의 이중성을 가집니다.</p>
+
+<div class="formula">c = 3 × 10⁸ m/s &nbsp;&nbsp;&nbsp; E = hf = hc/λ</div>
+
+<h2>반사와 굴절</h2>
+
+<div class="info-card">
+  <h4>반사의 법칙</h4>
+  <p>입사각 = 반사각. 모든 매끄러운 표면에서 성립합니다.</p>
+</div>
+
+<div class="info-card wave">
+  <h4>스넬의 법칙 (굴절)</h4>
+  <p>빛이 매질의 경계를 지날 때 방향이 변합니다.</p>
+</div>
+<div class="formula">n₁ sin θ₁ = n₂ sin θ₂</div>
+
+<h2>렌즈 시뮬레이터</h2>
+<p>물체 거리를 조절하여 볼록 렌즈의 상 형성을 관찰하세요. 실상과 허상이 어떻게 만들어지는지 확인합니다.</p>
+
+<div class="scene-3d" id="lens-scene">
+  <div class="scene-controls">
+    <label>물체 거리: <span id="obj-val">30</span>cm</label>
+    <input type="range" id="obj-slider" min="5" max="60" value="30">
+    <label>초점 거리: <span id="focal-val">15</span>cm</label>
+    <input type="range" id="focal-slider" min="5" max="25" value="15">
+  </div>
+</div>
+<span class="interact-hint">🔍 물체 거리를 초점 안팎으로 이동시켜 보세요</span>
+
+<h2>렌즈 공식</h2>
+<div class="formula">1/f = 1/d_o + 1/d_i &nbsp;&nbsp;&nbsp; 배율 M = −d_i/d_o</div>
+
+<h3>전반사</h3>
+<p>밀한 매질에서 소한 매질로 갈 때, 입사각이 임계각을 넘으면 빛이 전부 반사됩니다. 광섬유의 원리입니다.</p>
+<div class="formula">θ_c = arcsin(n₂/n₁)</div>
+
+<h2>전자기 스펙트럼</h2>
+<div class="info-card energy">
+  <h4>파장에 따른 분류</h4>
+  <p>전파 → 마이크로파 → 적외선 → 가시광선 → 자외선 → X선 → 감마선. 모두 같은 속도(c)로 이동합니다.</p>
+</div>
+
+<div class="info-card quantum">
+  <h4>💡 탐구 과제</h4>
+  <p>물체를 초점 거리 안에 놓으면 허상(확대된 정립상)이 됩니다. 돋보기의 원리예요!</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한 마디로!</h3><p>광학은 "빛이 어떻게 휘고, 튕기고, 모여서 그림(상)을 만드는가"를 알려줘요. 빛은 똑바로 가지만, 물이나 유리를 만나면 살짝 휘어요!</p>
+  <h3>🤔 왜 알아야 할까?</h3><p>물속의 젓가락이 툭 꺾여 보이는 것(굴절), 거울 속 내 모습이 좌우 바뀌어 보이는 것(반사), 안경으로 잘 안 보이던 게 또렷해지는 것(렌즈) 모두 빛의 장난이에요! 👓</p>
+  <div class="info-card"><h4>🌱 이 말만 알면 돼요</h4><ul><li>입사각·반사각: 빛이 거울과 이루는 각도</li><li>굴절률: 물질 속에서 빛이 느려지는 정도 (n=c/v)</li><li>초점: 나란히 온 빛이 한 점에 모이는 곳</li><li>실상·허상: 진짜 모인 빛 vs 거울 뒤에 있는 것처럼 보이는 상</li><li>분산: 색깔마다 휘는 정도가 달라지는 것</li></ul></div>
+  <h3>📖 이야기로 쉽게!</h3><p>거울에 내 얼굴이 보이는 건 너무 익숙하지만, 사실 빛이 아주 정확한 각도로 튕겨 나오기 때문이에요. 들어간 각도와 튕겨 나온 각도가 똑같죠(반사의 법칙). 빛이 공기에서 물로 들어가면 속도가 느려지면서 휘는데, 이게 굴절이에요. 그리고 물속에서 빛이 너무 비스듬히 나가려 하면, 밖으로 못 나가고 몽땅 안으로 튕겨 돌아와요(전반사)! 광섬유는 이 원리로 빛을 가둬서 아주 멀리까지 보내죠. 볼록렌즈는 빛을 한 점에 모으고, 오목렌즈는 쫙 퍼뜨려요. 우리 눈도 사실 초점을 바꿀 수 있는 볼록렌즈랍니다. 👁️</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 무지개는 빗방울 속에서 빛이 휘고, 튕기고, 다시 휘면서 색깔이 나뉘어 생겨요. 첫 번째 무지개는 하늘 약 42° 방향에 떠요! 🌈</div>
+  <h3>⭐ 한눈에 정리!</h3><ul><li>반사 법칙: 들어간 각 = 나온 각</li><li>스넬 법칙: n₁sinθ₁ = n₂sinθ₂ (빛이 휘는 규칙)</li><li>렌즈 공식: 1/f = 1/p + 1/q</li><li>전반사: 너무 비스듬하면 빛이 다 튕겨 돌아와요 (임계각 sinθ_c = n₂/n₁)</li><li>색은 파장마다 다르고, 그래서 무지개가 생겨요</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>기하광학은 파장이 매우 짧을 때의 극한이며, 빛을 광선으로 다룹니다. 페르마의 원리는 "빛은 시간을 최소로 하는 경로를 간다"로, 반사·굴절 법칙이 모두 이 원리에서 나옵니다. 물리광학은 파동성을 고려해 간섭과 회절을 다룹니다. 영의 이중슬릿 실험에서 무늬 간격은 d sinθ = mλ로 주어집니다. 단일슬릿 회절은 sin α/α 형태의 패턴을 만들고, 회절격자는 분광기의 핵심입니다. 렌즈에서 가우스 공식 1/f=1/p+1/q와 배율 m=-q/p는 상의 위치와 크기를 결정합니다. 수차(구면, 색수차)는 실제 광학계 설계의 주요 고려 요소입니다.</p>
+  <h3>핵심 공식과 의미</h3><div class="formula">d sinθ = mλ &nbsp;&nbsp; m = -q/p &nbsp;&nbsp; sinθ_c = n₂/n₁</div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>초점 20 cm 볼록렌즈에서 30 cm 떨어진 물체의 상: 1/q=1/20-1/30, q=60 cm, m=-2 (도립확대 실상).</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>슬릿 간격 0.1 mm, 파장 600 nm일 때 1 m 거리에서 무늬 간격: λL/d=6 mm.</p></div>
+  <h3>응용 사례</h3><p>광섬유 통신은 전반사로 빛을 가두며, 현대 인터넷의 근간입니다. 카메라 렌즈는 여러 매수의 비구면·이상분산 렌즈를 조합해 수차를 보정합니다. 망원경의 분해능은 회절한계 1.22λ/D로 한정되며, 큰 구경이 더 미세한 천체 구조를 보여줍니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 부호 규약을 일관되게 써야 합니다. 보통 광선 진행 방향과 같으면 양수, 반대면 음수입니다.</div>
+
+<h3>전문가 레벨 이해</h3><p>현대 광학의 토대는 맥스웰 방정식입니다. 진공 파동 방정식에서 c = 1/√(ε₀μ₀)가 빛의 속도임이 자연스럽게 나옵니다. 매질에서는 분극과 자화가 굴절률 n = √(εᵣμᵣ)을 결정합니다. 결정의 비등방성은 복굴절을 낳고, 광활성 매질은 편광면을 회전시킵니다. 푸리에 광학은 회절을 푸리에 변환으로 다루어 광학정보처리, 위상영상의 토대를 만듭니다. 양자광학은 빛의 입자성을 다루며 단일 광자, 얽힘, 압축광이 양자정보의 자원이 됩니다. 비선형 광학은 χ⁽²⁾, χ⁽³⁾ 응답으로 주파수 배가, 자기 위상변조, 광 솔리톤을 만듭니다.</p>
+  <h3>유도와 증명</h3><div class="formula">∇×E = -∂B/∂t &nbsp;⇒&nbsp; ∇²E = με ∂²E/∂t² &nbsp;⇒&nbsp; v=1/√(με)</div>
+  <h3>최신 연구</h3><p>메타표면은 위상·진폭·편광을 픽셀 단위로 제어해 초박형 렌즈와 홀로그래피를 가능하게 합니다. 양자영상은 얽힘 광자쌍을 이용해 고전 한계 너머의 분해능을 시도하고, 적응광학은 천체망원경에서 대기 흔들림을 실시간 보정합니다.</p>
+  <h3>관련 분야</h3><ul><li>분광학과 천체관측</li><li>광 컴퓨팅과 포토닉스</li><li>레이저 의료(라식·치료용)</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>Hecht, "Optics"</li><li>Born & Wolf, "Principles of Optics"</li><li>Saleh & Teich, "Fundamentals of Photonics"</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 가우시안 빔의 빔 허리, 레일리 거리, 발산각 사이의 관계를 파동방정식 근축근사로 유도해 보세요.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 다른 하나 찾기</h2>
+<p>각 묶음에서 성격이 다른 하나를 골라 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#00d4ff","prompt":"어울리지 않는 하나를 고르세요","rounds":[{"items":["전파","적외선","음파","X선"],"odd":2,"why":"음파만 전자기파가 아닙니다"},{"items":["반사","굴절","전반사","엔트로피"],"odd":3,"why":"엔트로피는 열역학 개념입니다"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00d4ff","questions":[{"q":"진공에서 빛의 속도는?","choices":["3×10⁶ m/s","343 m/s","3×10⁸ m/s","9.8 m/s"],"answer":2},{"q":"반사의 법칙은?","choices":["입사각=반사각","입사각>반사각","입사각<반사각","항상 90°"],"answer":0},{"q":"광섬유의 원리는?","choices":["분산","회절","간섭","전반사"],"answer":3},{"q":"스넬의 법칙 식은?","choices":["n₁cosθ₁=n₂cosθ₂","n₁sinθ₁=n₂sinθ₂","n₁θ₁=n₂θ₂","sinθ₁=sinθ₂"],"answer":1},{"q":"초점 안에 둔 물체의 상은?","choices":["도립 실상","축소 실상","확대 허상","상이 없음"],"answer":2}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('lens-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 3, 14);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Optical axis
+  scene.add(new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-8,0,0), new THREE.Vector3(8,0,0)]),
+    new THREE.LineBasicMaterial({ color: 0x00d4ff, transparent: true, opacity: 0.2 })
+  ));
+
+  // Lens
+  const lensGeo = new THREE.CylinderGeometry(2.5, 2.5, 0.1, 32);
+  const lensMat = new THREE.MeshBasicMaterial({ color: 0x00d4ff, transparent: true, opacity: 0.3 });
+  const lens = new THREE.Mesh(lensGeo, lensMat);
+  lens.rotation.z = Math.PI / 2;
+  scene.add(lens);
+
+  // Object (arrow)
+  let objDist = 30;
+  let focalLen = 15;
+  const scale = 0.12;
+
+  const objArrow = new THREE.Group();
+  const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 2, 8), new THREE.MeshBasicMaterial({ color: 0xff6b35 }));
+  shaft.position.y = 1;
+  const tip = new THREE.Mesh(new THREE.ConeGeometry(0.15, 0.4, 8), new THREE.MeshBasicMaterial({ color: 0xff6b35 }));
+  tip.position.y = 2.1;
+  objArrow.add(shaft, tip);
+  scene.add(objArrow);
+
+  // Image (arrow)
+  const imgArrow = new THREE.Group();
+  const iShaft = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 2, 8), new THREE.MeshBasicMaterial({ color: 0xa855f7 }));
+  iShaft.position.y = 1;
+  const iTip = new THREE.Mesh(new THREE.ConeGeometry(0.15, 0.4, 8), new THREE.MeshBasicMaterial({ color: 0xa855f7 }));
+  iTip.position.y = 2.1;
+  imgArrow.add(iShaft, iTip);
+  scene.add(imgArrow);
+
+  // Rays
+  let rays = [];
+  function clearRays() { rays.forEach(r => scene.remove(r)); rays = []; }
+  function addRay(points, color) {
+    const line = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints(points),
+      new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.5 })
+    );
+    scene.add(line);
+    rays.push(line);
+  }
+
+  function update() {
+    clearRays();
+    const do_scaled = objDist * scale;
+    const f = focalLen * scale;
+
+    objArrow.position.x = -do_scaled;
+
+    // Lens equation: 1/f = 1/do + 1/di
+    const di = 1 / (1/f - 1/do_scaled);
+    const mag = -di / do_scaled;
+
+    imgArrow.position.x = di;
+    imgArrow.scale.y = Math.abs(mag);
+    if (mag > 0) {
+      imgArrow.rotation.z = Math.PI; // inverted
+      imgArrow.position.y = Math.abs(mag) * 2;
+    } else {
+      imgArrow.rotation.z = 0;
+      imgArrow.position.y = 0;
+    }
+
+    // Draw rays
+    const objTop = new THREE.Vector3(-do_scaled, 2, 0);
+    // Ray parallel to axis -> through focal point
+    addRay([objTop, new THREE.Vector3(0, 2, 0), new THREE.Vector3(di, 2 * mag, 0)], 0xff6b35);
+    // Ray through center of lens
+    addRay([objTop, new THREE.Vector3(0, 0, 0).lerp(objTop, 0).set(di, 2*mag, 0)], 0x10b981);
+    addRay([objTop, new THREE.Vector3(di, 2*mag, 0)], 0x10b981);
+
+    // Focal points
+  }
+
+  const objSlider = document.getElementById('obj-slider');
+  const focalSlider = document.getElementById('focal-slider');
+  const objVal = document.getElementById('obj-val');
+  const focalVal = document.getElementById('focal-val');
+
+  objSlider.addEventListener('input', () => { objDist = parseInt(objSlider.value); objVal.textContent = objDist; update(); });
+  focalSlider.addEventListener('input', () => { focalLen = parseInt(focalSlider.value); focalVal.textContent = focalLen; update(); });
+
+  update();
+
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

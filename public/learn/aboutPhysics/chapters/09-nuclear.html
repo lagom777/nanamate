@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9. 핵물리와 입자 — aboutPhysics</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔬 표지 · 소개</a></li>
+    <li><a href="01-mechanics.html">1. 역학 · 뉴턴의 세계</a></li>
+    <li><a href="02-energy.html">2. 에너지와 운동량</a></li>
+    <li><a href="03-thermodynamics.html">3. 열역학</a></li>
+    <li><a href="04-waves.html">4. 파동과 소리</a></li>
+    <li><a href="05-optics.html">5. 빛과 광학</a></li>
+    <li><a href="06-electromagnetism.html">6. 전자기학</a></li>
+    <li><a href="07-modern.html">7. 현대물리 · 상대성</a></li>
+    <li><a href="08-quantum.html">8. 양자역학</a></li>
+    <li><a href="09-nuclear.html" style="color:var(--accent);font-weight:600;">9. 핵물리와 입자</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>핵물리</em>와<br>입자의 세계</h1>
+  <p class="authors">Chapter 9 — Nuclear Physics & Particle Physics</p>
+  <p class="affiliation">핵분열 체인 반응 시뮬레이터 포함</p>
+</header>
+
+<h2>원자핵의 구조</h2>
+<p>원자핵은 양성자와 중성자(핵자)로 구성됩니다. 핵자를 묶어주는 강한 핵력은 자연에서 가장 강력한 힘이지만, 아주 짧은 거리(~10⁻¹⁵m)에서만 작용합니다.</p>
+
+<div class="info-card">
+  <h4>질량수와 원자번호</h4>
+  <p>A = Z + N (질량수 = 양성자수 + 중성자수). 같은 원소의 동위원소는 Z는 같지만 N이 다릅니다.</p>
+</div>
+
+<h2>핵반응</h2>
+
+<div class="info-card energy">
+  <h4>핵분열 (Fission)</h4>
+  <p>무거운 원자핵(예: U-235)이 중성자를 흡수하여 둘로 쪼개짐. 막대한 에너지 방출 + 추가 중성자 → 연쇄 반응</p>
+</div>
+
+<div class="info-card wave">
+  <h4>핵융합 (Fusion)</h4>
+  <p>가벼운 원자핵(예: 수소)이 합쳐져 더 무거운 핵을 형성. 태양의 에너지원. 단위 질량(핵자)당 더 큰 에너지를 낼 수 있습니다.</p>
+</div>
+
+<div class="formula">E = Δm × c² &nbsp;&nbsp;(질량 결손 → 에너지)</div>
+
+<h2>핵분열 체인 반응 시뮬레이터</h2>
+<p>중성자가 우라늄 원자핵에 충돌하면 분열하며 새 중성자를 방출합니다. 임계질량에 따른 연쇄반응을 관찰하세요.</p>
+
+<div class="scene-3d" id="fission-scene">
+  <div class="scene-controls">
+    <label>연료 밀도: <span id="density-val">중간</span></label>
+    <input type="range" id="density-slider" min="1" max="3" value="2">
+    <button id="start-fission">☢️ 중성자 발사</button>
+  </div>
+</div>
+<span class="interact-hint">☢️ 중성자를 발사하여 연쇄반응을 시작하세요</span>
+
+<h2>표준 모형</h2>
+<p>입자물리의 표준 모형은 자연의 기본 입자와 힘을 기술하는 이론입니다:</p>
+
+<div class="info-card quantum">
+  <h4>기본 입자</h4>
+  <p>쿼크 6종 (up, down, charm, strange, top, bottom) + 렙톤 6종 (전자, 뮤온, 타우 + 각 중성미자) + 게이지 보손 (광자, W±, Z⁰, 글루온) + 힉스 보손</p>
+</div>
+
+<h3>네 가지 기본 힘</h3>
+<div class="formula">
+강력 > 전자기력 > 약력 > 중력
+</div>
+<p>강력은 쿼크를 묶고, 전자기력은 전하 사이에, 약력은 베타 붕괴에, 중력은 질량 사이에 작용합니다. 대통일 이론(GUT)은 이들을 하나로 통합하려는 시도입니다.</p>
+
+<h3>방사성 붕괴</h3>
+<div class="formula">N(t) = N₀ × e^(−λt) &nbsp;&nbsp;&nbsp; t₁/₂ = ln2 / λ</div>
+<p>불안정한 원자핵은 α, β, γ 붕괴를 통해 안정 상태로 변합니다. 반감기는 물질마다 고유합니다.</p>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한 마디로!</h3><p>핵물리는 "원자 한가운데 있는 아주 작은 알갱이들이 어떻게 뭉치고 쪼개지면서 엄청난 에너지를 내는가"를 알려줘요!</p>
+  <h3>🤔 왜 알아야 할까?</h3><p>태양이 반짝이는 이유는 핵융합, 원자력 발전으로 전기를 만드는 원리는 핵분열, X-ray랑 PET로 아픈 곳을 찾는 원리는 방사선이에요. 에너지, 의료, 우주 탐험에 꼭 필요한 지식이죠! ☀️</p>
+  <div class="info-card"><h4>🌱 이 말만 알면 돼요</h4><ul><li><strong>핵자</strong>: 원자핵을 이루는 양성자와 중성자</li><li><strong>강한 핵력</strong>: 핵자를 꽉 붙잡는 아주 센 힘 (가까울 때만!)</li><li><strong>핵분열</strong>: 무거운 핵이 둘로 쪼개지는 것</li><li><strong>핵융합</strong>: 가벼운 핵 둘이 하나로 합쳐지는 것</li><li><strong>반감기</strong>: 방사성 물질이 절반으로 줄어드는 데 걸리는 시간</li></ul></div>
+  <h3>📖 이야기로 쉽게!</h3><p>자석 두 개를 아주 가까이 붙여 본 적 있나요? 딱 붙을 만큼 가까울 때만 확! 끌어당기죠. "강한 핵력"도 비슷한데, 훨씬 더 가까운 거리(원자핵 안쪽, 약 10⁻¹⁵m)에서만 작동해요. 무거운 핵 안에는 +전기를 띤 양성자가 잔뜩 있어서 서로 밀어내려고 해요. 어느 순간 강한 핵력도 붙잡기 힘들어지면, 핵이 쪼개지면서 엄청난 에너지가 팡! 나와요(핵분열). 반대로 아주 가벼운 핵 둘을 힘껏 가까이 붙이면, 강한 핵력이 이겨서 하나로 합쳐지는데 이때도 큰 에너지가 나와요(핵융합). 태양이 바로 이 핵융합으로 빛나고 있답니다! ✨</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> E = mc²는 "아주 조금의 질량이 어마어마한 에너지로 바뀐다"는 뜻이에요. 단 1g이 약 9 × 10¹³ J — TNT 폭탄 2만 1천 톤(21킬로톤)과 맞먹어요!</div>
+  <h3>⭐ 한눈에 정리!</h3><ul><li>강한 핵력이 핵자들을 꽉 묶어요</li><li>쪼개지든(분열) 합쳐지든(융합) 큰 에너지가 나와요</li><li>E = mc²: 사라진 질량이 에너지로 변해요</li><li>반감기는 물질마다 정해진 고유한 성질이에요</li><li>표준 모형이 세상의 기본 입자들을 정리했어요</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>핵 결합 에너지는 질량수가 약 56(철)에서 최대를 보입니다. 그래서 철보다 가벼운 핵은 융합으로, 무거운 핵은 분열로 에너지를 얻을 수 있습니다. 핵 모형으로는 액체 방울 모형(반경험적 질량 공식)과 껍질 모형이 보완적으로 사용됩니다. 방사성 붕괴는 1차 미분방정식 dN/dt = -λN의 해로 지수 감소를 따릅니다. 표준 모형은 6쿼크 + 6렙톤 + 게이지 보존(γ, W±, Z⁰, g) + 힉스로 구성되며 강력·약력·전자기력을 통합해 기술합니다. 약력은 베타 붕괴(중성자 → 양성자 + 전자 + 반중성미자)의 근원입니다.</p>
+  <h3>핵심 공식과 의미</h3><div class="formula">E_b = (Zm_p + Nm_n − m_nucleus)c² &nbsp;&nbsp; t₁/₂ = ln2 / λ</div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1: U-235 분열 에너지</h4><p>U-235가 중성자 흡수로 분열할 때 약 200 MeV가 방출. 1 g당 약 8 × 10¹⁰ J — 석탄 3톤에 해당.</p></div>
+  <div class="info-card"><h4>📐 예제 2: 탄소-14 연대 측정</h4><p>반감기 5730년. 사망 후 ¹⁴C / ¹²C 비율 측정으로 약 5만 년까지 연대를 추정.</p></div>
+  <h3>응용 사례</h3><p>의료 영역에서 PET는 ¹⁸F를 결합한 FDG로 암을 영상화하고, 양성자 치료(Proton Therapy)는 정확한 깊이에 에너지를 집중해 정상 조직 손상을 최소화합니다. 산업에서는 ⁶⁰Co 방사선 살균, 비파괴 검사가 표준이고, 우주 탐사선은 RTG(방사성 동위원소 발전기)로 수십 년 전력을 공급합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "핵융합 = 곧 가능"이라는 오해가 흔합니다. ITER·KSTAR는 큰 진전을 이뤘지만 상용 전력망에는 아직 수십 년이 필요합니다.</div>
+
+<h3>전문가 레벨 이해</h3><p>표준 모형은 매우 성공적이지만 중력·암흑물질·중성미자 질량·우주 물질-반물질 비대칭을 설명하지 못합니다. 양자색역학(QCD)은 강력을 SU(3) 게이지 이론으로 기술하며, 점근 자유성과 색가둠이 핵심 현상입니다. 격자 QCD는 비섭동 영역에서 수치 계산으로 핵자 질량을 예측합니다. 약전기 통일(GWS)은 약력과 전자기력을 SU(2)×U(1)로 결합해 힉스 메커니즘으로 질량을 부여합니다. CKM·PMNS 행렬과 CP 위반은 입자물리 정밀 검증의 표준 영역입니다. 핵융합은 토카막 자기 가둠(ITER, KSTAR), 관성 가둠(NIF) 두 갈래로 연구되며, NIF는 2022년 12월 점화(net energy gain)에 도달했습니다.</p>
+  <h3>최신 연구·동향</h3><p>2025-2026 입자물리는 LHC Run 3 정밀 측정과 HL-LHC 업그레이드, 그리고 차세대 가속기(FCC, ILC) 구상이 동시에 진행 중입니다. 다크 매터 직접 검출(LZ, XENONnT)·간접 검출이 새 한계로 영역을 넓히고, 무뉴트리노 이중 베타 붕괴 실험은 마요라나 본성을 시험합니다. 핵융합 스타트업(Commonwealth Fusion, Helion, TAE) 자본 유치가 본격화되었습니다.</p>
+  <h3>관련 분야</h3><ul><li>입자물리와 우주론</li><li>플라즈마 물리와 핵융합 공학</li><li>방사선 의학과 방사선 안전</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>Krane, "Introductory Nuclear Physics"</li><li>Peskin & Schroeder, "An Introduction to QFT"</li><li>CERN/IAEA/ITER 공개 자료</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 액체 방울 모형의 반경험적 질량 공식으로 ²³⁵U와 ²³⁸U의 결합 에너지를 계산하고, 실측값과 비교하세요.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 핵분열 연쇄반응 순서</h2>
+<p>핵분열 연쇄반응이 일어나는 순서대로 클릭해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#00d4ff","prompt":"핵분열 연쇄반응의 순서를 클릭하세요","steps":["중성자 발사","우라늄 핵 흡수","핵분열","에너지 방출","새 중성자 방출","연쇄 반응"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00d4ff","questions":[{"q":"태양의 에너지원은?","choices":["핵분열","화학 반응","핵융합","마찰열"],"answer":2},{"q":"질량수 A의 식은?","choices":["Z−N","Z+N","Z×N","N/Z"],"answer":1},{"q":"핵자를 묶어주는 힘은?","choices":["중력","전자기력","약력","강한 핵력"],"answer":3},{"q":"결합 에너지가 최대인 질량수는?","choices":["약 4","약 16","약 56","약 235"],"answer":2},{"q":"반감기 t₁/₂의 공식은?","choices":["ln2/λ","λ/ln2","λ²","1/λ"],"answer":0}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('fission-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 8, 12);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  let density = 2;
+  let nuclei = [];
+  let neutrons = [];
+  let fragments = [];
+
+  function createNuclei() {
+    nuclei.forEach(n => scene.remove(n.mesh));
+    nuclei = [];
+    const count = density * 12;
+    for (let i = 0; i < count; i++) {
+      const mesh = new THREE.Mesh(
+        new THREE.SphereGeometry(0.4, 16, 16),
+        new THREE.MeshBasicMaterial({ color: 0x00d4ff, transparent: true, opacity: 0.7 })
+      );
+      mesh.position.set(
+        (Math.random() - 0.5) * 10,
+        (Math.random() - 0.5) * 6,
+        (Math.random() - 0.5) * 6
+      );
+      scene.add(mesh);
+      nuclei.push({ mesh, alive: true });
+    }
+  }
+  createNuclei();
+
+  function addNeutron(pos, vel) {
+    const mesh = new THREE.Mesh(
+      new THREE.SphereGeometry(0.12, 8, 8),
+      new THREE.MeshBasicMaterial({ color: 0xff6b35 })
+    );
+    mesh.position.copy(pos);
+    scene.add(mesh);
+    neutrons.push({ mesh, vel: vel.clone(), life: 200 });
+  }
+
+  function fission(nucleus) {
+    nucleus.alive = false;
+    nucleus.mesh.material.color.set(0xff6b35);
+    nucleus.mesh.material.opacity = 0.3;
+
+    // Spawn 2-3 neutrons
+    const numNew = 2 + Math.floor(Math.random() * 2);
+    for (let i = 0; i < numNew; i++) {
+      const vel = new THREE.Vector3(
+        (Math.random() - 0.5) * 0.3,
+        (Math.random() - 0.5) * 0.3,
+        (Math.random() - 0.5) * 0.3
+      );
+      addNeutron(nucleus.mesh.position.clone(), vel);
+    }
+
+    // Fragments
+    for (let i = 0; i < 4; i++) {
+      const frag = new THREE.Mesh(
+        new THREE.SphereGeometry(0.15, 8, 8),
+        new THREE.MeshBasicMaterial({ color: 0xa855f7, transparent: true, opacity: 0.8 })
+      );
+      frag.position.copy(nucleus.mesh.position);
+      scene.add(frag);
+      fragments.push({
+        mesh: frag,
+        vel: new THREE.Vector3((Math.random()-0.5)*0.2, (Math.random()-0.5)*0.2, (Math.random()-0.5)*0.2),
+        life: 60
+      });
+    }
+  }
+
+  const densitySlider = document.getElementById('density-slider');
+  const densityVal = document.getElementById('density-val');
+  const startBtn = document.getElementById('start-fission');
+
+  densitySlider.addEventListener('input', () => {
+    density = parseInt(densitySlider.value);
+    densityVal.textContent = ['낮음', '중간', '높음'][density - 1];
+    createNuclei();
+    neutrons.forEach(n => scene.remove(n.mesh));
+    neutrons = [];
+    fragments.forEach(f => scene.remove(f.mesh));
+    fragments = [];
+  });
+
+  startBtn.addEventListener('click', () => {
+    createNuclei();
+    neutrons.forEach(n => scene.remove(n.mesh));
+    neutrons = [];
+    fragments.forEach(f => scene.remove(f.mesh));
+    fragments = [];
+    addNeutron(new THREE.Vector3(-7, 0, 0), new THREE.Vector3(0.2, 0, 0));
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Move neutrons
+    for (let i = neutrons.length - 1; i >= 0; i--) {
+      const n = neutrons[i];
+      n.mesh.position.add(n.vel);
+      n.life--;
+
+      // Check collision with nuclei
+      for (const nuc of nuclei) {
+        if (!nuc.alive) continue;
+        if (n.mesh.position.distanceTo(nuc.mesh.position) < 0.6) {
+          fission(nuc);
+          scene.remove(n.mesh);
+          neutrons.splice(i, 1);
+          break;
+        }
+      }
+
+      if (n.life <= 0 || n.mesh.position.length() > 15) {
+        scene.remove(n.mesh);
+        neutrons.splice(i, 1);
+      }
+    }
+
+    // Move fragments
+    for (let i = fragments.length - 1; i >= 0; i--) {
+      const f = fragments[i];
+      f.mesh.position.add(f.vel);
+      f.life--;
+      f.mesh.material.opacity = f.life / 60;
+      if (f.life <= 0) {
+        scene.remove(f.mesh);
+        fragments.splice(i, 1);
+      }
+    }
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

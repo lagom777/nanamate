@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9. 생명공학 — aboutBiology</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🧬 표지 · 소개</a></li>
+    <li><a href="01-cell.html">1. 세포 · 생명의 단위</a></li>
+    <li><a href="02-dna.html">2. DNA와 유전학</a></li>
+    <li><a href="03-evolution.html">3. 진화</a></li>
+    <li><a href="04-ecology.html">4. 생태학</a></li>
+    <li><a href="05-physiology.html">5. 인체생리학</a></li>
+    <li><a href="06-microbiology.html">6. 미생물학</a></li>
+    <li><a href="07-botany.html">7. 식물학</a></li>
+    <li><a href="08-zoology.html">8. 동물학</a></li>
+    <li><a href="09-biotech.html" style="color:var(--accent);font-weight:600;">9. 생명공학</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>생명공학</em></h1>
+  <p class="authors">Chapter 9 — Biotechnology & Genetic Engineering</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ CRISPR 유전자 편집 — Cas9가 DNA를 절단하고 새 염기를 삽입</span>
+
+<h2>생명공학 개요</h2>
+<p>생명공학은 생물의 원리를 기술로 응용하는 분야입니다. 이 챕터에서는 유전자 편집(CRISPR), 재조합 DNA, 백신·치료제 개발 등 생명을 다루는 도구와 그에 따르는 윤리 문제를 살펴봅니다.</p>
+
+<div class="info-card">
+  <h4>핵심 개념</h4>
+  <p>재조합 DNA 기술, PCR, CRISPR 유전자 가위, 줄기세포 공학 등 현대 생명공학 기술의 원리와 의약·농업·산업 분야의 응용을 다룹니다.</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🔍 한 줄로 이해하기</h3>
+  <p>생명공학은 생물의 능력을 빌리거나 살짝 바꿔서 사람에게 도움이 되는 제품과 기술을 만드는 분야예요! 🧫</p>
+  <h3>🤔 왜 중요할까?</h3>
+  <p>당뇨병 환자에게 꼭 필요한 인슐린은 박테리아에 사람 유전자를 넣어서 만든 생명공학 작품이에요! 코로나19 mRNA 백신, 유전자 검사 키트, 식물성 고기, 친환경 바이오 연료까지 전부 이 분야의 결과랍니다. 미래의 의료·식량·환경 문제를 푸는 열쇠가 바로 생명공학이에요. 🔑</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4>
+    <ul>
+      <li><strong>유전자 재조합</strong>: 다른 생물의 DNA를 잘라 붙여 새 기능을 만드는 기술</li>
+      <li><strong>CRISPR</strong>: DNA를 정밀하게 자르고 고치는 유전자 가위</li>
+      <li><strong>줄기세포</strong>: 여러 종류의 세포로 변신할 수 있는 세포</li>
+      <li><strong>바이오의약품</strong>: 살아 있는 세포로 만든 약</li>
+      <li><strong>합성생물학</strong>: 새로운 생물 시스템을 설계하고 만드는 분야</li>
+    </ul>
+  </div>
+  <h3>💡 쉽게 풀어보기</h3>
+  <p>생명공학은 생물을 작은 "공장"처럼 부려요! 🏭 박테리아에 사람의 인슐린 유전자를 쏙 넣어 주면, 그 박테리아가 인슐린을 쉬지 않고 뚝딱뚝딱 만들어 줘요. 효모에 다른 유전자를 넣으면 친환경 향료, 의약품, 연료까지 만들 수 있고요. 최근엔 CRISPR라는 "분자 가위"로 원하는 위치의 DNA를 정확히 오려 고칠 수 있게 되어, 유전병을 치료할 길이 활짝 열렸어요. ✂️ 줄기세포 연구는 망가진 장기와 조직을 되살리려 하고, 합성생물학은 자연에 없던 새 기능을 세포에 심어요. 물론 이런 힘이 세진 만큼 안전·윤리·공정함에 대한 고민도 함께 해야 한답니다.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 생명공학은 '문제 → 생물 도구 → 결과물' 순서로 정리하면 응용 사례가 쏙쏙 이해돼요! 📝</div>
+  <h3>📌 한 페이지 요약</h3>
+  <ul>
+    <li>생명공학은 생물의 기능을 응용하는 학문이에요.</li>
+    <li>유전자 재조합과 CRISPR가 핵심 기술이에요.</li>
+    <li>의약·식량·환경 문제 해결에 도움을 줘요.</li>
+    <li>윤리와 안전에 대한 논의가 꼭 필요해요.</li>
+    <li>합성생물학이 미래의 큰 흐름이에요.</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
+  <p>유전자 클로닝의 기본 도구는 제한효소·라이게이스·플라스미드·숙주세포입니다. 이들로 외래 유전자를 벡터에 넣어 박테리아에서 발현시킵니다. CRISPR-Cas9는 가이드 RNA로 표적 서열을 인식하고 Cas9가 이중나선을 절단해 NHEJ(비상동말단연결) 또는 HDR(상동방향수복)로 수선됩니다. 유도만능줄기세포(iPSC)는 분화된 세포에 4개의 전사인자(OSKM)를 도입해 만들 수 있어 환자 맞춤형 모델·치료의 토대가 됩니다. 항체의약품은 단클론항체 기술로 표적 특이성을 확보하고, ADC(항체-약물 결합체), 이중특이항체로 발전합니다. 효소공학은 합리적 설계와 진화 공학을 결합해 특정 반응에 최적화된 효소를 얻습니다.</p>
+  <h3>메커니즘과 사례</h3>
+  <div class="info-card"><h4>🔬 사례 1 — 인슐린 생산</h4><p>대장균에 인간 인슐린 유전자를 넣어 발효 탱크에서 대량 생산합니다. 이는 1980년대 이후 당뇨 치료를 혁신했습니다.</p></div>
+  <div class="info-card"><h4>🔬 사례 2 — CAR-T 세포 치료</h4><p>환자의 T세포에 암 항원 인식 수용체를 도입해 환자 자신의 면역세포로 백혈병을 공격합니다.</p></div>
+  <h3>실험과 관찰</h3>
+  <p>전기영동, 시퀀싱(Sanger·NGS), qPCR, 형질전환 효율 측정은 기본 검증 도구입니다. 형광 보고자(GFP, mCherry)는 도입 유전자의 발현을 실시간 시각화합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 'CRISPR는 무엇이든 편집할 수 있다'는 과신입니다. 오프타깃, 모자이크 현상, 면역 반응 등 한계와 위험을 함께 고려해야 합니다.</div>
+
+<h3>전문가 레벨 이해</h3>
+  <p>차세대 유전자 편집은 베이스 에디팅, 프라임 에디팅, 에피게놈 편집(dCas9 융합)으로 정밀도와 안전성을 동시에 추구합니다. mRNA 치료제는 LNP 전달 시스템과 변형 뉴클레오타이드(ψ-uridine)로 안정성을 확보하고, 자가증폭 mRNA(saRNA)와 환형 mRNA가 차세대 후보입니다. AAV 벡터 기반 유전자 치료는 캡시드 공학으로 조직 특이성을 높이고 있습니다. 합성생물학은 표준화된 유전자 부품(BioBrick), 인공 게놈 합성, 무세포 시스템으로 확장되며, 비천연 아미노산 도입과 직교 번역(orthogonal translation)도 가능해졌습니다. 단일세포·공간 오믹스는 세포 치료의 결과를 정밀 평가하고, AI 기반 단백질 설계(RFdiffusion, ESMFold)는 새로운 효소·결합체를 디자인합니다.</p>
+  <h3>최신 연구</h3>
+  <p>인비보(in vivo) CRISPR 치료가 임상에서 ATTR-아밀로이드증의 단일 투여 효과를 입증했고, 베이스 에디팅 기반 백혈병 치료도 1상에서 결과를 보였습니다. AlphaFold·RFdiffusion 같은 단백질 설계 AI는 후보 발굴 주기를 단축하며, 인공 미니 장기(오가노이드)와 장기 칩이 동물 실험을 부분적으로 대체합니다. 생합성으로 비싼 천연물(파클리탁셀, 모르핀)을 효모에서 생산하는 사례도 늘고 있습니다.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>의학</strong>: 유전자·세포 치료의 임상 전환</li>
+    <li><strong>식량</strong>: 세포 배양육과 정밀 발효</li>
+    <li><strong>환경</strong>: 미생물 기반 플라스틱 분해, 바이오레미디에이션</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Molecular Cloning: A Laboratory Manual — Sambrook</li>
+    <li>📺 iGEM 합성생물학 강연</li>
+    <li>🔬 Addgene 플라스미드 데이터베이스</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 인비보 베이스 에디팅 치료의 안전성 평가에 어떤 오프타깃 분석(GUIDE-seq, CIRCLE-seq 등)을 어떤 순서로 적용할지 설계해 보세요.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 어울리지 않는 하나</h2>
+<p>네 개 중 성격이 다른 하나를 골라보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#00e676","prompt":"넷 중 어울리지 않는 하나를 고르세요","rounds":[{"items":["제한효소","라이게이스","플라스미드","항생제"],"odd":3,"why":"항생제는 약물이고 나머지는 유전자 클로닝 도구"},{"items":["CRISPR","베이스 에디팅","프라임 에디팅","전기영동"],"odd":3,"why":"전기영동은 분석 도구이고 나머지는 유전자 편집 기술"},{"items":["인슐린 생산","CAR-T 치료","줄기세포 치료","화석 분석"],"odd":3,"why":"화석 분석은 생명공학 응용이 아님"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e676","questions":[{"q":"DNA를 정밀하게 자르고 고치는 도구는?","choices":["PCR","CRISPR","전기영동","GFP"],"answer":1},{"q":"다양한 세포로 분화하는 세포는?","choices":["줄기세포","적혈구","신경세포","근육세포"],"answer":0},{"q":"인슐린을 대량 생산하는 데 쓰는 생물은?","choices":["식물","박테리아","바이러스","곰팡이"],"answer":1},{"q":"CRISPR에서 표적을 인식하는 것은?","choices":["제한효소","플라스미드","가이드 RNA","Cas9"],"answer":2},{"q":"환자 T세포로 암을 공격하는 치료는?","choices":["iPSC","백신","항생제","CAR-T"],"answer":3}]};</script>
+</main>
+</div>
+
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  // CRISPR: horizontal DNA strand of base beads; Cas9 cutter sweeps in, opens a gap, a new (green) base is inserted
+  const dna=new THREE.Group();s.add(dna);
+  const M=16,spacing=0.55,start=-(M-1)*spacing/2;
+  const targetIdx=8;
+  const bases=[];
+  for(let i=0;i<M;i++){
+    const isTarget=(i===targetIdx);
+    const col=isTarget?0xf43f5e:[0x3b82f6,0x22c55e,0xeab308,0x06b6d4][i%4];
+    const b=new THREE.Mesh(new THREE.SphereGeometry(0.22,14,14),new THREE.MeshBasicMaterial({color:col}));
+    b.position.set(start+i*spacing,0,0);dna.add(b);bases.push({m:b,x:start+i*spacing,target:isTarget});
+  }
+  // backbone line
+  const bl=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(start-0.3,0,0),new THREE.Vector3(start+(M-1)*spacing+0.3,0,0)]);
+  dna.add(new THREE.Line(bl,new THREE.LineBasicMaterial({color:0x64748b})));
+  // Cas9 cutter (boxy enzyme) + guide
+  const cas9=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.9,0.9),new THREE.MeshBasicMaterial({color:0x8b5cf6,transparent:true,opacity:0.6}));
+  s.add(cas9);
+  const cas9w=new THREE.Mesh(new THREE.BoxGeometry(0.92,0.92,0.92),new THREE.MeshBasicMaterial({color:0xc4b5fd,wireframe:true}));
+  s.add(cas9w);
+  // inserted base (green tetrahedron), hidden until insertion phase
+  const insert=new THREE.Mesh(new THREE.TetrahedronGeometry(0.3,0),new THREE.MeshBasicMaterial({color:0x16a34a}));
+  insert.visible=false;s.add(insert);
+  const tx=start+targetIdx*spacing;
+  s.userData={bases:bases,cas9:cas9,cas9w:cas9w,insert:insert,tx:tx};
+  // 생물학 용어 라벨 — CRISPR 유전자 편집 과정을 가르치기 위함
+  [['DNA 염기 서열','#1f2430',start+1.0,-0.9,0],['표적 부위','#be123c',tx,-0.9,0],['Cas9(절단 효소)','#6d28d9',tx,3.0,0],['새 염기 삽입','#15803d',tx+1.6,0.9,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ CRISPR는 DNA의 원하는 자리를 정밀하게 고치는 기술입니다.','Cas9 효소가 표적 부위를 찾아 DNA를 정확히 절단합니다.','잘린 자리에 새 염기를 넣어 유전 정보를 교정합니다.','이로써 유전 질환 치료·작물 개량 등 생명공학이 가능해집니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}
+    const u=s.userData;const cyc=(T*0.35)%(Math.PI*2);const ph=cyc/(Math.PI*2); // 0..1 edit cycle
+    // Cas9 descends to target, then retracts
+    const dy=ph<0.5?(2.5-ph*2*2.0):(0.5+(ph-0.5)*2*2.0);
+    u.cas9.position.set(u.tx,dy,0);u.cas9w.position.set(u.tx,dy,0);
+    const cut=(ph>0.35&&ph<0.75);
+    u.bases.forEach(b=>{const gap=(cut&&b.x>u.tx)?0.45:0;b.m.position.x=b.x+gap;b.m.scale.setScalar(b.target&&cut?0.3:1);});
+    u.insert.visible=cut;u.insert.position.set(u.tx+0.22,0,0);u.insert.rotation.y+=0.05;u.insert.rotation.x+=0.03;
+    s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body>
+</html>

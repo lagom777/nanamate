@@ -44,7 +44,7 @@ function PlayInner({ id }: { id: string }) {
 
   const chapter = chapterAt(id, hud.level);
   const paper = Boolean(meta.paper);
-  const isCsat = meta.kernel === "csat";
+  const isCsat = meta.group === "suneung";
 
   const onHud = useCallback((h: Hud) => setHud(h), []);
   const onClear = useCallback(

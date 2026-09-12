@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1장. 지구의 구조</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🌍 표지 · 소개</a></li>
+    <li><a href="01-structure.html">1. 지구의 구조</a></li>
+    <li><a href="02-plate-tectonics.html">2. 판구조론</a></li>
+    <li><a href="03-minerals-rocks.html">3. 광물과 암석</a></li>
+    <li><a href="04-atmosphere.html">4. 대기과학</a></li>
+    <li><a href="05-oceanography.html">5. 해양학</a></li>
+    <li><a href="06-climate-change.html">6. 기후변화</a></li>
+    <li><a href="07-geological-time.html">7. 지질시대</a></li>
+    <li><a href="08-natural-disasters.html">8. 자연재해</a></li>
+    <li><a href="09-resources-environment.html">9. 자원과 환경</a></li>
+  </ol>
+</aside>
+<main>
+<h2>1. 지구의 구조</h2>
+
+<div class="info-box">
+<p><strong>지구는 여러 층으로 이루어진 행성입니다.</strong> 마치 양파처럼 여러 겹의 층이 동심원 형태로 구성되어 있으며, 각 층은 화학 조성과 물리적 성질이 다릅니다.</p>
+<p>아래 3D 모델에서 슬라이더를 조절하여 지구의 내부를 직접 잘라보세요!</p>
+</div>
+
+<div class="threejs-container" data-label="3D 지구 내부 구조" id="earth-cross-section" style="height:550px;">
+  <div class="threejs-controls">
+    <label>절단면: <input type="range" id="slice-angle" min="0" max="360" value="270"></label>
+    <button id="btn-reset">리셋</button>
+    <button id="btn-labels">라벨 표시</button>
+  </div>
+  <div class="threejs-info" id="layer-info">클릭하여 층 정보 확인</div>
+</div>
+<p class="fig-title">그림 1.1. 지구 내부 구조 3D 단면도. 슬라이더로 절단 각도를 조절하세요.</p>
+
+<h3>1.1 지구의 층상 구조</h3>
+<p>지구는 크게 <strong>지각(Crust)</strong>, <strong>맨틀(Mantle)</strong>, <strong>외핵(Outer Core)</strong>, <strong>내핵(Inner Core)</strong>의 4개 층으로 구분됩니다. 이 구분은 지진파의 전파 속도 변화를 통해 밝혀졌습니다.</p>
+
+<table>
+<thead><tr><th>층</th><th>깊이 (km)</th><th>상태</th><th>주요 성분</th><th>온도 (°C)</th></tr></thead>
+<tbody>
+<tr><td>지각</td><td>0–35 (대륙) / 0–7 (해양)</td><td>고체</td><td>규산염 광물</td><td>~200–400</td></tr>
+<tr><td>상부 맨틀</td><td>35–670</td><td>고체/부분 용융</td><td>감람석, 휘석</td><td>1,000–1,500</td></tr>
+<tr><td>하부 맨틀</td><td>670–2,900</td><td>고체</td><td>규산염 페로브스카이트</td><td>1,500–3,700</td></tr>
+<tr><td>외핵</td><td>2,900–5,150</td><td>액체</td><td>철-니켈 합금</td><td>4,000–5,000</td></tr>
+<tr><td>내핵</td><td>5,150–6,371</td><td>고체</td><td>철-니켈</td><td>5,000–6,000</td></tr>
+</tbody>
+</table>
+
+<h3>1.2 지각의 종류</h3>
+<p><strong>대륙 지각</strong>은 평균 두께 35km로 주로 화강암질 암석(규장질)으로 구성됩니다. 밀도는 약 2.7 g/cm³입니다. 반면 <strong>해양 지각</strong>은 평균 두께 7km로 현무암질 암석(고철질)으로 구성되며, 밀도는 약 3.0 g/cm³입니다.</p>
+<p>해양 지각이 대륙 지각보다 밀도가 높기 때문에, 두 지각이 만나면 해양 지각이 아래로 섭입(subduction)하게 됩니다. 이것이 판구조론의 핵심 메커니즘 중 하나입니다.</p>
+
+<h3>1.3 맨틀과 대류</h3>
+<p>맨틀은 지구 부피의 약 84%를 차지하는 가장 큰 층입니다. 맨틀은 고체이지만, 지질학적 시간 규모(수백만 년)에서는 매우 느리게 흐를 수 있습니다. 이 <strong>맨틀 대류(mantle convection)</strong>가 판의 이동을 구동하는 원동력입니다.</p>
+<p>맨틀 대류의 원리: 핵에서 가열된 맨틀 물질이 상승하고, 표면에서 냉각되어 다시 하강합니다. 이 순환이 지각판을 움직이게 합니다.</p>
+
+<h3>1.4 핵: 지구 자기장의 원천</h3>
+<p>외핵은 <strong>액체 상태의 철-니켈 합금</strong>으로 이루어져 있습니다. 이 액체 금속의 대류 운동이 <strong>지구 자기장(geomagnetic field)</strong>을 생성합니다. 이를 지구 다이나모(geodynamo)라 합니다.</p>
+<p>내핵은 엄청난 압력(약 360 GPa) 때문에 5,000°C 이상의 고온에도 불구하고 고체 상태를 유지합니다. 내핵은 연간 약 1mm씩 성장하고 있습니다.</p>
+
+<h3>1.5 지진파를 통한 지구 내부 탐사</h3>
+<p>우리가 지구 내부 구조를 알게 된 것은 <strong>지진파</strong> 덕분입니다. P파(종파)와 S파(횡파)는 매질의 밀도와 상태에 따라 속도가 변합니다.</p>
+<ul>
+<li><strong>P파</strong>: 고체와 액체 모두 통과. 속도 5–13 km/s</li>
+<li><strong>S파</strong>: 고체만 통과 (액체에서 소멸). 외핵에서 S파가 사라짐 → 외핵이 액체라는 증거</li>
+</ul>
+<p>지진파 속도가 급격히 변하는 경계를 <strong>불연속면</strong>이라 합니다: 모호면(지각-맨틀), 구텐베르크 불연속면(맨틀-외핵), 레만 불연속면(외핵-내핵).</p>
+
+<div class="quiz-box">
+<h4>🧪 확인 문제</h4>
+<p>S파가 외핵을 통과하지 못하는 이유는?</p>
+<div class="quiz-option" onclick="this.classList.add('wrong')">① 외핵의 온도가 너무 높아서</div>
+<div class="quiz-option" onclick="this.classList.add('correct')">② 외핵이 액체 상태이기 때문에</div>
+<div class="quiz-option" onclick="this.classList.add('wrong')">③ 외핵의 밀도가 너무 낮아서</div>
+<div class="quiz-option" onclick="this.classList.add('wrong')">④ 외핵이 자기장을 가지고 있어서</div>
+</div>
+
+<div class="chapter-nav">
+  <a href="../index.html">← 표지</a>
+  <a href="02-plate-tectonics.html">판구조론 →</a>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🌍 한 줄 요약!</h3>
+  <p>지구는 양파처럼 여러 겹으로 되어 있어! 🧅 바깥부터 <strong>지각·맨틀·외핵·내핵</strong> 4층이야.</p>
+  <h3>🤔 왜 알아야 할까?</h3>
+  <p>지진은 왜 날까? 화산은 왜 터질까? 나침반은 왜 북쪽을 가리킬까? 정답은 전부 지구 <em>속</em>에 있어! 땅(지각)이 쩍 갈라지면 지진, 뜨거운 마그마가 뿅 뚫고 나오면 화산이야. 그리고 외핵의 액체 금속이 빙글빙글 돌면 거대한 자석이 생겨서 나침반과 GPS가 척척 작동해. 🧭</p>
+  <div class="info-card"><h4>🌱 꼭 기억할 말</h4><ul>
+    <li><strong>지각</strong>: 지구의 가장 바깥 껍질 (아주 얇아!)</li>
+    <li><strong>맨틀</strong>: 지구 부피의 약 84%를 차지하는 제일 두꺼운 층</li>
+    <li><strong>외핵</strong>: 액체 상태의 철-니켈 층</li>
+    <li><strong>내핵</strong>: 가장 안쪽의 고체 철-니켈 층</li>
+  </ul></div>
+  <h3>✨ 쉽게 풀어볼게!</h3>
+  <p>지구를 사과라고 생각해 봐! 🍎 얇은 껍질이 '지각', 두툼한 과육이 '맨틀', 가운데 씨방이 '핵'이야. 지각은 우리가 발 딛고 사는 곳이지만, 지구 전체로 보면 풍선 막처럼 얇아. 맨틀은 딱딱한 고체지만 수백만 년이라는 긴 시간 동안엔 꿀처럼 아주 천천히 흘러. 이걸 <strong>맨틀 대류</strong>라고 해. 핵은 더 신기해! 바깥쪽 외핵은 너무 뜨거워서 철이 녹아 흐르는 액체지만, 안쪽 내핵은 더 뜨거운데도 어마어마한 압력에 꽉 눌려서 고체야. 이 액체 금속이 빙글빙글 돌면 거대한 자석이 만들어져서, 우주에서 날아오는 위험한 방사선을 막아줘. 지구가 우리 방패인 셈이지! 🛡️</p>
+  <div class="study-tip"><strong>💡 꿀팁:</strong> 층 깊이는 숫자 노래로 외워봐! '지각 35 → 맨틀 2,900 → 외핵 5,150 → 내핵 6,371' km, 리듬 타면서! 🎵</div>
+  <h3>📌 오늘의 정리</h3>
+  <ul>
+    <li>지구는 4개 층(지각·맨틀·외핵·내핵)으로 구성</li>
+    <li>지각은 가장 얇고, 맨틀은 가장 두꺼움</li>
+    <li>외핵만 액체, 나머지는 고체</li>
+    <li>외핵의 흐름이 지구 자기장(거대한 자석)을 만듦</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>지구 내부 구조는 화학적 분류와 역학적 분류 두 가지 방식으로 나뉩니다. 화학적으로는 지각·맨틀·핵으로 구분되고, 역학적으로는 암석권(lithosphere)·연약권(asthenosphere)·중간권(mesosphere)·외핵·내핵으로 구분됩니다. 암석권은 지각과 상부 맨틀의 일부를 합친 것으로 단단한 판을 이루고, 그 아래의 연약권은 부분 용융 상태로 변형이 쉬워 판이 그 위를 미끄러져 움직일 수 있습니다. 670km 깊이에서 일어나는 광물의 상전이(감람석 → 와즐레이트 → 링우다이트 → 페로브스카이트)는 상부와 하부 맨틀을 가르는 중요한 경계입니다. 외핵은 약 4,000–5,000°C의 액체 철 합금으로, 그 안에서의 자기유체역학적 대류가 지구 자기장을 생성합니다. 내핵은 5,150km 깊이부터 시작되며 매년 약 1mm씩 자라고 있습니다.</p>
+  <h3>메커니즘과 모델</h3>
+  <div class="info-card"><h4>🌍 사례 1: 모호로비치치 불연속면</h4><p>1909년 크로아티아 지진 때 모호로비치치가 발견한 지각-맨틀 경계로, 이곳에서 P파 속도가 약 6.5에서 8.0 km/s로 갑자기 증가합니다. 대륙에서는 약 35km, 해양에서는 약 7km 깊이에 있습니다.</p></div>
+  <div class="info-card"><h4>🌍 사례 2: 구텐베르크 불연속면</h4><p>2,900km 깊이의 맨틀-외핵 경계로, 이곳에서 S파가 사라집니다. 횡파인 S파가 액체를 통과하지 못한다는 사실이 외핵이 액체임을 입증한 결정적 증거입니다.</p></div>
+  <h3>관측 데이터</h3>
+  <p>지진계 네트워크는 전 세계 수천 곳에 설치되어 있어 지진파를 통해 지구 내부를 'CT 촬영'하듯 영상화합니다. 이를 지진파 단층촬영(seismic tomography)이라 합니다. 또한 중력 위성(GRACE, GOCE)으로 지구 내부 질량 분포를 관측하고, 지자기 위성(Swarm)이 지구 자기장을 정밀 측정해 외핵의 운동을 간접 추적합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> '맨틀이 액체 마그마로 가득 차 있다'는 오해가 흔합니다. 맨틀은 거의 전부 고체이며, 마그마는 특정 조건에서 부분 용융이 일어난 일부분에서만 형성됩니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>지구 내부의 동역학은 다중 스케일 물리과정의 결합으로 설명됩니다. 맨틀 대류는 레일리 수(Ra ≈ 10⁸ 이상)가 임계치를 훨씬 넘는 강한 대류 상태로, 광역적으로는 단일 셀이 아닌 복수의 거대 저속도역(LLSVPs, Large Low Shear Velocity Provinces)이 아프리카와 태평양 아래 존재합니다. PREM(Preliminary Reference Earth Model)은 지진파 속도 분포의 기준 모델로, 1981년 Dziewonski와 Anderson에 의해 정립되어 지금도 표준입니다. 670km 불연속면에서의 광물 상전이는 클라페이론 기울기에 따라 침강하는 슬랩의 운동을 늦추거나 가속시키며, 일부 슬랩은 이 깊이에서 정체(stagnant slab)되기도 합니다. 외핵의 자기유체역학(MHD) 대류는 코리올리 힘과 자기장이 결합된 자기회전 대류 상태이며, 이는 지자기 역전(약 78만 년마다 평균 1회)을 일으키는 메커니즘으로 추정됩니다. 내핵에는 결정 정렬에 의한 이방성(anisotropy)이 존재해, 회전축 방향과 적도 방향에서 P파 속도가 약 3% 차이 납니다. 또한 내핵이 맨틀보다 약간 빠르게 자전한다는 'super-rotation' 가설(연 0.1–1°)은 여전히 활발히 논의 중입니다.</p>
+  <h3>핵심 모델</h3>
+  <div class="formula">맨틀 대류의 레일리 수: Ra = (αρgΔTd³) / (ηκ)<br>α: 열팽창계수, ρ: 밀도, g: 중력가속도, ΔT: 온도차, d: 층 두께, η: 점성, κ: 열확산도<br>지구 다이나모: ∂B/∂t = ∇×(u×B) + η_m∇²B (자기 유도 방정식)</div>
+  <h3>최신 연구</h3>
+  <p>2023년 발표된 연구는 내핵 회전 속도가 최근 10년간 거의 정지하거나 역전되었을 가능성을 제시했습니다(Yang & Song, Nature Geoscience). 또한 ULVZ(Ultra-Low Velocity Zone)라 불리는 핵-맨틀 경계 부근의 극저속도층은 부분 용융이나 철의 농축으로 해석되며, 슈퍼플룸의 뿌리일 수 있다는 가설이 있습니다. 심해 다이아몬드 포유물에서 발견된 링우다이트는 맨틀 전이대에 상당량의 물이 함유되어 있다는 증거로 주목받습니다.</p>
+  <h3>관련 분야</h3>
+  <ul>
+    <li>지진학(Seismology) — 지구 내부 구조 영상화</li>
+    <li>지구화학(Geochemistry) — 동위원소를 통한 맨틀 진화 추적</li>
+    <li>광물물리학(Mineral Physics) — 고압 광물상의 안정성 연구</li>
+    <li>지자기학(Geomagnetism) — 지구 다이나모 모형화</li>
+  </ul>
+  <h3>추가 자료</h3>
+  <ul>
+    <li>Dziewonski & Anderson (1981), <em>PREM</em>, PEPI</li>
+    <li>Olson, P. (2015), <em>Core Dynamics</em>, Treatise on Geophysics</li>
+    <li>USGS Earthquake Hazards Program (지진파 데이터)</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> PREM 모델을 이용해 P파가 진앙으로부터 90° 떨어진 관측소에 도달하는 시간을 계산하고, 실제 관측치와 비교해 보세요.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 지구 내부 층 순서</h2>
+<p>지표에서 중심으로, 지구 내부 층을 얕은 곳부터 깊은 곳 순서대로 클릭하세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#1565c0","prompt":"지표에서 가장 가까운 층부터 깊은 순서대로 클릭하세요","steps":["지각","맨틀","외핵","내핵"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#1565c0","questions":[{"q":"지구 내부에서 액체 상태인 층은?","choices":["지각","맨틀","외핵","내핵"],"answer":2},{"q":"지구 부피의 약 84%를 차지하는 층은?","choices":["맨틀","지각","외핵","내핵"],"answer":0},{"q":"지구 자기장을 만드는 층은?","choices":["지각","내핵","맨틀","외핵"],"answer":3},{"q":"외핵이 액체라는 결정적 증거는?","choices":["P파 소멸","S파 소멸","높은 온도","빠른 자전"],"answer":1},{"q":"지각과 맨틀의 경계 불연속면은?","choices":["구텐베르크면","레만면","모호면","연약권"],"answer":2}]};</script>
+</main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  const container = document.getElementById('earth-cross-section');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 100);
+  camera.position.set(0, 1, 4);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  container.appendChild(renderer.domElement);
+
+  // Layer colors and radii
+  const layers = [
+    { name: '내핵', radius: 0.18, color: 0xffab00, info: '내핵: 고체 철-니켈, 5000-6000°C' },
+    { name: '외핵', radius: 0.36, color: 0xff6d00, info: '외핵: 액체 철-니켈, 4000-5000°C' },
+    { name: '하부맨틀', radius: 0.72, color: 0xd84315, info: '하부맨틀: 고체 규산염, 1500-3700°C' },
+    { name: '상부맨틀', radius: 0.88, color: 0xe65100, info: '상부맨틀: 감람석+휘석, 1000-1500°C' },
+    { name: '지각', radius: 1.0, color: 0x5d4037, info: '지각: 규산염 광물, 평균 35km 두께' }
+  ];
+
+  const earthGroup = new THREE.Group();
+  scene.add(earthGroup);
+
+  // Create sphere layers
+  const meshes = [];
+  layers.forEach((layer, i) => {
+    const geo = new THREE.SphereGeometry(layer.radius, 64, 64, 0, Math.PI * 2, 0, Math.PI);
+    const mat = new THREE.MeshPhongMaterial({
+      color: layer.color,
+      shininess: 30,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.95
+    });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.userData = layer;
+    meshes.push(mesh);
+    earthGroup.add(mesh);
+  });
+
+  // Cross-section plane for clipping
+  let clipAngle = 270;
+  const clipPlane = new THREE.Plane(new THREE.Vector3(-1, 0, 0.3), 0);
+
+  function updateClip() {
+    const rad = (clipAngle / 360) * Math.PI * 2;
+    const nx = Math.sin(rad);
+    const nz = Math.cos(rad);
+    renderer.clippingPlanes = clipAngle < 360 ? [new THREE.Plane(new THREE.Vector3(nx, 0, nz), 0)] : [];
+    meshes.forEach(m => {
+      m.material.clippingPlanes = renderer.clippingPlanes;
+    });
+  }
+
+  renderer.localClippingEnabled = true;
+  updateClip();
+
+  // Cross-section fill circles (visible on cut face)
+  const crossSectionGroup = new THREE.Group();
+  earthGroup.add(crossSectionGroup);
+
+  function updateCrossSectionFaces() {
+    crossSectionGroup.clear();
+    if (clipAngle >= 360) return;
+    const rad = (clipAngle / 360) * Math.PI * 2;
+    const nx = Math.sin(rad);
+    const nz = Math.cos(rad);
+
+    layers.forEach((layer, i) => {
+      const innerR = i === 0 ? 0 : layers[i - 1].radius;
+      const outerR = layer.radius;
+      const ringGeo = new THREE.RingGeometry(innerR, outerR, 64);
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: layer.color,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.9
+      });
+      const ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.lookAt(nx, 0, nz);
+      crossSectionGroup.add(ring);
+    });
+  }
+  updateCrossSectionFaces();
+
+  // Lights
+  scene.add(new THREE.DirectionalLight(0xffffff, 1.0).translateTo = null);
+  const dLight = new THREE.DirectionalLight(0xffffff, 1.0);
+  dLight.position.set(3, 2, 4);
+  scene.add(dLight);
+  scene.add(new THREE.AmbientLight(0x404060, 0.5));
+  const backLight = new THREE.DirectionalLight(0x4fc3f7, 0.3);
+  backLight.position.set(-3, -1, -2);
+  scene.add(backLight);
+
+  // Slider control
+  const slider = document.getElementById('slice-angle');
+  slider.addEventListener('input', (e) => {
+    clipAngle = parseInt(e.target.value);
+    updateClip();
+    updateCrossSectionFaces();
+  });
+
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    slider.value = 270;
+    clipAngle = 270;
+    updateClip();
+    updateCrossSectionFaces();
+    earthGroup.rotation.set(0, 0, 0);
+  });
+
+  // Mouse rotation
+  let isDragging = false, prevMouse = { x: 0, y: 0 };
+  container.addEventListener('mousedown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') return;
+    isDragging = true;
+    prevMouse = { x: e.clientX, y: e.clientY };
+  });
+  container.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    earthGroup.rotation.y += (e.clientX - prevMouse.x) * 0.01;
+    earthGroup.rotation.x += (e.clientY - prevMouse.y) * 0.01;
+    prevMouse = { x: e.clientX, y: e.clientY };
+  });
+  container.addEventListener('mouseup', () => { isDragging = false; });
+  container.addEventListener('mouseleave', () => { isDragging = false; });
+
+  // Raycaster for click info
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  container.addEventListener('click', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') return;
+    const rect = container.getBoundingClientRect();
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(meshes);
+    if (intersects.length > 0) {
+      document.getElementById('layer-info').textContent = intersects[0].object.userData.info;
+    }
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

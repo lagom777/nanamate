@@ -1,0 +1,155 @@
+/* ============================================================
+   nanamate · Hub Light Override
+   메인 허브 페이지를 라이트 테마로 강제 변환
+   ============================================================ */
+
+:root {
+  --bg-0: #fafbfc !important;
+  --bg-1: #ffffff !important;
+  --bg-2: #f5f7fa !important;
+  --ink: #0a0e1a !important;
+  --ink-dim: #4a5468 !important;
+  --line: rgba(0, 0, 0, 0.08) !important;
+  --line-strong: rgba(0, 0, 0, 0.16) !important;
+  --shadow-deep: 0 30px 60px -20px rgba(0, 0, 0, 0.15) !important;
+}
+
+html, body {
+  background: #fafbfc !important;
+  color: #0a0e1a !important;
+}
+
+/* === Background grid을 연한 회색으로 === */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px) !important;
+}
+
+/* === Glow를 연한 컬러로 (장식 유지) === */
+.bg-glow {
+  background:
+    radial-gradient(600px circle at 15% 20%, rgba(123,92,255,0.06), transparent 60%),
+    radial-gradient(700px circle at 85% 70%, rgba(0,212,255,0.05), transparent 60%),
+    radial-gradient(500px circle at 50% 100%, rgba(255,92,179,0.04), transparent 60%) !important;
+}
+
+/* === Header === */
+.hub-header {
+  background: rgba(255,255,255,0.85) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+}
+
+.brand-text h1 {
+  background: linear-gradient(120deg, #0a0e1a 30%, #00a0c0) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+.brand-text p { color: #6b7280 !important; }
+
+.hub-nav a { color: #4a5468 !important; }
+.hub-nav a:hover { color: #0a0e1a !important; }
+
+/* === Hero === */
+.hero-text h2 { color: #0a0e1a !important; }
+.hero-text p { color: #4a5468 !important; }
+.hero-text strong { color: #0a0e1a !important; }
+.kicker { color: #00a0c0 !important; }
+
+/* === 버튼 === */
+.btn-primary {
+  background: linear-gradient(120deg, #7b5cff, #00a0c0) !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 30px -10px rgba(123,92,255,0.4) !important;
+}
+.btn-ghost {
+  border: 1px solid rgba(0,0,0,0.16) !important;
+  color: #0a0e1a !important;
+  background: transparent !important;
+}
+.btn-ghost:hover {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.32) !important;
+}
+
+/* === Stage cube 면을 연하게 === */
+.sc-face {
+  background: linear-gradient(135deg, rgba(123,92,255,0.12), rgba(0,212,255,0.08)) !important;
+  border: 1px solid rgba(123,92,255,0.3) !important;
+  color: #0a0e1a !important;
+  text-shadow: 0 0 20px rgba(123,92,255,0.2) !important;
+}
+
+.stage-orbit {
+  border-color: rgba(0,0,0,0.1) !important;
+}
+.stage-orbit-2 {
+  border-color: rgba(0,0,0,0.06) !important;
+}
+
+/* === Section 헤더 === */
+.section-head h2 { color: #0a0e1a !important; }
+.section-head p { color: #4a5468 !important; }
+
+/* === 카드 === */
+.subject-card {
+  background: linear-gradient(160deg, #ffffff, #f5f7fa) !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  color: #0a0e1a !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04) !important;
+}
+.subject-card:hover {
+  border-color: rgba(0,0,0,0.16) !important;
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.12) !important;
+}
+.subject-card::before {
+  background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(0,0,0,0.04), transparent 50%) !important;
+}
+
+.subject-card h3 { color: #0a0e1a !important; }
+.subject-card p { color: #4a5468 !important; }
+.card-en { color: #6b7280 !important; }
+.card-tag {
+  color: #00a0c0 !important;
+}
+.card-meta span {
+  background: rgba(0,0,0,0.03) !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  color: #4a5468 !important;
+}
+.card-arrow {
+  background: rgba(0,0,0,0.04) !important;
+  border: 1px solid rgba(0,0,0,0.16) !important;
+  color: #0a0e1a !important;
+}
+.subject-card:hover .card-arrow {
+  background: #7b5cff !important;
+  border-color: #7b5cff !important;
+  color: #ffffff !important;
+}
+
+/* === 카테고리 타이틀 (컴팩트) === */
+.category-title {
+  color: #0a0e1a !important;
+  background: linear-gradient(90deg, rgba(0,212,255,0.06), transparent) !important;
+  padding: 6px 12px !important;
+  border-radius: 6px !important;
+  font-size: 0.95em !important;
+  margin: 18px 0 8px !important;
+}
+.subjects-top .category-title:first-of-type { margin-top: 4px !important; }
+
+/* === 컴팩트 카드 라이트 보정 === */
+.subject-card { padding: 12px 14px 10px !important; min-height: auto !important; }
+.subject-card h3 { font-size: 16px !important; margin-bottom: 2px !important; }
+.card-en { font-size: 9px !important; margin-bottom: 4px !important; }
+.subject-card p { font-size: 11.5px !important; line-height: 1.35 !important; margin-bottom: 0 !important; }
+.card-tag, .card-meta { display: none !important; }
+.card-arrow {
+  top: 8px !important; right: 8px !important;
+  width: 20px !important; height: 20px !important; font-size: 11px !important;
+  bottom: auto !important;
+}
+.card-grid { gap: 10px !important; }

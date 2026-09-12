@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8. 고분자 — aboutChemistry</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">⚗️ 표지 · 소개</a></li>
+    <li><a href="01-atomic-structure.html">1. 원자 구조</a></li>
+    <li><a href="02-chemical-bonds.html">2. 화학 결합</a></li>
+    <li><a href="03-chemical-reactions.html">3. 화학 반응</a></li>
+    <li><a href="04-thermochemistry.html">4. 열화학</a></li>
+    <li><a href="05-acid-base.html">5. 산과 염기</a></li>
+    <li><a href="06-redox.html">6. 산화 환원</a></li>
+    <li><a href="07-organic.html">7. 유기 화학</a></li>
+    <li><a href="08-polymers.html">8. 고분자</a></li>
+    <li><a href="09-biochemistry.html">9. 생화학</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>고분자</em></h1>
+  <p class="authors">Chapter 8 — Polymer Chemistry</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 마우스로 드래그하여 회전</span>
+
+<h2>고분자 개요</h2>
+<p>이 챕터에서는 고분자의 핵심 개념을 3D 시뮬레이션과 함께 학습합니다. 분자 구조를 직접 회전시키고, 반응 과정을 관찰하세요.</p>
+
+<div class="info-card">
+  <h4>핵심 개념</h4>
+  <p>단량체가 첨가 중합과 축합 중합을 거쳐 거대 분자를 형성하는 원리를 배우고, 합성 고분자(플라스틱, 합성섬유)와 천연 고분자의 물성 및 친환경 소재를 살펴봅니다.</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🚂 고분자가 뭐예요?</h3>
+  <p>작은 알갱이(<strong>단량체</strong>)를 <strong>기차처럼</strong> 길게 쭉 이어 붙인 거대한 분자예요! 🚂 객차 한 량이 단량체이고, 길게 연결된 기차 전체가 <strong>고분자</strong>랍니다.</p>
+  <p>플라스틱, 옷(폴리에스터·나일론), 고무, 그리고 우리 몸의 DNA·단백질까지 전부 고분자예요. 우리 주변에 정말 많죠?</p>
+  <div class="info-card">
+    <h4>🌱 꼭 알아둘 말</h4>
+    <ul>
+      <li><strong>단량체</strong>: 고분자를 이루는 반복 부품(객차 한 량)</li>
+      <li><strong>중합</strong>: 단량체를 길게 연결하는 반응(기차 잇기)</li>
+      <li><strong>동종 중합체</strong>: 같은 객차만 이은 것(예: 폴리에틸렌)</li>
+      <li><strong>유리전이온도(Tg)</strong>: 딱딱해지고 물렁해지는 경계 온도</li>
+    </ul>
+  </div>
+  <h3>🔩 어떻게 잇느냐로 성질이 달라져요</h3>
+  <p>객차를 잇는 방법에 따라 <strong>사슬형·가지형·그물형</strong>으로 나뉘어요. 이 모양 차이가 성질을 정해요!</p>
+  <ul>
+    <li>사슬형 폴리에틸렌(LDPE) → <strong>부드러움</strong> (비닐봉지)</li>
+    <li>곁가지가 적은 HDPE → <strong>단단함</strong></li>
+    <li>그물처럼 얽힌 고무 → <strong>쭉쭉 늘어나고</strong> 원래대로 잘 돌아와요</li>
+  </ul>
+  <h3>🌡️ 고무는 왜 겨울에 굳을까?</h3>
+  <p><strong>Tg(유리전이온도)</strong>는 딱딱한 상태와 물렁한 상태의 경계 온도예요. 고무가 추운 <strong>겨울엔 굳고</strong> ❄️, 더운 <strong>여름엔 끈적</strong>해지는 🔥 이유가 바로 이 Tg 때문이랍니다!</p>
+  <div class="study-tip"><strong>💡 꿀팁:</strong> 플라스틱 바닥의 삼각형 숫자를 찾아보세요! ♳PET(페트병), ♶LDPE·HDPE(비닐봉지), ♵PVC(랩)처럼 종류가 적혀 있어요. 재활용 분리배출에도 도움이 돼요! ♻️</div>
+  <h3>📝 한눈에 정리</h3>
+  <ul>
+    <li>고분자 = 단량체를 길게 이은 기차 🚂</li>
+    <li>중합 방식: 부가 중합, 축합 중합</li>
+    <li>구조: 사슬형 / 가지형 / 그물형</li>
+    <li>Tg가 물렁함·딱딱함과 가공 조건을 정해요</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
+  <p>중합은 부가(연쇄) 중합과 축합(단계) 중합으로 나뉩니다. 부가 중합은 라디칼·양이온·음이온·배위(지글러-나타) 메커니즘이 있으며, 단량체가 한 번에 연쇄적으로 연결됩니다. 축합 중합은 다이올과 다이산처럼 두 작용기를 가진 단량체가 물·HCl 등을 잃으며 결합하고, 분자량은 시간이 지나며 천천히 증가합니다. 분자량은 수평균(Mn)과 중량평균(Mw)으로 정의되며, 둘의 비 PDI=Mw/Mn은 사슬 길이의 균일성을 보여줍니다. 살아있는 중합(living polymerization)은 PDI가 1에 가깝게 좁고, ATRP, RAFT, NMP 같은 제어 라디칼 중합법은 정밀한 분자 설계를 가능하게 합니다. 결정성 고분자는 결정 영역과 비결정 영역이 공존하며, X-선 회절·DSC로 분석합니다. 가공에는 사출, 압출, 블로우, 캘린더링 등이 있고, 가소제·안정제·충전제로 물성을 조절합니다.</p>
+  <h3>핵심 공식과 반응식</h3>
+  <div class="formula">
+    Carothers 식 (축합): X̄_n = 1/(1-p)<br>
+    Flory-Schulz 분포: P_x = (1-p) p^(x-1)<br>
+    Mw = Σ N_i M_i² / Σ N_i M_i,  Mn = Σ N_i M_i / Σ N_i<br>
+    Mark-Houwink: [η] = K M^a
+  </div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>축합 중합에서 전환율 p=0.99일 때 평균 중합도는? Carothers 식으로 X̄_n=1/(1-0.99)=100. 즉 99% 전환되어야 사슬이 100단위 길이가 됩니다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>HDPE의 Tg=-110°C, Tm=130°C. 상온(25°C)에서 어떤 상태인가? Tg<25<Tm이므로 고무 상태와 결정 상태가 공존하는 반결정성 상태로, 단단하면서도 충격에 약간의 유연함을 가집니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>리튬이온 전지의 분리막은 PE/PP 다공성 막으로 만들고, 연료전지의 막은 술폰화 폴리머(Nafion)입니다. 의료에서는 생체 흡수성 PLA·PGA 봉합사가 사용되고, 약물 방출용 마이크로스피어는 PLGA로 만듭니다. 자동차 산업은 강화 폴리머 복합재로 무게를 줄이며 연비를 개선하고 있습니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ‘고분자는 다 같은 분자량’이 아닙니다. 분자량 분포가 존재하므로 평균값과 분포를 모두 보고해야 합니다.</div>
+
+<h3>전문가 레벨 이해</h3>
+  <p>고분자물리는 통계역학과 만나 흥미로운 보편 법칙을 만듭니다. 자유 결합 사슬 모델은 가우시안 통계로 종단 거리 분포를 주고, ⟨R²⟩ = N b²로 표현됩니다. Flory의 평균장 이론은 좋은 용매에서 ⟨R²⟩ ~ N^(2ν)로 ν=3/5라고 예측하며, de Gennes의 스케일링과 재규격화군은 ν=0.588로 더 정확히 줍니다. 용액에서는 희박·반희박·농축 영역으로 나뉘고, blob 개념이 농도 의존성을 설명합니다. 용융 상태에서는 사슬 얽힘이 점탄성을 결정하고, Doi-Edwards의 reptation 이론이 응력 완화와 점도(η ~ M³·⁴)를 예측합니다. 블록 공중합체는 마이크로상 분리로 라멜라·실린더·구·자이로이드 모폴로지를 형성하며, 이는 photonic 결정과 메모리 소자에 응용됩니다. SCFT(self-consistent field theory)와 분자동역학이 분석 도구로 사용됩니다. 정밀 합성 측면에서는 ATRP, RAFT, ROMP, ROP가 표준 도구이며, 보로노프스키-쿠리야가와 식의 한계를 넘어 사슬 토폴로지(브러시, 별, 데드라이트, 환형)를 설계할 수 있게 되었습니다.</p>
+  <h3>유도와 증명</h3>
+  <div class="formula">
+    Flory-Huggins 자유에너지:<br>
+    ΔG_mix/RT = (φ_A/N_A) ln φ_A + (φ_B/N_B) ln φ_B + χ φ_A φ_B<br>
+    Reptation: τ_d ~ N³,  D ~ N⁻²,  η ~ N³·⁴ (실험)<br>
+    Rouse: τ_R ~ N²,  G(t) ~ Σ exp(-t/τ_p)<br>
+    Kuhn 길이: b² = ⟨R²⟩ / N
+  </div>
+  <h3>최신 연구</h3>
+  <p>생분해성 고분자(PLA, PHA, PBS)와 화학 재활용(해중합, glycolysis, methanolysis)이 플라스틱 폐기물 문제 해결의 핵심 분야로 떠올랐습니다. 자기치유 고분자, 형상기억 고분자, 4D 프린팅 재료, 단일사슬 나노입자도 활발히 연구되고 있으며, 머신러닝 기반 고분자 물성 예측(예: PolymerNet, polyBERT)이 신소재 발견을 가속하고 있습니다.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>고분자물리</strong>: 통계역학과 점탄성</li>
+    <li><strong>나노과학</strong>: 자기조립 블록 공중합체</li>
+    <li><strong>의공학</strong>: 약물전달, 조직공학</li>
+    <li><strong>전자재료</strong>: 유기반도체, 유연 디스플레이</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Rubinstein & Colby, Polymer Physics</li>
+    <li>📺 Princeton Polymer Physics 공개 강의</li>
+    <li>🔬 GPC, DSC, AFM, SAXS 실험 실습</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 폴리스타이렌-폴리아이소프렌 다이블록의 χN 값에 따라 어떤 상이 나타나는지 SCFT로 예측하고, 실험 SAXS 데이터와 비교해 보세요.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 고분자 용어 상황 판단</h2>
+<p>고분자 용어와 그 설명을 알맞게 연결하세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#00e896","prompt":"고분자 용어와 설명을 짝지으세요","pairs":[{"term":"단량체","def":"고분자를 이루는 반복 단위"},{"term":"중합","def":"단량체를 길게 연결하는 반응"},{"term":"유리전이온도(Tg)","def":"단단함과 유연함의 경계 온도"},{"term":"공중합체","def":"다른 단량체를 번갈아 연결한 고분자"},{"term":"분자량 분포","def":"사슬 길이의 통계 분포"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e896","questions":[{"q":"고분자를 이루는 반복 단위는?","choices":["모노머","원자","이온","전자"],"answer":0},{"q":"첨가 중합의 부산물은?","choices":["물","이산화탄소","없음","산소"],"answer":2},{"q":"폴리에틸렌은 무엇의 중합인가?","choices":["벤젠","메테인","에탄올","에틸렌"],"answer":3},{"q":"가열하면 녹아 재성형 가능한 것은?","choices":["열경화성","열가소성","결정성","비결정성"],"answer":1},{"q":"축합 중합으로 만드는 것은?","choices":["폴리에틸렌","나일론","PVC","폴리스타이렌"],"answer":1}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('sim-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 3, 8);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Molecule-like structure
+  const atoms = [];
+  const numAtoms = 5 + Math.floor(Math.random()*5);
+  for (let i = 0; i < numAtoms; i++) {
+    const r = 0.2 + Math.random()*0.3;
+    const color = [0x00e890, 0xfbbf24, 0xef4444, 0xa78bfa, 0x60a5fa][i % 5];
+    const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, 32, 32), new THREE.MeshBasicMaterial({ color }));
+    mesh.position.set((Math.random()-0.5)*4, (Math.random()-0.5)*4, (Math.random()-0.5)*4);
+    scene.add(mesh);
+    atoms.push(mesh);
+  }
+  // Bonds
+  for (let i = 0; i < atoms.length-1; i++) {
+    const points = [atoms[i].position, atoms[i+1].position];
+    const geo = new THREE.BufferGeometry().setFromPoints(points);
+    scene.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0x00e890, transparent: true, opacity: 0.4 })));
+  }
+
+  let mouseDown = false, prevX = 0, prevY = 0;
+  container.addEventListener('mousedown', e => { mouseDown = true; prevX = e.clientX; prevY = e.clientY; });
+  container.addEventListener('mouseup', () => mouseDown = false);
+  container.addEventListener('mousemove', e => {
+    if (!mouseDown) return;
+    scene.rotation.y += (e.clientX - prevX)*0.005;
+    scene.rotation.x += (e.clientY - prevY)*0.005;
+    prevX = e.clientX; prevY = e.clientY;
+  });
+  container.addEventListener('touchstart', e => { prevX = e.touches[0].clientX; prevY = e.touches[0].clientY; });
+  container.addEventListener('touchmove', e => {
+    scene.rotation.y += (e.touches[0].clientX - prevX)*0.005;
+    scene.rotation.x += (e.touches[0].clientY - prevY)*0.005;
+    prevX = e.touches[0].clientX; prevY = e.touches[0].clientY;
+  });
+
+  function animate() { requestAnimationFrame(animate); scene.rotation.y += 0.003; renderer.render(scene, camera); }
+  animate();
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+})();
+</script>
+</body>
+</html>

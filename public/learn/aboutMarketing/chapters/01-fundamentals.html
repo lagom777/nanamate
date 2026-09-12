@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1. 마케팅 기초 — aboutMarketing</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📈 표지 · 소개</a></li>
+    <li><a href="01-fundamentals.html">1. 마케팅 기초</a></li>
+    <li><a href="02-consumer-psychology.html">2. 소비자 심리</a></li>
+    <li><a href="03-branding.html">3. 브랜딩 전략</a></li>
+    <li><a href="04-digital-marketing.html">4. 디지털 마케팅</a></li>
+    <li><a href="05-social-media.html">5. 소셜 미디어</a></li>
+    <li><a href="06-content-marketing.html">6. 콘텐츠 마케팅</a></li>
+    <li><a href="07-advertising.html">7. 광고와 캠페인</a></li>
+    <li><a href="08-analytics.html">8. 데이터 분석</a></li>
+    <li><a href="09-growth-hacking.html">9. 그로스 해킹</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>마케팅 기초</em></h1>
+  <p class="authors">Chapter 1 — Marketing Fundamentals & Concepts</p>
+</header>
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 드래그로 회전 · 단계별로 진행됩니다</span>
+<div id="sim-cap" style="margin:4px 0 16px;padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border:1px solid var(--border);border-radius:12px;background:var(--bg-card);min-height:1.5em;">마케팅 믹스 4P를 하나씩 살펴봅니다.</div>
+<h2>마케팅 기초 개요</h2>
+<p>이 챕터에서는 마케팅 기초의 핵심 전략과 프레임워크를 3D 시각화와 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>마케팅은 고객의 가치를 창출하고 소통하며 전달하는 전 과정입니다. STP(세분화·타겟팅·포지셔닝)와 4P 믹스를 통해 시장 기회를 분석하고 전략적 의사결정을 내립니다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한 줄로 이해하기</h3>
+  <p>마케팅은 그냥 '광고'가 아니에요! 🙅 손님이 뭘 좋아하는지 찾아내고, 그걸 알맞은 가격과 방법으로 딱 전해줘서 <strong>손님도 웃고 회사도 웃게</strong> 만드는 모든 일이에요. 제품 만들기, 값 정하기, 파는 곳, 알리기까지 전부 포함! 회사의 '뼈대'인 셈이죠. 🦴</p>
+
+  <h3>🤔 왜 중요할까?</h3>
+  <p>아무리 맛있는 빵을 만들어도 아무도 모르면 팔 수가 없겠죠? 😢 그래서 마케팅이 필요해요.</p>
+  <ul>
+    <li>🥤 <strong>코카콜라</strong>는 100년 넘게 똑같은 빨간색과 '즐거움'이라는 느낌으로 전 세계 1등이에요.</li>
+    <li>🧹 <strong>다이슨</strong>은 "먼지봉투 없이도 쌩쌩 빨아들여요!"라는 새로운 장점으로 비싼 청소기를 팔았어요.</li>
+    <li>🛵 <strong>배달의민족</strong>은 친근하고 웃긴 한국식 말투로 그냥 배달앱을 넘어 '좋아하는 브랜드'가 됐어요.</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 꼭 알아둘 말</h4>
+    <ul>
+      <li><strong>4P</strong>: 마케팅의 기본 4총사! 제품(Product)·가격(Price)·유통(Place)·판촉(Promotion) 🎯</li>
+      <li><strong>STP</strong>: 손님 나누기(Segmentation) → 누구를 노릴지 고르기(Targeting) → 머릿속에 자리잡기(Positioning).</li>
+      <li><strong>퍼널(Funnel)</strong>: 알게 됨 → 관심 → 구매 → 또 구매. 깔때기처럼 좁아지는 손님의 여정. 🫗</li>
+      <li><strong>USP</strong>: "우리만 있는 특별한 점!" 다른 곳엔 없는 나만의 자랑.</li>
+      <li><strong>타깃 페르소나</strong>: 우리 손님을 진짜 사람처럼 콕 집어 상상한 가상 인물. 🧑</li>
+    </ul>
+  </div>
+
+  <h3>🍽️ 식당으로 쉽게!</h3>
+  <p>마케팅을 식당에 비유하면 딱이에요.</p>
+  <ul>
+    <li>🍜 <strong>메뉴</strong> = 제품</li>
+    <li>💰 <strong>가격표</strong> = 가격</li>
+    <li>📍 <strong>가게 위치·배달앱</strong> = 유통</li>
+    <li>📢 <strong>간판·SNS 홍보</strong> = 판촉</li>
+  </ul>
+  <p>이 넷이 따로 놀면 손님이 뚝! 딱 맞으면 줄 서는 맛집이 돼요. 😋 그리고 마케팅은 손님을 '억지로 설득'하는 게 아니라, 손님이 진짜 뭘 불편해하는지 <strong>찾아내는 일</strong>에 더 가까워요. 모두를 만족시키려 하지 말고, 우리 가게가 가장 빛나는 딱 한 무리의 손님을 고르는 게 똑똑한 방법이랍니다. 👍</p>
+
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 좋아하는 브랜드 하나를 골라, 4P(제품·가격·유통·판촉)가 어떻게 되어 있는지 한 장으로 정리해 보세요. 글로 쓰면 머리에 쏙쏙! ✏️</div>
+
+  <h3>✅ 기억해요</h3>
+  <ul>
+    <li>마케팅 = 광고가 아니라 '가치 교환' 전체를 설계하는 일! 🎨</li>
+    <li>4P와 STP는 가장 기본이 되는 생각의 뼈대. 🦴</li>
+    <li>모두가 아니라 '딱 한 사람'의 마음을 노려야 강해져요. 🎯</li>
+    <li>브랜드는 같은 메시지를 꾸준히 쌓을 때 만들어져요. 🧱</li>
+    <li>모든 전략의 시작은 '손님 관찰'! 👀</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>전략 깊이</h3>
+  <p>중급 수준에서는 마케팅을 단일 캠페인이 아니라 ‘시스템’으로 바라보아야 합니다. 시장은 끊임없이 변하기 때문에 STP는 한 번 정하면 끝나는 것이 아니라 분기 단위로 재검증해야 하는 살아있는 가설입니다. 4P 역시 디지털 환경에서는 4C(Customer, Cost, Convenience, Communication)로 변형되어 고객 중심으로 재해석되며, 옴니채널 시대에는 온오프라인의 접점이 통합된 고객 경험을 설계하는 일이 더 중요해졌습니다. 또한 브랜드 자산(brand equity)이라는 개념은 단순 매출이 아니라 인지도, 충성도, 연상 이미지의 총합으로 측정되며, 장기적으로는 광고 효율보다 더 큰 자산이 됩니다. 가격 전략에서도 단순 할인이 아니라 가치 기반 프라이싱(value-based pricing), 묶음 판매, 구독 모델 등 다양한 구조가 등장했습니다. 결국 응용 단계의 마케터는 ‘어떻게 더 잘 팔까’가 아니라 ‘어떤 고객 여정을 어떻게 설계할까’를 고민하게 됩니다.</p>
+
+  <h3>대표 사례 분석</h3>
+  <div class="info-card">
+    <h4>📈 사례 1 — 나이키 ‘Just Do It’의 STP 재정의</h4>
+    <p>나이키는 1980년대 운동선수를 표적으로 삼았던 좁은 STP를 ‘운동을 하려는 모든 사람’으로 재정의하면서 폭발적으로 성장했습니다. 슬로건은 단순했지만 그 안에는 운동을 망설이는 일반인을 응원하는 강력한 포지셔닝이 숨어 있었고, 광고 모델 역시 슈퍼스타에서 평범한 시민으로 확장되며 메시지의 진정성을 강화했습니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>📈 사례 2 — 토스의 4P 통합 전략</h4>
+    <p>토스는 송금이라는 단순 기능을 시작으로 제품(간편 송금), 가격(수수료 무료), 유통(모바일 앱 단일 채널), 판촉(공감형 광고와 추천 보상)을 하나의 일관된 메시지로 묶어 사용자에게 ‘금융이 쉬워진다’는 명확한 약속을 전달했습니다. 이후 보험, 증권, 대출 비교로 확장하면서도 메시지의 단순함을 잃지 않은 점이 핵심입니다.</p>
+  </div>
+
+  <h3>실무 응용</h3>
+  <p>실무에서 마케팅 전략을 짤 때는 다음과 같은 절차가 자주 사용됩니다. 첫째, 시장과 경쟁사를 분석해 우리만의 빈 자리를 찾는 ‘포지셔닝 맵’을 그립니다. 둘째, 핵심 타깃을 페르소나로 정의하고 그 사람의 하루를 따라가며 우리 제품이 등장할 수 있는 접점을 나열합니다. 셋째, 각 접점별로 KPI를 설정하고 캠페인을 분기별로 실행한 뒤 데이터를 보며 메시지와 4P를 다시 조정합니다. 이 사이클이 빠르게 돌수록 시장 적합도(product-market fit)가 빠르게 정교해집니다.</p>
+
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 모두를 위한 메시지를 만들려 하다 결국 누구의 마음에도 닿지 않는 모호한 슬로건이 만들어지는 경우가 매우 흔합니다. 타깃을 좁힐수록 메시지는 강해집니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>심화 단계의 마케팅은 직관과 슬로건의 영역을 넘어 데이터와 경제학, 심리학, 기술의 교차점에서 작동합니다. 현대 마케터는 마케팅 믹스 모델링(MMM)과 어트리뷰션 모델을 동시에 이해해야 하며, 단기 성과(perform marketing)와 장기 브랜드 자산(brand building)의 황금비율(흔히 60:40)을 균형 있게 운영해야 합니다. 바이런 샤프의 ‘How Brands Grow’는 카테고리 진입 가능성(mental availability)과 구매 가능성(physical availability)이 브랜드 성장의 핵심임을 데이터로 증명했고, 이는 STP 중심의 전통 이론에 큰 도전이 되었습니다. 또한 가격 탄력성, 한계 광고 효율(diminishing returns), 카테고리 침투율 같은 지표는 단순 ROAS보다 훨씬 정교한 의사결정을 가능하게 합니다. 글로벌 기업들은 더 나아가 브랜드 컨셉을 ‘카테고리 엔트리 포인트(CEP)’ 단위로 분해하고, 각 CEP에 맞는 크리에이티브를 시스템적으로 생산해 시장 점유율을 끌어올리고 있습니다. 이는 곧 마케팅이 예술과 과학의 결합, 그리고 운영 시스템의 문제라는 사실을 의미합니다.</p>
+
+  <h3>측정과 분석 모델</h3>
+  <p>심화 단계에서는 단일 채널의 ROAS가 아니라 LTV(고객 생애 가치), CAC(고객 획득 비용), 페이백 기간(payback period)이 핵심 지표가 됩니다. 멀티터치 어트리뷰션은 데이터 신호 손실(쿠키 deprecation, iOS ATT) 이후 한계를 드러냈고, 이를 보완하기 위해 마케팅 믹스 모델링과 지오 기반 인과추론(geo-experiment), 합성 통제(synthetic control) 같은 기법이 다시 부상하고 있습니다. 베이지안 MMM은 채널별 사후분포를 추정해 예산 배분을 최적화하며, 인크리멘털 리프트 테스트는 광고가 실제로 추가 매출을 만들었는지(즉, 인과적 기여)를 검증합니다. 결국 측정의 목표는 ‘무엇이 효과 있었는가’를 넘어서 ‘다음 분기에 1원을 어디에 더 쓸 때 가장 큰 증분 매출이 나오는가’를 답하는 것입니다.</p>
+
+  <h3>최신 트렌드</h3>
+  <p>첫째, 생성형 AI 기반 광고 자동화로 크리에이티브 변형을 수천 개 단위로 운영하고, 개인화된 카피와 이미지가 실시간으로 매칭되는 시대가 열렸습니다. 둘째, 1st party data 전략이 핵심 경쟁력으로 부상하며, CDP(Customer Data Platform)와 클린룸(clean room) 운영 능력이 마케팅 조직의 새로운 역량이 되었습니다. 셋째, 리테일 미디어 네트워크(아마존 Ads, 쿠팡 광고)가 디지털 광고의 ‘제3의 거인’으로 부상하면서 구매 신호 직전 단계의 광고 가치가 재평가되고 있습니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li>행동경제학과 의사결정 심리학</li>
+    <li>마케팅 사이언스와 인과추론 통계학</li>
+    <li>제품 디자인과 UX 리서치</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>Byron Sharp, <em>How Brands Grow</em></li>
+    <li>Les Binet & Peter Field, <em>The Long and the Short of It</em></li>
+    <li>Google, Meta가 공개한 MMM 오픈소스 라이브러리(예: Robyn, LightweightMMM)</li>
+  </ul>
+
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 가상의 D2C 브랜드를 하나 설정하고, 분기별 매체 예산을 LTV/CAC 기준으로 재배분하는 시뮬레이션을 직접 설계해 보세요. 인크리멘털 테스트 계획까지 포함하면 실무 수준의 포트폴리오가 됩니다.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 고객 여정 퍼널 순서</h2>
+<p>고객이 거치는 퍼널 단계를 순서대로 배열해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#e040fb","prompt":"퍼널(고객 여정)을 올바른 순서로 배열하세요","steps":["인지","흥미","구매","재구매"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#e040fb","questions":[{"q":"4P에 포함되지 않는 것은?","choices":["제품","가격","유통","직원"],"answer":3},{"q":"STP에서 P가 뜻하는 것은?","choices":["판촉","포지셔닝","가격","페르소나"],"answer":1},{"q":"인지→흥미→구매 모델의 이름은?","choices":["퍼널","USP","4C","NPS"],"answer":0},{"q":"디지털 시대 4P의 변형 개념은?","choices":["4E","5P","4C","STP"],"answer":2},{"q":"Just Do It 슬로건의 브랜드는?","choices":["토스","다이슨","코카콜라","나이키"],"answer":3}]};</script>
+</main>
+</div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8.5);cam.lookAt(0,0,0);
+  const r=new THREE.WebGLRenderer({antialias:true,alpha:true});r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  const capEl=document.getElementById('sim-cap');function cap(t){if(capEl)capEl.textContent=t;}
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const hub=new THREE.Mesh(new THREE.IcosahedronGeometry(0.9,0),new THREE.MeshBasicMaterial({color:0xff5a3c,wireframe:true}));s.add(hub);
+  const hubL=lbl('마케팅 믹스',0xc23a20);hubL.position.set(1.7,-0.7,0);hubL.material.opacity=0;s.add(hubL);
+  const colP=[0xff8a3c,0x3cc8ff,0x9b5cff,0x3cff8a];
+  const pNames=['Product 제품','Price 가격','Place 유통','Promotion 판촉'];
+  const pillars=[],pLineMats=[],pLabMats=[];
+  for(let i=0;i<4;i++){const ang=i*Math.PI/2;const box=new THREE.Mesh(new THREE.BoxGeometry(1,1,1),new THREE.MeshBasicMaterial({color:colP[i],wireframe:true,transparent:true,opacity:0}));box.position.set(Math.cos(ang)*2.8,Math.sin(ang)*2.8,0);s.add(box);pillars.push(box);
+    const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.BufferAttribute(new Float32Array([0,0,0,box.position.x,box.position.y,0]),3));const lm=new THREE.LineBasicMaterial({color:colP[i],transparent:true,opacity:0});s.add(new THREE.Line(lg,lm));pLineMats.push(lm);
+    const Lab=lbl(pNames[i],colP[i]);Lab.position.set(Math.cos(ang)*2.8,Math.sin(ang)*2.8+0.95,0);Lab.material.opacity=0;s.add(Lab);pLabMats.push(Lab.material);}
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  function showP(i,u){const f=ez(u);pillars[i].material.opacity=f;pLineMats[i].opacity=f*0.6;pLabMats[i].opacity=f;}
+  const phases=[
+    {dur:3,cap:'중심 — 마케팅 믹스는 고객에게 가치를 전달하기 위해 기업이 조절하는 4가지 도구의 조합입니다.',
+     up:u=>{hubL.material.opacity=ez(u);}},
+    {dur:3,cap:'① Product(제품) — 무엇을 파는가. 품질·디자인·기능·브랜드가 가치의 핵심입니다.',up:u=>showP(0,u)},
+    {dur:3,cap:'② Price(가격) — 얼마에 파는가. 원가·경쟁사·고객이 느끼는 가치 사이에서 결정됩니다.',up:u=>showP(1,u)},
+    {dur:3,cap:'③ Place(유통) — 어디서 파는가. 매장·온라인·물류 등 고객이 제품을 만나는 경로입니다.',up:u=>showP(2,u)},
+    {dur:3,cap:'④ Promotion(판촉) — 어떻게 알리는가. 광고·홍보·할인으로 고객과 소통합니다.',up:u=>showP(3,u)},
+    {dur:5,cap:'핵심 — 네 요소는 따로가 아니라 \'함께\' 맞물려야 합니다. 하나만 좋아도 실패 — 4P의 균형이 마케팅 전략입니다. 회전해 보세요.',
+     up:u=>{s.rotation.y+=0.004;}}
+  ];
+  let pi=0,pt=0,last=0,T=0;cap(phases[0].cap);
+  function a(now){requestAnimationFrame(a);const dt=Math.min(0.05,(now-last)/1000||0.016);last=now;T+=dt;pt+=dt;
+    if(pt>=phases[pi].dur){pt=0;pi=(pi+1)%phases.length;if(pi===0){hubL.material.opacity=0;pillars.forEach((b,i)=>{b.material.opacity=0;pLineMats[i].opacity=0;pLabMats[i].opacity=0;});}cap(phases[pi].cap);}
+    if(phases[pi].up)phases[pi].up(pt/phases[pi].dur);
+    hub.rotation.x+=0.01;hub.rotation.y+=0.012;
+    pillars.forEach((b,i)=>{if(b.material.opacity>0.3){b.rotation.x+=0.02;b.rotation.y+=0.02;}});
+    r.render(s,cam);}
+  requestAnimationFrame(a);
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body>
+</html>

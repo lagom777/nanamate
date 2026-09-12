@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3장. 광물과 암석</title>
+<link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🌍 표지 · 소개</a></li>
+    <li><a href="01-structure.html">1. 지구의 구조</a></li>
+    <li><a href="02-plate-tectonics.html">2. 판구조론</a></li>
+    <li><a href="03-minerals-rocks.html">3. 광물과 암석</a></li>
+    <li><a href="04-atmosphere.html">4. 대기과학</a></li>
+    <li><a href="05-oceanography.html">5. 해양학</a></li>
+    <li><a href="06-climate-change.html">6. 기후변화</a></li>
+    <li><a href="07-geological-time.html">7. 지질시대</a></li>
+    <li><a href="08-natural-disasters.html">8. 자연재해</a></li>
+    <li><a href="09-resources-environment.html">9. 자원과 환경</a></li>
+  </ol>
+</aside>
+<main>
+<h2>3. 광물과 암석</h2>
+
+<div class="info-box">
+<p><strong>광물은 자연에서 생성된 무기질 고체 결정으로, 암석의 기본 구성단위입니다.</strong> 지구의 지각은 약 4,000종의 광물로 이루어져 있으며, 그 중 약 30종이 일반적입니다.</p>
+<p>아래 3D 모델에서 다양한 결정 구조를 회전하며 관찰해보세요.</p>
+</div>
+
+<div class="threejs-container" data-label="3D 결정 구조" id="crystal-viewer" style="height:450px;">
+  <div class="threejs-controls">
+    <button id="btn-cubic" class="active">등축정계</button>
+    <button id="btn-hexagonal">육방정계</button>
+    <button id="btn-ortho">사방정계</button>
+    <button id="btn-monoclinic">단사정계</button>
+  </div>
+  <div class="threejs-info" id="crystal-info">등축정계: 소금(NaCl), 다이아몬드</div>
+</div>
+<p class="fig-title">그림 3.1. 결정계 3D 모델. 버튼으로 결정계를 전환하고 마우스로 회전하세요.</p>
+
+<h3>3.1 광물의 정의와 특성</h3>
+<p>광물(mineral)의 정의를 충족하려면 다음 5가지 조건을 만족해야 합니다:</p>
+<ul>
+<li><strong>자연적으로 생성</strong>: 인공물이 아닌 자연계에서 형성</li>
+<li><strong>무기질</strong>: 생물에 의해 만들어진 것이 아님 (예외: 생물 기원 석회암)</li>
+<li><strong>고체</strong>: 액체(수은)나 기체는 광물이 아님</li>
+<li><strong>특정 화학 조성</strong>: 일정하거나 좁은 범위의 화학식</li>
+<li><strong>규칙적인 내부 배열</strong>: 결정 구조를 가짐</li>
+</ul>
+
+<h3>3.2 광물의 물리적 성질</h3>
+<table>
+<thead><tr><th>성질</th><th>설명</th><th>예시</th></tr></thead>
+<tbody>
+<tr><td>경도</td><td>모스 경도계 (1-10)</td><td>활석(1), 석영(7), 다이아몬드(10)</td></tr>
+<tr><td>벽개</td><td>특정 면을 따라 쪼개지는 성질</td><td>운모(1방향), 장석(2방향)</td></tr>
+<tr><td>광택</td><td>빛의 반사 특성</td><td>금속광택, 유리광택, 진주광택</td></tr>
+<tr><td>색/조흔색</td><td>외관색과 가루색</td><td>황철석(검은 조흔색)</td></tr>
+<tr><td>비중</td><td>물 대비 밀도</td><td>석영(2.65), 방연석(7.5)</td></tr>
+</tbody>
+</table>
+
+<h3>3.3 암석의 순환</h3>
+<p>암석은 형성 과정에 따라 세 가지로 분류됩니다. 이들은 끊임없이 서로 변환되며, 이를 <strong>암석의 순환(rock cycle)</strong>이라 합니다.</p>
+
+<h4>화성암 (Igneous Rock)</h4>
+<p>마그마가 냉각·고화되어 형성됩니다.</p>
+<ul>
+<li><strong>심성암</strong> (지하에서 서서히 냉각): 화강암, 반려암 — 큰 결정</li>
+<li><strong>화산암</strong> (지표에서 빠르게 냉각): 현무암, 유문암 — 미세 결정/유리질</li>
+</ul>
+
+<h4>퇴적암 (Sedimentary Rock)</h4>
+<p>풍화·침식된 물질이 쌓이고 굳어져 형성됩니다.</p>
+<ul>
+<li><strong>쇄설성</strong>: 사암, 이암, 역암 (입자 크기로 분류)</li>
+<li><strong>화학적</strong>: 석회암, 암염 (용액에서 침전)</li>
+<li><strong>유기적</strong>: 석탄, 처트 (생물 유해 축적)</li>
+</ul>
+
+<h4>변성암 (Metamorphic Rock)</h4>
+<p>기존 암석이 높은 온도·압력에 의해 변한 암석입니다.</p>
+<ul>
+<li><strong>엽리 있음</strong>: 편마암, 편암, 점판암 (방향성 압력)</li>
+<li><strong>엽리 없음</strong>: 대리암(석회암→), 규암(사암→)</li>
+</ul>
+
+<h3>3.4 조암광물</h3>
+<p>지각을 구성하는 주요 광물(조암광물)은 대부분 <strong>규산염 광물</strong>입니다. 규산염 광물의 기본 단위는 SiO₄ 사면체이며, 이 사면체의 결합 방식에 따라 다양한 광물이 형성됩니다.</p>
+<ul>
+<li><strong>독립형</strong>: 감람석 — 사면체가 독립적으로 존재</li>
+<li><strong>단쇄형</strong>: 휘석 — 사면체가 한 줄로 연결</li>
+<li><strong>복쇄형</strong>: 각섬석 — 이중 쇠사슬 구조</li>
+<li><strong>판상형</strong>: 운모, 점토광물 — 면으로 연결</li>
+<li><strong>망상형</strong>: 석영, 장석 — 3차원 그물 구조</li>
+</ul>
+
+<div class="quiz-box">
+<h4>🧪 확인 문제</h4>
+<p>화강암이 변성작용을 받으면 무엇이 되는가?</p>
+<div class="quiz-option" onclick="this.classList.add('wrong')">① 대리암</div>
+<div class="quiz-option" onclick="this.classList.add('correct')">② 편마암</div>
+<div class="quiz-option" onclick="this.classList.add('wrong')">③ 규암</div>
+<div class="quiz-option" onclick="this.classList.add('wrong')">④ 점판암</div>
+</div>
+
+<div class="chapter-nav">
+  <a href="02-plate-tectonics.html">← 판구조론</a>
+  <a href="04-atmosphere.html">대기과학 →</a>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🌍 한 줄 요약!</h3>
+  <p>광물은 자연이 만든 '결정'이고, 암석은 그 광물들이 뭉친 '덩어리'야! 💎</p>
+  <h3>🤔 왜 알아야 할까?</h3>
+  <p>휴대폰·자동차·건물·도로... 전부 광물에서 시작돼! 화강암 묘비, 대리석 조각상, 다이아몬드 반지도 다 광물과 암석이야. 등산하다 만나는 알록달록한 돌들도 만들어진 방법이 저마다 달라. 알고 보면 풍경이 훨씬 재밌어져! ⛰️</p>
+  <div class="info-card"><h4>🌱 꼭 기억할 말</h4><ul>
+    <li><strong>광물(Mineral)</strong>: 일정한 화학식과 결정 구조를 가진 자연 고체</li>
+    <li><strong>화성암</strong>: 마그마가 식어 굳은 암석 (화강암·현무암)</li>
+    <li><strong>퇴적암</strong>: 모래·진흙이 쌓여 굳은 암석 (사암·석회암)</li>
+    <li><strong>변성암</strong>: 열·압력으로 성질이 바뀐 암석 (편마암·대리암)</li>
+  </ul></div>
+  <h3>✨ 쉽게 풀어볼게!</h3>
+  <p>광물이 '케이크 재료'라면, 암석은 그 재료로 만든 '케이크'야! 🍰 케이크 안에 밀가루·설탕·계란이 보이듯, 화강암 한 덩이 안에도 검은 점(흑운모), 흰 결정(석영), 분홍 결정(장석)이 함께 들어 있어. 같은 재료라도 굽는 방법에 따라 다른 빵이 나오지? 마그마가 천천히 식으면 결정이 큰 화강암, 빠르게 식으면 결정이 작은 현무암이 돼. 세월이 지나 비바람이 이 암석을 깎아 모래로 만들고, 그 모래가 강을 따라 바다로 흘러가 켜켜이 쌓여 굳으면 퇴적암! 그게 깊이 묻혀 뜨거워지고 짓눌리면 변성암으로 다시 태어나. 이렇게 세 암석이 서로 계속 바뀌는 걸 <strong>암석 순환</strong>이라고 해. 돌도 돌고 도는 거야! 🔄</p>
+  <div class="study-tip"><strong>💡 꿀팁:</strong> 모스 굳기계(1~10: 활석·석고·방해석·형석·인회석·정장석·석영·황옥·강옥·다이아몬드)는 손톱(약 2.5)·동전(약 3.5)·유리(약 5.5)로 긁어 비교하면 쉬워!</div>
+  <h3>📌 오늘의 정리</h3>
+  <ul>
+    <li>광물은 자연 결정, 암석은 광물의 모임</li>
+    <li>암석은 화성·퇴적·변성 세 종류</li>
+    <li>마그마가 빠르면 작은 결정, 천천히 식으면 큰 결정</li>
+    <li>모든 암석은 돌고 돈다 (암석 순환)</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>광물은 다섯 가지 조건(자연산·무기물·고체·일정한 화학식·결정 구조)을 모두 만족해야 합니다. 지구 지각의 대부분(약 92%)은 규산염 광물이며, 이는 SiO₄ 사면체가 어떻게 연결되는지에 따라 분류됩니다. 단독 사면체(감람석)·이중사슬(휘석·각섬석)·시트(운모·점토)·삼차원 골격(석영·장석)으로 갈수록 Si:O 비율이 변합니다. 화성암은 마그마의 화학 조성과 냉각 속도에 따라 분류되며, 보웬의 반응계열(Bowen's reaction series)이 결정 형성 순서를 설명합니다. 퇴적암은 풍화·운반·퇴적·속성작용을 거쳐 형성되며, 입자 크기(자갈·모래·실트·점토)와 화학 침전(석회암·암염)으로 나뉩니다. 변성암은 접촉변성(열)과 광역변성(열+압력)으로 구분되고, 광물 조합으로 변성도(저급·중급·고급)를 추정할 수 있습니다.</p>
+  <h3>메커니즘과 모델</h3>
+  <div class="info-card"><h4>🌍 사례 1: 다이아몬드의 형성</h4><p>다이아몬드는 약 150km 깊이의 상부 맨틀에서 1,000°C, 5GPa 이상의 조건에서 탄소가 결정화된 광물입니다. 킴벌라이트라는 특수 마그마 통로를 통해 지표 가까이로 빠르게 운반되어야 합니다. 이 빠른 운반이 없으면 흑연으로 변환됩니다.</p></div>
+  <div class="info-card"><h4>🌍 사례 2: 한국의 편마암 지대</h4><p>한반도의 약 30%는 선캄브리아기 편마암으로 이루어져 있습니다. 이는 원래 화성암이나 퇴적암이었던 것이 약 25억 년 전 광역변성을 받아 형성된 것으로, 한반도가 매우 오래된 대륙 지각임을 보여줍니다.</p></div>
+  <h3>관측 데이터</h3>
+  <p>편광현미경을 이용한 박편 관찰은 광물의 광학적 특성(복굴절·다색성·소광각)을 측정해 광물을 동정하는 표준 방법입니다. X선 회절(XRD)은 결정 구조의 격자 간격을 측정해 광물 종을 정확히 식별하며, 전자현미분석기(EPMA)는 ㎛ 스케일에서 광물의 화학 조성을 정량화합니다. 방사성 동위원소(U-Pb, K-Ar)를 이용한 연대 측정으로 암석 형성 시기도 결정합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> '검은색이면 현무암'이라는 단순화는 오류입니다. 색만으로는 분류할 수 없으며, 입자 크기·광물 조합·화학 조성을 종합해야 합니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>광물물리학(mineral physics)은 고압·고온 조건에서 광물의 안정 영역과 상전이를 다룹니다. 다이아몬드 앤빌 셀(DAC)과 충격압축 실험으로 수 백 GPa 영역까지 합성·관측이 가능합니다. 맨틀 광물의 주요 상전이는 410km(감람석 → 와즐레이트), 520km(와즐레이트 → 링우다이트), 660km(링우다이트 → 페로브스카이트 + 페리클레이즈)에서 일어납니다. 이는 클라페이론 슬로프(dP/dT)에 따라 깊이가 변하며, 슬랩의 운동을 가속·감속시킵니다. 화성암 분화는 결정-액체 분리(fractional crystallization), 동화작용(assimilation), 마그마 혼합(magma mixing)이 결합된 AFC 모델로 정량화되며, 미량원소 분배계수와 동위원소비를 사용해 모드를 역추적합니다. 변성상(metamorphic facies) 다이어그램은 압력-온도 공간에서 광물 조합의 안정 영역을 정의하며, P-T-t 경로(path)를 복원해 조산운동의 진행을 재구성합니다. 또한 광물의 인덱스 광물(index mineral)을 이용한 등변성도선(isograd)은 변성 등급의 공간 분포를 매핑하는 고전적 방법입니다.</p>
+  <h3>핵심 모델</h3>
+  <div class="formula">결정 분화 (Rayleigh fractionation): C_L = C_0·F^(D−1)<br>C_L: 잔류 액체의 농도, C_0: 초기 농도, F: 잔류 분율, D: 분배계수<br>클라페이론 식: dP/dT = ΔS / ΔV<br>변성 반응 예: Mg₂SiO₄ + MgSiO₃ ⇌ Mg₂Si₂O₆ (감람석 + 사방휘석)</div>
+  <h3>최신 연구</h3>
+  <p>지구 내부에서 발견된 새로운 고압상 'Bridgmanite'(MgSiO₃ 페로브스카이트)는 부피 기준 지구에서 가장 풍부한 광물로 2014년 정식 명명되었습니다. 또한 핵-맨틀 경계 부근의 포스트-페로브스카이트(post-perovskite) 상은 D'' 층의 지진학적 특성을 설명하는 핵심 광물로 주목받습니다. 다이아몬드 포유물 연구에서 확인된 함수 링우다이트는 맨틀 전이대에 해양 수 배의 물이 함유되어 있을 가능성을 시사합니다(Pearson et al., 2014).</p>
+  <h3>관련 분야</h3>
+  <ul>
+    <li>광물물리학 — 고압 상전이</li>
+    <li>지구화학 — 동위원소·미량원소 추적</li>
+    <li>암석학 — 화성·변성 진화</li>
+    <li>경제광상학 — 자원 광물 형성</li>
+  </ul>
+  <h3>추가 자료</h3>
+  <ul>
+    <li>Best, M.G. (2002), <em>Igneous and Metamorphic Petrology</em></li>
+    <li>Klein & Dutrow (2007), <em>Manual of Mineral Science</em></li>
+    <li>RRUFF Project (광물 데이터베이스)</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 화강암 박편의 모드 조성을 측정해 IUGS QAPF 다이어그램에서 정확한 명칭을 분류하고, 미량원소 패턴으로 마그마 기원을 추정해 보세요.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 암석 분류하기</h2>
+<p>각 암석을 알맞은 종류로 분류해보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#1565c0","prompt":"암석을 화성암·퇴적암·변성암으로 분류하세요","groups":[{"name":"화성암","items":["화강암","현무암"]},{"name":"퇴적암","items":["사암","석회암"]},{"name":"변성암","items":["편마암","대리암"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#1565c0","questions":[{"q":"마그마가 식어 굳은 암석은?","choices":["퇴적암","변성암","화성암","석회암"],"answer":2},{"q":"모스 경도 10에 해당하는 광물은?","choices":["석영","다이아몬드","활석","황옥"],"answer":1},{"q":"지하에서 서서히 식어 결정이 큰 암석은?","choices":["현무암","유문암","사암","화강암"],"answer":3},{"q":"석회암이 변성작용을 받으면?","choices":["대리암","규암","편마암","점판암"],"answer":0},{"q":"사면체가 독립형 구조인 광물은?","choices":["석영","운모","감람석","장석"],"answer":2}]};</script>
+</main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  const container = document.getElementById('crystal-viewer');
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x050d18);
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 100);
+  camera.position.set(0, 1.5, 4);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  container.appendChild(renderer.domElement);
+
+  scene.add(new THREE.AmbientLight(0x404060, 0.5));
+  const light1 = new THREE.DirectionalLight(0xffffff, 0.8);
+  light1.position.set(3, 3, 3);
+  scene.add(light1);
+  const light2 = new THREE.DirectionalLight(0x4fc3f7, 0.4);
+  light2.position.set(-3, 1, -2);
+  scene.add(light2);
+
+  let currentCrystal = null;
+  const crystalGroup = new THREE.Group();
+  scene.add(crystalGroup);
+
+  function clearCrystal() {
+    while (crystalGroup.children.length) crystalGroup.remove(crystalGroup.children[0]);
+  }
+
+  function createCubic() {
+    clearCrystal();
+    const mat = new THREE.MeshPhongMaterial({ color: 0x64b5f6, transparent: true, opacity: 0.7, shininess: 80 });
+    const wiremat = new THREE.MeshBasicMaterial({ color: 0x90caf9, wireframe: true });
+    const geo = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+    crystalGroup.add(new THREE.Mesh(geo, mat));
+    crystalGroup.add(new THREE.Mesh(geo, wiremat));
+    // Atoms at corners
+    const atomGeo = new THREE.SphereGeometry(0.08, 16, 16);
+    const atomMat = new THREE.MeshPhongMaterial({ color: 0xff6d00 });
+    for (let x = -1; x <= 1; x += 2)
+      for (let y = -1; y <= 1; y += 2)
+        for (let z = -1; z <= 1; z += 2) {
+          const atom = new THREE.Mesh(atomGeo, atomMat);
+          atom.position.set(x * 0.75, y * 0.75, z * 0.75);
+          crystalGroup.add(atom);
+        }
+    document.getElementById('crystal-info').textContent = '등축정계: a=b=c, α=β=γ=90° (소금, 다이아몬드)';
+  }
+
+  function createHexagonal() {
+    clearCrystal();
+    const shape = new THREE.Shape();
+    const r = 0.7;
+    for (let i = 0; i < 6; i++) {
+      const angle = (Math.PI / 3) * i - Math.PI / 6;
+      const x = r * Math.cos(angle);
+      const y = r * Math.sin(angle);
+      if (i === 0) shape.moveTo(x, y);
+      else shape.lineTo(x, y);
+    }
+    shape.closePath();
+    const geo = new THREE.ExtrudeGeometry(shape, { depth: 2, bevelEnabled: false });
+    geo.center();
+    const mat = new THREE.MeshPhongMaterial({ color: 0xab47bc, transparent: true, opacity: 0.6, shininess: 60 });
+    const wiremat = new THREE.MeshBasicMaterial({ color: 0xce93d8, wireframe: true });
+    crystalGroup.add(new THREE.Mesh(geo, mat));
+    crystalGroup.add(new THREE.Mesh(geo, wiremat));
+    document.getElementById('crystal-info').textContent = '육방정계: a=b≠c, α=β=90°, γ=120° (석영, 방해석)';
+  }
+
+  function createOrtho() {
+    clearCrystal();
+    const geo = new THREE.BoxGeometry(1.2, 1.8, 0.8);
+    const mat = new THREE.MeshPhongMaterial({ color: 0x66bb6a, transparent: true, opacity: 0.6, shininess: 60 });
+    const wiremat = new THREE.MeshBasicMaterial({ color: 0xa5d6a7, wireframe: true });
+    crystalGroup.add(new THREE.Mesh(geo, mat));
+    crystalGroup.add(new THREE.Mesh(geo, wiremat));
+    document.getElementById('crystal-info').textContent = '사방정계: a≠b≠c, α=β=γ=90° (감람석, 황옥)';
+  }
+
+  function createMonoclinic() {
+    clearCrystal();
+    const geo = new THREE.BoxGeometry(1.2, 1.6, 0.8);
+    const mat = new THREE.MeshPhongMaterial({ color: 0xffa726, transparent: true, opacity: 0.6, shininess: 60 });
+    const wiremat = new THREE.MeshBasicMaterial({ color: 0xffcc80, wireframe: true });
+    const mesh = new THREE.Mesh(geo, mat);
+    const wire = new THREE.Mesh(geo, wiremat);
+    mesh.rotation.z = 0.3;
+    wire.rotation.z = 0.3;
+    crystalGroup.add(mesh);
+    crystalGroup.add(wire);
+    document.getElementById('crystal-info').textContent = '단사정계: a≠b≠c, α=γ=90°, β≠90° (정장석, 석고)';
+  }
+
+  createCubic();
+
+  document.getElementById('btn-cubic').addEventListener('click', createCubic);
+  document.getElementById('btn-hexagonal').addEventListener('click', createHexagonal);
+  document.getElementById('btn-ortho').addEventListener('click', createOrtho);
+  document.getElementById('btn-monoclinic').addEventListener('click', createMonoclinic);
+
+  // Mouse rotation
+  let isDragging = false, prevMouse = { x: 0, y: 0 };
+  container.addEventListener('mousedown', (e) => {
+    if (e.target.tagName === 'BUTTON') return;
+    isDragging = true; prevMouse = { x: e.clientX, y: e.clientY };
+  });
+  container.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    crystalGroup.rotation.y += (e.clientX - prevMouse.x) * 0.01;
+    crystalGroup.rotation.x += (e.clientY - prevMouse.y) * 0.01;
+    prevMouse = { x: e.clientX, y: e.clientY };
+  });
+  container.addEventListener('mouseup', () => { isDragging = false; });
+  container.addEventListener('mouseleave', () => { isDragging = false; });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    if (!isDragging) crystalGroup.rotation.y += 0.005;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

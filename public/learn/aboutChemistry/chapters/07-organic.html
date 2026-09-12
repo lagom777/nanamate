@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7. 유기 화학 — aboutChemistry</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">⚗️ 표지 · 소개</a></li>
+    <li><a href="01-atomic-structure.html">1. 원자 구조</a></li>
+    <li><a href="02-chemical-bonds.html">2. 화학 결합</a></li>
+    <li><a href="03-chemical-reactions.html">3. 화학 반응</a></li>
+    <li><a href="04-thermochemistry.html">4. 열화학</a></li>
+    <li><a href="05-acid-base.html">5. 산과 염기</a></li>
+    <li><a href="06-redox.html">6. 산화 환원</a></li>
+    <li><a href="07-organic.html" style="color:var(--accent);font-weight:600;">7. 유기 화학</a></li>
+    <li><a href="08-polymers.html">8. 고분자</a></li>
+    <li><a href="09-biochemistry.html">9. 생화학</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>유기 화학:<br><em>탄소</em>의 화학</h1>
+  <p class="authors">Chapter 7 — Organic Chemistry & Carbon Compounds</p>
+  <p class="affiliation">3D 분자 구조 · 작용기 시뮬레이터</p>
+</header>
+
+<h2>유기 화학이란?</h2>
+<p>유기 화학은 탄소 화합물의 구조, 성질, 반응을 연구합니다. 탄소는 4개의 공유결합을 형성할 수 있어, 매우 다양하고 복잡한 분자를 만들어냅니다.</p>
+
+<div class="info-card organic">
+  <h4>탄소의 특별함</h4>
+  <p>4개의 결합 가능 | 사슬/고리/가지 구조 형성 | 단일/이중/삼중결합 | 수백만 종의 화합물 존재</p>
+</div>
+
+<h2>탄화수소 분류</h2>
+<div class="info-card">
+  <h4>알케인 (포화)</h4>
+  <p>단일결합만 포함. CₙH₂ₙ₊₂. 메테인, 에테인, 프로페인... 안정하고 반응성 낮음.</p>
+</div>
+<div class="info-card reaction">
+  <h4>알켄 (불포화)</h4>
+  <p>이중결합 포함. CₙH₂ₙ. 에틸렌(에텐), 프로필렌(프로펜)... 첨가 반응 가능.</p>
+</div>
+<div class="info-card acid">
+  <h4>방향족</h4>
+  <p>벤젠 고리 구조. C₆H₆. 공명 안정화로 특수한 반응성. 치환 반응이 주로 일어남.</p>
+</div>
+
+<h2>3D 분자 구조 뷰어</h2>
+<p>다양한 유기 분자의 3D 구조를 관찰하세요. 분자를 선택하고 드래그하여 회전할 수 있습니다.</p>
+
+<div class="scene-3d" id="organic-scene" style="height:450px;">
+  <div class="scene-controls">
+    <label>분자:</label>
+    <select id="mol-select">
+      <option value="methane">메테인 (CH₄)</option>
+      <option value="ethanol">에탄올 (C₂H₅OH)</option>
+      <option value="benzene">벤젠 (C₆H₆)</option>
+      <option value="acetic">아세트산 (CH₃COOH)</option>
+    </select>
+    <button id="spin-mol">자동 회전</button>
+  </div>
+</div>
+<span class="interact-hint">⟳ 분자 선택 후 드래그로 3D 회전 · 스크롤로 확대/축소</span>
+
+<h2>작용기</h2>
+<div class="formula">-OH 하이드록시 | -COOH 카복시 | -NH₂ 아미노 | -CHO 알데하이드 | C=O 케톤</div>
+
+<div class="info-card bond">
+  <h4>작용기의 중요성</h4>
+  <p>작용기는 유기 분자의 반응성을 결정합니다. 같은 작용기를 가진 분자들은 비슷한 화학적 성질을 보입니다.</p>
+</div>
+
+<h2>이성질체</h2>
+<div class="info-card organic">
+  <h4>구조 이성질체</h4>
+  <p>같은 분자식이지만 원자 연결 순서가 다른 분자. 예: 부탄과 아이소뷰테인(2-메틸프로페인)</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🧬 유기화학이 뭐예요?</h3>
+  <p><strong>탄소(C)</strong>를 뼈대로 만들어진 물질들을 연구하는 분야예요! 탄소는 정말 특별한 원자거든요. 우리 몸(단백질·지방·DNA), 플라스틱, 옷, 휘발유까지 우리 주변 대부분이 탄소로 되어 있어요. 😲</p>
+  <h3>🤲 탄소는 '손이 4개'예요</h3>
+  <p>탄소가 특별한 이유는 항상 <strong>4개의 손(결합)</strong>으로 다른 원자를 잡을 수 있어서예요! 그래서 탄소끼리 손을 잡고 긴 <strong>사슬</strong>, <strong>가지</strong>, <strong>고리</strong>를 자유자재로 만들죠. 그 덕에 수백만 종류의 물질이 생겨요! 🔗</p>
+  <div class="info-card">
+    <h4>🌱 꼭 알아둘 말</h4>
+    <ul>
+      <li><strong>탄화수소</strong>: 탄소(C)와 수소(H)로만 된 물질</li>
+      <li><strong>작용기</strong>: 분자의 성격을 정하는 특별한 부품(예: -OH, -COOH)</li>
+      <li><strong>포화·불포화</strong>: 단일결합만 있으면 포화, 이중·삼중결합이 있으면 불포화</li>
+      <li><strong>이성질체</strong>: 분자식은 같은데 모양이 다른 형제 분자</li>
+    </ul>
+  </div>
+  <h3>🧩 '탄소 뼈대 + 부품'으로 보기</h3>
+  <p>가장 단순한 건 탄소와 수소만 있는 <strong>탄화수소</strong>예요. 메테인(CH₄)은 아주 얌전해서 잘 안 변해요. 그런데 이중결합이 있는 에텐(C₂H₄)은 그 자리에 다른 분자를 쏙 끼워주는 반응을 잘 해요!</p>
+  <p>여기에 특별한 <strong>부품(작용기)</strong>을 붙이면 성격이 확 바뀌어요. -OH(알코올), -COOH(산) 같은 부품이죠. 술의 성분인 에탄올(C₂H₅OH)이 물에 잘 섞이는 건 바로 -OH 부품 덕분이에요! 🍶</p>
+  <div class="study-tip"><strong>💡 꿀팁:</strong> 분자를 통째로 외우지 마세요! "탄소 뼈대 + 작용기"로 나눠서 보면, 작용기 이름만 봐도 알코올인지 산인지 한눈에 알 수 있어요. 🧩</div>
+  <h3>📝 한눈에 정리</h3>
+  <ul>
+    <li>탄소는 손이 4개 → 사슬·가지·고리로 무한 변신</li>
+    <li>탄화수소: 포화(알케인) vs 불포화(알켄·알카인)</li>
+    <li>작용기가 분자의 성격과 반응을 정해요</li>
+    <li>이성질체 = 같은 분자식, 다른 모양 → 다른 성질</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
+  <p>유기 분자의 구조는 탄소의 혼성화로 설명됩니다. 단일결합 탄소(알케인)는 sp³ 혼성으로 약 109.5°의 정사면체 구조, 이중결합 탄소(알켄)는 sp² 혼성으로 약 120°의 평면 구조, 삼중결합 탄소(알카인)는 sp 혼성으로 180°의 직선 구조를 가집니다. 이중·삼중결합은 σ결합 1개와 π결합으로 이루어지는데, π결합은 회전이 막혀 있어 알켄에서 시스/트랜스(기하) 이성질체가 생깁니다. 벤젠 같은 방향족은 6개의 p 오비탈 전자가 고리 전체에 비편재화되어 공명 안정화되며, 그래서 첨가보다는 치환 반응을 합니다. 반응 유형은 크게 첨가(알켄+H₂, +HX), 치환(알케인의 할로젠화, 방향족 치환), 제거(알코올 탈수로 알켄 생성), 산화·환원(알코올↔알데하이드↔카복실산)으로 나뉩니다. 작용기의 우선순위에 따라 IUPAC 명명이 정해집니다.</p>
+  <h3>핵심 반응과 예시</h3>
+  <div class="formula">
+    첨가: CH₂=CH₂ + Br₂ → CH₂Br-CH₂Br<br>
+    치환: CH₄ + Cl₂ --(빛)--&gt; CH₃Cl + HCl<br>
+    산화: CH₃CH₂OH → CH₃CHO → CH₃COOH
+  </div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>C₄H₁₀의 구조 이성질체를 모두 쓰시오. 답: 곧은 사슬인 뷰테인(n-butane)과 가지가 있는 아이소뷰테인(2-메틸프로페인) 2가지가 있습니다. 분자식은 같지만 끓는점이 달라(직선형이 더 높음) 물리적 성질이 구분됩니다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>2-뷰텐(CH₃-CH=CH-CH₃)에 시스/트랜스 이성질체가 존재하는 이유를 설명하시오. 답: C=C의 π결합 때문에 결합축 회전이 막혀, 두 메틸기가 같은 쪽이면 시스, 반대쪽이면 트랜스가 되어 서로 다른 화합물이 됩니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>에틸렌(에텐)의 첨가 중합으로 폴리에틸렌 플라스틱이 만들어지고, 알코올의 산화로 식초(아세트산)가 생깁니다. 카복실산과 알코올의 에스터화 반응은 향료·바이오디젤 제조의 기본입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 이성질체의 종류를 혼동하지 마세요. 구조(연결 순서) 이성질체와 입체(같은 연결, 다른 공간 배열) 이성질체는 다릅니다. 또 알켄은 첨가, 방향족은 치환 반응을 한다는 점을 헷갈리지 마세요.</div>
+
+<h3>전문가 레벨 이해</h3>
+  <p>현대 유기화학은 반응을 전자의 흐름, 즉 메커니즘으로 기술합니다. 친핵성 치환은 Sₙ1(2단계, 카보양이온 중간체, 라세미화)과 Sₙ2(1단계, 후면 공격, 발덴 반전)로 나뉘고, 제거 반응은 E1·E2로 분류됩니다. 반응성과 선택성은 카보양이온·카보음이온·라디칼 같은 중간체의 안정성, 입체장애, 그리고 Markovnikov/anti-Markovnikov 규칙으로 예측합니다. 입체화학에서는 R/S 절대배치(CIP 우선순위 규칙), 거울상이성질체(에난티오머)와 부분입체이성질체(디아스테레오머), 광학활성(편광면 회전)이 핵심이며, 의약품에서는 거울상 한쪽만 약효를 내고 다른 쪽이 독성을 띠는 경우(탈리도마이드 사례)가 중요합니다. 방향족성은 휘켈의 4n+2 규칙으로 판정하고, 펜타사이클 방향족·헤테로방향족(피리딘, 퓨란)으로 확장됩니다. 분광법(NMR, IR, 질량분석)은 구조 결정의 표준 도구입니다.</p>
+  <h3>핵심 원리 정리</h3>
+  <div class="formula">
+    Sₙ2 속도식: rate = k[기질][친핵체] (2차)<br>
+    Sₙ1 속도식: rate = k[기질] (1차)<br>
+    방향족성: 평면 고리 + 공액 + π전자 (4n+2)개<br>
+    Markovnikov: H는 H가 많은 탄소에, 친전자체는 치환이 많은 탄소에
+  </div>
+  <h3>최신 연구</h3>
+  <p>2010년대 이후 광촉매(photoredox)와 전기화학적 유기합성이 온화한 조건에서 라디칼 반응을 정밀 제어하는 방향으로 크게 발전했습니다. 전이금속(Pd, Ni) 교차 짝지음 반응(스즈키·헥·네기시 커플링)은 노벨상을 받았고 의약품·소재 합성의 표준이 되었습니다. 또한 유기촉매(organocatalysis)를 통한 비대칭 합성, C-H 직접 활성화, 그리고 머신러닝 기반 합성 경로 설계(retrosynthesis AI)가 활발히 연구되고 있습니다.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>생화학</strong>: 효소 반응 메커니즘과 대사 경로</li>
+    <li><strong>의약화학</strong>: 약물 설계, 입체선택적 합성, 약물 대사</li>
+    <li><strong>고분자공학</strong>: 중합 반응 기반 신소재</li>
+    <li><strong>재료과학</strong>: 유기 반도체, OLED, 유기 태양전지</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Clayden, Organic Chemistry / McMurry, Organic Chemistry</li>
+    <li>📺 MIT OCW 5.12 Organic Chemistry 강의</li>
+    <li>🔬 ChemDraw, RDKit로 구조·반응 모델링 실습</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 3차 할로젠화 알킬(예: tert-뷰틸 브로마이드)이 1차보다 Sₙ1 반응을 훨씬 잘 하는 이유를 카보양이온 안정성(초공액·유발효과)으로 설명하고, 같은 기질이 Sₙ2를 거의 못하는 이유를 입체장애로 함께 논하세요.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 유기 화합물 분류</h2>
+<p>각 항목을 포화 탄화수소, 불포화 탄화수소, 작용기 중 알맞은 그룹으로 분류하세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#00e896","prompt":"포화·불포화·작용기로 분류하세요","groups":[{"name":"포화 탄화수소","items":["메테인 CH₄","알케인"]},{"name":"불포화 탄화수소","items":["에텐 C₂H₄","알켄"]},{"name":"작용기","items":["-OH","-COOH","-NH₂"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e896","questions":[{"q":"탄소가 형성하는 공유결합 수는?","choices":["2개","3개","4개","6개"],"answer":2},{"q":"알케인의 일반식은?","choices":["CₙH₂ₙ","CₙH₂ₙ₊₂","C₆H₆","CₙH₂ₙ₋₂"],"answer":1},{"q":"벤젠의 분자식은?","choices":["C₆H₆","CH₄","C₂H₆","C₂H₄"],"answer":0},{"q":"-COOH 작용기의 이름은?","choices":["하이드록시","아미노","케톤","카복시"],"answer":3},{"q":"분자식 같고 연결 구조 다른 분자는?","choices":["동위원소","구조 이성질체","이온","동소체"],"answer":1}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('organic-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 2, 6); camera.lookAt(0, 0, 0);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  const molGroup = new THREE.Group(); scene.add(molGroup);
+
+  const C_COLOR = 0x333333, H_COLOR = 0xeeeeee, O_COLOR = 0xff4444, BOND_COLOR = 0x00e896;
+
+  function addAtom(group, color, size, pos) {
+    const m = new THREE.Mesh(new THREE.SphereGeometry(size, 20, 20), new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.85 }));
+    m.position.set(...pos); group.add(m); return m;
+  }
+  function addBond(group, from, to) {
+    const s = new THREE.Vector3(...from), e = new THREE.Vector3(...to);
+    const d = e.clone().sub(s), l = d.length();
+    const m = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, l, 8), new THREE.MeshBasicMaterial({ color: BOND_COLOR, transparent: true, opacity: 0.4 }));
+    m.position.copy(s.clone().add(e).multiplyScalar(0.5));
+    m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), d.normalize());
+    group.add(m);
+  }
+
+  const molecules = {
+    methane: () => {
+      const g = new THREE.Group();
+      addAtom(g, C_COLOR, 0.35, [0,0,0]);
+      const hPos = [[0,1.2,0],[1.13,-0.4,0],[-0.57,-0.4,0.98],[-0.57,-0.4,-0.98]];
+      hPos.forEach(p => { addAtom(g, H_COLOR, 0.2, p); addBond(g, [0,0,0], p); });
+      return g;
+    },
+    ethanol: () => {
+      const g = new THREE.Group();
+      addAtom(g, C_COLOR, 0.35, [-0.8,0,0]); addAtom(g, C_COLOR, 0.35, [0.8,0,0]);
+      addAtom(g, O_COLOR, 0.3, [2,0.6,0]);
+      addBond(g, [-0.8,0,0], [0.8,0,0]); addBond(g, [0.8,0,0], [2,0.6,0]);
+      [[-1.4,0.9,0.3],[-1.4,-0.5,0.8],[-1.4,-0.5,-0.8]].forEach(p => { addAtom(g, H_COLOR, 0.2, p); addBond(g, [-0.8,0,0], p); });
+      [[0.8,0.9,0.7],[0.8,-0.9,0.3]].forEach(p => { addAtom(g, H_COLOR, 0.2, p); addBond(g, [0.8,0,0], p); });
+      addAtom(g, H_COLOR, 0.2, [2.7,0,0.3]); addBond(g, [2,0.6,0], [2.7,0,0.3]);
+      return g;
+    },
+    benzene: () => {
+      const g = new THREE.Group();
+      const r = 1.2;
+      const cPos = [], hPos = [];
+      for (let i = 0; i < 6; i++) {
+        const a = (i / 6) * Math.PI * 2 - Math.PI/2;
+        cPos.push([Math.cos(a)*r, Math.sin(a)*r, 0]);
+        hPos.push([Math.cos(a)*(r+0.8), Math.sin(a)*(r+0.8), 0]);
+      }
+      cPos.forEach((p,i) => {
+        addAtom(g, C_COLOR, 0.3, p);
+        addAtom(g, H_COLOR, 0.18, hPos[i]);
+        addBond(g, p, hPos[i]);
+        addBond(g, p, cPos[(i+1)%6]);
+      });
+      // Inner ring for delocalization
+      const ringPts = [];
+      for (let i = 0; i <= 60; i++) { const a = (i/60)*Math.PI*2; ringPts.push(new THREE.Vector3(Math.cos(a)*0.7, Math.sin(a)*0.7, 0)); }
+      g.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(ringPts), new THREE.LineBasicMaterial({ color: 0xa855f7, transparent: true, opacity: 0.4 })));
+      return g;
+    },
+    acetic: () => {
+      const g = new THREE.Group();
+      addAtom(g, C_COLOR, 0.35, [-1,0,0]); addAtom(g, C_COLOR, 0.35, [0.5,0,0]);
+      addAtom(g, O_COLOR, 0.3, [0.5,1.2,0]); addAtom(g, O_COLOR, 0.3, [1.8,-0.5,0]);
+      addBond(g, [-1,0,0], [0.5,0,0]); addBond(g, [0.5,0,0], [0.5,1.2,0]); addBond(g, [0.5,0,0], [1.8,-0.5,0]);
+      // Double bond indicator
+      const db = new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,1.2,8), new THREE.MeshBasicMaterial({ color: 0xff4444, transparent: true, opacity: 0.3 }));
+      db.position.set(0.65, 0.6, 0.12); db.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), new THREE.Vector3(0,1,0)); molGroup.add(db);
+
+      [[-1.6,0.8,0.3],[-1.6,-0.5,0.8],[-1.6,-0.5,-0.8]].forEach(p => { addAtom(g, H_COLOR, 0.2, p); addBond(g, [-1,0,0], p); });
+      addAtom(g, H_COLOR, 0.2, [2.5,0,0.3]); addBond(g, [1.8,-0.5,0], [2.5,0,0.3]);
+      return g;
+    }
+  };
+
+  let currentMol;
+  let autoSpin = false;
+
+  function loadMolecule(name) {
+    if (currentMol) molGroup.remove(currentMol);
+    currentMol = molecules[name]();
+    molGroup.add(currentMol);
+  }
+  loadMolecule('methane');
+
+  document.getElementById('mol-select').addEventListener('change', function() { loadMolecule(this.value); });
+  document.getElementById('spin-mol').addEventListener('click', () => { autoSpin = !autoSpin; });
+
+  let rY = 0, rX = 0.2, isDrag = false, pX = 0, pY = 0;
+  container.addEventListener('mousedown', e => { isDrag = true; pX = e.clientX; pY = e.clientY; });
+  window.addEventListener('mouseup', () => isDrag = false);
+  container.addEventListener('mousemove', e => { if (!isDrag) return; rY += (e.clientX-pX)*0.005; rX += (e.clientY-pY)*0.005; pX = e.clientX; pY = e.clientY; });
+  container.addEventListener('wheel', e => { e.preventDefault(); camera.position.z = Math.max(3, Math.min(12, camera.position.z + e.deltaY*0.01)); }, { passive: false });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    if (autoSpin) rY += 0.01;
+    molGroup.rotation.y = rY; molGroup.rotation.x = rX;
+    renderer.render(scene, camera);
+  }
+  animate();
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6장. Attention과 Transformer</title>
+<link rel="stylesheet" href="../styles.css">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script defer src="../toggle.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📖 표지 · 초록</a></li>
+    <li><a href="01-history.html">1–2. 서론 · 역사</a></li>
+    <li><a href="02-foundations.html">3–4. 수학 · ML 이론</a></li>
+    <li><a href="03-neural.html">5. 신경망과 딥러닝</a></li>
+    <li><a href="04-transformer.html">6. Attention · Transformer</a></li>
+    <li><a href="05-llm.html">7. 대규모 언어모델</a></li>
+    <li><a href="06-generative.html">8. 생성모델</a></li>
+    <li><a href="07-rl-multimodal.html">9–10. 강화학습 · 멀티모달</a></li>
+    <li><a href="08-safety-frontiers.html">11–13. 안전성 · 프런티어 · 결론</a></li>
+    <li><a href="09-references.html">참고문헌</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec6">
+<h2>6. Attention과 Transformer</h2>
+<div class="easy-version"><div class="easy-box">
+<h4>🧒 Transformer의 심장: 어텐션</h4>
+<p><strong>어텐션 = 문장 읽을 때 중요한 단어에 형광펜 치기.</strong></p>
+<div class="example">"The cat sat on the mat"에서 "sat(앉았다)"을 이해하려면 "cat(누가?)"을 봐야 한다. 어텐션이 "cat에 70% 주목, 나머지 30%"로 가중치를 매긴다.</div>
+<div class="analogy">Q·K·V는 도서관 비유:
+<ul>
+  <li><strong>Q (쿼리)</strong> = 내가 찾고 싶은 것 ("앉은 건 누구?")</li>
+  <li><strong>K (키)</strong> = 각 책의 제목 명찰 ("나는 고양이야")</li>
+  <li><strong>V (값)</strong> = 책 안의 실제 내용</li>
+  <li>Q와 K 궁합 맞추기 → 잘 맞는 책의 V를 많이 참고</li>
+</ul></div>
+<p>💡 Transformer가 대단한 이유: 문장의 첫 단어와 마지막 단어가 얼마나 떨어져 있든 <strong>한 번에</strong> 관계를 볼 수 있다. RNN은 순서대로 읽어야 했는데, 이건 병렬로 본다.</p>
+</div></div>
+<div class="paper-version">
+
+
+<p>
+Transformer 아키텍처(Vaswani et al., 2017)는 RNN의 순차성과 CNN의 지역성을 모두 버리고,
+<strong>자기주의(self-attention)</strong>만으로 시퀀스를 처리한다. 현대 AI의 중심축이므로 상세히 다룬다.
+</p>
+
+<svg class="svg-figure" viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg">
+  <!-- input X -->
+  <rect x="20" y="150" width="80" height="40" fill="#1a4b8f" rx="4"/>
+  <text x="60" y="175" text-anchor="middle" fill="#fff" font-family="serif" font-size="14" font-weight="bold">X</text>
+  <text x="60" y="210" text-anchor="middle" font-size="11" fill="#555">입력 시퀀스</text>
+  <!-- three projections -->
+  <line x1="100" y1="170" x2="180" y2="70"  stroke="#333" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="100" y1="170" x2="180" y2="170" stroke="#333" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="100" y1="170" x2="180" y2="270" stroke="#333" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <defs>
+    <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+  <text x="140" y="110" font-size="11" fill="#a02864" font-weight="bold">× W^Q</text>
+  <text x="140" y="160" font-size="11" fill="#a02864" font-weight="bold">× W^K</text>
+  <text x="140" y="260" font-size="11" fill="#a02864" font-weight="bold">× W^V</text>
+  <!-- Q K V boxes -->
+  <rect x="185" y="50"  width="70" height="40" fill="#c85028" rx="4"/>
+  <text x="220" y="75" text-anchor="middle" fill="#fff" font-size="16" font-weight="bold" font-family="serif">Q</text>
+  <rect x="185" y="150" width="70" height="40" fill="#6428a0" rx="4"/>
+  <text x="220" y="175" text-anchor="middle" fill="#fff" font-size="16" font-weight="bold" font-family="serif">K</text>
+  <rect x="185" y="250" width="70" height="40" fill="#080" rx="4"/>
+  <text x="220" y="275" text-anchor="middle" fill="#fff" font-size="16" font-weight="bold" font-family="serif">V</text>
+  <text x="220" y="35" text-anchor="middle" font-size="11" fill="#555">Query (질의)</text>
+  <text x="220" y="310" text-anchor="middle" font-size="11" fill="#555">Key / Value</text>
+  <!-- QK^T -->
+  <line x1="255" y1="70"  x2="340" y2="130" stroke="#333" stroke-width="1.5"/>
+  <line x1="255" y1="170" x2="340" y2="150" stroke="#333" stroke-width="1.5"/>
+  <rect x="340" y="120" width="120" height="50" fill="#fff" stroke="#c85028" stroke-width="2" rx="6"/>
+  <text x="400" y="140" text-anchor="middle" font-size="12" font-family="serif">Q · Kᵀ / √dₖ</text>
+  <text x="400" y="160" text-anchor="middle" font-size="11" font-family="serif" fill="#555">유사도 점수</text>
+  <!-- softmax -->
+  <line x1="460" y1="145" x2="490" y2="145" stroke="#333" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <rect x="490" y="120" width="100" height="50" fill="#fff" stroke="#6428a0" stroke-width="2" rx="6"/>
+  <text x="540" y="150" text-anchor="middle" font-size="13" font-family="serif">softmax</text>
+  <!-- multiply by V -->
+  <line x1="540" y1="170" x2="540" y2="230" stroke="#333" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <line x1="255" y1="270" x2="490" y2="240" stroke="#333" stroke-width="1.5"/>
+  <rect x="490" y="230" width="100" height="40" fill="#fff" stroke="#080" stroke-width="2" rx="6"/>
+  <text x="540" y="255" text-anchor="middle" font-size="13" font-family="serif">가중합 × V</text>
+  <!-- output -->
+  <line x1="590" y1="250" x2="640" y2="250" stroke="#333" stroke-width="2" marker-end="url(#arr2)"/>
+  <rect x="640" y="230" width="50" height="40" fill="#1a4b8f" rx="4"/>
+  <text x="665" y="255" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">Z</text>
+  <text x="665" y="290" text-anchor="middle" font-size="11" fill="#555">출력</text>
+</svg>
+<p class="fig-title">그림 6. 스케일드 닷-프로덕트 어텐션의 계산 흐름. Q·Kᵀ로 유사도를 측정 → softmax로 정규화 → V에 가중합 적용. 이것이 Transformer의 심장이다.</p>
+
+<h3>6.1 스케일드 닷-프로덕트 어텐션</h3>
+<p>
+입력 시퀀스 $\mathbf{X} \in \mathbb{R}^{n\times d}$에 대해 세 가지 선형 사영을 만든다:
+\[
+\mathbf{Q} = \mathbf{X}\mathbf{W}^Q, \quad \mathbf{K} = \mathbf{X}\mathbf{W}^K, \quad \mathbf{V} = \mathbf{X}\mathbf{W}^V
+\]
+어텐션 출력은:
+\[
+\mathrm{Attention}(\mathbf{Q},\mathbf{K},\mathbf{V}) = \mathrm{softmax}\!\left(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d_k}}\right)\mathbf{V} \tag{6.1}
+\]
+$\sqrt{d_k}$로의 스케일링은 softmax 포화를 방지한다. 어텐션의 각 출력은 <em>모든</em> 위치의 값의 가중합이므로,
+시퀀스 내 임의 거리의 의존성을 단일 층에서 모델링할 수 있다(경로 길이 $O(1)$).
+</p>
+
+<h3>6.2 다중 헤드 어텐션 (Multi-Head Attention)</h3>
+<p>
+단일 어텐션 대신 $h$개의 병렬 헤드를 사용한다:
+\[
+\mathrm{MultiHead}(\mathbf{X}) = \mathrm{Concat}(\mathrm{head}_1, \dots, \mathrm{head}_h)\mathbf{W}^O
+\]
+각 헤드는 서로 다른 부분공간에서 관계를 포착하며, 이는 문법·의미·참조 등 다양한 언어적 관계에 대응함이 경험적으로 관찰된다.
+</p>
+
+<div class="attn-grid" style="grid-template-columns: repeat(6, 1fr);">
+  <div class="attn-cell" style="background: #1a4b8f;">The</div>
+  <div class="attn-cell" style="background: #2a6ab0;">cat</div>
+  <div class="attn-cell" style="background: #5a8ec0;">sat</div>
+  <div class="attn-cell" style="background: #90b0d0;">on</div>
+  <div class="attn-cell" style="background: #c0d0e0;">the</div>
+  <div class="attn-cell" style="background: #e0e8f0; color:#333;">mat</div>
+
+  <div class="attn-cell" style="background: #b0c5dc; color:#333;">0.1</div>
+  <div class="attn-cell" style="background: #1a4b8f;">0.8</div>
+  <div class="attn-cell" style="background: #80a5c5;">0.3</div>
+  <div class="attn-cell" style="background: #c5d5e5; color:#333;">0.05</div>
+  <div class="attn-cell" style="background: #e5ebf2; color:#333;">0.02</div>
+  <div class="attn-cell" style="background: #5080b0;">0.4</div>
+
+  <div class="attn-cell" style="background: #d0dae8; color:#333;">0.05</div>
+  <div class="attn-cell" style="background: #7098c0;">0.5</div>
+  <div class="attn-cell" style="background: #1a4b8f;">0.9</div>
+  <div class="attn-cell" style="background: #a0bcd5; color:#333;">0.2</div>
+  <div class="attn-cell" style="background: #dfe6ee; color:#333;">0.03</div>
+  <div class="attn-cell" style="background: #8aaaca;">0.3</div>
+
+  <div class="attn-cell" style="background: #e5ebf2; color:#333;">0.02</div>
+  <div class="attn-cell" style="background: #c5d5e5; color:#333;">0.1</div>
+  <div class="attn-cell" style="background: #6090bc;">0.6</div>
+  <div class="attn-cell" style="background: #1a4b8f;">0.7</div>
+  <div class="attn-cell" style="background: #a0bcd5; color:#333;">0.2</div>
+  <div class="attn-cell" style="background: #70a0c5;">0.5</div>
+
+  <div class="attn-cell" style="background: #dfe6ee; color:#333;">0.03</div>
+  <div class="attn-cell" style="background: #d0dae8; color:#333;">0.08</div>
+  <div class="attn-cell" style="background: #c0d0e0; color:#333;">0.15</div>
+  <div class="attn-cell" style="background: #90b0d0;">0.3</div>
+  <div class="attn-cell" style="background: #1a4b8f;">0.85</div>
+  <div class="attn-cell" style="background: #b0c5dc; color:#333;">0.25</div>
+
+  <div class="attn-cell" style="background: #c5d5e5; color:#333;">0.1</div>
+  <div class="attn-cell" style="background: #5080b0;">0.45</div>
+  <div class="attn-cell" style="background: #90b0d0;">0.25</div>
+  <div class="attn-cell" style="background: #80a5c5;">0.4</div>
+  <div class="attn-cell" style="background: #a0bcd5; color:#333;">0.2</div>
+  <div class="attn-cell" style="background: #1a4b8f;">0.9</div>
+</div>
+<p class="fig-title">그림 7. 어텐션 가중치 행렬 시각화. 각 토큰(행)이 다른 토큰(열)에 얼마나 주의를 기울이는지. 대각선(자기 자신)이 진하고, "cat"은 "sat"에 강하게 주목한다.</p>
+
+<h3>6.3 Transformer 블록의 전체 구조</h3>
+<p>
+각 블록은 다음을 수행한다:
+</p>
+<pre><code>x = x + MultiHeadAttention(LayerNorm(x))   # Pre-LN 방식 (현대 표준)
+x = x + FFN(LayerNorm(x))
+# FFN(x) = W_2 · σ(W_1 · x)  (보통 SwiGLU)</code></pre>
+<p>
+Pre-LayerNorm(Xiong et al., 2020)은 훈련 안정성을 크게 향상시켜 GPT-2 이후 표준이 되었다.
+잔차 연결은 그래디언트 고속도로 역할을 한다.
+</p>
+
+<svg class="svg-figure" viewBox="0 0 500 520" xmlns="http://www.w3.org/2000/svg">
+  <!-- input -->
+  <rect x="200" y="10" width="100" height="30" fill="#1a4b8f" rx="4"/>
+  <text x="250" y="30" text-anchor="middle" fill="#fff" font-family="serif" font-size="13">입력 임베딩 + 위치</text>
+  <line x1="250" y1="40" x2="250" y2="70" stroke="#333" stroke-width="2"/>
+  <!-- LN 1 -->
+  <rect x="190" y="70" width="120" height="28" fill="#fff" stroke="#888" rx="4"/>
+  <text x="250" y="89" text-anchor="middle" font-size="12" font-family="serif">LayerNorm</text>
+  <line x1="250" y1="98" x2="250" y2="120" stroke="#333" stroke-width="2"/>
+  <!-- Multi-Head Attn -->
+  <rect x="150" y="120" width="200" height="50" fill="#c85028" rx="6"/>
+  <text x="250" y="140" text-anchor="middle" fill="#fff" font-size="14" font-family="serif" font-weight="bold">Multi-Head Self-Attention</text>
+  <text x="250" y="158" text-anchor="middle" fill="#fff" font-size="11">Q, K, V 병렬 처리</text>
+  <!-- residual 1 -->
+  <path d="M 250,40 Q 90,40 90,195 Q 90,200 150,200" stroke="#a02864" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
+  <circle cx="250" cy="200" r="14" fill="#fff" stroke="#a02864" stroke-width="2"/>
+  <text x="250" y="205" text-anchor="middle" font-size="16" fill="#a02864" font-weight="bold">+</text>
+  <text x="100" y="125" font-size="10" fill="#a02864">잔차 연결</text>
+  <line x1="250" y1="170" x2="250" y2="186" stroke="#333" stroke-width="2"/>
+  <line x1="236" y1="200" x2="150" y2="200" stroke="#a02864" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="250" y1="214" x2="250" y2="240" stroke="#333" stroke-width="2"/>
+  <!-- LN 2 -->
+  <rect x="190" y="240" width="120" height="28" fill="#fff" stroke="#888" rx="4"/>
+  <text x="250" y="259" text-anchor="middle" font-size="12" font-family="serif">LayerNorm</text>
+  <line x1="250" y1="268" x2="250" y2="290" stroke="#333" stroke-width="2"/>
+  <!-- FFN -->
+  <rect x="150" y="290" width="200" height="70" fill="#6428a0" rx="6"/>
+  <text x="250" y="315" text-anchor="middle" fill="#fff" font-size="14" font-family="serif" font-weight="bold">Feed-Forward</text>
+  <text x="250" y="335" text-anchor="middle" fill="#fff" font-size="11">W₂ · SwiGLU(W₁x)</text>
+  <text x="250" y="352" text-anchor="middle" fill="#fff" font-size="10">(4× 확장 → 축소)</text>
+  <!-- residual 2 -->
+  <path d="M 250,214 Q 410,214 410,385 Q 410,390 350,390" stroke="#a02864" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
+  <line x1="250" y1="360" x2="250" y2="376" stroke="#333" stroke-width="2"/>
+  <circle cx="250" cy="390" r="14" fill="#fff" stroke="#a02864" stroke-width="2"/>
+  <text x="250" y="395" text-anchor="middle" font-size="16" fill="#a02864" font-weight="bold">+</text>
+  <line x1="264" y1="390" x2="350" y2="390" stroke="#a02864" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="250" y1="404" x2="250" y2="430" stroke="#333" stroke-width="2"/>
+  <!-- output -->
+  <rect x="170" y="430" width="160" height="35" fill="#080" rx="4"/>
+  <text x="250" y="453" text-anchor="middle" fill="#fff" font-family="serif" font-size="13">출력 → 다음 블록</text>
+  <!-- repeat label -->
+  <rect x="370" y="150" width="120" height="200" fill="none" stroke="#ccc" stroke-dasharray="3,3" rx="6"/>
+  <text x="430" y="250" text-anchor="middle" font-size="11" fill="#888" font-family="serif">× N회 반복</text>
+  <text x="430" y="270" text-anchor="middle" font-size="11" fill="#888" font-family="serif">(GPT-4: ~120)</text>
+  <text x="430" y="290" text-anchor="middle" font-size="11" fill="#888" font-family="serif">(Llama-70B: 80)</text>
+  <!-- final output -->
+  <line x1="250" y1="465" x2="250" y2="485" stroke="#333" stroke-width="2"/>
+  <rect x="150" y="485" width="200" height="30" fill="#c85028" rx="4"/>
+  <text x="250" y="505" text-anchor="middle" fill="#fff" font-family="serif" font-size="13">Softmax → 다음 토큰</text>
+</svg>
+<p class="fig-title">그림 8. Transformer 블록의 해부도. 어텐션과 FFN이 교대로 쌓이며, 각각 잔차 연결과 LayerNorm으로 둘러싸인다. 이 블록이 수십~수백 번 반복되어 LLM이 된다.</p>
+
+<h3>6.4 위치 인코딩 (Positional Encoding)</h3>
+<p>
+자기주의는 순열 등변(permutation-equivariant)이므로 순서를 명시적으로 주입해야 한다.
+</p>
+<ul>
+  <li><strong>절대 위치</strong>: sinusoidal (Vaswani et al., 2017) 또는 학습된 임베딩.</li>
+  <li><strong>상대 위치</strong>: Shaw et al.(2018), T5-style.</li>
+  <li><strong>RoPE (Rotary Position Embedding, Su et al., 2021)</strong>: 쿼리·키 벡터를 회전시켜 상대 위치를 주입.
+  현재 Llama, Qwen, GPT-NeoX 등 대부분의 현대 LLM에서 채택.</li>
+  <li><strong>ALiBi</strong>(Press et al., 2022): 어텐션 점수에 거리 비례 편향을 가산, 길이 외삽에 유리.</li>
+</ul>
+
+<h3>6.5 어텐션의 계산 복잡도와 해결책</h3>
+<p>
+표준 어텐션은 시퀀스 길이 $n$에 대해 $O(n^2 d)$의 시간·메모리를 요구하여, 긴 맥락 처리의 병목이다.
+</p>
+<ul>
+  <li><strong>FlashAttention</strong>(Dao et al., 2022): 커널 융합과 타일링으로 메모리 I/O를 최소화. 근사가 아닌 정확한 계산.</li>
+  <li><strong>희소 어텐션</strong>: Longformer, BigBird 등 $O(n)$ 근사.</li>
+  <li><strong>Mamba / SSM</strong>(Gu & Dao, 2023): 상태 공간 모델로 선형 복잡도 달성, 긴 맥락 후보.</li>
+  <li><strong>Grouped-Query Attention (GQA)</strong>(Ainslie et al., 2023): 여러 쿼리 헤드가 하나의 키·값 헤드 공유. 추론 시 KV 캐시 감소.</li>
+</ul>
+
+<h3>6.6 인코더-디코더 변형</h3>
+<p>
+원본 Transformer는 번역을 위한 인코더-디코더였으나, 이후 세 계통으로 분화되었다:
+</p>
+<ul>
+  <li><strong>인코더 전용</strong>: BERT, RoBERTa — MLM으로 양방향 표현 학습. 분류·검색.</li>
+  <li><strong>디코더 전용</strong>: GPT 계열 — 인과 마스킹으로 자기회귀 생성. 현재 LLM의 지배적 아키텍처.</li>
+  <li><strong>인코더-디코더</strong>: T5, BART — 번역·요약 등 seq2seq.</li>
+</ul>
+
+</div>
+</section>
+
+<!-- 3D 학습 시각화: 어텐션 — 토큰이 서로를 참조하는 법 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · Self-Attention: 토큰 간 가중치 시각화</div>
+  <div id="ai3d-04" style="width:100%;height:430px;"></div>
+  <div id="ai3d-04-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">각 토큰(Query)이 문장의 다른 토큰을 얼마나 참조하는지 선의 진하기로 표현합니다.</div>
+</div>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="03-neural.html" style="text-decoration:none;">← 신경망</a><a href="05-llm.html" style="text-decoration:none;">대규모 언어모델 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🔎 한마디로 말하면?</h3>
+  <p>Transformer는 문장 속 <strong>모든 단어가 서로서로 쳐다보면서</strong> "누가 누구랑 관련 있지?"를 한꺼번에 알아내는 신경망이에요! 2017년 구글의 논문 "Attention is All You Need"에서 처음 나왔고, 지금 <strong>GPT, Claude, Gemini의 뼈대</strong>가 됐어요 🦴</p>
+  <div class="analogy">📚 도서관 비유! "사과 색깔이 뭐지?"라는 질문(Query)을 들고 도서관에 가요. 책마다 제목표(Key)와 내용(Value)이 있죠. 내 질문과 가장 비슷한 제목표를 가진 책을 찾아 읽으면 끝! 문장 속 단어들이 이렇게 서로의 책을 동시에 찾아봐요.</div>
+  <h3>🌟 우리 생활 어디에 있을까?</h3>
+  <ul>
+    <li>💬 ChatGPT가 앞에서 한 말을 기억해요 → self-attention이 전부 동시에 봐서!</li>
+    <li>🌐 구글 번역이 자연스러워졌어요 → 2017년 이후 Transformer로 바뀐 덕분</li>
+    <li>🎨 DALL·E·Midjourney의 그림도 Transformer 위에서 만들어져요.</li>
+  </ul>
+  <div class="info-card"><h4>🌱 이 말만 알면 돼!</h4><ul>
+    <li><strong>Attention</strong>: 어떤 단어에 얼마나 집중할지 정하는 기술</li>
+    <li><strong>Self-Attention</strong>: 같은 문장 속 단어들끼리 서로 주목하기</li>
+    <li><strong>Q, K, V</strong>: 질문(Query)·열쇠(Key)·값(Value), 도서관 검색 비유!</li>
+    <li><strong>토큰</strong>: 단어나 단어 조각 (AI가 한 번에 처리하는 최소 단위)</li>
+    <li><strong>Positional Encoding</strong>: 단어 순서를 알려주는 신호</li>
+  </ul></div>
+  <div class="study-tip">💡 <strong>공부 팁:</strong> "어텐션 너무 어려워!" 싶으면 작은 표로 직접 손계산해보세요. 단어 4개로 Q, K, V를 만들어 계산해보면, 사실 어텐션은 <strong>가중평균(중요한 것에 점수 더 주기)</strong>일 뿐이란 게 보여요! ✏️</div>
+  <h3>✨ 세 줄 정리</h3>
+  <ul>
+    <li>2017년 "Attention is All You Need"에서 시작!</li>
+    <li>한 단어씩 처리하던 RNN을 self-attention이 대체 → 빠르고 똑똑해짐</li>
+    <li>BERT, GPT, 그림 AI까지 전부 Transformer 기반이에요.</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
+  <p>Vaswani et al.(2017)의 핵심 통찰은 "RNN의 순환 구조 없이도 시퀀스 모델링이 가능하다"였습니다. Self-attention은 입력 시퀀스 X ∈ R^(n×d)에 대해 세 개의 선형 변환 Q = XW_Q, K = XW_K, V = XW_V를 만들고, Attention(Q, K, V) = softmax(QK^T/√d_k)V로 가중합을 계산합니다. √d_k 스케일링은 dot-product의 분산 폭주를 막아 softmax의 그래디언트 안정성을 확보합니다. Multi-Head Attention은 h개의 attention을 병렬로 수행한 뒤 concat하고 선형변환합니다. 각 head가 서로 다른 관계 패턴(문법, 의미, 공참조 등)을 학습하도록 유도하는 효과가 있습니다. Position 정보는 sin/cos 기반 절대 인코딩(원논문) 또는 RoPE(Rotary Position Embedding, Su et al., 2021), ALiBi 같은 상대 인코딩으로 주입합니다. Transformer 블록은 (1) Multi-Head Self-Attention, (2) Position-wise Feed-Forward Network(FFN), 그리고 각각의 Residual + LayerNorm으로 구성됩니다. FFN은 dim_model → 4·dim_model → dim_model로 확장-축소되며, 사실 매개변수의 약 2/3가 여기 있습니다.</p>
+  <h3>핵심 개념과 코드</h3>
+  <pre><code>import torch, math
+import torch.nn as nn
+import torch.nn.functional as F
+
+class SelfAttention(nn.Module):
+    def __init__(self, d_model, n_heads):
+        super().__init__()
+        self.h, self.d = n_heads, d_model // n_heads
+        self.qkv = nn.Linear(d_model, 3*d_model)
+        self.proj = nn.Linear(d_model, d_model)
+    def forward(self, x):
+        B, T, D = x.shape
+        q, k, v = self.qkv(x).chunk(3, dim=-1)
+        q = q.view(B, T, self.h, self.d).transpose(1,2)
+        k = k.view(B, T, self.h, self.d).transpose(1,2)
+        v = v.view(B, T, self.h, self.d).transpose(1,2)
+        att = (q @ k.transpose(-2,-1)) / math.sqrt(self.d)
+        att = F.softmax(att, dim=-1)
+        out = (att @ v).transpose(1,2).contiguous().view(B, T, D)
+        return self.proj(out)</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>💻 예제 1 — BERT vs GPT</h4><p>BERT(2018)는 Encoder-only로 양방향 마스킹 언어 모델링(MLM)을 수행합니다. 문장 이해, 분류, NER에 강합니다. GPT(2018~)는 Decoder-only로 인과적 마스킹을 사용해 다음 토큰을 예측합니다. 생성 작업에 강하며, 현재의 ChatGPT, Claude는 모두 GPT 계열 구조입니다.</p></div>
+  <div class="info-card"><h4>💻 예제 2 — Vision Transformer (ViT)</h4><p>이미지를 16x16 패치로 잘라 토큰화하고, CLS 토큰과 함께 Transformer Encoder에 넣으면 분류기가 됩니다. JFT-300M 같은 대규모 데이터에서 학습할 때 CNN을 능가하며, 현재 비전 백본의 표준 중 하나입니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① 코드 생성(GitHub Copilot, Cursor)은 GPT 계열 디코더로 다음 토큰을 예측해 코드를 자동완성합니다. ② 단백질 구조 예측 AlphaFold 2의 Evoformer는 Transformer의 변종으로 MSA(Multiple Sequence Alignment)와 pair representation을 동시에 처리합니다. ③ 음성 합성(VALL-E, Bark)은 오디오 토큰화 후 Transformer로 생성합니다. ④ 추천 시스템에서도 SASRec, BERT4Rec 같이 사용자의 클릭 시퀀스를 Transformer로 모델링합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> Self-attention의 시간·메모리 복잡도는 O(n²d)입니다. 시퀀스 길이가 8K, 32K가 되면 메모리가 폭증하므로 FlashAttention, sliding window, Mamba 같은 효율 기법이 필요합니다. 또 Layer Norm 위치(pre-LN vs post-LN)에 따라 학습 안정성이 크게 달라집니다.</div>
+
+<h3>전문가 레벨 이해</h3>
+  <p>Self-attention은 dynamic weight를 가진 그래프 신경망의 한 형태로 해석할 수 있습니다. 각 토큰이 노드이고, attention 가중치가 동적으로 결정되는 edge weight입니다. 이론적으로 Transformer는 Universal Approximator이며(Yun et al., 2020), 충분한 깊이와 폭이 주어지면 임의의 sequence-to-sequence 함수를 근사할 수 있습니다. Mechanistic interpretability 관점에서 Anthropic의 Transformer Circuits 연구(Elhage 2021, Olsson 2022)는 attention head를 induction head, copying head, name mover head 등으로 분해하고, in-context learning이 induction head에 의해 구현됨을 보였습니다. RoPE(Rotary Position Embedding)는 회전 행렬 R_(θm)을 Q, K에 곱하여 상대 위치 m-n을 내적에 자연스럽게 삽입합니다. 이는 long context 일반화의 핵심이 되었고, NTK-aware scaling, YaRN, Position Interpolation 같은 후속 기법으로 RoPE 기반 모델의 컨텍스트 확장이 가능해졌습니다. FlashAttention(Dao 2022, 2023)은 SRAM 친화적 타일링으로 attention의 HBM IO를 표준 어텐션의 Θ(n²)에서 Θ(n²d²/M)로 줄여(SRAM 크기 M이 d²보다 충분히 클 때 이득) 실효 속도를 2-4배 높였습니다. Sparse attention(Longformer, BigBird), linear attention(Performer, Linformer), 그리고 SSM(Mamba, S5)는 quadratic complexity를 우회하는 다른 접근들입니다.</p>
+  <h3>수학적 기초</h3>
+  <div class="formula">$$\text{Scaled Dot-Product Attention: } \text{Attn}(Q, K, V) = \text{softmax}\!\left(\frac{QK^T}{\sqrt{d_k}}\right) V$$
+  $$\text{Multi-Head: } \text{MHA}(X) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h) W^O$$
+  $$\text{RoPE: } R_{\theta_m} q \cdot R_{\theta_n} k = q \cdot R_{\theta_{m-n}} k$$
+  $$\text{FFN: } \text{FFN}(x) = W_2 \cdot \text{GeLU}(W_1 x + b_1) + b_2$$</div>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>Long context</strong>: Gemini 2M, Claude 200K, GPT-4 128K 등이 RoPE 보간, Ring Attention, ALiBi로 컨텍스트를 확장 중입니다. ② <strong>Sub-quadratic 대안</strong>: Mamba, RWKV, RetNet, Hyena가 long-context에서 Transformer와 경쟁하며 일부 작업에서 더 우수합니다. ③ <strong>MoE Transformer</strong>: Mixtral, DeepSeek-MoE는 routing function으로 토큰을 expert에 분배해 활성 매개변수를 줄입니다. ④ <strong>Diffusion Transformer(DiT)</strong>: Sora, Stable Diffusion 3는 U-Net 대신 Transformer를 디퓨전 백본으로 채택했습니다.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>그래프 신경망</strong>: Transformer = fully-connected graph + dynamic attention</li>
+    <li><strong>커널 방법</strong>: Performer는 attention을 random feature kernel로 근사</li>
+    <li><strong>제어이론</strong>: SSM(Mamba)는 linear time-invariant system의 직접 근사</li>
+    <li><strong>정보이론</strong>: attention entropy 분석, head 중요도 측정</li>
+    <li><strong>컴파일러·시스템</strong>: FlashAttention, Triton, CUDA 커널 최적화</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Vaswani et al., <em>Attention is All You Need</em> (2017, 원논문)</li>
+    <li>📖 Phuong & Hutter, <em>Formal Algorithms for Transformers</em> (2022)</li>
+    <li>📖 Anthropic, <em>A Mathematical Framework for Transformer Circuits</em></li>
+    <li>📺 Jay Alammar, "Illustrated Transformer" / Karpathy, "Let's build GPT"</li>
+    <li>🔬 키워드: RoPE, FlashAttention, MoE, induction head, in-context learning</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> Karpathy의 nanoGPT(약 300줄)를 읽고 직접 작은 corpus(예: 셰익스피어, 한국어 위키)에서 처음부터 학습시켜보세요. 그 후 attention 가중치를 시각화해 어떤 head가 어떤 패턴을 학습했는지 분석하면, Transformer의 내부가 더 이상 블랙박스로 보이지 않게 됩니다.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — Transformer 용어 상황 판단</h2>
+<p>어텐션과 Transformer 핵심 용어를 보고 알맞은 답을 고르세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"slots","color":"#b8441c","prompt":"Self-Attention 한 방 — 각 역할에 맞는 조각을 슬롯에 조립하세요","slots":[{"label":"Q (Query)","answer":"지금 토큰이 던지는 ‘질문’"},{"label":"K (Key)","answer":"다른 토큰의 ‘이름표’"},{"label":"V (Value)","answer":"가져올 실제 정보"},{"label":"점수 Softmax","answer":"어디를 볼지 비율로 정규화"},{"label":"가중합 출력","answer":"주목한 V들을 섞은 결과"},{"label":"위치 정보","answer":"Positional Encoding 주입"}],"distractors":["풀링 커널 크기","드롭아웃 비율만"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b8441c","questions":[{"q":"Transformer 논문 발표 연도는?","choices":["2012년","2015년","2017년","2020년"],"answer":2},{"q":"어텐션에서 Q가 뜻하는 것은?","choices":["값","질의","열쇠","출력"],"answer":1},{"q":"GPT 계열의 아키텍처 유형은?","choices":["인코더 전용","인코더-디코더","순환형","디코더 전용"],"answer":3},{"q":"어텐션에서 √dk로 나누는 이유는?","choices":["softmax 포화 방지","메모리 절약","속도 향상","정확도 측정"],"answer":0},{"q":"표준 어텐션의 계산 복잡도는?","choices":["O(n)","O(n log n)","O(n²d)","O(d)"],"answer":2}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('ai3d-04');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('ai3d-04-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,2.6,11.5);camera.lookAt(0,1.4,0);
+  var toks=['나는','어제','친구와','영화를','봤다'],tx=[-6,-3,0,3,6],tboxes=[];
+  toks.forEach(function(t,i){
+    var b=box(2.0,0.9,0.7,0xe9edf6,1);b.position.set(tx[i],0,0);scene.add(b);
+    var w=new THREE.Mesh(new THREE.BoxGeometry(2.04,0.94,0.74),new THREE.MeshBasicMaterial({color:0x5b6bd6,wireframe:true,transparent:true,opacity:0.4}));
+    w.position.copy(b.position);b.userData.wire=w;scene.add(w);
+    var L=lbl(t,30,'#252c3d',1);L.position.set(tx[i],0,0.55);scene.add(L);
+    tboxes.push(b);
+  });
+  var Wm=[[0.50,0.06,0.12,0.10,0.22],[0.12,0.48,0.06,0.10,0.24],[0.16,0.06,0.46,0.10,0.22],[0.12,0.05,0.06,0.50,0.27],[0.25,0.15,0.08,0.35,0.17]];
+  var arcGroup=new THREE.Group();scene.add(arcGroup);
+  var pulse=sph(0.13,0xffc83c);pulse.visible=false;scene.add(pulse);
+  var curArcs=[];
+  function clearArcs(){while(arcGroup.children.length)arcGroup.remove(arcGroup.children[0]);curArcs=[];}
+  function arc(i,j,w,colr,hexColor){
+    var a=V(tx[i],0.5,0),b=V(tx[j],0.5,0);
+    var m=V((a.x+b.x)/2,1.3+Math.abs(i-j)*0.5+w*1.6,0);
+    var cv=new THREE.QuadraticBezierCurve3(a,m,b);
+    var ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints(cv.getPoints(40)),new THREE.LineBasicMaterial({color:colr,transparent:true,opacity:0.12+w*1.5}));
+    arcGroup.add(ln);curArcs.push({cv:cv,w:w});
+    if(w>=0.2){var L=lbl((w*100).toFixed(0)+'%',22,hexColor,0.85);L.position.copy(m);L.position.y+=0.3;arcGroup.add(L);}
+  }
+  function showQuery(qi){
+    clearArcs();
+    tboxes.forEach(function(b,i){
+      var y=i===qi?0.45:0;b.position.y=y;b.userData.wire.position.y=y;
+      b.material.color.set(i===qi?0xffe9a8:0xe9edf6);
+    });
+    for(var j=0;j<5;j++){if(j!==qi)arc(qi,j,Wm[qi][j],0x5b6bd6,'#5b6bd6');}
+  }
+  function movePulse(u){
+    if(!curArcs.length){pulse.visible=false;return;}
+    var best=curArcs[0];curArcs.forEach(function(a){if(a.w>best.w)best=a;});
+    pulse.visible=true;pulse.position.copy(best.cv.getPoint(u%1));
+  }
+  var caps=[
+    "Query='나는': 자기 자신과 동사 '봤다'를 주로 참조 — 주어는 행동과 연결됩니다.",
+    "Query='어제': 시간 부사는 동사 '봤다'(24%)를 가장 강하게 참조 — '언제 봤는가'를 표현.",
+    "Query='친구와': 동반자 표현 역시 동사와 주어를 참조해 '누구와 한 행동'인지 연결.",
+    "Query='영화를': 목적어는 동사 '봤다'(27%)와 강하게 묶임 — 술어-논항 구조.",
+    "Query='봤다': 동사는 '영화를'(35%)·'나는'(25%)에 주목 — 어텐션 가중치(선 진하기·%)가 문장 구조를 학습합니다."
+  ];
+  var phases=[];
+  for(var qi=0;qi<5;qi++){(function(q){
+    phases.push({dur:3.2,cap:caps[q],enter:function(){showQuery(q);},update:movePulse});
+  })(qi);}
+  phases.push({dur:4.5,cap:'멀티헤드 어텐션: 헤드마다 다른 관계를 봅니다 — 파랑 헤드는 문법 구조(주어·목적어), 주황 헤드는 시간 관계.',
+    enter:function(){
+      clearArcs();
+      tboxes.forEach(function(b,i){b.position.y=0;b.userData.wire.position.y=0;b.material.color.set(0xe9edf6);});
+      arc(4,3,0.35,0x5b6bd6,'#5b6bd6');arc(4,0,0.25,0x5b6bd6,'#5b6bd6');
+      arc(4,1,0.45,0xe07a3f,'#e07a3f');arc(1,4,0.24,0xe07a3f,'#e07a3f');
+    },update:movePulse});
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

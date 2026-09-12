@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-4장. 수학적 기초와 ML 이론</title>
+<link rel="stylesheet" href="../styles.css">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script defer src="../toggle.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📖 표지 · 초록</a></li>
+    <li><a href="01-history.html">1–2. 서론 · 역사</a></li>
+    <li><a href="02-foundations.html">3–4. 수학 · ML 이론</a></li>
+    <li><a href="03-neural.html">5. 신경망과 딥러닝</a></li>
+    <li><a href="04-transformer.html">6. Attention · Transformer</a></li>
+    <li><a href="05-llm.html">7. 대규모 언어모델</a></li>
+    <li><a href="06-generative.html">8. 생성모델</a></li>
+    <li><a href="07-rl-multimodal.html">9–10. 강화학습 · 멀티모달</a></li>
+    <li><a href="08-safety-frontiers.html">11–13. 안전성 · 프런티어 · 결론</a></li>
+    <li><a href="09-references.html">참고문헌</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec3">
+<h2>3. 수학적 기초</h2>
+<div class="easy-version"><div class="easy-box">
+<h4>🧒 AI에 필요한 수학 4가지</h4>
+<ul>
+  <li><strong>선형대수</strong> = 숫자 여러 개를 한 번에 다루는 법 (엑셀 표 생각)</li>
+  <li><strong>확률</strong> = "얼마나 그럴 것 같은지" 계산</li>
+  <li><strong>정보이론</strong> = "이 정보 얼마나 놀라운가?" 측정 (항상 맞는 말 = 정보 0)</li>
+  <li><strong>최적화</strong> = 울퉁불퉁한 산에서 가장 낮은 계곡 찾아 내려가기</li>
+</ul>
+<div class="analogy">요리로 비유: 재료 조합(선형대수) + 이 레시피 성공률(확률) + 맛의 깊이/다양성(정보) + 딱 맞는 불 세기 찾기(최적화).</div>
+<div class="example">"<strong>경사하강법</strong>"은 안개 낀 산에서 발밑 기울기만 느끼면서 아래로 내려가는 것. AI 학습 = 이걸 수억 번 반복.</div>
+</div></div>
+<div class="paper-version">
+
+
+<section id="sec3-1">
+<h3>3.1 선형대수 (Linear Algebra)</h3>
+<p>
+딥러닝의 모든 계산은 본질적으로 텐서 연산이다. 벡터 $\mathbf{x} \in \mathbb{R}^d$와 행렬 $\mathbf{W} \in \mathbb{R}^{m \times d}$에 대해
+선형 변환은 $\mathbf{y} = \mathbf{W}\mathbf{x} + \mathbf{b}$로 표현된다.
+핵심 개념은 다음과 같다:
+</p>
+<ul>
+  <li><strong>특이값 분해(SVD)</strong>: $\mathbf{A} = \mathbf{U}\boldsymbol{\Sigma}\mathbf{V}^\top$, 여기서 $\mathbf{U}, \mathbf{V}$는 직교행렬. 주성분분석(PCA), 저랭크 근사, LoRA 파인튜닝의 기반이다.</li>
+  <li><strong>고유분해(Eigendecomposition)</strong>: $\mathbf{A}\mathbf{v} = \lambda\mathbf{v}$. 헤시안의 고유값은 손실 지형의 곡률을 나타내며, 최적화 경로에 결정적이다.</li>
+  <li><strong>노름(Norm)</strong>: $\ell_2$ 노름 $\|\mathbf{x}\|_2 = \sqrt{\sum_i x_i^2}$는 유클리드 거리; $\ell_1$ 노름은 희소성을 유도한다.</li>
+  <li><strong>야코비안(Jacobian)</strong>: $\mathbf{J}_{ij} = \partial f_i / \partial x_j$. 역전파에서 그래디언트 흐름의 구성요소이다.</li>
+</ul>
+
+<div class="theorem">
+  <strong>정리 3.1 (Johnson–Lindenstrauss, 1984).</strong> $n$개의 점을 $\mathbb{R}^d$에서 $\mathbb{R}^k$로 무작위 사영할 때,
+  $k = O(\varepsilon^{-2}\log n)$이면 쌍별 거리가 $(1\pm\varepsilon)$ 배 내로 보존된다.
+  이는 고차원 임베딩의 차원 축소 가능성에 대한 근거이다.
+</div>
+</section>
+
+<section id="sec3-2">
+<h3>3.2 확률론과 통계 (Probability and Statistics)</h3>
+<p>
+기계학습은 본질적으로 불확실성 하의 추론이다. 데이터를 확률분포 $p(\mathbf{x}, y)$로부터의 i.i.d. 표본으로 간주하며,
+학습의 목표는 조건부 분포 $p(y \mid \mathbf{x})$를 근사하는 것이다.
+</p>
+<p>
+<strong>최대우도추정(MLE)</strong>은 관측 데이터의 우도를 최대화한다:
+\[
+\hat{\theta}_{\text{MLE}} = \arg\max_\theta \sum_{i=1}^n \log p(y_i \mid \mathbf{x}_i; \theta)
+\]
+<strong>최대사후확률(MAP)</strong>는 사전분포를 포함한다: $\hat{\theta}_{\text{MAP}} = \arg\max_\theta [\log p(D\mid\theta) + \log p(\theta)]$.
+$\ell_2$ 정규화는 가우시안 사전, $\ell_1$ 정규화는 라플라스 사전에 대응함이 알려져 있다.
+</p>
+<p>
+<strong>베이즈 정리</strong> $p(\theta \mid D) = p(D\mid\theta)p(\theta) / p(D)$는 사후분포 추론의 기초이며,
+변분 추론(Variational Inference)과 MCMC는 계산 가능한 근사 기법이다.
+</p>
+</section>
+
+<section id="sec3-3">
+<h3>3.3 정보이론 (Information Theory)</h3>
+<p>
+Shannon(1948)이 정립한 정보이론은 딥러닝의 손실함수 설계에 근본적 영향을 미친다.
+</p>
+<ul>
+  <li><strong>엔트로피</strong>: $H(p) = -\sum_x p(x)\log p(x)$. 분포의 불확실성의 척도.</li>
+  <li><strong>교차엔트로피</strong>: $H(p, q) = -\sum_x p(x)\log q(x)$. 분류 손실로 사용된다.</li>
+  <li><strong>KL 발산</strong>: $D_{\text{KL}}(p\|q) = \sum_x p(x)\log\frac{p(x)}{q(x)} \geq 0$. 분포 간 거리(비대칭).</li>
+  <li><strong>상호정보량</strong>: $I(X;Y) = H(X) - H(X\mid Y)$. 표현학습과 InfoGAN, CLIP의 이론적 기반.</li>
+</ul>
+<p>
+분류에서의 교차엔트로피 손실 최소화는 모델 분포 $q_\theta$가 데이터 분포 $p$에 대해 $D_{\text{KL}}(p\|q_\theta)$를 최소화하는 것과 동치이다.
+</p>
+</section>
+
+<section id="sec3-4">
+<h3>3.4 최적화 (Optimization)</h3>
+<p>
+딥러닝 훈련은 비볼록(non-convex) 함수 $\mathcal{L}(\theta)$의 최소화 문제이다.
+일차 방법인 <strong>확률적 경사하강법(SGD)</strong>은 다음 갱신을 수행한다:
+\[
+\theta_{t+1} = \theta_t - \eta \nabla_\theta \mathcal{L}_{\text{batch}}(\theta_t) \tag{3.1}
+\]
+여기서 $\eta$는 학습률, 미니배치는 전체 데이터의 부분집합이다.
+</p>
+<p>
+실무에서는 적응적 최적화가 표준이다. <strong>Adam</strong>(Kingma & Ba, 2014)은 그래디언트의 1차·2차 모멘트 추정값을 활용한다:
+\[
+\begin{aligned}
+m_t &= \beta_1 m_{t-1} + (1-\beta_1)g_t \\
+v_t &= \beta_2 v_{t-1} + (1-\beta_2)g_t^2 \\
+\theta_{t+1} &= \theta_t - \eta \cdot \hat{m}_t / (\sqrt{\hat{v}_t}+\epsilon)
+\end{aligned}
+\]
+Loshchilov & Hutter(2019)의 <strong>AdamW</strong>는 가중치 감쇠를 그래디언트에서 분리함으로써 일반화 성능을 개선하여
+현재 LLM 훈련의 사실상 표준 최적화기로 자리잡았다.
+</p>
+
+<div class="theorem">
+  <strong>관찰 3.2 (Lottery Ticket Hypothesis, Frankle & Carbin, 2019).</strong>
+  무작위 초기화된 밀집 신경망은 분리해서 학습시 원본과 동등한 성능에 도달하는 희소 부분망을 포함한다.
+  이는 과대매개변수화가 최적화를 용이하게 한다는 경험적 근거를 제공한다.
+</div>
+</section>
+
+</div>
+</section>
+
+<section id="sec4">
+<h2>4. 기계학습 이론</h2>
+<div class="easy-version"><div class="easy-box">
+<h4>🧒 기계학습의 핵심 딜레마</h4>
+<p><strong>기계학습 = 답 알려주지 않고 예시만 많이 보여주면서 스스로 규칙 알아내게 하기.</strong></p>
+<p>가장 중요한 균형: <strong>너무 단순하면 못 맞추고(편향), 너무 복잡하면 외워버려서 시험에서 틀림(과적합).</strong></p>
+<div class="analogy">수학 문제집: ① 덧셈만 연습 → 곱셈 못 풀어(편향 큼) ② 문제 답 달달 외움 → 숫자 바뀌면 틀림(분산 큼) ③ 원리 이해 → 새 문제도 풀어냄(정답).</div>
+<div class="example"><strong>정규화</strong>는 모델에게 "너무 복잡해지지 마"라고 살짝 불이익을 주는 것. Dropout = 훈련 중 뉴런 몇 개를 랜덤으로 꺼버려서, 일부만 의존하지 못하게 함.</div>
+</div></div>
+<div class="paper-version">
+
+
+<section id="sec4-1">
+<h3>4.1 학습 문제의 형식화</h3>
+<p>
+입력공간 $\mathcal{X}$, 출력공간 $\mathcal{Y}$, 그리고 데이터 생성 분포 $\mathcal{D}$가 주어진다.
+가설공간 $\mathcal{H} = \{h_\theta : \mathcal{X} \to \mathcal{Y}\}$에서 <strong>진위험(true risk)</strong>
+\[
+R(h) = \mathbb{E}_{(\mathbf{x},y)\sim\mathcal{D}}[\ell(h(\mathbf{x}), y)]
+\]
+을 최소화하는 $h^* = \arg\min_{h\in\mathcal{H}}R(h)$을 찾는 것이 목표이다.
+그러나 $\mathcal{D}$는 미지이므로, 훈련집합 $S = \{(\mathbf{x}_i, y_i)\}_{i=1}^n$에 대한
+<strong>경험위험(empirical risk)</strong> $\hat{R}_S(h) = \frac{1}{n}\sum_i \ell(h(\mathbf{x}_i), y_i)$을 최소화한다(ERM 원리).
+</p>
+</section>
+
+<section id="sec4-2">
+<h3>4.2 편향-분산 분해</h3>
+<p>
+제곱오차 손실의 기댓값은 다음과 같이 분해된다:
+\[
+\mathbb{E}[(y - \hat{f}(\mathbf{x}))^2] = \underbrace{(\mathbb{E}[\hat{f}] - f)^2}_{\text{편향}^2} + \underbrace{\mathrm{Var}(\hat{f})}_{\text{분산}} + \underbrace{\sigma^2}_{\text{노이즈}} \tag{4.1}
+\]
+고전적 관점에서 모델 복잡도 증가는 편향을 줄이고 분산을 키운다(U-자 곡선).
+그러나 현대 과대매개변수화 체계에서는 <strong>이중 하강(double descent)</strong>(Belkin et al., 2019)이 관찰되어,
+파라미터 수가 보간 임계값을 넘어서면 테스트 오차가 다시 감소한다. 이는 통계학과 딥러닝의 일반화 이론 사이의 긴장을 만든다.
+</p>
+</section>
+
+<section id="sec4-3">
+<h3>4.3 PAC 학습과 일반화 한계</h3>
+<div class="theorem">
+  <strong>정리 4.1 (VC 일반화 한계).</strong> VC 차원이 $d$인 가설공간에 대해, 확률 $1-\delta$ 이상으로
+  \[
+  R(h) \leq \hat{R}_S(h) + \sqrt{\frac{d(\log(2n/d)+1) + \log(4/\delta)}{n}}
+  \]
+  가 성립한다.
+</div>
+<p>
+이 한계는 고전적 기계학습을 정당화하지만, 수십억 파라미터의 딥러닝 모델에는 직접 적용되지 않는다.
+PAC-Bayes 경계, 라데마허 복잡도, 그리고 암묵적 정규화(implicit regularization) 이론이 딥러닝 일반화 연구의 현대적 도구이다.
+</p>
+</section>
+
+<section id="sec4-4">
+<h3>4.4 정규화와 귀납 편향</h3>
+<p>
+정규화는 다음과 같이 분류된다:
+</p>
+<ul>
+  <li><strong>명시적 정규화</strong>: $\ell_2$ (ridge), $\ell_1$ (lasso), dropout (Srivastava et al., 2014), data augmentation.</li>
+  <li><strong>암묵적 정규화</strong>: SGD 자체가 평평한 극소점(flat minima)을 선호하는 경향; 이는 일반화와 상관관계가 관찰된다(Hochreiter & Schmidhuber, 1997; Keskar et al., 2017).</li>
+  <li><strong>아키텍처적 귀납 편향</strong>: CNN의 이동 등변성, Transformer의 순열 등변성, GNN의 그래프 구조 등.</li>
+</ul>
+</section>
+
+</div>
+</section>
+
+<!-- 3D 학습 시각화: 경사하강법 — 손실 표면 위의 학습 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 경사하강법: 손실 표면을 내려가는 학습</div>
+  <div id="ai3d-02" style="width:100%;height:430px;"></div>
+  <div id="ai3d-02-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">공이 손실 표면을 내려가는 과정 = 모델 학습.</div>
+</div>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="01-history.html" style="text-decoration:none;">← 서론·역사</a><a href="03-neural.html" style="text-decoration:none;">신경망 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🧮 한마디로 말하면?</h3>
+  <p>AI 속에는 <strong>수학 4총사</strong>가 숨어 있어요! 선형대수(숫자 줄 세우기), 미적분(얼마나 변하나), 확률통계(얼마나 확실하나), 정보이론(얼마나 놀라운 소식인가). 이 네 도구로 컴퓨터한테 "데이터에서 규칙 찾아봐!"를 시키는 거예요 🕵️</p>
+  <div class="analogy">🏔️ 안개 낀 산에서 내려오기! 멀리는 안 보여도 발밑 경사는 느껴지죠? 가장 가파르게 내려가는 쪽으로 한 걸음씩 옮기면 골짜기에 도착해요. AI가 실수를 줄이는 방법(경사하강법)이 딱 이거예요.</div>
+  <h3>🌟 우리 생활 어디에 있을까?</h3>
+  <ul>
+    <li>📸 인스타가 내 취향 사진을 찾아줘요 → 선형대수(비슷한 것 찾기)</li>
+    <li>🚗 자율주행차가 브레이크 세기를 조절해요 → 미적분(변화 계산)</li>
+    <li>☔ 일기예보 "비 올 확률 70%" → 확률통계</li>
+  </ul>
+  <div class="info-card"><h4>🌱 이 말만 알면 돼!</h4><ul>
+    <li><strong>벡터</strong>: 숫자를 한 줄로 세운 것 (예: 키·몸무게·나이 → [175, 70, 25])</li>
+    <li><strong>행렬</strong>: 벡터를 여러 줄로 모은 표</li>
+    <li><strong>경사하강법</strong>: 산에서 낮은 곳으로 내려가듯 실수(오차)를 줄이는 방법</li>
+    <li><strong>과적합</strong>: 답만 달달 외워서 응용문제는 못 푸는 상태 😵</li>
+    <li><strong>지도학습 / 비지도학습</strong>: 정답 알려주며 가르치기 vs 정답 없이 스스로 묶게 하기</li>
+  </ul></div>
+  <div class="study-tip">💡 <strong>공부 팁:</strong> 어려운 수식을 외우려 하지 마세요! "이 도구는 무슨 질문에 답하지?"만 알면 돼요. 선형대수=비슷한 정도, 미적분=어디로 가야 좋아지나, 확률=얼마나 확신하나. 이 세 개가 AI 수학의 90%예요! 🎯</div>
+  <h3>✨ 세 줄 정리</h3>
+  <ul>
+    <li>AI 수학 4총사: 선형대수 · 미적분 · 확률통계 · 정보이론</li>
+    <li>배운다 = 실수(오차)를 줄이는 값을 찾는 것</li>
+    <li>너무 단순하면 과소적합, 너무 외우면 과적합!</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
+  <p>머신러닝의 형식적 정의는 Mitchell(1997)을 따릅니다. "어떤 작업 T에 대해 경험 E로부터 성능 P가 향상되는 시스템." 가설 공간 H, 손실함수 L(y, ŷ), 데이터 분포 D가 주어졌을 때, 학습은 경험적 위험 최소화(ERM) 문제로 정식화됩니다. 즉 ĥ = argmin_(h∈H) (1/n)Σ L(h(xᵢ), yᵢ)입니다. 그러나 진짜 목표는 일반화 성능, 즉 R(h) = E_(x,y)~D [L(h(x), y)]를 최소화하는 것이죠. 이 둘 사이의 간격을 일반화 오차라 부르고, VC 차원이나 Rademacher 복잡도로 상한이 결정됩니다. 정칙화(regularization)는 가설 공간을 제약해 과적합을 막는 도구예요. L2(가중치 감쇠), L1(희소성), Dropout, Early Stopping이 대표적입니다. 베이지안 관점에서는 사전분포 p(θ) × 가능도 p(D|θ) ∝ 사후분포 p(θ|D)이며, MAP 추정은 L2 정칙화와 가우시안 사전분포 가정 하에서 동치입니다. 정보이론적으로 cross-entropy 손실은 KL divergence와 직결되며, 모델 분포가 실제 분포에 얼마나 가까운지 측정합니다.</p>
+  <h3>핵심 개념과 코드</h3>
+  <pre><code># 경사하강법으로 선형회귀 학습
+import numpy as np
+
+X = np.random.randn(100, 3)
+y = X @ np.array([2.0, -1.0, 0.5]) + 0.1 * np.random.randn(100)
+
+w = np.zeros(3)
+lr = 0.05
+for step in range(200):
+    pred = X @ w
+    grad = (2 / len(X)) * X.T @ (pred - y)   # ∂MSE/∂w
+    w -= lr * grad
+print("학습된 w:", w)   # ≈ [2.0, -1.0, 0.5]</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>💻 예제 1 — 편향-분산 분해</h4><p>선형모델로 사인파를 적합하면 편향이 커서 과소적합(underfitting)이 발생하고, 차수 20의 다항식을 적합하면 분산이 커서 과적합(overfitting)이 발생합니다. 적절한 정칙화 계수 λ는 검증 데이터로 교차검증을 통해 찾습니다. 일반화 오차 = 편향² + 분산 + 노이즈로 분해되는 것이 핵심입니다.</p></div>
+  <div class="info-card"><h4>💻 예제 2 — 로지스틱 회귀의 cross-entropy</h4><p>이진 분류에서 σ(z)=1/(1+e^(−z))를 출력으로 쓰고, 손실은 −[y·log(p) + (1−y)·log(1−p)]를 사용합니다. 이 손실의 기울기는 X^T(p−y)/n으로, 매우 깔끔합니다. cross-entropy는 KL(p_data || p_model)에서 데이터 엔트로피를 뺀 양이며, 정보이론의 직접적 결과입니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① 추천 시스템(넷플릭스, 유튜브)은 행렬분해(SVD, ALS)를 통해 사용자×아이템 행렬을 저차원 잠재 인자로 분해합니다. ② 스팸 필터는 Naive Bayes로 P(스팸|단어들) ∝ P(단어들|스팸)·P(스팸)를 계산합니다. ③ 의료 진단의 ROC 곡선과 AUC는 통계적 가설검정의 직계 후예이며, FDA 승인의 기준 지표가 됩니다. ④ A/B 테스트는 베이지안 또는 빈도론적 가설검정으로 통계적 유의성을 판단합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 학습 데이터로만 성능을 측정하면 과적합을 놓칩니다. 반드시 train/validation/test로 분리하세요. 또 데이터 누수(test 데이터의 정보가 학습에 새는 것)를 조심해야 하며, 표준화(z-score)는 train 통계량으로만 fit해서 val/test에 transform해야 합니다.</div>
+
+<h3>전문가 레벨 이해</h3>
+  <p>통계적 학습 이론의 출발점은 Vapnik-Chervonenkis(VC) 이론입니다. 가설 공간 H의 VC 차원 d가 유한하면, 임의 분포 D에 대해 일반화 오차는 R(h) ≤ R̂(h) + O(√(d log(n/d)/n))로 균일 수렴합니다. 그러나 신경망은 d가 매개변수 수에 거의 비례하는데도 잘 일반화하므로, 고전 PAC 이론으로 설명되지 않습니다. Belkin et al.(2019)의 double descent 현상은 보간 임계점을 넘어선 후 다시 일반화 오차가 감소함을 실증했고, 이는 implicit regularization과 NTK(Neural Tangent Kernel) 이론으로 부분 설명됩니다. 최적화 측면에서 SGD는 단순한 ERM이 아니라 SDE 근사를 통해 평탄한 최소점(flat minima)을 선호하며, 이것이 일반화의 한 메커니즘으로 제시됩니다(Keskar et al., 2017). 정보이론적 학습은 Tishby의 information bottleneck 원리로 표현 학습을 설명합니다. 즉 표현 T는 I(T; Y)를 최대화하면서 I(T; X)를 최소화해야 한다는 변분 원리입니다. 베이지안 딥러닝은 가중치에 대한 사후분포 p(θ|D)를 변분 추론(VI), MCMC, Laplace 근사 등으로 다루며, 모델 불확실성과 OOD 탐지에 활용됩니다.</p>
+  <h3>수학적 기초</h3>
+  <div class="formula">$$\text{ERM: } \hat{h} = \arg\min_{h \in H} \frac{1}{n}\sum_{i=1}^{n} L(h(x_i), y_i)$$
+  $$\text{PAC 일반화 한계: } R(h) \le \hat{R}(h) + \sqrt{\frac{d \log(2n/d) + \log(4/\delta)}{n}}$$
+  $$\text{Information Bottleneck: } \mathcal{L}_{IB} = I(X; T) - \beta \cdot I(T; Y)$$
+  $$\text{KL divergence: } D_{KL}(p \| q) = \int p(x) \log \frac{p(x)}{q(x)} dx$$</div>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>Neural Scaling Laws</strong>: Hoffmann et al.(Chinchilla, 2022)는 데이터와 매개변수가 같은 비율로 스케일되어야 한다고 주장하며, GPT-3가 데이터 부족 상태였음을 보였습니다. ② <strong>Mechanistic Interpretability</strong>: Anthropic의 Transformer Circuits, Sparse Autoencoder 연구는 학습된 모델의 내부 표현을 features 단위로 분해해 인과 그래프를 복원합니다. ③ <strong>Optimal Transport와 디퓨전</strong>: Wasserstein 거리, Schrödinger bridge가 생성모델의 새로운 수학적 토대가 되고 있습니다.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>통계물리학</strong>: replica method, spin glass와 신경망 손실 지형 분석</li>
+    <li><strong>최적화 이론</strong>: Adam, AdamW의 수렴성, Lion·Sophia 같은 2차 정보 활용</li>
+    <li><strong>미분기하학</strong>: 정보 기하학, Fisher 정보 행렬, natural gradient</li>
+    <li><strong>측도론</strong>: stochastic differential equation, score matching</li>
+    <li><strong>인과추론</strong>: do-calculus, structural causal model과 비편향 추정</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Bishop, <em>Pattern Recognition and Machine Learning</em> (PRML, 2006)</li>
+    <li>📖 Murphy, <em>Probabilistic Machine Learning</em> (2022, 2023)</li>
+    <li>📖 Hastie, Tibshirani, Friedman, <em>The Elements of Statistical Learning</em></li>
+    <li>📖 Boyd & Vandenberghe, <em>Convex Optimization</em></li>
+    <li>📺 MIT 6.036 / 6.867 / Stanford CS229 / CMU 10-715</li>
+    <li>🔬 키워드: PAC-Bayes, NTK, double descent, implicit regularization, scaling laws</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> MNIST 데이터에서 선형회귀, 로지스틱 회귀, 다층 퍼셉트론(2층, 3층, 5층)을 직접 NumPy만으로 구현하고, 매개변수 수에 따른 학습/검증 오차 곡선을 그려보세요. Belkin이 발견한 double descent 곡선이 재현되는지 확인하면, 현대 딥러닝의 일반화 미스터리를 직접 체험할 수 있습니다.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 수학적 기초 분류</h2>
+<p>각 개념이 어느 수학 분야에 속하는지 분류해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"slots","color":"#b8441c","prompt":"ML 학습 루프의 빈 칸을 채우세요 — 데이터가 모델이 되기까지의 핵심 구조","slots":[{"label":"① 입력","answer":"학습 데이터 (특징 벡터)"},{"label":"② 가설","answer":"모델 f(x; θ)"},{"label":"③ 채점","answer":"손실 함수 L"},{"label":"④ 갱신","answer":"경사하강법으로 θ 수정"},{"label":"⑤ 점검","answer":"검증 세트로 일반화 확인"}],"distractors":["랜덤 포레스트 앙상블","배치 정규화만 수행"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b8441c","questions":[{"q":"분류 손실로 쓰이는 정보이론 개념은?","choices":["교차엔트로피","상호정보량","조건부확률","공분산"],"answer":0},{"q":"경사하강법을 비유한 상황은?","choices":["바다 수영","산에서 내려가기","사다리 오르기","줄넘기"],"answer":1},{"q":"LLM 훈련의 사실상 표준 최적화기는?","choices":["SGD","RMSProp","AdamW","Adagrad"],"answer":2},{"q":"ℓ2 정규화에 대응하는 사전분포는?","choices":["라플라스","균등 분포","베타 분포","가우시안"],"answer":3},{"q":"이중 하강 현상을 보고한 연구자는?","choices":["Vapnik","Belkin","Valiant","Kingma"],"answer":1}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('ai3d-02');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('ai3d-02-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  function F(x,z){return 0.13*(x*x+z*z)+0.9*Math.sin(0.9*x)*Math.cos(0.9*z)+1.4;}
+  function gradF(x,z){var e=0.01;return [(F(x+e,z)-F(x-e,z))/(2*e),(F(x,z+e)-F(x,z-e))/(2*e)];}
+  var g=new THREE.PlaneGeometry(13,13,44,44);
+  var pos=g.attributes.position;
+  for(var i=0;i<pos.count;i++){pos.setZ(i,F(pos.getX(i),pos.getY(i)));}
+  g.computeVertexNormals();
+  var surf=new THREE.Mesh(g,new THREE.MeshLambertMaterial({color:0x8fa3e8,transparent:true,opacity:0.5,side:THREE.DoubleSide}));
+  surf.rotation.x=-Math.PI/2;scene.add(surf);
+  var wire=new THREE.Mesh(g.clone(),new THREE.MeshBasicMaterial({color:0x5b6bd6,wireframe:true,transparent:true,opacity:0.15}));
+  wire.rotation.x=-Math.PI/2;scene.add(wire);
+  var sl=lbl('손실 함수 표면 L(w₁,w₂)',28,'#39415a',1);sl.position.set(0,5.6,0);scene.add(sl);
+  var mn=[0,0],mv=1e9;
+  for(var xx=-6;xx<=6;xx+=0.2)for(var zz=-6;zz<=6;zz+=0.2){var v=F(xx,zz);if(v<mv){mv=v;mn=[xx,zz];}}
+  var flag=sph(0.2,0x2f9e63);flag.position.set(mn[0],mv+0.15,mn[1]);scene.add(flag);
+  var fl=lbl('최소 손실 (학습 목표)',25,'#2f9e63',0.95);fl.position.set(mn[0],mv+1.0,mn[1]);scene.add(fl);
+  var ball=sph(0.3,0xd6455b);scene.add(ball);
+  var bLbl=lbl('현재 가중치',24,'#d6455b',0.9);scene.add(bLbl);
+  var trailPts=[],trail=null,bx=4.6,bz=3.4,lr=0.5,stepT=0;
+  function setBall(){ball.position.set(bx,F(bx,bz)+0.32,bz);bLbl.position.set(bx,F(bx,bz)+1.2,bz);}
+  function reset(r){bx=4.6;bz=3.4;lr=r;stepT=0;trailPts.length=0;if(trail){scene.remove(trail);trail=null;}setBall();}
+  function step(){
+    var gr=gradF(bx,bz);bx-=lr*gr[0];bz-=lr*gr[1];
+    bx=Math.max(-6,Math.min(6,bx));bz=Math.max(-6,Math.min(6,bz));setBall();
+    trailPts.push(ball.position.clone());
+    if(trail){scene.remove(trail);trail.geometry.dispose();trail.material.dispose();}
+    if(trailPts.length>1){trail=new THREE.Line(new THREE.BufferGeometry().setFromPoints(trailPts),new THREE.LineBasicMaterial({color:0xd6455b,transparent:true,opacity:0.9}));scene.add(trail);}
+  }
+  function upd(iv){return function(u,dt){stepT+=dt;if(stepT>iv){stepT=0;step();}};}
+  var phases=[
+    {dur:7,cap:'경사하강법 ① 학습률이 너무 작으면: 기울기 반대 방향으로 아주 조금씩 — 올바르지만 수렴이 매우 느립니다.',enter:function(){reset(0.12);},update:upd(0.3)},
+    {dur:7,cap:'② 학습률이 너무 크면: 골짜기를 건너뛰며 진동 — 손실이 줄지 않고 발산할 수 있습니다.',enter:function(){reset(1.9);},update:upd(0.3)},
+    {dur:8,cap:'③ 적절한 학습률: 가파른 곳은 크게, 완만한 곳은 작게 내려가 최소 손실에 수렴 — 이것이 "학습"의 수학적 실체입니다.',enter:function(){reset(0.5);},update:upd(0.24)}
+  ];
+  function always(t){var a=t*0.1;camera.position.set(Math.cos(a)*11,8,Math.sin(a)*11);camera.lookAt(0,1.0,0);}
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

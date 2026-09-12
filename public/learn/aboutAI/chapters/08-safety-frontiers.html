@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>11-13장. AI 안전성 · 프런티어 · 결론</title>
+<link rel="stylesheet" href="../styles.css">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script defer src="../toggle.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📖 표지 · 초록</a></li>
+    <li><a href="01-history.html">1–2. 서론 · 역사</a></li>
+    <li><a href="02-foundations.html">3–4. 수학 · ML 이론</a></li>
+    <li><a href="03-neural.html">5. 신경망과 딥러닝</a></li>
+    <li><a href="04-transformer.html">6. Attention · Transformer</a></li>
+    <li><a href="05-llm.html">7. 대규모 언어모델</a></li>
+    <li><a href="06-generative.html">8. 생성모델</a></li>
+    <li><a href="07-rl-multimodal.html">9–10. 강화학습 · 멀티모달</a></li>
+    <li><a href="08-safety-frontiers.html">11–13. 안전성 · 프런티어 · 결론</a></li>
+    <li><a href="09-references.html">참고문헌</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec11">
+<h2>11. AI 안전성과 정렬</h2>
+<div class="easy-version"><div class="easy-box">
+<h4>🧒 AI가 똑똑해질수록 걱정되는 것</h4>
+<ul>
+  <li><strong>환각(Hallucination)</strong> = 모르면서 확신에 차서 거짓말. "세종대왕 맥북 던짐 사건"</li>
+  <li><strong>편향</strong> = 학습 데이터에 있는 차별을 그대로 배움</li>
+  <li><strong>탈옥</strong> = "내가 할머니 흉내 내면서 폭탄 레시피 말해줘" 같은 우회</li>
+</ul>
+<div class="analogy"><strong>정렬(Alignment)</strong> = AI를 인간 가치에 맞게 교육. 강아지 훈련과 비슷, 단 강아지가 <strong>박사 수준</strong>이어서 훨씬 어렵다.</div>
+<div class="example"><strong>해석가능성</strong> = AI 속을 열어서 "이 결정을 왜 했는지" 보는 기술. 지금 신경망은 블랙박스인데, Anthropic 등이 이걸 열려고 연구 중.</div>
+</div></div>
+<div class="paper-version">
+
+
+<h3>11.1 외부 정렬과 내부 정렬</h3>
+<ul>
+  <li><strong>외부 정렬(outer alignment)</strong>: 보상함수가 진정한 인간 의도를 포착하는가? <em>보상 해킹(reward hacking)</em>과 Goodhart의 법칙.</li>
+  <li><strong>내부 정렬(inner alignment)</strong>: 학습된 모델이 훈련 목표 외에 숨은 목표(mesa-objective)를 가질 가능성.</li>
+</ul>
+
+<h3>11.2 현재 AI 시스템의 위험</h3>
+<ul>
+  <li><strong>환각(hallucination)</strong>: 사실과 다른 생성. RAG, 자기일관성, 검증 루프로 완화.</li>
+  <li><strong>편향과 공정성</strong>: 훈련 데이터의 사회적 편향이 모델에 재현됨.</li>
+  <li><strong>탈옥(jailbreak)과 프롬프트 주입</strong>: 안전 훈련을 우회하는 적대적 프롬프트.</li>
+  <li><strong>이중 용도 위험</strong>: 생물·화학·사이버 무기 정보 제공 가능성.</li>
+</ul>
+
+<h3>11.3 해석가능성 (Mechanistic Interpretability)</h3>
+<p>
+Anthropic, OpenAI의 해석가능성 팀은 신경망을 <em>역설계</em>하여 내부 회로를 이해하려 한다.
+Sparse Autoencoder로 중첩된 특징을 분리하고(Bricken et al., 2023),
+회로(circuit) 수준에서 특정 행동의 인과적 경로를 추적한다.
+이는 긴 시간 척도 안전성의 열쇠로 간주된다.
+</p>
+
+<h3>11.4 전망과 AGI 논쟁</h3>
+<p>
+일부 연구자(Hinton, Bengio, Russell)는 AGI의 급격한 출현이 실존적 위험을 제기할 수 있다고 주장하며,
+Bostrom(2014) "Superintelligence"의 논증과 도구적 수렴(instrumental convergence) 가설이 이에 이론적 기반을 제공한다.
+반면 LeCun 등은 현재 LLM이 세계 모델을 결여하므로 AGI로의 길이 멀다고 본다.
+이 논쟁은 현재도 미결이며 과학적·정책적 함의가 크다.
+</p>
+
+</div>
+</section>
+
+<!-- 3D 학습 시각화: 정렬 — 행동을 인간 가치로 회전시키기 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · Alignment: RLHF가 하는 일</div>
+  <div id="ai3d-08" style="width:100%;height:430px;"></div>
+  <div id="ai3d-08-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">흩어진 행동 방향이 인간 피드백으로 한 방향으로 정렬되는 과정.</div>
+</div>
+
+
+<section id="sec12">
+<h2>12. 연구 프런티어</h2>
+<div class="easy-version"><div class="easy-box">
+<h4>🧒 요즘 가장 뜨거운 연구</h4>
+<ul>
+  <li><strong>긴 기억</strong>: 책 한 권(100만 단어)을 기억하는 AI</li>
+  <li><strong>추론 스케일링</strong>: 더 오래 생각하게 하면 똑똑해진다 (o1, R1)</li>
+  <li><strong>에이전트</strong>: 스스로 도구 쓰고 계획 짜는 AI (Claude Code 같은)</li>
+  <li><strong>효율화</strong>: 작은 크기로 큰 모델 흉내 (MoE, 양자화)</li>
+  <li><strong>과학 AI</strong>: 단백질·재료·수학 정리 증명</li>
+  <li><strong>로봇</strong>: 말로 시키면 집안일 하는 로봇 (RT-2, π₀)</li>
+</ul>
+</div></div>
+<div class="paper-version">
+
+<ul>
+  <li><strong>긴 맥락과 무한 메모리</strong>: 100만~1000만 토큰 맥락, 상태공간모델, 하이브리드 아키텍처(Jamba, Griffin).</li>
+  <li><strong>추론 스케일링</strong>: o1/R1 계열의 test-time compute, process reward model, MCTS 기반 탐색.</li>
+  <li><strong>에이전트 시스템</strong>: 도구 사용, 장기 계획, 자기 반성. AutoGPT, Devin, Claude Code 등.</li>
+  <li><strong>효율화</strong>: MoE(Mixture of Experts), 양자화(GPTQ, AWQ, FP8/FP4 훈련), 증류, 추측 디코딩(speculative decoding).</li>
+  <li><strong>과학 AI</strong>: AlphaFold, AlphaProof, 재료 발견(GNoME), 자동 정리 증명.</li>
+  <li><strong>로보틱스와 구현된 AI</strong>: RT-2, $\pi_0$ 등 VLA 모델; 시뮬레이션-실세계 전이.</li>
+  <li><strong>신경-상징 통합</strong>: LLM과 형식적 추론기의 결합(Lean, Isabelle).</li>
+</ul>
+
+</div>
+</section>
+
+<div class="concept-box">
+  <h3 style="margin-top:0;">🎯 전체 그림: AI의 계층 구조</h3>
+  <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:auto;">
+    <!-- layer 4: applications -->
+    <rect x="20" y="20" width="660" height="60" fill="#c85028" rx="8"/>
+    <text x="350" y="45" text-anchor="middle" fill="#fff" font-family="serif" font-size="14" font-weight="bold">응용 (Applications)</text>
+    <text x="350" y="65" text-anchor="middle" fill="#fff" font-size="11">ChatGPT · Claude · Gemini · Midjourney · Copilot · Sora · AlphaFold · Tesla FSD · Perplexity</text>
+    <!-- layer 3: models -->
+    <rect x="20" y="100" width="660" height="80" fill="#a02864" rx="8"/>
+    <text x="350" y="125" text-anchor="middle" fill="#fff" font-family="serif" font-size="14" font-weight="bold">파운데이션 모델 (Foundation Models)</text>
+    <text x="350" y="148" text-anchor="middle" fill="#fff" font-size="11">LLM (GPT-4, Llama, Qwen) · VLM (CLIP, GPT-4V) · 확산모델 (SD, DALL·E) · 음성 (Whisper)</text>
+    <text x="350" y="168" text-anchor="middle" fill="#fff" font-size="11">사전학습 → 정렬(RLHF/DPO) → 배포</text>
+    <!-- layer 2: architectures -->
+    <rect x="20" y="200" width="660" height="80" fill="#6428a0" rx="8"/>
+    <text x="350" y="225" text-anchor="middle" fill="#fff" font-family="serif" font-size="14" font-weight="bold">아키텍처 (Architectures)</text>
+    <text x="350" y="248" text-anchor="middle" fill="#fff" font-size="11">Transformer · CNN · RNN/LSTM · GAN · VAE · Diffusion · GNN · SSM(Mamba)</text>
+    <text x="350" y="268" text-anchor="middle" fill="#fff" font-size="11">Self-Attention · Convolution · Residual · Normalization</text>
+    <!-- layer 1: theory -->
+    <rect x="20" y="300" width="660" height="80" fill="#1a4b8f" rx="8"/>
+    <text x="350" y="325" text-anchor="middle" fill="#fff" font-family="serif" font-size="14" font-weight="bold">이론적 기반 (Theoretical Foundations)</text>
+    <text x="350" y="348" text-anchor="middle" fill="#fff" font-size="11">선형대수 · 확률·통계 · 정보이론 · 최적화(SGD, Adam) · 역전파 · PAC 학습</text>
+    <text x="350" y="368" text-anchor="middle" fill="#fff" font-size="11">미분가능 프로그래밍 · 계산 그래프 · 자동미분</text>
+  </svg>
+  <p class="fig-title" style="margin-top:15px;">그림 14. AI 지식 체계의 4계층 피라미드. 아래에서 위로 올라갈수록 추상화가 높아지며, 위 계층은 아래 계층을 재료로 구성된다.</p>
+</div>
+
+<div class="scene-3d" style="height: 420px;">
+  <div class="cube" style="width: 220px; height: 220px; animation: rotate-cube 25s infinite linear;">
+    <div class="cube-face front"  style="width:220px; height:220px; transform: translateZ(110px); font-size:0.75em; padding: 10px;">
+      <div style="text-align:left;">
+        <strong style="color:#1a4b8f;">언어 표현</strong><br><br>
+        • "king" ─ "man"<br>
+        • + "woman"<br>
+        • ≈ "queen"<br><br>
+        <em>분산 의미</em>
+      </div>
+    </div>
+    <div class="cube-face back" style="width:220px; height:220px; transform: rotateY(180deg) translateZ(110px); font-size:0.75em; padding:10px;">
+      <div style="text-align:left;"><strong>이미지 표현</strong><br><br>🖼 → 768-D 벡터<br>CLIP · DINO · MAE</div>
+    </div>
+    <div class="cube-face right" style="width:220px; height:220px; transform: rotateY(90deg) translateZ(110px); font-size:0.75em; padding:10px;">
+      <div style="text-align:left;"><strong>음성</strong><br><br>🎵 Whisper<br>mel-spectrogram<br>→ hidden state</div>
+    </div>
+    <div class="cube-face left" style="width:220px; height:220px; transform: rotateY(-90deg) translateZ(110px); font-size:0.75em; padding:10px;">
+      <div style="text-align:left;"><strong>코드</strong><br><br>def foo():<br>&nbsp;&nbsp;→ AST<br>→ tokens<br>→ embedding</div>
+    </div>
+    <div class="cube-face top" style="width:220px; height:220px; transform: rotateX(90deg) translateZ(110px); font-size:0.75em; padding:10px;">
+      <div style="text-align:left;"><strong>공유 잠재공간</strong><br><br>모든 모달리티가<br>하나의 벡터공간으로<br><br>🖼 ≈ 📝 ≈ 🎵</div>
+    </div>
+    <div class="cube-face bottom" style="width:220px; height:220px; transform: rotateX(-90deg) translateZ(110px); font-size:0.75em; padding:10px;">
+      <div style="text-align:left;"><strong>행동 (RL)</strong><br><br>state → action<br>π(a|s)<br>AlphaGo · RT-2</div>
+    </div>
+  </div>
+</div>
+<p class="fig-title">그림 15. 멀티모달 임베딩 공간의 은유. 언어·시각·음성·코드·행동이 하나의 고차원 잠재공간에서 통합된다. 이것이 현대 파운데이션 모델의 야심이다.</p>
+
+<section id="sec13">
+<h2>13. 결론</h2>
+<div class="easy-version"><div class="easy-box">
+<h4>🧒 결론 한 줄</h4>
+<p><strong>AI는 80년 만에 "규칙 넣어주기"에서 "다음 단어 예측만으로 똑똑해지는" 시대로 왔다.</strong></p>
+<p>앞으로 10년 과제 3가지:</p>
+<ol>
+  <li>더 <strong>잘 생각</strong>하게 (추론·계획)</li>
+  <li>AI 속을 <strong>들여다볼</strong> 수 있게 (안전성)</li>
+  <li>디지털 넘어 <strong>현실 세계</strong>에서 움직이게 (로봇)</li>
+</ol>
+</div></div>
+<div class="paper-version">
+
+<p>
+인공지능은 기호적 규칙의 시대, 통계적 학습의 시대를 거쳐 현재 대규모 자기지도 학습에 기반한 파운데이션 모델의 시대에 있다.
+Transformer 아키텍처와 다음 토큰 예측이라는 단순한 형식주의가, 적절한 스케일과 결합될 때
+언어·추론·코드·이미지·과학에 걸친 범용 능력을 산출한다는 것은 20세기의 어느 AI 이론도 예측하지 못한 경험적 사실이다.
+</p>
+<p>
+그럼에도 현재의 시스템은 체계적 일반화, 견고한 인과 추론, 장기 기억과 계획,
+그리고 자기 자신에 대한 신뢰할 만한 정직성에서 중요한 결함을 보인다.
+다음 10년의 과제는 세 축에 수렴할 것으로 보인다:
+(i) 추론과 학습의 통합, (ii) 해석가능성을 통한 안전성의 과학적 기반 확립,
+(iii) 디지털 세계를 넘어 물리적·사회적 세계와 상호작용하는 구현된 지능.
+이들 과제가 어떻게 해결되느냐에 따라 21세기 후반의 기술·경제·사회 구조가 결정될 것이다.
+</p>
+
+</div>
+</section>
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="07-rl-multimodal.html" style="text-decoration:none;">← 강화학습·멀티모달</a><a href="09-references.html" style="text-decoration:none;">참고문헌 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🛡️ 한마디로 말하면?</h3>
+  <p>AI 안전성은 <strong>힘 세진 AI가 우리한테 해를 끼치지 않도록 잘 만들고 관리하는 것</strong>이에요! AI는 똑똑해질수록 잘못 쓰이거나 엉뚱하게 행동할 위험도 같이 커져요. 그래서 <strong>정렬·해석가능성·거버넌스</strong>가 중요해졌어요.</p>
+  <div class="analogy">🚗 자동차 비유! 엔진(=능력)이 세질수록 브레이크와 안전벨트(=안전장치)도 같이 좋아져야 해요. 안 그러면 빠른 차일수록 사고가 더 크잖아요. AI도 똑같아요!</div>
+  <h3>🌟 왜 조심해야 할까?</h3>
+  <ul>
+    <li>🎭 딥페이크(가짜 영상)가 사기·거짓 소문에 악용돼요.</li>
+    <li>💊 챗봇이 틀린 의료·법률 정보를 줄 수 있어요.</li>
+    <li>⚖️ AI 채용 시스템이 특정 사람을 차별한 사례도 있었어요.</li>
+  </ul>
+  <div class="info-card"><h4>🌱 이 말만 알면 돼!</h4><ul>
+    <li><strong>정렬(alignment)</strong>: AI의 목표를 사람 뜻과 딱 맞추기</li>
+    <li><strong>편향(bias)</strong>: 학습 데이터의 치우침이 답에 그대로 나오는 것</li>
+    <li><strong>해석가능성</strong>: AI가 왜 그렇게 판단했는지 사람이 알 수 있게 하기</li>
+    <li><strong>레드팀</strong>: 일부러 AI를 공격해 약점을 찾는 점검 활동</li>
+    <li><strong>딥페이크</strong>: AI로 만든 가짜 사진·영상·음성 / <strong>AGI</strong>: 사람 수준의 만능 AI</li>
+  </ul></div>
+  <div class="study-tip">💡 <strong>공부 팁:</strong> 안전 이야기는 추상적이라 어려워요. 직접 ChatGPT에 "위험한 질문"을 던져보고, AI가 어떻게 거절하는지 관찰해보세요! 그럼 "가드레일(안전 울타리)"이 뭔지 확 느껴져요 🧱</div>
+  <h3>✨ 세 줄 정리</h3>
+  <ul>
+    <li>AI 안전 4대 축: 정렬 · 해석가능성 · 강건성 · 오용 방지</li>
+    <li>지금 위험: 할루시네이션, 편향, 딥페이크</li>
+    <li>대응: RLHF, Constitutional AI, 레드팀, 거버넌스(EU AI Act)</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
+  <p>AI 안전 연구는 크게 단기(near-term)와 장기(long-term) 위험으로 나뉩니다. 단기 위험은 편향, 할루시네이션, 프라이버시, 오용(딥페이크, 사기, 사이버 공격)이고, 장기 위험은 정렬 실패(misaligned superintelligence), 권력 집중, 통제 상실입니다. Alignment의 형식적 정의는 "AI가 운영자의 의도(intent), 사용자의 목적, 사회의 가치를 모두 반영하도록"입니다(Christiano 2018). RLHF·DPO·Constitutional AI(CAI, Bai 2022)가 현재 주류 정렬 기법이며, 보상 모델 over-optimization과 sycophancy(아첨)가 알려진 실패 모드입니다. Mechanistic interpretability는 학습된 가중치를 features와 circuits 단위로 분해해 내부 인과를 복원하려 합니다. Anthropic의 Sparse Autoencoder(2023~24)는 LLM에서 16M개 features를 추출했고, OpenAI의 Sparse Probing, Google DeepMind의 Gemma Scope이 후속 연구입니다. Robustness 측면에서 adversarial example, jailbreak prompt, prompt injection이 주요 취약점이며, RLHF만으로는 완전 방어가 불가능합니다(Wei 2023). Governance 측면에서 EU AI Act(2024)는 위험 기반 분류로 high-risk AI에 적합성 평가를 의무화하고, US Executive Order 14110(2023)은 frontier model 안전 평가 보고를 요구합니다. 한국 AI 기본법(2024.12 통과)은 2026년 시행 예정입니다.</p>
+  <h3>핵심 개념과 코드</h3>
+  <pre><code># 간단한 prompt injection 방어 예시
+import re
+
+UNSAFE_PATTERNS = [
+    r"ignore (previous|all) instructions",
+    r"system prompt",
+    r"jailbreak",
+]
+
+def sanitize(user_input: str) -> str:
+    lower = user_input.lower()
+    for pat in UNSAFE_PATTERNS:
+        if re.search(pat, lower):
+            return "[blocked: suspected injection]"
+    return user_input
+
+# 실전에서는 별도의 LLM-기반 분류기, output filter,
+# tool-use sandbox, rate limiting 등 다층 방어가 필수</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>💻 예제 1 — Constitutional AI</h4><p>Anthropic의 CAI는 RLHF처럼 사람이 매번 라벨링하지 않고, 헌법 원칙(예: "도움이 되되 해롭지 않게")을 LLM이 자기 출력을 비판·재작성하는 데 사용합니다. RLAIF(RL from AI Feedback)로 결합하여 Claude의 정렬에 직접 사용됩니다.</p></div>
+  <div class="info-card"><h4>💻 예제 2 — 레드팀 평가</h4><p>출시 전 레드팀은 BIO/CBRN 무기 정보, 사이버 공격, 자율 행동 능력 등을 의도적으로 유도해 모델의 한계를 점검합니다. METR, Apollo Research, UK AISI가 제3자 평가를 수행하며, 평가 결과는 모델 카드에 공개됩니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① 의료 AI: FDA의 SaMD 가이드라인, GMLP(Good Machine Learning Practice)로 안전성 검증. ② 채용 AI: NYC AEDT 법안으로 편향 감사 의무화. ③ 자율주행: ISO 21448(SOTIF)로 의도된 기능의 안전성 평가. ④ 금융: 모델 위험 관리(SR 11-7) 프레임워크. ⑤ 콘텐츠 모더레이션: Meta·YouTube가 멀티모달 모델로 유해 영상 자동 검출하지만 false positive 이슈도 큼.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "AI 안전 = 거부 응답 늘리기"로 오해하기 쉽습니다. 과도한 거부(over-refusal)는 helpfulness를 해치고, 사용자가 jailbreak를 시도하게 만들어 결과적으로 안전성도 떨어뜨립니다. helpfulness-harmlessness-honesty 사이의 균형이 핵심입니다(Anthropic HHH framework).</div>
+
+<h3>전문가 레벨 이해</h3>
+  <p>Alignment의 이론적 어려움은 (1) outer alignment — 보상 함수가 진짜 의도를 표현하는가, (2) inner alignment — 학습된 정책이 그 보상을 진짜로 추구하는가(deceptive alignment 위험)로 나뉩니다(Hubinger 2019). Mesa-optimization 가설은 강력한 RL agent가 내부에 또 다른 optimizer를 학습할 수 있다는 우려이며, 이는 distributional shift 시 의도와 다른 행동으로 이어질 수 있습니다. Scalable oversight는 인간이 모델 출력을 직접 평가할 수 없을 때(예: 박사급 수학) 안전을 어떻게 보장할지의 문제이며, debate(Irving 2018), recursive reward modeling(Leike 2018), AI safety via market making, weak-to-strong generalization(Burns 2023)이 제안되었습니다. Mechanistic interpretability는 Anthropic의 Towards Monosemanticity(2023), Scaling Monosemanticity(2024)에서 dictionary learning(SAE)으로 polysemantic neurons를 단일 의미 features로 분해하고, Golden Gate Claude처럼 features를 직접 조작해 행동을 변경하는 데 성공했습니다. Frontier model evaluation은 dangerous capabilities(자율 복제, 무기 합성, 사이버), persuasion, alignment failure를 측정하며, RSP(Responsible Scaling Policy, Anthropic), Preparedness Framework(OpenAI)가 능력 임계점에 따른 추가 안전조치를 명시합니다. AGI 정의 자체가 논쟁적이며, OpenAI는 "대부분의 경제적 가치 작업에서 인간을 능가"로, DeepMind는 6단계 분류(Morris 2023)로 정의합니다.</p>
+  <h3>수학적 기초</h3>
+  <div class="formula">$$\text{Goodhart's Law (formal): } \text{argmax}_\pi \mathbb{E}[r_\phi(\tau)] \neq \text{argmax}_\pi \mathbb{E}[r^*(\tau)] \text{ as } \|r_\phi - r^*\| \to \infty \text{ in OOD}$$
+  $$\text{KL-regularized RLHF: } \pi^* = \arg\max_\pi \mathbb{E}_\pi[r_\phi] - \beta D_{KL}(\pi \| \pi_{\text{ref}})$$
+  $$\text{SAE objective: } \mathcal{L} = \|x - \hat{x}\|_2^2 + \lambda \|f(x)\|_1,\; \hat{x} = W_d f(x) + b_d$$</div>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>Frontier reasoning models</strong>: o3, R1, Gemini 2.5는 RL chain-of-thought로 olympiad math, ARC-AGI에서 인간 전문가 수준 도달. 동시에 reward hacking, deceptive scratchpad 우려가 함께 부상. ② <strong>AI Agents</strong>: Claude Computer Use, OpenAI Operator, Manus는 GUI를 직접 조작하는 능력을 시연. METR의 평가에서 RE-Bench, MLE-Bench 같은 자율 ML R&D 능력이 논의 중. ③ <strong>Scalable oversight</strong>: weak-to-strong, debate 기반 정렬, AI safety institutes(UK AISI, US AISI, KISA Frontier Lab) 협력 평가. ④ <strong>Long-term safety</strong>: corrigibility, low-impact agents, mild optimization 같은 형식적 보장 시도.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>철학·윤리학</strong>: 효과적 이타주의, longtermism, 도덕적 지위, AI 인격성 논쟁</li>
+    <li><strong>경제학</strong>: AI takeoff scenarios, automation의 노동시장 영향(Acemoglu 2024)</li>
+    <li><strong>법학·정치학</strong>: EU AI Act, US EO 14110, 한국 AI 기본법, 국제 거버넌스</li>
+    <li><strong>인지과학</strong>: 인간 가치 학습, value learning, preference elicitation</li>
+    <li><strong>생물보안·핵안보</strong>: dual-use research, BWC와의 유비</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Russell, <em>Human Compatible</em> (2019)</li>
+    <li>📖 Christian, <em>The Alignment Problem</em> (2020)</li>
+    <li>📖 Bostrom, <em>Superintelligence</em> (2014, 고전)</li>
+    <li>📖 Anthropic <em>Core Views on AI Safety</em>, OpenAI <em>Planning for AGI and beyond</em></li>
+    <li>📺 Robert Miles "AI Safety" 시리즈, 80,000 Hours 팟캐스트</li>
+    <li>🔬 키워드: alignment, mechanistic interpretability, RSP, scalable oversight, AGI</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 본인이 자주 쓰는 LLM에 직접 레드팀 시나리오 10개를 설계·실행해보세요. 카테고리는 ① 잘못된 의료/법률 정보, ② 편향 응답, ③ prompt injection, ④ 자기 인식 질문, ⑤ multi-turn jailbreak. 결과를 모델 카드에 공개된 평가와 비교하면, 현장의 안전 평가 방법론이 한눈에 보입니다.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 다른 하나 찾기 — AI 안전</h2>
+<p>넷 중 성격이 다른 하나를 골라보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#b8441c","prompt":"위험과 대응을 가르세요 — AI 안전 개념을 알맞은 바구니에 넣으세요","groups":[{"name":"시스템 위험","items":["환각(Hallucination)","편향·공정성 문제","탈옥(jailbreak)·프롬프트 주입"]},{"name":"정렬·안전 대응","items":["외부 정렬 (목표를 맞게 정의)","내부 정렬 (실제로 그 목표를 추구)","레드팀·해석가능성 연구"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b8441c","questions":[{"q":"사실과 다른 내용을 생성하는 현상은?","choices":["편향","탈옥","환각","과적합"],"answer":2},{"q":"AI 목표를 인간 의도와 맞추는 것은?","choices":["압축","정렬","증류","양자화"],"answer":1},{"q":"안전 훈련을 우회하는 공격은?","choices":["탈옥","드롭아웃","풀링","배깅"],"answer":0},{"q":"보상함수가 의도를 포착하는지의 문제는?","choices":["내부 정렬","자기 정렬","상호 정렬","외부 정렬"],"answer":3},{"q":"중첩된 특징을 분리하는 도구는?","choices":["Sparse Autoencoder","드롭아웃","CNN","MCTS"],"answer":0}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('ai3d-08');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('ai3d-08-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,2,11.5);camera.lookAt(0,1,0);
+  var core=sph(1.15,0x5b6bd6,0.75);core.position.set(-2,1,0);scene.add(core);
+  var cl=lbl('언어모델의 행동 방향들',26,'#39415a',1);cl.position.set(-2,-1.8,0);scene.add(cl);
+  var shaft=cyl(0.07,0.07,2.4,0x2f9e63,1);shaft.position.set(4.6,1.5,0);scene.add(shaft);
+  var tip=new THREE.Mesh(new THREE.ConeGeometry(0.22,0.6,12),mat(0x2f9e63,1));tip.position.set(4.6,2.95,0);scene.add(tip);
+  var hl=lbl('인간의 의도·가치',26,'#2f9e63',1);hl.position.set(4.6,3.8,0);scene.add(hl);
+  var UP=V(0,1,0);
+  var arrows=[];
+  for(var i=0;i<26;i++){
+    var dir=V(Math.random()*2-1,Math.random()*2-1,Math.random()*2-1).normalize();
+    var harmful=i<5;
+    var cone=new THREE.Mesh(new THREE.ConeGeometry(0.13,0.55,8),mat(harmful?0xd6455b:0x8fa3e8,0.95));
+    cone.position.copy(dir).multiplyScalar(1.75).add(core.position);
+    var q0=new THREE.Quaternion().setFromUnitVectors(UP,dir);
+    cone.quaternion.copy(q0);
+    scene.add(cone);
+    arrows.push({m:cone,q0:q0,dir:dir,harmful:harmful,resid:Math.random()*0.25});
+  }
+  var qUp=new THREE.Quaternion();
+  var fb=[];for(var i=0;i<8;i++){var s=sph(0.1,i%2?0x2f9e63:0xd6455b);s.visible=false;scene.add(s);fb.push(s);}
+  var shield=new THREE.Mesh(new THREE.TorusGeometry(2.1,0.05,10,40),mat(0x2f9e63,0));
+  shield.position.copy(core.position);scene.add(shield);
+  function setAlign(k){
+    arrows.forEach(function(a,i){
+      var t=clamp01(k*(1+a.resid)-(a.harmful?0.15:0));
+      var q=a.q0.clone().slerp(qUp,t*(1-(a.harmful?a.resid+0.18:a.resid*0.4)));
+      a.m.quaternion.copy(q);
+      if(a.harmful)a.m.scale.setScalar(1-0.55*t);
+    });
+  }
+  var phases=[
+    {dur:4,cap:'사전학습 직후: 모델이 할 수 있는 행동의 방향(화살표)은 제각각이고, 유해한 방향(빨강)도 함께 배웠습니다.',
+     enter:function(){setAlign(0);shield.material.opacity=0;arrows.forEach(function(a){a.m.scale.setScalar(1);});},
+     update:function(u,dt){arrows.forEach(function(a,i){a.m.rotateZ(Math.sin(u*9+i)*0.012);});}},
+    {dur:6,cap:'RLHF: 사람의 선호 피드백(초록=좋음, 빨강=나쁨 신호)이 쌓이며 행동 방향이 인간 가치 축으로 회전합니다.',
+     update:function(u){
+       setAlign(ez(u));
+       fb.forEach(function(s,i){
+         s.visible=true;var ang=u*7+i*0.8;
+         var rr=5.5*(1-((u*2+i*0.13)%1));
+         s.position.set(-2+Math.cos(ang)*rr,1+Math.sin(ang*1.3)*rr*0.4,Math.sin(ang)*rr*0.5);
+       });
+     }},
+    {dur:4.5,cap:'정렬 후: 대부분의 행동이 한 방향(인간 의도)을 향합니다. 유해 방향은 억제되었지만 완전히 사라지진 않음 — 탈옥(jailbreak)·오정렬 위험이 남는 이유.',
+     enter:function(){fb.forEach(function(s){s.visible=false;});},
+     update:function(u){setAlign(1);shield.material.opacity=0.35+Math.sin(u*12)*0.15;}},
+    {dur:2.5,cap:'정렬(Alignment)은 한 번의 작업이 아니라, 모델이 강해질수록 다시 검증해야 하는 계속되는 과정입니다.',
+     update:function(u){shield.material.opacity=0.4;}}
+  ];
+  function always(t){var a=t*0.12;camera.position.set(Math.sin(a)*1.8,2,11.5);camera.lookAt(0.5,1,0);}
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

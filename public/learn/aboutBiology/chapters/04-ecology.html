@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4. 생태학 — aboutBiology</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🧬 표지 · 소개</a></li>
+    <li><a href="01-cell.html">1. 세포 · 생명의 단위</a></li>
+    <li><a href="02-dna.html">2. DNA와 유전학</a></li>
+    <li><a href="03-evolution.html">3. 진화</a></li>
+    <li><a href="04-ecology.html" style="color:var(--accent);font-weight:600;">4. 생태학</a></li>
+    <li><a href="05-physiology.html">5. 인체생리학</a></li>
+    <li><a href="06-microbiology.html">6. 미생물학</a></li>
+    <li><a href="07-botany.html">7. 식물학</a></li>
+    <li><a href="08-zoology.html">8. 동물학</a></li>
+    <li><a href="09-biotech.html">9. 생명공학</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>생태학:<br><em>생명</em>의 연결망</h1>
+  <p class="authors">Chapter 4 — Ecology: Web of Life</p>
+  <p class="affiliation">3D 생태계 시뮬레이터 포함</p>
+</header>
+
+<h2>생태학이란?</h2>
+<p>생태학(Ecology)은 생물과 환경 사이의 상호작용을 연구하는 학문입니다. 개체, 개체군, 군집, 생태계, 생물권에 이르기까지 다양한 수준에서 생명의 연결 관계를 탐구합니다. 생태학은 우리가 자연을 이해하고 보전하는 데 필수적인 과학입니다.</p>
+
+<div class="info-card ecology">
+  <h4>생태계의 구성 요소</h4>
+  <p><strong>생물적 요인(Biotic factors)</strong>: 생산자, 소비자, 분해자 등 살아있는 생물체.<br>
+  <strong>비생물적 요인(Abiotic factors)</strong>: 빛, 온도, 물, 토양, 공기 등 물리·화학적 환경 요소.<br>
+  이 두 요인이 끊임없이 상호작용하며 생태계를 유지합니다.</p>
+</div>
+
+<div class="info-card">
+  <h4>먹이사슬과 먹이그물</h4>
+  <p>먹이사슬은 생산자에서 최상위 포식자까지 에너지가 전달되는 단일 경로입니다. 자연에서는 여러 먹이사슬이 복잡하게 얽혀 먹이그물을 형성합니다. 먹이그물이 복잡할수록 생태계는 더 안정적입니다.</p>
+</div>
+
+<div class="formula">
+  에너지 흐름: 태양 → 생산자 → 1차 소비자 → 2차 소비자 → 분해자
+</div>
+
+<h2>3D 생태계 시뮬레이션</h2>
+<div class="scene-controls">
+  <label>초식동물: <span id="prey-count">20</span></label>
+  <label>포식자: <span id="pred-count">5</span></label>
+  <label>번식률: <input type="range" id="repro-rate" min="1" max="10" value="5"></label>
+  <button id="reset-btn">🔄 초기화</button>
+</div>
+<div class="scene-3d" id="ecosystem-scene"></div>
+<span class="interact-hint">🌍 포식자-피식자 관계를 관찰하세요</span>
+
+<h2>개체군 생태학</h2>
+<p>개체군 생태학은 같은 종의 개체들이 특정 지역에서 어떻게 변화하는지를 연구합니다. 개체군의 크기는 출생률, 사망률, 이입, 이출에 의해 결정됩니다. 환경이 지탱할 수 있는 최대 개체 수를 <strong>환경 수용력(K, carrying capacity)</strong>이라 합니다.</p>
+<p>개체군이 처음에는 기하급수적으로 증가하지만, 자원이 제한되면 성장이 둔화되어 S자형 곡선(로지스틱 성장)을 그립니다. 밀도 의존적 요인(경쟁, 질병, 포식)과 밀도 비의존적 요인(기후, 자연재해)이 함께 개체군 크기를 조절합니다.</p>
+
+<h3>생태 피라미드</h3>
+<div class="info-card cell">
+  <h4>에너지 피라미드</h4>
+  <p>에너지는 먹이단계를 거칠 때마다 약 <strong>10%</strong>만 다음 단계로 전달됩니다. 나머지 90%는 생명 활동(호흡, 운동, 체온 유지)에 소비됩니다. 이 때문에 상위 영양 단계의 생물 수는 하위 단계보다 훨씬 적습니다.</p>
+</div>
+
+<div class="formula">
+  로지스틱 성장: dN/dt = rN(K−N)/K
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🔍 한 줄로 이해하기</h3>
+  <p>생태학은 생물들이 서로서로, 그리고 자연환경과 어떻게 어울려 살아가는지를 연구하는 학문이에요! 🌳</p>
+  <h3>🤔 왜 중요할까?</h3>
+  <p>숲이 사라지면 왜 동물도 함께 사라질까요? 꿀벌이 줄어들면 왜 우리가 먹을 과일과 채소가 위험해질까요? 🐝 바로 이런 질문에 답해 주는 게 생태학이에요. 자연 속 모든 생물은 눈에 보이지 않는 실로 연결되어 있어서, 하나가 흔들리면 전체가 영향을 받는답니다.</p>
+  <div class="info-card"><h4>🌱 핵심 용어</h4>
+    <ul>
+      <li><strong>생태계</strong>: 생물과 (물·햇빛 같은) 비생물이 함께 어우러진 하나의 시스템</li>
+      <li><strong>먹이사슬</strong>: 에너지가 먹고 먹히며 전달되는 길</li>
+      <li><strong>개체군</strong>: 같은 종끼리 모인 생물 무리</li>
+      <li><strong>환경 수용력</strong>: 그 환경이 먹여 살릴 수 있는 최대 개체 수</li>
+      <li><strong>분해자</strong>: 죽은 생물을 분해해 영양소를 자연으로 돌려주는 생물</li>
+    </ul>
+  </div>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 위에 있는 3D 시뮬레이션에서 포식자와 피식자의 수가 어떻게 오르락내리락하는지 관찰해 보세요. 자연이 스스로 균형을 잡는 모습을 눈으로 느낄 수 있어요! ⚖️</div>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
+  <p>로트카-볼테라 방정식은 포식자-피식자 관계를 수학적으로 모델링합니다. 피식자 수가 늘면 포식자도 증가하고, 포식자가 늘면 피식자가 감소하는 순환이 반복됩니다. 경쟁적 배타 원리에 따르면 동일한 생태적 지위를 차지하는 두 종은 공존할 수 없습니다. 천이(succession)는 생태계가 시간에 따라 변화하는 과정으로, 나지에서 극상림까지 발전합니다.</p>
+  <div class="info-card"><h4>🔬 사례 — 옐로스톤 늑대 재도입</h4><p>1995년 옐로스톤에 늑대를 재도입하자 사슴 개체수가 조절되고, 식생이 회복되며, 강의 흐름까지 바뀌는 영양 단계 종속(trophic cascade) 현상이 관찰되었습니다.</p></div>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> '생태 평형'이 고정된 상태라고 생각하기 쉽지만, 실제로는 끊임없이 변동하는 동적 평형입니다.</div>
+
+<h3>전문가 레벨 이해</h3>
+  <p>메타개체군 이론은 서식지 파편화 속에서 국소 개체군의 소멸과 재정착 패턴을 분석합니다. 섬 생물지리학 이론(MacArthur &amp; Wilson)은 면적과 격리 정도가 종 다양성을 결정한다고 설명합니다. 생태계 서비스 개념은 자연이 인간에게 제공하는 경제적 가치를 정량화하며, 탄소 순환과 질소 순환 같은 생지화학적 순환이 지구 시스템을 유지합니다.</p>
+  <h3>최신 연구</h3>
+  <p>원격 탐사와 환경 DNA(eDNA) 기술은 대규모 생물 다양성 모니터링을 혁신하고 있습니다. 기후변화에 따른 종 분포 이동, 해양 산성화, 생물 다양성 감소가 주요 연구 과제입니다.</p>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 로트카-볼테라 방정식의 매개변수를 변경하며 포식자-피식자 진동의 진폭과 주기가 어떻게 달라지는지 시뮬레이션해 보세요.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 에너지 흐름 순서</h2>
+<p>생태계에서 에너지가 전달되는 순서대로 배열해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#00e676","prompt":"에너지가 흐르는 순서대로 배열하세요","steps":["태양","생산자","1차 소비자","2차 소비자","분해자"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e676","questions":[{"q":"빛, 온도, 물 같은 환경 요소는?","choices":["생물적 요인","비생물적 요인","생산자","소비자"],"answer":1},{"q":"죽은 생물을 분해하는 생물은?","choices":["분해자","생산자","소비자","포식자"],"answer":0},{"q":"환경이 지탱하는 최대 개체 수는?","choices":["개체군","먹이사슬","생태계","환경 수용력"],"answer":3},{"q":"먹이단계마다 전달되는 에너지 비율은?","choices":["약 10%","30%","50%","90%"],"answer":0},{"q":"1995년 늑대를 재도입한 곳은?","choices":["세렝게티","옐로스톤","아마존","갈라파고스"],"answer":1}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  var container = document.getElementById('ecosystem-scene');
+  if (!container) return;
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x87ceeb);
+  var camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 25, 35);
+  camera.lookAt(0, 0, 0);
+  var renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  var ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+  scene.add(ambientLight);
+  var dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  dirLight.position.set(10, 20, 10);
+  scene.add(dirLight);
+
+  // Ground
+  var groundGeo = new THREE.PlaneGeometry(40, 40);
+  var groundMat = new THREE.MeshLambertMaterial({ color: 0x4caf50 });
+  var ground = new THREE.Mesh(groundGeo, groundMat);
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.y = -0.5;
+  scene.add(ground);
+
+  // Decorative trees
+  var i, trunk, leaves, tx, tz;
+  for (i = 0; i < 8; i++) {
+    trunk = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.15, 0.2, 1.5, 8),
+      new THREE.MeshLambertMaterial({ color: 0x8B4513 })
+    );
+    leaves = new THREE.Mesh(
+      new THREE.SphereGeometry(0.8, 8, 8),
+      new THREE.MeshLambertMaterial({ color: 0x228B22 })
+    );
+    tx = (Math.random() - 0.5) * 36;
+    tz = (Math.random() - 0.5) * 36;
+    trunk.position.set(tx, 0.25, tz);
+    leaves.position.set(tx, 1.3, tz);
+    scene.add(trunk);
+    scene.add(leaves);
+  }
+
+  var BOUNDS = 18;
+  var preyList = [];
+  var predList = [];
+
+  function createPrey(x, z) {
+    var mesh = new THREE.Mesh(
+      new THREE.SphereGeometry(0.35, 12, 12),
+      new THREE.MeshLambertMaterial({ color: 0x66bb6a })
+    );
+    mesh.position.set(x, 0.35, z);
+    scene.add(mesh);
+    return { mesh: mesh, vx: (Math.random()-0.5)*0.1, vz: (Math.random()-0.5)*0.1, reproTimer: 0, alive: true };
+  }
+
+  function createPredator(x, z) {
+    var mesh = new THREE.Mesh(
+      new THREE.SphereGeometry(0.55, 12, 12),
+      new THREE.MeshLambertMaterial({ color: 0xef5350 })
+    );
+    mesh.position.set(x, 0.55, z);
+    scene.add(mesh);
+    return { mesh: mesh, vx: (Math.random()-0.5)*0.08, vz: (Math.random()-0.5)*0.08, energy: 3, alive: true };
+  }
+
+  function updateCounts() {
+    var pc = document.getElementById('prey-count');
+    var prc = document.getElementById('pred-count');
+    if (pc) pc.textContent = preyList.length;
+    if (prc) prc.textContent = predList.length;
+  }
+
+  function initSim() {
+    var j;
+    for (j = 0; j < preyList.length; j++) scene.remove(preyList[j].mesh);
+    for (j = 0; j < predList.length; j++) scene.remove(predList[j].mesh);
+    preyList = [];
+    predList = [];
+    for (j = 0; j < 20; j++) {
+      preyList.push(createPrey((Math.random()-0.5)*30, (Math.random()-0.5)*30));
+    }
+    for (j = 0; j < 5; j++) {
+      predList.push(createPredator((Math.random()-0.5)*30, (Math.random()-0.5)*30));
+    }
+    updateCounts();
+  }
+
+  var reproSlider = document.getElementById('repro-rate');
+  var resetBtn = document.getElementById('reset-btn');
+  if (resetBtn) resetBtn.addEventListener('click', initSim);
+
+  var frameCount = 0;
+
+  function simulate() {
+    frameCount++;
+    var reproRate = reproSlider ? parseInt(reproSlider.value) : 5;
+    var k, p, pred, nearest, nearDist, dx, dz, d, speed;
+
+    // Move prey
+    for (k = preyList.length - 1; k >= 0; k--) {
+      p = preyList[k];
+      p.vx += (Math.random()-0.5)*0.02;
+      p.vz += (Math.random()-0.5)*0.02;
+      speed = Math.sqrt(p.vx*p.vx + p.vz*p.vz);
+      if (speed > 0.12) { p.vx *= 0.12/speed; p.vz *= 0.12/speed; }
+      p.mesh.position.x += p.vx;
+      p.mesh.position.z += p.vz;
+      if (Math.abs(p.mesh.position.x) > BOUNDS) { p.vx *= -1; p.mesh.position.x = Math.sign(p.mesh.position.x)*BOUNDS; }
+      if (Math.abs(p.mesh.position.z) > BOUNDS) { p.vz *= -1; p.mesh.position.z = Math.sign(p.mesh.position.z)*BOUNDS; }
+      p.reproTimer++;
+      if (p.reproTimer > (600 - reproRate*50) && preyList.length < 100) {
+        p.reproTimer = 0;
+        if (Math.random() < 0.3) {
+          preyList.push(createPrey(p.mesh.position.x + (Math.random()-0.5)*2, p.mesh.position.z + (Math.random()-0.5)*2));
+        }
+      }
+    }
+
+    // Move predators
+    for (k = predList.length - 1; k >= 0; k--) {
+      pred = predList[k];
+      nearest = null;
+      nearDist = Infinity;
+      for (var m = 0; m < preyList.length; m++) {
+        dx = preyList[m].mesh.position.x - pred.mesh.position.x;
+        dz = preyList[m].mesh.position.z - pred.mesh.position.z;
+        d = Math.sqrt(dx*dx + dz*dz);
+        if (d < nearDist) { nearDist = d; nearest = preyList[m]; }
+      }
+      if (nearest && nearDist < 15) {
+        dx = nearest.mesh.position.x - pred.mesh.position.x;
+        dz = nearest.mesh.position.z - pred.mesh.position.z;
+        d = Math.sqrt(dx*dx + dz*dz);
+        pred.vx += (dx/d)*0.008;
+        pred.vz += (dz/d)*0.008;
+      } else {
+        pred.vx += (Math.random()-0.5)*0.02;
+        pred.vz += (Math.random()-0.5)*0.02;
+      }
+      speed = Math.sqrt(pred.vx*pred.vx + pred.vz*pred.vz);
+      if (speed > 0.14) { pred.vx *= 0.14/speed; pred.vz *= 0.14/speed; }
+      pred.mesh.position.x += pred.vx;
+      pred.mesh.position.z += pred.vz;
+      if (Math.abs(pred.mesh.position.x) > BOUNDS) { pred.vx *= -1; pred.mesh.position.x = Math.sign(pred.mesh.position.x)*BOUNDS; }
+      if (Math.abs(pred.mesh.position.z) > BOUNDS) { pred.vz *= -1; pred.mesh.position.z = Math.sign(pred.mesh.position.z)*BOUNDS; }
+
+      // Eat prey
+      if (nearest && nearDist < 1.0) {
+        scene.remove(nearest.mesh);
+        preyList.splice(preyList.indexOf(nearest), 1);
+        pred.energy++;
+        if (pred.energy >= 5 && predList.length < 30) {
+          pred.energy = 2;
+          predList.push(createPredator(pred.mesh.position.x + (Math.random()-0.5)*3, pred.mesh.position.z + (Math.random()-0.5)*3));
+        }
+      }
+
+      // Energy decay
+      if (frameCount % 120 === 0) {
+        pred.energy -= 0.5;
+        if (pred.energy <= 0) {
+          scene.remove(pred.mesh);
+          predList.splice(k, 1);
+        }
+      }
+    }
+
+    if (frameCount % 30 === 0) updateCounts();
+  }
+
+  // Camera rotation
+  var mouseDown = false, prevX = 0, prevY = 0;
+  container.addEventListener('mousedown', function(e) { mouseDown = true; prevX = e.clientX; prevY = e.clientY; });
+  container.addEventListener('mouseup', function() { mouseDown = false; });
+  container.addEventListener('mouseleave', function() { mouseDown = false; });
+  container.addEventListener('mousemove', function(e) {
+    if (!mouseDown) return;
+    var dxm = e.clientX - prevX;
+    var dym = e.clientY - prevY;
+    var qy = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0), dxm*0.005);
+    var qx = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0), dym*0.003);
+    camera.position.applyQuaternion(qy);
+    camera.position.applyQuaternion(qx);
+    camera.lookAt(0, 0, 0);
+    prevX = e.clientX; prevY = e.clientY;
+  });
+  container.addEventListener('touchstart', function(e) { prevX = e.touches[0].clientX; prevY = e.touches[0].clientY; });
+  container.addEventListener('touchmove', function(e) {
+    var dxm = e.touches[0].clientX - prevX;
+    var qy = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0), dxm*0.005);
+    camera.position.applyQuaternion(qy);
+    camera.lookAt(0, 0, 0);
+    prevX = e.touches[0].clientX; prevY = e.touches[0].clientY;
+  });
+
+  initSim();
+
+  function animate() {
+    requestAnimationFrame(animate);
+    simulate();
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', function() {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

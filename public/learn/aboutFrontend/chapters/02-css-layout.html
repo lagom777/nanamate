@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2장. CSS와 레이아웃</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        main {
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #555;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            line-height: 1.8;
+            color: #666;
+            margin: 1rem 0;
+        }
+
+        li {
+            line-height: 1.8;
+            color: #666;
+            margin: 0.5rem 0;
+        }
+
+        .container {
+            display: flex;
+            gap: 2rem;
+        }
+
+        aside {
+            flex: 0 0 220px;
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 12px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        aside h3 {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        aside ol {
+            list-style: none;
+            padding: 0;
+        }
+
+        aside li {
+            margin: 0.5rem 0;
+        }
+
+        aside a {
+            color: #7b5cff;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+
+        aside a:hover {
+            color: #00d4ff;
+        }
+
+        .hub-back-link {
+            display: block;
+            padding: 10px 14px;
+            margin-bottom: 18px;
+            background: linear-gradient(120deg, #7b5cff, #00d4ff);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-align:left;
+            box-shadow: 0 6px 18px -6px rgba(123, 92, 255, 0.5);
+            transition: transform 0.2s ease;
+        }
+
+        .hub-back-link:hover {
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #7b5cff;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* Box Model Visualizer */
+        .box-model-demo {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .slider-group {
+            margin: 1.5rem 0;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .slider-group label {
+            min-width: 120px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .slider-group input[type="range"] {
+            flex: 1;
+            min-width: 150px;
+            height: 6px;
+            border-radius: 3px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #7b5cff;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(123, 92, 255, 0.3);
+        }
+
+        .slider-group input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #7b5cff;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 6px rgba(123, 92, 255, 0.3);
+        }
+
+        .slider-value {
+            min-width: 50px;
+            text-align: right;
+            color: #7b5cff;
+            font-weight: 600;
+        }
+
+        .box-model-visual {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+        }
+
+        .box-model-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .box-margin {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 600;
+        }
+
+        .box-border {
+            position: absolute;
+            background: rgba(255, 107, 107, 0.3);
+            border: 2px solid #ff6b6b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        .box-padding {
+            position: absolute;
+            background: rgba(255, 205, 86, 0.3);
+            border: 2px solid #ffcd56;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #ffcd56;
+            font-weight: 600;
+        }
+
+        .box-content {
+            position: absolute;
+            background: rgba(52, 211, 153, 0.6);
+            border: 2px solid #34d399;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .box-model-legend {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2rem;
+            font-size: 12px;
+            color: #666;
+            white-space: nowrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-box {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+        }
+
+        /* Flexbox Playground */
+        .flexbox-demo {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .flexbox-controls {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .flex-control {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .flex-control label {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .flex-control select {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .flex-control select:focus {
+            outline: none;
+            border-color: #7b5cff;
+        }
+
+        .flexbox-container {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2rem;
+            border-radius: 8px;
+            min-height: 300px;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .flex-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Grid Layout */
+        .grid-demo {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .grid-controls {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .grid-container {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 2rem;
+            border-radius: 8px;
+            gap: 1rem;
+            display: grid;
+        }
+
+        .grid-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Animation Demo */
+        .animation-demo {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .animation-box {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(120deg, #7b5cff, #00d4ff);
+            border-radius: 8px;
+            margin: 2rem 0;
+            animation: slideIn 1s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animation-controls {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .anim-btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            background: #7b5cff;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .anim-btn:hover {
+            background: #6a4ecc;
+            transform: translateY(-2px);
+        }
+
+        .pulse {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .bounce {
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #eee;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align:left;
+        }
+
+        .nav-btn.prev {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .nav-btn.prev:hover {
+            background: #e0e0e0;
+            transform: translateX(-2px);
+        }
+
+        .nav-btn.next {
+            background: linear-gradient(120deg, #7b5cff, #00d4ff);
+            color: white;
+        }
+
+        .nav-btn.next:hover {
+            transform: translateX(2px);
+            box-shadow: 0 6px 18px -6px rgba(123, 92, 255, 0.5);
+        }
+    </style>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+            <h3>전체 목차</h3>
+            <ol>
+                <li><a href="../index.html">📖 표지 · 소개</a></li>
+                <li><a href="01-html-basics.html">1. HTML 기초</a></li>
+                <li><a href="02-css-layout.html">2. CSS와 레이아웃</a></li>
+                <li><a href="03-javascript-core.html">3. JavaScript 핵심</a></li>
+                <li><a href="04-dom-manipulation.html">4. DOM 조작</a></li>
+                <li><a href="05-react-components.html">5. React와 컴포넌트</a></li>
+                <li><a href="06-state-management.html">6. 상태관리</a></li>
+                <li><a href="07-responsive-design.html">7. 반응형 디자인</a></li>
+                <li><a href="08-performance.html">8. 성능 최적화</a></li>
+                <li><a href="09-build-deploy.html">9. 빌드도구와 배포</a></li>
+            </ol>
+        </aside>
+
+        <main>
+            <h1>2장. CSS와 레이아웃</h1>
+
+            <h2 class="section-title">2.1 CSS 기초</h2>
+            <p>
+                CSS(Cascading Style Sheets)는 HTML 요소의 모양, 레이아웃, 애니메이션을 정의합니다.
+                "캐스케이딩"이란 여러 스타일 규칙이 우선순위에 따라 적용되는 것을 의미합니다.
+            </p>
+
+            <h3 style="color: #555; margin-top: 1.5rem;">선택자(Selectors)</h3>
+            <div class="code-block">
+/* 요소 선택자 */
+p { color: blue; }
+
+/* 클래스 선택자 */
+.highlight { background: yellow; }
+
+/* ID 선택자 */
+#header { font-size: 24px; }
+
+/* 조합 선택자 */
+div > p { margin: 10px; }
+div p { padding: 5px; }
+
+/* 속성 선택자 */
+input[type="email"] { border: 2px solid blue; }
+
+/* 의사 클래스 */
+a:hover { color: red; }
+li:first-child { font-weight: bold; }
+            </div>
+
+            <h3 style="color: #555; margin-top: 1.5rem;">특이성(Specificity)</h3>
+            <p>
+                특이성은 어떤 CSS 규칙이 적용될지 결정합니다.
+                점수가 높을수록 높은 우선순위를 가집니다:
+            </p>
+            <ul style="margin-left: 1.5rem;">
+                <li>ID 선택자: 100점</li>
+                <li>클래스, 속성, 의사 클래스: 10점</li>
+                <li>요소 선택자: 1점</li>
+            </ul>
+
+            <h2 class="section-title">2.2 박스 모델 (Box Model)</h2>
+            <p>
+                모든 HTML 요소는 박스 모델로 구성됩니다: content → padding → border → margin
+            </p>
+
+            <div class="box-model-demo">
+                <h3>박스 모델 시각화</h3>
+                <p>아래 슬라이더를 조정하여 박스 모델의 각 부분을 변경해보세요.</p>
+
+                <div class="slider-group">
+                    <label for="margin-slider">Margin:</label>
+                    <input type="range" id="margin-slider" min="0" max="40" value="20">
+                    <span class="slider-value" id="margin-value">20px</span>
+                </div>
+
+                <div class="slider-group">
+                    <label for="border-slider">Border:</label>
+                    <input type="range" id="border-slider" min="0" max="15" value="5">
+                    <span class="slider-value" id="border-value">5px</span>
+                </div>
+
+                <div class="slider-group">
+                    <label for="padding-slider">Padding:</label>
+                    <input type="range" id="padding-slider" min="0" max="30" value="15">
+                    <span class="slider-value" id="padding-value">15px</span>
+                </div>
+
+                <div class="box-model-visual">
+                    <div class="box-model-container">
+                        <div class="box-margin" id="margin-box">
+                            <span>margin</span>
+                            <div class="box-border" id="border-box">
+                                <span>border</span>
+                                <div class="box-padding" id="padding-box">
+                                    <span>padding</span>
+                                    <div class="box-content">content</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">2.3 Flexbox</h2>
+            <p>
+                Flexbox는 일차원 레이아웃을 위한 강력한 CSS 기능입니다.
+                컨테이너 내의 아이템들을 유연하게 배치할 수 있습니다.
+            </p>
+
+            <div class="flexbox-demo">
+                <h3>Flexbox 플레이그라운드</h3>
+                <p>아래 선택지를 변경하여 Flexbox 속성의 효과를 즉시 확인해보세요.</p>
+
+                <div class="flexbox-controls">
+                    <div class="flex-control">
+                        <label for="flex-direction">flex-direction:</label>
+                        <select id="flex-direction">
+                            <option value="row">row</option>
+                            <option value="row-reverse">row-reverse</option>
+                            <option value="column">column</option>
+                            <option value="column-reverse">column-reverse</option>
+                        </select>
+                    </div>
+
+                    <div class="flex-control">
+                        <label for="justify-content">justify-content:</label>
+                        <select id="justify-content">
+                            <option value="flex-start">flex-start</option>
+                            <option value="flex-end">flex-end</option>
+                            <option value="center">center</option>
+                            <option value="space-between">space-between</option>
+                            <option value="space-around">space-around</option>
+                            <option value="space-evenly">space-evenly</option>
+                        </select>
+                    </div>
+
+                    <div class="flex-control">
+                        <label for="align-items">align-items:</label>
+                        <select id="align-items">
+                            <option value="stretch">stretch</option>
+                            <option value="flex-start">flex-start</option>
+                            <option value="flex-end">flex-end</option>
+                            <option value="center">center</option>
+                            <option value="baseline">baseline</option>
+                        </select>
+                    </div>
+
+                    <div class="flex-control">
+                        <label for="flex-wrap">flex-wrap:</label>
+                        <select id="flex-wrap">
+                            <option value="nowrap">nowrap</option>
+                            <option value="wrap">wrap</option>
+                            <option value="wrap-reverse">wrap-reverse</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flexbox-container" id="flexbox-container">
+                    <div class="flex-item">Item 1</div>
+                    <div class="flex-item">Item 2</div>
+                    <div class="flex-item">Item 3</div>
+                    <div class="flex-item">Item 4</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">2.4 Grid 레이아웃</h2>
+            <p>
+                CSS Grid는 이차원(행과 열) 레이아웃을 위한 강력한 시스템입니다.
+                복잡한 웹 페이지 구조를 쉽게 만들 수 있습니다.
+            </p>
+
+            <div class="grid-demo">
+                <h3>Grid 시각화</h3>
+
+                <div class="grid-controls">
+                    <div class="flex-control">
+                        <label for="grid-cols">Columns:</label>
+                        <select id="grid-cols">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3" selected>3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+
+                    <div class="flex-control">
+                        <label for="grid-gap">Gap:</label>
+                        <select id="grid-gap">
+                            <option value="10">10px</option>
+                            <option value="15">15px</option>
+                            <option value="20" selected>20px</option>
+                            <option value="30">30px</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-container" id="grid-container">
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">6</div>
+                    <div class="grid-item">7</div>
+                    <div class="grid-item">8</div>
+                    <div class="grid-item">9</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">2.5 애니메이션과 트랜지션</h2>
+            <p>
+                CSS 애니메이션과 트랜지션으로 부드러운 시각 효과를 만들 수 있습니다.
+                @keyframes를 사용하여 복잡한 애니메이션을 정의합니다.
+            </p>
+
+            <div class="animation-demo">
+                <div class="animation-controls">
+                    <button class="anim-btn" onclick="toggleAnimation(event, 'pulse')">Pulse</button>
+                    <button class="anim-btn" onclick="toggleAnimation(event, 'bounce')">Bounce</button>
+                    <button class="anim-btn" onclick="resetAnimation()">Reset</button>
+                </div>
+
+                <div class="animation-box" id="animation-box"></div>
+
+                <div class="code-block">
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.element {
+  animation: slideIn 1s ease-out forwards;
+}
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="01-html-basics.html" class="nav-btn prev">← 이전: HTML 기초</a>
+                <a href="03-javascript-core.html" class="nav-btn next">다음: JavaScript 핵심 →</a>
+            </div>
+
+            
+
+<!-- 3D 학습 시각화: 박스 모델과 Flexbox -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · CSS: 4겹 박스 + flex 분배 규칙</div>
+  <div id="fe3d-02" style="width:100%;height:430px;"></div>
+  <div id="fe3d-02-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">박스 모델 분해와 justify-content의 4가지 값.</div>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+            <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
+            <div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+            <div class="difficulty-content" data-level="easy">
+              <span class="difficulty-badge easy">🟢 쉬움</span>
+              <h3>🎯 딱 한 줄!</h3>
+              <p>CSS는 HTML을 <strong>예쁘게 꾸미는</strong> 말이에요. 색깔·크기·위치를 전부 정해줘요! 🎨</p>
+              <h3>😎 왜 배워요?</h3>
+              <p>똑같은 HTML도 CSS만 바꾸면 완전히 다른 느낌이 돼요. 브랜드 색을 사이트 전체에 똑같이 입히고, 폰·태블릿·컴퓨터마다 화면이 착착 바뀌고(반응형), 버튼에 마우스를 올리면 살짝 떠오르는 효과도 CSS가 만들어요! ✨</p>
+              <div class="info-card">
+                <h4>🌱 이 말들만 알아두자</h4>
+                <ul>
+                  <li><strong>선택자(Selector)</strong>: "누구를 꾸밀까?" 대상 고르기 🎯</li>
+                  <li><strong>속성:값</strong>: <code>color: red;</code> "무엇을 → 어떻게"</li>
+                  <li><strong>박스 모델</strong>: 모든 요소는 양파처럼 4겹! 🧅</li>
+                  <li><strong>Flexbox / Grid</strong>: 물건을 줄 세우고 칸 나누는 도구</li>
+                  <li><strong>캐스케이드</strong>: 규칙이 겹칠 때 누가 이기나 정하는 법</li>
+                </ul>
+              </div>
+              <h3>🎨 쉽게 풀어보기</h3>
+              <p>HTML이 집의 <strong>뼈대</strong>라면, CSS는 <strong>인테리어</strong>예요! 벽 색·가구 위치·조명만 바꿔도 방 분위기가 확 달라지죠?</p>
+              <p>규칙은 아주 간단해요: <code>선택자 { 속성: 값; }</code>. 예를 들어 <code>p { color: blue; }</code>는 "모든 <code>p</code> 글자를 파란색으로!"라는 뜻이에요. 🟦</p>
+              <p>박스 모델은 모든 요소가 양파처럼 <strong>content(알맹이) → padding(안쪽 여백) → border(테두리) → margin(바깥 여백)</strong> 4겹이라는 얘기예요. 이걸 모르면 "왜 여백이 이상하지?" 하고 며칠을 헤맬 수 있어요. 😵</p>
+              <p>줄 하나로 정렬할 땐 <strong>Flexbox</strong>, 신문처럼 가로세로 칸을 나눌 땐 <strong>Grid</strong>! 욕심내지 말고 Flex부터 손에 익혀요. 💪</p>
+              <div class="study-tip">
+                <strong>💡 꿀팁:</strong> <strong>Flexbox Froggy</strong>, <strong>Grid Garden</strong> 같은 게임으로 30분만 놀아도 핵심이 손가락에 쏙쏙 새겨져요! 🐸🥕
+              </div>
+              <h3>📝 오늘의 정리</h3>
+              <ul>
+                <li>CSS = 선택자 + 속성 + 값으로 꾸미기</li>
+                <li>박스 모델은 content / padding / border / margin 4겹</li>
+                <li>Flexbox = 한 줄, Grid = 가로세로 칸</li>
+                <li>규칙이 겹치면 캐스케이드·명시도(specificity)로 승자 결정</li>
+                <li>미디어 쿼리로 반응형! 작은 폰부터 만드는 게 추천 📱</li>
+              </ul>
+            </div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+                <p>CSS의 핵심은 "캐스케이드(Cascade) + 명시도(Specificity) + 상속(Inheritance)" 세 축입니다. 동일 속성에 여러 규칙이 겹치면 (1) 출처(작성자/사용자/브라우저), (2) <code>!important</code>, (3) 명시도 점수(인라인=1000, ID=100, 클래스=10, 태그=1), (4) 작성 순서 순으로 결정됩니다. <code>box-sizing: border-box</code>를 전역으로 설정하면 padding이 width를 침범하지 않아 레이아웃 계산이 직관적이 됩니다. Flexbox는 <code>justify-content</code>(주축)와 <code>align-items</code>(교차축)의 조합이 핵심이고, Grid는 <code>grid-template-areas</code>로 영역을 ASCII 아트처럼 정의하는 방식이 가독성이 가장 좋습니다. 애니메이션은 transform과 opacity 위주로 작성해 GPU 합성 단계에서 처리되도록 해야 60fps를 유지할 수 있습니다.</p>
+                <h3>핵심 코드 패턴</h3>
+                <pre><code>/* 카드 그리드: 자동으로 열 개수가 늘고 줄어듦 */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+/* 호버 애니메이션: GPU 가속 */
+.card {
+  transition: transform .2s ease, box-shadow .2s ease;
+  will-change: transform;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(0,0,0,.15);
+}</code></pre>
+                <h3>대표 예제</h3>
+                <div class="info-card">
+                    <h4>💻 예제 1: Sticky 사이드바</h4>
+                    <p><code>position: sticky; top: 1rem;</code> 한 줄로 스크롤해도 따라오는 사이드바를 만들 수 있어 JS 의존성을 제거할 수 있습니다.</p>
+                </div>
+                <div class="info-card">
+                    <h4>💻 예제 2: 다크 모드</h4>
+                    <p>CSS 변수와 <code>[data-theme="dark"]</code> 선택자를 조합하면 한 번의 속성 변경으로 전체 테마를 전환할 수 있고, <code>prefers-color-scheme</code> 미디어 쿼리로 OS 설정을 자동 반영할 수 있습니다.</p>
+                </div>
+                <h3>실무 응용</h3>
+                <p>실무에서는 (1) 디자인 토큰(색·간격·글꼴)을 CSS 커스텀 프로퍼티로 정의해 디자인 시스템을 구축, (2) Tailwind/CSS Modules로 클래스 충돌을 차단, (3) <code>clamp(min, ideal, max)</code>로 글자 크기를 화면 크기에 따라 부드럽게 조절합니다.</p>
+                <div class="warning-box">
+                    <strong>⚠️ 자주 하는 실수:</strong> margin 충돌(collapsing margins), z-index 남용으로 쌓임 맥락(stacking context) 무너뜨리기, 절대 단위(px)만 사용해 접근성 떨어뜨리기. 가능한 한 <code>rem</code>·<code>em</code>을 사용하세요.
+                </div>
+
+<h3>전문가 레벨</h3>
+                <p>브라우저 렌더링 파이프라인은 Style → Layout → Paint → Composite 4단계로 이루어집니다. 너비/위치 변경은 Layout부터 다시 계산되어 비용이 크지만, transform·opacity는 Composite 단계만 거치므로 60fps에 적합합니다. 또한 Layer Promotion을 유발하는 <code>will-change</code>·<code>transform: translateZ(0)</code>을 남용하면 메모리 폭증으로 오히려 성능이 악화될 수 있어 측정 후 적용해야 합니다. 컨테이너 쿼리(Container Queries)는 컴포넌트가 자기 부모 너비에 따라 스스로 모양을 바꿀 수 있게 하여 미디어 쿼리 패러다임을 보완하며, <code>:has()</code> 부모 선택자는 마침내 CSS만으로 "자식 상태에 따라 부모 스타일 변경"을 가능케 했습니다. 캐스케이드 레이어(<code>@layer</code>)는 명시도 전쟁을 끝내는 도구이며, 색 함수 <code>color-mix()</code>·<code>oklch()</code>는 색채 인지 균형 잡힌 팔레트를 만들 때 핵심입니다.</p>
+                <h3>고급 패턴</h3>
+                <pre><code>/* 컨테이너 쿼리 + :has() + 캐스케이드 레이어 */
+@layer reset, base, components, utilities;
+
+@layer components {
+  .card { container-type: inline-size; }
+
+  @container (min-width: 480px) {
+    .card { display: grid; grid-template-columns: 120px 1fr; }
+  }
+
+  /* 자식 input이 invalid이면 부모 스타일 변경 */
+  .field:has(input:invalid) {
+    border-color: hsl(0 80% 60%);
+  }
+}</code></pre>
+                <h3>최신 트렌드</h3>
+                <p>(1) <strong>View Transitions API</strong>: SPA 페이지 전환을 CSS만으로 모핑, (2) <strong>CSS Nesting</strong>: SCSS 없이도 네이티브 중첩 작성 가능(2023년 모든 메이저 브라우저 지원), (3) <strong>Subgrid</strong>: 자식 그리드가 부모의 트랙 라인을 상속해 카드 정렬이 픽셀 단위로 맞아떨어집니다.</p>
+                <h3>관련 분야</h3>
+                <ul>
+                    <li>디자인 시스템 엔지니어링(Figma Tokens, Style Dictionary)</li>
+                    <li>모션 디자인(Framer Motion, GSAP)</li>
+                    <li>인쇄용 CSS(<code>@page</code>, paged.js)</li>
+                </ul>
+                <h3>추가 자료</h3>
+                <ul>
+                    <li>📖 CSS Specs (W3C CSS Working Group)</li>
+                    <li>📺 Kevin Powell YouTube — 모던 CSS 기법</li>
+                    <li>🔬 Chrome DevTools "Rendering" 패널로 Paint 영역 시각화</li>
+                </ul>
+                <div class="success-box">
+                    <strong>🎓 도전 과제:</strong> JavaScript 0줄로 이미지 캐러셀(스냅 스크롤 + 페이드 + 인디케이터)을 구현해보세요. <code>scroll-snap</code>·<code>:target</code>·<code>animation-timeline: scroll()</code>이 무기가 됩니다.
+                </div>
+</div>
+        
+<h2>🕹️ 직접 해보기 — 박스 모델 순서 맞추기</h2>
+<p>박스 모델의 네 영역을 안쪽부터 바깥쪽 순서로 배열해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#0ea5e9","prompt":"박스 모델을 안쪽부터 바깥쪽 순서로 배열하세요","steps":["content","padding","border","margin"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0ea5e9","questions":[{"q":"ID 선택자의 특이성 점수는?","choices":["1점","10점","100점","1000점"],"answer":2},{"q":"1차원 레이아웃에 알맞은 것은?","choices":["Grid","Flexbox","Table","Float"],"answer":1},{"q":"박스 모델의 가장 안쪽은?","choices":["margin","border","padding","content"],"answer":3},{"q":"주축 정렬을 담당하는 속성은?","choices":["justify-content","align-items","flex-wrap","gap"],"answer":0},{"q":"60fps 애니메이션에 유리한 속성은?","choices":["width","top","transform","margin"],"answer":2}]};</script>
+</main>
+    </div>
+
+    <script>
+        // Box Model Sliders
+        const marginSlider = document.getElementById('margin-slider');
+        const borderSlider = document.getElementById('border-slider');
+        const paddingSlider = document.getElementById('padding-slider');
+
+        const marginValue = document.getElementById('margin-value');
+        const borderValue = document.getElementById('border-value');
+        const paddingValue = document.getElementById('padding-value');
+
+        const marginBox = document.getElementById('margin-box');
+        const borderBox = document.getElementById('border-box');
+        const paddingBox = document.getElementById('padding-box');
+
+        function updateBoxModel() {
+            const margin = marginSlider.value;
+            const border = borderSlider.value;
+            const padding = paddingSlider.value;
+
+            marginValue.textContent = margin + 'px';
+            borderValue.textContent = border + 'px';
+            paddingValue.textContent = padding + 'px';
+
+            marginBox.style.inset = margin + 'px';
+            borderBox.style.inset = border + 'px';
+            borderBox.style.borderWidth = border + 'px';
+            paddingBox.style.inset = padding + 'px';
+            paddingBox.style.borderWidth = padding + 'px';
+        }
+
+        marginSlider.addEventListener('input', updateBoxModel);
+        borderSlider.addEventListener('input', updateBoxModel);
+        paddingSlider.addEventListener('input', updateBoxModel);
+        updateBoxModel();
+
+        // Flexbox Controls
+        const flexDirection = document.getElementById('flex-direction');
+        const justifyContent = document.getElementById('justify-content');
+        const alignItems = document.getElementById('align-items');
+        const flexWrap = document.getElementById('flex-wrap');
+        const flexboxContainer = document.getElementById('flexbox-container');
+
+        function updateFlexbox() {
+            flexboxContainer.style.flexDirection = flexDirection.value;
+            flexboxContainer.style.justifyContent = justifyContent.value;
+            flexboxContainer.style.alignItems = alignItems.value;
+            flexboxContainer.style.flexWrap = flexWrap.value;
+        }
+
+        flexDirection.addEventListener('change', updateFlexbox);
+        justifyContent.addEventListener('change', updateFlexbox);
+        alignItems.addEventListener('change', updateFlexbox);
+        flexWrap.addEventListener('change', updateFlexbox);
+
+        // Grid Controls
+        const gridCols = document.getElementById('grid-cols');
+        const gridGap = document.getElementById('grid-gap');
+        const gridContainer = document.getElementById('grid-container');
+
+        function updateGrid() {
+            gridContainer.style.gridTemplateColumns = 'repeat(' + gridCols.value + ', 1fr)';
+            gridContainer.style.gap = gridGap.value + 'px';
+        }
+
+        gridCols.addEventListener('change', updateGrid);
+        gridGap.addEventListener('change', updateGrid);
+        updateGrid();
+
+        // Animation Controls
+        const animationBox = document.getElementById('animation-box');
+
+        function toggleAnimation(event, animClass) {
+            animationBox.classList.toggle(animClass);
+            event.target.textContent = animationBox.classList.contains(animClass) ?
+                animClass.charAt(0).toUpperCase() + animClass.slice(1) + ' (Stop)' :
+                animClass.charAt(0).toUpperCase() + animClass.slice(1);
+        }
+
+        function resetAnimation() {
+            animationBox.classList.remove('pulse', 'bounce');
+            animationBox.style.animation = 'none';
+            setTimeout(() => {
+                animationBox.style.animation = '';
+                animationBox.classList.add('slideIn');
+            }, 10);
+            document.querySelectorAll('.anim-btn').forEach(btn => {
+                btn.textContent = btn.textContent.replace(' (Stop)', '');
+            });
+        }
+    </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('fe3d-02');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('fe3d-02-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,1.6,13);camera.lookAt(0,0.4,0);
+  var margin=box(7.2,5.0,0.3,0xffe9a8,0.5);margin.position.set(-3.4,0.8,-0.6);scene.add(margin);
+  var border=box(5.6,3.6,0.4,0xe07a3f,0.75);border.position.set(-3.4,0.8,-0.3);scene.add(border);
+  var padding=box(4.6,2.7,0.5,0x9be3b8,0.8);padding.position.set(-3.4,0.8,0);scene.add(padding);
+  var content=box(3.2,1.6,0.6,0x5b6bd6,0.95);content.position.set(-3.4,0.8,0.3);scene.add(content);
+  var Ls=[
+    lbl('margin (바깥 여백)',22,'#9a6b00',0.9),
+    lbl('border (테두리)',22,'#b35b1f',0.9),
+    lbl('padding (안쪽 여백)',22,'#1d7a44',0.9),
+    lbl('content (내용)',22,'#ffffff',0.95)
+  ];
+  Ls.forEach(function(l){scene.add(l);});
+  var layers=[margin,border,padding,content];
+  var zBase=[-0.6,-0.3,0,0.3];
+  function explode(k){
+    layers.forEach(function(m,i){
+      m.position.z=zBase[i]+k*(i*1.4-2.1)*1.2;
+      Ls[i].position.set(-3.4+ (i===3?0:2.0+i*0.55)*0, m.position.y+2.8-i*0.0, m.position.z+0.4);
+      Ls[i].position.x=-3.4;
+      Ls[i].position.y=0.8+2.8-i*0.45-(i===3?2.0:0);
+      Ls[i].position.y=(i===0?3.6:(i===1?2.9:(i===2?2.25:0.8)));
+    });
+  }
+  explode(0);
+  // flexbox stage (right)
+  var frame=new THREE.Mesh(new THREE.BoxGeometry(7.0,2.4,0.7),new THREE.MeshBasicMaterial({color:0x39415a,wireframe:true,transparent:true,opacity:0.55}));
+  frame.position.set(3.9,-2.6,0);scene.add(frame);
+  var frL=lbl('flex 컨테이너',22,'#39415a',0.9);frL.position.set(3.9,-1.1,0);scene.add(frL);
+  var items=[],itemW=[1.3,1.3,1.3];
+  for(var i=0;i<3;i++){
+    var it=box(itemW[i],1.3,0.55,[0x5b6bd6,0x2f9e63,0xe07a3f][i],0.95);it.position.set(3.9,-2.6,0);scene.add(it);items.push(it);
+  }
+  var modeL=lbl('justify-content: flex-start',26,'#d6455b',1);modeL.position.set(3.9,-4.3,0);scene.add(modeL);
+  function setMode(t){scene.remove(modeL);modeL=lbl('justify-content: '+t,26,'#d6455b',1);modeL.position.set(3.9,-4.3,0);scene.add(modeL);}
+  var x0=3.9-3.5;
+  var layouts={
+    'flex-start':[x0+0.85,x0+2.25,x0+3.65],
+    'center':[3.9-1.4,3.9,3.9+1.4],
+    'space-between':[x0+0.85,3.9,3.9+2.65],
+    'space-around':[x0+1.35,3.9,3.9+2.15]
+  };
+  var curX=layouts['flex-start'].slice(),tgtX=curX.slice();
+  function target(name){setMode(name);tgtX=layouts[name];}
+  var phases=[
+    {dur:4,cap:'박스 모델: 모든 HTML 요소는 4겹 상자입니다 — content를 padding이, 그걸 border가, 그걸 margin이 감쌉니다. 분해해서 봅시다.',
+     update:function(u){explode(ez(u));}},
+    {dur:4,cap:'다시 조립: 박스 폭(렌더 폭)은 content+padding+border. content-box면 width:100px+padding+border가 박스 폭이고, border-box면 그 합이 100px로 고정됩니다. margin은 박스 밖 여백이라 box-sizing과 무관하게 어느 모드든 별도로 더해집니다.',
+     update:function(u){explode(1-ez(u));}},
+    {dur:3.5,cap:'Flexbox: 컨테이너가 "주축 방향 배치"를 책임집니다. justify-content:flex-start — 아이템이 시작점에 몰립니다.',
+     enter:function(){target('flex-start');}},
+    {dur:3.5,cap:'justify-content:center — 같은 HTML, CSS 한 줄로 가운데 정렬. 아이템을 일일이 움직이는 게 아니라 "분배 규칙"을 바꾸는 것.',
+     enter:function(){target('center');}},
+    {dur:3.5,cap:'space-between — 양 끝에 붙이고 남은 공간을 사이에 균등 분배. 내비게이션 바의 단골 패턴.',
+     enter:function(){target('space-between');}},
+    {dur:3.5,cap:'space-around — 아이템 둘레에 균등한 공간. 이 4가지 값만 알아도 가로 배치의 대부분이 해결됩니다.',
+     enter:function(){target('space-around');}}
+  ];
+  function always(t,dt){
+    items.forEach(function(it,i){
+      curX[i]+=(tgtX[i]-curX[i])*Math.min(1,dt*5);
+      it.position.x=curX[i];
+    });
+  }
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

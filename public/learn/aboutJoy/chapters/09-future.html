@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9. 응용과 미래 — aboutJoy</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🟡 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>응용과 미래</em></h1>
+  <p class="authors">Chapter 9 — Applications &amp; Future</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 미래 — 감정 AI·정서 컴퓨팅</span>
+
+<h2>응용과 미래 개요</h2>
+<p>행복은 더 이상 개인의 사적 영역이 아니다. 국가 정책(GDP를 넘는 well-being 지표), 도시·서비스 디자인(positive design), 기업 문화(HR well-being), 의학(BCI 기반 mood neurofeedback), AI(happiness coach)까지 영역이 확장되고 있다. 21세기는 "측정·설계·관리할 수 있는 행복"의 시대다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>행복은 측정·설계 가능한 시스템 변수가 되었다. 그러나 동시에 누가 그것을 측정·설계하느냐의 윤리·권력 문제도 같이 자란다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>😀 한 줄로 이해하기</h3><p>이제 행복은 내 마음속 감정만이 아니라, 나라·도시·회사·기술까지 함께 다루는 큰 주제예요. 🌍</p>
+  <h3>🤔 왜 중요한가?</h3><p>나라들은 이제 돈(GDP)만으로 국민이 잘 사는지 알 수 없다는 걸 깨달았어요. 그래서 OECD의 '더 나은 삶 지수'나 부탄의 '국민총행복지수(GNH)' 같은 새 잣대가 생겼죠. 📊 도시·회사·앱도 사람들의 행복을 일부러 설계해요. 사실 우리가 매일 쓰는 앱 대부분에 행복을 슬쩍 밀어 주는 장치가 숨어 있어요. 이걸 알면 어떤 디자인이 나를 진짜 행복하게 하고, 어떤 게 중독으로 이끄는지 구별할 수 있어요. 그래서 '행복 읽는 힘'이 디지털 시대의 중요한 능력이랍니다! 🧠</p>
+  <div class="info-card"><h4>🌱 꼭 알아둘 말</h4><ul><li><strong>더 나은 삶 지수(Better Life Index)</strong>: OECD가 만든 다양한 행복 측정표예요. 📊</li><li><strong>GNH</strong>: 부탄이 GDP 대신 쓰는 '국민총행복지수'예요. 🇧🇹</li><li><strong>넛지(Nudge)</strong>: 강요 없이 살짝 행동을 이끄는 설계예요. 👉</li><li><strong>게이미피케이션(Gamification)</strong>: 게임 원리를 다른 곳에 붙인 보상 설계예요. 🎮</li><li><strong>BCI</strong>: 뇌와 컴퓨터를 잇는 기술, 뇌 신호를 바로 쓰는 거예요. 🧠</li></ul></div>
+  <h3>📱 핵심 개념 풀어쓰기</h3><p>토스 앱이 송금하고 나면 별과 반짝 효과를 보여 주죠? 그게 바로 도파민 넛지예요. ✨ 카카오톡이 친구 생일을 알려 주는 건 옥시토신 넛지고요. 🎂 잘 쓰면 우리는 더 친절해지고 더 자주 고마워하지만, 잘못 쓰면 쓸데없는 알림 중독에 빠질 수도 있어요. 똑같은 도구가 약이 되기도, 독이 되기도 한답니다! ⚖️</p>
+  <div class="study-tip"><strong>💡 오늘의 미션:</strong> 내가 매일 쓰는 앱 5개의 '보상 디자인'을 살펴봐요. 어떤 알림이 진짜 도움이 되고, 어떤 게 도파민 함정인지 보일 거예요! 🔍</div>
+  <h3>📌 한 페이지 요약</h3><ul><li>돈을 넘어 '행복 지수'가 나라 정책에 들어와요. 📊</li><li>도시·앱은 넛지로 행복을 설계해요. 👉</li><li>같은 설계가 약도 독도 될 수 있어요. ⚖️</li><li>BCI·AI가 다음 세대 행복 기술이에요. 🤖</li><li>'행복 읽는 힘'이 디지털 시대 필수 능력이에요! 🧠</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>Well-being economics는 GDP의 한계를 넘어 인간 번영을 정량화하려는 경제학 분파다. Stiglitz-Sen-Fitoussi 위원회(2009)는 GDP를 보완할 다차원 지표를 권고했고, 이후 OECD·UN·EU가 이를 정책에 반영했다. 부탄의 GNH는 9개 영역(심리적 웰빙·시간 사용·문화 다양성·환경·교육·건강·생활 수준·공동체·통치) 33개 지표로 구성된다. Nudge for happiness는 Thaler·Sunstein의 행동경제학 응용으로, 기본 옵션 설정·사회적 비교 정보·시각적 피드백 등이 행복 선택을 유도한다. Positive design 분야는 Pieter Desmet 등이 주도하며, 제품·서비스가 "쾌락·개인 의미·미덕"의 세 차원에서 사용자 웰빙을 어떻게 지원하는지 평가 프레임을 제공한다. Gamification 보상 설계는 게임의 보상 스케줄 — 변동 비율 강화·진행 시각화·미션 구조 — 을 일상 서비스에 이식한다.</p>
+  <h3>핵심 메커니즘</h3><div class="info-card"><h4>📐 Positive design 삼각형</h4><p>① Pleasure(쾌락 — 즉각적 즐거움) ② Personal significance(개인 의미 — 가치 실현) ③ Virtue(미덕 — 사회적 선). 세 꼭짓점을 균형 있게 설계할 때 지속 가능한 행복 제품이 된다.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>당근마켓의 "매너 온도"는 옥시토신·자기 효능감을 동시에 자극하는 nudge다. 도파민 단발이 아니라 친절·신뢰의 누적이 보상으로 시각화된다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>토스의 사용자 인터페이스는 송금 후 즉각적 시각 보상으로 도파민을 자극하지만, 동시에 사용자에게 통제감과 안심을 주어 단순 중독 디자인과 구별된다.</p></div>
+  <h3>응용 사례</h3><p>한국 정부도 행복지수 측정과 정책 활용을 본격화하고 있다. 통계청의 국민 삶의 질 지표, 서울시의 시민 행복도 조사가 대표적이다. 기업 측면에서도 토스·우아한형제들 등은 "구성원 행복"을 KPI로 잡는 실험을 진행한다. 다만 "회사가 측정하는 행복"이 진짜 행복인지에 대한 비판도 함께 있다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "측정되는 것만 관리된다"는 격언은 양날의 검이다. 측정 가능한 행복 지표가 진짜 중요한 것을 놓칠 수 있다.</div>
+
+<h3>전문가 레벨 이해</h3><p>사이코델릭 산업화는 2030년대 시장 규모 100억 달러 이상으로 추정되며, 정신건강 의료 패러다임 변화 가능성을 품고 있다. 그러나 약물 자체의 효과보다 "환각 경험의 의미화(integration)" 단계가 임상 성공의 핵심으로 드러나며, 단순 의약품화의 한계가 부각된다. BCI 기반 mood neurofeedback은 실시간 fMRI 또는 EEG로 보상 회로 활동을 환자에게 피드백해 스스로 조절하는 훈련이다. Real-time fMRI neurofeedback 연구는 amygdala 자기 조절 훈련이 우울 증상을 개선한다는 RCT 결과를 내놓았다. AI happiness coach 영역은 LLM 기반 상담 챗봇이 빠르게 확산 중이지만, 임상 윤리·정서 정확도·의존성 문제가 동시에 제기된다. 특히 정서적 의존을 유도하는 design dark pattern과 진정한 well-being 지원의 경계가 모호하다. Sandel·Susskind 같은 윤리학자는 "행복을 외주화한 사회"의 위험 — 자율성 약화·정서 노동의 새로운 형태 — 을 경고한다.</p>
+  <h3>최신 연구·동향</h3><p>2025년 기준 FDA는 MDMA-PTSD 승인을 보류했으나 psilocybin-우울증 phase 3은 진행 중이다. EU의 AI Act는 정서 인식 AI를 고위험으로 분류해 규제를 강화한다. 한국도 디지털 치료제·정신건강 AI 규제 가이드라인을 마련 중이다.</p>
+  <h3>관련 분야</h3><ul><li>웰빙 경제학(Well-being Economics)</li><li>긍정 디자인(Positive Design)</li><li>신경윤리학(Neuroethics)</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"The Origins of Happiness" — Layard et al.</li><li>"Design for Happiness" — Pieter Desmet</li><li>"The Tyranny of Merit" — Michael Sandel</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 본인의 회사·동네·가족에 적용 가능한 "행복 nudge" 3가지를 설계하고, 각각 어떤 신경전달물질을 표적으로 하는지 명시해보자.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 미래 행복 기술 분류</h2>
+<p>미래의 행복 기술을 영역에 따라 분류해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#fde047","prompt":"미래의 행복 기술을 영역에 따라 분류하라","groups":[{"name":"정책·지표","items":["Better Life Index","GNH","국민 삶의 질 지표"]},{"name":"설계·기술","items":["Nudge","Gamification","BCI","AI happiness coach"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#fde047","questions":[{"q":"부탄이 GDP 대신 채택한 행복 지수는?","choices":["GNH","GDP","BLI","GNP"],"answer":0},{"q":"강제 없이 행동을 유도하는 설계 기법은?","choices":["Gamification","Nudge","BCI","KPI"],"answer":1},{"q":"뇌 신호를 직접 활용하는 기술의 약자는?","choices":["GNH","BLI","BCI","RPE"],"answer":2},{"q":"Positive design 삼각형의 세 축은?","choices":["쾌락·의미·미덕","과거·현재·미래","뇌·몸·행동","약·독·중립"],"answer":0},{"q":"OECD의 다차원 행복 측정 지표는?","choices":["GNH","Nudge","Gamification","Better Life Index"],"answer":3}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const COL=0xfde047;const layers=[3,4,2];const nodes=[];layers.forEach((cnt,li)=>{const arr=[];for(let i=0;i<cnt;i++){const y=(i-(cnt-1)/2)*1.0;const m=new THREE.Mesh(new THREE.SphereGeometry(0.22,14,14),new THREE.MeshBasicMaterial({color:li===2?0xffe08a:COL}));m.position.set((li-1)*2.4,y,0);s.add(m);arr.push(m);}nodes.push(arr);});for(let li=0;li<nodes.length-1;li++)nodes[li].forEach(p=>nodes[li+1].forEach(q=>s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([p.position,q.position]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.2})))));s.userData.nodes=nodes;
+  const inN=['넛지(Nudge)','게이미피케이션(Gamification)','BCI'];nodes[0].forEach((m,i)=>{const lb=lbl(inN[i],'#fff4d6');lb.position.set(m.position.x-1.4,m.position.y,m.position.z);s.add(lb);});const outN=['더 나은 삶 지수(Better Life Index)','GNH'];nodes[2].forEach((m,i)=>{const lb=lbl(outN[i],'#fde68a');lb.position.set(m.position.x+1.9,m.position.y,m.position.z);s.add(lb);});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 층층이 이어진 신경망 — 미래의 행복 기술은 데이터로 감정을 읽고 설계합니다.','넛지(Nudge)는 강요 없이, 게이미피케이션(Gamification)은 게임 원리로 행동을 이끄는 설계입니다.','BCI(뇌-컴퓨터 인터페이스)는 뇌 신호를 바로 읽는 다음 세대 기술입니다.','더 나은 삶 지수·GNH처럼 돈을 넘어 행복 지수가 나라 정책에 들어옵니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const all=s.userData.nodes.flat();all.forEach((m,i)=>m.scale.setScalar(0.8+0.3*Math.sin(T*3+i)));s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

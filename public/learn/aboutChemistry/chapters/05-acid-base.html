@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5. 산과 염기 — aboutChemistry</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">⚗️ 표지 · 소개</a></li>
+    <li><a href="01-atomic-structure.html">1. 원자 구조</a></li>
+    <li><a href="02-chemical-bonds.html">2. 화학 결합</a></li>
+    <li><a href="03-chemical-reactions.html">3. 화학 반응</a></li>
+    <li><a href="04-thermochemistry.html">4. 열화학</a></li>
+    <li><a href="05-acid-base.html" style="color:var(--accent);font-weight:600;">5. 산과 염기</a></li>
+    <li><a href="06-redox.html">6. 산화 환원</a></li>
+    <li><a href="07-organic.html">7. 유기 화학</a></li>
+    <li><a href="08-polymers.html">8. 고분자</a></li>
+    <li><a href="09-biochemistry.html">9. 생화학</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>산과 염기:<br><em>양성자</em>의 이동</h1>
+  <p class="authors">Chapter 5 — Acids, Bases & pH</p>
+  <p class="affiliation">pH 시뮬레이터 · 중화 반응 3D</p>
+</header>
+
+<h2>산과 염기의 정의</h2>
+<p>산과 염기는 화학에서 가장 중요한 개념 중 하나입니다. 브뢴스테드-로우리 정의가 가장 널리 쓰입니다.</p>
+
+<div class="info-card acid">
+  <h4>브뢴스테드-로우리 정의</h4>
+  <p>산: 양성자(H⁺)를 내놓는 물질 | 염기: 양성자를 받아들이는 물질</p>
+</div>
+<div class="info-card">
+  <h4>아레니우스 정의</h4>
+  <p>산: 수용액에서 H⁺를 내놓는 물질 | 염기: 수용액에서 OH⁻를 내놓는 물질</p>
+</div>
+<div class="info-card bond">
+  <h4>루이스 정의</h4>
+  <p>산: 전자쌍을 받아들이는 물질 | 염기: 전자쌍을 내놓는 물질</p>
+</div>
+
+<div class="formula">pH = −log[H⁺] &nbsp;&nbsp;|&nbsp;&nbsp; pOH = −log[OH⁻] &nbsp;&nbsp;|&nbsp;&nbsp; pH + pOH = 14 (25°C)</div>
+
+<h2>3D pH 스케일 시뮬레이터</h2>
+<p>pH 값을 조절하면 H⁺(빨강)과 OH⁻(파랑)의 상대적 농도가 3D로 시각화됩니다.</p>
+
+<div class="scene-3d" id="ph-scene" style="height:450px;">
+  <div class="scene-controls">
+    <label>pH: <span id="ph-val" style="font-size:1.2em;font-weight:bold;">7.0</span></label>
+    <input type="range" id="ph-slider" min="0" max="14" value="7" step="0.5">
+    <span id="ph-label" style="font-size:0.75em;color:var(--accent);font-family:var(--font-mono);">중성</span>
+  </div>
+</div>
+<span class="interact-hint">⟳ pH를 조절하여 이온 농도 변화 관찰 · 드래그로 회전</span>
+
+<h2>중화 반응</h2>
+<div class="formula">HCl + NaOH → NaCl + H₂O &nbsp;&nbsp;|&nbsp;&nbsp; ΔH = −57.1 kJ/mol</div>
+
+<h2>완충 용액</h2>
+<div class="info-card organic">
+  <h4>완충 용액이란?</h4>
+  <p>소량의 산이나 염기를 가해도 pH가 크게 변하지 않는 용액입니다. 약산과 그 짝염기의 혼합물로 구성됩니다.</p>
+</div>
+<div class="formula">Henderson-Hasselbalch: pH = pKa + log([A⁻]/[HA])</div>
+
+<div class="info-card reaction">
+  <h4>생체 내 완충 시스템</h4>
+  <p>혈액의 pH는 7.35~7.45로 유지됩니다. 탄산-탄산수소 완충계(H₂CO₃/HCO₃⁻)가 핵심 역할을 합니다.</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🍋🧼 산과 염기가 뭐예요?</h3>
+  <p><strong>산</strong>은 물에 녹으면 <strong>신맛</strong>이 나요! 레몬, 식초처럼요. 🍋 화학적으로는 <strong>H⁺(수소 이온)</strong>를 내놓는 물질이에요.</p>
+  <p><strong>염기</strong>는 만지면 <strong>미끈미끈</strong>해요. 비누처럼요! 🧼 염기는 H⁺를 받거나 OH⁻를 내놓아요.</p>
+  <p>어떤 게 얼마나 세게 산성인지, 염기성인지는 <strong>pH</strong>라는 눈금(0~14)으로 나타내요. 7이 딱 중간(중성)! 작을수록 산성, 클수록 염기성이에요.</p>
+  <div class="info-card">
+    <h4>🌱 꼭 알아둘 말</h4>
+    <ul>
+      <li><strong>산</strong>: H⁺를 내놓는 물질 (예: HCl, 식초) 🍋</li>
+      <li><strong>염기</strong>: H⁺를 받거나 OH⁻를 내놓는 물질 (예: NaOH, 비누) 🧼</li>
+      <li><strong>pH</strong>: 산성·염기성 세기. 7이 중성, 작으면 산성, 크면 염기성</li>
+      <li><strong>중화 반응</strong>: 산 + 염기 → 물 + 염 (서로 성질을 없앰)</li>
+      <li><strong>완충 용액</strong>: 산·염기를 조금 넣어도 pH가 잘 안 변하는 용액</li>
+    </ul>
+  </div>
+  <h3>⚾ H⁺는 '공', 산은 던지고 염기는 받아요</h3>
+  <p>H⁺를 <strong>공</strong>이라고 생각해 봐요! 산은 공을 던지는 사람, 염기는 공을 받는 사람이에요. ⚾</p>
+  <p><strong>중화 반응</strong>은 던진 공을 받는 사람이 몽땅 잡아버려서, 더 이상 아무도 공을 주고받지 않는 상태예요(이때 <strong>물</strong>이 생겨요!). 그래서 속이 쓰릴 때 먹는 제산제는 <strong>염기</strong>라서, 강한 위산(HCl, pH 약 1.5~2)을 중화해 편안하게 해줘요. 🩹</p>
+  <h3>📏 pH는 '10배 자'예요!</h3>
+  <p>pH는 한 칸 내려갈 때마다 산이 <strong>10배</strong> 세져요! pH 4는 pH 5보다 H⁺가 10배 많고, pH 3은 100배 많아요. 한 칸이 어마어마한 차이죠. 😲</p>
+  <div class="study-tip"><strong>💡 꿀팁:</strong> "pH 한 칸 = 10배"만 확실히 기억하세요. pH 2와 pH 5는 3칸 차이라서 10×10×10 = <strong>1000배</strong>나 달라요!</div>
+  <h3>📝 한눈에 정리</h3>
+  <ul>
+    <li>산 = H⁺ 주는 쪽(신맛), 염기 = H⁺ 받는 쪽(미끈)</li>
+    <li>pH 7 중성, 7보다 작으면 산성, 크면 염기성</li>
+    <li>pH는 10배 눈금 → 한 칸 = 10배</li>
+    <li>산 + 염기 → 물 + 염 (중화)</li>
+    <li>완충 용액 = pH를 지켜주는 든든한 짝꿍</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>원리 깊이 들어가기</h3>
+  <p>물은 스스로 약하게 이온화합니다(자체 이온화): 2H₂O ⇌ H₃O⁺ + OH⁻. 25°C에서 이온곱 상수는 Kw = [H⁺][OH⁻] = 1.0×10⁻¹⁴이며, 여기서 pH + pOH = 14가 유도됩니다. 산의 세기는 산해리상수 Ka로 정량화됩니다. 약산 HA ⇌ H⁺ + A⁻에서 Ka = [H⁺][A⁻]/[HA]이고, Ka가 클수록(pKa = −log Ka가 작을수록) 강한 산입니다. 강산(HCl, HNO₃, H₂SO₄)은 사실상 완전히 해리되어 [H⁺] ≈ 산의 농도가 됩니다. 약산은 일부만 해리되므로 [H⁺] = √(Ka·C) 같은 근사로 구합니다.</p>
+  <p>중화 반응의 본질은 H⁺ + OH⁻ → H₂O이며, 25°C에서 강산-강염기 중화열은 약 −57.1 kJ/mol로 일정합니다. 완충 용액은 약산 HA와 그 짝염기 A⁻(또는 약염기와 짝산)가 함께 있을 때 작동합니다. 외부에서 H⁺가 들어오면 A⁻가 흡수하고, OH⁻가 들어오면 HA가 중화하여 pH 변화를 완화합니다. 이때 Henderson-Hasselbalch 식 pH = pKa + log([A⁻]/[HA])로 pH를 계산하며, [A⁻] = [HA]일 때 pH = pKa이고 완충 능력이 최대가 됩니다.</p>
+  <h3>핵심 공식</h3>
+  <div class="formula">
+    Kw = [H⁺][OH⁻] = 1.0×10⁻¹⁴ (25°C)<br>
+    Ka·Kb = Kw,  pKa + pKb = 14<br>
+    약산: [H⁺] ≈ √(Ka·C),  pH = ½(pKa − log C)<br>
+    Henderson-Hasselbalch: pH = pKa + log([A⁻]/[HA])
+  </div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1 — 약산의 pH</h4><p>0.10 M 아세트산(CH₃COOH, Ka = 1.8×10⁻⁵)의 pH를 구하시오. 답: [H⁺] ≈ √(1.8×10⁻⁵ × 0.10) = √(1.8×10⁻⁶) ≈ 1.34×10⁻³ M. 따라서 pH = −log(1.34×10⁻³) ≈ 2.87.</p></div>
+  <div class="info-card"><h4>📐 예제 2 — 완충 용액</h4><p>0.20 M CH₃COOH와 0.30 M CH₃COONa로 만든 완충 용액의 pH는? (pKa = 4.74) 답: pH = 4.74 + log(0.30/0.20) = 4.74 + log(1.5) = 4.74 + 0.18 ≈ 4.92.</p></div>
+  <h3>응용 사례</h3>
+  <p>산-염기 적정에서는 당량점 부근에서 pH가 급격히 변하며, 페놀프탈레인·메틸오렌지 같은 지시약의 변색 범위(보통 pKa ± 1)를 이용해 종말점을 잡습니다. 약산을 강염기로 적정할 때 반당량점에서 pH = pKa가 되는 점은 Ka를 실험적으로 구하는 데 쓰입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> pH가 작다고 해서 항상 "강산"인 것은 아닙니다. 농도가 높은 약산도 pH가 낮을 수 있습니다. 산의 세기는 농도가 아니라 Ka(해리 정도)로 정해집니다. 또한 √(Ka·C) 근사는 해리도가 클 때(약 5% 초과) 오차가 커지므로 이차방정식으로 풀어야 합니다.</div>
+
+<h3>전문가 레벨 이해</h3>
+  <p>정확한 산-염기 평형 계산은 단순한 근사식을 넘어 질량 보존(물질 수지), 전하 균형(전하 중성 조건), 그리고 양성자 균형(proton condition)을 연립해 푸는 것입니다. 이를 통해 다양성자산(H₃PO₄ 등, Ka1·Ka2·Ka3)이나 양쪽성 물질(HCO₃⁻)처럼 단일 근사가 깨지는 계도 엄밀히 다룰 수 있습니다. 실제 농도가 높은 용액에서는 농도 대신 활동도(activity) a = γ·C를 써야 하며, 활동도 계수 γ는 Debye-Hückel 이론이나 Davies 식, 고이온세기에서는 Pitzer 모델로 추정합니다. 따라서 엄밀한 정의는 pH = −log a(H⁺)이며, 표준 pH는 정해진 완충 표준액과 전위차계(유리전극) 측정에 기반해 IUPAC가 운영적으로 정의합니다.</p>
+  <p>산 세기의 미시적 이해는 평형뿐 아니라 구조-반응성 관계로 확장됩니다. 유발효과(전자끌개 치환기가 짝염기를 안정화 → Ka 증가)와 공명 안정화(카복실산 vs 알코올의 산도 차이), 용매 효과 등이 pKa를 결정합니다. 비수용매나 초강산(magic acid, HF–SbF₅ 등) 영역에서는 Hammett 산도 함수 H₀로 산 세기를 정량화합니다.</p>
+  <h3>핵심 평형식</h3>
+  <div class="formula">
+    전하 균형 예: [H⁺] = [OH⁻] + [A⁻]<br>
+    pH = −log a(H⁺),  a = γ·[H⁺]<br>
+    Debye-Hückel: log γ± = −A·z₊z₋·√I / (1 + B·å·√I)<br>
+    완충 능력: β = 2.303·([A⁻][HA]/C_total),  최대 at pH = pKa
+  </div>
+  <h3>최신 동향</h3>
+  <p>최근에는 pKa를 양자화학(DFT + 암시적 용매 모델 PCM/SMD)이나 머신러닝 모델로 예측하는 연구가 활발하며, 신약 개발에서 분자의 이온화 상태가 흡수·분포에 미치는 영향을 사전 평가하는 데 널리 쓰입니다. 또한 해양 산성화(대기 CO₂ 증가로 인한 표층 해수 pH 하강)와 탄산염 완충계의 거동, 효소 활성 부위의 국소 pKa 섭동을 다루는 전산생물학이 주목받고 있습니다.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>분석화학</strong>: 적정·전위차 측정·이온선택성 전극</li>
+    <li><strong>생화학</strong>: 효소 촉매, 단백질 잔기의 pKa, 생리 완충계</li>
+    <li><strong>환경화학</strong>: 산성비, 해양 산성화, 탄산염 평형</li>
+    <li><strong>전기화학</strong>: 활동도·이온세기와 전극 전위(Nernst 식)</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Harris, Quantitative Chemical Analysis (산-염기 평형 장)</li>
+    <li>📖 Atkins, Physical Chemistry (전해질 활동도, Debye-Hückel)</li>
+    <li>🔬 적정 시뮬레이터·pKa 예측 도구(ChemAxon, MarvinSketch) 실습</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 양쪽성 이온 HCO₃⁻ 수용액의 pH가 근사적으로 pH = ½(pKa1 + pKa2)임을 양성자 균형과 두 해리 평형으로부터 유도해 보세요. 탄산의 pKa1 ≈ 6.35, pKa2 ≈ 10.33을 대입하면 약 8.3이 나오며, 이는 베이킹소다(NaHCO₃) 용액이 약염기성인 이유를 설명합니다.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 산·염기 용어 상황 판단</h2>
+<p>산·염기 용어와 그 설명을 알맞게 연결하세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#00e896","prompt":"산·염기 용어와 설명을 짝지으세요","pairs":[{"term":"산","def":"양성자 H⁺를 내놓는 물질"},{"term":"염기","def":"H⁺를 받거나 OH⁻를 내놓는 물질"},{"term":"pH","def":"산성·염기성의 세기를 나타내는 눈금"},{"term":"중화 반응","def":"산 + 염기 → 물 + 염"},{"term":"완충 용액","def":"산·염기를 넣어도 pH가 잘 안 변함"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00e896","questions":[{"q":"브뢴스테드-로우리 산의 정의는?","choices":["H⁺ 받음","전자 받음","H⁺ 내놓음","OH⁻ 내놓음"],"answer":2},{"q":"중성 용액의 pH 값은?","choices":["7","0","14","1"],"answer":0},{"q":"25°C에서 pH + pOH 값은?","choices":["7","10","14","100"],"answer":2},{"q":"완충 용액의 구성은?","choices":["강산+강염기","약산+짝염기","물만","소금물"],"answer":1},{"q":"혈액의 정상 pH 범위는?","choices":["1~2","13~14","10~11","7.35~7.45"],"answer":3}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('ph-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 5, 10); camera.lookAt(0, 0, 0);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Beaker
+  const bp = [[-3,-3,3],[3,-3,3],[3,3,3],[-3,3,3],[-3,-3,3],[-3,-3,-3],[3,-3,-3],[3,-3,3],[3,-3,-3],[3,3,-3],[3,3,3],[3,3,-3],[-3,3,-3],[-3,3,3],[-3,3,-3],[-3,-3,-3]];
+  scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(bp.map(p => new THREE.Vector3(...p))), new THREE.LineBasicMaterial({ color: 0x00e896, transparent: true, opacity: 0.15 })));
+
+  let ions = [];
+
+  function buildIons(phValue) {
+    ions.forEach(i => scene.remove(i)); ions = [];
+    const hCount = Math.min(60, Math.round(Math.max(1, 50 * Math.pow(10, -(phValue - 1) / 3))));
+    const ohCount = Math.min(60, Math.round(Math.max(1, 50 * Math.pow(10, -(14 - phValue - 1) / 3))));
+
+    for (let i = 0; i < hCount; i++) {
+      const m = new THREE.Mesh(new THREE.SphereGeometry(0.12, 12, 12), new THREE.MeshBasicMaterial({ color: 0xff4444, transparent: true, opacity: 0.8 }));
+      m.position.set((Math.random()-0.5)*5, (Math.random()-0.5)*5, (Math.random()-0.5)*5);
+      m.userData = { vel: new THREE.Vector3((Math.random()-0.5)*0.04, (Math.random()-0.5)*0.04, (Math.random()-0.5)*0.04) };
+      scene.add(m); ions.push(m);
+    }
+    for (let i = 0; i < ohCount; i++) {
+      const m = new THREE.Mesh(new THREE.SphereGeometry(0.15, 12, 12), new THREE.MeshBasicMaterial({ color: 0x4488ff, transparent: true, opacity: 0.8 }));
+      m.position.set((Math.random()-0.5)*5, (Math.random()-0.5)*5, (Math.random()-0.5)*5);
+      m.userData = { vel: new THREE.Vector3((Math.random()-0.5)*0.03, (Math.random()-0.5)*0.03, (Math.random()-0.5)*0.03) };
+      scene.add(m); ions.push(m);
+    }
+    for (let i = 0; i < 15; i++) {
+      const m = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), new THREE.MeshBasicMaterial({ color: 0x00e896, transparent: true, opacity: 0.25 }));
+      m.position.set((Math.random()-0.5)*5, (Math.random()-0.5)*5, (Math.random()-0.5)*5);
+      m.userData = { vel: new THREE.Vector3((Math.random()-0.5)*0.02, (Math.random()-0.5)*0.02, (Math.random()-0.5)*0.02) };
+      scene.add(m); ions.push(m);
+    }
+  }
+  buildIons(7);
+
+  document.getElementById('ph-slider').addEventListener('input', function() {
+    const v = parseFloat(this.value);
+    document.getElementById('ph-val').textContent = v.toFixed(1);
+    let label = '중성'; if (v < 3) label = '강산성'; else if (v < 7) label = '약산성'; else if (v > 11) label = '강염기성'; else if (v > 7) label = '약염기성';
+    document.getElementById('ph-label').textContent = label;
+    document.getElementById('ph-val').style.color = v < 7 ? '#ff4444' : v > 7 ? '#4488ff' : 'var(--accent)';
+    buildIons(v);
+  });
+
+  let rY = 0, rX = 0.3, isDrag = false, pX = 0, pY = 0;
+  container.addEventListener('mousedown', e => { isDrag = true; pX = e.clientX; pY = e.clientY; });
+  window.addEventListener('mouseup', () => isDrag = false);
+  container.addEventListener('mousemove', e => { if (!isDrag) return; rY += (e.clientX-pX)*0.005; rX += (e.clientY-pY)*0.005; pX = e.clientX; pY = e.clientY; });
+  container.addEventListener('wheel', e => { e.preventDefault(); camera.position.z = Math.max(5, Math.min(18, camera.position.z + e.deltaY*0.01)); }, { passive: false });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    ions.forEach(m => { m.position.add(m.userData.vel); ['x','y','z'].forEach(a => { if (Math.abs(m.position[a]) > 2.8) { m.position[a] = Math.sign(m.position[a])*2.8; m.userData.vel[a] *= -1; } }); });
+    scene.rotation.y = rY; scene.rotation.x = rX;
+    renderer.render(scene, camera);
+  }
+  animate();
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+})();
+</script>
+</body>
+</html>
