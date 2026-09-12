@@ -224,7 +224,7 @@ function Mark({ kind }: { kind: string }) {
         </svg>
       );
     case "exposure":
-    case "csat":
+    case "suneung":
       return (
         <svg {...common} aria-hidden>
           <rect x="18" y="14" width="44" height="52" rx="2" />

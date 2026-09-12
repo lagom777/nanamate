@@ -40,7 +40,6 @@ import { play as playTeps } from "@/games/kernels/teps";
 import { play as playCave } from "@/games/kernels/cave";
 import { play as playNostos } from "@/games/kernels/nostos";
 import { play as playExposure } from "@/games/kernels/exposure";
-import { play as playCsat } from "@/games/kernels/csat";
 import { play as playSuneung } from "@/games/kernels/suneung";
 
 type Starter = (id: string, canvas: HTMLCanvasElement, hooks: GameHooks) => GameHandle;
@@ -86,7 +85,6 @@ const KERNELS: Record<Exclude<KernelId, "custom">, Starter> = {
   cave: playCave,
   nostos: playNostos,
   exposure: playExposure,
-  csat: playCsat,
   suneung: playSuneung,
 };
 

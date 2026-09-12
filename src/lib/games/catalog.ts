@@ -44,7 +44,6 @@ export type KernelId =
   | "cave"
   | "nostos"
   | "exposure"
-  | "csat"
   | "suneung";
 
 export type GameMeta = {
