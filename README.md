@@ -1,5 +1,8 @@
 # nanamate
 
+사이트: https://nanamate.petal-bite.workers.dev
+
+
 정적 HTML 학습 허브. Cloudflare Pages는 `public/learn`을 사이트 루트로 올립니다.
 
 - **허브** — `index.html` / `public/learn/index.html`
