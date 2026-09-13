@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>실전 시간·오답 — 수능 이과</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">표지 · 이과 총람</a></li>
+<li><a href="01-overview.html">1. 수능 이과 한눈에</a></li>
+<li><a href="02-korean-reading.html">2. 국어 독서</a></li>
+<li><a href="03-korean-lit.html">3. 국어 문학</a></li>
+<li><a href="04-calc-diff.html">4. 미적분 — 극한·미분</a></li>
+<li><a href="05-calc-int.html">5. 미적분 — 적분·활용</a></li>
+<li><a href="06-english.html">6. 수능 영어</a></li>
+<li><a href="07-phys1.html">7. 물리학 I</a></li>
+<li><a href="08-bio1.html">8. 생명과학 I</a></li>
+<li><a href="09-strategy.html" style="color:var(--accent);font-weight:600;">9. 실전 시간·오답</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>실전 시간·오답</h1><p class="authors">Chapter 9 — 면 배치와 버리는 문항</p></header>
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">아는 문항을 먼저 지킵니다.</span>
+<h2>하루에 쓰는 체력</h2>
+<p>이과 수능은 오전에 국어·수학, 오후에 영어·탐구입니다. 점수는 모르는 문항을 붙잡는 시간이 아니라 <strong>아는 문항을 놓치지 않는 시간</strong>에서 납니다. 각 영역마다 ‘버리는 번호’를 미리 정합니다.</p>
+<div class="info-card"><h4>권장 골격</h4><p>국어: 독서 한 지문 16분, 문학 한 묶음 14분. 수학: 공통 앞 12문항 35분, 미적 킬러 2문항은 마지막. 영어: 듣기 후 빈칸 전에 주제·일치 먼저. 탐구: 자료 해석 4문항을 먼저, 계산 긴 문항은 표시 후 복귀.</p></div>
+<h2>난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바에서 난이도를 바꿀 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>못 푸는 한 문항보다, 쉬운 세 문항을 지키는 쪽이 등급을 올립니다.</p>
+<ul><li>표시하고 넘어가는 습관을 모의에서 연습합니다.</li><li>오답 노트는 정답이 아니라 ‘내가 고른 함정 문장’을 적습니다.</li><li>탐구 두 과목 사이 쉬는 시간에 물1 공식 한 장만 봅니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<h3>영역별 컷 감각</h3><p>영어는 90 고정이 목표라 모의에서 88~92 구간을 반복합니다. 수학 미적은 공통 실수가 표준점수를 더 깎습니다. 과탐은 20문항이라 두 개가 백분위 한 칸입니다. 시간 부족형 오답과 개념 혼동형 오답을 노트에서 갈라 적습니다.</p>
+<p>시험 전주에는 새 유형을 넣지 않습니다. 이미 틀린 함정 문장만 다시 봅니다. 한국사는 평이하게 나오므로 핵심 연표만 유지합니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>영역과 시간 전략을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#dc2626","prompt":"영역과 시간 전략을 짝지으세요.","pairs":[{"term":"국어","def":"독서 16분 · 문학 14분 감각"},{"term":"수학","def":"공통 앞을 먼저, 킬러는 마지막"},{"term":"영어","def":"듣기 고정 후 주제·일치"},{"term":"탐구","def":"자료 해석 먼저, 긴 계산은 표시"},{"term":"오답 노트","def":"함정 문장을 적는다"}]};</script>
+<h2>개념 확인</h2>
+<p>이 장에서 정리한 핵심만 고르세요. 게임은 이 페이지 안에 있습니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#dc2626","questions":[{"q":"등급을 올리는 쪽은?","choices":["킬러 한 문항","쉬운 문항을 안 놓침","전 문항 평균 시간","새로운 유형"],"answer":1},{"q":"수학에서 먼저 지킬 것은?","choices":["미적 킬러","공통 앞부분","기하","확률만"],"answer":1},{"q":"영어 1등급 선은?","choices":["80","90","70","100"],"answer":1},{"q":"오답 노트에 적을 것은?","choices":["정답만","함정 문장","점수만","시험장 주소"],"answer":1},{"q":"탐구 두 문항 실수는?","choices":["무시","백분위 한 칸이 될 수 있음","국어만 영향","영어 등급"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  var c=document.getElementById('sim-scene'); if(!c||typeof THREE==='undefined') return;
+  var s=new THREE.Scene();
+  var cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);
+  cam.position.set(0,0.4,9); cam.lookAt(0,0,0);
+  var r; try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight); r.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  c.appendChild(r.domElement);
+  var core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.15,1), new THREE.MeshBasicMaterial({color:0xdc2626,wireframe:true}));
+  s.add(core);
+  var ring=new THREE.Mesh(new THREE.TorusGeometry(2.2,0.05,10,64), new THREE.MeshBasicMaterial({color:0xf59e0b,transparent:true,opacity:0.7}));
+  ring.rotation.x=Math.PI/2.4; s.add(ring);
+  var hint=document.querySelector('.interact-hint');
+  var caps=["아는 문항을 먼저 지킵니다.","킬러는 마지막에 둡니다.","함정 문장을 노트에 남깁니다."]; var ci=0,t=0;
+  if(hint) hint.textContent=caps[0];
+  var md=false,px=0,py=0;
+  c.addEventListener('mousedown',function(e){md=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup',function(){md=false;});
+  c.addEventListener('mousemove',function(e){if(!md)return;s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;});
+  function a(){requestAnimationFrame(a);t+=0.016;core.rotation.y+=0.006;ring.rotation.z+=0.004;
+    if(hint&&t>4){t=0;ci=(ci+1)%caps.length;hint.textContent=caps[ci];}
+    r.render(s,cam);} a();
+})();
+</script>
+</body></html>

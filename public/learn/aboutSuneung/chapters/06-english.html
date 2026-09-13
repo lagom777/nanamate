@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수능 영어 — 수능 이과</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">표지 · 이과 총람</a></li>
+<li><a href="01-overview.html">1. 수능 이과 한눈에</a></li>
+<li><a href="02-korean-reading.html">2. 국어 독서</a></li>
+<li><a href="03-korean-lit.html">3. 국어 문학</a></li>
+<li><a href="04-calc-diff.html">4. 미적분 — 극한·미분</a></li>
+<li><a href="05-calc-int.html">5. 미적분 — 적분·활용</a></li>
+<li><a href="06-english.html" style="color:var(--accent);font-weight:600;">6. 수능 영어</a></li>
+<li><a href="07-phys1.html">7. 물리학 I</a></li>
+<li><a href="08-bio1.html">8. 생명과학 I</a></li>
+<li><a href="09-strategy.html">9. 실전 시간·오답</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>수능 영어</h1><p class="authors">Chapter 6 — 듣기 17 · 독해 유형</p></header>
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">듣기 17을 먼저 고정합니다.</span>
+<h2>영어가 실제로 묻는 것</h2>
+<p>45문항 70분, 절대평가입니다. 앞 <strong>17문항이 듣기</strong>이고 나머지는 독해입니다. 독해 유형은 주제·요지, 빈칸, 순서, 삽입, 장문(제목·내용 불일치·함의)이 뼈대입니다. 문법·어휘는 따로 보이지만 빈칸·장문 안에서 다시 나옵니다.</p>
+<div class="info-card"><h4>1등급의 최소 조건</h4><p>듣기에서 16 이상을 고정하고, 빈칸·순서·삽입에서 두 개 이상 잃지 않는 것입니다. 원점수 90이 1등급 선입니다.</p></div>
+<h2>난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바에서 난이도를 바꿀 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>듣기는 ‘다음에 할 말’, 독해는 ‘글이 밀고 가는 한 줄’입니다.</p>
+<ul><li>듣기: 숫자·장소·거절 이유를 미리 선지에 표시합니다.</li><li>주제: 반복되는 명사와 태도가 답입니다.</li><li>빈칸: 빈칸 앞 문장의 논리(그러나/그래서)를 먼저 봅니다.</li><li>순서·삽입: 지시어(this, such, these)와 접속 부사가 열쇠입니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<h3>빈칸</h3><p>빈칸이 문장 끝에 있으면 결론, 중간에 있으면 전제입니다. 선지가 길면 공통 뼈대만 남기고 수식어를 접습니다. 지문이 양보(although)인데 선지가 전면 부정하면 틀립니다.</p>
+<p>순서 문제는 첫 문장에 지시어가 있는 보기를 맨 앞에 두지 않습니다. 삽입은 앞 문장과 뒤 문장의 주어가 바뀌는 지점이 힌트입니다. 장문 함의(implied)는 글이 칭찬하는 대상을 반대로 읽는 보기가 함정입니다.</p>
+<div class="warning-box"><strong>함정:</strong> 주제 문제에서 세부 사례를 주제로 올리면 오답입니다. 사례는 수단입니다.</div>
+</div>
+<h2>직접 해보기</h2>
+<p>영어 유형과 공략을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#dc2626","prompt":"영어 유형과 공략을 짝지으세요.","pairs":[{"term":"듣기","def":"숫자·장소·거절을 선지에 선표시"},{"term":"주제","def":"반복 명사와 태도"},{"term":"빈칸","def":"앞 문장 논리(그러나/그래서)"},{"term":"순서","def":"지시어가 있는 문장은 뒤쪽"},{"term":"삽입","def":"주어가 바뀌는 틈"}]};</script>
+<h2>개념 확인</h2>
+<p>이 장에서 정리한 핵심만 고르세요. 게임은 이 페이지 안에 있습니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#dc2626","questions":[{"q":"영어 듣기 문항 수는?","choices":["10","17","22","28"],"answer":1},{"q":"1등급 원점수는?","choices":["80","85","90","100"],"answer":2},{"q":"순서 문제에서 지시어가 있는 문장은?","choices":["무조건 맨 앞","앞에 지시 대상이 있어야 함","정답 아님","듣기다"],"answer":1},{"q":"주제 문제의 흔한 오답은?","choices":["태도","세부 사례를 주제로 올림","반복 명사","빈칸"],"answer":1},{"q":"영어 성적 표기는?","choices":["표준점수만","등급만","백분위만","원점수만"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  var c=document.getElementById('sim-scene'); if(!c||typeof THREE==='undefined') return;
+  var s=new THREE.Scene();
+  var cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);
+  cam.position.set(0,0.4,9); cam.lookAt(0,0,0);
+  var r; try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight); r.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  c.appendChild(r.domElement);
+  var core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.15,1), new THREE.MeshBasicMaterial({color:0xdc2626,wireframe:true}));
+  s.add(core);
+  var ring=new THREE.Mesh(new THREE.TorusGeometry(2.2,0.05,10,64), new THREE.MeshBasicMaterial({color:0xf59e0b,transparent:true,opacity:0.7}));
+  ring.rotation.x=Math.PI/2.4; s.add(ring);
+  var hint=document.querySelector('.interact-hint');
+  var caps=["듣기 17을 먼저 고정합니다.","빈칸은 접속 논리입니다.","90점이 1등급 선입니다."]; var ci=0,t=0;
+  if(hint) hint.textContent=caps[0];
+  var md=false,px=0,py=0;
+  c.addEventListener('mousedown',function(e){md=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup',function(){md=false;});
+  c.addEventListener('mousemove',function(e){if(!md)return;s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;});
+  function a(){requestAnimationFrame(a);t+=0.016;core.rotation.y+=0.006;ring.rotation.z+=0.004;
+    if(hint&&t>4){t=0;ci=(ci+1)%caps.length;hint.textContent=caps[ci];}
+    r.render(s,cam);} a();
+})();
+</script>
+</body></html>

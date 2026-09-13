@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수능 이과 한눈에 — 수능 이과</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">표지 · 이과 총람</a></li>
+<li><a href="01-overview.html" style="color:var(--accent);font-weight:600;">1. 수능 이과 한눈에</a></li>
+<li><a href="02-korean-reading.html">2. 국어 독서</a></li>
+<li><a href="03-korean-lit.html">3. 국어 문학</a></li>
+<li><a href="04-calc-diff.html">4. 미적분 — 극한·미분</a></li>
+<li><a href="05-calc-int.html">5. 미적분 — 적분·활용</a></li>
+<li><a href="06-english.html">6. 수능 영어</a></li>
+<li><a href="07-phys1.html">7. 물리학 I</a></li>
+<li><a href="08-bio1.html">8. 생명과학 I</a></li>
+<li><a href="09-strategy.html">9. 실전 시간·오답</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>수능 이과 한눈에</h1><p class="authors">Chapter 1 — 2027학년도 체제</p></header>
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">공통이 점수 뼈대입니다.</span>
+<h2>무엇을 치르나</h2>
+<p>2027학년도 수능은 2015 개정 교육과정입니다. 국어·수학은 <strong>공통과목 + 선택과목</strong>, 영어·한국사는 절대평가, 탐구는 17과목 중 최대 2과목입니다. 이과 트랙에서 이 노트가 고정하는 선택은 <strong>수학 미적분</strong>, 탐구 <strong>물리학 I · 생명과학 I</strong>입니다.</p>
+<div class="info-card"><h4>시간표</h4><p>1교시 국어 80분 · 2교시 수학 100분 · 3교시 영어 70분 · 4교시 한국사 30분 후 탐구 과목당 30분. 한국사를 안 치면 성적 전체가 무효입니다.</p></div>
+<h2>난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바에서 난이도를 바꿀 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>이과는 국어·영어를 공통으로 치고, 수학은 미적분, 탐구는 물리1이랑 생1을 고르는 길입니다.</p>
+<h3>왜 이렇게 짜나</h3><p>국어·영어는 모든 모집단이 같아서 표준점수가 안정적입니다. 수학 미적분과 과탐은 응시 풀이 겹쳐 변별이 여기서 납니다. 탐구 한 과목을 쉽게 고르면 다른 과목 실수가 바로 백분위에 붙습니다.</p>
+<ul><li>국어: 독서·문학이 공통, 선택 한 과목</li><li>수학: Ⅰ·Ⅱ 공통 + 미적분</li><li>영어: 등급만, 듣기 17문항</li><li>탐구: 물1·생1, 각 20문항</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<h3>공통 75% · 선택 25%</h3><p>국어·수학은 공통과목 비중이 큽니다. 미적분에서 점수를 깎여도 공통(지수로그·삼각·수열·극한·미분적분의 공통분)을 놓치면 회복이 어렵습니다. 선택 과목 유불리 보정은 있으나, 공통 원점수가 뼈대입니다.</p>
+<div class="warning-box"><strong>자주 하는 착각:</strong> “미적만 잘하면 된다”는 아닙니다. 수학Ⅰ·Ⅱ 문항이 더 많습니다.</div>
+<h3>영어 절대평가</h3><p>1등급 컷은 원점수 90입니다. 빈칸·장문에서 두세 개 놓치면 2등급으로 내려갑니다. 듣기 17을 먼저 고정하는 것이 1등급의 최소 조건입니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>영역과 구성을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#dc2626","prompt":"영역과 구성을 짝지으세요.","pairs":[{"term":"국어","def":"45문항 · 80분 · 공통+선택"},{"term":"수학 미적분","def":"공통 Ⅰ·Ⅱ + 미적 선택 · 100분"},{"term":"영어","def":"45문항 · 듣기 17 · 절대평가"},{"term":"물리학 I","def":"20문항 · 30분 · 역학~현대"},{"term":"생명과학 I","def":"20문항 · 30분 · 유전·항상성"}]};</script>
+<h2>개념 확인</h2>
+<p>이 장에서 정리한 핵심만 고르세요. 게임은 이 페이지 안에 있습니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#dc2626","questions":[{"q":"2027 수능 국어 시간은?","choices":["70분","80분","100분","60분"],"answer":1},{"q":"수학 선택으로 이 노트가 고정한 과목은?","choices":["확률과 통계","기하","미적분","경제수학"],"answer":2},{"q":"영어 1등급 원점수 컷은?","choices":["80","85","90","95"],"answer":2},{"q":"한국사를 안 치면?","choices":["한국사만 0점","탐구만 무효","성적 전체 무효","재응시 가능"],"answer":2},{"q":"탐구 한 과목 문항 수는?","choices":["15","20","30","45"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  var c=document.getElementById('sim-scene'); if(!c||typeof THREE==='undefined') return;
+  var s=new THREE.Scene();
+  var cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);
+  cam.position.set(0,0.4,9); cam.lookAt(0,0,0);
+  var r; try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight); r.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  c.appendChild(r.domElement);
+  var core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.15,1), new THREE.MeshBasicMaterial({color:0xdc2626,wireframe:true}));
+  s.add(core);
+  var ring=new THREE.Mesh(new THREE.TorusGeometry(2.2,0.05,10,64), new THREE.MeshBasicMaterial({color:0xf59e0b,transparent:true,opacity:0.7}));
+  ring.rotation.x=Math.PI/2.4; s.add(ring);
+  var hint=document.querySelector('.interact-hint');
+  var caps=["공통이 점수 뼈대입니다.","미적은 선택 25% 안쪽입니다.","영어는 90점부터 1등급입니다."]; var ci=0,t=0;
+  if(hint) hint.textContent=caps[0];
+  var md=false,px=0,py=0;
+  c.addEventListener('mousedown',function(e){md=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup',function(){md=false;});
+  c.addEventListener('mousemove',function(e){if(!md)return;s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;});
+  function a(){requestAnimationFrame(a);t+=0.016;core.rotation.y+=0.006;ring.rotation.z+=0.004;
+    if(hint&&t>4){t=0;ci=(ci+1)%caps.length;hint.textContent=caps[ci];}
+    r.render(s,cam);} a();
+})();
+</script>
+</body></html>

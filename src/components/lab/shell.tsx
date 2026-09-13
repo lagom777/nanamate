@@ -1,5 +1,4 @@
 import { Link } from "@tanstack/react-router";
-import { GAMES } from "@/lib/games/catalog";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { SignedIn, SignedOut, UserButton } from "@/lib/auth/gates";
 
@@ -13,7 +12,7 @@ export function LabHeader({ compact = false }: { compact?: boolean }) {
           Nanamate
         </span>
         <span className="text-xs font-medium tracking-[0.16em] text-muted uppercase">
-          Lab
+          수능 이과
         </span>
       </Link>
       <div className="flex items-center gap-3 text-sm">
@@ -21,7 +20,7 @@ export function LabHeader({ compact = false }: { compact?: boolean }) {
           강의 노트
         </a>
         {!compact && (
-          <span className="hidden text-muted sm:inline">{GAMES.length}과목 · 각 9장</span>
+          <span className="hidden text-muted sm:inline">국어 · 미적 · 영어 · 물1 · 생1</span>
         )}
         {isPending ? (
           <div className="h-8 w-20 animate-pulse rounded-sm bg-subtle" />

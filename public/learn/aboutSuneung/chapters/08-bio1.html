@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>생명과학 I — 수능 이과</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">표지 · 이과 총람</a></li>
+<li><a href="01-overview.html">1. 수능 이과 한눈에</a></li>
+<li><a href="02-korean-reading.html">2. 국어 독서</a></li>
+<li><a href="03-korean-lit.html">3. 국어 문학</a></li>
+<li><a href="04-calc-diff.html">4. 미적분 — 극한·미분</a></li>
+<li><a href="05-calc-int.html">5. 미적분 — 적분·활용</a></li>
+<li><a href="06-english.html">6. 수능 영어</a></li>
+<li><a href="07-phys1.html">7. 물리학 I</a></li>
+<li><a href="08-bio1.html" style="color:var(--accent);font-weight:600;">8. 생명과학 I</a></li>
+<li><a href="09-strategy.html">9. 실전 시간·오답</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>생명과학 I</h1><p class="authors">Chapter 8 — 세포·유전·항상성·생태</p></header>
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">효소는 열을 주지 않습니다.</span>
+<h2>생1 범위</h2>
+<p>생명과학 I은 생명 현상의 특성, 세포와 물질대사, <strong>유전</strong>(멘델·가계도·염색체), 화신경과 항상성, 방어 작용, 생태계입니다. 생Ⅱ의 분자생물 실험·진화 심화·식물 생리는 범위 밖이지만, 효소·삼투·피드백은 매해 나옵니다.</p>
+<div class="info-card"><h4>가계도</h4><p>열성은 건너뛰고, 우성은 매 세대에 나타날 수 있습니다. 성염색체는 남녀 비가 어긋납니다. 보인자(정상 표현형)를 환자로 읽으면 한 세대를 망칩니다.</p></div>
+<h2>난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바에서 난이도를 바꿀 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>생1은 ‘어디가 무엇을 하는가’와 ‘누가 누구에게 유전자를 넘기는가’입니다.</p>
+<ul><li>효소: 활성 부위가 활성화 에너지를 낮춥니다. 온도·pH가 구조를 흔듭니다.</li><li>항상성: 음성 피드백이 기본(혈당·체온).</li><li>면역: 1차는 장벽, 2차는 식균, 3차는 림프구의 특이성.</li><li>생태계: 생산자→소비자, 에너지 10% 규칙의 감각.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<h3>유전 문항</h3><p>가계도에서 열성 환자 부모는 둘 다 보인자일 수 있습니다. X열성은 아들에게 나타나고 어머니가 보인자인 그림이 전형입니다. 염색체 비분리는 제1분열이면 상동염색체, 제2분열이면 자매염색분체가 붙습니다. 핵형에서 n과 2n을 먼저 셉니다.</p>
+<p>흥분의 전도는 분극→탈분극→재분극. 시냅스는 화학 전달이라 한 방향입니다. 혈당은 인슐린이 낮추고 글루카곤이 높입니다. 둘이 같은 방향으로 적힌 보기가 함정입니다.</p>
+<div class="warning-box"><strong>함정:</strong> 효소가 반응열을 공급한다는 문장. 효소는 경로의 문턱을 낮출 뿐 에너지를 만들어 주지 않습니다.</div>
+</div>
+<h2>직접 해보기</h2>
+<p>생1 개념과 한 줄을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#dc2626","prompt":"생1 개념과 한 줄을 짝지으세요.","pairs":[{"term":"효소","def":"활성화 에너지를 낮춘다"},{"term":"음성 피드백","def":"혈당·체온을 되돌린다"},{"term":"X열성","def":"아들에게 나타나기 쉽다"},{"term":"시냅스","def":"한 방향 화학 전달"},{"term":"인슐린","def":"혈당을 낮춘다"}]};</script>
+<h2>개념 확인</h2>
+<p>이 장에서 정리한 핵심만 고르세요. 게임은 이 페이지 안에 있습니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#dc2626","questions":[{"q":"효소의 역할은?","choices":["반응열 공급","활성화 에너지 하강","유전자 복제","산소 운반"],"answer":1},{"q":"인슐린의 효과는?","choices":["혈당 상승","혈당 하강","항상 일정","면역 억제"],"answer":1},{"q":"시냅스 전달 방향은?","choices":["양방향","한 방향","무작위","빛만"],"answer":1},{"q":"열성 형질이 세대를 건너뛰면?","choices":["불가능","보인자가 있을 수 있다","항상 우성","성염색체만"],"answer":1},{"q":"생1 범위가 아닌 것은?","choices":["가계도","항상성","식물 광인산화 심화","방어 작용"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  var c=document.getElementById('sim-scene'); if(!c||typeof THREE==='undefined') return;
+  var s=new THREE.Scene();
+  var cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);
+  cam.position.set(0,0.4,9); cam.lookAt(0,0,0);
+  var r; try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight); r.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  c.appendChild(r.domElement);
+  var core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.15,1), new THREE.MeshBasicMaterial({color:0xdc2626,wireframe:true}));
+  s.add(core);
+  var ring=new THREE.Mesh(new THREE.TorusGeometry(2.2,0.05,10,64), new THREE.MeshBasicMaterial({color:0xf59e0b,transparent:true,opacity:0.7}));
+  ring.rotation.x=Math.PI/2.4; s.add(ring);
+  var hint=document.querySelector('.interact-hint');
+  var caps=["효소는 열을 주지 않습니다.","인슐린은 혈당을 내립니다.","가계도는 보인자를 먼저 봅니다."]; var ci=0,t=0;
+  if(hint) hint.textContent=caps[0];
+  var md=false,px=0,py=0;
+  c.addEventListener('mousedown',function(e){md=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup',function(){md=false;});
+  c.addEventListener('mousemove',function(e){if(!md)return;s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;});
+  function a(){requestAnimationFrame(a);t+=0.016;core.rotation.y+=0.006;ring.rotation.z+=0.004;
+    if(hint&&t>4){t=0;ci=(ci+1)%caps.length;hint.textContent=caps[ci];}
+    r.render(s,cam);} a();
+})();
+</script>
+</body></html>

@@ -7,7 +7,7 @@ function Login() {
   return (
     <main className="grid min-h-dvh place-items-center bg-bg px-6 text-fg">
       <div className="w-full max-w-sm">
-        <p className="text-2xl font-semibold tracking-tight">Nanamate Lab</p>
+        <p className="text-2xl font-semibold tracking-tight">Nanamate</p>
         <h1 className="mt-3 text-lg font-medium">로그인</h1>
         <p className="mt-1 mb-6 text-sm text-muted">기록은 이 브라우저에 남습니다. 로그인은 선택입니다.</p>
         {authEnabled ? (
