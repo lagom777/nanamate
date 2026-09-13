@@ -1,7 +1,11 @@
 {
   "name": "nanamate",
   "compatibility_date": "2026-05-06",
-  "pages_build_output_dir": "./public/learn",
+  "workers_dev": true,
+  "preview_urls": true,
+  "build": {
+    "command": "node scripts/export-static.mjs"
+  },
   "assets": {
     "directory": "./public/learn"
   }
