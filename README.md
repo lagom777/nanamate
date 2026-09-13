@@ -1,20 +1,15 @@
 # nanamate
 
-지식마다 다른 게임을 두는 학습 허브. 예전 분야별 강의 노트는 그대로 남아 있습니다.
+정적 HTML 학습 허브. Cloudflare Pages는 `public/learn`을 사이트 루트로 올립니다.
 
-- **게임** — 루트 앱. 과목당 9장. 수능 23과목은 기본/심화, 과목마다 다른 손맛.
-- **강의 노트** — `/learn/` (기존 aboutAI, aboutPsy, … HTML)
+- **허브** — `index.html` / `public/learn/index.html`
+- **강의 노트** — `aboutAI`, `aboutPsy`, TOEIC, TEPS, …
+- **Lab** — `lab.html` 시그니처 게임
 
 ## 실행
 
-```bash
-npm install
-npm run dev
-```
-
-게임 허브와 `/learn/` 강의 노트가 같이 열립니다.
+정적 파일만 서빙하면 됩니다. 빌드 없음.
 
 ```bash
-npm run build
-npm run typecheck
+python3 -m http.server 8080 --directory public/learn
 ```
