@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미적분 — 적분·활용 — 수능 이과</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">표지 · 이과 총람</a></li>
+<li><a href="01-overview.html">1. 수능 이과 한눈에</a></li>
+<li><a href="02-korean-reading.html">2. 국어 독서</a></li>
+<li><a href="03-korean-lit.html">3. 국어 문학</a></li>
+<li><a href="04-calc-diff.html">4. 미적분 — 극한·미분</a></li>
+<li><a href="05-calc-int.html" style="color:var(--accent);font-weight:600;">5. 미적분 — 적분·활용</a></li>
+<li><a href="06-english.html">6. 수능 영어</a></li>
+<li><a href="07-phys1.html">7. 물리학 I</a></li>
+<li><a href="08-bio1.html">8. 생명과학 I</a></li>
+<li><a href="09-strategy.html">9. 실전 시간·오답</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>미적분 — 적분·활용</h1><p class="authors">Chapter 5 — 부정적분부터 넓이·부피</p></header>
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">적분은 누적입니다.</span>
+<h2>적분이 묻는 것</h2>
+<p>미적분 선택 뒷부분은 <strong>부정적분, 치환·부분적분, 정적분, 넓이, 속도와 위치, 회전체 부피</strong>입니다. 미분의 역연산이라는 한 줄이 출발점이고, 정적분은 리만 합의 극한입니다.</p>
+<div class="formula">∫f' = f+C · ∫ₐᵇ f = F(b)−F(a) · 부분적분 ∫u dv = uv−∫v du</div>
+<h2>난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바에서 난이도를 바꿀 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>적분은 조각을 더해 넓이(또는 변화의 누적)를 되돌리는 일입니다.</p>
+<ul><li>속도 v를 적분하면 위치의 변화입니다.</li><li>곡선 사이 넓이는 위−아래를 적분합니다. 구간에서 누가 위인지 먼저 봅니다.</li><li>치환은 합성미분을 거꾸로, 부분적분은 곱의 미분을 거꾸로입니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<h3>회전체</h3><p>x축 회전 원판법: π∫[R(x)]² dx. 껍질법: 2π∫ r h dx. 축이 y면 변수를 바꿉니다. 단면이 환이면 바깥제곱−안제곱입니다.</p>
+<p>정적분으로 정의된 함수 F(x)=∫ₐˣ f 이면 F'=f (FTC). 위끝이 합성 g(x)이면 연쇄 f(g)g'. 이상적분처럼 무한대를 넣으라는 식은 교육과정 밖이지만, 급수와 정적분을 섞어 수렴을 묻는 문항은 미적 선택에 있습니다.</p>
+<div class="warning-box"><strong>함정:</strong> 넓이에 부호를 남기면 아래쪽 넓이가 음수가 되어 합이 줄어듭니다. 넓이 문제는 절댓값 또는 구간 분할입니다.</div>
+</div>
+<h2>직접 해보기</h2>
+<p>적분 도구와 쓰임을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#dc2626","prompt":"적분 도구와 쓰임을 짝지으세요.","pairs":[{"term":"부정적분","def":"미분의 역 · +C"},{"term":"정적분","def":"F(b)−F(a)"},{"term":"치환적분","def":"합성미분의 역"},{"term":"부분적분","def":"곱의 미분의 역"},{"term":"회전체 원판","def":"π∫R² dx"}]};</script>
+<h2>개념 확인</h2>
+<p>이 장에서 정리한 핵심만 고르세요. 게임은 이 페이지 안에 있습니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#dc2626","questions":[{"q":"속도의 정적분은?","choices":["가속도","위치의 변화","질량","기울기"],"answer":1},{"q":"넓이 계산에서 아래쪽 그래프를 그대로 더하면?","choices":["항상 맞다","음수 구간이 넓이를 깎는다","부피가 된다","C가 생긴다"],"answer":1},{"q":"F(x)=∫ₐˣ f 이면 F'은?","choices":["0","f","F","1/f"],"answer":1},{"q":"위끝이 g(x)이면?","choices":["f(g)만","f(g)·g'","g/f","적분 불가"],"answer":1},{"q":"부분적분 공식은?","choices":["uv+∫v du","uv−∫v du","u/v","ln uv"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  var c=document.getElementById('sim-scene'); if(!c||typeof THREE==='undefined') return;
+  var s=new THREE.Scene();
+  var cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);
+  cam.position.set(0,0.4,9); cam.lookAt(0,0,0);
+  var r; try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight); r.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  c.appendChild(r.domElement);
+  var core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.15,1), new THREE.MeshBasicMaterial({color:0xdc2626,wireframe:true}));
+  s.add(core);
+  var ring=new THREE.Mesh(new THREE.TorusGeometry(2.2,0.05,10,64), new THREE.MeshBasicMaterial({color:0xf59e0b,transparent:true,opacity:0.7}));
+  ring.rotation.x=Math.PI/2.4; s.add(ring);
+  var hint=document.querySelector('.interact-hint');
+  var caps=["적분은 누적입니다.","넓이는 부호를 버립니다.","위끝이 합성이면 연쇄입니다."]; var ci=0,t=0;
+  if(hint) hint.textContent=caps[0];
+  var md=false,px=0,py=0;
+  c.addEventListener('mousedown',function(e){md=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup',function(){md=false;});
+  c.addEventListener('mousemove',function(e){if(!md)return;s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;});
+  function a(){requestAnimationFrame(a);t+=0.016;core.rotation.y+=0.006;ring.rotation.z+=0.004;
+    if(hint&&t>4){t=0;ci=(ci+1)%caps.length;hint.textContent=caps[ci];}
+    r.render(s,cam);} a();
+})();
+</script>
+</body></html>

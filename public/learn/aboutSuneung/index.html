@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수능 이과: 국어·미적·영어·물리1·생1</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../shared/light-theme.css">
+<script defer src="../shared/i18n.js"></script>
+<script defer src="../shared/support.js"></script>
+<script defer src="../shared/search.js"></script>
+<script defer src="../shared/difficulty.js"></script>
+<script defer src="../shared/quizgame3d.js"></script>
+<script defer src="../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="index.html" style="color:var(--accent);font-weight:600;">표지 · 이과 총람</a></li>
+<li><a href="chapters/01-overview.html">1. 수능 이과 한눈에</a></li>
+<li><a href="chapters/02-korean-reading.html">2. 국어 독서</a></li>
+<li><a href="chapters/03-korean-lit.html">3. 국어 문학</a></li>
+<li><a href="chapters/04-calc-diff.html">4. 미적분 — 극한·미분</a></li>
+<li><a href="chapters/05-calc-int.html">5. 미적분 — 적분·활용</a></li>
+<li><a href="chapters/06-english.html">6. 수능 영어</a></li>
+<li><a href="chapters/07-phys1.html">7. 물리학 I</a></li>
+<li><a href="chapters/08-bio1.html">8. 생명과학 I</a></li>
+<li><a href="chapters/09-strategy.html">9. 실전 시간·오답</a></li>
+</ol></aside>
+<main>
+<header class="paper-header">
+  <h1>수능 이과,<br><em>다섯 과목</em>을<br>한 흐름으로</h1>
+  <p class="authors">2027학년도 수능 · 국어 · 수학(미적분) · 영어 · 물리학 I · 생명과학 I</p>
+  <p class="affiliation">게임을 따로 모으지 않습니다. 각 장 본문 안에서 손으로 확인합니다.</p>
+</header>
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">이과 선택: 국어 · 미적분 · 영어 · 물리1 · 생1</span>
+<h2>이 트랙이 다루는 것</h2>
+<p>2027학년도 수능(2015 개정) 기준으로 <strong>이과가 실제로 치는 다섯 축</strong>만 모았습니다. 국어는 공통 독서·문학, 수학은 공통(수학Ⅰ·Ⅱ) 위의 <strong>미적분</strong>, 영어는 절대평가 듣기·독해, 탐구는 <strong>물리학 I</strong>과 <strong>생명과학 I</strong>입니다. 대학 교양 물리·생물 노트와 달리, 여기서는 출제 범위와 보기 함정을 기준으로 정리합니다.</p>
+<div class="info-card"><h4>Lab은 따로 두지 않습니다</h4><p>예전에 있던 시그니처 게임 허브는 뺐습니다. 포물선·염기쌍·그래프 같은 조작은 해당 과목 장 안에 있습니다. 수능 장도 짝짓기·선택 문제를 본문 바로 아래에 붙였습니다.</p></div>
+<h2>학습 로드맵</h2>
+<div class="outline-grid">
+  <div class="outline-card"><div class="num">01</div><h4>이과 한눈에</h4><p>시간표, 공통+선택, 절대평가</p></div>
+  <div class="outline-card"><div class="num">02–03</div><h4>국어</h4><p>독서 유형 · 문학 갈래와 보기</p></div>
+  <div class="outline-card"><div class="num">04–05</div><h4>미적분</h4><p>극한·미분 · 적분과 활용</p></div>
+  <div class="outline-card"><div class="num">06</div><h4>영어</h4><p>듣기 17 · 빈칸·순서·삽입·장문</p></div>
+  <div class="outline-card"><div class="num">07</div><h4>물리학 I</h4><p>역학부터 파동·광전까지</p></div>
+  <div class="outline-card"><div class="num">08</div><h4>생명과학 I</h4><p>세포·유전·항상성·생태계</p></div>
+  <div class="outline-card"><div class="num">09</div><h4>실전</h4><p>시간 배분과 오답 패턴</p></div>
+</div>
+<h2>시험 뼈대</h2>
+<p>국어 45문항 80분(공통 독서·문학 + 화작/언매 택1). 수학 30문항 100분(공통 수학Ⅰ·Ⅱ + 미적분). 영어 45문항 70분(듣기 17 포함, 등급만). 탐구는 과목당 20문항 30분, 최대 2과목. 이 노트는 탐구를 물리1·생1로 고정합니다.</p>
+</main></div>
+<script>
+(function(){
+  var c=document.getElementById('sim-scene'); if(!c||typeof THREE==='undefined') return;
+  var s=new THREE.Scene();
+  var cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);
+  cam.position.set(0,0.4,9); cam.lookAt(0,0,0);
+  var r; try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight); r.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  c.appendChild(r.domElement);
+  var core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.15,1), new THREE.MeshBasicMaterial({color:0xdc2626,wireframe:true}));
+  s.add(core);
+  var ring=new THREE.Mesh(new THREE.TorusGeometry(2.2,0.05,10,64), new THREE.MeshBasicMaterial({color:0xf59e0b,transparent:true,opacity:0.7}));
+  ring.rotation.x=Math.PI/2.4; s.add(ring);
+  var hint=document.querySelector('.interact-hint');
+  var caps=["국어·미적·영어가 점수 뼈대입니다.","탐구는 물리1과 생1, 과목당 30분.","게임은 허브가 아니라 각 장 안에 있습니다."]; var ci=0,t=0;
+  if(hint) hint.textContent=caps[0];
+  var md=false,px=0,py=0;
+  c.addEventListener('mousedown',function(e){md=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup',function(){md=false;});
+  c.addEventListener('mousemove',function(e){if(!md)return;s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;});
+  function a(){requestAnimationFrame(a);t+=0.016;core.rotation.y+=0.006;ring.rotation.z+=0.004;
+    if(hint&&t>4){t=0;ci=(ci+1)%caps.length;hint.textContent=caps[ci];}
+    r.render(s,cam);} a();
+})();
+</script>
+</body></html>

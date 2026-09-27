@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>국어 독서 — 수능 이과</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">표지 · 이과 총람</a></li>
+<li><a href="01-overview.html">1. 수능 이과 한눈에</a></li>
+<li><a href="02-korean-reading.html" style="color:var(--accent);font-weight:600;">2. 국어 독서</a></li>
+<li><a href="03-korean-lit.html">3. 국어 문학</a></li>
+<li><a href="04-calc-diff.html">4. 미적분 — 극한·미분</a></li>
+<li><a href="05-calc-int.html">5. 미적분 — 적분·활용</a></li>
+<li><a href="06-english.html">6. 수능 영어</a></li>
+<li><a href="07-phys1.html">7. 물리학 I</a></li>
+<li><a href="08-bio1.html">8. 생명과학 I</a></li>
+<li><a href="09-strategy.html">9. 실전 시간·오답</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>국어 독서</h1><p class="authors">Chapter 2 — 인문·사회·과학 지문</p></header>
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">답이 지문 안에 있습니다.</span>
+<h2>독서가 묻는 것</h2>
+<p>공통 독서는 지문 밖 배경지식을 요구하지 않습니다. 답이 되는 문장은 거의 항상 <strong>지문이 실제로 말한 범위</strong> 안에 있습니다. 유형은 중심 내용, 세부 정보, 추론, 적용, 빈칸·순서·삽입입니다.</p>
+<div class="info-card"><h4>읽는 순서</h4><p>첫 문단에서 화제와 입장을 잡고, 중간에서 구분 기준(A와 B를 가르는 축)을 표시한 뒤, 보기와 지문을 한 줄씩 대조합니다. 보기 중 “지문이 가능성만 말한 것을 필연으로 바꾼 문장”이 최다 오답입니다.</p></div>
+<h2>난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바에서 난이도를 바꿀 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>독서는 ‘내가 아는 이야기’가 아니라 ‘이 글이 한 말’을 고르는 시험입니다.</p>
+<h3>유형</h3><ul><li>중심: 글 전체가 밀고 가는 주장</li><li>세부: 숫자·고유명사·조건</li><li>추론: 지문이 허용하는 다음 문장</li><li>적용: 사례를 지문 기준에 넣기</li></ul>
+<div class="study-tip"><strong>TIP:</strong> 과학 지문은 원인과 조건을 동그라미. 사회 지문은 분류 기준을 네모.</div>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<h3>함정 셋</h3><p>① 부분 참 — 한 문단만 맞으면 전체를 대표하지 못합니다. ② 가치 첨가 — “바람직하다”처럼 지문이 평가하지 않은 말을 넣습니다. ③ 인과 뒤집기 — 결과가 원인으로 바뀝니다.</p>
+<p>인문은 개념 정의 → 구분 → 한계. 사회는 분류와 전환(일상화, 제도화). 과학은 구조·조건·실험 결과의 대응입니다. 빈칸은 앞뒤 지시어와 접속 관계를 먼저 보고, 수식어가 긴 보기를 의심합니다.</p>
+<div class="warning-box"><strong>함정:</strong> 선지에 ‘항상’, ‘오직’, ‘반드시’가 있으면 지문의 양보·예외 문장을 다시 찾으세요.</div>
+</div>
+<h2>직접 해보기</h2>
+<p>독서 유형과 묻는 것을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#dc2626","prompt":"독서 유형과 묻는 것을 짝지으세요.","pairs":[{"term":"중심 내용","def":"글 전체가 밀고 가는 주장"},{"term":"세부 정보","def":"숫자·조건·고유명사 일치"},{"term":"추론","def":"지문이 허용하는 다음 진술"},{"term":"적용","def":"사례를 지문 기준에 넣기"},{"term":"부분 참","def":"한 문단만 맞아 전체를 대표 못 함"}]};</script>
+<h2>개념 확인</h2>
+<p>이 장에서 정리한 핵심만 고르세요. 게임은 이 페이지 안에 있습니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#dc2626","questions":[{"q":"독서 정답의 근거는?","choices":["교과 지식","지문이 말한 범위","상식","작가 연보"],"answer":1},{"q":"최다 오답 형태는?","choices":["맞춤법","가능성→필연으로 바꾼 문장","짧은 보기","숫자 없음"],"answer":1},{"q":"과학 지문에서 먼저 표시할 것은?","choices":["운율","원인과 조건","화자","각운"],"answer":1},{"q":"‘반드시’가 있는 선지를 보면?","choices":["바로 정답","예외·양보 문장을 다시 찾는다","건너뛴다","길어서 고른다"],"answer":1},{"q":"공통 독서 출제 소재가 아닌 것은?","choices":["인문","사회","과학","듣기 대본"],"answer":3}]};</script>
+</main></div>
+<script>
+(function(){
+  var c=document.getElementById('sim-scene'); if(!c||typeof THREE==='undefined') return;
+  var s=new THREE.Scene();
+  var cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);
+  cam.position.set(0,0.4,9); cam.lookAt(0,0,0);
+  var r; try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight); r.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  c.appendChild(r.domElement);
+  var core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.15,1), new THREE.MeshBasicMaterial({color:0xdc2626,wireframe:true}));
+  s.add(core);
+  var ring=new THREE.Mesh(new THREE.TorusGeometry(2.2,0.05,10,64), new THREE.MeshBasicMaterial({color:0xf59e0b,transparent:true,opacity:0.7}));
+  ring.rotation.x=Math.PI/2.4; s.add(ring);
+  var hint=document.querySelector('.interact-hint');
+  var caps=["답이 지문 안에 있습니다.","부분 참을 전체로 키우지 마세요.","양보 문장이 함정을 가릅니다."]; var ci=0,t=0;
+  if(hint) hint.textContent=caps[0];
+  var md=false,px=0,py=0;
+  c.addEventListener('mousedown',function(e){md=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup',function(){md=false;});
+  c.addEventListener('mousemove',function(e){if(!md)return;s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;});
+  function a(){requestAnimationFrame(a);t+=0.016;core.rotation.y+=0.006;ring.rotation.z+=0.004;
+    if(hint&&t>4){t=0;ci=(ci+1)%caps.length;hint.textContent=caps[ci];}
+    r.render(s,cam);} a();
+})();
+</script>
+</body></html>

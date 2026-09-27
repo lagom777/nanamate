@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미적분 — 극한·미분 — 수능 이과</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">표지 · 이과 총람</a></li>
+<li><a href="01-overview.html">1. 수능 이과 한눈에</a></li>
+<li><a href="02-korean-reading.html">2. 국어 독서</a></li>
+<li><a href="03-korean-lit.html">3. 국어 문학</a></li>
+<li><a href="04-calc-diff.html" style="color:var(--accent);font-weight:600;">4. 미적분 — 극한·미분</a></li>
+<li><a href="05-calc-int.html">5. 미적분 — 적분·활용</a></li>
+<li><a href="06-english.html">6. 수능 영어</a></li>
+<li><a href="07-phys1.html">7. 물리학 I</a></li>
+<li><a href="08-bio1.html">8. 생명과학 I</a></li>
+<li><a href="09-strategy.html">9. 실전 시간·오답</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>미적분 — 극한·미분</h1><p class="authors">Chapter 4 — 수열 극한부터 도함수</p></header>
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">|r|&lt;1이어야 rⁿ이 죽습니다.</span>
+<h2>미적분이 실제로 묻는 앞부분</h2>
+<p>선택 미적분의 앞은 <strong>수열의 극한, 급수, 함수의 극한·연속, 미분법</strong>입니다. 공통 수학Ⅱ의 미분과 겹치되, 지수·로그·삼각의 합성, 음함수·매개변수, 도함수의 활용(접선, 증가감소, 최대최소)까지 깊이가 커집니다.</p>
+<div class="formula">|r|&lt;1 ⇒ rⁿ→0 · (1+1/n)ⁿ→e · (sinθ)/θ→1 (θ→0, 라디안)</div>
+<div class="info-card"><h4>기호를 먼저 고정</h4><p>수렴하면 극한은 유일합니다. 유계라고 수렴하지는 않습니다(진동). 미분가능하면 연속이지만 역은 거짓입니다(|x| at 0).</p></div>
+<h2>난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바에서 난이도를 바꿀 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>극한은 ‘가까워지는 값’, 미분은 ‘그 순간 기울기’입니다.</p>
+<ul><li>등비수열 rⁿ은 |r|&lt;1일 때만 0으로 갑니다.</li><li>접선 기울기가 f'(a)입니다.</li><li>최고점·최저점은 f'=0이거나 끝점입니다. 기울기 0이 항상 극값은 아닙니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<h3>합성·역함수</h3><p>(f∘g)' = f'(g)g'. 역함수 미분은 1/f'(x). 로그미분은 곱·지수가 얽힌 식에서 양변에 ln을 씌웁니다. 매개변수 x=x(t), y=y(t)이면 dy/dx = (dy/dt)/(dx/dt) (dx/dt≠0).</p>
+<p>로피탈은 0/0, ∞/∞에서만. 한 번으로 안 끝나면 조건을 다시 확인합니다. 평균값 정리: 연속+미분가능 구간에서 f'(c)=평균변화율인 c가 존재합니다. 존재만 말하고 위치를 구하라는 문제는 롤의 정리로 근을 가릅니다.</p>
+<div class="warning-box"><strong>함정:</strong> 삼각 극한을 도(degree)로 넣으면 계수가 π/180만큼 틀어집니다. 수능은 라디안입니다.</div>
+</div>
+<h2>직접 해보기</h2>
+<p>미적분 앞부분 공식과 조건을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#dc2626","prompt":"미적분 앞부분 공식과 조건을 짝지으세요.","pairs":[{"term":"rⁿ→0","def":"|r|&lt;1"},{"term":"(sinθ)/θ→1","def":"θ→0, 라디안"},{"term":"미분가능","def":"연속은 필요, 역은 거짓"},{"term":"합성함수 미분","def":"바깥 미분 × 안 미분"},{"term":"로피탈","def":"0/0 또는 ∞/∞"}]};</script>
+<h2>개념 확인</h2>
+<p>이 장에서 정리한 핵심만 고르세요. 게임은 이 페이지 안에 있습니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#dc2626","questions":[{"q":"|r|=1인 등비수열 rⁿ은?","choices":["항상 0","항상 1","1 또는 진동·발산","e"],"answer":2},{"q":"미분가능하면?","choices":["불연속일 수 있다","연속이다","적분 불가능","극대만 있다"],"answer":1},{"q":"삼각 극한의 기본 단위는?","choices":["도","라디안","그레이드","퍼센트"],"answer":1},{"q":"역함수 미분은?","choices":["f'(x)","1/f'(x)","f(x)²","ln f"],"answer":1},{"q":"f'=0이면 항상 극값인가?","choices":["예","아니오","적분일 때만","연속일 때만"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  var c=document.getElementById('sim-scene'); if(!c||typeof THREE==='undefined') return;
+  var s=new THREE.Scene();
+  var cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);
+  cam.position.set(0,0.4,9); cam.lookAt(0,0,0);
+  var r; try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight); r.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  c.appendChild(r.domElement);
+  var core=new THREE.Mesh(new THREE.IcosahedronGeometry(1.15,1), new THREE.MeshBasicMaterial({color:0xdc2626,wireframe:true}));
+  s.add(core);
+  var ring=new THREE.Mesh(new THREE.TorusGeometry(2.2,0.05,10,64), new THREE.MeshBasicMaterial({color:0xf59e0b,transparent:true,opacity:0.7}));
+  ring.rotation.x=Math.PI/2.4; s.add(ring);
+  var hint=document.querySelector('.interact-hint');
+  var caps=["|r|&lt;1이어야 rⁿ이 죽습니다.","기울기 0 ≠ 극값.","각은 라디안입니다."]; var ci=0,t=0;
+  if(hint) hint.textContent=caps[0];
+  var md=false,px=0,py=0;
+  c.addEventListener('mousedown',function(e){md=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup',function(){md=false;});
+  c.addEventListener('mousemove',function(e){if(!md)return;s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;});
+  function a(){requestAnimationFrame(a);t+=0.016;core.rotation.y+=0.006;ring.rotation.z+=0.004;
+    if(hint&&t>4){t=0;ci=(ci+1)%caps.length;hint.textContent=caps[ci];}
+    r.render(s,cam);} a();
+})();
+</script>
+</body></html>
