@@ -6,6 +6,7 @@
 정적 HTML 학습 허브. Cloudflare Pages는 `public/learn`을 사이트 루트로 올립니다.
 
 - **허브** — `index.html` / `public/learn/index.html`
+- **수능** — `suneung.html` 수능 이과 전용 목록(과목별 탭)
 - **강의 노트** — `aboutAI`, `aboutPsy`, TOEIC, TEPS, …
 - **Lab** — `lab.html` 시그니처 게임
 
