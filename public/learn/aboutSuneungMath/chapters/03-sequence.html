@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>수열 — 수능 수학</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>수학 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li class="grp">수학Ⅰ</li>
+<li><a href="01-exp-log.html">1. 지수와 로그</a></li>
+<li><a href="02-trig.html">2. 삼각함수</a></li>
+<li><a href="03-sequence.html" style="color:var(--accent);font-weight:600;">3. 수열</a></li>
+<li class="grp">수학Ⅱ</li>
+<li><a href="04-limit.html">4. 함수의 극한과 연속</a></li>
+<li><a href="05-diff.html">5. 미분</a></li>
+<li><a href="06-integral.html">6. 적분</a></li>
+<li class="grp">미적분</li>
+<li><a href="07-seq-limit.html">7. 수열의 극한</a></li>
+<li><a href="08-diff-methods.html">8. 여러 가지 미분법</a></li>
+<li><a href="09-int-methods.html">9. 여러 가지 적분법</a></li>
+<li class="grp">전략</li>
+<li><a href="10-strategy.html">10. 수능 수학 실전 전략</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>수열</h1><p class="authors">Part 3 · 수학Ⅰ</p><p class="affiliation">등차·등비수열, 시그마, 수열의 합, 귀납적 정의, 수학적 귀납법</p></header>
+<div class="stat-row"><div class="stat"><b>4.1</b><span>회당 문항 수</span></div><div class="stat"><b>13.9점</b><span>회당 배점</span></div><div class="stat"><b>4~5</b><span>회차별 범위</span></div><div class="stat"><b>69</b><span>최근 17회 누적</span></div></div>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2021학년도는 구 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>수열은 일반항과 합의 계산, 그리고 합 S<sub>n</sub>에서 항 a<sub>n</sub>을 복원하는 추론이 함께 나옵니다. 등차수열과 등비수열은 공식을 조건에 맞게 쓰고, 그 밖의 수열은 부분분수·분모의 유리화·계차로 합을 상쇄합니다. 점화식은 항을 몇 개 구해 규칙을 찾은 뒤, 수학적 귀납법으로 그 규칙이 모든 자연수에서 성립하는지 확인합니다.</p>
+<h2>1. 등차수열과 등차중항</h2>
+<p>첫째항이 a, 공차가 d인 등차수열은 이웃한 항의 차가 항상 d입니다. 제n항과 첫째항부터 제n항까지의 합은 다음과 같습니다. 여기서 l = a<sub>n</sub>은 끝항입니다.</p>
+<div class="formula">a<sub>n</sub> = a + (n − 1)d<br>S<sub>n</sub> = n(a + l) / 2 = n{2a + (n − 1)d} / 2</div>
+<p>합은 첫째항과 끝항의 평균에 항의 개수를 곱한 것입니다. 1부터 n까지의 자연수의 합이 n(n + 1)/2인 것도 평균 (1 + n)/2에 n을 곱한 결과입니다. n = 5이면 (1 + 5) × 5 / 2 = 15이고, 1 + 2 + 3 + 4 + 5 = 15입니다.</p>
+<p>제3항이 7, 제7항이 19이면 a + 2d = 7, a + 6d = 19입니다. 두 식을 빼면 4d = 12, d = 3, a = 1입니다. 수열은 1, 4, 7, 10, …입니다. 제10항은 1 + 9 · 3 = 28이고, S<sub>10</sub> = 10 × (1 + 28) / 2 = 145입니다. 공차 3인 열 항의 합으로 다시 보면 10 × (2 · 1 + 9 · 3) / 2 = 10 × 29 / 2 = 145입니다.</p>
+<p>세 수 a, b, c가 이 순서대로 등차수열을 이루면 2b = a + c입니다. b를 a와 c의 등차중항이라고 하며 b = (a + c) / 2입니다. 3과 11의 등차중항은 7이고, 수열 3, 7, 11의 공차는 4입니다.</p>
+<p>두 수 사이에 항을 여러 개 넣을 때도 전체는 한 등차수열입니다. 2와 14 사이에 3개를 넣으면 항이 5개, 간격은 4칸이므로 공차 (14 − 2) / 4 = 3입니다. 수열은 2, 5, 8, 11, 14입니다. 일반적으로 양 끝 사이에 m개를 넣으면 공차는 (끝 − 처음) / (m + 1)입니다.</p>
+<div class="study-tip"><strong>TIP:</strong> 공차가 0이 아니면 등차수열의 합 S<sub>n</sub>은 n에 대한 이차식입니다. 반대로 S<sub>n</sub> = pn<sup>2</sup> + qn처럼 상수항이 0인 이차식이면 a<sub>n</sub> = S<sub>n</sub> − S<sub>n−1</sub>이 n의 일차식이 되어 등차수열이 됩니다. 상수항이 남아 있으면 첫째항만 공차에서 어긋날 수 있습니다. 예를 들어 S<sub>n</sub> = n<sup>2</sup> + 1이면 a<sub>1</sub> = 2, a<sub>2</sub> = 3, a<sub>3</sub> = 5, a<sub>4</sub> = 7이라 차가 1, 2, 2로 일정하지 않습니다.</div>
+
+<h2>2. 등비수열과 등비중항</h2>
+<p>첫째항이 a, 공비가 r인 등비수열은 각 항에 r을 곱하면 다음 항이 됩니다. a ≠ 0, r ≠ 0으로 둡니다.</p>
+<div class="formula">a<sub>n</sub> = a · r<sup>n−1</sup><br>r ≠ 1일 때 S<sub>n</sub> = a(r<sup>n</sup> − 1) / (r − 1)<br>r = 1일 때 S<sub>n</sub> = na</div>
+<p>r = 1이면 모든 항이 a이고 합은 na입니다. 이 경우를 일반 공식의 분모에 넣으면 0으로 나누게 되므로 반드시 따로 둡니다. 첫째항 2, 공비 3이면 제5항은 2 · 3<sup>4</sup> = 162이고, S<sub>5</sub> = 2(3<sup>5</sup> − 1) / (3 − 1) = 2 × 242 / 2 = 242입니다. 2 + 6 + 18 + 54 + 162 = 242입니다.</p>
+<p>공비가 음수이면 부호가 번갈아 나타납니다. 첫째항 5, 공비 −2, 제6항까지의 합은</p>
+<div class="formula">S<sub>6</sub> = 5{(−2)<sup>6</sup> − 1} / (−2 − 1) = 5(64 − 1) / (−3) = −105</div>
+<p>항은 5, −10, 20, −40, 80, −160입니다. 앞에서부터 더하면 −5, 15, −25, 55, −105로 공식과 맞습니다.</p>
+<p>0이 아닌 세 수 a, b, c가 이 순서대로 등비수열을 이루면 b<sup>2</sup> = ac입니다. b를 a와 c의 등비중항이라고 합니다. ac &gt; 0이면 실수인 등비중항은 √(ac)와 −√(ac) 두 개입니다. 4와 16의 등비중항은 8과 −8입니다. 4, 8, 16은 공비 2이고, 4, −8, 16은 공비 −2입니다. −2와 −8의 등비중항도 4와 −4 두 개입니다. −2, 4, −8은 공비 −2, −2, −4, −8은 공비 2입니다. ac &lt; 0이면 제곱해서 음수가 되는 실수 b가 없으므로 등비중항은 없습니다.</p>
+<p>두 양수 사이에 m개의 양수 항을 등비로 넣으면, 처음에서 끝까지의 곱하는 횟수가 m + 1번이므로 공비는 (끝/처음)의 (m + 1)제곱근입니다. 부호가 번갈아 나타나는 공비는 그 제곱근의 부호를 따로 확인해야 합니다.</p>
+<div class="warning-box"><strong>함정:</strong> r = 1을 합 공식의 분모에 넣지 마세요. 또 등비중항을 양의 제곱근 하나만 답하면, 공비가 음수인 수열이 빠집니다. 문제에서 양수라고 한정한 경우에만 양의 중항만 취합니다.</div>
+
+<h2>3. 시그마와 자주 쓰는 합, S<sub>n</sub>과 a<sub>n</sub></h2>
+<p>∑<sub>k=1</sub><sup>n</sup> a<sub>k</sub>는 a<sub>1</sub> + a<sub>2</sub> + … + a<sub>n</sub>이라는 뜻입니다. k는 더하는 동안만 쓰는 문자라, 다른 문자로 바꿔도 합은 같습니다.</p>
+<div class="formula">∑(a<sub>k</sub> + b<sub>k</sub>) = ∑ a<sub>k</sub> + ∑ b<sub>k</sub><br>∑ c a<sub>k</sub> = c ∑ a<sub>k</sub><br>∑<sub>k=1</sub><sup>n</sup> c = cn</div>
+<div class="formula">∑<sub>k=1</sub><sup>n</sup> k = n(n + 1) / 2<br>∑<sub>k=1</sub><sup>n</sup> k<sup>2</sup> = n(n + 1)(2n + 1) / 6<br>∑<sub>k=1</sub><sup>n</sup> k<sup>3</sup> = {n(n + 1) / 2}<sup>2</sup></div>
+<p>n = 3으로 확인하면 1 + 2 + 3 = 6, 1 + 4 + 9 = 14, 1 + 8 + 27 = 36입니다. 공식은 3 · 4 / 2 = 6, 3 · 4 · 7 / 6 = 14, (3 · 4 / 2)<sup>2</sup> = 36입니다. k<sup>2</sup>의 합과 (k의 합)<sup>2</sup>은 다릅니다. n = 3에서 (∑ k)<sup>2</sup> = 36이지만 ∑ k<sup>2</sup> = 14입니다. 세제곱의 합이 (자연수 합)<sup>2</sup>과 같다는 공식과 헷갈리기 쉽습니다.</p>
+<p>∑<sub>k=1</sub><sup>n</sup> k(k + 1) = ∑(k<sup>2</sup> + k) = n(n + 1)(2n + 1)/6 + n(n + 1)/2입니다. 통분하면 n(n + 1)(n + 2) / 3입니다. n = 2이면 1 · 2 + 2 · 3 = 8이고, 2 · 3 · 4 / 3 = 8입니다.</p>
+<p>합의 시작 번호가 1이 아니면 전체를 구한 뒤 앞부분을 빼거나, 번호를 치환합니다. ∑<sub>k=1</sub><sup>n</sup> (k + 1) = ∑ k + ∑ 1 = n(n + 1)/2 + n = n(n + 3)/2입니다. 번호를 한 칸 밀면 ∑<sub>k=2</sub><sup>n+1</sup> k = {1부터 n + 1까지의 합} − 1 = (n + 1)(n + 2)/2 − 1 = n(n + 3)/2로 같습니다. n = 2이면 2 + 3 = 5이고 공식은 2 · 5 / 2 = 5입니다.</p>
+<h3>S<sub>n</sub>으로 a<sub>n</sub> 복원하기</h3>
+<p>S<sub>n</sub>이 첫째항부터 제n항까지의 합이면 항은 합의 차이로 되돌아옵니다.</p>
+<div class="formula">a<sub>1</sub> = S<sub>1</sub><br>n ≥ 2일 때 a<sub>n</sub> = S<sub>n</sub> − S<sub>n−1</sub></div>
+<p>S<sub>n</sub> = n<sup>2</sup> + n이면 a<sub>1</sub> = 2입니다. n ≥ 2이면 a<sub>n</sub> = (n<sup>2</sup> + n) − {(n − 1)<sup>2</sup> + (n − 1)} = n<sup>2</sup> + n − (n<sup>2</sup> − n) = 2n입니다. n = 1에도 2 · 1 = 2로 맞으므로 모든 자연수 n에 대해 a<sub>n</sub> = 2n입니다. 검산하면 ∑<sub>k=1</sub><sup>n</sup> 2k = 2 · n(n + 1)/2 = n<sup>2</sup> + n입니다.</p>
+<p>같은 차가 n = 1에서 깨지는 예가 S<sub>n</sub> = 2<sup>n</sup>입니다. a<sub>1</sub> = 2, n ≥ 2이면 a<sub>n</sub> = 2<sup>n</sup> − 2<sup>n−1</sup> = 2<sup>n−1</sup>입니다. n = 1에 2<sup>n−1</sup>을 넣으면 1이 되어 a<sub>1</sub> = 2와 다릅니다. 항은 2, 2, 4, 8, 16, …이고 합은 2, 4, 8, 16, …으로 2<sup>n</sup>이 됩니다. 차이 공식을 n = 1에 그대로 쓰지 않고 S<sub>1</sub>을 따로 확인해야 합니다.</p>
+<p>일부 구간만의 합은 S<sub>n</sub> − S<sub>m−1</sub> (m ≥ 2)입니다. 홀수 수열 a<sub>n</sub> = 2n − 1의 첫째항부터의 합은 n<sup>2</sup>입니다. 제3항부터 제6항까지는 5 + 7 + 9 + 11 = 32이고, S<sub>6</sub> − S<sub>2</sub> = 36 − 4 = 32입니다. 항의 개수 4, 처음 5, 끝 11로 계산해도 4 × (5 + 11) / 2 = 32입니다.</p>
+<div class="warning-box"><strong>함정:</strong> a<sub>n</sub> = S<sub>n</sub> − S<sub>n−1</sub>은 n ≥ 2일 때의 식입니다. n = 1에 넣으면 S<sub>0</sub>이 생겨 첫째항이 틀어질 수 있습니다. 차이로 구한 식에 n = 1을 대입해 S<sub>1</sub>과 같은지 꼭 비교하세요.</div>
+
+<h2>4. 부분분수, 분모의 유리화, 계차수열</h2>
+<p>등차도 등비도 아닌 합은 각 항을 이웃끼리 빼는 모양으로 바꿉니다. 가운데가 사라지고 처음과 끝만 남습니다.</p>
+<h3>부분분수</h3>
+<div class="formula">1 / {k(k + 1)} = 1/k − 1/(k + 1)<br>∑<sub>k=1</sub><sup>n</sup> 1/{k(k + 1)} = 1 − 1/(n + 1) = n/(n + 1)</div>
+<p>n = 2이면 1/2 + 1/6 = 2/3이고, 2/3과 같습니다. 간격이 2이면 계수가 생깁니다.</p>
+<div class="formula">1/k − 1/(k + 2) = 2 / {k(k + 2)}<br>1/{k(k + 2)} = (1/2){1/k − 1/(k + 2)}</div>
+<p>따라서 ∑<sub>k=1</sub><sup>n</sup> 1/{k(k + 2)} = (1/2){1 + 1/2 − 1/(n + 1) − 1/(n + 2)}입니다. n = 1이면 (1/2)(1 − 1/3) = 1/3이고, 실제 1/(1 · 3) = 1/3입니다. n = 2이면 (1/2)(1 + 1/2 − 1/3 − 1/4) = (1/2)(11/12) = 11/24입니다. 직접 더하면 1/3 + 1/8 = 11/24입니다. 앞의 1/2을 빠뜨리면 합이 두 배가 됩니다.</p>
+<h3>분모의 유리화</h3>
+<p>1 / (√k + √(k + 1))에 √(k + 1) − √k를 분자·분모에 곱하면 분모는 (k + 1) − k = 1이 되어 √(k + 1) − √k가 됩니다.</p>
+<div class="formula">∑<sub>k=1</sub><sup>n</sup> 1 / {√k + √(k + 1)} = ∑(√(k + 1) − √k) = √(n + 1) − 1</div>
+<p>가운데 항이 차례로 지워집니다. n = 1이면 √2 − 1이고, 1/(1 + √2)를 유리화한 값과 같습니다. n = 99이면 √100 − 1 = 9입니다. n = 8이면 √9 − 1 = 2입니다.</p>
+<h3>계차수열</h3>
+<p>b<sub>n</sub> = a<sub>n+1</sub> − a<sub>n</sub>을 계차수열이라고 합니다. 계차의 합은 원래 수열의 끝과 처음의 차입니다.</p>
+<div class="formula">∑<sub>k=1</sub><sup>n−1</sup> b<sub>k</sub> = a<sub>n</sub> − a<sub>1</sub><br>a<sub>n</sub> = a<sub>1</sub> + ∑<sub>k=1</sub><sup>n−1</sup> b<sub>k</sub></div>
+<p>n = 1일 때의 합은 더할 항이 없는 빈 합이라 0으로 두면, 이 식은 n = 1에도 a<sub>1</sub> = a<sub>1</sub>로 맞습니다. a<sub>1</sub> = 3이고 a<sub>n+1</sub> − a<sub>n</sub> = 2n이면 b<sub>k</sub> = 2k입니다.</p>
+<div class="formula">a<sub>n</sub> = 3 + ∑<sub>k=1</sub><sup>n−1</sup> 2k = 3 + (n − 1)n</div>
+<p>a<sub>2</sub> = 3 + 2 = 5, a<sub>3</sub> = 5 + 4 = 9, a<sub>4</sub> = 9 + 6 = 15입니다. 식 3 + n(n − 1)에 넣으면 5, 9, 15로 같습니다. 계차가 등차나 등비이면 그 합 공식으로 a<sub>n</sub>이 닫힌 식이 됩니다.</p>
+
+<h2>5. 귀납적 정의와 조건이 갈리는 점화식</h2>
+<p>첫째항과, 이웃한 항 사이의 규칙으로 수열을 정하는 것을 귀납적 정의라고 합니다. 그 규칙을 점화식이라고 합니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>점화식</th><th>수열</th><th>일반항</th></tr></thead><tbody><tr><td>a<sub>1</sub> = a, a<sub>n+1</sub> = a<sub>n</sub> + d</td><td>등차</td><td>a<sub>n</sub> = a + (n − 1)d</td></tr><tr><td>a<sub>1</sub> = a, a<sub>n+1</sub> = r a<sub>n</sub></td><td>등비</td><td>a<sub>n</sub> = a r<sup>n−1</sup></td></tr><tr><td>a<sub>n+1</sub> = p a<sub>n</sub> + q (p ≠ 1)</td><td>등비로 환원</td><td>a<sub>n</sub> − α = p<sup>n−1</sup>(a<sub>1</sub> − α)</td></tr></tbody></table></div>
+<p>셋째 경우의 α는 α = pα + q를 만족하는 수, 곧 α = q / (1 − p)입니다. a<sub>n+1</sub> − α = p(a<sub>n</sub> − α)가 되어 {a<sub>n</sub> − α}가 공비 p인 등비가 됩니다. p = 1이면 이 나눗셈을 쓸 수 없고, a<sub>n+1</sub> = a<sub>n</sub> + q인 등차로 따로 풉니다.</p>
+<p>a<sub>1</sub> = 1, a<sub>n+1</sub> = 2a<sub>n</sub> + 3이면 α = 2α + 3에서 α = −3입니다. a<sub>n+1</sub> + 3 = 2(a<sub>n</sub> + 3)이므로 a<sub>n</sub> + 3 = (1 + 3) · 2<sup>n−1</sup> = 2<sup>n+1</sup>입니다. 따라서 a<sub>n</sub> = 2<sup>n+1</sup> − 3입니다. 항은 1, 5, 13, 29, 61입니다. a<sub>2</sub> = 2 · 1 + 3 = 5 = 2<sup>3</sup> − 3, a<sub>3</sub> = 13 = 2<sup>4</sup> − 3, a<sub>5</sub> = 2<sup>6</sup> − 3 = 61로 맞습니다.</p>
+<h3>조건이 갈리는 점화식</h3>
+<p>홀수 번째와 짝수 번째에서 규칙이 다르면, 항을 직접 몇 개 적은 뒤 홀수 항만, 짝수 항만 다시 모읍니다.</p>
+<p>a<sub>1</sub> = 1이고, n이 홀수일 때 a<sub>n+1</sub> = 2a<sub>n</sub>, n이 짝수일 때 a<sub>n+1</sub> = a<sub>n</sub> + 3이라고 하면</p>
+<div class="formula">a<sub>1</sub> = 1, a<sub>2</sub> = 2, a<sub>3</sub> = 5, a<sub>4</sub> = 10, a<sub>5</sub> = 13, a<sub>6</sub> = 26, a<sub>7</sub> = 29</div>
+<p>홀수 항 b<sub>m</sub> = a<sub>2m−1</sub>은 b<sub>1</sub> = 1, b<sub>m+1</sub> = 2b<sub>m</sub> + 3입니다. 바로 앞의 점화식과 같으므로 b<sub>m</sub> = 2<sup>m+1</sup> − 3입니다. a<sub>1</sub> = 1, a<sub>3</sub> = 5, a<sub>5</sub> = 13, a<sub>7</sub> = 29가 맞습니다. 짝수 항은 그 직전 홀수 항에 2를 곱한 값이므로 a<sub>2m</sub> = 2(2<sup>m+1</sup> − 3) = 2<sup>m+2</sup> − 6입니다. a<sub>2</sub> = 2, a<sub>4</sub> = 10, a<sub>6</sub> = 26입니다.</p>
+<p>규칙 찾기 문제는 차분을 한 번 보고, 비가 일정한지도 본 다음, 홀짝으로 갈리는지 확인하는 순서가 안전합니다. 차분 a<sub>n+1</sub> − a<sub>n</sub>이 상수가 아니면 등차가 아니고, 비 a<sub>n+1</sub> / a<sub>n</sub>이 상수가 아니면 등비가 아닙니다. 둘 다 아니면 계차의 합이나 홀짝 분리로 넘어갑니다.</p>
+<div class="info-card"><h4>항 번호는 자연수입니다.</h4><p>이 교육과정에서 자연수는 1부터 시작합니다. 일반항에 n = 1을 넣어 첫째항이 나오는지, 점화식에 그 첫째항을 넣어 둘째항이 나오는지가 가장 빠른 검산입니다.</p></div>
+
+<h2>6. 수학적 귀납법</h2>
+<p>자연수 n에 대한 명제 P(n)이 모든 자연수에서 참임을 보이는 방법입니다. 절차는 두 단계입니다.</p>
+<ol>
+<li>가장 작은 자연수에서 참임을 확인합니다. 보통 n = 1입니다. 명제가 n ≥ m에서만 말하면 m에서 확인합니다.</li>
+<li>n = k일 때 참이라고 가정하고, 그 가정만으로 n = k + 1일 때도 참임을 보입니다.</li>
+</ol>
+<p>두 단계가 끝나면, 1에서 참이니 2에 의해 2에서도 참이고, 다시 3에서도 참입니다. 이렇게 모든 자연수로 이어집니다. 두 번째만 보이고 첫 단계를 빼먹으면 증명이 되지 않습니다. 가정은 n = k이지, 보여야 할 n = k + 1이 아닙니다.</p>
+<p>1 + 3 + 5 + … + (2n − 1) = n<sup>2</sup>을 이 절차로 증명해 봅니다.</p>
+<p>n = 1이면 왼쪽은 1, 오른쪽은 1<sup>2</sup>이라 참입니다. n = k일 때 1 + 3 + … + (2k − 1) = k<sup>2</sup>이라고 가정합니다. n = k + 1의 왼쪽은 가정한 합에 다음 홀수 2(k + 1) − 1 = 2k + 1을 더한 것입니다. k<sup>2</sup> + 2k + 1 = (k + 1)<sup>2</sup>이므로 참입니다. 따라서 모든 자연수 n에 대해 성립합니다. n = 4이면 1 + 3 + 5 + 7 = 16 = 4<sup>2</sup>입니다.</p>
+<p>∑<sub>k=1</sub><sup>n</sup> k = n(n + 1)/2도 같은 방법입니다. n = 1이면 1 = 1입니다. n = k를 가정하면 n = k + 1의 합은 k(k + 1)/2 + (k + 1) = (k + 1)(k/2 + 1) = (k + 1)(k + 2)/2입니다.</p>
+<p>제곱의 합 공식도 귀납법으로 확인할 수 있습니다. n = k를 가정하고 (k + 1)<sup>2</sup>을 더하면</p>
+<div class="formula">k(k + 1)(2k + 1) / 6 + (k + 1)<sup>2</sup><br>= (k + 1){k(2k + 1)/6 + (k + 1)}<br>= (k + 1)(2k<sup>2</sup> + 7k + 6) / 6<br>= (k + 1)(k + 2)(2k + 3) / 6</div>
+<p>2k<sup>2</sup> + 7k + 6 = (2k + 3)(k + 2)이므로 마지막 등식이 성립합니다. 이것은 n = k + 1일 때의 공식입니다.</p>
+<p>직전 한 항이 아니라 두 항을 사용하는 점화식이면, 처음 두 항을 확인하고 n = k와 n = k + 1을 함께 가정해 n = k + 2를 보입니다. 기본 절차의 첫 단계를 두 개로 늘린 것입니다.</p>
+<div class="study-tip"><strong>TIP:</strong> 수능형 계산은 S<sub>n</sub>이 주어지면 a<sub>1</sub> = S<sub>1</sub>과 n ≥ 2의 차이를 따로 쓰고, 점화식은 네다섯 항을 적어 등차·등비·홀짝 중 어디에 속하는지 본 뒤 일반항을 구합니다. 구한 일반항은 n = 1과 n = 2를 점화식에 넣어 확인합니다. 모든 자연수에서 성립한다는 문장은 귀납법의 두 단계를 빠뜨리지 않고 씁니다.</div>
+
+<h2>자주 나오는 함정</h2><ul>
+<li><strong>공비가 1인데도</strong> S<sub>n</sub> = a(r<sup>n</sup> − 1)/(r − 1)에 대입하는 경우. 분모가 0입니다. 합은 na입니다.</li>
+<li><strong>a<sub>n</sub> = S<sub>n</sub> − S<sub>n−1</sub>을 n = 1에도 검사 없이</strong> 쓰는 경우. S<sub>n</sub> = 2<sup>n</sup>이면 차이 식은 2<sup>n−1</sup>이지만 첫째항은 2입니다.</li>
+<li><strong>∑ k<sup>2</sup>과 (∑ k)<sup>2</sup>을 같은 공식</strong>으로 쓰는 경우. 세제곱의 합이 (자연수 합)의 제곱입니다.</li>
+<li><strong>등차중항과 등비중항을 바꿈</strong>. 등차중항은 평균 (a + c)/2, 등비중항은 ±√(ac)입니다.</li>
+<li><strong>귀납법에서 n = k + 1만 변형</strong>하고 n = 1 확인을 빼먹는 경우. 시작 항이 없으면 사슬이 이어지지 않습니다.</li>
+<li><strong>1/{k(k + 2)}의 부분분수에서 1/2을 빼먹음</strong>. 분자 1/k − 1/(k + 2)의 차는 2입니다.</li>
+<li><strong>등비중항을 항상 하나</strong>로 쓰는 경우. 두 수의 곱이 양수이면 실수 중항은 두 개일 수 있습니다.</li>
+<li><strong>a<sub>n+1</sub> = a<sub>n</sub> + q인데도</strong> α = q/(1 − p)를 쓰는 경우. p = 1이면 등차수열로 따로 풉니다.</li>
+</ul>
+<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>등차수열의 제3항이 7, 제7항이 19일 때 공차, 첫째항, 제10항까지의 합을 구하시오.</summary><div class="example-sol"><p>a + 2d = 7, a + 6d = 19입니다. 빼면 4d = 12, <strong>d = 3</strong>.</p><p>a + 6 = 7이므로 <strong>a = 1</strong>. 제10항은 1 + 9 × 3 = 28입니다.</p><p>S<sub>10</sub> = 10 × (1 + 28) / 2 = <strong>145</strong>.</p><p>항 1, 4, 7, 10, 13, 16, 19, 22, 25, 28의 합도 10 × 29 / 2 = 145입니다.</p></div></details><details class="example"><summary>S<sub>n</sub> = 2<sup>n</sup>일 때 a<sub>n</sub>을 구하시오. n = 1을 차이 공식에 넣으면 어떻게 되는지도 말하시오.</summary><div class="example-sol"><p>a<sub>1</sub> = S<sub>1</sub> = 2<sup>1</sup> = <strong>2</strong>입니다.</p><p>n ≥ 2이면 a<sub>n</sub> = 2<sup>n</sup> − 2<sup>n−1</sup> = <strong>2<sup>n−1</sup></strong>입니다.</p><p>이 식을 n = 1에 넣으면 2<sup>0</sup> = 1이라 첫째항 2와 다릅니다. 그래서 a<sub>1</sub> = 2, n ≥ 2일 때 a<sub>n</sub> = 2<sup>n−1</sup>으로 나누어 적습니다.</p><p>항은 2, 2, 4, 8, …이고 S<sub>2</sub> = 4 = 2<sup>2</sup>, S<sub>3</sub> = 8 = 2<sup>3</sup>입니다.</p></div></details><details class="example"><summary>∑<sub>k=1</sub><sup>10</sup> 1/{k(k + 1)}의 값을 구하시오.</summary><div class="example-sol"><p>1/{k(k + 1)} = 1/k − 1/(k + 1)입니다.</p><p>합은 (1 − 1/2) + (1/2 − 1/3) + … + (1/10 − 1/11)입니다.</p><p>가운데가 지워져 1 − 1/11 = <strong>10/11</strong>입니다.</p><p>공식 n/(n + 1)에 n = 10을 넣어도 10/11입니다.</p></div></details><details class="example"><summary>a<sub>1</sub> = 1이다. n이 홀수이면 a<sub>n+1</sub> = 2a<sub>n</sub>, n이 짝수이면 a<sub>n+1</sub> = a<sub>n</sub> + 3이다. a<sub>6</sub>을 구하고, 홀수 항의 일반항을 구하시오.</summary><div class="example-sol"><p>차례로 계산합니다. a<sub>2</sub> = 2 · 1 = 2, a<sub>3</sub> = 2 + 3 = 5, a<sub>4</sub> = 2 · 5 = 10, a<sub>5</sub> = 10 + 3 = 13, a<sub>6</sub> = 2 · 13 = <strong>26</strong>.</p><p>홀수 항 b<sub>m</sub> = a<sub>2m−1</sub>은 b<sub>1</sub> = 1, b<sub>m+1</sub> = 2b<sub>m</sub> + 3입니다.</p><p>α = 2α + 3에서 α = −3. b<sub>m</sub> + 3 = 4 · 2<sup>m−1</sup> = 2<sup>m+1</sup>이므로 b<sub>m</sub> = 2<sup>m+1</sup> − 3입니다.</p><p>따라서 a<sub>2m−1</sub> = <strong>2<sup>m+1</sup> − 3</strong>입니다. m = 3이면 a<sub>5</sub> = 2<sup>4</sup> − 3 = 13, 그 다음 a<sub>6</sub> = 26과 맞습니다.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>등차는 더하고, 등비는 곱합니다. 합 S<sub>n</sub>은 쌓인 총량이고, 항 a<sub>n</sub>은 새로 얹힌 한 층이라 이웃한 합의 차이입니다. 귀납법은 “1번이 참이고, 앞 번호가 참이면 다음 번호도 참”이라는 사슬입니다.</p><ul><li>공비가 1이면 합은 첫째항에 항의 개수를 곱합니다.</li><li>부분분수와 유리화는 가운데 항을 지워 처음과 끝만 남깁니다.</li><li>점화식은 네댓 항을 직접 써 보고 규칙을 찾습니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>S<sub>n</sub> 문항은 a<sub>1</sub> = S<sub>1</sub>을 먼저 적고, n ≥ 2에서만 차이를 전개한 뒤 그 식이 n = 1에서도 맞는지 비교합니다. 맞으면 한 식으로 합치고, 틀리면 첫째항을 분리해 적습니다.</p><p>점화식 a<sub>n+1</sub> = pa<sub>n</sub> + q는 p = 1인지 먼저 갈라, 1이면 등차, 아니면 고정점 α를 빼서 등비로 바꿉니다. 홀짝으로 조건이 갈리면 홀수 항만 모아 다시 점화식을 만듭니다. 일반항을 모든 자연수에 대해 증명하라는 문장은 귀납법으로 n = 1 확인과 k에서 k + 1로의 이행을 둘 다 씁니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>수열의 용어와 공식을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"수열의 용어와 공식을 짝지으세요.","pairs":[{"term":"등차수열의 일반항","def":"a+(n−1)d"},{"term":"공비가 1이 아닌 등비의 합","def":"a(rⁿ−1)/(r−1)"},{"term":"n이 2 이상일 때 aₙ","def":"Sₙ − Sₙ₋₁"},{"term":"1부터 n까지 k의 합","def":"n(n+1)/2"},{"term":"등차중항","def":"두 수의 평균"},{"term":"수학적 귀납법의 첫 단계","def":"가장 작은 n을 확인"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"첫째항 2, 공차 3인 등차수열의 제4항은?","choices":["9","12","11","14"],"answer":2},{"q":"1²+2²+3²+4²의 값은?","choices":["20","30","24","36"],"answer":1},{"q":"첫째항 3, 공비 1인 등비수열의 제4항까지의 합은?","choices":["12","3","6","15"],"answer":0},{"q":"Sₙ = n²일 때 a₃은?","choices":["3","6","9","5"],"answer":3},{"q":"수학적 귀납법에서 가정 앞에 해야 하는 일은?","choices":["n=k+1만 가정한다","공비를 구한다","가장 작은 n에서 성립을 확인한다","그래프의 주기를 구한다"],"answer":2}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 수학 전 시험지에서 이 파트로 분류된 <strong>69문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:a3">📝 수열 모아 풀기 →</a></p>
+<div class="pager"><a href="02-trig.html">← 삼각함수</a><a href="04-limit.html">함수의 극한과 연속 →</a></div>
+</main></div>
+</body></html>

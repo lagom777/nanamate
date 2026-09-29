@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>산과 염기 (중화 반응) — 수능 화학Ⅰ</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>화학Ⅰ 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li class="grp">화학의 첫걸음</li>
+<li><a href="01-mole.html">1. 화학과 우리 생활 · 화학식량과 몰</a></li>
+<li><a href="02-reaction.html">2. 화학 반응식과 양적 관계</a></li>
+<li class="grp">원자의 세계</li>
+<li><a href="03-atom.html">3. 원자 모형과 전자 배치</a></li>
+<li><a href="04-periodic.html">4. 원소의 주기적 성질</a></li>
+<li class="grp">화학 결합과 분자의 세계</li>
+<li><a href="05-bond.html">5. 화학 결합</a></li>
+<li><a href="06-molecule.html">6. 분자의 구조와 성질</a></li>
+<li class="grp">역동적인 화학 반응</li>
+<li><a href="07-equilibrium.html">7. 동적 평형</a></li>
+<li><a href="08-acid-base.html" style="color:var(--accent);font-weight:600;">8. 산과 염기 (중화 반응)</a></li>
+<li><a href="09-redox.html">9. 산화 환원 반응</a></li>
+<li class="grp">전략</li>
+<li><a href="10-strategy.html">10. 수능 화학Ⅰ 실전 전략</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>산과 염기 (중화 반응)</h1><p class="authors">Part 8 · 역동적인 화학 반응</p><p class="affiliation">산·염기 정의·pH·중화 반응·중화 적정</p></header>
+<div class="stat-row"><div class="stat"><b>2.9</b><span>회당 문항 수</span></div><div class="stat"><b>7.7점</b><span>회당 배점</span></div><div class="stat"><b>2~5</b><span>회차별 범위</span></div><div class="stat"><b>85</b><span>최근 29회 누적</span></div></div>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 29회(2018~2021학년도는 구 교육과정)(580문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>산과 염기 파트는 정의로 한 번, 숫자로 한 번 묻습니다. 누가 수소 이온을 주고받는지를 짝으로 고르고, pH와 이온 농도를 서로 바꾼 뒤, 두 수용액을 섞었을 때 남는 이온의 종류와 개수를 모형에서 읽습니다. 중화 적정은 중화점의 부피로 모르는 농도를 구하는 계산과, 적정 곡선에서 그 점을 집어 내는 해석이 함께 나옵니다.</p>
+<h2>1. 산과 염기의 정의, 짝산·짝염기</h2>
+<p>아레니우스 정의는 물을 기준으로 합니다. 산은 물에 녹아 수소 이온 H<sup>+</sup>를 내놓는 물질이고, 염기는 물에 녹아 수산화 이온 OH<sup>−</sup>를 내놓는 물질입니다. 염화 수소는 산, 수산화 나트륨과 수산화 칼슘은 염기입니다. 암모니아 NH<sub>3</sub>는 화학식에 OH가 없는데도 수용액이 염기성을 나타내므로, 아레니우스 정의만으로는 설명하기 어렵습니다.</p>
+<p>브뢴스테드-로우리 정의는 수소 이온의 이동으로 설명합니다. 산은 H<sup>+</sup>를 주는 물질이고, 염기는 H<sup>+</sup>를 받는 물질입니다. 수소 이온은 물 분자에 붙어 옥소늄 이온 H<sub>3</sub>O<sup>+</sup>로 존재합니다. 화학Ⅰ 계산에서는 H<sup>+</sup>와 H<sub>3</sub>O<sup>+</sup>를 같은 이온으로 두고, 간단히 H<sup>+</sup>로 적습니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>정의</th><th>산</th><th>염기</th><th>잘 맞는 예</th><th>한계</th></tr></thead><tbody><tr><td>아레니우스</td><td>물에 H<sup>+</sup>를 내놓음</td><td>물에 OH<sup>−</sup>를 내놓음</td><td>HCl, NaOH</td><td>OH가 없는 NH<sub>3</sub>를 염기로 보기 어려움</td></tr><tr><td>브뢴스테드-로우리</td><td>H<sup>+</sup>를 줌</td><td>H<sup>+</sup>를 받음</td><td>HCl, NH<sub>3</sub>, H<sub>2</sub>O</td><td>주고받는 짝이 있어야 함</td></tr></tbody></table></div>
+<p>산이 H<sup>+</sup>를 잃고 남은 입자가 그 산의 짝염기입니다. 염기가 H<sup>+</sup>를 받아 생긴 입자가 그 염기의 짝산입니다. 짝끼리의 차이는 수소 이온 1개입니다.</p>
+<div class="formula">HCl + H<sub>2</sub>O → H<sub>3</sub>O<sup>+</sup> + Cl<sup>−</sup><br>NH<sub>3</sub> + H<sub>2</sub>O ⇌ NH<sub>4</sub><sup>+</sup> + OH<sup>−</sup><br>CH<sub>3</sub>COOH + H<sub>2</sub>O ⇌ H<sub>3</sub>O<sup>+</sup> + CH<sub>3</sub>COO<sup>−</sup></div>
+<p>첫 반응에서 산은 HCl, 그 짝염기는 Cl<sup>−</sup>입니다. 염기는 H<sub>2</sub>O, 그 짝산은 H<sub>3</sub>O<sup>+</sup>입니다. 둘째 반응에서 염기는 NH<sub>3</sub>, 짝산은 NH<sub>4</sub><sup>+</sup>입니다. 산은 H<sub>2</sub>O, 짝염기는 OH<sup>−</sup>입니다. 물은 상대가 산이면 염기로, 상대가 염기이면 산으로 행동합니다. 이런 물질을 양쪽성 물질이라고 합니다.</p>
+<p>강산의 짝염기는 매우 약합니다. HCl의 짝염기 Cl<sup>−</sup>는 H<sup>+</sup>를 거의 다시 붙잡지 않습니다. 약산의 짝염기는 강산의 짝염기보다 H<sup>+</sup>를 잘 받습니다. CH<sub>3</sub>COOH의 짝염기 CH<sub>3</sub>COO<sup>−</sup>가 그 예입니다. 그래도 수산화 나트륨 같은 강염기와 같은 세기는 아닙니다.</p>
+<div class="info-card"><h4>짝을 고르는 순서</h4><p>반응식에서 H<sup>+</sup>가 하나 줄어든 쌍을 찾습니다. HCl과 Cl<sup>−</sup>, H<sub>3</sub>O<sup>+</sup>와 H<sub>2</sub>O, NH<sub>4</sub><sup>+</sup>와 NH<sub>3</sub>, H<sub>2</sub>O와 OH<sup>−</sup>, H<sub>2</sub>SO<sub>4</sub>와 HSO<sub>4</sub><sup>−</sup>, HSO<sub>4</sub><sup>−</sup>와 SO<sub>4</sub><sup>2−</sup>가 각각 짝입니다. 전하까지 함께 봅니다.</p></div>
+
+<h2>2. 물의 자동 이온화, pH와 세기</h2>
+<p>순수한 물에서도 물 분자끼리 수소 이온을 주고받습니다. 이를 물의 자동 이온화라고 합니다.</p>
+<div class="formula">H<sub>2</sub>O + H<sub>2</sub>O ⇌ H<sub>3</sub>O<sup>+</sup> + OH<sup>−</sup><br>간단히 H<sub>2</sub>O ⇌ H<sup>+</sup> + OH<sup>−</sup><br>물의 이온곱 K<sub>w</sub> = [H<sup>+</sup>][OH<sup>−</sup>]</div>
+<p>25°C에서 K<sub>w</sub> = 1.0×10<sup>−14</sup>입니다. 순수한 물에서는 두 이온이 1:1로 생기므로 [H<sup>+</sup>] = [OH<sup>−</sup>] = 1.0×10<sup>−7</sup> mol/L입니다. 곱은 10<sup>−7</sup> × 10<sup>−7</sup> = 10<sup>−14</sup>로 맞습니다. 순수한 물에도 이온이 있습니다. 농도를 0으로 두면 이온곱과 맞지 않습니다.</p>
+<p>온도를 올리면 자동 이온화가 오른쪽으로 더 진행되어 K<sub>w</sub>가 커집니다. 문제에서 어떤 온도의 K<sub>w</sub>를 1.0×10<sup>−12</sup>로 주면, 순수한 물의 [H<sup>+</sup>]와 [OH<sup>−</sup>]는 서로 같고 곱이 10<sup>−12</sup>이므로 각각 1.0×10<sup>−6</sup> mol/L입니다. 10<sup>−6</sup> × 10<sup>−6</sup> = 10<sup>−12</sup>입니다.</p>
+<h3>pH와 pOH</h3>
+<div class="formula">pH = −log[H<sup>+</sup>]<br>pOH = −log[OH<sup>−</sup>]<br>[H<sup>+</sup>] = 10<sup>−pH</sup>, &nbsp; [OH<sup>−</sup>] = 10<sup>−pOH</sup><br>25°C: pH + pOH = 14</div>
+<p>[H<sup>+</sup>]가 10의 정수 거듭제곱이면 pH는 그 지수의 절댓값입니다. 1.0×10<sup>−3</sup> mol/L이면 pH는 3, 1.0×10<sup>−2</sup> mol/L이면 pH는 2입니다. a×10<sup>−n</sup> 꼴이고 a가 1보다 크고 10보다 작으면 pH = n − log a입니다. 화학Ⅰ에서는 log 2 ≈ 0.30, log 5 ≈ 0.70을 사용합니다.</p>
+<p>25°C에서 [H<sup>+</sup>] = 2.0×10<sup>−2</sup> mol/L이면 pH = 2 − log 2 ≈ 2 − 0.30 = 1.70입니다. 같은 온도에서 [OH<sup>−</sup>] = 1.0×10<sup>−2</sup> mol/L이면 pOH = 2, pH = 12입니다. 검산은 10<sup>−2</sup> × 10<sup>−12</sup> = 10<sup>−14</sup>입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>25°C 용액</th><th>[H<sup>+</sup>]와 [OH<sup>−</sup>]</th><th>pH</th></tr></thead><tbody><tr><td>산성</td><td>[H<sup>+</sup>]가 [OH<sup>−</sup>]보다 큼</td><td>7보다 작다</td></tr><tr><td>중성</td><td>[H<sup>+</sup>] = [OH<sup>−</sup>]</td><td>7</td></tr><tr><td>염기성</td><td>[OH<sup>−</sup>]가 [H<sup>+</sup>]보다 큼</td><td>7보다 크다</td></tr></tbody></table></div>
+<p>중성의 기준은 pH의 숫자 7이 아니라 [H<sup>+</sup>] = [OH<sup>−</sup>]입니다. K<sub>w</sub> = 1.0×10<sup>−12</sup>인 온도의 순수한 물은 [H<sup>+</sup>] = [OH<sup>−</sup>] = 1.0×10<sup>−6</sup>이므로 중성입니다. 이때 pH는 6이고 pH와 pOH의 합은 12입니다. 합 14는 K<sub>w</sub>가 10<sup>−14</sup>인 25°C의 값입니다.</p>
+<div class="warning-box"><strong>함정:</strong> 1.0×10<sup>−8</sup> mol/L 염산의 pH를 8로 두면 염기성이 됩니다. 이 농도에서는 물이 스스로 만드는 이온을 무시할 수 없습니다. 용액은 여전히 산성이고, pH는 7보다 약간 작습니다. 산이 내는 H+가 10<sup>−6</sup> mol/L보다 충분히 클 때만 [H+]를 산의 농도로 둡니다.</div>
+<h3>강산·약산과 이온화도</h3>
+<p>이온화도(전리도)는 넣어 준 산 중에서 이온으로 떨어진 비율입니다.</p>
+<div class="formula">이온화도 α = 이온화된 몰수 / 처음 몰수<br>일양성자 산: [H<sup>+</sup>] = 농도 × α</div>
+<p>강산은 물에 녹아 거의 모두 이온화되므로 α를 1로 둡니다. 화학Ⅰ에서 강산으로 다루는 대표는 염산 HCl, 질산 HNO<sub>3</sub>, 황산 H<sub>2</sub>SO<sub>4</sub>입니다. 강염기는 수산화 나트륨 NaOH, 수산화 칼륨 KOH, 수산화 칼슘 Ca(OH)<sub>2</sub>입니다. 약산의 대표는 아세트산 CH<sub>3</sub>COOH, 약염기의 대표는 암모니아 NH<sub>3</sub>입니다.</p>
+<p>일양성자 강산은 [H<sup>+</sup>]가 산의 몰 농도와 같습니다. 0.0010 mol/L 염산은 [H<sup>+</sup>] = 1.0×10<sup>−3</sup> mol/L, pH = 3, pOH = 11, [OH<sup>−</sup>] = 1.0×10<sup>−11</sup> mol/L입니다. 0.010 mol/L 수산화 나트륨은 [OH<sup>−</sup>] = 1.0×10<sup>−2</sup> mol/L, pOH = 2, pH = 12입니다.</p>
+<p>약산은 같은 농도여도 일부만 이온화되어 [H<sup>+</sup>]가 더 작고 pH는 더 큽니다. 0.10 mol/L 아세트산의 이온화도를 0.010으로 주면 이온화된 양은 0.10 × 0.010 = 0.0010 mol/L입니다. [H<sup>+</sup>] = 1.0×10<sup>−3</sup> mol/L, pH = 3입니다. 이온화되지 않고 남은 아세트산 분자는 0.10 − 0.0010 = 0.099 mol/L입니다. 같은 농도 0.10 mol/L 염산은 [H<sup>+</sup>] = 1.0×10<sup>−1</sup> mol/L, pH = 1입니다. 수소 이온 농도는 0.10과 0.0010으로 100배 차이고, pH는 1과 3으로 2만큼 차이 납니다. 농도가 10배가 될 때마다 pH는 1씩 달라집니다.</p>
+<p>중화의 양적 관계에서 황산 1 mol은 H<sup>+</sup> 2 mol, 수산화 칼슘 1 mol은 OH<sup>−</sup> 2 mol로 셉니다. 묽은 황산의 pH를 몰 농도의 두 배로 두는 계산은 하지 않습니다. 둘째 수소까지 모두 떨어진다고 두면 실제 이온화와 어긋나기 쉽기 때문입니다. pH 예제는 일양성자 강산과, 완전히 이온화된다고 주어진 강염기로 둡니다.</p>
+<p>수산화 칼슘 0.0050 mol/L 수용액이 완전히 이온화된다고 하면 [OH<sup>−</sup>] = 2 × 0.0050 = 0.010 mol/L입니다. pOH = 2, 25°C에서 pH = 12입니다. [H<sup>+</sup>] = 1.0×10<sup>−12</sup> mol/L이고 이온곱은 0.010 × 10<sup>−12</sup> = 10<sup>−14</sup>입니다.</p>
+<div class="study-tip"><strong>TIP:</strong> pH 문제의 첫 줄은 25°C인지, Kw를 따로 주었는지입니다. 그다음 강산이면 농도 자체가 [H+]인지, 약산이면 이온화도가 주어졌는지를 표시하고 곱합니다. 마지막에 [H+][OH−]가 그 온도의 Kw와 같은지 곱해 봅니다.</div>
+
+<h2>3. 중화 반응과 혼합 용액의 액성</h2>
+<p>산의 H<sup>+</sup>와 염기의 OH<sup>−</sup>가 1:1로 만나 물이 되는 반응이 중화 반응입니다. 강산과 강염기에서는 나트륨 이온과 염화 이온처럼 반응 전후 그대로인 이온이 구경꾼 이온입니다.</p>
+<div class="formula">HCl + NaOH → NaCl + H<sub>2</sub>O<br>알짜 이온 반응식: H<sup>+</sup> + OH<sup>−</sup> → H<sub>2</sub>O<br>중화점: n(H<sup>+</sup>) = n(OH<sup>−</sup>)<br>n = 몰 농도(mol/L) × 부피(L)</div>
+<p>아세트산처럼 분자로 남아 있는 약산은 알짜 식에 분자가 남습니다.</p>
+<div class="formula">CH<sub>3</sub>COOH + OH<sup>−</sup> → CH<sub>3</sub>COO<sup>−</sup> + H<sub>2</sub>O</div>
+<p>강산·강염기를 섞으면 몰수가 적은 쪽의 H<sup>+</sup> 또는 OH<sup>−</sup>가 먼저 소모됩니다. 남은 이온의 몰수를 섞인 뒤의 전체 부피로 나눈 값이 농도입니다. 부피는 문제에서 다른 말을 하지 않으면 두 용액의 합으로 둡니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>몰수 비교</th><th>액성 (강산·강염기, 25°C)</th><th>남는 이온</th></tr></thead><tbody><tr><td>n(H<sup>+</sup>)가 n(OH<sup>−</sup>)보다 큼</td><td>산성, pH는 7보다 작다</td><td>남은 H<sup>+</sup>, 산의 음이온 전부, 염기의 양이온 전부</td></tr><tr><td>두 몰수가 같음</td><td>중성, pH = 7</td><td>염의 양이온과 음이온. H<sup>+</sup>·OH<sup>−</sup>는 물에서 온 10<sup>−7</sup> 수준</td></tr><tr><td>n(OH<sup>−</sup>)가 n(H<sup>+</sup>)보다 큼</td><td>염기성, pH는 7보다 크다</td><td>남은 OH<sup>−</sup>, 염기의 양이온 전부, 산의 음이온 전부</td></tr></tbody></table></div>
+<p>0.30 mol/L 염산 20 mL와 0.10 mol/L 수산화 나트륨 수용액 20 mL를 섞겠습니다. 부피가 같아도 농도가 다르면 중화가 완결되지 않습니다.</p>
+<div class="formula">n(H<sup>+</sup>) = 0.30 × 0.020 = 0.0060 mol<br>n(OH<sup>−</sup>) = 0.10 × 0.020 = 0.0020 mol<br>남은 H<sup>+</sup> = 0.0040 mol<br>전체 부피 = 0.040 L<br>[H<sup>+</sup>] = 0.0040 / 0.040 = 0.10 mol/L, pH = 1</div>
+<p>구경꾼과 남은 이온은 H<sup>+</sup> 0.0040 mol, Na<sup>+</sup> 0.0020 mol, Cl<sup>−</sup> 0.0060 mol입니다. 전하의 합은 0.0040 + 0.0020 = 0.0060으로 Cl<sup>−</sup>와 같습니다. 농도로는 [H<sup>+</sup>] = 0.10 mol/L, [Na<sup>+</sup>] = 0.050 mol/L, [Cl<sup>−</sup>] = 0.15 mol/L입니다. 입자 1개를 0.0010 mol로 그리면 H<sup>+</sup> 4개, Na<sup>+</sup> 2개, Cl<sup>−</sup> 6개입니다.</p>
+<p>염기 과량의 예로 0.050 mol/L 수산화 나트륨 60 mL와 0.050 mol/L 염산 40 mL를 섞으면 n(OH<sup>−</sup>) = 0.050 × 0.060 = 0.0030 mol, n(H<sup>+</sup>) = 0.050 × 0.040 = 0.0020 mol입니다. 남은 OH<sup>−</sup>는 0.0010 mol, 전체 부피는 0.100 L, [OH<sup>−</sup>] = 0.010 mol/L입니다. pOH = 2, 25°C에서 pH = 12입니다. Na<sup>+</sup> 0.0030 mol, Cl<sup>−</sup> 0.0020 mol, OH<sup>−</sup> 0.0010 mol이고 전하 0.0030 = 0.0020 + 0.0010입니다.</p>
+<p>0.10 mol/L 염산 25 mL와 0.10 mol/L 수산화 나트륨 25 mL는 n(H<sup>+</sup>) = n(OH<sup>−</sup>) = 0.0025 mol로 중화점입니다. 25°C에서 pH = 7입니다. 남는 이온은 Na<sup>+</sup>와 Cl<sup>−</sup>가 각각 0.0025 mol이고, 부피 0.050 L에서 농도는 각각 0.050 mol/L입니다.</p>
+<p>약산과 강염기의 중화점에서는 짝염기 CH<sub>3</sub>COO<sup>−</sup>가 물에게서 H<sup>+</sup>를 일부 받아 OH<sup>−</sup>가 생기므로, 용액이 약한 염기성입니다. 25°C에서 pH는 7보다 큽니다. 강산과 약염기의 중화점은 약한 산성이고 pH는 7보다 작습니다. 이 액성을 짝염기의 이온화 상수로 계산하는 것은 화학Ⅰ 범위를 넘으므로, 중화점이 산성인지 중성인지 염기성인지만 판단합니다. 중화점에 도달하는 데 필요한 염기 몰수는 이온화도와 별개입니다. 일양성자 산 0.10 mol이면 강산이든 약산이든 OH<sup>−</sup> 0.10 mol이 필요합니다.</p>
+<div class="warning-box"><strong>함정:</strong> 같은 부피끼리 섞었다고 중화점인 것은 아닙니다. 농도와 양성자 수를 곱한 몰수를 비교합니다. 황산이면 H+ 몰수는 몰 농도의 2배이고, 수산화 칼슘이면 OH− 몰수도 2배입니다.</div>
+
+<h2>4. 중화 적정 곡선과 계산</h2>
+<p>중화 적정은 농도를 아는 표준 용액을 농도를 모르는 용액에 떨어뜨려, 중화점까지 넣은 부피로 모르는 농도를 구하는 실험입니다. 피펫으로 분석할 용액을 일정 부피 취해 삼각 플라스크에 넣고 지시약을 몇 방울 떨어뜨립니다. 뷰렛의 표준 용액을 흔들며 넣고, 색이 변하는 순간의 부피를 읽습니다. 뷰렛 눈금은 아래로 갈수록 커집니다.</p>
+<p>지시약 색이 바뀌는 점을 종말점이라고 합니다. 종말점이 중화점과 거의 같도록, 색이 바뀌는 pH 구간이 곡선의 가파른 부분 안에 들어가는 지시약을 고릅니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>지시약</th><th>대략의 변색 범위</th><th>산성 쪽 색</th><th>염기성 쪽 색</th><th>잘 맞는 적정</th></tr></thead><tbody><tr><td>메틸 오렌지</td><td>pH 3.1~4.4</td><td>붉은색</td><td>노란색</td><td>강산과 약염기. 가파른 구간이 산성 쪽에 있음</td></tr><tr><td>페놀프탈레인</td><td>pH 8.2~10</td><td>무색</td><td>붉은색</td><td>약산과 강염기. 가파른 구간이 염기성 쪽에 있음</td></tr></tbody></table></div>
+<p>강산과 강염기의 가파른 구간은 산성에서 염기성까지 넓게 지나가므로 두 지시약 모두 중화점 근처에서 색이 바뀝니다. 약산과 강염기에는 페놀프탈레인, 강산과 약염기에는 메틸 오렌지를 고릅니다. 범위의 끝자리는 교재에 따라 조금씩 다를 수 있으므로, 문제에서 준 범위를 따릅니다.</p>
+<p>0.10 mol/L 염산 20.0 mL를 0.10 mol/L 수산화 나트륨으로 적정하는 곡선을 세 점으로 읽겠습니다. 처음 n(H<sup>+</sup>) = 0.0020 mol입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>넣은 NaOH</th><th>남은 이온</th><th>농도</th><th>25°C의 pH</th></tr></thead><tbody><tr><td>0 mL</td><td>H<sup>+</sup> 0.0020 mol</td><td>[H<sup>+</sup>] = 0.10 mol/L</td><td>1</td></tr><tr><td>10.0 mL</td><td>H<sup>+</sup> 0.0010 mol, 부피 0.030 L</td><td>[H<sup>+</sup>] = 0.0333 mol/L</td><td>약 1.48</td></tr><tr><td>20.0 mL</td><td>H<sup>+</sup>와 OH<sup>−</sup>가 모두 소모</td><td>물의 이온만 남음</td><td>7 (중화점)</td></tr><tr><td>30.0 mL</td><td>OH<sup>−</sup> 0.0010 mol, 부피 0.050 L</td><td>[OH<sup>−</sup>] = 0.020 mol/L</td><td>약 12.30</td></tr></tbody></table></div>
+<p>10.0 mL를 넣은 지점의 [H<sup>+</sup>] = 0.0010/0.030 = 3.33×10<sup>−2</sup> mol/L입니다. log 3 ≈ 0.48이면 log 3.33 ≈ 0.52이고, pH = 2 − 0.52 = 1.48입니다. 30.0 mL에서는 [OH<sup>−</sup>] = 0.0010/0.050 = 0.020 = 2.0×10<sup>−2</sup> mol/L입니다. pOH = 2 − log 2 ≈ 1.70, pH = 14 − 1.70 = 12.30입니다. 곡선은 중화점 직전까지 pH가 천천히 오르다가 20 mL 근처에서 수직으로 뛰고, 그 뒤 다시 완만해집니다. 수직 구간의 가운데 부피가 중화점입니다.</p>
+<p>약산을 같은 농도의 강염기로 적정하면 처음 pH는 강산보다 높고, 중화점의 pH는 7보다 크며, 수직 구간이 염기성 쪽에 있습니다. 강산을 약염기로 적정하면 수직 구간이 산성 쪽에 있고 중화점 pH는 7보다 작습니다.</p>
+<div class="study-tip"><strong>TIP:</strong> 적정 계산은 곡선에서 수직 구간의 가운데 부피를 읽은 뒤, 표준 용액의 농도×부피로 OH− 또는 H+의 몰수를 구하고, 상대 산·염기의 양성자 수로 나누어 몰수를 얻습니다. 그 몰수를 처음 부피로 나누면 농도입니다.</div>
+
+<h2>5. 자료를 이렇게 읽는다</h2>
+<p>이온 모형은 섞기 전과 섞은 뒤를 나란히 줍니다. 개수는 몰수에 비례하고, 농도는 그 몰수를 그 용기의 부피로 나눈 값입니다. 부피가 다른데 개수만 비교하면 액성을 반대로 판단합니다.</p>
+<ol>
+<li>범례에서 H<sup>+</sup>, OH<sup>−</sup>, 금속 이온, 음이온이 어떤 모양인지 적습니다. 입자 1개당 몰수가 있으면 그 값을 적습니다.</li>
+<li>각 용기의 부피를 적고, 이온마다 개수를 셉니다. 전하의 합이 용기 안에서 0인지 확인합니다. Ca<sup>2+</sup>는 개수×2, SO<sub>4</sub><sup>2−</sup>도 개수×2입니다.</li>
+<li>H<sup>+</sup> 몰수와 OH<sup>−</sup> 몰수를 비교합니다. 작은 쪽은 중화로 사라지고 큰 쪽은 차이만큼 남습니다. 금속 이온과 산의 음이온은 개수가 유지됩니다.</li>
+<li>전체 부피는 두 용액의 합으로 두고, 남은 몰수를 나눠 농도를 구합니다. pH는 그 농도에서 계산합니다.</li>
+<li>섞은 뒤 모형에서 양전하의 합과 음전하의 합이 같은지 다시 셉니다. 다르면 2가 이온을 1가로 센 경우가 많습니다.</li>
+</ol>
+<h3>부피가 다른데 개수가 같은 모형</h3>
+<p>입자 1개를 0.010 mol로 두겠습니다. 용기 A는 200 mL에 H<sup>+</sup> 4개, Cl<sup>−</sup> 4개입니다. 용기 B는 100 mL에 Na<sup>+</sup> 4개, OH<sup>−</sup> 4개입니다.</p>
+<p>A의 H<sup>+</sup>는 0.040 mol, 농도는 0.040/0.200 = 0.20 mol/L입니다. B의 OH<sup>−</sup>는 0.040 mol, 농도는 0.040/0.100 = 0.40 mol/L입니다. B의 농도가 더 큽니다. 그러나 몰수는 0.040 mol로 같습니다. 섞으면 H<sup>+</sup>와 OH<sup>−</sup>가 모두 반응하고 25°C에서 중성입니다. 부피 300 mL에 남는 이온은 Na<sup>+</sup> 0.040 mol, Cl<sup>−</sup> 0.040 mol입니다. 농도는 0.040/0.300 = 2/15 mol/L, 약 0.133 mol/L입니다. 처음 농도가 큰 B가 이긴다고 보면 틀립니다. 승부는 몰수입니다.</p>
+<h3>전하가 2인 이온</h3>
+<p>수산화 칼슘 모형은 Ca<sup>2+</sup> 1개와 OH<sup>−</sup> 2개가 짝입니다. 전하 +2와 −2가 맞습니다. OH<sup>−</sup> 개수를 Ca<sup>2+</sup> 개수와 같다고 세면 중화 몰수도, 전하 검산도 어긋납니다. 황산 모형이 H<sup>+</sup> 2개와 SO<sub>4</sub><sup>2−</sup> 1개로 그려져 있으면, 그 그림의 H<sup>+</sup> 개수를 그대로 중화에 사용합니다.</p>
+<div class="info-card"><h4>모형 한 장의 체크리스트</h4><p>범례 → 부피 → 개수를 몰수로 → H+와 OH−만 1:1로 제거 → 구경꾼은 유지 → 합친 부피로 농도 → 전하 합 검산. 액성 기호를 농도 비교로 먼저 찍지 않습니다.</p></div>
+
+<h2>6. 수능형 문항이 묻는 방식</h2>
+<p>문항은 두 비커의 모형 또는 농도·부피 표를 주고, 섞은 뒤의 액성, 이온 수, 농도, pH를 함께 묻습니다. 적정 문항은 중화점 부피로 미지 농도를 구한 뒤, 중화점을 지난 부피에서 남은 이온 농도를 한 번 더 묻기도 합니다.</p>
+<ul>
+<li><strong>액성.</strong> 강산과 강염기이면 남은 H<sup>+</sup>와 OH<sup>−</sup> 중 어느 쪽 몰수가 큰지로 정합니다. 약산·강염기의 중화점만 따로, 몰수가 같아도 염기성입니다.</li>
+<li><strong>이온 수.</strong> 반응으로 사라지는 것은 H<sup>+</sup>와 OH<sup>−</sup>뿐입니다. Na<sup>+</sup>, Cl<sup>−</sup>, Ca<sup>2+</sup>, NO<sub>3</sub><sup>−</sup>는 개수가 유지됩니다. 2가 이온은 전하에 2를 곱합니다.</li>
+<li><strong>부피.</strong> 개수가 같아도 부피가 크면 처음 농도는 작습니다. 섞은 뒤 농도의 분모는 합친 부피입니다.</li>
+<li><strong>적정 값.</strong> 표준 용액의 몰수에 계수를 반영합니다. 황산 1 mol은 NaOH 2 mol과 중화됩니다. 곡선에서는 수직 구간의 가운데를 그 부피로 읽습니다.</li>
+</ul>
+<p>pH를 숫자로 요구하면 25°C인지 먼저 보고, 10의 거듭제곱이면 지수를 그대로 씁니다. 계수 a가 붙어 있으면 n − log a로 고치고, log 2와 log 5의 값을 문제나 보기의 자릿수에 맞춥니다. 아주 묽은 10<sup>−8</sup> mol/L 부근은 물의 이온을 무시하는 식이 통하지 않는다는 판단에서 멈춥니다.</p>
+
+<h2>자주 나오는 함정</h2><ul>
+<li><strong>pH 7을 모든 온도의 중성으로 보기.</strong> 중성은 [H<sup>+</sup>] = [OH<sup>−</sup>]입니다. Kw가 커지면 중성 pH는 7보다 작아집니다.</li>
+<li><strong>같은 몰 농도의 강산과 약산의 pH가 같다고 보기.</strong> 약산은 이온화도가 작아 [H<sup>+</sup>]가 더 작고 pH가 더 큽니다. 중화에 필요한 염기 몰수는 일양성자 산이면 같습니다.</li>
+<li><strong>입자 개수를 농도처럼 비교하기.</strong> 개수는 몰수에 비례합니다. 부피가 다르면 농도는 개수를 부피로 나눈 뒤에 비교합니다.</li>
+<li><strong>구경꾼 이온도 중화로 사라진다고 세기.</strong> 알짜 반응으로 사라지는 것은 H<sup>+</sup>와 OH<sup>−</sup>입니다. Na<sup>+</sup>와 Cl<sup>−</sup>의 개수는 유지됩니다.</li>
+<li><strong>1.0×10<sup>−8</sup> mol/L 강산의 pH를 8로 계산하기.</strong> 물의 자동 이온화를 무시할 수 없는 농도입니다. 용액은 산성이고 pH는 7보다 약간 작습니다.</li>
+<li><strong>Ca<sup>2+</sup> 하나의 전하를 +1로 세기.</strong> 전하 검산과 OH<sup>−</sup> 개수는 2배입니다. 수산화 칼슘 1 mol은 OH<sup>−</sup> 2 mol입니다.</li>
+<li><strong>약산–강염기 적정에 메틸 오렌지를 고르기.</strong> 중화점이 염기성 쪽에 있으므로 변색 범위가 그 구간에 있는 페놀프탈레인을 씁니다.</li>
+<li><strong>부피 비가 1:1이면 항상 중화점이라고 보기.</strong> 농도가 다르거나 양성자 수가 다르면 몰수가 다릅니다. 0.30 mol/L 염산과 0.10 mol/L 수산화 나트륨을 같은 부피로 섞으면 산이 남습니다.</li>
+</ul>
+<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>25°C에서 0.0010 mol/L 질산 수용액의 pH와 수산화 이온 농도를 구하시오. 또 물의 이온곱이 1.0×10<sup>−12</sup>인 온도에서 순수한 물의 pH와 액성을 구하시오.</summary><div class="example-sol"><p>질산은 일양성자 강산이므로 [H<sup>+</sup>] = 1.0×10<sup>−3</sup> mol/L, pH = <strong>3</strong>입니다. pOH = 11, [OH<sup>−</sup>] = <strong>1.0×10<sup>−11</sup> mol/L</strong>입니다. 곱은 10<sup>−14</sup>로 25°C의 이온곱과 같습니다.</p><p>이온곱이 1.0×10<sup>−12</sup>이면 순수한 물의 두 이온 농도는 서로 같고, 제곱이 10<sup>−12</sup>이므로 각각 1.0×10<sup>−6</sup> mol/L입니다. pH = <strong>6</strong>입니다.</p><p>[H<sup>+</sup>] = [OH<sup>−</sup>]이므로 액성은 <strong>중성</strong>입니다. pH 6을 산성이라고 판단하지 않습니다. 이 온도에서 pH와 pOH의 합은 12입니다.</p></div></details><details class="example"><summary>0.10 mol/L 아세트산의 이온화도가 0.010일 때 pH를 구하고, 같은 농도의 염산과 비교하시오. 두 용액 20 mL를 각각 중화하는 데 필요한 0.10 mol/L 수산화 나트륨의 부피도 비교하시오. 25°C이다.</summary><div class="example-sol"><p>아세트산에서 이온화된 농도는 0.10 × 0.010 = 0.0010 mol/L입니다. [H<sup>+</sup>] = 1.0×10<sup>−3</sup> mol/L이므로 pH = <strong>3</strong>입니다. 남은 분자는 0.099 mol/L입니다.</p><p>0.10 mol/L 염산은 [H<sup>+</sup>] = 1.0×10<sup>−1</sup> mol/L이므로 pH = <strong>1</strong>입니다. 같은 농도에서 약산의 pH가 더 큽니다.</p><p>둘 다 일양성자 산입니다. 20 mL 속의 산은 0.10 × 0.020 = 0.0020 mol입니다. 필요한 OH<sup>−</sup>도 0.0020 mol이므로 수산화 나트륨 부피는 0.0020/0.10 = 0.020 L = <strong>20 mL로 같습니다</strong>. 이온화도는 처음 pH를 바꾸고, 중화점까지의 염기 부피는 바꾸지 않습니다. 아세트산의 중화점 액성은 중성이 아니라 약한 염기성입니다.</p></div></details><details class="example"><summary>입자 1개 = 0.0050 mol이다. 50 mL 비커 A에는 H<sup>+</sup> 6개와 Cl<sup>−</sup> 6개, 50 mL 비커 B에는 Na<sup>+</sup> 4개와 OH<sup>−</sup> 4개가 있다. 모두 섞은 뒤의 액성, pH, 이온 개수를 구하시오. 25°C, 부피는 합친다.</summary><div class="example-sol"><p>A의 H<sup>+</sup>는 6 × 0.0050 = 0.030 mol, B의 OH<sup>−</sup>는 4 × 0.0050 = 0.020 mol입니다. 처음 농도는 각각 0.030/0.050 = 0.60 mol/L, 0.020/0.050 = 0.40 mol/L입니다.</p><p>남은 H<sup>+</sup>는 0.010 mol입니다. 전체 부피 0.100 L에서 [H<sup>+</sup>] = 0.10 mol/L, pH = <strong>1</strong>입니다. 액성은 <strong>산성</strong>입니다.</p><p>이온은 H<sup>+</sup> 0.010 mol(2개), Na<sup>+</sup> 0.020 mol(4개), Cl<sup>−</sup> 0.030 mol(6개)입니다. OH<sup>−</sup>는 반응으로 사라집니다. 전하 0.010 + 0.020 = 0.030으로 Cl<sup>−</sup>와 같습니다.</p></div></details><details class="example"><summary>농도를 모르는 황산 10.0 mL를 0.20 mol/L 수산화 나트륨으로 적정하여 중화점까지 25.0 mL가 소비되었다. 황산의 몰 농도를 구하고, 같은 황산 10.0 mL에 이 수산화 나트륨을 30.0 mL 넣었을 때의 [OH<sup>−</sup>]와 25°C의 pH를 구하시오.</summary><div class="example-sol"><p>중화점까지 넣은 OH<sup>−</sup>는 0.20 × 0.0250 = 0.0050 mol입니다. 황산 1 mol이 H<sup>+</sup> 2 mol을 내므로 황산은 0.0050/2 = 0.0025 mol입니다. 농도는 0.0025/0.010 = <strong>0.25 mol/L</strong>입니다. 검산하면 0.25 × 0.010 × 2 = 0.0050 mol입니다.</p><p>30.0 mL를 넣으면 OH<sup>−</sup>는 0.20 × 0.030 = 0.0060 mol이고, 남은 OH<sup>−</sup>는 0.0010 mol입니다. 전체 부피 40.0 mL = 0.040 L이므로 [OH<sup>−</sup>] = 0.0010/0.040 = <strong>0.025 mol/L</strong>입니다.</p><p>0.025 = 2.5×10<sup>−2</sup>이므로 pOH = 2 − log 2.5입니다. log 2.5 = log(5/2) = 0.70 − 0.30 = 0.40, pOH = 1.60, pH = 14 − 1.60 = <strong>약 12.40</strong>입니다. 염기성입니다.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>산은 수소 이온을 내놓고, 염기는 그것을 받거나 수산화 이온을 내놓습니다. 둘이 만나면 1:1로 물이 되고, 많이 넣은 쪽의 이온이 남아 신맛 쪽(산)인지 반대쪽(염기)인지를 정합니다.</p><ul><li>25°C에서 pH 7은 중성, 그보다 작으면 산성, 크면 염기성입니다. 온도가 달라 이온곱이 바뀌면 중성 pH도 바뀝니다.</li><li>같은 농도라도 약산은 일부만 이온으로 갈라져 pH가 강산보다 높습니다.</li><li>모형에서는 개수를 먼저 몰수로 읽고, 부피로 나누어 농도를 만듭니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>풀이 순서는 (1) 온도가 25°C인지, Kw가 따로 주어졌는지 적기 (2) 모형이면 입자 1개의 몰수와 각 용기 부피를 적기 (3) H<sup>+</sup> 몰수와 OH<sup>−</sup> 몰수를 계산하되 황산·수산화 칼슘은 2배를 반영하기 (4) 큰 쪽에서 작은 쪽을 빼 남은 몰수를 구하고 합친 부피로 나누기 (5) pH로 바꿀 때만 로그를 쓰기 (6) 양전하 합과 음전하 합이 같은지 검산하기입니다.</p><p>적정 곡선은 시작 pH로 산인지 염기인지, 수직 구간의 가운데 부피로 중화점을 읽습니다. 그 점의 pH가 7이면 강산–강염기, 7보다 크면 약산–강염기, 7보다 작으면 강산–약염기입니다. 지시약의 변색 범위가 그 수직 구간 안에 들어가는지를 마지막에 확인합니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>산·염기와 중화의 개념을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0d9488","prompt":"산·염기와 중화의 개념을 짝지으세요.","pairs":[{"term":"아레니우스 산","def":"물에 H⁺를 내놓는 물질"},{"term":"브뢴스테드 염기","def":"H⁺를 받는 물질"},{"term":"짝염기","def":"산이 H⁺를 잃은 입자"},{"term":"25°C의 중성","def":"pH 7이고 두 이온 농도가 같음"},{"term":"중화점","def":"H⁺ 몰수와 OH⁻ 몰수가 같음"},{"term":"이온화도","def":"넣어 준 산 중 이온이 된 비율"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d9488","questions":[{"q":"25°C에서 pH가 3인 수용액의 수소 이온 농도는?","choices":["1×10⁻¹¹ mol/L","3 mol/L","1×10⁻³ g/mL","1×10⁻³ mol/L"],"answer":3},{"q":"25°C에서 0.010 mol/L 수산화 나트륨 수용액이 완전히 이온화될 때 pH는?","choices":["2","7","12","14"],"answer":2},{"q":"강산과 강염기의 중화에서 알짜 이온 반응으로 옳은 것은?","choices":["Na⁺ + Cl⁻ → NaCl","H⁺ + OH⁻ → H₂O","H⁺ + Cl⁻ → HCl","Na⁺ + OH⁻ → NaOH"],"answer":1},{"q":"같은 몰 농도의 강산과 약산을 비교할 때 약산에 해당하는 설명은?","choices":["수소 이온 농도가 더 작다","이온화도가 더 크다","pH가 더 작다","중화점까지 필요한 염기 몰수가 더 적다"],"answer":0},{"q":"0.10 mol/L 염산 20 mL를 중화하는 데 필요한 0.10 mol/L 수산화 나트륨 수용액의 부피는?","choices":["10 mL","40 mL","200 mL","20 mL"],"answer":3}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 화학Ⅰ 전 시험지에서 이 파트로 분류된 <strong>85문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:k8">📝 산과 염기 (중화 반응) 모아 풀기 →</a></p>
+<div class="pager"><a href="07-equilibrium.html">← 동적 평형</a><a href="09-redox.html">산화 환원 반응 →</a></div>
+</main></div>
+</body></html>

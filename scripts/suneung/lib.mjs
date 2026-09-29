@@ -5,6 +5,8 @@ import { fileURLToPath } from "url";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const LEARN = path.resolve(HERE, "../../public/learn");
+// 문항·시험지 이미지는 저장소 대신 Cloudflare R2(공개 r2.dev)에서 불러온다. exams.json·해설·meta.json 은 사이트에 그대로 둔다.
+export const IMG_BASE = "https://pub-920d78ae5be2443d84da6b3e8a54a5af.r2.dev/";
 export const EXAMS = JSON.parse(fs.readFileSync(path.join(LEARN, "suneung-exam/exams.json"), "utf8")).exams;
 
 /* ── 본문 조각 ── */
@@ -19,16 +21,20 @@ export const tbl = (head, rows) =>
 export const ex = (q, sol) =>
   `<details class="example"><summary>${q}</summary><div class="example-sol">${sol}</div></details>`;
 
+/* 과목별 시험 목록(그 과목 데이터가 있는 회차만) */
+export const examsOf = (sub) => EXAMS.filter((e) => e[sub]);
+
 /* 출제 통계: 최근 회차에서 이 파트 태그가 몇 문항이었나 */
 export function partStats(sub, partId) {
-  const per = EXAMS.map((e) => e[sub].t.filter((t) => t === partId).length);
+  const ex = examsOf(sub).filter((e) => e[sub].t);
+  const per = ex.map((e) => e[sub].t.filter((t) => t === partId).length);
   const total = per.reduce((a, b) => a + b, 0);
-  const pts = EXAMS.reduce((s, e) => s + e[sub].t.reduce((a, t, i) => a + (t === partId ? e[sub].p[i] : 0), 0), 0);
-  return { total, exams: EXAMS.length, avg: (total / EXAMS.length).toFixed(1), avgPts: (pts / EXAMS.length).toFixed(1), min: Math.min(...per), max: Math.max(...per) };
+  const pts = ex.reduce((s, e) => s + e[sub].t.reduce((a, t, i) => a + (t === partId ? e[sub].p[i] : 0), 0), 0);
+  return { total, exams: ex.length, avg: (total / ex.length).toFixed(1), avgPts: (pts / ex.length).toFixed(1), min: Math.min(...per), max: Math.max(...per) };
 }
 
 /* ── 페이지 뼈대 ── */
-function head(title, depth, spec) {
+export function head(title, depth, spec) {
   const up = depth ? "../" : "";
   return `<!DOCTYPE html>
 <html lang="ko">
@@ -52,7 +58,11 @@ export function aside(spec, active, depth) {
   const ch = depth ? "" : "chapters/";
   const li = (href, label, on) => `<li><a href="${href}"${on ? ' style="color:var(--accent);font-weight:600;"' : ""}>${label}</a></li>`;
   const items = [li(`${up}index.html`, "표지 · 범위와 로드맵", active === "index")];
-  spec.chapters.forEach((c, i) => items.push(li(`${ch}${c.file}`, `${i + 1}. ${c.title}`, active === c.file)));
+  let lastGroup = null;
+  spec.chapters.forEach((c, i) => {
+    if (c.group && c.group !== lastGroup) { items.push(`<li class="grp">${c.group}</li>`); lastGroup = c.group; }
+    items.push(li(`${ch}${c.file}`, `${i + 1}. ${c.title}`, active === c.file));
+  });
   if (spec.motion !== false) items.push(li(`${up}motion.html`, "🎬 모션 노트", active === "motion"));
   if (spec.practice !== false) items.push(li(`${up}practice.html`, "📝 수능 풀어보기", active === "practice"));
   return `<aside><a href="${up}../index.html" class="hub-back-link">↑ 통합 허브</a><h3>${spec.short} 목차</h3><ol>
@@ -76,7 +86,19 @@ ${hard}
 </div>`;
 }
 
-function games(spec, c) {
+/* 퀴즈 정답 위치가 한쪽으로 몰리지 않게 보기 순서를 결정적으로 돌린다 */
+function spreadAnswers(questions, salt) {
+  return questions.map((q, qi) => {
+    const right = q.choices[q.answer];
+    const others = q.choices.filter((_, i) => i !== q.answer);
+    const target = (qi * 3 + salt) % 4;
+    const choices = others.slice();
+    choices.splice(target, 0, right);
+    return { ...q, choices, answer: target };
+  });
+}
+
+function games(spec, c, salt = 0) {
   return `<h2>직접 해보기</h2>
 <p>${c.prompt}</p>
 <div id="nm-game-host"></div>
@@ -84,7 +106,7 @@ function games(spec, c) {
 <h2>개념 확인</h2>
 <p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
 <div id="nm-quiz-host"></div>
-<script>window.NANAMATE_QUIZ=${JSON.stringify({ color: spec.color, questions: c.questions })};</script>`;
+<script>window.NANAMATE_QUIZ=${JSON.stringify({ color: spec.color, questions: spreadAnswers(c.questions, salt) })};</script>`;
 }
 
 export function chapterPage(spec, c, i) {
@@ -92,7 +114,7 @@ export function chapterPage(spec, c, i) {
   const prev = spec.chapters[i - 1], next = spec.chapters[i + 1];
   const stat = st
     ? `<div class="stat-row"><div class="stat"><b>${st.avg}</b><span>회당 문항 수</span></div><div class="stat"><b>${st.avgPts}점</b><span>회당 배점</span></div><div class="stat"><b>${st.min}~${st.max}</b><span>회차별 범위</span></div><div class="stat"><b>${st.total}</b><span>최근 ${st.exams}회 누적</span></div></div>
-<p class="stat-note">수능 2022~2026학년도 + 6·9월 모의평가 ${st.exams}회(${st.exams * 20}문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>`
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 ${st.exams}회(2018~2021학년도는 구 교육과정)(${st.exams * (spec.qn || 20)}문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>`
     : "";
   const practice = c.part
     ? `<h2>이 파트 기출 풀어보기</h2>
@@ -117,7 +139,7 @@ ${motion}
 ${c.traps ? `<h2>자주 나오는 함정</h2>${c.traps}` : ""}
 ${c.examples ? `<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p>${c.examples}` : ""}
 ${tabs(c.easy, c.hard)}
-${games(spec, c)}
+${games(spec, c, i)}
 ${practice}
 ${nav}
 </main></div>
@@ -125,13 +147,24 @@ ${nav}
 }
 
 export function indexPage(spec) {
-  const cards = spec.chapters
-    .map((c, i) => {
-      const st = c.part ? partStats(spec.sub, c.part) : null;
-      return `  <a class="outline-card" href="chapters/${c.file}"><div class="num">PART ${String(i + 1).padStart(2, "0")}</div><h4>${c.title}</h4><p>${c.sub}</p>${st ? `<p class="mini">회당 약 ${st.avg}문항 · ${st.avgPts}점</p>` : ""}</a>`;
-    })
-    .join("\n");
-  const tot = EXAMS.length * 20;
+  const card = (c, i) => {
+    const st = c.part ? partStats(spec.sub, c.part) : null;
+    return `  <a class="outline-card" href="chapters/${c.file}"><div class="num">PART ${String(i + 1).padStart(2, "0")}</div><h4>${c.title}</h4><p>${c.sub}</p>${st ? `<p class="mini">회당 약 ${st.avg}문항 · ${st.avgPts}점</p>` : ""}</a>`;
+  };
+  const extraCards = `${spec.motion === false ? "" : `  <a class="outline-card" href="motion.html"><div class="num">MOTION</div><h4>🎬 모션 노트</h4><p>${spec.motionBlurb}</p></a>`}
+${spec.practice === false ? "" : `  <a class="outline-card" href="practice.html"><div class="num">PRACTICE</div><h4>📝 수능 풀어보기</h4><p>${spec.practiceBlurb || `실제 시험지 ${examsOf(spec.sub).length}회 ${examsOf(spec.sub).length * (spec.qn || 20)}문항 · 채점 · 해설`}</p></a>`}`;
+  let roadmap;
+  if (spec.chapters.some((c) => c.group)) {
+    const groups = [];
+    spec.chapters.forEach((c, i) => {
+      let g = groups[groups.length - 1];
+      if (!g || g.name !== c.group) groups.push((g = { name: c.group, cards: [] }));
+      g.cards.push(card(c, i));
+    });
+    roadmap = groups.map((g, gi) => `<h3 class="grp-h">${g.name}</h3>\n<div class="outline-grid">\n${g.cards.join("\n")}${gi === groups.length - 1 ? "\n" + extraCards : ""}\n</div>`).join("\n");
+  } else {
+    roadmap = `<div class="outline-grid">\n${spec.chapters.map(card).join("\n")}\n${extraCards}\n</div>`;
+  }
   return `${head(`${spec.label} — 수능 노트`, 0, spec)}
 <body><div class="layout">
 ${aside(spec, "index", 0)}
@@ -143,35 +176,39 @@ ${aside(spec, "index", 0)}
 </header>
 ${spec.intro}
 <h2>파트별 로드맵</h2>
-<div class="outline-grid">
-${cards}
-${spec.motion === false ? "" : `  <a class="outline-card" href="motion.html"><div class="num">MOTION</div><h4>🎬 모션 노트</h4><p>${spec.motionBlurb}</p></a>`}
-${spec.practice === false ? "" : `  <a class="outline-card" href="practice.html"><div class="num">PRACTICE</div><h4>📝 수능 풀어보기</h4><p>실제 시험지 ${EXAMS.length}회 ${tot}문항 · 채점 · 해설</p></a>`}
-</div>
+${roadmap}
 ${spec.after || ""}
 </main></div>
 </body></html>`;
 }
 
-export function practicePage(spec) {
+export function practicePage(spec, o = {}) {
+  const sub = o.sub || spec.sub, label = o.label || spec.label;
+  const kind = spec.kind || "items", qn = spec.qn || 20, minutes = spec.minutes || 30;
+  const ex = examsOf(sub);
   const expDir = path.join(LEARN, "suneung-exam/explain");
   const withExp = fs.existsSync(expDir)
-    ? fs.readdirSync(expDir).filter((f) => f.endsWith(`-${spec.sub}.json`)).map((f) => EXAMS.find((e) => e.key === f.replace(`-${spec.sub}.json`, ""))).filter(Boolean)
+    ? fs.readdirSync(expDir).filter((f) => f.endsWith(`-${sub}.json`)).map((f) => EXAMS.find((e) => e.key === f.replace(`-${sub}.json`, ""))).filter(Boolean)
     : [];
   const expNote = withExp.length
-    ? `<p class="exp-note">📖 <strong>문항별 해설이 있는 시험</strong>: ${withExp.map((e) => e.title).join(", ")}. 나머지 시험은 정답·배점 채점과 관련 파트 링크가 제공되고, 해설은 순차적으로 추가합니다.</p>`
+    ? `<p class="exp-note">📖 <strong>문항별 해설이 있는 시험</strong> ${withExp.length}회: ${withExp.map((e) => e.title).join(", ")}. 나머지 시험(과 해설을 싣지 못한 문항)은 정답·배점 채점${spec.chapters.length ? "과 관련 파트 링크" : ""}가 제공됩니다. 해설은 AI가 문항 이미지를 풀어 쓰고 공식 정답과 일치하는 것만 실었지만, 풀이 과정에 오류가 있을 수 있으니 참고용으로 보세요.</p>`
     : "";
   const parts = spec.chapters.filter((c) => c.part).map((c) => ({ id: c.part, name: c.title, href: `chapters/${c.file}` }));
-  return `${head(`수능 풀어보기 — ${spec.label}`, 0, spec).replace("</head>", `<link rel="stylesheet" href="../suneung-exam/practice.css">\n</head>`)}
+  const numeric = sub === "math" ? " 단답형(16~22번·29~30번)은 답을 숫자로 직접 입력합니다." : "";
+  const lead = kind === "paper"
+    ? `<p>시험지를 <strong>단(段) 단위 이미지</strong>로 그대로 보여 주고, 오른쪽 답안지에 답을 표시합니다. 시험 모드는 ${minutes}분 타이머로 ${sub === "korean" ? "공통 34문항 + 선택 11문항" : "45문항"}을 풀고 제출하면 채점합니다. 연습 모드는 답을 고르는 즉시 정오가 표시됩니다.${sub === "korean" ? " 선택과목(화법과 작문 / 언어와 매체)을 골라 풀 수 있습니다." : " 듣기 음성은 제공하지 않아 채점 후 대본으로 확인합니다."}</p>`
+    : `<p>시험 모드는 ${minutes}분 타이머로 ${qn}문항을 풀고 제출하면 한 번에 채점합니다. 연습 모드는 답을 고르는 즉시 정오${withExp.length ? "와 해설" : ""}가 열립니다.${numeric}${parts.length ? " <strong>파트별 모아 풀기</strong>로 약한 단원만 골라 풀고, " : " "}틀린 문항은 자동으로 오답 노트에 쌓입니다.</p>`;
+  const years = `수능 2018~2026학년도 · 6월/9월 모의평가 2018~2027학년도 · 총 ${ex.length}회`;
+  return `${head(`수능 풀어보기 — ${label}`, 0, spec).replace("</head>", `<link rel="stylesheet" href="../suneung-exam/practice.css">\n</head>`)}
 <body><div class="layout">
-${aside(spec, "practice", 0)}
+${o.aside || aside(spec, "practice", 0)}
 <main class="wide">
-<header class="paper-header"><h1>수능 풀어보기</h1><p class="authors">${spec.label} · 실제 시험지 그대로</p><p class="affiliation">수능 2022~2026학년도 · 6월/9월 모의평가 2022~2027학년도</p></header>
-<p>시험 모드는 30분 타이머로 20문항을 풀고 제출하면 한 번에 채점합니다. 연습 모드는 답을 고르는 즉시 정오와 해설이 열립니다. <strong>파트별 모아 풀기</strong>로 약한 단원만 골라 풀고, 틀린 문항은 자동으로 오답 노트에 쌓입니다.</p>
+<header class="paper-header"><h1>수능 풀어보기</h1><p class="authors">${label} · 실제 시험지 그대로</p><p class="affiliation">${years}</p></header>
+${lead}
 ${expNote}
 <div id="practice-root"></div>
 </main></div>
-<script>window.SUNEUNG_PRACTICE=${JSON.stringify({ subject: spec.sub, label: spec.label, base: "../suneung-exam/", parts, mount: "practice-root" })};</script>
+<script>window.SUNEUNG_PRACTICE=${JSON.stringify({ subject: sub, label, base: "../suneung-exam/", imgBase: IMG_BASE, parts, mount: "practice-root", kind, qn, minutes })};</script>
 <script src="../suneung-exam/practice.js"></script>
 </body></html>`;
 }
@@ -211,6 +248,8 @@ details.example summary { cursor:pointer; padding:12px 16px; font-weight:600; li
 .example-sol { padding:4px 18px 14px; border-top:1px dashed var(--border); }
 .example-sol p { margin:10px 0; }
 main h2 + ul, main h3 + ul { margin-top:4px; }
+aside ol li.grp { margin:16px 0 4px; padding-left:12px; font-size:.7em; letter-spacing:.12em; color:var(--text-mute); font-family:var(--font-mono); }
+h3.grp-h { margin:28px 0 -6px; font-size:1.05em; color:var(--accent); }
 main li { color:var(--text-dim); margin-bottom:4px; line-height:1.7; }
 `;
   return css;
@@ -220,7 +259,7 @@ export function writeAll(spec, extra = {}) {
   const dir = path.join(LEARN, spec.folder);
   const out = {};
   out["index.html"] = indexPage(spec);
-  out["practice.html"] = practicePage(spec);
+  if (spec.practice !== false) out["practice.html"] = practicePage(spec);
   out["styles.css"] = stylesCss(spec);
   spec.chapters.forEach((c, i) => (out["chapters/" + c.file] = chapterPage(spec, c, i)));
   Object.assign(out, extra);

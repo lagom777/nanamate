@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>삼각함수 — 수능 수학</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>수학 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li class="grp">수학Ⅰ</li>
+<li><a href="01-exp-log.html">1. 지수와 로그</a></li>
+<li><a href="02-trig.html" style="color:var(--accent);font-weight:600;">2. 삼각함수</a></li>
+<li><a href="03-sequence.html">3. 수열</a></li>
+<li class="grp">수학Ⅱ</li>
+<li><a href="04-limit.html">4. 함수의 극한과 연속</a></li>
+<li><a href="05-diff.html">5. 미분</a></li>
+<li><a href="06-integral.html">6. 적분</a></li>
+<li class="grp">미적분</li>
+<li><a href="07-seq-limit.html">7. 수열의 극한</a></li>
+<li><a href="08-diff-methods.html">8. 여러 가지 미분법</a></li>
+<li><a href="09-int-methods.html">9. 여러 가지 적분법</a></li>
+<li class="grp">전략</li>
+<li><a href="10-strategy.html">10. 수능 수학 실전 전략</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>삼각함수</h1><p class="authors">Part 2 · 수학Ⅰ</p><p class="affiliation">호도법·삼각함수의 그래프와 성질·삼각방정식·사인법칙과 코사인법칙</p></header>
+<div class="stat-row"><div class="stat"><b>3.0</b><span>회당 문항 수</span></div><div class="stat"><b>10.6점</b><span>회당 배점</span></div><div class="stat"><b>3~3</b><span>회차별 범위</span></div><div class="stat"><b>51</b><span>최근 17회 누적</span></div></div>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2021학년도는 구 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>삼각함수는 호의 길이와 넓이, 그래프의 주기와 최댓값, 방정식의 해의 개수, 삼각형에서 법칙을 고르는 문제가 중심입니다. 각은 라디안으로 맞추고, 사분면의 부호를 정한 뒤 기준각의 값을 붙입니다. 도형에서는 주어진 것이 변인지 각인지, 그 각이 끼인각인지에 따라 사인법칙과 코사인법칙이 갈립니다.</p>
+<h2>1. 일반각과 호도법, 부채꼴</h2>
+<p>반직선이 한 점(꼭짓점)을 중심으로 회전한 양을 각이라고 합니다. 시작 위치를 시초선이라 하고, 보통 좌표평면에서는 원점과 양의 x축 방향을 시초선으로 둡니다. 회전한 뒤의 반직선을 동경이라고 합니다. 시계 반대 방향을 양의 각, 시계 방향을 음의 각으로 둡니다.</p>
+<p>동경의 위치만 보면 360°를 더하거나 빼도 같은 자리입니다. 라디안으로는 2π만큼입니다. 그래서 θ와 θ + 2nπ (n은 정수)는 같은 동경을 나타냅니다. 420°는 420 − 360 = 60°와 같고, sin 420° = sin 60° = √3 / 2입니다. −150°에 360°를 더하면 210°이므로 −150°와 210°는 같은 동경입니다.</p>
+<p>각의 크기를 호의 길이로 재는 방법이 호도법입니다. 반지름 r인 원에서 호의 길이가 r이면 그 중심각을 1라디안이라고 합니다. 반원의 호는 πr이므로 180° = π 라디안입니다.</p>
+<div class="formula">θ(라디안) = θ(도) × π / 180<br>θ(도) = θ(라디안) × 180 / π</div>
+<p>자주 쓰는 대응은 30° = π/6, 45° = π/4, 60° = π/3, 90° = π/2, 180° = π, 360° = 2π입니다. 210° = 210π/180 = 7π/6입니다.</p>
+<p>반지름 r, 중심각 θ(라디안)인 부채꼴에서 호의 길이와 넓이는 다음과 같습니다.</p>
+<div class="formula">호의 길이 l = rθ<br>넓이 S = (1/2)r<sup>2</sup>θ = (1/2)rl</div>
+<p>반지름 6, 중심각 60° = π/3이면 l = 6 · π/3 = 2π, S = (1/2) · 36 · π/3 = 6π입니다. (1/2) · r · l = (1/2) · 6 · 2π = 6π로 같습니다. 도 단위로 검산하면 전체 원에서 60/360 = 1/6이므로 호의 길이는 2πr · (1/6) = 2π, 넓이는 πr<sup>2</sup> · (1/6) = 6π입니다.</p>
+<div class="warning-box"><strong>함정:</strong> l = rθ, S = (1/2)r<sup>2</sup>θ에 넣는 θ는 라디안입니다. 60을 그대로 넣어 6 × 60 = 360이라고 하면 안 됩니다. 도가 주어지면 π/180을 먼저 곱하세요.</div>
+<div class="study-tip"><strong>TIP:</strong> 넓이 공식 두 개가 같다는 것은 S = (1/2)rl에서 바로 보입니다. 호와 반지름을 알았으면 각을 다시 구하지 않아도 넓이가 나옵니다.</div>
+
+<h2>2. 삼각함수의 정의, 부호, 관계</h2>
+<p>원점을 중심으로 반지름이 1인 원을 단위원이라고 합니다. 일반각 θ의 동경이 단위원과 만나는 점을 (x, y)라고 하면</p>
+<div class="formula">cos θ = x, &nbsp; sin θ = y, &nbsp; tan θ = y/x (x ≠ 0)</div>
+<p>tan θ는 만나는 점의 x좌표가 0일 때, 곧 θ = π/2 + nπ일 때 정의되지 않습니다. 단위원 위의 점이므로 항상 다음이 성립합니다.</p>
+<div class="formula">sin<sup>2</sup>θ + cos<sup>2</sup>θ = 1<br>tan θ = sin θ / cos θ (cos θ ≠ 0)<br>1 + tan<sup>2</sup>θ = 1 / cos<sup>2</sup>θ</div>
+<p>마지막 식은 sin<sup>2</sup>θ + cos<sup>2</sup>θ = 1의 양변을 cos<sup>2</sup>θ로 나눈 것입니다. sin θ = 3/5이고 θ가 제2사분면이면 cos θ는 음수입니다. cos<sup>2</sup>θ = 1 − 9/25 = 16/25이므로 cos θ = −4/5, tan θ = (3/5)/(−4/5) = −3/4입니다. 9/25 + 16/25 = 1로 맞습니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>사분면</th><th>sin</th><th>cos</th><th>tan</th></tr></thead><tbody><tr><td>제1사분면</td><td>+</td><td>+</td><td>+</td></tr><tr><td>제2사분면</td><td>+</td><td>−</td><td>−</td></tr><tr><td>제3사분면</td><td>−</td><td>−</td><td>+</td></tr><tr><td>제4사분면</td><td>−</td><td>+</td><td>−</td></tr></tbody></table></div>
+<p>부호는 y, x, y/x의 부호입니다. 제3사분면은 sin과 cos가 모두 음수라 그 비인 tan만 양수입니다.</p>
+<p>값을 구하는 순서는 세 단계입니다. 각을 0 이상 2π 미만으로 만들고, 사분면으로 부호를 정한 뒤, 동경과 x축이 이루는 예각(기준각)의 삼각비를 붙입니다. 210° = 7π/6은 제3사분면이고 기준각은 30°입니다. sin 210° = −1/2, cos 210° = −√3 / 2, tan 210° = (−1/2)/(−√3 / 2) = 1/√3 = √3 / 3입니다. −150°도 같은 동경이므로 값이 같습니다. sin이 홀함수라는 점만으로도 sin(−150°) = −sin 150° = −1/2입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>θ</th><th>0</th><th>π/6</th><th>π/4</th><th>π/3</th><th>π/2</th></tr></thead><tbody><tr><td>도</td><td>0°</td><td>30°</td><td>45°</td><td>60°</td><td>90°</td></tr><tr><td>sin</td><td>0</td><td>1/2</td><td>√2/2</td><td>√3/2</td><td>1</td></tr><tr><td>cos</td><td>1</td><td>√3/2</td><td>√2/2</td><td>1/2</td><td>0</td></tr><tr><td>tan</td><td>0</td><td>1/√3</td><td>1</td><td>√3</td><td>정의 안 됨</td></tr></tbody></table></div>
+<p>단위원에서 각을 π만큼 돌리면 점 (x, y)는 (−x, −y)가 되고, π − θ는 기준각이 같아 sin의 부호는 유지되고 cos의 부호는 바뀝니다. 이 관계는 덧셈정리를 펼치지 않아도 점에서 읽힙니다. 각의 합을 sin, cos의 곱으로 전개하는 공식은 이 과목에서 쓰지 않습니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>각</th><th>sin</th><th>cos</th><th>tan</th></tr></thead><tbody><tr><td>π − θ</td><td>sin θ</td><td>−cos θ</td><td>−tan θ</td></tr><tr><td>π + θ</td><td>−sin θ</td><td>−cos θ</td><td>tan θ</td></tr><tr><td>2π − θ</td><td>−sin θ</td><td>cos θ</td><td>−tan θ</td></tr><tr><td>π/2 − θ</td><td>cos θ</td><td>sin θ</td><td>1/tan θ</td></tr></tbody></table></div>
+<p>표의 마지막 줄에서 tan(π/2 − θ) = 1/tan θ는 tan θ가 0이 아닐 때입니다. θ = 0이면 π/2 − θ = π/2가 되어 탄젠트 자체가 정의되지 않습니다. sin은 원점 대칭(sin(−θ) = −sin θ), cos는 y축 대칭(cos(−θ) = cos θ), tan는 정의되는 곳에서 원점 대칭입니다. y = cos x의 그래프는 y = sin x를 왼쪽으로 π/2만큼 평행이동한 모양입니다. 단위원에서 각을 π/2만큼 더하면 점 (x, y)가 (−y, x)로 가므로 sin(θ + π/2) = cos θ입니다.</p>
+
+<h2>3. 그래프, 주기, 진폭, 평행이동과 최대·최소</h2>
+<p>y = sin x는 원점을 지나고, x = π/2에서 1, x = 3π/2에서 −1이 됩니다. x절편은 nπ입니다. y = cos x는 (0, 1)을 지나고 x절편은 π/2 + nπ입니다. y = tan x는 원점을 지나며 x = π/2 + nπ를 점근선으로 하고, 각 구간에서 증가합니다.</p>
+<div class="formula">sin, cos의 기본 주기: 2π<br>tan의 기본 주기: π</div>
+<p>y = a sin(bx + c) + d (b ≠ 0)를 읽을 때는 괄호를 b로 묶어 b(x − p) 꼴로 만듭니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>읽는 것</th><th>sin, cos</th><th>tan</th></tr></thead><tbody><tr><td>진폭</td><td>|a|</td><td>쓰지 않음(위로·아래로 한없이 감)</td></tr><tr><td>주기</td><td>2π / |b|</td><td>π / |b|</td></tr><tr><td>최댓값</td><td>|a| + d</td><td>없음</td></tr><tr><td>최솟값</td><td>−|a| + d</td><td>없음</td></tr><tr><td>평행이동</td><td>x축 방향 p, y축 방향 d</td><td>점근선도 같이 이동</td></tr></tbody></table></div>
+<p>y = −2 cos x + 3이면 진폭은 2, 주기는 2π입니다. cos x = −1일 때 y = −2 · (−1) + 3 = 5가 최댓값이고, cos x = 1일 때 y = 1이 최솟값입니다. 최댓값이 되는 한 점은 x = π입니다. a가 음수여도 진폭은 |a|이고, 최댓값은 |a| + d입니다.</p>
+<p>y = 2 sin(2x − π/3) + 1은 2x − π/3 = 2(x − π/6)이므로 오른쪽으로 π/6만큼 이동합니다. 진폭 2, 주기 2π/2 = π, 위로 1입니다. 최댓값은 3, 최솟값은 −1입니다.</p>
+<p>y = sin(x − π/3) + 1은 오른쪽 π/3, 위 1만큼의 이동입니다. 점 (π/3, 1)을 지나고 최댓값 2, 최솟값 0, 주기 2π입니다.</p>
+<h3>그래프에서 읽는 순서</h3>
+<ol>
+<li>축의 눈금이 도인지 라디안인지 확인합니다. 수능 그래프의 눈금은 π/2, π처럼 라디안입니다.</li>
+<li>|a|로 위아래 폭, |b|로 한 바퀴의 길이를 정합니다. b의 절댓값이 크면 주기가 짧아져 같은 구간에 파동이 더 많이 들어옵니다.</li>
+<li>괄호 안을 묶어 좌우 이동량을 읽고, 마지막 상수로 위아래 이동을 읽습니다.</li>
+<li>최댓값은 |a| + d, 최솟값은 −|a| + d입니다. a가 음수이면 산과 골짜기의 위치가 바뀝니다.</li>
+<li>점근선이 있는 tan는 주기를 π/|b|로 자르고, 잘린 구간마다 한 번씩 증가하는 곡선으로 봅니다.</li>
+</ol>
+<div class="info-card"><h4>한 주기만 정확히 그리면 나머지가 따라옵니다.</h4><p>sin은 0에서 시작해 1, 0, −1, 0으로 한 주기를 마칩니다. cos는 1에서 시작해 0, −1, 0, 1입니다. 평행이동한 뒤에는 이 다섯 점을 이동량만큼 옮겨 찍으면 개형이 정해집니다.</p></div>
+
+<h2>4. 삼각방정식과 부등식</h2>
+<p>sin x = k는 |k| &gt; 1이면 해가 없고, |k| = 1이면 한 주기에 한 번, |k| &lt; 1이면 한 주기에 두 번 만납니다. cos도 같습니다. tan x = k는 점근선 사이의 각 구간마다 정확히 한 번 만납니다. k가 어떤 실수여도 됩니다.</p>
+<div class="formula">sin x = sin α ⇒ x = nπ + (−1)<sup>n</sup> α<br>cos x = cos α ⇒ x = 2nπ ± α<br>tan x = tan α ⇒ x = nπ + α</div>
+<p>0 ≤ x &lt; 2π에서 sin x = √3 / 2이면 x = π/3, 2π/3입니다. 일반해는 x = nπ + (−1)<sup>n</sup>(π/3)입니다. n = 0이면 π/3, n = 1이면 π − π/3 = 2π/3, n = 2이면 2π + π/3으로 이어집니다.</p>
+<p>cos x = −1/2이면 0 ≤ x &lt; 2π에서 x = 2π/3, 4π/3이고, 일반해는 x = 2nπ ± 2π/3입니다. tan x = 1이면 x = π/4, 5π/4이고, 일반해는 x = nπ + π/4입니다. 5π/4 = π + π/4이므로 주기를 π로 더하면 됩니다. 3π/4는 tan가 −1인 각이라 넣으면 안 됩니다.</p>
+<p>계수가 붙은 방정식은 괄호 안 전체를 한 문자로 봅니다. 0 ≤ x &lt; 2π에서 sin 2x = 1/2이면 t = 2x로 둘 때 0 ≤ t &lt; 4π입니다. t = π/6, 5π/6, 그리고 2π를 더한 13π/6, 17π/6입니다. 따라서 x = π/12, 5π/12, 13π/12, 17π/12로 네 개입니다. 양의 정수 b에 대해 0 ≤ x &lt; 2π에서 sin(bx) = k (|k| &lt; 1)의 해는 2b개입니다. b = 1이면 2개, b = 2이면 4개, b = 3이면 6개입니다.</p>
+<p>부등식은 그 구간의 그래프에 수평선 y = k를 그어, 곡선이 직선 위에 있는 구간을 읽습니다. 등호가 있으면 교점을 포함하고, 없으면 빼니다.</p>
+<p>0 ≤ x &lt; 2π에서 sin x ≥ 1/2인 구간은 π/6 ≤ x ≤ 5π/6입니다. cos x &lt; −1/2이면, cos x = −1/2인 점이 2π/3과 4π/3이므로 2π/3 &lt; x &lt; 4π/3입니다. x = π에서 cos x = −1로 참이고, x = 2π/3에서는 등호라서 부등호가 순수하게 작다면 포함하지 않습니다.</p>
+<div class="warning-box"><strong>함정:</strong> 일반해를 쓸 때 sin의 주기를 2π로만 더하면, π − α 쪽 해가 빠집니다. sin은 nπ + (−1)<sup>n</sup> α, tan은 주기가 π입니다. 또 해의 범위를 구할 때 t = 2x처럼 치환했다면 t의 범위가 두 배가 됩니다.</div>
+
+<h2>5. 사인법칙, 코사인법칙, 넓이와 외접원</h2>
+<p>삼각형 ABC에서 각 A, B, C의 마주 보는 변을 a, b, c라고 하고, 외접원의 반지름을 R이라고 합니다.</p>
+<div class="formula">a / sin A = b / sin B = c / sin C = 2R<br>a<sup>2</sup> = b<sup>2</sup> + c<sup>2</sup> − 2bc cos A<br>cos A = (b<sup>2</sup> + c<sup>2</sup> − a<sup>2</sup>) / (2bc)<br>S = (1/2)bc sin A</div>
+<p>넓이에서 두 변은 그 끼인각을 사이에 둔 변입니다. 각 C를 쓸 때는 S = (1/2)ab sin C입니다. sin은 둔각에서도 양수이므로, 각이 둔각이어도 넓이 공식의 sin 값 자체는 양수로 넣습니다.</p>
+<p>A = 30°, B = 60°, C = 90°, a = 3이면 a / sin A = 3 / (1/2) = 6 = 2R이므로 R = 3입니다. b = 6 sin 60° = 6 · √3 / 2 = 3√3, c = 6 sin 90° = 6입니다. 3<sup>2</sup> + (3√3)<sup>2</sup> = 9 + 27 = 36 = 6<sup>2</sup>이라 피타고라스 정리와도 맞습니다. 직각삼각형의 외심은 빗변의 중점이므로 R은 빗변의 절반인 3입니다. 넓이 S = (1/2) · 3 · 3√3 · sin 90° = 9√3 / 2입니다.</p>
+<p>코사인법칙에서 cos A의 부호가 각의 종류를 정합니다. a<sup>2</sup>이 b<sup>2</sup> + c<sup>2</sup>보다 작으면 예각, 같으면 직각, 크면 둔각입니다. a = 4, b = 3, c = 2이면 가장 긴 변은 a입니다.</p>
+<div class="formula">cos A = (9 + 4 − 16) / (2 · 3 · 2) = −3/12 = −1/4</div>
+<p>cos A &lt; 0이므로 각 A는 둔각입니다. sin A = √(1 − (−1/4)<sup>2</sup>) = √(15/16) = √15 / 4입니다. 둔각의 사인은 양수입니다. 넓이 S = (1/2) · 3 · 2 · √15 / 4 = 3√15 / 4입니다. R = a / (2 sin A) = 4 / (2 · √15 / 4) = 8/√15 = 8√15 / 15입니다. 검산으로 S = abc / (4R)을 쓰면, a = 2R sin A를 S = (1/2)bc sin A에 넣은 식입니다. 4 · 3 · 2 / (4 · 8/√15) = 24 · √15 / 32 = 3√15 / 4로 넓이와 같습니다.</p>
+<div class="info-card"><h4>abc / (4R)은 외운 식보다 유도가 안전합니다.</h4><p>사인법칙에서 sin A = a / (2R)입니다. 이것을 S = (1/2)bc sin A에 넣으면 S = abc / (4R)이 됩니다. 두 식으로 같은 넓이가 나오면 계산이 맞은 것입니다.</p></div>
+
+<h2>6. 법칙을 고르는 법, 그래프의 교점 개수</h2>
+<p>삼각형 문제는 주어진 자료가 무엇인지로 법칙이 결정됩니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>주어진 것</th><th>고르는 법칙</th><th>주의</th></tr></thead><tbody><tr><td>두 각과 한 변</td><td>사인법칙</td><td>나머지 각은 180°에서 뺍니다</td></tr><tr><td>두 변과 끼인각</td><td>코사인법칙으로 마주 보는 변, 넓이는 (1/2)bc sin A</td><td>끼인각의 sin으로 넓이</td></tr><tr><td>세 변</td><td>코사인법칙으로 각</td><td>가장 긴 변의 대각이 둔각인지 cos의 부호로 판단</td></tr><tr><td>두 변과 끼인각이 아닌 각</td><td>사인법칙</td><td>마주 보는 각이 예각·둔각 두 가지일 수 있음</td></tr></tbody></table></div>
+<p>마지막 경우는 한 각 A와 그 마주 보는 변 a, 그리고 다른 변 b가 주어진 상황입니다. sin B = b sin A / a를 구한 뒤 B와 180° − B를 둘 다 검사합니다. 각의 합이 180°를 넘으면 그 후보는 버립니다.</p>
+<p>A = 30°, a = √2, b = 2이면 sin B = 2 · sin 30° / √2 = 2 · (1/2) / √2 = 1/√2입니다. 따라서 B = 45° 또는 B = 135°입니다. B = 45°이면 C = 105°, B = 135°이면 C = 15°로 둘 다 삼각형이 됩니다. 각 A가 예각이고, 변 a가 b sin A = 1보다 크면서 b = 2보다 작기 때문입니다. 해가 하나뿐이라고 단정하면 하나가 빠집니다.</p>
+<p>그래프의 교점 개수는 한 주기 안의 횟수에, 주어진 구간에 주기가 몇 번 들어가는지를 곱합니다. 0 ≤ x &lt; 2π에서 y = cos x와 y = 1/2의 교점은 x = π/3, 5π/3로 2개입니다. 같은 구간에서 y = sin 2x와 y = 1/2의 교점은 앞 절에서 센 4개입니다. |sin 2x| = 1/2처럼 절댓값이 붙으면 sin 2x = 1/2과 sin 2x = −1/2를 따로 세어 8개가 됩니다. t = 2x의 범위가 0 이상 4π 미만이고, 그 안에 각 방정식의 해가 4개씩이기 때문입니다.</p>
+<div class="study-tip"><strong>TIP:</strong> 도형 문항은 그림에 주어진 각과 변을 표시한 뒤, 끼인각이 있으면 코사인, 마주 보는 각과 변의 쌍이 있으면 사인으로 시작합니다. 그래프 문항은 주기를 먼저 구하고, 그 주기 칸 안에 수평선이 곡선을 몇 번 지나는지 센 다음 칸 수를 곱합니다.</div>
+
+<h2>자주 나오는 함정</h2><ul>
+<li><strong>호도법 공식에 도 단위 각을 그대로 넣는</strong> 경우. l = rθ의 θ는 라디안입니다.</li>
+<li><strong>sin과 tan의 주기를 둘 다 2π</strong>로 두는 경우. tan의 주기는 π입니다.</li>
+<li><strong>y = −2 cos x + 3의 최댓값을 −2 + 3 = 1</strong>로 쓰는 경우. 진폭은 |−2| = 2이고 최댓값은 5입니다.</li>
+<li><strong>제2사분면에서 cos를 양수</strong>로 두는 경우. 제2사분면은 sin만 양수입니다.</li>
+<li><strong>코사인법칙의 부호를 반대로</strong> 쓰는 경우. 둔각이면 cos가 음수이고, 마주 보는 변의 제곱은 다른 두 변의 제곱의 합보다 큽니다.</li>
+<li><strong>끼인각이 아닌 두 변과 한 각에서 예각 해만</strong> 답으로 쓰는 경우. 180°에서 그 각을 뺀 값도 각의 합을 통과하면 답입니다.</li>
+<li><strong>둔각의 sin을 음수</strong>로 넣어 넓이가 음수가 되는 경우. 넓이 공식의 sin은 양수입니다.</li>
+<li><strong>sin x = 2처럼 |k| &gt; 1인 방정식에 해가 있다</strong>고 보는 경우. 사인·코사인의 범위는 −1 이상 1 이하입니다.</li>
+</ul>
+<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>반지름이 10이고 중심각이 2라디안인 부채꼴의 호의 길이와 넓이를 구하시오.</summary><div class="example-sol"><p>각이 이미 라디안이므로 공식에 바로 넣습니다.</p><p>l = rθ = 10 × 2 = <strong>20</strong>.</p><p>S = (1/2)r<sup>2</sup>θ = (1/2) × 100 × 2 = <strong>100</strong>.</p><p>검산: (1/2)rl = (1/2) × 10 × 20 = 100. 도를 360으로 나누는 식은 쓰지 않습니다.</p></div></details><details class="example"><summary>sin θ = 3/5이고 θ가 제2사분면의 각일 때 cos θ와 tan θ를 구하시오.</summary><div class="example-sol"><p>sin<sup>2</sup>θ + cos<sup>2</sup>θ = 1에서 cos<sup>2</sup>θ = 1 − 9/25 = 16/25입니다.</p><p>제2사분면이므로 cos θ &lt; 0. 따라서 cos θ = <strong>−4/5</strong>.</p><p>tan θ = sin θ / cos θ = (3/5) / (−4/5) = <strong>−3/4</strong>.</p><p>9/25 + 16/25 = 1로 맞습니다.</p></div></details><details class="example"><summary>0 ≤ x &lt; 2π에서 방정식 sin 2x = 1/2의 해를 모두 구하고 개수를 말하시오.</summary><div class="example-sol"><p>t = 2x로 두면 0 ≤ t &lt; 4π이고 sin t = 1/2입니다.</p><p>t = π/6, 5π/6, 13π/6, 17π/6.</p><p>x = t/2이므로 x = <strong>π/12, 5π/12, 13π/12, 17π/12</strong>의 4개입니다.</p><p>양의 정수 b = 2이고 |k| &lt; 1이므로 해의 개수 2b = 4와 일치합니다.</p></div></details><details class="example"><summary>두 변의 길이가 5, 7이고 그 끼인각이 60°일 때, 끼인각의 마주 보는 변의 길이, 삼각형의 넓이, 외접원의 반지름을 구하시오.</summary><div class="example-sol"><p>a<sup>2</sup> = 5<sup>2</sup> + 7<sup>2</sup> − 2 · 5 · 7 · cos 60° = 25 + 49 − 70 · (1/2) = 74 − 35 = 39.</p><p>마주 보는 변은 <strong>√39</strong>입니다.</p><p>S = (1/2) · 5 · 7 · sin 60° = (35/2) · (√3 / 2) = <strong>35√3 / 4</strong>.</p><p>2R = a / sin A이므로 R = √39 / (2 · √3 / 2) = √39 / √3 = <strong>√13</strong>.</p><p>검산: abc / (4R) = 5 · 7 · √39 / (4√13) = 35√3 / 4. 넓이와 같습니다.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>단위원에서 가로좌표가 코사인, 세로좌표가 사인입니다. 사인은 한 바퀴(2π)마다, 탄젠트는 반 바퀴(π)마다 같은 모양이 반복됩니다. 삼각형은 마주 보는 쌍이 보이면 사인, 끼인각이 보이면 코사인입니다.</p><ul><li>부채꼴 공식의 각은 라디안입니다.</li><li>최댓값은 진폭의 절댓값에 위아래 이동을 더한 값입니다.</li><li>넓이 (1/2)ab sin C에서 sin은 둔각이어도 양수입니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>그래프 문항은 주기를 구한 뒤 한 주기 칸에 수평선이 몇 번 닿는지 세고, 구간에 칸이 몇 개인지 곱합니다. 치환 t = bx를 했으면 t의 범위를 먼저 늘려 적습니다. 방정식의 일반해는 sin, cos, tan의 주기 공식을 섞지 않고 함수마다 따로 씁니다.</p><p>도형 문항은 (1) 그림에 변·각 표시 (2) 끼인각이면 코사인, 마주 보는 쌍이면 사인 (3) 끼인각이 아닌 경우에는 예각·둔각 두 후보를 각의 합으로 검사 (4) 넓이와 R을 서로 다른 식으로 한 번 더 계산해 검산하는 순서입니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>삼각함수의 개념과 공식을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"삼각함수의 개념과 공식을 짝지으세요.","pairs":[{"term":"부채꼴의 호의 길이","def":"반지름 곱하기 라디안"},{"term":"사인·코사인의 주기","def":"2π"},{"term":"탄젠트의 주기","def":"π"},{"term":"sin²θ + cos²θ","def":"1"},{"term":"사인법칙","def":"a/sin A = 2R"},{"term":"두 변과 끼인각","def":"코사인법칙과 넓이"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"60°를 라디안으로 바꾸면?","choices":["π/6","π/3","π/4","π/2"],"answer":1},{"q":"반지름 2, 중심각 π/3인 부채꼴의 호의 길이는?","choices":["2π/3","π/3","π","4π/3"],"answer":0},{"q":"0 이상 2π 미만에서 cos x = 0인 해는 몇 개인가?","choices":["1개","3개","4개","2개"],"answer":3},{"q":"삼각형에서 a/sin A와 같은 값은?","choices":["R","R/2","2R","πR"],"answer":2},{"q":"두 변의 길이가 모두 2이고 끼인각이 60°일 때, 마주 보는 변의 제곱은?","choices":["2","4","6","8"],"answer":1}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 수학 전 시험지에서 이 파트로 분류된 <strong>51문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:a2">📝 삼각함수 모아 풀기 →</a></p>
+<div class="pager"><a href="01-exp-log.html">← 지수와 로그</a><a href="03-sequence.html">수열 →</a></div>
+</main></div>
+</body></html>

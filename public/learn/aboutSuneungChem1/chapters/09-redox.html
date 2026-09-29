@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>산화 환원 반응 — 수능 화학Ⅰ</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>화학Ⅰ 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li class="grp">화학의 첫걸음</li>
+<li><a href="01-mole.html">1. 화학과 우리 생활 · 화학식량과 몰</a></li>
+<li><a href="02-reaction.html">2. 화학 반응식과 양적 관계</a></li>
+<li class="grp">원자의 세계</li>
+<li><a href="03-atom.html">3. 원자 모형과 전자 배치</a></li>
+<li><a href="04-periodic.html">4. 원소의 주기적 성질</a></li>
+<li class="grp">화학 결합과 분자의 세계</li>
+<li><a href="05-bond.html">5. 화학 결합</a></li>
+<li><a href="06-molecule.html">6. 분자의 구조와 성질</a></li>
+<li class="grp">역동적인 화학 반응</li>
+<li><a href="07-equilibrium.html">7. 동적 평형</a></li>
+<li><a href="08-acid-base.html">8. 산과 염기 (중화 반응)</a></li>
+<li><a href="09-redox.html" style="color:var(--accent);font-weight:600;">9. 산화 환원 반응</a></li>
+<li class="grp">전략</li>
+<li><a href="10-strategy.html">10. 수능 화학Ⅰ 실전 전략</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>산화 환원 반응</h1><p class="authors">Part 9 · 역동적인 화학 반응</p><p class="affiliation">산화수·산화 환원 반응·반응식 완성·화학 전지</p></header>
+<div class="stat-row"><div class="stat"><b>2.0</b><span>회당 문항 수</span></div><div class="stat"><b>4.9점</b><span>회당 배점</span></div><div class="stat"><b>1~4</b><span>회차별 범위</span></div><div class="stat"><b>59</b><span>최근 29회 누적</span></div></div>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 29회(2018~2021학년도는 구 교육과정)(580문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>산화 환원은 전자가 어느 원자에서 어느 원자로 이동했는지를 산화수로 읽어 내는 파트입니다. 수능에서는 반응식의 산화수 변화로 산화제와 환원제를 고르고, 전자 수를 맞춰 계수를 완성하며, 반응 전후 이온 모형에서 사라진 이온과 생긴 금속의 개수를 대조합니다. 화학 전지는 그 전자가 도선으로 빠져나가는 구조로, 어느 금속이 녹고 어느 극이 무거운지를 묻습니다.</p>
+<h2>1. 산화와 환원의 정의</h2>
+<p>산화와 환원은 항상 함께 일어납니다. 한 물질이 전자를 잃으면 다른 물질이 그 전자를 받습니다. 역사적으로는 산소·수소의 이동으로 먼저 정의했고, 지금은 전자와 산화수까지 같은 현상의 다른 표현으로 묶습니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>기준</th><th>산화</th><th>환원</th></tr></thead><tbody><tr><td>산소</td><td>산소와 결합한다</td><td>산소를 잃는다</td></tr><tr><td>수소</td><td>수소를 잃는다</td><td>수소와 결합한다</td></tr><tr><td>전자</td><td>전자를 잃는다</td><td>전자를 얻는다</td></tr><tr><td>산화수</td><td>산화수가 증가한다</td><td>산화수가 감소한다</td></tr></tbody></table></div>
+<p>네 줄은 같은 반응에서 동시에 맞아야 합니다. 구리가 산소와 결합해 산화 구리(Ⅱ)가 되면 구리는 전자를 잃고 산화수가 0에서 +2로 커집니다. 산소는 산화수가 0에서 −2로 작아지므로 환원됩니다.</p>
+<div class="formula">2Cu + O<sub>2</sub> → 2CuO<br>Cu: 0 → +2 (산화), &nbsp; O: 0 → −2 (환원)</div>
+<p>수소와 염소가 만나 염화 수소가 되는 반응은 산소가 없어도 산화 환원입니다. 수소는 0에서 +1로 산화되고, 염소는 0에서 −1로 환원됩니다. 전자는 수소에서 염소로 이동합니다.</p>
+<div class="formula">H<sub>2</sub> + Cl<sub>2</sub> → 2HCl</div>
+<p>연소도 산화 환원입니다. 메테인에서 탄소의 산화수는 −4이고, 이산화 탄소에서 탄소의 산화수는 +4입니다. 탄소 하나당 전자 8개를 잃습니다. 산소 분자 2개, 산소 원자 4개는 0에서 −2가 되며 원자 하나당 전자 2개, 합이 8개입니다.</p>
+<div class="formula">CH<sub>4</sub> + 2O<sub>2</sub> → CO<sub>2</sub> + 2H<sub>2</sub>O</div>
+<p>전자를 잃는 물질이 상대를 환원시키므로 환원제입니다. 전자를 얻는 물질이 상대를 산화시키므로 산화제입니다. 산화제는 자신은 환원되고, 환원제는 자신은 산화됩니다. 이름은 상대에게 하는 일에 붙입니다.</p>
+<div class="warning-box"><strong>함정:</strong> 산화되는 물질을 산화제라고 부르면 방향이 뒤집힙니다. 산화수가 증가한 물질이 환원제이고, 산화수가 감소한 물질이 산화제입니다.</div>
+
+<h2>2. 산화수 규칙과 변화 판정</h2>
+<p>산화수는 전자가 어느 쪽으로 치우쳤는지를 원자에 정수로 매긴 값입니다. 실제 전하와 항상 같지는 않으며, 결합한 전자를 일정한 규칙으로 나누어 가진 것입니다. 다음 순서로 매깁니다.</p>
+<ol>
+<li>홑원소 물질의 산화수는 0입니다. H<sub>2</sub>, O<sub>2</sub>, Cl<sub>2</sub>, Na, Fe, P<sub>4</sub>가 모두 0입니다. 원자 개수를 산화수로 쓰지 않습니다.</li>
+<li>단원자 이온의 산화수는 이온의 전하와 같습니다. Na<sup>+</sup>는 +1, Cl<sup>−</sup>는 −1, Mg<sup>2+</sup>는 +2, Al<sup>3+</sup>은 +3입니다.</li>
+<li>화합물에서 플루오린은 −1, 1족 금속은 +1, 2족 금속은 +2입니다. 수소는 보통 +1이고, NaH처럼 금속과 결합한 수소화물은 −1입니다. 산소는 보통 −2이고, H<sub>2</sub>O<sub>2</sub> 같은 과산화물에서는 −1, OF<sub>2</sub>에서는 +2입니다.</li>
+<li>중성 물질에서 산화수의 합은 0입니다. 다원자 이온에서 산화수의 합은 이온의 전하와 같습니다. 규칙을 적용하고 남은 원자가 미지수입니다.</li>
+</ol>
+<div class="tbl-wrap"><table><thead><tr><th>물질</th><th>계산</th><th>결과</th></tr></thead><tbody><tr><td>H<sub>2</sub>O</td><td>2×(+1) + O = 0</td><td>O는 −2</td></tr><tr><td>H<sub>2</sub>O<sub>2</sub></td><td>2×(+1) + 2O = 0</td><td>O는 −1</td></tr><tr><td>OF<sub>2</sub></td><td>O + 2×(−1) = 0</td><td>O는 +2</td></tr><tr><td>NaH</td><td>(+1) + H = 0</td><td>H는 −1</td></tr><tr><td>H<sub>2</sub>SO<sub>4</sub></td><td>2×(+1) + S + 4×(−2) = 0</td><td>S는 +6</td></tr><tr><td>SO<sub>4</sub><sup>2−</sup></td><td>S + 4×(−2) = −2</td><td>S는 +6</td></tr><tr><td>NO<sub>3</sub><sup>−</sup></td><td>N + 3×(−2) = −1</td><td>N는 +5</td></tr><tr><td>NH<sub>3</sub></td><td>N + 3×(+1) = 0</td><td>N는 −3</td></tr><tr><td>CO<sub>2</sub> / CO</td><td>C + 2×(−2) = 0, C + (−2) = 0</td><td>C는 +4 / +2</td></tr><tr><td>KMnO<sub>4</sub></td><td>(+1) + Mn + 4×(−2) = 0</td><td>Mn는 +7</td></tr><tr><td>MnO<sub>2</sub></td><td>Mn + 2×(−2) = 0</td><td>Mn는 +4</td></tr><tr><td>Cr<sub>2</sub>O<sub>7</sub><sup>2−</sup></td><td>2Cr + 7×(−2) = −2</td><td>Cr는 +6</td></tr><tr><td>Fe<sub>2</sub>O<sub>3</sub></td><td>2Fe + 3×(−2) = 0</td><td>Fe는 +3</td></tr><tr><td>CH<sub>4</sub></td><td>C + 4×(+1) = 0</td><td>C는 −4</td></tr></tbody></table></div>
+<p>황산의 검산은 2 + 6 − 8 = 0입니다. 중크롬산 이온은 2Cr − 14 = −2에서 2Cr = 12, Cr = +6입니다. 과망가니즈산 칼륨은 1 + Mn − 8 = 0에서 Mn = +7입니다. 이온 전체의 전하 −2를 황의 산화수와 혼동하면 SO<sub>4</sub><sup>2−</sup>에서 황을 −2로 두게 됩니다. 황은 +6이고, −2는 산소 네 개와 황을 합친 이온의 전하입니다.</p>
+<p>같은 원소라도 물질마다 산화수가 다릅니다. 황은 홑원소 S에서 0, 황화 수소에서 −2, 이산화 황에서 +4, 황산과 황산 이온에서 +6입니다. 반응이 어느 물질에서 어느 물질로 가는지를 봐야 증가인지 감소인지가 정해집니다.</p>
+<div class="formula">산화수 증가 → 산화, 그 물질을 포함한 반응물이 환원제<br>산화수 감소 → 환원, 그 물질을 포함한 반응물이 산화제</div>
+<p>과산화 수소가 물과 산소로 나뉠 때는 산소의 산화수가 한 방향으로만 움직이지 않습니다.</p>
+<div class="formula">2H<sub>2</sub>O<sub>2</sub> → 2H<sub>2</sub>O + O<sub>2</sub></div>
+<p>H<sub>2</sub>O<sub>2</sub>의 산소는 −1입니다. 물 속의 산소는 −2가 되어 환원되고, 산소 분자의 산소는 0이 되어 산화됩니다. 원자 개수는 왼쪽 산소 4개, 오른쪽 물 2개와 산소 분자 2개로 보존됩니다. 같은 원소가 일부는 산화되고 일부는 환원되는 반응입니다.</p>
+<div class="study-tip"><strong>TIP:</strong> 미지 산화수는 플루오린, 1족·2족, 수소, 산소 순으로 알려진 값을 먼저 넣고, 합이 0 또는 이온 전하가 되도록 나머지를 구합니다. 구한 뒤에는 합을 다시 더해 검산합니다.</div>
+
+<h2>3. 산화제·환원제와 반응식 완성</h2>
+<p>반응식을 완성할 때는 원자 개수만 맞추면 전자가 어긋날 수 있으므로, 산화수가 변한 원자부터 전자 수를 맞춥니다.</p>
+<ol>
+<li>모든 원자의 산화수를 반응 전후에 적고, 변한 원자만 동그라미를 칩니다.</li>
+<li>산화된 원자 하나가 잃은 전자 수, 환원된 원자 하나가 얻은 전자 수를 적습니다.</li>
+<li>잃은 전자의 총합과 얻은 전자의 총합이 같도록 계수를 곱합니다.</li>
+<li>반쪽 반응을 더해 전자를 지웁니다. 구경꾼 이온은 개수가 맞도록 양쪽에 더합니다.</li>
+<li>원소별 원자 수와 좌우의 전하 합을 검산합니다.</li>
+</ol>
+<p>산화 구리(Ⅱ)와 수소의 반응은 이미 계수가 맞습니다. 구리의 산화수는 +2에서 0으로 감소하므로 CuO가 산화제입니다. 수소의 산화수는 0에서 +1로 증가하므로 H<sub>2</sub>가 환원제입니다. 산소는 −2 그대로입니다. 수소 분자 1개가 전자 2개를 잃고, 구리 하나가 전자 2개를 얻습니다.</p>
+<div class="formula">CuO + H<sub>2</sub> → Cu + H<sub>2</sub>O</div>
+<p>아연과 구리(Ⅱ) 이온은 반쪽으로 나누면 다음과 같습니다.</p>
+<div class="formula">산화 반쪽(환원제): Zn → Zn<sup>2+</sup> + 2e<sup>−</sup><br>환원 반쪽(산화제): Cu<sup>2+</sup> + 2e<sup>−</sup> → Cu<br>알짜: Zn + Cu<sup>2+</sup> → Zn<sup>2+</sup> + Cu</div>
+<p>황산 이온이 있는 전체 식은 Zn + CuSO<sub>4</sub> → ZnSO<sub>4</sub> + Cu입니다. SO<sub>4</sub><sup>2−</sup>의 황 산화수는 +6 그대로라 구경꾼입니다. 전하도 왼쪽 Cu<sup>2+</sup>의 +2와 오른쪽 Zn<sup>2+</sup>의 +2가 같습니다.</p>
+<p>알루미늄과 구리(Ⅱ) 이온은 전자 수가 다릅니다. 알루미늄은 전자 3개를 잃고, 구리(Ⅱ) 이온은 전자 2개를 얻습니다. 최소공배수는 6입니다.</p>
+<div class="formula">Al → Al<sup>3+</sup> + 3e<sup>−</sup> &nbsp; (×2)<br>Cu<sup>2+</sup> + 2e<sup>−</sup> → Cu &nbsp; (×3)<br>2Al + 3Cu<sup>2+</sup> → 2Al<sup>3+</sup> + 3Cu</div>
+<p>전하의 합은 왼쪽 3 × (+2) = +6, 오른쪽 2 × (+3) = +6입니다. 황산 구리(Ⅱ)로 쓰면 2Al + 3CuSO<sub>4</sub> → Al<sub>2</sub>(SO<sub>4</sub>)<sub>3</sub> + 3Cu이고, 황산 이온 3개가 양쪽에서 같습니다.</p>
+<p>산화 철(Ⅲ)과 일산화 탄소의 반응은 제련의 모형으로 자주 나옵니다. Fe<sub>2</sub>O<sub>3</sub>에서 철은 +3, CO에서 탄소는 +2, CO<sub>2</sub>에서 탄소는 +4입니다.</p>
+<div class="formula">Fe<sub>2</sub>O<sub>3</sub> + 3CO → 2Fe + 3CO<sub>2</sub></div>
+<p>철 원자 2개가 각각 전자 3개, 합 6개를 얻습니다. 탄소 3개가 각각 전자 2개, 합 6개를 잃습니다. 산화제는 Fe<sub>2</sub>O<sub>3</sub>, 환원제는 CO입니다. 철 원자량은 56, 산소는 16로 두면 Fe<sub>2</sub>O<sub>3</sub>의 화학식량은 160입니다. 0.10 mol이면 질량 16 g이고, CO 0.30 mol은 8.4 g입니다. 생성되는 Fe 0.20 mol은 11.2 g, CO<sub>2</sub> 0.30 mol은 13.2 g입니다. 16 + 8.4 = 24.4, 11.2 + 13.2 = 24.4로 질량이 보존됩니다. 전자는 0.20 × 3 = 0.60 mol입니다.</p>
+<p>이산화 망가니즈와 염산의 반응에서는 염소가 모두 산화되지는 않습니다. 망가니즈 원자량은 55로 둡니다.</p>
+<div class="formula">MnO<sub>2</sub> + 4HCl → MnCl<sub>2</sub> + Cl<sub>2</sub> + 2H<sub>2</sub>O</div>
+<p>망가니즈는 +4에서 +2로 환원되어 전자 2개를 얻습니다. 염소 4개 중 2개만 −1에서 0이 되어 Cl<sub>2</sub>가 되고, 나머지 2개는 MnCl<sub>2</sub>에서 −1 그대로입니다. 전자 2개와 맞습니다. 산화제는 MnO<sub>2</sub>, 환원제는 HCl입니다. 원자 개수는 Mn 1, O 2, H 4, Cl 4로 양쪽이 같습니다.</p>
+<p>구리는 묽은 질산과 진한 질산에서 서로 다른 기체를 만듭니다. 질산의 질소는 +5입니다. 묽은 질산에서는 질소의 일부가 +2인 NO로, 진한 질산에서는 +4인 NO<sub>2</sub>로 환원됩니다. 질산 이온으로 구리 이온과 짝지어 남는 질소는 +5 그대로입니다.</p>
+<div class="formula">3Cu + 8HNO<sub>3</sub>(묽은) → 3Cu(NO<sub>3</sub>)<sub>2</sub> + 2NO + 4H<sub>2</sub>O<br>Cu + 4HNO<sub>3</sub>(진한) → Cu(NO<sub>3</sub>)<sub>2</sub> + 2NO<sub>2</sub> + 2H<sub>2</sub>O</div>
+<p>묽은 쪽 검산은 구리 3, 수소 8, 질소 8 = 6 + 2, 산소 24 = 18 + 2 + 4입니다. 구리 3개가 전자 6개를 잃고, NO로 가는 질소 2개가 각각 전자 3개를 얻어 6개입니다. 진한 쪽은 구리 1개가 전자 2개를 잃고, NO<sub>2</sub>로 가는 질소 2개가 각각 전자 1개를 얻습니다. 산소 12 = 6 + 4 + 2, 질소 4 = 2 + 2입니다.</p>
+<div class="info-card"><h4>계수가 맞은 반응식</h4><p>변한 원자의 전자 수가 같고, 원소마다 원자 수가 같으며, 이온 반응이면 전하의 합이 같습니다. 셋 중 하나라도 다르면 계수를 다시 곱합니다.</p></div>
+
+<h2>4. 금속의 반응성과 화학 전지</h2>
+<p>금속이 전자를 잃고 양이온이 되려는 경향을 이온화 경향이라고 합니다. 화학Ⅰ에서 비교에 쓰는 순서는 다음과 같습니다. 왼쪽으로 갈수록 전자를 잃기 쉽고, 그 이온은 환원되기 어렵습니다.</p>
+<div class="formula">K &gt; Ca &gt; Na &gt; Mg &gt; Al &gt; Zn &gt; Fe &gt; Ni &gt; Sn &gt; Pb &gt; H &gt; Cu &gt; Hg &gt; Ag &gt; Pt &gt; Au</div>
+<p>왼쪽에 있는 금속은 오른쪽 금속의 이온에게 전자를 줄 수 있습니다. 금속 자체는 산화되어 녹고, 상대 이온은 환원되어 고체로 석출됩니다. 반대 방향은 일어나지 않습니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>조합</th><th>일어나는 반응</th><th>일어나지 않는 방향</th></tr></thead><tbody><tr><td>아연과 구리(Ⅱ) 이온</td><td>Zn + Cu<sup>2+</sup> → Zn<sup>2+</sup> + Cu</td><td>Cu + Zn<sup>2+</sup></td></tr><tr><td>구리와 은 이온</td><td>Cu + 2Ag<sup>+</sup> → Cu<sup>2+</sup> + 2Ag</td><td>Ag + Cu<sup>2+</sup></td></tr><tr><td>아연과 묽은 염산</td><td>Zn + 2H<sup>+</sup> → Zn<sup>2+</sup> + H<sub>2</sub></td><td>수소보다 오른쪽인 Cu와 묽은 염산</td></tr><tr><td>철과 구리(Ⅱ) 이온</td><td>Fe + Cu<sup>2+</sup> → Fe<sup>2+</sup> + Cu</td><td>Cu + Fe<sup>2+</sup></td></tr></tbody></table></div>
+<p>수소보다 왼쪽 금속만 묽은 산의 H<sup>+</sup>를 환원해 수소 기체를 만듭니다. 구리를 묽은 염산에 넣어도 수소가 발생하지 않습니다. 용액에 반응성이 다른 금속 이온이 함께 있으면, 반응성이 작은 금속의 이온이 먼저 전자를 받습니다. 은 이온이 구리(Ⅱ) 이온보다 먼저 환원됩니다.</p>
+<p>실험으로 순서를 정할 때는 금속판을 다른 금속의 이온 수용액에 넣고 석출 여부를 표로 만듭니다. X를 Y<sup>2+</sup> 수용액에 넣었더니 Y가 석출되면 X가 Y보다 반응성이 큽니다. 변화가 없으면 X는 Y보다 반응성이 작습니다. 묽은 염산에서 기체가 나오면 그 금속은 수소보다 왼쪽입니다.</p>
+<h3>볼타 전지</h3>
+<p>화학 전지는 산화 환원으로 전자가 도선을 따라 흐르게 만든 장치입니다. 볼타 전지는 아연판과 구리판을 묽은 황산에 함께 넣습니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>위치</th><th>반응</th><th>전자와 질량</th></tr></thead><tbody><tr><td>아연판, 음극(−)</td><td>Zn → Zn<sup>2+</sup> + 2e<sup>−</sup> 산화</td><td>전자가 도선으로 나감. 아연판은 녹아 가벼워짐</td></tr><tr><td>구리판, 양극(+)</td><td>2H<sup>+</sup> + 2e<sup>−</sup> → H<sub>2</sub> 환원</td><td>전자가 도선으로 들어옴. 구리판 질량은 늘지 않고 수소 기체가 붙음</td></tr></tbody></table></div>
+<div class="formula">볼타 전지의 전체 반응: Zn + 2H<sup>+</sup> → Zn<sup>2+</sup> + H<sub>2</sub></div>
+<p>전자는 도선을 따라 아연에서 구리로 이동합니다. 용액 속을 전자가 지나가는 것이 아닙니다. 용액에서는 이온이 움직입니다. 구리판에 수소 기체가 붙으면 전류가 약해지는데, 이것을 분극이라고 합니다.</p>
+<p>아연 원자량을 65, 수소 원자량을 1로 두면, 전자 0.20 mol이 이동할 때 녹는 아연은 0.10 mol, 질량 6.5 g입니다. 발생하는 수소는 0.10 mol, 질량 0.20 g이고, 0°C·1기압에서 부피는 2.24 L입니다. 구리판의 질량은 이 전자 이동만으로 증가하지 않습니다.</p>
+<h3>다니엘 전지</h3>
+<p>다니엘 전지는 두 용액을 나눠 분극을 피한 화학 전지입니다. 아연판은 황산 아연 수용액에, 구리판은 황산 구리(Ⅱ) 수용액에 넣고 염다리로 연결합니다.</p>
+<div class="formula">음극(−), 산화: Zn → Zn<sup>2+</sup> + 2e<sup>−</sup><br>양극(+), 환원: Cu<sup>2+</sup> + 2e<sup>−</sup> → Cu<br>전체: Zn + Cu<sup>2+</sup> → Zn<sup>2+</sup> + Cu</div>
+<p>전자는 역시 도선을 따라 아연에서 구리로 갑니다. 아연판은 녹아 질량이 줄고, 구리판에는 구리가 붙어 질량이 늘어납니다. 아연 이온은 늘어나고 구리(Ⅱ) 이온은 줄어듭니다. 황산 이온에서 황의 산화수는 +6 그대로입니다.</p>
+<p>염다리에서는 음이온이 산화가 일어나는 아연 쪽으로, 양이온이 환원이 일어나는 구리 쪽으로 이동합니다. 아연 쪽이 양이온이 늘어 양전하가 넘치고, 구리 쪽이 양이온이 줄어 양전하가 모자라기 때문입니다. 전자는 염다리를 통과하지 않습니다.</p>
+<p>구리 원자량을 64로 두면 전자 0.20 mol이 이동할 때 구리 0.10 mol, 6.4 g이 석출됩니다. 아연은 볼타 전지와 같이 6.5 g이 줄어듭니다. 반응성이 큰 금속이 음극입니다. 두 금속의 반응성 차이가 전지의 방향과 전압의 대소를 정하는 기준이 됩니다. 표준 환원 전위를 숫자로 계산하는 것은 화학Ⅰ의 이 단원에서 요구하지 않습니다.</p>
+<div class="warning-box"><strong>함정:</strong> 화학 전지에서 산화 전극은 음극(−)입니다. 전자가 나가는 극이 음극이고, 반응성이 큰 금속이 그 자리에 옵니다. 전자의 통로는 도선이고, 이온의 통로는 용액과 염다리입니다.</div>
+
+<h2>5. 자료를 이렇게 읽는다</h2>
+<p>산화 환원 자료는 반응 전후 이온 모형, 금속을 담근 결과 표, 전지의 전극 그림입니다. 모형은 다음 순서로 읽습니다.</p>
+<ol>
+<li>반응 전과 후의 양이온, 음이온, 고체 금속을 종류별로 셉니다. 범례의 모양을 먼저 적습니다.</li>
+<li>음이온 개수가 그대로이면 구경꾼 후보입니다. 황의 산화수가 +6에서 변했는지 따로 확인합니다. 변하지 않았으면 전자 계산에서 뺍니다.</li>
+<li>줄어든 금속 이온과 늘어난 금속 이온의 개수 비가 반응식 계수와 같은지 봅니다. 1:1이 아닌 반응은 전자 수로 계수가 달라집니다.</li>
+<li>2가 이온은 개수에 2를 곱해 전하를 셉니다. 전후 모두 양전하 합과 음전하 합이 같아야 합니다.</li>
+<li>이동한 전자 수 = (환원된 이온 개수) × (이온 1개가 받은 전자 수)입니다. 산화된 금속이 내놓은 전자 수와 같은지 확인합니다.</li>
+<li>이온화 경향으로 그 방향이 실제로 일어나는지 확인합니다. 모형이 역반응처럼 보여도, 반응성이 작은 금속이 큰 금속의 이온을 환원하지는 못합니다.</li>
+<li>용액에 이온이 둘 있으면 반응성이 작은 금속의 이온부터 환원됩니다. 넣어 준 금속의 전자가 부족하면 뒤의 이온은 남습니다.</li>
+</ol>
+<p>예를 들어 반응 전 Cu<sup>2+</sup> 5개, SO<sub>4</sub><sup>2−</sup> 5개이던 용액에 아연을 넣었더니 Cu<sup>2+</sup> 2개, Zn<sup>2+</sup> 3개, SO<sub>4</sub><sup>2−</sup> 5개가 되었습니다. 황산 이온은 그대로라 구경꾼입니다. Cu<sup>2+</sup>가 3개 줄고 Zn<sup>2+</sup>가 3개 늘었으므로 계수 비 1:1과 맞습니다. 전하는 2×2 + 3×2 = 10, 황산 이온 5×2 = 10으로 같습니다. 전자는 구리 이온 3개가 각각 2개씩 받아 6개이고, 아연 3개가 각각 2개씩 내놓은 것과 같습니다. 석출된 구리 고체도 3개입니다.</p>
+<p>금속 반응 표는 행에 담근 금속, 열에 용액의 이온을 두고, 석출되면 담근 금속이 더 반응성이 크다고 화살표를 긋습니다. 모순이 없도록 한 줄로 세운 뒤 수소의 자리를 산과의 반응으로 끼웁니다.</p>
+<div class="study-tip"><strong>TIP:</strong> 전지 그림은 두 금속의 이온화 경향을 먼저 비교합니다. 큰 쪽이 음극, 전자는 큰 쪽에서 작은 쪽으로 도선을 따라 갑니다. 질량은 음극이 줄고, 환원 생성물이 금속이면 양극이 늘어납니다. 볼타 전지의 양극 생성물은 수소 기체라 구리판 질량이 늘지 않습니다.</div>
+
+<h2>6. 수능형 문항이 묻는 방식</h2>
+<p>문항은 반응식 하나와 모형 하나를 주고 보기를 겹칩니다. 다음 네 가지가 한 세트로 나옵니다.</p>
+<ul>
+<li><strong>산화수 변화.</strong> 규칙을 적용해 변한 원자만 표시합니다. 증가하면 산화, 감소하면 환원입니다. 합이 이온의 전하와 같은지 검산합니다.</li>
+<li><strong>산화제와 환원제.</strong> 산화수가 감소한 원자를 포함한 반응물이 산화제, 증가한 원자를 포함한 반응물이 환원제입니다. 생성물은 그 역할의 답이 아닙니다.</li>
+<li><strong>전자 수와 계수.</strong> 반쪽 반응의 전자를 최소공배수로 맞춥니다. 질산이나 염산처럼 일부 원자만 산화수가 변하는 반응은, 변한 개수와 구경꾼으로 남은 개수를 따로 셉니다.</li>
+<li><strong>모형과 전지.</strong> 이온 개수 변화로 전자 수를 구하고, 전하가 맞는지 2가 이온을 반영해 확인합니다. 전지에서는 전자의 방향, 전극의 질량 변화, 염다리의 이온 방향을 반쪽 반응과 짝짓습니다.</li>
+</ul>
+<p>반응성이 주어진 세 금속은 석출 실험의 참·거짓으로 순서를 완성한 뒤, 수소보다 왼쪽인지만 산과의 반응에 사용합니다. 순서가 Zn &gt; H &gt; Cu이면 아연은 묽은 염산과 반응하고 구리는 반응하지 않으며, 아연은 구리(Ⅱ) 이온과 반응합니다.</p>
+
+<h2>자주 나오는 함정</h2><ul>
+<li><strong>산화되는 물질을 산화제라고 보기.</strong> 산화수가 증가해 산화되는 물질은 환원제입니다. 산화제는 자신은 환원됩니다.</li>
+<li><strong>산소의 산화수를 항상 −2로 보기.</strong> 과산화 수소의 산소는 −1, OF<sub>2</sub>의 산소는 +2입니다. 홑원소 산소 분자는 0입니다.</li>
+<li><strong>다원자 이온의 전하를 가운데 원자의 산화수로 보기.</strong> SO<sub>4</sub><sup>2−</sup>의 전하 −2와 황의 산화수 +6은 다릅니다. 합이 전하가 되도록 황을 구합니다.</li>
+<li><strong>반응성이 큰 금속을 화학 전지의 양극으로 보기.</strong> 반응성이 큰 금속이 산화되는 음극(−)입니다. 전자는 그 극에서 도선으로 나갑니다.</li>
+<li><strong>전자가 염다리나 용액으로 이동한다고 보기.</strong> 전자는 도선으로, 이온은 용액과 염다리로 이동합니다.</li>
+<li><strong>볼타 전지에서 구리판 질량이 는다고 보기.</strong> 구리판에서는 수소 기체가 발생합니다. 구리 금속이 석출되는 것은 다니엘 전지의 양극입니다.</li>
+<li><strong>구리가 묽은 염산과 반응해 수소를 만든다고 보기.</strong> 구리는 수소보다 이온화 경향이 작아 이 반응이 일어나지 않습니다. 아연은 일어납니다.</li>
+<li><strong>MnO<sub>2</sub>와 HCl의 반응에서 염소가 모두 산화된다고 보기.</strong> Cl<sub>2</sub>가 되는 염소만 산화수가 −1에서 0으로 변하고, MnCl<sub>2</sub>로 남는 염소는 −1입니다.</li>
+</ul>
+<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>CuO + H<sub>2</sub> → Cu + H<sub>2</sub>O에서 각 원자의 산화수 변화를 적고, 산화제와 환원제를 고르시오. H<sub>2</sub>O<sub>2</sub>에서 산소의 산화수도 구하시오.</summary><div class="example-sol"><p>CuO에서 산소는 −2, 구리는 +2입니다. H<sub>2</sub>는 홑원소라 0입니다. Cu는 홑원소라 0이고, H<sub>2</sub>O에서 수소는 +1, 산소는 −2입니다.</p><p>구리는 +2 → 0으로 감소하므로 환원됩니다. CuO가 <strong>산화제</strong>입니다. 수소는 0 → +1로 증가하므로 산화됩니다. H<sub>2</sub>가 <strong>환원제</strong>입니다. 산소는 −2로 유지됩니다. 이동한 전자는 수소 분자 1개당 2개이고 구리 1개가 2개를 받아 맞습니다.</p><p>H<sub>2</sub>O<sub>2</sub>는 2×(+1) + 2O = 0이므로 산소의 산화수는 <strong>−1</strong>입니다. 물의 산소 −2와 다릅니다.</p></div></details><details class="example"><summary>알루미늄 5.4 g(0.20 mol)과 구리(Ⅱ) 이온 0.15 mol이 반응한다. 반응식을 완성하고, 한계가 되는 쪽, 석출되는 구리의 질량, 이동한 전자의 몰수를 구하시오. 원자량은 Al 27, Cu 64이다.</summary><div class="example-sol"><p>반쪽 반응은 Al → Al<sup>3+</sup> + 3e<sup>−</sup>, Cu<sup>2+</sup> + 2e<sup>−</sup> → Cu입니다. 전자를 6개로 맞추면 <strong>2Al + 3Cu<sup>2+</sup> → 2Al<sup>3+</sup> + 3Cu</strong>입니다. 전하는 양쪽 모두 +6입니다.</p><p>비교값은 알루미늄 0.20/2 = 0.10, 구리(Ⅱ) 이온 0.15/3 = 0.050입니다. 작은 쪽이 한계이므로 <strong>구리(Ⅱ) 이온</strong>이 한계입니다.</p><p>석출되는 구리는 0.15 mol, 질량은 0.15 × 64 = <strong>9.6 g</strong>입니다. 반응하는 알루미늄은 0.15 × (2/3) = 0.10 mol, 질량 2.7 g이고 2.7 g이 남습니다. 전자는 0.15 × 2 = <strong>0.30 mol</strong>입니다. 알루미늄 0.10 mol × 3으로 검산해도 0.30 mol입니다.</p></div></details><details class="example"><summary>MnO<sub>2</sub> 0.10 mol이 충분한 염산과 반응한다. 반응식을 쓰고, 산화제와 환원제, 발생하는 Cl<sub>2</sub>의 질량과 0°C·1기압 부피, 산화수가 변하지 않는 염소의 몰수를 구하시오. 원자량은 Mn 55, O 16, Cl 35.5, H 1이다.</summary><div class="example-sol"><p>반응식은 <strong>MnO<sub>2</sub> + 4HCl → MnCl<sub>2</sub> + Cl<sub>2</sub> + 2H<sub>2</sub>O</strong>입니다. Mn은 +4 → +2로 환원되므로 MnO<sub>2</sub>가 <strong>산화제</strong>입니다. Cl의 일부가 −1 → 0으로 산화되므로 HCl이 <strong>환원제</strong>입니다.</p><p>Cl<sub>2</sub>는 0.10 mol입니다. 분자량 71이므로 질량은 <strong>7.1 g</strong>이고, 0°C·1기압 부피는 0.10 × 22.4 = <strong>2.24 L</strong>입니다. 전자는 0.20 mol입니다.</p><p>HCl 0.40 mol 중 Cl<sub>2</sub>가 되는 염소는 0.20 mol이고, MnCl<sub>2</sub>에 남는 염소도 <strong>0.20 mol</strong>입니다. 이 0.20 mol의 산화수는 −1 그대로입니다.</p><p>질량 검산은 MnO<sub>2</sub> 8.7 g + HCl 14.6 g = 23.3 g, MnCl<sub>2</sub> 12.6 g + Cl<sub>2</sub> 7.1 g + H<sub>2</sub>O 3.6 g = 23.3 g입니다.</p></div></details><details class="example"><summary>황산 구리(Ⅱ) 수용액의 모형이 반응 전 Cu<sup>2+</sup> 6개, SO<sub>4</sub><sup>2−</sup> 6개였다. 아연판을 넣었더니 Cu<sup>2+</sup> 1개, Zn<sup>2+</sup> 5개, SO<sub>4</sub><sup>2−</sup> 6개가 되었다. 입자 1개 = 0.020 mol일 때 이동한 전자의 몰수와, 같은 전자가 다니엘 전지의 도선으로 흐를 때 구리판과 아연판의 질량 변화를 구하시오. 원자량은 Cu 64, Zn 65이다.</summary><div class="example-sol"><p>Cu<sup>2+</sup>는 5개 줄고 Zn<sup>2+</sup>는 5개 늘었습니다. SO<sub>4</sub><sup>2−</sup>는 6개 그대로라 구경꾼입니다. 전하는 1×2 + 5×2 = 12, 황산 이온 6×2 = 12로 같습니다.</p><p>구리(Ⅱ) 이온 1개는 전자 2개를 받습니다. 5개 × 2 × 0.020 mol = <strong>0.20 mol</strong>의 전자가 이동합니다. 아연 5개 × 2 × 0.020으로 검산해도 0.20 mol입니다.</p><p>다니엘 전지에서 이 전자는 아연 음극에서 구리 양극으로 도선을 따라 갑니다. 석출되는 구리는 0.10 mol, 질량 <strong>6.4 g 증가</strong>입니다. 녹는 아연은 0.10 mol, 질량 <strong>6.5 g 감소</strong>입니다. 염다리로 전자가 이동하는 것은 아닙니다.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>산화 환원은 전자라는 공을 주고받는 일입니다. 공을 넘긴 원자는 산화수가 올라가고 환원제가 됩니다. 공을 받은 원자는 산화수가 내려가고 산화제가 됩니다. 준 개수와 받은 개수는 같습니다.</p><ul><li>홑원소는 산화수 0, 산소는 대개 −2, 과산화 수소의 산소만 −1로 기억하면 대부분의 값이 나옵니다.</li><li>반응성이 큰 금속이 작은 금속의 이온에게 전자를 건넵니다. 그 금속이 전지의 음극입니다.</li><li>전자는 도선으로, 이온은 용액으로 움직입니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>풀이 순서는 (1) 알려진 산화수를 먼저 넣고 미지 원자를 합 규칙으로 구하기 (2) 증가한 원자와 감소한 원자에 전자 수를 적기 (3) 최소공배수로 반쪽 반응의 계수를 맞추기 (4) 원자 수와 전하를 검산하기 (5) 이온화 경향으로 실제 방향인지 확인하기입니다.</p><p>모형 문항은 구경꾼 음이온으로 전하 합을 먼저 맞춘 뒤, 환원된 이온 개수에 받은 전자 수를 곱해 전자 몰수를 구합니다. 전지 문항은 반응성이 큰 금속을 음극으로 두고, 질량 감소는 산화 반쪽, 질량 증가 또는 기체 발생은 환원 반쪽에 연결합니다. 볼타 전지의 환원 생성물은 수소이고, 다니엘 전지의 환원 생성물은 구리 금속입니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>산화 환원과 화학 전지의 개념을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0d9488","prompt":"산화 환원과 화학 전지의 개념을 짝지으세요.","pairs":[{"term":"산화","def":"전자를 잃고 산화수가 증가"},{"term":"산화제","def":"자신은 환원되는 물질"},{"term":"환원제","def":"자신은 산화되는 물질"},{"term":"홑원소의 산화수","def":"항상 0"},{"term":"전지의 음극","def":"산화가 일어나는 −극"},{"term":"이온화 경향","def":"금속이 양이온이 되기 쉬운 정도"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d9488","questions":[{"q":"H₂O₂에서 산소의 산화수는?","choices":["−1","0","−2","+2"],"answer":0},{"q":"Zn + Cu²⁺ → Zn²⁺ + Cu에서 환원제는?","choices":["Cu²⁺","Zn²⁺","Cu","Zn"],"answer":3},{"q":"이온화 경향이 아연, 구리, 은 순으로 클 때 실제로 일어나는 것은?","choices":["구리가 아연 이온과 반응한다","은이 구리 이온과 반응한다","아연이 구리 이온과 반응한다","은이 아연 이온과 반응한다"],"answer":2},{"q":"아연과 구리로 만든 화학 전지에서 도선을 통한 전자의 이동은?","choices":["구리 전극에서 아연 전극으로","아연 전극에서 구리 전극으로","염다리를 통해서만 이동한다","구리 이온이 도선을 통과한다"],"answer":1},{"q":"Fe₂O₃ + 3CO → 2Fe + 3CO₂에서 산화제는?","choices":["Fe₂O₃","Fe","CO","CO₂"],"answer":0}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 화학Ⅰ 전 시험지에서 이 파트로 분류된 <strong>59문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:k9">📝 산화 환원 반응 모아 풀기 →</a></p>
+<div class="pager"><a href="08-acid-base.html">← 산과 염기 (중화 반응)</a><a href="10-strategy.html">수능 화학Ⅰ 실전 전략 →</a></div>
+</main></div>
+</body></html>

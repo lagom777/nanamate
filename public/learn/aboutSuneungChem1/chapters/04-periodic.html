@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>원소의 주기적 성질 — 수능 화학Ⅰ</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>화학Ⅰ 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li class="grp">화학의 첫걸음</li>
+<li><a href="01-mole.html">1. 화학과 우리 생활 · 화학식량과 몰</a></li>
+<li><a href="02-reaction.html">2. 화학 반응식과 양적 관계</a></li>
+<li class="grp">원자의 세계</li>
+<li><a href="03-atom.html">3. 원자 모형과 전자 배치</a></li>
+<li><a href="04-periodic.html" style="color:var(--accent);font-weight:600;">4. 원소의 주기적 성질</a></li>
+<li class="grp">화학 결합과 분자의 세계</li>
+<li><a href="05-bond.html">5. 화학 결합</a></li>
+<li><a href="06-molecule.html">6. 분자의 구조와 성질</a></li>
+<li class="grp">역동적인 화학 반응</li>
+<li><a href="07-equilibrium.html">7. 동적 평형</a></li>
+<li><a href="08-acid-base.html">8. 산과 염기 (중화 반응)</a></li>
+<li><a href="09-redox.html">9. 산화 환원 반응</a></li>
+<li class="grp">전략</li>
+<li><a href="10-strategy.html">10. 수능 화학Ⅰ 실전 전략</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>원소의 주기적 성질</h1><p class="authors">Part 4 · 원자의 세계</p><p class="affiliation">주기율표·유효 핵전하·원자 반지름·이온화 에너지</p></header>
+<div class="stat-row"><div class="stat"><b>1.8</b><span>회당 문항 수</span></div><div class="stat"><b>4.6점</b><span>회당 배점</span></div><div class="stat"><b>0~3</b><span>회차별 범위</span></div><div class="stat"><b>52</b><span>최근 29회 누적</span></div></div>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 29회(2018~2021학년도는 구 교육과정)(580문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>주기율표 문항은 성질을 외워서 맞히는 방식보다, 원자 반지름·이온화 에너지 그래프에서 원소의 위치를 찾는 방식이 중심입니다. 같은 족은 원자가 전자 배치가 같아 화학적 성질이 비슷하고, 같은 주기에서는 유효 핵전하가 성질의 방향을 결정합니다. 순차 이온화 에너지의 급격한 점프는 원자가 전자 수를 알려 줍니다.</p>
+<h2>1. 주기율표의 구성</h2>
+<p>주기율표는 원자 번호 순서로 원소를 배열했을 때, 비슷한 성질이 주기적으로 되풀이되도록 줄을 나눈 표입니다. 가로줄을 <strong>주기</strong>, 세로줄을 <strong>족</strong>이라고 합니다. 화학Ⅰ에서는 1~18족, 1~7주기를 씁니다. 주기 번호는 그 원자에서 전자가 차지하는 가장 큰 주양자수와 같습니다. 나트륨은 3s<sup>1</sup>이므로 3주기, 칼륨은 4s<sup>1</sup>이므로 4주기입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>구분</th><th>족</th><th>원자가 전자 배치</th><th>대표 성질</th></tr></thead><tbody><tr><td>알칼리 금속</td><td>1족 (H 제외)</td><td>ns<sup>1</sup></td><td>전자 1개를 잃고 +1 이온. 아래로 갈수록 반응성이 크다</td></tr><tr><td>알칼리 토금속</td><td>2족</td><td>ns<sup>2</sup></td><td>전자 2개를 잃고 +2 이온</td></tr><tr><td>할로젠</td><td>17족</td><td>ns<sup>2</sup> np<sup>5</sup></td><td>전자 1개를 얻어 −1 이온. 위쪽(F)일수록 반응성이 크다</td></tr><tr><td>비활성 기체</td><td>18족</td><td>He는 1s<sup>2</sup>, 나머지는 ns<sup>2</sup> np<sup>6</sup></td><td>전자 배치가 안정하여 반응성이 매우 작다</td></tr></tbody></table></div>
+<p>13족은 ns<sup>2</sup> np<sup>1</sup>, 14족은 ns<sup>2</sup> np<sup>2</sup>, 15족은 ns<sup>2</sup> np<sup>3</sup>, 16족은 ns<sup>2</sup> np<sup>4</sup>입니다. 전형 원소(1·2·13~18족)는 족 번호와 원자가 전자 수가 이렇게 대응합니다. 3~12족은 전이 원소로, d 오비탈이 채워지는 영역이며 여러 가지 양이온을 만드는 경우가 많습니다.</p>
+<p>수소는 1족 위에 두지만 비금속입니다. 전자가 1개라 배치 표기는 1s<sup>1</sup>로 알칼리 금속과 비슷하나, 금속처럼 양이온만 만드는 원소로 분류하지 않습니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>분류</th><th>위치</th><th>화학적 특징</th></tr></thead><tbody><tr><td>금속</td><td>주기율표의 왼쪽과 아래</td><td>전자를 잃고 양이온이 되기 쉽다. 고체에서 전기가 통하고 전성·연성이 있다</td></tr><tr><td>비금속</td><td>오른쪽 위</td><td>전자를 얻어 음이온이 되거나 공유 결합을 한다</td></tr><tr><td>준금속</td><td>금속과 비금속의 경계</td><td>중간 성질. B, Si, Ge, As, Sb, Te</td></tr></tbody></table></div>
+<p>알칼리 금속은 물과 반응해 수소 기체를 냅니다. 나트륨의 반응은 2Na + 2H<sub>2</sub>O → 2NaOH + H<sub>2</sub>입니다. 원자 번호가 클수록 이온화 에너지가 작아져 전자를 더 쉽게 잃고, 반응성이 커집니다. 할로젠은 이원자 분자(F<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub>, I<sub>2</sub>)로 존재하고, 전자를 하나 받아 비활성 기체 배치가 되려 합니다. 반응성은 플루오린이 가장 큽니다. 실온에서 플루오린·염소는 기체, 브로민은 액체, 아이오딘은 고체입니다.</p>
+<div class="info-card"><h4>금속성과 비금속성</h4><p>금속성은 전자를 잃기 쉬운 정도라 이온화 에너지가 작은 왼쪽 아래로 갈수록 큽니다. 비금속성은 공유 전자쌍을 끌어당기는 정도(전기 음성도)가 큰 오른쪽 위로 갈수록 큽니다. 플루오린의 비금속성이 가장 크고, 비활성 기체는 이 비교에서 보통 빼습니다.</p></div>
+<div class="study-tip"><strong>TIP:</strong> 족을 외울 때는 배치 끝만 보면 됩니다. ns<sup>1</sup>은 1족, ns<sup>2</sup> np<sup>5</sup>는 17족, 껍질이 닫히면 18족입니다. 주기 번호는 그 ns의 n입니다.</div>
+
+<h2>2. 유효 핵전하와 원자·이온 반지름</h2>
+<p>핵의 양전하 Z는 양성자 수 전부입니다. 안쪽 전자가 핵 전하를 가려 주면, 바깥 전자가 실제로 느끼는 인력은 Z보다 작습니다. 이 값을 <strong>유효 핵전하</strong>라고 합니다.</p>
+<div class="formula">유효 핵전하 = 핵전하 − 가려막기<br>같은 주기: 껍질 수는 같고 양성자가 늘어 유효 핵전하가 커진다<br>같은 족 아래: 새 껍질이 생겨 원자가 전자가 핵에서 멀어진다</div>
+<p>같은 주기의 왼쪽에서 오른쪽으로 가면 전자는 같은 껍질에 더해지고 양성자는 하나씩 늘어납니다. 늘어난 전자가 서로를 완전히 가려 주지는 못하므로 유효 핵전하는 커지고, 바깥 전자는 핵 쪽으로 더 끌립니다. 그래서 <strong>원자 반지름은 같은 주기에서 원자 번호가 커질수록 대체로 작아집니다</strong>.</p>
+<p>같은 족에서 아래로 가면 주양자수가 하나 큰 껍질이 추가됩니다. 원자가 전자와 핵 사이의 거리가 멀어지고 안쪽 전자의 가려막기도 커져, <strong>원자 반지름은 아래로 갈수록 커집니다</strong>. 화학Ⅰ에서는 이 껍질 증가가 족의 반지름을 설명하는 주된 이유입니다.</p>
+<p>원자 반지름은 같은 종류의 두 원자가 결합했을 때 핵 사이 거리의 절반으로 비교하는 경우가 많습니다. 비활성 기체는 공유 결합을 거의 하지 않아 다른 기준(판데르발스 반지름)으로 실린 자료가 있습니다. 그래프를 볼 때 비활성 기체까지 같은 기준으로 이어져 있는지 범례를 확인합니다.</p>
+<h3>이온 반지름</h3>
+<p>같은 원소이면 양이온은 중성 원자보다 작고, 음이온은 중성 원자보다 큽니다. 나트륨이 전자 하나를 잃으면 3s 껍질이 비고 2주기 껍질만 남아 반지름이 크게 줄어듭니다. 남은 전자가 느끼는 유효 핵전하도 커집니다. 염소가 전자를 얻으면 전자 간 반발이 커져 Cl<sup>−</sup>가 Cl보다 큽니다.</p>
+<div class="formula">같은 원소: 양이온 &lt; 중성 원자 &lt; 음이온<br>예: Na<sup>+</sup> &lt; Na , Cl &lt; Cl<sup>−</sup></div>
+<p><strong>등전자 이온</strong>은 전자 수와 전자 배치가 같은 이온·원자입니다. 배치가 같으면 핵전하(원자 번호)가 큰 쪽이 전자를 더 세게 끌어 반지름이 작습니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>입자</th><th>O<sup>2−</sup></th><th>F<sup>−</sup></th><th>Ne</th><th>Na<sup>+</sup></th><th>Mg<sup>2+</sup></th><th>Al<sup>3+</sup></th></tr></thead><tbody><tr><td>전자 수</td><td>10</td><td>10</td><td>10</td><td>10</td><td>10</td><td>10</td></tr><tr><td>양성자 수</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td></tr><tr><td>반지름</td><td>가장 큼</td><td>큼</td><td>중간</td><td>작음</td><td>더 작음</td><td>가장 작음</td></tr></tbody></table></div>
+<p>순서는 O<sup>2−</sup> &gt; F<sup>−</sup> &gt; Ne &gt; Na<sup>+</sup> &gt; Mg<sup>2+</sup> &gt; Al<sup>3+</sup>입니다. 전하의 절댓값이 아니라 양성자 수로 비교합니다.</p>
+<div class="warning-box"><strong>함정:</strong> 원자 반지름 순서 Na &gt; Cl을 이온에도 그대로 적용하면 Na<sup>+</sup> &gt; Cl<sup>−</sup>가 됩니다. 실제로는 Na<sup>+</sup>는 전자 10개(n=2), Cl<sup>−</sup>는 전자 18개(n=3)라 Cl<sup>−</sup>가 훨씬 큽니다. 원자와 이온의 전자 수를 먼저 적으세요.</div>
+<div class="study-tip"><strong>TIP:</strong> 반지름 문제를 만나면 각 입자의 전자 수와 양성자 수를 표로 적습니다. 전자 수가 같으면 양성자가 많은 쪽이 작고, 전자 껍질 수가 다르면 껍질이 많은 쪽이 큽니다.</div>
+
+<h2>3. 이온화 에너지, 전자 친화도, 전기 음성도</h2>
+<p><strong>이온화 에너지</strong>는 기체 상태의 원자 1몰에서 전자 1몰을 떼어 내어 기체 이온으로 만드는 데 필요한 최소 에너지입니다. 항상 에너지를 흡수합니다.</p>
+<div class="formula">제1 이온화 에너지 IE<sub>1</sub>: X(g) → X<sup>+</sup>(g) + e<sup>−</sup><br>제2 이온화 에너지 IE<sub>2</sub>: X<sup>+</sup>(g) → X<sup>2+</sup>(g) + e<sup>−</sup><br>항상 IE<sub>1</sub> &lt; IE<sub>2</sub> &lt; IE<sub>3</sub> &lt; …</div>
+<p>두 번째부터가 더 큰 이유는, 이미 양전하인 이온에서 전자를 떼어 내기 때문입니다. 원자가 전자를 모두 뺀 다음 안쪽 껍질의 전자를 뗄 때 값이 갑자기 몇 배로 뜁니다. 그 전자는 핵에 더 가깝고, 닫힌 전자 배치를 깨야 하기 때문입니다.</p>
+<p>제1 이온화 에너지는 <strong>같은 주기에서 오른쪽으로 갈수록 대체로 커지고, 같은 족에서 아래로 갈수록 작아집니다</strong>. 오른쪽으로 가면 유효 핵전하가 커져 전자를 붙잡는 힘이 세지고, 아래로 가면 원자가 전자가 핵에서 멀어집니다. 비활성 기체가 그 주기에서 가장 크고, 다음 알칼리 금속에서 급격히 작아집니다. 이 급락이 새 주기의 시작입니다.</p>
+<p>주기 안에서 두 군데 예외가 있습니다. 2족보다 13족이 작고(Be &gt; B, Mg &gt; Al), 15족보다 16족이 작습니다(N &gt; O, P &gt; S). 13족은 전자가 p 오비탈에 있어 s 오비탈보다 에너지가 높고 가려막기를 더 받아 떼어 내기 쉽습니다. 16족은 p 오비탈 하나에 전자쌍이 생겨 반발이 있으므로, 반이 찬 15족보다 전자를 떼어 내기 쉽습니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>원소</th><th>Na</th><th>Mg</th><th>Al</th><th>Si</th><th>P</th><th>S</th><th>Cl</th><th>Ar</th></tr></thead><tbody><tr><td>IE<sub>1</sub> (kJ/mol, 반올림)</td><td>496</td><td>738</td><td>578</td><td>787</td><td>1012</td><td>1000</td><td>1251</td><td>1521</td></tr></tbody></table></div>
+<p>이 표를 큰 순서대로 보면 Na &lt; Al &lt; Mg &lt; Si &lt; S &lt; P &lt; Cl &lt; Ar입니다. 전체는 증가하는데 Al과 S에서만 바로 앞 원소보다 작습니다. 전자를 가장 쉽게 잃는 원소는 이온화 에너지가 가장 작은 Na입니다.</p>
+<p><strong>전자 친화도</strong>는 기체 상태의 중성 원자 1몰이 전자 1몰을 얻어 음이온이 될 때 방출하는 에너지입니다.</p>
+<div class="formula">X(g) + e<sup>−</sup> → X<sup>−</sup>(g) 에서 방출되는 에너지</div>
+<p>방출하는 에너지가 클수록 음이온이 되기 쉽습니다. 할로젠이 대체로 크고, 비활성 기체는 안정한 배치에 전자를 더하려면 에너지를 흡수하므로 전자 친화도가 매우 작습니다. 같은 주기에서는 오른쪽으로 갈수록, 같은 족에서는 위로 갈수록 대체로 커집니다. 다만 플루오린은 원자가 매우 작아 들어온 전자와 기존 전자의 반발이 커서, 전자 친화도는 염소보다 작습니다. 그래프에서 2족·15족도 이웃보다 낮게 나올 수 있습니다. 2족은 다음 전자가 더 높은 p 오비탈로 들어가고, 15족은 반이 찬 p<sup>3</sup>에 쌍을 만들어야 하기 때문입니다.</p>
+<p><strong>전기 음성도</strong>는 결합 속의 원자가 공유 전자쌍을 자기 쪽으로 끌어당기는 능력입니다. 폴링이 만든 상대적인 척도이고, 플루오린이 4.0으로 가장 큽니다. 오른쪽으로, 위로 갈수록 커지는 경향은 전자 친화도와 비슷하지만 같은 양은 아닙니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th></th><th>이온화 에너지</th><th>전자 친화도</th><th>전기 음성도</th></tr></thead><tbody><tr><td>무엇을 보나</td><td>기체 원자에서 전자를 떼어 내는 데 필요한 에너지</td><td>기체 원자가 전자를 얻을 때 방출하는 에너지</td><td>결합 속에서 공유 전자쌍을 끌어당기는 능력</td></tr><tr><td>클 때</td><td>전자를 잃기 어렵다</td><td>음이온이 되기 쉽다</td><td>결합 전자쌍이 그 원자 쪽으로 치우친다</td></tr><tr><td>경향</td><td>오른쪽·위가 대체로 큼</td><td>오른쪽·위가 대체로 큼 (18족 제외)</td><td>오른쪽·위가 큼. F가 최대</td></tr></tbody></table></div>
+<div class="info-card"><h4>자주 쓰는 전기 음성도</h4><p>H 2.1, C 2.5, N 3.0, O 3.5, F 4.0, Cl 3.0, Na 0.9 정도입니다. 차이로 결합의 극성을 비교할 때 이 값이면 충분합니다. 비활성 기체는 안정한 분자 결합을 거의 만들지 않아 이 비교에 넣지 않습니다.</p></div>
+<div class="warning-box"><strong>함정:</strong> 이온화 에너지가 크면 전자를 잃기 ‘쉽다고’ 읽으면 금속성 판단이 뒤집힙니다. 큰 이온화 에너지는 전자를 붙잡고 있다는 뜻입니다. 전기 음성도와 전자 친화도는 둘 다 오른쪽 위가 크지만, 하나는 결합 속 공유 전자쌍, 다른 하나는 고립된 기체의 전자 획득입니다.</div>
+
+<h2>4. 전자 배치와 주기적 성질, 등전자 이온</h2>
+<p>같은 족의 화학적 성질이 비슷한 이유는 원자가 전자 배치가 같기 때문입니다. 알칼리 금속은 모두 ns<sup>1</sup>이라 전자 하나를 잃고 +1 이온이 되면 비활성 기체 배치가 됩니다. 할로젠은 ns<sup>2</sup> np<sup>5</sup>라 전자 하나를 얻어 −1 이온이 됩니다. 이온의 전하는 이렇게 닫힌 배치까지 잃거나 얻는 전자 수와 같습니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>입자</th><th>전자 수</th><th>전자 배치</th><th>같은 배치의 예</th></tr></thead><tbody><tr><td>Na<sup>+</sup></td><td>10</td><td>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup></td><td>Ne, F<sup>−</sup>, Mg<sup>2+</sup>, Al<sup>3+</sup>, O<sup>2−</sup></td></tr><tr><td>Cl<sup>−</sup></td><td>18</td><td>1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>6</sup></td><td>Ar, K<sup>+</sup>, Ca<sup>2+</sup>, S<sup>2−</sup></td></tr><tr><td>Ca<sup>2+</sup></td><td>18</td><td>Ar과 같음</td><td>Cl<sup>−</sup>, K<sup>+</sup></td></tr></tbody></table></div>
+<p>등전자이면 화학 결합에서 옥텟을 채운 상태가 같고, 반지름만 핵전하에 따라 달라집니다. K<sup>+</sup>와 Cl<sup>−</sup>는 전자 18개로 같지만 양성자는 19개와 17개이므로 K<sup>+</sup>가 더 작습니다.</p>
+<p>순차 이온화 에너지의 점프도 배치로 읽습니다. 나트륨은 IE<sub>1</sub>이 약 496 kJ/mol이고 IE<sub>2</sub>가 약 4562 kJ/mol로 바로 뜁니다. 전자 하나를 떼면 네온 배치가 되어, 두 번째 전자는 안쪽 껍질에서 나와야 합니다. 마그네슘은 IE<sub>1</sub> 약 738, IE<sub>2</sub> 약 1451로 둘 다 원자가 전자(3s<sup>2</sup>)이고, IE<sub>3</sub> 약 7733에서 뜁니다. 알루미늄은 아래 예제처럼 네 번째에서 뜁니다.</p>
+<div class="formula">점프가 IE<sub>n</sub>과 IE<sub>n+1</sub> 사이에 있으면 원자가 전자는 n개<br>IE<sub>1</sub>과 IE<sub>2</sub> 사이 점프 → 1족<br>IE<sub>2</sub>와 IE<sub>3</sub> 사이 점프 → 2족<br>IE<sub>3</sub>과 IE<sub>4</sub> 사이 점프 → 13족</div>
+<p>전이 금속은 4s와 3d가 함께 관여하므로, 전형 원소처럼 ‘점프 = 족 번호’로 단순하게 읽지 않습니다. 순차 이온화로 족을 정하는 문항은 전형 원소 자료인 경우가 많습니다.</p>
+<div class="study-tip"><strong>TIP:</strong> 미지 원소 X, Y, Z가 연속한 원자 번호라면, 이온화 에너지가 급락하는 경계의 왼쪽을 18족, 오른쪽을 1족으로 두면 나머지 족이 차례로 정해집니다.</div>
+
+<h2>5. 자료를 이렇게 읽는다</h2>
+<p>수능 자료는 원자 번호(또는 미지 원소 순서)를 가로축으로 하고, 원자 반지름이나 제1 이온화 에너지를 세로축으로 한 꺾은선이 많습니다. 다음 순서로 읽습니다.</p>
+<ol>
+<li><strong>급락을 찾습니다.</strong> 이온화 에너지가 크게 떨어지는 지점은 비활성 기체 다음의 알칼리 금속입니다. 반지름 그래프에서는 그 지점에서 반지름이 갑자기 커집니다.</li>
+<li><strong>한 주기의 폭을 자릅니다.</strong> 알칼리 금속부터 다음 알칼리 금속 직전까지가 한 주기입니다. 2주기는 Li부터 Ne까지 8개, 3주기는 Na부터 Ar까지 8개입니다. H·He가 포함된 1주기는 2개뿐입니다.</li>
+<li><strong>주기 안의 꺾임을 표시합니다.</strong> 이온화 에너지는 전반적으로 오르다가, 그 주기의 세 번째 원소(13족: B, Al)와 여섯 번째 원소(16족: O, S)에서 바로 앞보다 낮아집니다. 이 두 골짜기가 보이면 족을 확정할 수 있습니다.</li>
+<li><strong>반지름은 반대 방향입니다.</strong> 한 주기 안에서는 원자 번호가 커질수록 반지름이 작아지는 내리막입니다. 이온화 에너지의 봉우리와 반지름의 내리막을 같은 원소에 겹쳐 확인합니다.</li>
+<li><strong>순차 이온화 표는 이웃과의 비를 봅니다.</strong> 앞 값의 서너 배 이상으로 커지는 칸이 점프입니다. 점프 직전까지 떼어 낸 전자 수가 원자가 전자 수입니다.</li>
+</ol>
+<p>3주기 이온화 에너지(kJ/mol) 496, 738, 578, 787, 1012, 1000, 1251, 1521을 이 순서로 읽으면, 첫 값 496이 Na, 바로 뒤 738이 Mg, 골짜기 578이 Al, 다시 오르다 1012 다음의 1000이 S, 최대 1521이 Ar입니다. 원자 번호만 있고 원소 기호가 없어도 골짜기 위치로 족을 정할 수 있습니다.</p>
+<h3>등전자 반지름 자료</h3>
+<p>표에 이온의 전하와 반지름만 있고 원소 이름이 없으면, 먼저 전자 수를 맞춥니다. A<sup>+</sup>, B<sup>2+</sup>, C<sup>−</sup>가 등전자이고 반지름이 C<sup>−</sup> &gt; A<sup>+</sup> &gt; B<sup>2+</sup>이면 양성자 수는 C &lt; A &lt; B입니다. 원자 번호가 연속이라는 조건이 더 있으면 C, A, B 순으로 원자 번호가 1씩 커집니다.</p>
+<div class="warning-box"><strong>함정:</strong> 그래프의 세로축이 이온화 에너지인지 원자 반지름인지 바뀌면 기울기 방향이 반대입니다. 축 제목을 보기 전에 오른쪽 끝이 높다고 비활성 기체로 단정하지 마세요. 반지름 그래프의 오른쪽 끝(비활성 기체)은 그 주기에서 작습니다.</div>
+
+<h2>6. 수능에서 묻는 방식</h2>
+<p>문항은 원소를 문자 A~E로 숨기고, 반지름·이온화 에너지·전자 배치 중 일부를 줍니다. 푸는 순서는 고정되어 있습니다.</p>
+<ol>
+<li>전자 배치가 주어지면 족·주기·원자가 전자 수를 먼저 확정합니다.</li>
+<li>순차 이온화 에너지가 주어지면 점프 위치로 원자가 전자 수를 정합니다. 배치와 모순되면 읽기를 다시 합니다.</li>
+<li>제1 이온화 에너지의 골짜기(13족, 16족)로 주기 안의 위치를 맞춥니다.</li>
+<li>원자 반지름은 같은 주기에서 왼쪽이 크고, 같은 족에서 아래가 큽니다. 이온 반지름은 전자 수를 다시 센 뒤에 비교합니다.</li>
+<li>보기의 ‘항상 크다’ ‘모든 주기에서 단조 증가’ 같은 문장은 예외(Mg와 Al, P와 S, Cl과 F의 전자 친화도)에 걸리는지 확인합니다.</li>
+</ol>
+<p>금속성 비교는 이온화 에너지가 작은 쪽이 큽니다. 비금속성이나 결합의 극성으로 이어지면 전기 음성도가 큰 쪽을 고릅니다. 두 양을 한 문장에 섞어 두면, 전자를 ‘잃는’ 이야기인지 ‘끌어당기는’ 이야기인지를 먼저 나눕니다.</p>
+
+<h2>자주 나오는 함정</h2><ul>
+<li><strong>같은 주기에서 오른쪽으로 갈수록 원자 반지름이 커진다</strong> — 유효 핵전하가 커져 반지름은 작아집니다. 아래로 갈수록 커집니다.</li>
+<li><strong>Na &gt; Cl이면 Na<sup>+</sup> &gt; Cl<sup>−</sup>이다</strong> — 이온이 되면 전자 껍질 수가 달라 Cl<sup>−</sup>가 더 큽니다.</li>
+<li><strong>등전자 이온은 음전하가 클수록 작다</strong> — 전자 수가 같으면 양성자 수가 많은 쪽이 작습니다. Al<sup>3+</sup>가 O<sup>2−</sup>보다 작습니다.</li>
+<li><strong>이온화 에너지가 클수록 금속성이 크다</strong> — 금속성은 이온화 에너지가 작아 전자를 잃기 쉬울 때 큽니다.</li>
+<li><strong>제1 이온화 에너지는 주기에서 예외 없이 증가한다</strong> — 2족 &gt; 13족, 15족 &gt; 16족 예외가 있습니다.</li>
+<li><strong>순차 이온화에서 점프한 그 전자까지 원자가 전자로 센다</strong> — 점프 직전에 떼어 낸 전자까지가 원자가 전자입니다. IE<sub>3</sub>과 IE<sub>4</sub> 사이 점프면 원자가 전자는 3개입니다.</li>
+<li><strong>전자 친화도와 전기 음성도를 같은 물리량으로 본다</strong> — 전자 친화도는 고립된 기체 원자의 에너지이고, 전기 음성도는 결합 속 능력의 상대 척도입니다.</li>
+<li><strong>비활성 기체의 전기 음성도가 가장 크다</strong> — 전기 음성도는 플루오린이 가장 크고, 비활성 기체는 비교에서 빼습니다. 이온화 에너지는 그 주기에서 비활성 기체가 최대입니다.</li>
+</ul>
+<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>알루미늄의 순차 이온화 에너지(kJ/mol, 반올림)는 IE1=578, IE2=1817, IE3=2745, IE4=11577이다. 원자가 전자 수와 족을 구하고, 왜 네 번째에서 급격히 커지는지 설명하시오.</summary><div class="example-sol"><p><strong>1단계.</strong> 이웃한 값의 차이를 계산합니다. IE2−IE1 = 1817−578 = 1239. IE3−IE2 = 2745−1817 = 928. IE4−IE3 = 11577−2745 = 8832 kJ/mol입니다.</p>
+<p><strong>2단계.</strong> 앞의 두 차이는 1000 전후인데, 세 번째 차이는 약 8800으로 훨씬 큽니다. 급격한 점프는 IE3과 IE4 사이입니다.</p>
+<p><strong>3단계.</strong> 점프 전까지 떼어 낸 전자가 3개이므로 원자가 전자는 <strong>3개</strong>, 전자 배치는 ns<sup>2</sup> np<sup>1</sup>, <strong>13족</strong>입니다. 알루미늄은 3주기 13족입니다.</p>
+<p><strong>4단계.</strong> 전자 3개를 떼면 전자 배치는 네온과 같은 닫힌 껍질이 됩니다. 네 번째 전자는 그 안쪽 껍질에서 나오므로 유효 핵전하를 훨씬 크게 느끼고, 이온화 에너지가 급증합니다. IE1 &lt; IE2 &lt; IE3인 것은 맞지만, 그 증가와 네 번째의 점프는 크기가 다릅니다.</p></div></details><details class="example"><summary>O<sup>2−</sup>, F<sup>−</sup>, Na<sup>+</sup>, Mg<sup>2+</sup>, Al<sup>3+</sup>의 이온 반지름이 큰 순서대로 나열하고, 그 이유를 전자 수와 양성자 수로 설명하시오.</summary><div class="example-sol"><p><strong>1단계.</strong> 전자 수를 계산합니다. O<sup>2−</sup>는 8+2=10, F<sup>−</sup>는 9+1=10, Na<sup>+</sup>는 11−1=10, Mg<sup>2+</sup>는 12−2=10, Al<sup>3+</sup>는 13−3=10입니다. 모두 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup>인 등전자 이온입니다.</p>
+<p><strong>2단계.</strong> 양성자 수는 O 8, F 9, Na 11, Mg 12, Al 13입니다. 전자 배치가 같으면 양성자가 많을수록 전자가 핵에 더 가까이 끌립니다.</p>
+<p><strong>3단계.</strong> 반지름은 <strong>O<sup>2−</sup> &gt; F<sup>−</sup> &gt; Na<sup>+</sup> &gt; Mg<sup>2+</sup> &gt; Al<sup>3+</sup></strong>입니다. 음이온이라고 해서 무조건 작거나, 전하 숫자가 큰 양이온이라고 해서 큰 것이 아닙니다.</p></div></details><details class="example"><summary>3주기 제1 이온화 에너지(kJ/mol)가 Na 496, Mg 738, Al 578, Si 787, P 1012, S 1000, Cl 1251, Ar 1521이다. (1) 전체 경향과 두 예외를 찾고 (2) Mg보다 Al의 값이 작은 이유를 설명하시오.</summary><div class="example-sol"><p><strong>1단계.</strong> 원자 번호 순서로 비교하면 496 → 738은 증가, 738 → 578은 감소, 578 → 787 → 1012는 증가, 1012 → 1000은 감소, 1000 → 1251 → 1521은 증가입니다.</p>
+<p><strong>2단계.</strong> 전체 경향은 같은 주기에서 원자 번호가 커질수록 제1 이온화 에너지가 커지는 것입니다. 유효 핵전하가 증가하기 때문입니다. 예외는 <strong>Mg &gt; Al</strong>, <strong>P &gt; S</strong> 두 곳입니다.</p>
+<p><strong>3단계.</strong> Mg의 원자가 전자는 3s<sup>2</sup>로 s 오비탈에 있고, Al의 원자가 전자 중 떼어 내기 쉬운 것은 3p<sup>1</sup>입니다. 3p 전자는 3s보다 에너지가 높고 3s 전자에 가려막기를 받아, 양성자가 하나 더 많은데도 제1 이온화 에너지는 Al이 더 작습니다.</p>
+<p><strong>4단계.</strong> P는 3p<sup>3</sup>로 세 오비탈에 전자가 하나씩 있고, S는 3p<sup>4</sup>로 한 오비탈에 전자쌍이 있습니다. 그 쌍의 반발 때문에 S의 전자가 더 쉽게 떨어집니다. 전자를 가장 쉽게 잃는 원소는 값이 가장 작은 Na입니다.</p></div></details><details class="example"><summary>Na, Mg, Al의 원자 반지름과, Na<sup>+</sup>, Mg<sup>2+</sup>, Al<sup>3+</sup>의 이온 반지름을 각각 큰 순서대로 나열하시오.</summary><div class="example-sol"><p><strong>1단계.</strong> 세 원자는 모두 3주기입니다. 최외각 껍질은 n=3으로 같고, 양성자 수는 Na 11, Mg 12, Al 13입니다. 유효 핵전하는 Na, Mg, Al 순서로 커지므로 원자 반지름은 <strong>Na &gt; Mg &gt; Al</strong>입니다.</p>
+<p><strong>2단계.</strong> 이온의 전자 수를 계산합니다. Na<sup>+</sup>는 11−1=10, Mg<sup>2+</sup>는 12−2=10, Al<sup>3+</sup>는 13−3=10입니다. 모두 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup>인 등전자 이온이고, 최외각은 n=2입니다.</p>
+<p><strong>3단계.</strong> 전자 배치가 같으면 양성자가 많은 쪽이 작습니다. 이온 반지름은 <strong>Na<sup>+</sup> &gt; Mg<sup>2+</sup> &gt; Al<sup>3+</sup></strong>입니다.</p>
+<p><strong>4단계.</strong> 각 양이온은 중성 원자보다 작습니다. 전자를 잃으며 최외각이 n=3에서 n=2로 줄고, 남은 전자가 느끼는 인력이 커지기 때문입니다. Na &gt; Na<sup>+</sup>, Mg &gt; Mg<sup>2+</sup>, Al &gt; Al<sup>3+</sup>입니다. 원자끼리의 순서와 이온끼리의 순서는 둘 다 나트륨 쪽이 크지만, 비교 대상을 원자와 이온 사이에 섞지 않습니다.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3>
+<p>주기율표는 <strong>전자를 잃고 얻는 방식</strong>이 비슷한 원소를 같은 세로줄에 모아 둔 표입니다. 오른쪽으로 갈수록 핵이 바깥 전자를 더 세게 잡아당겨 원자는 작아지고, 전자를 떼어 내기는 어려워집니다.</p>
+<ul>
+<li>아래로 가면 껍질이 하나 늘어 원자가 커집니다.</li>
+<li>양이온은 원래 원자보다 작고, 음이온은 원래 원자보다 큽니다.</li>
+<li>이온화 에너지가 갑자기 몇 배로 튀면, 그 직전까지가 원자가 전자입니다.</li>
+</ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>그래프 문항의 순서는 (1) 이온화 에너지 급락 = 18족 → 1족 경계, (2) 그 사이 8개(2·3주기)를 한 주기로 자르기, (3) 세 번째 자리의 골짜기 = 13족, 여섯 번째 자리의 골짜기 = 16족, (4) 반지름 그래프는 같은 원소에서 반대 기울기인지 대조하기입니다. 순차 이온화는 차이 또는 비를 계산해 점프 직전의 전자 수를 원자가 전자로 확정합니다.</p>
+<p>등전자 보기는 전하 기호를 가리고 전자 수 = 원자 번호 − (양전하) 또는 원자 번호 + (음전하의 절댓값)으로 맞춘 뒤, 양성자 수가 큰 쪽을 작은 반지름으로 고릅니다. 원자 반지름 순서와 이온 반지름 순서를 한 부등식에 섞지 않습니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>주기적 성질의 개념을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0d9488","prompt":"주기적 성질의 개념을 짝지으세요.","pairs":[{"term":"유효 핵전하","def":"가려막기를 뺀 핵의 인력"},{"term":"등전자 이온","def":"전자 수와 배치가 같은 이온"},{"term":"이온화 에너지","def":"기체 원자에서 전자를 떼는 에너지"},{"term":"전기 음성도","def":"공유 전자쌍을 끌어당기는 능력"},{"term":"전자 친화도","def":"전자를 얻을 때 방출하는 에너지"},{"term":"알칼리 금속","def":"1족에서 수소를 뺀 금속"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d9488","questions":[{"q":"같은 주기에서 원자 번호가 커질 때 원자 반지름은 대체로?","choices":["커진다","항상 일정하다","18족에서만 커진다","작아진다"],"answer":3},{"q":"등전자 이온 O²⁻, F⁻, Na⁺, Mg²⁺ 중 반지름이 가장 작은 것은?","choices":["O²⁻","F⁻","Mg²⁺","Na⁺"],"answer":2},{"q":"순차 이온화 에너지가 IE3과 IE4 사이에서 급격히 커지면 원자가 전자 수는?","choices":["2개","3개","4개","8개"],"answer":1},{"q":"3주기에서 제1 이온화 에너지가 Mg보다 작은 원소는?","choices":["Al","Si","P","Cl"],"answer":0},{"q":"전기 음성도가 가장 큰 원소는?","choices":["O","Ne","Cl","F"],"answer":3}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 화학Ⅰ 전 시험지에서 이 파트로 분류된 <strong>52문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:k4">📝 원소의 주기적 성질 모아 풀기 →</a></p>
+<div class="pager"><a href="03-atom.html">← 원자 모형과 전자 배치</a><a href="05-bond.html">화학 결합 →</a></div>
+</main></div>
+</body></html>

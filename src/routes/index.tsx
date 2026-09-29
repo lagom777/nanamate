@@ -8,19 +8,19 @@ const TRACKS = [
     href: "/learn/aboutSuneungKorean/index.html",
     tag: "국어",
     title: "수능 국어",
-    blurb: "독서 유형과 함정 문장, 문학 갈래와 보기.",
+    blurb: "독서·문학·선택 12파트 정리, 기출 17회 시험지 채점.",
   },
   {
-    href: "/learn/aboutSuneungCalculus/index.html",
+    href: "/learn/aboutSuneungMath/index.html",
     tag: "수학",
-    title: "수능 미적분",
-    blurb: "극한·미분·적분. 선택 미적분만 모았습니다.",
+    title: "수능 수학",
+    blurb: "수학Ⅰ·수학Ⅱ·미적분 9파트, 기출 17회 채점.",
   },
   {
     href: "/learn/aboutSuneungEnglish/index.html",
     tag: "영어",
     title: "수능 영어",
-    blurb: "듣기 17, 빈칸·순서·삽입·장문. 90점이 1등급 선.",
+    blurb: "듣기·독해 유형 7파트, 기출 채점과 듣기 대본.",
   },
   {
     href: "/learn/aboutSuneungPhysics1/index.html",
@@ -29,10 +29,28 @@ const TRACKS = [
     blurb: "7파트 정리, 모션 노트, 기출 16회 채점·해설.",
   },
   {
+    href: "/learn/aboutSuneungChem1/index.html",
+    tag: "탐구",
+    title: "수능 화학Ⅰ",
+    blurb: "9파트 정리, 기출 16회 채점.",
+  },
+  {
     href: "/learn/aboutSuneungBio1/index.html",
     tag: "탐구",
     title: "수능 생명과학Ⅰ",
     blurb: "8파트 정리, 모션 노트, 기출 16회 채점·해설.",
+  },
+  {
+    href: "/learn/aboutSuneungEarth1/index.html",
+    tag: "탐구",
+    title: "수능 지구과학Ⅰ",
+    blurb: "6파트 정리, 기출 16회 채점.",
+  },
+  {
+    href: "/learn/aboutSuneungScience2/index.html",
+    tag: "탐구",
+    title: "수능 과학탐구Ⅱ",
+    blurb: "물리Ⅱ·화학Ⅱ·생명Ⅱ·지구Ⅱ 기출 채점.",
   },
 ];
 
@@ -42,10 +60,10 @@ function Home() {
       <LabHeader />
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
         <p className="text-xs font-medium tracking-[0.16em] text-muted uppercase">
-          2027 수능 · 이과 다섯 과목
+          2027 수능 · 국어 · 수학 · 영어 · 과학탐구
         </p>
         <h1 className="mt-2 max-w-2xl text-3xl font-semibold leading-tight sm:text-4xl">
-          국어 · 미적분 · 영어 · 물리 I · 생 I
+          과목마다 파트별 노트와 실제 기출
         </h1>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted">
           과목마다 파트별로 개념을 읽고, 짝짓기와 선택 문제로 확인한 뒤 실제 기출을

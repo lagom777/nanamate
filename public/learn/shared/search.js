@@ -9,11 +9,14 @@
 
   // === 과목 색인 (index.html 에서 추출, 정렬 유지) ===
   var SUBJECTS = [
-    {"n": "수능 국어", "e": "CSAT Korean", "d": "독서 유형, 문학 갈래, 보기 함정", "u": "aboutSuneungKorean/index.html", "c": "수능", "a": "#b45309"},
-    {"n": "수능 미적분", "e": "CSAT Calculus", "d": "극한·미분·적분·회전체", "u": "aboutSuneungCalculus/index.html", "c": "수능", "a": "#7c3aed"},
-    {"n": "수능 영어", "e": "CSAT English", "d": "듣기 17, 빈칸·순서·삽입·장문", "u": "aboutSuneungEnglish/index.html", "c": "수능", "a": "#2563eb"},
+    {"n": "수능 국어", "e": "CSAT Korean", "d": "독서·문학·화법과 작문·언어와 매체 파트 정리, 기출 채점", "u": "aboutSuneungKorean/index.html", "c": "수능", "a": "#b45309"},
+    {"n": "수능 수학", "e": "CSAT Math", "d": "수학Ⅰ·수학Ⅱ·미적분 9파트, 기출 30문항 채점", "u": "aboutSuneungMath/index.html", "c": "수능", "a": "#7c3aed"},
+    {"n": "수능 영어", "e": "CSAT English", "d": "듣기·독해 유형 7파트, 기출 채점·듣기 대본", "u": "aboutSuneungEnglish/index.html", "c": "수능", "a": "#2563eb"},
     {"n": "수능 물리학Ⅰ", "e": "CSAT Physics I", "d": "3단원 7파트, 모션 노트, 기출 채점·해설", "u": "aboutSuneungPhysics1/index.html", "c": "수능", "a": "#0284c7"},
+    {"n": "수능 화학Ⅰ", "e": "CSAT Chemistry I", "d": "4단원 9파트, 기출 채점", "u": "aboutSuneungChem1/index.html", "c": "수능", "a": "#0d9488"},
     {"n": "수능 생명과학Ⅰ", "e": "CSAT Biology I", "d": "5단원 8파트, 모션 노트, 기출 채점·해설", "u": "aboutSuneungBio1/index.html", "c": "수능", "a": "#16a34a"},
+    {"n": "수능 지구과학Ⅰ", "e": "CSAT Earth Science I", "d": "3단원 6파트, 기출 채점", "u": "aboutSuneungEarth1/index.html", "c": "수능", "a": "#ca8a04"},
+    {"n": "수능 과학탐구Ⅱ", "e": "CSAT Science II", "d": "물리학Ⅱ·화학Ⅱ·생명과학Ⅱ·지구과학Ⅱ 기출 채점", "u": "aboutSuneungScience2/index.html", "c": "수능", "a": "#475569"},
     {"n": "물리학", "e": "Interactive Physics Lab", "d": "역학~양자역학, 상대성이론까지 3D 시뮬레이션", "u": "aboutPhysics/index.html", "c": "자연과학", "a": "#00d4ff"},
     {"n": "화학", "e": "Molecular Chemistry", "d": "원자~유기화학, 생화학 3D 분자 모델", "u": "aboutChemistry/index.html", "c": "자연과학", "a": "#00e890"},
     {"n": "생물학", "e": "Biology Lab", "d": "세포, DNA, 진화, 생태학 3D 시뮬레이션", "u": "aboutBiology/index.html", "c": "자연과학", "a": "#22c55e"},
@@ -51,6 +54,7 @@
     {"n": "토익", "e": "TOEIC Preparation", "d": "LC/RC 전략, 어휘, 모의고사", "u": "aboutTOEIC/index.html", "c": "실용", "a": "#f59e0b"},
     {"n": "토플", "e": "TOEFL Preparation", "d": "iBT 4영역(R/L/S/W), 어휘, 모의고사", "u": "aboutTOEFL/index.html", "c": "실용", "a": "#06b6d4"},
     {"n": "텝스", "e": "TEPS Preparation", "d": "청해·어휘·문법·독해, 600점 전략", "u": "aboutTEPS/index.html", "c": "실용", "a": "#7c3aed"},
+    {"n": "나만의 영단어장", "e": "My Vocab", "d": "단어를 소리로 듣고 뜻·어원으로 외우는 TTS 단어장", "u": "aboutMyVocab/index.html", "c": "실용", "a": "#2344c4"},
     {"n": "중국어", "e": "Chinese Language", "d": "발음~HSK, 비즈니스 중국어", "u": "aboutChinese/index.html", "c": "실용", "a": "#ef4444"},
     {"n": "마케팅", "e": "Marketing & Growth", "d": "소비자 심리, 브랜딩, 그로스 해킹", "u": "aboutMarketing/index.html", "c": "실용", "a": "#e040fb"},
     {"n": "창업", "e": "Startup", "d": "아이디어~엑싯, 투자, 팀빌딩", "u": "aboutStartup/index.html", "c": "실용", "a": "#f97316"},

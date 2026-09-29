@@ -1,0 +1,705 @@
+<title>소리 단어장</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+:root {
+  --desk: #E6EBF2; --card: #FFFFFF; --panel: #F3F5F9;
+  --ink: #141D2B; --ink-2: #465367; --ink-3: #737E92;
+  --line: #D2D9E4; --rule: #DCE6F2; --margin: #E06A62; --red-ink: #C0433B;
+  --accent: #2344C4; --accent-soft: #E2E8FB; --on-accent: #FFFFFF;
+  --pencil: #555D6D; --star: #D4951A; --mask: #C6D0DF;
+  --track: #C5CEDB; --knob: #FFFFFF;
+  --shadow: 0 1px 2px rgba(20,29,43,.08), 0 14px 30px -16px rgba(20,29,43,.32);
+  --serif: "Literata", "Iowan Old Style", Georgia, serif;
+  --sans: "IBM Plex Sans KR", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --pen: "Nanum Pen Script", "Apple SD Gothic Neo", cursive;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --desk: #0E131A; --card: #18202C; --panel: #141B25;
+    --ink: #E6EBF2; --ink-2: #AAB5C6; --ink-3: #7E8A9E;
+    --line: #273243; --rule: #202A39; --margin: #A9544D; --red-ink: #EC8F87;
+    --accent: #93A8FF; --accent-soft: #1D2747; --on-accent: #0E131A;
+    --pencil: #A7B0BF; --star: #E5B04A; --mask: #2E394B;
+    --track: #3A465A; --knob: #F2F4F8;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 16px 32px -16px rgba(0,0,0,.75);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --desk: #0E131A; --card: #18202C; --panel: #141B25;
+  --ink: #E6EBF2; --ink-2: #AAB5C6; --ink-3: #7E8A9E;
+  --line: #273243; --rule: #202A39; --margin: #A9544D; --red-ink: #EC8F87;
+  --accent: #93A8FF; --accent-soft: #1D2747; --on-accent: #0E131A;
+  --pencil: #A7B0BF; --star: #E5B04A; --mask: #2E394B;
+  --track: #3A465A; --knob: #F2F4F8;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 16px 32px -16px rgba(0,0,0,.75);
+}
+
+* { box-sizing: border-box; }
+body { background: var(--desk); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.55; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.app {
+  max-width: 1060px; margin: 0 auto;
+  padding-inline: clamp(16px, 4vw, 32px); padding-block: 28px 56px;
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px;
+}
+@media (min-width: 880px) {
+  .app { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); column-gap: 40px; align-items: start; }
+  .stage { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 20px); }
+  .list { max-height: min(720px, calc(100vh - 150px)); overflow-y: auto; }
+}
+
+.top { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; }
+.top h1 { margin: 0; font-size: 26px; font-weight: 600; letter-spacing: -0.01em; text-wrap: balance; }
+.top p { margin: 0; color: var(--ink-2); font-size: 14px; }
+.warn { grid-column: 1 / -1; margin: 0; padding: 12px 14px; border: 1px solid var(--margin); border-radius: 8px; color: var(--red-ink); font-size: 14px; }
+
+/* index card */
+.stage { display: grid; gap: 16px; }
+.card {
+  position: relative; border-radius: 6px; box-shadow: var(--shadow); cursor: pointer;
+  min-height: clamp(280px, 38vw, 340px); display: flex; flex-direction: column;
+  background:
+    linear-gradient(var(--margin), var(--margin)) 0 52px / 100% 1.5px no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 31px, var(--rule) 31px 32px) 0 52px / 100% calc(100% - 52px) no-repeat,
+    var(--card);
+}
+.card-head { height: 52px; display: flex; align-items: center; gap: 12px; padding: 0 8px 0 20px; }
+.pos { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--red-ink); }
+.count { font-family: var(--mono); font-size: 13px; color: var(--ink-3); font-variant-numeric: tabular-nums; margin-right: auto; }
+.pill {
+  height: 30px; padding: 0 12px; border-radius: 15px; cursor: pointer; white-space: nowrap;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink-2); font-size: 13px;
+}
+.pill:hover { border-color: var(--ink-3); }
+.pill[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 600; }
+.mean.peekable span { cursor: pointer; }
+.hide-mean .rm { color: transparent; border-radius: 4px; background: repeating-linear-gradient(-45deg, var(--mask) 0 5px, transparent 5px 10px); user-select: none; }
+.hide-mean .row:hover .rm { color: var(--ink-2); background: none; }
+.hide-mean .re { display: none; }
+.hide-mean .row:hover .re { display: block; }
+.icon-btn {
+  width: 40px; height: 40px; display: grid; place-items: center; border: 0; border-radius: 8px;
+  background: transparent; color: var(--ink-3); cursor: pointer;
+}
+.icon-btn:hover { background: var(--panel); color: var(--ink); }
+.icon-btn svg { width: 20px; height: 20px; }
+.card-body {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; padding: 20px 20px 32px; text-align: center;
+}
+.word span {
+  display: inline-block; font-family: var(--serif); font-weight: 600;
+  font-size: clamp(2.1rem, 8vw, 3.5rem); line-height: 1.12; letter-spacing: -0.01em; overflow-wrap: anywhere;
+}
+.mean span { display: inline-block; font-size: clamp(1.15rem, 3.8vw, 1.45rem); font-weight: 500; color: var(--ink); }
+.note { font-family: var(--pen); font-size: 1.5rem; line-height: 1.2; color: var(--pencil); transform: rotate(-1.5deg); }
+.note.ghost, .ety.ghost { visibility: hidden; }
+.ety { margin: 4px 0 0; max-width: 34em; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); text-wrap: balance; }
+.ety-lbl { font-family: var(--mono); font-size: 11px; color: var(--red-ink); margin-right: 8px; letter-spacing: .04em; }
+.word span, .mean span { transition: color .2s; }
+.speaking { color: var(--accent) !important; }
+.masked {
+  color: transparent !important; border-radius: 4px; user-select: none;
+  background: repeating-linear-gradient(-45deg, var(--mask) 0 5px, transparent 5px 10px);
+}
+
+.progress { height: 3px; border-radius: 2px; background: var(--line); overflow: hidden; }
+.progress span { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+
+.transport { display: flex; align-items: center; justify-content: center; gap: 24px; }
+.t-btn {
+  width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+}
+.t-btn:hover { border-color: var(--ink-3); }
+.t-btn svg { width: 22px; height: 22px; fill: currentColor; }
+.t-btn.play { width: 68px; height: 68px; border: 0; background: var(--accent); color: var(--on-accent); }
+.t-btn.play svg { width: 28px; height: 28px; }
+.t-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+.status { margin: 0; text-align: center; font-size: 14px; color: var(--ink-2); }
+.keys { margin: -8px 0 0; text-align: center; font-size: 12px; color: var(--ink-3); }
+.keys .touch { display: none; }
+@media (hover: none) { .keys .desk { display: none; } .keys .touch { display: inline; } }
+
+/* settings */
+.settings { border-top: 1px solid var(--line); padding-top: 18px; display: grid; gap: 18px; }
+.settings h2, .list-head h2 { margin: 0; font-size: 13px; font-weight: 600; color: var(--ink-2); letter-spacing: .04em; }
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; }
+@media (max-width: 420px) { .fields { grid-template-columns: minmax(0, 1fr); } }
+.field { display: grid; gap: 6px; min-width: 0; }
+.lbl { font-size: 12px; color: var(--ink-3); }
+.seg { display: flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.seg input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.seg label {
+  flex: 1; text-align: center; padding: 6px 4px; border-radius: 6px; cursor: pointer; white-space: nowrap;
+  font-size: 13px; color: var(--ink-2); font-variant-numeric: tabular-nums;
+}
+.seg input:checked + label { background: var(--card); color: var(--ink); font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,.14); }
+.seg input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.toggles { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+.switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font-size: 14px; }
+.switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.track { flex: none; position: relative; width: 36px; height: 22px; border-radius: 11px; background: var(--track); transition: background .15s; }
+.track::after {
+  content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--knob); box-shadow: 0 1px 2px rgba(0,0,0,.3); transition: transform .15s;
+}
+.switch input:checked + .track { background: var(--accent); }
+.switch input:checked + .track::after { transform: translateX(14px); }
+.switch input:focus-visible + .track { outline: 2px solid var(--accent); outline-offset: 2px; }
+select {
+  width: 100%; max-width: 100%; font: inherit; font-size: 14px; color: var(--ink);
+  background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px;
+}
+.hint { margin: -8px 0 0; font-size: 13px; color: var(--ink-3); }
+
+/* word list */
+.list-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.list-head span { font-family: var(--mono); font-size: 13px; color: var(--ink-3); }
+.list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); position: relative; }
+.list li { display: flex; align-items: center; gap: 4px; border-bottom: 1px solid var(--line); }
+.re { grid-column: 2 / -1; font-size: 12.5px; line-height: 1.45; color: var(--ink-3); }
+.re b { font-family: var(--mono); font-weight: 500; font-size: 10.5px; color: var(--red-ink); margin-right: 6px; letter-spacing: .04em; }
+.card { touch-action: pan-y; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.card-body.slide-l { animation: slideL .22s ease-out; }
+.card-body.slide-r { animation: slideR .22s ease-out; }
+@keyframes slideL { from { opacity: 0; transform: translateX(36px); } to { opacity: 1; transform: none; } }
+@keyframes slideR { from { opacity: 0; transform: translateX(-36px); } to { opacity: 1; transform: none; } }
+.row {
+  flex: 1; min-width: 0; display: grid; grid-template-columns: 2.2em minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 2px 12px; align-items: baseline; padding: 10px 8px; margin: 3px 0;
+  border: 0; border-radius: 6px; background: none; text-align: left; cursor: pointer;
+}
+.row:hover { background: var(--panel); }
+.num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.rw { font-family: var(--serif); font-weight: 500; font-size: 17px; overflow-wrap: anywhere; }
+.rpos { font-family: var(--mono); font-size: 11px; color: var(--red-ink); margin-left: 6px; }
+.rm { font-size: 14px; color: var(--ink-2); }
+.current .row { background: var(--accent-soft); }
+.current .rw { color: var(--accent); }
+@media (max-width: 480px) {
+  .row { grid-template-columns: 2em minmax(0, 1fr); }
+  .rm { grid-column: 2; }
+}
+.star svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; }
+.star[aria-pressed="true"] { color: var(--star); }
+.star[aria-pressed="true"] svg { fill: var(--star); stroke: var(--star); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+
+<div class="app">
+  <header class="top">
+    <h1>소리 단어장</h1>
+    <p><span id="total">61</span>개 단어 · 영어 발음을 듣고 뜻을 떠올려 보세요</p>
+  </header>
+  <p class="warn" id="noTts" hidden>이 브라우저는 음성 읽기를 지원하지 않아요. Chrome이나 Safari에서 열어 주세요.</p>
+
+  <section class="stage" aria-label="단어 카드">
+    <div class="card" id="card">
+      <div class="card-head">
+        <span class="pos" id="pos"></span>
+        <span class="count" id="count"></span>
+        <button class="pill" id="hideMean" type="button" aria-pressed="false" title="뜻만 가리기 (눈으로 볼 때만, 소리는 그대로)">뜻 가리기</button>
+        <button class="icon-btn" id="replay" type="button" aria-label="다시 듣기" title="다시 듣기">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+        </button>
+        <button class="icon-btn star" id="cardStar" type="button" aria-pressed="false" aria-label="어려운 단어로 표시" title="어려운 단어로 표시">
+          <svg viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg>
+        </button>
+      </div>
+      <div class="card-body" aria-live="polite">
+        <div class="word"><span id="word"></span></div>
+        <div class="mean"><span id="mean"></span></div>
+        <div class="note" id="note"></div>
+        <p class="ety"><span class="ety-lbl">어원</span><span id="ety"></span></p>
+      </div>
+    </div>
+
+    <div class="progress" aria-hidden="true"><span id="bar"></span></div>
+
+    <div class="transport">
+      <button class="t-btn" id="prev" type="button" aria-label="이전 단어">
+        <svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM19.5 5.5v13L9.5 12z"/></svg>
+      </button>
+      <button class="t-btn play" id="play" type="button" aria-label="재생">
+        <svg id="icPlay" viewBox="0 0 24 24"><path d="M8 5.2v13.6L19 12z"/></svg>
+        <svg id="icPause" viewBox="0 0 24 24" hidden><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+      </button>
+      <button class="t-btn" id="next" type="button" aria-label="다음 단어">
+        <svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4.5 5.5v13L14.5 12z"/></svg>
+      </button>
+    </div>
+    <p class="status" id="status"></p>
+    <p class="warn" id="ttsFail" role="alert" hidden></p>
+    <p class="keys"><span class="desk">스페이스 재생·정지 · ← → 이동 · 카드를 누르면 다시 듣기</span><span class="touch">카드를 좌우로 밀면 넘어가고, 누르면 다시 들어요</span></p>
+
+    <div class="settings">
+      <h2>재생 설정</h2>
+      <div class="fields">
+        <div class="field">
+          <span class="lbl" id="l-order">순서</span>
+          <div class="seg" role="radiogroup" aria-labelledby="l-order">
+            <input type="radio" name="order" id="order-enko" value="en-ko"><label for="order-enko">영어 → 뜻</label>
+            <input type="radio" name="order" id="order-koen" value="ko-en"><label for="order-koen">뜻 → 영어</label>
+          </div>
+        </div>
+        <div class="field">
+          <span class="lbl" id="l-rate">영어 속도</span>
+          <div class="seg" role="radiogroup" aria-labelledby="l-rate">
+            <input type="radio" name="rate" id="rate-07" value="0.7"><label for="rate-07">0.7×</label>
+            <input type="radio" name="rate" id="rate-09" value="0.9"><label for="rate-09">0.9×</label>
+            <input type="radio" name="rate" id="rate-10" value="1"><label for="rate-10">1×</label>
+            <input type="radio" name="rate" id="rate-12" value="1.2"><label for="rate-12">1.2×</label>
+          </div>
+        </div>
+        <div class="field">
+          <span class="lbl" id="l-rep">영어 반복</span>
+          <div class="seg" role="radiogroup" aria-labelledby="l-rep">
+            <input type="radio" name="rep" id="rep-1" value="1"><label for="rep-1">1번</label>
+            <input type="radio" name="rep" id="rep-2" value="2"><label for="rep-2">2번</label>
+            <input type="radio" name="rep" id="rep-3" value="3"><label for="rep-3">3번</label>
+          </div>
+        </div>
+        <div class="field">
+          <span class="lbl" id="l-gap">생각할 시간</span>
+          <div class="seg" role="radiogroup" aria-labelledby="l-gap">
+            <input type="radio" name="gap" id="gap-1" value="1"><label for="gap-1">1초</label>
+            <input type="radio" name="gap" id="gap-2" value="2"><label for="gap-2">2초</label>
+            <input type="radio" name="gap" id="gap-4" value="4"><label for="gap-4">4초</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="toggles">
+        <label class="switch"><input type="checkbox" id="opt-hide"><span class="track"></span>정답 가리기</label>
+        <label class="switch"><input type="checkbox" id="opt-shuffle"><span class="track"></span>순서 섞기</label>
+        <label class="switch"><input type="checkbox" id="opt-star"><span class="track"></span>★ 단어만</label>
+      </div>
+      <p class="hint" id="starHint" hidden>아직 별표한 단어가 없어서 전체를 읽어요. 어려운 단어에 ★를 눌러 두세요.</p>
+
+      <div class="fields">
+        <label class="field"><span class="lbl">영어 목소리</span><select id="voice-en"></select></label>
+        <label class="field"><span class="lbl">한국어 목소리</span><select id="voice-ko"></select></label>
+      </div>
+      <p class="hint" id="voiceHint" hidden>이 기기에서 한국어 음성을 찾지 못했어요. 뜻이 어색하게 읽히면 기기 설정에서 한국어 음성을 내려받아 주세요.</p>
+    </div>
+  </section>
+
+  <section aria-label="전체 단어 목록">
+    <div class="list-head"><h2>전체 단어</h2><span id="starCount">★ 0</span></div>
+    <ol class="list" id="list"></ol>
+  </section>
+</div>
+
+<script>
+const WORDS = [
+  { w: 'revise', pos: 'v.', m: '수정, 개정', e: 're(다시) + videre(보다) → 다시 보고 고치다' },
+  { w: 'indifferent', pos: 'adj.', m: '무관심한', note: '별로 다르지않네~', e: 'in(아닌) + different(다른) → 차이를 두지 않는 → 신경 안 쓰는' },
+  { w: 'spatial', pos: 'adj.', m: '공간의', e: 'spatium(공간) → space의 형용사형' },
+  { w: 'establish', pos: 'v.', m: '세우다', e: 'stabilis(안정된, stare 서다) → 단단히 서게 하다' },
+  { w: 'engage', pos: 'v.', m: '교류', e: 'en(안에) + gage(담보, 서약) → 약속으로 묶다 → 관여하다' },
+  { w: 'immediate', pos: 'adj.', m: '즉각적인', e: 'im(아닌) + medius(중간) → 사이에 낀 것이 없는 → 바로' },
+  { w: 'sophisticated', pos: 'adj.', m: '정교한, 세련된', e: 'sophos(그리스어: 지혜로운) → 지식을 갖춘 → 세련된' },
+  { w: 'compassion', pos: 'n.', m: '동정심', e: 'com(함께) + pati(고통받다) → 함께 아파함' },
+  { w: 'exacerbate', pos: 'v.', m: '악화', e: 'ex(강조) + acerbus(쓴, 거친) → 더 쓰게 만들다' },
+  { w: 'introduction', pos: 'n.', m: '유입', e: 'intro(안으로) + ducere(이끌다) → 안으로 데려옴' },
+  { w: 'sympathetic', pos: 'adj.', m: '교감신경의', e: 'syn(함께) + pathos(느낌) → 함께 느끼는' },
+  { w: 'consequences', pos: 'n.', m: '결과', note: '함께 따르는. 시퀀스가 순서라서', e: 'con(함께) + sequi(따르다) → 뒤따라오는 것' },
+  { w: 'reliance', pos: 'n.', m: '의존', e: 're(뒤로) + ligare(묶다) → 기대어 묶여 있음' },
+  { w: 'cognition', pos: 'n.', m: '의식', e: 'co(강조) + gnoscere(알다) → 알아차림' },
+  { w: 'homogeneous', pos: 'adj.', m: '동종의, 동질적인', e: 'homos(같은) + genos(종류) → 같은 종류의' },
+  { w: 'exploitation', pos: 'n.', m: '착취', e: 'ex(밖으로) + plicare(접다) → 펼쳐서 뽑아 씀' },
+  { w: 'distribution', pos: 'n.', m: '유통', note: 'distribute : 나눠주다', e: 'dis(따로따로) + tribuere(나누어 주다)' },
+  { w: 'prevailing', pos: 'adj.', m: '지배적인', e: 'prae(앞에) + valere(힘이 세다) → 앞서 우세한' },
+  { w: 'ambiguity', pos: 'n.', m: '모호한', e: 'ambi(양쪽) + agere(몰다) → 이쪽저쪽으로 흔들림' },
+  { w: 'derive', pos: 'v.', m: '파생하다', e: 'de(~에서) + rivus(시냇물) → 물줄기를 끌어오다' },
+  { w: 'further', pos: 'v. · adv.', m: '촉진시키다, 게다가', e: '고대영어 furthor, forth(앞으로)의 비교급 → 더 앞으로' },
+  { w: 'convention', pos: 'n.', m: '집회', e: 'con(함께) + venire(오다) → 함께 모임 → 모두가 따르는 관습' },
+  { w: 'distinctive', pos: 'adj.', m: '독특한', e: 'dis(따로) + stinguere(찔러 표시하다) → 구별되게 표시된' },
+  { w: 'preference', pos: 'n.', m: '선호', e: 'prae(앞에) + ferre(가져오다) → 앞에 놓음' },
+  { w: 'retention', pos: 'n.', m: '보유, 유지', e: 're(뒤로) + tenere(붙잡다) → 붙잡아 둠' },
+  { w: 'commitment', pos: 'n.', m: '책임, 전념', note: '너무 다양하다', e: 'com(함께) + mittere(보내다) → 맡겨 보냄 → 자신을 내맡김' },
+  { w: 'drain', pos: 'v.', m: '배수하다', e: '고대영어 dreahnian(물기를 빼다), dry와 같은 뿌리' },
+  { w: 'equilibrium', pos: 'n.', m: '마음의 평형, 평형', e: 'aequi(같은) + libra(저울) → 저울이 수평인 상태' },
+  { w: 'accommodate', pos: 'v.', m: '수용하다, 숙박시키다, 맞추다', e: 'ad(~에) + com(함께) + modus(척도) → 치수를 맞춰 주다' },
+  { w: 'draft', pos: 'n. · v.', m: '초안, 징병, 외풍', e: '고대영어 dragan(끌다, draw와 같은 뿌리) → 끌어 그린 밑그림' },
+  { w: 'fierce', pos: 'adj.', m: '사나운, 격렬한', e: 'ferus(야생의) → 길들지 않은' },
+  { w: 'steep', pos: 'adj.', m: '가파른, 급격한', e: '고대영어 steap(높이 솟은)' },
+  { w: 'depreciate', pos: 'v.', m: '가치가 떨어지다, 평가절하하다', e: 'de(아래로) + pretium(가격) → 값이 내려가다' },
+  { w: 'sublime', pos: 'adj.', m: '숭고한, 장엄한', e: 'sub(~까지) + limen(문 위 상인방) → 높이 치솟은' },
+  { w: 'ingredient', pos: 'n.', m: '재료, 성분', e: 'in(안에) + gradi(걸어가다) → 안으로 들어가는 것' },
+  { w: 'appliance', pos: 'n.', m: '가전제품, 기구', e: 'ad(~에) + plicare(접다, 붙이다) → 갖다 대어 쓰는 것 (apply)' },
+  { w: 'deteriorate', pos: 'v.', m: '악화되다, 나빠지다', e: 'deterior(더 나쁜, de 아래로) → 더 나빠지다' },
+  { w: 'recipient', pos: 'n.', m: '받는 사람, 수령인', e: 're(뒤로) + capere(잡다, 받다) → 받아 드는 사람' },
+  { w: 'transaction', pos: 'n.', m: '거래, 처리', e: 'trans(가로질러) + agere(행하다) → 끝까지 해냄' },
+  { w: 'expertise', pos: 'n.', m: '전문 지식, 전문 기술', e: 'experiri(시험해 보다) → 경험으로 얻은 것 (experience와 같은 뿌리)' },
+  { w: 'inferior', pos: 'adj.', m: '열등한, 하위의', e: 'inferus(아래의)의 비교급 → 더 아래에 있는' },
+  { w: 'facilitate', pos: 'v.', m: '용이하게 하다, 촉진하다', e: 'facilis(쉬운, facere 하다) → 쉽게 만들다' },
+  { w: 'optimal', pos: 'adj.', m: '최적의', e: 'optimus(최고의, bonus의 최상급)' },
+  { w: 'empirical', pos: 'adj.', m: '경험적인, 실증적인', e: 'empeiria(그리스어: 경험, peira 시도) → 직접 해 봐서 아는' },
+  { w: 'ethnic', pos: 'adj.', m: '민족의, 인종의', e: 'ethnos(그리스어: 민족, 무리)' },
+  { w: 'coverage', pos: 'n.', m: '보도, 적용 범위, 보상 범위', e: 'cover(덮다) + -age(범위) → 덮는 범위' },
+  { w: 'incorporate', pos: 'v.', m: '통합하다, 포함하다', e: 'in(안에) + corpus(몸) → 한 몸 안에 넣다' },
+  { w: 'radical', pos: 'adj.', m: '근본적인, 급진적인', e: 'radix(뿌리) → 뿌리까지 건드리는' },
+  { w: 'infer', pos: 'v.', m: '추론하다', e: 'in(안으로) + ferre(가져오다) → 결론을 끌어오다' },
+  { w: 'subordinate', pos: 'adj. · n.', m: '종속된, 부하', e: 'sub(아래) + ordinare(순서를 정하다) → 아래 순서에 놓인' },
+  { w: 'dilute', pos: 'v.', m: '희석하다, 약하게 하다', e: 'dis(따로) + luere(씻다) → 씻어서 흩다' },
+  { w: 'evoke', pos: 'v.', m: '불러일으키다, 떠올리게 하다', e: 'e(밖으로) + vocare(부르다) → 불러내다' },
+  { w: 'revelation', pos: 'n.', m: '폭로, 계시, 뜻밖의 새 사실', e: 're(반대로) + velum(베일) → 베일을 걷어냄' },
+  { w: 'nurture', pos: 'v. · n.', m: '양육하다, 기르다, 양육', e: 'nutrire(먹이다, 기르다) → nutrition과 같은 뿌리' },
+  { w: 'vague', pos: 'adj.', m: '막연한, 흐릿한', e: 'vagus(떠도는) → 한곳에 머물지 않는' },
+  { w: 'aesthetic', pos: 'adj.', m: '미적인, 미학의', e: 'aisthesis(그리스어: 감각, 지각) → 감각으로 느끼는' },
+  { w: 'avalanche', pos: 'n.', m: '눈사태, 쇄도', e: '프랑스어 avaler(아래로 내려가다, à val 골짜기로)' },
+  { w: 'kin', pos: 'n.', m: '친척, 혈족', e: '고대영어 cynn(가족, 종족) → kind(종류)와 같은 뿌리' },
+  { w: 'martial', pos: 'adj.', m: '전쟁의, 군대의', e: 'Mars(로마의 전쟁 신) → martial arts 무술' },
+  { w: 'niche', pos: 'n.', m: '틈새, 적소', e: '프랑스어 niche(벽감), nicher(둥지를 틀다) → 딱 맞는 자리' },
+  { w: 'retrospect', pos: 'n.', m: '회상, 회고', e: 'retro(뒤로) + specere(보다) → 뒤돌아봄' },
+];
+
+const $ = id => document.getElementById(id);
+const pad = n => String(n).padStart(2, '0');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const TTS = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const STAR = '<svg viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg>';
+
+// settings + stars (per-viewer, browser only)
+const KEY = 'sori-vocab-v1';
+const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, hide: false, hideMean: false, shuffle: false, starOnly: false, enVoice: '', koVoice: '' };
+let stars = new Set();
+try {
+  const d = JSON.parse(localStorage.getItem(KEY) || '{}');
+  if (d.S) Object.assign(S, d.S);
+  if (Array.isArray(d.stars)) stars = new Set(d.stars);
+} catch (e) {}
+function save() { try { localStorage.setItem(KEY, JSON.stringify({ S, stars: [...stars] })); } catch (e) {} }
+
+const els = {
+  card: $('card'), pos: $('pos'), count: $('count'), word: $('word'), mean: $('mean'), note: $('note'), ety: $('ety'),
+  bar: $('bar'), cardStar: $('cardStar'), list: $('list'), play: $('play'),
+};
+
+// deck = order of word indices for this round; pos = place in deck
+let deck = [], pos = 0, swiped = 0, peek = -1;
+function buildDeck(keep) {
+  let d = WORDS.map((_, i) => i);
+  if (S.starOnly) { const f = d.filter(i => stars.has(WORDS[i].w)); if (f.length) d = f; }
+  if (S.shuffle) {
+    for (let i = d.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [d[i], d[j]] = [d[j], d[i]]; }
+    if (keep != null && d.includes(keep)) { d.splice(d.indexOf(keep), 1); d.unshift(keep); }
+  }
+  deck = d;
+  pos = keep != null && deck.includes(keep) ? deck.indexOf(keep) : 0;
+  $('starHint').hidden = !(S.starOnly && stars.size === 0);
+}
+
+// list
+els.list.innerHTML = WORDS.map((w, i) =>
+  `<li><button class="row" type="button" data-i="${i}"><span class="num">${pad(i + 1)}</span>` +
+  `<span class="rw">${w.w}<span class="rpos">${w.pos}</span></span><span class="rm">${w.m}</span>` +
+  `<span class="re"><b>어원</b>${w.e}</span></button>` +
+  `<button class="icon-btn star" type="button" data-star="${i}" aria-pressed="false" aria-label="${w.w} 별표">${STAR}</button></li>`
+).join('');
+const rows = [...els.list.children];
+const rowStars = rows.map(li => li.querySelector('.star'));
+$('total').textContent = WORDS.length;
+
+let lastShown = -1;
+function render(revealed) {
+  const i = deck[pos], w = WORDS[i];
+  const hidden = S.hide && !revealed;
+  els.pos.textContent = w.pos;
+  els.count.textContent = `${pad(pos + 1)} / ${pad(deck.length)}`;
+  els.word.textContent = w.w;
+  els.mean.textContent = w.m;
+  els.note.textContent = w.note || '';
+  els.note.hidden = !w.note;
+  els.note.classList.toggle('ghost', hidden);
+  els.ety.textContent = w.e;
+  els.ety.parentElement.classList.toggle('ghost', hidden);
+  els.word.classList.toggle('masked', hidden && S.order === 'ko-en');
+  const meanOff = S.hideMean && peek !== i;
+  els.mean.classList.toggle('masked', (hidden && S.order === 'en-ko') || meanOff);
+  els.mean.parentElement.classList.toggle('peekable', S.hideMean);
+  if (meanOff) { els.note.classList.add('ghost'); els.ety.parentElement.classList.add('ghost'); }
+  $('hideMean').setAttribute('aria-pressed', S.hideMean);
+  document.body.classList.toggle('hide-mean', S.hideMean);
+  els.cardStar.setAttribute('aria-pressed', stars.has(w.w));
+  els.bar.style.width = `${((pos + 1) / deck.length) * 100}%`;
+  if (i !== lastShown) {
+    lastShown = i;
+    rows.forEach((li, k) => li.classList.toggle('current', k === i));
+    scrollRow(rows[i]);
+  }
+}
+function scrollRow(li) {
+  const box = els.list;
+  if (box.scrollHeight <= box.clientHeight + 1) return;
+  box.scrollTo({ top: li.offsetTop - box.clientHeight / 2 + li.offsetHeight / 2, behavior: reduceMotion ? 'auto' : 'smooth' });
+}
+function syncStars() {
+  rowStars.forEach((b, i) => b.setAttribute('aria-pressed', stars.has(WORDS[i].w)));
+  els.cardStar.setAttribute('aria-pressed', stars.has(WORDS[deck[pos]].w));
+  $('starCount').textContent = `★ ${stars.size}`;
+  $('starHint').hidden = !(S.starOnly && stars.size === 0);
+}
+function toggleStar(i) {
+  const k = WORDS[i].w;
+  stars.has(k) ? stars.delete(k) : stars.add(k);
+  save(); syncStars();
+}
+function updateStatus() {
+  const en = `영어 ${S.rep}번`;
+  const seq = S.order === 'en-ko' ? [en, `${S.gap}초`, '뜻'] : ['뜻', `${S.gap}초`, en];
+  $('status').textContent = `${seq.join(' → ')} · 끝나면 처음부터 다시`;
+}
+
+// voices
+let voices = [];
+const enSel = $('voice-en'), koSel = $('voice-ko');
+function fillSelect(sel, list, value, fallback) {
+  sel.innerHTML = '';
+  if (!list.length) sel.add(new Option(fallback, ''));
+  list.forEach(v => sel.add(new Option(`${v.name} · ${v.lang}`, v.voiceURI)));
+  sel.value = value;
+}
+function loadVoices() {
+  if (!TTS) return;
+  voices = speechSynthesis.getVoices();
+  const isUS = v => /en[-_]US/i.test(v.lang);
+  const en = voices.filter(v => /^en/i.test(v.lang)).sort((a, b) => isUS(b) - isUS(a) || a.name.localeCompare(b.name));
+  const ko = voices.filter(v => /^ko/i.test(v.lang));
+  const pick = (list, re, saved) =>
+    (list.find(v => v.voiceURI === saved) || list.find(v => re.test(v.name)) || list[0] || {}).voiceURI || '';
+  fillSelect(enSel, en, pick(en, /Samantha|Google US English|Aria|Jenny|Ava|Allison/i, S.enVoice), '기본 영어 음성');
+  fillSelect(koSel, ko, pick(ko, /Yuna|유나|Google|SunHi|Heami/i, S.koVoice), '기본 한국어 음성');
+  $('voiceHint').hidden = ko.length > 0 || voices.length === 0;
+}
+const voiceFor = sel => voices.find(v => v.voiceURI === sel.value) || null;
+
+// speech engine: every start bumps `run`; stale loops see the mismatch and exit
+let run = 0, playing = false, pending = null, keepAlive = null, wake = null;
+function stop() {
+  run++;
+  let cancelled = false;
+  if (TTS) {
+    if (speechSynthesis.speaking || speechSynthesis.pending) { speechSynthesis.cancel(); cancelled = true; }
+  }
+  if (pending) pending();
+  els.word.classList.remove('speaking');
+  els.mean.classList.remove('speaking');
+  return cancelled;
+}
+function showTtsFail(msg) {
+  const el = $('ttsFail');
+  if (msg) { el.textContent = msg; el.hidden = false; } else { el.hidden = true; }
+}
+function say(text, lang, sel, el, rate, id) {
+  return new Promise(resolve => {
+    if (id !== run || !TTS) return resolve();
+    const u = new SpeechSynthesisUtterance(text);
+    const v = voiceFor(sel);
+    u.lang = v ? v.lang : lang; u.rate = rate;
+    if (v) u.voice = v;
+    let timer, watch, started = false;
+    const done = () => {
+      clearTimeout(timer); clearTimeout(watch);
+      el.classList.remove('speaking');
+      if (pending === done) pending = null;
+      resolve();
+    };
+    u.onstart = () => { started = true; showTtsFail(''); };
+    u.onend = done;
+    u.onerror = e => {
+      const code = e && e.error;
+      if (code && code !== 'canceled' && code !== 'interrupted' && id === run) {
+        showTtsFail('소리를 낼 수 없어요 (' + code + '). 브라우저(Chrome·Safari)에서 직접 열거나, 무음 모드와 미디어 볼륨을 확인해 주세요.');
+      }
+      done();
+    };
+    timer = setTimeout(done, 3000 + text.length * 250 / rate); // some browsers drop onend
+    watch = setTimeout(() => {
+      if (!started && id === run) showTtsFail('소리가 시작되지 않았어요. 무음 모드·미디어 볼륨을 확인하거나, 앱 안이 아닌 Chrome·Safari에서 열어 주세요.');
+    }, 1800);
+    pending = done; keepAlive = u;
+    el.classList.add('speaking');
+    try { speechSynthesis.resume(); } catch (e) {}
+    speechSynthesis.speak(u);
+  });
+}
+async function speakWord(id) {
+  const w = WORDS[deck[pos]];
+  const en = async () => {
+    for (let r = 0; r < S.rep; r++) {
+      if (r) await sleep(450);
+      if (id !== run) return;
+      await say(w.w, 'en-US', enSel, els.word, S.rate, id);
+    }
+  };
+  const ko = () => say(w.m, 'ko-KR', koSel, els.mean, 1, id);
+  render(false);
+  await (S.order === 'en-ko' ? en() : ko());
+  await sleep(S.gap * 1000);
+  if (id !== run) return;
+  render(true);
+  await (S.order === 'en-ko' ? ko() : en());
+}
+async function loop(id) {
+  while (id === run) {
+    await speakWord(id);
+    await sleep(1200);
+    if (id !== run) return;
+    if (pos >= deck.length - 1) buildDeck(); else pos++;
+  }
+}
+function start() {
+  const hadQueue = stop();
+  const id = run;
+  const go_ = () => { if (id === run) playing ? loop(id) : speakWord(id); };
+  // Phones only allow speech started inside the tap itself, so speak right now.
+  // Only when we just cancelled something do we wait a beat (cancel+speak in one tick can be dropped).
+  if (hadQueue) setTimeout(go_, 120); else go_();
+}
+function setPlaying(p) {
+  playing = p;
+  $('icPlay').hidden = p; $('icPause').hidden = !p;
+  els.play.setAttribute('aria-label', p ? '일시정지' : '재생');
+  if (p) { navigator.wakeLock?.request('screen').then(l => { wake = l; }).catch(() => {}); }
+  else { try { wake?.release(); } catch (e) {} wake = null; }
+}
+function toggle() {
+  if (playing) { setPlaying(false); stop(); render(true); }
+  else { setPlaying(true); start(); }
+}
+function go(p, dir) {
+  pos = (p + deck.length) % deck.length;
+  render(false);
+  if (dir && !reduceMotion) {
+    const b = els.card.querySelector('.card-body');
+    b.classList.remove('slide-l', 'slide-r');
+    void b.offsetWidth;
+    b.classList.add(dir > 0 ? 'slide-l' : 'slide-r');
+  }
+  start();
+}
+function jumpTo(i) {
+  if (!deck.includes(i)) { S.starOnly = false; $('opt-star').checked = false; buildDeck(i); save(); }
+  go(deck.indexOf(i));
+}
+function restartCurrent() {
+  if (playing) go(pos); else { stop(); render(true); }
+}
+
+// controls
+function syncControls() {
+  ['order', 'rate', 'rep', 'gap'].forEach(name => {
+    const r = document.querySelector(`input[name="${name}"][value="${S[name]}"]`);
+    if (r) r.checked = true;
+  });
+  $('opt-hide').checked = S.hide;
+  $('opt-shuffle').checked = S.shuffle;
+  $('opt-star').checked = S.starOnly;
+}
+document.querySelectorAll('.seg input').forEach(r => r.addEventListener('change', () => {
+  S[r.name] = r.name === 'order' ? r.value : Number(r.value);
+  save(); updateStatus();
+  if (r.name === 'order') restartCurrent();
+}));
+$('opt-hide').addEventListener('change', e => { S.hide = e.target.checked; save(); restartCurrent(); });
+$('opt-shuffle').addEventListener('change', e => { S.shuffle = e.target.checked; save(); buildDeck(deck[pos]); restartCurrent(); });
+$('opt-star').addEventListener('change', e => { S.starOnly = e.target.checked; save(); buildDeck(deck[pos]); restartCurrent(); });
+enSel.addEventListener('change', () => { S.enVoice = enSel.value; save(); });
+koSel.addEventListener('change', () => { S.koVoice = koSel.value; save(); });
+
+els.play.addEventListener('click', toggle);
+$('prev').addEventListener('click', () => go(pos - 1, -1));
+$('next').addEventListener('click', () => go(pos + 1, 1));
+
+// swipe left/right on the card: fires as soon as the finger has moved far enough,
+// so it still works if the host app cancels the touch later
+(function () {
+  let sx = 0, sy = 0, on = false, done = false, lastFire = 0;
+  const begin = (x, y, target) => {
+    if (target.closest && target.closest('button')) { on = false; return; }
+    on = true; done = false; sx = x; sy = y;
+  };
+  const move = (x, y) => {
+    if (!on || done) return;
+    const dx = x - sx, dy = y - sy;
+    if (Math.abs(dx) < 38 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+    if (Date.now() - lastFire < 350) { done = true; return; }
+    done = true; lastFire = Date.now(); swiped = Date.now();
+    go(pos + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+  };
+  const end = () => { on = false; };
+  const c = els.card;
+  c.addEventListener('touchstart', e => { if (e.touches.length === 1) begin(e.touches[0].clientX, e.touches[0].clientY, e.target); else on = false; }, { passive: true });
+  c.addEventListener('touchmove', e => { const t = e.touches[0]; if (t) move(t.clientX, t.clientY); }, { passive: true });
+  c.addEventListener('touchend', e => { const t = e.changedTouches[0]; if (t) move(t.clientX, t.clientY); end(); }, { passive: true });
+  c.addEventListener('touchcancel', end, { passive: true });
+  if (window.PointerEvent) {
+    c.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') begin(e.clientX, e.clientY, e.target); });
+    c.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') move(e.clientX, e.clientY); });
+    c.addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') { move(e.clientX, e.clientY); end(); } });
+    c.addEventListener('pointercancel', end);
+  }
+})();
+$('replay').addEventListener('click', () => go(pos));
+els.card.addEventListener('click', e => { if (Date.now() - swiped < 500) return; if (!e.target.closest('button')) go(pos); });
+$('hideMean').addEventListener('click', () => { S.hideMean = !S.hideMean; peek = -1; save(); render(!playing); });
+els.mean.addEventListener('click', e => {
+  if (!S.hideMean) return;
+  e.stopPropagation();
+  peek = peek === deck[pos] ? -1 : deck[pos]; render(!playing);
+});
+els.cardStar.addEventListener('click', () => toggleStar(deck[pos]));
+els.list.addEventListener('click', e => {
+  const s = e.target.closest('[data-star]');
+  if (s) return toggleStar(Number(s.dataset.star));
+  const row = e.target.closest('.row');
+  if (row) jumpTo(Number(row.dataset.i));
+});
+document.addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey || e.target.closest('input, select, textarea, button')) return;
+  if (e.code === 'Space') { e.preventDefault(); toggle(); }
+  else if (e.key === 'ArrowRight') { e.preventDefault(); go(pos + 1, 1); }
+  else if (e.key === 'ArrowLeft') { e.preventDefault(); go(pos - 1, -1); }
+});
+
+// boot
+try {
+  syncControls();
+  buildDeck();
+  render(true);
+  syncStars();
+  updateStatus();
+} catch (err) {
+  const w = $('noTts'); w.hidden = false; w.textContent = '불러오는 중 문제가 생겼어요. 새로고침해 주세요. (' + err.message + ')';
+}
+// fonts load after first paint so a slow font server can never block the page
+try {
+  const f = document.createElement('link');
+  f.rel = 'stylesheet';
+  f.href = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Literata:opsz,wght@7..72,500;7..72,600&family=Nanum+Pen+Script&display=swap';
+  document.head.appendChild(f);
+} catch (e) {}
+if (TTS) {
+  loadVoices();
+  speechSynthesis.addEventListener?.('voiceschanged', loadVoices);
+  setTimeout(loadVoices, 600);
+} else {
+  $('noTts').hidden = false;
+  ['play', 'prev', 'next', 'replay'].forEach(id => { $(id).disabled = true; });
+}
+</script>

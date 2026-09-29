@@ -99,3 +99,35 @@
 #practice-root .pr-submit:hover { background: var(--accent) !important; filter: brightness(1.1); }
 #practice-root .pr-btn:hover { border-color: var(--accent) !important; color: var(--accent) !important; }
 .pr-omr h3 { text-transform: none !important; letter-spacing: 0 !important; }
+
+/* 단답형 입력 · 시험지(국어·영어) 단 조각 */
+.pr-numrow { display: flex; align-items: center; gap: 12px; margin-top: 12px; font-size: 13px; color: var(--text-dim); }
+.pr-num, .pr-numo { font: 600 18px var(--font-mono, monospace); text-align: center; color: var(--text); background: var(--pr-el); border: 1px solid var(--pr-line); border-radius: 10px; padding: 8px 10px; width: 130px; }
+.pr-num:focus, .pr-numo:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.pr-num:disabled, .pr-numo:disabled { opacity: .8; }
+.pr-row.numrow { grid-template-columns: 28px 1fr; }
+.pr-row.numrow .pr-numans { grid-column: 2; font: 11px var(--font-mono, monospace); color: var(--pr-ok); }
+.pr-numo { width: 100%; font-size: 13px; padding: 3px 8px; border-radius: 12px; }
+.pr-sec { margin: 18px 0 8px !important; font-size: 15px !important; color: var(--text) !important; }
+.pr-list.paper { gap: 6px; }
+.pr-strips { display: flex; flex-direction: column; gap: 10px; }
+.pr-strip { position: relative; background: #fff; border: 1px solid var(--pr-line); border-radius: 8px; padding: 10px 12px; max-width: 760px; }
+.pr-strip img { display: block; width: 100%; height: auto; }
+.pr-anchor { position: absolute; left: 0; width: 1px; height: 1px; scroll-margin-top: 120px; pointer-events: none; }
+.pr-omr-sec { margin: 10px 0 4px; padding-top: 6px; font-size: 11px; color: var(--text-dim); border-top: 1px dashed var(--pr-line); }
+.pr-omr-sec:first-child { margin-top: 0; border-top: 0; }
+.pr-script { border: 1px solid var(--pr-line); border-radius: 10px; background: var(--pr-card); padding: 10px 14px; font-size: 13.5px; }
+.pr-script summary { cursor: pointer; font-weight: 600; }
+.pr-script.locked { opacity: .7; }
+.pr-script.locked summary { cursor: default; }
+.pr-script-q { margin-top: 10px; }
+.pr-script-q pre { white-space: pre-wrap; margin: 4px 0 0; font: 13px/1.7 var(--font-body, sans-serif); color: var(--text-dim); }
+.pr-fab { display: none; }
+@media (max-width: 900px) {
+  .pr-body.paper .pr-omr { display: none; position: fixed; left: 8px; right: 8px; bottom: 64px; top: auto; max-height: 55vh; z-index: 20; box-shadow: 0 10px 34px rgba(0,0,0,.28); }
+  .pr-body.paper .pr-omr.open { display: block; }
+  .pr-fab { display: block; position: fixed; right: 12px; bottom: 12px; z-index: 21; padding: 12px 18px; border-radius: 999px; font: 600 14px var(--font-body, sans-serif); box-shadow: 0 6px 20px rgba(0,0,0,.25); cursor: pointer; }
+  #practice-root .pr-fab { background: var(--accent) !important; color: #fff !important; border: 0 !important; }
+}
+@media (max-width: 900px) { .pr-strip { padding: 6px 6px; } .pr-anchor { scroll-margin-top: 20px; } }
+#practice-root .pr-num, #practice-root .pr-numo { background: var(--pr-el) !important; color: var(--text) !important; border: 1px solid var(--pr-line) !important; }

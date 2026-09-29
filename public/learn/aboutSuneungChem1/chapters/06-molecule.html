@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>분자의 구조와 성질 — 수능 화학Ⅰ</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>화학Ⅰ 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li class="grp">화학의 첫걸음</li>
+<li><a href="01-mole.html">1. 화학과 우리 생활 · 화학식량과 몰</a></li>
+<li><a href="02-reaction.html">2. 화학 반응식과 양적 관계</a></li>
+<li class="grp">원자의 세계</li>
+<li><a href="03-atom.html">3. 원자 모형과 전자 배치</a></li>
+<li><a href="04-periodic.html">4. 원소의 주기적 성질</a></li>
+<li class="grp">화학 결합과 분자의 세계</li>
+<li><a href="05-bond.html">5. 화학 결합</a></li>
+<li><a href="06-molecule.html" style="color:var(--accent);font-weight:600;">6. 분자의 구조와 성질</a></li>
+<li class="grp">역동적인 화학 반응</li>
+<li><a href="07-equilibrium.html">7. 동적 평형</a></li>
+<li><a href="08-acid-base.html">8. 산과 염기 (중화 반응)</a></li>
+<li><a href="09-redox.html">9. 산화 환원 반응</a></li>
+<li class="grp">전략</li>
+<li><a href="10-strategy.html">10. 수능 화학Ⅰ 실전 전략</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>분자의 구조와 성질</h1><p class="authors">Part 6 · 화학 결합과 분자의 세계</p><p class="affiliation">분자 모양·극성·전자쌍 반발·분자 간 힘</p></header>
+<div class="stat-row"><div class="stat"><b>2.1</b><span>회당 문항 수</span></div><div class="stat"><b>5.3점</b><span>회당 배점</span></div><div class="stat"><b>0~4</b><span>회차별 범위</span></div><div class="stat"><b>61</b><span>최근 29회 누적</span></div></div>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 29회(2018~2021학년도는 구 교육과정)(580문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>이 파트는 루이스 구조에서 중심 원자의 전자쌍을 세어 분자 모양을 정하고, 그 모양이 쌍극자를 상쇄하는지를 물어 극성 분자를 가립니다. 이어서 분자 사이에 작용하는 힘으로 끓는점 순서를 설명합니다. 공유 결합 자체의 세기와 분자 간 힘을 섞으면 끓는점 비교가 뒤집히므로, 상태 변화에서 끊기는 것이 무엇인지부터 구분합니다.</p>
+<h2>1. 루이스 구조와 공유·비공유 전자쌍</h2>
+<p>분자의 모양은 중심 원자 주위의 <strong>전자쌍이 어떻게 배치되는지</strong>로 정해집니다. 그전에 공유 전자쌍과 비공유 전자쌍의 수를 루이스 구조로 확정합니다. 세는 절차는 앞 파트와 같고, 여기서는 모양에 바로 쓰는 결과만 정리합니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>분자</th><th>원자가 전자 합</th><th>중심의 공유 전자쌍</th><th>중심의 비공유 전자쌍</th><th>중심이 가지는 전자</th></tr></thead><tbody><tr><td>BeCl<sub>2</sub></td><td>16</td><td>2 (단일 결합 2)</td><td>0</td><td>4 (옥텟 미완성)</td></tr><tr><td>BF<sub>3</sub></td><td>24</td><td>3</td><td>0</td><td>6 (옥텟 미완성)</td></tr><tr><td>CH<sub>4</sub></td><td>8</td><td>4</td><td>0</td><td>8</td></tr><tr><td>NH<sub>3</sub></td><td>8</td><td>3</td><td>1</td><td>8</td></tr><tr><td>H<sub>2</sub>O</td><td>8</td><td>2</td><td>2</td><td>8</td></tr><tr><td>CO<sub>2</sub></td><td>16</td><td>2개의 이중 결합 영역</td><td>0</td><td>8</td></tr></tbody></table></div>
+<p>원자가 전자 합을 다시 확인하면 BeCl<sub>2</sub>는 2+7+7 = 16, BF<sub>3</sub>는 3+7×3 = 24, CH<sub>4</sub>는 4+4 = 8, NH<sub>3</sub>는 5+3 = 8입니다. CO<sub>2</sub>의 탄소에는 비공유 전자쌍이 없고, 산소 두 개와 각각 이중 결합을 합니다.</p>
+<p>전자쌍 반발에서는 <strong>이중 결합·삼중 결합도 방향이 하나이므로 영역 1개</strong>로 셉니다. CO<sub>2</sub>는 공유 전자쌍이 4개(이중 결합 둘)이지만, 중심 주위의 영역은 2개입니다. SO<sub>2</sub>는 중심 황 주위에 결합 영역 2개와 비공유 전자쌍 1개가 있어 영역이 3개입니다. 황의 원자가 전자는 6, 산소 둘은 12, 합이 18개입니다.</p>
+<div class="formula">중심 주위 전자 영역 수 = 결합 영역 수 + 비공유 전자쌍 수<br>다중 결합 1개 = 영역 1개</div>
+<div class="info-card"><h4>형식 전하로 구조를 점검하기</h4><p>형식 전하 = 원자가 전자 수 − 비공유 전자 수 − (공유 전자 수)/2 입니다. CO<sub>2</sub>의 O=C=O에서는 탄소와 산소의 형식 전하가 모두 0이라 이 구조를 사용합니다. 형식 전하의 합은 분자의 전하(중성이면 0)와 같아야 합니다.</p></div>
+<div class="warning-box"><strong>함정:</strong> 공유 전자쌍 수와 전자 영역 수를 같게 두면 CO<sub>2</sub>를 영역 4개로 세어 정사면체로 읽게 됩니다. 이중 결합 하나는 영역 하나입니다. 비공유 전자쌍을 영역에 빼먹으면 물을 직선형으로 보게 됩니다.</div>
+<div class="study-tip"><strong>TIP:</strong> 수소는 비공유 전자쌍을 가지지 않고 항상 말단입니다. 중심을 찾을 때 H를 중심에 두면 물과 암모니아의 모양이 처음부터 어긋납니다.</div>
+
+<h2>2. 전자쌍 반발 이론과 분자 모양</h2>
+<p>중심 원자 주위의 전자쌍(공유 영역과 비공유 전자쌍)은 서로 밀어 냅니다. 반발이 최소가 되도록 가능한 한 멀리 떨어지려 하고, 그 배치가 분자 모양을 만듭니다. 반발의 세기는 <strong>비공유-비공유 &gt; 비공유-공유 &gt; 공유-공유</strong> 순입니다. 비공유 전자쌍은 한 원자에만 속해 공간적으로 더 넓게 퍼지기 때문입니다. 그래서 비공유 전자쌍이 있으면 결합각이 기본 각보다 작아집니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>전자 영역</th><th>공유 영역</th><th>비공유</th><th>전자쌍 배치</th><th>분자 모양</th><th>결합각</th><th>예</th></tr></thead><tbody><tr><td>2</td><td>2</td><td>0</td><td>직선형</td><td>직선형</td><td>180°</td><td>BeCl<sub>2</sub>, CO<sub>2</sub></td></tr><tr><td>3</td><td>3</td><td>0</td><td>평면 삼각형</td><td>평면 삼각형</td><td>120°</td><td>BF<sub>3</sub></td></tr><tr><td>3</td><td>2</td><td>1</td><td>평면 삼각형</td><td>굽은형</td><td>120°보다 작음</td><td>SO<sub>2</sub></td></tr><tr><td>4</td><td>4</td><td>0</td><td>정사면체</td><td>정사면체형</td><td>109.5°</td><td>CH<sub>4</sub>, CCl<sub>4</sub></td></tr><tr><td>4</td><td>3</td><td>1</td><td>정사면체</td><td>삼각뿔형</td><td>약 107°</td><td>NH<sub>3</sub></td></tr><tr><td>4</td><td>2</td><td>2</td><td>정사면체</td><td>굽은형</td><td>약 104.5°</td><td>H<sub>2</sub>O</td></tr></tbody></table></div>
+<p>분자 모양의 이름은 <strong>원자의 위치만</strong> 보고 붙입니다. 비공유 전자쌍은 자리를 차지하지만 모양 이름에는 들어가지 않습니다. 암모니아는 전자쌍 배치는 정사면체인데, 보이는 원자는 삼각뿔입니다. 물은 전자쌍 배치가 정사면체이고 분자 모양은 굽은형입니다.</p>
+<p>굽은형은 두 종류입니다. SO<sub>2</sub>처럼 영역 3개(비공유 1개)에서 온 굽은형과, H<sub>2</sub>O처럼 영역 4개(비공유 2개)에서 온 굽은형입니다. 결합각의 기준이 120°인지 109.5°인지가 다릅니다.</p>
+<p>메테인·암모니아·물의 결합각을 비교하면 CH<sub>4</sub>(109.5°) &gt; NH<sub>3</sub>(약 107°) &gt; H<sub>2</sub>O(약 104.5°)입니다. 셋 다 전자 영역은 4개인데, 비공유 전자쌍이 0개, 1개, 2개로 늘면서 공유 전자쌍을 더 세게 밀어 결합각이 줄어듭니다.</p>
+<div class="formula">영역 2, 비공유 0 → 직선형 180°<br>영역 3, 비공유 0 → 평면 삼각형 120°<br>영역 3, 비공유 1 → 굽은형<br>영역 4, 비공유 0 → 정사면체 109.5°<br>영역 4, 비공유 1 → 삼각뿔<br>영역 4, 비공유 2 → 굽은형</div>
+<div class="warning-box"><strong>함정:</strong> 암모니아를 평면 삼각형(120°)으로 보면 비공유 전자쌍을 무시한 것입니다. 질소에는 비공유 전자쌍이 1개 있어 삼각뿔이고 결합각은 약 107°입니다. 사면체의 109.5°를 90°나 120°로 기억하는 실수도 많습니다.</div>
+<div class="study-tip"><strong>TIP:</strong> 문제를 읽을 때 ‘전자쌍의 배치’와 ‘분자의 모양’ 중 무엇을 묻는지 표시해 둡니다. NH<sub>3</sub>는 배치가 정사면체, 모양이 삼각뿔입니다. 둘 다 맞는 말이고 가리키는 것이 다릅니다.</div>
+
+<h2>3. 결합의 극성과 분자의 극성</h2>
+<p>결합이 극성이어도 분자 전체의 쌍극자는 0일 수 있습니다. 각 결합의 쌍극자는 크기와 방향을 가진 화살표이고, 분자 전체의 쌍극자 모멘트는 그 화살표를 더한 결과입니다. 합이 0이면 <strong>무극성 분자</strong>, 0이 아니면 <strong>극성 분자</strong>입니다.</p>
+<p>판정은 세 단계입니다.</p>
+<ol>
+<li>루이스 구조로 분자 모양을 정합니다.</li>
+<li>각 결합이 극성인지 봅니다. 같은 원자 사이의 결합은 무극성입니다. 전기 음성도가 다르면 극성 결합이고, δ−는 전기 음성도가 큰 쪽입니다.</li>
+<li>모양의 대칭으로 화살표가 서로 취소되는지 봅니다. 비공유 전자쌍이 있거나 말단 원자가 서로 다르면 대칭이 깨져 극성인 경우가 많습니다.</li>
+</ol>
+<div class="tbl-wrap"><table><thead><tr><th>분자</th><th>모양</th><th>결합 극성</th><th>분자 극성</th><th>이유</th></tr></thead><tbody><tr><td>H<sub>2</sub>, N<sub>2</sub>, O<sub>2</sub>, Cl<sub>2</sub></td><td>직선형(이원자)</td><td>무극성</td><td>무극성</td><td>같은 원자 사이</td></tr><tr><td>HCl, HF, CO</td><td>직선형(이원자)</td><td>극성</td><td>극성</td><td>서로 다른 두 원자. 취소할 반대 결합이 없다</td></tr><tr><td>CO<sub>2</sub></td><td>직선형</td><td>C=O는 극성</td><td>무극성</td><td>두 쌍극자가 180°로 반대라 합이 0</td></tr><tr><td>BF<sub>3</sub></td><td>평면 삼각형</td><td>B−F는 극성</td><td>무극성</td><td>세 쌍극자가 120° 대칭으로 취소</td></tr><tr><td>CCl<sub>4</sub>, CH<sub>4</sub></td><td>정사면체</td><td>C−Cl은 극성, C−H는 약함</td><td>무극성</td><td>같은 말단이 대칭으로 취소</td></tr><tr><td>H<sub>2</sub>O</td><td>굽은형</td><td>O−H는 극성</td><td>극성</td><td>굽은 모양이라 산소 쪽으로 합이 남음. O가 δ−</td></tr><tr><td>NH<sub>3</sub></td><td>삼각뿔</td><td>N−H는 극성</td><td>극성</td><td>비공유 전자쌍 때문에 합이 0이 아님</td></tr><tr><td>SO<sub>2</sub></td><td>굽은형</td><td>S=O는 극성</td><td>극성</td><td>굽은형이라 쌍극자가 남음</td></tr><tr><td>CH<sub>3</sub>Cl, CHCl<sub>3</sub></td><td>사면체 골격</td><td>C−Cl과 C−H가 다름</td><td>극성</td><td>말단이 달라 대칭 취소가 안 됨</td></tr></tbody></table></div>
+<p>CO<sub>2</sub>와 H<sub>2</sub>O를 나란히 보면 핵심이 보입니다. 둘 다 중심과 산소(또는 수소) 사이의 결합은 극성입니다. CO<sub>2</sub>는 곧은 막대처럼 양끝이 같은 산소라 화살표가 상쇄되어 무극성입니다. H<sub>2</sub>O는 꺾여 있어 두 O−H 화살표의 합이 산소 쪽을 향하고, 극성 분자입니다. 물이 극성인 덕분에 이온 결정을 잘 둘러싸 녹이는 경우가 많습니다.</p>
+<p>정사면체라고 해서 항상 무극성은 아닙니다. CCl<sub>4</sub>는 네 개의 C−Cl이 같아서 무극성이고, CH<sub>3</sub>Cl은 C−Cl 하나가 C−H 세 개와 달라 극성입니다. CH<sub>2</sub>Cl<sub>2</sub>도 극성입니다. ‘모양 이름’만으로 극성을 정하지 않고 말단 원자가 모두 같은지 확인합니다.</p>
+<div class="formula">무극성이 되기 쉬운 경우<br>직선형이고 양 끝이 같다 (CO<sub>2</sub>, BeCl<sub>2</sub>)<br>평면 삼각형이고 말단이 모두 같다 (BF<sub>3</sub>)<br>정사면체이고 말단이 모두 같다 (CH<sub>4</sub>, CCl<sub>4</sub>)</div>
+<div class="warning-box"><strong>함정:</strong> 극성 결합이 있으면 분자도 극성이다라고 보면 CO<sub>2</sub>, BF<sub>3</sub>, CCl<sub>4</sub>가 모두 틀립니다. 결합 극성은 결합 하나의 성질이고, 분자 극성은 그 벡터의 합입니다.</div>
+<div class="study-tip"><strong>TIP:</strong> 쌍극자 모멘트가 0으로 주어진 분자는 무극성입니다. 구조식이 없어도 분산력만 분자 사이에 있다고 판단할 수 있습니다. 0이 아니면 극성 분자입니다.</div>
+
+<h2>4. 분자 간 힘과 끓는점·녹는점</h2>
+<p>분자성 물질이 녹거나 끓을 때 끊어지는 것은 분자와 분자 사이의 힘입니다. 분자 안의 공유 결합은 그대로 남습니다. 물이 수증기가 될 때 O−H 결합이 끊어져 수소와 산소로 갈라지는 것이 아닙니다. 물 분자끼리의 인력이 끊깁니다. 그래서 분자성 물질의 녹는점·끓는점은 공유 결합 에너지가 아니라 <strong>분자 간 힘</strong>의 세기를 나타냅니다. 이온 결정과 공유 결정은 상태 변화 때 화학 결합이 재배열되므로 녹는점이 훨씬 높습니다.</p>
+<p>분자 간 힘은 세 가지로 구분합니다. 극성 분자에도 분산력은 항상 있고, 그 위에 다른 힘이 더해집니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>힘</th><th>작용하는 분자</th><th>생기는 이유</th><th>세기에 영향을 주는 것</th></tr></thead><tbody><tr><td>분산력</td><td>모든 분자 (무극성 분자 사이의 유일한 힘)</td><td>전자가 순간적으로 치우쳐 순간 쌍극자가 생기고, 이웃 분자에 쌍극자를 유도한다</td><td>전자 수가 많을수록, 접촉 면적이 클수록 크다</td></tr><tr><td>쌍극자·쌍극자 힘</td><td>극성 분자</td><td>영구 쌍극자의 δ+와 δ−가 끌어당긴다</td><td>쌍극자 모멘트가 클수록 크다</td></tr><tr><td>수소 결합</td><td>N, O, F와 직접 결합한 H가 있는 분자</td><td>그 H가 이웃 분자의 N, O, F에 있는 비공유 전자쌍과 강하게 끌어당긴다</td><td>분자 크기가 비슷하면 보통의 쌍극자 힘보다 강하다</td></tr></tbody></table></div>
+<p>수소 결합의 조건은 두 가지를 모두 만족해야 합니다. 첫째, 수소가 전기 음성도가 매우 크고 원자가 작은 N, O, F와 공유 결합하고 있어야 합니다. 둘째, 그 수소가 이웃 분자의 N, O, F의 비공유 전자쌍을 끌어당깁니다. H<sub>2</sub>O, NH<sub>3</sub>, HF, 에탄올(C<sub>2</sub>H<sub>5</sub>OH)은 수소 결합을 합니다. CH<sub>4</sub>, HCl, H<sub>2</sub>S, PH<sub>3</sub>는 수소가 있어도 수소 결합으로 치지 않습니다. Cl, S, P는 이 기준에 들어가지 않습니다. 다이메틸 에터(CH<sub>3</sub>OCH<sub>3</sub>)는 산소가 있지만 그 산소에 수소가 직접 붙어 있지 않아 분자 사이에 수소 결합이 없습니다.</p>
+<p>분자 크기(전자 수, 분자량)가 비슷하면 세기는 대략 <strong>수소 결합 &gt; 쌍극자·쌍극자 힘 &gt; 분산력</strong>입니다. 크기가 많이 다르면 분산력이 역전할 수 있습니다. 아이오딘은 무극성이지만 전자가 많아 끓는점이 극성 분자인 염화 수소보다 높습니다. 비교 전에 분자량이 비슷한지 봅니다.</p>
+<h3>끓는점 경향</h3>
+<ul>
+<li>무극성 분자끼리이고 모양이 비슷하면 분자량이 클수록 분산력이 커서 끓는점이 높습니다. F<sub>2</sub> &lt; Cl<sub>2</sub> &lt; Br<sub>2</sub> &lt; I<sub>2</sub>, CH<sub>4</sub> &lt; C<sub>2</sub>H<sub>6</sub> &lt; C<sub>3</sub>H<sub>8</sub>입니다. 실온에서 F<sub>2</sub>·Cl<sub>2</sub>는 기체, Br<sub>2</sub>는 액체, I<sub>2</sub>는 고체입니다.</li>
+<li>곧은 사슬은 가지가 많은 이성질체보다 접촉 면적이 커서 분산력이 크고, 끓는점이 높은 경향이 있습니다.</li>
+<li>수소 결합을 하는 수소화물은 같은 족의 바로 아래 수소화물보다 분자량이 작은데도 끓는점이 높습니다. H<sub>2</sub>O(100°C)는 H<sub>2</sub>S(약 −60°C)보다 훨씬 높고, HF(약 20°C)는 HCl(약 −85°C)보다 높으며, NH<sub>3</sub>(약 −33°C)는 PH<sub>3</sub>보다 높습니다.</li>
+<li>물·암모니아·플루오린화 수소 사이에서는 물이 가장 높습니다(100°C, HF 약 20°C, NH<sub>3</sub> 약 −33°C). 물 분자는 수소 2개와 비공유 전자쌍 2개를 가져 분자당 수소 결합을 많이 만들 수 있습니다. HF는 수소가 1개이고, NH<sub>3</sub>는 비공유 전자쌍이 1개이며 전기 음성도도 산소보다 작아 수소 결합이 상대적으로 약합니다.</li>
+<li>화학식은 C<sub>2</sub>H<sub>6</sub>O로 같은 에탄올과 다이메틸 에터에서, 에탄올(약 78°C)은 O−H가 있어 수소 결합을 하고 다이메틸 에터(약 −25°C)는 그렇지 않아 끓는점 차이가 큽니다.</li>
+</ul>
+<p>16족 수소화물의 끓는점 그래프는 H<sub>2</sub>O만 위로 튀어 있고, H<sub>2</sub>S부터는 분자량이 커질수록 다시 올라갑니다. 튀어오른 점이 수소 결합이고, 그 아래의 증가는 분산력입니다. 17족에서는 HF가 튀어오르고 HCl, HBr, HI로 가며 다시 오릅니다.</p>
+<p>녹는점도 분자 간 힘이 세면 높아지는 경향이 있지만, 결정 안에서 분자가 얼마나 잘 쌓이는지에도 영향을 받습니다. 화학Ⅰ의 비교 문항은 끓는점으로 분자 간 힘을 묻는 경우가 더 분명합니다.</p>
+<div class="warning-box"><strong>함정:</strong> 끓는점이 높으면 공유 결합이 세다고 설명하면 안 됩니다. 분자성 물질의 끓는점은 분자 간 힘입니다. 또 수소가 들어 있는 모든 분자가 수소 결합을 하는 것은 아닙니다. HCl과 CH<sub>4</sub>에는 수소 결합이 없습니다.</div>
+<div class="study-tip"><strong>TIP:</strong> 끓는점 순서가 분자량 순서와 같으면 분산력으로 설명하고, 분자량이 작은데 끓는점이 유난히 높으면 수소 결합(N·O·F에 붙은 H)을 찾습니다.</div>
+
+<h2>5. 자료를 이렇게 읽는다</h2>
+<h3>구조식·모형</h3>
+<ol>
+<li>중심 원자를 찾고, 그에 붙은 원자 수를 셉니다. 수소는 말단입니다.</li>
+<li>중심의 비공유 전자쌍을 루이스 식으로 구합니다. 원자가 전자에서 결합에 쓴 전자를 빼면 됩니다. 산소가 중심이고 단일 결합이 2개면 비공유 전자쌍은 (6−2)/2 = 2개입니다. 질소가 단일 결합 3개면 (5−3)/2 = 1개입니다.</li>
+<li>다중 결합은 모형에서 막대가 두세 개여도 영역은 1개입니다.</li>
+<li>영역 수로 전자쌍 배치를, 비공유 전자쌍을 뺀 결과로 분자 모양을 적습니다.</li>
+<li>말단 원자가 모두 같고 비공유 전자쌍이 없으며 모양이 직선형·평면 삼각형·정사면체이면 무극성 후보입니다. 비공유 전자쌍이 있어 굽은형·삼각뿔이면 극성 후보입니다.</li>
+</ol>
+<h3>표로 준 전자쌍과 쌍극자</h3>
+<p>표에 중심의 공유 전자쌍 수, 비공유 전자쌍 수, 쌍극자 모멘트만 있는 경우가 있습니다. 공유+비공유로 영역을 정하고 모양을 쓴 뒤, 쌍극자 모멘트가 0인지와 모순되지 않는지 확인합니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>공유</th><th>비공유</th><th>모양</th><th>쌍극자 모멘트가 보통</th></tr></thead><tbody><tr><td>2</td><td>0</td><td>직선형</td><td>말단이 같으면 0</td></tr><tr><td>3</td><td>0</td><td>평면 삼각형</td><td>말단이 같으면 0</td></tr><tr><td>2</td><td>1</td><td>굽은형</td><td>0이 아님</td></tr><tr><td>4</td><td>0</td><td>정사면체</td><td>말단이 같으면 0</td></tr><tr><td>3</td><td>1</td><td>삼각뿔</td><td>0이 아님</td></tr><tr><td>2</td><td>2</td><td>굽은형</td><td>0이 아님</td></tr></tbody></table></div>
+<p>표의 쌍극자 모멘트가 이 예상과 다르면, 말단 원자가 서로 다른 정사면체(CH<sub>3</sub>Cl처럼 극성)인지 다시 봅니다.</p>
+<h3>끓는점·분자량 표</h3>
+<ol>
+<li>분자량이 비슷한 줄끼리 묶습니다. 그 안에서 끓는점이 높은 물질에 수소 결합이나 쌍극자 힘이 있는지 봅니다.</li>
+<li>분자량 순서와 끓는점 순서가 같으면 분산력으로 설명합니다.</li>
+<li>분자량이 더 작은데 끓는점이 높으면, 구조식에서 O−H, N−H, F−H를 찾습니다.</li>
+<li>같은 분자식의 두 물질이면 작용기의 차이(에탄올의 O−H와 에터)를 비교합니다.</li>
+<li>그래프에서 같은 족 수소화물의 끓는점이 가장 가벼운 물질에서만 위로 튀어 있으면 그 점이 수소 결합입니다. 나머지 오르막은 분산력입니다.</li>
+</ol>
+<div class="warning-box"><strong>함정:</strong> 표의 ‘비공유 전자쌍 수’가 분자 전체인지 중심 원자만인지를 제목 칸에서 확인합니다. 물의 중심 산소는 2개이지만, 분자 전체도 이 경우는 2개입니다. 플루오린화 수소는 중심을 어디로 보든 비공유 전자쌍이 플루오린에 3개 있어, 중심을 묻지 않은 문장과 헷갈리기 쉽습니다.</div>
+
+<h2>6. 수능에서 묻는 방식</h2>
+<ol>
+<li><strong>모양</strong>: 중심의 공유 영역과 비공유 전자쌍으로 위 표를 찾아 직선형·굽은형·평면 삼각형·삼각뿔·정사면체 중 하나를 고릅니다. 결합각 109.5°, 120°, 180°와 약 107°, 약 104.5°를 연결합니다.</li>
+<li><strong>극성</strong>: 결합 극성과 분자 극성을 보기가 섞어 두면 각각 판단합니다. CO<sub>2</sub>는 결합은 극성, 분자는 무극성입니다.</li>
+<li><strong>분자 간 힘</strong>: 무극성끼리는 분산력만, 극성끼리는 분산력에 쌍극자 힘을 더하고, N·O·F에 붙은 H가 있으면 수소 결합을 추가합니다. 끓는점이 가장 높은 물질을 고르라면 이 순서로 비교합니다.</li>
+<li><strong>자료 조합</strong>: 모형에서 모양과 극성을 정하고, 별도 표의 끓는점과 모순이 없는지 봅니다. 무극성으로 판정한 물질이 분자량이 비슷한 극성 물질보다 끓는점이 높다면 분자량 차이를 다시 확인합니다.</li>
+</ol>
+<p>ㄱ·ㄴ·ㄷ 보기에서는 “물 분자는 직선형이므로 무극성이다”, “CCl<sub>4</sub>는 극성 결합이 있으므로 극성 분자이다”, “메테인은 수소 결합을 한다”, “끓을 때 공유 결합이 끊어진다” 같은 문장이 걸립니다. 모양, 벡터 합, 수소 결합의 조건, 상태 변화에서 끊기는 힘을 한 문장씩 대입합니다.</p>
+
+<h2>자주 나오는 함정</h2><ul>
+<li><strong>극성 결합이 있으면 분자도 항상 극성이다</strong> — CO<sub>2</sub>, BF<sub>3</sub>, CCl<sub>4</sub>는 결합은 극성일 수 있어도 분자는 무극성입니다.</li>
+<li><strong>정사면체면 항상 무극성이다</strong> — 말단이 모두 같을 때입니다. CH<sub>3</sub>Cl, CH<sub>2</sub>Cl<sub>2</sub>, CHCl<sub>3</sub>는 극성입니다.</li>
+<li><strong>비공유 전자쌍을 빼고 모양을 정한다</strong> — 물을 직선형, 암모니아를 평면 삼각형으로 보게 됩니다. 비공유 전자쌍도 영역을 차지합니다.</li>
+<li><strong>이중 결합을 전자 영역 2개로 센다</strong> — 다중 결합은 방향이 하나라 영역 1개입니다. CO<sub>2</sub>는 직선형입니다.</li>
+<li><strong>NH<sub>3</sub>의 결합각이 120°이다</strong> — 삼각뿔이고 약 107°입니다. 109.5°보다 약간 작습니다.</li>
+<li><strong>끓을 때 분자 안의 공유 결합이 끊어진다</strong> — 분자성 물질은 분자 간 힘이 끊깁니다. 공유 결합은 유지됩니다.</li>
+<li><strong>수소가 있으면 모두 수소 결합이다</strong> — H가 N, O, F와 직접 결합해 있어야 합니다. CH<sub>4</sub>, HCl, H<sub>2</sub>S는 해당하지 않습니다.</li>
+<li><strong>분산력은 무극성 분자에만 있다</strong> — 모든 분자에 있습니다. 극성 분자는 그 위에 쌍극자 힘이나 수소 결합이 더해집니다. 분자량이 훨씬 크면 무극성 분자의 분산력이 작은 극성 분자의 끓는점을 역전할 수 있습니다.</li>
+</ul>
+<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>CO<sub>2</sub>, BF<sub>3</sub>, CH<sub>4</sub>, NH<sub>3</sub>, H<sub>2</sub>O의 분자 모양과 결합각을 정하고, CH<sub>4</sub>·NH<sub>3</sub>·H<sub>2</sub>O의 결합각이 줄어드는 이유를 설명하시오.</summary><div class="example-sol"><p><strong>CO<sub>2</sub>.</strong> 탄소 주위는 이중 결합 영역 2개, 비공유 전자쌍 0개입니다. <strong>직선형, 180°</strong>입니다.</p>
+<p><strong>BF<sub>3</sub>.</strong> 붕소 주위는 단일 결합 3개, 비공유 전자쌍 0개입니다. <strong>평면 삼각형, 120°</strong>입니다. 붕소는 전자 6개로 옥텟이 아닙니다.</p>
+<p><strong>CH<sub>4</sub>.</strong> 공유 4, 비공유 0. <strong>정사면체형, 109.5°</strong>입니다.</p>
+<p><strong>NH<sub>3</sub>.</strong> 공유 3, 비공유 1. 전자쌍 배치는 정사면체이고 분자 모양은 <strong>삼각뿔형, 약 107°</strong>입니다.</p>
+<p><strong>H<sub>2</sub>O.</strong> 공유 2, 비공유 2. 분자 모양은 <strong>굽은형, 약 104.5°</strong>입니다.</p>
+<p>셋 다 전자 영역은 4개입니다. 비공유 전자쌍이 0 → 1 → 2로 늘면 비공유 전자쌍이 공유 전자쌍을 더 세게 밀어 결합각이 CH<sub>4</sub> &gt; NH<sub>3</sub> &gt; H<sub>2</sub>O 순서로 작아집니다.</p></div></details><details class="example"><summary>CO<sub>2</sub>, H<sub>2</sub>O, CCl<sub>4</sub>, CHCl<sub>3</sub> 중 극성 분자를 모두 고르고, 무극성인 것은 그 이유를 결합 극성과 구분해 설명하시오.</summary><div class="example-sol"><p><strong>CO<sub>2</sub>.</strong> C=O는 전기 음성도 차이 때문에 극성 결합입니다. 분자는 직선형이라 두 쌍극자가 반대 방향으로 취소됩니다. <strong>무극성 분자</strong>입니다.</p>
+<p><strong>H<sub>2</sub>O.</strong> O−H는 극성 결합이고 분자는 굽은형입니다. 쌍극자의 합이 산소 쪽(δ−)으로 남습니다. <strong>극성 분자</strong>입니다.</p>
+<p><strong>CCl<sub>4</sub>.</strong> C−Cl은 극성 결합입니다. 정사면체이고 네 말단이 모두 Cl이라 쌍극자가 취소됩니다. <strong>무극성 분자</strong>입니다.</p>
+<p><strong>CHCl<sub>3</sub>.</strong> 골격은 사면체이지만 말단이 H 하나와 Cl 세 개로 다릅니다. C−Cl 쌍극자가 C−H와 취소되지 않습니다. <strong>극성 분자</strong>입니다.</p>
+<p>극성 분자는 H<sub>2</sub>O와 CHCl<sub>3</sub>입니다. 무극성인 CO<sub>2</sub>와 CCl<sub>4</sub>도 결합 자체는 극성일 수 있습니다.</p></div></details><details class="example"><summary>다음 끓는점을 분자 간 힘으로 설명하시오. H<sub>2</sub>O 100°C(분자량 18), H<sub>2</sub>S 약 −60°C(분자량 34), 에탄올 C<sub>2</sub>H<sub>5</sub>OH 약 78°C(분자량 46), 다이메틸 에터 CH<sub>3</sub>OCH<sub>3</sub> 약 −25°C(분자량 46).</summary><div class="example-sol"><p><strong>1단계.</strong> H<sub>2</sub>O와 H<sub>2</sub>S를 비교합니다. H<sub>2</sub>S의 분자량이 더 큰데 끓는점은 훨씬 낮습니다. 물에는 O−H가 있어 분자 사이에 <strong>수소 결합</strong>이 있고, H<sub>2</sub>S의 황은 수소 결합의 기준(N, O, F)에 들어가지 않습니다. H<sub>2</sub>S는 약한 쌍극자 힘과 분산력입니다.</p>
+<p><strong>2단계.</strong> 에탄올과 다이메틸 에터는 분자식이 모두 C<sub>2</sub>H<sub>6</sub>O라 분자량이 같습니다. 에탄올은 산소에 수소가 직접 붙어 수소 결합을 합니다. 에터는 산소가 탄소에만 연결되어 분자 사이에 수소 결합이 없고, 극성에 따른 쌍극자 힘과 분산력만 있습니다.</p>
+<p><strong>3단계.</strong> 그래서 끓는점은 에탄올이 약 78°C, 에터가 약 −25°C로 차이 납니다. 분자량이 같은데 끓는점이 크게 다르면 수소 결합의 유무를 구조식에서 찾으면 됩니다.</p>
+<p>물의 100°C가 에탄올의 78°C보다 높은 것은, 물 분자가 작고 수소 결합을 분자당 더 효율적으로 만들기 때문입니다. 이 비교는 분자량이 다르므로 ‘무조건 수소 결합이면 같다’로 두지 않습니다.</p></div></details><details class="example"><summary>중심 원자에 대한 자료이다. W는 공유 전자쌍 4, 비공유 0, 쌍극자 모멘트 0. X는 공유 3, 비공유 1, 쌍극자 모멘트 있음. Y는 공유 2, 비공유 2, 쌍극자 모멘트 있음. Z는 공유 전자 영역 2, 비공유 0, 쌍극자 모멘트 0. 각 분자의 모양을 정하고, 분자량이 비슷할 때 수소 결합을 할 수 있는 후보를 고르시오.</summary><div class="example-sol"><p><strong>W.</strong> 영역 4, 비공유 0 → <strong>정사면체형</strong>. 쌍극자 모멘트 0은 말단이 모두 같은 경우(CH<sub>4</sub>, CCl<sub>4</sub>)와 맞습니다. 무극성입니다.</p>
+<p><strong>X.</strong> 영역 4, 비공유 1 → <strong>삼각뿔형</strong>. 극성입니다. NH<sub>3</sub>처럼 중심에 N−H가 있으면 수소 결합을 할 수 있습니다.</p>
+<p><strong>Y.</strong> 영역 4, 비공유 2 → <strong>굽은형</strong>. 극성입니다. H<sub>2</sub>O처럼 O−H이면 수소 결합을 할 수 있습니다. 결합각은 약 104.5°로, X의 약 107°보다 작습니다.</p>
+<p><strong>Z.</strong> 영역 2, 비공유 0 → <strong>직선형</strong>. 쌍극자가 0이면 CO<sub>2</sub>처럼 양 끝이 같은 무극성 분자입니다. 수소 결합의 조건(N·O·F에 붙은 H)이 이 자료만으로는 없고, 무극성 직선형 분자로는 해당하지 않습니다.</p>
+<p>분자량이 비슷하면 끓는점은 수소 결합이 가능한 극성 분자 X·Y가 W·Z보다 높기 쉽습니다. X와 Y 중에서는 물처럼 수소 결합을 여러 방향으로 만드는 Y 유형이 더 높은 경우가 많습니다. 실제 물질 이름이 주어지면 O−H, N−H를 확인한 뒤에 순서를 확정합니다.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3>
+<p>전자쌍은 서로 싫어해서 <strong>가능한 한 멀리</strong> 떨어집니다. 그 자리 중에서 원자가 있는 곳만 이으면 분자 모양이 되고, 전하가 한쪽으로 남으면 극성 분자입니다.</p>
+<ul>
+<li>비공유 전자쌍도 자리를 차지합니다. 물이 꺾여 있는 이유입니다.</li>
+<li>곧고, 평면에서 대칭이고, 정사면체에서 끝이 모두 같으면 쌍극자는 상쇄됩니다.</li>
+<li>끓는점은 분자 사이의 힘입니다. N·O·F에 붙은 수소가 있으면 그 힘이 특히 셉니다.</li>
+</ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>구조 자료의 순서는 (1) 중심과 말단을 나누고, (2) 다중 결합을 영역 1개로 묶어 공유 영역 수를 구하고, (3) 비공유 전자쌍을 더해 전자쌍 배치를 정하고, (4) 비공유를 제외한 원자 배치로 분자 모양과 결합각을 적고, (5) 결합 쌍극자의 벡터 합으로 분자 극성을 판정합니다. ‘전자쌍 배치’와 ‘분자 모양’을 답란에 맞게 고릅니다.</p>
+<p>끓는점 자료는 (1) 분자량이 비슷한 집단으로 나누고, (2) 구조식에서 O−H, N−H, F−H를 찾아 수소 결합을 표시하고, (3) 없으면 쌍극자 모멘트가 0인지 보아 쌍극자 힘과 분산력을 구분하고, (4) 분자량 순서와 끓는점 순서가 어긋난 물질만 따로 설명합니다. 같은 족 수소화물 그래프에서는 가장 가벼운 분자가 위로 벗어난 점만 수소 결합, 나머지 증가분은 분산력입니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>분자 모양과 분자 간 힘을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0d9488","prompt":"분자 모양과 분자 간 힘을 짝지으세요.","pairs":[{"term":"정사면체형","def":"공유 4, 비공유 0, 109.5°"},{"term":"삼각뿔형","def":"공유 3쌍과 비공유 1쌍"},{"term":"굽은형","def":"공유 2쌍과 비공유 전자쌍"},{"term":"수소 결합","def":"N·O·F에 결합한 H의 인력"},{"term":"분산력","def":"모든 분자에 있는 순간 쌍극자 힘"},{"term":"무극성 분자","def":"쌍극자 모멘트의 합이 0"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d9488","questions":[{"q":"중심 원자에 공유 전자쌍 2개, 비공유 전자쌍 2개인 분자의 모양은?","choices":["직선형","굽은형","평면 삼각형","정사면체형"],"answer":1},{"q":"CO₂ 분자가 무극성인 이유로 옳은 것은?","choices":["직선형이라 결합 쌍극자가 서로 취소된다","C=O 결합 자체가 무극성이다","탄소와 산소의 전기 음성도가 같다","고체 상태에서만 존재하기 때문이다"],"answer":0},{"q":"분자량이 비슷할 때 끓는점을 가장 높이기 쉬운 분자 간 힘은?","choices":["분산력만 작용할 때","쌍극자·쌍극자 힘","세 경우가 항상 같다","수소 결합"],"answer":3},{"q":"CH₄, NH₃, H₂O의 결합각이 큰 것부터 나열하면?","choices":["H₂O, NH₃, CH₄","NH₃, CH₄, H₂O","CH₄, NH₃, H₂O","CH₄, H₂O, NH₃"],"answer":2},{"q":"다음 중 분자 사이에 수소 결합을 하는 물질은?","choices":["CH₄","H₂O","HCl","H₂S"],"answer":1}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 화학Ⅰ 전 시험지에서 이 파트로 분류된 <strong>61문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:k6">📝 분자의 구조와 성질 모아 풀기 →</a></p>
+<div class="pager"><a href="05-bond.html">← 화학 결합</a><a href="07-equilibrium.html">동적 평형 →</a></div>
+</main></div>
+</body></html>
