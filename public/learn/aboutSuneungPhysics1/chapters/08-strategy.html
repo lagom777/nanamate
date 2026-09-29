@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>실전 총정리 — 수능 물리학Ⅰ</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>물리학Ⅰ 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li><a href="01-forces.html">1. 힘과 운동</a></li>
+<li><a href="02-energy-heat.html">2. 에너지와 열</a></li>
+<li><a href="03-spacetime.html">3. 시간과 공간</a></li>
+<li><a href="04-matter.html">4. 물질의 구조와 성질</a></li>
+<li><a href="05-electromagnetism.html">5. 전기와 자기</a></li>
+<li><a href="06-waves.html">6. 파동의 성질과 활용</a></li>
+<li><a href="07-duality.html">7. 빛과 물질의 이중성</a></li>
+<li><a href="08-strategy.html" style="color:var(--accent);font-weight:600;">8. 실전 총정리</a></li>
+<li><a href="../motion.html">🎬 모션 노트</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>실전 총정리</h1><p class="authors">Part 8 · 실전</p><p class="affiliation">출제 비중 · 시간 배분 · 공식 · 함정 문장</p></header>
+
+<p>파트별 학습을 마쳤다면 이 장에서 전체 지도를 그립니다. 출제 비중 표는 실제 시험지 데이터로 계산한 값입니다.</p>
+<h2>시험 뼈대</h2>
+<p>물리학Ⅰ은 <strong>20문항 50점, 30분</strong>입니다. 2점 문항 10개(20점)와 3점 문항 10개(30점)로 구성됩니다. 3점은 최근 16회 모두 정확히 10개였고, 앞 10문항에 평균 4.5개, 뒤 10문항에 평균 5.5개가 흩어져 있어 <em>번호로 난이도를 짐작할 수 없습니다</em>. 문항 1개당 평균 1.5분이라 <em>계산을 길게 하면 시간이 모자랍니다</em>. 식을 세우기 전에 그림에서 방향·부호·표의 비를 정리해 짧게 푸는 습관이 필요합니다.</p>
+<h2>파트별 출제 비중</h2>
+<div class="tbl-wrap"><table><thead><tr><th>파트</th><th>회당 문항</th><th>회당 배점</th><th>회차별 범위</th></tr></thead><tbody><tr><td><a href="01-forces.html">힘과 운동</a></td><td>5.1</td><td>13.3점</td><td>4~6</td></tr><tr><td><a href="02-energy-heat.html">에너지와 열</a></td><td>1.9</td><td>4.4점</td><td>1~3</td></tr><tr><td><a href="03-spacetime.html">시간과 공간</a></td><td>2.1</td><td>4.8점</td><td>2~3</td></tr><tr><td><a href="04-matter.html">물질의 구조와 성질</a></td><td>1.9</td><td>4.9점</td><td>1~2</td></tr><tr><td><a href="05-electromagnetism.html">전기와 자기</a></td><td>4.1</td><td>10.6점</td><td>3~5</td></tr><tr><td><a href="06-waves.html">파동의 성질과 활용</a></td><td>3.9</td><td>9.4점</td><td>3~4</td></tr><tr><td><a href="07-duality.html">빛과 물질의 이중성</a></td><td>1.1</td><td>2.6점</td><td>1~2</td></tr></tbody></table></div>
+<p>표는 최근 16회 실제 시험지의 자동 분류 결과입니다. <strong>힘과 운동 + 전기와 자기 + 파동</strong> 세 파트가 전체의 약 3분의 2를 차지합니다.</p>
+<h2>시간 배분 예시</h2>
+<div class="tbl-wrap"><table><thead><tr><th>구간</th><th>문항</th><th>권장 시간</th><th>요령</th></tr></thead><tbody><tr><td>앞부분</td><td>1~10번</td><td>약 10분</td><td>개념 문항 위주. 함정 문장을 보기에서 바로 걸러내기</td></tr><tr><td>중반</td><td>11~17번</td><td>약 12분</td><td>그래프·표 결합. 조건을 식 하나로 정리한 뒤 계산</td></tr><tr><td>후반</td><td>18~20번</td><td>약 8분</td><td>3점 킬러. 막히면 표시하고 마지막에 복귀</td></tr></tbody></table></div>
+<h2>유형별 접근</h2>
+<ul><li><strong>ㄱ·ㄴ·ㄷ 보기 판별</strong>: 보기 하나씩 독립적으로 참/거짓을 먼저 표시하고 선택지를 조합합니다. 확실한 보기 하나로 선택지를 절반 이상 줄일 수 있습니다.</li><li><strong>그래프 읽기</strong>: 축의 이름과 단위, 기울기·넓이가 무엇을 뜻하는지 <em>축부터</em> 읽습니다.</li><li><strong>조건 표(실험 결과)</strong>: 표의 빈칸 ㉠·㉡은 다른 칸과의 <strong>비율 관계</strong>로 채웁니다.</li><li><strong>보존량</strong>: 운동량·역학적 에너지·자기 선속 중 무엇이 보존되고 무엇이 변하는지 먼저 정합니다.</li></ul>
+<h2>전 파트 공식 총정리</h2>
+<div class="tbl-wrap"><table><thead><tr><th>파트</th><th>핵심 식·관계</th></tr></thead><tbody><tr><td>힘과 운동</td><td>v = v₀ + at · s = v₀t + ½at² · F = ma · Δp = FΔt · p 보존</td></tr><tr><td>에너지와 열</td><td>E = K + U 보존 · Q = ΔU + W · e = W/Q고</td></tr><tr><td>시간과 공간</td><td>Δt = γΔt₀ · L = L₀/γ · E = Δmc²</td></tr><tr><td>물질의 구조</td><td>Eₙ = −13.6/n² eV · hf = |E_i − E_f| · λ(nm) = 1240/E(eV)</td></tr><tr><td>전기와 자기</td><td>F = kq₁q₂/r² · B ∝ I/r · Φ = BA cosθ · ε = −NΔΦ/Δt</td></tr><tr><td>파동</td><td>v = fλ · n₁sinθ₁ = n₂sinθ₂ · 경로차 mλ(보강)</td></tr><tr><td>이중성</td><td>K = hf − W · λ = h/p</td></tr></tbody></table></div>
+<h2>함정 문장 TOP 10</h2>
+<ol><li>최고점에서 가속도가 0이다.</li><li>비탄성 충돌에서 운동 에너지가 보존된다.</li><li>작용·반작용을 한 물체의 힘의 평형으로 읽기.</li><li>단열 팽창에서 열을 흡수한다.</li><li>운동하는 쪽의 시간이 항상 고유 시간이다.</li><li>n형 반도체는 음전하를 띤다.</li><li>선속이 크면 유도 전류가 크다(변화율이 핵심).</li><li>매질이 바뀌면 파동의 진동수가 변한다.</li><li>빛의 세기가 크면 광전자의 최대 운동 에너지가 커진다.</li><li>정지한 전하가 자기력을 받는다.</li></ol>
+<h2>오답 노트 요령</h2>
+<p>정답이 아니라 <strong>내가 고른 함정 문장</strong>을 적습니다. 풀어보기 페이지에서 틀린 문항은 자동으로 오답 노트에 쌓이니, 주말에 <em>“틀린 문제 다시 풀기”</em>로 한 번에 복습하세요. 파트별 정답률도 채점 결과에 나오므로 약한 파트를 골라 모아 풀기로 바로 이어 갈 수 있습니다.</p>
+
+
+
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>물리학Ⅰ은 <strong>그림 읽기 시험</strong>입니다. 식은 적게 외우고, 그림에서 방향·부호·비율을 먼저 정리하세요.</p>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>3점 문항은 “표 + 그래프 + 조건 3개”가 하나의 문항에 묶여 나옵니다. 조건을 식으로 바꾸기 전에 <strong>미지수를 하나(예: m, v₀, 시간 단위 t₀)로 통일</strong>하면 계산이 절반으로 줄어듭니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>유형과 접근을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0284c7","prompt":"유형과 접근을 짝지으세요.","pairs":[{"term":"ㄱㄴㄷ 보기","def":"보기별로 참/거짓을 먼저 표시"},{"term":"그래프","def":"축부터 읽기"},{"term":"조건 표","def":"빈칸은 비율로 채우기"},{"term":"보존량","def":"무엇이 보존되는지 먼저 정하기"},{"term":"3점 킬러","def":"막히면 표시하고 마지막에"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0284c7","questions":[{"q":"물리학Ⅰ 시험의 문항 수와 시간은?","choices":["20문항 30분","30문항 50분","20문항 40분","25문항 30분"],"answer":0},{"q":"3점 문항은 전체 몇 개인가?","choices":["5개","8개","10개","12개"],"answer":2},{"q":"표의 ㉠, ㉡을 채우는 가장 좋은 방법은?","choices":["찍기","다른 칸과의 비율 관계","마지막에 계산","생략"],"answer":1},{"q":"오답 노트에 적어야 할 것은?","choices":["정답 번호","내가 고른 함정 문장","풀이 시간","점수"],"answer":1},{"q":"가장 먼저 읽어야 하는 그래프의 부분은?","choices":["곡선 모양","축의 이름과 단위","격자","제목만"],"answer":1}]};</script>
+<h2>실전으로 풀어보기</h2><p><a class="cta" href="../practice.html">📝 수능 풀어보기 →</a></p>
+<div class="pager"><a href="07-duality.html">← 빛과 물질의 이중성</a><a href="../practice.html">수능 풀어보기 →</a></div>
+</main></div>
+</body></html>

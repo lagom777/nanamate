@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>파동의 성질과 활용 — 수능 물리학Ⅰ</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>물리학Ⅰ 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li><a href="01-forces.html">1. 힘과 운동</a></li>
+<li><a href="02-energy-heat.html">2. 에너지와 열</a></li>
+<li><a href="03-spacetime.html">3. 시간과 공간</a></li>
+<li><a href="04-matter.html">4. 물질의 구조와 성질</a></li>
+<li><a href="05-electromagnetism.html">5. 전기와 자기</a></li>
+<li><a href="06-waves.html" style="color:var(--accent);font-weight:600;">6. 파동의 성질과 활용</a></li>
+<li><a href="07-duality.html">7. 빛과 물질의 이중성</a></li>
+<li><a href="08-strategy.html">8. 실전 총정리</a></li>
+<li><a href="../motion.html">🎬 모션 노트</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>파동의 성질과 활용</h1><p class="authors">Part 6 · Ⅲ. 파동과 정보통신</p><p class="affiliation">파동의 요소 · 굴절과 전반사 · 전자기파 · 간섭</p></header>
+<div class="stat-row"><div class="stat"><b>3.9</b><span>회당 문항 수</span></div><div class="stat"><b>9.4점</b><span>회당 배점</span></div><div class="stat"><b>3~4</b><span>회차별 범위</span></div><div class="stat"><b>63</b><span>최근 16회 누적</span></div></div>
+<p class="stat-note">수능 2022~2026학년도 + 6·9월 모의평가 16회(320문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>회당 3~4문항입니다. 주제는 네 가지이고 각각 <strong>그림을 직접 그려 놓고 푸는 유형</strong>입니다. 파동 그래프 두 종류 구별, 굴절 시 <em>변하는 것과 변하지 않는 것</em>, 전반사 조건, 두 파원 간섭의 경로차 계산이 그것입니다.</p>
+<h2>1. 파동의 요소</h2>
+<div class="formula">v = fλ  (속력 = 진동수 × 파장)<br>T = 1/f</div>
+<ul><li><strong>진동수 f</strong>는 파원이 정하고, <strong>속력 v</strong>는 매질이 정합니다. 그래서 매질이 바뀌면 f는 그대로, v와 λ가 함께 변합니다.</li><li>횡파(빛·물결)는 진동 방향이 진행 방향에 수직, 종파(소리)는 나란합니다. 소리는 <em>매질이 있어야</em> 전달되고, 전자기파는 진공에서도 전달됩니다.</li></ul>
+<h3>두 그래프를 구별하기</h3>
+<div class="tbl-wrap"><table><thead><tr><th>그래프</th><th>가로축</th><th>읽는 것</th></tr></thead><tbody><tr><td>변위–위치</td><td>위치 x</td><td>파장 λ, 특정 순간의 모양. 진행 방향으로 파형을 조금 밀면 다음 순간 모양</td></tr><tr><td>변위–시간</td><td>시간 t</td><td>주기 T, 한 점의 진동. 이 한 점의 다음 진동 방향</td></tr></tbody></table></div>
+<h2>2. 굴절</h2>
+<div class="formula">n = c/v (굴절률)<br>스넬: n<sub>1</sub> sinθ<sub>1</sub> = n<sub>2</sub> sinθ<sub>2</sub>  ⇔  sinθ<sub>1</sub>/sinθ<sub>2</sub> = v<sub>1</sub>/v<sub>2</sub> = λ<sub>1</sub>/λ<sub>2</sub></div>
+<ul><li>굴절률이 큰 매질에서 빛이 느려지고 파장이 짧아지며, 경계에서 <strong>법선 쪽으로</strong> 꺾입니다.</li><li>진동수는 변하지 않습니다. 물결파도 수심이 얕아지면 v·λ가 줄어듭니다.</li></ul>
+<h2>3. 전반사와 광통신</h2>
+<ul><li>굴절률이 <strong>큰 매질 → 작은 매질</strong>로 갈 때, 입사각이 임계각 이상이면 전반사가 일어납니다: sinθ<sub>c</sub> = n<sub>작</sub> / n<sub>큰</sub>.</li><li>광섬유는 굴절률이 큰 코어를 작은 클래딩이 감싸 전반사로 빛 신호를 멀리 보냅니다(광통신, 내시경).</li></ul>
+<h2>4. 전자기파</h2>
+<div class="tbl-wrap"><table><thead><tr><th>종류 (파장 긴 → 짧, 진동수·에너지 작은 → 큰)</th><th>이용</th></tr></thead><tbody><tr><td>라디오파</td><td>라디오·TV 방송, 통신</td></tr><tr><td>마이크로파</td><td>전자레인지, 레이더, 휴대전화</td></tr><tr><td>적외선</td><td>열화상 카메라, 리모컨</td></tr><tr><td>가시광선</td><td>시각, 광통신</td></tr><tr><td>자외선</td><td>살균, 위조지폐 판별</td></tr><tr><td>X선</td><td>의료 영상, 공항 검색</td></tr><tr><td>감마선</td><td>암 치료, 살균</td></tr></tbody></table></div>
+<p>진공에서 모든 전자기파의 속력은 c = 3×10⁸ m/s로 같습니다. <strong>정보 통신</strong>에서는 안테나로 전자기파를 송수신하고, 광섬유로 빛 신호를, 무선 충전에는 전자기 유도를 이용합니다.</p>
+<h2>5. 파동의 간섭</h2>
+<p>두 파원 S<sub>1</sub>, S<sub>2</sub>에서 나온 파동이 만나면 <strong>경로차 Δ</strong>에 따라 결정됩니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>두 파원의 위상</th><th>보강 간섭</th><th>상쇄 간섭</th></tr></thead><tbody><tr><td>같음</td><td>Δ = mλ (m = 0, 1, 2, …)</td><td>Δ = (m + ½)λ</td></tr><tr><td>반대</td><td>Δ = (m + ½)λ</td><td>Δ = mλ</td></tr></tbody></table></div>
+<ul><li>물결파 사진(마루선·골선)에서는 <strong>마루와 마루(또는 골과 골)가 만나는 곳이 보강</strong>, 마루와 골이 만나는 곳이 상쇄입니다.</li><li>이중 슬릿 무늬 간격 Δx = λL/d: 파장이 길수록, 스크린이 멀수록, 슬릿 간격이 좁을수록 넓어집니다.</li><li>상쇄 간섭 지점에서도 <em>에너지가 사라지는 것이 아니라</em> 다른 곳으로 분배됩니다(노이즈 캔슬링).</li></ul>
+<h2>모션으로 보기</h2>
+<p>이 파트의 개념을 움직이는 그림으로 다시 확인합니다.</p>
+<p><a class="cta sm" href="../motion.html#s14">🎬 파동의 요소와 진행</a> <a class="cta sm" href="../motion.html#s15">🎬 빛의 굴절과 전반사</a> <a class="cta sm" href="../motion.html#s16">🎬 전자기파의 종류와 활용</a> <a class="cta sm" href="../motion.html#s17">🎬 파동의 간섭</a></p>
+<h2>자주 나오는 함정</h2><ul><li><strong>매질이 바뀌면 진동수가 바뀐다</strong> — 진동수는 그대로입니다.</li><li><strong>전반사는 굴절률이 작은 매질에서 큰 매질로 갈 때</strong>도 일어난다 — 큰 → 작은 방향에서만.</li><li><strong>변위–시간 그래프에서 파장을 읽는다</strong> — 가로축이 시간이면 주기만 읽습니다.</li><li><strong>소리도 진공을 통과한다</strong>는 보기 — 종파(소리)는 매질이 필수입니다.</li><li>두 파원이 <em>반대 위상</em>이면 보강·상쇄 조건이 뒤집힙니다. 파원 위상 조건을 문제에서 확인하세요.</li><li>전자기파 중 파장이 가장 긴 것이 속력이 가장 빠르다 — 진공에서는 모두 같습니다.</li></ul>
+<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>주기가 0.5 s이고 파장이 2 m인 파동의 속력은?</summary><div class="example-sol"><p>f = 1/T = 2 Hz. v = fλ = 2 × 2 = <strong>4 m/s</strong>.</p></div></details><details class="example"><summary>공기(n = 1)에서 굴절률 √2인 유리로 45°로 입사한 빛의 굴절각은?</summary><div class="example-sol"><p>1 · sin45° = √2 · sinθ<sub>2</sub> → sinθ<sub>2</sub> = (√2/2)/√2 = 1/2 → <strong>θ<sub>2</sub> = 30°</strong>. 굴절률이 크므로 법선 쪽으로 꺾였습니다.</p></div></details><details class="example"><summary>광섬유 코어의 굴절률이 1.5, 클래딩이 1.2일 때 임계각의 사인값은?</summary><div class="example-sol"><p>sinθ<sub>c</sub> = n<sub>작</sub>/n<sub>큰</sub> = 1.2/1.5 = <strong>0.8</strong> (θ<sub>c</sub> ≈ 53°). 입사각이 이보다 크면 전반사합니다.</p></div></details><details class="example"><summary>같은 위상으로 진동하는 두 파원 S₁, S₂의 파장이 4 cm다. 점 P까지 거리가 S₁에서 20 cm, S₂에서 28 cm일 때 P에서의 간섭은?</summary><div class="example-sol"><p>경로차 = 28 − 20 = 8 cm = 2λ → <strong>보강 간섭</strong>(Δ = mλ, m = 2).</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>파동이 다른 물질로 들어가면 <strong>속도와 파장은 변하고, 진동수(박자)는 그대로</strong>입니다. 두 파동이 만나면 경로차가 파장의 정수배일 때 커지고, 반 파장만큼 어긋나면 사라집니다.</p><ul><li>빛은 더 느린 물질 쪽에서 법선에 가까워집니다.</li><li>전자기파는 파장이 짧을수록 에너지가 큽니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>물결파 간섭 문항은 <strong>보강선·상쇄선의 개수를 경로차로 센다</strong>는 발상이 핵심입니다. 두 파원 사이 선분 위에서 경로차는 −d에서 +d까지 연속으로 변하므로, 그 범위 안의 mλ(또는 (m+½)λ) 값의 개수가 보강(상쇄) 지점 수입니다.</p><p>굴절 문항은 <em>v ∝ λ ∝ 1/n</em>을 한 줄로 두고, 그림에서 각도나 파면 간격 중 읽을 수 있는 것을 골라 비를 만듭니다. 파면 간격이 파장입니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>파동 용어와 관계를 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0284c7","prompt":"파동 용어와 관계를 짝지으세요.","pairs":[{"term":"v = fλ","def":"파동의 속력"},{"term":"굴절 시 불변","def":"진동수"},{"term":"전반사 조건","def":"큰 굴절률 → 작은 굴절률, 임계각 이상"},{"term":"같은 위상 보강","def":"경로차 = mλ"},{"term":"적외선 이용","def":"열화상·리모컨"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0284c7","questions":[{"q":"빛이 공기에서 물로 들어갈 때 변하지 않는 것은?","choices":["속력","파장","진동수","굴절각"],"answer":2},{"q":"전반사가 일어나는 방향은?","choices":["굴절률 작은 → 큰","굴절률 큰 → 작은","어느 쪽이든","수직 입사만"],"answer":1},{"q":"같은 위상의 두 파원에서 경로차가 1.5λ이면?","choices":["보강","상쇄","알 수 없음","굴절"],"answer":1},{"q":"진공에서 모든 전자기파의 공통점은?","choices":["파장","진동수","속력","에너지"],"answer":2},{"q":"변위–시간 그래프에서 읽을 수 있는 것은?","choices":["파장","주기","속력","굴절률"],"answer":1}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 물리학Ⅰ 전 시험지에서 이 파트로 분류된 <strong>63문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:p6">📝 파동의 성질과 활용 모아 풀기 →</a></p>
+<div class="pager"><a href="05-electromagnetism.html">← 전기와 자기</a><a href="07-duality.html">빛과 물질의 이중성 →</a></div>
+</main></div>
+</body></html>

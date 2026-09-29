@@ -1,0 +1,101 @@
+/* 수능 풀어보기 플레이어 — 과목 폴더의 styles.css 변수(--bg-card, --text, --accent …)를 그대로 쓴다 */
+#practice-root { --pr-line: var(--border, rgba(128,140,170,.25)); --pr-card: var(--bg-card, #101828); --pr-el: var(--bg-elevated, #182038); --pr-ok: #16a34a; --pr-bad: #dc2626; }
+.pr-bar { position: sticky; top: 0; z-index: 5; display: flex; flex-direction: column; gap: 10px; padding: 12px 14px; margin: 0 0 18px; background: var(--pr-card); border: 1px solid var(--pr-line); border-radius: 12px; }
+.pr-bar-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pr-bar select { font: inherit; font-size: 14px; color: var(--text); background: var(--pr-el); border: 1px solid var(--pr-line); border-radius: 8px; padding: 8px 10px; max-width: 100%; min-width: 0; flex: 1 1 260px; }
+.pr-count { font-size: 13px; color: var(--text-dim); display: flex; align-items: center; gap: 6px; }
+.pr-count select { flex: 0 0 auto; min-width: 0; }
+.pr-segs { display: inline-flex; border: 1px solid var(--pr-line); border-radius: 8px; overflow: hidden; }
+.pr-seg { font: inherit; font-size: 13px; padding: 7px 14px; border: 0; background: transparent; color: var(--text-dim); cursor: pointer; }
+.pr-seg[aria-pressed="true"] { background: var(--accent); color: #fff; }
+.pr-seg:disabled { opacity: .4; cursor: not-allowed; }
+.pr-timer { font: 13px var(--font-mono, monospace); padding: 7px 12px; border: 1px solid var(--pr-line); border-radius: 8px; background: transparent; color: var(--text-dim); cursor: pointer; }
+.pr-timer.on { color: var(--accent); border-color: var(--accent); }
+.pr-prog { margin-left: auto; font: 12px var(--font-mono, monospace); color: var(--text-mute, var(--text-dim)); }
+
+.pr-body { display: grid; grid-template-columns: minmax(0, 1fr) 250px; gap: 20px; align-items: start; }
+.pr-list { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.pr-empty { padding: 30px; text-align: center; color: var(--text-dim); border: 1px dashed var(--pr-line); border-radius: 12px; }
+
+.pr-card { background: var(--pr-card); border: 1px solid var(--pr-line); border-left-width: 4px; border-radius: 12px; padding: 14px 14px 16px; scroll-margin-top: 130px; }
+.pr-card.ok { border-left-color: var(--pr-ok); }
+.pr-card.bad { border-left-color: var(--pr-bad); }
+.pr-card.skip { border-left-color: #9ca3af; }
+.pr-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.pr-no { display: grid; place-items: center; min-width: 30px; height: 30px; padding: 0 8px; border-radius: 15px; background: var(--accent); color: #fff; font: 700 14px var(--font-mono, monospace); }
+.pr-meta { font-size: 13px; color: var(--text-dim); }
+.pr-tag { margin-left: auto; font-size: 12px; padding: 3px 10px; border: 1px solid var(--pr-line); border-radius: 999px; color: var(--accent); text-decoration: none; }
+.pr-tag:hover { background: var(--accent-glow, transparent); }
+.pr-paper { background: #fff; border-radius: 8px; padding: 10px 12px; overflow-x: auto; }
+.pr-img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.pr-choices { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 12px; }
+.pr-ch { font: 500 20px var(--font-body, sans-serif); padding: 10px 0; border: 1px solid var(--pr-line); border-radius: 10px; background: var(--pr-el); color: var(--text); cursor: pointer; transition: transform .1s, background .15s; }
+.pr-ch:hover { border-color: var(--accent); }
+.pr-ch:active { transform: scale(.96); }
+.pr-ch.sel { background: var(--accent); border-color: var(--accent); color: #fff; }
+.pr-ch.right { background: var(--pr-ok); border-color: var(--pr-ok); color: #fff; }
+.pr-ch.wrong { background: var(--pr-bad); border-color: var(--pr-bad); color: #fff; }
+
+.pr-explain { margin-top: 12px; padding: 12px 14px; border-radius: 10px; background: var(--pr-el); font-size: 14px; line-height: 1.7; }
+.pr-verdict { margin: 0 0 6px; color: var(--text); }
+.pr-exp-body { color: var(--text-dim); }
+.pr-exp-body.has { color: var(--text); }
+.pr-exp-body p { margin: 0 0 8px; color: inherit; }
+.pr-exp-body ol, .pr-exp-body ul { margin: 4px 0 8px; padding-left: 20px; }
+.pr-exp-body .k { color: var(--accent); font-weight: 600; }
+.pr-exp-body a { color: var(--accent); }
+
+.pr-omr { position: sticky; top: 130px; background: var(--pr-card); border: 1px solid var(--pr-line); border-radius: 12px; padding: 14px; max-height: calc(100vh - 150px); overflow-y: auto; }
+.pr-omr h3 { margin: 0 0 10px !important; font-size: 14px !important; color: var(--text) !important; }
+.pr-grid { display: flex; flex-direction: column; gap: 3px; }
+.pr-row { display: grid; grid-template-columns: 28px repeat(5, 1fr); gap: 4px; align-items: center; padding: 2px 4px; border-radius: 6px; }
+.pr-row.ok { background: rgba(22,163,74,.14); }
+.pr-row.bad { background: rgba(220,38,38,.14); }
+.pr-row.skip { background: rgba(156,163,175,.14); }
+.pr-rn { font: 600 12px var(--font-mono, monospace); color: var(--text-dim); text-decoration: none; text-align: center; }
+.pr-b { font: 12px var(--font-mono, monospace); height: 24px; border-radius: 12px; border: 1px solid var(--pr-line); background: transparent; color: var(--text-dim); cursor: pointer; padding: 0; }
+.pr-b.sel { background: var(--text); border-color: var(--text); color: var(--pr-card); }
+.pr-b.right { box-shadow: 0 0 0 2px var(--pr-ok); }
+.pr-submit { width: 100%; margin-top: 12px; padding: 12px; border: 0; border-radius: 10px; background: var(--accent); color: #fff; font: 600 14px var(--font-body, sans-serif); cursor: pointer; }
+.pr-submit:hover { filter: brightness(1.08); }
+.pr-result { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--pr-line); }
+.pr-score { font-size: 15px; color: var(--text-dim); }
+.pr-score b { font: 700 34px var(--font-display, sans-serif); color: var(--accent); }
+.pr-sub { margin: 4px 0 0; font-size: 12.5px; color: var(--text-dim); }
+.pr-parts { list-style: none; margin: 6px 0 0; padding: 0; font-size: 12.5px; color: var(--text-dim); }
+.pr-parts a { color: var(--accent); text-decoration: none; }
+.pr-acts { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+.pr-btn { padding: 9px 10px; border: 1px solid var(--pr-line); border-radius: 8px; background: transparent; color: var(--text); font: 13px var(--font-body, sans-serif); cursor: pointer; }
+.pr-btn:hover { border-color: var(--accent); color: var(--accent); }
+.pr-hist { margin-top: 12px; font-size: 12px; color: var(--text-dim); }
+.pr-hist summary { cursor: pointer; }
+.pr-hrow { padding: 3px 0; border-bottom: 1px dashed var(--pr-line); }
+.pr-src { margin-top: 24px; font-size: 12px; color: var(--text-mute, var(--text-dim)); line-height: 1.6; }
+
+@media (max-width: 900px) {
+  .pr-body { grid-template-columns: 1fr; }
+  .pr-omr { position: static; max-height: none; }
+  .pr-bar { position: static; }
+  .pr-card { scroll-margin-top: 20px; }
+  .pr-ch { font-size: 18px; padding: 12px 0; }
+}
+
+/* light-theme.css 가 button 전체를 파란색 !important 로 덮으므로 플레이어 버튼은 id 로 다시 덮는다 */
+#practice-root button { background: transparent !important; color: var(--text) !important; border: 1px solid var(--pr-line) !important; }
+#practice-root button:hover { background: transparent !important; }
+#practice-root .pr-seg { border: 0 !important; color: var(--text-dim) !important; }
+#practice-root .pr-seg[aria-pressed="true"] { background: var(--accent) !important; color: #fff !important; }
+#practice-root .pr-timer { color: var(--text-dim) !important; }
+#practice-root .pr-timer.on { color: var(--accent) !important; border-color: var(--accent) !important; }
+#practice-root .pr-ch { background: var(--pr-el) !important; }
+#practice-root .pr-ch:hover { border-color: var(--accent) !important; }
+#practice-root .pr-ch.sel { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
+#practice-root .pr-ch.right { background: var(--pr-ok) !important; border-color: var(--pr-ok) !important; color: #fff !important; }
+#practice-root .pr-ch.wrong { background: var(--pr-bad) !important; border-color: var(--pr-bad) !important; color: #fff !important; }
+#practice-root .pr-b { color: var(--text-dim) !important; }
+#practice-root .pr-b.sel { background: var(--text) !important; border-color: var(--text) !important; color: var(--pr-card) !important; }
+#practice-root .pr-b.right { border-color: var(--pr-ok) !important; }
+#practice-root .pr-submit { background: var(--accent) !important; color: #fff !important; border: 0 !important; }
+#practice-root .pr-submit:hover { background: var(--accent) !important; filter: brightness(1.1); }
+#practice-root .pr-btn:hover { border-color: var(--accent) !important; color: var(--accent) !important; }
+.pr-omr h3 { text-transform: none !important; letter-spacing: 0 !important; }

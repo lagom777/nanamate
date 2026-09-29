@@ -9,12 +9,11 @@
 
   // === 과목 색인 (index.html 에서 추출, 정렬 유지) ===
   var SUBJECTS = [
-    {"n": "수능 이과", "e": "CSAT Science Track", "d": "국어 언어·미적분·영어·물리학 I·생명과학 I", "u": "aboutSuneung/index.html", "c": "수능", "a": "#dc2626"},
-    {"n": "수능 국어", "e": "CSAT Korean", "d": "독서 유형, 문학 갈래, 보기 함정", "u": "aboutSuneung/chapters/02-korean-reading.html", "c": "수능", "a": "#b45309"},
-    {"n": "수능 미적분", "e": "CSAT Calculus", "d": "극한·미분·적분·회전체", "u": "aboutSuneung/chapters/04-calc-diff.html", "c": "수능", "a": "#7c3aed"},
-    {"n": "수능 영어", "e": "CSAT English", "d": "듣기 17, 빈칸·순서·삽입·장문", "u": "aboutSuneung/chapters/06-english.html", "c": "수능", "a": "#2563eb"},
-    {"n": "수능 물리학 I", "e": "Physics I", "d": "역학, 파동, 광전 효과, 그래프", "u": "aboutSuneung/chapters/07-phys1.html", "c": "수능", "a": "#0284c7"},
-    {"n": "수능 생명과학 I", "e": "Biology I", "d": "유전 가계도, 항상성, 방어, 생태계", "u": "aboutSuneung/chapters/08-bio1.html", "c": "수능", "a": "#16a34a"},
+    {"n": "수능 국어", "e": "CSAT Korean", "d": "독서 유형, 문학 갈래, 보기 함정", "u": "aboutSuneungKorean/index.html", "c": "수능", "a": "#b45309"},
+    {"n": "수능 미적분", "e": "CSAT Calculus", "d": "극한·미분·적분·회전체", "u": "aboutSuneungCalculus/index.html", "c": "수능", "a": "#7c3aed"},
+    {"n": "수능 영어", "e": "CSAT English", "d": "듣기 17, 빈칸·순서·삽입·장문", "u": "aboutSuneungEnglish/index.html", "c": "수능", "a": "#2563eb"},
+    {"n": "수능 물리학Ⅰ", "e": "CSAT Physics I", "d": "3단원 7파트, 모션 노트, 기출 채점·해설", "u": "aboutSuneungPhysics1/index.html", "c": "수능", "a": "#0284c7"},
+    {"n": "수능 생명과학Ⅰ", "e": "CSAT Biology I", "d": "5단원 8파트, 모션 노트, 기출 채점·해설", "u": "aboutSuneungBio1/index.html", "c": "수능", "a": "#16a34a"},
     {"n": "물리학", "e": "Interactive Physics Lab", "d": "역학~양자역학, 상대성이론까지 3D 시뮬레이션", "u": "aboutPhysics/index.html", "c": "자연과학", "a": "#00d4ff"},
     {"n": "화학", "e": "Molecular Chemistry", "d": "원자~유기화학, 생화학 3D 분자 모델", "u": "aboutChemistry/index.html", "c": "자연과학", "a": "#00e890"},
     {"n": "생물학", "e": "Biology Lab", "d": "세포, DNA, 진화, 생태학 3D 시뮬레이션", "u": "aboutBiology/index.html", "c": "자연과학", "a": "#22c55e"},

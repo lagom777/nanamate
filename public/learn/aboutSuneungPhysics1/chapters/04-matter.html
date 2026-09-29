@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>물질의 구조와 성질 — 수능 물리학Ⅰ</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>물리학Ⅰ 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li><a href="01-forces.html">1. 힘과 운동</a></li>
+<li><a href="02-energy-heat.html">2. 에너지와 열</a></li>
+<li><a href="03-spacetime.html">3. 시간과 공간</a></li>
+<li><a href="04-matter.html" style="color:var(--accent);font-weight:600;">4. 물질의 구조와 성질</a></li>
+<li><a href="05-electromagnetism.html">5. 전기와 자기</a></li>
+<li><a href="06-waves.html">6. 파동의 성질과 활용</a></li>
+<li><a href="07-duality.html">7. 빛과 물질의 이중성</a></li>
+<li><a href="08-strategy.html">8. 실전 총정리</a></li>
+<li><a href="../motion.html">🎬 모션 노트</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>물질의 구조와 성질</h1><p class="authors">Part 4 · Ⅱ. 물질과 전자기장</p><p class="affiliation">원자 모형과 스펙트럼 · 고체의 에너지띠 · 반도체와 다이오드</p></header>
+<div class="stat-row"><div class="stat"><b>1.9</b><span>회당 문항 수</span></div><div class="stat"><b>4.9점</b><span>회당 배점</span></div><div class="stat"><b>1~2</b><span>회차별 범위</span></div><div class="stat"><b>31</b><span>최근 16회 누적</span></div></div>
+<p class="stat-note">수능 2022~2026학년도 + 6·9월 모의평가 16회(320문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>세 덩어리가 각각 <strong>1문항씩</strong> 나오는 파트입니다. 수소 원자의 <em>에너지 준위 전이와 스펙트럼</em>, <em>도체·반도체·절연체의 띠 구조</em>, <em>p–n 접합·LED 회로</em>가 그것입니다. 모두 그림 하나를 정확히 읽으면 풀리는 유형이라 점수 효율이 높습니다.</p>
+<h2>1. 원자 모형</h2>
+<div class="tbl-wrap"><table><thead><tr><th>모형</th><th>내용</th><th>근거 실험</th></tr></thead><tbody><tr><td>톰슨</td><td>양전하 덩어리 속에 전자가 박혀 있음</td><td>음극선 → 전자 발견</td></tr><tr><td>러더퍼드</td><td>원자 중심에 작고 무거운 <strong>원자핵</strong>, 전자는 그 주위</td><td>α 입자 산란 (대부분 통과, 일부 큰 각도로 산란)</td></tr><tr><td>보어</td><td>전자는 <strong>불연속적인 에너지 준위</strong>에서만 원운동, 준위 사이 전이에서 광자 흡수·방출</td><td>수소 원자의 선 스펙트럼</td></tr><tr><td>현대(전자 구름)</td><td>전자의 위치는 확률로만 (오비탈)</td><td>양자 역학</td></tr></tbody></table></div>
+<h2>2. 수소 원자의 에너지 준위와 선 스펙트럼</h2>
+<div class="formula">E<sub>n</sub> = −13.6 / n² eV  (n = 1, 2, 3, …)<br>전이: hf = |E<sub>i</sub> − E<sub>f</sub>| = hc/λ<br>λ(nm) ≈ 1240 / ΔE(eV)</div>
+<ul><li>높은 준위 → 낮은 준위: 광자 <strong>방출</strong>(방출 스펙트럼). 낮은 → 높은: <strong>흡수</strong>(흡수 스펙트럼, 흡수선 위치는 방출선과 같음).</li><li>전이 에너지 차이가 <strong>클수록 진동수가 크고 파장이 짧습니다</strong>.</li></ul>
+<div class="tbl-wrap"><table><thead><tr><th>계열</th><th>도착 준위</th><th>영역</th><th>예</th></tr></thead><tbody><tr><td>라이먼</td><td>n = 1</td><td>자외선</td><td>2→1: 10.2 eV (121.6 nm)</td></tr><tr><td>발머</td><td>n = 2</td><td>가시광선</td><td>3→2: 1.89 eV (656 nm, 붉은색)</td></tr><tr><td>파셴</td><td>n = 3</td><td>적외선</td><td>4→3: 0.66 eV</td></tr></tbody></table></div>
+<p>세 전이 a(3→1), b(3→2), c(2→1)처럼 <strong>에너지가 이어지면 ΔE<sub>a</sub> = ΔE<sub>b</sub> + ΔE<sub>c</sub></strong>이고, 파장으로는 1/λ<sub>a</sub> = 1/λ<sub>b</sub> + 1/λ<sub>c</sub>입니다. 수능은 이 관계를 자주 씁니다.</p>
+<h2>3. 고체의 에너지띠</h2>
+<p>원자가 많이 모이면 준위가 겹치며 띠가 됩니다. 전자가 가득 찬 <strong>원자가 띠</strong>와 그 위의 <strong>전도띠</strong>, 그 사이 <strong>띠 간격</strong>이 성질을 정합니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>구분</th><th>띠 구조</th><th>전기 전도성</th><th>온도가 오르면</th></tr></thead><tbody><tr><td>도체</td><td>전도띠가 부분적으로 채워지거나 원자가 띠와 겹침</td><td>매우 좋음</td><td>저항 증가(전도성 감소)</td></tr><tr><td>반도체</td><td>띠 간격이 작음 (약 1 eV)</td><td>온도·불순물에 따라 변함</td><td>전도성 증가</td></tr><tr><td>절연체</td><td>띠 간격이 큼 (약 5 eV 이상)</td><td>거의 없음</td><td>거의 변화 없음</td></tr></tbody></table></div>
+<h2>4. 반도체와 p–n 접합</h2>
+<ul><li><strong>n형 반도체</strong>: 규소(Si)에 5족 원소(P, As)를 첨가. 남는 전자가 <em>전도띠 바로 아래</em> 준위에 있어 전자가 주된 운반자.</li><li><strong>p형 반도체</strong>: 규소에 3족 원소(B, Ga)를 첨가. 전자가 빈 자리(<em>양공</em>)가 원자가 띠 바로 위에 생겨 양공이 주된 운반자.</li><li>둘 다 전기적으로는 <strong>중성</strong>입니다.</li></ul>
+<h3>다이오드</h3>
+<p>p형에 (+), n형에 (−)를 연결하는 <strong>순방향</strong>에서만 전류가 흐릅니다. 반대인 <strong>역방향</strong>에서는 거의 흐르지 않습니다(정류 작용). 회로 문항은 “전원의 (+)극에서 나온 전류가 다이오드의 p형 쪽으로 들어가는가”만 보면 켜지는 소자를 가릴 수 있습니다.</p>
+<h3>발광 다이오드(LED)</h3>
+<p>순방향에서 전자와 양공이 접합면에서 재결합하며 <strong>띠 간격에 해당하는 에너지의 빛</strong>을 냅니다. 띠 간격이 클수록 진동수가 크고 파장이 짧은(파란색 쪽) 빛이 나옵니다.</p>
+<h2>모션으로 보기</h2>
+<p>이 파트의 개념을 움직이는 그림으로 다시 확인합니다.</p>
+<p><a class="cta sm" href="../motion.html#s8">🎬 원자 모형과 선 스펙트럼</a> <a class="cta sm" href="../motion.html#s9">🎬 고체의 에너지띠</a> <a class="cta sm" href="../motion.html#s10">🎬 반도체와 p–n 접합 다이오드</a></p>
+<h2>자주 나오는 함정</h2><ul><li><strong>발머 계열은 모두 가시광선</strong>이라는 보기 — n = 2로 떨어지는 전이 중 처음 몇 개만 가시광선입니다(계열 극한은 자외선 경계).</li><li><strong>에너지 준위를 양수로 계산</strong> — E<sub>n</sub>은 음수입니다. 전이 에너지는 두 값의 차를 <em>절댓값</em>으로 씁니다.</li><li><strong>n형 반도체가 음전하를 띤다</strong> — 전기적으로 중성이고, 자유 전자가 <em>많을 뿐</em>입니다.</li><li><strong>양공은 실제 입자</strong>라는 보기 — 전자가 빠진 자리를 양(+)전하처럼 다루는 개념입니다.</li><li><strong>온도를 올리면 모든 물질의 전도성이 증가</strong> — 도체는 반대로 감소합니다.</li><li>흡수 스펙트럼의 <strong>흡수선 위치는 방출선과 같은 파장</strong>입니다(다르다는 보기가 함정).</li></ul>
+<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>수소 원자에서 전자가 n = 3에서 n = 2로 전이할 때 방출되는 빛의 에너지와 파장은?</summary><div class="example-sol"><p>E<sub>3</sub> = −13.6/9 = −1.51 eV, E<sub>2</sub> = −13.6/4 = −3.40 eV.</p><p>ΔE = 1.89 eV → λ = 1240 / 1.89 ≈ <strong>656 nm</strong> (가시광선, 붉은색).</p></div></details><details class="example"><summary>수소 원자의 전이 a(3→1), b(3→2), c(2→1)에서 방출되는 빛의 파장을 짧은 순서로 나열하면?</summary><div class="example-sol"><p>ΔE는 a &gt; c &gt; b: a = 12.09 eV, c = 10.2 eV, b = 1.89 eV.</p><p>ΔE가 클수록 파장이 짧으므로 <strong>λ<sub>a</sub> &lt; λ<sub>c</sub> &lt; λ<sub>b</sub></strong>. 또 ΔE<sub>a</sub> = ΔE<sub>b</sub> + ΔE<sub>c</sub>이므로 1/λ<sub>a</sub> = 1/λ<sub>b</sub> + 1/λ<sub>c</sub>입니다.</p></div></details><details class="example"><summary>건전지의 (+)극에서 나온 전류가 LED의 p형 쪽으로 들어가는 회로에서 LED는 켜지는가? 반대로 뒤집으면?</summary><div class="example-sol"><p>(+)극 → p형 → n형 → (−)극이면 <strong>순방향</strong>이므로 켜집니다.</p><p>뒤집으면 (+)극이 n형에 연결되어 <strong>역방향</strong>이므로 전류가 거의 흐르지 않아 꺼집니다.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>원자 속 전자는 “계단(준위)”에서만 설 수 있고, 계단을 <strong>내려올 때 그 높이 차이만큼의 빛</strong>을 냅니다. 높이 차이가 클수록 파장이 짧습니다.</p><ul><li>도체는 전자가 이미 “움직일 자리”가 있고, 절연체는 자리까지 가는 계단이 너무 높습니다.</li><li>다이오드는 <strong>한쪽으로만 열리는 문</strong>입니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>스펙트럼 문항은 준위 그림에 전이 화살표가 여러 개 주어지고, 파장·진동수 크기 비교를 <strong>ΔE의 대소</strong>로 바꾸는 것이 핵심입니다. 화살표 길이(준위 간격)가 그대로 ΔE의 비교 자료입니다. 세 준위 사이 전이에서는 <strong>가장 긴 화살표 = 나머지 두 개의 합</strong>으로 파장·진동수 관계를 세웁니다.</p><p>다이오드 회로는 <em>스위치 상태별로 전류 경로를 새로 그려</em> 각 소자의 방향을 판단합니다. 병렬로 연결된 여러 LED 중 순방향인 것만 켜집니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>반도체·스펙트럼 용어와 뜻을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0284c7","prompt":"반도체·스펙트럼 용어와 뜻을 짝지으세요.","pairs":[{"term":"n형 반도체","def":"5족 첨가, 전자가 운반자"},{"term":"p형 반도체","def":"3족 첨가, 양공이 운반자"},{"term":"순방향","def":"p형에 (+), n형에 (−)"},{"term":"발머 계열","def":"n=2로 전이, 가시광선"},{"term":"띠 간격","def":"원자가 띠와 전도띠 사이"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0284c7","questions":[{"q":"수소 원자에서 전이 에너지가 가장 큰 것은?","choices":["3→2","4→3","2→1","4→2"],"answer":2},{"q":"LED에서 나오는 빛의 에너지는 무엇으로 정해지는가?","choices":["전원 전압","띠 간격","도선 굵기","저항"],"answer":1},{"q":"다이오드에 전류가 흐르는 연결은?","choices":["p형에 (−)","p형에 (+)","n형에 (+)","어느 쪽이든"],"answer":1},{"q":"온도가 올라가면 전도성이 증가하는 것은?","choices":["도체","반도체","둘 다 감소","절연체만"],"answer":1},{"q":"러더퍼드 실험으로 밝혀진 것은?","choices":["전자의 발견","원자핵의 존재","준위의 양자화","중성자"],"answer":1}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 물리학Ⅰ 전 시험지에서 이 파트로 분류된 <strong>31문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:p4">📝 물질의 구조와 성질 모아 풀기 →</a></p>
+<div class="pager"><a href="03-spacetime.html">← 시간과 공간</a><a href="05-electromagnetism.html">전기와 자기 →</a></div>
+</main></div>
+</body></html>

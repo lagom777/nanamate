@@ -5,40 +5,34 @@ export const Route = createFileRoute("/")({ component: Home });
 
 const TRACKS = [
   {
-    href: "/learn/aboutSuneung/index.html",
-    tag: "총람",
-    title: "수능 이과",
-    blurb: "2027 체제, 시간표, 공통+선택. 연습은 각 장 안에 있습니다.",
-  },
-  {
-    href: "/learn/aboutSuneung/chapters/02-korean-reading.html",
+    href: "/learn/aboutSuneungKorean/index.html",
     tag: "국어",
-    title: "국어 언어",
+    title: "수능 국어",
     blurb: "독서 유형과 함정 문장, 문학 갈래와 보기.",
   },
   {
-    href: "/learn/aboutSuneung/chapters/04-calc-diff.html",
+    href: "/learn/aboutSuneungCalculus/index.html",
     tag: "수학",
-    title: "미적분",
+    title: "수능 미적분",
     blurb: "극한·미분·적분. 선택 미적분만 모았습니다.",
   },
   {
-    href: "/learn/aboutSuneung/chapters/06-english.html",
+    href: "/learn/aboutSuneungEnglish/index.html",
     tag: "영어",
     title: "수능 영어",
     blurb: "듣기 17, 빈칸·순서·삽입·장문. 90점이 1등급 선.",
   },
   {
-    href: "/learn/aboutSuneung/chapters/07-phys1.html",
+    href: "/learn/aboutSuneungPhysics1/index.html",
     tag: "탐구",
-    title: "물리학 I",
-    blurb: "역학부터 파동·광전까지. 그래프와 보존량.",
+    title: "수능 물리학Ⅰ",
+    blurb: "7파트 정리, 모션 노트, 기출 16회 채점·해설.",
   },
   {
-    href: "/learn/aboutSuneung/chapters/08-bio1.html",
+    href: "/learn/aboutSuneungBio1/index.html",
     tag: "탐구",
-    title: "생명과학 I",
-    blurb: "유전 가계도, 항상성, 방어, 생태계.",
+    title: "수능 생명과학Ⅰ",
+    blurb: "8파트 정리, 모션 노트, 기출 16회 채점·해설.",
   },
 ];
 
@@ -54,8 +48,8 @@ function Home() {
           국어 · 미적분 · 영어 · 물리 I · 생 I
         </h1>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted">
-          게임을 따로 모아 두지 않습니다. 개념을 읽은 다음, 그 장 아래에서 짝짓기와
-          선택 문제로 확인합니다.{" "}
+          과목마다 파트별로 개념을 읽고, 짝짓기와 선택 문제로 확인한 뒤 실제 기출을
+          풀어 봅니다.{" "}
           <a href="/learn/" className="text-fg underline-offset-2 hover:underline">
             다른 강의 노트
           </a>

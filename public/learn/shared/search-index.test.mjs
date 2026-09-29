@@ -21,7 +21,7 @@ function loadSubjects() {
 function hubHrefs() {
   const html = readFileSync(new URL('./../index.html', import.meta.url), 'utf8');
   const set = new Set();
-  const re = /href="(about[A-Za-z]+\/index\.html)"/g;
+  const re = /href="(about[A-Za-z0-9]+\/index\.html)"/g;
   let m;
   while ((m = re.exec(html)) !== null) set.add(m[1]);
   return set;

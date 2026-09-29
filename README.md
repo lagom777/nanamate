@@ -7,7 +7,7 @@
 
 - **허브** — `index.html` / `public/learn/index.html`
 - **강의 노트** — `aboutAI`, `aboutPsy`, TOEIC, TEPS, …
-- **Lab** — `lab.html` 시그니처 게임
+- **수능 이과** — 과목별 노트 `aboutSuneungKorean` · `Calculus` · `English` · `Physics1` · `Bio1`. 물리학Ⅰ·생명과학Ⅰ은 파트별 정리 + 모션 노트 + 기출 풀어보기(채점·해설). 페이지 생성 `node scripts/generate-suneung-subjects.mjs`, 문항 이미지는 `suneung-exam/` (파이프라인은 `scripts/suneung-exam/README.md`)
 
 ## 실행
 

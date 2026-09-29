@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>유전 정보와 세포 분열 — 수능 생명과학Ⅰ</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>생명과학Ⅰ 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li><a href="01-life.html">1. 생명과학의 이해</a></li>
+<li><a href="02-metabolism.html">2. 사람의 물질대사</a></li>
+<li><a href="03-neuron-muscle.html">3. 자극의 전달과 근수축</a></li>
+<li><a href="04-nervous-homeostasis.html">4. 신경계와 항상성</a></li>
+<li><a href="05-defense.html">5. 방어 작용</a></li>
+<li><a href="06-cell-division.html" style="color:var(--accent);font-weight:600;">6. 유전 정보와 세포 분열</a></li>
+<li><a href="07-human-genetics.html">7. 사람의 유전</a></li>
+<li><a href="08-ecosystem.html">8. 생태계와 상호 작용</a></li>
+<li><a href="09-strategy.html">9. 실전 총정리</a></li>
+<li><a href="../motion.html">🎬 모션 노트</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>유전 정보와 세포 분열</h1><p class="authors">Part 6 · Ⅳ. 유전</p><p class="affiliation">DNA·유전자·염색체 · 세포 주기와 체세포 분열 · 감수 분열 · 핵상과 DNA 상대량</p></header>
+<div class="stat-row"><div class="stat"><b>2.6</b><span>회당 문항 수</span></div><div class="stat"><b>6.1점</b><span>회당 배점</span></div><div class="stat"><b>1~4</b><span>회차별 범위</span></div><div class="stat"><b>42</b><span>최근 16회 누적</span></div></div>
+<p class="stat-note">수능 2022~2026학년도 + 6·9월 모의평가 16회(320문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>이 파트에서 <strong>‘DNA 상대량 표’와 ‘핵상’ 문항</strong>이 매 시험 12~17번대에 3점 문항으로 나옵니다. 처음 보면 어렵지만 <em>규칙이 정해진 퍼즐</em>이라, 시기별 (핵상, DNA 상대량) 표를 외우면 확실한 득점원이 됩니다. 항상 “교차와 돌연변이는 고려하지 않는다”는 조건이 붙습니다.</p>
+<h2>1. DNA · 유전자 · 염색체</h2>
+<ul><li><strong>DNA</strong>: 뉴클레오타이드(인산 + 당 + 염기 A·T·G·C)가 이중 나선으로 배열. 염기 상보성: A=T(수소 결합 2개), G≡C(3개). 따라서 한 가닥의 A+T 개수 비율은 상보 가닥의 T+A 비율과 같고, 이중 나선 전체에서 A:T = 1:1, G:C = 1:1.</li><li><strong>유전자</strong>: 형질 정보가 들어 있는 DNA의 특정 부분. 한 염색체에 여러 유전자가 있고, <em>상동 염색체의 같은 위치</em>에 <strong>대립유전자</strong>가 있습니다.</li><li><strong>염색체</strong>: DNA가 히스톤 단백질에 감겨 응축된 구조. 분열 준비 과정(S기)에서 복제되어 <strong>염색 분체 2개</strong>가 동원체로 붙어 있습니다.</li><li><strong>상동 염색체</strong>: 크기·모양이 같은 한 쌍(하나는 아버지, 하나는 어머니 유래). 사람 체세포는 <strong>2n = 46</strong> = 상염색체 22쌍 + 성염색체 1쌍(XX 또는 XY). 생식세포는 n = 23.</li><li><strong>핵형 분석</strong>: 염색체를 크기·모양 순으로 배열한 것. 염색체 수·구조 이상과 성별을 알 수 있습니다.</li></ul>
+<h2>2. 세포 주기와 체세포 분열</h2>
+<div class="formula">세포 주기 = 간기(G<sub>1</sub>기 → S기 → G<sub>2</sub>기) + 분열기(M기: 전기·중기·후기·말기) + 세포질 분열</div>
+<div class="tbl-wrap"><table><thead><tr><th>시기</th><th>핵 1개당 DNA 양</th><th>일어나는 일</th></tr></thead><tbody><tr><td>G<sub>1</sub>기</td><td>1 (상대량)</td><td>세포 생장, 단백질 합성</td></tr><tr><td>S기</td><td>1 → 2</td><td><strong>DNA 복제</strong></td></tr><tr><td>G<sub>2</sub>기</td><td>2</td><td>분열 준비</td></tr><tr><td>M기 전기~후기</td><td>2</td><td>염색체 응축, 중기에 적도판 배열, 후기에 <strong>염색 분체 분리</strong></td></tr><tr><td>M기 말기 ~ 세포질 분열</td><td>2 → 1</td><td>딸세포 2개 형성</td></tr></tbody></table></div>
+<ul><li>간기가 세포 주기의 대부분(약 90 %)을 차지합니다. 세포 수 그래프에서 <em>세포 수가 가장 많은 시기가 가장 긴 시기</em>입니다.</li><li>체세포 분열: 2n → 2n × 2 (유전적으로 <strong>동일</strong>). 후기에는 염색 분체가 분리되어 염색체 수가 일시적으로 <em>2배(2n → 4n 상태)</em>가 됩니다.</li></ul>
+<h2>3. 감수 분열</h2>
+<p>생식세포를 만드는 분열로 <strong>DNA 복제는 1회, 분열은 연속 2회</strong>(감수 1분열, 감수 2분열)이고 결과는 <strong>n인 딸세포 4개</strong>입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>시기</th><th>핵상</th><th>핵 1개당 DNA 양</th><th>염색체 수(세포당)</th><th>특징</th></tr></thead><tbody><tr><td>G<sub>1</sub>기(간기 시작)</td><td>2n</td><td>1</td><td>2n</td><td>—</td></tr><tr><td>감수 1분열 전기~중기</td><td>2n</td><td>2</td><td>2n</td><td><strong>2가 염색체</strong> 형성(상동 염색체 접합), 교차 가능</td></tr><tr><td>감수 1분열 후(감수 2분열 전기~중기)</td><td><strong>n</strong></td><td>1</td><td>n(염색 분체 2개씩)</td><td>상동 염색체 분리 = <em>염색체 수 반감</em></td></tr><tr><td>감수 2분열 후(생식세포)</td><td>n</td><td>0.5(= 1개 염색 분체)</td><td>n</td><td>염색 분체 분리</td></tr></tbody></table></div>
+<p class="note-line"><em>주의:</em> 위 표의 DNA 양은 <strong>G<sub>1</sub> 세포를 1로 정한 상대값</strong>입니다. 수능은 “DNA 상대량”으로 <em>각 유전자별 값</em>을 주므로 아래 표를 봅니다.</p>
+<h3>유전자별 DNA 상대량 (유전자형 Aa 예)</h3>
+<div class="tbl-wrap"><table><thead><tr><th>세포</th><th>핵상</th><th>A의 상대량</th><th>a의 상대량</th><th>A+a 합</th></tr></thead><tbody><tr><td>G<sub>1</sub>기 세포</td><td>2n</td><td>1</td><td>1</td><td>2</td></tr><tr><td>감수 1분열 중기 세포(복제 후)</td><td>2n</td><td>2</td><td>2</td><td>4</td></tr><tr><td>감수 2분열 중기 세포(n)</td><td>n</td><td>2 또는 0</td><td>0 또는 2</td><td>2</td></tr><tr><td>생식세포</td><td>n</td><td>1 또는 0</td><td>0 또는 1</td><td>1</td></tr></tbody></table></div>
+<ul><li><strong>합이 4</strong>이면 복제된 2n 세포(감수 1분열 전기~중기 또는 체세포 분열 G<sub>2</sub>~중기), <strong>합이 2</strong>이면 G<sub>1</sub>기(2n) 또는 감수 2분열 중기(n) — 핵상 표시로 구분, <strong>합이 1</strong>이면 생식세포(n).</li><li>같은 유전자가 동형 접합(AA)이면 G<sub>1</sub>기에서 A = 2, 복제 후 A = 4입니다. 대립유전자가 없는 성염색체 유전자는 남자 G<sub>1</sub>기에서 X 연관 유전자 상대량이 1입니다.</li></ul>
+<h3>유전적 다양성</h3>
+<ul><li><strong>상동 염색체의 독립적 배열</strong>: 감수 1분열 중기에 2가 염색체가 무작위 방향으로 배열 → 생식세포 종류 2<sup>n</sup> (사람 n = 23 → 약 838만 가지).</li><li><strong>교차</strong>: 감수 1분열 전기 2가 염색체에서 염색 분체 일부가 교환되어 유전자 재조합.</li></ul>
+<h2>모션으로 보기</h2>
+<p>이 파트의 개념을 움직이는 그림으로 다시 확인합니다.</p>
+<p><a class="cta sm" href="../motion.html#s14">🎬 DNA와 염색체</a> <a class="cta sm" href="../motion.html#s15">🎬 세포 주기와 체세포 분열</a> <a class="cta sm" href="../motion.html#s16">🎬 감수 분열</a> <a class="cta sm" href="../motion.html#s17">🎬 핵상과 DNA 상대량 읽기</a></p>
+<h2>자주 나오는 함정</h2><ul><li><strong>감수 1분열에서 염색 분체가 분리된다</strong> — 상동 염색체가 분리(염색 분체 분리는 감수 2분열).</li><li><strong>핵상 n인 세포의 DNA 양이 항상 1</strong> — 감수 2분열 중기 세포는 핵상 n이지만 복제된 염색 분체 때문에 유전자당 DNA 상대량이 2입니다.</li><li><strong>염색체 수와 DNA 양을 같은 값으로</strong> — 염색체 수는 동원체 수, DNA 양은 염색 분체 수까지 셉니다.</li><li><strong>체세포 분열 후기에 염색체 수가 반으로 준다</strong> — 일시적으로 2배(염색 분체가 각각 염색체가 됨).</li><li><strong>감수 1분열 후기에 염색 분체가 분리</strong>된다는 보기 — 감수 2분열 후기입니다.</li><li><strong>상동 염색체 = 복제로 생긴 두 염색 분체</strong> — 상동 염색체는 부모 각각에서 온 서로 다른 염색체입니다.</li></ul>
+<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>유전자형이 Aa인 사람의 세포 (가)~(라)에서 A와 a의 DNA 상대량을 더한 값이 각각 2, 4, 2, 1이다. (나)와 (라)는 각각 어느 시기의 세포인가? (교차는 없음)</summary><div class="example-sol"><p>합이 <strong>4</strong>인 (나)는 DNA 복제 후의 2n 세포, 즉 <strong>감수 1분열 중기</strong>(또는 G<sub>2</sub>기)의 세포입니다(A=2, a=2).</p><p>합이 <strong>1</strong>인 (라)는 <strong>생식세포(n)</strong>(A=1 또는 a=1). 합이 2인 (가)·(다)는 G<sub>1</sub>기 세포(2n, A=1, a=1) 또는 감수 2분열 중기 세포(n, A=2 또는 a=2)입니다.</p></div></details><details class="example"><summary>핵 1개당 DNA 양이 1 → 2 → 1로 변하는 체세포 분열 세포 주기 그래프에서, DNA 양이 1에서 2로 증가하는 구간과 2에서 1로 감소하는 사건은?</summary><div class="example-sol"><p>1 → 2는 <strong>S기(DNA 복제)</strong>, 2 → 1은 분열 말기·세포질 분열로 <strong>딸세포 2개가 생기며</strong> 각 핵의 DNA 양이 절반이 되는 것입니다.</p></div></details><details class="example"><summary>어떤 동물(2n = 6)의 감수 1분열과 2분열 후 생성되는 세포 하나가 가질 수 있는 염색체 수와, 만들 수 있는 생식세포의 조합 수(교차 없음)는?</summary><div class="example-sol"><p>감수 분열 후 생식세포는 n = 3개의 염색체를 가집니다. 서로 다른 상동 염색체 3쌍의 독립적 배열로 만들 수 있는 조합 수는 2³ = <strong>8가지</strong>입니다.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>DNA는 <strong>세포가 나뉘기 전(S기)에 두 배로 복사</strong>됩니다. 체세포 분열은 복사본을 똑같이 나눠 가지므로 그대로 두 세포, 감수 분열은 <em>복사 한 번 · 분열 두 번</em>이라 절반짜리(n) 네 개가 생깁니다.</p><ul><li>감수 1분열 = 짝(상동 염색체)끼리 갈라진다. 감수 2분열 = 복사본(염색 분체)끼리 갈라진다.</li><li>DNA 상대량 합: 4, 2, 1 이 세 숫자가 시기를 알려 줍니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>DNA 상대량 표 문항은 (1) <strong>세포별 각 유전자 DNA 합</strong>으로 시기(G<sub>1</sub>: 2, 복제 후: 4, 감수 2 중기: 2(n), 생식세포: 1)를 정하고, (2) <em>어떤 세포에 특정 대립유전자가 없으면</em> 그 세포가 n이거나 그 유전자가 <em>동형 접합의 다른 형태</em>임을 이용해 유전자형을 확정합니다. 성염색체 유전자는 남자에서 상대량이 1(G<sub>1</sub>)/2(복제 후)임을 이용해 구별합니다.</p><p>핵상과 염색체 수를 함께 묻는 그림(“세포 (가)~(라)에 들어 있는 모든 염색체”)은 <strong>크기·모양이 같은 염색체 쌍이 있으면 2n, 쌍이 없으면 n</strong>이라는 규칙으로 핵상을 정한 뒤, 어떤 염색체가 성염색체인지(X·Y의 크기 차)로 남녀와 개체 종을 가립니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>세포 분열 개념을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#16a34a","prompt":"세포 분열 개념을 짝지으세요.","pairs":[{"term":"S기","def":"DNA 복제"},{"term":"감수 1분열","def":"상동 염색체 분리, 핵상 2n → n"},{"term":"감수 2분열","def":"염색 분체 분리"},{"term":"2가 염색체","def":"상동 염색체 접합 (감수 1분열 전기)"},{"term":"A+a 상대량 합 4","def":"복제 후 2n 세포"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#16a34a","questions":[{"q":"DNA 복제가 일어나는 시기는?","choices":["G₁기","S기","G₂기","M기 말기"],"answer":1},{"q":"감수 1분열에서 분리되는 것은?","choices":["염색 분체","상동 염색체","뉴클레오타이드","동원체"],"answer":1},{"q":"유전자형 Aa인 사람의 생식세포에서 A+a의 DNA 상대량 합은?","choices":["1","2","3","4"],"answer":0},{"q":"사람의 체세포 염색체 수는?","choices":["23","44","46","48"],"answer":2},{"q":"감수 분열 결과 만들어지는 세포는?","choices":["2n 2개","n 4개","n 2개","2n 4개"],"answer":1}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 생명과학Ⅰ 전 시험지에서 이 파트로 분류된 <strong>42문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:b6">📝 유전 정보와 세포 분열 모아 풀기 →</a></p>
+<div class="pager"><a href="05-defense.html">← 방어 작용</a><a href="07-human-genetics.html">사람의 유전 →</a></div>
+</main></div>
+</body></html>

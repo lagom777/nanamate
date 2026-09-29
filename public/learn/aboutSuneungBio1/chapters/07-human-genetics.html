@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사람의 유전 — 수능 생명과학Ⅰ</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>생명과학Ⅰ 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li><a href="01-life.html">1. 생명과학의 이해</a></li>
+<li><a href="02-metabolism.html">2. 사람의 물질대사</a></li>
+<li><a href="03-neuron-muscle.html">3. 자극의 전달과 근수축</a></li>
+<li><a href="04-nervous-homeostasis.html">4. 신경계와 항상성</a></li>
+<li><a href="05-defense.html">5. 방어 작용</a></li>
+<li><a href="06-cell-division.html">6. 유전 정보와 세포 분열</a></li>
+<li><a href="07-human-genetics.html" style="color:var(--accent);font-weight:600;">7. 사람의 유전</a></li>
+<li><a href="08-ecosystem.html">8. 생태계와 상호 작용</a></li>
+<li><a href="09-strategy.html">9. 실전 총정리</a></li>
+<li><a href="../motion.html">🎬 모션 노트</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>사람의 유전</h1><p class="authors">Part 7 · Ⅳ. 유전</p><p class="affiliation">멘델 유전 · 가계도 분석 · 성염색체 유전 · ABO식 혈액형 · 염색체 이상</p></header>
+<div class="stat-row"><div class="stat"><b>3.5</b><span>회당 문항 수</span></div><div class="stat"><b>9.3점</b><span>회당 배점</span></div><div class="stat"><b>2~5</b><span>회차별 범위</span></div><div class="stat"><b>56</b><span>최근 16회 누적</span></div></div>
+<p class="stat-note">수능 2022~2026학년도 + 6·9월 모의평가 16회(320문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>회당 3문항 이상이 나오는 <strong>가장 큰 파트</strong>이고, 수능의 최고난도 3점 문항(16~19번)이 여기서 나옵니다. 가계도로 유전 방식을 정하고 <em>DNA 상대량 표</em>와 결합해 유전자형을 확정하는 <strong>고정된 풀이 순서</strong>가 있습니다. 이 순서를 몸에 익히면 4~5번을 모두 맞힐 수 있는 영역입니다.</p>
+<h2>1. 멘델의 유전 원리</h2>
+<div class="tbl-wrap"><table><thead><tr><th>용어</th><th>뜻</th></tr></thead><tbody><tr><td>대립유전자</td><td>상동 염색체의 같은 위치에서 하나의 형질을 결정하는 서로 다른 유전자(A, a)</td></tr><tr><td>동형 접합 / 이형 접합</td><td>AA·aa / Aa</td></tr><tr><td>우성 · 열성</td><td>이형 접합에서 표현형으로 나타나는 쪽 · 안 나타나는 쪽</td></tr><tr><td>표현형 · 유전자형</td><td>겉으로 나타난 형질 · 유전자 구성</td></tr></tbody></table></div>
+<ul><li><strong>분리의 법칙</strong>: 감수 분열 때 대립유전자가 분리되어 서로 다른 생식세포로 들어간다. Aa × Aa → AA : Aa : aa = 1 : 2 : 1, 우성 : 열성 = 3 : 1.</li><li><strong>독립의 법칙</strong>: 서로 다른 염색체에 있는 두 형질은 독립적으로 유전. AaBb × AaBb → 9 : 3 : 3 : 1. (같은 염색체에 있으면 <em>연관</em>, 교차가 없으면 함께 유전.)</li></ul>
+<h2>2. 가계도 분석 — 풀이 순서</h2>
+<ol><li><strong>우열 판정</strong>: <em>정상 × 정상 → 발병 자녀</em>가 있으면 발병이 <strong>열성</strong>. <em>발병 × 발병 → 정상 자녀</em>가 있으면 발병이 <strong>우성</strong>.</li><li><strong>상염색체 vs X 염색체 판정</strong>(후보를 하나씩 모순 검사):<ul><li>X 염색체 <em>열성</em>이 불가능한 경우: 발병 <em>딸</em>의 아버지가 정상, 또는 발병 <em>어머니</em>의 아들이 정상.</li><li>X 염색체 <em>우성</em>이 불가능한 경우: 발병 <em>아버지</em>의 딸이 정상, 또는 정상 <em>어머니</em>의 아들이 발병.</li></ul></li><li><strong>유전자형 확정</strong>: 발병 열성은 aa, 발병 우성인 사람의 부모 중 정상이 있으면 그 자녀는 Aa, 자녀 중 열성이 나오면 부모는 둘 다 최소 Aa 등.</li><li><strong>확률 계산</strong>: 각 사건의 확률을 곱하고, <em>“정상인데”</em> 같은 조건이 붙으면 조건에 맞는 경우만 분모로 잡습니다.</li></ol>
+<h3>확률 자주 쓰는 값</h3>
+<div class="formula">Aa × Aa → 발병(aa) 1/4<br>정상 자녀가 보인자(Aa)일 확률 = 2/3 (AA:Aa = 1:2)<br>Aa × aa → 발병 1/2</div>
+<h2>3. 성염색체 유전 (X 연관)</h2>
+<ul><li>남자(XY)는 X가 하나뿐이라 <strong>X 열성 유전자 하나만 있어도 발병</strong>(적록 색맹, 혈우병). 그래서 <em>발병률이 남자 &gt; 여자</em>.</li><li>X 열성: 어머니가 발병이면 <strong>아들은 모두 발병</strong>, 아버지가 발병이면 딸은 (어머니가 정상이라도) <strong>보인자 이상</strong>. 아버지 → 아들에게는 X를 물려주지 않습니다.</li><li>X 우성: 아버지가 발병이면 <strong>딸은 모두 발병</strong>.</li></ul>
+<div class="formula">X<sup>H</sup>X<sup>h</sup>(보인자 어머니) × X<sup>H</sup>Y(정상 아버지)<br>→ 딸: 모두 정상(1/2는 보인자), 아들: 1/2 정상, 1/2 발병<br>→ 자녀 전체에서 ‘발병 아들’ 확률 1/4, 아들 중 발병 확률 1/2</div>
+<h2>4. ABO식 혈액형 (복대립 유전)</h2>
+<ul><li>대립유전자 3개: A, B, O(=i). <strong>A와 B는 O에 대해 우성, A와 B 사이는 공동 우성</strong>.</li></ul>
+<div class="tbl-wrap"><table><thead><tr><th>표현형</th><th>유전자형</th><th>응집원(적혈구 표면)</th><th>응집소(혈장)</th></tr></thead><tbody><tr><td>A형</td><td>AA, AO</td><td>A</td><td>β</td></tr><tr><td>B형</td><td>BB, BO</td><td>B</td><td>α</td></tr><tr><td>AB형</td><td>AB</td><td>A, B</td><td>없음</td></tr><tr><td>O형</td><td>OO</td><td>없음</td><td>α, β</td></tr></tbody></table></div>
+<ul><li>표현형 4가지, 유전자형 6가지. 부모가 A형(AO) × B형(BO)이면 자녀는 A·B·AB·O <em>모두 가능</em>(각 1/4).</li><li>응집원 A와 응집소 α가 만나면 응집. 항 A 혈청(α)에 응집하면 A형 또는 AB형, 항 B 혈청(β)에 응집하면 B형 또는 AB형.</li></ul>
+<h2>5. 사람의 유전병과 염색체 이상</h2>
+<div class="tbl-wrap"><table><thead><tr><th>구분</th><th>질환</th><th>원인</th></tr></thead><tbody><tr><td>단일 유전자(상염색체 우성)</td><td>헌팅턴 무도병</td><td>우성 대립유전자</td></tr><tr><td>단일 유전자(상염색체 열성)</td><td>낭성 섬유증, 페닐케톤뇨증, 알비노, 낫 모양 적혈구 빈혈증</td><td>열성 대립유전자(낫 모양 적혈구 빈혈증은 헤모글로빈 유전자의 염기 변화)</td></tr><tr><td>X 염색체 열성</td><td>적록 색맹, 혈우병</td><td>X 연관 열성</td></tr><tr><td>염색체 수 이상</td><td>다운 증후군(21번 3개, 47), 터너 증후군(XO, 45, 여성), 클라인펠터 증후군(XXY, 47, 남성)</td><td>감수 분열 때 염색체 <strong>비분리</strong></td></tr><tr><td>염색체 구조 이상</td><td>고양이 울음 증후군</td><td>5번 염색체 일부 결실</td></tr></tbody></table></div>
+<h3>염색체 비분리</h3>
+<div class="tbl-wrap"><table><thead><tr><th>비분리 시기</th><th>분리 실패한 것</th><th>만들어지는 생식세포 4개</th></tr></thead><tbody><tr><td>감수 1분열</td><td><strong>상동 염색체</strong></td><td>n+1 2개, n−1 2개 (정상 n 없음)</td></tr><tr><td>감수 2분열</td><td><strong>염색 분체</strong></td><td>n+1 1개, n−1 1개, 정상 n 2개</td></tr></tbody></table></div>
+<p>정상 난자(n)가 <em>n+1인 정자</em>와 만나면 2n+1(삼염색체성), <em>n−1인 정자</em>와 만나면 2n−1(일염색체성)이 됩니다. 성염색체가 XXY이면 정상 X를 가진 난자 + XY 정자(아버지의 <em>감수 1분열</em> 비분리) 또는 XX 난자(어머니 비분리) + Y 정자로 설명됩니다. 아버지가 XY를 모두 준 경우는 <strong>감수 1분열</strong>에서만 가능하고(상동 염색체 X·Y가 분리 안 됨), 어머니가 XX를 준 경우는 감수 1 또는 2분열 어느 쪽이든 가능합니다.</p>
+<h2>모션으로 보기</h2>
+<p>이 파트의 개념을 움직이는 그림으로 다시 확인합니다.</p>
+<p><a class="cta sm" href="../motion.html#s18">🎬 멘델 유전과 가계도</a> <a class="cta sm" href="../motion.html#s19">🎬 성염색체 유전</a> <a class="cta sm" href="../motion.html#s20">🎬 염색체 비분리와 염색체 이상</a></p>
+<h2>자주 나오는 함정</h2><ul><li><strong>정상 부모에서 발병 자녀가 나왔으니 우성</strong> — 열성입니다(부모는 모두 보인자).</li><li><strong>X 열성에서 발병 딸의 아버지가 정상일 수 있다</strong> — 불가능합니다. 딸이 X<sup>h</sup>X<sup>h</sup>이면 아버지에게서 X<sup>h</sup>를 받았으므로 아버지도 발병입니다.</li><li><strong>일란성 쌍둥이의 형질 차이는 유전자 차이</strong> — 유전자가 같으므로 환경 요인입니다.</li><li><strong>A형의 유전자형은 AA 하나</strong> — AA 또는 AO입니다(부모 정보로 확정).</li><li><strong>감수 1·2분열 비분리를 반대로 판별</strong> — 자녀 세포에 <em>상동 염색체 두 개(서로 다른 것)</em>가 있으면 1분열, <em>같은 염색 분체 복제본 두 개</em>가 있으면 2분열입니다.</li><li><strong>다운 증후군은 유전자 돌연변이</strong> — 염색체 수 이상(21번 삼염색체성)입니다.</li><li><strong>헌팅턴 무도병은 열성</strong> — 상염색체 <em>우성</em>입니다.</li></ul>
+<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>정상인 아버지(1)와 어머니(2) 사이에서 발병한 딸(3)이 태어났다. 이 형질의 우열과 유전자 위치는?</summary><div class="example-sol"><p>정상 × 정상 → 발병 자녀이므로 발병은 <strong>열성</strong>. 발병한 <em>딸</em>의 아버지가 정상이므로 X 염색체 열성이 <strong>불가능</strong>합니다(딸이 X<sup>a</sup>X<sup>a</sup>면 아버지도 X<sup>a</sup>Y여야 함).</p><p>따라서 <strong>상염색체 열성</strong>이며 1, 2는 모두 Aa, 3은 aa입니다.</p></div></details><details class="example"><summary>어머니가 X<sup>H</sup>X<sup>h</sup>(보인자), 아버지가 X<sup>H</sup>Y(정상)일 때, 아들 중 발병할 확률과 딸이 보인자일 확률은?</summary><div class="example-sol"><p>어머니 배우자 X<sup>H</sup>, X<sup>h</sup> 각 1/2, 아버지는 X<sup>H</sup> 1/2, Y 1/2. 아들(XY)은 어머니에게서 X를 받으므로 발병(X<sup>h</sup>Y) <strong>1/2</strong>.</p><p>딸(XX)은 아버지의 X<sup>H</sup>를 반드시 받고 어머니에게서 X<sup>H</sup> 또는 X<sup>h</sup> → 보인자 확률 <strong>1/2</strong>, 발병 확률 0.</p></div></details><details class="example"><summary>A형(유전자형을 모름)과 B형인 부부에게서 O형 자녀가 태어났다. 이 부부의 유전자형과, 이 부부가 다음에 낳을 자녀가 O형일 확률은?</summary><div class="example-sol"><p>O형 자녀(OO)는 양쪽에서 O를 받았으므로 부모는 각각 O를 가집니다. A형 = <strong>AO</strong>, B형 = <strong>BO</strong>.</p><p>AO × BO → A : B : AB : O = 1 : 1 : 1 : 1이므로 O형 확률은 <strong>1/4</strong>입니다.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>가계도는 <strong>“정상 두 사람에게서 환자 → 열성”</strong> 한 줄로 시작합니다. 열성이면 그 환자는 aa, 부모는 둘 다 보인자입니다. 남자는 X가 하나라 X 열성 병이 <em>더 잘 나타납니다</em>.</p><ul><li>ABO는 “A와 B는 O보다 강하고, A와 B끼리는 둘 다 나타난다”.</li><li>비분리는 “짝(상동 염색체)이 안 갈라졌나(1분열), 복사본이 안 갈라졌나(2분열)”.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>3점 킬러(유전 가계도 + DNA 상대량 표)의 풀이 순서: (1) 조건 “유전자 ㉠은 X 염색체에 있고, ㉡은 상염색체” 같은 문장에서 <strong>위치를 먼저 확정</strong>하고, (2) 가계도로 각 형질의 우열을 정하고, (3) 표의 DNA 상대량(체세포 1개당)으로 각 구성원의 <em>유전자형</em>을 정합니다 — 상대량 2 = 동형 접합(또는 X 유전자의 남자 1), 1 = 이형 접합/남자의 X 연관 유전자, 0 = 그 대립유전자 없음. (4) 확정된 유전자형으로 부모→자녀 확률을 곱합니다. <em>“⑥와 ⑦ 사이에서 태어난 아이가 (가)와 (나)가 모두 발현될 확률”</em>은 각 형질 확률의 곱입니다(독립인 경우).</p><p>비분리 문항은 <strong>자녀의 세포/핵형에서 염색체 조성</strong>(예: XXY, 21번 3개)을 확정한 뒤 부모 중 누구의 어느 분열 비분리인지 <em>염색체 구성 조각</em>으로 추적합니다. 부모 감수 1분열 때 <em>상동 염색체가 함께 이동하면</em> 생식세포에 서로 다른 염색체 하나씩이 함께 들어 있습니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>유전 개념을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#16a34a","prompt":"유전 개념을 짝지으세요.","pairs":[{"term":"Aa × Aa","def":"우성 : 열성 = 3 : 1"},{"term":"정상 × 정상 → 환자","def":"열성 형질"},{"term":"X 열성, 어머니 환자","def":"아들은 모두 환자"},{"term":"ABO A형","def":"AA 또는 AO"},{"term":"감수 1분열 비분리","def":"상동 염색체가 함께 이동"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#16a34a","questions":[{"q":"정상인 부모 사이에서 발병한 자녀가 태어났다면 발병 형질은?","choices":["우성","열성","알 수 없음","X 우성"],"answer":1},{"q":"X 열성 형질에서 아버지가 정상일 때 발병한 딸이 나올 수 있는가?","choices":["가능","불가능","50%","보인자일 때만"],"answer":1},{"q":"AO형 × BO형 부부에게서 O형 자녀가 나올 확률은?","choices":["0","1/4","1/2","1"],"answer":1},{"q":"다운 증후군의 원인은?","choices":["21번 염색체 3개","X 염색체 1개","유전자 돌연변이","성염색체 XXY"],"answer":0},{"q":"헌팅턴 무도병의 유전 방식은?","choices":["상염색체 열성","상염색체 우성","X 열성","X 우성"],"answer":1}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 생명과학Ⅰ 전 시험지에서 이 파트로 분류된 <strong>56문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:b7">📝 사람의 유전 모아 풀기 →</a></p>
+<div class="pager"><a href="06-cell-division.html">← 유전 정보와 세포 분열</a><a href="08-ecosystem.html">생태계와 상호 작용 →</a></div>
+</main></div>
+</body></html>
