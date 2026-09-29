@@ -10,7 +10,7 @@ from PIL import Image, ImageChops
 qpdf, apdf, out, nq = sys.argv[1], sys.argv[2], sys.argv[3], int(sys.argv[4])
 LABEL = sys.argv[5] if len(sys.argv) > 5 else None
 os.makedirs(out, exist_ok=True)
-ZOOM = 180 / 72
+ZOOM = float(os.environ.get('CROP_DPI', '180')) / 72
 CIRC = "①②③④⑤"
 
 doc = pymupdf.open(qpdf)
@@ -98,7 +98,7 @@ for n in range(1, nq + 1):
         for r in masks:
             dw.rectangle(((r.x0 - clip.x0) * ZOOM - 3, (r.y0 - clip.y0) * ZOOM - 3, (r.x1 - clip.x0) * ZOOM + 3, (r.y1 - clip.y0) * ZOOM + 3), fill=255)
     img = trim(img)
-    img.save(os.path.join(out, f"q{n:02d}.webp"), "WEBP", quality=75, method=6)
+    img.save(os.path.join(out, f"q{n:02d}.webp"), "WEBP", quality=int(os.environ.get('CROP_Q', '75')), method=6)
 
 json.dump(texts, open(os.path.join(out, "text.json"), "w"), ensure_ascii=False)
 # answer key

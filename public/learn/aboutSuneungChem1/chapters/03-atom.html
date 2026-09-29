@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>원자 모형과 전자 배치 — 수능 화학Ⅰ</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>화학Ⅰ 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li class="grp">화학의 첫걸음</li>
+<li><a href="01-mole.html">1. 화학과 우리 생활 · 화학식량과 몰</a></li>
+<li><a href="02-reaction.html">2. 화학 반응식과 양적 관계</a></li>
+<li class="grp">원자의 세계</li>
+<li><a href="03-atom.html" style="color:var(--accent);font-weight:600;">3. 원자 모형과 전자 배치</a></li>
+<li><a href="04-periodic.html">4. 원소의 주기적 성질</a></li>
+<li class="grp">화학 결합과 분자의 세계</li>
+<li><a href="05-bond.html">5. 화학 결합</a></li>
+<li><a href="06-molecule.html">6. 분자의 구조와 성질</a></li>
+<li class="grp">역동적인 화학 반응</li>
+<li><a href="07-equilibrium.html">7. 동적 평형</a></li>
+<li><a href="08-acid-base.html">8. 산과 염기 (중화 반응)</a></li>
+<li><a href="09-redox.html">9. 산화 환원 반응</a></li>
+<li class="grp">전략</li>
+<li><a href="10-strategy.html">10. 수능 화학Ⅰ 실전 전략</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>원자 모형과 전자 배치</h1><p class="authors">Part 3 · 원자의 세계</p><p class="affiliation">원자 구조·보어 모형·오비탈·전자 배치·양자수</p></header>
+<div class="stat-row"><div class="stat"><b>2.4</b><span>회당 문항 수</span></div><div class="stat"><b>6.0점</b><span>회당 배점</span></div><div class="stat"><b>2~3</b><span>회차별 범위</span></div><div class="stat"><b>69</b><span>최근 29회 누적</span></div></div>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 29회(2018~2021학년도는 구 교육과정)(580문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>이 파트는 수소 원자의 선 스펙트럼과 전자 배치 자료를 읽고, 원소를 특정하는 문항으로 자주 나옵니다. 보어 모형에서는 두 준위의 에너지 차이로 빛의 진동수·파장을 비교하고, 현대 모형에서는 양자수 네 개가 허용되는지와 홀전자 수를 묻습니다. 식은 짧지만, 바닥상태와 들뜬상태, 중성 원자와 이온의 전자 배치를 구별하지 못하면 자료 해석이 막힙니다.</p>
+<h2>1. 원자 모형의 변천과 구성 입자</h2>
+<p>원자 모형은 새로운 실험이 나올 때마다 고쳐 왔습니다. 수능에서는 모형 이름과 그 모형이 설명하는 사실, 설명하지 못하는 사실을 짝짓습니다. 순서는 돌턴 → 톰슨 → 러더퍼드 → 보어 → 현대 모형입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>모형</th><th>핵심 그림</th><th>설명하는 것</th><th>한계</th></tr></thead><tbody><tr><td>돌턴</td><td>더 쪼개지지 않는 단단한 공</td><td>원소는 같은 종류의 원자로 이루어지고, 화합물은 원자들이 일정한 정수비로 결합한다</td><td>전자·양성자·중성자를 모른다</td></tr><tr><td>톰슨</td><td>양전하 덩어리 안에 전자가 박힌 모형(건포도 푸딩)</td><td>음극선 실험으로 전자를 발견했다. 원자는 전기적으로 중성이므로 양전하도 있어야 한다</td><td>핵이 없고, 금박 실험의 큰 각 산란을 설명하지 못한다</td></tr><tr><td>러더퍼드</td><td>아주 작은 양전하 핵 + 그 주위의 전자</td><td>금박에 α 입자를 쏘면 대부분은 직진하고, 일부는 크게 휘며, 극히 일부는 되튄다. 질량과 양전하는 매우 작은 핵에 모여 있다</td><td>돌고 있는 전자가 어떻게 안정한지, 선 스펙트럼이 왜 나오는지 설명하지 못한다</td></tr><tr><td>보어</td><td>특정 에너지 준위의 원형 궤도</td><td>수소 원자의 선 스펙트럼. 전자는 정해진 준위에 있을 때 빛을 내지 않고, 준위가 바뀔 때만 빛을 흡수·방출한다</td><td>수소 이외의 원자, 오비탈의 모양, 화학 결합을 설명하지 못한다</td></tr><tr><td>현대 모형</td><td>전자가 발견될 확률 분포(오비탈)</td><td>다전자 원자의 전자 배치와 주기율표의 주기성</td><td>전자를 고정된 궤도로 그리면 이 모형과 어긋난다</td></tr></tbody></table></div>
+<p>러더퍼드 실험에서 대부분의 α 입자가 금박을 그대로 통과한다는 것은 원자 안의 대부분이 빈 공간이라는 뜻입니다. 크게 휘거나 되튀는 입자는 양전하를 띤 아주 작은 핵에 가까이 갔다는 뜻입니다. 핵의 전하가 양인 이유는 α 입자 자체도 양전하라서, 같은 전하끼리 밀리기 때문입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>입자</th><th>전하</th><th>상대 질량</th><th>있는 곳</th></tr></thead><tbody><tr><td>양성자</td><td>+1</td><td>1</td><td>핵</td></tr><tr><td>중성자</td><td>0</td><td>1</td><td>핵</td></tr><tr><td>전자</td><td>−1</td><td>양성자의 약 1/1840</td><td>핵 바깥</td></tr></tbody></table></div>
+<p>원자의 질량은 사실상 핵이 결정하고, 화학 반응에서 바뀌는 것은 전자의 배치입니다. 전자 하나의 질량은 양성자·중성자에 비해 매우 작아, 질량수를 셀 때 전자는 넣지 않습니다.</p>
+<div class="formula">원자 번호 Z = 양성자 수<br>중성 원자에서는 전자 수 = Z<br>질량수 A = 양성자 수 + 중성자 수<br>중성자 수 = A − Z</div>
+<p><sup>23</sup><sub>11</sub>Na는 양성자 11개, 전자 11개, 중성자 23 − 11 = 12개입니다. 여기서 전자가 하나 빠지면 <sup>23</sup><sub>11</sub>Na<sup>+</sup>가 되어 전자는 10개이고, 양성자와 중성자는 그대로입니다. <sup>16</sup><sub>8</sub>O<sup>2−</sup>는 양성자 8개, 중성자 8개, 전자 10개입니다. 전하의 부호는 양성자 수와 전자 수의 차이입니다.</p>
+<div class="info-card"><h4>동위 원소</h4><p>원자 번호는 같고 중성자 수(질량수)만 다른 원자끼리입니다. <sup>35</sup>Cl과 <sup>37</sup>Cl, <sup>1</sup>H·<sup>2</sup>H·<sup>3</sup>H가 예입니다. 전자 배치가 같으므로 화학적 성질은 거의 같고, 질량과 밀도 같은 물리적 성질은 다릅니다.</p></div>
+<div class="warning-box"><strong>함정:</strong> 질량수를 전자까지 포함해 세거나, 이온의 전자 수를 중성 원자와 같다고 두면 원자 번호를 잘못 읽습니다. 이온은 양성자 수가 원자 번호이고, 전자 수만 전하만큼 달라집니다.</div>
+
+<h2>2. 보어 모형과 수소 원자의 선 스펙트럼</h2>
+<p>보어 모형에서 전자는 아무 에너지나 가지지 못하고, 주양자수 n = 1, 2, 3, …에 해당하는 에너지 준위에만 있습니다. n = 1이 바닥상태이고 에너지가 가장 낮습니다. n이 커질수록 에너지는 높아지며, 준위 간격은 점점 좁아집니다. n이 무한대이면 전자가 원자에서 떨어져 나간 것으로 보고, 이때의 에너지를 0으로 둡니다. 그래서 수소 원자의 에너지는 음수입니다.</p>
+<div class="formula">E<sub>n</sub> = −1312 / n<sup>2</sup> kJ/mol<br>n = 1이면 E<sub>1</sub> = −1312 kJ/mol<br>n = 2이면 E<sub>2</sub> = −328 kJ/mol<br>n = 4이면 E<sub>4</sub> = −82 kJ/mol<br>n → ∞이면 E = 0</div>
+<p>n = 2의 값은 −1312/4 = −328입니다. n = 4는 −1312/16 = −82입니다. n = 3은 −1312/9 kJ/mol입니다. 바닥상태 원자에서 전자를 무한대까지 떼어 내는 에너지가 제1 이온화 에너지이므로, 수소의 이온화 에너지는 0 − (−1312) = 1312 kJ/mol입니다.</p>
+<p>전자가 높은 준위 n<sub>i</sub>에서 낮은 준위 n<sub>f</sub>로 내려가면 그 차이만큼의 빛을 <strong>방출</strong>합니다. 낮은 준위에서 높은 준위로 올라가려면 같은 에너지만큼의 빛을 <strong>흡수</strong>합니다. 같은 두 준위 사이의 방출선과 흡수선은 파장이 같습니다.</p>
+<div class="formula">방출하는 빛 1몰의 에너지 = E<sub>i</sub> − E<sub>f</sub> = 1312 (1/n<sub>f</sub><sup>2</sup> − 1/n<sub>i</sub><sup>2</sup>) kJ/mol<br>E = hν = hc/λ<br>c = νλ = 3.00×10<sup>8</sup> m/s</div>
+<p>에너지가 클수록 진동수 ν는 크고, 파장 λ는 짧습니다. 빛의 색깔을 비교할 때는 에너지 차이의 대소만 보면 됩니다. 파장을 미터로 구하려면 몰당 에너지(kJ/mol)를 광자 하나의 에너지(J)로 바꾼 뒤 λ = hc/E를 쓰거나, 아래 뤼드베리 식을 씁니다.</p>
+<div class="formula">1/λ = R (1/n<sub>f</sub><sup>2</sup> − 1/n<sub>i</sub><sup>2</sup>)<br>R = 1.097×10<sup>7</sup> m<sup>−1</sup><br>n<sub>i</sub> &gt; n<sub>f</sub> (방출)</div>
+<div class="tbl-wrap"><table><thead><tr><th>계열</th><th>전자가 도착하는 준위</th><th>빛의 영역</th><th>계열 안에서 에너지 범위</th></tr></thead><tbody><tr><td>라이먼</td><td>n<sub>f</sub> = 1</td><td>자외선</td><td>n = 2→1의 984 kJ/mol부터, 최대 1312 kJ/mol</td></tr><tr><td>발머</td><td>n<sub>f</sub> = 2</td><td>일부는 가시광선</td><td>n = 3→2의 약 182 kJ/mol부터, 최대 328 kJ/mol</td></tr><tr><td>파셴</td><td>n<sub>f</sub> = 3</td><td>적외선</td><td>최대 1312/9 ≈ 146 kJ/mol 이하</td></tr></tbody></table></div>
+<p>발머 계열에서 n = 3, 4, 5, 6에서 n = 2로 떨어지는 빛은 가시광선입니다. n = 3→2는 붉은색(약 656 nm)이고, 출발 준위가 높아질수록 보라색 쪽으로 이동하며 선 간격이 좁아집니다. 선이 한곳으로 모이는 짧은 파장 끝이 그 계열의 한계이며, n = ∞에서 그 준위로 떨어지는 전이에 해당합니다.</p>
+<p>에너지 크기만 비교하면 파셴 계열 전체는 발머 계열의 가장 작은 전이(182 kJ/mol)보다 작고, 발머 계열 전체는 라이먼 계열의 가장 작은 전이(984 kJ/mol)보다 작습니다. 계산은 다음과 같습니다.</p>
+<div class="formula">2→1: 1312 × (1 − 1/4) = 1312 × 3/4 = 984 kJ/mol<br>3→2: 1312 × (1/4 − 1/9) = 1312 × 5/36 = 6560/36 = 182.2 kJ/mol<br>∞→2: 1312 × (1/4) = 328 kJ/mol<br>∞→3: 1312/9 ≈ 145.8 kJ/mol</div>
+<p>라이먼·발머·파셴은 에너지 구간이 겹치지 않아서, 이 세 계열끼리는 도착 준위 n<sub>f</sub>가 작은 쪽의 에너지가 큽니다. 도착 준위가 같으면 출발 준위 n<sub>i</sub>가 큰 쪽의 에너지가 큽니다. 그보다 높은 계열까지 섞이면 구간이 겹칠 수 있으므로, 그때는 1/n<sub>f</sub><sup>2</sup> − 1/n<sub>i</sub><sup>2</sup>를 직접 비교합니다.</p>
+<div class="info-card"><h4>바닥상태 수소가 흡수하는 빛</h4><p>실온에서 수소 원자는 거의 모두 n = 1에 있습니다. 흡수할 수 있는 빛은 n = 1에서 더 높은 준위로 올라가는 라이먼 계열뿐이고, 이 빛은 자외선입니다. 가시광선의 발머 흡수선은 n = 2에 전자가 있을 때 나타납니다.</p></div>
+<div class="warning-box"><strong>함정:</strong> 준위에 ‘머무는 동안’ 빛이 나온다고 보면 안 됩니다. 빛은 준위가 바뀔 때만 나오거나 흡수됩니다. 에너지가 크면 파장이 길어지는 것도 반대입니다. E가 크면 ν가 크고 λ는 짧아집니다.</div>
+<div class="study-tip"><strong>TIP:</strong> 몰당 에너지(kJ/mol)를 플랑크 상수 h(J·s)에 바로 넣지 않습니다. 파장 계산은 뤼드베리 식으로 하거나, N<sub>A</sub>로 나누어 광자 하나의 에너지로 바꾼 뒤에 hν를 씁니다.</div>
+
+<h2>3. 현대 원자 모형: 오비탈과 양자수</h2>
+<p>현대 모형에서 전자는 정해진 원형 궤도를 돌지 않습니다. 핵 주위의 어느 공간에서 전자가 발견될 확률로 나타내고, 그 확률 분포를 <strong>오비탈</strong>이라고 합니다. 그림에서 진하게 칠해진 곳이 전자를 발견할 확률이 높은 영역입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>오비탈</th><th>방위 양자수 l</th><th>모양</th><th>방향의 수</th><th>한 껍질에서의 최대 전자 수</th></tr></thead><tbody><tr><td>s</td><td>0</td><td>구형. 핵을 중심으로 공 모양이다</td><td>1</td><td>2</td></tr><tr><td>p</td><td>1</td><td>아령형. 핵을 지나는 마디(확률이 0인 면)가 있다</td><td>3 (서로 수직)</td><td>6</td></tr><tr><td>d</td><td>2</td><td>화학Ⅰ에서는 모양보다 오비탈 수(5개)와 에너지 순서를 쓴다</td><td>5</td><td>10</td></tr></tbody></table></div>
+<p>s 오비탈은 n = 1부터 있고, p 오비탈은 n = 2부터 있습니다. 주양자수가 커지면 같은 종류의 오비탈도 핵에서 더 멀리까지 퍼집니다. p 오비탈 세 개는 공간에서 뻗는 방향만 다르고, 고립된 원자에서는 에너지가 같습니다. 어느 자기 양자수가 어느 축인지를 일대일로 외울 필요는 없습니다. 방향이 세 가지라는 점이 중요합니다.</p>
+<p>전자의 상태는 양자수 네 개로 구별합니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>양자수</th><th>기호</th><th>허용되는 값</th><th>정하는 것</th></tr></thead><tbody><tr><td>주양자수</td><td>n</td><td>1, 2, 3, …</td><td>전자 껍질, 오비탈의 크기, 에너지의 큰 틀</td></tr><tr><td>방위 양자수</td><td>l</td><td>0, 1, 2, …, n−1</td><td>오비탈의 종류와 모양. 0=s, 1=p, 2=d, 3=f</td></tr><tr><td>자기 양자수</td><td>m<sub>l</sub></td><td>−l, …, 0, …, +l</td><td>오비탈의 방향. 값의 개수 = 오비탈 수</td></tr><tr><td>스핀 양자수</td><td>m<sub>s</sub></td><td>+1/2 또는 −1/2</td><td>스핀. 한 오비탈의 전자 둘은 서로 반대</td></tr></tbody></table></div>
+<div class="formula">n 껍질의 오비탈 수 = n<sup>2</sup><br>n 껍질의 최대 전자 수 = 2n<sup>2</sup><br>l이 정해지면 오비탈 수 = 2l + 1, 최대 전자 수 = 2(2l + 1)</div>
+<p>n = 1이면 오비탈 1개(1s), 전자 2개입니다. n = 2이면 오비탈 4개(2s 1개 + 2p 3개), 전자 8개입니다. n = 3이면 오비탈 9개(3s, 3p 3개, 3d 5개), 전자 18개입니다. 다만 3주기 원소는 3d를 채우기 전에 4s로 넘어가므로, 아르곤까지의 원자가 전자는 s와 p에만 있습니다.</p>
+<p>허용되지 않는 조합은 범위에서 바로 걸러집니다. n = 2이면 l은 0 또는 1뿐입니다. (n, l, m<sub>l</sub>) = (2, 2, 0)은 l이 n−1보다 커서 없습니다. (2, 0, −1)은 l = 0인데 m<sub>l</sub>이 0이 아니라서 없습니다. (3, 1, 2)는 p 오비탈의 m<sub>l</sub>이 −1, 0, +1뿐이므로 없습니다. (3, 2, −2)는 3d 오비탈로 허용됩니다.</p>
+<div class="info-card"><h4>수소와 다전자 원자의 에너지</h4><p>수소처럼 전자가 하나이면 에너지는 n만으로 정해져 2s와 2p가 같습니다. 전자가 둘 이상이면 전자끼리의 반발 때문에 같은 n에서도 s, p, d의 에너지가 갈라지고, 일반적으로 s &lt; p &lt; d입니다.</p></div>
+<div class="warning-box"><strong>함정:</strong> m<sub>l</sub>을 0부터 l까지만 세면 p 오비탈을 2개로 잘못 셉니다. −l부터 +l까지이므로 p는 3개, d는 5개입니다. 스핀까지 넣으면 각 오비탈의 전자는 2개입니다.</div>
+
+<h2>4. 전자 배치: 쌓음 원리, 파울리 원리, 훈트 규칙</h2>
+<p>바닥상태는 에너지가 가장 낮은 전자 배치입니다. 다음 세 규칙을 모두 지킵니다.</p>
+<ul>
+<li><strong>쌓음 원리</strong>: 에너지가 낮은 오비탈부터 채웁니다. 화학Ⅰ에서 쓰는 순서는 1s → 2s → 2p → 3s → 3p → 4s → 3d → 4p → 5s → 4d → 5p입니다.</li>
+<li><strong>파울리 배타 원리</strong>: 한 원자 안에서 양자수 네 개가 모두 같은 전자는 없습니다. 한 오비탈에는 스핀이 반대인 전자가 최대 2개입니다.</li>
+<li><strong>훈트 규칙</strong>: 에너지가 같은 오비탈(예: 2p 세 개)에는 전자를 먼저 한 개씩, 스핀을 나란히 넣습니다. 그다음에 짝을 이룹니다.</li>
+</ul>
+<div class="formula">오비탈 표기 예<br>C(Z=6): 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>2</sup><br>N(Z=7): 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>3</sup><br>O(Z=8): 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>4</sup><br>Na(Z=11): 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>1</sup><br>Fe(Z=26): [Ar] 4s<sup>2</sup> 3d<sup>6</sup></div>
+<p>화살표로 그리면 칸 하나가 오비탈입니다. 질소의 2p는 ↑ ↑ ↑ 로 세 칸에 하나씩이고 홀전자가 3개입니다. 산소의 2p는 ↑↓ ↑ ↑ 입니다. 세 칸에 먼저 하나씩 넣은 뒤 네 번째 전자만 짝을 이루므로 홀전자는 2개입니다. ↑↓ ↑↓ 와 빈 칸으로 그리면 홀전자가 0이 되어, 훈트 규칙에 어긋난 들뜬 배치입니다.</p>
+<p>전형 원소의 원자가 전자는 가장 큰 n의 s, p 전자입니다. 1족은 ns<sup>1</sup>, 2족은 ns<sup>2</sup>, 13족은 ns<sup>2</sup> np<sup>1</sup>, 17족은 ns<sup>2</sup> np<sup>5</sup>, 18족은 ns<sup>2</sup> np<sup>6</sup>입니다. 헬륨만 1s<sup>2</sup>로 껍질이 가득 찹니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>홀전자 수</th><th>2주기 바닥상태의 예</th><th>2p 전자 배치</th></tr></thead><tbody><tr><td>1</td><td>B, F</td><td>2p<sup>1</sup> 또는 2p<sup>5</sup></td></tr><tr><td>2</td><td>C, O</td><td>2p<sup>2</sup> 또는 2p<sup>4</sup></td></tr><tr><td>3</td><td>N</td><td>2p<sup>3</sup></td></tr><tr><td>0</td><td>Be, Ne (그리고 짝이 다 찬 경우)</td><td>2p<sup>0</sup> 또는 2p<sup>6</sup></td></tr></tbody></table></div>
+<p>바닥상태가 쌓음 순서와 다른 예외가 두 가지 있습니다. 크롬(Z = 24)은 [Ar] 4s<sup>1</sup> 3d<sup>5</sup>이고, 구리(Z = 29)는 [Ar] 4s<sup>1</sup> 3d<sup>10</sup>입니다. 3d가 절반만 차거나 모두 찬 배치가 더 안정하기 때문입니다. 이 둘은 들뜬상태가 아니라 바닥상태입니다.</p>
+<p>들뜬상태는 전자의 총수는 바닥상태와 같은데, 일부 전자가 더 높은 오비탈에 올라가 전체 에너지가 높아진 배치입니다. 탄소의 바닥상태는 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>2</sup>(홀전자 2개)이고, 1s<sup>2</sup> 2s<sup>1</sup> 2p<sup>3</sup>(홀전자 4개)은 같은 탄소의 들뜬상태입니다. 전자가 6개라는 점은 같습니다.</p>
+<div class="info-card"><h4>전이 금속 이온</h4><p>중성 원자를 쓸 때는 4s를 3d보다 먼저 채웁니다. 양이온이 될 때는 4s 전자가 먼저 떨어집니다. Fe는 [Ar] 4s<sup>2</sup> 3d<sup>6</sup>, Fe<sup>2+</sup>는 [Ar] 3d<sup>6</sup>, Fe<sup>3+</sup>는 [Ar] 3d<sup>5</sup>입니다. Cu는 [Ar] 4s<sup>1</sup> 3d<sup>10</sup>, Cu<sup>+</sup>는 [Ar] 3d<sup>10</sup>, Cu<sup>2+</sup>는 [Ar] 3d<sup>9</sup>입니다.</p></div>
+<div class="warning-box"><strong>함정:</strong> Fe<sup>2+</sup>를 [Ar] 4s<sup>2</sup> 3d<sup>4</sup>로 쓰면 중성 원자에서 3d 전자를 뺀 것이 됩니다. 4s를 먼저 뺍니다. 또 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>3</sup> 3s<sup>1</sup>처럼 안쪽 껍질이 비어 있는데 바깥에 전자가 있으면, 전자 수가 같아도 바닥상태가 아닙니다.</div>
+<div class="study-tip"><strong>TIP:</strong> 홀전자는 ‘짝이 없는 화살표’만 셉니다. 오비탈 수와 다릅니다. 산소는 전자가 들어 있는 오비탈이 5개(1s, 2s, 2p 세 개)이고 홀전자는 2개입니다.</div>
+
+<h2>5. 자료를 이렇게 읽는다</h2>
+<p>이 파트의 자료는 세 종류입니다. 에너지 준위 화살표, 양자수 표, 오비탈 다이어그램(칸과 화살표)입니다.</p>
+<h3>에너지 준위와 스펙트럼</h3>
+<ol>
+<li>세로축이 에너지인지 파장인지 먼저 읽습니다. 에너지가 위로 갈수록 크면 n이 큰 준위가 위쪽에 있고 간격은 위로 갈수록 좁아집니다.</li>
+<li>아래로 향한 화살표는 방출, 위로 향한 화살표는 흡수입니다. 문제에서 방출만 묻는다면 아래로 가는 전이만 비교합니다.</li>
+<li>각 화살표의 n<sub>i</sub>와 n<sub>f</sub>를 적어 1/n<sub>f</sub><sup>2</sup> − 1/n<sub>i</sub><sup>2</sup>를 비교합니다. 이 값이 클수록 에너지와 진동수가 크고 파장은 짧습니다.</li>
+<li>선 스펙트럼 그림에서 짧은 파장 쪽으로 선이 촘촘해지면 그 끝이 계열 한계입니다. 빈 구간은 그 파장의 빛이 없다는 뜻입니다.</li>
+<li>가시광선은 대략 400~700 nm입니다. 656 nm는 가시광선(빨강), 122 nm는 자외선입니다.</li>
+</ol>
+<p>n = 2→1의 파장을 뤼드베리 식으로 확인하면 λ = 4/(3 × 1.097×10<sup>7</sup>) = 4/(3.291×10<sup>7</sup>) m ≈ 1.22×10<sup>−7</sup> m = 122 nm입니다. 자외선이라는 판단과 맞습니다.</p>
+<h3>양자수 표</h3>
+<ol>
+<li>n이 자연수인지, l이 0 이상 n−1 이하인지, m<sub>l</sub>이 −l 이상 +l 이하인지, m<sub>s</sub>가 ±1/2인지 한 줄씩 검사합니다. 하나라도 벗어나면 그 전자는 존재하지 않습니다.</li>
+<li>네 숫자가 모두 같은 행이 두 개면 파울리 원리에 어긋납니다. n, l, m<sub>l</sub>이 같고 m<sub>s</sub>만 반대이면 같은 오비탈의 전자 둘로 허용됩니다.</li>
+<li>l = 0이면 s, l = 1이면 p입니다. 오비탈 이름은 n과 l로만 정해지고, m<sub>l</sub>은 그 안의 방향입니다.</li>
+</ol>
+<h3>오비탈 다이어그램</h3>
+<ol>
+<li>칸의 높이가 에너지입니다. 같은 높이의 칸은 에너지가 같은 오비탈입니다.</li>
+<li>화살표 하나를 전자 하나로 셉니다. 총 화살표 수가 원자 번호(중성 원자)입니다.</li>
+<li>한 칸에 화살표가 둘이면 방향이 반대여야 합니다. 같은 방향 둘은 파울리 원리 위반입니다.</li>
+<li>같은 높이인데 어느 칸은 쌍을 이루고 어느 칸은 비어 있으면 훈트 규칙을 확인합니다. 홀전자를 더 늘릴 수 있는 배치면 바닥상태가 아닙니다.</li>
+<li>4s에 전자가 있고 3d가 비어 있는 칼륨·칼슘은 정상입니다. 3d보다 4s를 먼저 채운 그림 자체가 오류는 아닙니다.</li>
+</ol>
+<div class="study-tip"><strong>TIP:</strong> 원자 번호를 물을 때는 화살표를 모두 더한 뒤, 바닥상태 순서와 예외(Cr, Cu)인지만 확인합니다. 들뜬상태 그림이면 그 전자 수의 바닥상태 원소로 바꾸어 원자 번호를 정합니다. 전자 수는 들뜬상태에서도 같습니다.</div>
+
+<h2>6. 수능에서 묻는 방식</h2>
+<p>문항은 대개 아래 순서로 풀립니다.</p>
+<ol>
+<li><strong>전이 비교</strong>: 보기에 있는 전이의 n<sub>f</sub>, n<sub>i</sub>를 적고 에너지 차이를 분수로 비교합니다. 파장이 가장 긴 것을 고르라면 에너지 차이가 가장 작은 전이입니다.</li>
+<li><strong>허용 양자수</strong>: 범위를 벗어난 보기를 먼저 지웁니다. 남은 것 중 오비탈 이름과 홀전자 조건을 맞춥니다.</li>
+<li><strong>오비탈 수·홀전자 수</strong>: 전자 배치를 쓴 뒤, 전자가 들어 있는 칸 수와 짝 없는 화살표 수를 따로 셉니다.</li>
+<li><strong>원자 번호</strong>: 중성 원자의 전자 수 = 양성자 수입니다. “n = 3인 전자가 1개”이면 3s<sup>1</sup>까지 채운 나트륨(Z = 11)처럼 읽습니다.</li>
+<li><strong>이온</strong>: 전하만큼 전자를 더하거나 뺀 뒤, 전이 금속이면 4s부터 제거합니다.</li>
+</ol>
+<p>예를 들어 “바닥상태에서 홀전자가 3개이고, 가장 큰 주양자수가 2인 중성 원자”는 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>3</sup>인 질소, 원자 번호 7입니다. “n = 3인 전자가 6개이고 홀전자가 2개이며 4s 전자는 없다”는 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>4</sup>인 황, 원자 번호 16입니다. 3p<sup>4</sup>의 홀전자가 2개이기 때문입니다.</p>
+<div class="warning-box"><strong>함정:</strong> ‘전자가 들어 있는 오비탈 수’와 ‘홀전자 수’와 ‘원자가 전자 수’는 서로 다른 숫자입니다. 황은 점유 오비탈이 9개, 홀전자 2개, 원자가 전자 6개입니다.</div>
+
+<h2>자주 나오는 함정</h2><ul>
+<li><strong>궤도에 있는 동안 빛이 나온다</strong> — 보어 모형에서 빛은 준위 사이 전이에서만 나오거나 흡수됩니다.</li>
+<li><strong>에너지가 큰 빛은 파장이 길다</strong> — 에너지는 진동수에 비례하고 파장에는 반비례합니다.</li>
+<li><strong>바닥상태 수소가 발머 계열(가시광선)을 흡수한다</strong> — 바닥상태는 n = 1이라 흡수선은 라이먼 계열(자외선)입니다.</li>
+<li><strong>다전자 원자에서도 2s와 2p의 에너지가 같다</strong> — 수소만 에너지가 n만으로 정해집니다. 다전자 원자는 같은 껍질에서 s &lt; p &lt; d입니다.</li>
+<li><strong>m<sub>l</sub>의 개수를 l개로 센다</strong> — −l부터 +l까지이므로 2l+1개입니다. p는 3개입니다.</li>
+<li><strong>4s를 3d보다 나중에 채운다</strong> — 중성 원자의 바닥상태는 4s를 먼저 채웁니다. 이온이 될 때 빠지는 순서가 4s 먼저입니다.</li>
+<li><strong>크롬·구리의 배치를 들뜬상태로 본다</strong> — [Ar] 4s<sup>1</sup> 3d<sup>5</sup>, [Ar] 4s<sup>1</sup> 3d<sup>10</sup>은 바닥상태 예외입니다.</li>
+<li><strong>훈트 규칙과 반대로 한 오비탈부터 쌍을 채운다</strong> — 같은 에너지 오비탈은 홀전자가 최대가 되도록 한 개씩 넣습니다.</li>
+</ul>
+<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>수소 원자에서 전자가 n=4에서 n=2로 떨어질 때와 n=3에서 n=2로 떨어질 때, 방출하는 빛 1몰의 에너지는 각각 얼마인가? 어느 쪽 파장이 더 긴가? E<sub>n</sub> = −1312/n<sup>2</sup> kJ/mol이다.</summary><div class="example-sol"><p><strong>1단계.</strong> 방출 에너지는 1312(1/n<sub>f</sub><sup>2</sup> − 1/n<sub>i</sub><sup>2</sup>) kJ/mol입니다. 도착 준위는 둘 다 n = 2입니다.</p>
+<p><strong>2단계.</strong> n=4→2: 1/4 − 1/16 = 4/16 − 1/16 = 3/16. 1312 × 3/16 = 3936/16 = <strong>246 kJ/mol</strong>.</p>
+<p><strong>3단계.</strong> n=3→2: 1/4 − 1/9 = 9/36 − 4/36 = 5/36. 1312 × 5 = 6560, 6560/36 = <strong>182.2 kJ/mol</strong>(1640/9).</p>
+<p><strong>4단계.</strong> 246 &gt; 182.2이므로 4→2의 에너지와 진동수가 큽니다. 에너지는 파장에 반비례하므로 파장이 더 긴 쪽은 <strong>3→2</strong>입니다. 진동수 비는 246 ÷ (1640/9) = 246×9/1640 = 27/20 = 1.35입니다. 4→2의 파장은 3→2 파장의 20/27배입니다.</p></div></details><details class="example"><summary>R = 1.097×10<sup>7</sup> m<sup>−1</sup>일 때, 수소의 n=3→2 방출선의 파장은 약 몇 nm인가? 그 빛이 가시광선인지 판별하시오.</summary><div class="example-sol"><p><strong>1단계.</strong> 1/λ = R(1/4 − 1/9) = R × 5/36.</p>
+<p><strong>2단계.</strong> λ = 36/(5R) = 36/(5 × 1.097×10<sup>7</sup>) = 36/(5.485×10<sup>7</sup>) m.</p>
+<p><strong>3단계.</strong> 36/5.485 ≈ 6.563이므로 λ ≈ 6.563×10<sup>−7</sup> m = <strong>656 nm</strong>.</p>
+<p><strong>4단계.</strong> 가시광선은 대략 400~700 nm이므로 이 선은 가시광선(빨강)입니다. 같은 식으로 n=2→1은 λ = 4/(3R) ≈ 122 nm로 자외선입니다.</p>
+<p>검산으로 c = νλ를 쓰면, λ = 6.56×10<sup>−7</sup> m, c = 3.00×10<sup>8</sup> m/s일 때 ν = c/λ = 3.00/6.56 × 10<sup>15</sup> ≈ 4.57×10<sup>14</sup> Hz입니다. h = 6.63×10<sup>−34</sup> J·s이면 광자 하나의 에너지는 약 3.03×10<sup>−19</sup> J이고, 1몰(6.02×10<sup>23</sup>개)이면 약 182 kJ입니다. 앞 예제의 182.2 kJ/mol과 맞습니다.</p></div></details><details class="example"><summary>다음 전자 배치를 바닥상태와 들뜬상태로 구별하고, 중성 원자라면 원자 번호와 홀전자 수를 구하시오. (가) 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>3</sup> (나) 1s<sup>2</sup> 2s<sup>1</sup> 2p<sup>3</sup> (다) 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>6</sup> 3s<sup>2</sup> 3p<sup>6</sup> 4s<sup>1</sup> 3d<sup>5</sup></summary><div class="example-sol"><p><strong>(가)</strong> 전자 수 2+2+3 = 7. 쌓음 순서와 훈트 규칙(2p에 하나씩)을 모두 지킵니다. <strong>질소의 바닥상태</strong>, 원자 번호 7, 홀전자 3개입니다.</p>
+<p><strong>(나)</strong> 전자 수 2+1+3 = 6. 탄소의 바닥상태는 1s<sup>2</sup> 2s<sup>2</sup> 2p<sup>2</sup>이므로, 2s 전자 하나가 2p로 올라간 <strong>탄소의 들뜬상태</strong>입니다. 원자 번호 6입니다. 2s의 홀전자 1개와 2p<sup>3</sup>의 홀전자 3개를 더해 홀전자는 4개입니다.</p>
+<p><strong>(다)</strong> 전자 수 18+1+5 = 24. 크롬의 바닥상태는 예외적으로 [Ar] 4s<sup>1</sup> 3d<sup>5</sup>입니다. <strong>바닥상태</strong>이고 원자 번호 24입니다. 4s 홀전자 1개와 3d<sup>5</sup> 홀전자 5개를 더해 홀전자는 6개입니다. 4s<sup>2</sup> 3d<sup>4</sup>로 쓰면 오히려 바닥상태가 아닙니다.</p></div></details><details class="example"><summary>Fe의 바닥상태 전자 배치를 쓰고, Fe<sup>2+</sup>와 Fe<sup>3+</sup>의 전자 배치와 홀전자 수를 구하시오. 원자 번호는 26이다.</summary><div class="example-sol"><p><strong>1단계.</strong> Ar(Z=18)까지 채운 뒤 4s를 3d보다 먼저 채웁니다. 남은 전자는 8개이므로 Fe는 <strong>[Ar] 4s<sup>2</sup> 3d<sup>6</sup></strong>입니다.</p>
+<p><strong>2단계.</strong> 양이온은 4s 전자부터 제거합니다. Fe<sup>2+</sup>는 4s<sup>2</sup>를 뺀 <strong>[Ar] 3d<sup>6</sup></strong>입니다. 3d 오비탈 5개에 전자 6개이면 훈트 규칙에 따라 쌍은 1개, 홀전자는 4개입니다.</p>
+<p><strong>3단계.</strong> Fe<sup>3+</sup>는 전자를 하나 더 빼 <strong>[Ar] 3d<sup>5</sup></strong>입니다. 3d 다섯 칸에 하나씩이므로 홀전자는 5개입니다.</p>
+<p>[Ar] 4s<sup>2</sup> 3d<sup>4</sup>는 Fe<sup>2+</sup>가 아닙니다. 3d에서 먼저 뺀 배치라 화학Ⅰ의 이온 배치 규칙과 다릅니다.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3>
+<p>전자는 아무 자리에나 있지 않고, <strong>허용된 칸(오비탈)</strong>에만 들어갑니다. 빛이 나오는 것은 칸을 옮겨 탈 때뿐이고, 에너지 차이가 클수록 빛은 파랗고 짧아집니다.</p>
+<ul>
+<li>원자 번호는 양성자 수이고, 중성 원자에서는 전자 수와 같습니다.</li>
+<li>칸 하나에 전자는 최대 2개, 화살표는 서로 반대 방향입니다.</li>
+<li>같은 높이의 칸은 한 개씩 먼저 채웁니다. 짝 없는 화살표가 홀전자입니다.</li>
+</ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>스펙트럼 문항은 (1) 방출인지 흡수인지 화살표 방향으로 정하고, (2) 각 전이의 (1/n<sub>f</sub><sup>2</sup> − 1/n<sub>i</sub><sup>2</sup>)를 통분하여 비교하고, (3) 에너지·진동수·파장의 대소가 서로 반대인지 확인합니다. 계열 한계(n=∞)는 그 계열에서 에너지가 가장 크고 파장이 가장 짧습니다. 라이먼·발머·파셴은 에너지 구간이 겹치지 않습니다.</p>
+<p>전자 배치 자료는 (1) 화살표 총수 = 전자 수, (2) 바닥상태이면 쌓음 순서와 Cr·Cu 예외만 허용, (3) 홀전자는 쌍을 이루지 않은 화살표만, (4) 이온이면 전하만큼 전자를 조정하되 전이 금속은 4s를 먼저 제거합니다. 양자수 표는 n → l → m<sub>l</sub> → m<sub>s</sub> 순서로 범위를 검사하고, 네 수가 완전히 같은 행이 있으면 그 자료는 파울리 원리에 어긋납니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>원자 모형·양자수·전자 배치 용어를 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0d9488","prompt":"원자 모형·양자수·전자 배치 용어를 짝지으세요.","pairs":[{"term":"주양자수 n","def":"껍질과 에너지 준위"},{"term":"방위 양자수 l","def":"오비탈의 종류와 모양"},{"term":"파울리 배타 원리","def":"오비탈당 전자 2개, 스핀 반대"},{"term":"훈트 규칙","def":"같은 에너지 칸에 홀전자 우선"},{"term":"바닥상태","def":"에너지가 가장 낮은 배치"},{"term":"선 스펙트럼","def":"준위 사이 전이의 특정 파장"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d9488","questions":[{"q":"수소 원자에서 n=4→2 방출선의 에너지는 n=3→2 방출선과 비교하면?","choices":["같다","더 작다","더 크다","파장은 같고 에너지만 알 수 없다"],"answer":2},{"q":"양자수 n=2, l=2, ml=0 인 오비탈은?","choices":["2s","허용되지 않는다","2p","3d"],"answer":1},{"q":"바닥상태 질소 원자의 홀전자 수는?","choices":["3","1","2","5"],"answer":0},{"q":"3p, 4s, 3d, 4p 중 에너지가 가장 낮은 오비탈은?","choices":["4s","3d","4p","3p"],"answer":3},{"q":"Fe2+의 전자 배치로 옳은 것은?","choices":["[Ar] 4s2 3d4","[Ar] 4s2 3d6","[Ar] 3d6","[Ar] 4s1 3d5"],"answer":2}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 화학Ⅰ 전 시험지에서 이 파트로 분류된 <strong>69문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:k3">📝 원자 모형과 전자 배치 모아 풀기 →</a></p>
+<div class="pager"><a href="02-reaction.html">← 화학 반응식과 양적 관계</a><a href="04-periodic.html">원소의 주기적 성질 →</a></div>
+</main></div>
+</body></html>
