@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>힘과 운동 — 수능 물리학Ⅰ</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>물리학Ⅰ 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li><a href="01-forces.html" style="color:var(--accent);font-weight:600;">1. 힘과 운동</a></li>
+<li><a href="02-energy-heat.html">2. 에너지와 열</a></li>
+<li><a href="03-spacetime.html">3. 시간과 공간</a></li>
+<li><a href="04-matter.html">4. 물질의 구조와 성질</a></li>
+<li><a href="05-electromagnetism.html">5. 전기와 자기</a></li>
+<li><a href="06-waves.html">6. 파동의 성질과 활용</a></li>
+<li><a href="07-duality.html">7. 빛과 물질의 이중성</a></li>
+<li><a href="08-strategy.html">8. 실전 총정리</a></li>
+<li><a href="../motion.html">🎬 모션 노트</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>힘과 운동</h1><p class="authors">Part 1 · Ⅰ. 역학과 에너지</p><p class="affiliation">등가속도 직선 운동 · 뉴턴 운동 법칙 · 운동량과 충격량</p></header>
+<div class="stat-row"><div class="stat"><b>5.1</b><span>회당 문항 수</span></div><div class="stat"><b>13.3점</b><span>회당 배점</span></div><div class="stat"><b>4~6</b><span>회차별 범위</span></div><div class="stat"><b>81</b><span>최근 16회 누적</span></div></div>
+<p class="stat-note">수능 2022~2026학년도 + 6·9월 모의평가 16회(320문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>물리학Ⅰ에서 가장 큰 덩어리입니다. 수능에서는 세 가지가 서로 섞여 나옵니다. <strong>v–t 그래프로 가속도와 변위를 읽고</strong>, <strong>실로 연결된 물체의 알짜힘을 세우고</strong>, <strong>충돌 전후의 운동량과 충격량을 비교</strong>합니다. 식은 몇 개 안 되지만, 문항마다 조건이 표와 그림에 흩어져 있어서 <em>방향(부호)</em>을 놓치면 바로 오답이 됩니다.</p>
+<h2>1. 등가속도 직선 운동</h2>
+<p>가속도가 일정한 직선 운동입니다. 처음 속도를 v<sub>0</sub>, 가속도를 a라고 할 때 아래 네 식이 전부입니다. 시간이 주어지면 앞의 두 식, 시간이 없으면 세 번째 식을 씁니다.</p>
+<div class="formula">v = v<sub>0</sub> + at<br>s = v<sub>0</sub>t + ½at²<br>v² − v<sub>0</sub>² = 2as<br>s = ½(v + v<sub>0</sub>)t</div>
+<h3>그래프 읽기 — 기울기와 넓이 두 개</h3>
+<div class="tbl-wrap"><table><thead><tr><th>그래프</th><th>기울기</th><th>아래 넓이</th></tr></thead><tbody><tr><td>위치–시간 (s–t)</td><td>속도</td><td>—</td></tr><tr><td>속도–시간 (v–t)</td><td>가속도</td><td>변위 (v가 음수인 구간은 음수)</td></tr><tr><td>가속도–시간 (a–t)</td><td>—</td><td>속도 변화량</td></tr></tbody></table></div>
+<ul><li>정지 상태에서 출발한 등가속도 운동은 같은 시간 간격마다 이동 거리가 <strong>1 : 3 : 5 : …</strong>입니다.</li>
+<li>연직 위로 던진 물체는 최고점에서 속도만 0이고 <strong>가속도는 그대로 g(아래 방향)</strong>입니다.</li>
+<li>마찰 없는 빗면에서 가속도는 g sinθ, 경사가 클수록 커집니다.</li></ul>
+
+<h2>2. 뉴턴 운동 법칙</h2>
+<h3>세 법칙을 한 줄씩</h3>
+<div class="tbl-wrap"><table><thead><tr><th>법칙</th><th>내용</th><th>수능에서 묻는 방식</th></tr></thead><tbody><tr><td>1법칙(관성)</td><td>알짜힘 = 0 ⇔ 정지 또는 등속 직선 운동</td><td>그래프에서 v가 일정한 구간 = 알짜힘 0</td></tr><tr><td>2법칙</td><td>F<sub>알짜</sub> = ma. 가속도는 알짜힘과 같은 방향</td><td>연결된 물체의 가속도, 장력 계산</td></tr><tr><td>3법칙(작용·반작용)</td><td>두 물체 사이에서 크기 같고 방향 반대, <strong>서로 다른 물체</strong>에 작용</td><td>저울·자석 위에 떠 있는 물체, 충돌 중 서로 받는 힘</td></tr></tbody></table></div>
+<h3>작용·반작용 vs 힘의 평형</h3>
+<p>둘 다 “크기가 같고 방향이 반대”라 자주 헷갈립니다. 구별은 하나입니다. <strong>힘의 평형은 한 물체에 작용하는 두 힘</strong>이고, <strong>작용·반작용은 두 물체가 서로에게 주는 힘</strong>입니다. 책상 위 책의 중력과 수직항력은 평형, 책이 책상을 누르는 힘과 수직항력은 작용·반작용입니다.</p>
+<h3>연결된 물체 (도르래·실)</h3>
+<p>실로 묶인 물체는 <strong>가속도의 크기가 같습니다</strong>. 전체를 하나로 보고 a를 먼저 구한 다음, 한 물체만 떼어 장력을 구합니다.</p>
+<div class="formula">마찰 없는 수평면의 A(질량 m<sub>A</sub>)를 실로 당기는 매달린 B(m<sub>B</sub>):<br>a = m<sub>B</sub>g / (m<sub>A</sub> + m<sub>B</sub>),  T = m<sub>A</sub>a</div>
+<h3>마찰력과 수직항력</h3>
+<ul><li>정지 상태의 <strong>정지 마찰력은 외력과 같은 크기</strong>로 따라 변합니다(최대 정지 마찰력을 넘기 전까지).</li><li>운동 마찰력은 μN으로 일정합니다. 빗면에서는 N = mg cosθ입니다.</li></ul>
+
+<h2>3. 운동량과 충격량</h2>
+<div class="formula">p = mv (벡터)<br>충격량 I = FΔt = Δp = mv′ − mv<br>F–t 그래프 아래 넓이 = 충격량</div>
+<h3>운동량 보존</h3>
+<p>외력이 없거나 무시할 수 있으면 충돌 전 운동량의 합 = 충돌 후 운동량의 합입니다. 1차원이면 <strong>한 방향을 (+)로 정해 부호를 붙여</strong> 더합니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>충돌 종류</th><th>운동량 p</th><th>운동 에너지 K</th><th>특징</th></tr></thead><tbody><tr><td>탄성 충돌</td><td>보존</td><td>보존</td><td>같은 질량이면 속도 교환</td></tr><tr><td>비탄성 충돌</td><td>보존</td><td>감소</td><td>일부가 열·소리로</td></tr><tr><td>완전 비탄성 충돌</td><td>보존</td><td>가장 많이 감소</td><td>합쳐져 한 덩어리, v′ = (m<sub>1</sub>v<sub>1</sub> + m<sub>2</sub>v<sub>2</sub>)/(m<sub>1</sub> + m<sub>2</sub>)</td></tr></tbody></table></div>
+<h3>분열(폭발)과 용수철</h3>
+<p>정지한 계가 둘로 나뉘면 전체 운동량은 0이므로 두 조각의 운동량은 <strong>크기가 같고 방향이 반대</strong>입니다. 이때 운동 에너지는 질량에 <em>반비례</em>합니다(K = p²/2m). 가벼운 쪽이 더 빠르고 더 큰 K를 가집니다.</p>
+<h3>충격량과 힘</h3>
+<ul><li>충돌하는 두 물체가 <strong>서로 받는 충격량의 크기는 같습니다</strong>(작용·반작용, 접촉 시간도 같음).</li><li>같은 Δp라도 충돌 시간을 늘리면 평균 힘은 작아집니다(에어백, 무릎 굽히기).</li></ul>
+<h2>모션으로 보기</h2>
+<p>이 파트의 개념을 움직이는 그림으로 다시 확인합니다.</p>
+<p><a class="cta sm" href="../motion.html#s1">🎬 등가속도 직선 운동</a> <a class="cta sm" href="../motion.html#s2">🎬 뉴턴 운동 법칙</a> <a class="cta sm" href="../motion.html#s3">🎬 운동량과 충격량</a></p>
+<h2>자주 나오는 함정</h2><ul><li><strong>최고점에서 가속도 0</strong>이라는 보기 — 속도만 0입니다. 가속도는 g.</li><li><strong>작용·반작용을 힘의 평형</strong>으로 읽기 — 같은 물체에 작용하는지 먼저 확인.</li><li><strong>비탄성 충돌에서 K가 보존</strong>된다는 보기 — p만 보존됩니다.</li><li><strong>부호 실수</strong> — 반대 방향으로 튀어 나오는 물체의 v′는 음수입니다. v–t 그래프에서 x축 아래 넓이는 음(−)의 변위입니다.</li><li><strong>충돌 중 두 물체가 받는 힘이 다르다</strong>는 보기 — 크기는 항상 같습니다.</li><li>운동량 보존은 <strong>외력이 있으면 성립하지 않습니다</strong>. 바닥과 붙어 있는 계, 벽과의 충돌은 벽이 외력을 줍니다.</li></ul>
+<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>정지 상태에서 출발한 물체가 등가속도로 4 s 동안 8 m를 갔다. 4 s가 끝난 순간 속도와, 그다음 4 s 동안 이동 거리는?</summary><div class="example-sol"><p>s = ½at² → 8 = ½·a·16 → <strong>a = 1 m/s²</strong>. 4 s 후 속도 v = at = <strong>4 m/s</strong>.</p><p>다음 4 s: s′ = 4·4 + ½·1·16 = <strong>24 m</strong>. 처음 4 s와 비교하면 8 : 24 = 1 : 3, 정지 출발 연속 구간의 비와 일치합니다.</p></div></details><details class="example"><summary>마찰 없는 수평면 위 질량 3m 물체 A를 실로 연결하고, 도르래를 지나 질량 m 물체 B를 매달았다. 놓았을 때 가속도와 실의 장력은?</summary><div class="example-sol"><p>전체 알짜힘은 B의 무게 mg뿐이고 전체 질량은 4m입니다.</p><p>a = mg / 4m = <strong>g/4</strong>. A만 보면 T = 3m·a = <strong>3mg/4</strong>. (B로 확인: mg − T = m·a → T = mg − mg/4 = 3mg/4 ✓)</p></div></details><details class="example"><summary>2 kg 물체가 3 m/s로 가다가 정지한 1 kg 물체와 충돌해 붙었다. 충돌 후 속도와 잃어버린 운동 에너지는?</summary><div class="example-sol"><p>운동량 보존: 2·3 = (2+1)v′ → <strong>v′ = 2 m/s</strong>.</p><p>K<sub>전</sub> = ½·2·3² = 9 J, K<sub>후</sub> = ½·3·2² = 6 J → 손실 <strong>3 J</strong>. 완전 비탄성이므로 p는 보존, K는 줄어듭니다.</p></div></details><details class="example"><summary>질량 3 kg 물체가 정지해 있다가 힘을 받는다. 힘은 0~2 s 동안 6 N으로 일정하고 그 뒤 0이다. 2 s 이후 속도는?</summary><div class="example-sol"><p>F–t 그래프 넓이 = 충격량 = 6 × 2 = 12 N·s.</p><p>I = Δp = mv − 0 → v = 12 / 3 = <strong>4 m/s</strong>. 이후 힘이 0이므로 계속 4 m/s 등속입니다.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>속도는 “위치가 변하는 빠르기”, 가속도는 “속도가 변하는 빠르기”. v–t 그래프에서는 <strong>기울기 = 가속도, 넓이 = 이동 거리</strong> 두 가지만 봅니다.</p><ul><li>가속도 0이면 속도가 일정한 것입니다(멈춘 것과는 다릅니다).</li><li>충돌은 “주고받은 힘(충격량)”이 서로 같다고 생각하면 편합니다.</li><li>정지한 채 갈라지면 서로 <em>반대 방향으로 같은 운동량</em>을 가져갑니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>다물체 문항은 (1) 방향 기준 정하기 → (2) 전체 a 구하기 → (3) 물체별 장력·접촉력 구하기 순서로 풉니다. 충돌 문항은 운동량 보존식과 충돌 <em>후 속도 관계</em>(탄성이면 상대 속도 크기 유지, 완전 비탄성이면 같은 속도)를 연립합니다.</p><p>표에 “충돌 전후 속도”가 미지수(㉠, ㉡)로 주어지면 <strong>운동량 보존식 하나로 미지수를 하나 제거</strong>하고 나머지 조건(K 비, 충격량 비)을 넣습니다. 충격량 비 = 운동량 변화량 비이므로 질량비를 곧바로 쓸 수 있습니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>힘과 운동의 개념과 식을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0284c7","prompt":"힘과 운동의 개념과 식을 짝지으세요.","pairs":[{"term":"v–t 그래프 기울기","def":"가속도"},{"term":"v–t 그래프 아래 넓이","def":"변위"},{"term":"F–t 그래프 아래 넓이","def":"충격량"},{"term":"외력이 없는 충돌","def":"운동량 보존"},{"term":"완전 비탄성 충돌","def":"합쳐져 운동, K 최대 손실"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0284c7","questions":[{"q":"연직 위로 던진 물체가 최고점에 있을 때 가속도는?","choices":["0","g, 아래 방향","g, 위 방향","무한대"],"answer":1},{"q":"책상 위 책의 ‘작용·반작용’ 쌍은?","choices":["중력과 수직항력","책이 책상을 누르는 힘과 책상이 책을 받치는 힘","중력과 책상이 누르는 힘","마찰력과 중력"],"answer":1},{"q":"충돌 중 두 물체가 서로 받는 충격량의 크기는?","choices":["질량 큰 쪽이 크다","속력 빠른 쪽이 크다","항상 같다","탄성일 때만 같다"],"answer":2},{"q":"정지한 물체가 폭발하듯 둘로 갈라질 때 두 조각의 운동량은?","choices":["같은 방향, 같은 크기","반대 방향, 같은 크기","질량 비로 나뉨","모두 0"],"answer":1},{"q":"비탄성 충돌에서 보존되는 것은?","choices":["운동량만","운동 에너지만","둘 다","둘 다 아님"],"answer":0}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 물리학Ⅰ 전 시험지에서 이 파트로 분류된 <strong>81문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:p1">📝 힘과 운동 모아 풀기 →</a></p>
+<div class="pager"><a href="../index.html">← 표지</a><a href="02-energy-heat.html">에너지와 열 →</a></div>
+</main></div>
+</body></html>

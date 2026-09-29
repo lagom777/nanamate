@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>빛과 물질의 이중성 — 수능 물리학Ⅰ</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>물리학Ⅰ 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li><a href="01-forces.html">1. 힘과 운동</a></li>
+<li><a href="02-energy-heat.html">2. 에너지와 열</a></li>
+<li><a href="03-spacetime.html">3. 시간과 공간</a></li>
+<li><a href="04-matter.html">4. 물질의 구조와 성질</a></li>
+<li><a href="05-electromagnetism.html">5. 전기와 자기</a></li>
+<li><a href="06-waves.html">6. 파동의 성질과 활용</a></li>
+<li><a href="07-duality.html" style="color:var(--accent);font-weight:600;">7. 빛과 물질의 이중성</a></li>
+<li><a href="08-strategy.html">8. 실전 총정리</a></li>
+<li><a href="../motion.html">🎬 모션 노트</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>빛과 물질의 이중성</h1><p class="authors">Part 7 · Ⅲ. 파동과 정보통신</p><p class="affiliation">광전 효과 · 물질파 · 전자 현미경</p></header>
+<div class="stat-row"><div class="stat"><b>1.1</b><span>회당 문항 수</span></div><div class="stat"><b>2.6점</b><span>회당 배점</span></div><div class="stat"><b>1~2</b><span>회차별 범위</span></div><div class="stat"><b>17</b><span>최근 16회 누적</span></div></div>
+<p class="stat-note">수능 2022~2026학년도 + 6·9월 모의평가 16회(320문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>가장 문항 수가 적은 파트(회당 1문항)이지만 <strong>거의 매 회 나오고, 개념 문장이 정해져 있어</strong> 맞히기 쉬운 문항입니다. 광전 효과의 세 가지 사실과 물질파 λ = h/p 관계만 정확히 잡으면 됩니다.</p>
+<h2>1. 빛의 입자성 — 광전 효과</h2>
+<p>금속에 빛을 비추면 전자가 튀어나오는 현상입니다. 빛을 <strong>광자</strong>(에너지 E = hf)의 흐름으로 보면 설명됩니다.</p>
+<div class="formula">광자 에너지 E = hf = hc/λ<br>K<sub>max</sub> = hf − W  (W = hf<sub>0</sub>: 일함수)<br>정지 전압 V<sub>s</sub> = K<sub>max</sub>/e</div>
+<div class="tbl-wrap"><table><thead><tr><th>바꾸는 것</th><th>결과</th></tr></thead><tbody><tr><td>진동수 f ≥ f<sub>0</sub>(문턱 진동수)</td><td>광전자 방출. f &lt; f<sub>0</sub>이면 세기가 아무리 커도 <strong>방출 없음</strong></td></tr><tr><td>빛의 세기 ↑ (f 고정)</td><td>광전자 <strong>수</strong> ↑ (광전류 ↑), K<sub>max</sub> 불변</td></tr><tr><td>진동수 ↑ (세기 고정)</td><td>K<sub>max</sub> ↑ (광전자 수는 광자 수에 의존)</td></tr><tr><td>금속 종류 변경</td><td>W(문턱 진동수)가 달라짐, K<sub>max</sub>–f 그래프의 <strong>기울기(h)는 동일</strong></td></tr></tbody></table></div>
+<h3>K<sub>max</sub>–f 그래프</h3>
+<ul><li>직선의 <strong>기울기 = 플랑크 상수 h</strong> (금속과 무관), f축 절편 = f<sub>0</sub>, K축 절편 = −W.</li><li>금속 A, B의 그래프는 서로 <em>평행</em>합니다. 절편이 큰 쪽이 일함수가 큰 금속입니다.</li></ul>
+<h2>2. 빛의 파동성과 이중성</h2>
+<p>빛은 이중 슬릿 실험에서 <strong>간섭 무늬</strong>(파동성)를, 광전 효과에서 <strong>광자 하나하나</strong>(입자성)를 보입니다. 두 성질은 실험 상황에 따라 드러나며 한 번에 하나만 관측됩니다.</p>
+<h2>3. 물질파와 전자 현미경</h2>
+<div class="formula">드브로이 파장 λ = h/p = h/mv</div>
+<ul><li>입자(전자·양성자)도 파동성을 가집니다. 전자선을 금속박에 쏘면 X선처럼 <strong>회절 무늬</strong>가 나옵니다(데이비슨·거머 실험).</li><li>운동량이 클수록 파장이 짧습니다. 같은 속력이면 <strong>질량이 큰 입자의 물질파 파장이 짧습니다</strong>. 같은 운동 에너지에서도 p = √(2mK)이므로 질량이 큰 쪽이 파장이 짧습니다.</li><li><strong>전자 현미경</strong>은 전자의 물질파 파장이 가시광선보다 훨씬 짧아 <em>분해능이 높습니다</em>. 가속 전압을 높이면 전자의 p가 커져 λ가 더 짧아집니다.</li><li>일상의 거시적 물체는 파장이 너무 짧아(p가 매우 큼) 파동성을 관측할 수 없습니다.</li></ul>
+<h2>모션으로 보기</h2>
+<p>이 파트의 개념을 움직이는 그림으로 다시 확인합니다.</p>
+<p><a class="cta sm" href="../motion.html#s18">🎬 광전 효과</a> <a class="cta sm" href="../motion.html#s19">🎬 물질파와 전자 현미경</a></p>
+<h2>자주 나오는 함정</h2><ul><li><strong>빛의 세기를 키우면 광전자의 최대 운동 에너지가 커진다</strong> — 세기는 개수, 진동수가 K<sub>max</sub>를 정합니다.</li><li><strong>문턱 진동수 미만인 빛도 오래 비추면 방출된다</strong> — 시간과 무관하게 방출되지 않습니다.</li><li><strong>금속마다 K<sub>max</sub>–f 그래프의 기울기가 다르다</strong> — 기울기는 h로 모두 같습니다.</li><li><strong>물질파는 전자에만 있다</strong> — 모든 입자가 물질파를 가집니다(파장이 관측 가능한 것이 미시 입자일 뿐).</li><li>파장이 <strong>긴</strong> 빛이 에너지가 더 크다 — 반대입니다. λ가 짧을수록 광자 에너지가 큽니다.</li></ul>
+<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>일함수가 2.0 eV인 금속에 광자 에너지가 3.5 eV인 빛을 비출 때 최대 운동 에너지와 정지 전압은?</summary><div class="example-sol"><p>K<sub>max</sub> = hf − W = 3.5 − 2.0 = <strong>1.5 eV</strong>. 정지 전압 V<sub>s</sub> = 1.5 V.</p></div></details><details class="example"><summary>파장이 400 nm인 빛의 광자 에너지는? (hc = 1240 eV·nm)</summary><div class="example-sol"><p>E = 1240 / 400 = <strong>3.1 eV</strong>. 일함수 2.5 eV인 금속에서는 방출되고 3.5 eV인 금속에서는 방출되지 않습니다.</p></div></details><details class="example"><summary>같은 속력으로 운동하는 전자와 양성자 중 물질파 파장이 더 짧은 쪽은?</summary><div class="example-sol"><p>λ = h/mv이므로 속력이 같으면 질량이 큰 <strong>양성자</strong>의 파장이 짧습니다(약 1836배 짧음).</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>빛은 <strong>알갱이(광자)</strong>로 부딪쳐 전자를 튕겨 냅니다. 알갱이 하나의 힘(진동수)이 문턱을 넘어야 튕겨 나오고, 알갱이 수(세기)는 튀어나오는 전자의 개수를 정합니다.</p><ul><li>입자도 파동처럼 굴 수 있습니다(물질파).</li><li>전자 현미경은 “파장이 아주 짧은 전자파”로 보는 현미경입니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>광전 효과 그래프 문항은 <em>기울기 = h가 같다</em>를 이용해 두 금속의 그래프를 평행하게 그려 놓고, 같은 진동수에서 K<sub>max</sub> 차이 = 일함수 차이라는 관계를 씁니다. 광전류–전압 그래프에서는 <strong>포화 전류 = 세기(광자 수)</strong>, <strong>정지 전압 = K<sub>max</sub>/e</strong>로 두 정보를 분리해 읽습니다.</p><p>물질파 문항은 λ = h/p에 운동량 보존, 운동 에너지 관계(p² = 2mK)를 붙여 파장 비를 구합니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>광전 효과·물질파 관계를 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0284c7","prompt":"광전 효과·물질파 관계를 짝지으세요.","pairs":[{"term":"빛의 세기 증가","def":"광전자 수 증가"},{"term":"진동수 증가","def":"최대 운동 에너지 증가"},{"term":"K–f 그래프 기울기","def":"플랑크 상수 h"},{"term":"물질파 파장","def":"λ = h/p"},{"term":"전자 현미경","def":"짧은 파장으로 높은 분해능"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0284c7","questions":[{"q":"광전 효과에서 최대 운동 에너지를 결정하는 것은?","choices":["빛의 세기","빛의 진동수","조사 시간","금속의 크기"],"answer":1},{"q":"K–f 그래프의 기울기는?","choices":["금속마다 다르다","h로 모두 같다","일함수","0"],"answer":1},{"q":"같은 속력일 때 물질파 파장이 짧은 쪽은?","choices":["질량이 작은 입자","질량이 큰 입자","같다","전하가 큰 입자"],"answer":1},{"q":"전자 현미경의 분해능이 높은 이유는?","choices":["전자의 파장이 짧아서","전자의 질량이 커서","전압이 낮아서","전자가 빛이라서"],"answer":0},{"q":"문턱 진동수보다 작은 빛을 세게 비추면?","choices":["광전자 방출","방출 없음","K가 커짐","시간이 지나면 방출"],"answer":1}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 물리학Ⅰ 전 시험지에서 이 파트로 분류된 <strong>17문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:p7">📝 빛과 물질의 이중성 모아 풀기 →</a></p>
+<div class="pager"><a href="06-waves.html">← 파동의 성질과 활용</a><a href="08-strategy.html">실전 총정리 →</a></div>
+</main></div>
+</body></html>

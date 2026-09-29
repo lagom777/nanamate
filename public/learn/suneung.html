@@ -59,6 +59,24 @@
     .sn-num { height: 38px; font-size: 14px; }
     .sn-start.ghost { margin-left: 0; margin-top: 10px; }
   }
+
+  .sn-sub { margin-top: 30px; scroll-margin-top: 130px; padding: 18px; border-radius: 16px; background: #fff; border: 1px solid rgba(0,0,0,.08); box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  .sn-sub[hidden] { display: none; }
+  .sn-sh { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px; padding-left: 12px; border-left: 4px solid var(--c); }
+  .sn-sh h3 { font-size: 21px; letter-spacing: -.01em; }
+  .sn-sh p { font-size: 13px; color: #4a5468; margin-top: 2px; }
+  .sn-sh .sn-home { font-size: 13px; font-weight: 700; color: var(--c); text-decoration: none; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--c); white-space: nowrap; }
+  .sn-sh .sn-home:hover { background: color-mix(in srgb, var(--c) 10%, #fff); }
+  .sn-ch { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; margin-top: 14px; }
+  .sn-c { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; background: #fafbfc; border: 1px solid rgba(0,0,0,.08); color: inherit; text-decoration: none; font-size: 14px; font-weight: 600; transition: border-color .2s, background .2s; }
+  .sn-c:hover { border-color: var(--c); background: color-mix(in srgb, var(--c) 6%, #fff); }
+  .sn-c b { flex: none; display: grid; place-items: center; min-width: 30px; height: 26px; padding: 0 6px; border-radius: 7px; background: color-mix(in srgb, var(--c) 13%, #fff); color: var(--c); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  .sn-c.sp { background: color-mix(in srgb, var(--c) 8%, #fff); border-color: color-mix(in srgb, var(--c) 40%, #fff); }
+  .sn-c.sp b { background: var(--c); color: #fff; }
+  .sn-quick { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .sn-quick a { font-size: 13.5px; font-weight: 700; padding: 8px 14px; border-radius: 999px; background: #fff; border: 1px solid rgba(0,0,0,.14); color: #0a0e1a; text-decoration: none; }
+  .sn-quick a:hover { border-color: rgba(0,0,0,.4); }
+
 </style>
 </head>
 <body>
@@ -80,7 +98,6 @@
   <nav class="hub-nav">
     <a href="index.html">허브</a>
     <a href="suneung.html" aria-current="page" style="color:#dc2626!important;font-weight:700;">수능</a>
-    <a href="aboutSuneung/index.html">전체 목차</a>
   </nav>
 </header>
 
@@ -88,124 +105,108 @@
   <section class="sn-hero">
     <div class="sn-kicker">2027학년도 · 이과</div>
     <h2>수능 이과, 다섯 과목</h2>
-    <p>국어 · 미적분 · 영어 · 물리학 I · 생명과학 I. 과목별로 골라 보거나, 처음부터 순서대로 따라가세요. 연습 문제는 각 장 본문 안에 있습니다.</p>
-    <a class="sn-start" href="aboutSuneung/chapters/01-overview.html">1장부터 시작 →</a>
-    <a class="sn-start ghost" href="aboutSuneung/index.html">이과 총람</a>
+    <p>국어 · 미적분 · 영어 · 물리학Ⅰ · 생명과학Ⅰ. 과목을 골라 각 노트의 장으로 바로 들어가세요.</p>
+    <div class="sn-quick">
+      <a href="aboutSuneungPhysics1/practice.html">📝 물리학Ⅰ 기출 풀어보기</a>
+      <a href="aboutSuneungBio1/practice.html">📝 생명과학Ⅰ 기출 풀어보기</a>
+      <a href="aboutSuneungPhysics1/motion.html">🎬 물리학Ⅰ 모션 노트</a>
+      <a href="aboutSuneungBio1/motion.html">🎬 생명과학Ⅰ 모션 노트</a>
+    </div>
     <div class="sn-exam" aria-label="시험 구성">
       <div><b>국어</b><span>45문항 · 80분</span></div>
       <div><b>수학(미적분)</b><span>30문항 · 100분</span></div>
       <div><b>영어</b><span>45문항 · 70분 · 절대평가</span></div>
-      <div><b>탐구(물1·생1)</b><span>과목당 20문항 · 30분</span></div>
+      <div><b>탐구(물Ⅰ·생Ⅰ)</b><span>과목당 20문항 · 30분</span></div>
     </div>
   </section>
 
   <div class="sn-tabs" role="tablist" aria-label="과목 필터">
-    <button class="sn-tab" role="tab" data-f="all" aria-selected="true">전체 9장</button>
-    <button class="sn-tab" role="tab" data-f="start" aria-selected="false">시작</button>
+    <button class="sn-tab" role="tab" data-f="all" aria-selected="true">전체</button>
     <button class="sn-tab" role="tab" data-f="korean" aria-selected="false">국어</button>
-    <button class="sn-tab" role="tab" data-f="math" aria-selected="false">수학</button>
+    <button class="sn-tab" role="tab" data-f="calc" aria-selected="false">미적분</button>
     <button class="sn-tab" role="tab" data-f="english" aria-selected="false">영어</button>
-    <button class="sn-tab" role="tab" data-f="science" aria-selected="false">탐구</button>
-    <button class="sn-tab" role="tab" data-f="final" aria-selected="false">실전</button>
+    <button class="sn-tab" role="tab" data-f="phys" aria-selected="false">물리학Ⅰ</button>
+    <button class="sn-tab" role="tab" data-f="bio" aria-selected="false">생명과학Ⅰ</button>
   </div>
 
-  <section class="sn-group" data-g="start" style="--c:#dc2626">
-    <div class="sn-ghead"><h3>시작</h3><span>시험 구조부터</span></div>
-    <div class="sn-list">
-      <a class="sn-row" href="aboutSuneung/chapters/01-overview.html">
-        <div class="sn-num">01</div>
-        <div><h4>수능 이과 한눈에</h4><p>시간표, 공통+선택 구조, 절대평가 영어</p>
-          <div class="sn-tags"><span>시간표</span><span>공통+선택</span><span>절대평가</span></div></div>
-        <div class="sn-go">→</div>
-      </a>
+  <section class="sn-sub" data-g="korean" style="--c:#b45309">
+    <div class="sn-sh">
+      <div><h3>국어</h3><p>공통 독서·문학 · 독서 유형·함정 문장, 문학 갈래와 보기 대응</p></div>
+      <a class="sn-home" href="aboutSuneungKorean/index.html">노트 표지 →</a>
+    </div>
+    <div class="sn-ch">
+        <a class="sn-c" href="aboutSuneungKorean/chapters/01-reading.html"><b>01</b>독서</a>
+        <a class="sn-c" href="aboutSuneungKorean/chapters/02-literature.html"><b>02</b>문학</a>
     </div>
   </section>
 
-  <section class="sn-group" data-g="korean" style="--c:#b45309">
-    <div class="sn-ghead"><h3>국어</h3><span>공통 독서·문학</span></div>
-    <div class="sn-list">
-      <a class="sn-row" href="aboutSuneung/chapters/02-korean-reading.html">
-        <div class="sn-num">02</div>
-        <div><h4>국어 독서</h4><p>독서 유형과 함정 문장</p>
-          <div class="sn-tags"><span>독서 유형</span><span>함정 문장</span></div></div>
-        <div class="sn-go">→</div>
-      </a>
-      <a class="sn-row" href="aboutSuneung/chapters/03-korean-lit.html">
-        <div class="sn-num">03</div>
-        <div><h4>국어 문학</h4><p>갈래·시점·보기 — 작품이 지금 하는 말을 읽는 법</p>
-          <div class="sn-tags"><span>갈래</span><span>시점</span><span>보기</span></div></div>
-        <div class="sn-go">→</div>
-      </a>
+  <section class="sn-sub" data-g="calc" style="--c:#7c3aed">
+    <div class="sn-sh">
+      <div><h3>미적분</h3><p>선택 과목 · 극한·미분·적분·회전체</p></div>
+      <a class="sn-home" href="aboutSuneungCalculus/index.html">노트 표지 →</a>
+    </div>
+    <div class="sn-ch">
+        <a class="sn-c" href="aboutSuneungCalculus/chapters/01-differentiation.html"><b>01</b>극한·미분</a>
+        <a class="sn-c" href="aboutSuneungCalculus/chapters/02-integration.html"><b>02</b>적분·활용</a>
     </div>
   </section>
 
-  <section class="sn-group" data-g="math" style="--c:#7c3aed">
-    <div class="sn-ghead"><h3>수학</h3><span>선택 미적분</span></div>
-    <div class="sn-list">
-      <a class="sn-row" href="aboutSuneung/chapters/04-calc-diff.html">
-        <div class="sn-num">04</div>
-        <div><h4>미적분 — 극한·미분</h4><p>수열 극한부터 도함수까지</p>
-          <div class="sn-tags"><span>수열·급수</span><span>극한·연속</span><span>미분법</span></div></div>
-        <div class="sn-go">→</div>
-      </a>
-      <a class="sn-row" href="aboutSuneung/chapters/05-calc-int.html">
-        <div class="sn-num">05</div>
-        <div><h4>미적분 — 적분·활용</h4><p>부정적분부터 넓이·부피까지</p>
-          <div class="sn-tags"><span>치환·부분적분</span><span>넓이</span><span>회전체 부피</span></div></div>
-        <div class="sn-go">→</div>
-      </a>
+  <section class="sn-sub" data-g="english" style="--c:#2563eb">
+    <div class="sn-sh">
+      <div><h3>영어</h3><p>절대평가 · 90점이 1등급 선 · 듣기 17·빈칸·순서·삽입·장문</p></div>
+      <a class="sn-home" href="aboutSuneungEnglish/index.html">노트 표지 →</a>
+    </div>
+    <div class="sn-ch">
+        <a class="sn-c" href="aboutSuneungEnglish/chapters/01-english.html"><b>01</b>듣기와 독해 유형</a>
     </div>
   </section>
 
-  <section class="sn-group" data-g="english" style="--c:#2563eb">
-    <div class="sn-ghead"><h3>영어</h3><span>절대평가 · 90점이 1등급 선</span></div>
-    <div class="sn-list">
-      <a class="sn-row" href="aboutSuneung/chapters/06-english.html">
-        <div class="sn-num">06</div>
-        <div><h4>수능 영어</h4><p>듣기 17, 빈칸·순서·삽입·장문</p>
-          <div class="sn-tags"><span>듣기</span><span>빈칸</span><span>순서·삽입</span><span>장문</span></div></div>
-        <div class="sn-go">→</div>
-      </a>
+  <section class="sn-sub" data-g="phys" style="--c:#0284c7">
+    <div class="sn-sh">
+      <div><h3>물리학Ⅰ</h3><p>3단원 7파트 · 정리 · 모션 노트 · 기출 16회 채점·해설</p></div>
+      <a class="sn-home" href="aboutSuneungPhysics1/index.html">노트 표지 →</a>
+    </div>
+    <div class="sn-ch">
+        <a class="sn-c" href="aboutSuneungPhysics1/chapters/01-forces.html"><b>01</b>힘과 운동</a>
+        <a class="sn-c" href="aboutSuneungPhysics1/chapters/02-energy-heat.html"><b>02</b>에너지와 열</a>
+        <a class="sn-c" href="aboutSuneungPhysics1/chapters/03-spacetime.html"><b>03</b>시간과 공간</a>
+        <a class="sn-c" href="aboutSuneungPhysics1/chapters/04-matter.html"><b>04</b>물질의 구조와 성질</a>
+        <a class="sn-c" href="aboutSuneungPhysics1/chapters/05-electromagnetism.html"><b>05</b>전기와 자기</a>
+        <a class="sn-c" href="aboutSuneungPhysics1/chapters/06-waves.html"><b>06</b>파동의 성질과 활용</a>
+        <a class="sn-c" href="aboutSuneungPhysics1/chapters/07-duality.html"><b>07</b>빛과 물질의 이중성</a>
+        <a class="sn-c" href="aboutSuneungPhysics1/chapters/08-strategy.html"><b>08</b>실전 총정리</a>
+        <a class="sn-c sp" href="aboutSuneungPhysics1/motion.html"><b>🎬</b>모션 노트</a>
+        <a class="sn-c sp" href="aboutSuneungPhysics1/practice.html"><b>📝</b>기출 풀어보기</a>
     </div>
   </section>
 
-  <section class="sn-group" data-g="science" style="--c:#0284c7">
-    <div class="sn-ghead"><h3>탐구</h3><span>물리학 I · 생명과학 I · 과목당 20문항 30분</span></div>
-    <div class="sn-list">
-      <a class="sn-row" href="aboutSuneung/chapters/07-phys1.html" style="--c:#0284c7">
-        <div class="sn-num">07</div>
-        <div><h4>물리학 I</h4><p>역학부터 파동·광전 효과까지, 그래프와 보존량</p>
-          <div class="sn-tags"><span>역학</span><span>파동</span><span>광전 효과</span></div></div>
-        <div class="sn-go">→</div>
-      </a>
-      <a class="sn-row" href="aboutSuneung/chapters/08-bio1.html" style="--c:#16a34a">
-        <div class="sn-num">08</div>
-        <div><h4>생명과학 I</h4><p>유전 가계도, 항상성, 방어, 생태계</p>
-          <div class="sn-tags"><span>가계도</span><span>항상성</span><span>생태계</span></div></div>
-        <div class="sn-go">→</div>
-      </a>
+  <section class="sn-sub" data-g="bio" style="--c:#16a34a">
+    <div class="sn-sh">
+      <div><h3>생명과학Ⅰ</h3><p>5단원 8파트 · 정리 · 모션 노트 · 기출 16회 채점·해설</p></div>
+      <a class="sn-home" href="aboutSuneungBio1/index.html">노트 표지 →</a>
+    </div>
+    <div class="sn-ch">
+        <a class="sn-c" href="aboutSuneungBio1/chapters/01-life.html"><b>01</b>생명과학의 이해</a>
+        <a class="sn-c" href="aboutSuneungBio1/chapters/02-metabolism.html"><b>02</b>사람의 물질대사</a>
+        <a class="sn-c" href="aboutSuneungBio1/chapters/03-neuron-muscle.html"><b>03</b>자극의 전달과 근수축</a>
+        <a class="sn-c" href="aboutSuneungBio1/chapters/04-nervous-homeostasis.html"><b>04</b>신경계와 항상성</a>
+        <a class="sn-c" href="aboutSuneungBio1/chapters/05-defense.html"><b>05</b>방어 작용</a>
+        <a class="sn-c" href="aboutSuneungBio1/chapters/06-cell-division.html"><b>06</b>유전 정보와 세포 분열</a>
+        <a class="sn-c" href="aboutSuneungBio1/chapters/07-human-genetics.html"><b>07</b>사람의 유전</a>
+        <a class="sn-c" href="aboutSuneungBio1/chapters/08-ecosystem.html"><b>08</b>생태계와 상호 작용</a>
+        <a class="sn-c" href="aboutSuneungBio1/chapters/09-strategy.html"><b>09</b>실전 총정리</a>
+        <a class="sn-c sp" href="aboutSuneungBio1/motion.html"><b>🎬</b>모션 노트</a>
+        <a class="sn-c sp" href="aboutSuneungBio1/practice.html"><b>📝</b>기출 풀어보기</a>
     </div>
   </section>
 
-  <section class="sn-group" data-g="final" style="--c:#475569">
-    <div class="sn-ghead"><h3>실전</h3><span>시험장에서 쓰는 법</span></div>
-    <div class="sn-list">
-      <a class="sn-row" href="aboutSuneung/chapters/09-strategy.html">
-        <div class="sn-num">09</div>
-        <div><h4>실전 시간·오답</h4><p>면 배치와 버리는 문항, 오답 노트 쓰는 법</p>
-          <div class="sn-tags"><span>시간 배분</span><span>오답 노트</span></div></div>
-        <div class="sn-go">→</div>
-      </a>
-    </div>
-  </section>
-
-  <p class="sn-foot">각 장은 <strong>개념 → 난이도별 학습 → 직접 해보기 → 개념 확인</strong> 순서입니다. <a href="index.html">← 통합 허브로</a></p>
+  <p class="sn-foot"><a href="index.html">← 통합 허브로</a></p>
 </main>
 
 <script>
 (function () {
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.sn-tab'));
-  var groups = Array.prototype.slice.call(document.querySelectorAll('.sn-group'));
+  var groups = Array.prototype.slice.call(document.querySelectorAll('.sn-sub'));
   var valid = tabs.map(function (t) { return t.dataset.f; });
   function show(f, push) {
     if (valid.indexOf(f) < 0) f = 'all';

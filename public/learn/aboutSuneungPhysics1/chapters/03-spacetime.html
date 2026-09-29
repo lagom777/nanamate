@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시간과 공간 — 수능 물리학Ⅰ</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<script defer src="../../shared/quizgame3d.js"></script>
+<script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>물리학Ⅰ 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li><a href="01-forces.html">1. 힘과 운동</a></li>
+<li><a href="02-energy-heat.html">2. 에너지와 열</a></li>
+<li><a href="03-spacetime.html" style="color:var(--accent);font-weight:600;">3. 시간과 공간</a></li>
+<li><a href="04-matter.html">4. 물질의 구조와 성질</a></li>
+<li><a href="05-electromagnetism.html">5. 전기와 자기</a></li>
+<li><a href="06-waves.html">6. 파동의 성질과 활용</a></li>
+<li><a href="07-duality.html">7. 빛과 물질의 이중성</a></li>
+<li><a href="08-strategy.html">8. 실전 총정리</a></li>
+<li><a href="../motion.html">🎬 모션 노트</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>시간과 공간</h1><p class="authors">Part 3 · Ⅰ. 역학과 에너지</p><p class="affiliation">특수 상대성 이론 · 질량–에너지 등가 · 핵반응</p></header>
+<div class="stat-row"><div class="stat"><b>2.1</b><span>회당 문항 수</span></div><div class="stat"><b>4.8점</b><span>회당 배점</span></div><div class="stat"><b>2~3</b><span>회차별 범위</span></div><div class="stat"><b>33</b><span>최근 16회 누적</span></div></div>
+<p class="stat-note">수능 2022~2026학년도 + 6·9월 모의평가 16회(320문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>계산이 거의 없고 <strong>개념 판별</strong>이 중심인 파트입니다. 상대성 이론은 “누가 고유 시간·고유 길이를 재는가”, 핵반응은 “질량수와 전하량은 보존되고 질량은 줄어든다”를 알면 됩니다. 회당 약 2문항이 꾸준히 나오는데, 배운 대로만 읽으면 되는 <em>서비스 문항</em>인 경우가 많습니다.</p>
+<h2>1. 특수 상대성 이론의 두 가정</h2>
+<ul><li><strong>상대성 원리</strong>: 모든 관성계에서 물리 법칙은 똑같이 성립한다.</li><li><strong>광속 불변 원리</strong>: 진공에서 빛의 속력 c는 광원이나 관찰자의 운동과 관계없이 모든 관성계에서 같다.</li></ul>
+<h2>2. 시간 지연과 길이 수축</h2>
+<div class="formula">γ = 1 / √(1 − v²/c²)<br>시간 지연: Δt = γΔt<sub>0</sub>  (Δt<sub>0</sub>: 고유 시간)<br>길이 수축: L = L<sub>0</sub> / γ  (L<sub>0</sub>: 고유 길이, 운동 방향만)</div>
+<h3>고유 시간과 고유 길이를 가르는 법</h3>
+<div class="tbl-wrap"><table><thead><tr><th>구분</th><th>누가 재는가</th><th>값</th></tr></thead><tbody><tr><td>고유 시간</td><td><strong>두 사건이 같은 위치에서</strong> 일어나는 관성계의 관찰자</td><td>가장 짧은 시간</td></tr><tr><td>고유 길이</td><td><strong>물체(또는 두 지점)가 정지해 있는</strong> 관성계의 관찰자</td><td>가장 긴 길이</td></tr></tbody></table></div>
+<p>“A가 보기에 우주선 B의 시간은 느리게 간다”는 <em>서로 상대적</em>입니다. B의 시계로 재면 A의 시계가 느립니다. 문제는 항상 “두 사건이 같은 장소에서 일어난 관성계는 어디인가”를 물어서 정답을 가립니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>v</th><th>γ</th><th>1/γ</th></tr></thead><tbody><tr><td>0.6c</td><td>1.25 (5/4)</td><td>0.8</td></tr><tr><td>0.8c</td><td>1.67 (5/3)</td><td>0.6</td></tr><tr><td>0.9c</td><td>약 2.29</td><td>약 0.44</td></tr></tbody></table></div>
+<h2>3. 질량–에너지 등가</h2>
+<div class="formula">E = mc²<br>핵반응에서 방출 에너지 E = Δm c²  (Δm: 질량 결손)</div>
+<p>정지한 물체도 질량 m에 해당하는 에너지를 가집니다. 핵반응에서 <strong>반응 전 질량의 합이 반응 후보다 크고</strong>, 그 차(질량 결손)가 에너지로 나옵니다.</p>
+<h2>4. 핵분열과 핵융합</h2>
+<div class="tbl-wrap"><table><thead><tr><th>구분</th><th>핵분열</th><th>핵융합</th></tr></thead><tbody><tr><td>반응</td><td>무거운 핵이 가벼운 핵 둘 이상으로 쪼개짐 (예: ²³⁵U + n → 두 핵 + 중성자 2~3개)</td><td>가벼운 핵이 합쳐져 무거운 핵 (예: ²H + ³H → ⁴He + n)</td></tr><tr><td>이용</td><td>원자력 발전</td><td>태양 에너지, 수소 핵융합 연구</td></tr><tr><td>질량</td><td>반응 후 질량 합 감소</td><td>반응 후 질량 합 감소</td></tr></tbody></table></div>
+<p>핵반응식에서는 <strong>질량수(윗첨자)의 합</strong>과 <strong>원자 번호(전하량, 아랫첨자)의 합</strong>이 양변에서 같습니다. 문제에 미지의 입자 ㉠이 나오면 두 합을 맞춰 정체를 정하면 됩니다.</p>
+<h2>모션으로 보기</h2>
+<p>이 파트의 개념을 움직이는 그림으로 다시 확인합니다.</p>
+<p><a class="cta sm" href="../motion.html#s6">🎬 특수 상대성 이론</a> <a class="cta sm" href="../motion.html#s7">🎬 질량–에너지 등가와 핵반응</a></p>
+<h2>자주 나오는 함정</h2><ul><li><strong>운동하는 쪽이 재는 시간이 항상 고유 시간이다</strong>? 아닙니다. 두 사건이 같은 위치에서 일어난 관성계가 고유 시간입니다.</li><li><strong>운동하면 길이가 줄어든다</strong>를 모든 방향으로 확장 — 수축은 <em>운동 방향만</em>, 그리고 <em>고유 길이 대비</em>입니다.</li><li><strong>빛의 속력이 관찰자에 따라 다르다</strong> — 어느 관성계에서도 c.</li><li><strong>핵반응에서 질량이 보존된다</strong> — 질량수가 보존되고 <em>질량은 줄어듭니다</em>.</li><li><strong>핵융합이나 핵분열 모두 무조건 에너지를 방출</strong>하는가? 수능 범위에서는 “질량 결손 → 에너지 방출”만 다룹니다. 방출 여부를 질량 대소로 판단하세요.</li></ul>
+<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>지구에서 5광년 떨어진 별까지 0.8c로 가는 우주선이 있다. 지구 관찰자가 재는 이동 시간과 우주선 안 시계로 잰 시간은?</summary><div class="example-sol"><p>지구 관찰자: t = 5 / 0.8 = <strong>6.25년</strong> (지구–별 거리는 지구계의 고유 길이).</p><p>우주선 시계의 시간은 고유 시간: Δt<sub>0</sub> = t / γ = 6.25 × 0.6 = <strong>3.75년</strong>.</p><p>검산: 우주선에서 본 거리는 5 × 0.6 = 3광년, 3 / 0.8 = 3.75년 ✓.</p></div></details><details class="example"><summary>²H(2.0141 u) + ³H(3.0160 u) → ⁴He(4.0026 u) + n(1.0087 u)에서 방출되는 에너지는? (1 u = 931.5 MeV/c²)</summary><div class="example-sol"><p>반응 전 질량 합 = 5.0301 u, 반응 후 합 = 5.0113 u.</p><p>질량 결손 Δm = 0.0188 u → E = 0.0188 × 931.5 ≈ <strong>17.5 MeV</strong>.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>빠르게 움직이는 쪽의 <strong>시간은 느리게 가고, 길이는 짧아 보입니다</strong>. 단, “같은 장소에서 재는 시간”과 “같이 정지한 채 재는 길이”가 진짜(고유) 값입니다.</p><ul><li>빛의 속력은 누가 재도 똑같습니다.</li><li>핵반응 = 질량이 조금 줄어든 만큼 에너지가 나옵니다(E = mc²).</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>“관찰자 A에 대해 B, C가 각각 0.6c, 0.8c로 운동” 유형은 <strong>관찰자마다 재는 거리·시간을 표로 정리</strong>합니다. 각 관찰자가 (정지한 물체까지의 거리 = 고유 길이 L<sub>0</sub>)인지 (운동하는 물체의 길이 = L<sub>0</sub>/γ)인지 붙여서 보면 대소 비교가 곧바로 나옵니다.</p><p>속도 덧셈(상대 속도)은 물리학Ⅰ 범위 밖이므로 “A가 볼 때 광속은 c”라는 한 줄로 충분한 경우가 대부분입니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>상대성 이론 용어와 뜻을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0284c7","prompt":"상대성 이론 용어와 뜻을 짝지으세요.","pairs":[{"term":"고유 시간","def":"두 사건이 같은 위치에서 일어난 계의 시간"},{"term":"고유 길이","def":"물체와 함께 정지한 관찰자가 잰 길이"},{"term":"광속 불변","def":"모든 관성계에서 c"},{"term":"질량 결손","def":"핵반응 후 줄어든 질량"},{"term":"핵융합","def":"가벼운 핵이 합쳐져 에너지 방출"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0284c7","questions":[{"q":"고유 시간을 재는 관찰자는?","choices":["운동하는 관찰자","두 사건이 같은 위치에서 일어나는 계의 관찰자","지구의 관찰자","빛과 함께 움직이는 관찰자"],"answer":1},{"q":"길이 수축이 일어나는 방향은?","choices":["모든 방향","운동 방향","운동에 수직한 방향","없다"],"answer":1},{"q":"핵반응 전후에 보존되지 않는 것은?","choices":["질량수","전하량","질량","에너지 총합"],"answer":2},{"q":"0.6c일 때 γ 값은?","choices":["1.0","1.25","1.67","2.0"],"answer":1},{"q":"태양 에너지의 원천은?","choices":["핵분열","핵융합","화학 반응","중력 붕괴만"],"answer":1}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 물리학Ⅰ 전 시험지에서 이 파트로 분류된 <strong>33문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:p3">📝 시간과 공간 모아 풀기 →</a></p>
+<div class="pager"><a href="02-energy-heat.html">← 에너지와 열</a><a href="04-matter.html">물질의 구조와 성질 →</a></div>
+</main></div>
+</body></html>
