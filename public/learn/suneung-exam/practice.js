@@ -196,7 +196,7 @@
     S.set = setId;
     var isExam = setId.indexOf('exam:') === 0;
     if (PAPER) {
-      S.graded = false; S.left = EXAM_SECONDS; S.usedTimer = false;
+      S.graded = false; S.left = EXAM_SECONDS; S.usedTimer = false; S.revealed = {};
       if (!isExam) setId = S.set = 'exam:' + examList()[0].key;
       var key = setId.slice(5);
       var saved = store('sn:' + SUB + ':' + setId);
@@ -265,7 +265,16 @@
     renderOmr();
   }
 
-  function isShown(i) { return S.graded || (S.mode === 'practice' && S.ans[i]); }
+  function isShown(i) {
+    if (S.revealed[i] !== undefined) return S.revealed[i];
+    return S.graded || (S.mode === 'practice' && S.ans[i]);
+  }
+  /* 문항 하나만 채점·해설 열기/접기 (시험 모드에서도 가능) */
+  function toggleReveal(i) {
+    S.revealed[i] = !isShown(i);
+    if (!PAPER) refreshCard(i);
+    renderOmr();
+  }
   function stateCls(it, i) {
     if (!isShown(i)) return '';
     return isRight(it, S.ans[i]) ? ' ok' : (S.ans[i] ? ' bad' : ' skip');
@@ -300,6 +309,7 @@
       })(k);
       c.appendChild(ch);
     }
+    c.appendChild(el('button', { type: 'button', class: 'pr-chk-btn' + (shown ? ' on' : ''), text: shown ? '해설 접기' : '이 문제 채점 · 해설 보기', onclick: function () { toggleReveal(i); } }));
     if (shown) c.appendChild(reveal(it, i));
     return c;
   }
@@ -441,6 +451,7 @@
         if (isShown(i) && it.ans !== 0 && isRight(it, k)) cls += ' right';
         row.appendChild(el('button', { type: 'button', class: cls, 'aria-label': label + '번 ' + k + '번 선택', text: k, onclick: function () { choose(i, k); } }));
       })(k);
+      if (PAPER) row.appendChild(el('button', { type: 'button', class: 'pr-chk' + (isShown(i) ? ' on' : ''), title: isShown(i) ? '정답 가리기' : '이 문제 채점', 'aria-label': label + '번 채점', text: '✓', onclick: function () { toggleReveal(i); } }));
       grid.appendChild(row);
     });
     omr.appendChild(grid);
@@ -468,7 +479,7 @@
   function grade() {
     if (S.graded) return;
     stopTimer();
-    S.graded = true;
+    S.graded = true; S.revealed = {};
     var sc = 0, tot = 0, right = 0, wrongIds = [], bySec = {};
     S.items.forEach(function (it, i) {
       tot += it.pts;
