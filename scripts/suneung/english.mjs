@@ -12,6 +12,7 @@ export const spec = {
   h1: "수능 영어,<br><em>유형별</em>로<br>정리하기",
   authors: "2015 개정 교육과정 · 2027학년도 수능까지 · 실제 시험지 " + N + "회 풀어보기",
   affiliation: "듣기 · 독해 유형 6파트 · 전략 · 수능 풀어보기(채점·듣기 대본)",
+  extraLinks: [{ href: "../aboutMyVocab/index.html", label: "🔊 나만의 영단어장", num: "VOCAB", blurb: "단어·어원 · 뜻 가리기 · ★ 표시 · 발음 듣기" }],
   motion: false, kind: "paper", qn: 45, minutes: 70,
   practiceBlurb: `실제 시험지 ${N}회 · 45문항 · 답안지 채점 · 채점 후 듣기 대본`,
   chapters,
