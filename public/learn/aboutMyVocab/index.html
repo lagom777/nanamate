@@ -127,6 +127,10 @@ button { font: inherit; color: inherit; }
 .t-btn.play { width: 68px; height: 68px; border: 0; background: var(--accent); color: var(--on-accent); }
 .t-btn.play svg { width: 28px; height: 28px; }
 .t-btn:disabled { opacity: .4; cursor: not-allowed; }
+.transport { position: relative; }
+.t-btn.shuffle { position: absolute; left: 0; width: 44px; height: 44px; color: var(--ink-3); }
+.t-btn.shuffle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.t-btn.shuffle[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 
 .status { margin: 0; text-align: center; font-size: 14px; color: var(--ink-2); }
 .keys { margin: -8px 0 0; text-align: center; font-size: 12px; color: var(--ink-3); }
@@ -237,6 +241,9 @@ select {
     <div class="progress" aria-hidden="true"><span id="bar"></span></div>
 
     <div class="transport">
+      <button class="t-btn shuffle" id="shuffle" type="button" aria-pressed="false" aria-label="랜덤 재생" title="랜덤 재생 (순서 섞기)">
+        <svg viewBox="0 0 24 24"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+      </button>
       <button class="t-btn" id="prev" type="button" aria-label="이전 단어">
         <svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM19.5 5.5v13L9.5 12z"/></svg>
       </button>
@@ -621,7 +628,7 @@ const STAR = '<svg viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 
 
 // settings + stars (per-viewer, browser only)
 const KEY = 'sori-vocab-v1';
-const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, hide: false, hideMean: false, shuffle: false, starOnly: false, enVoice: '', koVoice: '' };
+const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '' };
 let stars = new Set();
 try {
   const d = JSON.parse(localStorage.getItem(KEY) || '{}');
@@ -854,6 +861,7 @@ function syncControls() {
   });
   $('opt-hide').checked = S.hide;
   $('opt-shuffle').checked = S.shuffle;
+  $('shuffle').setAttribute('aria-pressed', S.shuffle);
   $('opt-star').checked = S.starOnly;
 }
 document.querySelectorAll('.seg input').forEach(r => r.addEventListener('change', () => {
@@ -862,7 +870,14 @@ document.querySelectorAll('.seg input').forEach(r => r.addEventListener('change'
   if (r.name === 'order') restartCurrent();
 }));
 $('opt-hide').addEventListener('change', e => { S.hide = e.target.checked; save(); restartCurrent(); });
-$('opt-shuffle').addEventListener('change', e => { S.shuffle = e.target.checked; save(); buildDeck(deck[pos]); restartCurrent(); });
+function setShuffle(on) {
+  S.shuffle = on;
+  $('opt-shuffle').checked = on;
+  $('shuffle').setAttribute('aria-pressed', on);
+  save(); buildDeck(deck[pos]); restartCurrent();
+}
+$('opt-shuffle').addEventListener('change', e => setShuffle(e.target.checked));
+$('shuffle').addEventListener('click', () => setShuffle(!S.shuffle));
 $('opt-star').addEventListener('change', e => { S.starOnly = e.target.checked; save(); buildDeck(deck[pos]); restartCurrent(); });
 enSel.addEventListener('change', () => { S.enVoice = enSel.value; save(); });
 koSel.addEventListener('change', () => { S.koVoice = koSel.value; save(); });
