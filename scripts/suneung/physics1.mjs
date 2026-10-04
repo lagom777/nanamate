@@ -1,5 +1,6 @@
 // 수능 물리학Ⅰ — 파트별 노트 내용 (2015 개정, 2027학년도까지)
 import { f, note, warn, tip, tbl, ex, partStats, EXAMS } from "./lib.mjs";
+import { maps } from "./maps-physics1.mjs";
 
 const U1 = "Ⅰ. 역학과 에너지", U2 = "Ⅱ. 물질과 전자기장", U3 = "Ⅲ. 파동과 정보통신";
 const COLOR = "#0284c7";
@@ -400,7 +401,7 @@ export const spec = {
   h1: "수능 물리학Ⅰ,<br><em>파트별</em>로<br>끝까지",
   authors: "2015 개정 교육과정 · 2027학년도 수능까지 · 실제 기출 " + EXAMS.length + "회 " + EXAMS.length * 20 + "문항으로 검증",
   affiliation: "3단원 · 7파트 · 19개 모션 · 수능 풀어보기(채점·해설)",
-  summary: true, summaryBlurb: "파트별 핵심 공식·비교표·함정만 한 페이지에 — 시험 직전 훑어보기용",
+  summary: true, summaryBlurb: "파트별 공식·그래프·비교표·함정을 카드 한 장씩에 — 시험 직전 훑어보기용", maps,
   motionBlurb: "19개 핵심 개념을 움직이는 그림으로",
   chapters,
   intro: `<h2>이 노트가 다루는 것</h2>

@@ -2,6 +2,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { mapHtml, mapCss } from "./map.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const LEARN = path.resolve(HERE, "../../public/learn");
@@ -137,6 +138,7 @@ ${aside(spec, c.file, 1)}
 <header class="paper-header"><h1>${c.title}</h1><p class="authors">Part ${i + 1} · ${c.unit}</p><p class="affiliation">${c.sub}</p></header>
 ${stat}
 ${c.lead}
+${spec.maps ? `<details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary>${mapOf(spec, i)}</details>` : ""}
 ${sumCta}
 ${c.body}
 ${motion}
@@ -219,6 +221,16 @@ ${expNote}
 </body></html>`;
 }
 
+/* 한눈에 요약 맵(spec.maps[i])을 HTML로. 출제 비중 막대·회당 문항 수는 실제 시험 데이터에서 계산한다. */
+function mapOf(spec, i) {
+  const m = spec.maps?.[i];
+  if (!m) return "";
+  const c = spec.chapters[i];
+  const st = c.part ? partStats(spec.sub, c.part) : null;
+  const weights = spec.chapters.filter((x) => x.part).map((x) => ({ title: x.title, ...partStats(spec.sub, x.part) }));
+  return mapHtml(m, { weights, stat: st ? `회당 평균 ${st.avg}문항 · ${st.avgPts}점` : "" });
+}
+
 /* 챕터 본문에서 공식 상자·표만 뽑아 파트별 요약 시트를 만든다(새로 쓰는 내용 없이 본문 그대로). */
 function sheetOf(c) {
   const re = /<h2>([\s\S]*?)<\/h2>|<h3>([\s\S]*?)<\/h3>|(<div class="formula">[\s\S]*?<\/div>)|(<div class="tbl-wrap">[\s\S]*?<\/div>)/g;
@@ -238,20 +250,20 @@ export function summaryPage(spec) {
     const secs = sheetOf(c).map((x) => `<div class="sum-sec"><h3>${x.title}</h3>${x.blocks.join("")}</div>`).join("\n");
     const traps = c.traps ? `<div class="sum-traps"><h3>⚠ 자주 걸리는 함정</h3>${c.traps}</div>` : "";
     const terms = c.pairs?.length ? `<div class="sum-sec"><h3>핵심 용어</h3>${tbl(["용어", "뜻"], c.pairs.map((p) => [p.term, p.def]))}</div>` : "";
+    const map = spec.maps ? mapOf(spec, i) : "";
+    const sheet = `${secs}\n${terms}\n${traps}`;
     return `<section class="sum-part" id="p${i + 1}">
 <h2>Part ${i + 1} · ${c.title}</h2>
 <p class="sum-sub">${c.unit} · ${c.sub}</p>
-${secs}
-${terms}
-${traps}
+${map ? `${map}\n<details class="mg-wrap"><summary>📋 본문에서 뽑은 공식·표 시트 펼치기</summary>${sheet}</details>` : sheet}
 <p><a class="cta sm" href="chapters/${c.file}">이 파트 자세히 보기 →</a>${c.part ? ` <a class="cta sm" href="practice.html#part:${c.part}">📝 기출 풀기</a>` : ""}</p>
 </section>`;
   }).join("\n");
   return `${head(`한눈에 요약 — ${spec.label}`, 0, spec)}
-<body><div class="layout">
+<body class="sumpage"><div class="layout">
 ${aside(spec, "summary", 0)}
 <main>
-<header class="paper-header"><h1>한눈에 요약</h1><p class="authors">${spec.label} · 파트별 공식·표·함정만 모았습니다</p><p class="affiliation">개념 설명은 각 파트 노트에서, 여기서는 시험 직전 훑어보기용으로</p></header>
+<header class="paper-header"><h1>한눈에 요약</h1><p class="authors">${spec.label} · 파트별 핵심 공식·그림·함정을 카드 한 장씩에 모았습니다</p><p class="affiliation">개념 설명은 각 파트 노트에서, 여기서는 시험 직전 훑어보기용으로</p></header>
 <div class="sum-chips">${chips}</div>
 ${parts}
 </main></div>
@@ -307,6 +319,7 @@ main li { color:var(--text-dim); margin-bottom:4px; line-height:1.7; }
 .sum-sec h4 { margin:14px 0 4px; font-size:.95em; }
 .sum-traps { margin-top:22px; padding:6px 18px 10px; border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:10px; background:var(--bg-card); }
 .sum-traps h3 { margin:12px 0 4px; font-size:1.05em; }
+${mapCss}
 @media print { aside, .sum-chips, .cta { display:none !important; } .layout { display:block !important; } .sum-part { break-before:page; } }
 `;
   return css;
