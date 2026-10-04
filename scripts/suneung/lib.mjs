@@ -64,6 +64,7 @@ export function aside(spec, active, depth) {
     items.push(li(`${ch}${c.file}`, `${i + 1}. ${c.title}`, active === c.file));
   });
   if (spec.motion !== false) items.push(li(`${up}motion.html`, "🎬 모션 노트", active === "motion"));
+  if (spec.summary) items.push(li(`${up}summary.html`, "📌 한눈에 요약", active === "summary"));
   if (spec.practice !== false) items.push(li(`${up}practice.html`, "📝 수능 풀어보기", active === "practice"));
   (spec.extraLinks || []).forEach((x) => items.push(li(`${up}${x.href}`, x.label, false)));
   return `<aside><a href="${up}../index.html" class="hub-back-link">↑ 통합 허브</a><h3>${spec.short} 목차</h3><ol>
@@ -127,6 +128,7 @@ export function chapterPage(spec, c, i) {
 <p>이 파트의 개념을 움직이는 그림으로 다시 확인합니다.</p>
 <p>${c.motion.map(([n, label]) => `<a class="cta sm" href="../motion.html#s${n}">🎬 ${label}</a>`).join(" ")}</p>`
     : "";
+  const sumCta = spec.summary ? `<p><a class="cta sm" href="../summary.html#p${i + 1}">📌 이 파트 한눈에 요약 →</a></p>` : "";
   const nav = `<div class="pager">${prev ? `<a href="${prev.file}">← ${prev.title}</a>` : `<a href="../index.html">← 표지</a>`}${next ? `<a href="${next.file}">${next.title} →</a>` : `<a href="../practice.html">수능 풀어보기 →</a>`}</div>`;
   return `${head(`${c.title} — ${spec.label}`, 1, spec)}
 <body><div class="layout">
@@ -135,6 +137,7 @@ ${aside(spec, c.file, 1)}
 <header class="paper-header"><h1>${c.title}</h1><p class="authors">Part ${i + 1} · ${c.unit}</p><p class="affiliation">${c.sub}</p></header>
 ${stat}
 ${c.lead}
+${sumCta}
 ${c.body}
 ${motion}
 ${c.traps ? `<h2>자주 나오는 함정</h2>${c.traps}` : ""}
@@ -153,6 +156,7 @@ export function indexPage(spec) {
     return `  <a class="outline-card" href="chapters/${c.file}"><div class="num">PART ${String(i + 1).padStart(2, "0")}</div><h4>${c.title}</h4><p>${c.sub}</p>${st ? `<p class="mini">회당 약 ${st.avg}문항 · ${st.avgPts}점</p>` : ""}</a>`;
   };
   const extraCards = `${spec.motion === false ? "" : `  <a class="outline-card" href="motion.html"><div class="num">MOTION</div><h4>🎬 모션 노트</h4><p>${spec.motionBlurb}</p></a>`}
+${spec.summary ? `  <a class="outline-card" href="summary.html"><div class="num">SUMMARY</div><h4>📌 한눈에 요약</h4><p>${spec.summaryBlurb}</p></a>` : ""}
 ${spec.practice === false ? "" : `  <a class="outline-card" href="practice.html"><div class="num">PRACTICE</div><h4>📝 수능 풀어보기</h4><p>${spec.practiceBlurb || `실제 시험지 ${examsOf(spec.sub).length}회 ${examsOf(spec.sub).length * (spec.qn || 20)}문항 · 채점 · 해설`}</p></a>`}
 ${(spec.extraLinks || []).map((x) => `  <a class="outline-card" href="${x.href}"><div class="num">${x.num}</div><h4>${x.label}</h4><p>${x.blurb}</p></a>`).join("\n")}`;
   let roadmap;
@@ -215,6 +219,46 @@ ${expNote}
 </body></html>`;
 }
 
+/* 챕터 본문에서 공식 상자·표만 뽑아 파트별 요약 시트를 만든다(새로 쓰는 내용 없이 본문 그대로). */
+function sheetOf(c) {
+  const re = /<h2>([\s\S]*?)<\/h2>|<h3>([\s\S]*?)<\/h3>|(<div class="formula">[\s\S]*?<\/div>)|(<div class="tbl-wrap">[\s\S]*?<\/div>)/g;
+  const secs = [];
+  let sec = null, label = "", m;
+  while ((m = re.exec(c.body))) {
+    if (m[1] != null) { sec = { title: m[1].replace(/^\d+\.\s*/, ""), blocks: [] }; secs.push(sec); label = ""; }
+    else if (m[2] != null) label = m[2];
+    else if (sec) { sec.blocks.push((label ? `<h4>${label}</h4>` : "") + (m[3] || m[4])); label = ""; }
+  }
+  return secs.filter((x) => x.blocks.length);
+}
+
+export function summaryPage(spec) {
+  const chips = spec.chapters.map((c, i) => `<a href="#p${i + 1}">${i + 1}. ${c.title}</a>`).join("");
+  const parts = spec.chapters.map((c, i) => {
+    const secs = sheetOf(c).map((x) => `<div class="sum-sec"><h3>${x.title}</h3>${x.blocks.join("")}</div>`).join("\n");
+    const traps = c.traps ? `<div class="sum-traps"><h3>⚠ 자주 걸리는 함정</h3>${c.traps}</div>` : "";
+    const terms = c.pairs?.length ? `<div class="sum-sec"><h3>핵심 용어</h3>${tbl(["용어", "뜻"], c.pairs.map((p) => [p.term, p.def]))}</div>` : "";
+    return `<section class="sum-part" id="p${i + 1}">
+<h2>Part ${i + 1} · ${c.title}</h2>
+<p class="sum-sub">${c.unit} · ${c.sub}</p>
+${secs}
+${terms}
+${traps}
+<p><a class="cta sm" href="chapters/${c.file}">이 파트 자세히 보기 →</a>${c.part ? ` <a class="cta sm" href="practice.html#part:${c.part}">📝 기출 풀기</a>` : ""}</p>
+</section>`;
+  }).join("\n");
+  return `${head(`한눈에 요약 — ${spec.label}`, 0, spec)}
+<body><div class="layout">
+${aside(spec, "summary", 0)}
+<main>
+<header class="paper-header"><h1>한눈에 요약</h1><p class="authors">${spec.label} · 파트별 공식·표·함정만 모았습니다</p><p class="affiliation">개념 설명은 각 파트 노트에서, 여기서는 시험 직전 훑어보기용으로</p></header>
+<div class="sum-chips">${chips}</div>
+${parts}
+</main></div>
+<script>window.addEventListener("load", () => { const el = document.getElementById(location.hash.slice(1)); if (el) setTimeout(() => el.scrollIntoView(), 400); });</script>
+</body></html>`;
+}
+
 export function stylesCss(spec) {
   const base = fs.readFileSync(path.join(HERE, "base.css"), "utf8"); // 옛 aboutSuneung 스타일(다크 기본형)에서 가져온 공통 뼈대
   let css = base
@@ -253,6 +297,17 @@ main h2 + ul, main h3 + ul { margin-top:4px; }
 aside ol li.grp { margin:16px 0 4px; padding-left:12px; font-size:.7em; letter-spacing:.12em; color:var(--text-mute); font-family:var(--font-mono); }
 h3.grp-h { margin:28px 0 -6px; font-size:1.05em; color:var(--accent); }
 main li { color:var(--text-dim); margin-bottom:4px; line-height:1.7; }
+.sum-chips { display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 8px; }
+.sum-chips a { padding:6px 12px; border-radius:999px; border:1px solid var(--border); color:var(--text-dim); text-decoration:none; font-size:.85em; }
+.sum-chips a:hover { border-color:var(--accent); color:var(--accent); }
+.sum-part { margin-top:52px; padding-top:10px; border-top:2px solid var(--accent); scroll-margin-top:16px; }
+.sum-part > h2 { margin-top:14px; }
+.sum-sub { color:var(--text-mute); margin-top:-6px; }
+.sum-sec h3 { margin:26px 0 6px; font-size:1.05em; color:var(--accent); }
+.sum-sec h4 { margin:14px 0 4px; font-size:.95em; }
+.sum-traps { margin-top:22px; padding:6px 18px 10px; border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:10px; background:var(--bg-card); }
+.sum-traps h3 { margin:12px 0 4px; font-size:1.05em; }
+@media print { aside, .sum-chips, .cta { display:none !important; } .layout { display:block !important; } .sum-part { break-before:page; } }
 `;
   return css;
 }
@@ -262,6 +317,7 @@ export function writeAll(spec, extra = {}) {
   const out = {};
   out["index.html"] = indexPage(spec);
   if (spec.practice !== false) out["practice.html"] = practicePage(spec);
+  if (spec.summary) out["summary.html"] = summaryPage(spec);
   out["styles.css"] = stylesCss(spec);
   spec.chapters.forEach((c, i) => (out["chapters/" + c.file] = chapterPage(spec, c, i)));
   Object.assign(out, extra);

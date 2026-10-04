@@ -67,3 +67,14 @@ main h2 + ul, main h3 + ul { margin-top:4px; }
 aside ol li.grp { margin:16px 0 4px; padding-left:12px; font-size:.7em; letter-spacing:.12em; color:var(--text-mute); font-family:var(--font-mono); }
 h3.grp-h { margin:28px 0 -6px; font-size:1.05em; color:var(--accent); }
 main li { color:var(--text-dim); margin-bottom:4px; line-height:1.7; }
+.sum-chips { display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 8px; }
+.sum-chips a { padding:6px 12px; border-radius:999px; border:1px solid var(--border); color:var(--text-dim); text-decoration:none; font-size:.85em; }
+.sum-chips a:hover { border-color:var(--accent); color:var(--accent); }
+.sum-part { margin-top:52px; padding-top:10px; border-top:2px solid var(--accent); scroll-margin-top:16px; }
+.sum-part > h2 { margin-top:14px; }
+.sum-sub { color:var(--text-mute); margin-top:-6px; }
+.sum-sec h3 { margin:26px 0 6px; font-size:1.05em; color:var(--accent); }
+.sum-sec h4 { margin:14px 0 4px; font-size:.95em; }
+.sum-traps { margin-top:22px; padding:6px 18px 10px; border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:10px; background:var(--bg-card); }
+.sum-traps h3 { margin:12px 0 4px; font-size:1.05em; }
+@media print { aside, .sum-chips, .cta { display:none !important; } .layout { display:block !important; } .sum-part { break-before:page; } }
