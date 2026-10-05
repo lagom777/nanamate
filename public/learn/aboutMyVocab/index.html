@@ -132,7 +132,11 @@ button { font: inherit; color: inherit; }
 .t-btn.play { width: 68px; height: 68px; border: 0; background: var(--accent); color: var(--on-accent); }
 .t-btn.play svg { width: 28px; height: 28px; }
 .t-btn:disabled { opacity: .4; cursor: not-allowed; }
-svg[hidden] { display: none; }
+[hidden] { display: none !important; }
+.t-btn.sleep { position: absolute; right: 0; width: 44px; height: 44px; color: var(--ink-3); }
+.t-btn.sleep svg { width: 19px; height: 19px; }
+.t-btn.sleep[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.t-btn .badge { position: absolute; top: -6px; right: -6px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; display: grid; place-items: center; background: var(--ink); color: var(--card); font-size: 10.5px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .transport { position: relative; }
 .t-btn.shuffle { position: absolute; left: 0; width: 44px; height: 44px; color: var(--ink-3); }
 .t-btn.shuffle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
@@ -264,6 +268,10 @@ select {
       <button class="t-btn" id="next" type="button" aria-label="다음 단어">
         <svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4.5 5.5v13L14.5 12z"/></svg>
       </button>
+      <button class="t-btn sleep" id="sleepBtn" type="button" aria-pressed="false" aria-label="자동 종료 타이머 끔" title="자동 종료 타이머 (누를 때마다 5·10·15·30·60분·끔)">
+        <svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        <span class="badge" id="sleepBadge" hidden></span>
+      </button>
     </div>
     <p class="status" id="status"></p>
     <p class="warn" id="ttsFail" role="alert" hidden></p>
@@ -302,6 +310,17 @@ select {
             <input type="radio" name="gap" id="gap-1" value="1"><label for="gap-1">1초</label>
             <input type="radio" name="gap" id="gap-2" value="2"><label for="gap-2">2초</label>
             <input type="radio" name="gap" id="gap-4" value="4"><label for="gap-4">4초</label>
+          </div>
+        </div>
+        <div class="field">
+          <span class="lbl" id="l-sleep">자동 종료 (자기 전에)</span>
+          <div class="seg" role="radiogroup" aria-labelledby="l-sleep">
+            <input type="radio" name="sleep" id="sleep-0" value="0"><label for="sleep-0">끔</label>
+            <input type="radio" name="sleep" id="sleep-5" value="5"><label for="sleep-5">5분</label>
+            <input type="radio" name="sleep" id="sleep-10" value="10"><label for="sleep-10">10분</label>
+            <input type="radio" name="sleep" id="sleep-15" value="15"><label for="sleep-15">15분</label>
+            <input type="radio" name="sleep" id="sleep-30" value="30"><label for="sleep-30">30분</label>
+            <input type="radio" name="sleep" id="sleep-60" value="60"><label for="sleep-60">60분</label>
           </div>
         </div>
       </div>
@@ -740,7 +759,7 @@ const STAR = '<svg viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 
 
 // settings + stars (per-viewer, browser only)
 const KEY = 'sori-vocab-v1';
-const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '', deck: 'yeongilman', part: 0 };
+const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '', deck: 'yeongilman', part: 0, sleep: 0 };
 let stars = new Set();
 let WORDS = [];   // 지금 고른 단어장·파트의 단어
 try {
@@ -831,7 +850,38 @@ function toggleStar(i) {
 function updateStatus() {
   const en = `영어 ${S.rep}번`;
   const seq = S.order === 'en-ko' ? [en, `${S.gap}초`, '뜻'] : ['뜻', `${S.gap}초`, en];
-  $('status').textContent = `${seq.join(' → ')} · 끝나면 처음부터 다시`;
+  let t = `${seq.join(' → ')} · 끝나면 처음부터 다시`;
+  if (S.sleep) t += sleepAt ? ` · 🌙 ${fmtLeft(sleepAt - Date.now())} 뒤 자동 종료` : ` · 🌙 재생하면 ${S.sleep}분 뒤 자동 종료`;
+  $('status').textContent = t;
+}
+
+// 자동 종료 타이머: 재생을 시작한 순간부터 센다. 시간이 되면 지금 읽던 단어를 끝내고 멈춘다.
+const SLEEP_STEPS = [0, 5, 10, 15, 30, 60];
+let sleepAt = 0, sleepTick = null;
+const fmtLeft = ms => { const t = Math.max(0, Math.ceil(ms / 1000)); return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`; };
+function updateSleepUI() {
+  const b = $('sleepBadge');
+  b.hidden = !S.sleep;
+  b.textContent = S.sleep ? (sleepAt ? Math.max(1, Math.ceil((sleepAt - Date.now()) / 60000)) : S.sleep) : '';
+  $('sleepBtn').setAttribute('aria-pressed', !!S.sleep);
+  $('sleepBtn').setAttribute('aria-label', S.sleep ? `자동 종료 타이머 ${S.sleep}분` : '자동 종료 타이머 끔');
+  const r = document.getElementById('sleep-' + S.sleep); if (r) r.checked = true;
+}
+function armSleep() {
+  clearInterval(sleepTick); sleepTick = null; sleepAt = 0;
+  if (playing && S.sleep) {
+    sleepAt = Date.now() + S.sleep * 60000;
+    sleepTick = setInterval(() => {
+      if (Date.now() > sleepAt + 30000) return endSleep(); // 음성이 멈춰 루프가 안 돌 때를 대비한 안전장치
+      updateSleepUI(); updateStatus();
+    }, 1000);
+  }
+  updateSleepUI(); updateStatus();
+}
+function setSleep(min) { S.sleep = min; save(); armSleep(); }
+function endSleep() {
+  setPlaying(false); stop(); render(true);
+  $('status').textContent = '🌙 설정한 시간이 지나 멈췄어요. 안녕히 주무세요';
 }
 
 // 단어장·파트 고르기
@@ -966,6 +1016,7 @@ async function loop(id) {
     await speakWord(id);
     await sleep(1200);
     if (id !== run) return;
+    if (sleepAt && Date.now() >= sleepAt) { endSleep(); return; }
     if (pos >= deck.length - 1) buildDeck(); else pos++;
   }
 }
@@ -983,6 +1034,7 @@ function setPlaying(p) {
   els.play.setAttribute('aria-label', p ? '일시정지' : '재생');
   if (p) { navigator.wakeLock?.request('screen').then(l => { wake = l; }).catch(() => {}); }
   else { try { wake?.release(); } catch (e) {} wake = null; }
+  armSleep();
 }
 function toggle() {
   if (playing) { setPlaying(false); stop(); render(true); }
@@ -1009,7 +1061,7 @@ function restartCurrent() {
 
 // controls
 function syncControls() {
-  ['order', 'rate', 'rep', 'gap'].forEach(name => {
+  ['order', 'rate', 'rep', 'gap', 'sleep'].forEach(name => {
     const r = document.querySelector(`input[name="${name}"][value="${S[name]}"]`);
     if (r) r.checked = true;
   });
@@ -1022,7 +1074,9 @@ document.querySelectorAll('.seg input').forEach(r => r.addEventListener('change'
   S[r.name] = r.name === 'order' ? r.value : Number(r.value);
   save(); updateStatus();
   if (r.name === 'order') restartCurrent();
+  if (r.name === 'sleep') armSleep();
 }));
+$('sleepBtn').addEventListener('click', () => setSleep(SLEEP_STEPS[(SLEEP_STEPS.indexOf(S.sleep) + 1) % SLEEP_STEPS.length]));
 $('opt-hide').addEventListener('change', e => { S.hide = e.target.checked; save(); restartCurrent(); });
 function setShuffle(on) {
   S.shuffle = on;
@@ -1097,6 +1151,7 @@ try {
   loadSource();
   render(true);
   syncStars();
+  updateSleepUI();
   updateStatus();
 } catch (err) {
   const w = $('noTts'); w.hidden = false; w.textContent = '불러오는 중 문제가 생겼어요. 새로고침해 주세요. (' + err.message + ')';
