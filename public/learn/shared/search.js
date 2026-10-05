@@ -9,6 +9,7 @@
 
   // === 과목 색인 (index.html 에서 추출, 정렬 유지) ===
   var SUBJECTS = [
+    {"n": "수능 (과목별 목록)", "e": "CSAT", "d": "국어·수학·영어·물리Ⅰ·화학Ⅰ·생Ⅰ·지구Ⅰ·과탐Ⅱ — 과목별로 골라 보기", "u": "suneung.html", "c": "수능", "a": "#dc2626"},
     {"n": "수능 국어", "e": "CSAT Korean", "d": "독서·문학·화법과 작문·언어와 매체 파트 정리, 기출 채점", "u": "aboutSuneungKorean/index.html", "c": "수능", "a": "#b45309"},
     {"n": "수능 수학", "e": "CSAT Math", "d": "수학Ⅰ·수학Ⅱ·미적분 9파트, 기출 30문항 채점", "u": "aboutSuneungMath/index.html", "c": "수능", "a": "#7c3aed"},
     {"n": "수능 영어", "e": "CSAT English", "d": "듣기·독해 유형 7파트, 기출 채점·듣기 대본", "u": "aboutSuneungEnglish/index.html", "c": "수능", "a": "#2563eb"},
