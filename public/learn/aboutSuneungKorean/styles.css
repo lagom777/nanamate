@@ -54,6 +54,20 @@ a.outline-card:hover { transform:translateY(-2px); border-color:var(--accent); }
 table { border-collapse:collapse; width:100%; font-size:.92em; }
 th, td { border:1px solid var(--border); padding:8px 12px; text-align:left; vertical-align:top; line-height:1.55; }
 th { background:var(--bg-elevated); font-family:var(--font-display); font-size:.9em; }
+th, td { word-break:keep-all; overflow-wrap:break-word; }
+/* 옛한글(아래아 ㆍ, ㅿ, ㆁ, ㅸ 등): 첫가끝 자모만 담은 Noto Sans CJK KR 부분 글꼴 — 조합 규칙(ljmo/vjmo/tjmo) 포함 */
+@font-face { font-family:'NM Old Hangul'; src:url('../shared/fonts/old-hangul.woff2') format('woff2'); unicode-range:U+1100-11FF, U+302E-302F, U+3164-318E, U+A960-A97F, U+D7B0-D7FF; font-display:swap; }
+:root { --font-body:'NM Old Hangul','IBM Plex Sans KR',-apple-system,sans-serif; --font-display:'Space Grotesk','NM Old Hangul','IBM Plex Sans KR',sans-serif; }
+@media (max-width:640px) {
+  main { padding:32px 16px 72px; }
+  .tbl-wrap { overflow:visible; }
+  .tbl-wrap table, .tbl-wrap tbody, .tbl-wrap tr, .tbl-wrap td { display:block; width:100%; }
+  .tbl-wrap thead { display:none; }
+  .tbl-wrap tr { margin:0 0 10px; border:1px solid var(--border); border-radius:10px; overflow:hidden; background:var(--bg-card); }
+  .tbl-wrap td { border:none; border-top:1px solid var(--border); padding:8px 12px; }
+  .tbl-wrap td:first-child { border-top:none; background:var(--bg-elevated); color:var(--text); font-weight:600; }
+  .tbl-wrap td:not(:first-child)[data-l]:not([data-l=""])::before { content:attr(data-l); display:block; margin-bottom:2px; font-size:.75em; font-weight:600; color:var(--text-mute); }
+}
 .cta { display:inline-block; padding:10px 18px; border-radius:10px; background:var(--accent); color:#fff !important; text-decoration:none; font-weight:600; font-size:.95em; margin:4px 6px 4px 0; }
 .cta.sm { padding:7px 14px; font-size:.85em; background:transparent; color:var(--accent) !important; border:1px solid var(--accent); }
 .cta:hover { filter:brightness(1.1); }
@@ -101,7 +115,8 @@ main li { color:var(--text-dim); margin-bottom:4px; line-height:1.7; }
 .mg-tbl table { width:100%; border-collapse:collapse; font-size:.8em; line-height:1.5; }
 .mg-tbl th, .mg-tbl td { padding:5px 8px; border:1px solid var(--border); text-align:left; vertical-align:top; color:var(--text-dim); }
 .mg-tbl thead th { background:color-mix(in srgb, var(--c) 12%, transparent); color:var(--text); font-weight:700; white-space:nowrap; }
-.mg-tbl tbody th { background:var(--bg-elevated); color:var(--text); font-weight:600; white-space:nowrap; }
+.mg-tbl tbody th { background:var(--bg-elevated); color:var(--text); font-weight:600; min-width:4.5em; }
+.mg-tbl th, .mg-tbl td { word-break:keep-all; overflow-wrap:break-word; }
 .mg-flow { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:6px 4px; align-items:stretch; }
 .mg-flow li { margin:0; position:relative; display:flex; flex-direction:column; gap:1px; padding:6px 10px; border-radius:9px; background:color-mix(in srgb, var(--c) 10%, var(--bg-elevated)); border:1px solid color-mix(in srgb, var(--c) 28%, transparent); font-size:.82em; line-height:1.4; color:var(--text); }
 .mg-flow li b { font-weight:700; }
@@ -168,6 +183,12 @@ details.mg-wrap[open] > summary { margin-bottom:6px; }
   .mg-traps ul { grid-template-columns:minmax(0,1fr); }
   .mg-bars .row { grid-template-columns:minmax(0,7em) minmax(0,1fr); } .mg-bars .num { grid-column:1 / -1; margin-top:-4px; }
   .mg-stat { margin-left:0; }
+  .mg-tbl table, .mg-tbl tbody, .mg-tbl tr, .mg-tbl tbody th, .mg-tbl td { display:block; width:100%; }
+  .mg-tbl thead { display:none; }
+  .mg-tbl tr { margin:0 0 8px; border:1px solid var(--border); border-radius:9px; overflow:hidden; }
+  .mg-tbl tbody th, .mg-tbl td { border:none; border-top:1px solid var(--border); }
+  .mg-tbl tbody th { border-top:none; }
+  .mg-tbl td[data-l]:not([data-l=""])::before { content:attr(data-l); display:block; font-size:.85em; font-weight:600; color:var(--text-mute); }
 }
 @media print { .mg-card { break-inside:avoid; } }
 

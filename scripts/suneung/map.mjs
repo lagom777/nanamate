@@ -46,7 +46,7 @@ const BLOCKS = {
   kv: (b) => `<dl class="mg-kv">${b.rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>`,
   tbl: (b) =>
     `<div class="mg-tbl"><table><thead><tr>${b.head.map((x) => `<th>${x}</th>`).join("")}</tr></thead><tbody>${b.rows
-      .map((r) => `<tr>${r.map((x, i) => (i === 0 ? `<th scope="row">${x}</th>` : `<td>${x}</td>`)).join("")}</tr>`)
+      .map((r) => `<tr>${r.map((x, i) => (i === 0 ? `<th scope="row">${x}</th>` : `<td data-l="${String(b.head[i] ?? "").replace(/<[^>]*>/g, "").replace(/"/g, "&quot;")}">${x}</td>`)).join("")}</tr>`)
       .join("")}</tbody></table></div>`,
   flow: (b) =>
     `<ol class="mg-flow${b.v ? " v" : ""}">${b.steps
@@ -126,7 +126,8 @@ export const mapCss = `
 .mg-tbl table { width:100%; border-collapse:collapse; font-size:.8em; line-height:1.5; }
 .mg-tbl th, .mg-tbl td { padding:5px 8px; border:1px solid var(--border); text-align:left; vertical-align:top; color:var(--text-dim); }
 .mg-tbl thead th { background:color-mix(in srgb, var(--c) 12%, transparent); color:var(--text); font-weight:700; white-space:nowrap; }
-.mg-tbl tbody th { background:var(--bg-elevated); color:var(--text); font-weight:600; white-space:nowrap; }
+.mg-tbl tbody th { background:var(--bg-elevated); color:var(--text); font-weight:600; min-width:4.5em; }
+.mg-tbl th, .mg-tbl td { word-break:keep-all; overflow-wrap:break-word; }
 .mg-flow { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:6px 4px; align-items:stretch; }
 .mg-flow li { margin:0; position:relative; display:flex; flex-direction:column; gap:1px; padding:6px 10px; border-radius:9px; background:color-mix(in srgb, var(--c) 10%, var(--bg-elevated)); border:1px solid color-mix(in srgb, var(--c) 28%, transparent); font-size:.82em; line-height:1.4; color:var(--text); }
 .mg-flow li b { font-weight:700; }
@@ -193,6 +194,12 @@ details.mg-wrap[open] > summary { margin-bottom:6px; }
   .mg-traps ul { grid-template-columns:minmax(0,1fr); }
   .mg-bars .row { grid-template-columns:minmax(0,7em) minmax(0,1fr); } .mg-bars .num { grid-column:1 / -1; margin-top:-4px; }
   .mg-stat { margin-left:0; }
+  .mg-tbl table, .mg-tbl tbody, .mg-tbl tr, .mg-tbl tbody th, .mg-tbl td { display:block; width:100%; }
+  .mg-tbl thead { display:none; }
+  .mg-tbl tr { margin:0 0 8px; border:1px solid var(--border); border-radius:9px; overflow:hidden; }
+  .mg-tbl tbody th, .mg-tbl td { border:none; border-top:1px solid var(--border); }
+  .mg-tbl tbody th { border-top:none; }
+  .mg-tbl td[data-l]:not([data-l=""])::before { content:attr(data-l); display:block; font-size:.85em; font-weight:600; color:var(--text-mute); }
 }
 @media print { .mg-card { break-inside:avoid; } }
 `;

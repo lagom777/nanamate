@@ -15,9 +15,11 @@ export const f = (h) => `<div class="formula">${h}</div>`;
 export const note = (t, h) => `<div class="info-card"><h4>${t}</h4><p>${h}</p></div>`;
 export const warn = (h) => `<div class="warning-box"><strong>함정:</strong> ${h}</div>`;
 export const tip = (h) => `<div class="study-tip"><strong>TIP:</strong> ${h}</div>`;
+/* 머리글을 data-l 로 칸마다 넣어 둔다 — 좁은 화면에서는 행을 카드로 쌓고 칸 이름을 위에 보여 준다 */
+export const cellLabel = (x) => String(x).replace(/<[^>]*>/g, "").replace(/"/g, "&quot;");
 export const tbl = (head, rows) =>
   `<div class="tbl-wrap"><table><thead><tr>${head.map((x) => `<th>${x}</th>`).join("")}</tr></thead><tbody>${rows
-    .map((r) => `<tr>${r.map((x) => `<td>${x}</td>`).join("")}</tr>`)
+    .map((r) => `<tr>${r.map((x, i) => `<td data-l="${cellLabel(head[i] ?? "")}">${x}</td>`).join("")}</tr>`)
     .join("")}</tbody></table></div>`;
 export const ex = (q, sol) =>
   `<details class="example"><summary>${q}</summary><div class="example-sol">${sol}</div></details>`;
@@ -307,6 +309,20 @@ a.outline-card:hover { transform:translateY(-2px); border-color:var(--accent); }
 table { border-collapse:collapse; width:100%; font-size:.92em; }
 th, td { border:1px solid var(--border); padding:8px 12px; text-align:left; vertical-align:top; line-height:1.55; }
 th { background:var(--bg-elevated); font-family:var(--font-display); font-size:.9em; }
+th, td { word-break:keep-all; overflow-wrap:break-word; }
+/* 옛한글(아래아 ㆍ, ㅿ, ㆁ, ㅸ 등): 첫가끝 자모만 담은 Noto Sans CJK KR 부분 글꼴 — 조합 규칙(ljmo/vjmo/tjmo) 포함 */
+@font-face { font-family:'NM Old Hangul'; src:url('../shared/fonts/old-hangul.woff2') format('woff2'); unicode-range:U+1100-11FF, U+302E-302F, U+3164-318E, U+A960-A97F, U+D7B0-D7FF; font-display:swap; }
+:root { --font-body:'NM Old Hangul','IBM Plex Sans KR',-apple-system,sans-serif; --font-display:'Space Grotesk','NM Old Hangul','IBM Plex Sans KR',sans-serif; }
+@media (max-width:640px) {
+  main { padding:32px 16px 72px; }
+  .tbl-wrap { overflow:visible; }
+  .tbl-wrap table, .tbl-wrap tbody, .tbl-wrap tr, .tbl-wrap td { display:block; width:100%; }
+  .tbl-wrap thead { display:none; }
+  .tbl-wrap tr { margin:0 0 10px; border:1px solid var(--border); border-radius:10px; overflow:hidden; background:var(--bg-card); }
+  .tbl-wrap td { border:none; border-top:1px solid var(--border); padding:8px 12px; }
+  .tbl-wrap td:first-child { border-top:none; background:var(--bg-elevated); color:var(--text); font-weight:600; }
+  .tbl-wrap td:not(:first-child)[data-l]:not([data-l=""])::before { content:attr(data-l); display:block; margin-bottom:2px; font-size:.75em; font-weight:600; color:var(--text-mute); }
+}
 .cta { display:inline-block; padding:10px 18px; border-radius:10px; background:var(--accent); color:#fff !important; text-decoration:none; font-weight:600; font-size:.95em; margin:4px 6px 4px 0; }
 .cta.sm { padding:7px 14px; font-size:.85em; background:transparent; color:var(--accent) !important; border:1px solid var(--accent); }
 .cta:hover { filter:brightness(1.1); }
