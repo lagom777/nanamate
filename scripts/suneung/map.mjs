@@ -19,6 +19,26 @@ export function axes(ox, oy, xe, ye, xl = "", yl = "") {
   );
 }
 
+/** 원점이 가운데인 좌표축(x0~x1, y0~y1은 화면 좌표, 교점은 cx, cy) */
+export function cross(cx, cy, x0, x1, y0, y1, xl = "", yl = "") {
+  return (
+    L(x0, cy, x1, cy) + L(cx, y0 + 0, cx, y1) +
+    `<polygon class="ah" points="${x1},${cy} ${x1 - 6},${cy - 3} ${x1 - 6},${cy + 3}"/>` +
+    `<polygon class="ah" points="${cx},${y0} ${cx - 3},${y0 + 6} ${cx + 3},${y0 + 6}"/>` +
+    (xl ? T(x1, cy + 14, xl, "t-m", "end") : "") + (yl ? T(cx + 6, y0 + 4, yl, "t-m") : "")
+  );
+}
+/** 번호 칩 한 줄: 문항 번호를 색 묶음별로 칠한다. groups = [[from, to, 클래스], …] */
+export function chips(from, to, x, y, groups, w = 15, gap = 2, h = 17) {
+  let out = "";
+  for (let n = from; n <= to; n++) {
+    const g = groups.find(([a, b]) => n >= a && n <= b);
+    const cx = x + (n - from) * (w + gap);
+    out += `<rect class="${g ? g[2] : "box"}" x="${cx}" y="${y}" width="${w}" height="${h}" rx="3"/>` + T(cx + w / 2, y + h - 5, n, "t-n", "middle");
+  }
+  return out;
+}
+
 /* ── 블록 ── */
 const li = (items) => items.map((x) => `<li>${x}</li>`).join("");
 const BLOCKS = {
@@ -139,6 +159,9 @@ export const mapCss = `
 .mg-fig .box { fill:var(--bg-elevated); stroke:currentColor; stroke-opacity:.35; stroke-width:1; }
 .mg-fig .boxa { fill:color-mix(in srgb, var(--c) 14%, transparent); stroke:var(--c); stroke-width:1.2; }
 .mg-fig .pt { fill:var(--c); } .mg-fig .ptb { fill:#e11d48; }
+.mg-fig .f1 { fill:#2563eb; fill-opacity:.28; } .mg-fig .f2 { fill:#0d9488; fill-opacity:.3; } .mg-fig .f3 { fill:#d97706; fill-opacity:.32; }
+.mg-fig .f4 { fill:#db2777; fill-opacity:.28; } .mg-fig .f5 { fill:#7c3aed; fill-opacity:.28; } .mg-fig .f6 { fill:#16a34a; fill-opacity:.3; }
+.mg-fig .t-n { font-size:9.5px; }
 .mg-bars { display:grid; gap:6px; }
 .mg-bars .row { display:grid; grid-template-columns:minmax(0,9.5em) minmax(0,1fr) auto; gap:8px; align-items:center; font-size:.8em; color:var(--text-dim); }
 .mg-bars .lab { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--text); }

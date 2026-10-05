@@ -1,5 +1,6 @@
 // 수능 국어 — 독서 · 문학 · 선택(화법과 작문 / 언어와 매체) (content/ko-*.mjs, 전략은 content/st-ko.mjs)
 import { note, tip, tbl, examsOf } from "./lib.mjs";
+import { maps } from "./maps-korean.mjs";
 
 const load = async (n) => { try { return (await import(`./content/${n}.mjs`)).chapters; } catch { return []; } };
 const ko2 = await load("ko-2");
@@ -14,6 +15,7 @@ export const spec = {
   h1: "수능 국어,<br><em>독서·문학·선택</em><br>파트별로",
   authors: "2015 개정 교육과정 · 2027학년도 수능까지 · 실제 시험지 " + N + "회 풀어보기",
   affiliation: "독서 5파트 · 문학 5파트 · 화법과 작문/언어와 매체 · 전략 · 수능 풀어보기(채점)",
+  summary: true, summaryBlurb: "파트별 표·기호·함정을 카드 한 장씩에 — 시험 직전 훑어보기용", maps,
   motion: false, kind: "paper", qn: 45, minutes: 80,
   practiceBlurb: `실제 시험지 ${N}회 · 공통 34 + 선택 11문항 · 답안지 채점`,
   chapters,

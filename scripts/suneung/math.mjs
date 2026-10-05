@@ -1,5 +1,6 @@
 // 수능 수학 — 수학Ⅰ · 수학Ⅱ · 미적분 (파트별 노트는 content/math-*.mjs, 전략은 content/st-math.mjs)
 import { note, tip, tbl, examsOf } from "./lib.mjs";
+import { maps } from "./maps-math.mjs";
 
 const load = async (n) => { try { return (await import(`./content/${n}.mjs`)).chapters; } catch { return []; } };
 const chapters = [...(await load("math-1")), ...(await load("math-2")), ...(await load("math-3")), ...(await load("st-math"))];
@@ -12,6 +13,18 @@ export const spec = {
   h1: "수능 수학,<br><em>Ⅰ·Ⅱ·미적분</em><br>파트별로 끝까지",
   authors: "2015 개정 교육과정 · 2027학년도 수능까지 · 실제 기출 " + N + "회 " + N * 30 + "문항 풀어보기",
   affiliation: "수학Ⅰ 3파트 · 수학Ⅱ 3파트 · 미적분 3파트 · 전략 · 수능 풀어보기(채점)",
+  imageMaps: [
+    { img: "images/01-numbers-sets.svg", title: "수와 집합", desc: "수 체계 확장(ℕ~ℂ), 벤다이어그램, 드모르간 법칙, 귀류법", chapter: "01-exp-log.html" },
+    { img: "images/02-algebra.svg", title: "대수 — 다항식과 방정식", desc: "곱셈공식, 나머지정리, 판별식 D, 근과 계수의 관계, 근의 분리", chapter: "01-exp-log.html" },
+    { img: "images/03-functions.svg", title: "함수와 그래프", desc: "일대일대응, 역함수(y=x 대칭), 평행·대칭이동, 점근선 개형", chapter: "04-limit.html" },
+    { img: "images/04-geometry.svg", title: "기하 — 도형과 좌표기하", desc: "피타고라스 정리, 특수각 삼각비, 점과 직선 거리, 원과 접선", chapter: "02-trig.html" },
+    { img: "images/05-trigonometry.svg", title: "삼각함수 — 원과 파동", desc: "단위원, 호도법(π=180°), 주기 2π/|b|, 사인법칙, 코사인법칙", chapter: "02-trig.html" },
+    { img: "images/06-exponential-log.svg", title: "지수와 로그", desc: "거듭제곱근 개수, 밑변환 공식, 지수·로그 그래프와 역함수 대칭", chapter: "01-exp-log.html" },
+    { img: "images/07-sequences-limits.svg", title: "수열과 극한", desc: "등차·등비 일반항과 합, 시그마 ∑k 공식, 무한등비급수 a/(1-r)", chapter: "03-sequence.html" },
+    { img: "images/08-differentiation.svg", title: "미분 — 도함수와 그래프", desc: "미분계수 정의, 극대·극소 판정, 접선의 방정식, 3·4차함수 비율관계", chapter: "05-diff.html" },
+    { img: "images/09-integration.svg", title: "적분과 통계", desc: "미적분학 기본정리(FTC), 곡선 넓이 공식, 중복조합, 정규분포 표준화 Z", chapter: "06-integral.html" },
+  ],
+  summary: true, summaryBlurb: "파트별 공식·그래프·비교표·함정을 카드 한 장씩에 — 시험 직전 훑어보기용", maps,
   motion: false, kind: "items", qn: 30, minutes: 100,
   practiceBlurb: `실제 시험지 ${N}회 ${N * 30}문항(2022~: 공통 22 + 미적분 8, ~2021: 가형) · 단답형 입력 · 채점`,
   chapters,
