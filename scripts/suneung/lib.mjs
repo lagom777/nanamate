@@ -256,7 +256,8 @@ export function summaryPage(spec) {
 </section>`
     : "";
   const parts = spec.chapters.map((c, i) => {
-    const secs = sheetOf(c).map((x) => `<div class="sum-sec"><h3>${x.title}</h3>${x.blocks.join("")}</div>`).join("\n");
+    // 본문 표 안의 파트 링크(같은 chapters/ 폴더 기준)는 요약 페이지(상위 폴더)에서 쓰도록 경로를 고친다.
+    const secs = sheetOf(c).map((x) => `<div class="sum-sec"><h3>${x.title}</h3>${x.blocks.join("").replace(/href="(?!https?:|#|\/|chapters\/)([^"]+)"/g, 'href="chapters/$1"')}</div>`).join("\n");
     const traps = c.traps ? `<div class="sum-traps"><h3>⚠ 자주 걸리는 함정</h3>${c.traps}</div>` : "";
     const terms = c.pairs?.length ? `<div class="sum-sec"><h3>핵심 용어</h3>${tbl(["용어", "뜻"], c.pairs.map((p) => [p.term, p.def]))}</div>` : "";
     const map = spec.maps ? mapOf(spec, i) : "";
