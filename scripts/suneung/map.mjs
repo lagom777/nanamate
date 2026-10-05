@@ -154,6 +154,13 @@ export const mapCss = `
 .mg-traps em { font-style:normal; font-weight:600; color:var(--text); }
 .mg-ask { margin:12px 0 0; padding:9px 14px; border-radius:10px; background:var(--bg-elevated); font-size:.86em; line-height:1.6; color:var(--text-dim); }
 .mg-ask b { margin-right:10px; color:var(--accent); }
+.mg-gallery { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:16px; margin-top:16px; }
+.mg-gcard { overflow:hidden; border:1px solid var(--border); border-radius:12px; background:var(--bg-card); display:flex; flex-direction:column; }
+.mg-gcard img { display:block; width:100%; aspect-ratio:16 / 9; object-fit:cover; background:#0a0e1a; }
+.mg-gcard .gi { padding:10px 14px 14px; }
+.mg-gcard .gp { font-size:.72em; font-weight:700; color:var(--accent); font-family:var(--font-mono); }
+.mg-gcard .gt { margin:3px 0 2px; font-weight:600; font-size:.95em; }
+.mg-gcard .gd { margin-bottom:8px; font-size:.78em; color:var(--text-dim); line-height:1.55; }
 details.mg-wrap { margin:22px 0; }
 details.mg-wrap > summary { cursor:pointer; padding:10px 14px; border:1px solid var(--border); border-radius:10px; background:var(--bg-card); font-weight:700; list-style:none; }
 details.mg-wrap[open] > summary { margin-bottom:6px; }

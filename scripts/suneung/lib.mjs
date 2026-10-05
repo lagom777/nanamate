@@ -245,7 +245,16 @@ function sheetOf(c) {
 }
 
 export function summaryPage(spec) {
-  const chips = spec.chapters.map((c, i) => `<a href="#p${i + 1}">${i + 1}. ${c.title}</a>`).join("");
+  const chips = spec.chapters.map((c, i) => `<a href="#p${i + 1}">${i + 1}. ${c.title}</a>`).join("") + (spec.imageMaps ? `<a href="#img-maps">🗺️ 이미지 요약 맵</a>` : "");
+  const gallery = spec.imageMaps
+    ? `<section class="sum-part" id="img-maps">
+<h2>🗺️ 이미지 요약 맵 ${spec.imageMaps.length}장</h2>
+<p class="sum-sub">카드를 누르면 큰 이미지가 열리고, 아래 링크로 가까운 파트 노트로 이동합니다.</p>
+<div class="mg-gallery">${spec.imageMaps
+        .map((m, i) => `<div class="mg-gcard"><a href="${m.img}" target="_blank" rel="noopener" title="새 탭에서 크게 보기"><img src="${m.img}" alt="${m.title}" loading="lazy"></a><div class="gi"><div class="gp">MAP ${String(i + 1).padStart(2, "0")}</div><div class="gt">${m.title}</div><div class="gd">${m.desc}</div><a class="cta sm" href="chapters/${m.chapter}">관련 파트 노트 →</a></div></div>`)
+        .join("")}</div>
+</section>`
+    : "";
   const parts = spec.chapters.map((c, i) => {
     const secs = sheetOf(c).map((x) => `<div class="sum-sec"><h3>${x.title}</h3>${x.blocks.join("")}</div>`).join("\n");
     const traps = c.traps ? `<div class="sum-traps"><h3>⚠ 자주 걸리는 함정</h3>${c.traps}</div>` : "";
@@ -266,6 +275,7 @@ ${aside(spec, "summary", 0)}
 <header class="paper-header"><h1>한눈에 요약</h1><p class="authors">${spec.label} · 파트별 핵심 공식·그림·함정을 카드 한 장씩에 모았습니다</p><p class="affiliation">개념 설명은 각 파트 노트에서, 여기서는 시험 직전 훑어보기용으로</p></header>
 <div class="sum-chips">${chips}</div>
 ${parts}
+${gallery}
 </main></div>
 <script>window.addEventListener("load", () => { const el = document.getElementById(location.hash.slice(1)); if (el) setTimeout(() => el.scrollIntoView(), 400); });</script>
 </body></html>`;
