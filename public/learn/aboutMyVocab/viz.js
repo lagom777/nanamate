@@ -2,7 +2,7 @@
    window.VIZ[소문자 단어] = { color, t(단계당 초), tag, ipa, pos, kr, lead, scene(SVG), steps:[[제목, 설명, 예문?]], origin, ex, rel }
    scene 안에서 data-s="n" 인 요소는 n단계부터, data-e="m" 이 있으면 m단계까지 보인다.
    등장 방식: .vs(서서히) + .up(아래에서) .pop(커지며) .wipe(왼→오) .wipe-d(위→아래) .draw(선 긋기, pathLength="1")
-   이동: .mv (--from 위치에서 제자리로). 반복 움직임: .a-fall .a-drip .a-dash .a-bob .a-flap .a-pulse .a-slide .a-flow .a-flip .a-press */
+   이동: .mv (--from 위치에서 제자리로). 반복 움직임: .a-fall .a-drip .a-rise .a-dash .a-bob .a-flap .a-pulse .a-slide .a-flow .a-flip .a-press */
 (function () {
   const pts = (a) => a.map((p) => p.join(",")).join(" ");
   const badge = (k, x, y, c = "#1e5f99") =>
@@ -260,7 +260,140 @@ ${tile(1, 14, "#0f766e", "선박", "a large ship", "cargo vessel", ship)}${tile(
     };
   })();
 
-  const VIZ = (window.VIZ = { glacier, pollination, vessel, chronic });
+  /* ───────── sediment ───────── */
+  const sediment = (() => {
+    const svg = `<svg viewBox="0 0 560 300" role="img" aria-label="강물이 흙을 실어 와 호수 바닥에 가라앉아 층을 이루는 과정">
+<defs>
+<linearGradient id="se-water" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b9e0f4"/><stop offset="1" stop-color="#8ccbe9"/></linearGradient>
+<clipPath id="se-clip"><rect width="560" height="300" rx="14"/></clipPath>
+<clipPath id="se-in"><rect x="301" y="91" width="238" height="184"/></clipPath>
+</defs>
+<g clip-path="url(#se-clip)">
+<rect width="560" height="300" fill="#efe4cf"/>
+<rect x="298" y="88" width="244" height="190" rx="10" fill="none" stroke="#8a6a48" stroke-width="6"/>
+<path d="M0 96H304V132H0Z" fill="url(#se-water)"/>
+<g class="vs" data-s="1" data-e="2"><path class="a-slide" d="M0 110q15 -5 30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.6"/></g>
+<g class="vs" data-s="1" data-e="2" fill="#7a5a36"><g class="a-flow"><circle cx="40" cy="112" r="3.5"/><circle cx="92" cy="122" r="3"/><circle cx="150" cy="106" r="3.8"/><circle cx="206" cy="118" r="3.2"/><circle cx="250" cy="110" r="3.6"/><circle cx="276" cy="124" r="3"/></g></g>
+<rect x="301" y="91" width="238" height="184" fill="#cfe9f7"/>
+<g clip-path="url(#se-in)">
+<rect class="vs up" data-s="3" style="--dl:0s" x="301" y="244" width="238" height="31" fill="#dcbf8c"/>
+<rect class="vs up" data-s="3" style="--dl:.7s" x="301" y="216" width="238" height="28" fill="#b98f5f"/>
+<rect class="vs up" data-s="3" style="--dl:1.4s" x="301" y="190" width="238" height="26" fill="#8e6c46"/>
+</g>
+<g class="vs" data-s="2" data-e="2" fill="#7a5a36">
+<circle class="a-fall" style="animation-delay:0s" cx="330" cy="140" r="3"/>
+<circle class="a-fall" style="animation-delay:-.8s" cx="362" cy="158" r="2.6"/>
+<circle class="a-fall" style="animation-delay:-1.6s" cx="398" cy="146" r="3.2"/>
+<circle class="a-fall" style="animation-delay:-2.2s" cx="430" cy="166" r="2.8"/>
+<circle class="a-fall" style="animation-delay:-.4s" cx="466" cy="150" r="3"/>
+<circle class="a-fall" style="animation-delay:-2.8s" cx="500" cy="172" r="2.6"/>
+</g>
+<g class="vs up" data-s="1" style="--dl:.3s"><text x="150" y="86" text-anchor="middle" font-size="13" font-weight="700" fill="#2a4d69">강물 흐름 →</text></g>
+<g class="vs up" data-s="3" style="--dl:.2s" fill="#3a2a18" font-size="12.5" font-weight="700" text-anchor="end"><text x="530" y="263">모래</text></g>
+<g class="vs up" data-s="3" style="--dl:.9s" fill="#3a2a18" font-size="12.5" font-weight="700" text-anchor="end"><text x="530" y="234">진흙</text></g>
+<g class="vs up" data-s="3" style="--dl:1.6s" fill="#f5efe4" font-size="12.5" font-weight="700" text-anchor="end"><text x="530" y="205">점토</text></g>
+<g class="vs up" data-s="3" style="--dl:2s"><text x="150" y="214" text-anchor="middle" font-size="13.5" font-weight="700" fill="#5b4327">퇴적층 (층층이 쌓인 흙)</text><path d="M236 206H290" stroke="#5b4327" stroke-width="1.6" fill="none"/><path d="M286 201L296 206L286 211Z" fill="#5b4327"/></g>
+${badge(1, 40, 70)}${badge(2, 330, 74)}${badge(3, 520, 166)}
+</g></svg>`;
+    return {
+      color: "#8e6c46", t: 3.6, tag: "움직이는 해설 · 과정", ipa: "/ˈsedɪmənt/", pos: "n.", kr: "침전물",
+      lead: "물에 실려 온 흙과 모래가 가라앉아 층층이 쌓인 것 — 굳으면 퇴적암이 됩니다",
+      scene: svg,
+      steps: [
+        ["강물이 흙을 싣고 흐른다", "물살에 흙과 모래 알갱이가 떠서 실려 갑니다"],
+        ["물살이 느려지면 가라앉는다", "고요한 호수에서는 무거운 알갱이부터 바닥으로 가라앉습니다"],
+        ["층층이 쌓여 퇴적층이 된다", "쌓인 층이 오랜 세월 눌려 굳으면 퇴적암(sedimentary rock)이 됩니다"],
+      ],
+      origin: ["어원", "sedere(앉다, 라틴어) → sedimentum(가라앉은 것) → sediment : 바닥에 앉은 것"],
+      ex: ["The river deposits sediment at its mouth.", "강은 하구에 침전물을 쌓아 놓는다."],
+      rel: [["sedimentary", "퇴적의"], ["settle", "가라앉다"], ["deposit", "퇴적시키다"]],
+    };
+  })();
+
+  /* ───────── condense ───────── */
+  const condense = (() => {
+    const cloud = [[60, 230, 4], [84, 212, 3], [112, 236, 3.5], [140, 206, 4], [170, 232, 3], [196, 212, 4], [226, 236, 3.5], [250, 216, 3], [110, 194, 3], [186, 194, 3.5], [240, 196, 3]];
+    const vapor = cloud.map(([x, y, r], i) => `<circle class="a-rise" style="animation-delay:${-(i * 0.42).toFixed(2)}s" cx="${x}" cy="${y}" r="${r}"/>`).join("");
+    const drops = [[392, 132, 4], [390, 154, 3], [498, 128, 4.5], [492, 174, 3.5], [396, 198, 3], [494, 214, 4], [388, 234, 3.5], [474, 146, 2.5], [480, 226, 3]];
+    const beads = drops.map(([x, y, r], i) => `<circle class="vs pop" data-s="3" style="--dl:${(i * 0.12).toFixed(2)}s" cx="${x}" cy="${y}" r="${r}" fill="#ffffff" stroke="#6fa8c9" stroke-width="1"/>`).join("");
+    const svg = `<svg viewBox="0 0 560 300" role="img" aria-label="공기 속 수증기가 차가운 컵에 닿아 물방울로 응결하는 과정">
+<defs>
+<linearGradient id="co-bg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fdf1e4"/><stop offset="1" stop-color="#e7f3fb"/></linearGradient>
+<linearGradient id="co-glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff" stop-opacity=".6"/><stop offset="1" stop-color="#dff1fb" stop-opacity=".35"/></linearGradient>
+<linearGradient id="co-liq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd8f2"/><stop offset="1" stop-color="#5fb4de"/></linearGradient>
+<clipPath id="co-clip"><rect width="560" height="300" rx="14"/></clipPath>
+<clipPath id="co-cup"><path d="M385 110H495L485 250Q485 258 477 258H403Q395 258 395 250Z"/></clipPath>
+</defs>
+<g clip-path="url(#co-clip)">
+<rect width="560" height="300" fill="url(#co-bg)"/>
+<g class="vs" data-s="1" data-e="2" fill="#86aac4" fill-opacity=".9">${vapor}</g>
+<g class="vs up" data-s="1" data-e="2" style="--dl:.3s"><text x="140" y="276" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1e4e79">수증기 (기체)</text></g>
+<g class="vs wipe" data-s="2" style="--d:1.4s" fill="#3b82c4"><path d="M240 150H346" stroke="#3b82c4" stroke-width="2.4" stroke-dasharray="7 6" fill="none"/><path d="M342 142L355 150L342 158Z"/></g>
+<path d="M385 110H495L485 250Q485 258 477 258H403Q395 258 395 250Z" fill="url(#co-glass)" stroke="#6fa8c9" stroke-width="2.2"/>
+<g clip-path="url(#co-cup)"><rect x="380" y="160" width="120" height="110" fill="url(#co-liq)" opacity=".45"/>
+<g class="vs pop" data-s="2" style="--dl:.4s"><rect x="410" y="170" width="28" height="28" rx="5" fill="#eaf9ff" stroke="#9dd0ea"/><rect x="448" y="186" width="26" height="26" rx="5" fill="#eaf9ff" stroke="#9dd0ea"/></g></g>
+<g class="vs up" data-s="2" style="--dl:.3s"><text x="440" y="98" text-anchor="middle" font-size="13" font-weight="700" fill="#2a6a9a">차가운 컵</text></g>
+${beads}
+<g class="vs" data-s="3" data-e="3" fill="#6fb4dc"><circle class="a-drip" style="animation-delay:0s" cx="402" cy="262" r="2.6"/><circle class="a-drip" style="animation-delay:-.8s" cx="488" cy="262" r="2.6"/></g>
+<g class="vs up" data-s="3" style="--dl:.5s"><text x="440" y="292" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1e4e79">물방울 (액체)</text></g>
+${badge(1, 40, 70)}${badge(2, 330, 118)}${badge(3, 530, 130)}
+</g></svg>`;
+    return {
+      color: "#3b82c4", t: 3.6, tag: "움직이는 해설 · 과정", ipa: "/kənˈdens/", pos: "v.", kr: "응축하다 · 요약하다",
+      lead: "기체가 식어 액체가 되는 것(응결) — ‘빽빽하게 한데 모으다’가 요약의 뜻으로도 이어집니다",
+      scene: svg,
+      steps: [
+        ["공기 속에 수증기가 떠 있다", "기체 상태의 물은 눈에 보이지 않게 공기에 섞여 있습니다"],
+        ["차가운 표면에 닿아 식는다", "차가운 컵 주변의 공기가 식으면서 수증기가 컵 쪽으로 모입니다"],
+        ["작은 물방울로 뭉쳐 흘러내린다", "수증기가 액체 물방울이 되는 것 — 이것이 응결(condensation)입니다"],
+      ],
+      origin: ["어원", "con(함께, 강조) + densus(빽빽한) → 빽빽하게 한데 모이다 → 응축하다"],
+      ex: ["The steam condensed into droplets on the cold window.", "수증기가 차가운 창문에서 물방울로 응결했다."],
+      rel: [["condensation", "응결"], ["dense", "빽빽한"], ["vapor", "증기"]],
+    };
+  })();
+
+  /* ───────── friction ───────── */
+  const friction = (() => {
+    let teeth = "M180 200";
+    for (let x = 180; x < 280; x += 10) teeth += " l5 6 l5 -6";
+    const svg = `<svg viewBox="0 0 560 300" role="img" aria-label="바닥 위 물체를 밀 때 돌기가 맞물려 마찰력이 생기는 과정">
+<defs><clipPath id="fr-clip"><rect width="560" height="300" rx="14"/></clipPath></defs>
+<g clip-path="url(#fr-clip)">
+<rect width="560" height="300" fill="#f3f4f6"/>
+<rect x="0" y="200" width="560" height="100" fill="#d6dbe3"/>
+<path d="M0 200H560" stroke="#6b7280" stroke-width="2"/>
+<g class="vs up" data-s="1" style="--dl:.3s"><text x="440" y="236" text-anchor="middle" font-size="13.5" font-weight="700" fill="#4b5563">바닥 (거친 표면)</text></g>
+<g class="vs" data-s="3" data-e="3" fill="#f59e0b"><circle class="a-rise" style="animation-delay:0s" cx="178" cy="196" r="2.6"/><circle class="a-rise" style="animation-delay:-1.2s" cx="174" cy="190" r="2"/><circle class="a-rise" style="animation-delay:-.6s" cx="284" cy="196" r="2.6"/><circle class="a-rise" style="animation-delay:-1.8s" cx="288" cy="188" r="2"/></g>
+<g class="mv" data-s="2" style="--from:translateX(-40px);--d:1.8s;--ease:cubic-bezier(.3,.7,.3,1)">
+<rect x="180" y="146" width="100" height="54" rx="6" fill="#c98b4a" stroke="#7a4d1e" stroke-width="2"/>
+<rect x="194" y="154" width="72" height="8" rx="4" fill="#e2b27a" opacity=".7"/>
+<path d="${teeth}" fill="none" stroke="#7a4d1e" stroke-width="1.6"/>
+<text x="230" y="182" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">물체</text>
+</g>
+<g class="vs wipe" data-s="2" style="--d:1.2s" fill="#2563eb"><path d="M288 173H386" stroke="#2563eb" stroke-width="3" fill="none"/><path d="M382 165L396 173L382 181Z"/></g>
+<g class="vs up" data-s="2" style="--dl:.5s"><text x="340" y="162" text-anchor="middle" font-size="15" font-weight="700" fill="#2563eb">F (미는 힘)</text></g>
+<g class="vs wipe" data-s="3" style="--d:1.2s" fill="#dc2626"><path d="M172 173H84" stroke="#dc2626" stroke-width="3" fill="none"/><path d="M88 165L74 173L88 181Z"/></g>
+<g class="vs up" data-s="3" style="--dl:.5s"><text x="128" y="162" text-anchor="middle" font-size="15" font-weight="700" fill="#dc2626">f (마찰력)</text></g>
+<g class="vs up" data-s="3" style="--dl:1s"><text x="340" y="262" text-anchor="middle" font-size="13.5" font-weight="700" fill="#c2410c">운동을 거스르며 열이 난다</text></g>
+${badge(1, 150, 126)}${badge(2, 410, 150)}${badge(3, 40, 150)}
+</g></svg>`;
+    return {
+      color: "#c2410c", t: 3.6, tag: "움직이는 해설 · 과정", ipa: "/ˈfrɪkʃn/", pos: "n.", kr: "마찰 · 불화",
+      lead: "맞닿은 물체가 미끄러지지 않으려는 힘 — 사람 사이의 ‘불화’라는 뜻도 여기서 왔습니다",
+      scene: svg,
+      steps: [
+        ["물체를 바닥에 올려놓는다", "겉보기엔 매끈해도 확대하면 울퉁불퉁한 돌기가 있습니다"],
+        ["밀면 돌기끼리 맞물린다", "힘(F)을 주면 두 표면의 돌기가 서로 걸리며 움직임을 막습니다"],
+        ["움직임을 거스르는 마찰력이 생긴다", "마찰력(f)은 운동 방향과 반대로 작용하고, 그 과정에서 열이 납니다"],
+      ],
+      origin: ["어원", "fricare(문지르다, 라틴어) → friction : 맞비벼 생기는 저항"],
+      ex: ["Friction between the tires and the road slows the car.", "타이어와 도로 사이의 마찰이 자동차의 속도를 줄인다."],
+      rel: [["frictionless", "마찰 없는"], ["rub", "문지르다"], ["resistance", "저항"]],
+    };
+  })();
+
+  const VIZ = (window.VIZ = { glacier, pollination, vessel, chronic, sediment, condense, friction });
 
   /* 카드 옆 패널 HTML */
   const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
