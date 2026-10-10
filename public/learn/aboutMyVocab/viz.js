@@ -351,7 +351,176 @@ ${beads}
     return { pic: true, n: 3, color: "#c2410c", t: 3.6, scene: svg };
   })();
 
-  const VIZ = (window.VIZ = { glacier, pollination, vessel, chronic, sediment, condense, friction });
+  /* ───────── erosion ───────── */
+  const erosion = (() => {
+    const lines = (x1, x2, ys) => ys.map((y) => `<path d="M${x1} ${y}H${x2}" stroke="#6b4a2a" stroke-width="2" stroke-opacity=".45"/>`).join("");
+    const rock = (x, y, s, dl) =>
+      `<g class="vs" data-s="3" style="--dl:${dl}s"><g class="mv" data-s="3" style="--from:translateY(-70px);--d:.9s;--dl:${dl}s;--ease:cubic-bezier(.5,0,.9,.5)"><polygon transform="translate(${x} ${y}) scale(${s})" points="-9,2 -4,-8 7,-6 11,3 2,9" fill="#a47c4f" stroke="#6b4a2a" stroke-width="1.4"/></g></g>`;
+    const svg = `<svg viewBox="0 0 560 300" role="img" aria-label="파도가 절벽 아래를 깎아 절벽이 무너져 물러나는 과정">
+<defs>
+<linearGradient id="er-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe3f8"/><stop offset="1" stop-color="#eef8fe"/></linearGradient>
+<linearGradient id="er-rock" gradientUnits="userSpaceOnUse" x1="0" y1="92" x2="0" y2="300"><stop offset="0" stop-color="#cfa774"/><stop offset="1" stop-color="#8a6842"/></linearGradient>
+<linearGradient id="er-sea" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6db8e6"/><stop offset="1" stop-color="#3f91cf"/></linearGradient>
+<clipPath id="er-clip"><rect width="560" height="300" rx="14"/></clipPath>
+</defs>
+<g clip-path="url(#er-clip)">
+<rect width="560" height="300" fill="url(#er-sky)"/>
+<rect x="210" y="180" width="350" height="120" fill="url(#er-sea)"/>
+<g class="a-slide"><path d="M190 180q15 -7 30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0t30 0" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="2"/></g>
+<polygon points="0,92 150,92 150,300 0,300" fill="url(#er-rock)"/>${lines(0, 150, [114, 136, 158, 180, 202, 224, 246, 268, 290])}
+<rect x="0" y="86" width="150" height="8" fill="#6fae52"/>
+<polygon points="150,182 210,200 210,300 150,300" fill="url(#er-rock)"/>${lines(150, 210, [218, 238, 258, 278, 294])}
+<polygon points="210,166 150,182 210,200" fill="#4b3a2a"/>
+<g class="vs" data-s="1" data-e="1"><polygon points="210,166 150,182 210,200" fill="url(#er-rock)"/></g>
+<g class="vs" data-s="1" data-e="2"><polygon points="150,92 210,92 210,166 150,182" fill="url(#er-rock)"/>${lines(150, 210, [114, 136, 156])}<rect x="150" y="86" width="60" height="8" fill="#6fae52"/></g>
+<g class="vs" data-s="1" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-dasharray="10 9">
+<path class="a-dash" d="M520 200H252"/><path class="a-dash" style="animation-delay:-.5s" d="M520 226H252"/><path class="a-dash" style="animation-delay:-.9s" d="M520 252H252"/></g>
+<g class="vs" data-s="1" fill="#fff"><path d="M258 192L242 200L258 208Z"/><path d="M258 218L242 226L258 234Z"/><path d="M258 244L242 252L258 260Z"/></g>
+<g class="vs" data-s="2" data-e="2" fill="#fff"><circle class="a-rise" style="animation-delay:0s" cx="216" cy="178" r="3.2"/><circle class="a-rise" style="animation-delay:-.7s" cx="226" cy="182" r="2.4"/><circle class="a-rise" style="animation-delay:-1.4s" cx="212" cy="184" r="2.8"/><circle class="a-rise" style="animation-delay:-2.1s" cx="232" cy="176" r="2.2"/></g>
+${rock(224, 176, 1, 0)}${rock(240, 181, 0.8, 0.25)}${rock(213, 185, 0.7, 0.5)}
+<g class="vs" data-s="3" data-e="3" fill="#d9cbb6"><g class="vs pop" data-s="3" data-e="3" style="--dl:.1s"><circle cx="196" cy="156" r="9"/><circle cx="182" cy="140" r="7"/><circle cx="204" cy="132" r="6"/></g></g>
+<g class="vs" data-s="3" style="--dl:.6s"><polygon points="150,92 210,92 210,166 150,182" fill="none" stroke="#7a5a36" stroke-width="2" stroke-dasharray="6 5"/></g>
+<g class="vs wipe" data-s="3" style="--dl:1s;--d:.9s"><path d="M202 128H168" stroke="#dc2626" stroke-width="3" fill="none"/><path d="M172 121L158 128L172 135Z" fill="#dc2626"/></g>
+</g></svg>`;
+    return { pic: true, n: 3, color: "#8a6842", t: 3.8, scene: svg };
+  })();
+
+  /* ───────── refraction ───────── */
+  const refraction = (() => {
+    const glass = "M258 80H402L388 252Q387 260 378 260H282Q273 260 272 252Z";
+    const svg = `<svg viewBox="0 0 560 300" role="img" aria-label="물이 담긴 컵 속 빨대가 꺾여 보이는 이유, 빛의 굴절">
+<defs>
+<linearGradient id="rf-water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd8f2"/><stop offset="1" stop-color="#5fb4de"/></linearGradient>
+<clipPath id="rf-clip"><rect width="560" height="300" rx="14"/></clipPath>
+<clipPath id="rf-in"><path d="${glass}"/></clipPath>
+<clipPath id="rf-under"><rect x="240" y="150" width="190" height="120"/></clipPath>
+</defs>
+<g clip-path="url(#rf-clip)">
+<rect width="560" height="300" fill="#f4f7fb"/>
+<g transform="translate(26 -8) scale(1.1)">
+<ellipse cx="330" cy="268" rx="96" ry="9" fill="#000" fill-opacity=".07"/>
+<path d="M330 40L306 150" stroke="#ef4444" stroke-width="9" stroke-linecap="round" fill="none"/>
+<path d="M330 40L306 150" stroke="#fff" stroke-opacity=".75" stroke-width="3" stroke-dasharray="7 11" fill="none"/>
+<g clip-path="url(#rf-under)"><g class="mv" data-s="2" style="--from:translateX(16px);--d:1.4s;--dl:1.1s"><path d="M290 150L268 250" stroke="#ef4444" stroke-width="12" stroke-linecap="butt" fill="none"/><path d="M290 150L268 250" stroke="#fff" stroke-opacity=".75" stroke-width="4" stroke-dasharray="7 11" fill="none"/></g></g>
+<g clip-path="url(#rf-in)"><g class="mv" data-s="2" style="--from:translateY(120px);--d:2.2s;--ease:cubic-bezier(.3,.6,.4,1)"><rect x="240" y="150" width="190" height="130" fill="url(#rf-water)" fill-opacity=".5"/><g class="a-slide"><path d="M230 150q10 -5 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="2"/></g></g></g>
+<path d="${glass}" fill="#dff1fb" fill-opacity=".25" stroke="#6fa8c9" stroke-width="2.4" stroke-linejoin="round"/>
+<path class="vs draw" data-s="3" pathLength="1" style="--d:1.6s" d="M274 212L270 152L112 136" stroke="#f59e0b" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+<g class="vs pop" data-s="3" style="--dl:1.2s"><circle cx="270" cy="152" r="5.5" fill="#fff" stroke="#f59e0b" stroke-width="2.4"/></g>
+<g class="vs pop" data-s="3" style="--dl:1.5s" fill="#f59e0b"><path d="M130 128L112 136L130 144Z"/></g>
+<g class="vs pop" data-s="3" style="--dl:1.7s"><ellipse cx="70" cy="136" rx="26" ry="15" fill="#fff" stroke="#374151" stroke-width="2.4"/><circle cx="76" cy="136" r="8.5" fill="#2563eb"/><circle cx="76" cy="136" r="3.6" fill="#111827"/><circle cx="79" cy="133" r="1.6" fill="#fff"/></g>
+</g>
+</g></svg>`;
+    return { pic: true, n: 3, color: "#f59e0b", t: 3.6, scene: svg };
+  })();
+
+  /* ───────── dissolve ───────── */
+  const dissolve = (() => {
+    const glass = "M192 70H368L352 244Q351 252 343 252H217Q209 252 208 244Z";
+    const cube = (x, y, s) => `<rect x="${x}" y="${y}" width="${s}" height="${s}" rx="${(s / 8).toFixed(1)}" fill="#fff" stroke="#c7d2de" stroke-width="1.6"/><path d="M${x + s * 0.2} ${y + s * 0.25}H${x + s * 0.6}M${x + s * 0.2} ${y + s * 0.45}H${x + s * 0.4}" stroke="#dbe4ee" stroke-width="2" stroke-linecap="round"/>`;
+    const near = Array.from({ length: 10 }, (_, i) => {
+      const a = (Math.PI * 2 * i) / 10, rad = 26 + (i % 3) * 9;
+      return `<circle class="vs pop" data-s="2" data-e="2" style="--dl:${(0.3 + i * 0.08).toFixed(2)}s" cx="${(280 + Math.cos(a) * rad).toFixed(1)}" cy="${Math.min(244, 226 + Math.sin(a) * rad * 0.75).toFixed(1)}" r="${(3 + (i % 2) * 0.8).toFixed(1)}" fill="#fff" stroke="#4a9fd0" stroke-width="1.4"/>`;
+    }).join("");
+    const spread = Array.from({ length: 30 }, (_, i) =>
+      `<circle class="vs pop" data-s="3" style="--dl:${((i % 10) * 0.09).toFixed(2)}s" cx="${220 + ((i * 37) % 121)}" cy="${126 + ((i * 53) % 112)}" r="${(3 + (i % 3) * 0.7).toFixed(1)}" fill="#fff" stroke="#4a9fd0" stroke-width="1.4"/>`).join("");
+    const svg = `<svg viewBox="0 0 560 300" role="img" aria-label="각설탕이 물에 들어가 작아지다 물 전체에 퍼져 녹는 과정">
+<defs>
+<linearGradient id="dl-water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a9ddf5"/><stop offset="1" stop-color="#62b6e0"/></linearGradient>
+<clipPath id="dl-clip"><rect width="560" height="300" rx="14"/></clipPath>
+<clipPath id="dl-in"><path d="${glass}"/></clipPath>
+</defs>
+<g clip-path="url(#dl-clip)">
+<rect width="560" height="300" fill="#f4f7fb"/>
+<ellipse cx="280" cy="258" rx="100" ry="9" fill="#000" fill-opacity=".07"/>
+<g class="vs" data-s="1" data-e="1"><g class="mv" data-s="1" style="--from:translateY(-170px);--d:1.1s;--ease:cubic-bezier(.4,0,.8,.6)">${cube(251, 192, 58)}</g></g>
+<g class="vs" data-s="2" data-e="2" style="--dl:.2s">${cube(261, 212, 38)}</g>
+${near}${spread}
+<g clip-path="url(#dl-in)"><rect x="190" y="110" width="180" height="150" fill="url(#dl-water)" fill-opacity=".5"/><g class="a-slide"><path d="M170 110q10 -5 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="2"/></g></g>
+<g class="vs" data-s="1" data-e="1" style="--dl:.9s"><ellipse class="a-pulse" cx="280" cy="112" rx="14" ry="4" fill="none" stroke="#fff" stroke-width="2.4"/></g>
+<path d="${glass}" fill="#dff1fb" fill-opacity=".2" stroke="#6fa8c9" stroke-width="2.4" stroke-linejoin="round"/>
+</g></svg>`;
+    return { pic: true, n: 3, color: "#38a4d8", t: 3.6, scene: svg };
+  })();
+
+  /* ───────── inflate ───────── */
+  const inflate = (() => {
+    const svg = `<svg viewBox="0 0 560 300" role="img" aria-label="공기를 불어넣어 풍선이 점점 부푸는 과정">
+<defs>
+<radialGradient id="in-ball" cx=".38" cy=".32" r=".8"><stop offset="0" stop-color="#ff9db4"/><stop offset=".6" stop-color="#f43f5e"/><stop offset="1" stop-color="#be123c"/></radialGradient>
+<linearGradient id="in-pump" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cbd5e1"/><stop offset="1" stop-color="#8d9bb0"/></linearGradient>
+<clipPath id="in-clip"><rect width="560" height="300" rx="14"/></clipPath>
+</defs>
+<g clip-path="url(#in-clip)">
+<rect width="560" height="300" fill="#f6f3fb"/>
+<rect x="0" y="262" width="560" height="38" fill="#e7e2f3"/>
+<g class="a-press"><path d="M76 160V112" stroke="#64748b" stroke-width="7" stroke-linecap="round"/><rect x="48" y="100" width="56" height="12" rx="6" fill="#475569"/></g>
+<rect x="34" y="158" width="84" height="48" rx="10" fill="url(#in-pump)" stroke="#64748b" stroke-width="2"/>
+<rect x="116" y="173" width="100" height="14" rx="7" fill="#64748b"/>
+<path class="a-dash" d="M122 180H210" stroke="#fff" stroke-opacity=".85" stroke-width="3" stroke-dasharray="8 10" stroke-linecap="round" fill="none"/>
+<g class="mv" data-s="2" style="--from:scale(.62);--d:1.6s;transform-box:fill-box;transform-origin:0% 50%"><g class="mv" data-s="3" style="--from:scale(.8);--d:1.6s;transform-box:fill-box;transform-origin:0% 50%">
+<ellipse cx="332" cy="180" rx="106" ry="86" fill="url(#in-ball)"/><ellipse cx="292" cy="136" rx="28" ry="14" transform="rotate(-28 292 136)" fill="#fff" fill-opacity=".45"/></g></g>
+<polygon points="228,180 212,170 212,190" fill="#be123c"/>
+</g></svg>`;
+    return { pic: true, n: 3, color: "#e11d48", t: 3.6, scene: svg };
+  })();
+
+  /* ───────── decay ───────── */
+  const decay = (() => {
+    const apple = "M280 112C262 96 214 102 206 150C198 200 236 250 262 250C272 250 276 246 280 246C284 246 288 250 298 250C324 250 362 200 354 150C346 102 298 96 280 112Z";
+    const fly = (x, y, dl) => `<g transform="translate(${x} ${y})"><g class="vs pop" data-s="3" style="--dl:${dl}s"><g class="a-bob"><g class="a-flap"><ellipse cx="-4" cy="-6" rx="7" ry="3.4" fill="#fff" fill-opacity=".8" stroke="#9ca3af"/><ellipse cx="5" cy="-6" rx="7" ry="3.4" fill="#fff" fill-opacity=".8" stroke="#9ca3af"/></g><ellipse rx="7" ry="4.6" fill="#1f2937"/><circle cx="-7" cy="0" r="3" fill="#111827"/></g></g></g>`;
+    const svg = `<svg viewBox="0 0 560 300" role="img" aria-label="신선한 사과가 시간이 지나며 썩어 가는 과정">
+<defs>
+<radialGradient id="dc-red" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#ef5350"/><stop offset="1" stop-color="#a51c1c"/></radialGradient>
+<clipPath id="dc-clip"><rect width="560" height="300" rx="14"/></clipPath>
+<clipPath id="dc-apple"><path d="${apple}"/></clipPath>
+</defs>
+<g clip-path="url(#dc-clip)">
+<rect width="560" height="300" fill="#f8f4ee"/>
+<ellipse cx="280" cy="262" rx="84" ry="10" fill="#000" fill-opacity=".09"/>
+<path d="M280 112C282 96 286 86 292 76" stroke="#6b4423" stroke-width="6" stroke-linecap="round" fill="none"/>
+<path d="M290 92C310 70 338 74 344 84C330 100 306 102 290 92Z" fill="#5aa84a"/>
+<path d="${apple}" fill="url(#dc-red)"/>
+<ellipse cx="238" cy="150" rx="12" ry="26" transform="rotate(14 238 150)" fill="#fff" fill-opacity=".28"/>
+<g clip-path="url(#dc-apple)">
+<g class="vs pop" data-s="2" style="--dl:.2s" fill="#6b4423"><ellipse cx="256" cy="176" rx="20" ry="17"/><ellipse cx="320" cy="204" rx="15" ry="13"/><ellipse cx="294" cy="140" rx="11" ry="10"/></g>
+<g class="vs pop" data-s="3" style="--dl:0s"><ellipse cx="280" cy="198" rx="86" ry="64" fill="#5a3a22" fill-opacity=".9"/></g>
+<g class="vs" data-s="3" style="--dl:.4s"><rect x="190" y="90" width="180" height="170" fill="#3b2614" fill-opacity=".35"/></g>
+</g>
+<g class="vs" data-s="3" style="--dl:.8s" fill="none" stroke="#2a1a0c" stroke-opacity=".55" stroke-width="2.4" stroke-linecap="round"><path d="M232 140q10 20 0 40"/><path d="M328 130q-10 22 0 44"/><path d="M262 226q18 10 40 0"/></g>
+<g class="vs pop" data-s="3" style="--dl:1s" fill="#bfe6a0" stroke="#7fb257" stroke-width="1.2"><circle cx="262" cy="200" r="5.5"/><circle cx="300" cy="216" r="4.5"/><circle cx="284" cy="180" r="3.6"/><circle cx="318" cy="190" r="3.2"/></g>
+${fly(206, 112, 1.2)}${fly(364, 132, 1.5)}
+<g transform="translate(468 70)"><g class="vs pop" data-s="2"><g class="a-flip"><path d="M-14-18H14L3 0L14 18H-14L-3 0Z" fill="#fff4e0" stroke="#b45309" stroke-width="2" stroke-linejoin="round"/><path d="M-8-13H8L3-4H-3ZM-4 9H4L8 14H-8Z" fill="#b45309"/></g></g></g>
+</g></svg>`;
+    return { pic: true, n: 3, color: "#b45309", t: 3.6, scene: svg };
+  })();
+
+  /* ───────── collide ───────── */
+  const collide = (() => {
+    const star = Array.from({ length: 16 }, (_, i) => {
+      const a = (Math.PI * 2 * i) / 16 - Math.PI / 2, r = i % 2 ? 16 : 42;
+      return `${(Math.cos(a) * r).toFixed(1)},${(Math.sin(a) * r).toFixed(1)}`;
+    }).join(" ");
+    const ball = (base, fromMid, fromPost, grad) =>
+      `<g class="mv" data-s="2" data-e="2" style="--from:translateX(${fromMid}px);--d:1.1s;--ease:cubic-bezier(.5,0,.9,.6)"><g class="mv" data-s="3" style="--from:translateX(${fromPost}px);--d:1.1s;--ease:cubic-bezier(.2,.7,.3,1)"><g transform="translate(${base} 162)"><ellipse cx="0" cy="37" rx="32" ry="6" fill="#000" fill-opacity=".14"/><circle r="38" fill="url(#${grad})"/><ellipse cx="-13" cy="-15" rx="13" ry="8" transform="rotate(-30 -13 -15)" fill="#fff" fill-opacity=".5"/></g></g></g>`;
+    const svg = `<svg viewBox="0 0 560 300" role="img" aria-label="두 공이 서로를 향해 달려와 부딪친 뒤 튕겨 나가는 과정">
+<defs>
+<radialGradient id="co2-a" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#fb7185"/><stop offset="1" stop-color="#be123c"/></radialGradient>
+<radialGradient id="co2-b" cx=".35" cy=".3" r=".85"><stop offset="0" stop-color="#60a5fa"/><stop offset="1" stop-color="#1d4ed8"/></radialGradient>
+<clipPath id="co2-clip"><rect width="560" height="300" rx="14"/></clipPath>
+</defs>
+<g clip-path="url(#co2-clip)">
+<rect width="560" height="300" fill="#f4f7fb"/>
+<rect x="0" y="200" width="560" height="100" fill="#e2e8f0"/><path d="M0 200H560" stroke="#94a3b8" stroke-width="2"/>
+${ball(292, -122, -50, "co2-a")}${ball(268, 122, 50, "co2-b")}
+<g class="vs" data-s="1" data-e="1"><g stroke-width="4" stroke-linecap="round" fill="none"><path d="M78 100H148" stroke="#e11d48"/><path d="M482 100H412" stroke="#2563eb"/></g><path d="M148 93L164 100L148 107Z" fill="#e11d48"/><path d="M412 93L396 100L412 107Z" fill="#2563eb"/></g>
+<g transform="translate(280 162)"><g class="vs pop" data-s="2" data-e="2" style="--dl:.9s"><polygon points="${star}" fill="#fde047" stroke="#f59e0b" stroke-width="2.4" stroke-linejoin="round"/></g></g>
+<g class="vs" data-s="2" data-e="2" style="--dl:.9s"><ellipse class="a-pulse" cx="280" cy="162" rx="38" ry="38" fill="none" stroke="#f59e0b" stroke-width="2.6"/></g>
+<g class="vs" data-s="3"><g stroke-width="4" stroke-linecap="round" fill="none"><path d="M214 100H146" stroke="#e11d48"/><path d="M346 100H414" stroke="#2563eb"/></g><path d="M148 93L132 100L148 107Z" fill="#e11d48"/><path d="M412 93L428 100L412 107Z" fill="#2563eb"/></g>
+</g></svg>`;
+    return { pic: true, n: 3, color: "#2563eb", t: 3.2, scene: svg };
+  })();
+
+  const VIZ = (window.VIZ = { glacier, pollination, vessel, chronic, sediment, condense, friction, erosion, refraction, dissolve, inflate, decay, collide });
 
   /* 카드 옆 패널 HTML */
   const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
