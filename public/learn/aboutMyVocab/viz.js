@@ -60,7 +60,6 @@ ${pill(346, iFlake, 0.3)}${next(404, 0.7)}${pill(420, iPack, 0.9)}${next(478, 1.
 <g class="vs" data-s="4" data-e="4"><circle class="a-pulse" cx="524" cy="96" r="18" fill="none" stroke="#f59e0b" stroke-width="2.4"/></g>
 <g class="vs" data-s="1" stroke="#5aa9dd" stroke-width="1.4" stroke-linecap="round" fill="none">
 ${flake(126, 14, 1.1, 0)}${flake(152, 30, 1, -1.1)}${flake(232, 16, 0.9, -2)}${flake(262, 36, 1.1, -0.6)}${flake(92, 26, 0.9, -1.6)}</g>
-${badge(1, 196, 40)}${badge(2, 266, 86)}${badge(3, 318, 108)}${badge(4, 500, 196)}
 </g></svg>`;
     return { pic: true, n: 4, color: "#2b8cc4", t: 3.8, scene: svg };
   })();
@@ -321,7 +320,6 @@ ${badge(1, 40, 70)}${badge(2, 330, 74)}${badge(3, 520, 166)}
 <g transform="translate(440 88)"><g class="vs pop" data-s="2" style="--dl:.3s"><g stroke="#4aa0d8" stroke-width="2.4" stroke-linecap="round"><path d="M-12 0H12M0 -12V12M-8.5 -8.5L8.5 8.5M-8.5 8.5L8.5 -8.5"/></g></g></g>
 ${beads}
 <g class="vs" data-s="3" data-e="3" fill="#6fb4dc"><circle class="a-drip" style="animation-delay:0s" cx="402" cy="262" r="2.6"/><circle class="a-drip" style="animation-delay:-.8s" cx="488" cy="262" r="2.6"/></g>
-${badge(1, 40, 70)}${badge(2, 330, 118)}${badge(3, 530, 130)}
 </g></svg>`;
     return { pic: true, n: 3, color: "#3b82c4", t: 3.6, scene: svg };
   })();
@@ -349,7 +347,6 @@ ${badge(1, 40, 70)}${badge(2, 330, 118)}${badge(3, 530, 130)}
 <circle cx="440" cy="78" r="44" fill="none" stroke="#7a4d1e" stroke-width="3"/></g>
 <g class="vs wipe" data-s="2" style="--d:1.2s" fill="#2563eb"><path d="M288 173H386" stroke="#2563eb" stroke-width="3" fill="none"/><path d="M382 165L396 173L382 181Z"/></g>
 <g class="vs wipe" data-s="3" style="--d:1.2s" fill="#dc2626"><path d="M172 173H84" stroke="#dc2626" stroke-width="3" fill="none"/><path d="M88 165L74 173L88 181Z"/></g>
-${badge(1, 150, 126)}${badge(2, 410, 150)}${badge(3, 40, 150)}
 </g></svg>`;
     return { pic: true, n: 3, color: "#c2410c", t: 3.6, scene: svg };
   })();
