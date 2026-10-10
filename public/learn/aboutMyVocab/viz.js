@@ -17,9 +17,12 @@
     const line = (off) => pts([[150, 58 + off], [200, 86 + off], [280, 126 + off], [360, 168 + off], [440, 205 + off]]);
     const flake = (x, y, s, d) =>
       `<g transform="translate(${x} ${y}) scale(${s})"><g class="a-fall" style="animation-delay:${d}s"><path d="M-5 0H5M0 -5V5M-3.5 -3.5L3.5 3.5M-3.5 3.5L3.5 -3.5"/></g></g>`;
-    const chip = (x, w, label, solid, dl) =>
-      `<g class="vs pop" data-s="2" style="--dl:${dl}s"><rect x="${x}" y="14" width="${w}" height="26" rx="13" fill="${solid ? "#3b8fcf" : "#fff"}" stroke="#3b8fcf" stroke-opacity="${solid ? 1 : 0.5}"/><text x="${x + w / 2}" y="31.5" text-anchor="middle" font-size="13" font-weight="700" fill="${solid ? "#fff" : "#1e5f99"}">${label}</text></g>`;
-    const arrow = (x, dl) => `<g class="vs" data-s="2" style="--dl:${dl}s"><text x="${x}" y="31.5" text-anchor="middle" font-size="13" font-weight="700" fill="#1e5f99">→</text></g>`;
+    const pill = (x, inner, dl) =>
+      `<g class="vs pop" data-s="2" style="--dl:${dl}s"><rect x="${x}" y="12" width="44" height="30" rx="15" fill="#fff" stroke="#3b8fcf" stroke-opacity=".5"/><g transform="translate(${x + 22} 27)">${inner}</g></g>`;
+    const next = (x, dl) => `<g class="vs" data-s="2" style="--dl:${dl}s"><path d="M${x - 6} 27H${x + 6}M${x + 2} 23L${x + 6} 27L${x + 2} 31" stroke="#1e5f99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>`;
+    const iFlake = `<g stroke="#5aa9dd" stroke-width="1.8" stroke-linecap="round"><path d="M-8 0H8M0 -8V8M-5.6 -5.6L5.6 5.6M-5.6 5.6L5.6 -5.6"/></g>`;
+    const iPack = `<g fill="#dcecf8" stroke="#8fb8d8" stroke-width="1"><circle cx="-6" cy="-5" r="3.2"/><circle cx="0" cy="-5" r="3.2"/><circle cx="6" cy="-5" r="3.2"/><circle cx="-3" cy="1" r="3.2"/><circle cx="3" cy="1" r="3.2"/><circle cx="0" cy="7" r="3.2"/></g>`;
+    const iIce = `<rect x="-8" y="-8" width="16" height="16" rx="3" fill="url(#gl-ice)" stroke="#5eaadf" stroke-width="1.2"/><path d="M-4 -3.5L2 -3.5M-4 0L-1 0" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>`;
     const drip = (d, dl) => `<g class="a-drip" style="animation-delay:${dl}s"><path d="${d}"/></g>`;
     const svg = `<svg viewBox="0 0 560 300" role="img" aria-label="빙하가 만들어져 흘러내리는 과정">
 <defs>
@@ -46,7 +49,7 @@
 <polygon class="vs wipe" data-s="1" style="--d:1.6s" points="${pts(snow)}" fill="#fff"/>
 <g class="vs" data-s="3" stroke="#3b82c4" stroke-width="1.7" stroke-linecap="round"><path d="M318 147l6 12M340 157l6 11M300 138l5 10M388 178l5 9"/></g>
 <g class="vs" data-s="2" data-e="2" style="--dl:.2s"><g class="a-press" fill="none" stroke="#1e5f99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M172 46v14m-5-5 5 5 5-5M212 68v14m-5-5 5 5 5-5M246 85v14m-5-5 5 5 5-5"/></g></g>
-${chip(346, 36, "눈", false, 0.3)}${arrow(392, 0.7)}${chip(402, 74, "다져진 눈", false, 0.9)}${arrow(486, 1.3)}${chip(496, 48, "얼음", true, 1.5)}
+${pill(346, iFlake, 0.3)}${next(404, 0.7)}${pill(420, iPack, 0.9)}${next(478, 1.3)}${pill(494, iIce, 1.5)}
 <g class="vs" data-s="3" fill="none" stroke="#1e5f99" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="8 7" marker-end="url(#gl-ar)">
 <path class="a-dash" d="M338 132Q362 142 386 156"/><path class="a-dash" d="M408 168Q428 177 448 189"/></g>
 <g class="vs wipe" data-s="4" style="--d:1.4s;--dl:.3s">
@@ -54,28 +57,12 @@ ${chip(346, 36, "눈", false, 0.3)}${arrow(392, 0.7)}${chip(402, 74, "다져진 
 <ellipse cx="520" cy="266" rx="38" ry="8" fill="url(#gl-water)" opacity=".85"/>
 <g stroke="#fff" stroke-opacity=".7" stroke-width="1.2" fill="none"><path d="M500 266q8-3 16 0M524 263q8-3 14 0M510 270q10-2 20 0"/></g></g>
 <g class="vs" data-s="4"><g fill="#4aa3e0">${drip("M449 184q-4 7 0 9q4-2 0-9z", 0)}${drip("M468 191q-4 7 0 9q4-2 0-9z", -0.5)}${drip("M482 205q-4 7 0 9q4-2 0-9z", -1)}</g></g>
-<g class="vs wipe-d" data-s="4" style="--d:1.2s;--dl:.6s"><line x1="292" y1="16" x2="292" y2="272" stroke="#1e5f99" stroke-width="1.4" stroke-dasharray="4 4"/>
-<text x="298" y="28" fill="#1e5f99" font-size="13.5" font-weight="700">평형선</text></g>
+<g class="vs" data-s="4" data-e="4"><circle class="a-pulse" cx="524" cy="96" r="18" fill="none" stroke="#f59e0b" stroke-width="2.4"/></g>
 <g class="vs" data-s="1" stroke="#5aa9dd" stroke-width="1.4" stroke-linecap="round" fill="none">
 ${flake(126, 14, 1.1, 0)}${flake(152, 30, 1, -1.1)}${flake(232, 16, 0.9, -2)}${flake(262, 36, 1.1, -0.6)}${flake(92, 26, 0.9, -1.6)}</g>
-<g class="vs up" data-s="1" style="--dl:.5s" fill="#fff" font-size="15" font-weight="700"><text x="146" y="152">적설 구역</text><text x="146" y="170" font-size="12.5" font-weight="500" opacity=".9">눈이 쌓이는 쪽</text></g>
-<g class="vs up" data-s="4" style="--dl:.4s" fill="#fff" font-size="15" font-weight="700"><text x="370" y="252">소모 구역</text><text x="370" y="270" font-size="12.5" font-weight="500" opacity=".9">얼음이 녹는 쪽</text></g>
 ${badge(1, 196, 40)}${badge(2, 266, 86)}${badge(3, 318, 108)}${badge(4, 500, 196)}
 </g></svg>`;
-    return {
-      color: "#2b8cc4", t: 3.8, tag: "움직이는 해설 · 과정", ipa: "/ˈɡleɪʃər/", pos: "n.", kr: "빙하",
-      lead: "눈이 쌓여 얼음이 되고, 그 얼음이 천천히 흘러내리는 ‘얼음의 강’",
-      scene: svg,
-      steps: [
-        ["눈이 쌓인다", "산꼭대기에 눈이 해마다 녹지 않고 쌓입니다 — 적설 구역"],
-        ["얼음이 된다", "쌓인 눈이 제 무게에 눌려 다져지고, 단단한 얼음으로 변합니다"],
-        ["흘러내린다", "얼음 덩어리가 중력 때문에 아주 천천히 아래로 흐릅니다"],
-        ["녹는다", "따뜻한 아래쪽에서 녹아 물이 되어 강·호수로 흘러갑니다 — 소모 구역"],
-      ],
-      origin: ["어원", "glacies(얼음, 라틴어) → 프랑스어 glace → glacier : 얼음이 있는 곳"],
-      ex: ["Glaciers are shrinking as the climate gets warmer.", "기후가 따뜻해지면서 빙하가 줄어들고 있다."],
-      rel: [["glacial", "빙하의"], ["ice sheet", "대륙 빙하"], ["iceberg", "빙산"]],
-    };
+    return { pic: true, n: 4, color: "#2b8cc4", t: 3.8, scene: svg };
   })();
 
   /* ───────── pollination ───────── */
@@ -327,70 +314,44 @@ ${badge(1, 40, 70)}${badge(2, 330, 74)}${badge(3, 520, 166)}
 <g clip-path="url(#co-clip)">
 <rect width="560" height="300" fill="url(#co-bg)"/>
 <g class="vs" data-s="1" data-e="2" fill="#86aac4" fill-opacity=".9">${vapor}</g>
-<g class="vs up" data-s="1" data-e="2" style="--dl:.3s"><text x="140" y="276" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1e4e79">수증기 (기체)</text></g>
 <g class="vs wipe" data-s="2" style="--d:1.4s" fill="#3b82c4"><path d="M240 150H346" stroke="#3b82c4" stroke-width="2.4" stroke-dasharray="7 6" fill="none"/><path d="M342 142L355 150L342 158Z"/></g>
 <path d="M385 110H495L485 250Q485 258 477 258H403Q395 258 395 250Z" fill="url(#co-glass)" stroke="#6fa8c9" stroke-width="2.2"/>
 <g clip-path="url(#co-cup)"><rect x="380" y="160" width="120" height="110" fill="url(#co-liq)" opacity=".45"/>
 <g class="vs pop" data-s="2" style="--dl:.4s"><rect x="410" y="170" width="28" height="28" rx="5" fill="#eaf9ff" stroke="#9dd0ea"/><rect x="448" y="186" width="26" height="26" rx="5" fill="#eaf9ff" stroke="#9dd0ea"/></g></g>
-<g class="vs up" data-s="2" style="--dl:.3s"><text x="440" y="98" text-anchor="middle" font-size="13" font-weight="700" fill="#2a6a9a">차가운 컵</text></g>
+<g transform="translate(440 88)"><g class="vs pop" data-s="2" style="--dl:.3s"><g stroke="#4aa0d8" stroke-width="2.4" stroke-linecap="round"><path d="M-12 0H12M0 -12V12M-8.5 -8.5L8.5 8.5M-8.5 8.5L8.5 -8.5"/></g></g></g>
 ${beads}
 <g class="vs" data-s="3" data-e="3" fill="#6fb4dc"><circle class="a-drip" style="animation-delay:0s" cx="402" cy="262" r="2.6"/><circle class="a-drip" style="animation-delay:-.8s" cx="488" cy="262" r="2.6"/></g>
-<g class="vs up" data-s="3" style="--dl:.5s"><text x="440" y="292" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1e4e79">물방울 (액체)</text></g>
 ${badge(1, 40, 70)}${badge(2, 330, 118)}${badge(3, 530, 130)}
 </g></svg>`;
-    return {
-      color: "#3b82c4", t: 3.6, tag: "움직이는 해설 · 과정", ipa: "/kənˈdens/", pos: "v.", kr: "응축하다 · 요약하다",
-      lead: "기체가 식어 액체가 되는 것(응결) — ‘빽빽하게 한데 모으다’가 요약의 뜻으로도 이어집니다",
-      scene: svg,
-      steps: [
-        ["공기 속에 수증기가 떠 있다", "기체 상태의 물은 눈에 보이지 않게 공기에 섞여 있습니다"],
-        ["차가운 표면에 닿아 식는다", "차가운 컵 주변의 공기가 식으면서 수증기가 컵 쪽으로 모입니다"],
-        ["작은 물방울로 뭉쳐 흘러내린다", "수증기가 액체 물방울이 되는 것 — 이것이 응결(condensation)입니다"],
-      ],
-      origin: ["어원", "con(함께, 강조) + densus(빽빽한) → 빽빽하게 한데 모이다 → 응축하다"],
-      ex: ["The steam condensed into droplets on the cold window.", "수증기가 차가운 창문에서 물방울로 응결했다."],
-      rel: [["condensation", "응결"], ["dense", "빽빽한"], ["vapor", "증기"]],
-    };
+    return { pic: true, n: 3, color: "#3b82c4", t: 3.6, scene: svg };
   })();
 
   /* ───────── friction ───────── */
   const friction = (() => {
     let teeth = "M180 200";
     for (let x = 180; x < 280; x += 10) teeth += " l5 6 l5 -6";
+    let saw = "";
+    for (let k = -6; k <= 6; k++) saw += `${k === -6 ? "M" : "L"}${k * 10} ${k % 2 === 0 ? 9 : -9} `;
     const svg = `<svg viewBox="0 0 560 300" role="img" aria-label="바닥 위 물체를 밀 때 돌기가 맞물려 마찰력이 생기는 과정">
-<defs><clipPath id="fr-clip"><rect width="560" height="300" rx="14"/></clipPath></defs>
+<defs><clipPath id="fr-clip"><rect width="560" height="300" rx="14"/></clipPath><clipPath id="fr-lens"><circle cx="440" cy="78" r="44"/></clipPath></defs>
 <g clip-path="url(#fr-clip)">
 <rect width="560" height="300" fill="#f3f4f6"/>
 <rect x="0" y="200" width="560" height="100" fill="#d6dbe3"/>
 <path d="M0 200H560" stroke="#6b7280" stroke-width="2"/>
-<g class="vs up" data-s="1" style="--dl:.3s"><text x="440" y="236" text-anchor="middle" font-size="13.5" font-weight="700" fill="#4b5563">바닥 (거친 표면)</text></g>
-<g class="vs" data-s="3" data-e="3" fill="#f59e0b"><circle class="a-rise" style="animation-delay:0s" cx="178" cy="196" r="2.6"/><circle class="a-rise" style="animation-delay:-1.2s" cx="174" cy="190" r="2"/><circle class="a-rise" style="animation-delay:-.6s" cx="284" cy="196" r="2.6"/><circle class="a-rise" style="animation-delay:-1.8s" cx="288" cy="188" r="2"/></g>
+<g class="vs" data-s="3" data-e="3" fill="none" stroke="#f59e0b" stroke-width="3.4" stroke-linecap="round"><path class="a-rise" style="animation-delay:0s" d="M196 250q-7 -8 0 -16t0 -16t0 -16"/><path class="a-rise" style="animation-delay:-1.1s" d="M232 250q-7 -8 0 -16t0 -16t0 -16"/><path class="a-rise" style="animation-delay:-2.2s" d="M268 250q-7 -8 0 -16t0 -16t0 -16"/></g>
 <g class="mv" data-s="2" style="--from:translateX(-40px);--d:1.8s;--ease:cubic-bezier(.3,.7,.3,1)">
 <rect x="180" y="146" width="100" height="54" rx="6" fill="#c98b4a" stroke="#7a4d1e" stroke-width="2"/>
 <rect x="194" y="154" width="72" height="8" rx="4" fill="#e2b27a" opacity=".7"/>
 <path d="${teeth}" fill="none" stroke="#7a4d1e" stroke-width="1.6"/>
-<text x="230" y="182" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">물체</text>
 </g>
+<g class="vs pop" data-s="2" style="--dl:.5s"><polygon points="404,110 452,116 284,206 262,206" fill="#7a4d1e" fill-opacity=".1" stroke="#7a4d1e" stroke-opacity=".35" stroke-dasharray="4 4"/>
+<g clip-path="url(#fr-lens)"><g transform="translate(440 78)"><path d="${saw}L60 -60 L-60 -60Z" fill="#c98b4a"/><path d="${saw}L60 60 L-60 60Z" fill="#9ca3af"/><path d="${saw}" fill="none" stroke="#4b3320" stroke-width="1.8" stroke-linejoin="round"/></g></g>
+<circle cx="440" cy="78" r="44" fill="none" stroke="#7a4d1e" stroke-width="3"/></g>
 <g class="vs wipe" data-s="2" style="--d:1.2s" fill="#2563eb"><path d="M288 173H386" stroke="#2563eb" stroke-width="3" fill="none"/><path d="M382 165L396 173L382 181Z"/></g>
-<g class="vs up" data-s="2" style="--dl:.5s"><text x="340" y="162" text-anchor="middle" font-size="15" font-weight="700" fill="#2563eb">F (미는 힘)</text></g>
 <g class="vs wipe" data-s="3" style="--d:1.2s" fill="#dc2626"><path d="M172 173H84" stroke="#dc2626" stroke-width="3" fill="none"/><path d="M88 165L74 173L88 181Z"/></g>
-<g class="vs up" data-s="3" style="--dl:.5s"><text x="128" y="162" text-anchor="middle" font-size="15" font-weight="700" fill="#dc2626">f (마찰력)</text></g>
-<g class="vs up" data-s="3" style="--dl:1s"><text x="340" y="262" text-anchor="middle" font-size="13.5" font-weight="700" fill="#c2410c">운동을 거스르며 열이 난다</text></g>
 ${badge(1, 150, 126)}${badge(2, 410, 150)}${badge(3, 40, 150)}
 </g></svg>`;
-    return {
-      color: "#c2410c", t: 3.6, tag: "움직이는 해설 · 과정", ipa: "/ˈfrɪkʃn/", pos: "n.", kr: "마찰 · 불화",
-      lead: "맞닿은 물체가 미끄러지지 않으려는 힘 — 사람 사이의 ‘불화’라는 뜻도 여기서 왔습니다",
-      scene: svg,
-      steps: [
-        ["물체를 바닥에 올려놓는다", "겉보기엔 매끈해도 확대하면 울퉁불퉁한 돌기가 있습니다"],
-        ["밀면 돌기끼리 맞물린다", "힘(F)을 주면 두 표면의 돌기가 서로 걸리며 움직임을 막습니다"],
-        ["움직임을 거스르는 마찰력이 생긴다", "마찰력(f)은 운동 방향과 반대로 작용하고, 그 과정에서 열이 납니다"],
-      ],
-      origin: ["어원", "fricare(문지르다, 라틴어) → friction : 맞비벼 생기는 저항"],
-      ex: ["Friction between the tires and the road slows the car.", "타이어와 도로 사이의 마찰이 자동차의 속도를 줄인다."],
-      rel: [["frictionless", "마찰 없는"], ["rub", "문지르다"], ["resistance", "저항"]],
-    };
+    return { pic: true, n: 3, color: "#c2410c", t: 3.6, scene: svg };
   })();
 
   const VIZ = (window.VIZ = { glacier, pollination, vessel, chronic, sediment, condense, friction });
@@ -401,6 +362,12 @@ ${badge(1, 150, 126)}${badge(2, 410, 150)}${badge(3, 40, 150)}
   window.vizHtml = function (word) {
     const v = VIZ[word.toLowerCase()];
     if (!v) return null;
+    if (v.pic) {
+      return `<div class="vz pic" data-state="idle" style="--vz:${v.color};--t:${v.t}s">
+<div class="vz-scene">${v.scene}</div>
+<div class="vz-ctl"><button class="vz-play" type="button" aria-label="해설 재생">${ICON}</button>
+<div class="vz-segs">${Array.from({ length: v.n }, (_, i) => `<button class="vz-seg" type="button" data-k="${i + 1}" aria-label="${i + 1}단계 보기"><b><i></i></b></button>`).join("")}</div></div></div>`;
+    }
     const n = v.steps.length;
     return `<div class="vz" data-state="idle" style="--vz:${v.color};--t:${v.t}s">
 <div class="vz-head"><span class="vz-tag">${esc(v.tag)}</span>
@@ -443,10 +410,11 @@ ${badge(1, 150, 126)}${badge(2, 410, 150)}${badge(3, 40, 150)}
       segs.forEach((s, i) => { s.classList.toggle("done", i + 1 < k); s.classList.remove("run"); });
       if (k >= 1) { const s = segs[k - 1]; void s.offsetWidth; s.classList.add("run"); }
       lis.forEach((li, i) => li.classList.toggle("on", i + 1 === k));
-      time.textContent = `${k} / ${n}`;
+      if (time) time.textContent = `${k} / ${n}`;
     }
     function end() {
       set("end");
+      root.dispatchEvent(new CustomEvent("vzend"));
       segs.forEach((s) => { s.classList.remove("run"); s.classList.add("done"); });
       lis.forEach((li) => li.classList.remove("on"));
     }

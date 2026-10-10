@@ -158,6 +158,9 @@ button { font: inherit; color: inherit; }
 .vz-rel { display: flex; flex-wrap: wrap; gap: 6px; }
 .vz-rel span { padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-size: 12.5px; font-weight: 500; }
 .vz-rel em { margin-left: 6px; font-style: normal; font-weight: 400; color: var(--ink-3); }
+/* 그림만 보여 주는 해설 */
+.vz.pic .vz-scene { margin-top: 14px; }
+.vz.pic .vz-ctl { padding-bottom: 16px; }
 /* 해설 재생기 */
 .vz-ctl { display: flex; align-items: center; gap: 12px; padding: 12px 18px 0; }
 .vz-play { flex: none; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; background: var(--vz); color: #fff; cursor: pointer; }
@@ -442,6 +445,7 @@ select {
         <label class="switch"><input type="checkbox" id="opt-shuffle"><span class="track"></span>순서 섞기</label>
         <label class="switch"><input type="checkbox" id="opt-star"><span class="track"></span>★ 단어만</label>
         <label class="switch"><input type="checkbox" id="opt-viz"><span class="track"></span>그림·어원 도해</label>
+        <label class="switch"><input type="checkbox" id="opt-pic"><span class="track"></span>그림 먼저 (맞히기)</label>
       </div>
       <p class="hint" id="starHint" hidden>아직 별표한 단어가 없어서 전체를 읽어요. 어려운 단어에 ★를 눌러 두세요.</p>
 
@@ -1804,7 +1808,7 @@ const STAR = '<svg viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 
 
 // settings + stars (per-viewer, browser only)
 const KEY = 'sori-vocab-v1';
-const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '', deck: 'all', part: 0, sleep: 0, viz: true };
+const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '', deck: 'all', part: 0, sleep: 0, viz: true, pic: false };
 let stars = new Set();
 let WORDS = [];   // 지금 고른 단어장·파트의 단어
 try {
@@ -1835,6 +1839,7 @@ function buildDeck(keep) {
 
 // 단어 한 장 해설(viz.js) — 데스크톱은 목록 위(카드 옆), 모바일은 카드 바로 아래
 const hasViz = w => !!(window.VIZ && window.VIZ[w.w.toLowerCase()]);
+const hasPic = w => !!(window.VIZ && window.VIZ[w.w.toLowerCase()] && window.VIZ[w.w.toLowerCase()].pic);
 const vizEl = document.createElement('aside');
 vizEl.setAttribute('aria-label', '그림 해설');
 const wide = window.matchMedia('(min-width: 880px)');
@@ -1915,25 +1920,26 @@ let lastShown = -1;
 function render(revealed) {
   const i = deck[pos], w = WORDS[i];
   const hidden = S.hide && !revealed;
+  const picQ = S.pic && hasPic(w) && !revealed;   // 그림 먼저: 단어·뜻은 가리고 그림만 보여 준다
   els.pos.textContent = w.pos;
   els.count.textContent = `${pad(pos + 1)} / ${pad(deck.length)}`;
   els.word.textContent = w.w;
   els.mean.textContent = w.m;
   els.note.textContent = w.note || '';
   els.note.hidden = !w.note;
-  els.note.classList.toggle('ghost', hidden);
+  els.note.classList.toggle('ghost', hidden || picQ);
   els.ety.innerHTML = S.viz ? etyDiagram(w) : esc(w.e);
   els.ety.setAttribute('aria-label', w.e);
   els.wicon.textContent = iconOf(w);
-  els.ety.parentElement.classList.toggle('ghost', hidden);
-  els.wicon.classList.toggle('ghost', hidden || (S.hideMean && peek !== i));
-  els.word.classList.toggle('masked', hidden && S.order === 'ko-en');
+  els.ety.parentElement.classList.toggle('ghost', hidden || picQ);
+  els.wicon.classList.toggle('ghost', hidden || picQ || (S.hideMean && peek !== i));
+  els.word.classList.toggle('masked', (hidden && S.order === 'ko-en') || picQ);
   const meanOff = S.hideMean && peek !== i;
-  els.mean.classList.toggle('masked', (hidden && S.order === 'en-ko') || meanOff);
+  els.mean.classList.toggle('masked', (hidden && S.order === 'en-ko') || meanOff || picQ);
   els.mean.parentElement.classList.toggle('peekable', S.hideMean);
   if (meanOff) { els.note.classList.add('ghost'); els.ety.parentElement.classList.add('ghost'); }
   document.body.classList.toggle('no-viz', !S.viz);
-  renderViz(w, hidden || meanOff);
+  renderViz(w, (hidden || meanOff) && !picQ);
   $('hideMean').setAttribute('aria-pressed', S.hideMean);
   document.body.classList.toggle('hide-mean', S.hideMean);
   els.cardStar.setAttribute('aria-pressed', stars.has(w.k));
@@ -2070,6 +2076,7 @@ function stop() {
     if (speechSynthesis.speaking || speechSynthesis.pending) { speechSynthesis.cancel(); cancelled = true; }
   }
   if (pending) pending();
+  if (picSkip) picSkip();
   els.word.classList.remove('speaking');
   els.mean.classList.remove('speaking');
   return cancelled;
@@ -2111,6 +2118,17 @@ function say(text, lang, sel, el, rate, id) {
     speechSynthesis.speak(u);
   });
 }
+let picSkip = null;
+function picWait(id) {
+  return new Promise(res => {
+    const root = vizEl.firstElementChild;
+    const t = setTimeout(() => finish(), 25000);   // 그림을 멈춰 둔 채로 두면 25초 뒤 공개
+    function finish() { clearTimeout(t); picSkip = null; if (root) root.removeEventListener('vzend', finish); res(); }
+    picSkip = finish;
+    if (!root || root.dataset.state === 'end') return finish();
+    root.addEventListener('vzend', finish);
+  });
+}
 async function speakWord(id) {
   const w = WORDS[deck[pos]];
   const en = async () => {
@@ -2121,6 +2139,19 @@ async function speakWord(id) {
     }
   };
   const ko = () => say(w.m, 'ko-KR', koSel, els.mean, 1, id);
+  if (S.pic && hasPic(w)) {
+    render(false);   // 단어·뜻은 가리고 그림만 재생 — 그림이 끝나거나 카드를 누르면 정답 공개
+    await picWait(id);
+    if (id !== run) return;
+    await sleep(500);
+    if (id !== run) return;
+    render(true);
+    await (S.order === 'en-ko' ? en() : ko());
+    await sleep(500);
+    if (id !== run) return;
+    await (S.order === 'en-ko' ? ko() : en());
+    return;
+  }
   render(false);
   await (S.order === 'en-ko' ? en() : ko());
   await sleep(S.gap * 1000);
@@ -2187,6 +2218,7 @@ function syncControls() {
   $('shuffle').setAttribute('aria-pressed', S.shuffle);
   $('opt-star').checked = S.starOnly;
   $('opt-viz').checked = S.viz;
+  $('opt-pic').checked = S.pic;
 }
 document.querySelectorAll('.seg input').forEach(r => r.addEventListener('change', () => {
   S[r.name] = r.name === 'order' ? r.value : Number(r.value);
@@ -2205,6 +2237,7 @@ function setShuffle(on) {
 $('opt-shuffle').addEventListener('change', e => setShuffle(e.target.checked));
 $('shuffle').addEventListener('click', () => setShuffle(!S.shuffle));
 $('opt-viz').addEventListener('change', e => { S.viz = e.target.checked; save(); render(!playing); });
+$('opt-pic').addEventListener('change', e => { S.pic = e.target.checked; save(); restartCurrent(); });
 $('opt-star').addEventListener('change', e => { S.starOnly = e.target.checked; save(); buildDeck(deck[pos]); restartCurrent(); });
 enSel.addEventListener('change', () => { S.enVoice = enSel.value; save(); });
 koSel.addEventListener('change', () => { S.koVoice = koSel.value; save(); });
@@ -2243,7 +2276,7 @@ $('next').addEventListener('click', () => go(pos + 1, 1));
   }
 })();
 $('replay').addEventListener('click', () => go(pos));
-els.card.addEventListener('click', e => { if (Date.now() - swiped < 500) return; if (!e.target.closest('button')) go(pos); });
+els.card.addEventListener('click', e => { if (Date.now() - swiped < 500) return; if (e.target.closest('button')) return; if (picSkip) picSkip(); else go(pos); });
 $('hideMean').addEventListener('click', () => { S.hideMean = !S.hideMean; peek = -1; save(); render(!playing); });
 els.mean.addEventListener('click', e => {
   if (!S.hideMean) return;
