@@ -125,6 +125,95 @@ button { font: inherit; color: inherit; }
 .emap .ea { align-self: center; color: var(--accent); font-weight: 700; }
 .emap .es { align-self: center; padding: 5px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); font-size: 12.5px; line-height: 1.35; text-align: center; }
 .emap .es.last { background: var(--accent); color: var(--on-accent); font-weight: 600; }
+/* 단어 한 장 해설 패널 (viz.js) */
+.vz-slot:empty { display: none; }
+.side { display: grid; gap: 20px; min-width: 0; }
+@media (min-width: 880px) { .side.has-viz .list { max-height: 340px; } }
+.vz { --vz: #2b8cc4; background: var(--card); border-radius: 14px; border-top: 4px solid var(--vz); box-shadow: var(--shadow); overflow: hidden; transition: filter .25s, opacity .25s; }
+.vz.ghost { filter: blur(14px); opacity: .55; pointer-events: none; user-select: none; }
+.vz-head { padding: 14px 18px 10px; }
+.vz-tag { display: inline-block; padding: 2px 10px; border-radius: 999px; font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .05em; color: var(--vz); background: color-mix(in srgb, var(--vz) 12%, transparent); }
+.vz-word { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; margin-top: 8px; }
+.vz-word b { font-family: var(--serif); font-size: 1.7rem; font-weight: 600; line-height: 1.15; }
+.vz-word i { font-style: normal; font-family: var(--mono); font-size: 12.5px; color: var(--ink-3); }
+.vz-word span { font-family: var(--mono); font-size: 12.5px; color: var(--red-ink); }
+.vz-kr { margin-top: 2px; font-size: 1.05rem; font-weight: 600; color: var(--vz); }
+.vz-lead { margin: 6px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+.vz-scene { margin: 0 14px; border-radius: 12px; overflow: hidden; line-height: 0; background: var(--panel); }
+.vz-scene svg { display: block; width: 100%; height: auto; font-family: var(--sans); }
+.vz-steps { list-style: none; margin: 0; padding: 14px 18px 4px; display: grid; gap: 10px; }
+.vz-steps li { display: flex; gap: 11px; align-items: flex-start; cursor: pointer; transition: opacity .3s; }
+.vz[data-state="run"] .vz-steps li:not(.on), .vz[data-state="pause"] .vz-steps li:not(.on) { opacity: .38; }
+.vz-steps li.on .n { box-shadow: 0 0 0 4px color-mix(in srgb, var(--vz) 22%, transparent); }
+.vz-steps .n { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; margin-top: 1px; background: var(--vz); color: #fff; font-size: 12px; font-weight: 700; }
+.vz-steps b { display: block; font-size: 14px; font-weight: 600; line-height: 1.35; }
+.vz-steps span:not(.n) { display: block; font-size: 13px; line-height: 1.45; color: var(--ink-2); }
+.vz-steps em { display: block; margin-top: 1px; font-style: normal; font-size: 12.5px; line-height: 1.4; color: var(--ink-3); }
+.vz-foot { margin-top: 14px; padding: 14px 18px 16px; display: grid; gap: 10px; background: var(--panel); }
+.vz-org { font-size: 12.5px; line-height: 1.5; color: var(--ink-2); }
+.vz-org b { margin-right: 8px; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .04em; color: var(--red-ink); }
+.vz-ex p { margin: 0; }
+.vz-ex .en { font-family: var(--serif); font-size: 14px; font-style: italic; line-height: 1.45; }
+.vz-ex .ko { font-size: 12.5px; color: var(--ink-3); }
+.vz-rel { display: flex; flex-wrap: wrap; gap: 6px; }
+.vz-rel span { padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-size: 12.5px; font-weight: 500; }
+.vz-rel em { margin-left: 6px; font-style: normal; font-weight: 400; color: var(--ink-3); }
+/* 해설 재생기 */
+.vz-ctl { display: flex; align-items: center; gap: 12px; padding: 12px 18px 0; }
+.vz-play { flex: none; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; background: var(--vz); color: #fff; cursor: pointer; }
+.vz-play svg { display: none; width: 16px; height: 16px; fill: currentColor; }
+.vz-play .ic-play { display: block; }
+.vz[data-state="run"] .ic-play, .vz[data-state="end"] .ic-play { display: none; }
+.vz[data-state="run"] .ic-pause, .vz[data-state="end"] .ic-again { display: block; }
+.vz-segs { flex: 1; display: flex; gap: 6px; }
+.vz-seg { flex: 1; height: 24px; padding: 0; border: 0; background: none; cursor: pointer; display: flex; align-items: center; }
+.vz-seg b { display: block; width: 100%; height: 4px; border-radius: 2px; overflow: hidden; background: color-mix(in srgb, var(--vz) 16%, var(--line)); }
+.vz-seg i { display: block; width: 0; height: 100%; background: var(--vz); }
+.vz-seg.done i { width: 100%; }
+.vz-seg.run i { animation: vz-fill var(--t, 3.8s) linear forwards; }
+.vz-time { min-width: 3.2em; text-align: right; font-family: var(--mono); font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+/* 장면 속 등장·움직임 (data-s 단계에 맞춰 .in이 붙는다) */
+.vz-scene .vs { opacity: 0; transition: opacity .6s ease var(--dl, 0s), transform .8s cubic-bezier(.2,.8,.2,1) var(--dl, 0s), clip-path var(--d, 1.4s) cubic-bezier(.45,0,.2,1) var(--dl, 0s), stroke-dashoffset var(--d, 1.4s) ease-in-out var(--dl, 0s); }
+.vz-scene .vs.in { opacity: 1; }
+.vz-scene .up { transform: translateY(12px); }
+.vz-scene .pop { transform-box: fill-box; transform-origin: center; transform: scale(.3); }
+.vz-scene .up.in, .vz-scene .pop.in { transform: none; }
+.vz-scene .wipe { clip-path: inset(0 100% 0 0); }
+.vz-scene .wipe-d { clip-path: inset(0 0 100% 0); }
+.vz-scene .wipe.in, .vz-scene .wipe-d.in { clip-path: inset(0 0 0 0); }
+.vz-scene .draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.vz-scene .draw.in { stroke-dashoffset: 0; }
+.vz-scene .mv { transform: var(--from); transition: transform var(--d, 1.6s) var(--ease, ease-in-out) var(--dl, 0s); }
+.vz-scene .mv.in { transform: none; }
+.vz-scene.vz-reset * { transition: none !important; }
+.vz-scene .a-fall { animation: vz-fall 3.2s linear infinite; }
+.vz-scene .a-drip { animation: vz-drip 1.6s ease-in infinite; }
+.vz-scene .a-dash { animation: vz-dash 1.4s linear infinite; }
+.vz-scene .a-bob { animation: vz-bob 1.2s ease-in-out infinite; }
+.vz-scene .a-flap { transform-box: fill-box; transform-origin: 50% 100%; animation: vz-flap .16s ease-in-out infinite alternate; }
+.vz-scene .a-pulse { transform-box: fill-box; transform-origin: center; animation: vz-pulse 1.4s ease-out infinite; }
+.vz-scene .a-slide { animation: vz-slide 1.8s linear infinite; }
+.vz-scene .a-flow { animation: vz-flow 1.1s linear infinite; }
+.vz-scene .a-flip { transform-box: fill-box; transform-origin: center; animation: vz-flip 4s ease-in-out infinite; }
+.vz-scene .a-press { animation: vz-press .9s ease-in-out infinite; }
+@keyframes vz-fill { to { width: 100%; } }
+@keyframes vz-fall { 0% { transform: translateY(-14px); opacity: 0; } 20%, 70% { opacity: 1; } 100% { transform: translateY(26px); opacity: 0; } }
+@keyframes vz-drip { 0% { transform: translateY(-4px); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateY(16px); opacity: 0; } }
+@keyframes vz-dash { to { stroke-dashoffset: -30; } }
+@keyframes vz-bob { 50% { transform: translateY(-3px); } }
+@keyframes vz-flap { to { transform: scaleY(.55); } }
+@keyframes vz-pulse { 0% { transform: scale(.8); opacity: .9; } 100% { transform: scale(1.9); opacity: 0; } }
+@keyframes vz-slide { from { transform: translateX(-20px); } to { transform: none; } }
+@keyframes vz-flow { from { transform: translateX(-30px); } to { transform: none; } }
+@keyframes vz-flip { 0%, 40% { transform: rotate(0); } 50%, 90% { transform: rotate(180deg); } 100% { transform: rotate(360deg); } }
+@keyframes vz-press { 50% { transform: translateY(4px); } }
+.vz[data-state="pause"] .vz-scene *, .vz[data-state="pause"] .vz-seg i { animation-play-state: paused !important; }
+@media (prefers-reduced-motion: reduce) {
+  .vz-scene *, .vz-seg i { animation: none !important; transition: none !important; }
+  .vz-seg.run i { width: 100%; }
+}
+.rv { margin-left: 6px; padding: 0 6px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 10.5px; font-weight: 600; vertical-align: 1px; }
+.no-viz .rv { display: none; }
 .ri { margin-right: 4px; font-size: 15px; }
 .no-viz .ri { display: none; }
 .hide-mean .ri { visibility: hidden; }
@@ -246,6 +335,7 @@ select {
   <section class="pickers" id="pickers" aria-label="단어장 선택">
     <div class="pk"><span class="pk-lbl">단어장</span><div class="pk-chips" id="deckPick"></div></div>
     <div class="pk" id="partRow" hidden><span class="pk-lbl">파트</span><div class="pk-chips" id="partPick"></div></div>
+    <div class="pk" id="vizRow" hidden><span class="pk-lbl">그림 해설</span><div class="pk-chips" id="vizPick"></div></div>
   </section>
   <p class="warn" id="noTts" hidden>이 브라우저는 음성 읽기를 지원하지 않아요. Chrome이나 Safari에서 열어 주세요.</p>
 
@@ -272,6 +362,7 @@ select {
     </div>
 
     <div class="progress" aria-hidden="true"><span id="bar"></span></div>
+    <div class="vz-slot" id="vizSlotStage"></div>
 
     <div class="transport">
       <button class="t-btn shuffle" id="shuffle" type="button" aria-pressed="false" aria-label="랜덤 재생" title="랜덤 재생 (순서 섞기)">
@@ -360,12 +451,16 @@ select {
     </div>
   </section>
 
-  <section aria-label="전체 단어 목록">
-    <div class="list-head"><h2>전체 단어</h2><span id="starCount">★ 0</span></div>
-    <ol class="list" id="list"></ol>
-  </section>
+  <div class="side" id="side">
+    <div class="vz-slot" id="vizSlotSide"></div>
+    <section aria-label="전체 단어 목록">
+      <div class="list-head"><h2>전체 단어</h2><span id="starCount">★ 0</span></div>
+      <ol class="list" id="list"></ol>
+    </section>
+  </div>
 </div>
 
+<script src="viz.js"></script>
 <script>
 const ICONS = {
   avalanche: '🏔️',
@@ -1736,12 +1831,31 @@ function buildDeck(keep) {
   $('starHint').hidden = !(S.starOnly && !WORDS.some(w => stars.has(w.k)));
 }
 
+// 단어 한 장 해설(viz.js) — 데스크톱은 목록 위(카드 옆), 모바일은 카드 바로 아래
+const hasViz = w => !!(window.VIZ && window.VIZ[w.w.toLowerCase()]);
+const vizEl = document.createElement('aside');
+vizEl.setAttribute('aria-label', '그림 해설');
+const wide = window.matchMedia('(min-width: 880px)');
+function placeViz() { ($(wide.matches ? 'vizSlotSide' : 'vizSlotStage')).append(vizEl); }
+wide.addEventListener('change', placeViz);
+placeViz();
+let vizWord = '', vizCtl = null;
+function renderViz(w, hidden) {
+  const h = S.viz && window.vizHtml ? window.vizHtml(w.w) : null;
+  $('side').classList.toggle('has-viz', !!h);
+  vizEl.hidden = !h;
+  if (!h) { vizWord = ''; vizCtl = null; vizEl.innerHTML = ''; return; }
+  if (vizWord !== w.w) { vizEl.innerHTML = h; vizWord = w.w; vizCtl = window.vizMount(vizEl.firstElementChild, !hidden); }
+  else if (!hidden) vizCtl.reveal();   // 가렸던 뜻을 펼치면 그때 재생
+  vizEl.firstElementChild.classList.toggle('ghost', hidden);
+}
+
 // list (단어장·파트가 바뀔 때마다 다시 그린다)
 let rows = [], rowStars = [];
 function renderList() {
   els.list.innerHTML = WORDS.map((w, i) =>
     `<li><button class="row" type="button" data-i="${i}"><span class="num">${pad(i + 1)}</span>` +
-    `<span class="rw">${iconOf(w) ? `<span class="ri">${iconOf(w)}</span>` : ''}${w.w}<span class="rpos">${w.pos}</span></span><span class="rm">${w.m}</span>` +
+    `<span class="rw">${iconOf(w) ? `<span class="ri">${iconOf(w)}</span>` : ''}${w.w}<span class="rpos">${w.pos}</span>${hasViz(w) ? '<span class="rv">해설</span>' : ''}</span><span class="rm">${w.m}</span>` +
     `<span class="re"><b>어원</b>${w.e}</span></button>` +
     `<button class="icon-btn star" type="button" data-star="${i}" aria-pressed="false" aria-label="${w.w} 별표">${STAR}</button></li>`
   ).join('');
@@ -1817,6 +1931,7 @@ function render(revealed) {
   els.mean.parentElement.classList.toggle('peekable', S.hideMean);
   if (meanOff) { els.note.classList.add('ghost'); els.ety.parentElement.classList.add('ghost'); }
   document.body.classList.toggle('no-viz', !S.viz);
+  renderViz(w, hidden || meanOff);
   $('hideMean').setAttribute('aria-pressed', S.hideMean);
   document.body.classList.toggle('hide-mean', S.hideMean);
   els.cardStar.setAttribute('aria-pressed', stars.has(w.k));
@@ -1899,6 +2014,9 @@ function loadSource() {
   $('deckName').textContent = d.name + (S.part ? ` · Part ${S.part}` : '');
   $('total').textContent = WORDS.length;
   renderPickers(d);
+  const vw = WORDS.map((w, i) => [w, i]).filter(([w]) => hasViz(w));
+  $('vizRow').hidden = !vw.length;
+  $('vizPick').innerHTML = vw.map(([w, i]) => `<button class="pill" type="button" data-viz="${i}">${w.w}</button>`).join('');
   renderList();
   peek = -1;
   buildDeck();
@@ -1915,6 +2033,7 @@ $('pickers').addEventListener('click', e => {
   if (!b) return;
   if (b.dataset.deck) changeSource(b.dataset.deck, b.dataset.deck === S.deck ? S.part : 0);
   else if (b.dataset.part != null) changeSource(S.deck, Number(b.dataset.part));
+  else if (b.dataset.viz != null) jumpTo(Number(b.dataset.viz));
 });
 
 // voices

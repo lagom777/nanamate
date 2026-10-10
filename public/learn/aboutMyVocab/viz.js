@@ -1,0 +1,345 @@
+/* 단어 한 장 해설 — 단계별로 움직이는 그림 해설(재생·일시정지·단계 이동).
+   window.VIZ[소문자 단어] = { color, t(단계당 초), tag, ipa, pos, kr, lead, scene(SVG), steps:[[제목, 설명, 예문?]], origin, ex, rel }
+   scene 안에서 data-s="n" 인 요소는 n단계부터, data-e="m" 이 있으면 m단계까지 보인다.
+   등장 방식: .vs(서서히) + .up(아래에서) .pop(커지며) .wipe(왼→오) .wipe-d(위→아래) .draw(선 긋기, pathLength="1")
+   이동: .mv (--from 위치에서 제자리로). 반복 움직임: .a-fall .a-drip .a-dash .a-bob .a-flap .a-pulse .a-slide .a-flow .a-flip .a-press */
+(function () {
+  const pts = (a) => a.map((p) => p.join(",")).join(" ");
+  const badge = (k, x, y, c = "#1e5f99") =>
+    `<g class="vs pop" data-s="${k}"><circle cx="${x}" cy="${y}" r="11.5" fill="${c}" stroke="#fff" stroke-width="2"/><text x="${x}" y="${y + 4.4}" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff">${k}</text></g>`;
+
+  /* ───────── glacier ───────── */
+  const glacier = (() => {
+    const rock = [[0, 170], [55, 112], [100, 52], [112, 40], [128, 60], [200, 105], [280, 150], [360, 190], [440, 222], [500, 240], [560, 246], [560, 300], [0, 300]];
+    const ice = [[116, 38], [150, 58], [200, 86], [280, 126], [360, 168], [440, 205], [464, 216], [464, 228], [440, 222], [360, 190], [280, 150], [200, 105], [128, 60], [112, 42]];
+    const pack = [[116, 38], [150, 58], [200, 86], [280, 126], [300, 142], [300, 160], [280, 150], [200, 105], [128, 60], [112, 42]];
+    const snow = [[116, 38], [150, 58], [200, 86], [280, 126], [292, 132], [286, 141], [280, 135], [200, 95], [150, 67], [116, 47]];
+    const line = (off) => pts([[150, 58 + off], [200, 86 + off], [280, 126 + off], [360, 168 + off], [440, 205 + off]]);
+    const flake = (x, y, s, d) =>
+      `<g transform="translate(${x} ${y}) scale(${s})"><g class="a-fall" style="animation-delay:${d}s"><path d="M-5 0H5M0 -5V5M-3.5 -3.5L3.5 3.5M-3.5 3.5L3.5 -3.5"/></g></g>`;
+    const chip = (x, w, label, solid, dl) =>
+      `<g class="vs pop" data-s="2" style="--dl:${dl}s"><rect x="${x}" y="14" width="${w}" height="26" rx="13" fill="${solid ? "#3b8fcf" : "#fff"}" stroke="#3b8fcf" stroke-opacity="${solid ? 1 : 0.5}"/><text x="${x + w / 2}" y="31.5" text-anchor="middle" font-size="13" font-weight="700" fill="${solid ? "#fff" : "#1e5f99"}">${label}</text></g>`;
+    const arrow = (x, dl) => `<g class="vs" data-s="2" style="--dl:${dl}s"><text x="${x}" y="31.5" text-anchor="middle" font-size="13" font-weight="700" fill="#1e5f99">→</text></g>`;
+    const drip = (d, dl) => `<g class="a-drip" style="animation-delay:${dl}s"><path d="${d}"/></g>`;
+    const svg = `<svg viewBox="0 0 560 300" role="img" aria-label="빙하가 만들어져 흘러내리는 과정">
+<defs>
+<linearGradient id="gl-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b7dcff"/><stop offset="1" stop-color="#f1f8ff"/></linearGradient>
+<linearGradient id="gl-rock" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#76869b"/><stop offset="1" stop-color="#3b4658"/></linearGradient>
+<linearGradient id="gl-ice" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eaf8ff"/><stop offset=".55" stop-color="#9bd2f3"/><stop offset="1" stop-color="#5eaadf"/></linearGradient>
+<linearGradient id="gl-snow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dcecf8"/></linearGradient>
+<linearGradient id="gl-water" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8fd0f2"/><stop offset="1" stop-color="#3b8fcf"/></linearGradient>
+<radialGradient id="gl-sun"><stop offset="0" stop-color="#fff4c4"/><stop offset="1" stop-color="#fff4c4" stop-opacity="0"/></radialGradient>
+<marker id="gl-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1e5f99"/></marker>
+<clipPath id="gl-clip"><rect width="560" height="300" rx="14"/></clipPath>
+</defs>
+<g clip-path="url(#gl-clip)">
+<rect width="560" height="300" fill="url(#gl-sky)"/>
+<circle cx="524" cy="96" r="46" fill="url(#gl-sun)"/><circle cx="524" cy="96" r="15" fill="#ffe9a8"/>
+<polygon points="0,205 60,152 110,186 170,122 232,192 300,160 362,202 424,172 500,206 560,192 560,300 0,300" fill="#cdd9e8" opacity=".7"/>
+<polygon points="${pts(rock)}" fill="url(#gl-rock)"/>
+<polygon class="vs wipe" data-s="1" style="--d:1.6s" points="${pts(pack)}" fill="url(#gl-snow)"/>
+<g class="vs wipe" data-s="2" style="--d:2s"><polygon points="${pts(ice)}" fill="url(#gl-ice)"/>
+<polyline points="${line(8)}" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.2"/>
+<polyline points="${line(15)}" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="1"/></g>
+<g class="vs" data-s="3" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="14 16">
+<polyline class="a-dash" points="${line(8)}" stroke-opacity=".95"/><polyline class="a-dash" points="${line(15)}" stroke-opacity=".7" style="animation-delay:-.6s"/></g>
+<polygon class="vs wipe" data-s="1" style="--d:1.6s" points="${pts(snow)}" fill="#fff"/>
+<g class="vs" data-s="3" stroke="#3b82c4" stroke-width="1.7" stroke-linecap="round"><path d="M318 147l6 12M340 157l6 11M300 138l5 10M388 178l5 9"/></g>
+<g class="vs" data-s="2" data-e="2" style="--dl:.2s"><g class="a-press" fill="none" stroke="#1e5f99" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M172 46v14m-5-5 5 5 5-5M212 68v14m-5-5 5 5 5-5M246 85v14m-5-5 5 5 5-5"/></g></g>
+${chip(346, 36, "눈", false, 0.3)}${arrow(392, 0.7)}${chip(402, 74, "다져진 눈", false, 0.9)}${arrow(486, 1.3)}${chip(496, 48, "얼음", true, 1.5)}
+<g class="vs" data-s="3" fill="none" stroke="#1e5f99" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="8 7" marker-end="url(#gl-ar)">
+<path class="a-dash" d="M338 132Q362 142 386 156"/><path class="a-dash" d="M408 168Q428 177 448 189"/></g>
+<g class="vs wipe" data-s="4" style="--d:1.4s;--dl:.3s">
+<path d="M462 227 Q492 232 530 240 L560 246 L560 260 Q520 254 480 245 L462 233Z" fill="url(#gl-water)"/>
+<ellipse cx="520" cy="266" rx="38" ry="8" fill="url(#gl-water)" opacity=".85"/>
+<g stroke="#fff" stroke-opacity=".7" stroke-width="1.2" fill="none"><path d="M500 266q8-3 16 0M524 263q8-3 14 0M510 270q10-2 20 0"/></g></g>
+<g class="vs" data-s="4"><g fill="#4aa3e0">${drip("M449 184q-4 7 0 9q4-2 0-9z", 0)}${drip("M468 191q-4 7 0 9q4-2 0-9z", -0.5)}${drip("M482 205q-4 7 0 9q4-2 0-9z", -1)}</g></g>
+<g class="vs wipe-d" data-s="4" style="--d:1.2s;--dl:.6s"><line x1="292" y1="16" x2="292" y2="272" stroke="#1e5f99" stroke-width="1.4" stroke-dasharray="4 4"/>
+<text x="298" y="28" fill="#1e5f99" font-size="13.5" font-weight="700">평형선</text></g>
+<g class="vs" data-s="1" stroke="#5aa9dd" stroke-width="1.4" stroke-linecap="round" fill="none">
+${flake(126, 14, 1.1, 0)}${flake(152, 30, 1, -1.1)}${flake(232, 16, 0.9, -2)}${flake(262, 36, 1.1, -0.6)}${flake(92, 26, 0.9, -1.6)}</g>
+<g class="vs up" data-s="1" style="--dl:.5s" fill="#fff" font-size="15" font-weight="700"><text x="146" y="152">적설 구역</text><text x="146" y="170" font-size="12.5" font-weight="500" opacity=".9">눈이 쌓이는 쪽</text></g>
+<g class="vs up" data-s="4" style="--dl:.4s" fill="#fff" font-size="15" font-weight="700"><text x="370" y="252">소모 구역</text><text x="370" y="270" font-size="12.5" font-weight="500" opacity=".9">얼음이 녹는 쪽</text></g>
+${badge(1, 196, 40)}${badge(2, 266, 86)}${badge(3, 318, 108)}${badge(4, 500, 196)}
+</g></svg>`;
+    return {
+      color: "#2b8cc4", t: 3.8, tag: "움직이는 해설 · 과정", ipa: "/ˈɡleɪʃər/", pos: "n.", kr: "빙하",
+      lead: "눈이 쌓여 얼음이 되고, 그 얼음이 천천히 흘러내리는 ‘얼음의 강’",
+      scene: svg,
+      steps: [
+        ["눈이 쌓인다", "산꼭대기에 눈이 해마다 녹지 않고 쌓입니다 — 적설 구역"],
+        ["얼음이 된다", "쌓인 눈이 제 무게에 눌려 다져지고, 단단한 얼음으로 변합니다"],
+        ["흘러내린다", "얼음 덩어리가 중력 때문에 아주 천천히 아래로 흐릅니다"],
+        ["녹는다", "따뜻한 아래쪽에서 녹아 물이 되어 강·호수로 흘러갑니다 — 소모 구역"],
+      ],
+      origin: ["어원", "glacies(얼음, 라틴어) → 프랑스어 glace → glacier : 얼음이 있는 곳"],
+      ex: ["Glaciers are shrinking as the climate gets warmer.", "기후가 따뜻해지면서 빙하가 줄어들고 있다."],
+      rel: [["glacial", "빙하의"], ["ice sheet", "대륙 빙하"], ["iceberg", "빙산"]],
+    };
+  })();
+
+  /* ───────── pollination ───────── */
+  const pollination = (() => {
+    const cx = 330;
+    const petal = (a, fill, o = 1) => `<g transform="translate(${cx} 206) rotate(${a})" opacity="${o}"><path d="M0 0C-26-28-32-82 0-112C32-82 26-28 0 0Z" fill="${fill}" stroke="#e0709f" stroke-width="1"/><path d="M0-8V-96M-8-30Q-14-60 -4-92M8-30Q14-60 4-92" stroke="#e0709f" stroke-opacity=".35" fill="none"/></g>`;
+    const grains = [[280, 112], [282, 130], [274, 122], [378, 106], [385, 116], [376, 138]]
+      .map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.3" fill="#f2b705"/>`).join("");
+    const leader = (k, dl, x1, y1, x2, y2, label, sub) =>
+      `<g class="vs up" data-s="${k}" style="--dl:${dl}s"><path d="M${x1} ${y1}L${x2} ${y2}" stroke="#7b8794" stroke-width="1" fill="none"/><circle cx="${x1}" cy="${y1}" r="2.5" fill="#7b8794"/><text x="${x2 + 6}" y="${y2 + 4}" font-size="15" font-weight="700" fill="#374151">${label}</text><text x="${x2 + 6}" y="${y2 + 19}" font-size="12.5" fill="#6b7280">${sub}</text></g>`;
+    // 벌(오른쪽을 봄) — 작은 꽃(100,160)에서 출발해 암술머리 옆(296,90)으로 날아간다. 가로·세로 속도를 달리해 곡선으로 난다
+    const bee = `<g transform="translate(296 90)">
+<g class="mv" data-s="2" style="--from:translateX(-196px);--d:1.9s;--ease:cubic-bezier(.45,0,.35,1)">
+<g class="mv" data-s="2" style="--from:translateY(70px);--d:1.9s;--ease:cubic-bezier(.15,.7,.3,1)">
+<g class="a-bob">
+<g class="a-flap"><ellipse cx="-6" cy="-20" rx="8" ry="14" transform="rotate(-20 -6 -20)" fill="#fff" fill-opacity=".85" stroke="#8fb8e6" stroke-width="1.2"/><ellipse cx="7" cy="-20" rx="8" ry="14" transform="rotate(22 7 -20)" fill="#fff" fill-opacity=".85" stroke="#8fb8e6" stroke-width="1.2"/></g>
+<ellipse rx="24" ry="14" fill="#f6c343" stroke="#7a5a00" stroke-width="1.2"/>
+<g clip-path="url(#po-bee)" fill="#3b2f00" opacity=".88"><rect x="-14" y="-16" width="5.5" height="32"/><rect x="-4" y="-16" width="5.5" height="32"/><rect x="6" y="-16" width="5.5" height="32"/></g>
+<circle cx="27" cy="-1" r="9" fill="#3b2f00"/><circle cx="30" cy="-3" r="2.2" fill="#fff"/>
+<path d="M32-9l6-7M27-10l2-9" stroke="#3b2f00" stroke-width="1.4" stroke-linecap="round"/>
+<path d="M-24 0l-8 3 8 3z" fill="#3b2f00"/>
+<path d="M8 13l3 9M-2 14l0 9M-12 13l-3 8" stroke="#3b2f00" stroke-width="1.6" stroke-linecap="round"/>
+<g class="vs pop" data-s="1" data-e="2" style="--dl:.8s"><circle cx="11" cy="24" r="3.6" fill="#f2b705"/><circle cx="0" cy="25" r="3.6" fill="#f2b705"/><circle cx="-15" cy="23" r="3.4" fill="#f2b705"/></g>
+</g></g></g></g>`;
+    const svg = `<svg viewBox="0 0 560 300" role="img" aria-label="벌이 꽃가루를 옮겨 수분이 일어나는 과정">
+<defs>
+<linearGradient id="po-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6fa"/><stop offset="1" stop-color="#e8f5e2"/></linearGradient>
+<linearGradient id="po-style" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8cc86f"/><stop offset="1" stop-color="#5aa75a"/></linearGradient>
+<linearGradient id="po-anther" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe680"/><stop offset="1" stop-color="#f2b705"/></linearGradient>
+<clipPath id="po-clip"><rect width="560" height="300" rx="14"/></clipPath>
+<clipPath id="po-bee"><ellipse cx="0" cy="0" rx="24" ry="14"/></clipPath>
+</defs>
+<g clip-path="url(#po-clip)">
+<rect width="560" height="300" fill="url(#po-bg)"/>
+<path d="M0 262Q140 240 280 258T560 250V300H0Z" fill="#d6edc9"/>
+<g><path d="M66 212V268" stroke="#5aa75a" stroke-width="3.5" fill="none"/>
+${[0, 72, 144, 216, 288].map((a) => `<ellipse cx="66" cy="196" rx="8" ry="13" fill="#ffb3d1" stroke="#e0709f" stroke-width=".8" transform="rotate(${a} 66 206)"/>`).join("")}
+<circle cx="66" cy="206" r="8" fill="#f2b705"/><circle cx="62" cy="203" r="1.8" fill="#fff3b0"/><circle cx="70" cy="209" r="1.8" fill="#fff3b0"/></g>
+<path d="M${cx} 268V214" stroke="#5aa75a" stroke-width="9" stroke-linecap="round"/>
+<path d="M${cx} 216Q${cx - 24} 214 ${cx - 34} 226Q${cx - 16} 228 ${cx} 222ZM${cx} 216Q${cx + 24} 214 ${cx + 34} 226Q${cx + 16} 228 ${cx} 222Z" fill="#6fb55f"/>
+${petal(-62, "#ffe3ee", 0.95)}${petal(62, "#ffe3ee", 0.95)}${petal(-26, "#ffb3d1")}${petal(26, "#ffb3d1")}
+<path d="M${cx - 5} 196Q${cx - 24} 160 ${cx - 34} 128" stroke="#86c66a" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M${cx + 5} 196Q${cx + 24} 160 ${cx + 34} 128" stroke="#86c66a" stroke-width="3" fill="none" stroke-linecap="round"/>
+<ellipse cx="${cx - 36}" cy="122" rx="8" ry="12" transform="rotate(-18 ${cx - 36} 122)" fill="url(#po-anther)" stroke="#d99a00" stroke-width="1"/>
+<ellipse cx="${cx + 36}" cy="122" rx="8" ry="12" transform="rotate(18 ${cx + 36} 122)" fill="url(#po-anther)" stroke="#d99a00" stroke-width="1"/>
+${grains}
+<rect x="${cx - 4.5}" y="120" width="9" height="76" rx="4" fill="url(#po-style)"/>
+<path class="vs draw" data-s="4" pathLength="1" style="--d:1.6s" d="M${cx} 121V194" stroke="#f59e0b" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+<ellipse cx="${cx}" cy="206" rx="21" ry="16" fill="#b6e08f" stroke="#5aa75a" stroke-width="1.2"/>
+<ellipse cx="${cx - 7}" cy="203" rx="4.5" ry="6" fill="#fff3c4"/><ellipse cx="${cx + 7}" cy="203" rx="4.5" ry="6" fill="#fff3c4"/><ellipse cx="${cx}" cy="211" rx="4.5" ry="5.5" fill="#fff3c4"/>
+<g class="vs pop" data-s="4" style="--dl:1.5s" fill="#f7b500" stroke="#c98a00" stroke-width=".8"><ellipse cx="${cx - 7}" cy="203" rx="4.5" ry="6"/><ellipse cx="${cx + 7}" cy="203" rx="4.5" ry="6"/><ellipse cx="${cx}" cy="211" rx="4.5" ry="5.5"/></g>
+<ellipse cx="${cx}" cy="114" rx="14" ry="8.5" fill="#ff8fb8" stroke="#d6568a" stroke-width="1"/>
+<g class="vs" data-s="3" data-e="3"><ellipse class="a-pulse" cx="${cx}" cy="114" rx="14" ry="8.5" fill="none" stroke="#d6568a" stroke-width="2"/></g>
+<g class="vs pop" data-s="3" style="--dl:.5s" fill="#f2b705" stroke="#b98900" stroke-width=".6"><circle cx="${cx - 6}" cy="111" r="2.6"/><circle cx="${cx + 2}" cy="109" r="2.6"/><circle cx="${cx + 8}" cy="114" r="2.6"/></g>
+<g class="vs wipe" data-s="2" style="--d:1.9s"><path d="M104 146C140 96 200 70 262 84" stroke="#d6568a" stroke-width="2.2" stroke-dasharray="5 4" fill="none"/></g>
+${leader(1, 0.4, cx + 36, 122, 438, 138, "꽃가루", "pollen")}${leader(3, 0.6, cx + 14, 112, 438, 98, "암술머리", "stigma")}${leader(4, 0.4, cx + 3, 160, 438, 178, "꽃가루관", "pollen tube")}${leader(4, 1.3, cx + 20, 208, 438, 226, "씨방", "ovary → 열매")}
+${bee}
+${badge(1, 30, 178, "#d6568a")}${badge(2, 166, 64, "#d6568a")}${badge(3, 358, 78, "#d6568a")}${badge(4, 294, 246, "#d6568a")}
+</g></svg>`;
+    return {
+      color: "#d6568a", t: 3.8, tag: "움직이는 해설 · 과정", ipa: "/ˌpɑːləˈneɪʃn/", pos: "n.", kr: "수분(受粉)",
+      lead: "꽃가루가 곤충·바람에 실려 암술머리에 닿는 일 — 열매와 씨앗의 시작",
+      scene: svg,
+      steps: [
+        ["꽃가루가 묻는다", "벌이 꿀을 찾아 꽃에 앉을 때 다리와 몸에 꽃가루가 묻습니다"],
+        ["다른 꽃으로 이동", "꽃가루를 단 채 다른 꽃으로 날아갑니다 (바람·새도 옮겨 줌)"],
+        ["암술머리에 닿는다", "끈적한 암술머리에 꽃가루가 붙는 순간 — 이것이 수분입니다"],
+        ["수정 → 열매", "꽃가루관이 자라 씨방 속 밑씨에 닿으면 씨앗과 열매가 생깁니다"],
+      ],
+      origin: ["어원", "pollen(고운 가루, 라틴어) + ate + ion → 꽃가루를 옮기는 일"],
+      ex: ["Bees play a key role in the pollination of many crops.", "벌은 많은 농작물의 수분에서 핵심 역할을 한다."],
+      rel: [["pollen", "꽃가루"], ["pollinate", "수분하다"], ["pollinator", "수분 매개자"]],
+    };
+  })();
+
+  /* ───────── vessel ───────── */
+  const vessel = (() => {
+    const tile = (k, x, c, title, en, chip, icon) => `
+<g transform="translate(${x} 0)">
+<path class="vs draw" data-s="${k}" pathLength="1" style="--d:.5s" d="M83 58V80" stroke="${c}" stroke-width="2" fill="none" stroke-opacity=".5"/>
+<g class="vs up" data-s="${k}" style="--dl:.25s">
+<rect x="0" y="80" width="166" height="206" rx="16" fill="#fff" stroke="${c}" stroke-opacity=".35" stroke-width="1.4"/>
+<rect x="10" y="90" width="146" height="104" rx="12" fill="${c}" fill-opacity=".08"/>
+<g transform="translate(83 142)" clip-path="url(#ve-ic)">${icon}</g>
+<text x="83" y="222" text-anchor="middle" font-size="18" font-weight="700" fill="#1f2937">${title}</text>
+<text x="83" y="241" text-anchor="middle" font-size="12" fill="#6b7280">${en}</text>
+<rect x="${83 - chip.length * 3.9 - 12}" y="251" width="${chip.length * 7.8 + 24}" height="24" rx="12" fill="${c}" fill-opacity=".12"/>
+<text x="83" y="267" text-anchor="middle" font-size="12.5" font-weight="600" fill="${c}">${chip}</text></g></g>`;
+    const wave = (y, w, c, op) => `<path d="M-102 ${y}${" q10 -6 20 0".repeat(10)}" stroke="${c}" stroke-width="${w}" fill="none" stroke-linecap="round" opacity="${op}"/>`;
+    const box = (x, y, c, dl) => `<g class="vs pop" data-s="1" style="--dl:${dl}s"><rect x="${x}" y="${y}" width="11" height="9" rx="1.5" fill="${c}" stroke="#0f172a" stroke-opacity=".35" stroke-width=".8"/></g>`;
+    const ship = `<g class="a-bob" style="animation-duration:2.4s">
+<path d="M-50 12H50L36 36H-36Z" fill="#0f766e"/><path d="M-50 12H50" stroke="#99f6e4" stroke-width="2"/>
+<rect x="-30" y="-12" width="34" height="24" rx="3" fill="#e2e8f0" stroke="#94a3b8"/>
+<g fill="#38bdf8"><rect x="-24" y="-6" width="7" height="7" rx="1"/><rect x="-13" y="-6" width="7" height="7" rx="1"/><rect x="-2" y="-6" width="4" height="7" rx="1"/></g>
+<rect x="-14" y="-30" width="11" height="18" rx="2" fill="#ef4444"/><rect x="-14" y="-30" width="11" height="4" fill="#111827"/>
+${box(12, 3, "#f59e0b", 0.8)}${box(24, 3, "#6366f1", 1)}${box(36, 3, "#f59e0b", 1.2)}${box(18, -6, "#ec4899", 1.4)}${box(30, -6, "#22c55e", 1.6)}
+</g>
+<g class="a-slide">${wave(40, 3.2, "#38bdf8", 1)}</g><g class="a-slide" style="animation-duration:2.3s;animation-direction:reverse">${wave(48, 2.4, "#7dd3fc", 0.8)}</g>`;
+    const jarPath = "M-20-36H20V-28C42-14 46 12 32 36C24 46-24 46-32 36C-46 12-42-14-20-28Z";
+    const jar = `<path d="${jarPath}" fill="#fbbf24" stroke="#b45309" stroke-width="1.6"/>
+<g clip-path="url(#ve-jar)"><g class="mv" data-s="2" style="--from:translateY(46px);--d:2.2s;--dl:.5s"><g class="a-slide" style="animation-duration:2s">
+<path d="M-102 0${" q10 -6 20 0".repeat(10)}V60H-102Z" fill="#38bdf8" opacity=".75"/>${wave(0, 2, "#fff", 0.85)}</g></g></g>
+<path d="M-37 6Q0 -4 37 6M-39 18Q0 8 39 18" stroke="#b45309" stroke-opacity=".35" stroke-width="2" fill="none"/>
+<ellipse cx="0" cy="-36" rx="20" ry="5.5" fill="#fde68a" stroke="#b45309" stroke-width="1.4"/>`;
+    const cells = Array.from({ length: 8 }, (_, i) => {
+      const x = -105 + i * 30, y = i % 2 ? 3 : -1;
+      return `<ellipse cx="${x}" cy="${y}" rx="10" ry="6.5" fill="#dc2626"/><ellipse cx="${x}" cy="${y}" rx="4" ry="2.4" fill="#fca5a5"/>`;
+    }).join("");
+    const vein = `<path d="M-58-16C-36-24 28-8 58-16V20C28 28-36 12-58 20Z" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+<g clip-path="url(#ve-tube)"><g class="a-flow">${cells}</g></g>
+<g class="vs wipe" data-s="3" style="--dl:.6s;--d:1s" opacity=".8"><path d="M-46 -34H38" stroke="#dc2626" stroke-width="2.4" fill="none"/><path d="M36 -40L48 -34L36 -28Z" fill="#dc2626"/></g>
+<text x="0" y="48" text-anchor="middle" font-size="12.5" fill="#b91c1c">피가 흐르는 관</text>`;
+    const svg = `<svg viewBox="0 0 560 300" role="img" aria-label="vessel의 세 가지 뜻">
+<defs><linearGradient id="ve-rb" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0f766e"/><stop offset="1" stop-color="#14b8a6"/></linearGradient>
+<clipPath id="ve-clip"><rect width="560" height="300" rx="14"/></clipPath>
+<clipPath id="ve-ic"><rect x="-73" y="-52" width="146" height="104" rx="12"/></clipPath>
+<clipPath id="ve-jar"><path d="${jarPath}"/></clipPath>
+<clipPath id="ve-tube"><path d="M-57-15C-36-23 28-7 57-15V19C28 27-36 11-57 19Z"/></clipPath></defs>
+<g clip-path="url(#ve-clip)">
+<rect width="560" height="300" fill="#f1f8f7"/>
+<rect x="40" y="12" width="480" height="46" rx="23" fill="url(#ve-rb)"/>
+<text x="280" y="31" text-anchor="middle" font-size="12" fill="#ccfbf1" letter-spacing="1.5">vas (라틴어 · 그릇)</text>
+<text x="280" y="49" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">무언가를 담아 나르는 것 = vessel</text>
+${tile(1, 14, "#0f766e", "선박", "a large ship", "cargo vessel", ship)}${tile(2, 197, "#b45309", "그릇·용기", "a container for liquid", "a vessel of water", jar)}${tile(3, 380, "#dc2626", "혈관", "a tube carrying blood", "blood vessel", vein)}
+</g></svg>`;
+    return {
+      color: "#0f766e", t: 3.4, tag: "움직이는 해설 · 다의어", ipa: "/ˈvesl/", pos: "n.", kr: "선박 · 그릇 · 혈관",
+      lead: "뜻은 셋이지만 그림은 하나 — ‘안에 무언가를 담아 나르는 통’",
+      scene: svg,
+      steps: [
+        ["선박", "사람과 짐을 싣고 바다 위를 나르는 큰 배", "The vessel sank in the storm. (그 선박은 폭풍 속에서 가라앉았다.)"],
+        ["그릇·용기", "물이나 술 같은 액체를 담아 두는 통", "Pour the water into a clean vessel. (깨끗한 그릇에 물을 부어라.)"],
+        ["혈관", "피를 싣고 온몸을 도는 관 — blood vessel", "Smoking can damage blood vessels. (흡연은 혈관을 손상시킬 수 있다.)"],
+      ],
+      origin: ["어원", "vas(그릇, 라틴어) → 작은 그릇 vasculum → 고대 프랑스어 vaissel → vessel"],
+      ex: ["Cholesterol can block the blood vessels near the heart.", "콜레스테롤은 심장 가까운 혈관을 막을 수 있다."],
+      rel: [["vase", "꽃병"], ["vascular", "혈관의"], ["blood vessel", "혈관"]],
+    };
+  })();
+
+  /* ───────── chronic ───────── */
+  const chronic = (() => {
+    const acute = "M70 226C104 226 122 64 154 56C186 64 204 222 238 226L520 226";
+    const chron = "M70 226C118 214 168 172 224 152C262 138 296 142 330 136C366 130 396 140 430 134C466 128 494 134 520 130";
+    const svg = `<svg viewBox="0 0 560 300" role="img" aria-label="급성과 만성의 차이">
+<defs>
+<linearGradient id="ch-a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e11d48" stop-opacity=".28"/><stop offset="1" stop-color="#e11d48" stop-opacity="0"/></linearGradient>
+<linearGradient id="ch-c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6d5bd0" stop-opacity=".28"/><stop offset="1" stop-color="#6d5bd0" stop-opacity="0"/></linearGradient>
+<marker id="ch-ax" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6b7280"/></marker>
+<clipPath id="ch-clip"><rect width="560" height="300" rx="14"/></clipPath>
+</defs>
+<g clip-path="url(#ch-clip)">
+<rect width="560" height="300" fill="#f7f6fd"/>
+<g stroke="#d9d6f0" stroke-width="1"><path d="M70 60H520M70 110H520M70 160H520"/></g>
+<path d="M70 24V232H524" stroke="#6b7280" stroke-width="1.6" fill="none" marker-end="url(#ch-ax)"/>
+<text x="76" y="22" font-size="13.5" fill="#6b7280" font-weight="600">증상의 세기</text>
+<text x="524" y="280" text-anchor="end" font-size="13.5" fill="#6b7280" font-weight="600">시간 →</text>
+<path class="vs" data-s="1" style="--dl:1s" d="${acute}V232H70Z" fill="url(#ch-a)"/>
+<path class="vs" data-s="2" style="--dl:2s" d="${chron}V232H70Z" fill="url(#ch-c)"/>
+<path class="vs draw" data-s="1" pathLength="1" style="--d:1.5s" d="${acute}" stroke="#e11d48" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path class="vs draw" data-s="2" pathLength="1" style="--d:2.6s" d="${chron}" stroke="#6d5bd0" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+<g class="vs pop" data-s="1" style="--dl:.7s"><circle cx="154" cy="56" r="5" fill="#e11d48" stroke="#fff" stroke-width="2"/></g>
+<g class="vs up" data-s="1" style="--dl:1.2s"><rect x="212" y="30" width="184" height="52" rx="10" fill="#fff" stroke="#fecdd3"/><text x="224" y="52" font-size="16" font-weight="700" fill="#be123c">급성 acute</text><text x="224" y="71" font-size="12.5" fill="#6b7280">갑자기 · 심하게 · 금방 지나감</text></g>
+<g class="vs up" data-s="2" style="--dl:2.2s"><rect x="258" y="160" width="226" height="52" rx="10" fill="#fff" stroke="#ddd8fa"/><text x="270" y="182" font-size="16" font-weight="700" fill="#4f3fb5">만성 chronic</text><text x="270" y="201" font-size="12.5" fill="#6b7280">세지 않아도 · 오랫동안 · 계속</text></g>
+<g class="vs wipe" data-s="2" style="--dl:1s;--d:1.6s"><path d="M232 246H512" stroke="#6d5bd0" stroke-width="1.8" fill="none"/><path d="M234 240.5L224 246L234 251.5ZM510 240.5L520 246L510 251.5Z" fill="#6d5bd0"/>
+<text x="372" y="266" text-anchor="middle" font-size="13.5" fill="#4f3fb5" font-weight="600">오랜 기간 이어짐</text></g>
+<g transform="translate(486 58)"><g class="vs pop" data-s="3"><g class="a-flip"><path d="M-12-16H12L2 0L12 16H-12L-2 0Z" fill="#ede9ff" stroke="#6d5bd0" stroke-width="1.8" stroke-linejoin="round"/><path d="M-7-12H7L2 -4H-2ZM-3 8H3L7 13H-7Z" fill="#6d5bd0"/></g></g></g>
+<g class="vs up" data-s="3" style="--dl:.4s"><text x="486" y="96" text-anchor="middle" font-size="12.5" fill="#4f3fb5" font-weight="700">chrono = 시간</text></g>
+</g></svg>`;
+    return {
+      color: "#6d5bd0", t: 4, tag: "움직이는 해설 · 비교", ipa: "/ˈkrɑːnɪk/", pos: "adj.", kr: "만성의",
+      lead: "세기가 약해도 ‘시간’을 길게 끌며 이어지는 것 — 반대말은 acute(급성의)",
+      scene: svg,
+      steps: [
+        ["acute — 급성", "갑자기 시작해 심하게 나타나고, 비교적 빨리 가라앉습니다"],
+        ["chronic — 만성", "천천히 생겨 오래 이어집니다. 병뿐 아니라 문제·상황에도 씁니다 (chronic shortage 만성적 부족)"],
+        ["chron(o) = 시간", "chronology(연대기), synchronize(시간을 맞추다), chronicle(연대기·기록)이 같은 뿌리"],
+      ],
+      origin: ["어원", "chronos(시간, 그리스어) + ic → 시간에 걸친 → 오래 끄는"],
+      ex: ["She has suffered from chronic back pain for years.", "그녀는 수년째 만성 요통에 시달려 왔다."],
+      rel: [["acute", "급성의"], ["chronology", "연대기"], ["synchronize", "동시에 맞추다"]],
+    };
+  })();
+
+  const VIZ = (window.VIZ = { glacier, pollination, vessel, chronic });
+
+  /* 카드 옆 패널 HTML */
+  const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const ICON = `<svg class="ic-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></svg><svg class="ic-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg><svg class="ic-again" viewBox="0 0 24 24"><path d="M12 5a7 7 0 1 1-6.6 4.7l1.9.6A5 5 0 1 0 12 7v3L7.5 6 12 2z"/></svg>`;
+  window.vizHtml = function (word) {
+    const v = VIZ[word.toLowerCase()];
+    if (!v) return null;
+    const n = v.steps.length;
+    return `<div class="vz" data-state="idle" style="--vz:${v.color};--t:${v.t}s">
+<div class="vz-head"><span class="vz-tag">${esc(v.tag)}</span>
+<div class="vz-word"><b>${esc(word)}</b><i>${esc(v.ipa)}</i><span>${esc(v.pos)}</span></div>
+<div class="vz-kr">${esc(v.kr)}</div><p class="vz-lead">${esc(v.lead)}</p></div>
+<div class="vz-scene">${v.scene}</div>
+<div class="vz-ctl"><button class="vz-play" type="button" aria-label="해설 재생">${ICON}</button>
+<div class="vz-segs">${v.steps.map((s, i) => `<button class="vz-seg" type="button" data-k="${i + 1}" aria-label="${i + 1}단계 보기: ${esc(s[0])}"><b><i></i></b></button>`).join("")}</div>
+<span class="vz-time">0 / ${n}</span></div>
+<ol class="vz-steps">${v.steps.map((s, i) => `<li data-k="${i + 1}"><span class="n">${i + 1}</span><div><b>${esc(s[0])}</b><span>${esc(s[1])}</span>${s[2] ? `<em>${esc(s[2])}</em>` : ""}</div></li>`).join("")}</ol>
+<div class="vz-foot"><div class="vz-org"><b>${esc(v.origin[0])}</b>${esc(v.origin[1])}</div>
+<div class="vz-ex"><p class="en">${esc(v.ex[0])}</p><p class="ko">${esc(v.ex[1])}</p></div>
+<div class="vz-rel">${v.rel.map((r) => `<span>${esc(r[0])}<em>${esc(r[1])}</em></span>`).join("")}</div></div></div>`;
+  };
+
+  /* 재생기: 단계 막대의 채움 애니메이션이 끝나면 다음 단계로 — 일시정지하면 애니메이션째 멈춘다 */
+  window.vizMount = function (root, autoplay) {
+    const scene = root.querySelector(".vz-scene");
+    const parts = [...scene.querySelectorAll("[data-s]")];
+    const segs = [...root.querySelectorAll(".vz-seg")];
+    const lis = [...root.querySelectorAll(".vz-steps li")];
+    const btn = root.querySelector(".vz-play");
+    const time = root.querySelector(".vz-time");
+    const n = segs.length;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let step = 0;
+    const LABEL = { idle: "해설 재생", run: "해설 일시정지", pause: "해설 이어서 재생", end: "해설 다시 보기" };
+    const set = (st) => { root.dataset.state = st; btn.setAttribute("aria-label", LABEL[st]); };
+    function show(k, instant) {
+      if (instant) scene.classList.add("vz-reset");
+      parts.forEach((el) => {
+        const s = +el.dataset.s, e = el.dataset.e ? +el.dataset.e : n;
+        el.classList.toggle("in", k >= s && k <= e);
+      });
+      if (instant) { void scene.offsetWidth; scene.classList.remove("vz-reset"); }
+    }
+    function go(k, instant) {
+      step = k;
+      show(k, instant);
+      segs.forEach((s, i) => { s.classList.toggle("done", i + 1 < k); s.classList.remove("run"); });
+      if (k >= 1) { const s = segs[k - 1]; void s.offsetWidth; s.classList.add("run"); }
+      lis.forEach((li, i) => li.classList.toggle("on", i + 1 === k));
+      time.textContent = `${k} / ${n}`;
+    }
+    function end() {
+      set("end");
+      segs.forEach((s) => { s.classList.remove("run"); s.classList.add("done"); });
+      lis.forEach((li) => li.classList.remove("on"));
+    }
+    function play() { set("run"); go(0, true); go(1); }
+    function jump(k) {
+      if (reduce) { go(k); set("pause"); return; }
+      set("run"); go(k);
+    }
+    root.addEventListener("animationend", (e) => {
+      if (root.dataset.state !== "run" || !e.target.matches(".vz-seg.run i")) return;
+      if (step < n) go(step + 1); else end();
+    });
+    btn.addEventListener("click", () => {
+      const st = root.dataset.state;
+      if (reduce) { jump(step < n && st !== "end" ? step + 1 : 1); return; }
+      if (st === "run") set("pause");
+      else if (st === "pause") set("run");
+      else play();
+    });
+    root.addEventListener("click", (e) => {
+      const t = e.target.closest(".vz-seg, .vz-steps li");
+      if (t) jump(+t.dataset.k);
+    });
+    if (reduce) { go(n, true); end(); }
+    else if (autoplay) play();
+    else { set("idle"); go(0, true); }
+    return { reveal() { if (root.dataset.state === "idle") play(); } };
+  };
+})();
