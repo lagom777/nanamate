@@ -266,6 +266,9 @@ button { font: inherit; color: inherit; }
 @media (max-width: 420px) { .fields { grid-template-columns: minmax(0, 1fr); } }
 .field { display: grid; gap: 6px; min-width: 0; }
 .lbl { font-size: 12px; color: var(--ink-3); }
+.field.vol { grid-column: 1 / -1; }
+.vol .lbl { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
+#vol { width: 100%; margin: 4px 0 0; accent-color: var(--accent); cursor: pointer; }
 .seg { display: flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
 .seg input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
 .seg label {
@@ -395,6 +398,10 @@ select {
     <div class="settings">
       <h2>재생 설정</h2>
       <div class="fields">
+        <div class="field vol">
+          <label class="lbl" for="vol"><span>음량</span><output id="volOut" for="vol">100%</output></label>
+          <input type="range" id="vol" min="0" max="100" step="5" value="100">
+        </div>
         <div class="field">
           <span class="lbl" id="l-order">순서</span>
           <div class="seg" role="radiogroup" aria-labelledby="l-order">
@@ -1808,7 +1815,7 @@ const STAR = '<svg viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 
 
 // settings + stars (per-viewer, browser only)
 const KEY = 'sori-vocab-v1';
-const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '', deck: 'all', part: 0, sleep: 0, viz: true, pic: false };
+const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '', deck: 'all', part: 0, sleep: 0, viz: true, pic: false, vol: 1 };
 let stars = new Set();
 let WORDS = [];   // 지금 고른 단어장·파트의 단어
 try {
@@ -2090,7 +2097,7 @@ function say(text, lang, sel, el, rate, id) {
     if (id !== run || !TTS) return resolve();
     const u = new SpeechSynthesisUtterance(text);
     const v = voiceFor(sel);
-    u.lang = v ? v.lang : lang; u.rate = rate;
+    u.lang = v ? v.lang : lang; u.rate = rate; u.volume = S.vol;
     if (v) u.voice = v;
     let timer, watch, started = false;
     const done = () => {
@@ -2219,6 +2226,7 @@ function syncControls() {
   $('opt-star').checked = S.starOnly;
   $('opt-viz').checked = S.viz;
   $('opt-pic').checked = S.pic;
+  $('vol').value = Math.round(S.vol * 100); $('volOut').textContent = Math.round(S.vol * 100) + '%';
 }
 document.querySelectorAll('.seg input').forEach(r => r.addEventListener('change', () => {
   S[r.name] = r.name === 'order' ? r.value : Number(r.value);
@@ -2226,6 +2234,8 @@ document.querySelectorAll('.seg input').forEach(r => r.addEventListener('change'
   if (r.name === 'order') restartCurrent();
   if (r.name === 'sleep') armSleep();
 }));
+$('vol').addEventListener('input', e => { S.vol = Number(e.target.value) / 100; $('volOut').textContent = e.target.value + '%'; });
+$('vol').addEventListener('change', () => { save(); go(pos); });   // 놓으면 현재 단어를 새 음량으로 다시 들려준다
 $('sleepBtn').addEventListener('click', () => setSleep(SLEEP_STEPS[(SLEEP_STEPS.indexOf(S.sleep) + 1) % SLEEP_STEPS.length]));
 $('opt-hide').addEventListener('change', e => { S.hide = e.target.checked; save(); restartCurrent(); });
 function setShuffle(on) {
