@@ -342,7 +342,7 @@ select {
   </header>
   <section class="pickers" id="pickers" aria-label="단어장 선택">
     <div class="pk"><span class="pk-lbl">단어장</span><div class="pk-chips" id="deckPick"></div></div>
-    <div class="pk" id="partRow" hidden><span class="pk-lbl">파트</span><div class="pk-chips" id="partPick"></div></div>
+    <div class="pk" id="grpRow" hidden><span class="pk-lbl">어원</span><div class="pk-chips" id="grpPick"></div></div>
     <div class="pk" id="vizRow" hidden><span class="pk-lbl">그림 해설</span><div class="pk-chips" id="vizPick"></div></div>
   </section>
   <p class="warn" id="noTts" hidden>이 브라우저는 음성 읽기를 지원하지 않아요. Chrome이나 Safari에서 열어 주세요.</p>
@@ -1342,7 +1342,7 @@ const YEONGILMAN = [
   { w: 'grim', pos: 'adj.', m: '엄한, 암울한', e: '고대 영어 grimm(사나운) → 험악한' },
 ];
 
-// 워드마스터 — 파트(18단어씩)로 나눠 고를 수 있다
+// 워드 단어장
 const WORDMASTER = [
   { w: 'commodity', pos: 'n.', m: '상품, 물품', e: 'com(함께) + modus(척도, 알맞음) → 쓰기에 알맞은 것 → 편리한 물건 → 상품' },
   { w: 'constant', pos: 'adj.', m: '끊임없는, 일정한', e: 'con(함께) + stare(서다) → 계속 서 있는 → 변하지 않는' },
@@ -1917,19 +1917,43 @@ const WORDMASTER = [
   { w: 'discrete', pos: 'adj.', m: '별개의, 분리된', e: 'dis(떨어져) + cernere(가르다) → 갈라진' },
   { w: 'fluctuation', pos: 'n.', m: '변동', e: 'fluctus(물결) ← fluere(흐르다)' },
 ];
-const PART_SIZE = 18;
-WORDMASTER.forEach((w, i) => { w.p = Math.floor(i / PART_SIZE) + 1; });
+// 워드 — 파트 대신 어원(공통 어근·접두사)으로 묶어 고를 수 있다. 어느 묶음에도 안 드는 단어는 '기타'
+const WORD_GROUPS = (() => {
+  const SKIP = new Set(['con', 'com', 'cor', 'col', 'syn', 'dis', 'sub', 'pre', 'pro', 'contra', 'per', 'sur', 'over', 'out', 'with', 'take', 'back', 'draw', 'land', 'set', 'mis', 'anti', 'inter', 'ex']);
+  const PREFIX = [['con', 'con-·com- 함께', ['con', 'com', 'cor', 'col', 'syn']], ['dis', 'dis- 떨어져', ['dis']], ['sub', 'sub- 아래', ['sub']], ['pre', 'pre- 미리', ['pre']], ['pro', 'pro- 앞으로', ['pro']]];
+  const info = WORDMASTER.map(w => {
+    const t = new Map();
+    for (const m of w.e.matchAll(/([a-z][a-zA-Z-]{2,})\(([^)]+)\)/g)) { const k = m[1].toLowerCase(); if (!t.has(k)) t.set(k, m[2]); }
+    return t;
+  });
+  const roots = new Map();
+  WORDMASTER.forEach((w, i) => info[i].forEach((g, k) => {
+    if (SKIP.has(k)) return;
+    if (!roots.has(k)) roots.set(k, { label: `${k} ${g}`, words: [] });
+    roots.get(k).words.push(w);
+  }));
+  const groups = [];
+  PREFIX.forEach(([key, label, ks]) => {
+    const words = WORDMASTER.filter((w, i) => ks.some(k => info[i].has(k)));
+    if (words.length >= 4) groups.push({ key, label, words });
+  });
+  [...roots].filter(([, o]) => o.words.length >= 3).sort((a, b) => b[1].words.length - a[1].words.length)
+    .forEach(([k, o]) => groups.push({ key: k, label: o.label, words: o.words }));
+  const used = new Set(groups.flatMap(g => g.words));
+  groups.push({ key: 'etc', label: '기타', words: WORDMASTER.filter(w => !used.has(w)) });
+  return groups;
+})();
 // 별표는 단어 기준 — 두 단어장에 같은 단어가 있으면 별표도 함께 보인다
 [YEONGILMAN, WORDMASTER].forEach(a => a.forEach(w => { w.k = w.w; }));
-// '전체'는 두 단어장을 합치되, 겹치는 단어는 한 번만 (영일만 쪽을 쓴다)
+// '전체'는 두 단어장을 합치되, 겹치는 단어는 한 번만 (VOCA 쪽을 쓴다)
 const ALLWORDS = YEONGILMAN.concat((() => {
   const seen = new Set(YEONGILMAN.map(w => w.w.toLowerCase()));
   return WORDMASTER.filter(w => !seen.has(w.w.toLowerCase()));
 })());
 const DECKS = [
   { id: 'all', name: '전체', words: ALLWORDS },
-  { id: 'yeongilman', name: '영일만 VOCA', words: YEONGILMAN },
-  { id: 'wordmaster', name: '워드마스터', words: WORDMASTER, parts: Math.ceil(WORDMASTER.length / PART_SIZE) },
+  { id: 'yeongilman', name: 'VOCA', words: YEONGILMAN },
+  { id: 'wordmaster', name: '워드', words: WORDMASTER, groups: WORD_GROUPS },
 ];
 
 const $ = id => document.getElementById(id);
@@ -1941,7 +1965,7 @@ const STAR = '<svg viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 
 
 // settings + stars (per-viewer, browser only)
 const KEY = 'sori-vocab-v1';
-const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '', deck: 'all', part: 0, sleep: 0, viz: true, pic: false, vol: 1 };
+const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '', deck: 'all', grp: '', sleep: 0, viz: true, pic: false, vol: 1 };
 let stars = new Set();
 let WORDS = [];   // 지금 고른 단어장·파트의 단어
 try {
@@ -2136,23 +2160,22 @@ function endSleep() {
   $('status').textContent = '🌙 설정한 시간이 지나 멈췄어요. 안녕히 주무세요';
 }
 
-// 단어장·파트 고르기
+// 단어장·어원 고르기
 function renderPickers(d) {
   $('deckPick').innerHTML = DECKS.map(x =>
     `<button class="pill" type="button" data-deck="${x.id}" aria-pressed="${x.id === d.id}">${x.name}<small>${x.words.length}</small></button>`).join('');
-  $('partRow').hidden = !d.parts;
-  if (!d.parts) return;
-  const chip = (n, label, count) => `<button class="pill" type="button" data-part="${n}" aria-pressed="${S.part === n}">${label}<small>${count}</small></button>`;
-  let h = chip(0, '전체', d.words.length);
-  for (let n = 1; n <= d.parts; n++) h += chip(n, `Part ${n}`, d.words.filter(w => w.p === n).length);
-  $('partPick').innerHTML = h;
+  $('grpRow').hidden = !d.groups;
+  if (!d.groups) return;
+  const chip = (key, label, count) => `<button class="pill" type="button" data-grp="${key}" aria-pressed="${S.grp === key}">${label}<small>${count}</small></button>`;
+  $('grpPick').innerHTML = chip('', '전체', d.words.length) + d.groups.map(g => chip(g.key, g.label, g.words.length)).join('');
 }
 function loadSource() {
   const d = DECKS.find(x => x.id === S.deck) || DECKS[0];
   S.deck = d.id;
-  if (!d.parts || !(S.part >= 1 && S.part <= d.parts)) S.part = 0;
-  WORDS = S.part ? d.words.filter(w => w.p === S.part) : d.words;
-  $('deckName').textContent = d.name + (S.part ? ` · Part ${S.part}` : '');
+  const g = d.groups && d.groups.find(x => x.key === S.grp);
+  if (!g) S.grp = '';
+  WORDS = g ? g.words : d.words;
+  $('deckName').textContent = d.name + (g ? ` · ${g.label}` : '');
   $('total').textContent = WORDS.length;
   renderPickers(d);
   const vw = WORDS.map((w, i) => [w, i]).filter(([w]) => hasViz(w));
@@ -2162,18 +2185,18 @@ function loadSource() {
   peek = -1;
   buildDeck();
 }
-function changeSource(deck, part) {
-  if (deck === S.deck && part === S.part) return;
+function changeSource(deck, grp) {
+  if (deck === S.deck && grp === S.grp) return;
   if (playing) setPlaying(false);
   stop();
-  S.deck = deck; S.part = part;
+  S.deck = deck; S.grp = grp;
   loadSource(); render(true); syncStars(); save();
 }
 $('pickers').addEventListener('click', e => {
   const b = e.target.closest('button');
   if (!b) return;
-  if (b.dataset.deck) changeSource(b.dataset.deck, b.dataset.deck === S.deck ? S.part : 0);
-  else if (b.dataset.part != null) changeSource(S.deck, Number(b.dataset.part));
+  if (b.dataset.deck) changeSource(b.dataset.deck, b.dataset.deck === S.deck ? S.grp : '');
+  else if (b.dataset.grp != null) changeSource(S.deck, b.dataset.grp);
   else if (b.dataset.viz != null) jumpTo(Number(b.dataset.viz));
 });
 
