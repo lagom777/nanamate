@@ -110,7 +110,25 @@ button { font: inherit; color: inherit; }
 .mean span { display: inline-block; font-size: clamp(1.15rem, 3.8vw, 1.45rem); font-weight: 500; color: var(--ink); }
 .note { font-family: var(--pen); font-size: 1.5rem; line-height: 1.2; color: var(--pencil); transform: rotate(-1.5deg); }
 .note.ghost, .ety.ghost { visibility: hidden; }
-.ety { margin: 4px 0 0; max-width: 34em; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); text-wrap: balance; }
+.ety { margin: 4px 0 0; width: 100%; max-width: 34em; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); }
+.wicon { font-size: 40px; line-height: 1; margin-bottom: -2px; }
+.wicon:empty, .no-viz .wicon { display: none; }
+.wicon.ghost { visibility: hidden; }
+.emap { display: flex; flex-wrap: wrap; align-items: stretch; justify-content: center; gap: 6px 5px; margin-top: 8px; }
+.emap .eb { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-width: 54px; padding: 5px 10px 6px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.emap .eb small { font-size: 10px; line-height: 1.2; color: var(--ink-3); }
+.emap .eb b { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; line-height: 1.2; color: var(--accent); }
+.emap .eb i { font-style: normal; font-size: 12px; line-height: 1.3; color: var(--ink-2); }
+.emap .eb.aff b { color: var(--ink-2); }
+.emap .eb.txt { max-width: 100%; text-align: center; }
+.emap .eop { align-self: center; color: var(--ink-3); font-weight: 600; }
+.emap .ea { align-self: center; color: var(--accent); font-weight: 700; }
+.emap .es { align-self: center; padding: 5px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); font-size: 12.5px; line-height: 1.35; text-align: center; }
+.emap .es.last { background: var(--accent); color: var(--on-accent); font-weight: 600; }
+.ri { margin-right: 4px; font-size: 15px; }
+.no-viz .ri { display: none; }
+.hide-mean .ri { visibility: hidden; }
+.hide-mean .row:hover .ri { visibility: visible; }
 .ety-lbl { font-family: var(--mono); font-size: 11px; color: var(--red-ink); margin-right: 8px; letter-spacing: .04em; }
 .word span, .mean span { transition: color .2s; }
 .speaking { color: var(--accent) !important; }
@@ -245,10 +263,11 @@ select {
         </button>
       </div>
       <div class="card-body" aria-live="polite">
+        <div class="wicon" id="wicon" aria-hidden="true"></div>
         <div class="word"><span id="word"></span></div>
         <div class="mean"><span id="mean"></span></div>
         <div class="note" id="note"></div>
-        <p class="ety"><span class="ety-lbl">어원</span><span id="ety"></span></p>
+        <div class="ety"><span class="ety-lbl">어원</span><div id="ety"></div></div>
       </div>
     </div>
 
@@ -329,6 +348,7 @@ select {
         <label class="switch"><input type="checkbox" id="opt-hide"><span class="track"></span>정답 가리기</label>
         <label class="switch"><input type="checkbox" id="opt-shuffle"><span class="track"></span>순서 섞기</label>
         <label class="switch"><input type="checkbox" id="opt-star"><span class="track"></span>★ 단어만</label>
+        <label class="switch"><input type="checkbox" id="opt-viz"><span class="track"></span>그림·어원 도해</label>
       </div>
       <p class="hint" id="starHint" hidden>아직 별표한 단어가 없어서 전체를 읽어요. 어려운 단어에 ★를 눌러 두세요.</p>
 
@@ -347,6 +367,446 @@ select {
 </div>
 
 <script>
+const ICONS = {
+  avalanche: '🏔️',
+  suburb: '🏘️',
+  ingredient: '🥕',
+  appliance: '🔌',
+  shrub: '🌿',
+  vendor: '🛍️',
+  litter: '🗑️',
+  pollinate: '🐝',
+  demolition: '🏚️',
+  grin: '😁',
+  glimpse: '👀',
+  farsighted: '🔭',
+  kin: '👪',
+  domesticate: '🐕',
+  devour: '🍖',
+  stir: '🥄',
+  scenic: '🏞️',
+  drain: '🚰',
+  evaporate: '♨️',
+  recipient: '📬',
+  transaction: '💳',
+  inspection: '🔍',
+  solitary: '🧍',
+  weary: '😩',
+  maternity: '🤰',
+  municipal: '🏙️',
+  needy: '🥺',
+  leisurely: '☕',
+  mandatory: '❗',
+  reclaim: '♻️',
+  respiratory: '🫁',
+  renowned: '🌟',
+  solidarity: '✊',
+  tedious: '🥱',
+  stern: '😠',
+  subtract: '➖',
+  suspicious: '🤨',
+  testimony: '⚖️',
+  unpaved: '🛤️',
+  verification: '✅',
+  vie: '🏁',
+  stride: '🚶',
+  ambiguous: '❓',
+  approval: '👍',
+  assess: '📊',
+  conceive: '💡',
+  confine: '🔒',
+  dispose: '🗑️',
+  sneak: '🤫',
+  commodity: '📦',
+  construct: '🏗️',
+  resident: '🏠',
+  awful: '😱',
+  extinct: '🦖',
+  institute: '🏛️',
+  ashamed: '😳',
+  reproduce: '🐣',
+  formal: '🤵',
+  rite: '🕯️',
+  descend: '⬇️',
+  eager: '🤩',
+  thrive: '🌱',
+  scarce: '🏜️',
+  regulate: '🚦',
+  yield: '🌾',
+  cottage: '🏡',
+  prey: '🦌',
+  pupil: '👁️',
+  spice: '🌶️',
+  tempt: '🍰',
+  dine: '🍽️',
+  wreck: '🚢',
+  address: '📮',
+  commute: '🚌',
+  retail: '🛍️',
+  nurture: '🍼',
+  spill: '🥛',
+  tragic: '🎭',
+  arctic: '❄️',
+  dilute: '💧',
+  dim: '🔅',
+  errand: '🏃',
+  pile: '📚',
+  ethnic: '🌍',
+  wholesale: '📦',
+  germ: '🦠',
+  drift: '🌊',
+  confront: '🆚',
+  dynasty: '👑',
+  temper: '😤',
+  raft: '🛶',
+  soak: '🛁',
+  craft: '🧶',
+  cease: '🛑',
+  unify: '🤝',
+  bump: '💥',
+  doom: '⚰️',
+  graze: '🐄',
+  glacier: '🧊',
+  celebrity: '🌟',
+  editorial: '📰',
+  crawl: '🐛',
+  diabetes: '🩸',
+  congestion: '🚦',
+  barter: '🔄',
+  vague: '🌫️',
+  disgrace: '😞',
+  chore: '🧹',
+  fossil: '🦴',
+  pottery: '🏺',
+  polish: '✨',
+  radiant: '☀️',
+  exclaim: '❗',
+  decay: '🦷',
+  wage: '💰',
+  vicious: '🐺',
+  famine: '🌾',
+  string: '🧵',
+  depict: '🖼️',
+  wilderness: '🏞️',
+  flush: '🚽',
+  omit: '✂️',
+  despair: '😭',
+  astonish: '😲',
+  inflate: '🎈',
+  physician: '🩺',
+  passage: '🚪',
+  vessel: '🚢',
+  marble: '🏛️',
+  edible: '🍽️',
+  tablet: '💊',
+  roam: '🚶',
+  bud: '🌱',
+  peasant: '🌾',
+  tenant: '🔑',
+  pavement: '🛣️',
+  sacred: '🙏',
+  revise: '✏️',
+  resent: '😠',
+  suspend: '⏸️',
+  collapse: '🏚️',
+  monologue: '🗣️',
+  prescribe: '💊',
+  masculine: '👨',
+  frown: '🙁',
+  disguise: '🎭',
+  sermon: '⛪',
+  foster: '🍼',
+  reform: '🔧',
+  convention: '🎪',
+  devastate: '🌪️',
+  reap: '🌾',
+  nourish: '🥗',
+  bulletin: '📋',
+  concrete: '🧱',
+  literate: '📖',
+  lease: '🔑',
+  fatal: '☠️',
+  invert: '🙃',
+  startle: '😮',
+  era: '⏳',
+  withdraw: '🏧',
+  mischief: '😈',
+  groom: '🤵',
+  evolve: '🐒',
+  afflict: '🤕',
+  empirical: '🔬',
+  weep: '😢',
+  absurd: '🤪',
+  boast: '😎',
+  incentive: '🎁',
+  wrestle: '🤼',
+  confucian: '📜',
+  draft: '📝',
+  dismay: '😟',
+  molecule: '⚛️',
+  reservoir: '🏞️',
+  tangible: '✋',
+  archaeology: '🗿',
+  breed: '🐕',
+  trim: '✂️',
+  anecdote: '💬',
+  pledge: '🤝',
+  mock: '🤡',
+  disclose: '🔓',
+  grind: '⚙️',
+  damp: '💧',
+  flourish: '🌸',
+  sole: '1️⃣',
+  divine: '😇',
+  revenue: '💵',
+  equator: '🌐',
+  arithmetic: '➕',
+  cognitive: '🧠',
+  hygiene: '🧼',
+  herd: '🐑',
+  subjective: '💭',
+  sewage: '🚽',
+  warrant: '📜',
+  halt: '🛑',
+  ponder: '🤔',
+  burglar: '🦹',
+  stroke: '🧠',
+  cluster: '🍇',
+  plea: '🙏',
+  sour: '🍋',
+  embrace: '🤗',
+  accommodate: '🛏️',
+  cozy: '🛋️',
+  suitor: '💐',
+  pioneer: '🚩',
+  assert: '📢',
+  auditorium: '🏟️',
+  radioactive: '☢️',
+  bruise: '🩹',
+  attorney: '⚖️',
+  sanitation: '🧼',
+  heredity: '🧬',
+  plow: '🚜',
+  ornament: '🎄',
+  breathtaking: '🌄',
+  overturn: '🔃',
+  ripe: '🍎',
+  conflict: '⚔️',
+  vapor: '♨️',
+  tuition: '🎓',
+  inhale: '🌬️',
+  loop: '➰',
+  withstand: '🛡️',
+  collide: '💥',
+  memorial: '🕯️',
+  wander: '🚶',
+  antibiotic: '💊',
+  sprain: '🦶',
+  stool: '🪑',
+  fad: '🕺',
+  gymnastics: '🤸',
+  tariff: '🛃',
+  yeast: '🍞',
+  skyscraper: '🏙️',
+  spade: '⛏️',
+  surplus: '📈',
+  hypothesis: '🔬',
+  reed: '🌾',
+  fatigue: '😴',
+  peel: '🍌',
+  bias: '⚖️',
+  tread: '👣',
+  vomit: '🤮',
+  prophecy: '🔮',
+  correspond: '✉️',
+  cling: '🐨',
+  mutation: '🧬',
+  tyrant: '👑',
+  aid: '🆘',
+  flour: '🌾',
+  garment: '👕',
+  pasture: '🐄',
+  crust: '🍞',
+  plunge: '🏊',
+  nasty: '😒',
+  deed: '📜',
+  canal: '🛶',
+  censorship: '🙊',
+  verbal: '🗣️',
+  liberate: '🕊️',
+  segregation: '🚧',
+  irrigation: '🚿',
+  refuge: '⛺',
+  drowsy: '😪',
+  inspect: '🔍',
+  compress: '🗜️',
+  steep: '⛰️',
+  cemetery: '🪦',
+  feast: '🍗',
+  commemorate: '🎗️',
+  chronic: '⏳',
+  shiver: '🥶',
+  improvise: '🎷',
+  executive: '💼',
+  authentic: '✅',
+  outlaw: '🤠',
+  squeeze: '🍊',
+  nuisance: '😣',
+  sweep: '🧹',
+  tremble: '😨',
+  slaughter: '🔪',
+  blow: '🌬️',
+  ballot: '🗳️',
+  amplify: '📢',
+  steer: '🧭',
+  compost: '♻️',
+  shred: '📄',
+  tribute: '🏆',
+  artery: '❤️',
+  harass: '😡',
+  narrative: '📖',
+  obstruct: '🚧',
+  heatstroke: '🥵',
+  oval: '🥚',
+  vocation: '👷',
+  mandate: '📜',
+  statesman: '🏛️',
+  mortgage: '🏠',
+  mimic: '🦜',
+  unearth: '⛏️',
+  wail: '😭',
+  applicant: '📝',
+  hemisphere: '🌍',
+  sway: '🌴',
+  rebel: '✊',
+  folklore: '🧙',
+  recess: '🔔',
+  mourn: '🖤',
+  latitude: '🧭',
+  maternal: '🤱',
+  insomnia: '🌙',
+  shatter: '🔨',
+  pollute: '🏭',
+  altruism: '🤝',
+  fiber: '🧵',
+  spectator: '👀',
+  medieval: '🏰',
+  snatch: '✋',
+  meadow: '🌼',
+  primate: '🐒',
+  imperial: '👑',
+  populate: '👥',
+  frugal: '🪙',
+  rejoice: '🎉',
+  textile: '🧶',
+  terrain: '⛰️',
+  predator: '🦁',
+  condense: '💧',
+  poise: '🧘',
+  disciple: '🎓',
+  gust: '💨',
+  verdict: '⚖️',
+  stall: '🚫',
+  hail: '🌨️',
+  outburst: '🌋',
+  vanity: '🪞',
+  obesity: '🍔',
+  bribe: '💰',
+  perspiration: '💦',
+  notion: '💡',
+  oversee: '👁️',
+  contagious: '🤒',
+  janitor: '🧹',
+  blush: '☺️',
+  intervene: '✋',
+  nomad: '🐪',
+  cuisine: '🍽️',
+  solvent: '🧪',
+  ascent: '🧗',
+  spur: '🐴',
+  scheme: '🗺️',
+  brisk: '🚶',
+  exile: '🚪',
+  unanimous: '🙌',
+  dissolve: '🧂',
+  constraint: '⛓️',
+  delude: '🎭',
+  dehydrate: '🏜️',
+  metabolism: '🔥',
+  pinch: '🤏',
+  punctual: '⏰',
+  aviate: '✈️',
+  headquarters: '🏢',
+  delegate: '👥',
+  thorn: '🌹',
+  renovate: '🔨',
+  wrench: '🔧',
+  retort: '💬',
+  shudder: '😖',
+  coexist: '🕊️',
+  dispute: '🗯️',
+  stack: '📚',
+  reprove: '☝️',
+  engross: '📖',
+  bulk: '📦',
+  despise: '😤',
+  manuscript: '📜',
+  flee: '🏃',
+  prehistoric: '🦕',
+  predecessor: '⏮️',
+  alienate: '🚷',
+  furnish: '🛋️',
+  fume: '💨',
+  staple: '🍚',
+  eloquent: '🎤',
+  hazardous: '⚠️',
+  detergent: '🧴',
+  bypass: '🛣️',
+  dispense: '💊',
+  monotonous: '😐',
+  landslide: '⛰️',
+  endow: '🎁',
+  frantic: '🏃',
+  moan: '😩',
+  reckon: '🧮',
+  detest: '🤢',
+  defy: '🙅',
+  refraction: '🌈',
+  dusk: '🌇',
+  antagonist: '🥊',
+  creed: '⛪',
+  misplace: '🔎',
+  auditory: '👂',
+  missionary: '✝️',
+  cosmopolitan: '🌐',
+  embed: '📌',
+  erosion: '🏜️',
+  feat: '🏅',
+  utensil: '🍴',
+  intrude: '🚷',
+  grumble: '😒',
+  landfill: '🗑️',
+  scrutiny: '🔍',
+  reckless: '🏍️',
+  synthetic: '🧪',
+  outset: '🏁',
+  peril: '☠️',
+  pitfall: '🕳️',
+  uncover: '🔦',
+  limb: '🦵',
+  prudent: '🦉',
+  solidify: '🧊',
+  grudge: '😠',
+  transcend: '🪜',
+  tangle: '🪢',
+  subsidy: '💸',
+  pollination: '🐝',
+  prosper: '📈',
+  veterinarian: '🐶',
+  cumulative: '➕',
+  fluctuation: '📉',
+};
+
 const YEONGILMAN = [
   { w: 'revise', pos: 'v.', m: '수정, 개정', e: 're(다시) + videre(보다) → 다시 보고 고치다' },
   { w: 'indifferent', pos: 'adj.', m: '무관심한', note: '별로 다르지않네~', e: 'in(아닌) + different(다른) → 차이를 두지 않는 → 신경 안 쓰는' },
@@ -1247,7 +1707,7 @@ const STAR = '<svg viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 
 
 // settings + stars (per-viewer, browser only)
 const KEY = 'sori-vocab-v1';
-const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '', deck: 'all', part: 0, sleep: 0 };
+const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '', deck: 'all', part: 0, sleep: 0, viz: true };
 let stars = new Set();
 let WORDS = [];   // 지금 고른 단어장·파트의 단어
 try {
@@ -1259,7 +1719,7 @@ function save() { try { localStorage.setItem(KEY, JSON.stringify({ S, stars: [..
 
 const els = {
   card: $('card'), pos: $('pos'), count: $('count'), word: $('word'), mean: $('mean'), note: $('note'), ety: $('ety'),
-  bar: $('bar'), cardStar: $('cardStar'), list: $('list'), play: $('play'),
+  bar: $('bar'), cardStar: $('cardStar'), list: $('list'), play: $('play'), wicon: $('wicon'),
 };
 
 // deck = order of word indices for this round; pos = place in deck
@@ -1281,7 +1741,7 @@ let rows = [], rowStars = [];
 function renderList() {
   els.list.innerHTML = WORDS.map((w, i) =>
     `<li><button class="row" type="button" data-i="${i}"><span class="num">${pad(i + 1)}</span>` +
-    `<span class="rw">${w.w}<span class="rpos">${w.pos}</span></span><span class="rm">${w.m}</span>` +
+    `<span class="rw">${iconOf(w) ? `<span class="ri">${iconOf(w)}</span>` : ''}${w.w}<span class="rpos">${w.pos}</span></span><span class="rm">${w.m}</span>` +
     `<span class="re"><b>어원</b>${w.e}</span></button>` +
     `<button class="icon-btn star" type="button" data-star="${i}" aria-pressed="false" aria-label="${w.w} 별표">${STAR}</button></li>`
   ).join('');
@@ -1289,6 +1749,50 @@ function renderList() {
   rowStars = rows.map(li => li.querySelector('.star'));
   lastShown = -1;
   els.list.scrollTop = 0;
+}
+
+// 어원 도해: 'com(함께) + modus(척도) → 쓰기에 알맞은 것 → 상품' 같은 문자열을 블록·화살표 그림으로
+const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const iconOf = w => ICONS[w.w.toLowerCase()] || '';
+const LANG = /^((?:고대 북부 |고대 |중세 )?(?:영어|프랑스어|노르드어|네덜란드어|독일어|라틴어|그리스어|이탈리아어|아랍어|스칸디나비아어)|저지 독일어)\s+(.+)$/;
+function splitTop(str) {
+  const toks = [], ops = []; let depth = 0, cur = '';
+  for (let i = 0; i < str.length; i++) {
+    const c = str[i];
+    if (c === '(') depth++; else if (c === ')') depth--;
+    if (!depth && (str.startsWith(' + ', i) || str.startsWith(' / ', i))) { toks.push(cur); ops.push(str[i + 1]); cur = ''; i += 2; continue; }
+    cur += c;
+  }
+  toks.push(cur);
+  return { toks, ops };
+}
+// 첫 여는 괄호가 문자열 맨 끝에서 닫힐 때만 '말(뜻)' 한 덩어리로 본다 (예: 'niche(벽감), nicher(둥지)'는 제외)
+function closesAtEnd(t) {
+  let d = 0;
+  for (let i = 0; i < t.length; i++) {
+    if (t[i] === '(') d++;
+    else if (t[i] === ')') { d--; if (d === 0) return i === t.length - 1; }
+  }
+  return false;
+}
+function etyBlock(t) {
+  t = t.trim();
+  const m = t.match(/^([^()]+?)\s*\(([\s\S]*)\)$/);
+  if (m && !m[1].includes(',') && closesAtEnd(t)) {
+    let label = m[1].trim(), tag = '';
+    const l = label.match(LANG);
+    if (l) { tag = l[1]; label = l[2]; }
+    return `<span class="eb">${tag ? `<small>${esc(tag)}</small>` : ''}<b>${esc(label)}</b><i>${esc(m[2])}</i></span>`;
+  }
+  if (/^[A-Za-z-]+$/.test(t)) return `<span class="eb aff"><b>${esc(t)}</b></span>`;
+  return `<span class="eb txt"><i>${esc(t)}</i></span>`;
+}
+function etyDiagram(w) {
+  const segs = w.e.split(' → ');
+  const { toks, ops } = splitTop(segs[0]);
+  let h = toks.map((t, i) => etyBlock(t) + (i < ops.length ? `<span class="eop">${ops[i]}</span>` : '')).join('');
+  segs.slice(1).forEach((t, i, a) => { h += `<span class="ea">→</span><span class="es${i === a.length - 1 ? ' last' : ''}">${esc(t.trim())}</span>`; });
+  return `<div class="emap">${h}</div>`;
 }
 
 let lastShown = -1;
@@ -1302,13 +1806,17 @@ function render(revealed) {
   els.note.textContent = w.note || '';
   els.note.hidden = !w.note;
   els.note.classList.toggle('ghost', hidden);
-  els.ety.textContent = w.e;
+  els.ety.innerHTML = S.viz ? etyDiagram(w) : esc(w.e);
+  els.ety.setAttribute('aria-label', w.e);
+  els.wicon.textContent = iconOf(w);
   els.ety.parentElement.classList.toggle('ghost', hidden);
+  els.wicon.classList.toggle('ghost', hidden || (S.hideMean && peek !== i));
   els.word.classList.toggle('masked', hidden && S.order === 'ko-en');
   const meanOff = S.hideMean && peek !== i;
   els.mean.classList.toggle('masked', (hidden && S.order === 'en-ko') || meanOff);
   els.mean.parentElement.classList.toggle('peekable', S.hideMean);
   if (meanOff) { els.note.classList.add('ghost'); els.ety.parentElement.classList.add('ghost'); }
+  document.body.classList.toggle('no-viz', !S.viz);
   $('hideMean').setAttribute('aria-pressed', S.hideMean);
   document.body.classList.toggle('hide-mean', S.hideMean);
   els.cardStar.setAttribute('aria-pressed', stars.has(w.k));
@@ -1557,6 +2065,7 @@ function syncControls() {
   $('opt-shuffle').checked = S.shuffle;
   $('shuffle').setAttribute('aria-pressed', S.shuffle);
   $('opt-star').checked = S.starOnly;
+  $('opt-viz').checked = S.viz;
 }
 document.querySelectorAll('.seg input').forEach(r => r.addEventListener('change', () => {
   S[r.name] = r.name === 'order' ? r.value : Number(r.value);
@@ -1574,6 +2083,7 @@ function setShuffle(on) {
 }
 $('opt-shuffle').addEventListener('change', e => setShuffle(e.target.checked));
 $('shuffle').addEventListener('click', () => setShuffle(!S.shuffle));
+$('opt-viz').addEventListener('change', e => { S.viz = e.target.checked; save(); render(!playing); });
 $('opt-star').addEventListener('change', e => { S.starOnly = e.target.checked; save(); buildDeck(deck[pos]); restartCurrent(); });
 enSel.addEventListener('change', () => { S.enVoice = enSel.value; save(); });
 koSel.addEventListener('change', () => { S.koVoice = koSel.value; save(); });
