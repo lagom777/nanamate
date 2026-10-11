@@ -1,0 +1,24 @@
+<!doctype html><meta charset="utf-8"><title>viz review</title>
+<body style="margin:0;background:#E6EBF2;font-family:sans-serif">
+<div id="g" style="display:grid;grid-template-columns:repeat(3,330px);gap:10px;padding:10px;width:1010px"></div>
+<script>
+// 사용: _review.html?words=a,b,c&step=final|0|1|2…   (viz/<단어>.svg 를 불러 그 단계의 모습으로 고정해 보여 준다. 소스는 scripts/viz/review.html)
+(async () => {
+  const q = new URLSearchParams(location.search);
+  const html = await (await fetch('index.html', { cache: 'reload' })).text();
+  const st = document.createElement('style'); st.textContent = html.match(/<style>([\s\S]*?)<\/style>/)[1]; document.head.append(st);
+  const words = (q.get('words') || '').split(',').filter(Boolean);
+  const step = q.get('step') || 'final';
+  const g = document.getElementById('g');
+  for (const w of words) {
+    const t = await (await fetch(`viz/${w}.svg`, { cache: 'reload' })).text();
+    const n = Number((t.match(/data-n="(\d+)"/) || [])[1]) || 3;
+    const k = step === 'final' ? n : Number(step);
+    const d = document.createElement('div');
+    d.innerHTML = `<div class="vz pic" style="--vz:#888;border-radius:10px"><div class="vz-scene vz-reset" style="margin:0">${t}</div></div><div style="font:600 13px sans-serif;padding:4px 2px">${w} <span style="font-weight:400;color:#556">· n=${n} · t=${(t.match(/data-t="([^"]*)"/)||[])[1]}</span></div>`;
+    g.append(d);
+    d.querySelectorAll('[data-s]').forEach(el => { const s = +el.dataset.s, e = el.dataset.e ? +el.dataset.e : n; el.classList.toggle('in', k >= s && k <= e); });
+  }
+  window.ready = true;
+})();
+</script>

@@ -61,7 +61,7 @@ ${pill(346, iFlake, 0.3)}${next(404, 0.7)}${pill(420, iPack, 0.9)}${next(478, 1.
 <g class="vs" data-s="1" stroke="#5aa9dd" stroke-width="1.4" stroke-linecap="round" fill="none">
 ${flake(126, 14, 1.1, 0)}${flake(152, 30, 1, -1.1)}${flake(232, 16, 0.9, -2)}${flake(262, 36, 1.1, -0.6)}${flake(92, 26, 0.9, -1.6)}</g>
 </g></svg>`;
-    return { pic: true, n: 4, color: "#2b8cc4", t: 3.8, scene: svg };
+    return { pic: true, n: 4, color: "#2b8cc4", t: 2.1, scene: svg };
   })();
 
   /* ───────── pollination ───────── */
@@ -321,7 +321,7 @@ ${badge(1, 40, 70)}${badge(2, 330, 74)}${badge(3, 520, 166)}
 ${beads}
 <g class="vs" data-s="3" data-e="3" fill="#6fb4dc"><circle class="a-drip" style="animation-delay:0s" cx="402" cy="262" r="2.6"/><circle class="a-drip" style="animation-delay:-.8s" cx="488" cy="262" r="2.6"/></g>
 </g></svg>`;
-    return { pic: true, n: 3, color: "#3b82c4", t: 3.6, scene: svg };
+    return { pic: true, n: 3, color: "#3b82c4", t: 2.0, scene: svg };
   })();
 
   /* ───────── friction ───────── */
@@ -348,7 +348,7 @@ ${beads}
 <g class="vs wipe" data-s="2" style="--d:1.2s" fill="#2563eb"><path d="M288 173H386" stroke="#2563eb" stroke-width="3" fill="none"/><path d="M382 165L396 173L382 181Z"/></g>
 <g class="vs wipe" data-s="3" style="--d:1.2s" fill="#dc2626"><path d="M172 173H84" stroke="#dc2626" stroke-width="3" fill="none"/><path d="M88 165L74 173L88 181Z"/></g>
 </g></svg>`;
-    return { pic: true, n: 3, color: "#c2410c", t: 3.6, scene: svg };
+    return { pic: true, n: 3, color: "#c2410c", t: 2.0, scene: svg };
   })();
 
   /* ───────── erosion ───────── */
@@ -382,7 +382,7 @@ ${rock(224, 176, 1, 0)}${rock(240, 181, 0.8, 0.25)}${rock(213, 185, 0.7, 0.5)}
 <g class="vs" data-s="3" style="--dl:.6s"><polygon points="150,92 210,92 210,166 150,182" fill="none" stroke="#7a5a36" stroke-width="2" stroke-dasharray="6 5"/></g>
 <g class="vs wipe" data-s="3" style="--dl:1s;--d:.9s"><path d="M202 128H168" stroke="#dc2626" stroke-width="3" fill="none"/><path d="M172 121L158 128L172 135Z" fill="#dc2626"/></g>
 </g></svg>`;
-    return { pic: true, n: 3, color: "#8a6842", t: 3.8, scene: svg };
+    return { pic: true, n: 3, color: "#8a6842", t: 2.1, scene: svg };
   })();
 
   /* ───────── refraction ───────── */
@@ -410,7 +410,7 @@ ${rock(224, 176, 1, 0)}${rock(240, 181, 0.8, 0.25)}${rock(213, 185, 0.7, 0.5)}
 <g class="vs pop" data-s="3" style="--dl:1.7s"><ellipse cx="70" cy="136" rx="26" ry="15" fill="#fff" stroke="#374151" stroke-width="2.4"/><circle cx="76" cy="136" r="8.5" fill="#2563eb"/><circle cx="76" cy="136" r="3.6" fill="#111827"/><circle cx="79" cy="133" r="1.6" fill="#fff"/></g>
 </g>
 </g></svg>`;
-    return { pic: true, n: 3, color: "#f59e0b", t: 3.6, scene: svg };
+    return { pic: true, n: 3, color: "#f59e0b", t: 2.0, scene: svg };
   })();
 
   /* ───────── dissolve ───────── */
@@ -439,7 +439,7 @@ ${near}${spread}
 <g class="vs" data-s="1" data-e="1" style="--dl:.9s"><ellipse class="a-pulse" cx="280" cy="112" rx="14" ry="4" fill="none" stroke="#fff" stroke-width="2.4"/></g>
 <path d="${glass}" fill="#dff1fb" fill-opacity=".2" stroke="#6fa8c9" stroke-width="2.4" stroke-linejoin="round"/>
 </g></svg>`;
-    return { pic: true, n: 3, color: "#38a4d8", t: 3.6, scene: svg };
+    return { pic: true, n: 3, color: "#38a4d8", t: 2.0, scene: svg };
   })();
 
   /* ───────── inflate ───────── */
@@ -461,7 +461,7 @@ ${near}${spread}
 <ellipse cx="332" cy="180" rx="106" ry="86" fill="url(#in-ball)"/><ellipse cx="292" cy="136" rx="28" ry="14" transform="rotate(-28 292 136)" fill="#fff" fill-opacity=".45"/></g></g>
 <polygon points="228,180 212,170 212,190" fill="#be123c"/>
 </g></svg>`;
-    return { pic: true, n: 3, color: "#e11d48", t: 3.6, scene: svg };
+    return { pic: true, n: 3, color: "#e11d48", t: 2.0, scene: svg };
   })();
 
   /* ───────── decay ───────── */
@@ -491,7 +491,7 @@ ${near}${spread}
 ${fly(206, 112, 1.2)}${fly(364, 132, 1.5)}
 <g transform="translate(468 70)"><g class="vs pop" data-s="2"><g class="a-flip"><path d="M-14-18H14L3 0L14 18H-14L-3 0Z" fill="#fff4e0" stroke="#b45309" stroke-width="2" stroke-linejoin="round"/><path d="M-8-13H8L3-4H-3ZM-4 9H4L8 14H-8Z" fill="#b45309"/></g></g></g>
 </g></svg>`;
-    return { pic: true, n: 3, color: "#b45309", t: 3.6, scene: svg };
+    return { pic: true, n: 3, color: "#b45309", t: 2.0, scene: svg };
   })();
 
   /* ───────── collide ───────── */
@@ -517,7 +517,7 @@ ${ball(292, -122, -50, "co2-a")}${ball(268, 122, 50, "co2-b")}
 <g class="vs" data-s="2" data-e="2" style="--dl:.9s"><ellipse class="a-pulse" cx="280" cy="162" rx="38" ry="38" fill="none" stroke="#f59e0b" stroke-width="2.6"/></g>
 <g class="vs" data-s="3"><g stroke-width="4" stroke-linecap="round" fill="none"><path d="M214 100H146" stroke="#e11d48"/><path d="M346 100H414" stroke="#2563eb"/></g><path d="M148 93L132 100L148 107Z" fill="#e11d48"/><path d="M412 93L428 100L412 107Z" fill="#2563eb"/></g>
 </g></svg>`;
-    return { pic: true, n: 3, color: "#2563eb", t: 3.2, scene: svg };
+    return { pic: true, n: 3, color: "#2563eb", t: 1.8, scene: svg };
   })();
 
   const VIZ = (window.VIZ = { glacier, pollination, vessel, chronic, sediment, condense, friction, erosion, refraction, dissolve, inflate, decay, collide });
@@ -529,13 +529,13 @@ ${ball(292, -122, -50, "co2-a")}${ball(268, 122, 50, "co2-b")}
     const v = VIZ[word.toLowerCase()];
     if (!v) return null;
     if (v.pic) {
-      return `<div class="vz pic" data-state="idle" style="--vz:${v.color};--t:${v.t}s">
+      return `<div class="vz pic" data-state="idle" style="--vz:${v.color};--t:${v.t}s;--k:${Math.max(0.35, v.t / 4)}">
 <div class="vz-scene">${v.scene}</div>
 <div class="vz-ctl"><button class="vz-play" type="button" aria-label="해설 재생">${ICON}</button>
 <div class="vz-segs">${Array.from({ length: v.n }, (_, i) => `<button class="vz-seg" type="button" data-k="${i + 1}" aria-label="${i + 1}단계 보기"><b><i></i></b></button>`).join("")}</div></div></div>`;
     }
     const n = v.steps.length;
-    return `<div class="vz" data-state="idle" style="--vz:${v.color};--t:${v.t}s">
+    return `<div class="vz" data-state="idle" style="--vz:${v.color};--t:${v.t}s;--k:${Math.max(0.35, v.t / 4)}">
 <div class="vz-head"><span class="vz-tag">${esc(v.tag)}</span>
 <div class="vz-word"><b>${esc(word)}</b><i>${esc(v.ipa)}</i><span>${esc(v.pos)}</span></div>
 <div class="vz-kr">${esc(v.kr)}</div><p class="vz-lead">${esc(v.lead)}</p></div>
