@@ -165,13 +165,13 @@ button { font: inherit; color: inherit; }
 .vz.pic .vz-ctl { padding-bottom: 16px; }
 /* 해설 재생기 */
 .vz-ctl { display: flex; align-items: center; gap: 12px; padding: 12px 18px 0; }
-.vz-play { flex: none; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; background: var(--vz); color: #fff; cursor: pointer; }
-.vz-play svg { display: none; width: 16px; height: 16px; fill: currentColor; }
+.vz-play { flex: none; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; background: var(--vz); color: #fff; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.vz-play svg { display: none; width: 18px; height: 18px; fill: currentColor; }
 .vz-play .ic-play { display: block; }
 .vz[data-state="run"] .ic-play, .vz[data-state="end"] .ic-play { display: none; }
 .vz[data-state="run"] .ic-pause, .vz[data-state="end"] .ic-again { display: block; }
 .vz-segs { flex: 1; display: flex; gap: 6px; }
-.vz-seg { flex: 1; height: 24px; padding: 0; border: 0; background: none; cursor: pointer; display: flex; align-items: center; }
+.vz-seg { flex: 1; height: 36px; touch-action: manipulation; padding: 0; border: 0; background: none; cursor: pointer; display: flex; align-items: center; }
 .vz-seg b { display: block; width: 100%; height: 4px; border-radius: 2px; overflow: hidden; background: color-mix(in srgb, var(--vz) 16%, var(--line)); }
 .vz-seg i { display: block; width: 0; height: 100%; background: var(--vz); }
 .vz-seg.done i { width: 100%; }
@@ -222,10 +222,6 @@ button { font: inherit; color: inherit; }
 }
 .rv { margin-left: 6px; padding: 0 6px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 10.5px; font-weight: 600; vertical-align: 1px; }
 .no-viz .rv { display: none; }
-.ri { margin-right: 4px; font-size: 15px; }
-.no-viz .ri { display: none; }
-.hide-mean .ri { visibility: hidden; }
-.hide-mean .row:hover .ri { visibility: visible; }
 .ety-lbl { font-family: var(--mono); font-size: 11px; color: var(--red-ink); margin-right: 8px; letter-spacing: .04em; }
 .word span, .mean span { transition: color .2s; }
 .speaking { color: var(--accent) !important; }
@@ -2064,7 +2060,7 @@ let rows = [], rowStars = [];
 function renderList() {
   els.list.innerHTML = WORDS.map((w, i) =>
     `<li><button class="row" type="button" data-i="${i}"><span class="num">${pad(i + 1)}</span>` +
-    `<span class="rw">${iconOf(w) ? `<span class="ri">${iconOf(w)}</span>` : ''}${w.w}<span class="rpos">${w.pos}</span>${hasViz(w) ? '<span class="rv">해설</span>' : ''}${hasClip(w) ? '<span class="rv">영상</span>' : ''}</span><span class="rm">${w.m}</span>` +
+    `<span class="rw">${w.w}<span class="rpos">${w.pos}</span>${hasViz(w) ? '<span class="rv">해설</span>' : ''}${hasClip(w) ? '<span class="rv">영상</span>' : ''}</span><span class="rm">${w.m}</span>` +
     `<span class="re"><b>어원</b>${w.e}</span></button>` +
     `<button class="icon-btn star" type="button" data-star="${i}" aria-pressed="false" aria-label="${w.w} 별표">${STAR}</button></li>`
   ).join('');
@@ -2168,8 +2164,12 @@ function render(revealed) {
 }
 function scrollRow(li) {
   const box = els.list;
+  if (playing) return;   // 재생 중에는 목록을 따라가지 않는다(단어마다 목록이 움직이면 어지럽다)
   if (box.scrollHeight <= box.clientHeight + 1) return;
-  box.scrollTo({ top: li.offsetTop - box.clientHeight / 2 + li.offsetHeight / 2, behavior: reduceMotion ? 'auto' : 'smooth' });
+  const top = li.offsetTop, bottom = top + li.offsetHeight;
+  if (top >= box.scrollTop && bottom <= box.scrollTop + box.clientHeight) return;   // 이미 보이면 가만히 둔다
+  box.scrollTop = top - box.clientHeight / 2 + li.offsetHeight / 2;                  // 슝 가는 애니메이션 없이 바로
+
 }
 function syncStars() {
   rowStars.forEach((b, i) => b.setAttribute('aria-pressed', stars.has(WORDS[i].k)));
@@ -2400,10 +2400,13 @@ async function speakWord(id) {
   render(true);
   await (S.order === 'en-ko' ? ko() : en());
 }
+const vzPaused = () => { const r = vizEl.firstElementChild; return !vizEl.hidden && !!r && r.dataset.state === 'pause'; };
 async function loop(id) {
   while (id === run) {
     await speakWord(id);
     await sleep(1200);
+    if (id !== run) return;
+    while (id === run && vzPaused()) await sleep(250);   // 해설을 일시정지해 두면 다음 단어로 넘어가지 않는다
     if (id !== run) return;
     if (sleepAt && Date.now() >= sleepAt) { endSleep(); return; }
     if (pos >= deck.length - 1) buildDeck(); else pos++;
