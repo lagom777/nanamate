@@ -1,46 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" data-n="3" data-t="1" data-c="#2563eb" viewBox="0 0 560 300" role="img" aria-label="식탁 위 컵이 쓰러지며 우유가 쏟아져 웅덩이로 퍼지는 과정">
+<svg xmlns="http://www.w3.org/2000/svg" data-n="3" data-t="1" data-c="#2563eb" viewBox="0 0 560 300" role="img" aria-label="식탁 위 컵이 쓰러져 우유가 쏟아지는 모습">
 <defs>
-<linearGradient id="spill_top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#d97706"/></linearGradient>
+<linearGradient id="spill_wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9b8"/><stop offset="1" stop-color="#ffd7a0"/></linearGradient>
+<linearGradient id="spill_wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d79a5b"/><stop offset="1" stop-color="#b5733a"/></linearGradient>
+<linearGradient id="spill_front" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8a5226"/><stop offset="1" stop-color="#6a3d1c"/></linearGradient>
+<linearGradient id="spill_milk" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#eef1f7"/></linearGradient>
+<linearGradient id="spill_glass" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e3f2ff" stop-opacity=".9"/><stop offset=".5" stop-color="#ffffff" stop-opacity=".35"/><stop offset="1" stop-color="#cfe6fa" stop-opacity=".85"/></linearGradient>
 <clipPath id="spill_clip"><rect width="560" height="300" rx="14"/></clipPath>
+<clipPath id="spill_cup"><path d="M388 196H448L454 90H382Z"/></clipPath>
 </defs>
 <g clip-path="url(#spill_clip)">
-<rect width="560" height="300" fill="#fef9c3"/>
-<rect y="268" width="560" height="32" fill="#fde8c4"/>
-<rect x="60" y="228" width="440" height="40" fill="#92400e"/>
-<rect x="86" y="262" width="16" height="38" rx="2" fill="#7c3a12"/>
-<rect x="458" y="262" width="16" height="38" rx="2" fill="#7c3a12"/>
-<rect x="60" y="210" width="440" height="18" rx="2" fill="url(#spill_top)"/>
-<path d="M68 214H492" stroke="#fde68a" stroke-opacity=".45" stroke-width="2"/>
-<ellipse cx="270" cy="216" rx="40" ry="6" fill="#000" opacity=".12"/>
-<g class="vs pop" data-s="3" style="--d:.5s">
-<ellipse cx="270" cy="219" rx="130" ry="12" fill="#fff"/>
-<ellipse cx="240" cy="217" rx="72" ry="5" fill="#f0f9ff"/>
-</g>
-<g class="vs" data-s="3" fill="#fff">
-<circle class="a-drip" style="animation-delay:0s" cx="142" cy="238" r="3.4"/>
-<circle class="a-drip" style="animation-delay:-.55s" cx="156" cy="242" r="2.8"/>
-<circle class="a-drip" style="animation-delay:-1.1s" cx="170" cy="236" r="3"/>
-</g>
-<g fill="#fff" stroke="#bfdbfe" stroke-width="1">
-<circle class="vs pop" data-s="3" style="--dl:0s;--d:.35s" cx="128" cy="288" r="4"/>
-<circle class="vs pop" data-s="3" style="--dl:.18s;--d:.35s" cx="150" cy="294" r="3.2"/>
-<circle class="vs pop" data-s="3" style="--dl:.32s;--d:.35s" cx="168" cy="286" r="3.6"/>
-</g>
-<g class="vs" data-s="1">
-<g class="mv" data-s="2" style="--from:rotate(80deg);transform-origin:305px 210px;--d:1.2s;--ease:cubic-bezier(.45,0,.75,1)">
-<g transform="rotate(-80 305 210)">
-<path d="M240 112H300L305 210H235Z" fill="#dbeafe" fill-opacity=".45"/>
-<path d="M238 132H302L304 208H236Z" fill="#fff"/>
-<ellipse cx="270" cy="132" rx="32" ry="6" fill="#f8fafc"/>
-<path d="M240 112H300L305 210H235Z" fill="none" stroke="#7dd3fc" stroke-width="3" stroke-linejoin="round"/>
-<ellipse cx="270" cy="112" rx="30" ry="7" fill="#f0f9ff" fill-opacity=".65" stroke="#7dd3fc" stroke-width="3"/>
-<path d="M252 128L250 188" stroke="#fff" stroke-opacity=".8" stroke-width="3" stroke-linecap="round" fill="none"/>
-</g>
-</g>
-</g>
-<path class="vs wipe-d" data-s="2" style="--d:1s;--dl:.3s" d="M208 196C168 202 110 208 78 216L150 232C190 226 214 214 196 204C200 198 204 196 208 196Z" fill="#fff"/>
-<g class="vs pop" data-s="1" data-e="1" style="--d:.35s" fill="none" stroke="#64748b" stroke-width="3" stroke-linecap="round">
-<path d="M312 98L330 86"/><path d="M318 114L338 108"/><path d="M306 106L322 96"/>
-</g>
-</g>
-</svg>
+<rect width="560" height="300" fill="url(#spill_wall)"/>
+<rect x="0" y="262" width="560" height="38" fill="#e9c9a0"/><path d="M0 262H560" stroke="#d1a877" stroke-width="2"/>
+<g><rect x="132" y="226" width="14" height="40" fill="#7b4a22"/><rect x="520" y="226" width="14" height="40" fill="#7b4a22"/><rect x="112" y="210" width="448" height="20" fill="url(#spill_front)"/><rect x="112" y="196" width="448" height="16" rx="3" fill="url(#spill_wood)"/><path d="M130 203H540M150 208H520" stroke="#9c5f2c" stroke-opacity=".5" stroke-width="1.2"/></g>
+<g class="vs" data-s="1" data-e="1"><g clip-path="url(#spill_cup)"><path d="M380 128H460V200H380Z" fill="url(#spill_milk)"/><path d="M380 128q10 -5 20 0t20 0t20 0t20 0" fill="none" stroke="#dfe6f2" stroke-width="2.4"/></g></g>
+<ellipse cx="418" cy="198" rx="44" ry="5" fill="#000" fill-opacity=".16"/>
+<g class="mv" data-s="2" style="--from:rotate(82deg);--d:1.3s;--ease:cubic-bezier(.5,0,.7,.7);transform-origin:388px 196px">
+<g transform="translate(388 196) rotate(-82)">
+<path d="M0 0H60L66 -106H-6Z" fill="url(#spill_glass)" stroke="#8fb9de" stroke-width="2.4" stroke-linejoin="round"/>
+<path d="M6 -6L2 -98" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-opacity=".7"/>
+<path d="M2 -100H58" stroke="#fff" stroke-opacity=".8" stroke-width="2.4"/>
+<ellipse cx="30" cy="-104" rx="33" ry="4.5" fill="#fff" fill-opacity=".55" stroke="#8fb9de" stroke-width="1.6"/>
+</g></g>
+<g class="vs" data-s="2" style="--dl:.45s"><path d="M294 152C284 156 280 172 278 196" stroke="#e6ebf5" stroke-width="13" stroke-linecap="round" fill="none"/><path d="M294 152C284 156 280 172 278 196" stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none"/></g>
+<g class="vs pop" data-s="2" style="--dl:.3s"><g stroke="#f59e0b" stroke-width="3.4" stroke-linecap="round"><path d="M448 126l14-8M452 142l16-2M444 112l8-12"/></g></g>
+<g class="vs pop" data-s="3" style="--dl:.2s"><path d="M336 197C300 192 230 191 180 197C156 200 132 200 116 198V205C150 212 300 212 336 205Z" fill="url(#spill_milk)" stroke="#e1e8f3" stroke-width="1.4"/><ellipse cx="250" cy="198" rx="70" ry="2.8" fill="#fff" fill-opacity=".85"/></g>
+<g class="vs" data-s="3" style="--dl:.5s"><path d="M118 201C108 203 108 212 112 222" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none"/><g fill="#fff"><circle class="a-drip" style="animation-delay:0s" cx="112" cy="236" r="4"/><circle class="a-drip" style="animation-delay:-.8s" cx="112" cy="250" r="3.4"/><circle class="a-drip" style="animation-delay:-1.4s" cx="114" cy="228" r="3"/></g></g>
+<g class="vs pop" data-s="3" style="--dl:.8s"><ellipse cx="112" cy="272" rx="26" ry="5" fill="#fff" stroke="#e1e8f3" stroke-width="1.2"/><circle cx="82" cy="276" r="3" fill="#fff"/><circle cx="144" cy="278" r="2.4" fill="#fff"/></g>
+</g></svg>
