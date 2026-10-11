@@ -121,7 +121,7 @@ export function chapterPage(spec, c, i) {
     ? `<div class="stat-row"><div class="stat"><b>${st.avg}</b><span>회당 문항 수</span></div><div class="stat"><b>${st.avgPts}점</b><span>회당 배점</span></div><div class="stat"><b>${st.min}~${st.max}</b><span>회차별 범위</span></div><div class="stat"><b>${st.total}</b><span>최근 ${st.exams}회 누적</span></div></div>
 <p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 ${st.exams}회(2018~2021학년도는 구 교육과정)(${st.exams * (spec.qn || 20)}문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>`
     : "";
-  const practice = c.part
+  const practice = spec.practice === false ? "" : c.part
     ? `<h2>이 파트 기출 풀어보기</h2>
 <p>${spec.label} 전 시험지에서 이 파트로 분류된 <strong>${st.total}문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
 <p><a class="cta" href="../practice.html#part:${c.part}">📝 ${c.title} 모아 풀기 →</a></p>`
@@ -132,7 +132,7 @@ export function chapterPage(spec, c, i) {
 <p>${c.motion.map(([n, label]) => `<a class="cta sm" href="../motion.html#s${n}">🎬 ${label}</a>`).join(" ")}</p>`
     : "";
   const sumCta = spec.summary ? `<p><a class="cta sm" href="../summary.html#p${i + 1}">📌 이 파트 한눈에 요약 →</a></p>` : "";
-  const nav = `<div class="pager">${prev ? `<a href="${prev.file}">← ${prev.title}</a>` : `<a href="../index.html">← 표지</a>`}${next ? `<a href="${next.file}">${next.title} →</a>` : `<a href="../practice.html">수능 풀어보기 →</a>`}</div>`;
+  const nav = `<div class="pager">${prev ? `<a href="${prev.file}">← ${prev.title}</a>` : `<a href="../index.html">← 표지</a>`}${next ? `<a href="${next.file}">${next.title} →</a>` : spec.practice === false ? "" : `<a href="../practice.html">수능 풀어보기 →</a>`}</div>`;
   return `${head(`${c.title} — ${spec.label}`, 1, spec)}
 <body><div class="layout">
 ${aside(spec, c.file, 1)}

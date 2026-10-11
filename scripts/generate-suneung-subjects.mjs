@@ -9,9 +9,10 @@ import { spec as korean } from "./suneung/korean.mjs";
 import { spec as english } from "./suneung/english.mjs";
 import { spec as chem } from "./suneung/chem1.mjs";
 import { spec as earth } from "./suneung/earth1.mjs";
+import { spec as hist } from "./suneung/hist.mjs";
 import { writeScience2 } from "./suneung/science2.mjs";
 
 const only = process.argv.slice(2);
 const want = (spec) => !only.length || only.some((k) => spec.folder.toLowerCase().includes(k.toLowerCase()));
-for (const s of [phys, bio, math, korean, english, chem, earth]) if (want(s)) writeAll(s);
+for (const s of [phys, bio, math, korean, english, chem, earth, hist]) if (want(s)) writeAll(s);
 if (!only.length || only.some((k) => "science2".includes(k.toLowerCase()))) writeScience2();

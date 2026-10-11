@@ -23,6 +23,12 @@ const TRACKS = [
     blurb: "듣기·독해 유형 7파트, 기출 채점과 듣기 대본.",
   },
   {
+    href: "/learn/aboutSuneungHistory/index.html",
+    tag: "필수",
+    title: "수능 한국사",
+    blurb: "시대별 9파트 정리, 핵심 연표, 절대평가 전략.",
+  },
+  {
     href: "/learn/aboutSuneungPhysics1/index.html",
     tag: "탐구",
     title: "수능 물리학Ⅰ",
