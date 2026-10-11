@@ -23,7 +23,7 @@ function check(file) {
   if (!/xmlns="http:\/\/www\.w3\.org\/2000\/svg"/.test(root.attrs)) errs.push('xmlns 누락');
   const n = Number(attr(root.attrs, 'data-n')), t = Number(attr(root.attrs, 'data-t')), c = attr(root.attrs, 'data-c');
   if (!Number.isInteger(n) || n < 2 || n > 5) errs.push('data-n은 2~5의 정수');
-  if (!(t >= 1.5 && t <= 4)) errs.push('data-t는 1.5~4(초)');
+  if (!(t >= 1 && t <= 4)) errs.push("data-t는 1~4(초)");
   if (!/^#[0-9a-fA-F]{6}$/.test(c || '')) errs.push('data-c는 #rrggbb');
   const ids = new Set(), refs = [];
   const stepHas = new Set();
