@@ -160,6 +160,9 @@ h1 span{color:var(--acc);transition:color .4s}
 .desc{color:var(--muted);margin:0}
 .keys{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
 .keys li{position:relative;padding-left:16px;font-size:14px}.keys li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:50%;border:1.5px solid var(--acc)}
+.king{border:1px solid var(--acc);border-radius:14px;padding:12px 14px;background:color-mix(in srgb,var(--acc) 7%,transparent)}
+.king h3{margin:0;font-size:17px;display:flex;gap:8px;align-items:center}.king h3 small{font-family:var(--fm);font-size:11.5px;color:var(--muted);font-weight:400}
+.king ul{margin:8px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px}.king li{font-size:13.5px;position:relative;padding-left:14px}.king li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--acc)}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding-top:10px;border-top:1px dashed var(--line)}
 .legend span{display:flex;align-items:center;gap:6px;font-size:13px}.legend i{width:13px;height:13px;border-radius:3px;display:inline-block}
 .links{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
@@ -169,14 +172,14 @@ h1 span{color:var(--acc);transition:color .4s}
 .btn{width:38px;height:38px;flex:none;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--text);cursor:pointer;font-size:15px}
 .btn:hover{border-color:var(--acc)}.btn.main{background:var(--acc);border-color:var(--acc);color:var(--bg)}
 input[type=range]{flex:1;accent-color:var(--acc);height:28px;min-width:0}
-.ticks{display:grid;grid-template-columns:repeat(${snaps.length},minmax(0,1fr));gap:4px}
-.tick{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:2px;padding:7px 6px;border-radius:8px;border:1px solid var(--line);min-width:0;text-align:center;transition:all .25s}
+.ticks{display:flex;gap:4px;overflow-x:auto;padding-bottom:6px;scroll-behavior:smooth;scrollbar-width:thin}
+.tick{all:unset;cursor:pointer;flex:0 0 112px;display:flex;flex-direction:column;gap:2px;padding:7px 6px;border-radius:8px;border:1px solid var(--line);min-width:0;text-align:center;transition:all .25s}
 .tick b{font-family:var(--fm);font-size:11.5px;font-weight:500;color:var(--c)}.tick span{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tick:hover{border-color:var(--c)}.tick[aria-current="true"]{background:color-mix(in srgb,var(--c) 18%,transparent);border-color:var(--c)}
 .tick:focus-visible,.btn:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .note{color:var(--dim);font-size:12px;font-family:var(--fm)}
 @media (max-width:900px){.board{grid-template-columns:1fr}.info{border-left:0;border-top:1px solid var(--line)}
-  .ticks{grid-template-columns:repeat(${Math.ceil(snaps.length / 2)},minmax(0,1fr))}}
+  .tick{flex-basis:96px}}
 </style>
 </head>
 <body>
@@ -191,6 +194,7 @@ input[type=range]{flex:1;accent-color:var(--acc);height:28px;min-width:0}
       <div class="yr" id="yr"></div>
       <h2 class="ttl" id="ttl"></h2>
       <p class="desc" id="desc"></p>
+      <div class="king" id="king" hidden></div>
       <ul class="keys" id="keys"></ul>
       <div class="legend" id="legend"></div>
       <div class="links" id="links"></div>
@@ -221,10 +225,11 @@ new ResizeObserver(resize).observe(cv);resize();
 function panel(i){if(i===shown)return;shown=i;const s=SN[i],col=CH[s.u].c;
   document.documentElement.style.setProperty('--acc',col);
   $('yr').textContent=s.y;$('ttl').textContent=s.t;$('desc').textContent=s.d;
+  const kg=s.king;$('king').hidden=!kg;if(kg)$('king').innerHTML='<h3><span>'+kg.e+'</span>'+kg.n+'<small>'+kg.r+'</small></h3><ul>'+kg.k.map(k=>'<li>'+k+'</li>').join('')+'</ul>';
   $('keys').innerHTML=s.keys.map(k=>'<li>'+k+'</li>').join('');
   $('legend').innerHTML=s.regs.filter(r=>r.legend!==false).map(r=>'<span><i style="background:'+r.c+'"></i>'+r.n+'</span>').join('');
   $('links').innerHTML='<a href="chapters/'+CH[s.u].file+'">📖 '+CH[s.u].name+' 파트 노트</a><a href="motion/'+CH[s.u].file+'">🎬 '+CH[s.u].name+' 모션</a>';
-  document.querySelectorAll('.tick').forEach((b,j)=>b.setAttribute('aria-current',j===i));
+  document.querySelectorAll('.tick').forEach((b,j)=>{b.setAttribute('aria-current',j===i);if(j===i){const t=$('ticks');t.scrollTo({left:b.offsetLeft-t.clientWidth/2+b.clientWidth/2,behavior:reduce?'auto':'smooth'});}});
   try{history.replaceState(null,'','#'+s.id)}catch(e){}}
 function goTo(i){i=Math.max(0,Math.min(SN.length-1,i));if(reduce){v=i;target=null;}else target=i;hold=0;}
 function setPlay(p){playing=p;$('play').textContent=p?'❚❚':'▶';$('play').setAttribute('aria-label',p?'일시정지':'재생');hold=0;}
