@@ -113,9 +113,6 @@ button { font: inherit; color: inherit; }
 .note { font-family: var(--pen); font-size: 1.5rem; line-height: 1.2; color: var(--pencil); transform: rotate(-1.5deg); }
 .note.ghost, .ety.ghost { visibility: hidden; }
 .ety { margin: 4px 0 0; width: 100%; max-width: 34em; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); }
-.wicon { font-size: 40px; line-height: 1; margin-bottom: -2px; }
-.wicon:empty, .no-viz .wicon { display: none; }
-.wicon.ghost { visibility: hidden; }
 .emap { display: flex; flex-wrap: wrap; align-items: stretch; justify-content: center; gap: 6px 5px; margin-top: 8px; }
 .emap .eb { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-width: 54px; padding: 5px 10px 6px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
 .emap .eb small { font-size: 10px; line-height: 1.2; color: var(--ink-3); }
@@ -336,6 +333,42 @@ select {
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+/* 필터 접기 버튼은 좁은 화면에서만 */
+.pk-toggle { display: none; }
+.pk-toggle i { margin-left: 6px; font-style: normal; font-size: 11px; opacity: .6; }
+.pk-toggle[aria-expanded="true"] i { display: inline-block; transform: rotate(180deg); }
+
+/* 영상(clips.js)과 해설을 같은 칸에 겹쳐 놓아, 영상이 떠도 아래 칸이 밀려 내려가지 않게 한다 */
+#vizSlotStage { display: grid; }
+#vizSlotStage > * { grid-area: 1 / 1; min-width: 0; }
+#vizSlotStage > .clip { contain: size; align-self: stretch; }
+#vizSlotStage > .clip video { width: 100%; height: 100%; aspect-ratio: auto; object-fit: contain; background: transparent; }
+#vizSlotStage:has(> aside:not(.clip)[hidden]) > .clip, #vizSlotStage:not(:has(> aside:not(.clip))) > .clip { contain: none; }
+#vizSlotStage:has(> .clip:not([hidden])) > aside:not(.clip) { visibility: hidden; }
+
+/* 모바일: 카드·해설·재생 버튼이 한 화면에 들어오게 줄인다 */
+@media (max-width: 879px) {
+  .app { padding-block: 8px 40px; gap: 10px; }
+  .top { flex-wrap: nowrap; align-items: center; gap: 10px; }
+  .back { flex: none; flex-basis: auto; }
+  .top h1 { flex: 1; min-width: 0; font-size: 1.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .top > p { display: none; }
+  .pk-toggle { display: inline-flex; align-items: center; flex: none; max-width: 52%; height: 32px; }
+  .pk-toggle span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pickers:not(.open) { display: none; }
+  .stage { gap: 8px; }
+  .card { min-height: 262px; }   /* 어원 줄 수가 달라도 카드 높이가 거의 안 바뀌게 */
+  .card-body { gap: 6px; padding: 8px 16px 14px; }
+  .ety { margin-top: 0; }
+  .emap { margin-top: 4px; }
+  .vz.pic .vz-scene { margin-top: 8px; }
+  .vz.pic .vz-ctl { padding: 6px 14px 8px; gap: 10px; }
+  .vz-play { width: 44px; height: 44px; }
+  .t-btn { width: 46px; height: 46px; }
+  .t-btn.play { width: 60px; height: 60px; }
+  .keys { margin-top: -2px; }
+}
 </style>
 
 </head>
@@ -344,6 +377,7 @@ select {
   <header class="top">
     <a href="../index.html" class="back">↑ 통합 허브</a>
     <h1>나만의 영단어장</h1>
+    <button class="pill pk-toggle" id="pkToggle" type="button" aria-expanded="false" aria-controls="pickers"><span id="pkSummary"></span><i aria-hidden="true">▾</i></button>
     <p><b id="deckName"></b> · <span id="total"></span>개 단어 · 영어 발음을 듣고 뜻을 떠올려 보세요</p>
   </header>
   <section class="pickers" id="pickers" aria-label="단어장 선택">
@@ -368,7 +402,6 @@ select {
         </button>
       </div>
       <div class="card-body" aria-live="polite">
-        <div class="wicon" id="wicon" aria-hidden="true"></div>
         <div class="word"><span id="word"></span></div>
         <div class="mean"><span id="mean"></span></div>
         <div class="note" id="note"></div>
@@ -486,446 +519,6 @@ select {
 <script src="themes.js"></script>
 <script src="clips.js"></script>
 <script>
-const ICONS = {
-  avalanche: '🏔️',
-  suburb: '🏘️',
-  ingredient: '🥕',
-  appliance: '🔌',
-  shrub: '🌿',
-  vendor: '🛍️',
-  litter: '🗑️',
-  pollinate: '🐝',
-  demolition: '🏚️',
-  grin: '😁',
-  glimpse: '👀',
-  farsighted: '🔭',
-  kin: '👪',
-  domesticate: '🐕',
-  devour: '🍖',
-  stir: '🥄',
-  scenic: '🏞️',
-  drain: '🚰',
-  evaporate: '♨️',
-  recipient: '📬',
-  transaction: '💳',
-  inspection: '🔍',
-  solitary: '🧍',
-  weary: '😩',
-  maternity: '🤰',
-  municipal: '🏙️',
-  needy: '🥺',
-  leisurely: '☕',
-  mandatory: '❗',
-  reclaim: '♻️',
-  respiratory: '🫁',
-  renowned: '🌟',
-  solidarity: '✊',
-  tedious: '🥱',
-  stern: '😠',
-  subtract: '➖',
-  suspicious: '🤨',
-  testimony: '⚖️',
-  unpaved: '🛤️',
-  verification: '✅',
-  vie: '🏁',
-  stride: '🚶',
-  ambiguous: '❓',
-  approval: '👍',
-  assess: '📊',
-  conceive: '💡',
-  confine: '🔒',
-  dispose: '🗑️',
-  sneak: '🤫',
-  commodity: '📦',
-  construct: '🏗️',
-  resident: '🏠',
-  awful: '😱',
-  extinct: '🦖',
-  institute: '🏛️',
-  ashamed: '😳',
-  reproduce: '🐣',
-  formal: '🤵',
-  rite: '🕯️',
-  descend: '⬇️',
-  eager: '🤩',
-  thrive: '🌱',
-  scarce: '🏜️',
-  regulate: '🚦',
-  yield: '🌾',
-  cottage: '🏡',
-  prey: '🦌',
-  pupil: '👁️',
-  spice: '🌶️',
-  tempt: '🍰',
-  dine: '🍽️',
-  wreck: '🚢',
-  address: '📮',
-  commute: '🚌',
-  retail: '🛍️',
-  nurture: '🍼',
-  spill: '🥛',
-  tragic: '🎭',
-  arctic: '❄️',
-  dilute: '💧',
-  dim: '🔅',
-  errand: '🏃',
-  pile: '📚',
-  ethnic: '🌍',
-  wholesale: '📦',
-  germ: '🦠',
-  drift: '🌊',
-  confront: '🆚',
-  dynasty: '👑',
-  temper: '😤',
-  raft: '🛶',
-  soak: '🛁',
-  craft: '🧶',
-  cease: '🛑',
-  unify: '🤝',
-  bump: '💥',
-  doom: '⚰️',
-  graze: '🐄',
-  glacier: '🧊',
-  celebrity: '🌟',
-  editorial: '📰',
-  crawl: '🐛',
-  diabetes: '🩸',
-  congestion: '🚦',
-  barter: '🔄',
-  vague: '🌫️',
-  disgrace: '😞',
-  chore: '🧹',
-  fossil: '🦴',
-  pottery: '🏺',
-  polish: '✨',
-  radiant: '☀️',
-  exclaim: '❗',
-  decay: '🦷',
-  wage: '💰',
-  vicious: '🐺',
-  famine: '🌾',
-  string: '🧵',
-  depict: '🖼️',
-  wilderness: '🏞️',
-  flush: '🚽',
-  omit: '✂️',
-  despair: '😭',
-  astonish: '😲',
-  inflate: '🎈',
-  physician: '🩺',
-  passage: '🚪',
-  vessel: '🚢',
-  marble: '🏛️',
-  edible: '🍽️',
-  tablet: '💊',
-  roam: '🚶',
-  bud: '🌱',
-  peasant: '🌾',
-  tenant: '🔑',
-  pavement: '🛣️',
-  sacred: '🙏',
-  revise: '✏️',
-  resent: '😠',
-  suspend: '⏸️',
-  collapse: '🏚️',
-  monologue: '🗣️',
-  prescribe: '💊',
-  masculine: '👨',
-  frown: '🙁',
-  disguise: '🎭',
-  sermon: '⛪',
-  foster: '🍼',
-  reform: '🔧',
-  convention: '🎪',
-  devastate: '🌪️',
-  reap: '🌾',
-  nourish: '🥗',
-  bulletin: '📋',
-  concrete: '🧱',
-  literate: '📖',
-  lease: '🔑',
-  fatal: '☠️',
-  invert: '🙃',
-  startle: '😮',
-  era: '⏳',
-  withdraw: '🏧',
-  mischief: '😈',
-  groom: '🤵',
-  evolve: '🐒',
-  afflict: '🤕',
-  empirical: '🔬',
-  weep: '😢',
-  absurd: '🤪',
-  boast: '😎',
-  incentive: '🎁',
-  wrestle: '🤼',
-  confucian: '📜',
-  draft: '📝',
-  dismay: '😟',
-  molecule: '⚛️',
-  reservoir: '🏞️',
-  tangible: '✋',
-  archaeology: '🗿',
-  breed: '🐕',
-  trim: '✂️',
-  anecdote: '💬',
-  pledge: '🤝',
-  mock: '🤡',
-  disclose: '🔓',
-  grind: '⚙️',
-  damp: '💧',
-  flourish: '🌸',
-  sole: '1️⃣',
-  divine: '😇',
-  revenue: '💵',
-  equator: '🌐',
-  arithmetic: '➕',
-  cognitive: '🧠',
-  hygiene: '🧼',
-  herd: '🐑',
-  subjective: '💭',
-  sewage: '🚽',
-  warrant: '📜',
-  halt: '🛑',
-  ponder: '🤔',
-  burglar: '🦹',
-  stroke: '🧠',
-  cluster: '🍇',
-  plea: '🙏',
-  sour: '🍋',
-  embrace: '🤗',
-  accommodate: '🛏️',
-  cozy: '🛋️',
-  suitor: '💐',
-  pioneer: '🚩',
-  assert: '📢',
-  auditorium: '🏟️',
-  radioactive: '☢️',
-  bruise: '🩹',
-  attorney: '⚖️',
-  sanitation: '🧼',
-  heredity: '🧬',
-  plow: '🚜',
-  ornament: '🎄',
-  breathtaking: '🌄',
-  overturn: '🔃',
-  ripe: '🍎',
-  conflict: '⚔️',
-  vapor: '♨️',
-  tuition: '🎓',
-  inhale: '🌬️',
-  loop: '➰',
-  withstand: '🛡️',
-  collide: '💥',
-  memorial: '🕯️',
-  wander: '🚶',
-  antibiotic: '💊',
-  sprain: '🦶',
-  stool: '🪑',
-  fad: '🕺',
-  gymnastics: '🤸',
-  tariff: '🛃',
-  yeast: '🍞',
-  skyscraper: '🏙️',
-  spade: '⛏️',
-  surplus: '📈',
-  hypothesis: '🔬',
-  reed: '🌾',
-  fatigue: '😴',
-  peel: '🍌',
-  bias: '⚖️',
-  tread: '👣',
-  vomit: '🤮',
-  prophecy: '🔮',
-  correspond: '✉️',
-  cling: '🐨',
-  mutation: '🧬',
-  tyrant: '👑',
-  aid: '🆘',
-  flour: '🌾',
-  garment: '👕',
-  pasture: '🐄',
-  crust: '🍞',
-  plunge: '🏊',
-  nasty: '😒',
-  deed: '📜',
-  canal: '🛶',
-  censorship: '🙊',
-  verbal: '🗣️',
-  liberate: '🕊️',
-  segregation: '🚧',
-  irrigation: '🚿',
-  refuge: '⛺',
-  drowsy: '😪',
-  inspect: '🔍',
-  compress: '🗜️',
-  steep: '⛰️',
-  cemetery: '🪦',
-  feast: '🍗',
-  commemorate: '🎗️',
-  chronic: '⏳',
-  shiver: '🥶',
-  improvise: '🎷',
-  executive: '💼',
-  authentic: '✅',
-  outlaw: '🤠',
-  squeeze: '🍊',
-  nuisance: '😣',
-  sweep: '🧹',
-  tremble: '😨',
-  slaughter: '🔪',
-  blow: '🌬️',
-  ballot: '🗳️',
-  amplify: '📢',
-  steer: '🧭',
-  compost: '♻️',
-  shred: '📄',
-  tribute: '🏆',
-  artery: '❤️',
-  harass: '😡',
-  narrative: '📖',
-  obstruct: '🚧',
-  heatstroke: '🥵',
-  oval: '🥚',
-  vocation: '👷',
-  mandate: '📜',
-  statesman: '🏛️',
-  mortgage: '🏠',
-  mimic: '🦜',
-  unearth: '⛏️',
-  wail: '😭',
-  applicant: '📝',
-  hemisphere: '🌍',
-  sway: '🌴',
-  rebel: '✊',
-  folklore: '🧙',
-  recess: '🔔',
-  mourn: '🖤',
-  latitude: '🧭',
-  maternal: '🤱',
-  insomnia: '🌙',
-  shatter: '🔨',
-  pollute: '🏭',
-  altruism: '🤝',
-  fiber: '🧵',
-  spectator: '👀',
-  medieval: '🏰',
-  snatch: '✋',
-  meadow: '🌼',
-  primate: '🐒',
-  imperial: '👑',
-  populate: '👥',
-  frugal: '🪙',
-  rejoice: '🎉',
-  textile: '🧶',
-  terrain: '⛰️',
-  predator: '🦁',
-  condense: '💧',
-  poise: '🧘',
-  disciple: '🎓',
-  gust: '💨',
-  verdict: '⚖️',
-  stall: '🚫',
-  hail: '🌨️',
-  outburst: '🌋',
-  vanity: '🪞',
-  obesity: '🍔',
-  bribe: '💰',
-  perspiration: '💦',
-  notion: '💡',
-  oversee: '👁️',
-  contagious: '🤒',
-  janitor: '🧹',
-  blush: '☺️',
-  intervene: '✋',
-  nomad: '🐪',
-  cuisine: '🍽️',
-  solvent: '🧪',
-  ascent: '🧗',
-  spur: '🐴',
-  scheme: '🗺️',
-  brisk: '🚶',
-  exile: '🚪',
-  unanimous: '🙌',
-  dissolve: '🧂',
-  constraint: '⛓️',
-  delude: '🎭',
-  dehydrate: '🏜️',
-  metabolism: '🔥',
-  pinch: '🤏',
-  punctual: '⏰',
-  aviate: '✈️',
-  headquarters: '🏢',
-  delegate: '👥',
-  thorn: '🌹',
-  renovate: '🔨',
-  wrench: '🔧',
-  retort: '💬',
-  shudder: '😖',
-  coexist: '🕊️',
-  dispute: '🗯️',
-  stack: '📚',
-  reprove: '☝️',
-  engross: '📖',
-  bulk: '📦',
-  despise: '😤',
-  manuscript: '📜',
-  flee: '🏃',
-  prehistoric: '🦕',
-  predecessor: '⏮️',
-  alienate: '🚷',
-  furnish: '🛋️',
-  fume: '💨',
-  staple: '🍚',
-  eloquent: '🎤',
-  hazardous: '⚠️',
-  detergent: '🧴',
-  bypass: '🛣️',
-  dispense: '💊',
-  monotonous: '😐',
-  landslide: '⛰️',
-  endow: '🎁',
-  frantic: '🏃',
-  moan: '😩',
-  reckon: '🧮',
-  detest: '🤢',
-  defy: '🙅',
-  refraction: '🌈',
-  dusk: '🌇',
-  antagonist: '🥊',
-  creed: '⛪',
-  misplace: '🔎',
-  auditory: '👂',
-  missionary: '✝️',
-  cosmopolitan: '🌐',
-  embed: '📌',
-  erosion: '🏜️',
-  feat: '🏅',
-  utensil: '🍴',
-  intrude: '🚷',
-  grumble: '😒',
-  landfill: '🗑️',
-  scrutiny: '🔍',
-  reckless: '🏍️',
-  synthetic: '🧪',
-  outset: '🏁',
-  peril: '☠️',
-  pitfall: '🕳️',
-  uncover: '🔦',
-  limb: '🦵',
-  prudent: '🦉',
-  solidify: '🧊',
-  grudge: '😠',
-  transcend: '🪜',
-  tangle: '🪢',
-  subsidy: '💸',
-  pollination: '🐝',
-  prosper: '📈',
-  veterinarian: '🐶',
-  cumulative: '➕',
-  fluctuation: '📉',
-};
-
 const YEONGILMAN = [
   { w: 'revise', pos: 'v.', m: '수정, 개정', e: 're(다시) + videre(보다) → 다시 보고 고치다' },
   { w: 'indifferent', pos: 'adj.', m: '무관심한', note: '별로 다르지않네~', e: 'in(아닌) + different(다른) → 차이를 두지 않는 → 신경 안 쓰는' },
@@ -1998,7 +1591,7 @@ function save() { try { localStorage.setItem(KEY, JSON.stringify({ S, stars: [..
 
 const els = {
   card: $('card'), pos: $('pos'), count: $('count'), word: $('word'), mean: $('mean'), note: $('note'), ety: $('ety'),
-  bar: $('bar'), cardStar: $('cardStar'), list: $('list'), play: $('play'), wicon: $('wicon'),
+  bar: $('bar'), cardStar: $('cardStar'), list: $('list'), play: $('play'),
 };
 
 // deck = order of word indices for this round; pos = place in deck
@@ -2084,7 +1677,6 @@ function applyFind() {
 
 // 어원 도해: 'com(함께) + modus(척도) → 쓰기에 알맞은 것 → 상품' 같은 문자열을 블록·화살표 그림으로
 const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const iconOf = w => ICONS[w.w.toLowerCase()] || '';
 const LANG = /^((?:고대 북부 |고대 |중세 )?(?:영어|프랑스어|노르드어|네덜란드어|독일어|라틴어|그리스어|이탈리아어|아랍어|스칸디나비아어)|저지 독일어)\s+(.+)$/;
 function splitTop(str) {
   const toks = [], ops = []; let depth = 0, cur = '';
@@ -2141,9 +1733,7 @@ function render(revealed) {
   els.note.classList.toggle('ghost', hidden || picQ);
   els.ety.innerHTML = S.viz ? etyDiagram(w) : esc(w.e);
   els.ety.setAttribute('aria-label', w.e);
-  els.wicon.textContent = iconOf(w);
   els.ety.parentElement.classList.toggle('ghost', hidden || picQ);
-  els.wicon.classList.toggle('ghost', hidden || picQ || (S.hideMean && peek !== i));
   els.word.classList.toggle('masked', (hidden && S.order === 'ko-en') || picQ);
   const meanOff = S.hideMean && peek !== i;
   els.mean.classList.toggle('masked', (hidden && S.order === 'en-ko') || meanOff || picQ);
@@ -2254,6 +1844,7 @@ function loadSource() {
   if (S.picOnly) { const only = WORDS.filter(hasViz); if (only.length) WORDS = only; }
   $('deckName').textContent = d.name + (t ? ` · ${t.label}` : '') + (g ? ` · ${g.label}` : '');
   $('total').textContent = WORDS.length;
+  $('pkSummary').textContent = `${$('deckName').textContent} ${WORDS.length}`;
   renderPickers(d);
   renderVizRow();
   renderList();
@@ -2490,6 +2081,7 @@ enSel.addEventListener('change', () => { S.enVoice = enSel.value; save(); });
 koSel.addEventListener('change', () => { S.koVoice = koSel.value; save(); });
 
 els.play.addEventListener('click', toggle);
+$('pkToggle').addEventListener('click', () => { const on = $('pickers').classList.toggle('open'); $('pkToggle').setAttribute('aria-expanded', on); });
 $('prev').addEventListener('click', () => go(pos - 1, -1));
 $('next').addEventListener('click', () => go(pos + 1, 1));
 
