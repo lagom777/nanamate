@@ -240,13 +240,16 @@ let drag=null;cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,v};cv.setP
 cv.addEventListener('pointermove',e=>{if(!drag)return;target=null;v=Math.max(0,Math.min(SN.length-1,drag.v-(e.clientX-drag.x)/(cv.getBoundingClientRect().width*.5)));});
 cv.addEventListener('pointerup',()=>{if(drag){goTo(Math.round(v));drag=null;}});
 function frame(now){const dt=last==null?0:Math.min(.05,(now-last)/1000);last=now;
-  if(target!=null){const d=target-v;v+=Math.sign(d)*Math.min(Math.abs(d),dt*Math.max(1.4,Math.abs(d)*3));if(Math.abs(target-v)<1e-3){v=target;target=null;}}
+  if(target!=null){const d=target-v;v+=Math.sign(d)*Math.min(Math.abs(d),dt*Math.max(.5,Math.abs(d)*.9));if(Math.abs(target-v)<1e-3){v=target;target=null;}}
   else if(playing){hold+=dt;if(hold>3.2){if(Math.round(v)>=SN.length-1)setPlay(false);else goTo(Math.round(v)+1);}}
   $('slider').value=v;
-  const a=Math.floor(v+1e-6),k=v-a,A=SN[a],B=SN[Math.min(SN.length-1,a+1)],kk=ease(k);
+  const a=Math.floor(v+1e-6),k=v-a,A=SN[a],B=SN[Math.min(SN.length-1,a+1)];
   ctx.setTransform(cv.width/MW,0,0,cv.height/MH,0,0);ctx.clearRect(0,0,MW,MH);
-  drawTerritory(ctx,TERR[A.id],k>0?TERR[B.id]:null,k>0?kk:0,{x:0,y:0,w:MW,h:MH});
-  const cur=SN[Math.round(v)];TS(ctx,cur.y,22,40,{size:30,font:DISP,w:400,align:'left',color:CH[cur.u].c,lw:6});TS(ctx,cur.t,22,74,{size:16,align:'left',lw:5});
+  drawTerritory(ctx,TERR[A.id],k>0?TERR[B.id]:null,k,{x:0,y:0,w:MW,h:MH});
+  const ka=ease(Math.max(0,Math.min(1,k*1.6-.2))),ca=CH[A.u].c,cb=CH[B.u].c;
+  ctx.save();ctx.beginPath();ctx.rect(14,10,400,92);ctx.clip();
+  const yo=(s,col,al,dy)=>{TS(ctx,s.y,22,40+dy,{size:30,font:DISP,w:400,align:'left',color:col,lw:6,alpha:al});TS(ctx,s.t,22,74+dy,{size:16,align:'left',lw:5,alpha:al});};
+  if(k>0&&B!==A){yo(A,ca,1-ka,-26*ka);yo(B,cb,ka,26*(1-ka));}else yo(A,ca,1,0);ctx.restore();
   panel(Math.round(v));requestAnimationFrame(frame);}
 const h0=SN.findIndex(s=>'#'+s.id===location.hash);if(h0>=0)v=h0;panel(Math.round(v));
 requestAnimationFrame(frame);

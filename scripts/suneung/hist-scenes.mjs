@@ -401,6 +401,21 @@ export const TERR = {
       { n: "휴전선", c: "#FF7A8A", w: 3, p: [[126.1, 37.75], [126.7, 37.95], [127.1, 38.25], [127.6, 38.3], [128.0, 38.3], [128.35, 38.6]], at: [128.7, 38.9] }],
     pins: [["서울", 127.0, 37.55, "l"], ["평양", 125.75, 39.02, "l"]] },
 };
+// 모프 계승 관계: 같은 key 의 영역은 시기 사이에서 모양·색·이름표가 이어 움직인다(마한→백제, 진한→신라→통일 신라→고려→조선→미군정→대한민국, 고구려→발해→여진, 당→거란→원→명).
+const KEYS = {
+  gojoseon: { "고조선": "nangnang", "여러 소국": "baekje" },
+  states: { "낙랑군": "nangnang", "마한": "baekje", "진한": "silla", "변한": "gaya", "고구려": "goguryeo" },
+  baekje4: { "백제": "baekje", "신라": "silla", "가야": "gaya", "고구려": "goguryeo" },
+  goguryeo5: { "백제": "baekje", "신라": "silla", "가야": "gaya", "고구려": "goguryeo" },
+  silla6: { "백제": "baekje", "신라": "silla", "고구려": "goguryeo" },
+  nambuk: { "발해": "goguryeo", "통일 신라": "silla", "당": "china" },
+  goryeo11: { "고려": "silla", "거란(요)": "china", "여진": "goguryeo" },
+  goryeo14: { "고려": "silla", "원(元)": "china" },
+  joseon15: { "조선": "silla", "명·여진": "china" },
+  div1945: { "소련군정": "north2", "미군정": "silla" },
+  div1953: { "북한": "north2", "대한민국": "silla" },
+};
+Object.entries(KEYS).forEach(([id, m]) => TERR[id].regs.forEach((r) => { if (m[r.n]) r.key = m[r.n]; }));
 export const TERR_ORDER = Object.keys(TERR);
 
 /* 영토 변화 장면을 파트별로 끼워 넣는다(각 파트의 첫 장면 바로 뒤). */
@@ -418,7 +433,7 @@ TERR_SCENES.forEach((x) => {
   const sn = x.snaps.map((id) => TERR[id]);
   scenes.splice(first + 1, 0, {
     u: x.u, type: "territory", ch: "영토 변화", title: x.title, head: "🗺️ 지도가 바뀐다",
-    sub: "시대가 바뀔 때마다 지도가 겹쳐 바뀝니다. 누가 어디를 차지했는지 색으로 보세요. (경계는 단순화한 약도)",
+    sub: "시대가 바뀌면 국경이 움직입니다. 같은 나라는 모양이 이어서 늘고 줄고, 새 나라는 번지듯 생기고, 사라지는 나라는 스러집니다. (경계는 단순화한 약도)",
     fx: sn.map((s) => w(`${s.y} · ${s.t}`, s.keys[0])),
     pts: sn.map((s) => `<em>${s.y}</em> ${s.d}`).slice(0, 4),
     dur: sn.length > 4 ? sn.length * 4.6 : Math.max(10, sn.length * 6), still: 5.5, snaps: x.snaps,

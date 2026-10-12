@@ -225,38 +225,87 @@ function chaikin(pts,n=2){let a=pts;for(let r=0;r<n;r++){const b=[];a.forEach((p
 const SMOOTH=new WeakMap();const smooth=p=>{let s=SMOOTH.get(p);if(!s){s=chaikin(p);SMOOTH.set(p,s);}return s;};
 function TS(c,s,x,y,o={}){c.save();c.font=`${o.w||700} ${o.size||15}px ${o.font||SANS}`;c.textAlign=o.align||'center';c.textBaseline='middle';
   if(o.alpha!=null)c.globalAlpha*=o.alpha;c.lineJoin='round';c.lineWidth=o.lw||4;c.strokeStyle='rgba(8,16,26,.9)';c.strokeText(s,x,y);c.fillStyle=o.color||'#fff';c.fillText(s,x,y);c.restore();}
+/* 모프 준비: 영역 다각형을 같은 개수(N)의 점으로 다시 뽑아, 시기 사이에서 점끼리 이어 움직인다. */
+const MN=128,PREP=new WeakMap(),ALIGN=new WeakMap(),EMPTY_T={regs:[],lines:[],pins:[]};
+function parea(p){let a=0;p.forEach((q,i)=>{const r=p[(i+1)%p.length];a+=q[0]*r[1]-r[0]*q[1];});return a/2;}
+function resample(pts,N){const P=pts.concat([pts[0]]),L=[0];for(let i=1;i<P.length;i++)L.push(L[i-1]+Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]));
+  const tot=L[L.length-1],out=[];let j=0;for(let n=0;n<N;n++){const d=n/N*tot;while(j<L.length-2&&L[j+1]<d)j++;const u=(d-L[j])/((L[j+1]-L[j])||1);out.push([lerp(P[j][0],P[j+1][0],u),lerp(P[j][1],P[j+1][1],u)]);}return out;}
+function prep(s){let r=PREP.get(s);if(r)return r;
+  r=s.regs.map((g,i)=>{let p=g.sharp?g.p:chaikin(g.p);if(parea(p)<0)p=p.slice().reverse();const q=resample(p,MN);
+    const cen=q.reduce((a,b)=>[a[0]+b[0]/MN,a[1]+b[1]/MN],[0,0]);return{...g,key:g.key||g.n,q,cen,idx:i};});
+  PREP.set(s,r);return r;}
+function alignOff(a,b){let m=ALIGN.get(a);if(!m){m=new Map();ALIGN.set(a,m);}if(m.has(b))return m.get(b);
+  let best=0,bd=Infinity;for(let o=0;o<MN;o+=2){let d=0;for(let i=0;i<MN;i+=4){const p=a.q[(i+o)%MN],q=b.q[i];d+=(p[0]-q[0])**2+(p[1]-q[1])**2;}if(d<bd){bd=d;best=o;}}
+  m.set(b,best);return best;}
+const hex2=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16));
+function mixC(a,b,k){if(a===b)return a;const x=hex2(a),y=hex2(b);return '#'+x.map((v,i)=>Math.round(lerp(v,y[i],k)).toString(16).padStart(2,'0')).join('');}
+const easeOutBack=k=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(k-1,3)+c1*Math.pow(k-1,2);};
+function polyPart(pts,f){if(f>=1)return pts;let L=0;const seg2=[];for(let i=1;i<pts.length;i++){const d=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);seg2.push(d);L+=d;}
+  let rem=L*f;const out=[pts[0]];for(let i=1;i<pts.length;i++){if(rem>=seg2[i-1]){out.push(pts[i]);rem-=seg2[i-1];}else{const u=rem/seg2[i-1];out.push([lerp(pts[i-1][0],pts[i][0],u),lerp(pts[i-1][1],pts[i][1],u)]);break;}}return out;}
+/* A 스냅숏에서 B 스냅숏으로 k(0~1)만큼 옮겨 간 지도. 같은 key 의 영역은 모양·색·이름표가 이어 움직이고, 새 영역은 번지듯 생기고, 없어지는 영역은 스러진다. */
 function drawTerritory(c,A,B,k,bx){
-  const P=terrProj(bx),sz=Math.max(.75,Math.min(1.35,bx.h/450));
+  A=A||EMPTY_T;B=B||EMPTY_T;const P=terrProj(bx),sz=Math.max(.75,Math.min(1.35,bx.h/450));
+  const ra=prep(A),rb=prep(B),used=new Set(),items=[];
+  rb.forEach(b=>{const a=ra.find(x=>x.key===b.key&&!used.has(x));if(a){used.add(a);items.push({a,b});}else items.push({b});});
+  ra.forEach(a=>{if(!used.has(a))items.unshift({a});});
+  const n=items.length,stag=(it,i)=>clamp(k*1.3-.3*i/Math.max(1,n-1));
   c.save();c.beginPath();c.roundRect(bx.x,bx.y,bx.w,bx.h,14);c.clip();
   c.fillStyle='#071220';c.fillRect(bx.x,bx.y,bx.w,bx.h);
   c.beginPath();pathOf(c,P,MAINLAND);pathOf(c,P,KOR);pathOf(c,P,JEJU);pathOf(c,P,KYUSHU);pathOf(c,P,JPN);c.fillStyle='#1B3147';c.fill();c.strokeStyle='#3A6688';c.lineWidth=1.1;c.stroke();
   c.save();c.beginPath();pathOf(c,P,MAINLAND);pathOf(c,P,KOR);pathOf(c,P,JEJU);c.clip();
-  [[A,1-k],[B,k]].forEach(([s,a])=>{if(!s||a<=.001)return;s.regs.forEach(r=>{c.save();c.beginPath();pathOf(c,P,r.sharp?r.p:smooth(r.p));
-    c.globalAlpha=a*(r.hi?.78:.5);c.fillStyle=r.c;c.fill();c.globalAlpha=a*.95;c.strokeStyle=r.c;c.lineWidth=r.hi?2.2:1.4;if(r.hi)c.setLineDash([5,4]);c.stroke();c.restore();});});
+  const labels=[];
+  items.forEach((it,i)=>{const kr=ease(stag(it,i));let pts,col,alpha,hi,moving=kr>0&&kr<1;
+    if(it.a&&it.b){const o=alignOff(it.a,it.b);pts=it.b.q.map((q,j)=>{const p=it.a.q[(j+o)%MN];return[lerp(p[0],q[0],kr),lerp(p[1],q[1],kr)];});
+      col=mixC(it.a.c,it.b.c,kr);alpha=1;hi=it.b.hi;
+      labels.push({x:lerp(it.a.at?.[0]??it.b.at?.[0],it.b.at?.[0]??it.a.at?.[0],kr),y:lerp(it.a.at?.[1]??it.b.at?.[1],it.b.at?.[1]??it.a.at?.[1],kr),from:it.a,to:it.b,kr});}
+    else if(it.b){const g=it.b,sk=g.hi?Math.max(0,easeOutBack(clamp(k*1.25-.25))):lerp(.35,1,kr),cen=g.seed||g.at||g.cen;
+      pts=g.q.map(q=>[cen[0]+(q[0]-cen[0])*sk,cen[1]+(q[1]-cen[1])*sk]);col=g.c;alpha=g.hi?clamp(k*2-.4):kr;hi=g.hi;
+      labels.push({x:g.at?.[0],y:g.at?.[1],to:g,kr:g.hi?clamp(k*1.6-.6):kr});}
+    else{const g=it.a,sk=lerp(1,.82,kr),cen=g.at||g.cen;pts=g.q.map(q=>[cen[0]+(q[0]-cen[0])*sk,cen[1]+(q[1]-cen[1])*sk]);col=g.c;alpha=1-kr;hi=g.hi;
+      labels.push({x:g.at?.[0],y:g.at?.[1],from:g,kr:1-(1-kr)});}
+    if(alpha<=.003)return;
+    c.save();c.beginPath();pathOf(c,P,pts);c.globalAlpha=alpha*(hi?.8:.52);c.fillStyle=col;c.fill();
+    c.globalAlpha=alpha;c.strokeStyle=col;c.lineWidth=(hi?2.2:1.4)*(moving?1.6:1);if(hi)c.setLineDash([5,4]);
+    if(moving){c.shadowColor=col;c.shadowBlur=14;}c.stroke();c.restore();});
   c.restore();
   c.beginPath();pathOf(c,P,KOR);c.strokeStyle='#4A7FA8';c.lineWidth=1.4;c.stroke();
-  [[A,1-k],[B,k]].forEach(([s,a])=>{if(!s||a<=.02)return;
-    (s.lines||[]).forEach(l=>{poly(c,l.p.map(q=>P(q[0],q[1])),l.c||'#fff',(l.w||2.6)*sz,{dash:l.dash?[7,5]:null,alpha:a});
-      if(l.at){const [x,y]=P(l.at[0],l.at[1]);TS(c,l.n,x,y,{size:12*sz,color:l.c||'#fff',alpha:a});}});
-    s.regs.forEach(r=>{if(!r.at)return;const [x,y]=P(r.at[0],r.at[1]);TS(c,r.n,x,y,{size:(r.fs||16)*sz,w:800,alpha:a});
-      if(r.s)TS(c,r.s,x,y+17*sz,{size:11.5*sz,w:600,color:'#DCE6F0',alpha:a*.95,lw:3});});
-    (s.pins||[]).forEach(p=>{const [x,y]=P(p[1],p[2]);dot(c,x,y,4.2*sz,'#fff',{alpha:a,stroke:'#09131F',lw:1.6});
-      TS(c,p[0],x+(p[3]==='l'?-7:7)*sz,y,{size:12*sz,w:700,align:p[3]==='l'?'right':'left',color:'#FFF6D8',alpha:a,lw:3});});});
+  // 선: 새 선은 그려지듯, 없어지는 선은 흐려지듯
+  const ln=(s,f,a)=>(s.lines||[]).forEach(l=>{const pp=polyPart(l.p,f).map(q=>P(q[0],q[1]));poly(c,pp,l.c||'#fff',(l.w||2.6)*sz,{dash:l.dash?[7,5]:null,alpha:a});
+    if(l.at&&f>.6){const [x,y]=P(l.at[0],l.at[1]);TS(c,l.n,x,y,{size:12*sz,color:l.c||'#fff',alpha:a*clamp((f-.6)/.4)});}});
+  const bn=new Set((B.lines||[]).map(l=>l.n));
+  ln({lines:(A.lines||[]).filter(l=>!bn.has(l.n))},1,1-k);
+  const an=new Set((A.lines||[]).map(l=>l.n));
+  ln({lines:(B.lines||[]).filter(l=>an.has(l.n))},1,1);ln({lines:(B.lines||[]).filter(l=>!an.has(l.n))},ease(clamp(k*1.4-.3)),1);
+  // 이름표
+  labels.forEach(L=>{if(L.x==null)return;const [x,y]=P(L.x,L.y);
+    const draw=(g,a,dy)=>{if(!g||a<=.02)return;TS(c,g.n,x,y+dy,{size:(g.fs||16)*sz,w:800,alpha:a});if(g.s)TS(c,g.s,x,y+dy+17*sz,{size:11.5*sz,w:600,color:'#DCE6F0',alpha:a*.95,lw:3});};
+    if(L.from&&L.to){if(L.from.n===L.to.n&&L.from.s===L.to.s)draw(L.to,1,0);else{draw(L.from,1-L.kr,-8*L.kr*sz);draw(L.to,L.kr,8*(1-L.kr)*sz);}}
+    else if(L.to)draw(L.to,L.kr,6*(1-L.kr)*sz);else draw(L.from,1-L.kr,0);});
+  // 핀: 같은 이름은 그대로, 새 핀은 톡 튀어나오고, 없어지는 핀은 흐려진다
+  const pin=(p,a,sc)=>{if(a<=.02)return;const [x,y]=P(p[1],p[2]);dot(c,x,y,4.2*sz*sc,'#fff',{alpha:a,stroke:'#09131F',lw:1.6});
+    TS(c,p[0],x+(p[3]==='l'?-7:7)*sz,y,{size:12*sz,w:700,align:p[3]==='l'?'right':'left',color:'#FFF6D8',alpha:a,lw:3});};
+  const bp=new Set((B.pins||[]).map(p=>p[0])),ap=new Set((A.pins||[]).map(p=>p[0]));
+  (A.pins||[]).forEach(p=>{if(!bp.has(p[0]))pin(p,1-k,1);});
+  (B.pins||[]).forEach(p=>{if(ap.has(p[0]))pin(p,1,1);else{const q=clamp(k*1.6-.6);pin(p,q,Math.max(0,easeOutBack(q)));}});
   c.restore();
 }
+/* 연도 글자: 옛 연도는 위로 밀려 나가고 새 연도가 아래에서 올라온다 */
+function yearRoll(c,A,B,k,x,y,o){const a=ease(clamp(k*1.6-.2));
+  if(A&&a<1)T(c,A.y,x,y-24*a,{...o,alpha:1-a});if(B)T(c,B.y,x,y+24*(1-a),{...o,alpha:A?a:1});}
 TPL.territory=function(c,t,d){
   const col=colOf(d);kicker(c,d,col);
-  const sn=d.snaps.map(id=>TERR[id]),m=sn.length,slot=d.dur/m,i=Math.min(m-1,Math.floor(t/slot)),lt=t-i*slot,k=ease(seg(lt,0,1.1));
+  const sn=d.snaps.map(id=>TERR[id]),m=sn.length,slot=d.dur/m,i=Math.min(m-1,Math.floor(t/slot)),lt=t-i*slot,k=seg(lt,.15,2.1);
   const prev=i>0?sn[i-1]:null,cur=sn[i];
-  drawTerritory(c,prev,cur,prev?k:1,{x:24,y:72,w:528,h:450});
-  const x=576,a=ease(seg(lt,.15,.75));c.save();c.globalAlpha=a;
-  T(c,cur.y,x,102,{font:DISP,size:fit(c,cur.y,350,40,400,DISP),color:col,w:400});
+  drawTerritory(c,prev||EMPTY_T,cur,k,{x:24,y:72,w:528,h:450});
+  const x=576;c.save();c.beginPath();c.rect(x-4,70,360,58);c.clip();
+  yearRoll(c,prev,cur,k,x,102,{font:DISP,size:fit(c,cur.y,350,40,400,DISP),color:col,w:400});c.restore();
+  const a=ease(seg(lt,.5,1.3));c.save();c.globalAlpha=a;c.translate(0,(1-a)*10);
   T(c,cur.t,x,146,{size:fit(c,cur.t,350,22,800),w:800});
   const nl=WT(c,cur.d,x,180,352,22,{size:15,color:C.muted});
   const regs=cur.regs.filter(r=>r.n&&r.legend!==false),ly=180+nl*22+20;
   regs.forEach((r,j)=>{const cx=x+(j%2)*178,cy=ly+Math.floor(j/2)*26;box(c,cx,cy-7,14,14,3,r.c,null,0,{alpha:r.hi?1:.85});T(c,r.n,cx+22,cy,{size:13.5,w:600});});
   c.restore();
-  if(m>1){const sx=590,ex=916,yy=486;poly(c,[[sx,yy],[ex,yy]],C.line,3);poly(c,[[sx,yy],[lerp(sx,ex,(i+clamp(lt/slot))/(m-1||1)),yy]],col,3,{alpha:.7});
-    sn.forEach((s,j)=>{const xx=lerp(sx,ex,j/(m-1)),on=j===i;dot(c,xx,yy,on?8:5,on?col:'#10202F',{stroke:col,lw:2});
+  if(m>1){const sx=590,ex=916,yy=486,pr=(i+ease(clamp(lt/slot)))/(m-1||1);poly(c,[[sx,yy],[ex,yy]],C.line,3);poly(c,[[sx,yy],[lerp(sx,ex,Math.min(1,pr)),yy]],col,3,{alpha:.7});
+    sn.forEach((s,j)=>{const xx=lerp(sx,ex,j/(m-1)),on=j===i;dot(c,xx,yy,on?8+Math.sin(t*4)*1.2:5,on?col:'#10202F',{stroke:col,lw:2,glow:on?14:0});
       label(c,s.sy||s.y,xx,yy+(m>6&&j%2?-20:20),on?col:C.dim,{size:11});});}
 };
