@@ -1,8 +1,18 @@
 // 수능 한국사 — 시대별 9파트 + 암기법 + 전략 (content/hi-*.mjs, 전략은 content/st-hi.mjs). 기출 이미지는 아직 없어 풀어보기 페이지를 만들지 않는다.
 import { note, tip, tbl } from "./lib.mjs";
+import { UNITS } from "./hist-scenes.mjs";
+import { motionPages, sceneIndex } from "./hist-motion.mjs";
 
 const load = async (n) => { try { return (await import(`./content/${n}.mjs`)).chapters; } catch { return []; } };
 const chapters = [...(await load("hi-1")), ...(await load("hi-2")), ...(await load("hi-3")), ...(await load("hi-memo")), ...(await load("st-hi"))];
+
+// 파트 챕터 ↔ 모션 노트: 합본의 장면 번호로 링크하고, 그 파트만 재생하는 페이지도 붙인다.
+UNITS.forEach((u, k) => {
+  const c = chapters.find((x) => x.file === u.file);
+  if (!c) return;
+  c.motion = sceneIndex(k).map(({ i, title }) => [i, title]);
+  c.motionPage = u.file;
+});
 
 export const spec = {
   sub: "hist", folder: "aboutSuneungHistory", label: "수능 한국사", short: "한국사", color: "#be123c",
@@ -13,7 +23,8 @@ export const spec = {
   affiliation: "고대 · 중세·근세 · 근대·현대 · 9파트 · 암기법 · 전략 · 한눈에 요약",
   summary: true, summaryBlurb: "파트별 연표·표·함정을 카드 한 장씩에 — 시험 직전 훑어보기용",
   practice: false,
-  motion: false, kind: "items", qn: 20, minutes: 30,
+  motion: true, motionBlurb: "연표·지도·인과 사슬·퀴즈로 움직이며 외우기 — 전체 합본과 파트별 재생", extra: motionPages(),
+  kind: "items", qn: 20, minutes: 30,
   chapters,
   intro: `<h2>이 노트가 다루는 것</h2>
 <p>수능 한국사는 <strong>모든 수험생이 응시해야 하는 필수 영역</strong>이고, 20문항 50점 만점의 절대평가입니다(40점 이상이면 1등급). 문항은 사료·유물·지도 같은 자료를 보고 시대와 사건을 알아맞힌 다음, 그에 맞는 설명을 고르는 방식이 대부분입니다. 이 노트는 선사 시대부터 현대까지를 아홉 파트로 나누어, 파트마다 <em>흐름 → 핵심 표(왕·제도·사건) → 함정 → 대표 예제 → 짝짓기·퀴즈</em> 순서로 정리했습니다.</p>

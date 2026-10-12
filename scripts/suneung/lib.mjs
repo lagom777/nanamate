@@ -129,7 +129,7 @@ export function chapterPage(spec, c, i) {
   const motion = c.motion
     ? `<h2>모션으로 보기</h2>
 <p>이 파트의 개념을 움직이는 그림으로 다시 확인합니다.</p>
-<p>${c.motion.map(([n, label]) => `<a class="cta sm" href="../motion.html#s${n}">🎬 ${label}</a>`).join(" ")}</p>`
+<p>${c.motion.map(([n, label]) => `<a class="cta sm" href="../motion.html#s${n}">🎬 ${label}</a>`).join(" ")}${c.motionPage ? ` <a class="cta" href="../motion/${c.motionPage}">▶ 이 파트 모션 전체 재생</a>` : ""}</p>`
     : "";
   const sumCta = spec.summary ? `<p><a class="cta sm" href="../summary.html#p${i + 1}">📌 이 파트 한눈에 요약 →</a></p>` : "";
   const nav = `<div class="pager">${prev ? `<a href="${prev.file}">← ${prev.title}</a>` : `<a href="../index.html">← 표지</a>`}${next ? `<a href="${next.file}">${next.title} →</a>` : spec.practice === false ? "" : `<a href="../practice.html">수능 풀어보기 →</a>`}</div>`;

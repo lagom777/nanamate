@@ -12,7 +12,7 @@
     {"n": "수능 국어", "e": "CSAT Korean", "d": "독서·문학·화법과 작문·언어와 매체 파트 정리, 기출 채점", "u": "aboutSuneungKorean/index.html", "c": "수능", "a": "#b45309"},
     {"n": "수능 수학", "e": "CSAT Math", "d": "수학Ⅰ·수학Ⅱ·미적분 9파트, 기출 30문항 채점", "u": "aboutSuneungMath/index.html", "c": "수능", "a": "#7c3aed"},
     {"n": "수능 영어", "e": "CSAT English", "d": "듣기·독해 유형 7파트, 기출 채점·듣기 대본", "u": "aboutSuneungEnglish/index.html", "c": "수능", "a": "#2563eb"},
-    {"n": "수능 한국사", "e": "CSAT Korean History", "d": "시대별 9파트, 핵심 연표·사료 키워드, 절대평가 전략", "u": "aboutSuneungHistory/index.html", "c": "수능", "a": "#be123c"},
+    {"n": "수능 한국사", "e": "CSAT Korean History", "d": "시대별 9파트, 모션 노트 47장면, 암기법, 절대평가 전략", "u": "aboutSuneungHistory/index.html", "c": "수능", "a": "#be123c"},
     {"n": "수능 물리학Ⅰ", "e": "CSAT Physics I", "d": "3단원 7파트, 모션 노트, 기출 채점·해설", "u": "aboutSuneungPhysics1/index.html", "c": "수능", "a": "#0284c7"},
     {"n": "수능 화학Ⅰ", "e": "CSAT Chemistry I", "d": "4단원 9파트, 기출 채점", "u": "aboutSuneungChem1/index.html", "c": "수능", "a": "#0d9488"},
     {"n": "수능 생명과학Ⅰ", "e": "CSAT Biology I", "d": "5단원 8파트, 모션 노트, 기출 채점·해설", "u": "aboutSuneungBio1/index.html", "c": "수능", "a": "#16a34a"},

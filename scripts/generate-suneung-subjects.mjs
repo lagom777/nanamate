@@ -14,5 +14,5 @@ import { writeScience2 } from "./suneung/science2.mjs";
 
 const only = process.argv.slice(2);
 const want = (spec) => !only.length || only.some((k) => spec.folder.toLowerCase().includes(k.toLowerCase()));
-for (const s of [phys, bio, math, korean, english, chem, earth, hist]) if (want(s)) writeAll(s);
+for (const s of [phys, bio, math, korean, english, chem, earth, hist]) if (want(s)) writeAll(s, s.extra || {});
 if (!only.length || only.some((k) => "science2".includes(k.toLowerCase()))) writeScience2();
