@@ -26,7 +26,7 @@ const TRACKS = [
     href: "/learn/aboutSuneungHistory/index.html",
     tag: "필수",
     title: "수능 한국사",
-    blurb: "시대별 9파트 정리, 모션 노트 47장면, 암기법, 절대평가 전략.",
+    blurb: "시대별 9파트 정리, 모션 노트 54장면, 영토 변화 지도, 암기법.",
   },
   {
     href: "/learn/aboutSuneungPhysics1/index.html",

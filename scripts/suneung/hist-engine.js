@@ -210,3 +210,53 @@ TPL.compare=function(c,t,d){
 
 /* ── 플레이어용: 데이터 → 장면 ── */
 function buildScenes(list){list.forEach(d=>{S.push(Object.assign({still:d.dur*.82},d,{draw:(c,t)=>TPL[d.type](c,t,d)}));});}
+
+/* ── 영토 변화 지도: 시대별 스냅숏(TERR)을 서로 겹쳐 바꿔 그린다 ──
+   영역 다각형은 바다까지 넉넉히 잡고, 육지(대륙+한반도) 모양으로 잘라 그린다. 경계는 교과서 지도를 단순화한 약도. */
+const MAINLAND=[[112,30],[121.9,31.2],[121.2,32.1],[120.5,33.3],[119.2,34.7],[120.4,36.1],[122.5,37.4],[121.0,37.5],[119.3,37.2],[118.3,38.2],[117.7,39.0],[119.0,39.8],[120.7,40.4],[122.2,40.6],[121.6,39.6],[121.2,38.9],[122.3,39.5],[123.5,39.8],[124.35,39.8],
+  [124.4,40.15],[125.3,40.4],[126.3,41.1],[126.9,41.8],[128.2,41.4],[128.1,42.0],[129.2,42.25],[129.75,42.45],[130.1,42.95],[130.68,42.3],[131.2,42.6],[131.9,43.0],[132.4,42.85],[133.1,42.7],[134.5,43.4],[136,44.5],[137.5,46],[138.5,47.5],[138.5,52],[112,52]];
+const JEJU=[[126.15,33.3],[126.3,33.5],[126.6,33.56],[126.95,33.47],[126.9,33.26],[126.5,33.2]];
+const KYUSHU=[[129.6,33.4],[130.2,33.9],[131.0,33.95],[131.9,33.3],[131.5,32.0],[131.0,31.3],[130.2,31.3],[129.9,32.6]];
+function terrProj(bx){const lon0=117,lon1=134,lat0=32.8,lat1=47.5,k0=Math.cos(40*Math.PI/180);
+  const sc=Math.min(bx.w/((lon1-lon0)*k0),bx.h/(lat1-lat0)),ox=bx.x+(bx.w-(lon1-lon0)*k0*sc)/2,oy=bx.y+(bx.h-(lat1-lat0)*sc)/2;
+  return (lo,la)=>[ox+(lo-lon0)*k0*sc,oy+(lat1-la)*sc];}
+function pathOf(c,P,pts){pts.forEach((p,i)=>{const q=P(p[0],p[1]);i?c.lineTo(q[0],q[1]):c.moveTo(q[0],q[1]);});c.closePath();}
+function chaikin(pts,n=2){let a=pts;for(let r=0;r<n;r++){const b=[];a.forEach((p,i)=>{const q=a[(i+1)%a.length];b.push([.75*p[0]+.25*q[0],.75*p[1]+.25*q[1]],[.25*p[0]+.75*q[0],.25*p[1]+.75*q[1]]);});a=b;}return a;}
+const SMOOTH=new WeakMap();const smooth=p=>{let s=SMOOTH.get(p);if(!s){s=chaikin(p);SMOOTH.set(p,s);}return s;};
+function TS(c,s,x,y,o={}){c.save();c.font=`${o.w||700} ${o.size||15}px ${o.font||SANS}`;c.textAlign=o.align||'center';c.textBaseline='middle';
+  if(o.alpha!=null)c.globalAlpha*=o.alpha;c.lineJoin='round';c.lineWidth=o.lw||4;c.strokeStyle='rgba(8,16,26,.9)';c.strokeText(s,x,y);c.fillStyle=o.color||'#fff';c.fillText(s,x,y);c.restore();}
+function drawTerritory(c,A,B,k,bx){
+  const P=terrProj(bx),sz=Math.max(.75,Math.min(1.35,bx.h/450));
+  c.save();c.beginPath();c.roundRect(bx.x,bx.y,bx.w,bx.h,14);c.clip();
+  c.fillStyle='#071220';c.fillRect(bx.x,bx.y,bx.w,bx.h);
+  c.beginPath();pathOf(c,P,MAINLAND);pathOf(c,P,KOR);pathOf(c,P,JEJU);pathOf(c,P,KYUSHU);pathOf(c,P,JPN);c.fillStyle='#1B3147';c.fill();c.strokeStyle='#3A6688';c.lineWidth=1.1;c.stroke();
+  c.save();c.beginPath();pathOf(c,P,MAINLAND);pathOf(c,P,KOR);pathOf(c,P,JEJU);c.clip();
+  [[A,1-k],[B,k]].forEach(([s,a])=>{if(!s||a<=.001)return;s.regs.forEach(r=>{c.save();c.beginPath();pathOf(c,P,r.sharp?r.p:smooth(r.p));
+    c.globalAlpha=a*(r.hi?.78:.5);c.fillStyle=r.c;c.fill();c.globalAlpha=a*.95;c.strokeStyle=r.c;c.lineWidth=r.hi?2.2:1.4;if(r.hi)c.setLineDash([5,4]);c.stroke();c.restore();});});
+  c.restore();
+  c.beginPath();pathOf(c,P,KOR);c.strokeStyle='#4A7FA8';c.lineWidth=1.4;c.stroke();
+  [[A,1-k],[B,k]].forEach(([s,a])=>{if(!s||a<=.02)return;
+    (s.lines||[]).forEach(l=>{poly(c,l.p.map(q=>P(q[0],q[1])),l.c||'#fff',(l.w||2.6)*sz,{dash:l.dash?[7,5]:null,alpha:a});
+      if(l.at){const [x,y]=P(l.at[0],l.at[1]);TS(c,l.n,x,y,{size:12*sz,color:l.c||'#fff',alpha:a});}});
+    s.regs.forEach(r=>{if(!r.at)return;const [x,y]=P(r.at[0],r.at[1]);TS(c,r.n,x,y,{size:(r.fs||16)*sz,w:800,alpha:a});
+      if(r.s)TS(c,r.s,x,y+17*sz,{size:11.5*sz,w:600,color:'#DCE6F0',alpha:a*.95,lw:3});});
+    (s.pins||[]).forEach(p=>{const [x,y]=P(p[1],p[2]);dot(c,x,y,4.2*sz,'#fff',{alpha:a,stroke:'#09131F',lw:1.6});
+      TS(c,p[0],x+(p[3]==='l'?-7:7)*sz,y,{size:12*sz,w:700,align:p[3]==='l'?'right':'left',color:'#FFF6D8',alpha:a,lw:3});});});
+  c.restore();
+}
+TPL.territory=function(c,t,d){
+  const col=colOf(d);kicker(c,d,col);
+  const sn=d.snaps.map(id=>TERR[id]),m=sn.length,slot=d.dur/m,i=Math.min(m-1,Math.floor(t/slot)),lt=t-i*slot,k=ease(seg(lt,0,1.1));
+  const prev=i>0?sn[i-1]:null,cur=sn[i];
+  drawTerritory(c,prev,cur,prev?k:1,{x:24,y:72,w:528,h:450});
+  const x=576,a=ease(seg(lt,.15,.75));c.save();c.globalAlpha=a;
+  T(c,cur.y,x,102,{font:DISP,size:fit(c,cur.y,350,40,400,DISP),color:col,w:400});
+  T(c,cur.t,x,146,{size:fit(c,cur.t,350,22,800),w:800});
+  const nl=WT(c,cur.d,x,180,352,22,{size:15,color:C.muted});
+  const regs=cur.regs.filter(r=>r.n&&r.legend!==false),ly=180+nl*22+20;
+  regs.forEach((r,j)=>{const cx=x+(j%2)*178,cy=ly+Math.floor(j/2)*26;box(c,cx,cy-7,14,14,3,r.c,null,0,{alpha:r.hi?1:.85});T(c,r.n,cx+22,cy,{size:13.5,w:600});});
+  c.restore();
+  if(m>1){const sx=590,ex=916,yy=486;poly(c,[[sx,yy],[ex,yy]],C.line,3);poly(c,[[sx,yy],[lerp(sx,ex,(i+clamp(lt/slot))/(m-1||1)),yy]],col,3,{alpha:.7});
+    sn.forEach((s,j)=>{const xx=lerp(sx,ex,j/(m-1)),on=j===i;dot(c,xx,yy,on?8:5,on?col:'#10202F',{stroke:col,lw:2});
+      label(c,s.sy||s.y,xx,yy+(m>6&&j%2?-20:20),on?col:C.dim,{size:11});});}
+};
