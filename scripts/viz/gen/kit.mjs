@@ -69,8 +69,46 @@ export class Scene {
       defs.push(`<linearGradient id="${this.w}_${name}" ${xy}><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`);
     }
     const lab = this.label.replace(/"/g, "'");
-    return `<svg xmlns="http://www.w3.org/2000/svg" data-n="${this.n}" data-t="1" data-c="${this.c}" viewBox="0 0 560 300" role="img" aria-label="${lab}">\n<defs>\n${defs.join('\n')}\n</defs>\n<g clip-path="url(#${this.w}_clip)">\n${this.body.join('\n')}\n</g></svg>\n`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" data-n="${this.n}" data-t="1" data-c="${this.c}" viewBox="0 0 560 300" role="img" aria-label="${lab}">\n<defs>\n${defs.join('\n')}\n</defs>\n<g clip-path="url(#${this.w}_clip)">\n${hideReplaced(this.body.join('\n'), this.n)}\n</g></svg>\n`;
   }
+}
+
+/* 같은 자리에 새 자세·표정의 사람이 나타나면, 그 동안 이전 사람은 숨긴다.
+   (그대로 두면 이전 사람의 팔·얼굴이 새 사람 밖으로 삐져나와 팔이 네 개처럼 보인다) */
+function hideReplaced(body, n) {
+  const tok = /<(\/?)([a-zA-Z]+)([^>]*?)(\/?)>/g;
+  const stack = [], people = [];
+  let m;
+  while ((m = tok.exec(body))) {
+    const [all, close, tag, attrs, self] = m;
+    if (close) { const el = stack.pop(); el.end = m.index + all.length; continue; }
+    const el = { tag, attrs, start: m.index, end: m.index + all.length };
+    if (/^<rect x="-16" y="-64" width="32" height="60" rx="12"/.test(all) && stack.length) {
+      const root = stack[stack.length - 1];
+      let s = 0, e = n, x = 0, y = 0;
+      for (const a of stack) {
+        const ds = a.attrs.match(/data-s="(\d+)"/), de = a.attrs.match(/data-e="(\d+)"/);
+        if (ds && /class="[^"]*\b(vs)\b/.test(a.attrs)) s = Math.max(s, +ds[1]);
+        if (de) e = Math.min(e, +de[1]);
+        const tr = a.attrs.match(/transform="translate\(([-\d.]+)[ ,]+([-\d.]+)\)/);
+        if (tr) { x += +tr[1]; y += +tr[2]; }
+      }
+      people.push({ root, s, e, x, y });
+    }
+    if (!self) stack.push(el);
+  }
+  const edits = [];
+  for (const a of people) {
+    const later = people.filter((b) => b !== a && b.s > a.s && b.s <= a.e && Math.abs(b.x - a.x) < 14 && Math.abs(b.y - a.y) < 14);
+    if (!later.length) continue;
+    let ranges = [[Math.max(a.s, 1), a.e]];
+    for (const b of later) ranges = ranges.flatMap(([s, e]) => [[s, Math.min(e, b.s - 1)], [Math.max(s, b.e + 1), e]]).filter(([s, e]) => s <= e);
+    const src = body.slice(a.root.start, a.root.end);
+    edits.push([a.root.start, a.root.end, ranges.map(([s, e]) => `<g class="vs" data-s="${s}"${e < n ? ` data-e="${e}"` : ''}>${src}</g>`).join('')]);
+  }
+  edits.sort((p, q) => q[0] - p[0]);
+  for (const [s, e, rep] of edits) body = body.slice(0, s) + rep + body.slice(e);
+  return body;
 }
 
 /* ---------- 기본 도형 ---------- */
