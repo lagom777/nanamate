@@ -16,8 +16,8 @@ export const CLR = { skin: '#ffd7b5', skin2: '#f0c6a4', hair: '#3a2418', ink: '#
 const f = (n) => Math.round(n * 10) / 10;
 
 export class Scene {
-  constructor(word, { c = '#3b82f6', label = '', n = 3 } = {}) {
-    this.w = word; this.c = c; this.label = label; this.n = n; this.grads = new Map(); this.body = [];
+  constructor(word, { c = '#3b82f6', label = '', n = 3, frame = null } = {}) {
+    this.w = word; this.c = c; this.label = label; this.n = n; this.frame = frame; this.grads = new Map(); this.body = [];
   }
   /* 그라데이션 등록 → url(#단어_이름) */
   g(name, c1, c2, dir = 'v') {
@@ -69,7 +69,10 @@ export class Scene {
       defs.push(`<linearGradient id="${this.w}_${name}" ${xy}><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`);
     }
     const lab = this.label.replace(/"/g, "'");
-    return `<svg xmlns="http://www.w3.org/2000/svg" data-n="${this.n}" data-t="1" data-c="${this.c}" viewBox="0 0 560 300" role="img" aria-label="${lab}">\n<defs>\n${defs.join('\n')}\n</defs>\n<g clip-path="url(#${this.w}_clip)">\n${hideReplaced(this.body.join('\n'), this.n)}\n</g></svg>\n`;
+    /* frame = [배율, x, y] (scripts/viz/frame.mjs 가 잰 값) — 그림 전체를 확대해 화면을 채운다 */
+    let body = hideReplaced(this.body.join('\n'), this.n);
+    if (this.frame) body = `<g transform="translate(${this.frame[1]} ${this.frame[2]}) scale(${this.frame[0]})">\n${body}\n</g>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" data-n="${this.n}" data-t="1" data-c="${this.c}" viewBox="0 0 560 300" role="img" aria-label="${lab}">\n<defs>\n${defs.join('\n')}\n</defs>\n<g clip-path="url(#${this.w}_clip)">\n${body}\n</g></svg>\n`;
   }
 }
 
