@@ -134,6 +134,7 @@
     <li>판 경계는 발산·수렴·변환 세 종류</li>
     <li>지진과 화산은 대부분 판 경계에 몰려 있음</li>
   </ul>
+  <p class="summary-table-link">🗂️ 아래 <a href="#summary-table">한판 정리표</a>에서 핵심 개념·공식·헷갈리는 점을 표로 한눈에 복습해 보세요.</p>
 </div>
 
 <div class="difficulty-content" data-level="hard">
@@ -168,6 +169,26 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 두 판의 오일러 극이 주어졌을 때, 임의의 위도·경도 지점에서의 상대 속도 벡터(크기와 방향)를 계산하는 알고리즘을 작성해 보세요.</div>
 </div>
+
+<section class="summary-table-section" id="summary-table" aria-labelledby="summary-table-title">
+  <h2 id="summary-table-title">🗂️ 한판 정리표</h2>
+  <p class="summary-table-lead">이 챕터의 핵심 개념 · 정의 · 공식과 자주 헷갈리는 포인트를 한 장에 모았어요. 난이도 탭과 상관없이 복습용으로 활용하세요.</p>
+  <div class="summary-table-wrap" role="region" aria-labelledby="summary-table-title" tabindex="0">
+    <table class="summary-table">
+      <thead><tr><th scope="col">핵심 개념</th><th scope="col">정의 · 핵심 내용</th><th scope="col">공식 · 원리 · 예시</th><th scope="col">⚠️ 헷갈리기 쉬운 점</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">대륙 이동설 → 판 구조론</th><td>베게너(1912)가 대륙 이동설 제안 → 1960년대 해저 확장설·고지자기 연구로 판 구조론 확립</td><td class="st-formula">베게너의 증거: 해안선 일치, 같은 화석(메소사우루스·글로소프테리스), 빙하 흔적 → 판게아</td><td class="st-confuse">베게너는 대륙을 움직이는 <strong>원동력</strong>을 설명하지 못해 당시 받아들여지지 않음</td></tr>
+        <tr><th scope="row">발산 경계</th><td>두 판이 멀어지는 곳. 맨틀 물질이 올라와 새 해양 지각 생성</td><td class="st-formula">해령(대서양 중앙 해령), 열곡대(동아프리카 열곡대)</td><td class="st-confuse">새 지각이 <strong>생성</strong>되는 곳. 천발 지진과 화산 활동이 일어남</td></tr>
+        <tr><th scope="row">수렴 경계</th><td>두 판이 가까워지는 곳</td><td class="st-formula">해양-대륙: 섭입 → 해구 + 습곡 산맥·화산 (안데스)<br>해양-해양: 섭입 → 해구 + 호상 열도 (일본·필리핀)<br>대륙-대륙: 충돌 → 습곡 산맥 (히말라야)</td><td class="st-confuse">대륙-대륙 충돌은 양쪽 모두 가벼워 <strong>섭입이 거의 없음</strong> → 화산 활동 드묾</td></tr>
+        <tr><th scope="row">보존(변환) 경계</th><td>두 판이 수평으로 어긋나며 스쳐 지나가는 곳. 지각이 생성·소멸되지 않음</td><td class="st-formula">예: 산안드레아스 단층(태평양판 ↔ 북아메리카판)</td><td class="st-confuse">화산 활동은 거의 없지만 <strong>큰 천발 지진</strong>이 자주 일어남</td></tr>
+        <tr><th scope="row">판을 움직이는 힘</th><td>맨틀 대류 · 해령 밀기(ridge push) · 섭입대 끌기(slab pull)</td><td class="st-formula">섭입하는 차갑고 무거운 판이 끌어당기는 힘(slab pull)이 가장 큰 기여</td><td class="st-confuse">판 이동이 맨틀 대류만으로 움직인다는 설명은 단순화. <strong>섭입판의 무게</strong>가 핵심</td></tr>
+        <tr><th scope="row">판 구조론의 증거</th><td>해저 확장, 고지자기 줄무늬, GPS 측정(연 1~10 cm), 판 경계를 따른 지진 분포, 열점</td><td class="st-formula">해령에서 멀어질수록 해양 지각의 나이·퇴적물 두께 증가, 고지자기 줄무늬는 해령 축에 대칭</td><td class="st-confuse">판 ≠ 대륙. 한 판 안에 대륙과 해양이 <strong>함께</strong> 있을 수 있음 (북아메리카판)</td></tr>
+        <tr><th scope="row">열점 (Hot Spot)</th><td>판 아래 고정된 마그마 공급원. 판이 움직이면 화산이 줄지어 생김</td><td class="st-formula">하와이 열도: 열점에서 멀어질수록 화산섬의 나이가 많음</td><td class="st-confuse">열점은 판 경계가 아닌 <strong>판 내부</strong>에서도 화산을 만듦</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="summary-table-hint">↔ 표가 화면보다 넓으면 옆으로 밀어서 보세요.</p>
+</section>
 
 <h2>🚀 초고급 3D 게임 — 판 구조</h2>
 <p>두 지각판을 직접 드래그해 수렴·발산·변환 운동을 만들고, 프롬프트가 요구하는 지형(산맥·해령·변환단층·해구)을 솟아오르게 하세요.</p>

@@ -101,6 +101,7 @@
   <h3>📖 이야기로 쉽게!</h3><p>뜨거운 물과 차가운 물을 섞으면 어떻게 될까요? 미지근한 물이 되죠. 한쪽이 더 뜨거워지고 다른 쪽이 더 차가워지는 일은 절대 안 일어나요. 이게 바로 "열역학 제2법칙"이에요. 세상은 점점 더 뒤죽박죽(무질서) 쪽으로 흘러가거든요. 방을 안 치우면 저절로 어질러지는 것처럼요! 그리고 자동차 엔진은 기름의 에너지를 열로 바꾼 뒤, 그중 일부만 "달리는 힘"으로 써요. 100% 다 쓰는 건 불가능하고, 남은 건 항상 열로 빠져나가요. 그래서 엔진이 뜨끈해지는 거랍니다. 🔥</p>
   <div class="study-tip"><strong>💡 학습 TIP:</strong> 엔트로피는 "더 흔한 상태"로 생각하면 쉬워요. 카드를 던지면 딱 맞게 정렬되는 것보다 흩어지는 경우가 훨씬 많잖아요!</div>
   <h3>⭐ 한눈에 정리!</h3><ul><li>제0법칙: 온도가 같으면 열평형 (열이 안 흘러요)</li><li>제1법칙: ΔU = Q − W (에너지는 사라지지 않아요)</li><li>제2법칙: 세상은 점점 더 무질서해져요</li><li>제3법칙: 아주 아주 추운 절대 0도에선 엔트로피가 0에 가까워요</li><li>기체 규칙: PV = nRT</li></ul>
+  <p class="summary-table-link">🗂️ 아래 <a href="#summary-table">한판 정리표</a>에서 핵심 개념·공식·헷갈리는 점을 표로 한눈에 복습해 보세요.</p>
 </div>
 
 <div class="difficulty-content" data-level="hard">
@@ -121,6 +122,24 @@
   <div class="success-box"><strong>🎓 도전 과제:</strong> 2차원 이징 모형의 분배함수가 가지는 임계온도를 정성적으로 추정하고, 평균장 근사로 자발자기화의 임계지수를 구해 보세요.</div>
 </div>
 
+<section class="summary-table-section" id="summary-table" aria-labelledby="summary-table-title">
+  <h2 id="summary-table-title">🗂️ 한판 정리표</h2>
+  <p class="summary-table-lead">이 챕터의 핵심 개념 · 정의 · 공식과 자주 헷갈리는 포인트를 한 장에 모았어요. 난이도 탭과 상관없이 복습용으로 활용하세요.</p>
+  <div class="summary-table-wrap" role="region" aria-labelledby="summary-table-title" tabindex="0">
+    <table class="summary-table">
+      <thead><tr><th scope="col">핵심 개념</th><th scope="col">정의 · 핵심 내용</th><th scope="col">공식 · 원리 · 예시</th><th scope="col">⚠️ 헷갈리기 쉬운 점</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">열역학 제0법칙 · 온도</th><td>A와 C, B와 C가 각각 열평형이면 A와 B도 열평형 → 온도 개념의 기초</td><td class="st-formula">분자 운동론: ½m⟨v²⟩ = (3/2)kT (온도 ∝ 분자의 평균 운동 에너지)</td><td class="st-confuse">온도와 열은 다름. 온도는 상태량, 열은 온도 차 때문에 <strong>이동하는</strong> 에너지</td></tr>
+        <tr><th scope="row">열역학 제1법칙</th><td>에너지 보존: 계에 들어온 열 = 내부 에너지 증가 + 계가 외부에 한 일</td><td class="st-formula">ΔU = Q − W (W = 계가 한 일)<br>P-V 그래프 아래 면적 = 기체가 한 일</td><td class="st-confuse">교재마다 W 부호 규약이 다름. 화학에서는 ΔU = q + w (w = 계가 <strong>받은</strong> 일)</td></tr>
+        <tr><th scope="row">열역학 제2법칙 · 엔트로피</th><td>고립계의 엔트로피는 감소하지 않음. 열은 자발적으로 저온에서 고온으로 이동하지 않음</td><td class="st-formula">ΔS ≥ 0 (고립계),  가역 과정 dS = dQ/T,  S = k·lnΩ</td><td class="st-confuse">엔트로피는 '무질서'라기보다 '가능한 미시 상태의 수'. 냉장고는 외부 일을 써서 열을 거꾸로 옮길 뿐 2법칙 위반이 아님</td></tr>
+        <tr><th scope="row">열역학 제3법칙</th><td>유한한 과정으로는 절대영도(0 K)에 도달할 수 없음</td><td class="st-formula">0 K에 가까워질수록 완전 결정의 엔트로피 → 0</td><td class="st-confuse">섭씨 0°C가 아니라 <strong>−273.15°C</strong>(0 K)가 절대영도</td></tr>
+        <tr><th scope="row">이상기체 법칙 · 열역학 과정</th><td>이상기체의 압력·부피·온도 관계. 대표 과정: 등온·등압·등적·단열</td><td class="st-formula">PV = nRT (R = 8.314 J/mol·K, T는 절대온도)<br>등온: PV = 일정 / 단열: PV^γ = 일정</td><td class="st-confuse">단열 곡선이 등온 곡선보다 <strong>더 가파름</strong>(γ > 1). 단열 = 열 출입 없음이지 온도 일정이 아님</td></tr>
+        <tr><th scope="row">열기관 · 카르노 효율</th><td>열을 일로 바꾸는 장치. 두 열저장소 사이에서 가능한 최대 효율은 카르노 기관의 효율</td><td class="st-formula">η = W/Q_H,  η_카르노 = 1 − T_C/T_H<br>예: 600 K / 300 K → 최대 50%</td><td class="st-confuse">온도는 반드시 <strong>켈빈(K)</strong>으로 대입. 효율 100% 열기관은 불가능</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="summary-table-hint">↔ 표가 화면보다 넓으면 옆으로 밀어서 보세요.</p>
+</section>
 
 <h2>🕹️ 직접 해보기 — 열역학 법칙 순서</h2>
 <p>열역학 법칙을 번호 순서대로 맞춰 보세요.</p>

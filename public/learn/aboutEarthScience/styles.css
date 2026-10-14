@@ -635,3 +635,88 @@ main > *, section > * { animation: rise 0.5s ease both; }
   border-color: var(--volcanic);
   background: rgba(216,67,21,0.1);
 }
+
+/* ================= 한판 정리표 ================= */
+.summary-table-section { margin: 96px 0 24px; }
+.summary-table-section h2 { max-width: none; }
+.summary-table-link { margin: 14px 0 0; font-size: 0.92em; }
+.summary-table-link a { font-weight: 600; }
+.summary-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  contain: inline-size;
+  margin: 24px 0 8px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--ocean);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(13, 27, 42, 0.06);
+}
+.summary-table-wrap:focus-visible { outline: 2px solid var(--ocean); outline-offset: 2px; }
+table.summary-table {
+  width: 100%;
+  min-width: 680px;
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: none !important;
+  background: transparent !important;
+  font-size: 0.9em;
+  line-height: 1.62;
+}
+.summary-table th,
+.summary-table td {
+  padding: 12px 14px;
+  vertical-align: top;
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule-soft) !important;
+}
+.summary-table thead th {
+  background: var(--paper-soft) !important;
+  color: var(--ocean-dim) !important;
+  font-family: var(--font-body);
+  font-size: 0.86em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid var(--ink) !important;
+  white-space: nowrap;
+}
+.summary-table thead th:nth-child(1) { width: 15%; }
+.summary-table thead th:nth-child(2) { width: 30%; }
+.summary-table thead th:nth-child(3) { width: 27%; }
+.summary-table thead th:nth-child(4) { width: 28%; }
+.summary-table tbody th {
+  background: var(--paper-soft) !important;
+  font-family: var(--font-body);
+  font-size: 1em;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink) !important;
+  min-width: 112px;
+}
+.summary-table thead th:first-child,
+.summary-table tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  border-right: 1px solid var(--rule) !important;
+}
+.summary-table td.st-formula { font-variant-numeric: tabular-nums; }
+.summary-table td.st-confuse { background: rgba(216, 67, 21, 0.05) !important; }
+.summary-table tbody tr:hover td { background: var(--paper-soft) !important; }
+.summary-table tbody tr:last-child > * { border-bottom: none !important; }
+.summary-table-hint {
+  display: none;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  color: var(--ink-faint);
+}
+@media (max-width: 920px) {
+  .summary-table-section { margin-top: 64px; }
+  table.summary-table { font-size: 0.85em; }
+  .summary-table th,
+  .summary-table td { padding: 10px 12px; }
+  .summary-table-hint { display: block; }
+}

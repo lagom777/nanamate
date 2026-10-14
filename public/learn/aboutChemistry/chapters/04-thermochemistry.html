@@ -88,6 +88,7 @@
     <li>q = mcΔT 로 얻거나 잃은 열량을 계산해요</li>
     <li>헤스의 법칙: 총 ΔH는 어떤 길로 가든 똑같아요</li>
   </ul>
+  <p class="summary-table-link">🗂️ 아래 <a href="#summary-table">한판 정리표</a>에서 핵심 개념·공식·헷갈리는 점을 표로 한눈에 복습해 보세요.</p>
 </div>
 
 <div class="difficulty-content" data-level="hard">
@@ -135,6 +136,25 @@
   </ul>
   <div class="success-box"><strong>🎓 도전 과제:</strong> 반트 호프 식을 적분해 ln K = −ΔH°/(RT) + ΔS°/R 형태로 유도하고, 여러 온도에서 측정한 ln K 대 1/T 그래프(반트 호프 플롯)의 기울기와 절편으로부터 ΔH°와 ΔS°를 동시에 구하는 절차를 직접 정리해 보세요.</div>
 </div>
+
+<section class="summary-table-section" id="summary-table" aria-labelledby="summary-table-title">
+  <h2 id="summary-table-title">🗂️ 한판 정리표</h2>
+  <p class="summary-table-lead">이 챕터의 핵심 개념 · 정의 · 공식과 자주 헷갈리는 포인트를 한 장에 모았어요. 난이도 탭과 상관없이 복습용으로 활용하세요.</p>
+  <div class="summary-table-wrap" role="region" aria-labelledby="summary-table-title" tabindex="0">
+    <table class="summary-table">
+      <thead><tr><th scope="col">핵심 개념</th><th scope="col">정의 · 핵심 내용</th><th scope="col">공식 · 원리 · 예시</th><th scope="col">⚠️ 헷갈리기 쉬운 점</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">발열 반응 · 흡열 반응</th><td>발열: 열을 방출, 생성물 에너지 < 반응물 / 흡열: 열을 흡수, 생성물 에너지 > 반응물</td><td class="st-formula">ΔH = H(생성물) − H(반응물)<br>발열 ΔH < 0 (연소·중화), 흡열 ΔH > 0 (광합성·열분해)</td><td class="st-confuse">발열인데 ΔH가 <strong>음수</strong>. 계(물질)가 에너지를 잃었다는 기준</td></tr>
+        <tr><th scope="row">엔탈피 · 제1법칙</th><td>엔탈피 H = U + PV. 일정 압력에서 반응열 = ΔH</td><td class="st-formula">ΔU = q + w (w: 계가 받은 일),  ΔH = q_p</td><td class="st-confuse">물리에서는 ΔU = Q − W(W: 계가 한 일)로 씀. <strong>부호 규약</strong>만 다르고 같은 법칙</td></tr>
+        <tr><th scope="row">열량 측정</th><td>열량계에서 온도 변화를 재서 반응열을 구함</td><td class="st-formula">q = mcΔT<br>예: 물 100 g, 25 → 75°C, c = 4.18 J/g·°C → 20.9 kJ</td><td class="st-confuse">c(비열)는 물질마다 다르고, ΔT는 섭씨·켈빈 어느 쪽이든 <strong>차이값이 같음</strong></td></tr>
+        <tr><th scope="row">헤스의 법칙</th><td>반응 경로와 관계없이 처음과 끝 상태가 같으면 전체 ΔH는 같음 (엔탈피 = 상태 함수)</td><td class="st-formula">예: C + ½O₂ → CO,  ΔH = −393.5 − (−283.0) = −110.5 kJ</td><td class="st-confuse">반응식을 <strong>뒤집으면 ΔH 부호도</strong> 바뀌고, 계수를 n배 하면 ΔH도 n배</td></tr>
+        <tr><th scope="row">생성 엔탈피 · 결합 에너지</th><td>표준 생성 엔탈피: 표준 상태 홑원소 물질에서 화합물 1몰이 생길 때의 ΔH</td><td class="st-formula">ΔH° = ΣΔH°f(생성물) − ΣΔH°f(반응물)<br>ΔH ≈ Σ(끊은 결합 에너지) − Σ(생긴 결합 에너지)</td><td class="st-confuse">결합 에너지로 구할 때는 '반응물 − 생성물' 순서로 <strong>생성 엔탈피와 반대</strong>. 결합을 끊는 것은 흡열</td></tr>
+        <tr><th scope="row">자발성 · 깁스 자유 에너지</th><td>자발성은 엔탈피와 엔트로피를 함께 고려해 판단</td><td class="st-formula">ΔG = ΔH − TΔS,  ΔG < 0이면 자발적</td><td class="st-confuse">발열 반응이라고 항상 자발적인 것은 아님. 얼음이 녹는 것(흡열)도 상온에서는 TΔS가 커서 자발적</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="summary-table-hint">↔ 표가 화면보다 넓으면 옆으로 밀어서 보세요.</p>
+</section>
 
 <h2>3D 에너지 다이어그램 시뮬레이터</h2>
 <p>발열/흡열 반응의 에너지 변화를 3D로 관찰하세요. 활성화 에너지를 조절하고 반응 경로를 따라가 보세요.</p>
