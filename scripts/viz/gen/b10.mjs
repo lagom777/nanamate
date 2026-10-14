@@ -30,7 +30,7 @@ export default [
     s.sky('warm'); s.ground('stone', 250);
     s.step(1, castle(280, 250, 1.3), { cls: 'up' });
     s.step(2, [90, 150, 410, 470].map((x, i) => person({ x, y: 266, shirt: '#7c2d12', pants: '#1f2937', s: 0.8, fc: 'neutral', hat: '<path d="M-14 -96Q0 -114 14 -96Z" fill="#8a93a5"/>', armR: [8, -10], armL: [-8, 24] }) + L(`M${x + 22} 266V176`, '#8a6a2a', 4)).join(''), { cls: 'up' });
-    s.step(3, flag(280, 30, '#b91c1c', 50) + crown(280, 10, 0.9) + sparks(280, 60, 80, 94, '#ffd34d', 10, 3), { cls: 'pop' });
+    s.step(3, flag(280, 147, '#b91c1c', 72) + crown(280, 66, 0.8) + sparks(280, 54, 38, 50, '#ffd34d', 10, 3), { cls: 'pop' });
   }],
   ['terminate', '#475569', '플러그를 뽑자 켜져 있던 전등이 꺼지며 끝난다', (s) => {
     s.sky('night'); s.ground('floor', 252);

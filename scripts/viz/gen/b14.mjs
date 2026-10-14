@@ -181,9 +181,10 @@ export default [
   }],
   ['transcend', '#f59e0b', '한계선을 뛰어넘어 구름 위 하늘까지 솟아오르는 초월', (s) => {
     s.sky('day'); s.ground('grass', 252);
-    s.step(1, L('M60 130H500', '#ef4444', 5, 'stroke-dasharray="12 8"') + person({ x: 280, y: 262, shirt: '#f59e0b', fc: 'smile' }), { cls: 'up', e: 2 });
-    s.step(2, cloud(120, 130, 1.4) + cloud(440, 120, 1.6) + person({ x: 280, y: 190, shirt: '#f59e0b', fc: 'cheer', armL: [-26, -46], armR: [26, -46] }), { e: 2 });
-    s.step(3, person({ x: 280, y: 90, shirt: '#f59e0b', fc: 'cheer', armL: [-26, -46], armR: [26, -46], sh: false }) + sparks(280, 20, 50, 66, '#ffd34d', 12, 4) + star(140, 50, 10) + star(420, 40, 10) + L('M60 130H500', '#ef4444', 5, 'stroke-dasharray="12 8"') + arrow(500, 260, 500, 170, '#f59e0b', 6, 14), { });
+    s.step(1, L('M60 130H500', '#ef4444', 5, 'stroke-dasharray="12 8"'), { cls: 'up', e: 2 });
+    s.step(1, person({ x: 280, y: 262, shirt: '#f59e0b', fc: 'smile' }), { cls: 'up', e: 1 });
+    s.step(2, cloud(120, 130, 1.4) + cloud(440, 120, 1.6) + person({ x: 280, y: 190, shirt: '#f59e0b', fc: 'cheer', armL: [-26, -46], armR: [26, -46], sh: false }), { e: 2 });
+    s.step(3, person({ x: 280, y: 118, shirt: '#f59e0b', fc: 'cheer', armL: [-26, -46], armR: [26, -46], sh: false }) + sparks(280, 58, 54, 68, '#ffd34d', 12, 4) + star(140, 60, 10) + star(420, 50, 10) + L('M60 130H500', '#ef4444', 5, 'stroke-dasharray="12 8"') + arrow(500, 260, 500, 170, '#f59e0b', 6, 14), { });
   }],
   ['subsidy', '#0d9488', '정부 건물에서 농부에게 지원금 자루를 보내 작물을 키우게 돕는다', (s) => {
     s.sky('day'); s.ground('grass', 246);

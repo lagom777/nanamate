@@ -184,6 +184,7 @@ function face(kind, skin) {
     case 'cheer': return L('M-10 -82Q-6 -87 -2 -82M2 -82Q6 -87 10 -82', '#2a1a12', 2.6) + P('M-6 -75Q0 -66 6 -75Z', '#7a2a2a');
     case 'sick': return L('M-9 -84L-3 -81M9 -84L3 -81', '#2a1a12', 2.6) + m('M-6 -73Q-3 -77 0 -73T6 -73');
     case 'smirk': return eye(-6) + eye(6) + m('M-4 -74Q2 -71 6 -76');
+    case 'neutral': return eye(-6) + eye(6) + m('M-5 -74H5', 2.6);
     case 'yawn': return L('M-10 -83Q-6 -80 -2 -83M2 -83Q6 -80 10 -83', '#2a1a12', 2.4) + E(0, -73, 3.8, 5, '#7a2a2a');
     default: return eye(-6) + eye(6) + m('M-6 -75Q0 -69 6 -75');
   }

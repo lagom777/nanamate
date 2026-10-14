@@ -123,7 +123,7 @@ export default [
     s.step(1, L('M230 250L290 40M300 250L360 40', '#8c6238', 8) + [[238, 212], [246, 170], [254, 128], [262, 86]].map(([x, y]) => L(`M${x} ${y}L${x + 70} ${y}`, '#8c6238', 6)).join(''), { cls: 'up' });
     s.step(1, person({ x: 150, y: 262, shirt: '#f59e0b', legs: 'walk', s: 0.8 }), { cls: 'up', e: 1 });
     s.step(2, person({ x: 290, y: 190, shirt: '#f59e0b', fc: 'angry', s: 0.7, legs: 'walk', armL: [20, -34], armR: [24, -50], sh: false }), { e: 2 });
-    s.step(3, person({ x: 325, y: 80, shirt: '#f59e0b', fc: 'cheer', s: 0.7, legs: 'hide', armR: [30, -40], armL: [-6, 20], sh: false }) + `<g transform="translate(390 30)">${P('M-16 -26H16V-6Q16 6 0 6Q-16 6 -16 -6Z', '#ffd34d')}${R(-10, 6, 20, 8, '#d99a00', 2)}</g>` + sparks(390, 20, 28, 42, '#ffd34d', 8, 3), { });
+    s.step(3, person({ x: 325, y: 94, shirt: '#f59e0b', fc: 'cheer', s: 0.7, legs: 'hide', armR: [30, -40], armL: [-6, 20], sh: false }) + `<g transform="translate(392 52)">${P('M-16 -26H16V-6Q16 6 0 6Q-16 6 -16 -6Z', '#ffd34d')}${R(-10, 6, 20, 8, '#d99a00', 2)}</g>` + sparks(392, 38, 26, 38, '#ffd34d', 8, 3), { });
   }],
   ['deficient', '#6b7280', '채워야 할 기준선보다 물이 모자란 부족한 상태', (s) => {
     s.sky('cool'); s.ground('floor', 252);
