@@ -95,6 +95,7 @@ button { font: inherit; color: inherit; }
 .hide-mean .row:hover .rm { color: var(--ink-2); background: none; }
 .hide-mean .re { display: none; }
 .hide-mean .row:hover .re { display: block; }
+.re.rx i { font-family: var(--serif); }
 .icon-btn {
   width: 40px; height: 40px; display: grid; place-items: center; border: 0; border-radius: 8px;
   background: transparent; color: var(--ink-3); cursor: pointer;
@@ -111,8 +112,15 @@ button { font: inherit; color: inherit; }
 }
 .mean span { display: inline-block; font-size: clamp(1.15rem, 3.8vw, 1.45rem); font-weight: 500; color: var(--ink); }
 .note { font-family: var(--pen); font-size: 1.5rem; line-height: 1.2; color: var(--pencil); transform: rotate(-1.5deg); }
-.note.ghost, .ety.ghost { visibility: hidden; }
+.note.ghost, .ety.ghost, .ex.ghost { visibility: hidden; }
 .ety { margin: 4px 0 0; width: 100%; max-width: 34em; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); }
+.ety, .ex-en, .ex-ko { border-radius: 8px; transition: background .2s, color .2s; }
+.ety.speaking, .ex-en.speaking, .ex-ko.speaking { background: var(--accent-soft); }
+.ex { width: 100%; max-width: 34em; display: grid; gap: 1px; justify-items: center; }
+.ex p { margin: 0; padding: 0 6px; text-wrap: pretty; }
+.ex-en { font-family: var(--serif); font-size: 15px; font-style: italic; line-height: 1.45; color: var(--ink); }
+.ex-en b { font-weight: 600; color: var(--accent); }
+.ex-ko { font-size: 12.5px; line-height: 1.45; color: var(--ink-3); }
 .emap { display: flex; flex-wrap: wrap; align-items: stretch; justify-content: center; gap: 6px 5px; margin-top: 8px; }
 .emap .eb { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-width: 54px; padding: 5px 10px 6px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
 .emap .eb small { font-size: 10px; line-height: 1.2; color: var(--ink-3); }
@@ -220,6 +228,7 @@ button { font: inherit; color: inherit; }
 .rv { margin-left: 6px; padding: 0 6px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 10.5px; font-weight: 600; vertical-align: 1px; }
 .no-viz .rv { display: none; }
 .ety-lbl { font-family: var(--mono); font-size: 11px; color: var(--red-ink); margin-right: 8px; letter-spacing: .04em; }
+.ex .ety-lbl { margin: 0 0 1px; }
 .word span, .mean span { transition: color .2s; }
 .speaking { color: var(--accent) !important; }
 .masked {
@@ -275,6 +284,8 @@ button { font: inherit; color: inherit; }
 .seg input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 1px; }
 
 .toggles { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+.toggles.say { gap: 2px 22px; }
+.say .switch { min-height: 40px; }
 .switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font-size: 14px; }
 .switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .track { flex: none; position: relative; width: 36px; height: 22px; border-radius: 11px; background: var(--track); transition: background .15s; }
@@ -345,7 +356,10 @@ select {
 #vizSlotStage > .clip { contain: size; align-self: stretch; }
 #vizSlotStage > .clip video { width: 100%; height: 100%; aspect-ratio: auto; object-fit: contain; background: transparent; }
 #vizSlotStage:has(> aside:not(.clip)[hidden]) > .clip, #vizSlotStage:not(:has(> aside:not(.clip))) > .clip { contain: none; }
-#vizSlotStage:has(> .clip:not([hidden])) > aside:not(.clip) { visibility: hidden; }
+/* 영상과 그림 해설이 둘 다 있으면 나란히 — 영상은 해설 높이에 맞춰 왼쪽 칸을 채운다 */
+#vizSlotStage:has(> .clip:not([hidden])):has(> aside:not(.clip):not([hidden])) { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 8px; }
+#vizSlotStage:has(> .clip:not([hidden])):has(> aside:not(.clip):not([hidden])) > aside:not(.clip) { grid-area: 1 / 2; }
+#vizSlotStage:has(> .clip:not([hidden])):has(> aside:not(.clip):not([hidden])) > .clip video { object-fit: cover; }
 
 /* 모바일: 카드·해설·재생 버튼이 한 화면에 들어오게 줄인다 */
 @media (max-width: 879px) {
@@ -406,6 +420,7 @@ select {
         <div class="mean"><span id="mean"></span></div>
         <div class="note" id="note"></div>
         <div class="ety"><span class="ety-lbl">어원</span><div id="ety"></div></div>
+        <div class="ex" id="ex"><span class="ety-lbl">예문</span><p class="ex-en" id="exEn" lang="en"></p><p class="ex-ko" id="exKo"></p></div>
       </div>
     </div>
 
@@ -437,6 +452,17 @@ select {
 
     <div class="settings">
       <h2>재생 설정</h2>
+      <div class="field">
+        <span class="lbl" id="l-say">읽어 줄 항목</span>
+        <div class="toggles say" role="group" aria-labelledby="l-say">
+          <label class="switch"><input type="checkbox" id="say-word" data-say="word"><span class="track"></span>영어 단어</label>
+          <label class="switch"><input type="checkbox" id="say-mean" data-say="mean"><span class="track"></span>뜻</label>
+          <label class="switch"><input type="checkbox" id="say-ety" data-say="ety"><span class="track"></span>어원</label>
+          <label class="switch"><input type="checkbox" id="say-ex" data-say="ex"><span class="track"></span>예문</label>
+          <label class="switch"><input type="checkbox" id="say-exko" data-say="exko"><span class="track"></span>예문 해석</label>
+        </div>
+      </div>
+      <p class="hint" id="sayHint" hidden>읽을 항목이 모두 꺼져 있어요. 카드만 넘어가요.</p>
       <div class="fields">
         <div class="field vol">
           <label class="lbl" for="vol"><span>음량</span><output id="volOut" for="vol">100%</output></label>
@@ -518,6 +544,7 @@ select {
 <script src="viz.js"></script>
 <script src="themes.js"></script>
 <script src="clips.js"></script>
+<script src="examples.js"></script>
 <script>
 const YEONGILMAN = [
   { w: 'revise', pos: 'v.', m: '수정, 개정', e: 're(다시) + videre(보다) → 다시 보고 고치다' },
@@ -1558,7 +1585,11 @@ function themeGroups(words) {
   return [...by.values(), misc].filter(g => g.words.length);
 }
 // 별표는 단어 기준 — 두 단어장에 같은 단어가 있으면 별표도 함께 보인다
-[YEONGILMAN, WORDMASTER].forEach(a => a.forEach(w => { w.k = w.w; }));
+[YEONGILMAN, WORDMASTER].forEach(a => a.forEach(w => {
+  w.k = w.w;
+  const x = (window.EXAMPLES || {})[w.w.toLowerCase()];
+  if (x) { w.x = x[0]; w.xk = x[1]; }
+}));
 // '전체'는 두 단어장을 합치되, 겹치는 단어는 한 번만 (VOCA 쪽을 쓴다)
 const ALLWORDS = YEONGILMAN.concat((() => {
   const seen = new Set(YEONGILMAN.map(w => w.w.toLowerCase()));
@@ -1580,17 +1611,22 @@ const STAR = '<svg viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 
 // settings + stars (per-viewer, browser only)
 const KEY = 'sori-vocab-v1';
 const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '', deck: 'all', grp: '', thm: '', picOnly: false, sleep: 0, viz: true, pic: false, vol: 1 };
+const SAY = { word: true, mean: true, ety: true, ex: true, exko: false };   // 읽어 줄 항목
+const SAY_KEYS = Object.keys(SAY);
+S.say = { ...SAY };
 let stars = new Set();
 let WORDS = [];   // 지금 고른 단어장·파트의 단어
 try {
   const d = JSON.parse(localStorage.getItem(KEY) || '{}');
   if (d.S) Object.assign(S, d.S);
+  S.say = { ...SAY, ...(d.S && d.S.say) };   // 저장본에 없는 항목은 기본값으로
   if (Array.isArray(d.stars)) stars = new Set(d.stars.map(k => String(k).replace(/^wordmaster:/, '')));   // 예전 키 이름 정리
 } catch (e) {}
 function save() { try { localStorage.setItem(KEY, JSON.stringify({ S, stars: [...stars] })); } catch (e) {} }
 
 const els = {
   card: $('card'), pos: $('pos'), count: $('count'), word: $('word'), mean: $('mean'), note: $('note'), ety: $('ety'),
+  ex: $('ex'), exEn: $('exEn'), exKo: $('exKo'),
   bar: $('bar'), cardStar: $('cardStar'), list: $('list'), play: $('play'),
 };
 
@@ -1653,11 +1689,16 @@ let rows = [], rowStars = [];
 function renderList() {
   els.list.innerHTML = WORDS.map((w, i) =>
     `<li><button class="row" type="button" data-i="${i}"><span class="num">${pad(i + 1)}</span>` +
-    `<span class="rw">${w.w}<span class="rpos">${w.pos}</span>${hasViz(w) ? '<span class="rv">해설</span>' : ''}${hasClip(w) ? '<span class="rv">영상</span>' : ''}</span><span class="rm">${w.m}</span>` +
-    `<span class="re"><b>어원</b>${w.e}</span></button>` +
+    `<span class="rw">${w.w}<span class="rpos">${w.pos}</span>${hasViz(w) ? '<span class="rv rv-viz">해설</span>' : ''}${hasClip(w) ? '<span class="rv">영상</span>' : ''}</span><span class="rm">${w.m}</span>` +
+    `<span class="re"><b>어원</b>${w.e}</span>` +
+    (w.x ? `<span class="re rx"><b>예문</b><i lang="en">${esc(w.x)}</i></span>` : '') + `</button>` +
     `<button class="icon-btn star" type="button" data-star="${i}" aria-pressed="false" aria-label="${w.w} 별표">${STAR}</button></li>`
   ).join('');
   rows = [...els.list.children];
+  rows.forEach(li => {   // 검색은 예문을 빼고 단어·뜻·어원에서만
+    const rx = li.querySelector('.rx');
+    li.dataset.q = (rx ? li.textContent.replace(rx.textContent, '') : li.textContent).toLowerCase();
+  });
   rowStars = rows.map(li => li.querySelector('.star'));
   lastShown = -1;
   els.list.scrollTop = 0;
@@ -1667,7 +1708,7 @@ function applyFind() {
   const q = ($('find').value || '').trim().toLowerCase();
   let n = 0;
   rows.forEach(li => {
-    const show = !q || li.textContent.toLowerCase().includes(q);
+    const show = !q || li.dataset.q.includes(q);
     li.hidden = !show;
     if (show) n++;
   });
@@ -1717,6 +1758,21 @@ function etyDiagram(w) {
   segs.slice(1).forEach((t, i, a) => { h += `<span class="ea">→</span><span class="es${i === a.length - 1 ? ' last' : ''}">${esc(t.trim())}</span>`; });
   return `<div class="emap">${h}</div>`;
 }
+// 예문 속 표제어(변화형 포함)를 굵게: 앞부분이 같은 단어를 찾는다 (fled·swollen 같은 불규칙형은 그대로 둔다)
+function exHtml(w) {
+  const stem = w.w.toLowerCase().slice(0, Math.max(3, w.w.length - 2));
+  let hit = false;
+  return w.x.split(/(\b[A-Za-z][A-Za-z-]*\b)/).map(t => {
+    if (!hit && /^[A-Za-z]/.test(t) && t.toLowerCase().startsWith(stem)) { hit = true; return `<b>${esc(t)}</b>`; }
+    return esc(t);
+  }).join('');
+}
+// 한국어 음성으로 어원을 읽기 좋게: 're(다시) + videre(보다) → 다시 보고 고치다' → 're 다시, videre 보다. 다시 보고 고치다.'
+function etySpeech(e) {
+  return e.replace(/\s*\(([^()]*)\)(?=\s|$)/g, ' $1,').replace(/\s*\(([^()]*)\)/g, ' $1 ').replace(/,(\s*)(?=[+→←/]|$)/g, '$1')
+    .replace(/\s*\+\s*/g, ', ').replace(/\s*[→←]\s*/g, '. ').replace(/\s*\/\s*/g, ', ')
+    .replace(/(^|\s)-|-(?=[\s,.]|$)/g, '$1').replace(/,\s*([,.])/g, '$1').replace(/\s+([,.])/g, '$1').replace(/\s+/g, ' ').trim();
+}
 
 let lastShown = -1, lastRev = true;
 function render(revealed) {
@@ -1734,11 +1790,15 @@ function render(revealed) {
   els.ety.innerHTML = S.viz ? etyDiagram(w) : esc(w.e);
   els.ety.setAttribute('aria-label', w.e);
   els.ety.parentElement.classList.toggle('ghost', hidden || picQ);
+  els.ex.hidden = !w.x;
+  els.exEn.innerHTML = w.x ? exHtml(w) : '';
+  els.exKo.textContent = w.xk || '';
+  els.ex.classList.toggle('ghost', hidden || picQ);
   els.word.classList.toggle('masked', (hidden && S.order === 'ko-en') || picQ);
   const meanOff = S.hideMean && peek !== i;
   els.mean.classList.toggle('masked', (hidden && S.order === 'en-ko') || meanOff || picQ);
   els.mean.parentElement.classList.toggle('peekable', S.hideMean);
-  if (meanOff) { els.note.classList.add('ghost'); els.ety.parentElement.classList.add('ghost'); }
+  if (meanOff) { els.note.classList.add('ghost'); els.ety.parentElement.classList.add('ghost'); els.ex.classList.add('ghost'); }
   document.body.classList.toggle('no-viz', !S.viz);
   renderViz(w, (hidden || meanOff) && !picQ);
   if (window.clipShow) window.clipShow(w.w, hidden || meanOff || picQ, S.viz);
@@ -1773,9 +1833,12 @@ function toggleStar(i) {
   save(); syncStars();
 }
 function updateStatus() {
-  const en = `영어 ${S.rep}번`;
-  const seq = S.order === 'en-ko' ? [en, `${S.gap}초`, '뜻'] : ['뜻', `${S.gap}초`, en];
-  let t = `${seq.join(' → ')} · 끝나면 처음부터 다시`;
+  const en = S.say.word && `영어 ${S.rep}번`, ko = S.say.mean && '뜻';
+  const seq = (S.order === 'en-ko' ? [en, `${S.gap}초`, ko] : [ko, `${S.gap}초`, en])
+    .concat(S.say.ety && '어원', S.say.ex && '예문', S.say.exko && '예문 해석').filter(Boolean);
+  const any = SAY_KEYS.some(k => S.say[k]);
+  $('sayHint').hidden = any;
+  let t = `${any ? seq.join(' → ') : '읽기 꺼짐'} · 끝나면 처음부터 다시`;
   if (S.sleep) t += sleepAt ? ` · 🌙 ${fmtLeft(sleepAt - Date.now())} 뒤 자동 종료` : ` · 🌙 재생하면 ${S.sleep}분 뒤 자동 종료`;
   $('status').textContent = t;
 }
@@ -1871,7 +1934,17 @@ $('pickers').addEventListener('click', e => {
 fetch('viz/index.json').then(r => r.ok ? r.json() : []).then(a => {
   if (!Array.isArray(a) || !a.length) return;
   a.forEach(x => VFILE.add(String(x).toLowerCase()));
-  if (S.picOnly) { stop(); loadSource(); render(true); syncStars(); } else { renderVizRow(); }
+  if (S.picOnly) { stop(); loadSource(); render(true); syncStars(); return; }
+  renderVizRow();
+  // 목록을 다시 그리면 스크롤·검색이 풀리므로 '해설' 표시만 끼워 넣는다
+  rows.forEach((li, i) => {
+    const rw = li.querySelector('.rw');
+    if (!hasViz(WORDS[i]) || rw.querySelector('.rv-viz')) return;
+    rw.querySelector('.rpos').insertAdjacentHTML('afterend', '<span class="rv rv-viz">해설</span>');
+    li.dataset.q += ' 해설';
+  });
+  const w = WORDS[deck[pos]];
+  if (w && VFILE.has(vk(w))) render(lastRev);   // 첫 카드가 목록보다 먼저 그려졌으면 해설을 이제 붙인다
 }).catch(() => {});
 
 // voices
@@ -1907,8 +1980,7 @@ function stop() {
   }
   if (pending) pending();
   if (picSkip) picSkip();
-  els.word.classList.remove('speaking');
-  els.mean.classList.remove('speaking');
+  [els.word, els.mean, els.ety.parentElement, els.exEn, els.exKo].forEach(el => el.classList.remove('speaking'));
   return cancelled;
 }
 function showTtsFail(msg) {
@@ -1961,14 +2033,29 @@ function picWait(id) {
 }
 async function speakWord(id) {
   const w = WORDS[deck[pos]];
+  // 항목을 껐는지는 읽기 직전에 본다 — 재생 중에 스위치를 바꿔도 다음 항목부터 바로 따른다
   const en = async () => {
     for (let r = 0; r < S.rep; r++) {
       if (r) await sleep(450);
-      if (id !== run) return;
+      if (id !== run || !S.say.word) return;
       await say(w.w, 'en-US', enSel, els.word, S.rate, id);
     }
   };
-  const ko = () => say(w.m, 'ko-KR', koSel, els.mean, 1, id);
+  const ko = () => S.say.mean ? say(w.m, 'ko-KR', koSel, els.mean, 1, id) : Promise.resolve();
+  const extras = async () => {
+    const parts = [
+      ['ety', () => w.e && say(etySpeech(w.e), 'ko-KR', koSel, els.ety.parentElement, 1, id)],
+      ['ex', () => w.x && say(w.x, 'en-US', enSel, els.exEn, S.rate, id)],
+      ['exko', () => w.xk && say(w.xk, 'ko-KR', koSel, els.exKo, 1, id)],
+    ];
+    for (const [k, fn] of parts) {
+      if (id !== run) return;
+      if (!S.say[k]) continue;
+      await sleep(600);
+      if (id !== run) return;
+      if (S.say[k]) await fn();
+    }
+  };
   if (S.pic && hasPic(w)) {
     await ensureViz(w);
     if (id !== run) return;
@@ -1982,6 +2069,7 @@ async function speakWord(id) {
     await sleep(500);
     if (id !== run) return;
     await (S.order === 'en-ko' ? ko() : en());
+    await extras();
     return;
   }
   render(false);
@@ -1990,6 +2078,7 @@ async function speakWord(id) {
   if (id !== run) return;
   render(true);
   await (S.order === 'en-ko' ? ko() : en());
+  await extras();
 }
 const vzPaused = () => { const r = vizEl.firstElementChild; return !vizEl.hidden && !!r && r.dataset.state === 'pause'; };
 async function loop(id) {
@@ -2054,6 +2143,7 @@ function syncControls() {
   $('opt-star').checked = S.starOnly;
   $('opt-viz').checked = S.viz;
   $('opt-pic').checked = S.pic;
+  SAY_KEYS.forEach(k => { $('say-' + k).checked = !!S.say[k]; });
   $('vol').value = Math.round(S.vol * 100); $('volOut').textContent = Math.round(S.vol * 100) + '%';
 }
 document.querySelectorAll('.seg input').forEach(r => r.addEventListener('change', () => {
@@ -2066,6 +2156,9 @@ $('vol').addEventListener('input', e => { S.vol = Number(e.target.value) / 100; 
 $('vol').addEventListener('change', () => { save(); go(pos); });   // 놓으면 현재 단어를 새 음량으로 다시 들려준다
 $('sleepBtn').addEventListener('click', () => setSleep(SLEEP_STEPS[(SLEEP_STEPS.indexOf(S.sleep) + 1) % SLEEP_STEPS.length]));
 $('opt-hide').addEventListener('change', e => { S.hide = e.target.checked; save(); restartCurrent(); });
+document.querySelectorAll('[data-say]').forEach(c => c.addEventListener('change', () => {
+  S.say[c.dataset.say] = c.checked; save(); updateStatus();
+}));
 function setShuffle(on) {
   S.shuffle = on;
   $('opt-shuffle').checked = on;
