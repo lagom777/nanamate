@@ -4,12 +4,38 @@
 (function () {
   const VIZ = (window.VIZ = window.VIZ || {});   // 장면은 viz/<단어>.svg 에서 불러와 채워진다 (index.html의 ensureViz)
 
+  /* 다크 테마에서는 밝은 장면이 튀지 않게 살짝 어둡게 덮는다(filter는 움직일 때마다 다시 그려야 해서 덮개로) */
+  const DIM = 'content: ""; position: absolute; inset: 0; background: #0e131a; opacity: .14; pointer-events: none;';
+  const css = document.createElement("style");
+  css.textContent = `.vz-scene { position: relative; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .vz-scene::after { ${DIM} } }
+:root[data-theme="dark"] .vz-scene::after { ${DIM} }`;
+  document.head.append(css);
+
+  /* 장면 안에서 가장 늦게 끝나는 등장·이동의 지연+길이(배율 적용 전 초) */
+  function span(scene) {
+    let max = 0.8;
+    for (const m of scene.matchAll(/<[a-z]+[^>]*\bclass="([^"]*)"[^>]*>/g)) {
+      const cls = ` ${m[1]} `, tag = m[0];
+      if (!/ (vs|mv) /.test(cls)) continue;
+      const dl = +((tag.match(/--dl:\s*([\d.]+)s/) || [])[1] || 0), d = tag.match(/--d:\s*([\d.]+)s/);
+      const len = / mv /.test(cls) ? (d ? +d[1] : 1.6) : / (wipe|wipe-d|draw) /.test(cls) ? (d ? +d[1] : 1.4) : 0.8;
+      max = Math.max(max, dl + len);
+    }
+    return max;
+  }
+  /* --k = 등장·이동 시간 배율: 단계가 짧아도 툭 튀지 않게 넉넉히 주되, 단계가 끝나기 전에 움직임이 멈추도록 */
+  function pace(v) {
+    if (v.k == null) v.k = Math.max(0.2, Math.min(1, v.t / 2, (0.85 * v.t) / span(v.scene))).toFixed(2);
+    return v.k;
+  }
+
   /* 카드 옆 패널 HTML */
   const ICON = `<svg class="ic-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></svg><svg class="ic-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg><svg class="ic-again" viewBox="0 0 24 24"><path d="M12 5a7 7 0 1 1-6.6 4.7l1.9.6A5 5 0 1 0 12 7v3L7.5 6 12 2z"/></svg>`;
   window.vizHtml = function (word) {
     const v = VIZ[word.toLowerCase()];
     if (!v || !v.pic) return null;
-    return `<div class="vz pic" data-state="idle" style="--vz:${v.color};--t:${v.t}s;--k:${Math.max(0.2, v.t / 4)}">
+    return `<div class="vz pic" data-state="idle" style="--vz:${v.color};--t:${v.t}s;--k:${pace(v)}">
 <div class="vz-scene">${v.scene}</div>
 <div class="vz-ctl"><button class="vz-play" type="button" aria-label="해설 재생">${ICON}</button>
 <div class="vz-segs">${Array.from({ length: v.n }, (_, i) => `<button class="vz-seg" type="button" data-k="${i + 1}" aria-label="${i + 1}단계 보기"><b><i></i></b></button>`).join("")}</div></div></div>`;
