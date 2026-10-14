@@ -207,10 +207,11 @@ export default [
     s.sky('sun'); s.ground('floor', 252);
     const head = R(210, 236, 140, 40, '#f59e0b', 20) + R(268, 214, 24, 26, '#f0c6a4') + C(280, 150, 74, '#ffd7b5') + P('M206 140Q200 62 280 64Q360 62 354 140Q330 98 280 98Q230 98 206 140Z', '#3a2418') + C(206, 156, 11, '#f0c6a4') + C(354, 156, 11, '#f0c6a4');
     const eyes = (sq) => sq ? L('M238 142Q250 132 262 142M298 142Q310 132 322 142', '#2a1a12', 5) : C(250, 140, 6, '#2a1a12') + C(310, 140, 6, '#2a1a12');
+    s.step(3, sparks(280, 150, 92, 108, '#ffd34d', 10, 4), { cls: 'pop' });
     s.step(1, head, { cls: 'up' });
     s.step(1, eyes(false) + L('M262 188H298', '#2a1a12', 5), { e: 1 });
     s.step(2, eyes(false) + L('M254 184Q280 200 306 184', '#2a1a12', 5), { e: 2 });
-    s.step(3, eyes(true) + C(228, 172, 10, '#ff8aa0', 'fill-opacity=".6"') + C(332, 172, 10, '#ff8aa0', 'fill-opacity=".6"') + P('M226 174Q280 236 334 174Q280 190 226 174Z', '#7a2a2a', 'stroke="#2a1a12" stroke-width="4" stroke-linejoin="round"') + P('M234 177Q280 190 326 177L320 188Q280 198 240 188Z', '#fff') + L('M256 182V194M280 184V197M304 182V194', '#d6d0c0', 2) + sparks(280, 150, 92, 108, '#ffd34d', 10, 4), { cls: 'pop' });
+    s.step(3, eyes(true) + C(228, 172, 10, '#ff8aa0', 'fill-opacity=".6"') + C(332, 172, 10, '#ff8aa0', 'fill-opacity=".6"') + P('M226 174Q280 236 334 174Q280 190 226 174Z', '#7a2a2a', 'stroke="#2a1a12" stroke-width="4" stroke-linejoin="round"') + P('M234 177Q280 190 326 177L320 188Q280 198 240 188Z', '#fff') + L('M256 182V194M280 184V197M304 182V194', '#d6d0c0', 2), { cls: 'pop' });
   }],
   ['heritage', '#b45309', '조상이 지켜 온 옛집을 아이가 이어받아 소중히 간직하는 유산', (s) => {
     s.sky('warm'); s.ground('grass', 246);
