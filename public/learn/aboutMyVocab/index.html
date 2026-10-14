@@ -345,7 +345,10 @@ select {
 #vizSlotStage > .clip { contain: size; align-self: stretch; }
 #vizSlotStage > .clip video { width: 100%; height: 100%; aspect-ratio: auto; object-fit: contain; background: transparent; }
 #vizSlotStage:has(> aside:not(.clip)[hidden]) > .clip, #vizSlotStage:not(:has(> aside:not(.clip))) > .clip { contain: none; }
-#vizSlotStage:has(> .clip:not([hidden])) > aside:not(.clip) { visibility: hidden; }
+/* 영상과 그림 해설이 둘 다 있으면 나란히 — 영상은 해설 높이에 맞춰 왼쪽 칸을 채운다 */
+#vizSlotStage:has(> .clip:not([hidden])):has(> aside:not(.clip):not([hidden])) { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 8px; }
+#vizSlotStage:has(> .clip:not([hidden])):has(> aside:not(.clip):not([hidden])) > aside:not(.clip) { grid-area: 1 / 2; }
+#vizSlotStage:has(> .clip:not([hidden])):has(> aside:not(.clip):not([hidden])) > .clip video { object-fit: cover; }
 
 /* 모바일: 카드·해설·재생 버튼이 한 화면에 들어오게 줄인다 */
 @media (max-width: 879px) {
