@@ -1689,7 +1689,7 @@ let rows = [], rowStars = [];
 function renderList() {
   els.list.innerHTML = WORDS.map((w, i) =>
     `<li><button class="row" type="button" data-i="${i}"><span class="num">${pad(i + 1)}</span>` +
-    `<span class="rw">${w.w}<span class="rpos">${w.pos}</span>${hasViz(w) ? '<span class="rv">해설</span>' : ''}${hasClip(w) ? '<span class="rv">영상</span>' : ''}</span><span class="rm">${w.m}</span>` +
+    `<span class="rw">${w.w}<span class="rpos">${w.pos}</span>${hasViz(w) ? '<span class="rv rv-viz">해설</span>' : ''}${hasClip(w) ? '<span class="rv">영상</span>' : ''}</span><span class="rm">${w.m}</span>` +
     `<span class="re"><b>어원</b>${w.e}</span>` +
     (w.x ? `<span class="re rx"><b>예문</b><i lang="en">${esc(w.x)}</i></span>` : '') + `</button>` +
     `<button class="icon-btn star" type="button" data-star="${i}" aria-pressed="false" aria-label="${w.w} 별표">${STAR}</button></li>`
@@ -1934,7 +1934,17 @@ $('pickers').addEventListener('click', e => {
 fetch('viz/index.json').then(r => r.ok ? r.json() : []).then(a => {
   if (!Array.isArray(a) || !a.length) return;
   a.forEach(x => VFILE.add(String(x).toLowerCase()));
-  if (S.picOnly) { stop(); loadSource(); render(true); syncStars(); } else { renderVizRow(); }
+  if (S.picOnly) { stop(); loadSource(); render(true); syncStars(); return; }
+  renderVizRow();
+  // 목록을 다시 그리면 스크롤·검색이 풀리므로 '해설' 표시만 끼워 넣는다
+  rows.forEach((li, i) => {
+    const rw = li.querySelector('.rw');
+    if (!hasViz(WORDS[i]) || rw.querySelector('.rv-viz')) return;
+    rw.querySelector('.rpos').insertAdjacentHTML('afterend', '<span class="rv rv-viz">해설</span>');
+    li.dataset.q += ' 해설';
+  });
+  const w = WORDS[deck[pos]];
+  if (w && VFILE.has(vk(w))) render(lastRev);   // 첫 카드가 목록보다 먼저 그려졌으면 해설을 이제 붙인다
 }).catch(() => {});
 
 // voices
