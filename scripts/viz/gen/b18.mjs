@@ -45,7 +45,7 @@ export default [
     s.sky('wall'); s.ground('floor', 252);
     s.step(1, person({ x: 150, y: 254, shirt: '#b91c1c', fc: 'shock' }) + P('M240 252L255 230L270 252Z M280 252L296 238L310 252Z', '#60a5fa', 'stroke="#2563eb" stroke-width="2"'), { cls: 'up', e: 2 });
     s.mv(2, 'translateY(-90px)', paper(300, 130, 70, 90, 3) + L('M280 100H320', '#dc2626', 5), { d: 0.8, e: 2 });
-    s.step(3, person({ x: 280, y: 254, shirt: '#b91c1c', fc: 'sad', rot: 10, armL: [-6, 24], armR: [6, 24] }) + `<g transform="translate(282 160)">${P('M-30 40Q-34 0 0 -4Q34 0 30 40Z', '#dc2626', 'stroke="#7f1d1d" stroke-width="3"')}${coin(0, 14, 10)}</g>` + drop(256, 150, 0.8), { });
+    s.step(3, `<g transform="translate(250 128) rotate(-12)">${P('M-46 52Q-54 -4 0 -10Q54 -4 46 52Q0 64 -46 52Z', '#dc2626', 'stroke="#7f1d1d" stroke-width="3"')}${L('M-14 -10Q0 -22 14 -10', '#7f1d1d', 4)}${coin(0, 24, 14)}</g>` + person({ x: 290, y: 254, shirt: '#b91c1c', fc: 'sad', rot: 18, armL: [-30, -30], armR: [-20, -34] }) + drop(330, 150, 0.8) + L('M226 34V56M256 30V52', '#7f1d1d', 4) + P('M219 54L226 68L233 54Z M249 50L256 64L263 50Z', '#7f1d1d'), { cls: 'up' });
   }],
   ['pester', '#f59e0b', '일하는 어른의 소매를 계속 잡아당기며 조르는 아이', (s) => {
     s.sky('wall'); s.ground('floor', 252);

@@ -16,8 +16,8 @@ export const CLR = { skin: '#ffd7b5', skin2: '#f0c6a4', hair: '#3a2418', ink: '#
 const f = (n) => Math.round(n * 10) / 10;
 
 export class Scene {
-  constructor(word, { c = '#3b82f6', label = '', n = 3 } = {}) {
-    this.w = word; this.c = c; this.label = label; this.n = n; this.grads = new Map(); this.body = [];
+  constructor(word, { c = '#3b82f6', label = '', n = 3, frame = null } = {}) {
+    this.w = word; this.c = c; this.label = label; this.n = n; this.frame = frame; this.grads = new Map(); this.body = [];
   }
   /* 그라데이션 등록 → url(#단어_이름) */
   g(name, c1, c2, dir = 'v') {
@@ -69,8 +69,49 @@ export class Scene {
       defs.push(`<linearGradient id="${this.w}_${name}" ${xy}><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`);
     }
     const lab = this.label.replace(/"/g, "'");
-    return `<svg xmlns="http://www.w3.org/2000/svg" data-n="${this.n}" data-t="1" data-c="${this.c}" viewBox="0 0 560 300" role="img" aria-label="${lab}">\n<defs>\n${defs.join('\n')}\n</defs>\n<g clip-path="url(#${this.w}_clip)">\n${this.body.join('\n')}\n</g></svg>\n`;
+    /* frame = [배율, x, y] (scripts/viz/frame.mjs 가 잰 값) — 그림 전체를 확대해 화면을 채운다 */
+    let body = hideReplaced(this.body.join('\n'), this.n);
+    if (this.frame) body = `<g transform="translate(${this.frame[1]} ${this.frame[2]}) scale(${this.frame[0]})">\n${body}\n</g>`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" data-n="${this.n}" data-t="1" data-c="${this.c}" viewBox="0 0 560 300" role="img" aria-label="${lab}">\n<defs>\n${defs.join('\n')}\n</defs>\n<g clip-path="url(#${this.w}_clip)">\n${body}\n</g></svg>\n`;
   }
+}
+
+/* 같은 자리에 새 자세·표정의 사람이 나타나면, 그 동안 이전 사람은 숨긴다.
+   (그대로 두면 이전 사람의 팔·얼굴이 새 사람 밖으로 삐져나와 팔이 네 개처럼 보인다) */
+function hideReplaced(body, n) {
+  const tok = /<(\/?)([a-zA-Z]+)([^>]*?)(\/?)>/g;
+  const stack = [], people = [];
+  let m;
+  while ((m = tok.exec(body))) {
+    const [all, close, tag, attrs, self] = m;
+    if (close) { const el = stack.pop(); el.end = m.index + all.length; continue; }
+    const el = { tag, attrs, start: m.index, end: m.index + all.length };
+    if (/^<rect x="-16" y="-64" width="32" height="60" rx="12"/.test(all) && stack.length) {
+      const root = stack[stack.length - 1];
+      let s = 0, e = n, x = 0, y = 0;
+      for (const a of stack) {
+        const ds = a.attrs.match(/data-s="(\d+)"/), de = a.attrs.match(/data-e="(\d+)"/);
+        if (ds && /class="[^"]*\b(vs)\b/.test(a.attrs)) s = Math.max(s, +ds[1]);
+        if (de) e = Math.min(e, +de[1]);
+        const tr = a.attrs.match(/transform="translate\(([-\d.]+)[ ,]+([-\d.]+)\)/);
+        if (tr) { x += +tr[1]; y += +tr[2]; }
+      }
+      people.push({ root, s, e, x, y });
+    }
+    if (!self) stack.push(el);
+  }
+  const edits = [];
+  for (const a of people) {
+    const later = people.filter((b) => b !== a && b.s > a.s && b.s <= a.e && Math.abs(b.x - a.x) < 14 && Math.abs(b.y - a.y) < 14);
+    if (!later.length) continue;
+    let ranges = [[Math.max(a.s, 1), a.e]];
+    for (const b of later) ranges = ranges.flatMap(([s, e]) => [[s, Math.min(e, b.s - 1)], [Math.max(s, b.e + 1), e]]).filter(([s, e]) => s <= e);
+    const src = body.slice(a.root.start, a.root.end);
+    edits.push([a.root.start, a.root.end, ranges.map(([s, e]) => `<g class="vs" data-s="${s}"${e < n ? ` data-e="${e}"` : ''}>${src}</g>`).join('')]);
+  }
+  edits.sort((p, q) => q[0] - p[0]);
+  for (const [s, e, rep] of edits) body = body.slice(0, s) + rep + body.slice(e);
+  return body;
 }
 
 /* ---------- 기본 도형 ---------- */
@@ -146,6 +187,7 @@ function face(kind, skin) {
     case 'cheer': return L('M-10 -82Q-6 -87 -2 -82M2 -82Q6 -87 10 -82', '#2a1a12', 2.6) + P('M-6 -75Q0 -66 6 -75Z', '#7a2a2a');
     case 'sick': return L('M-9 -84L-3 -81M9 -84L3 -81', '#2a1a12', 2.6) + m('M-6 -73Q-3 -77 0 -73T6 -73');
     case 'smirk': return eye(-6) + eye(6) + m('M-4 -74Q2 -71 6 -76');
+    case 'neutral': return eye(-6) + eye(6) + m('M-5 -74H5', 2.6);
     case 'yawn': return L('M-10 -83Q-6 -80 -2 -83M2 -83Q6 -80 10 -83', '#2a1a12', 2.4) + E(0, -73, 3.8, 5, '#7a2a2a');
     default: return eye(-6) + eye(6) + m('M-6 -75Q0 -69 6 -75');
   }

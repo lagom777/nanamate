@@ -114,7 +114,6 @@ export default [
   ['impair', '#6b7280', '안경이 깨져 시야가 흐려지고 잘 보이지 않게 된다', (s) => {
     s.sky('day'); s.ground('grass', 246);
     s.step(1, person({ x: 150, y: 260, shirt: '#6b7280', fc: 'smile', hat: '<g fill="#cfeaff" fill-opacity=".6" stroke="#2a2e3a" stroke-width="2.4"><circle cx="-7" cy="-83" r="6"/><circle cx="7" cy="-83" r="6"/></g>' }) + flag(420, 250, '#16a34a', 110), { cls: 'up' });
-    s.step(2, L('M-4 -87L2 -80L-2 -78', '#2a2e3a', 2) + '', { cls: 'pop' });
     s.step(2, `<g transform="translate(150 260)"><g fill="none" stroke="#2a2e3a" stroke-width="2"><path d="M-10 -88L-4 -80L-8 -77L-3 -73"/><path d="M6 -88L10 -82"/></g></g>`, {});
     s.step(3, `<rect x="380" y="100" width="130" height="150" fill="#eef2f7" fill-opacity=".75"/>` + person({ x: 150, y: 260, shirt: '#6b7280', fc: 'sad', hat: '<g fill="none" stroke="#ef4444" stroke-width="2"><path d="M-12 -80L-3 -86M3 -80L12 -86"/></g>' }) + L('M110 150L96 140M200 150L214 140', '#6b7280', 3), { });
   }],
