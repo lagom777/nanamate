@@ -53,8 +53,9 @@
 
   var S = {
     set: '', mode: 'exam', items: [], ans: [], graded: false, timer: false, left: EXAM_SECONDS, tick: null,
-    count: 10, revealed: {}, sel: 'a', meta: null, pa: {}
+    count: 10, revealed: {}, sel: 'a', meta: null, pa: {}, wrongLoading: false
   };
+  var meUser = null;
 
   function examList() { return EXAMS.filter(function (e) { return e[SUB]; }); }
   function examOf(key) { return examList().filter(function (e) { return e.key === key; })[0]; }
@@ -83,6 +84,14 @@
       items = shuffle(items);
     }
     return items;
+  }
+  function wrongItems(rows) {
+    var items = [];
+    (rows || []).forEach(function (r) {
+      var e2 = examOf(r.exam);
+      if (e2 && +r.q) items.push(mk(e2, +r.q));
+    });
+    return shuffle(items);
   }
   function mk(e, n) {
     var s = e[SUB];
@@ -114,7 +123,7 @@
   }
 
   /* ───────── UI shell ───────── */
-  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap;
+  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, authBox;
 
   function buildShell() {
     root.innerHTML = '';
@@ -157,6 +166,8 @@
       el('div', { class: 'pr-bar-row' }, row1),
       el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), timerEl, progEl])
     ]);
+    authBox = el('div', { class: 'pr-auth' });
+    bar.appendChild(authBox);
     list = el('div', { class: 'pr-list' + (PAPER ? ' paper' : '') });
     omr = el('div', { class: 'pr-omr', role: 'complementary', 'aria-label': '답안지' });
     root.appendChild(bar);
@@ -191,8 +202,47 @@
   }
   function stopTimer() { if (S.tick) clearInterval(S.tick); S.tick = null; S.timer = false; }
 
+  function refreshAuth() {
+    if (!authBox) return;
+    authBox.textContent = '';
+    if (!window.SnAuth) return;
+    if (meUser && meUser.id) {
+      authBox.appendChild(el('span', { class: 'pr-auth-name', text: (meUser.nickname || '학생') + '님 · ' }));
+      authBox.appendChild(el('button', { type: 'button', class: 'pr-auth-out', text: '로그아웃', onclick: function () {
+        SnAuth.logout().then(function () {
+          meUser = { id: null };
+          refreshAuth();
+          if (S.set.indexOf('wrong:') === 0) startSet(S.set);
+        });
+      } }));
+      authBox.appendChild(el('span', { class: 'pr-auth-note', text: '틀린 문제가 계정에 저장됩니다' }));
+    } else {
+      authBox.appendChild(el('button', { type: 'button', class: 'pr-kakao', text: '카카오로 로그인', onclick: function () { SnAuth.login(); } }));
+    }
+  }
+  function migrateWrong() {
+    if (!meUser || !meUser.id || !window.SnAuth || store('sn:' + SUB + ':migrated')) return Promise.resolve();
+    var local = store('sn:' + SUB + ':wrong') || [];
+    return SnAuth.wrong(SUB).then(function (rows) {
+      if (!Array.isArray(rows)) return;
+      var have = {};
+      rows.forEach(function (r) { have[r.exam + '/' + r.q] = 1; });
+      var ts = Date.now(), extra = [];
+      local.forEach(function (id) {
+        if (have[id]) return;
+        var p = String(id).split('/');
+        var q = parseInt(p[1], 10);
+        if (!/^[0-9]{4}-(csat|jun|sep)$/.test(p[0]) || !q) return;
+        extra.push({ exam: p[0], sub: SUB, q: q, picked: 0, ok: 0, ts: ts });
+      });
+      var mark = function () { store('sn:' + SUB + ':migrated', 1); };
+      if (!extra.length) { mark(); return; }
+      return SnAuth.record(extra).then(mark);
+    }).catch(function () {});
+  }
   function startSet(setId, keepAns) {
     stopTimer();
+    S.wrongLoading = false;
     S.set = setId;
     var isExam = setId.indexOf('exam:') === 0;
     if (PAPER) {
@@ -212,6 +262,32 @@
         renderAll();
         if (!keepAns) window.scrollTo && root.scrollIntoView && root.scrollIntoView({ block: 'start' });
       }).catch(function () { list.textContent = '시험지 데이터를 불러오지 못했습니다.'; });
+      return;
+    }
+    if (setId.indexOf('wrong:') === 0 && meUser && meUser.id && window.SnAuth) {
+      S.items = [];
+      S.ans = [];
+      S.graded = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
+      S.mode = 'practice';
+      S.wrongLoading = true;
+      setSel.value = setId;
+      try { history.replaceState(null, '', '#' + encodeURIComponent(setId)); } catch (e) {}
+      renderAll();
+      var req = setId;
+      SnAuth.wrong(SUB).then(function (rows) {
+        if (S.set !== req) return;
+        S.wrongLoading = false;
+        S.items = wrongItems(rows);
+        S.ans = S.items.map(function () { return 0; });
+        renderAll();
+        window.scrollTo && root.scrollIntoView && root.scrollIntoView({ block: 'start' });
+      }).catch(function () {
+        if (S.set !== req) return;
+        S.wrongLoading = false;
+        S.items = buildItems(req);
+        S.ans = S.items.map(function () { return 0; });
+        renderAll();
+      });
       return;
     }
     S.items = buildItems(setId);
@@ -258,7 +334,7 @@
     if (PAPER) renderPaper();
     else {
       if (!S.items.length) {
-        list.appendChild(el('p', { class: 'pr-empty', text: '아직 저장된 오답이 없습니다. 문제를 풀고 채점하면 틀린 문항이 여기에 모입니다.' }));
+        list.appendChild(el('p', { class: 'pr-empty', text: S.wrongLoading ? '오답을 불러오는 중…' : '아직 저장된 오답이 없습니다. 문제를 풀고 채점하면 틀린 문항이 여기에 모입니다.' }));
       }
       S.items.forEach(function (it, i) { list.appendChild(card(it, i)); });
     }
@@ -271,7 +347,9 @@
   }
   /* 문항 하나만 채점·해설 열기/접기 (시험 모드에서도 가능) */
   function toggleReveal(i) {
-    S.revealed[i] = !isShown(i);
+    var open = !isShown(i);
+    S.revealed[i] = open;
+    if (open) sendAttempt(i);
     if (!PAPER) refreshCard(i);
     renderOmr();
   }
@@ -356,6 +434,7 @@
     S.ans[i] = S.ans[i] === k ? 0 : k;
     persist();
     if (S.mode === 'practice' && !PAPER) recordWrong(S.items[i], S.ans[i]);
+    if (S.mode === 'practice' || isShown(i)) sendAttempt(i);
     if (!PAPER) refreshCard(i);
     renderBar(); renderOmr();
   }
@@ -365,6 +444,7 @@
     S.ans[i] = isNaN(n) ? 0 : n;
     persist();
     if (S.mode === 'practice') recordWrong(S.items[i], S.ans[i]);
+    if (S.mode === 'practice' || isShown(i)) sendAttempt(i);
     refreshCard(i);
     renderBar(); renderOmr();
   }
@@ -375,6 +455,27 @@
     if (!isRight(it, a) && idx < 0) w.push(it.id);
     else if (isRight(it, a) && idx >= 0) w.splice(idx, 1);
     store('sn:' + SUB + ':wrong', w);
+  }
+  function attemptOf(it, i, ts) {
+    var a = S.ans[i];
+    if (!a || !it) return null;
+    var exam = it.ex || (S.set.indexOf('exam:') === 0 ? S.set.slice(5) : '');
+    if (!exam) return null;
+    return { exam: exam, sub: SUB, q: it.n, picked: a, ok: isRight(it, a) ? 1 : 0, ts: ts || Date.now() };
+  }
+  function sendAttempt(i) {
+    if (!window.SnAuth) return;
+    var row = attemptOf(S.items[i], i);
+    if (row) SnAuth.record([row]);
+  }
+  function sendGraded() {
+    if (!window.SnAuth) return;
+    var ts = Date.now(), rows = [];
+    S.items.forEach(function (it, i) {
+      var row = attemptOf(it, i, ts);
+      if (row) rows.push(row);
+    });
+    if (rows.length) SnAuth.record(rows);
   }
 
   /* ───────── paper 렌더 ───────── */
@@ -501,6 +602,7 @@
     var d = new Date();
     hist.push({ d: (d.getMonth() + 1) + '/' + d.getDate(), s: setLabel(), sc: sc, t: tot });
     store('sn:' + SUB + ':hist', hist.slice(-40));
+    sendGraded();
     renderAll();
     if (PAPER && isNarrow()) toggleOmr(true);
     else omr.scrollIntoView && omr.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -548,10 +650,14 @@
   }
 
   /* ───────── boot ───────── */
-  fetch(cfg.base + 'exams.json').then(function (r) { return r.json(); }).then(function (d) {
-    EXAMS = d.exams;
+  var examsP = fetch(cfg.base + 'exams.json').then(function (r) { return r.json(); });
+  var meP = window.SnAuth ? SnAuth.me() : Promise.resolve({ id: null });
+  Promise.all([examsP, meP]).then(function (pair) {
+    EXAMS = pair[0].exams;
+    meUser = pair[1] && pair[1].id ? pair[1] : { id: null };
     var ex = examList();
     buildShell();
+    refreshAuth();
     var savedMode = store('sn:' + SUB + ':mode');
     S.mode = savedMode === 'practice' ? 'practice' : 'exam';
     var sv = store('sn:' + SUB + ':sel');
@@ -561,8 +667,9 @@
     var start = /^(exam|part|wrong):/.test(h) ? h : 'exam:' + ex[0].key;
     if (start.indexOf('exam:') === 0 && !examOf(start.slice(5))) start = 'exam:' + ex[0].key;
     if (start.indexOf('part:') === 0 && !partName[start.slice(5)]) start = 'exam:' + ex[0].key;
-    startSet(start);
-    window.scrollTo(0, 0);
+    var begin = function () { startSet(start); window.scrollTo(0, 0); };
+    if (meUser.id && start.indexOf('wrong:') === 0) migrateWrong().then(begin);
+    else { begin(); if (meUser.id) migrateWrong(); }
   }).catch(function () {
     root.textContent = '문제 데이터를 불러오지 못했습니다. 로컬에서는 python3 -m http.server로 public/learn을 열어 주세요.';
   });

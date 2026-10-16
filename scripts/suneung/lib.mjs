@@ -219,6 +219,7 @@ ${expNote}
 <div id="practice-root"></div>
 </main></div>
 <script>window.SUNEUNG_PRACTICE=${JSON.stringify({ subject: sub, label, base: "../suneung-exam/", imgBase: IMG_BASE, parts, mount: "practice-root", kind, qn, minutes })};</script>
+<script src="../shared/auth.js"></script>
 <script src="../suneung-exam/practice.js"></script>
 </body></html>`;
 }

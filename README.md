@@ -16,3 +16,17 @@
 ```bash
 python3 -m http.server 8080 --directory public/learn
 ```
+
+## 카카오 로그인 · 오답 저장
+
+기출 풀이 기록은 Worker(`worker/index.js`)와 D1에 둔다. `wrangler.jsonc`의 `database_id`(`REPLACE_WITH_D1_ID`)를 만든 데이터베이스 아이디로 바꾼 뒤 마이그레이션과 시크릿 세 개를 등록한다.
+
+```bash
+npx wrangler d1 create nanamate
+npx wrangler d1 migrations apply nanamate --remote
+npx wrangler secret put KAKAO_REST_API_KEY
+npx wrangler secret put KAKAO_CLIENT_SECRET
+npx wrangler secret put SESSION_SECRET
+```
+
+카카오 Redirect URI는 `https://nanamate.petal-bite.workers.dev/api/auth/kakao/callback` 와 `http://localhost:8787/api/auth/kakao/callback` 이다. 로컬은 `npx wrangler d1 migrations apply nanamate --local` 다음 `npx wrangler dev --local --port 8787`.
