@@ -1,6 +1,6 @@
 # nanamate
 
-사이트: https://nanamate.petal-bite.workers.dev
+사이트: https://nanamate.na7.workers.dev
 
 
 정적 HTML 학습 허브. Cloudflare Pages는 `public/learn`을 사이트 루트로 올립니다.
@@ -29,4 +29,4 @@ npx wrangler secret put KAKAO_CLIENT_SECRET
 npx wrangler secret put SESSION_SECRET
 ```
 
-카카오 Redirect URI는 `https://nanamate.petal-bite.workers.dev/api/auth/kakao/callback` 와 `http://localhost:8787/api/auth/kakao/callback` 이다. 로컬은 `npx wrangler d1 migrations apply nanamate --local` 다음 `npx wrangler dev --local --port 8787`.
+카카오 Redirect URI는 `https://nanamate.na7.workers.dev/api/auth/kakao/callback` 와 `http://localhost:8787/api/auth/kakao/callback` 이다. 로컬은 `npx wrangler d1 migrations apply nanamate --local` 다음 `npx wrangler dev --local --port 8787`.
