@@ -70,6 +70,10 @@
     return fetch('/api/wrong?sub=' + encodeURIComponent(sub), { credentials: 'same-origin', cache: 'no-store' })
       .then(function (r) { if (!r.ok) throw new Error('wrong'); return r.json(); });
   }
+  function exportAttempts(sub) {
+    return fetch('/api/export?sub=' + encodeURIComponent(sub), { credentials: 'same-origin', cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error('export'); return r.json(); });
+  }
 
-  w.SnAuth = { me: me, login: login, logout: logout, record: record, wrong: wrong };
+  w.SnAuth = { me: me, login: login, logout: logout, record: record, wrong: wrong, exportAttempts: exportAttempts };
 })(window);

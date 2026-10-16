@@ -123,7 +123,7 @@
   }
 
   /* ───────── UI shell ───────── */
-  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, authBox;
+  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, authBox, exportMsg, exportTimer, exporting = false;
 
   function buildShell() {
     root.innerHTML = '';
@@ -215,8 +215,13 @@
           if (S.set.indexOf('wrong:') === 0) startSet(S.set);
         });
       } }));
+      authBox.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '분석용 MD 복사', onclick: function () { exportMarkdown('copy'); } }));
+      authBox.appendChild(el('button', { type: 'button', class: 'pr-btn', text: 'MD 다운로드', onclick: function () { exportMarkdown('download'); } }));
+      exportMsg = el('span', { class: 'pr-auth-msg', 'aria-live': 'polite' });
+      authBox.appendChild(exportMsg);
       authBox.appendChild(el('span', { class: 'pr-auth-note', text: '틀린 문제가 계정에 저장됩니다' }));
     } else {
+      exportMsg = null;
       authBox.appendChild(el('button', { type: 'button', class: 'pr-kakao', text: '카카오로 로그인', onclick: function () { SnAuth.login(); } }));
     }
   }
@@ -442,6 +447,137 @@
       explainCache[ck] = fetch(cfg.base + 'trap/' + key + '-' + SUB + '.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
     }
     return explainCache[ck];
+  }
+
+  var reportLoading = null;
+  function loadReport() {
+    if (window.SnReport) return Promise.resolve();
+    if (reportLoading) return reportLoading;
+    reportLoading = new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = cfg.base + 'report.js';
+      s.onload = function () {
+        if (window.SnReport) resolve();
+        else { reportLoading = null; reject(new Error('report')); }
+      };
+      s.onerror = function () { reportLoading = null; reject(new Error('report')); };
+      document.head.appendChild(s);
+    });
+    return reportLoading;
+  }
+  function exportSubject() {
+    return String(cfg.label || SUB).replace(/^수능\s+/, '');
+  }
+  function countQuestions(attempts) {
+    var seen = {}, n = 0;
+    (attempts || []).forEach(function (a) {
+      if (!a) return;
+      var k = a.exam + '/' + a.q;
+      if (seen[k]) return;
+      seen[k] = 1;
+      n++;
+    });
+    return n;
+  }
+  function loadExportMaps(attempts) {
+    var seen = {}, keys = [];
+    (attempts || []).forEach(function (a) {
+      if (!a || !a.exam || seen[a.exam]) return;
+      seen[a.exam] = 1;
+      keys.push(a.exam);
+    });
+    return Promise.all(keys.map(function (key) {
+      return Promise.all([loadTrap(key), loadExplain(key)]).then(function (pair) {
+        return { key: key, trap: pair[0], explain: pair[1] };
+      });
+    })).then(function (rows) {
+      var trap = {}, explain = {};
+      rows.forEach(function (r) {
+        if (r.trap) trap[r.key] = r.trap;
+        if (r.explain) explain[r.key] = r.explain;
+      });
+      return { trap: trap, explain: explain };
+    });
+  }
+  function downloadText(text, filename) {
+    var blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+  }
+  function flashExport(text) {
+    if (!exportMsg) return;
+    exportMsg.textContent = text;
+    if (exportTimer) clearTimeout(exportTimer);
+    exportTimer = setTimeout(function () { if (exportMsg) exportMsg.textContent = ''; }, 2000);
+  }
+  function prepareExport(now) {
+    return loadReport().then(function () {
+      return SnAuth.exportAttempts(SUB);
+    }).then(function (attempts) {
+      if (!Array.isArray(attempts)) throw new Error('export');
+      return loadExportMaps(attempts).then(function (maps) {
+        var md = window.SnReport.buildReport({
+          subLabel: exportSubject(),
+          now: now,
+          attempts: attempts,
+          exams: EXAMS,
+          sub: SUB,
+          partName: partName,
+          trap: maps.trap,
+          explain: maps.explain,
+          imgBase: cfg.imgBase || cfg.base || ''
+        });
+        var subject = exportSubject().replace(/[\\/:*?"<>|]/g, '');
+        return {
+          md: md,
+          n: countQuestions(attempts),
+          file: '분석-' + subject + '-' + window.SnReport.kstDate(now).replace(/-/g, '') + '.md'
+        };
+      });
+    });
+  }
+  function saveExport(res) {
+    downloadText(res.md, res.file);
+    flashExport('내려받았습니다 (' + res.n + '문항)');
+  }
+  function exportMarkdown(kind) {
+    if (exporting || !window.SnAuth) return;
+    exporting = true;
+    var now = Date.now();
+    var work = prepareExport(now);
+    var finish = function () { exporting = false; };
+    if (kind === 'copy' && window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+      try {
+        navigator.clipboard.write([new ClipboardItem({
+          'text/plain': work.then(function (res) { return new Blob([res.md], { type: 'text/plain' }); })
+        })]).then(function () {
+          return work.then(function (res) { flashExport('복사했습니다 (' + res.n + '문항)'); });
+        }).catch(function () {
+          return work.then(saveExport);
+        }).then(finish, function () {
+          flashExport('내보내지 못했습니다');
+          finish();
+        });
+        return;
+      } catch (e) {}
+    }
+    work.then(function (res) {
+      if (kind === 'download' || !navigator.clipboard || !navigator.clipboard.writeText) {
+        saveExport(res);
+        return;
+      }
+      return navigator.clipboard.writeText(res.md).then(function () {
+        flashExport('복사했습니다 (' + res.n + '문항)');
+      }, function () { saveExport(res); });
+    }).catch(function () {
+      flashExport('내보내지 못했습니다');
+    }).then(finish);
   }
 
   function refreshCard(i) {

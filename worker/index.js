@@ -181,6 +181,17 @@ async function listAttempts(request, env, url) {
   return json(results || []);
 }
 
+async function exportAttempts(request, env, url) {
+  const session = await current(request, env);
+  if (!session) return json({ error: 'unauthorized' }, 401);
+  const sub = url.searchParams.get('sub');
+  if (!validSub(sub)) return json({ error: 'bad query' }, 400);
+  const { results } = await env.DB.prepare(
+    'SELECT exam, q, picked, ok, ts FROM attempts WHERE user_id = ? AND sub = ? ORDER BY ts ASC, id ASC LIMIT 5000'
+  ).bind(session.uid, sub).all();
+  return json(results || []);
+}
+
 async function wrong(request, env, url) {
   const session = await current(request, env);
   if (!session) return json({ error: 'unauthorized' }, 401);
@@ -218,6 +229,7 @@ export default {
       if (path === '/api/me' && request.method === 'GET') return await me(request, env);
       if (path === '/api/attempts' && request.method === 'POST') return await postAttempts(request, env);
       if (path === '/api/attempts' && request.method === 'GET') return await listAttempts(request, env, url);
+      if (path === '/api/export' && request.method === 'GET') return await exportAttempts(request, env, url);
       if (path === '/api/wrong' && request.method === 'GET') return await wrong(request, env, url);
       return new Response('not found', { status: 404, headers: { 'Cache-Control': 'no-store' } });
     } catch {
