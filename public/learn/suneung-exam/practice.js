@@ -401,6 +401,17 @@
     var box = el('div', { class: 'pr-explain' }, [
       el('p', { class: 'pr-verdict' }, [el('b', { text: verdict }), ' · ' + (it.ans === 0 ? '' : '정답 ') + corr + ' · 배점 ' + it.pts + '점']),
     ]);
+    if (S.ans[i] && !okk && !it.num && !Array.isArray(it.ans)) {
+      var trap = el('p', { class: 'pr-trap', hidden: true });
+      box.appendChild(trap);
+      loadTrap(it.ex).then(function (map) {
+        var t = map && map[it.n] && map[it.n].o && map[it.n].o[S.ans[i]];
+        if (!t) return;
+        trap.appendChild(el('b', { text: '내가 고른 ' + chLabel(S.ans[i]) + ' — 왜 오답일까? ' }));
+        trap.appendChild(document.createTextNode(t));
+        trap.hidden = false;
+      });
+    }
     var body = el('div', { class: 'pr-exp-body', text: '해설 불러오는 중…' });
     box.appendChild(body);
     loadExplain(it.ex).then(function (map) {
@@ -421,6 +432,14 @@
     var ck = key + '-' + SUB;
     if (!explainCache[ck]) {
       explainCache[ck] = fetch(cfg.base + 'explain/' + ck + '.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+    }
+    return explainCache[ck];
+  }
+
+  function loadTrap(key) {
+    var ck = 'trap:' + key + '-' + SUB;
+    if (!explainCache[ck]) {
+      explainCache[ck] = fetch(cfg.base + 'trap/' + key + '-' + SUB + '.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
     }
     return explainCache[ck];
   }
