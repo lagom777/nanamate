@@ -5,7 +5,7 @@ import { parseAttempts, validExam, validSub } from './attempts.js';
 const SESSION = 'sn_session';
 const OAUTH = 'sn_oauth';
 const SESSION_AGE = 60 * 60 * 24 * 30;
-const OAUTH_AGE = 600;
+const OAUTH_AGE = 1800;
 const enc = new TextEncoder();
 const dec = new TextDecoder();
 
