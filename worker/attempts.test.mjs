@@ -8,7 +8,7 @@ test('정상적인 풀이 기록', () => {
   const parsed = parseAttempts({ attempts: [row, { ...row, q: 16, picked: 42, ok: 1 }] });
   assert.equal(parsed.ok, true);
   assert.equal(parsed.attempts.length, 2);
-  assert.deepEqual(parsed.attempts[0], row);
+  assert.deepEqual(parsed.attempts[0], { ...row, ms: null, mode: null });
 });
 
 test('이전용 picked 0 허용, 빈 배열 허용', () => {
@@ -32,4 +32,34 @@ test('잘못된 입력은 거부', () => {
   assert.equal(parseAttempts({ attempts: [{ ...row, ok: true }] }).ok, false);
   assert.equal(parseAttempts({ attempts: [{ ...row, ts: 1.5 }] }).ok, false);
   assert.equal(parseAttempts({ attempts: [null] }).ok, false);
+});
+
+test('ms와 mode는 선택이고, 범위 밖이면 거부', () => {
+  const withTime = parseAttempts({ attempts: [{ ...row, ms: 42000, mode: 'exam' }] });
+  assert.equal(withTime.ok, true);
+  assert.equal(withTime.attempts[0].ms, 42000);
+  assert.equal(withTime.attempts[0].mode, 'exam');
+
+  const practice = parseAttempts({ attempts: [{ ...row, ms: 0, mode: 'practice' }] });
+  assert.equal(practice.ok, true);
+  assert.equal(practice.attempts[0].ms, 0);
+  assert.equal(practice.attempts[0].mode, 'practice');
+
+  const cap = parseAttempts({ attempts: [{ ...row, ms: 3600000 }] });
+  assert.equal(cap.ok, true);
+  assert.equal(cap.attempts[0].ms, 3600000);
+  assert.equal(cap.attempts[0].mode, null);
+
+  const modeOnly = parseAttempts({ attempts: [{ ...row, mode: 'exam' }] });
+  assert.equal(modeOnly.ok, true);
+  assert.equal(modeOnly.attempts[0].ms, null);
+  assert.equal(modeOnly.attempts[0].mode, 'exam');
+
+  assert.equal(parseAttempts({ attempts: [{ ...row, ms: null, mode: null }] }).attempts[0].ms, null);
+  assert.equal(parseAttempts({ attempts: [{ ...row, ms: -1 }] }).ok, false);
+  assert.equal(parseAttempts({ attempts: [{ ...row, ms: 3600001 }] }).ok, false);
+  assert.equal(parseAttempts({ attempts: [{ ...row, ms: 1.5 }] }).ok, false);
+  assert.equal(parseAttempts({ attempts: [{ ...row, ms: '42' }] }).ok, false);
+  assert.equal(parseAttempts({ attempts: [{ ...row, mode: 'rush' }] }).ok, false);
+  assert.equal(parseAttempts({ attempts: [{ ...row, mode: '' }] }).ok, false);
 });

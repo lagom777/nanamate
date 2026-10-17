@@ -53,8 +53,37 @@
 
   var S = {
     set: '', mode: 'exam', items: [], ans: [], graded: false, timer: false, left: EXAM_SECONDS, tick: null,
-    count: 10, revealed: {}, sel: 'a', meta: null, pa: {}, wrongLoading: false
+    count: 10, revealed: {}, sel: 'a', meta: null, pa: {}, wrongLoading: false, ms: {}, lastActive: null
   };
+  var hiddenMs = 0, hiddenAt = 0;
+  function activeNow() {
+    var extra = (document.visibilityState === 'hidden' && hiddenAt) ? (Date.now() - hiddenAt) : 0;
+    return Date.now() - hiddenMs - extra;
+  }
+  function onVisibility() {
+    if (document.visibilityState === 'hidden') {
+      if (!hiddenAt) hiddenAt = Date.now();
+    } else if (hiddenAt) {
+      hiddenMs += Date.now() - hiddenAt;
+      hiddenAt = 0;
+    }
+  }
+  document.addEventListener('visibilitychange', onVisibility);
+  if (document.visibilityState === 'hidden') hiddenAt = Date.now();
+  function armClock() {
+    S.ms = {};
+    S.lastActive = activeNow();
+  }
+  function stampChoice(i) {
+    var now = activeNow();
+    if (S.ms[i] == null) {
+      var d = now - (S.lastActive == null ? now : S.lastActive);
+      if (d < 0) d = 0;
+      if (d > 3600000) d = 3600000;
+      S.ms[i] = d;
+    }
+    S.lastActive = now;
+  }
   var meUser = null;
 
   function examList() { return EXAMS.filter(function (e) { return e[SUB]; }); }
@@ -215,6 +244,7 @@
           if (S.set.indexOf('wrong:') === 0) startSet(S.set);
         });
       } }));
+      authBox.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '분석용 PDF', onclick: function () { exportHtml(); } }));
       authBox.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '분석용 MD 복사', onclick: function () { exportMarkdown('copy'); } }));
       authBox.appendChild(el('button', { type: 'button', class: 'pr-btn', text: 'MD 다운로드', onclick: function () { exportMarkdown('download'); } }));
       exportMsg = el('span', { class: 'pr-auth-msg', 'aria-live': 'polite' });
@@ -247,6 +277,7 @@
   }
   function startSet(setId, keepAns) {
     stopTimer();
+    armClock();
     S.wrongLoading = false;
     S.set = setId;
     var isExam = setId.indexOf('exam:') === 0;
@@ -264,6 +295,7 @@
         if (selSel) selSel.style.display = m.answers.a ? '' : 'none';
         S.items = buildPaper();
         S.ans = S.items.map(function (it) { return S.pa[it.id] || 0; });
+        armClock();
         renderAll();
         if (!keepAns) window.scrollTo && root.scrollIntoView && root.scrollIntoView({ block: 'start' });
       }).catch(function () { list.textContent = '시험지 데이터를 불러오지 못했습니다.'; });
@@ -284,6 +316,7 @@
         S.wrongLoading = false;
         S.items = wrongItems(rows);
         S.ans = S.items.map(function () { return 0; });
+        armClock();
         renderAll();
         window.scrollTo && root.scrollIntoView && root.scrollIntoView({ block: 'start' });
       }).catch(function () {
@@ -291,6 +324,7 @@
         S.wrongLoading = false;
         S.items = buildItems(req);
         S.ans = S.items.map(function () { return 0; });
+        armClock();
         renderAll();
       });
       return;
@@ -522,7 +556,7 @@
     }).then(function (attempts) {
       if (!Array.isArray(attempts)) throw new Error('export');
       return loadExportMaps(attempts).then(function (maps) {
-        var md = window.SnReport.buildReport({
+        var reportOpts = {
           subLabel: exportSubject(),
           now: now,
           attempts: attempts,
@@ -532,10 +566,12 @@
           trap: maps.trap,
           explain: maps.explain,
           imgBase: cfg.imgBase || cfg.base || ''
-        });
+        };
+        var md = window.SnReport.buildReport(reportOpts);
         var subject = exportSubject().replace(/[\\/:*?"<>|]/g, '');
         return {
           md: md,
+          opts: reportOpts,
           n: countQuestions(attempts),
           file: '분석-' + subject + '-' + window.SnReport.kstDate(now).replace(/-/g, '') + '.md'
         };
@@ -579,6 +615,22 @@
       flashExport('내보내지 못했습니다');
     }).then(finish);
   }
+  function exportHtml() {
+    if (exporting || !window.SnAuth) return;
+    var w = window.open('', '_blank');
+    if (!w) { flashExport('팝업을 허용해 주세요'); return; }
+    exporting = true;
+    prepareExport(Date.now()).then(function (res) {
+      var html = window.SnReport.buildReportHtml(res.opts);
+      var blob = new Blob([html], { type: 'text/html' });
+      var url = URL.createObjectURL(blob);
+      w.location.href = url;
+      setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+    }).catch(function () {
+      try { w.close(); } catch (e) {}
+      flashExport('내보내지 못했습니다');
+    }).then(function () { exporting = false; });
+  }
 
   function refreshCard(i) {
     var old = document.getElementById('q-' + i);
@@ -587,6 +639,7 @@
   function choose(i, k) {
     if (S.graded) return;
     S.ans[i] = S.ans[i] === k ? 0 : k;
+    if (S.ans[i]) stampChoice(i);
     persist();
     if (S.mode === 'practice' && !PAPER) recordWrong(S.items[i], S.ans[i]);
     if (S.mode === 'practice' || isShown(i)) sendAttempt(i);
@@ -597,6 +650,7 @@
     if (S.graded) return;
     var n = parseInt(String(v).replace(/[^0-9]/g, ''), 10);
     S.ans[i] = isNaN(n) ? 0 : n;
+    if (S.ans[i]) stampChoice(i);
     persist();
     if (S.mode === 'practice') recordWrong(S.items[i], S.ans[i]);
     if (S.mode === 'practice' || isShown(i)) sendAttempt(i);
@@ -616,7 +670,9 @@
     if (!a || !it) return null;
     var exam = it.ex || (S.set.indexOf('exam:') === 0 ? S.set.slice(5) : '');
     if (!exam) return null;
-    return { exam: exam, sub: SUB, q: it.n, picked: a, ok: isRight(it, a) ? 1 : 0, ts: ts || Date.now() };
+    var row = { exam: exam, sub: SUB, q: it.n, picked: a, ok: isRight(it, a) ? 1 : 0, ts: ts || Date.now(), mode: S.mode === 'practice' ? 'practice' : 'exam' };
+    if (S.ms && S.ms[i] != null) row.ms = S.ms[i];
+    return row;
   }
   function sendAttempt(i) {
     if (!window.SnAuth) return;

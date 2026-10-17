@@ -164,8 +164,8 @@ async function postAttempts(request, env) {
   if (!parsed.ok) return json({ error: 'bad attempts' }, 400);
   if (!parsed.attempts.length) return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
   await env.DB.batch(parsed.attempts.map((a) => env.DB.prepare(
-    'INSERT INTO attempts (user_id, exam, sub, q, picked, ok, ts) VALUES (?, ?, ?, ?, ?, ?, ?)'
-  ).bind(session.uid, a.exam, a.sub, a.q, a.picked, a.ok, a.ts)));
+    'INSERT INTO attempts (user_id, exam, sub, q, picked, ok, ts, ms, mode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+  ).bind(session.uid, a.exam, a.sub, a.q, a.picked, a.ok, a.ts, a.ms, a.mode)));
   return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
 }
 
@@ -176,7 +176,7 @@ async function listAttempts(request, env, url) {
   const exam = url.searchParams.get('exam');
   if (!validSub(sub) || !validExam(exam)) return json({ error: 'bad query' }, 400);
   const { results } = await env.DB.prepare(
-    'SELECT exam, sub, q, picked, ok, ts FROM attempts WHERE user_id = ? AND sub = ? AND exam = ? ORDER BY ts DESC, id DESC LIMIT 500'
+    'SELECT exam, sub, q, picked, ok, ts, ms, mode FROM attempts WHERE user_id = ? AND sub = ? AND exam = ? ORDER BY ts DESC, id DESC LIMIT 500'
   ).bind(session.uid, sub, exam).all();
   return json(results || []);
 }
@@ -187,7 +187,7 @@ async function exportAttempts(request, env, url) {
   const sub = url.searchParams.get('sub');
   if (!validSub(sub)) return json({ error: 'bad query' }, 400);
   const { results } = await env.DB.prepare(
-    'SELECT exam, q, picked, ok, ts FROM attempts WHERE user_id = ? AND sub = ? ORDER BY ts ASC, id ASC LIMIT 5000'
+    'SELECT exam, q, picked, ok, ts, ms, mode FROM attempts WHERE user_id = ? AND sub = ? ORDER BY ts ASC, id ASC LIMIT 5000'
   ).bind(session.uid, sub).all();
   return json(results || []);
 }

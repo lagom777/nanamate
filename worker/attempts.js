@@ -15,7 +15,17 @@ export function parseAttempts(body) {
     if (!Number.isInteger(a.picked) || a.picked < 0 || a.picked > 999) return { ok: false };
     if (a.ok !== 0 && a.ok !== 1) return { ok: false };
     if (!Number.isInteger(a.ts) || a.ts < 0 || !Number.isSafeInteger(a.ts)) return { ok: false };
-    attempts.push({ exam: a.exam, sub: a.sub, q: a.q, picked: a.picked, ok: a.ok, ts: a.ts });
+    let ms = null;
+    if (a.ms != null) {
+      if (!Number.isInteger(a.ms) || a.ms < 0 || a.ms > 3600000) return { ok: false };
+      ms = a.ms;
+    }
+    let mode = null;
+    if (a.mode != null) {
+      if (a.mode !== 'exam' && a.mode !== 'practice') return { ok: false };
+      mode = a.mode;
+    }
+    attempts.push({ exam: a.exam, sub: a.sub, q: a.q, picked: a.picked, ok: a.ok, ts: a.ts, ms, mode });
   }
   return { ok: true, attempts };
 }

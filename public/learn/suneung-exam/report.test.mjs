@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const { buildReport, kstDate } = require('./report.js');
+const { buildReport, buildReportHtml, kstDate } = require('./report.js');
 
 const T16 = Date.UTC(2026, 9, 15, 15, 0, 0);
 const T16b = Date.UTC(2026, 9, 16, 14, 30, 0);
@@ -179,4 +179,129 @@ test('두 번 틀린 뒤 맞추면 반복과 고친 문항에 모두 들어가�
   assert.match(chunk(md, '## 틀렸다가 고친 문항', ''), /오답 2회 후 맞춤/);
   assert.match(chunk(md, '## 현재 오답', '## 반복해서 틀린 문항'), /없음/);
   assert.doesNotMatch(md, /^### 2026/m);
+});
+
+test('이상치(10분 초과)는 시간 통계에서 빠지고 표기만 남긴다', () => {
+  const md = report({
+    attempts: [
+      { exam: '2026-csat', q: 1, picked: 5, ok: 1, ts: T16, ms: 10000, mode: 'exam' },
+      { exam: '2026-csat', q: 2, picked: 1, ok: 0, ts: T16 + 1000, ms: 20000, mode: 'exam' },
+      { exam: '2026-csat', q: 2, picked: 3, ok: 1, ts: T17, ms: 60000, mode: 'practice' },
+      { exam: '2026-csat', q: 1, picked: 2, ok: 0, ts: T16b, ms: 720000, mode: 'exam' }
+    ]
+  });
+  assert.match(md, /풀이 시간\(이상치 제외\): 중앙값 20초, 평균 30초, 측정된 시도 3회, 이상치 1회/);
+  assert.match(md, /\| 30초 미만 \| 2 \| 1 \| 50% \|/);
+  assert.match(md, /\| 3분 이상 \| 0 \| 0 \| 0% \|/);
+  assert.match(md, /맞힌 문항 평균 35초, 틀린 문항 평균 20초/);
+  const unit = chunk(md, '### 단원별 평균 풀이 시간', '### 모드별');
+  assert.ok(unit.indexOf('| 유전 정보와 세포 분열 | 40 | 50% |') < unit.indexOf('| 신경계와 항상성 | 10 | 100% |'));
+  assert.match(md, /\| 시험 \| 3 \| 1 \| 33\.3% \|/);
+  assert.match(md, /\| 연습 \| 1 \| 1 \| 100% \|/);
+  assert.match(chunk(md, '## 현재 오답', '## 반복해서 틀린 문항'), /시도 기록: 2026-10-16 ⑤✔ 10초, 2026-10-16 ② \(이상치 12분, 통계 제외\)/);
+  assert.match(md, /찍기 의심\(매우 빠르고 틀림이 반복\)도 같이 판단해 줘\. 이상치 표시는 자리를 비운 시간이니 무시해 줘\./);
+});
+
+test('시간 구간 경계: 30초와 90초는 그 구간의 시작이다', () => {
+  const spec = [
+    [29999, 1],
+    [30000, 0],
+    [89999, 1],
+    [90000, 0],
+    [179999, 1],
+    [180000, 0],
+    [600000, 1],
+    [600001, 0]
+  ];
+  const md = buildReport({
+    subLabel: '생명과학Ⅰ',
+    now: NOW,
+    sub: 'bio1',
+    exams: exams,
+    partName: partName,
+    attempts: spec.map(function (row, i) {
+      return { exam: '2026-csat', q: i + 1, picked: 1, ok: row[1], ts: T16 + i * 1000, ms: row[0], mode: 'exam' };
+    })
+  });
+  const bands = chunk(md, '### 시간 구간별 정답률', '### 맞힌 문항');
+  assert.match(bands, /\| 30초 미만 \| 1 \| 1 \| 100% \|/);
+  assert.match(bands, /\| 30~90초 \| 2 \| 1 \| 50% \|/);
+  assert.match(bands, /\| 90초~3분 \| 2 \| 1 \| 50% \|/);
+  assert.match(bands, /\| 3분 이상 \| 2 \| 1 \| 50% \|/);
+  assert.match(md, /중앙값 90초, 평균 171초, 측정된 시도 7회, 이상치 1회/);
+  assert.match(md, /이상치 10분, 통계 제외/);
+});
+
+test('ms 없는 구버전 행은 시간 통계에 넣지 않고 모드는 미기록이다', () => {
+  const md = report({
+    attempts: [
+      { exam: '2026-csat', q: 2, picked: 4, ok: 0, ts: T16 },
+      { exam: '2026-csat', q: 2, picked: 1, ok: 0, ts: T17, ms: 42000, mode: 'practice' },
+      { exam: '2026-csat', q: 1, picked: 5, ok: 1, ts: T16b, ms: 30000, mode: 'exam' }
+    ]
+  });
+  assert.match(md, /중앙값 36초, 평균 36초, 측정된 시도 2회, 이상치 0회/);
+  assert.match(chunk(md, '### 시간 구간별 정답률', '### 맞힌 문항'), /\| 30~90초 \| 2 \| 1 \| 50% \|/);
+  assert.match(chunk(md, '### 시간 구간별 정답률', '### 맞힌 문항'), /\| 30초 미만 \| 0 \| 0 \| 0% \|/);
+  assert.match(md, /\| 시험 \| 1 \| 1 \| 100% \|/);
+  assert.match(md, /\| 연습 \| 1 \| 0 \| 0% \|/);
+  assert.match(md, /\| 미기록 \| 1 \| 0 \| 0% \|/);
+  assert.match(chunk(md, '## 현재 오답', '## 반복해서 틀린 문항'), /시도 기록: 2026-10-16 ④, 2026-10-17 ① 42초/);
+});
+
+test('buildReportHtml 은 데이터를 이스케이프하고 문항 이미지를 넣는다', () => {
+  const html = buildReportHtml({
+    subLabel: '생명과학Ⅰ',
+    now: NOW,
+    sub: 'bio1',
+    exams: [{
+      key: '2026-csat',
+      title: '시험 <script> & "A"',
+      bio1: { a: [5], p: [2], t: ['b4'] }
+    }],
+    partName: { b4: "신경<'>계" },
+    trap: { '2026-csat': { 1: { o: { 2: '<script>alert(1)</script>' } } } },
+    explain: { '2026-csat': { 1: '<script>alert(1)</script><b>해설</b>' } },
+    imgBase: 'https://img.example/',
+    attempts: [{ exam: '2026-csat', q: 1, picked: 2, ok: 0, ts: T16, ms: 42000, mode: 'exam' }]
+  });
+  assert.equal(html.startsWith('<!doctype html>'), true);
+  assert.equal(/<script/i.test(html), false);
+  assert.match(html, /&lt;script&gt;alert\(1\)&lt;\/script&gt;/);
+  assert.match(html, /&amp;/);
+  assert.match(html, /&quot;A&quot;/);
+  assert.match(html, /&#39;/);
+  assert.match(html, /<img src="https:\/\/img\.example\/2026-csat\/bio1\/q01\.webp" alt="[^"]*" loading="eager">/);
+  assert.match(html, /onclick="window\.print\(\)"/);
+  assert.match(html, /@media print/);
+  assert.match(html, /break-inside:\s*avoid/);
+  assert.match(html, /max-width:\s*100%/);
+  assert.match(html, /PDF로 저장/);
+
+  const many = [];
+  for (let q = 1; q <= 31; q++) many.push({ exam: '2026-csat', q: q, picked: 1, ok: 0, ts: q * 1000 });
+  const manyHtml = buildReportHtml({
+    subLabel: '생명과학Ⅰ',
+    now: NOW,
+    sub: 'bio1',
+    imgBase: 'https://img.example/',
+    attempts: many
+  });
+  assert.equal((manyHtml.match(/<img /g) || []).length, 30);
+  assert.match(manyHtml, /q31\.webp/);
+  assert.match(manyHtml, /q02\.webp/);
+  assert.doesNotMatch(manyHtml, /q01\.webp/);
+  assert.match(manyHtml, /외 1문항/);
+});
+
+test('빈 입력', () => {
+  assert.equal(buildReport({ attempts: [] }), '아직 기록이 없습니다\n');
+  assert.equal(buildReport(null), '아직 기록이 없습니다\n');
+  const html = buildReportHtml({ attempts: [] });
+  assert.equal(html.startsWith('<!doctype html>'), true);
+  assert.match(html, /아직 기록이 없습니다/);
+  assert.match(html, /PDF로 저장/);
+  assert.match(html, /window\.print\(\)/);
+  assert.doesNotMatch(html, /<img /);
+  assert.equal(buildReportHtml(null).startsWith('<!doctype html>'), true);
 });
