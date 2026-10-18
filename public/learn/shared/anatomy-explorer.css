@@ -1,0 +1,483 @@
+/* 뇌·내분비 탐험기. 선택자는 .anx 안으로만. 호스트 버튼·제목 !important를 이긴다. */
+.anx {
+  --ax-accent: var(--accent, #16a34a);
+  --ax-text: var(--text, #1a1f2e);
+  --ax-dim: var(--text-dim, #4a5468);
+  --ax-mute: var(--text-mute, #6b7280);
+  --ax-line: var(--border, rgba(0, 0, 0, 0.08));
+  --ax-card: var(--bg-card, #fff);
+  --ax-elev: var(--bg-elevated, #f5f7fa);
+  container: anx / inline-size;
+  max-width: 100%;
+  color: var(--ax-text);
+  font-size: 1rem;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+.anx *,
+.anx *::before,
+.anx *::after { box-sizing: border-box; }
+.anx h3,
+.anx h4,
+.anx p,
+.anx ul,
+.anx li,
+.anx summary {
+  margin: 0;
+  font: inherit;
+  color: var(--ax-text);
+}
+.anx h3,
+.anx h4 { color: var(--ax-text) !important; }
+.anx ul { padding-left: 1.15rem; }
+.anx li { margin: 0.2rem 0; }
+.anx [hidden] { display: none !important; }
+.anx i { font-style: normal; }
+
+.anx button {
+  background: transparent !important;
+  color: var(--ax-text) !important;
+  border: none !important;
+  border-radius: 9px;
+  padding: 7px 10px;
+  font: inherit !important;
+  font-size: 0.92rem !important;
+  line-height: 1.35;
+  cursor: pointer;
+  white-space: normal;
+  text-align: center;
+}
+.anx button:hover {
+  background: color-mix(in srgb, var(--ax-accent) 12%, transparent) !important;
+  color: var(--ax-text) !important;
+}
+.anx button:focus-visible {
+  outline: 2px solid var(--ax-accent);
+  outline-offset: 2px;
+}
+
+.anx-tabs,
+.anx-views,
+.anx-sex {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--ax-elev);
+  border: 1px solid var(--ax-line);
+}
+.anx-tabs { margin: 0 0 10px; }
+.anx.is-single .anx-tabs { display: none; }
+.anx-controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 10px; }
+.anx.is-tab-brain .anx-sex,
+.anx.is-tab-endo .anx-views { display: none; }
+.anx.is-female [data-sex="m"]:not(.anx-sexbtn),
+.anx.is-male [data-sex="f"]:not(.anx-sexbtn) { display: none !important; }
+
+.anx button.is-on:not(.anx-chip):not(.anx-hcard-btn):not(.anx-link) {
+  background: var(--ax-accent) !important;
+  color: #fff !important;
+}
+.anx button.is-on:not(.anx-chip):not(.anx-hcard-btn):not(.anx-link):hover {
+  background: var(--ax-accent) !important;
+  color: #fff !important;
+}
+
+.anx-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.anx-col { min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+
+.anx-stage {
+  position: relative;
+  background: var(--ax-card);
+  border: 1px solid var(--ax-line);
+  border-radius: 16px;
+  overflow: hidden;
+  min-width: 0;
+}
+.anx-svghost { min-width: 0; }
+.anx-svg { display: block; width: 100%; height: auto; shape-rendering: geometricPrecision; }
+.anx text { font-family: inherit; }
+
+.anx-note {
+  padding: 0 12px 10px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--ax-mute) !important;
+}
+
+.anx-tip {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  max-width: 70%;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: var(--ax-card);
+  border: 1px solid var(--ax-line);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+.anx-tip-name { display: block; font-weight: 700; font-size: 0.86rem; }
+.anx-tip-en { display: block; color: var(--ax-mute); font-size: 0.75rem; }
+
+.anx-panel {
+  min-width: 0;
+  background: var(--ax-card);
+  border: 1px solid var(--ax-line);
+  border-radius: 16px;
+  padding: 14px 14px 16px;
+}
+.anx-panel-body { animation: anx-fade 0.15s ease; }
+
+.anx-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+.anx-name { font-size: 1.35rem !important; font-weight: 800; line-height: 1.25; }
+.anx-en {
+  flex-basis: 100%;
+  color: var(--ax-mute) !important;
+  font-size: 0.88rem;
+}
+.anx-badge {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.4;
+  vertical-align: middle;
+}
+.anx .anx-badge.is-core {
+  background: var(--ax-accent);
+  color: #fff !important;
+}
+.anx .anx-badge.is-ref {
+  color: var(--ax-mute) !important;
+  box-shadow: inset 0 0 0 1px var(--ax-mute);
+}
+
+.anx-sec { margin-top: 12px; }
+.anx-sec-h {
+  font-size: 0.8rem !important;
+  font-weight: 700;
+  color: var(--ax-dim) !important;
+  margin-bottom: 4px;
+}
+.anx-etym {
+  background: color-mix(in srgb, var(--ax-accent) 13%, var(--ax-card));
+  border: 1px solid color-mix(in srgb, var(--ax-accent) 32%, var(--ax-line));
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+.anx-etym-ko { font-weight: 700; line-height: 1.5; }
+.anx-etym-en {
+  margin-top: 4px;
+  color: var(--ax-dim) !important;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+.anx-memo {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed color-mix(in srgb, var(--ax-accent) 40%, var(--ax-line));
+  font-weight: 700;
+  line-height: 1.45;
+}
+.anx-memo b { color: var(--ax-accent); font-weight: 800; }
+.anx-role { color: var(--ax-text); }
+.anx-exam {
+  background: color-mix(in srgb, #d97706 16%, var(--ax-card));
+  border-left: 3px solid #d97706;
+  border-radius: 8px;
+  padding: 8px 10px;
+  line-height: 1.5;
+}
+
+.anx-hlabel {
+  margin: 10px 0 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ax-dim) !important;
+}
+.anx-hcard {
+  margin-top: 8px;
+  padding: 8px 10px 10px;
+  border: 1px solid var(--ax-line);
+  border-radius: 12px;
+  background: var(--ax-card);
+}
+.anx-hcard.is-on {
+  border-color: var(--ax-accent);
+  box-shadow: inset 0 0 0 1px var(--ax-accent);
+}
+.anx button.anx-hcard-btn {
+  display: block;
+  width: 100%;
+  padding: 0 !important;
+  background: transparent !important;
+  color: var(--ax-text) !important;
+  border: none !important;
+  text-align: left !important;
+  font-weight: 400 !important;
+  cursor: pointer;
+}
+.anx button.anx-hcard-btn:hover { background: transparent !important; }
+.anx-hcard-top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.anx-hname { font-weight: 800; }
+.anx-habbr { color: var(--ax-mute); font-size: 0.84rem; }
+.anx-heffect,
+.anx-hwhen,
+.anx-hmemo { display: block; margin-top: 4px; }
+.anx-hwhen { color: var(--ax-dim); font-size: 0.88rem; }
+.anx-hdetails { margin-top: 6px; }
+.anx-hdetails summary { cursor: pointer; color: var(--ax-dim); font-size: 0.85rem; }
+.anx-hdetails p { margin-top: 4px; color: var(--ax-dim) !important; font-size: 0.88rem; }
+
+.anx button.anx-jump {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 8px 12px !important;
+  color: var(--ax-accent) !important;
+  background: transparent !important;
+  border: 1px dashed var(--ax-accent) !important;
+  border-radius: 10px;
+  text-align: center;
+}
+.anx-links { display: flex; flex-wrap: wrap; gap: 6px; }
+.anx button.anx-link {
+  border: 1px solid var(--ax-line) !important;
+  background: var(--ax-elev) !important;
+  border-radius: 999px;
+  padding: 4px 10px !important;
+  font-size: 0.84rem !important;
+}
+
+.anx-idle-lead { font-weight: 700; }
+.anx-idle-note { margin-top: 8px; color: var(--ax-dim) !important; }
+.anx-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  color: var(--ax-mute) !important;
+  font-size: 0.82rem;
+}
+.anx-panel .anx-legend { margin-top: 10px; }
+.anx-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ax-mute);
+  display: inline-block;
+  flex: 0 0 auto;
+}
+.anx-dot.is-core { background: var(--ax-accent); border-color: var(--ax-accent); }
+
+.anx-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.anx button.anx-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--ax-line) !important;
+  background: var(--ax-card) !important;
+  border-radius: 999px;
+  padding: 5px 10px !important;
+  font-size: 0.86rem !important;
+  white-space: nowrap;
+  min-height: 34px;
+}
+.anx button.anx-chip.is-on,
+.anx button.anx-chip.is-on:hover {
+  border-color: var(--ax-accent) !important;
+  background: color-mix(in srgb, var(--ax-accent) 14%, var(--ax-card)) !important;
+  color: var(--ax-text) !important;
+}
+
+.anx-scenes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.anx button.anx-scene {
+  border: 1px solid var(--ax-line) !important;
+  background: var(--ax-card) !important;
+  border-radius: 999px;
+  text-align: left;
+}
+.anx button.anx-scene.is-on,
+.anx button.anx-scene.is-on:hover {
+  background: var(--ax-accent) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+.anx-player {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--ax-accent) 8%, var(--ax-card));
+  border: 1px solid var(--ax-line);
+}
+.anx-sub { line-height: 1.55; }
+.anx-count { color: var(--ax-mute); font-size: 0.82rem; white-space: nowrap; }
+.anx-pc { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; }
+.anx-pc button {
+  min-width: 42px;
+  min-height: 36px;
+  border: 1px solid var(--ax-line) !important;
+  background: var(--ax-card) !important;
+}
+.anx-dots { display: inline-flex; gap: 5px; align-items: center; margin-left: 4px; }
+.anx-pdot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ax-mute) 35%, var(--ax-line));
+  display: inline-block;
+}
+.anx-pdot.is-done { background: color-mix(in srgb, var(--ax-accent) 55%, var(--ax-card)); }
+.anx-pdot.is-on { background: var(--ax-accent); transform: scale(1.25); }
+
+.anx-error {
+  margin: 0;
+  color: var(--ax-dim) !important;
+}
+
+/* 그림 */
+.anx .ax-part,
+.anx .ax-target,
+.anx .ax-body,
+.anx .ax-deco,
+.anx .ax-bg,
+.anx .ax-flow,
+.anx .ax-bone {
+  vector-effect: non-scaling-stroke;
+}
+.anx .ax-body {
+  fill: #f3d2c3;
+  stroke: var(--ax-mute);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+.anx .ax-part {
+  stroke: var(--ax-mute);
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+  cursor: pointer;
+  transition: opacity 0.15s ease, filter 0.15s ease;
+}
+.anx .ax-target {
+  stroke: var(--ax-mute);
+  stroke-width: 1.15;
+  stroke-linejoin: round;
+}
+.anx .ax-lateral {
+  stroke: #5c6e8a;
+  stroke-dasharray: 5 4;
+  fill-opacity: 0.42;
+}
+.anx .ax-bone {
+  fill: none;
+  stroke: #c4b49a;
+  stroke-width: 4.5;
+  stroke-linecap: round;
+}
+.anx .ax-part.is-dim { opacity: 0.34; }
+.anx .ax-part.is-hover,
+.anx .ax-part.is-pinned {
+  stroke: var(--ax-accent);
+  stroke-width: 2.6;
+  opacity: 1;
+}
+.anx .ax-part.is-pinned { filter: drop-shadow(0 0 4px var(--ax-accent)); }
+.anx .ax-part.is-linked {
+  stroke: var(--ax-accent);
+  opacity: 1;
+  animation: anx-pulse 1.6s ease-in-out infinite;
+}
+.anx .is-hot {
+  stroke: var(--ax-accent);
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 5px var(--ax-accent));
+}
+.anx .is-warm {
+  stroke: var(--ax-accent);
+  stroke-width: 2;
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--ax-accent) 65%, transparent));
+}
+.anx .ax-bone.is-hot { stroke-width: 7; }
+.anx .ax-bone.is-warm { stroke-width: 6; }
+.anx .ax-flow {
+  fill: none;
+  stroke: var(--ax-accent);
+  stroke-width: 2.2;
+  stroke-dasharray: 7 9;
+  stroke-linecap: round;
+  animation: anx-dash 0.9s linear infinite;
+}
+.anx .ax-flow.is-soft { opacity: 0.4; }
+.anx .ax-arrow { fill: var(--ax-accent); }
+.anx .ax-arrow.is-soft { opacity: 0.4; }
+.anx .ax-particle { pointer-events: none; }
+.anx .ax-ring {
+  fill: none;
+  stroke: var(--ax-accent);
+  stroke-width: 2;
+  opacity: 0.85;
+}
+.anx .ax-ring.is-soft { opacity: 0.35; }
+.anx .ax-label {
+  fill: var(--ax-text);
+  font-weight: 700;
+  pointer-events: none;
+}
+.anx .ax-label-bg {
+  fill: var(--ax-card);
+  stroke: var(--ax-accent);
+  stroke-width: 1;
+  opacity: 0.94;
+}
+
+.anx.is-tab-endo:not(.is-selected):not(.is-off) .ax-part {
+  animation: anx-breathe 3.6s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* 뷰포트가 아니라 본문 칸 폭 기준: 사이드바가 있는 좁은 본문에서는 세로로 쌓는다 */
+@container anx (min-width: 700px) {
+  .anx-main { flex-direction: row; align-items: flex-start; gap: 16px; }
+  .anx-col { flex: 1.15 1 0; }
+  .anx-panel {
+    flex: 0.9 1 0;
+    max-height: min(72vh, 720px);
+    overflow: auto;
+    position: sticky;
+    top: 8px;
+  }
+}
+
+@keyframes anx-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes anx-dash {
+  to { stroke-dashoffset: -32; }
+}
+@keyframes anx-breathe {
+  0%, 100% { opacity: 0.78; }
+  50% { opacity: 1; }
+}
+@keyframes anx-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.15); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anx-panel-body,
+  .anx .ax-part,
+  .anx .ax-flow,
+  .anx .ax-part.is-linked { animation: none !important; }
+  .anx .ax-part { transition: none; }
+}

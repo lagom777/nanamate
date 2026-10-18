@@ -37,8 +37,12 @@ export function partStats(sub, partId) {
 }
 
 /* ── 페이지 뼈대 ── */
-export function head(title, depth, spec) {
+export function head(title, depth, spec, opts = {}) {
   const up = depth ? "../" : "";
+  // 용어·어원 툴팁: spec.termsData 가 있는 과목의 파트·요약 페이지에만 (shared/term-tips.js + shared/terms/<이름>.js)
+  const terms = opts.terms && spec.termsData
+    ? `\n<link rel="stylesheet" href="${up}../shared/term-tips.css">\n<script defer src="${up}../shared/terms/${spec.termsData}.js"></script>\n<script defer src="${up}../shared/term-tips.js"></script>`
+    : "";
   return `<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -52,7 +56,7 @@ export function head(title, depth, spec) {
 <script defer src="${up}../shared/search.js"></script>
 <script defer src="${up}../shared/difficulty.js"></script>
 <script defer src="${up}../shared/quizgame3d.js"></script>
-<script defer src="${up}../shared/learngame3d.js"></script>
+<script defer src="${up}../shared/learngame3d.js"></script>${terms}${opts.extra ? "\n" + opts.extra : ""}
 </head>`;
 }
 
@@ -133,7 +137,7 @@ export function chapterPage(spec, c, i) {
     : "";
   const sumCta = spec.summary ? `<p><a class="cta sm" href="../summary.html#p${i + 1}">📌 이 파트 한눈에 요약 →</a></p>` : "";
   const nav = `<div class="pager">${prev ? `<a href="${prev.file}">← ${prev.title}</a>` : `<a href="../index.html">← 표지</a>`}${next ? `<a href="${next.file}">${next.title} →</a>` : spec.practice === false ? "" : `<a href="../practice.html">수능 풀어보기 →</a>`}</div>`;
-  return `${head(`${c.title} — ${spec.label}`, 1, spec)}
+  return `${head(`${c.title} — ${spec.label}`, 1, spec, { terms: true, extra: c.headExtra })}
 <body><div class="layout">
 ${aside(spec, c.file, 1)}
 <main>
@@ -272,7 +276,7 @@ ${map ? `${map}\n<details class="mg-wrap"><summary>📋 본문에서 뽑은 공�
 <p><a class="cta sm" href="chapters/${c.file}">이 파트 자세히 보기 →</a>${c.part ? ` <a class="cta sm" href="practice.html#part:${c.part}">📝 기출 풀기</a>` : ""}</p>
 </section>`;
   }).join("\n");
-  return `${head(`한눈에 요약 — ${spec.label}`, 0, spec)}
+  return `${head(`한눈에 요약 — ${spec.label}`, 0, spec, { terms: true })}
 <body class="sumpage"><div class="layout">
 ${aside(spec, "summary", 0)}
 <main>

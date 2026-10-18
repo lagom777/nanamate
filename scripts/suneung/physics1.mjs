@@ -395,7 +395,7 @@ chapters.push({
 });
 
 export const spec = {
-  sub: "phys1", folder: "aboutSuneungPhysics1", label: "수능 물리학Ⅰ", short: "물리학Ⅰ", color: COLOR,
+  sub: "phys1", folder: "aboutSuneungPhysics1", label: "수능 물리학Ⅰ", short: "물리학Ⅰ", color: COLOR, termsData: "phys1",
   glow: "rgba(2,132,199,0.12)", border: "rgba(2,132,199,0.16)",
   asideSub: "수능 물리학Ⅰ — 3단원 7파트 + 모션 + 기출",
   h1: "수능 물리학Ⅰ,<br><em>파트별</em>로<br>끝까지",
