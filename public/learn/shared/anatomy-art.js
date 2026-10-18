@@ -274,36 +274,31 @@
   }
   function sulciIn(box, seed, gap) {
     var r = rnd(seed), out = [];
-    var x, y, k, n, px, py, ang, step, pts, m, a2;
+    var x, y, k, n, px, py, ang, step, pts;
     for (y = box[1]; y < box[3]; y += gap * 0.86) {
       for (x = box[0] + ((y / gap) % 2 ? gap / 2 : 0); x < box[2]; x += gap) {
         px = x + (r() - 0.5) * gap * 0.7;
         py = y + (r() - 0.5) * gap * 0.7;
         ang = r() * Math.PI * 2;
-        step = gap * (0.42 + r() * 0.14);
-        n = 3 + Math.floor(r() * 2);
+        step = gap * (0.5 + r() * 0.12);
+        n = 2 + Math.floor(r() * 2);
         pts = [[r1(px), r1(py)]];
         for (k = 0; k < n; k++) {
-          ang += (r() - 0.5) * 1.5;
+          ang += (r() - 0.5) * 0.9;
           px += Math.cos(ang) * step;
           py += Math.sin(ang) * step;
           pts.push([r1(px), r1(py)]);
         }
         out.push(pts);
-        if (r() < 0.25) {
-          m = pts[1 + Math.floor(r() * (pts.length - 2))];
-          a2 = ang + (r() < 0.5 ? 1.5 : -1.5);
-          out.push([m, [r1(m[0] + Math.cos(a2) * step * 0.9), r1(m[1] + Math.sin(a2) * step * 0.9)]]);
-        }
       }
     }
     return out;
   }
   function lobeSulci(key, color, box, seed) {
-    var lines = paths(sulciIn(box, seed, 46));
+    var lines = paths(sulciIn(box, seed, 60));
     return '<g class="ax-deco" pointer-events="none" clip-path="url(#axc-' + key + ')" fill="none" stroke-linecap="round" stroke-linejoin="round">' +
-      '<g stroke="#ffffff" stroke-opacity="0.42" stroke-width="2.2" transform="translate(-1.8 -2.2)">' + lines + '</g>' +
-      '<g stroke="' + shade(color, 0.42) + '" stroke-opacity="0.82" stroke-width="3">' + lines + '</g></g>';
+      '<g stroke="#ffffff" stroke-opacity="0.3" stroke-width="2" transform="translate(-1.2 -1.5)">' + lines + '</g>' +
+      '<g stroke="' + shade(color, 0.2) + '" stroke-opacity="0.6" stroke-width="2.4">' + lines + '</g></g>';
   }
   var sideClips = '<defs>' +
     '<clipPath id="axc-frontal"><path d="' + frontalD + '"/></clipPath>' +
