@@ -31,14 +31,15 @@
   }
 
   /* 카드 옆 패널 HTML */
-  const ICON = `<svg class="ic-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></svg><svg class="ic-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg><svg class="ic-again" viewBox="0 0 24 24"><path d="M12 5a7 7 0 1 1-6.6 4.7l1.9.6A5 5 0 1 0 12 7v3L7.5 6 12 2z"/></svg>`;
+  const ICON = `<svg class="ic-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></svg><svg class="ic-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>`;
   window.vizHtml = function (word) {
     const v = VIZ[word.toLowerCase()];
     if (!v || !v.pic) return null;
     return `<div class="vz pic" data-state="idle" style="--vz:${v.color};--t:${v.t}s;--k:${pace(v)}">
 <div class="vz-scene">${v.scene}</div>
 <div class="vz-ctl"><button class="vz-play" type="button" aria-label="해설 재생">${ICON}</button>
-<div class="vz-segs">${Array.from({ length: v.n }, (_, i) => `<button class="vz-seg" type="button" data-k="${i + 1}" aria-label="${i + 1}단계 보기"><b><i></i></b></button>`).join("")}</div></div></div>`;
+<div class="vz-word"><b>${word.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]))}</b></div>
+<div class="vz-segs" aria-hidden="true">${Array.from({ length: v.n }, (_, i) => `<span class="vz-seg" data-k="${i + 1}"><b><i></i></b></span>`).join("")}</div></div></div>`;
   };
 
   /* 재생기: 단계 막대의 채움 애니메이션이 끝나면 다음 단계로 — 일시정지하면 애니메이션째 멈춘다 */
@@ -52,7 +53,7 @@
     const n = segs.length;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let step = 0;
-    const LABEL = { idle: "해설 재생", run: "해설 일시정지", pause: "해설 이어서 재생", end: "해설 다시 보기" };
+    const LABEL = { idle: "해설 재생", run: "해설 일시정지", pause: "해설 이어서 재생", end: "해설 다시 재생" };
     const set = (st) => { root.dataset.state = st; btn.setAttribute("aria-label", LABEL[st]); };
     function show(k, instant) {
       if (instant) scene.classList.add("vz-reset");
@@ -92,9 +93,9 @@
       else if (st === "pause") set("run");
       else play();
     });
-    root.addEventListener("click", (e) => {
-      const t = e.target.closest(".vz-seg, .vz-steps li");
-      if (t) jump(+t.dataset.k);
+    scene.addEventListener("click", () => {   // 장면을 누르면 처음부터 다시 본다
+      if (reduce) { jump(1); return; }
+      play();
     });
     if (reduce) { go(n, true); end(); }
     else if (autoplay) play();

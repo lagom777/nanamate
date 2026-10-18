@@ -135,12 +135,14 @@ button { font: inherit; color: inherit; }
 /* 단어 한 장 해설 패널 (viz.js) */
 .vz-slot:empty { display: none; }
 .side { display: grid; gap: 20px; min-width: 0; }
-@media (min-width: 880px) { .side.has-viz .list { max-height: 340px; } }
+@media (min-width: 880px) { body:not(.no-viz) .side .list { max-height: 340px; } }
 .vz { --vz: #2b8cc4; background: var(--card); border-radius: 14px; border-top: 4px solid var(--vz); box-shadow: var(--shadow); overflow: hidden; transition: filter .25s, opacity .25s; }
 .vz.ghost { filter: blur(14px); opacity: .55; pointer-events: none; user-select: none; }
 .vz-head { padding: 14px 18px 10px; }
 .vz-tag { display: inline-block; padding: 2px 10px; border-radius: 999px; font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .05em; color: var(--vz); background: color-mix(in srgb, var(--vz) 12%, transparent); }
 .vz-word { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; margin-top: 8px; }
+.vz-ctl .vz-word { margin: 0; flex: 1; min-width: 0; }
+.vz-word.masked b { color: transparent; border-radius: 4px; user-select: none; background: repeating-linear-gradient(-45deg, var(--mask) 0 5px, transparent 5px 10px); }
 .vz-word b { font-family: var(--serif); font-size: 1.7rem; font-weight: 600; line-height: 1.15; }
 .vz-word i { font-style: normal; font-family: var(--mono); font-size: 12.5px; color: var(--ink-3); }
 .vz-word span { font-family: var(--mono); font-size: 12.5px; color: var(--red-ink); }
@@ -173,9 +175,10 @@ button { font: inherit; color: inherit; }
 .vz-play { flex: none; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; background: var(--vz); color: #fff; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 .vz-play svg { display: none; width: 18px; height: 18px; fill: currentColor; }
 .vz-play .ic-play { display: block; }
-.vz[data-state="run"] .ic-play, .vz[data-state="end"] .ic-play { display: none; }
-.vz[data-state="run"] .ic-pause, .vz[data-state="end"] .ic-again { display: block; }
-.vz-segs { flex: 1; display: flex; gap: 6px; }
+.vz[data-state="run"] .ic-play { display: none; }
+.vz[data-state="run"] .ic-pause { display: block; }
+.vz-scene { cursor: pointer; }   /* 장면을 누르면 처음부터 다시 */
+.vz-segs { position: absolute; width: 0; height: 0; overflow: hidden; opacity: 0; pointer-events: none; }   /* 단계 타이머 전용 — 화면에는 보이지 않는다 */
 .vz-seg { flex: 1; height: 36px; touch-action: manipulation; padding: 0; border: 0; background: none; cursor: pointer; display: flex; align-items: center; }
 .vz-seg b { display: block; width: 100%; height: 4px; border-radius: 2px; overflow: hidden; background: color-mix(in srgb, var(--vz) 16%, var(--line)); }
 .vz-seg i { display: block; width: 0; height: 100%; background: var(--vz); }
@@ -350,16 +353,18 @@ select {
 .pk-toggle i { margin-left: 6px; font-style: normal; font-size: 11px; opacity: .6; }
 .pk-toggle[aria-expanded="true"] i { display: inline-block; transform: rotate(180deg); }
 
-/* 영상(clips.js)과 해설을 같은 칸에 겹쳐 놓아, 영상이 떠도 아래 칸이 밀려 내려가지 않게 한다 */
-#vizSlotStage { display: grid; }
-#vizSlotStage > * { grid-area: 1 / 1; min-width: 0; }
-#vizSlotStage > .clip { contain: size; align-self: stretch; }
-#vizSlotStage > .clip video { width: 100%; height: 100%; aspect-ratio: auto; object-fit: contain; background: transparent; }
-#vizSlotStage:has(> aside:not(.clip)[hidden]) > .clip, #vizSlotStage:not(:has(> aside:not(.clip))) > .clip { contain: none; }
-/* 영상과 그림 해설이 둘 다 있으면 나란히 — 영상은 해설 높이에 맞춰 왼쪽 칸을 채운다 */
-#vizSlotStage:has(> .clip:not([hidden])):has(> aside:not(.clip):not([hidden])) { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 8px; }
-#vizSlotStage:has(> .clip:not([hidden])):has(> aside:not(.clip):not([hidden])) > aside:not(.clip) { grid-area: 1 / 2; }
-#vizSlotStage:has(> .clip:not([hidden])):has(> aside:not(.clip):not([hidden])) > .clip video { object-fit: cover; }
+/* 그림 해설 한 칸(실영상은 뺐다). 장면 비율을 고정해 두어 그림을 불러오는 동안·단어가 바뀔 때도 아래 칸이 밀리지 않는다.
+   hidden이어도 자리는 그대로 둔다. */
+.vz-slot { display: block; }
+.vz-slot > aside[hidden] { display: block !important; visibility: hidden; }
+.vz-scene { aspect-ratio: 560 / 300; }
+.vz.skel .vz-play { opacity: .35; cursor: default; }
+.no-viz .vz-slot { display: none; }
+/* 카드도 고정 높이: 어원 도해 줄 수가 달라도 카드가 늘었다 줄었다 하며 아래 칸을 밀지 않게.
+   높이는 896단어 실측 99% 이상이 들어가는 값, 넘치는 몇 단어만 카드 안에서 스크롤 */
+.card { min-height: 0; height: 430px; }
+.card-body { min-height: 0; overflow-y: auto; justify-content: safe center; scrollbar-width: thin; }
+@media (max-width: 879px) { .card { height: 352px; } }
 
 /* 모바일: 카드·해설·재생 버튼이 한 화면에 들어오게 줄인다 */
 @media (max-width: 879px) {
@@ -543,7 +548,6 @@ select {
 
 <script src="viz.js"></script>
 <script src="themes.js"></script>
-<script src="clips.js"></script>
 <script src="examples.js"></script>
 <script>
 const YEONGILMAN = [
@@ -1670,18 +1674,21 @@ function placeViz() {
 }
 wide.addEventListener('change', placeViz);
 placeViz();
+// 그림을 불러오는 동안 같은 크기의 빈 틀 — 자리를 미리 잡아 두어 그림이 도착해도 칸이 튀지 않게
+const VIZ_SKEL = `<div class="vz pic skel" data-state="idle"><div class="vz-scene"></div><div class="vz-ctl"><button class="vz-play" type="button" disabled aria-label="그림 해설 불러오는 중"></button><div class="vz-word"><b>&nbsp;</b></div></div></div>`;
 let vizWord = '', vizCtl = null;
-function renderViz(w, hidden) {
+function renderViz(w, hidden, wordMasked) {
   if (S.viz && VFILE.has(vk(w)) && !window.VIZ[vk(w)]) {
     ensureViz(w).then(() => { if (WORDS[deck[pos]] === w) render(lastRev); });
   }
   const h = S.viz && window.vizHtml ? window.vizHtml(w.w) : null;
   $('side').classList.toggle('has-viz', !!h);
-  vizEl.hidden = !h;
-  if (!h) { vizWord = ''; vizCtl = null; vizEl.innerHTML = ''; return; }
+  vizEl.hidden = !S.viz;
+  if (!h) { vizWord = ''; vizCtl = null; vizEl.innerHTML = S.viz ? VIZ_SKEL : ''; return; }
   if (vizWord !== w.w) { vizEl.innerHTML = h; vizWord = w.w; vizCtl = window.vizMount(vizEl.firstElementChild, !hidden); }
   else if (!hidden) vizCtl.reveal();   // 가렸던 뜻을 펼치면 그때 재생
   vizEl.firstElementChild.classList.toggle('ghost', hidden);
+  const vw = vizEl.querySelector('.vz-word'); if (vw) vw.classList.toggle('masked', !!wordMasked);
 }
 
 // list (단어장·파트가 바뀔 때마다 다시 그린다)
@@ -1800,7 +1807,7 @@ function render(revealed) {
   els.mean.parentElement.classList.toggle('peekable', S.hideMean);
   if (meanOff) { els.note.classList.add('ghost'); els.ety.parentElement.classList.add('ghost'); els.ex.classList.add('ghost'); }
   document.body.classList.toggle('no-viz', !S.viz);
-  renderViz(w, (hidden || meanOff) && !picQ);
+  renderViz(w, (hidden || meanOff) && !picQ, (hidden && S.order === 'ko-en') || picQ);
   if (window.clipShow) window.clipShow(w.w, hidden || meanOff || picQ, S.viz);
   $('hideMean').setAttribute('aria-pressed', S.hideMean);
   document.body.classList.toggle('hide-mean', S.hideMean);
