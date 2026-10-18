@@ -2102,7 +2102,7 @@ function start() {
 }
 function setPlaying(p) {
   playing = p;
-  $('icPlay').hidden = p; $('icPause').hidden = !p;
+  $('icPlay').toggleAttribute('hidden', p); $('icPause').toggleAttribute('hidden', !p);   // SVG 요소는 .hidden 프로퍼티가 속성에 반영되지 않는다
   els.play.setAttribute('aria-label', p ? '일시정지' : '재생');
   if (p) { navigator.wakeLock?.request('screen').then(l => { wake = l; }).catch(() => {}); }
   else { try { wake?.release(); } catch (e) {} wake = null; }
