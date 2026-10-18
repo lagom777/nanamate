@@ -352,6 +352,7 @@ main li { color:var(--text-dim); margin-bottom:4px; line-height:1.7; }
 .sum-traps { margin-top:22px; padding:6px 18px 10px; border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:10px; background:var(--bg-card); }
 .sum-traps h3 { margin:12px 0 4px; font-size:1.05em; }
 ${mapCss}
+${spec.extraCss || ""}
 @media print { aside, .sum-chips, .cta { display:none !important; } .layout { display:block !important; } .sum-part { break-before:page; } }
 `;
   return css;

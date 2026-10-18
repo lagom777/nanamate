@@ -5,7 +5,18 @@ import { maps } from "./maps-korean.mjs";
 const load = async (n) => { try { return (await import(`./content/${n}.mjs`)).chapters; } catch { return []; } };
 const ko2 = await load("ko-2");
 const at = ko2.findIndex((c) => c.file === "08-classic-poetry.html") + 1;
-const chapters = [...(await load("ko-1")), ...ko2.slice(0, at), ...(await load("ko-vocab")), ...ko2.slice(at), ...(await load("ko-3")), ...(await load("st-ko"))];
+const chapters = [...(await load("ko-1")), ...ko2.slice(0, at), ...(await load("ko-vocab")), ...(await load("ko-anthology")), ...ko2.slice(at), ...(await load("ko-3")), ...(await load("st-ko"))];
+// 고전시가 명작 읽기의 작품 상자(.poem) 스타일
+const extraCss = `
+.poem { margin:20px 0; padding:16px 20px 14px; border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:12px; background:var(--bg-card); }
+.poem-h { display:flex; flex-wrap:wrap; align-items:baseline; gap:2px 12px; margin-bottom:10px; }
+.poem-h b { font-family:var(--font-display); font-size:1.08em; color:var(--text); }
+.poem-h span { font-size:.8em; color:var(--text-mute); }
+.poem-t { margin:0 0 12px; font-size:1.02em; line-height:2; color:var(--text); }
+.poem-g { margin:0 0 10px; padding:8px 12px; border-radius:8px; background:var(--bg-elevated); font-size:.88em; line-height:1.75; }
+.poem-g b { margin-right:6px; color:var(--accent); }
+.poem-r { margin:0; font-size:.92em; line-height:1.75; }
+@media (max-width:640px) { .poem { padding:14px 14px 12px; } .poem-t { font-size:.98em; } }`;
 const N = examsOf("korean").length;
 
 export const spec = {
@@ -15,7 +26,7 @@ export const spec = {
   h1: "수능 국어,<br><em>독서·문학·선택</em><br>파트별로",
   authors: "2015 개정 교육과정 · 2027학년도 수능까지 · 실제 시험지 " + N + "회 풀어보기",
   affiliation: "독서 5파트 · 문학 5파트 · 화법과 작문/언어와 매체 · 전략 · 수능 풀어보기(채점)",
-  summary: true, summaryBlurb: "파트별 표·기호·함정을 카드 한 장씩에 — 시험 직전 훑어보기용", maps,
+  summary: true, summaryBlurb: "파트별 표·기호·함정을 카드 한 장씩에 — 시험 직전 훑어보기용", maps, extraCss,
   motion: false, kind: "paper", qn: 45, minutes: 80,
   practiceBlurb: `실제 시험지 ${N}회 · 공통 34 + 선택 11문항 · 답안지 채점`,
   chapters,
