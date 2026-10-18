@@ -116,7 +116,7 @@
 
   if (typeof document === 'undefined') return;
 
-  var EXCLUDE = 'h1, h2, a, button, script, style, textarea, input, select, svg, summary, code, pre, .paper-header, .nm-term, .nmt-list, .nmt-tip, .anx, .mg-wrap, #nm-game-host, #nm-quiz-host, [data-no-terms]';
+  var EXCLUDE = 'h1, h2, a, button, script, style, textarea, input, select, svg, summary, code, pre, .paper-header, .nm-term, .nmt-list, .nmt-tip, .anx, .fgx, .mg-wrap, #nm-game-host, #nm-quiz-host, [data-no-terms]';
   var OPEN_DELAY = 100;
   var CLOSE_DELAY = 150;
   var started = false;

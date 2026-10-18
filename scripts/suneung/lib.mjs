@@ -25,6 +25,13 @@ export const ex = (q, sol) =>
   `<details class="example"><summary>${q}</summary><div class="example-sol">${sol}</div></details>`;
 
 /* 과목별 시험 목록(그 과목 데이터가 있는 회차만) */
+/* 장별 인터랙티브 그림(마우스 올리면 설명·어원): shared/figure-explorer.{js,css} + figures/<id>.js(그림) + figures/data/<id>.js(글).
+ * 장 파일(chapters/ 아래)의 headExtra 에 넣고, 본문에는 <div data-figure="<id>"></div> 를 둔다. */
+export const figHead = (...ids) => `<link rel="stylesheet" href="../../shared/figure-explorer.css">
+<script defer src="../../shared/figure-explorer.js"></script>
+${ids.map((id) => `<script defer src="../../shared/figures/data/${id}.js"></script>\n<script defer src="../../shared/figures/${id}.js"></script>`).join("\n")}`;
+export const figure = (id, view) => `<div data-figure="${id}"${view ? ` data-view="${view}"` : ""}></div>`;
+
 export const examsOf = (sub) => EXAMS.filter((e) => e[sub]);
 
 /* 출제 통계: 최근 회차에서 이 파트 태그가 몇 문항이었나 */

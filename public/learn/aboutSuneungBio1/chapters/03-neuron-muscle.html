@@ -15,6 +15,12 @@
 <link rel="stylesheet" href="../../shared/term-tips.css">
 <script defer src="../../shared/terms/bio1.js"></script>
 <script defer src="../../shared/term-tips.js"></script>
+<link rel="stylesheet" href="../../shared/figure-explorer.css">
+<script defer src="../../shared/figure-explorer.js"></script>
+<script defer src="../../shared/figures/data/neuron.js"></script>
+<script defer src="../../shared/figures/neuron.js"></script>
+<script defer src="../../shared/figures/data/sarcomere.js"></script>
+<script defer src="../../shared/figures/sarcomere.js"></script>
 </head>
 <body><div class="layout">
 <aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>생명과학Ⅰ 목차</h3><ol>
@@ -54,11 +60,17 @@
 <h2>2. 활동 전위의 발생</h2>
 <div class="formula">휴지 전위 ≈ −70 mV (세포 안이 (−))<br>탈분극: Na<sup>+</sup> 통로 열림 → Na<sup>+</sup> 유입 → 막전위 +30 mV 부근까지<br>재분극: K<sup>+</sup> 통로 열림 → K<sup>+</sup> 유출 → 다시 (−)<br>이후 과분극을 거쳐 −70 mV로 회복</div>
 <ul><li><strong>Na<sup>+</sup>–K<sup>+</sup> 펌프</strong>: ATP를 써서 Na<sup>+</sup> 3개를 밖으로, K<sup>+</sup> 2개를 안으로 보내 휴지 전위를 유지합니다(능동 수송).</li><li><strong>역치</strong>: 활동 전위를 일으키는 최소 자극 세기. 역치 미만이면 발생하지 않고, 역치 이상이면 <em>자극이 세도 활동 전위의 크기는 같습니다</em>(실무율). 자극이 셀수록 <em>발생 빈도</em>가 늘어납니다.</li><li>막전위 그래프 읽기: 오르는 구간 = 탈분극(Na<sup>+</sup> 유입이 우세), 내리는 구간 = 재분극(K<sup>+</sup> 유출이 우세).</li></ul>
+<h3>뉴런을 눌러 보세요</h3>
+<p>‘뉴런 구조’, ‘활동 전위’, ‘시냅스’ 세 보기를 바꿔 가며 부위에 마우스를 올려 보세요. 활동 전위 보기에서는 슬라이더로 시간을 움직이면 이온 통로가 열리고 닫히는 모습이 보입니다.</p>
+<div data-figure="neuron"></div>
 <h2>3. 흥분의 전도와 전달</h2>
 <ul><li><strong>전도</strong>: 뉴런 안에서 활동 전위가 축삭을 따라 이동. 자극점에서 <em>양방향</em>으로 전도되고, 전도 속도 v = 거리 / 시간. 표에 지점별 도달 시간이 있으면 (거리 차)/(시간 차)로 v를 구합니다.</li><li><strong>전달</strong>(시냅스): 축삭 돌기 말단에 흥분이 도달 → Ca<sup>2+</sup> 유입 → 시냅스 소포에서 <em>신경 전달 물질</em> 방출 → 시냅스 후 뉴런의 수용체에 결합 → 탈분극(흥분성) 또는 과분극(억제성). 전달은 <strong>한 방향</strong>(축삭 말단 → 다음 뉴런의 가지 돌기·세포체)이며, 전도보다 느립니다.</li></ul>
 <h2>4. 골격근의 수축</h2>
 <p>골격근은 근섬유 다발이고, 근섬유 안의 <strong>근육 원섬유</strong>는 Z선 사이의 <strong>근육 원섬유 마디(사르코미어)</strong>가 반복된 구조입니다. 마디는 굵은 <strong>마이오신 필라멘트</strong>와 가는 <strong>액틴 필라멘트</strong>로 이루어집니다.</p>
 <div class="formula">Z선 ─ [액틴만] ─ [겹침] ─ [마이오신만 (H대)] ─ [겹침] ─ [액틴만] ─ Z선<br>A대(암대) = 마이오신 필라멘트가 있는 전체 길이 = 겹침 + H대 + 겹침<br>I대(명대) = 액틴만 있는 부분</div>
+<h3>근육 원섬유 마디를 줄여 보세요</h3>
+<p>슬라이더를 끌면 마디가 짧아집니다. 어떤 구간이 짧아지고 어떤 구간(A대·필라멘트 길이)은 그대로인지, 수치가 함께 바뀝니다.</p>
+<div data-figure="sarcomere"></div>
 <h3>수축할 때 (활주설)</h3>
 <div class="tbl-wrap"><table><thead><tr><th>변화</th><th>결과</th></tr></thead><tbody><tr><td data-l="변화">액틴 필라멘트가 마이오신 사이로 미끄러져 들어감</td><td data-l="결과">필라멘트 <strong>길이는 그대로</strong></td></tr><tr><td data-l="변화">근육 원섬유 마디(Z선 사이) 길이</td><td data-l="결과">짧아짐</td></tr><tr><td data-l="변화">H대 길이</td><td data-l="결과">짧아짐</td></tr><tr><td data-l="변화">I대 길이</td><td data-l="결과">짧아짐</td></tr><tr><td data-l="변화">A대 길이</td><td data-l="결과"><strong>변하지 않음</strong></td></tr><tr><td data-l="변화">ATP</td><td data-l="결과">필요 (마이오신 머리가 액틴에 결합·이동)</td></tr></tbody></table></div>
 <p>수능 문항은 X(마디) 안의 세 구간 길이를 ㉠(액틴만), ㉡(겹침), ㉢(마이오신만)로 놓고 시점 t<sub>1</sub>, t<sub>2</sub>의 비를 줍니다. <strong>A대 = ㉡ + ㉢은 일정, 마디 길이 = ㉠ + ㉡ + ㉢, H대 감소량 = 마디 감소량</strong> 이 세 관계로 풉니다.</p>
