@@ -207,26 +207,6 @@
     return out;
   }
 
-  /* 구불구불한 회·구 무늬: 시작점→끝점 사이를 크게 굽이치게 한다 (엽 안쪽에만 쓴다).
-   * 굽이마다 진폭·위상을 달리해 규칙적인 지그재그로 보이지 않게 한다. */
-  function wig(x1, y1, x2, y2, amp, waves) {
-    var pts = [];
-    var n = waves * 2;
-    var dx = x2 - x1, dy = y2 - y1;
-    var len = Math.sqrt(dx * dx + dy * dy) || 1;
-    var nx = -dy / len, ny = dx / len;
-    var seed = Math.round(x1 * 3 + y1 * 5 + len);
-    var i, t, k, jitter, drift;
-    for (i = 0; i <= n; i++) {
-      t = i / n;
-      jitter = 0.55 + 0.9 * (((seed + i * 37) % 11) / 10);
-      drift = (((seed + i * 53) % 7) - 3) * 0.012;
-      k = (i === 0 || i === n) ? 0 : (i % 2 ? 1 : -1) * amp * jitter;
-      pts.push([r1(x1 + dx * (t + drift) + nx * k), r1(y1 + dy * (t + drift) + ny * k)]);
-    }
-    return pts;
-  }
-
   /* ═══════════════ 옆면 (전두엽이 왼쪽) ═══════════════
    * 외곽은 한 바퀴. 실비우스 열(외측구)은 윤곽이 한번 들어갔다가 측두극이 다시 앞아래로 나온다.
    * A 외측구 입구 · B 중심구∩외측구 · C 외측구 뒤끝 · D 중심구 위 · E 두정–후두 경계(위) · F 후두전 패임(아래) */
@@ -280,19 +260,56 @@
     [468, 520], [476, 474], [488, 430], [492, 388], [482, 346], [434, 334]
   ];
 
-  var gyriSets = [
-    /* 전두엽 */
-    wig(122, 200, 306, 152, 12, 3), wig(114, 152, 266, 100, 11, 3), wig(152, 228, 334, 206, 10, 3),
-    wig(190, 114, 376, 72, 10, 3), wig(236, 176, 358, 156, 9, 2),
-    /* 두정엽 */
-    wig(436, 70, 566, 92, 11, 3), wig(424, 122, 574, 144, 11, 3), wig(404, 178, 536, 180, 10, 3),
-    wig(480, 46, 606, 66, 9, 2),
-    /* 후두엽 */
-    wig(630, 130, 690, 170, 10, 2), wig(612, 188, 682, 228, 10, 2), wig(628, 244, 658, 280, 8, 1),
-    /* 측두엽 */
-    wig(246, 304, 426, 294, 11, 3), wig(278, 328, 470, 318, 10, 3), wig(450, 264, 568, 252, 9, 2),
-    wig(352, 282, 502, 270, 9, 3)
-  ];
+  /* 겉질 주름(회·구): 엽마다 짧게 굽이치는 홈을 고르게 흩뿌리고 엽 모양으로 잘라 낸다(만화식 뇌 주름).
+     홈은 엽 색보다 진한 선, 그 위쪽에 밝은 선을 살짝 어긋나게 겹쳐 볼록한 이랑처럼 보이게 한다. */
+  function rnd(seed) {
+    var v = seed % 2147483647;
+    if (v <= 0) v += 2147483646;
+    return function () { v = v * 16807 % 2147483647; return (v - 1) / 2147483646; };
+  }
+  function shade(hex, k) {
+    var h = hex.replace('#', '');
+    var c = [0, 2, 4].map(function (i) { return parseInt(h.slice(i, i + 2), 16); });
+    return 'rgb(' + c.map(function (v) { return Math.round(v * (1 - k)); }).join(',') + ')';
+  }
+  function sulciIn(box, seed, gap) {
+    var r = rnd(seed), out = [];
+    var x, y, k, n, px, py, ang, step, pts, m, a2;
+    for (y = box[1]; y < box[3]; y += gap * 0.86) {
+      for (x = box[0] + ((y / gap) % 2 ? gap / 2 : 0); x < box[2]; x += gap) {
+        px = x + (r() - 0.5) * gap * 0.7;
+        py = y + (r() - 0.5) * gap * 0.7;
+        ang = r() * Math.PI * 2;
+        step = gap * (0.42 + r() * 0.14);
+        n = 3 + Math.floor(r() * 2);
+        pts = [[r1(px), r1(py)]];
+        for (k = 0; k < n; k++) {
+          ang += (r() - 0.5) * 1.5;
+          px += Math.cos(ang) * step;
+          py += Math.sin(ang) * step;
+          pts.push([r1(px), r1(py)]);
+        }
+        out.push(pts);
+        if (r() < 0.25) {
+          m = pts[1 + Math.floor(r() * (pts.length - 2))];
+          a2 = ang + (r() < 0.5 ? 1.5 : -1.5);
+          out.push([m, [r1(m[0] + Math.cos(a2) * step * 0.9), r1(m[1] + Math.sin(a2) * step * 0.9)]]);
+        }
+      }
+    }
+    return out;
+  }
+  function lobeSulci(key, color, box, seed) {
+    var lines = paths(sulciIn(box, seed, 46));
+    return '<g class="ax-deco" pointer-events="none" clip-path="url(#axc-' + key + ')" fill="none" stroke-linecap="round" stroke-linejoin="round">' +
+      '<g stroke="#ffffff" stroke-opacity="0.42" stroke-width="2.2" transform="translate(-1.8 -2.2)">' + lines + '</g>' +
+      '<g stroke="' + shade(color, 0.42) + '" stroke-opacity="0.82" stroke-width="3">' + lines + '</g></g>';
+  }
+  var sideClips = '<defs>' +
+    '<clipPath id="axc-frontal"><path d="' + frontalD + '"/></clipPath>' +
+    '<clipPath id="axc-parietal"><path d="' + parietalD + '"/></clipPath>' +
+    '<clipPath id="axc-occipital"><path d="' + occipitalD + '"/></clipPath>' +
+    '<clipPath id="axc-temporal"><path d="' + temporalD + '"/></clipPath></defs>';
 
   var sideFolia = '';
   (function () {
@@ -305,6 +322,7 @@
   })();
 
   var brainSide = [
+    sideClips,
     part('cerebellum', '#e4c27a', '1', P(poly(cerebPts)) + deco(sideFolia, '#8a6230', 1.4, 0.55)),
     part('brainstem', '#e09aa3', '1', P(poly(stemPts)) + deco(paths([
       [[392, 372], [432, 380], [478, 372]],
@@ -313,16 +331,15 @@
       [[410, 470], [438, 474], [470, 468]],
       [[416, 520], [440, 524], [468, 518]]
     ]), '#7a4450', 1.5, 0.4)),
-    part('occipital', '#8ebbe8', '1', P(occipitalD)),
-    part('temporal', '#c9b0e0', '1', P(temporalD)),
-    part('parietal', '#7dcec0', '1', P(parietalD)),
-    part('frontal', '#f2b39a', '1', P(frontalD)),
+    part('occipital', '#8ebbe8', '1', P(occipitalD) + lobeSulci('occipital', '#8ebbe8', [560, 70, 712, 320], 41)),
+    part('temporal', '#c9b0e0', '1', P(temporalD) + lobeSulci('temporal', '#c9b0e0', [200, 186, 660, 362], 73)),
+    part('parietal', '#7dcec0', '1', P(parietalD) + lobeSulci('parietal', '#7dcec0', [336, 20, 646, 252], 29)),
+    part('frontal', '#f2b39a', '1', P(frontalD) + lobeSulci('frontal', '#f2b39a', [78, 18, 426, 276], 11)),
     deco(
       '<path d="' + pathD(central, false) + '" stroke-width="3.4" stroke-opacity="0.82"/>' +
       '<path d="' + pathD(lfAll, false) + '" stroke-width="3.6" stroke-opacity="0.84"/>' +
       '<path d="' + pathD(po, false) + '" stroke-width="2.8" stroke-opacity="0.7"/>' +
-      '<path d="' + pathD(toF, false) + '" stroke-width="2.2" stroke-opacity="0.55"/>' +
-      paths(gyriSets),
+      '<path d="' + pathD(toF, false) + '" stroke-width="2.2" stroke-opacity="0.55"/>',
       '#4a382f', 1.15, 0.4
     )
   ].join('');

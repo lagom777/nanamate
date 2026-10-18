@@ -8,7 +8,9 @@ const COLOR = "#16a34a";
 const ANX_HEAD = `<link rel="stylesheet" href="../../shared/anatomy-explorer.css">
 <script defer src="../../shared/anatomy-data.js"></script>
 <script defer src="../../shared/anatomy-art.js"></script>
-<script defer src="../../shared/anatomy-explorer.js"></script>`;
+<script defer src="../../shared/anatomy-explorer.js"></script>
+<link rel="stylesheet" href="../../shared/brain-tour.css">
+<script defer src="../../shared/brain-tour.js"></script>`;
 const chapters = [];
 
 /* ───────────── 1. 생명과학의 이해 ───────────── */
@@ -163,6 +165,9 @@ chapters.push({
   lead: `<p>회당 2~3문항으로 이 단원 중 <strong>가장 넓은 범위</strong>입니다. 신경계는 <em>구조와 역할의 대응</em>, 호르몬과 항상성은 <em>음성 피드백의 방향(증가/감소)</em>을 묻습니다. 그래프에 <strong>호르몬 ㉠, ㉡</strong>이 나오면 “무엇이 무엇을 억제하는가”만 정해 두면 정체를 곧바로 알 수 있습니다.</p>`,
   body: `<h2>1. 신경계</h2>
 ${tbl(["구분", "구조", "역할"], [["중추 신경계", "대뇌", "감각·판단·수의 운동 명령, 기억·사고"], ["", "소뇌", "몸의 균형 유지, 근육 운동 조절"], ["", "간뇌", "시상(감각 중계), <strong>시상 하부(체온·혈당·삼투압 조절 중추, 뇌하수체 조절)</strong>"], ["", "중간뇌", "안구 운동, 동공(홍채) 반사"], ["", "연수", "호흡·심장 박동·소화 운동 조절, 재채기·기침 등"], ["", "척수", "무릎 반사·회피 반사 중추"], ["말초 신경계", "체성 신경", "감각 신경, 운동 신경 (골격근 조절)"], ["", "자율 신경", "교감 신경, 부교감 신경 (내장 기관 조절, 무의식적)"]])}
+<h3>🎬 뇌 여행 — 영상으로 먼저 보기</h3>
+<p>뇌의 바깥(엽)부터 안쪽(간뇌·뇌줄기)까지 카메라가 따라가며 보여 줍니다. 장면마다 부위 <strong>이름의 뜻</strong>이 함께 나옵니다.</p>
+<div data-braintour></div>
 <h3>뇌 부위를 눌러 보세요</h3>
 <p>마우스를 올리면(휴대폰은 누르면) 위치·하는 일·<strong>이름의 뜻(어원)</strong>이 나옵니다. 아래 ‘영상’ 버튼은 무릎 반사·동공 반사 같은 반응 경로를 차례로 보여 줍니다.</p>
 <div data-anatomy="brain"></div>
