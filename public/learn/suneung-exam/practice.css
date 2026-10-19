@@ -137,7 +137,7 @@
 #practice-root .pr-chk-btn { background: transparent !important; color: var(--accent) !important; border: 1px solid var(--accent) !important; }
 #practice-root .pr-chk-btn.on { color: var(--text-dim) !important; border-color: var(--pr-line) !important; }
 .pr-row.numrow { grid-template-columns: 28px 1fr; }
-.pr-body.paper .pr-row:not(.numrow) { grid-template-columns: 28px repeat(5, 1fr) 24px; }
+.pr-body.paper .pr-row:not(.numrow) { grid-template-columns: 28px repeat(5, 1fr) 24px 24px; }
 .pr-chk { height: 24px; width: 24px; border-radius: 12px; padding: 0; font: 12px var(--font-mono, monospace); cursor: pointer; }
 #practice-root .pr-chk { color: var(--text-dim) !important; }
 #practice-root .pr-chk.on { background: var(--pr-ok) !important; border-color: var(--pr-ok) !important; color: #fff !important; }
@@ -151,3 +151,47 @@
 
 .pr-trap { margin: 8px 0; padding: 8px 12px; border-left: 3px solid var(--pr-bad, #e5484d); background: rgba(229, 72, 77, 0.08); border-radius: 0 8px 8px 0; font-size: 14px; line-height: 1.65; color: var(--text); }
 .pr-trap b { color: var(--pr-bad, #e5484d); margin-right: 4px; }
+
+/* AI 해설·분석 (내 API 키) */
+.pr-chk-row { display: flex; gap: 8px; }
+.pr-chk-row .pr-chk-btn { flex: 1 1 0; }
+#practice-root .pr-ai-btn { color: #fff !important; background: var(--accent) !important; border-color: var(--accent) !important; }
+#practice-root .pr-ai-mini { font-size: 9.5px; letter-spacing: -.3px; color: var(--accent) !important; }
+#practice-root .pr-ai-cta { color: var(--accent) !important; border-color: var(--accent) !important; }
+.pr-ai { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--pr-line); font-size: 14px; line-height: 1.75; }
+.pr-ai-body b { color: var(--accent); }
+.pr-ai-body ul { margin: 2px 0 10px; }
+.pr-ai-wait { margin: 6px 0 0; color: var(--text-dim); font-size: 13px; animation: pr-ai-blink 1.4s ease-in-out infinite; }
+@keyframes pr-ai-blink { 50% { opacity: .45; } }
+.pr-ai-err { margin: 0 0 8px; color: var(--pr-bad); }
+.pr-ai-note { margin: 0 0 8px; font-size: 12.5px; color: var(--text-dim); line-height: 1.6; }
+.pr-ai-note a { color: var(--accent); }
+.pr-ai-keyrow { display: flex; gap: 6px; }
+.pr-ai-key { flex: 1 1 auto; min-width: 0; font: 13px var(--font-mono, monospace); color: var(--text); background: var(--pr-card); border: 1px solid var(--pr-line); border-radius: 8px; padding: 8px 10px; }
+.pr-ai-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-top: 6px; font-size: 11.5px; color: var(--text-mute, var(--text-dim)); }
+#practice-root .pr-ai-link { background: transparent !important; border: 0 !important; padding: 0; color: var(--text-dim) !important; font: inherit; text-decoration: underline; cursor: pointer; }
+.pr-ai-dlg { width: min(760px, calc(100vw - 32px)); max-height: calc(100vh - 48px); padding: 16px 18px 18px; border: 1px solid var(--pr-line); border-radius: 14px; background: var(--pr-card); color: var(--text); overflow-y: auto; }
+.pr-ai-dlg::backdrop { background: rgba(0,0,0,.55); }
+.pr-ai-dlg .pr-ai { margin-top: 4px; border-top: 0; padding-top: 0; }
+.pr-ai-head { position: sticky; top: -16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: -16px -18px 8px; padding: 12px 18px; background: var(--pr-card); border-bottom: 1px solid var(--pr-line); }
+#practice-root .pr-ai-x { background: transparent !important; border: 0 !important; color: var(--text-dim) !important; font-size: 16px; cursor: pointer; padding: 4px 6px; }
+@media (max-width: 520px) { .pr-chk-row { flex-direction: column; gap: 0; } }
+.pr-ai-q { margin: 12px 0 6px; padding: 8px 12px; border-radius: 10px; background: var(--accent-glow, rgba(124,58,237,.12)); color: var(--text); font-size: 13.5px; }
+.pr-ai-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 6px; }
+#practice-root .pr-ai-chip { padding: 5px 11px; border-radius: 999px; border: 1px solid var(--pr-line) !important; background: transparent !important; color: var(--text) !important; font: 12.5px var(--font-body, sans-serif); cursor: pointer; }
+#practice-root .pr-ai-chip:hover { border-color: var(--accent) !important; color: var(--accent) !important; }
+.pr-ai-fold { margin: 6px 0 4px; }
+.pr-ai-fold summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+.pr-hint .pr-ai { margin-top: 0; padding-top: 0; border-top: 0; }
+#practice-root .pr-hint-btn { flex: 0 0 auto; padding: 10px 14px; }
+.pr-weak-chip { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 10px 0 2px; padding: 8px 12px; border: 1px dashed var(--pr-line); border-radius: 10px; font-size: 13px; color: var(--text-dim); }
+.pr-weak-chip.on { border-style: solid; border-color: var(--accent); color: var(--text); }
+.pr-weak-grp { padding: 12px 0; border-bottom: 1px solid var(--pr-line); }
+.pr-weak-grp:last-of-type { border-bottom: 0; }
+.pr-weak-head { display: flex; align-items: baseline; gap: 8px; font-size: 15px; }
+.pr-weak-head a { color: var(--accent); font-weight: 700; text-decoration: none; }
+.pr-weak-n { font-size: 12px; color: var(--text-dim); }
+.pr-weak-list { list-style: none; margin: 6px 0 0; padding: 0; font-size: 13.5px; line-height: 1.6; }
+.pr-weak-list li { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 5px 0; border-bottom: 1px dashed var(--pr-line); }
+.pr-weak-list li small { color: var(--text-mute, var(--text-dim)); }
+.pr-weak-list .pr-ai-link { flex: 0 0 auto; }
