@@ -56,11 +56,14 @@ export default [
     s.step(2, person({ x: 130, y: 262, shirt: '#b45309', hair: '#e5e7eb', fc: 'cheer', armR: [40, -30] }) + person({ x: 430, y: 266, shirt: '#3b82f6', s: 0.7, fc: 'shock' }) + person({ x: 490, y: 266, shirt: '#ec4899', hs: 'long', s: 0.7, fc: 'shock' }), { cls: 'up' });
     s.step(3, E(250, 80, 90, 54, '#fff', 'stroke="#aab4c6" stroke-width="3"') + `<g transform="translate(250 80)">${C(0, 0, 30, '#f59e0b')}${L('M-20 -14L-10 -6M20 -14L10 -6M-24 8L-12 6M24 8L12 6', '#2a1a12', 4)}${C(-10, -6, 3, '#2a1a12')}${C(10, -6, 3, '#2a1a12')}${P('M-8 10H8L0 18Z', '#7a2a2a')}${P('M-26 -22L-30 -42L-12 -28ZM26 -22L30 -42L12 -28Z', '#f59e0b')}</g>`, { cls: 'pop' });
   }],
-  ['preliminary', '#2563eb', '결승에 앞서 치르는 첫 단계의 예선', (s) => {
-    s.sky('cool'); s.ground('floor', 252);
-    s.step(1, stairs(280, 252), { cls: 'up' });
-    s.step(2, R(130, 222, 100, 30, '#2563eb', 3) + person({ x: 180, y: 222, shirt: '#2563eb', s: 0.7, legs: 'walk', fc: 'cheer' }) + C(110, 130, 12, '#94a3b8') + C(150, 130, 12, '#94a3b8') + C(190, 130, 12, '#94a3b8') + C(230, 130, 12, '#94a3b8'), { cls: 'pop' });
-    s.step(3, arrow(250, 200, 320, 170, '#2563eb', 5, 12) + arrow(350, 170, 420, 140, '#2563eb', 5, 12) + star(480, 80, 14, '#cbd5e1') + L('M460 70L500 90', '#cbd5e1', 3, 'stroke-opacity="0"'), { cls: 'wipe' });
+  ['preliminary', '#2563eb', '본 경기에 앞서 트랙 밖에서 먼저 몸을 푸는 예비 단계', (s) => {
+    s.sky('day'); s.ground('grass', 236);
+    s.add(R(0, 262, 560, 38, '#c2410c') + L('M0 280H560', '#fde6d8', 2));
+    const gate = R(392, 120, 8, 142, '#64748b') + R(528, 120, 8, 142, '#64748b') + R(388, 108, 152, 28, '#2563eb', 5) + [0, 1, 2, 3, 4, 5, 6, 7].map((i) => R(400 + i * 16, 114, 8, 8, i % 2 ? '#fff' : '#1e3a8a')).join('') + R(394, 262, 140, 6, '#fff');
+    s.step(1, person({ x: 130, y: 252, shirt: '#2563eb', fc: 'smile', armL: [-14, -46], armR: [14, -46] }) + E(130, 258, 74, 14, 'none', 'stroke="#2563eb" stroke-width="3" stroke-dasharray="8 7"'), { cls: 'up', e: 2 });
+    s.step(2, gate + sparks(464, 122, 30, 44, '#ffd34d', 8, 3), { cls: 'up' });
+    s.step(2, arrow(220, 190, 370, 190, '#2563eb', 5, 12), { cls: 'wipe', e: 2 });
+    s.step(3, person({ x: 464, y: 260, shirt: '#2563eb', fc: 'angry', armL: [20, 6], armR: [-18, 10] }) + star(520, 40, 14, '#ffd34d'), { cls: 'up' });
   }],
   ['proliferation', '#16a34a', '하나이던 것이 둘, 넷, 여덟으로 순식간에 불어난다', (s) => {
     s.sky('mint'); s.ground('tile', 252);

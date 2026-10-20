@@ -41,11 +41,15 @@ export default [
     s.step(2, row(200, 9, 1.3) + row(168, 11, 1.1), { cls: 'up' });
     s.step(3, row(140, 12, 1) + row(112, 14, 0.9) + row(276, 10, 2) + arrow(280, 40, 280, 70, '#2563eb', 4, 10), { cls: 'up' });
   }],
-  ['liability', '#b91c1c', '깨뜨린 것에 대한 청구서가 날아와 빚이라는 무거운 책임을 짊어진다', (s) => {
-    s.sky('wall'); s.ground('floor', 252);
-    s.step(1, person({ x: 150, y: 254, shirt: '#b91c1c', fc: 'shock' }) + P('M240 252L255 230L270 252Z M280 252L296 238L310 252Z', '#60a5fa', 'stroke="#2563eb" stroke-width="2"'), { cls: 'up', e: 2 });
-    s.mv(2, 'translateY(-90px)', paper(300, 130, 70, 90, 3) + L('M280 100H320', '#dc2626', 5), { d: 0.8, e: 2 });
-    s.step(3, `<g transform="translate(250 128) rotate(-12)">${P('M-46 52Q-54 -4 0 -10Q54 -4 46 52Q0 64 -46 52Z', '#dc2626', 'stroke="#7f1d1d" stroke-width="3"')}${L('M-14 -10Q0 -22 14 -10', '#7f1d1d', 4)}${coin(0, 24, 14)}</g>` + person({ x: 290, y: 254, shirt: '#b91c1c', fc: 'sad', rot: 18, armL: [-30, -30], armR: [-20, -34] }) + drop(330, 150, 0.8) + L('M226 34V56M256 30V52', '#7f1d1d', 4) + P('M219 54L226 68L233 54Z M249 50L256 64L263 50Z', '#7f1d1d'), { cls: 'up' });
+  ['liability', '#991b1b', '차로 남의 담장을 부숴 법적 책임 서류를 받고, 무거운 배상 짐을 짊어진다', (s) => {
+    s.sky('day'); s.ground('grass', 236);
+    const fence = (broken) => R(380, 196, 160, 8, '#d6b98c', 3) + [392, 416, 440, 464, 488, 512].map((x, i) => R(x, 176, 14, 64, '#e7d3b0', 4, broken && i === 0 ? 'transform="rotate(-28 399 240)"' : '')).join('');
+    s.step(1, fence(false), { cls: 'up', e: 1 });
+    s.step(2, fence(true) + sparks(392, 200, 18, 32, '#ef4444', 8, 4), {});
+    s.mv(1, 'translateX(-240px)', car(330, 230, '#3b82f6'), { d: 0.9 });
+    s.step(2, person({ x: 200, y: 244, shirt: '#991b1b', fc: 'shock', armL: [-20, -30], armR: [20, -30] }), { cls: 'up', e: 2 });
+    s.step(2, R(420, 34, 96, 116, '#fff', 6, 'stroke="#cbd5e1" stroke-width="3"') + L('M436 56H500M436 72H500M436 88H480', '#94a3b8', 3) + T(468, 140, scales(0, 0, 0), 'scale(0.32)') + C(496, 128, 13, 'none', 'stroke="#dc2626" stroke-width="3.5"'), { cls: 'pop' });
+    s.step(3, person({ x: 200, y: 244, shirt: '#991b1b', fc: 'sad', rot: 16, armL: [-24, -36], armR: [-14, -40] }) + sack(182, 168, 1.35, '#a16207') + C(182, 130, 11, '#ffd34d', 'stroke="#d99a00" stroke-width="2"') + arrow(160, 30, 160, 70, '#991b1b', 4, 10) + arrow(204, 30, 204, 70, '#991b1b', 4, 10) + drop(234, 150, 0.7) + cross(500, 56, 18), {});
   }],
   ['pester', '#f59e0b', '일하는 어른의 소매를 계속 잡아당기며 조르는 아이', (s) => {
     s.sky('wall'); s.ground('floor', 252);

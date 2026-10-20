@@ -64,11 +64,16 @@ export default [
     s.step(2, `<g fill="none" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round"><path class="a-rise" d="M252 160Q240 140 252 120"/><path class="a-rise" style="animation-delay:-1s" d="M308 160Q320 140 308 120"/><path class="a-rise" style="animation-delay:-2s" d="M280 150Q268 130 280 110"/></g>`, {});
     s.step(3, L('M240 270L224 280M320 270L336 280M230 262L212 262M330 262L348 262', '#dc2626', 4) + sparks(280, 170, 40, 56, '#ef4444', 8, 3), { cls: 'pop' });
   }],
-  ['staple', '#d97706', '매일 식탁에 오르는 밥이 주식이다', (s) => {
-    s.sky('warm'); s.ground('floor', 252);
-    s.step(1, table(280, 240, 340), { cls: 'up' });
-    s.step(2, `<g transform="translate(280 232)">${P('M-44 0Q-44 -34 0 -34Q44 -34 44 0Z', '#fff', 'stroke="#d6dbe5" stroke-width="3"')}${P('M-40 -10Q0 -64 40 -10Z', '#f8f4e8')}</g>` + `<g transform="translate(170 232)">${E(0, 0, 26, 8, '#fff', 'stroke="#d6dbe5" stroke-width="2"')}${E(0, -6, 16, 8, '#ef4444')}</g>` + `<g transform="translate(390 232)">${E(0, 0, 26, 8, '#fff', 'stroke="#d6dbe5" stroke-width="2"')}${E(0, -6, 16, 8, '#22c55e')}</g>`, { cls: 'pop' });
-    s.step(3, sun(110, 80, 24, '#ffd34d') + moon(450, 80, 20, '#f7c98f') + L('M150 60Q280 20 410 60', '#d97706', 4, 'stroke-dasharray="5 8"') + arrow(400, 52, 420, 70, '#d97706', 4, 10), { cls: 'pop' });
+  ['staple', '#ca8a04', '아침·점심·저녁 상마다 가운데에 늘 밥 한 공기 — 주식(主食)', (s) => {
+    s.sky('wall'); s.ground('floor', 252);
+    const bowl = (x, y) => `<g transform="translate(${x} ${y})">${P('M-24 -16Q-20 -40 0 -40Q20 -40 24 -16Z', '#fff', 'stroke="#e2e8f0" stroke-width="2"')}${P('M-27 -16Q-27 8 0 8Q27 8 27 -16Z', '#e0ecf7', 'stroke="#94a3b8" stroke-width="2.5"')}</g>`;
+    const side = (x, y, col) => E(x, y, 15, 5, '#fff', 'stroke="#d6dbe5" stroke-width="2"') + E(x, y - 3, 9, 4, col);
+    const meal = (x, sky, c1, c2) => sky + R(x - 76, 222, 152, 12, '#a0602e', 5) + R(x - 64, 234, 9, 18, '#7a461f') + R(x + 55, 234, 9, 18, '#7a461f') + side(x - 50, 220, c1) + side(x + 50, 220, c2) + bowl(x, 220);
+    const ring = (x) => C(x, 200, 38, 'none', 'stroke="#ca8a04" stroke-width="3.5" stroke-dasharray="7 6"');
+    s.step(1, meal(95, P('M56 120A20 20 0 0 1 96 120Z', '#fb923c') + L('M40 122H112', '#fb923c', 3) + L('M76 92V84M54 100L48 94M98 100L104 94', '#fb923c', 3), '#ef4444', '#22c55e'), { cls: 'up' });
+    s.step(2, meal(280, sun(280, 70, 20, '#fbbf24') + sparks(280, 70, 26, 36, '#fbbf24', 8, 3), '#f59e0b', '#16a34a'), { cls: 'up' });
+    s.step(3, meal(465, R(420, 40, 90, 70, '#1f2a44', 14) + moon(458, 76, 18, '#1f2a44') + star(494, 58, 5, '#fff6c8') + star(436, 96, 4, '#fff6c8'), '#a16207', '#dc2626'), { cls: 'up' });
+    s.step(3, ring(95) + ring(280) + ring(465) + chk(36, 36, 18), { cls: 'pop', dl: 0.5 });
   }],
   ['dispersal', '#16a34a', '바람에 민들레 씨앗이 사방으로 흩어져 퍼진다', (s) => {
     s.sky('day'); s.ground('grass', 246);
@@ -162,11 +167,15 @@ export default [
     s.step(2, cloud(160, 100, 0.8, '#94a3b8') + arrow(200, 102, 240, 102, '#6366f1', 4, 10) + L('M250 82V98M244 90L250 84L256 90M264 92V108M258 100L264 94L270 100', '#6fb8ee', 3) + arrow(300, 102, 340, 102, '#6366f1', 4, 10) + P('M360 116H390Q392 100 380 96Q370 94 362 104Q356 110 360 116Z', '#22c55e'), { cls: 'wipe' });
     s.step(3, person({ x: 420, y: 254, shirt: '#6366f1', fc: 'smile', armR: [10, -50] }) + chk(480, 56), { cls: 'up' });
   }],
-  ['endow', '#f59e0b', '하늘에서 내려온 별빛이 아이에게 재능을 부여한다', (s) => {
-    s.sky('night'); s.ground('grass', 250);
-    s.step(1, person({ x: 280, y: 262, shirt: '#f59e0b', s: 0.7, fc: 'smile' }), { cls: 'up' });
-    s.mv(2, 'translateY(-130px)', star(280, 180, 16, '#ffd34d') + sparks(280, 180, 24, 36, '#ffd34d', 8, 3), { d: 1 });
-    s.step(3, sparks(280, 180, 60, 78, '#ffd34d', 12, 4) + note(150, 180) + pencil(420, 180, 1.4, 20) + L('M120 100L140 120M440 100L420 120', '#ffd34d', 4), { cls: 'pop' });
+  ['endow', '#16a34a', '돈 자루를 학교에 기부해 학교가 빛나고 아이들이 기뻐한다(기부하다, 부여하다)', (s) => {
+    s.sky('day'); s.ground('grass', 236);
+    const bag = (x, y) => sack(x, y, 1, '#d8c79f') + C(x, y - 26, 10, '#ffd34d', 'stroke="#d99a00" stroke-width="2"');
+    s.step(1, house(410, 236, 150, '#fde68a', '#2563eb') + flag(410, 86, '#16a34a', 40), { cls: 'up' });
+    s.step(1, person({ x: 110, y: 244, shirt: '#1f2937', fc: 'smile', armR: [30, 10] }), { cls: 'up' });
+    s.step(1, bag(150, 244), { cls: 'up', e: 1 });
+    s.mv(2, 'translateX(-180px)', bag(330, 244), { d: 1 });
+    s.step(2, arrow(170, 150, 300, 150, '#16a34a', 5, 12), { cls: 'wipe' });
+    s.step(3, sparks(410, 170, 92, 110, '#ffd34d', 12, 4) + person({ x: 500, y: 244, shirt: '#f59e0b', s: 0.6, fc: 'cheer', armL: [-16, -30], armR: [16, -30] }) + person({ x: 532, y: 244, shirt: '#ec4899', s: 0.6, hs: 'long', fc: 'cheer', armL: [-16, -30], armR: [16, -30] }) + heart(516, 150, 0.6, '#ef4444'), { cls: 'pop' });
   }],
   ['extrinsic', '#ca8a04', '스스로가 아닌 바깥의 보상 때문에 움직이는 외적 동기', (s) => {
     s.sky('wall'); s.ground('floor', 252);

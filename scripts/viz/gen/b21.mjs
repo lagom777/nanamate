@@ -198,12 +198,15 @@ export default [
     s.step(2, `<g transform="translate(280 200)">${R(-4, -50, 8, 50, '#6b7384')}${E(0, -52, 14, 6, '#475569')}</g>` + L('M280 150Q220 110 160 180M280 150Q340 110 400 180M280 150Q250 90 230 130M280 150Q310 90 330 130', '#38bdf8', 4, 'stroke-dasharray="3 6"') + drop(200, 150, 0.8, '#7dd3fc') + drop(360, 150, 0.8, '#7dd3fc'), { cls: 'pop', e: 3 });
     s.step(3, R(0, 200, 560, 100, '#7a5230') + [100, 200, 300, 400, 500].map((x) => L(`M${x} 220V190`, '#3f8f3a', 4) + P(`M${x} 200C${x - 14} 188 ${x - 22} 200 ${x - 14} 210Z M${x} 194C${x + 14} 182 ${x + 22} 194 ${x + 14} 204Z`, '#5fb85a')).join('') + chk(500, 56), { cls: 'up' });
   }],
-  ['oblige', '#ec4899', '떨어뜨린 책을 주워 건네 주는 친절을 베푸는 호의', (s) => {
-    s.sky('warm'); s.ground('stone', 250);
-    s.step(1, person({ x: 400, y: 262, shirt: '#3b82f6', fc: 'shock', armL: [-30, 10] }) + [[300, 252], [330, 258], [350, 248]].map(([x, y], i) => R(x - 14, y - 10, 28, 12, ['#ef4444', '#22c55e', '#f59e0b'][i], 2, `transform="rotate(${i * 12} ${x} ${y})"`)).join(''), { cls: 'up' });
-    s.step(2, person({ x: 130, y: 262, shirt: '#ec4899', hs: 'long', fc: 'smile', rot: 18, armR: [60, 30] }), { cls: 'up' });
-    s.mv(3, 'translateX(-60px)', book(330, 214, '#ef4444', 40, 28) + book(330, 188, '#22c55e', 40, 22), { d: 0.8 });
-    s.step(3, heart(300, 110, 0.9, '#ef4444') + sparks(300, 120, 30, 44, '#ffd34d', 8, 3), { cls: 'pop' });
+  ['oblige', '#ec4899', '책 더미에 쩔쩔매는 사람을 도와주어 고맙다고 고개 숙이게 하다(은혜를 베풀다)', (s) => {
+    s.sky('warm'); s.ground('floor', 252);
+    const cols = ['#ef4444', '#3b82f6', '#22c55e', '#f59e0b', '#8b5cf6', '#14b8a6'];
+    const books = (x, y, n, o = 0) => Array.from({ length: n }, (_, i) => R(x - 26 + (i % 2) * 5, y - 13 * (i + 1), 52, 12, cols[(i + o) % 6], 3)).join('');
+    s.step(1, person({ x: 170, y: 254, shirt: '#ec4899', hs: 'long', fc: 'sad', rot: -5, armL: [18, -12], armR: [-18, -12] }) + books(170, 196, 6) + drop(132, 140, 0.7) + drop(212, 132, 0.7), { cls: 'up', e: 1 });
+    s.step(2, person({ x: 170, y: 254, shirt: '#ec4899', hs: 'long', fc: 'smile', armL: [18, 4], armR: [-18, 4] }) + books(170, 214, 3), { e: 2 });
+    s.step(2, person({ x: 360, y: 254, shirt: '#2563eb', fc: 'smile', armL: [18, 4], armR: [-18, 4] }) + books(360, 214, 3, 3), { cls: 'up', e: 2 });
+    s.step(3, table(270, 238, 120) + books(270, 228, 6), { cls: 'up' });
+    s.step(3, person({ x: 150, y: 254, shirt: '#ec4899', hs: 'long', fc: 'cheer', rot: 12, armL: [6, 26], armR: [10, 24] }) + person({ x: 400, y: 254, shirt: '#2563eb', fc: 'smile', armL: [-20, -34] }) + heart(176, 92, 0.9, '#ef4444') + sparks(176, 92, 24, 38, '#ffd34d', 6, 3), {});
   }],
   ['refute', '#dc2626', '날아온 주장 말풍선을 라켓으로 되받아쳐 반박한다', (s) => {
     s.sky('wall'); s.ground('floor', 252);
@@ -217,11 +220,12 @@ export default [
     s.step(2, `<g transform="translate(280 252)">${R(-150, -30, 100, 30, '#cbd5e1', 3)}${R(-50, -60, 100, 60, '#cbd5e1', 3)}${R(50, -90, 100, 90, '#cbd5e1', 3)}</g>` + person({ x: 420, y: 162, shirt: '#78716c', s: 0.7, fc: 'sad', legs: 'walk' }), { e: 2 });
     s.step(3, `<g transform="translate(280 252)">${R(-150, -30, 100, 30, '#cbd5e1', 3)}${R(-50, -60, 100, 60, '#cbd5e1', 3)}${R(50, -90, 100, 90, '#cbd5e1', 3)}</g>` + person({ x: 130, y: 222, shirt: '#78716c', s: 0.7, fc: 'sad', legs: 'walk' }) + arrow(420, 80, 160, 130, '#dc2626', 5, 12) + cross(500, 56), { });
   }],
-  ['postulate', '#0891b2', '일단 맞다고 가정한 첫 블록 위에 논리의 탑을 쌓아 올린다', (s) => {
+  ['postulate', '#0891b2', '"이게 있다고 치자" — 머릿속 점선 받침을 깔고 그 위에 탑을 쌓는다(가정하다)', (s) => {
     s.sky('cool'); s.ground('floor', 252);
-    s.step(1, person({ x: 150, y: 254, shirt: '#0891b2', fc: 'think', armR: [50, -10] }) + qm(150, 90, '#0891b2', 1.2), { cls: 'up' });
-    s.step(2, R(250, 220, 90, 32, '#0891b2', 4, 'stroke="#fff" stroke-width="3"') + flag(300, 218, '#facc15', 40), { cls: 'pop' });
-    s.step(3, R(260, 188, 70, 30, '#38bdf8', 4, 'stroke="#fff" stroke-width="3"') + R(270, 158, 50, 28, '#7dd3fc', 4, 'stroke="#fff" stroke-width="3"') + R(280, 130, 30, 26, '#bae6fd', 4, 'stroke="#fff" stroke-width="3"') + chk(480, 56), { cls: 'up' });
+    const dash = 'stroke="#0891b2" stroke-width="4" stroke-dasharray="10 8"';
+    s.step(1, person({ x: 110, y: 254, shirt: '#0891b2', fc: 'think', armR: [-8, -30] }) + C(146, 140, 5, '#fff', 'stroke="#94a3b8" stroke-width="2"') + C(162, 122, 8, '#fff', 'stroke="#94a3b8" stroke-width="2"') + E(240, 82, 72, 44, '#fff', 'stroke="#94a3b8" stroke-width="3"') + R(210, 66, 60, 32, '#e0f2fe', 6, dash), { cls: 'up' });
+    s.step(2, R(300, 212, 130, 40, '#e0f2fe', 6, dash) + arrow(286, 112, 340, 196, '#0891b2', 4, 10), { cls: 'pop' });
+    s.step(3, R(310, 176, 110, 36, '#0e7490', 6) + R(322, 144, 86, 32, '#38bdf8', 6) + R(336, 116, 58, 28, '#7dd3fc', 6) + R(350, 94, 30, 22, '#bae6fd', 5) + chk(500, 56), { cls: 'up' });
   }],
   ['stroll', '#16a34a', '손잡고 공원길을 천천히 거닐며 산책하는 한가로운 걸음', (s) => {
     s.sky('dusk'); s.ground('grass', 246);

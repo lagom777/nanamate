@@ -79,11 +79,12 @@ export default [
     s.step(2, `<g class="a-bob" style="animation-duration:.5s">${P('M270 168C264 158 268 152 270 146C274 152 276 158 270 168Z', '#ff9a1f')}${P('M290 168C284 158 288 152 290 146C294 152 296 158 290 168Z', '#ff9a1f')}</g>` + person({ x: 130, y: 262, shirt: '#7c3aed', fc: 'smile', rot: 16, armL: [10, 24], armR: [-10, 24] }), { cls: 'up' });
     s.step(3, sun(110, 70, 20, '#ffd34d') + moon(450, 70, 18, '#1b1f4a') + L('M150 60Q280 10 410 60', '#7c3aed', 4, 'stroke-dasharray="5 8"') + L('M410 110Q280 150 150 110', '#7c3aed', 4, 'stroke-dasharray="5 8"'), { cls: 'pop' });
   }],
-  ['irrational', '#dc2626', '찌는 여름 해변에서 두꺼운 겨울 코트와 목도리를 걸친 앞뒤 안 맞는 행동', (s) => {
-    s.sky('sun'); s.ground('sand', 246);
-    s.step(1, sun(450, 70, 34, '#ff8a1a') + sparks(450, 70, 44, 62, '#ffb347', 12, 4) + `<g transform="translate(110 246)">${R(-3, -80, 6, 80, '#8c6238')}${P('M-44 -80Q0 -122 44 -80Z', '#3b82f6')}</g>`, { cls: 'up' });
-    s.step(2, person({ x: 280, y: 262, shirt: '#7c2d12', fc: 'cheer', hat: '<rect x="-17" y="-70" width="34" height="10" rx="5" fill="#dc2626"/><rect x="-18" y="-96" width="36" height="6" rx="3" fill="#7c2d12"/>' }), { cls: 'up' });
-    s.step(3, drop(250, 170, 0.9) + drop(312, 174, 0.9) + L('M240 150L226 140M320 150L334 140', '#dc2626', 4) + qm(280, 80, '#dc2626', 1.4) + cross(500, 56), { cls: 'pop' });
+  ['irrational', '#dc2626', '작고 순한 아기 고양이를 보고 의자 위로 뛰어올라 벌벌 떠는 비합리적인 공포', (s) => {
+    s.sky('wall'); s.ground('floor', 252);
+    s.step(1, cat(130, 252, 0.75, '#f59e0b') + heart(140, 196, 0.45, '#f472b6'), { cls: 'up' });
+    s.step(1, person({ x: 400, y: 254, shirt: '#dc2626', fc: 'smile' }), { cls: 'up', e: 1 });
+    s.step(2, chair(400, 252) + person({ x: 404, y: 224, shirt: '#dc2626', fc: 'shock', armL: [-22, -42], armR: [22, -42] }) + drop(370, 136, 0.7) + drop(440, 132, 0.7) + L('M356 112L344 102M452 112L464 102M404 100V86', '#dc2626', 3), {});
+    s.step(3, person({ x: 260, y: 254, shirt: '#64748b', s: 0.85, fc: 'think', armR: [-10, -30] }) + qm(262, 132, '#6366f1', 1.6) + cross(500, 56), { cls: 'pop' });
   }],
   ['proportion', '#0d9488', '조각이 전체에서 차지하는 알맞은 비율', (s) => {
     s.sky('cool'); s.ground('floor', 252);
