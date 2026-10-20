@@ -161,11 +161,11 @@ export default [
     s.step(2, [[160, 150], [200, 130], [240, 160], [280, 140]].map(([x, y]) => C(x, y, 7, '#84cc16', 'stroke="#4d7c0f" stroke-width="2"')).join(''), { cls: 'pop' });
     s.step(3, [[320, 150], [360, 130], [400, 160], [450, 140]].map(([x, y]) => C(x, y, 7, '#84cc16', 'stroke="#4d7c0f" stroke-width="2"')).join('') + [90, 280, 420].map((x, i) => person({ x, y: 270, shirt: ['#3b82f6', '#ec4899', '#f59e0b'][i], s: 0.55, fc: 'sick', skin: '#d8e8a0' }) + R(x - 8, 220, 16, 8, '#fff', 3)).join('') + cross(500, 50), { cls: 'up' });
   }],
-  ['figurative', '#6366f1', '시계가 금화로 바뀌는 "시간은 돈"이라는 비유적 표현', (s) => {
+  ['figurative', '#6366f1', '"시간은 금이다" — 시계를 금에 빗대는 비유적 표현', (s) => {
     s.sky('cool'); s.ground('floor', 252);
-    s.step(1, clock(130, 150, 52, 1, 3.4), { cls: 'pop' });
-    s.step(2, arrow(210, 150, 330, 150, '#6366f1', 6, 14), { cls: 'wipe' });
-    s.step(3, coin(430, 150, 52) + L('M430 150V124M430 150L450 160', '#d99a00', 4) + sparks(430, 150, 64, 80, '#ffd34d', 10, 3), { cls: 'pop' });
+    s.step(1, clock(140, 150, 52, 1, 3.4), { cls: 'pop' });
+    s.step(2, R(242, 128, 76, 14, '#6366f1', 7) + R(242, 158, 76, 14, '#6366f1', 7), { cls: 'pop' });
+    s.step(3, coin(420, 150, 56) + L('M420 150V122M420 150L442 162', '#d99a00', 4) + sparks(420, 150, 68, 84, '#ffd34d', 10, 3), { cls: 'pop' });
   }],
   ['fleeting', '#38bdf8', '두둥실 떠오르다 금세 터져 사라지는 순간의 비눗방울', (s) => {
     s.sky('sun'); s.ground('grass', 250);

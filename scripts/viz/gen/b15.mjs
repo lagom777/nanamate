@@ -9,11 +9,11 @@ const qm = (x, y, col = '#6366f1', k = 1) => L(`M${x - 6 * k} ${y - 6 * k}Q${x -
 const stairs = (x, y) => `<g transform="translate(${x} ${y})">${R(-150, -30, 100, 30, '#cbd5e1', 3)}${R(-50, -60, 100, 60, '#cbd5e1', 3)}${R(50, -90, 100, 90, '#cbd5e1', 3)}</g>`;
 
 export default [
-  ['indifferent', '#6b7280', '우는 아이를 보고도 어깨를 으쓱하며 그냥 지나치는 무관심', (s) => {
+  ['indifferent', '#6b7280', '우는 아이 옆을 휴대폰만 보며 어깨를 으쓱하고 그냥 지나치는 무관심', (s) => {
     s.sky('gray'); s.ground('stone', 250);
     s.step(1, person({ x: 160, y: 262, shirt: '#3b82f6', s: 0.7, fc: 'cry', armL: [-10, -20], armR: [10, -20] }) + drop(140, 190, 0.7) + drop(180, 194, 0.7), { cls: 'up' });
-    s.mv(2, 'translateX(-200px)', person({ x: 440, y: 254, shirt: '#6b7280', fc: 'neutral', legs: 'walk', armL: [-20, 4], armR: [20, 4] }), { d: 1.1, ease: 'linear' });
-    s.step(3, L('M300 120Q320 100 340 120', '#6b7280', 4) + L('M300 150H340', '#6b7280', 3, 'stroke-opacity="0"') + cross(500, 56), { cls: 'pop' });
+    s.mv(2, 'translateX(-200px)', person({ x: 440, y: 254, shirt: '#6b7280', fc: 'neutral', legs: 'walk', armL: [-20, 4], armR: [14, -24] }) + phone(458, 196, 0.8), { d: 1.1, ease: 'linear' });
+    s.step(3, L('M380 128Q400 108 420 128', '#6b7280', 4) + L('M404 152H436', '#6b7280', 3) + cross(500, 56), { cls: 'pop' });
   }],
   ['spatial', '#2563eb', '가로·세로·높이의 세 축으로 이루어진 입체 공간', (s) => {
     s.sky('cool'); s.ground('floor', 252);

@@ -192,11 +192,12 @@ export default [
     s.step(2, person({ x: 150, y: 258, shirt: '#b45309', fc: 'angry', armR: [34, -20], armL: [30, -4] }) + chair(230, 254), { cls: 'up' });
     s.step(3, `<g transform="translate(400 250)">${E(0, -40, 50, 28, '#d9a05a')}${C(-36, -46, 34, '#b9742a')}${C(-36, -44, 22, '#d9a05a')}${L('M-48 -48H-40M-30 -48H-22', '#111', 3)}${R(-28, -20, 12, 22, '#d9a05a', 4)}${R(24, -20, 12, 22, '#d9a05a', 4)}</g>` + chk(500, 56) + sparks(400, 150, 50, 64, '#ffd34d', 6, 3), { });
   }],
-  ['conviction', '#2563eb', '밀려드는 무리에도 가슴에 손을 얹고 굳건히 지키는 확신', (s) => {
-    s.sky('wall'); s.ground('floor', 252);
-    s.step(1, person({ x: 280, y: 254, shirt: '#2563eb', fc: 'cheer', armR: [-10, -30], armL: [-6, 28] }), { cls: 'up' });
-    s.step(2, arrow(60, 140, 200, 140, '#dc2626', 8, 18) + arrow(500, 140, 360, 140, '#dc2626', 8, 18), { cls: 'wipe' });
-    s.step(3, heart(280, 150, 0.7, '#ef4444') + sparks(280, 160, 60, 76, '#ffd34d', 10, 4) + chk(500, 56), { cls: 'pop' });
+  ['conviction', '#2563eb', '거센 바람에도 깃발을 꽉 붙잡고 꿈쩍하지 않는 굳은 확신', (s) => {
+    s.sky('cool'); s.ground('grass', 236);
+    s.step(1, flag(330, 244, '#2563eb', 130) + person({ x: 300, y: 244, shirt: '#2563eb', fc: 'smile', armR: [24, -40] }), { cls: 'up', e: 1 });
+    s.step(2, flag(330, 244, '#2563eb', 130) + person({ x: 300, y: 244, shirt: '#2563eb', fc: 'angry', armR: [24, -40], armL: [20, -30] }), { e: 2 });
+    s.step(2, L('M20 96H170M0 136H150M30 176H180M10 216H140', '#94a3b8', 6) + E(200, 120, 9, 5, '#65a30d') + E(150, 196, 8, 4, '#65a30d'), { cls: 'wipe' });
+    s.step(3, flag(330, 244, '#2563eb', 130) + person({ x: 300, y: 244, shirt: '#2563eb', fc: 'cheer', armR: [24, -40], armL: [20, -30] }) + sparks(300, 120, 60, 76, '#ffd34d', 8, 4) + heart(300, 222, 0.5, '#ef4444') + chk(500, 56), { cls: 'pop' });
   }],
   ['stout', '#92400e', '키는 작아도 몸집이 다부지고 단단하게 튼튼한 사람', (s) => {
     s.sky('wall'); s.ground('floor', 252);

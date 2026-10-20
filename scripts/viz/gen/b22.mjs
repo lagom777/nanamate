@@ -126,11 +126,13 @@ export default [
     s.step(2, L('M240 150Q300 130 340 200', '#38bdf8', 10) + E(340, 214, 30, 8, '#4fc3f7') + drop(340, 130, 0.8), { cls: 'wipe' });
     s.step(3, L('M440 150C400 100 360 100 380 150C400 200 480 200 500 150C520 100 480 100 440 150', '#0ea5e9', 8) + arrow(300, 90, 220, 90, '#0ea5e9', 4, 10), { cls: 'wipe' });
   }],
-  ['stifle', '#f59e0b', '터져 나오는 웃음을 손으로 입을 막아 꾹 억누른다', (s) => {
+  ['stifle', '#f59e0b', '아기가 자는 옆에서 터져 나오는 웃음을 두 손으로 입을 막아 꾹 참는다', (s) => {
     s.sky('warm'); s.ground('floor', 252);
-    s.step(1, person({ x: 420, y: 254, shirt: '#3b82f6', fc: 'cheer', armL: [-20, -50] }) + `<g transform="translate(360 150)">${C(0, 0, 16, '#fde047', 'stroke="#d99a00" stroke-width="2"')}${L('M-6 -3V-1M6 -3V-1M-7 5Q0 11 7 5', '#2a1a12', 2)}</g>`, { cls: 'up' });
-    s.step(2, person({ x: 160, y: 254, shirt: '#f59e0b', fc: 'cheer', armL: [-30, -30], armR: [30, -30] }) + L('M110 150L96 140M210 150L224 140', '#f59e0b', 4), { cls: 'up', e: 2 });
-    s.step(3, person({ x: 160, y: 254, shirt: '#f59e0b', fc: 'shy', armR: [-14, -26] }) + L('M120 160L106 154M200 160L214 154', '#f59e0b', 3) + drop(190, 150, 0.7), { });
+    const zz = (x, y) => L(`M${x} ${y}H${x + 12}L${x} ${y + 12}H${x + 12}M${x + 18} ${y - 16}H${x + 26}L${x + 18} ${y - 8}H${x + 26}`, '#64748b', 2.6);
+    s.step(1, bed(430, 252) + person({ x: 410, y: 214, shirt: '#fde8c8', s: 0.5, fc: 'sleep', legs: 'hide', sh: false }) + zz(440, 150), { cls: 'up' });
+    s.step(1, person({ x: 170, y: 254, shirt: '#3b82f6', fc: 'smile' }) + `<g transform="translate(220 120)">${C(0, 0, 18, '#fde047', 'stroke="#d99a00" stroke-width="2"')}${L('M-7 -4V-1M7 -4V-1M-8 6Q0 13 8 6', '#2a1a12', 2.2)}</g>`, { cls: 'up', e: 1 });
+    s.step(2, person({ x: 170, y: 254, shirt: '#f59e0b', fc: 'cheer', armL: [-30, -30], armR: [30, -30] }) + L('M120 150L106 140M220 150L234 140M128 126L118 112M212 126L222 112', '#f59e0b', 4), { cls: 'up', e: 2 });
+    s.step(3, person({ x: 170, y: 254, shirt: '#f59e0b', fc: 'shy', armL: [14, -18], armR: [-14, -18] }) + R(150, 166, 40, 22, '#ffd7b5', 10, 'stroke="#c98f68" stroke-width="2.5"') + L('M160 168V186M170 167V187M180 168V186', '#c98f68', 2) + C(148, 168, 6, '#ff8aa0', 'fill-opacity=".75"') + C(192, 168, 6, '#ff8aa0', 'fill-opacity=".75"') + L('M124 132L112 124M216 132L228 124', '#f59e0b', 3) + drop(198, 150, 0.7) + chk(500, 56), {});
   }],
   ['deadlock', '#7f1d1d', '좁은 외나무다리에서 염소 두 마리가 이마를 맞대고 서로 비키지 않는 교착', (s) => {
     s.sky('day'); s.ground('water', 220);

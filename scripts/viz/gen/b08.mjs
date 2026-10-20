@@ -168,12 +168,13 @@ export default [
     s.step(2, P('M194 150L240 100L280 140L320 90L366 150V166H194Z', '#6fbf4a') + sun(330, 90, 14, '#ffd34d'), { cls: 'pop' });
     s.step(3, person({ x: 280, y: 254, shirt: '#ec4899', hs: 'long', fc: 'cheer', armL: [-20, -30], armR: [20, -30] }) + heart(230, 200, 0.7, '#ef4444') + heart(330, 200, 0.7, '#ef4444') + sparks(280, 110, 140, 156, '#ffd34d', 12, 3), { cls: 'up' });
   }],
-  ['earnest', '#f59e0b', '꽃을 들고 허리 숙여 진심을 담아 사과하는 진지한 태도', (s) => {
+  ['earnest', '#f59e0b', '떨리는 마음으로 두 손에 꽃을 받쳐 내밀며 진심을 전하는 진지한 태도', (s) => {
     s.sky('warm'); s.ground('floor', 252);
-    s.step(1, person({ x: 200, y: 254, shirt: '#f59e0b', fc: 'sad', armL: [10, 20], armR: [30, 10] }) + `<g transform="translate(236 214)">${C(0, 0, 10, '#ef4444')}${C(14, 6, 10, '#f472b6')}${C(-12, 8, 10, '#facc15')}${L('M0 12L-4 40', '#3a8a3a', 3)}</g>`, { cls: 'up', e: 2 });
-    s.step(2, person({ x: 200, y: 254, shirt: '#f59e0b', fc: 'sad', rot: 24, rotO: '0 0', armL: [10, 20], armR: [30, 10] }), { e: 2 });
-    s.step(3, person({ x: 400, y: 254, shirt: '#ec4899', hs: 'long', fc: 'cheer', armL: [-20, -30] }) + heart(300, 120, 1.1, '#ef4444') + sparks(300, 120, 28, 42, '#ffd34d', 6, 3), { cls: 'up' });
-    s.step(3, person({ x: 200, y: 254, shirt: '#f59e0b', fc: 'smile', armR: [30, 10] }), {});
+    const bouquet = (x, y) => `<g transform="translate(${x} ${y})">${C(0, 0, 10, '#ef4444')}${C(14, 6, 10, '#f472b6')}${C(-12, 8, 10, '#facc15')}${L('M0 12L-4 40', '#3a8a3a', 3)}</g>`;
+    s.step(1, person({ x: 200, y: 254, shirt: '#f59e0b', fc: 'think', armL: [10, 20], armR: [30, 10] }) + bouquet(236, 214) + drop(222, 160, 0.6), { cls: 'up', e: 1 });
+    s.step(2, person({ x: 400, y: 254, shirt: '#ec4899', hs: 'long', fc: 'smile', armL: [-6, 30] }), { cls: 'up' });
+    s.step(2, person({ x: 220, y: 254, shirt: '#f59e0b', fc: 'neutral', armL: [40, -6], armR: [44, -10] }) + L('M210 164L216 162M224 162L230 164', '#2a1a12', 2.4) + bouquet(272, 190) + drop(244, 156, 0.6), { e: 2 });
+    s.step(3, person({ x: 220, y: 254, shirt: '#f59e0b', fc: 'smile', armL: [40, -6], armR: [44, -10] }) + bouquet(272, 190) + heart(320, 116, 1.1, '#ef4444') + sparks(320, 116, 28, 42, '#ffd34d', 6, 3), { cls: 'pop' });
   }],
   ['tremble', '#6366f1', '그림자 괴물 앞에서 무서워 온몸이 바들바들 떨린다', (s) => {
     s.sky('night'); s.ground('floor', 252);

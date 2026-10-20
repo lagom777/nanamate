@@ -96,11 +96,15 @@ export default [
     s.step(2, `<g transform="translate(280 150)">${E(0, 0, 40, 10, '#7a4a2a')}${L('M-20 0Q0 -12 20 0', '#fff3d2', 5)}</g>` + `<g transform="translate(300 100) rotate(20)">${R(-3, -40, 6, 80, '#cbd5e1', 3)}${E(0, 44, 8, 12, '#cbd5e1')}</g>`, { e: 2 });
     s.step(3, `<g transform="translate(280 150)">${E(0, 0, 40, 10, '#a67a52')}${L('M-26 0Q-10 -8 0 0T26 0', '#d9b48a', 3)}</g>` + L('M200 100Q210 80 200 60M360 100Q370 80 360 60', '#cbd5e1', 4) + chk(480, 56), { cls: 'pop' });
   }],
-  ['deprive', '#7f1d1d', '굶주린 아이의 빵을 커다란 손이 빼앗아 가 접시가 텅 비었다', (s) => {
+  ['deprive', '#7f1d1d', '굶주린 아이 앞의 빵을 커다란 손이 집어 가 버려 접시가 텅 비었다', (s) => {
     s.sky('wall'); s.ground('floor', 252);
-    s.step(1, person({ x: 160, y: 254, shirt: '#94a3b8', s: 0.8, fc: 'smile', armR: [30, 10] }) + table(250, 238, 160) + bread(250, 226, 1.4), { cls: 'up' });
-    s.mv(2, 'translateX(-130px)', `<g transform="translate(400 120) rotate(30)">${R(-6, -10, 70, 28, '#c9a37a', 12)}${R(60, -14, 16, 10, '#c9a37a', 5)}${R(60, 6, 16, 10, '#c9a37a', 5)}</g>`, { d: 0.8, e: 2 });
-    s.step(3, person({ x: 160, y: 254, shirt: '#94a3b8', s: 0.8, fc: 'cry', armR: [30, 10] }) + table(250, 238, 160) + E(250, 226, 30, 6, '#fff', 'stroke="#d6dbe5" stroke-width="2"') + cross(500, 56) + drop(150, 180, 0.7), { });
+    const hand = `<g transform="rotate(150)">${R(-6, -10, 70, 28, '#c9a37a', 12)}${R(60, -14, 16, 10, '#c9a37a', 5)}${R(60, 6, 16, 10, '#c9a37a', 5)}</g>`;
+    s.step(1, table(250, 238, 160) + E(250, 232, 30, 6, '#fff', 'stroke="#d6dbe5" stroke-width="2"'), { cls: 'up' });
+    s.step(1, person({ x: 120, y: 254, shirt: '#94a3b8', s: 0.8, fc: 'smile', armR: [30, 10] }), { cls: 'up', e: 2 });
+    s.step(1, bread(250, 222, 1.4), { cls: 'up', e: 2 });
+    s.mv(2, 'translate(150px,-100px)', `<g transform="translate(312 180)">${hand}</g>`, { d: 0.8, e: 2 });
+    s.mv(3, 'translate(-158px,110px)', `<g transform="translate(470 70)">${hand}<g transform="translate(-58 40)">${bread(0, 0, 1.4)}</g></g>`, { d: 0.9 });
+    s.step(3, person({ x: 120, y: 254, shirt: '#94a3b8', s: 0.8, fc: 'cry', armR: [36, -22] }) + drop(106, 182, 0.7) + cross(500, 56), {});
   }],
   ['disregard', '#6b7280', '친구의 경고를 못 들은 척 정지 표지판을 무시하고 걸어간다', (s) => {
     s.sky('day'); s.ground('road', 246);
