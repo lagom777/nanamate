@@ -30,15 +30,13 @@
     return v.k;
   }
 
-  /* 카드 옆 패널 HTML */
-  const ICON = `<svg class="ic-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></svg><svg class="ic-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>`;
+  /* 카드 옆 패널 HTML: 장면 + 영단어. 재생 버튼은 두지 않는다 — 재생·정지는 아래 큰 재생 버튼 하나로, 장면을 누르면 처음부터 다시 */
   window.vizHtml = function (word) {
     const v = VIZ[word.toLowerCase()];
     if (!v || !v.pic) return null;
     return `<div class="vz pic" data-state="idle" style="--vz:${v.color};--t:${v.t}s;--k:${pace(v)}">
-<div class="vz-scene">${v.scene}</div>
-<div class="vz-ctl"><button class="vz-play" type="button" aria-label="해설 재생">${ICON}</button>
-<div class="vz-word"><b>${word.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]))}</b></div>
+<div class="vz-scene" role="button" tabindex="0" aria-label="그림 해설 처음부터 다시 보기" title="누르면 처음부터 다시">${v.scene}</div>
+<div class="vz-ctl"><div class="vz-word"><b>${word.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]))}</b></div>
 <div class="vz-segs" aria-hidden="true">${Array.from({ length: v.n }, (_, i) => `<span class="vz-seg" data-k="${i + 1}"><b><i></i></b></span>`).join("")}</div></div></div>`;
   };
 
@@ -47,14 +45,10 @@
     const scene = root.querySelector(".vz-scene");
     const parts = [...scene.querySelectorAll("[data-s]")];
     const segs = [...root.querySelectorAll(".vz-seg")];
-    const lis = [...root.querySelectorAll(".vz-steps li")];
-    const btn = root.querySelector(".vz-play");
-    const time = root.querySelector(".vz-time");
     const n = segs.length;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let step = 0;
-    const LABEL = { idle: "해설 재생", run: "해설 일시정지", pause: "해설 이어서 재생", end: "해설 다시 재생" };
-    const set = (st) => { root.dataset.state = st; btn.setAttribute("aria-label", LABEL[st]); };
+    const set = (st) => { root.dataset.state = st; };
     function show(k, instant) {
       if (instant) scene.classList.add("vz-reset");
       parts.forEach((el) => {
@@ -68,38 +62,35 @@
       show(k, instant);
       segs.forEach((s, i) => { s.classList.toggle("done", i + 1 < k); s.classList.remove("run"); });
       if (k >= 1) { const s = segs[k - 1]; void s.offsetWidth; s.classList.add("run"); }
-      lis.forEach((li, i) => li.classList.toggle("on", i + 1 === k));
-      if (time) time.textContent = `${k} / ${n}`;
     }
     function end() {
       set("end");
       root.dispatchEvent(new CustomEvent("vzend"));
       segs.forEach((s) => { s.classList.remove("run"); s.classList.add("done"); });
-      lis.forEach((li) => li.classList.remove("on"));
     }
     function play() { set("run"); go(0, true); go(1); }
-    function jump(k) {
-      if (reduce) { go(k); set("pause"); return; }
-      set("run"); go(k);
-    }
+    /* 단계 길이는 보이지 않는 막대(.vz-seg i)의 채움 애니메이션으로 잰다 */
     root.addEventListener("animationend", (e) => {
       if (root.dataset.state !== "run" || !e.target.matches(".vz-seg.run i")) return;
       if (step < n) go(step + 1); else end();
     });
-    btn.addEventListener("click", () => {
-      const st = root.dataset.state;
-      if (reduce) { jump(step < n && st !== "end" ? step + 1 : 1); return; }
-      if (st === "run") set("pause");
-      else if (st === "pause") set("run");
-      else play();
-    });
-    scene.addEventListener("click", () => {   // 장면을 누르면 처음부터 다시 본다
-      if (reduce) { jump(1); return; }
-      play();
+    /* 장면을 누르면 처음부터 다시(움직임 줄이기 설정이면 한 단계씩 넘긴다) */
+    function again() {
+      if (!reduce) { play(); return; }
+      const k = step < n && root.dataset.state !== "end" ? step + 1 : 1;
+      go(k, true);
+      if (k === n) end(); else set("step");
+    }
+    scene.addEventListener("click", again);
+    scene.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); again(); }
     });
     if (reduce) { go(n, true); end(); }
     else if (autoplay) play();
     else { set("idle"); go(0, true); }
-    return { reveal() { if (root.dataset.state === "idle") play(); } };
+    return {
+      reveal() { if (root.dataset.state === "idle") play(); },
+      replay() { if (root.dataset.state === "end" && !reduce) play(); },   // 다 본 장면을 낭독과 함께 처음부터
+    };
   };
 })();

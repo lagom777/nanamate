@@ -141,7 +141,7 @@ button { font: inherit; color: inherit; }
 .vz-head { padding: 14px 18px 10px; }
 .vz-tag { display: inline-block; padding: 2px 10px; border-radius: 999px; font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .05em; color: var(--vz); background: color-mix(in srgb, var(--vz) 12%, transparent); }
 .vz-word { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; margin-top: 8px; }
-.vz-ctl .vz-word { margin: 0; flex: 1; min-width: 0; }
+.vz-ctl .vz-word { margin: 0; flex: 1; min-width: 0; justify-content: center; text-align: center; }
 .vz-word.masked b { color: transparent; border-radius: 4px; user-select: none; background: repeating-linear-gradient(-45deg, var(--mask) 0 5px, transparent 5px 10px); }
 .vz-word b { font-family: var(--serif); font-size: 1.7rem; font-weight: 600; line-height: 1.15; }
 .vz-word i { font-style: normal; font-family: var(--mono); font-size: 12.5px; color: var(--ink-3); }
@@ -172,12 +172,8 @@ button { font: inherit; color: inherit; }
 .vz.pic .vz-ctl { padding-bottom: 16px; }
 /* 해설 재생기 */
 .vz-ctl { display: flex; align-items: center; gap: 12px; padding: 12px 18px 0; }
-.vz-play { flex: none; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; display: grid; place-items: center; background: var(--vz); color: #fff; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-.vz-play svg { display: none; width: 18px; height: 18px; fill: currentColor; }
-.vz-play .ic-play { display: block; }
-.vz[data-state="run"] .ic-play { display: none; }
-.vz[data-state="run"] .ic-pause { display: block; }
-.vz-scene { cursor: pointer; }   /* 장면을 누르면 처음부터 다시 */
+.vz-scene { cursor: pointer; -webkit-tap-highlight-color: transparent; }   /* 장면을 누르면 처음부터 다시 */
+.vz-scene:focus-visible { outline: 3px solid var(--vz); outline-offset: 3px; }
 .vz-segs { position: absolute; width: 0; height: 0; overflow: hidden; opacity: 0; pointer-events: none; }   /* 단계 타이머 전용 — 화면에는 보이지 않는다 */
 .vz-seg { flex: 1; height: 36px; touch-action: manipulation; padding: 0; border: 0; background: none; cursor: pointer; display: flex; align-items: center; }
 .vz-seg b { display: block; width: 100%; height: 4px; border-radius: 2px; overflow: hidden; background: color-mix(in srgb, var(--vz) 16%, var(--line)); }
@@ -358,7 +354,6 @@ select {
 .vz-slot { display: block; }
 .vz-slot > aside[hidden] { display: block !important; visibility: hidden; }
 .vz-scene { aspect-ratio: 560 / 300; }
-.vz.skel .vz-play { opacity: .35; cursor: default; }
 .no-viz .vz-slot { display: none; }
 /* 카드도 고정 높이: 어원 도해 줄 수가 달라도 카드가 늘었다 줄었다 하며 아래 칸을 밀지 않게.
    높이는 896단어 실측 99% 이상이 들어가는 값, 넘치는 몇 단어만 카드 안에서 스크롤 */
@@ -383,7 +378,6 @@ select {
   .emap { margin-top: 4px; }
   .vz.pic .vz-scene { margin-top: 8px; }
   .vz.pic .vz-ctl { padding: 6px 14px 8px; gap: 10px; }
-  .vz-play { width: 44px; height: 44px; }
   .t-btn { width: 46px; height: 46px; }
   .t-btn.play { width: 60px; height: 60px; }
   .keys { margin-top: -2px; }
@@ -546,7 +540,7 @@ select {
   </div>
 </div>
 
-<script src="viz.js"></script>
+<script src="viz.js?v=3"></script>
 <script src="themes.js"></script>
 <script src="examples.js"></script>
 <script>
@@ -1675,8 +1669,10 @@ function placeViz() {
 wide.addEventListener('change', placeViz);
 placeViz();
 // 그림을 불러오는 동안 같은 크기의 빈 틀 — 자리를 미리 잡아 두어 그림이 도착해도 칸이 튀지 않게
-const VIZ_SKEL = `<div class="vz pic skel" data-state="idle"><div class="vz-scene"></div><div class="vz-ctl"><button class="vz-play" type="button" disabled aria-label="그림 해설 불러오는 중"></button><div class="vz-word"><b>&nbsp;</b></div></div></div>`;
+const VIZ_SKEL = `<div class="vz pic skel" data-state="idle"><div class="vz-scene"></div><div class="vz-ctl"><div class="vz-word"><b>&nbsp;</b></div></div></div>`;
 let vizWord = '', vizCtl = null;
+// 낭독을 시작한 단어의 그림이 이미 끝나 있으면 처음부터 다시(가려 둔 그림은 그대로)
+function replayViz() { const r = vizEl.firstElementChild; if (vizCtl && r && !r.classList.contains('ghost')) vizCtl.replay(); }
 function renderViz(w, hidden, wordMasked) {
   if (S.viz && VFILE.has(vk(w)) && !window.VIZ[vk(w)]) {
     ensureViz(w).then(() => { if (WORDS[deck[pos]] === w) render(lastRev); });
@@ -2067,6 +2063,7 @@ async function speakWord(id) {
     await ensureViz(w);
     if (id !== run) return;
     render(false);   // 단어·뜻은 가리고 그림만 재생 — 그림이 끝나거나 카드를 누르면 정답 공개
+    replayViz();
     await picWait(id);
     if (id !== run) return;
     await sleep(500);
@@ -2080,6 +2077,7 @@ async function speakWord(id) {
     return;
   }
   render(false);
+  replayViz();
   await (S.order === 'en-ko' ? en() : ko());
   await sleep(S.gap * 1000);
   if (id !== run) return;
@@ -2087,13 +2085,10 @@ async function speakWord(id) {
   await (S.order === 'en-ko' ? ko() : en());
   await extras();
 }
-const vzPaused = () => { const r = vizEl.firstElementChild; return !vizEl.hidden && !!r && r.dataset.state === 'pause'; };
 async function loop(id) {
   while (id === run) {
     await speakWord(id);
     await sleep(1200);
-    if (id !== run) return;
-    while (id === run && vzPaused()) await sleep(250);   // 해설을 일시정지해 두면 다음 단어로 넘어가지 않는다
     if (id !== run) return;
     if (sleepAt && Date.now() >= sleepAt) { endSleep(); return; }
     if (pos >= deck.length - 1) buildDeck(); else pos++;
