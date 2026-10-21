@@ -56,14 +56,16 @@ export default [
     s.step(2, person({ x: 130, y: 262, shirt: '#b45309', hair: '#e5e7eb', fc: 'cheer', armR: [40, -30] }) + person({ x: 430, y: 266, shirt: '#3b82f6', s: 0.7, fc: 'shock' }) + person({ x: 490, y: 266, shirt: '#ec4899', hs: 'long', s: 0.7, fc: 'shock' }), { cls: 'up' });
     s.step(3, E(250, 80, 90, 54, '#fff', 'stroke="#aab4c6" stroke-width="3"') + `<g transform="translate(250 80)">${C(0, 0, 30, '#f59e0b')}${L('M-20 -14L-10 -6M20 -14L10 -6M-24 8L-12 6M24 8L12 6', '#2a1a12', 4)}${C(-10, -6, 3, '#2a1a12')}${C(10, -6, 3, '#2a1a12')}${P('M-8 10H8L0 18Z', '#7a2a2a')}${P('M-26 -22L-30 -42L-12 -28ZM26 -22L30 -42L12 -28Z', '#f59e0b')}</g>`, { cls: 'pop' });
   }],
-  ['preliminary', '#2563eb', '본 경기에 앞서 트랙 밖에서 먼저 몸을 푸는 예비 단계', (s) => {
+  ['preliminary', '#2563eb', '본 경기 출발선에 서기 전에 먼저 몸을 푸는 예비 단계', (s) => {
     s.sky('day'); s.ground('grass', 236);
     s.add(R(0, 262, 560, 38, '#c2410c') + L('M0 280H560', '#fde6d8', 2));
-    const gate = R(392, 120, 8, 142, '#64748b') + R(528, 120, 8, 142, '#64748b') + R(388, 108, 152, 28, '#2563eb', 5) + [0, 1, 2, 3, 4, 5, 6, 7].map((i) => R(400 + i * 16, 114, 8, 8, i % 2 ? '#fff' : '#1e3a8a')).join('') + R(394, 262, 140, 6, '#fff');
-    s.step(1, person({ x: 130, y: 252, shirt: '#2563eb', fc: 'smile', armL: [-14, -46], armR: [14, -46] }) + E(130, 258, 74, 14, 'none', 'stroke="#2563eb" stroke-width="3" stroke-dasharray="8 7"'), { cls: 'up', e: 2 });
-    s.step(2, gate + sparks(464, 122, 30, 44, '#ffd34d', 8, 3), { cls: 'up' });
-    s.step(2, arrow(220, 190, 370, 190, '#2563eb', 5, 12), { cls: 'wipe', e: 2 });
-    s.step(3, person({ x: 464, y: 260, shirt: '#2563eb', fc: 'angry', armL: [20, 6], armR: [-18, 10] }) + star(520, 40, 14, '#ffd34d'), { cls: 'up' });
+    const lean = (x, y, deg, arms) => R(x - 14, y - 10, 11, 20, '#334155', 4) + R(x + 3, y - 10, 11, 20, '#334155', 4) + shadow(x, y + 12, 26) + person({ x, y, shirt: '#2563eb', fc: 'smile', legs: 'hide', sh: false, rot: deg, rotO: '0 -8', ...arms });
+    const gate = R(372, 120, 8, 142, '#64748b') + R(528, 120, 8, 142, '#64748b') + R(368, 108, 172, 28, '#2563eb', 5) + [0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => R(382 + i * 16, 114, 8, 8, i % 2 ? '#fff' : '#1e3a8a')).join('') + R(376, 262, 156, 6, '#fff');
+    s.step(1, lean(130, 252, -20, { armL: [-6, -60], armR: [6, -60] }) + L('M78 96Q64 116 74 138', '#2563eb', 3) + L('M70 140L74 138L78 132', '#2563eb', 3), { cls: 'up', e: 1 });
+    s.step(2, lean(130, 252, 20, { armL: [-6, -60], armR: [6, -60] }) + L('M182 96Q196 116 186 138', '#2563eb', 3) + L('M190 140L186 138L182 132', '#2563eb', 3), { e: 2 });
+    s.step(2, gate + sparks(454, 122, 30, 44, '#ffd34d', 8, 3), { cls: 'up' });
+    s.step(2, arrow(214, 196, 346, 196, '#2563eb', 5, 12), { cls: 'wipe', e: 2 });
+    s.step(3, person({ x: 412, y: 258, s: 0.85, shirt: '#ef4444', fc: 'angry', armL: [18, 8], armR: [-16, 10] }) + person({ x: 496, y: 258, s: 0.85, shirt: '#16a34a', fc: 'angry', armL: [18, 8], armR: [-16, 10] }) + person({ x: 454, y: 262, shirt: '#2563eb', fc: 'angry', armL: [18, 8], armR: [-16, 10] }) + star(520, 40, 14, '#ffd34d'), { cls: 'up' });
   }],
   ['proliferation', '#16a34a', '하나이던 것이 둘, 넷, 여덟으로 순식간에 불어난다', (s) => {
     s.sky('mint'); s.ground('tile', 252);

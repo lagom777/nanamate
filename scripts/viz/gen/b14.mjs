@@ -38,11 +38,13 @@ export default [
     s.step(2, person({ x: 190, y: 254, shirt: '#fff', pants: '#fff', fc: 'angry', rot: 10, armR: [60, -10] }) + L('M250 200L380 190', '#aab4c6', 4) + person({ x: 410, y: 254, shirt: '#1f2937', pants: '#1f2937', fc: 'neutral', armL: [-30, -4] }), { e: 2 });
     s.step(3, person({ x: 190, y: 254, shirt: '#fff', pants: '#fff', fc: 'cheer', rot: 10, armR: [60, -10] }) + L('M250 200L396 192', '#aab4c6', 4) + person({ x: 420, y: 254, shirt: '#1f2937', pants: '#1f2937', fc: 'shock', rot: -8, armL: [-30, -4] }) + sparks(396, 192, 14, 30, '#ffd34d', 8, 4), { });
   }],
-  ['creed', '#7c3aed', '굳게 지키는 신조를 적은 석판을 가슴에 새기고 따르는 사람들', (s) => {
-    s.sky('warm'); s.ground('stone', 250);
-    s.step(1, `<g transform="translate(280 250)">${R(-50, -140, 100, 140, '#cbd5e1', 20, 'stroke="#8a93a5" stroke-width="4"')}${heart(0, -90, 0.9, '#ef4444')}${star(0, -50, 12, '#ffd34d')}${L('M-30 -30H30', '#8a93a5', 4)}</g>`, { cls: 'up' });
-    s.step(2, person({ x: 120, y: 262, shirt: '#7c3aed', fc: 'cheer', armR: [-10, -30], s: 0.9 }) + person({ x: 440, y: 262, shirt: '#14b8a6', fc: 'cheer', hs: 'long', armL: [10, -30], s: 0.9 }), { cls: 'up' });
-    s.step(3, sparks(280, 140, 90, 106, '#ffd34d', 12, 3) + L('M180 150L200 150M360 150L380 150', '#7c3aed', 4, 'stroke-opacity="0"'), { cls: 'pop' });
+  ['creed', '#b91c1c', '벽에 건 신조(서로 돕자)를 가슴에 새기고 늘 그대로 행동한다', (s) => {
+    s.sky('wall'); s.ground('floor', 252);
+    const scroll = R(66, 36, 108, 8, '#7c4a1e', 4) + R(74, 44, 92, 128, '#fef3c7', 2, 'stroke="#d6b98c" stroke-width="2"') + R(66, 172, 108, 8, '#7c4a1e', 4) + L('M106 36L120 22L134 36', '#7c4a1e', 2.5) + heart(120, 92, 1.3, '#dc2626') + C(102, 126, 7, '#16a34a') + R(96, 134, 12, 22, '#16a34a', 4) + C(138, 126, 7, '#2563eb') + R(132, 134, 12, 22, '#2563eb', 4) + L('M108 142H132', '#c98f68', 4);
+    s.step(1, scroll, { cls: 'up' });
+    s.step(1, person({ x: 250, y: 254, shirt: '#16a34a', fc: 'think', armR: [-16, 2] }), { cls: 'up', e: 1 });
+    s.step(2, person({ x: 300, y: 254, shirt: '#16a34a', fc: 'smile', armR: [36, -6] }) + person({ x: 380, y: 254, shirt: '#a8a29e', hair: '#e5e7eb', fc: 'smile', rot: 8, armL: [-26, -6], armR: [10, 30] }) + L('M404 200L410 254', '#7c4a1e', 4) + L('M170 120Q240 120 286 150', '#b91c1c', 2.5, 'stroke-dasharray="6 6"'), { cls: 'up' });
+    s.step(3, sparks(120, 108, 70, 86, '#ffd34d', 10, 3) + heart(340, 112, 0.9, '#ef4444') + chk(500, 52, 20), { cls: 'pop' });
   }],
   ['equate', '#0d9488', '서로 다른 두 물건을 저울에 올려 같다고 맞춰 본다', (s) => {
     s.sky('cool'); s.ground('floor', 252);

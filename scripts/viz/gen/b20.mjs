@@ -136,11 +136,14 @@ export default [
     s.step(2, R(300, 160, 20, 60, '#8a7a68', 4) + R(300, 160, 150, 14, '#8a7a68', 4) + R(0, 190, 560, 110, '#38bdf8') + `<g transform="translate(180 250)">${R(-20, -30, 40, 30, '#f59e0b', 4)}${L('M0 -30V-60H40', '#6b7384', 6)}</g>`, { cls: 'up', e: 2 });
     s.step(3, R(0, 190, 560, 110, '#8bc866') + [[100, 240], [200, 240], [300, 240], [400, 240]].map(([x, y]) => L(`M${x} ${y}V${y - 22}`, '#3f8f3a', 4) + P(`M${x} ${y - 18}C${x - 12} ${y - 30} ${x - 20} ${y - 18} ${x - 12} ${y - 10}Z`, '#5fb85a')).join('') + R(0, 180, 560, 12, '#8a7a68', 4) + chk(500, 56), { cls: 'up' });
   }],
-  ['redundant', '#6b7280', '허리띠를 하고도 멜빵까지 이중으로 해서 쓸모없이 불필요한 중복', (s) => {
-    s.sky('wall'); s.ground('floor', 252);
-    s.step(1, person({ x: 280, y: 254, shirt: '#3b82f6', pants: '#334155', fc: 'smile' }) + R(264, 196, 32, 6, '#8c5a2a', 2), { cls: 'up' });
-    s.step(2, L('M268 126V196M292 126V196', '#ef4444', 5), { cls: 'wipe-d' });
-    s.step(3, qm(380, 120, '#6b7280', 1.3) + cross(440, 150) + arrow(340, 190, 300, 200, '#6b7280', 3, 8), { cls: 'pop' });
+  ['redundant', '#6b7280', '우산 하나면 충분한데 하나를 더 펴 든다 — 쓸데없이 중복되는', (s) => {
+    s.sky('gray'); s.ground('stone', 250);
+    const umb = (x, y, col) => `<g transform="translate(${x} ${y})">${P('M-50 0Q-50 -46 0 -48Q50 -46 50 0Q38 -8 25 0Q12 -8 0 0Q-12 -8 -25 0Q-38 -8 -50 0Z', col)}${L('M0 0V34Q0 42 -8 40', '#475569', 4)}</g>`;
+    s.add(`<g fill="#8fb4d8">${[50, 130, 210, 350, 430, 510].map((x, i) => `<path class="a-fall" style="animation-delay:-${i * 0.5}s" d="M${x} 20c-5 8-5 12 0 12s5-4 0-12z"/>`).join('')}</g>`);
+    s.step(1, person({ x: 280, y: 262, shirt: '#64748b', fc: 'smile', armR: [34, -38] }) + umb(330, 156, '#ef4444'), { cls: 'up', e: 1 });
+    s.step(1, chk(330, 92, 16), { cls: 'pop' });
+    s.step(2, person({ x: 280, y: 262, shirt: '#64748b', fc: 'smile', armL: [-34, -38], armR: [34, -38] }) + umb(330, 156, '#ef4444') + umb(230, 156, '#3b82f6'), { cls: 'up' });
+    s.step(3, cross(230, 92, 18) + person({ x: 468, y: 262, s: 0.8, shirt: '#a3a3a3', fc: 'think', armR: [-8, -30] }) + qm(478, 140, '#6366f1', 1.2), { cls: 'pop' });
   }],
   ['remnant', '#a8a29e', '무너진 신전에 홀로 남은 기둥 하나뿐인 잔해', (s) => {
     s.sky('sun'); s.ground('sand', 246);

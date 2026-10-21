@@ -161,11 +161,12 @@ export default [
     s.step(2, [[160, 150], [200, 130], [240, 160], [280, 140]].map(([x, y]) => C(x, y, 7, '#84cc16', 'stroke="#4d7c0f" stroke-width="2"')).join(''), { cls: 'pop' });
     s.step(3, [[320, 150], [360, 130], [400, 160], [450, 140]].map(([x, y]) => C(x, y, 7, '#84cc16', 'stroke="#4d7c0f" stroke-width="2"')).join('') + [90, 280, 420].map((x, i) => person({ x, y: 270, shirt: ['#3b82f6', '#ec4899', '#f59e0b'][i], s: 0.55, fc: 'sick', skin: '#d8e8a0' }) + R(x - 8, 220, 16, 8, '#fff', 3)).join('') + cross(500, 50), { cls: 'up' });
   }],
-  ['figurative', '#6366f1', '"시간은 금이다" — 시계를 금에 빗대는 비유적 표현', (s) => {
+  ['figurative', '#6366f1', '"시간은 금이다" — 시계를 금덩이에 빗대어 말하는 비유적 표현', (s) => {
     s.sky('cool'); s.ground('floor', 252);
-    s.step(1, clock(140, 150, 52, 1, 3.4), { cls: 'pop' });
-    s.step(2, R(242, 128, 76, 14, '#6366f1', 7) + R(242, 158, 76, 14, '#6366f1', 7), { cls: 'pop' });
-    s.step(3, coin(420, 150, 56) + L('M420 150V122M420 150L442 162', '#d99a00', 4) + sparks(420, 150, 68, 84, '#ffd34d', 10, 3), { cls: 'pop' });
+    const bar = (x, y) => P(`M${x - 30} ${y}L${x - 21} ${y - 18}H${x + 21}L${x + 30} ${y}Z`, '#facc15', 'stroke="#ca8a04" stroke-width="3" stroke-linejoin="round"') + L(`M${x - 13} ${y - 12}H${x + 8}`, '#fef9c3', 3);
+    s.step(1, clock(130, 164, 64, 1, 3.4), { cls: 'pop' });
+    s.step(2, R(240, 142, 72, 15, '#6366f1', 7) + R(240, 172, 72, 15, '#6366f1', 7), { cls: 'pop' });
+    s.step(3, bar(372, 236) + bar(434, 236) + bar(496, 236) + bar(403, 218) + bar(465, 218) + bar(434, 200) + sparks(434, 196, 50, 66, '#ffd34d', 8, 3), { cls: 'up' });
   }],
   ['fleeting', '#38bdf8', '두둥실 떠오르다 금세 터져 사라지는 순간의 비눗방울', (s) => {
     s.sky('sun'); s.ground('grass', 250);
@@ -198,15 +199,16 @@ export default [
     s.step(2, `<g transform="translate(280 200)">${R(-4, -50, 8, 50, '#6b7384')}${E(0, -52, 14, 6, '#475569')}</g>` + L('M280 150Q220 110 160 180M280 150Q340 110 400 180M280 150Q250 90 230 130M280 150Q310 90 330 130', '#38bdf8', 4, 'stroke-dasharray="3 6"') + drop(200, 150, 0.8, '#7dd3fc') + drop(360, 150, 0.8, '#7dd3fc'), { cls: 'pop', e: 3 });
     s.step(3, R(0, 200, 560, 100, '#7a5230') + [100, 200, 300, 400, 500].map((x) => L(`M${x} 220V190`, '#3f8f3a', 4) + P(`M${x} 200C${x - 14} 188 ${x - 22} 200 ${x - 14} 210Z M${x} 194C${x + 14} 182 ${x + 22} 194 ${x + 14} 204Z`, '#5fb85a')).join('') + chk(500, 56), { cls: 'up' });
   }],
-  ['oblige', '#ec4899', '책 더미에 쩔쩔매는 사람을 도와주어 고맙다고 고개 숙이게 하다(은혜를 베풀다)', (s) => {
+  ['oblige', '#ec4899', '책 더미에 쩔쩔매는 사람을 도와주어 고맙다는 인사를 받다(은혜를 베풀다)', (s) => {
     s.sky('warm'); s.ground('floor', 252);
     const cols = ['#ef4444', '#3b82f6', '#22c55e', '#f59e0b', '#8b5cf6', '#14b8a6'];
     const books = (x, y, n, o = 0) => Array.from({ length: n }, (_, i) => R(x - 26 + (i % 2) * 5, y - 13 * (i + 1), 52, 12, cols[(i + o) % 6], 3)).join('');
-    s.step(1, person({ x: 170, y: 254, shirt: '#ec4899', hs: 'long', fc: 'sad', rot: -5, armL: [18, -12], armR: [-18, -12] }) + books(170, 196, 6) + drop(132, 140, 0.7) + drop(212, 132, 0.7), { cls: 'up', e: 1 });
-    s.step(2, person({ x: 170, y: 254, shirt: '#ec4899', hs: 'long', fc: 'smile', armL: [18, 4], armR: [-18, 4] }) + books(170, 214, 3), { e: 2 });
-    s.step(2, person({ x: 360, y: 254, shirt: '#2563eb', fc: 'smile', armL: [18, 4], armR: [-18, 4] }) + books(360, 214, 3, 3), { cls: 'up', e: 2 });
-    s.step(3, table(270, 238, 120) + books(270, 228, 6), { cls: 'up' });
-    s.step(3, person({ x: 150, y: 254, shirt: '#ec4899', hs: 'long', fc: 'cheer', rot: 12, armL: [6, 26], armR: [10, 24] }) + person({ x: 400, y: 254, shirt: '#2563eb', fc: 'smile', armL: [-20, -34] }) + heart(176, 92, 0.9, '#ef4444') + sparks(176, 92, 24, 38, '#ffd34d', 6, 3), {});
+    const bowP = (x, y, dir, shirt, hs) => R(x - 14, y - 10, 11, 20, '#334155', 4) + R(x + 3, y - 10, 11, 20, '#334155', 4) + shadow(x, y + 12, 26) + person({ x, y, shirt, hs, fc: 'cheer', legs: 'hide', sh: false, rot: 32 * dir, rotO: '0 -8', armL: [6, 26], armR: [-6, 26] });
+    s.step(1, person({ x: 200, y: 254, shirt: '#ec4899', hs: 'long', fc: 'sad', rot: -5, armL: [18, -12], armR: [-18, -12] }) + books(200, 196, 6) + drop(162, 140, 0.7) + drop(242, 132, 0.7), { cls: 'up', e: 1 });
+    s.step(2, person({ x: 200, y: 254, shirt: '#ec4899', hs: 'long', fc: 'smile', armL: [18, 6], armR: [-18, 6] }) + books(200, 216, 3), { e: 2 });
+    s.step(2, person({ x: 350, y: 254, shirt: '#2563eb', fc: 'smile', armL: [18, 6], armR: [-18, 6] }) + books(350, 216, 3, 3), { cls: 'up', e: 2 });
+    s.step(3, table(110, 238, 96) + books(110, 228, 6), { cls: 'up' });
+    s.step(3, bowP(250, 254, 1, '#ec4899', 'long') + person({ x: 392, y: 254, shirt: '#2563eb', fc: 'smile', armL: [-22, -36] }) + heart(330, 104, 0.9, '#ef4444') + sparks(330, 104, 24, 38, '#ffd34d', 6, 3), {});
   }],
   ['refute', '#dc2626', '날아온 주장 말풍선을 라켓으로 되받아쳐 반박한다', (s) => {
     s.sky('wall'); s.ground('floor', 252);

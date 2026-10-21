@@ -183,11 +183,17 @@ export default [
     s.step(2, R(0, 220, 560, 80, '#d9bd7a') + sparks(450, 70, 40, 58, '#ffb347', 12, 4), { e: 2 });
     s.step(3, R(0, 220, 560, 80, '#c9a257') + L('M60 240L100 260L80 290M200 236L240 270L220 296M340 240L380 262M460 250L500 280L480 296', '#7a5a2a', 4) + `<g transform="translate(280 230)">${L('M0 0V-90M0 -50L-30 -80M0 -66L26 -92', '#6b5a3a', 7)}</g>` + cross(500, 40), { });
   }],
-  ['candid', '#0ea5e9', '가면을 벗고 숨김없이 솔직한 맨얼굴을 보여 준다', (s) => {
+  ['candid', '#0ea5e9', '꽃병을 깬 아이가 손을 번쩍 들고 "제가 그랬어요" 하고 숨김없이 털어놓는 솔직함', (s) => {
     s.sky('wall'); s.ground('floor', 252);
-    s.step(1, person({ x: 200, y: 254, shirt: '#0ea5e9', fc: 'smile', hat: '<ellipse cx="0" cy="-84" rx="18" ry="12" fill="#a78bfa" stroke="#6d28d9" stroke-width="2"/>' }), { cls: 'up', e: 2 });
-    s.step(2, `<g transform="translate(330 140) rotate(20)"><ellipse cx="0" cy="0" rx="18" ry="12" fill="#a78bfa" stroke="#6d28d9" stroke-width="2"/></g>` + person({ x: 200, y: 254, shirt: '#0ea5e9', fc: 'neutral', armR: [30, -50] }), { e: 2 });
-    s.step(3, person({ x: 200, y: 254, shirt: '#0ea5e9', fc: 'cheer', armL: [-30, -10], armR: [30, -10] }) + sparks(200, 160, 40, 56, '#ffd34d', 8, 3) + heart(300, 110, 0.8, '#ef4444') + chk(500, 56), { });
+    const st = 'stroke="#1d4ed8" stroke-width="2" stroke-linejoin="round"';
+    const shards = (x, y) => E(x, y + 2, 58, 6, '#bfdbfe', 'fill-opacity=".8"') + P(`M${x - 22} ${y}Q${x - 32} ${y - 10} ${x - 24} ${y - 24}L${x - 16} ${y - 34}L${x - 8} ${y - 24}L${x} ${y - 38}L${x + 8} ${y - 26}L${x + 16} ${y - 34}L${x + 24} ${y - 24}Q${x + 32} ${y - 10} ${x + 22} ${y}Z`, '#60a5fa', st) + P(`M${x - 52} ${y}L${x - 44} ${y - 14}L${x - 36} ${y}Z`, '#60a5fa', st) + P(`M${x + 34} ${y}L${x + 44} ${y - 16}L${x + 52} ${y - 2}Z`, '#93c5fd', st) + P(`M${x + 8} ${y - 62}L${x + 20} ${y - 70}L${x + 18} ${y - 56}Z`, '#93c5fd', st);
+    const vaseMini = (x, y) => `<g transform="translate(${x} ${y})">${P('M-10 -28H10L13 -13Q21 -4 10 0H-10Q-21 -4 -13 -13Z', '#60a5fa', st)}${L('M-3 -28L3 -18L-3 -9L3 0', '#1d4ed8', 2.6)}</g>`;
+    s.step(1, shards(300, 250), { cls: 'up' });
+    s.step(1, person({ x: 430, y: 254, shirt: '#ec4899', hs: 'long', fc: 'think', armL: [-22, 16], armR: [22, 16] }) + qm(442, 128, '#6366f1', 1.5), { cls: 'up', e: 1 });
+    s.step(1, person({ x: 170, y: 254, s: 0.9, shirt: '#0ea5e9', fc: 'sad' }) + drop(196, 160, 0.7), { cls: 'up', e: 1 });
+    s.step(2, person({ x: 170, y: 254, s: 0.9, shirt: '#0ea5e9', fc: 'neutral', armR: [8, -58], armL: [16, -4] }) + bubble(240, 116, 80, 58, '#fff', 'l') + vaseMini(240, 134), { cls: 'up' });
+    s.step(2, person({ x: 430, y: 254, shirt: '#ec4899', hs: 'long', fc: 'neutral', armL: [-22, 16], armR: [22, 16] }), { e: 2 });
+    s.step(3, person({ x: 430, y: 254, shirt: '#ec4899', hs: 'long', fc: 'smile', armL: [-36, -8] }) + heart(330, 112, 1, '#ef4444') + sparks(330, 112, 26, 40, '#ffd34d', 6, 3) + chk(516, 44, 20), { cls: 'pop' });
   }],
   ['combustion', '#dc2626', '성냥불이 장작에 옮겨붙어 산소를 먹고 활활 타오르는 연소', (s) => {
     s.sky('dusk'); s.ground('soil', 250);
@@ -224,13 +230,16 @@ export default [
     s.step(2, who(1, 'sick', '#cfe8a9') + arrow(128, 128, 192, 128, '#65a30d', 4, 10) + germ(176, 108, 0.7) + germ(256, 152, 0.8), {});
     s.step(3, who(2, 'sick', '#cfe8a9') + who(3, 'sick', '#cfe8a9') + arrow(248, 128, 312, 128, '#65a30d', 4, 10) + arrow(368, 128, 432, 128, '#65a30d', 4, 10) + germ(376, 152, 0.8) + germ(496, 156, 0.7) + cross(520, 40, 18), {});
   }],
-  ['contempt', '#7f1d1d', '내민 손을 거들떠보지도 않고 팔짱 낀 채 고개를 쳐들고 가 버리는 경멸', (s) => {
+  ['contempt', '#7f1d1d', '높은 단 위에서 눈을 내리깔고 손가락질하며 깔보는 경멸', (s) => {
     s.sky('wall'); s.ground('floor', 252);
-    s.step(1, person({ x: 170, y: 254, shirt: '#94a3b8', s: 0.85, fc: 'smile', armR: [46, -4] }), { cls: 'up', e: 2 });
-    s.step(1, person({ x: 380, y: 254, shirt: '#7f1d1d', fc: 'neutral' }), { cls: 'up', e: 1 });
-    s.step(2, person({ x: 380, y: 254, shirt: '#7f1d1d', fc: 'sleep', rot: 12, armL: [16, -10], armR: [-16, -10] }) + L('M396 172Q404 166 412 170', '#2a1a12', 2.6) + L('M414 176L432 170M414 182L434 182', '#94a3b8', 3), { e: 2 });
-    s.mv(3, 'translateX(-80px)', person({ x: 460, y: 254, shirt: '#7f1d1d', fc: 'sleep', rot: 12, legs: 'walk', armL: [16, -10], armR: [-16, -10] }) + L('M476 172Q484 166 492 170', '#2a1a12', 2.6), { d: 0.9 });
-    s.step(3, person({ x: 170, y: 254, shirt: '#94a3b8', s: 0.85, fc: 'sad', armR: [14, 28] }) + drop(156, 186, 0.6) + cross(500, 56), {});
+    const topHat = R(-14, -132, 28, 32, '#111827', 3) + R(-24, -104, 48, 7, '#111827', 3) + R(-14, -112, 28, 5, '#b91c1c');
+    const sneer = (x, y) => L(`M${x - 11} ${y - 87}H${x - 2}M${x + 2} ${y - 87}H${x + 11}`, '#2a1a12', 2.6) + L(`M${x - 6} ${y - 74}Q${x + 2} ${y - 71} ${x + 8} ${y - 78}`, '#2a1a12', 2.6);
+    s.step(1, R(300, 222, 180, 30, '#94a3b8', 4) + R(326, 190, 128, 34, '#a8b3c4', 4), { cls: 'up' });
+    s.step(1, person({ x: 390, y: 190, shirt: '#111827', fc: 'neutral', hat: topHat }), { cls: 'up', e: 1 });
+    s.step(1, person({ x: 180, y: 254, s: 0.9, shirt: '#94a3b8', fc: 'smile', armR: [40, -14] }), { cls: 'up', e: 1 });
+    s.step(2, person({ x: 390, y: 190, shirt: '#111827', fc: 'sleep', hat: topHat, armL: [-42, 24] }) + sneer(390, 190) + L('M378 108L206 176', '#7f1d1d', 2.5, 'stroke-dasharray="6 6"'), {});
+    s.step(2, person({ x: 180, y: 254, s: 0.9, shirt: '#94a3b8', fc: 'sad', armR: [24, 10] }), { e: 2 });
+    s.step(3, person({ x: 180, y: 254, s: 0.72, shirt: '#94a3b8', fc: 'cry' }) + cross(520, 44, 18), {});
   }],
   ['dissent', '#dc2626', '모두가 찬성하는데 홀로 손을 들어 반대 의견을 낸다', (s) => {
     s.sky('wall'); s.ground('floor', 252);

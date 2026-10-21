@@ -136,11 +136,16 @@ export default [
     s.step(2, dog(410, 252, 2, '#b9772e'), { cls: 'up' });
     s.step(3, heart(280, 130, 1.3, '#ef4444') + sparks(280, 140, 50, 64, '#ffd34d', 8, 3), { cls: 'pop' });
   }],
-  ['drawback', '#b45309', '번쩍이는 새 차에도 숨은 결함이 있는 단점', (s) => {
-    s.sky('day'); s.ground('road', 246);
-    s.step(1, car(260, 250, '#ef4444', 1.6) + sparks(260, 180, 90, 104, '#ffd34d', 6, 3), { cls: 'up' });
-    s.step(2, `<g transform="translate(222 250)">${E(0, 18, 14, 4, '#1f2937', 'transform="scale(1 1)"')}</g>` + C(222, 270, 16, '#1f2937') + E(222, 280, 20, 6, '#1f2937'), { cls: 'pop' });
-    s.step(3, `<g fill="#6b7280" fill-opacity=".8">${C(330, 190, 14)}${C(350, 170, 11)}${C(312, 176, 9)}</g>` + cross(500, 56), { cls: 'pop' });
+  ['drawback', '#dc2626', '멋진 집(+)인데 바로 옆으로 기차가 시끄럽게 지나간다 — 단점(−)', (s) => {
+    s.sky('day'); s.ground('grass', 236);
+    const badge = (x, y, col, plus) => `<g transform="translate(${x} ${y})"><circle r="19" fill="${col}" stroke="#fff" stroke-width="3"/>${L(plus ? 'M-9 0H9M0 -9V9' : 'M-9 0H9', '#fff', 5)}</g>`;
+    const car2 = (x, col) => R(x - 44, 160, 88, 38, col, 6) + R(x - 32, 168, 22, 14, '#e0f2fe', 3) + R(x - 4, 168, 22, 14, '#e0f2fe', 3) + C(x - 24, 202, 9, '#1f2937') + C(x + 24, 202, 9, '#1f2937');
+    s.add(R(270, 208, 290, 6, '#6b7280') + [290, 330, 370, 410, 450, 490, 530].map((x) => R(x, 212, 8, 8, '#8a6a4a')).join(''));
+    s.step(1, house(140, 236, 150, '#fde68a', '#dc2626') + badge(140, 60, '#16a34a', true), { cls: 'up' });
+    s.step(1, person({ x: 240, y: 246, shirt: '#2563eb', fc: 'cheer', armR: [16, -40] }) + sparks(140, 140, 84, 98, '#ffd34d', 8, 3) + heart(210, 100, 0.6, '#ef4444'), { cls: 'up', e: 1 });
+    s.mv(2, 'translateX(330px)', car2(330, '#f97316') + car2(426, '#f97316') + R(476, 150, 40, 48, '#ea580c', 6) + R(486, 132, 12, 20, '#475569', 2) + C(500, 202, 9, '#1f2937'), { d: 0.8 });
+    s.step(2, person({ x: 240, y: 246, shirt: '#2563eb', fc: 'angry', armL: [12, -40], armR: [-12, -40] }) + L('M300 150Q290 170 300 190M282 140Q268 170 282 200', '#ef4444', 3), { cls: 'up' });
+    s.step(3, badge(380, 110, '#dc2626', false), { cls: 'pop' });
   }],
   ['dispute', '#dc2626', '두 아이가 곰 인형을 서로 잡아당기며 다툰다', (s) => {
     s.sky('warm'); s.ground('carpet', 252);

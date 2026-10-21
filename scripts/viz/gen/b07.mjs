@@ -103,11 +103,13 @@ export default [
     s.step(2, person({ x: 220, y: 260, shirt: '#16a34a', legs: 'walk', fc: 'sad', rot: 6 }) + drop(240, 150, 0.8) + battery(450, 80, 0.4, '#f59e0b'), { e: 2 });
     s.step(3, R(250, 226, 130, 14, '#8c6238', 4) + R(260, 240, 10, 22, '#6b4a2a') + R(360, 240, 10, 22, '#6b4a2a') + person({ x: 310, y: 226, shirt: '#16a34a', legs: 'hide', fc: 'sleep', rot: 10, armL: [-10, 28], armR: [10, 28], sh: false }) + battery(450, 80, 0.06, '#ef4444') + drop(290, 150, 0.8), { cls: 'up' });
   }],
-  ['bias', '#7c3aed', '색안경 때문에 똑같은 사람인데도 한쪽만 좋게 보는 편견', (s) => {
+  ['bias', '#7c3aed', '빨간 색안경을 쓰니 똑같은 두 사람이 한쪽은 천사, 한쪽은 악마로 보이는 편견', (s) => {
     s.sky('wall'); s.ground('floor', 252);
-    s.step(1, person({ x: 130, y: 254, shirt: '#7c3aed', fc: 'smirk', hat: '<g fill="#ef4444" fill-opacity=".55" stroke="#2a2e3a" stroke-width="2.4"><circle cx="-7" cy="-83" r="6"/><circle cx="7" cy="-83" r="6"/></g>' }), { cls: 'up' });
-    s.step(2, person({ x: 330, y: 254, shirt: '#94a3b8', fc: 'neutral' }) + person({ x: 450, y: 254, shirt: '#94a3b8', hs: 'long', fc: 'neutral' }), { cls: 'up' });
-    s.step(3, E(330, 120, 18, 5, 'none', 'stroke="#facc15" stroke-width="5"') + P('M440 124L432 108L444 112L452 104L456 122Z', '#ef4444') + L('M200 140Q260 100 320 130', '#7c3aed', 3, 'stroke-dasharray="5 7"') + L('M200 150Q320 190 440 150', '#7c3aed', 3, 'stroke-dasharray="5 7"'), { cls: 'pop' });
+    const glasses = '<g fill="#ef4444" fill-opacity=".55" stroke="#2a2e3a" stroke-width="2.4"><circle cx="-7" cy="-83" r="6"/><circle cx="7" cy="-83" r="6"/></g>';
+    const twin = (x) => person({ x, y: 254, shirt: '#94a3b8', fc: 'neutral' });
+    s.step(1, person({ x: 120, y: 254, shirt: '#7c3aed', fc: 'smirk', hat: glasses }), { cls: 'up' });
+    s.step(2, twin(330) + twin(450) + L('M376 160H404M376 170H404', '#64748b', 3), { cls: 'up' });
+    s.step(3, E(330, 154, 22, 6, 'none', 'stroke="#facc15" stroke-width="6"') + heart(330, 120, 0.8, '#f472b6') + P('M434 166L426 140L442 154Z M466 166L474 140L458 154Z', '#dc2626') + L('M450 120L444 106L456 112L450 98', '#dc2626', 3) + L('M166 150Q240 110 306 150', '#7c3aed', 3, 'stroke-dasharray="5 7"') + L('M166 162Q300 216 428 168', '#7c3aed', 3, 'stroke-dasharray="5 7"'), { cls: 'pop' });
   }],
   ['tread', '#78350f', '진흙을 한 걸음씩 밟고 지나가 발자국을 남긴다', (s) => {
     s.sky('gray'); s.ground('soil', 190);

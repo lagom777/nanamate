@@ -224,11 +224,12 @@ export default [
     s.step(2, `<g transform="translate(410 230)">${E(0, 0, 40, 28, '#fff', 'stroke="#d6dbe5" stroke-width="3"')}${C(-18, -10, 14, '#fff')}${C(18, -12, 14, '#fff')}${C(-44, -4, 14, '#3b3f4a')}${R(-24, 22, 8, 18, '#3b3f4a', 2)}${R(18, 22, 8, 18, '#3b3f4a', 2)}</g>`, { cls: 'up' });
     s.step(3, R(240, 90, 50, 8, '#7c3aed', 3) + R(240, 112, 50, 8, '#7c3aed', 3) + L('M180 120L230 120M300 120L360 150', '#7c3aed', 3, 'stroke-dasharray="4 6"') + sparks(265, 105, 40, 54, '#ffd34d', 6, 3), { cls: 'pop' });
   }],
-  ['dignity', '#ca8a04', '어떤 상황에서도 가슴을 펴고 턱을 당당히 든 품위와 존엄', (s) => {
-    s.sky('warm'); s.ground('carpet', 252);
-    s.step(1, person({ x: 280, y: 254, shirt: '#1f2937', pants: '#1f2937', hat: tie, fc: 'neutral' }), { cls: 'up' });
-    s.step(2, L('M280 90V240', '#ca8a04', 4, 'stroke-dasharray="6 6"') + arrow(280, 110, 280, 60, '#ca8a04', 5, 12), { cls: 'wipe-d' });
-    s.step(3, crown(280, 56, 1) + `<ellipse cx="280" cy="42" rx="22" ry="6" fill="none" stroke="#facc15" stroke-width="5"/>`.replace(/.*/, '') + sparks(280, 150, 80, 96, '#ffd34d', 12, 3) + star(120, 100, 10) + star(440, 100, 10), { cls: 'pop' });
+  ['dignity', '#a16207', '움츠렸던 사람이 허리를 펴고 당당히 서자 주변 사람들이 정중히 고개를 숙인다 — 존엄, 품위', (s) => {
+    s.sky('wall'); s.ground('floor', 252);
+    const bowP = (x, y, dir, shirt, hs) => R(x - 14, y - 10, 11, 20, '#334155', 4) + R(x + 3, y - 10, 11, 20, '#334155', 4) + shadow(x, y + 12, 26) + person({ x, y, shirt, hs, fc: 'smile', legs: 'hide', sh: false, rot: 32 * dir, rotO: '0 -8', armL: [6, 26], armR: [-6, 26] });
+    s.step(1, person({ x: 280, y: 254, s: 0.8, shirt: '#94a3b8', fc: 'sad', armL: [2, 30], armR: [-2, 30] }) + drop(298, 176, 0.6), { cls: 'up', e: 1 });
+    s.step(2, C(280, 176, 74, '#fde68a', 'fill-opacity=".6"') + person({ x: 280, y: 254, shirt: '#0f766e', fc: 'smile', armR: [-16, 2] }), { cls: 'pop' });
+    s.step(3, bowP(132, 254, 1, '#94a3b8', 'short') + bowP(428, 254, -1, '#c084fc', 'long') + sparks(280, 150, 84, 100, '#ffd34d', 10, 3), { cls: 'up' });
   }],
   ['prevail', '#f59e0b', '먹구름을 뚫고 햇살이 우세하게 퍼져 마을을 환히 비춘다', (s) => {
     s.sky('gray'); s.ground('grass', 246);

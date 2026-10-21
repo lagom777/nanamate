@@ -168,13 +168,16 @@ export default [
     s.step(2, P('M194 150L240 100L280 140L320 90L366 150V166H194Z', '#6fbf4a') + sun(330, 90, 14, '#ffd34d'), { cls: 'pop' });
     s.step(3, person({ x: 280, y: 254, shirt: '#ec4899', hs: 'long', fc: 'cheer', armL: [-20, -30], armR: [20, -30] }) + heart(230, 200, 0.7, '#ef4444') + heart(330, 200, 0.7, '#ef4444') + sparks(280, 110, 140, 156, '#ffd34d', 12, 3), { cls: 'up' });
   }],
-  ['earnest', '#f59e0b', '떨리는 마음으로 두 손에 꽃을 받쳐 내밀며 진심을 전하는 진지한 태도', (s) => {
-    s.sky('warm'); s.ground('floor', 252);
-    const bouquet = (x, y) => `<g transform="translate(${x} ${y})">${C(0, 0, 10, '#ef4444')}${C(14, 6, 10, '#f472b6')}${C(-12, 8, 10, '#facc15')}${L('M0 12L-4 40', '#3a8a3a', 3)}</g>`;
-    s.step(1, person({ x: 200, y: 254, shirt: '#f59e0b', fc: 'think', armL: [10, 20], armR: [30, 10] }) + bouquet(236, 214) + drop(222, 160, 0.6), { cls: 'up', e: 1 });
-    s.step(2, person({ x: 400, y: 254, shirt: '#ec4899', hs: 'long', fc: 'smile', armL: [-6, 30] }), { cls: 'up' });
-    s.step(2, person({ x: 220, y: 254, shirt: '#f59e0b', fc: 'neutral', armL: [40, -6], armR: [44, -10] }) + L('M210 164L216 162M224 162L230 164', '#2a1a12', 2.4) + bouquet(272, 190) + drop(244, 156, 0.6), { e: 2 });
-    s.step(3, person({ x: 220, y: 254, shirt: '#f59e0b', fc: 'smile', armL: [40, -6], armR: [44, -10] }) + bouquet(272, 190) + heart(320, 116, 1.1, '#ef4444') + sparks(320, 116, 28, 42, '#ffd34d', 6, 3), { cls: 'pop' });
+  ['earnest', '#f59e0b', '공으로 유리창을 깬 아이가 허리 숙여 저금통을 내밀며 진지하게 사과한다', (s) => {
+    s.sky('day'); s.ground('grass', 236);
+    const piggy = (x, y, k = 1) => `<g transform="translate(${x} ${y}) scale(${k})">${E(0, -22, 34, 25, '#f9a8d4', 'stroke="#db2777" stroke-width="3"')}${C(30, -26, 12, '#f9a8d4', 'stroke="#db2777" stroke-width="3"')}${E(39, -24, 5, 4, '#f472b6')}${C(30, -33, 2.2, '#2a1a12')}${P('M20 -44L25 -55L31 -42Z', '#f472b6')}${R(-11, -46, 22, 4, '#9d174d', 2)}${R(-22, -2, 9, 12, '#f9a8d4', 3)}${R(13, -2, 9, 12, '#f9a8d4', 3)}</g>`;
+    const k = 0.85;
+    const bowKid = (x, y) => R(x - 14 * k, y - 10 * k, 11 * k, 20 * k, '#334155', 3) + R(x + 3 * k, y - 10 * k, 11 * k, 20 * k, '#334155', 3) + shadow(x, y + 10, 22) + person({ x, y, s: k, shirt: '#f59e0b', fc: 'sad', legs: 'hide', sh: false, rot: -32, rotO: '0 -8', armL: [6, 26], armR: [-6, 26] });
+    s.step(1, house(96, 236, 150, '#e8d0b0', '#b45309') + P('M40 172L50 176L47 184L57 188L45 191L38 182Z', '#334155') + L('M49 180L36 168M49 180L62 170M49 180L52 194', '#475569', 2) + P('M40 236L46 226L52 236Z M58 238L66 230L70 238Z', '#bae6fd', 'stroke="#7dd3fc" stroke-width="1.5"') + C(132, 244, 11, '#f97316', 'stroke="#c2410c" stroke-width="2"'), { cls: 'up' });
+    s.step(1, person({ x: 240, y: 244, shirt: '#475569', hair: '#9ca3af', fc: 'angry', armL: [14, -10], armR: [-14, -10] }), { cls: 'up', e: 2 });
+    s.step(1, person({ x: 410, y: 244, s: k, shirt: '#f59e0b', fc: 'sad' }) + drop(432, 162, 0.7), { cls: 'up', e: 1 });
+    s.step(2, bowKid(318, 244) + piggy(306, 238, 0.6) + drop(250, 174, 0.6), { cls: 'up' });
+    s.step(3, person({ x: 240, y: 244, shirt: '#475569', hair: '#9ca3af', fc: 'smile', armR: [30, -24] }) + heart(258, 100, 1, '#ef4444') + sparks(258, 100, 26, 40, '#ffd34d', 6, 3) + chk(516, 44, 20), { cls: 'pop' });
   }],
   ['tremble', '#6366f1', '그림자 괴물 앞에서 무서워 온몸이 바들바들 떨린다', (s) => {
     s.sky('night'); s.ground('floor', 252);

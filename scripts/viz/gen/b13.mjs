@@ -105,11 +105,14 @@ export default [
     s.step(2, bottle(330, 150, 1.6, '#38bdf8') + [[300, 210], [330, 200], [360, 214], [320, 232], [350, 236], [380, 224]].map(([x, y]) => C(x, y, 12, '#fff', 'stroke="#9fd8ff" stroke-width="3"')).join(''), { cls: 'pop' });
     s.step(3, P('M110 120L150 100H190L230 120L210 150L196 140V220H144V140L130 150Z', '#fff', 'stroke="#aab4c6" stroke-width="3"') + sparks(170, 160, 50, 64, '#ffd34d', 8, 3) + chk(480, 56), { cls: 'pop' });
   }],
-  ['rash', '#dc2626', '피부에 붉은 발진이 번져 가려워 긁게 된다', (s) => {
-    s.sky('pink'); s.ground('floor', 252);
-    s.step(1, R(120, 150, 300, 56, '#ffd7b5', 28, 'stroke="#e8b48c" stroke-width="3"') + R(400, 140, 70, 76, '#ffd7b5', 26, 'stroke="#e8b48c" stroke-width="3"'), { cls: 'up' });
-    s.step(2, [[180, 170], [220, 190], [260, 168], [300, 188], [340, 172], [250, 150], [200, 150]].map(([x, y]) => C(x, y, 7, '#dc2626', 'fill-opacity=".85"')).join(''), { cls: 'pop' });
-    s.step(3, L('M230 110L260 130M250 100L280 120M270 94L296 112', '#ef4444', 4) + R(250, 106, 56, 22, '#ffd7b5', 10, 'stroke="#e8b48c" stroke-width="2" transform="rotate(30 278 117)"') + drop(240, 90, 0.7), { cls: 'pop' });
+  ['rash', '#dc2626', '"얼음이 얇아요!" 경고를 듣지도 않고 성급하게 달려 나갔다가 빠진다(성급한, 경솔한)', (s) => {
+    s.sky('day'); s.ground('snow', 236);
+    s.add(R(250, 238, 310, 62, '#bae6fd') + L('M270 256H330M380 270H460M480 252H540', '#e0f2fe', 3));
+    const sign = R(232, 168, 6, 70, '#7c4a1e') + P('M235 110L278 176H192Z', '#facc15', 'stroke="#a16207" stroke-width="4" stroke-linejoin="round"') + L('M235 132V156', '#1f2937', 6) + C(235, 166, 3.5, '#1f2937');   // 노란 삼각 경고판(!)
+    s.step(1, sign, { cls: 'up' });
+    s.step(1, person({ x: 120, y: 244, shirt: '#ef4444', fc: 'cheer', legs: 'walk', rot: 10, armL: [-26, -10], armR: [26, -26] }) + L('M60 200H84M54 216H80', '#94a3b8', 3), { cls: 'up', e: 1 });
+    s.step(2, person({ x: 380, y: 244, shirt: '#ef4444', fc: 'cheer', legs: 'walk', rot: 10, armL: [-26, -10], armR: [26, -26] }) + L('M300 200H330M294 216H326', '#94a3b8', 3) + L('M340 246L356 240L366 250L380 242L392 252', '#475569', 2.5), { e: 2 });
+    s.step(3, E(390, 248, 42, 10, '#0ea5e9') + P('M354 248L362 238L370 248Z M408 248L418 236L426 248Z', '#e0f2fe', 'stroke="#7dd3fc" stroke-width="2"') + person({ x: 390, y: 276, shirt: '#ef4444', fc: 'shock', legs: 'hide', sh: false, armL: [-30, -46], armR: [30, -46] }) + drop(356, 186, 0.6) + drop(424, 180, 0.6) + cross(510, 50, 18), {});
   }],
   ['bypass', '#0891b2', '막힌 마을 길을 피해 바깥으로 둘러 가는 우회로', (s) => {
     s.sky('day'); s.ground('grass', 246);
@@ -201,12 +204,15 @@ export default [
     s.step(2, person({ x: 150, y: 258, shirt: '#b45309', fc: 'angry', armR: [34, -20], armL: [30, -4] }) + chair(230, 254), { cls: 'up' });
     s.step(3, `<g transform="translate(400 250)">${E(0, -40, 50, 28, '#d9a05a')}${C(-36, -46, 34, '#b9742a')}${C(-36, -44, 22, '#d9a05a')}${L('M-48 -48H-40M-30 -48H-22', '#111', 3)}${R(-28, -20, 12, 22, '#d9a05a', 4)}${R(24, -20, 12, 22, '#d9a05a', 4)}</g>` + chk(500, 56) + sparks(400, 150, 50, 64, '#ffd34d', 6, 3), { });
   }],
-  ['conviction', '#2563eb', '거센 바람에도 깃발을 꽉 붙잡고 꿈쩍하지 않는 굳은 확신', (s) => {
-    s.sky('cool'); s.ground('grass', 236);
-    s.step(1, flag(330, 244, '#2563eb', 130) + person({ x: 300, y: 244, shirt: '#2563eb', fc: 'smile', armR: [24, -40] }), { cls: 'up', e: 1 });
-    s.step(2, flag(330, 244, '#2563eb', 130) + person({ x: 300, y: 244, shirt: '#2563eb', fc: 'angry', armR: [24, -40], armL: [20, -30] }), { e: 2 });
-    s.step(2, L('M20 96H170M0 136H150M30 176H180M10 216H140', '#94a3b8', 6) + E(200, 120, 9, 5, '#65a30d') + E(150, 196, 8, 4, '#65a30d'), { cls: 'wipe' });
-    s.step(3, flag(330, 244, '#2563eb', 130) + person({ x: 300, y: 244, shirt: '#2563eb', fc: 'cheer', armR: [24, -40], armL: [20, -30] }) + sparks(300, 120, 60, 76, '#ffd34d', 8, 4) + heart(300, 222, 0.5, '#ef4444') + chk(500, 56), { cls: 'pop' });
+  ['conviction', '#2563eb', '모두가 "아니야(X)"라고 해도 내 깃발(✓)을 꽉 붙잡고 흔들리지 않는 확신', (s) => {
+    s.sky('cool'); s.ground('floor', 252);
+    const myFlag = R(206, 106, 5, 150, '#64748b') + P('M211 106H285L272 125L285 144H211Z', '#2563eb') + L('M230 125L240 135L262 113', '#fff', 5);
+    const xb = (x, y) => bubble(x, y, 50, 38, '#fff', 'r') + L(`M${x - 9} ${y - 9}L${x + 9} ${y + 9}M${x + 9} ${y - 9}L${x - 9} ${y + 9}`, '#ef4444', 4.5);
+    s.step(1, myFlag, { cls: 'up' });
+    s.step(1, person({ x: 180, y: 254, shirt: '#2563eb', fc: 'smile', armR: [12, -40] }), { cls: 'up', e: 1 });
+    s.step(2, person({ x: 360, y: 254, shirt: '#94a3b8', fc: 'angry', armL: [-42, -12] }) + person({ x: 456, y: 254, shirt: '#a3a3a3', hs: 'long', fc: 'angry', armL: [-42, -12] }) + xb(334, 122) + xb(430, 122), { cls: 'up' });
+    s.step(2, person({ x: 180, y: 254, shirt: '#2563eb', fc: 'angry', armR: [12, -40], armL: [30, -30] }), { e: 2 });
+    s.step(3, person({ x: 180, y: 254, shirt: '#2563eb', fc: 'cheer', armR: [12, -40], armL: [30, -30] }) + sparks(184, 164, 62, 78, '#ffd34d', 10, 4) + chk(64, 50, 20), { cls: 'pop' });
   }],
   ['stout', '#92400e', '키는 작아도 몸집이 다부지고 단단하게 튼튼한 사람', (s) => {
     s.sky('wall'); s.ground('floor', 252);

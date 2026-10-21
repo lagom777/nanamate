@@ -39,11 +39,16 @@ export default [
     s.step(2, `<g transform="translate(175 130)">${R(-12, 0, 60, 24, '#ffd7b5', 10, 'stroke="#e8b48c" stroke-width="2"')}</g>`, { cls: 'up' });
     s.step(3, bulb(400, 200, 1.4) + sparks(400, 160, 50, 70, '#ffd34d', 10, 4) + clock(280, 100, 22, 0, 0) + L('M190 170H400', '#f59e0b', 4, 'stroke-dasharray="3 6"'), { cls: 'pop' });
   }],
-  ['sophisticated', '#7c3aed', '정교한 시계 장치와 세련된 차림의 품위 있는 모습', (s) => {
-    s.sky('wall'); s.ground('carpet', 252);
-    s.step(1, C(160, 150, 70, '#fff', 'stroke="#ca8a04" stroke-width="8"') + gear(150, 140, 28, '#ca8a04') + gear(190, 170, 18, '#a16207') + gear(120, 180, 14, '#ca8a04'), { cls: 'pop' });
-    s.step(2, person({ x: 420, y: 254, shirt: '#1f2937', pants: '#1f2937', fc: 'smile', hat: '<path d="M-6 -64L0 -58L6 -64L2 -56L0 -40L-2 -56Z" fill="#7c3aed"/><ellipse cx="-6" cy="-84" rx="9" ry="9" fill="none" stroke="#ca8a04" stroke-width="2"/>', armR: [30, -16] }) + `<g transform="translate(452 190)">${P('M-8 -20H8L6 -4Q0 6 -6 -4Z', '#fff', 'stroke="#aab4c6" stroke-width="2"')}${R(-1, -4, 2, 14, '#aab4c6')}</g>`, { cls: 'up' });
-    s.step(3, sparks(280, 130, 120, 136, '#ffd34d', 14, 3) + star(280, 60, 12), { cls: 'pop' });
+  ['sophisticated', '#b45309', '평범해 보이는 시계 속을 돋보기로 보니 작은 톱니가 빽빽이 맞물린 정교한 장치', (s) => {
+    s.sky('cool'); s.ground('floor', 252);
+    const cx = 210, cy = 146;
+    const ticks = Array.from({ length: 12 }, (_, i) => { const a = (i * Math.PI) / 6; return `M${(cx + Math.sin(a) * 50).toFixed(1)} ${(cy - Math.cos(a) * 50).toFixed(1)}L${(cx + Math.sin(a) * 57).toFixed(1)} ${(cy - Math.cos(a) * 57).toFixed(1)}`; }).join('');
+    s.step(1, L(`M${cx} ${cy - 80}Q${cx - 50} ${cy - 112} ${cx - 104} ${cy - 92}`, '#b45309', 4) + R(cx - 10, cy - 90, 20, 14, '#d4a017', 4) + C(cx, cy, 74, '#e9b949', 'stroke="#a16207" stroke-width="5"'), { cls: 'pop' });
+    s.step(1, C(cx, cy, 62, '#fffdf5', 'stroke="#d4a017" stroke-width="3"') + L(ticks, '#7c5c12', 3) + L(`M${cx} ${cy}V${cy - 40}M${cx} ${cy}L${cx + 28} ${cy + 12}`, '#3b2f1a', 4) + C(cx, cy, 4, '#3b2f1a'), { cls: 'pop', e: 1 });
+    s.step(1, person({ x: 440, y: 254, shirt: '#475569', fc: 'think', armR: [-10, -30] }), { cls: 'up', e: 2 });
+    const gears = [[-22, -18, 17, '#d4a017'], [17, -25, 12, '#9ca3af'], [24, 14, 15, '#d4a017'], [-12, 24, 11, '#9ca3af'], [2, -1, 8, '#b45309'], [-36, 8, 8, '#9ca3af'], [40, -6, 7, '#b45309']];
+    s.step(2, C(cx, cy, 62, '#f5e6c4', 'stroke="#d4a017" stroke-width="3"') + gears.map(([dx, dy, r, c]) => gear(cx + dx, cy + dy, r, c)).join('') + [[-22, -18], [24, 14], [2, -1]].map(([dx, dy]) => C(cx + dx, cy + dy, 3, '#dc2626')).join('') + C(cx, cy, 70, 'none', 'stroke="#334155" stroke-width="10"') + L(`M${cx + 52} ${cy + 50}L${cx + 96} ${cy + 94}`, '#7a5230', 14) + L(`M${cx - 40} ${cy - 30}Q${cx - 30} ${cy - 46} ${cx - 10} ${cy - 50}`, '#fff', 4, 'stroke-opacity=".8"'), { cls: 'pop' });
+    s.step(3, sparks(cx, cy, 86, 104, '#ffd34d', 12, 4) + person({ x: 440, y: 254, shirt: '#475569', fc: 'shock', armL: [-22, -40], armR: [22, -40] }) + star(500, 56, 14, '#f59e0b'), { cls: 'pop' });
   }],
   ['compassion', '#ec4899', '울고 있는 아이의 어깨를 감싸 안고 위로하는 동정심', (s) => {
     s.sky('warm'); s.ground('floor', 252);
