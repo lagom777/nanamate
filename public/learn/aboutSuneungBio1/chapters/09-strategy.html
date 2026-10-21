@@ -40,18 +40,28 @@
 
 <p>파트별 학습을 마쳤다면 전체 지도를 그립니다. 출제 비중 표는 실제 시험지 데이터로 계산한 값입니다.</p>
 <section class="nms" data-nms>
-<div class="nms-top"><b>🧭 내 성향으로 이 파트 공부하기</b><a href="../study-style.html">성향별 공부법 전체 →</a></div>
+<div class="nms-top"><b>🧭 내 성향으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">성향별 공부법 전체 →</a></span></div>
 <div class="nms-tabs" role="group" aria-label="공부 성향"><button type="button" data-set="logic">논리형</button><button type="button" data-set="memory">암기형</button><button type="button" data-set="visual">시각형</button><button type="button" data-set="practice">실전형</button></div>
-<div class="nms-pane" data-st="logic"><h4 class="nms-nojs">논리형</h4><p class="nms-one"><b>하나만 고른다면</b>문항을 ‘규칙 적용형·자료 해석형·사실 확인형’으로 나누면 시간 배분이 정해진다.</p>
-<ol class="nms-chain"><li>문항을 세 종류로 나눈다: 규칙 적용형(막전위·DNA 상대량·가계도), 자료 해석형(실험·그래프), 사실 확인형(용어·짝)</li><li>규칙 적용형은 풀이 첫 줄에 쓸 원리를 정해 두면 시간이 일정해진다</li><li>사실 확인형은 ‘이유 없는 사실’ 목록에서 나오므로 시험 전날까지 그 목록만 반복한다</li><li>킬러 문항은 조건을 표로 옮긴 뒤 규칙으로 칸을 채운다 — 머릿속 계산을 줄일수록 실수가 준다</li></ol>
+<div class="nms-pane" data-st="logic"><h4 class="nms-nojs">논리형</h4><p class="nms-one"><b>하나만 고른다면</b><strong>문항을 ‘규칙 적용형·자료 해석형·사실 확인형’으로 나누면 시간 배분이 정해진다.</strong></p>
+<div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
+<p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
+<ol class="nms-chain"><li><span class="nms-step">문항을 <b>세 종류로 나눈다</b>: 규칙 적용형(막전위·DNA 상대량·가계도), 자료 해석형(실험·그래프), 사실 확인형(용어·짝)</span></li><li><span class="nms-step">규칙 적용형은 <b>풀이 첫 줄에 쓸 원리</b>를 정해 두면 시간이 일정해진다</span></li><li><span class="nms-step">사실 확인형은 ‘이유 없는 사실’ 목록에서 나오므로 시험 전날까지 <b>그 목록만 반복한다</b></span></li><li><span class="nms-step">킬러 문항은 <b>조건을 표로 옮긴 뒤</b> 규칙으로 칸을 채운다 — 머릿속 계산을 줄일수록 실수가 준다</span></li></ol>
+<details class="nms-full" open><summary>📖 논리형 전체 해설 — 이 파트를 처음부터 끝까지</summary>
+<div class="nms-full-sec"><p class="nms-full-h">시험의 뼈대 — 시간이 어디에 필요한가</p><p>생명과학Ⅰ은 <b>20문항 50점, 30분</b>이고 2점 10문항, 3점 10문항입니다. 3점 문항은 앞 10문항에 평균 3.9개, 뒤 10문항에 평균 6.1개로 뒤쪽에 몰려 있고, 유전(6·7장)이 회당 약 6문항으로 가장 큰 덩어리입니다. 그러므로 앞쪽 개념 문항은 빠르게 끝내고, 뒤쪽 표·가계도·DNA 상대량 문항에 시간을 남기는 것이 기본 전략입니다.</p><p>시간 배분 예시는 1~9번 약 8분(보기별 참·거짓을 짧게 판정), 10~15번 약 10분(그래프·표, 호르몬 ㉠·㉡은 정체 → 방향 → 결론 순), 16~20번 약 12분(가계도 + DNA 상대량, 비분리)입니다. 문항을 <b>규칙 적용형, 자료 해석형, 사실 확인형</b>으로 나눠 보면, 사실 확인형은 ‘이유 없는 사실’ 목록에서 바로 답하고 남은 시간을 규칙 적용형 3점에 몰아 쓸 수 있습니다.</p></div>
+<div class="nms-full-sec"><p class="nms-full-h">킬러 유형별 첫 줄</p><p>규칙 적용형은 풀이 첫 줄에 쓸 원리를 미리 정해 두면 시간이 일정해집니다. 가계도 + DNA 상대량은 <b>위치 확정 → 우열 → 유전자형 → 확률</b>, DNA 상대량 + 감수 분열은 세포마다 (핵상, 상대량 합 4·2·1)로 시기를 정한 뒤 유전자형을 추론합니다. 막전위·전도 표는 속도 v를 먼저 구하고 각 지점에서 흥분이 도달한 뒤 지난 시간을 계산하며, 근수축은 A대 일정, H대 감소량 = 마디 감소량으로 식을 닫습니다.</p><p>조건이 많은 3점 문항은 머릿속으로 풀지 말고 <b>표를 직접 그립니다</b>. 구성원을 세로, 유전자를 가로에 놓고 확정된 값부터 채운 뒤, 미정인 칸은 남겨 둔 채 다른 조건으로 전진하는 방식이 실수가 가장 적습니다.</p></div>
+<div class="nms-full-sec"><p class="nms-full-h">함정 문장과 오답 노트</p><p>자주 나오는 함정 문장은 항상성 사례를 적응과 진화로 읽기, 바이러스의 독립적 물질대사, 재분극 = Na⁺ 유입, 근수축 때 A대 감소, 교감 신경의 소화 촉진, 기억 세포의 항체 분비, 감수 1분열의 염색 분체 분리, 정상 부모 → 환자 = 우성, 에너지의 순환, ADH 증가 → 오줌량 증가입니다. 각각을 <b>바른 문장으로 고쳐 말할 수 있으면</b> 개념 문항은 거의 잃지 않습니다.</p><p>오답 노트에는 정답 번호가 아니라 <b>내가 고른 함정 문장과 파트</b>를 적습니다. 그리고 틀린 이유를 ‘원리를 잘못 적용했다’와 ‘이유 없는 사실을 몰랐다’로 나눠, 앞쪽은 사슬의 해당 고리를 다시 보고 뒤쪽은 사실 목록에 넣어 반복합니다.</p></div></details>
 <p class="nms-kv"><b>외울 것은 이것뿐</b>파트별 출제 비중, 내가 가장 오래 걸리는 유형</p>
 <p class="nms-kv"><b>나머지는 유도</b>시간 배분: 사실 확인형을 빨리 끝내고 남은 시간을 규칙 적용형 3점에 몰아 쓴다</p>
-<p class="nms-trap"><b>논리형 함정</b>앞 문항에서 원리를 끝까지 증명하려다 시간을 씁니다. 시험장에서는 이미 정리한 원리를 적용만 하세요.</p>
-<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>가장 오래 걸리는 유형 하나를 골라 풀이 첫 줄에 쓸 원리를 설명해 보세요.</li><li>‘이유 없는 사실’ 목록 중 가장 자주 틀리는 것 세 개를 말해 보세요.</li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 답해 보세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
-</div>
-<div class="nms-pane" data-st="memory"><h4 class="nms-nojs">암기형</h4><p class="nms-tip">전 파트 핵심 한 줄을 시험 전 주에 매일 한 번씩 소리 내어 읽으세요.</p><p class="nms-fit"><b>암기형에게 이 과목은</b> — 용어·짝이 많아 정리와 반복에 강한 성향에게 개념 문항(1~10번대)은 안정적인 득점원입니다. 계산형 3점 문항은 풀이 순서까지 외울 대상으로 삼으세요.</p></div>
-<div class="nms-pane" data-st="visual"><h4 class="nms-nojs">시각형</h4><p class="nms-tip">파트별 핵심 그림 9장을 한 장에 모아 시험 직전 훑기용으로 만드세요.</p><p class="nms-fit"><b>시각형에게 이 과목은</b> — 생명과학은 구조·과정 그림이 많아 시각형에게 기억하기 쉬운 과목입니다. 그림을 ‘보는 것’에서 ‘직접 그리는 것’으로 바꾸는 것이 관건입니다.</p></div>
-<div class="nms-pane" data-st="practice"><h4 class="nms-nojs">실전형</h4><p class="nms-tip">주 2회 실전 시간(30분)으로 풀고, 시간이 넘은 문항 유형만 다음 주 집중 연습하세요.</p><p class="nms-fit"><b>실전형에게 이 과목은</b> — 기출 유형이 정해져 있어 문제부터 푸는 실전형에게 효율이 좋습니다. 다만 개념 구멍을 그때그때 메우지 않으면 같은 유형을 계속 틀립니다.</p></div>
+<p class="nms-trap"><b>논리형 함정</b>앞 문항에서 원리를 끝까지 증명하려다 시간을 씁니다. 시험장에서는 <b>이미 정리한 원리를 적용만</b> 하세요.</p>
+<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>가장 오래 걸리는 유형 하나를 골라 풀이 첫 줄에 쓸 원리를 설명해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>예를 들어 근수축 길이 문항이 가장 오래 걸린다면, 첫 줄에 ‘필라멘트 길이는 변하지 않는다 → A대는 일정, 마디 감소량 = H대 감소량 = I대(양쪽 합) 감소량’을 씁니다. 이 한 줄이 있으면 두 시점의 길이를 미지수로 놓고 A대가 일정하다는 조건으로 바로 식을 세울 수 있어, 주어진 비에 숫자를 이것저것 넣어 보는 시간이 사라집니다. 가계도 문항이라면 ‘위치 확정 → 우열 → 유전자형 → 확률’ 순서를 첫 줄로 정해 두는 식으로, <b>유형마다 첫 줄을 하나씩</b> 만들어 두면 시험장에서는 적용만 하면 됩니다.</p></details></li><li>‘이유 없는 사실’ 목록 중 가장 자주 틀리는 것 세 개를 말해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>사람마다 다르지만 자주 틀리는 대표 세 가지를 들면, 첫째로 교감 신경은 신경절 이전 뉴런이 짧고 신경절 이후 뉴런 말단에서 노르에피네프린을, 부교감 신경은 신경절 이전 뉴런이 길고 신경절 이후 뉴런 말단에서 아세틸콜린을 분비합니다. 둘째로 지방산과 모노글리세리드는 모세 혈관이 아니라 융털의 암죽관으로 흡수됩니다. 셋째로 질소 순환에서 N₂를 암모늄 이온으로 바꾸는 질소 고정은 뿌리혹박테리아 같은 질소 고정 세균이, 암모늄 이온을 질산 이온으로 바꾸는 질산화는 질산화 세균이, 질산 이온을 N₂로 되돌리는 탈질산화는 탈질산화 세균이 맡습니다. 셋 다 <b>원리로 유도되지 않으니</b> 이유를 찾지 말고 목록에 넣어 짧게 자주 반복합니다.</p></details></li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
+
+<div class="nms-done" data-done="aboutSuneungBio1/09-strategy.html"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
+<label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
+<label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
+<label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div></div>
+<div class="nms-pane" data-st="memory"><h4 class="nms-nojs">암기형</h4><p class="nms-tip">전 파트 핵심 한 줄을 시험 전 주에 매일 한 번씩 <b>소리 내어 읽으세요</b>.</p><p class="nms-fit"><b>암기형에게 이 과목은</b> — 용어·짝이 많아 정리와 반복에 강한 성향에게 개념 문항(1~10번대)은 안정적인 득점원입니다. 계산형 3점 문항은 <b>풀이 순서까지 외울 대상</b>으로 삼으세요.</p></div>
+<div class="nms-pane" data-st="visual"><h4 class="nms-nojs">시각형</h4><p class="nms-tip">파트별 핵심 그림 9장을 <b>한 장에 모아</b> 시험 직전 훑기용으로 만드세요.</p><p class="nms-fit"><b>시각형에게 이 과목은</b> — 생명과학은 구조·과정 그림이 많아 시각형에게 기억하기 쉬운 과목입니다. 그림을 ‘보는 것’에서 <b>‘직접 그리는 것’으로 바꾸는 것</b>이 관건입니다.</p></div>
+<div class="nms-pane" data-st="practice"><h4 class="nms-nojs">실전형</h4><p class="nms-tip">주 2회 실전 시간(30분)으로 풀고, <b>시간이 넘은 문항 유형만</b> 다음 주 집중 연습하세요.</p><p class="nms-fit"><b>실전형에게 이 과목은</b> — 기출 유형이 정해져 있어 문제부터 푸는 실전형에게 효율이 좋습니다. 다만 <b>개념 구멍을 그때그때 메우지 않으면</b> 같은 유형을 계속 틀립니다.</p></div>
 </section>
 <details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">유전(6+7) 두 파트가 가장 크다 — 앞은 빠르게, 뒤는 시간을 남겨서</span></div>
