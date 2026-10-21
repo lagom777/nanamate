@@ -1,13 +1,14 @@
 // 수능 수학 — 수학Ⅰ · 수학Ⅱ · 미적분 (파트별 노트는 content/math-*.mjs, 전략은 content/st-math.mjs)
 import { note, tip, tbl, examsOf } from "./lib.mjs";
 import { maps } from "./maps-math.mjs";
+import { styles } from "./content/style-math.mjs";
 
 const load = async (n) => { try { return (await import(`./content/${n}.mjs`)).chapters; } catch { return []; } };
 const chapters = [...(await load("math-1")), ...(await load("math-2")), ...(await load("math-3")), ...(await load("st-math"))];
 const N = examsOf("math").length;
 
 export const spec = {
-  sub: "math", folder: "aboutSuneungMath", label: "수능 수학", short: "수학", color: "#7c3aed",
+  sub: "math", styles, folder: "aboutSuneungMath", label: "수능 수학", short: "수학", color: "#7c3aed",
   glow: "rgba(124,58,237,0.12)", border: "rgba(124,58,237,0.16)",
   asideSub: "수능 수학 — 수학Ⅰ·수학Ⅱ·미적분 + 기출",
   h1: "수능 수학,<br><em>Ⅰ·Ⅱ·미적분</em><br>파트별로 끝까지",
