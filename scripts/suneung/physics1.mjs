@@ -1,6 +1,7 @@
 // 수능 물리학Ⅰ — 파트별 노트 내용 (2015 개정, 2027학년도까지)
 import { f, note, warn, tip, tbl, ex, partStats, EXAMS, figHead, figure } from "./lib.mjs";
 import { maps } from "./maps-physics1.mjs";
+import { styles } from "./content/style-physics1.mjs";
 
 const U1 = "Ⅰ. 역학과 에너지", U2 = "Ⅱ. 물질과 전자기장", U3 = "Ⅲ. 파동과 정보통신";
 const COLOR = "#0284c7";
@@ -413,7 +414,7 @@ chapters.push({
 });
 
 export const spec = {
-  sub: "phys1", folder: "aboutSuneungPhysics1", label: "수능 물리학Ⅰ", short: "물리학Ⅰ", color: COLOR, termsData: "phys1",
+  sub: "phys1", styles, folder: "aboutSuneungPhysics1", label: "수능 물리학Ⅰ", short: "물리학Ⅰ", color: COLOR, termsData: "phys1",
   glow: "rgba(2,132,199,0.12)", border: "rgba(2,132,199,0.16)",
   asideSub: "수능 물리학Ⅰ — 3단원 7파트 + 모션 + 기출",
   h1: "수능 물리학Ⅰ,<br><em>파트별</em>로<br>끝까지",

@@ -158,7 +158,7 @@ ${sumCta}
 ${c.body}
 ${motion}
 ${c.traps ? `<h2>자주 나오는 함정</h2>${c.traps}` : ""}
-${c.examples ? `<h2>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p>${c.examples}` : ""}
+${c.examples ? `<h2${spec.styles ? ' id="examples"' : ""}>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p>${c.examples}` : ""}
 ${tabs(c.easy, c.hard)}
 ${games(spec, c, i)}
 ${practice}
@@ -272,10 +272,24 @@ export const STYLE_TYPES = [
   ["practice", "실전형", "문제를 먼저 풀며 개념을 채운다"],
 ];
 const styleTabs = () => `<div class="nms-tabs" role="group" aria-label="공부 성향">${STYLE_TYPES.map(([k, name]) => `<button type="button" data-set="${k}">${name}</button>`).join("")}</div>`;
-const logicBlock = (d) => `<ol class="nms-chain">${d.chain.map((x) => `<li>${x}</li>`).join("")}</ol>
+const logicBlock = (d, exHref) => `${d.one ? `<p class="nms-one"><b>하나만 고른다면</b>${d.one}</p>` : ""}
+<ol class="nms-chain">${d.chain.map((x) => `<li>${x}</li>`).join("")}</ol>
 <p class="nms-kv"><b>외울 것은 이것뿐</b>${d.keep}</p>
 <p class="nms-kv"><b>나머지는 유도</b>${d.derive}</p>
-<p class="nms-trap"><b>논리형 함정</b>${d.trap}</p>`;
+<p class="nms-trap"><b>논리형 함정</b>${d.trap}</p>
+${d.explain ? `<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol>${d.explain.map((x) => `<li>${x}</li>`).join("")}</ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 답해 보세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>` : ""}
+${exHref ? `<p class="nms-first">문제부터 부딪치고 싶다면 <a href="${exHref}">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p>` : ""}`;
+/* 논리형 공통 루틴 — 이해가 ‘옮겨 적기’에서 끝나지 않고 내 것이 되게 하는 습관(모든 과목 공통) */
+const LOGIC_COMMON = [
+  "<strong>틀부터 빌립니다.</strong> 파트를 읽기 전 표지의 로드맵과 ‘한눈에 요약 맵’으로 큰 덩어리를 5분 봅니다. 틀을 직접 만들려 애쓰지 말고, 있는 틀이 왜 그렇게 짜였는지 이해하는 데 힘을 씁니다. 읽는 동안 ‘지금 이 내용이 틀의 어느 자리인가’를 의식합니다.",
+  "<strong>‘왜’를 두 번 묻습니다.</strong> 읽은 문장에 ‘왜 그런가’, 그 답에 다시 ‘왜’. 파트마다 있는 ‘왜 사슬’은 이 질문의 답을 이어 놓은 것입니다.",
+  "<strong>하나만 고릅니다.</strong> 파트를 덮고 ‘가장 중요한 것 하나’를 말해 봅니다. 고르는 행위가 지식에 층위를 만듭니다. 카드 맨 위의 ‘하나만 고른다면’과 비교해 보세요.",
+  "<strong>말로 설명합니다(파인만 학습법).</strong> 공부 끝 5분, 오늘 배운 것 하나를 모르는 사람에게 설명하듯 소리 내어 말합니다. 막히는 곳이 아직 내 것이 아닌 곳이고, 그 부분만 다시 봅니다.",
+  "<strong>숫자와 조건을 바꿔 확인합니다.</strong> 이해했다고 느껴도 조건 하나가 바뀐 문제에서 손이 멈추면 아직 옮겨 적기만 한 상태입니다.",
+  "<strong>오답에는 ‘내가 왜 그렇게 생각했나’를 한 줄 씁니다.</strong> 정답을 베끼지 말고, 내 생각이 어느 단계에서 틀어졌는지를 고칩니다.",
+  "<strong>어려운 문제를 먼저 만나도 됩니다.</strong> 순서대로 읽는 대신 대표 예제나 기출 하나를 먼저 붙잡고, 막힌 고리만 사슬에서 찾아 채우는 방식이 잘 맞는 경우가 많습니다.",
+  "<strong>50분 한 덩어리, 작은 마감.</strong> 50분 안에 주제 하나를 끝내는 단위로 계획하고, 큰 목표 하나보다 매일 끝낼 수 있는 작은 마감을 둡니다. 막혀서 손이 안 가면 그 과목에서 가장 쉬운 문제 하나부터 풉니다."
+];
 
 export function styleCard(spec, c) {
   const d = spec.styles && spec.styles.chapters[c.file];
@@ -284,7 +298,7 @@ export function styleCard(spec, c) {
   return `<section class="nms" data-nms>
 <div class="nms-top"><b>🧭 내 성향으로 이 파트 공부하기</b><a href="../study-style.html">성향별 공부법 전체 →</a></div>
 ${styleTabs()}
-${pane("logic", "논리형", logicBlock(d.logic))}
+${pane("logic", "논리형", logicBlock(d.logic, c.examples ? "#examples" : null))}
 ${STYLE_TYPES.slice(1).map(([k, name]) => pane(k, name, `<p class="nms-tip">${d[k]}</p><p class="nms-fit"><b>${name}에게 이 과목은</b> — ${spec.styles.types[k].fit}</p>`)).join("\n")}
 </section>`;
 }
@@ -300,13 +314,15 @@ export function stylePage(spec) {
   const chapterList = (k) => spec.chapters.filter((c) => S.chapters[c.file]).map((c) => {
     const d = S.chapters[c.file];
     const i = spec.chapters.indexOf(c);
-    return `<h3><a href="chapters/${c.file}">${i + 1}. ${c.title} →</a></h3>${k === "logic" ? logicBlock(d.logic) : `<p class="nms-tip">${d[k]}</p>`}`;
+    return `<h3><a href="chapters/${c.file}">${i + 1}. ${c.title} →</a></h3>${k === "logic" ? logicBlock(d.logic, c.examples ? `chapters/${c.file}#examples` : null) : `<p class="nms-tip">${d[k]}</p>`}`;
   }).join("\n");
   const panes = STYLE_TYPES.map(([k, name, gist]) => {
     const t = S.types[k];
     return `<div class="nms-pane" data-st="${k}">
 <h4 class="nms-nojs">${name}</h4>
 <p class="nms-tip"><strong>${name}</strong> — ${gist}. ${t.fit}</p>
+${k === "logic" ? `<div class="nms-common"><h3>논리형 공통 루틴 — 이해가 ‘내 것’이 되게</h3><ol>${LOGIC_COMMON.map((x) => `<li>${x}</li>`).join("")}</ol></div>` : ""}
+${t.extra ? `<div class="nms-extra"><h3>${t.extra.title}</h3><ul>${t.extra.items.map((x) => `<li>${x}</li>`).join("")}</ul></div>` : ""}
 <h3>이 과목의 기본 원칙</h3>
 <ul>${t.principles.map((x) => `<li>${x}</li>`).join("")}</ul>
 <h3>공부 순서</h3>
