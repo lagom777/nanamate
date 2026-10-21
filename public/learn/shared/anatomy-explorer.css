@@ -355,7 +355,7 @@
   vector-effect: non-scaling-stroke;
 }
 .anx .ax-body {
-  fill: #f3d2c3;
+  fill: #e9eff7;
   stroke: var(--ax-mute);
   stroke-width: 1.6;
   stroke-linejoin: round;
@@ -368,7 +368,7 @@
   transition: opacity 0.15s ease, filter 0.15s ease;
 }
 .anx .ax-target {
-  stroke: var(--ax-mute);
+  stroke: color-mix(in srgb, var(--ax-mute) 55%, transparent);
   stroke-width: 1.15;
   stroke-linejoin: round;
 }
@@ -379,8 +379,8 @@
 }
 .anx .ax-bone {
   fill: none;
-  stroke: #c4b49a;
-  stroke-width: 4.5;
+  stroke: #c9d1de;
+  stroke-width: 3.5;
   stroke-linecap: round;
 }
 .anx .ax-part.is-dim { opacity: 0.34; }
@@ -408,6 +408,9 @@
 }
 .anx .ax-bone.is-hot { stroke-width: 7; }
 .anx .ax-bone.is-warm { stroke-width: 6; }
+/* 표적 기관은 평소 옅은 단색이라, 호르몬이 닿을 때 강조색을 채워 눈에 띄게 한다(뼈는 선이라 제외) */
+.anx .ax-target:not(.ax-bone).is-hot .ax-spot { fill: color-mix(in srgb, var(--ax-accent) 45%, #ffffff); }
+.anx .ax-target:not(.ax-bone).is-warm .ax-spot { fill: color-mix(in srgb, var(--ax-accent) 25%, #ffffff); }
 .anx .ax-flow {
   fill: none;
   stroke: var(--ax-accent);

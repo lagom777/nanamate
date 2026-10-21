@@ -260,82 +260,68 @@
     [468, 520], [476, 474], [488, 430], [492, 388], [482, 346], [434, 334]
   ];
 
-  /* 겉질 주름(회·구): 엽마다 짧게 굽이치는 홈을 고르게 흩뿌리고 엽 모양으로 잘라 낸다(만화식 뇌 주름).
-     홈은 엽 색보다 진한 선, 그 위쪽에 밝은 선을 살짝 어긋나게 겹쳐 볼록한 이랑처럼 보이게 한다. */
-  function rnd(seed) {
-    var v = seed % 2147483647;
-    if (v <= 0) v += 2147483646;
-    return function () { v = v * 16807 % 2147483647; return (v - 1) / 2147483646; };
-  }
+  /* 겉질 주름: 무작위로 흩뿌리면 금이 간 살갗처럼 보여서, 실제 큰 고랑의 방향만 엽마다 두세 줄 매끄럽게 긋는다
+     (이마엽·관자엽은 앞뒤로 길게, 중심고랑 앞뒤는 나란히). 고랑은 엽 색보다 조금 진한 선, 위에 밝은 선을 살짝 겹쳐 이랑처럼. */
   function shade(hex, k) {
     var h = hex.replace('#', '');
     var c = [0, 2, 4].map(function (i) { return parseInt(h.slice(i, i + 2), 16); });
     return 'rgb(' + c.map(function (v) { return Math.round(v * (1 - k)); }).join(',') + ')';
   }
-  function sulciIn(box, seed, gap) {
-    var r = rnd(seed), out = [];
-    var x, y, k, n, px, py, ang, step, pts;
-    for (y = box[1]; y < box[3]; y += gap * 0.86) {
-      for (x = box[0] + ((y / gap) % 2 ? gap / 2 : 0); x < box[2]; x += gap) {
-        px = x + (r() - 0.5) * gap * 0.7;
-        py = y + (r() - 0.5) * gap * 0.7;
-        ang = r() * Math.PI * 2;
-        step = gap * (0.5 + r() * 0.12);
-        n = 2 + Math.floor(r() * 2);
-        pts = [[r1(px), r1(py)]];
-        for (k = 0; k < n; k++) {
-          ang += (r() - 0.5) * 0.9;
-          px += Math.cos(ang) * step;
-          py += Math.sin(ang) * step;
-          pts.push([r1(px), r1(py)]);
-        }
-        out.push(pts);
-      }
-    }
-    return out;
-  }
-  function lobeSulci(key, color, box, seed) {
-    var lines = paths(sulciIn(box, seed, 60));
+  var GYRI = {
+    frontal: [
+      [[128, 146], [182, 108], [250, 84], [322, 72], [376, 70]],
+      [[112, 200], [168, 172], [240, 156], [312, 148], [356, 146]],
+      [[394, 42], [380, 92], [362, 144], [344, 194], [328, 232]]
+    ],
+    parietal: [
+      [[450, 36], [434, 86], [416, 138], [398, 184], [382, 222]],
+      [[436, 124], [486, 112], [536, 110], [580, 118]]
+    ],
+    temporal: [
+      [[244, 298], [318, 288], [398, 276], [476, 258], [544, 236], [582, 230]],
+      [[306, 326], [362, 324], [442, 316], [520, 300], [590, 282]]
+    ],
+    occipital: [
+      [[640, 118], [662, 160], [676, 206]],
+      [[616, 172], [638, 214], [650, 256]]
+    ]
+  };
+  function lobeGyri(key, color) {
+    var lines = paths(GYRI[key]);
     return '<g class="ax-deco" pointer-events="none" clip-path="url(#axc-' + key + ')" fill="none" stroke-linecap="round" stroke-linejoin="round">' +
-      '<g stroke="#ffffff" stroke-opacity="0.3" stroke-width="2" transform="translate(-1.2 -1.5)">' + lines + '</g>' +
-      '<g stroke="' + shade(color, 0.2) + '" stroke-opacity="0.6" stroke-width="2.4">' + lines + '</g></g>';
+      '<g stroke="#ffffff" stroke-opacity="0.5" stroke-width="2.2" transform="translate(-1 -1.6)">' + lines + '</g>' +
+      '<g stroke="' + shade(color, 0.3) + '" stroke-opacity="0.55" stroke-width="2.6">' + lines + '</g></g>';
   }
   var sideClips = '<defs>' +
     '<clipPath id="axc-frontal"><path d="' + frontalD + '"/></clipPath>' +
     '<clipPath id="axc-parietal"><path d="' + parietalD + '"/></clipPath>' +
     '<clipPath id="axc-occipital"><path d="' + occipitalD + '"/></clipPath>' +
-    '<clipPath id="axc-temporal"><path d="' + temporalD + '"/></clipPath></defs>';
+    '<clipPath id="axc-temporal"><path d="' + temporalD + '"/></clipPath>' +
+    '<clipPath id="axc-cereb"><path d="' + poly(cerebPts) + '"/></clipPath></defs>';
 
-  var sideFolia = '';
-  (function () {
-    var rows = [[344, 520, 700], [364, 508, 706], [384, 506, 704], [404, 514, 690], [424, 538, 660]];
-    var i, y, x1, x2;
-    for (i = 0; i < rows.length; i++) {
-      y = rows[i][0]; x1 = rows[i][1]; x2 = rows[i][2];
-      sideFolia += '<path d="M ' + x1 + ' ' + y + ' Q ' + Math.round((x1 + x2) / 2) + ' ' + (y + 7) + ' ' + x2 + ' ' + y + '"/>';
-    }
-  })();
+  /* 소뇌 주름: 아랫면 윤곽과 나란한 활 세 줄 */
+  var sideFolia = '<g clip-path="url(#axc-cereb)">' + paths([
+    [[498, 372], [544, 388], [600, 394], [656, 388], [698, 370]],
+    [[500, 396], [548, 410], [600, 416], [652, 410], [690, 394]],
+    [[522, 418], [562, 428], [602, 432], [644, 426], [676, 412]]
+  ]) + '</g>';
 
+  /* 색: 살색·검붉은색을 피한 맑은 파스텔(이마 파랑, 마루 노랑, 관자 초록, 뒤통수 분홍, 소뇌 보라, 뇌줄기 회청) */
+  var LOBE = { frontal: '#a7c7f2', parietal: '#f6d98a', temporal: '#a6ddb8', occipital: '#f3b3c3' };
   var brainSide = [
     sideClips,
-    part('cerebellum', '#e4c27a', '1', P(poly(cerebPts)) + deco(sideFolia, '#8a6230', 1.4, 0.55)),
-    part('brainstem', '#e09aa3', '1', P(poly(stemPts)) + deco(paths([
-      [[392, 372], [432, 380], [478, 372]],
-      [[392, 396], [434, 404], [482, 394]],
-      [[398, 420], [436, 426], [484, 416]],
-      [[410, 470], [438, 474], [470, 468]],
-      [[416, 520], [440, 524], [468, 518]]
-    ]), '#7a4450', 1.5, 0.4)),
-    part('occipital', '#8ebbe8', '1', P(occipitalD) + lobeSulci('occipital', '#8ebbe8', [560, 70, 712, 320], 41)),
-    part('temporal', '#c9b0e0', '1', P(temporalD) + lobeSulci('temporal', '#c9b0e0', [200, 186, 660, 362], 73)),
-    part('parietal', '#7dcec0', '1', P(parietalD) + lobeSulci('parietal', '#7dcec0', [336, 20, 646, 252], 29)),
-    part('frontal', '#f2b39a', '1', P(frontalD) + lobeSulci('frontal', '#f2b39a', [78, 18, 426, 276], 11)),
+    part('cerebellum', '#c9b8ea', '1', P(poly(cerebPts)) + deco(sideFolia, '#6e5c9a', 1.5, 0.4)),
+    part('brainstem', '#b8c4d6', '1', P(poly(stemPts))),
+    part('occipital', LOBE.occipital, '1', P(occipitalD) + lobeGyri('occipital', LOBE.occipital)),
+    part('temporal', LOBE.temporal, '1', P(temporalD) + lobeGyri('temporal', LOBE.temporal)),
+    part('parietal', LOBE.parietal, '1', P(parietalD) + lobeGyri('parietal', LOBE.parietal)),
+    part('frontal', LOBE.frontal, '1', P(frontalD) + lobeGyri('frontal', LOBE.frontal)),
     deco(
-      '<path d="' + pathD(central, false) + '" stroke-width="3.4" stroke-opacity="0.82"/>' +
-      '<path d="' + pathD(lfAll, false) + '" stroke-width="3.6" stroke-opacity="0.84"/>' +
-      '<path d="' + pathD(po, false) + '" stroke-width="2.8" stroke-opacity="0.7"/>' +
-      '<path d="' + pathD(toF, false) + '" stroke-width="2.2" stroke-opacity="0.55"/>',
-      '#4a382f', 1.15, 0.4
+      '<path d="' + pathD(central, false) + '" stroke-width="3.2" stroke-opacity="0.7"/>' +
+      '<path d="' + pathD(lfAll, false) + '" stroke-width="3.4" stroke-opacity="0.72"/>' +
+      '<path d="' + pathD(po, false) + '" stroke-width="2.6" stroke-opacity="0.6"/>' +
+      '<path d="' + pathD(toF, false) + '" stroke-width="2.2" stroke-opacity="0.5"/>',
+      '#3f4b5e', 1.15, 0.4
     )
   ].join('');
 
@@ -413,48 +399,45 @@
     }
   })();
 
+  /* 단면 색: 겉질(회색질)은 회청, 속(백색질)은 흰색, 뇌줄기는 회청 계열, 내분비샘(시상 하부·뇌하수체·송과샘)만 또렷한 색 */
   var brainMid = [
-    part('cerebellum', '#e4c27a', '1',
+    part('cerebellum', '#c9b8ea', '1',
       P(poly(cereMidPts)) +
-      deco(midFolia, '#8a6230', 1.25, 0.5) +
-      deco(paths(arbor), '#f7f1e2', 5, 0.95)
+      deco(midFolia, '#6e5c9a', 1.25, 0.35) +
+      deco(paths(arbor), '#ffffff', 5, 0.9)
     ),
-    part('cerebrum', '#d9a28e', '1',
+    part('cerebrum', '#c5d2e8', '1',
       P(poly(cerebrumPts)) +
-      '<path fill="#f7f3ee" fill-opacity="0.98" d="' + poly(whitePts) + '"/>' +
-      deco(paths(midSulci), '#6a4a40', 1.55, 0.48)
+      '<path fill="#f8f9fc" fill-opacity="0.98" d="' + poly(whitePts) + '"/>' +
+      deco(paths(midSulci), '#7d8aa6', 1.55, 0.4)
     ),
-    part('spinal_cord', '#c9a3aa', '0.95',
+    part('spinal_cord', '#c8d0de', '0.95',
       P(cordD) +
-      '<path fill="none" stroke="#f4e8ea" stroke-width="1.6" stroke-linecap="round" d="M 424 506 L 426 574"/>'
+      '<path fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" d="M 424 506 L 426 574"/>'
     ),
-    part('medulla', '#a85d72', '0.95', P(medullaD)),
-    part('pons', '#b86d82', '0.95', P(ponsD) + deco(paths([
-      [[362, 372], [420, 380], [486, 370]],
-      [[350, 394], [420, 404], [492, 392]],
-      [[360, 414], [430, 422], [484, 408]]
-    ]), '#f6e8ea', 1.8, 0.5)),
-    part('midbrain', '#c98490', '0.95',
+    part('medulla', '#9fafca', '0.95', P(medullaD)),
+    part('pons', '#afbcd5', '0.95', P(ponsD)),
+    part('midbrain', '#bfc9de', '0.95',
       P(midbrainD) +
-      '<ellipse fill="#e0b0b6" cx="486" cy="296" rx="8" ry="6"/>' +
-      '<ellipse fill="#e0b0b6" cx="494" cy="314" rx="8" ry="6"/>' +
-      '<ellipse fill="#d0989e" cx="480" cy="334" rx="7" ry="5"/>'
+      '<ellipse fill="#d6dcea" cx="486" cy="296" rx="8" ry="6"/>' +
+      '<ellipse fill="#d6dcea" cx="494" cy="314" rx="8" ry="6"/>' +
+      '<ellipse fill="#cbd2e3" cx="480" cy="334" rx="7" ry="5"/>'
     ),
-    '<path pointer-events="none" fill="#c5d5de" d="M 496 366 L 508 380 L 498 398 Z"/>',
-    part('corpus_callosum', '#fbf7ef', '1', P(poly(callosumPts))),
+    '<path pointer-events="none" fill="#dce6f0" d="M 496 366 L 508 380 L 498 398 Z"/>',
+    part('corpus_callosum', '#ffffff', '1', P(poly(callosumPts))),
     deco(
       '<path d="M 300 198 C 350 168, 420 160, 480 178 C 496 186, 504 200, 508 214" fill="none"/>' +
       '<path d="M 304 202 C 312 226, 318 250, 312 270" fill="none"/>',
-      '#b6a27a', 2.2, 0.9
+      '#aab4c8', 2.2, 0.9
     ),
-    part('thalamus', '#e08a62', '0.96', P(poly(thalamusPts)) + '<circle cx="408" cy="236" r="4.5" fill="#c46a48"/>'),
-    part('hypothalamus', '#d4537e', '1', P(poly(hypoPts)) + hit(332, 288, 15)),
-    '<ellipse class="ax-deco" pointer-events="none" cx="306" cy="318" rx="14" ry="6" fill="#b86d82" fill-opacity="0.8"/>',
-    part('pineal', '#d4a017', '0.97', P(poly(pinealPts)) + hit(494, 228, 14)),
-    part('pituitary', '#c42d66', '0.97',
-      '<path d="M 330 304 C 326 318, 324 326, 322 334" fill="none" stroke="#c42d66" stroke-width="4.5" stroke-linecap="round"/>' +
-      '<ellipse cx="322" cy="348" rx="19" ry="14" fill="#c42d66"/>' +
-      '<ellipse cx="331" cy="348" rx="7" ry="9" fill="#9a2048"/>' +
+    part('thalamus', '#f2b47e', '0.96', P(poly(thalamusPts)) + '<circle cx="408" cy="236" r="4.5" fill="#d9935a"/>'),
+    part('hypothalamus', '#e97fa5', '1', P(poly(hypoPts)) + hit(332, 288, 15)),
+    '<ellipse class="ax-deco" pointer-events="none" cx="306" cy="318" rx="14" ry="6" fill="#b8c2d6" fill-opacity="0.9"/>',
+    part('pineal', '#e9c24a', '0.97', P(poly(pinealPts)) + hit(494, 228, 14)),
+    part('pituitary', '#d9608e', '0.97',
+      '<path d="M 330 304 C 326 318, 324 326, 322 334" fill="none" stroke="#d9608e" stroke-width="4.5" stroke-linecap="round"/>' +
+      '<ellipse cx="322" cy="348" rx="19" ry="14" fill="#d9608e"/>' +
+      '<ellipse cx="331" cy="348" rx="7" ry="9" fill="#b84776"/>' +
       hit(322, 346, 20)
     ),
     part('hippocampus', '#5b8fc4', '0.55', P(poly(hippoPts)), { cls: 'ax-lateral' }),
@@ -518,10 +501,6 @@
   var adrenalLD = 'M 146 440 L 118 468 L 170 464 Z';
   var adrenalRD = 'M 230 426 L 204 454 L 254 450 Z';
   var pancreasD = 'M 122 384 C 114 366, 136 352, 162 360 C 200 346, 238 348, 254 360 C 248 370, 200 372, 158 380 C 138 392, 126 394, 122 384 Z';
-  var lungRU = 'M 112 262 C 100 286, 106 322, 136 334 C 158 324, 170 292, 162 266 C 148 252, 124 252, 112 262 Z';
-  var lungRL = 'M 114 328 C 104 352, 118 378, 152 374 C 170 364, 168 338, 146 326 C 132 320, 120 320, 114 328 Z';
-  var lungLU = 'M 196 260 C 188 284, 198 318, 224 328 C 246 316, 252 286, 242 264 C 228 252, 206 252, 196 260 Z';
-  var lungLL = 'M 200 322 C 192 346, 208 368, 236 362 C 252 350, 248 328, 226 318 C 214 312, 204 314, 200 322 Z';
   var uterusD = 'M 176 500 C 156 506, 152 526, 162 542 C 170 554, 182 554, 190 542 C 200 526, 196 506, 176 500 Z';
   var thymusD = 'M 156 252 C 148 268, 158 286, 176 280 C 194 286, 204 268, 196 252 C 186 258, 166 258, 156 252 Z';
   var thyroidD = 'M 158 184 C 146 194, 150 214, 168 216 C 174 208, 174 202, 176 206 C 178 202, 178 208, 184 216 C 202 214, 206 194, 194 184 C 184 192, 180 196, 176 196 C 172 196, 168 192, 158 184 Z';
@@ -530,7 +509,6 @@
   var breastRD = 'M 224 292 C 210 300, 214 320, 234 324 C 252 320, 256 302, 244 292 C 236 284, 228 286, 224 292 Z';
   var ovaryLD = 'M 118 478 C 112 492, 118 510, 132 512 C 144 506, 146 490, 136 478 C 128 470, 122 472, 118 478 Z';
   var ovaryRD = 'M 234 478 C 228 492, 234 510, 248 512 C 260 506, 262 490, 252 478 C 244 470, 238 472, 234 478 Z';
-  var scrotumD = 'M 160 594 C 154 612, 164 630, 176 632 C 188 630, 198 612, 192 594 C 184 582, 168 582, 160 594 Z';
 
   var IX = 456, IY = 176, IR = 98;
   var insetBrainD = 'M 396 164 C 388 138, 408 108, 448 98 C 492 90, 526 114, 532 150 C 534 176, 508 196, 476 188 C 458 206, 424 200, 404 176 C 394 168, 394 166, 396 164 Z';
@@ -546,73 +524,58 @@
     '<circle cx="' + IX + '" cy="' + IY + '" r="' + IR + '" fill="var(--bg-card,#fff)" stroke="var(--text-mute,#6b7280)" stroke-width="1.4"/>',
     '<text x="' + IX + '" y="64" text-anchor="middle" fill="var(--text-mute,#6b7280)" font-size="15" font-weight="600">머리 확대</text>',
     g({ 'class': 'ax-inset', 'pointer-events': 'none' },
-      '<path fill="#d9a28e" d="' + insetBrainD + '"/>' +
-      '<path fill="#f7f3ee" d="' + insetWhite + '"/>' +
-      '<path fill="#fbf7ef" d="' + insetCall + '"/>' +
-      '<path fill="#e4c27a" d="' + insetCere + '"/>' +
-      '<path fill="none" stroke="#8a6230" stroke-width="1.2" stroke-opacity="0.6" d="M 500 190 C 512 184, 522 196, 520 208"/>'
+      '<path fill="#c5d2e8" d="' + insetBrainD + '"/>' +
+      '<path fill="#f8f9fc" d="' + insetWhite + '"/>' +
+      '<path fill="#ffffff" d="' + insetCall + '"/>' +
+      '<path fill="#c9b8ea" d="' + insetCere + '"/>' +
+      '<path fill="none" stroke="#6e5c9a" stroke-width="1.2" stroke-opacity="0.5" d="M 500 190 C 512 184, 522 196, 520 208"/>'
     ),
-    part('hypothalamus', '#d4537e', '0.96', spot(insetHypo) + hit(428, 172, 15)),
-    part('pineal', '#d4a017', '0.97', spot(insetPine) + hit(492, 140, 14)),
-    part('pituitary', '#c42d66', '0.97',
-      '<path d="M 430 194 C 424 202, 418 210, 420 216" fill="none" stroke="#c42d66" stroke-width="5" stroke-linecap="round"/>' +
+    part('hypothalamus', '#e97fa5', '0.96', spot(insetHypo) + hit(428, 172, 15)),
+    part('pineal', '#e9c24a', '0.97', spot(insetPine) + hit(492, 140, 14)),
+    part('pituitary', '#d9608e', '0.97',
+      '<path d="M 430 194 C 424 202, 418 210, 420 216" fill="none" stroke="#d9608e" stroke-width="5" stroke-linecap="round"/>' +
       spot(insetPit) +
-      '<ellipse cx="422" cy="216" rx="5" ry="7" fill="#9a2048"/>' +
+      '<ellipse cx="422" cy="216" rx="5" ry="7" fill="#b84776"/>' +
       hit(416, 214, 15)
     )
   ].join('');
 
-  var gutSquig = '<path d="M 162 452 C 176 442, 188 458, 176 470 C 164 482, 158 468, 168 458"/>' +
-    '<path d="M 174 460 C 190 450, 204 468, 190 482 C 176 494, 166 478, 178 466"/>' +
-    '<path d="M 168 478 C 184 470, 198 486, 184 498"/>';
-
+  /* 몸: 살색 맨몸에 장기가 비치면 징그러워서, 몸은 옅은 회청 실루엣(색은 css .ax-body), 표적 기관은 옅은 단색,
+     내분비샘만 또렷한 색으로 둔다. 폐·창자 주름·유두·음낭 같은 군더더기는 그리지 않는다. */
   var body = [
     g({ 'class': 'ax-body' }, '<path d="' + bodyD(bodyLine) + '"/>'),
     target('bone', 'none', '1', ribs(), { cls: 'ax-bone' }),
-    target('muscle', '#e7b1a8', '0.45',
+    target('muscle', '#cfd8e6', '0.6',
       ell(46, 334, 9, 34, 'ax-spot') + ell(306, 334, 9, 34, 'ax-spot') +
       ell(127, 658, 26, 66, 'ax-spot') + ell(225, 658, 26, 66, 'ax-spot')
     ),
-    g({
-      'class': 'ax-deco', 'pointer-events': 'none',
-      fill: '#d4aeb2', 'fill-opacity': '0.4', stroke: '#b89096', 'stroke-width': '1.25', 'stroke-opacity': '0.85'
-    }, P(lungRU) + P(lungRL) + P(lungLU) + P(lungLL) +
-      '<path fill="none" stroke="#a07880" stroke-width="1.2" d="M 118 330 C 140 322, 160 330, 166 338"/>' +
-      '<path fill="none" stroke="#a07880" stroke-width="1.2" d="M 202 322 C 220 316, 240 324, 246 334"/>'),
-    target('liver', '#c47272', '0.62', spot(liverD)),
-    target('gut', '#e0a07a', '0.78',
+    target('liver', '#d9c0b4', '0.9', spot(liverD)),
+    target('gut', '#ead9c4', '0.9',
       spot(stomachD) +
       spot(massD) +
-      '<path class="ax-spot" fill-rule="evenodd" d="' + colonD + '"/>' +
-      deco(gutSquig, '#a86848', 1.7, 0.6)
+      '<path class="ax-spot" fill-rule="evenodd" d="' + colonD + '"/>'
     ),
-    target('heart', '#d25d5d', '0.78', '<g transform="translate(207 352) scale(0.68) translate(-207 -352)">' + spot(heartD) + '</g>'),
-    target('kidney', '#c98478', '0.78', spot(kidneyLD) + spot(kidneyRD)),
-    part('pancreas', '#e3a31a', '0.96', spot(pancreasD)),
-    part('adrenal', '#e07c32', '0.97', spot(adrenalLD) + spot(adrenalRD) + hit(144, 456, 14) + hit(230, 442, 14)),
-    target('breast', '#f0b7c4', '0.88',
-      spot(breastLD) + spot(breastRD) +
-      '<circle cx="136" cy="308" r="3.2" fill="#d4899e"/>' +
-      '<circle cx="232" cy="308" r="3.2" fill="#d4899e"/>',
-      { sex: 'f' }
-    ),
-    target('uterus', '#e7a0b8', '0.86', spot(uterusD) + deco(
+    target('heart', '#efc3cb', '0.95', '<g transform="translate(207 352) scale(0.68) translate(-207 -352)">' + spot(heartD) + '</g>'),
+    target('kidney', '#e3c6be', '0.95', spot(kidneyLD) + spot(kidneyRD)),
+    part('pancreas', '#edb43a', '0.96', spot(pancreasD)),
+    part('adrenal', '#f0954a', '0.97', spot(adrenalLD) + spot(adrenalRD) + hit(144, 456, 14) + hit(230, 442, 14)),
+    target('breast', '#f1d3dc', '0.8', spot(breastLD) + spot(breastRD), { sex: 'f' }),
+    target('uterus', '#efc9d6', '0.95', spot(uterusD) + deco(
       '<path d="M 162 508 C 140 496, 124 492, 116 482"/>' +
       '<path d="M 190 508 C 212 496, 228 492, 236 482"/>',
-      '#d4899e', 1.7, 0.8
+      '#d8aebe', 1.7, 0.8
     ), { sex: 'f' }),
-    part('ovary', '#d4537e', '0.96', spot(ovaryLD) + spot(ovaryRD) + hit(130, 494, 14) + hit(246, 494, 14), { sex: 'f' }),
-    part('testis', '#c4622d', '0.96',
-      spot(scrotumD) +
-      '<ellipse class="ax-spot" cx="168" cy="610" rx="8" ry="11" fill="#b85628"/>' +
-      '<ellipse class="ax-spot" cx="184" cy="610" rx="8" ry="11" fill="#b85628"/>' +
-      hit(176, 612, 16),
+    part('ovary', '#e0709a', '0.96', spot(ovaryLD) + spot(ovaryRD) + hit(130, 494, 14) + hit(246, 494, 14), { sex: 'f' }),
+    part('testis', '#e8925a', '0.96',
+      '<ellipse class="ax-spot" cx="167" cy="578" rx="7.5" ry="9.5"/>' +
+      '<ellipse class="ax-spot" cx="185" cy="578" rx="7.5" ry="9.5"/>' +
+      hit(176, 578, 16),
       { sex: 'm' }
     ),
-    target('brain', '#e7b0bc', '0.9', spot(headBrainD) +
-      deco('<path d="M 176 52 C 176 80, 176 96, 176 112" fill="none"/>', '#c48898', 1.2, 0.4)),
-    part('thymus', '#e98aa0', '0.9', spot(thymusD)),
-    part('thyroid', '#e15b48', '0.95', spot(thyroidD)),
+    target('brain', '#d3dcf2', '0.95', spot(headBrainD) +
+      deco('<path d="M 176 52 C 176 80, 176 96, 176 112" fill="none"/>', '#9fb0d3', 1.2, 0.5)),
+    part('thymus', '#f3a6bc', '0.9', spot(thymusD)),
+    part('thyroid', '#f07f6e', '0.95', spot(thyroidD)),
     part('parathyroid', '#f0a030', '0.98',
       ell(154, 192, 5.5, 5, 'ax-spot') + ell(162, 208, 5, 4.5, 'ax-spot') +
       ell(190, 208, 5, 4.5, 'ax-spot') + ell(198, 192, 5.5, 5, 'ax-spot') +
