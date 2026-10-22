@@ -1,0 +1,39 @@
+/* 직접 해보기·개념 확인 — 3D 없는 가벼운 화면. 사이트 전역 button 규칙(!important)을 이기려고 .nm-p 아래에서 !important 를 쓴다. */
+.nm-p { margin: 10px 0 26px; }
+.nm-p-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin: 10px 0; }
+.nm-p-score { font-size: .92em; font-weight: 700; color: var(--accent, #16a34a); }
+.nm-p button {
+  appearance: none; cursor: pointer; font: inherit !important; text-align: left;
+  border: 1px solid var(--border, rgba(0,0,0,.12)) !important;
+  background: var(--bg-card, #fff) !important; color: var(--text, #1a1f2e) !important;
+}
+.nm-p .nm-p-reset { padding: 5px 14px !important; border-radius: 999px !important; font-size: .85em !important; font-weight: 600; }
+.nm-p button:hover:not(:disabled) { border-color: var(--accent, #16a34a) !important; background: var(--bg-card, #fff) !important; }
+.nm-p button:focus-visible { outline: 2px solid var(--accent, #16a34a); outline-offset: 2px; }
+
+/* 짝 맞추기 */
+.nm-m-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 8px 12px; align-items: start; }
+.nm-m-col { display: flex; flex-direction: column; gap: 8px; }
+.nm-p .nm-m-item { min-height: 44px; padding: 9px 12px !important; border-radius: 10px !important; font-size: .93em !important; line-height: 1.5; }
+.nm-p .nm-m-term { font-weight: 700; }
+.nm-p .nm-m-item.is-sel { border-color: var(--accent, #16a34a) !important; box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent, #16a34a) 35%, transparent); }
+.nm-p .nm-m-item.is-ok { cursor: default; border-color: color-mix(in srgb, var(--accent, #16a34a) 45%, transparent) !important; background: color-mix(in srgb, var(--accent, #16a34a) 12%, var(--bg-card, #fff)) !important; color: var(--text-dim, #4a5468) !important; }
+.nm-p .nm-m-item.is-no { border-color: #dc2626 !important; background: color-mix(in srgb, #dc2626 8%, var(--bg-card, #fff)) !important; }
+
+/* 개념 확인 */
+.nm-q-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; counter-reset: nmq; }
+.nm-q { counter-increment: nmq; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border, rgba(0,0,0,.1)); background: var(--bg-card, #fff); }
+.nm-q-t { margin: 0 0 8px !important; font-weight: 700; line-height: 1.6; color: var(--text, #1a1f2e) !important; }
+.nm-q-t::before { content: "Q" counter(nmq) ". "; color: var(--accent, #16a34a); }
+.nm-q-ch { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 8px; }
+.nm-p .nm-q-btn { min-height: 40px; padding: 7px 12px !important; border-radius: 10px !important; font-size: .92em !important; line-height: 1.5; }
+.nm-q-no { margin-right: 6px; color: var(--text-mute, #6b7280); }
+.nm-p .nm-q-btn:disabled { cursor: default; }
+.nm-p .nm-q-btn.is-ok, .nm-p .nm-q-btn.is-ans { border-color: var(--accent, #16a34a) !important; background: color-mix(in srgb, var(--accent, #16a34a) 12%, var(--bg-card, #fff)) !important; }
+.nm-p .nm-q-btn.is-no { border-color: #dc2626 !important; background: color-mix(in srgb, #dc2626 8%, var(--bg-card, #fff)) !important; }
+.nm-q-fb { margin: 8px 0 0 !important; font-size: .88em; font-weight: 600; color: var(--text-dim, #4a5468) !important; }
+.nm-q-fb:empty { display: none; }
+@media (max-width: 640px) {
+  .nm-m-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 6px 8px; }
+  .nm-q-ch { grid-template-columns: 1fr; }
+}

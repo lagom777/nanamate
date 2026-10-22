@@ -125,10 +125,13 @@
 
 /* 논리형 전체 해설 */
 .nms-full { margin: 10px 0 14px; border: 1px solid color-mix(in srgb, var(--accent, #16a34a) 28%, transparent); border-radius: 12px; background: var(--bg-card, #fff); }
-.nms-full > summary { cursor: pointer; padding: 10px 14px; font-weight: 800; color: var(--accent, #16a34a); list-style: none; }
+.nms-full > summary { cursor: pointer; padding: 10px 14px; list-style: none; }
 .nms-full > summary::-webkit-details-marker { display: none; }
-.nms-full > summary::after { content: " 접기 ▴"; font-size: .8em; font-weight: 600; color: var(--text-mute, #6b7280); }
-.nms-full:not([open]) > summary::after { content: " 펼치기 ▾"; }
+.nms-full-t { font-weight: 800; color: var(--accent, #16a34a); }
+.nms-full-t::after { content: " 펼치기 ▾"; font-size: .8em; font-weight: 600; color: var(--text-mute, #6b7280); }
+.nms-full[open] .nms-full-t::after { content: " 접기 ▴"; }
+.nms-full-toc { display: block; margin-top: 4px; font-size: .84em; line-height: 1.6; color: var(--text-dim, #4a5468); }
+.nms-full[open] .nms-full-toc { display: none; }
 .nms-full-sec { padding: 0 16px 6px; }
 .nms-full-sec + .nms-full-sec { border-top: 1px dashed var(--border, rgba(0,0,0,.1)); padding-top: 8px; }
 .nms-full-h { margin: 6px 0 6px !important; font-weight: 800; font-size: 1em; color: var(--text, #1a1f2e) !important; }
@@ -139,3 +142,13 @@
 .nms-figlink { display: flex; flex-wrap: wrap; gap: 6px 10px; margin: -2px 0 10px !important; }
 .nms-figlink a { display: inline-block; padding: 4px 12px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--accent, #16a34a) 40%, transparent); background: color-mix(in srgb, var(--accent, #16a34a) 8%, var(--bg-card, #fff)); font-size: .86em; font-weight: 700; color: var(--accent, #16a34a); text-decoration: none; }
 .nms-figlink a:hover { background: color-mix(in srgb, var(--accent, #16a34a) 16%, var(--bg-card, #fff)); }
+
+/* 공부법 페이지: 파트별 공략을 파트마다 접기 */
+.nms-part { margin: 8px 0; border: 1px solid var(--border, rgba(0,0,0,.1)); border-radius: 12px; background: var(--bg-card, #fff); }
+.nms-part > summary { cursor: pointer; list-style: none; padding: 10px 14px; font-weight: 700; color: var(--text, #1a1f2e); }
+.nms-part > summary::-webkit-details-marker { display: none; }
+.nms-part > summary::before { content: "▸ "; color: var(--accent, #16a34a); }
+.nms-part[open] > summary::before { content: "▾ "; }
+.nms-part[open] { padding: 0 14px 12px; }
+.nms-part[open] > summary { margin: 0 -14px 4px; }
+.nms-part > .nms-first:first-of-type { margin-top: 0 !important; }

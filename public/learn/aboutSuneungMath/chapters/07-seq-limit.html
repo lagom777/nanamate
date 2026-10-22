@@ -4,14 +4,13 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>수열의 극한 — 수능 수학</title>
 <link rel="stylesheet" href="../styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="../../shared/light-theme.css">
 <script defer src="../../shared/i18n.js"></script>
 <script defer src="../../shared/support.js"></script>
 <script defer src="../../shared/search.js"></script>
 <script defer src="../../shared/difficulty.js"></script>
-<script defer src="../../shared/quizgame3d.js"></script>
-<script defer src="../../shared/learngame3d.js"></script>
+<link rel="stylesheet" href="../../shared/practice-simple.css">
+<script defer src="../../shared/practice-simple.js"></script>
 <link rel="stylesheet" href="../../shared/study-style.css">
 <script defer src="../../shared/study-style.js"></script>
 </head>
@@ -47,7 +46,7 @@
 <div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
 <p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
 <ol class="nms-chain"><li><span class="nms-step">n이 커질수록 a<sub>n</sub>이 한 실수 L에 한없이 가까워지면 수렴 → 아니면 발산(+∞, −∞, <b>진동</b>)</span></li><li><span class="nms-step">유리식은 분모의 최고차항으로 나누면 1/n 꼴이 0으로 사라져 <b>최고차항의 계수비</b>가 남는다 → ∞ − ∞는 켤레로 유리화해 ∞/∞ 꼴로 바꾼다</span></li><li><span class="nms-step">등비수열 r<sup>n</sup>은 <b>|r| &lt; 1이면 0</b>, r = 1이면 1, r &gt; 1이면 ∞, r ≤ −1이면 진동 → 밑이 여러 개면 절댓값이 가장 큰 밑으로 나눈다</span></li><li><span class="nms-step">급수의 합은 무한 개를 한꺼번에 더한 값이 아니라 <b>부분합 S<sub>n</sub>의 극한</b> → 수렴하면 a<sub>n</sub> = S<sub>n</sub> − S<sub>n−1</sub> → 0(역은 거짓)</span></li><li><span class="nms-step">등비급수 S<sub>n</sub> = a(1 − r<sup>n</sup>)/(1 − r)은 r<sup>n</sup> → 0일 때만 수렴 → <b>−1 &lt; r &lt; 1에서 합 a/(1 − r)</b>, 도형에서는 길이 공비 r, 넓이 공비 r<sup>2</sup></span></li></ol>
-<details class="nms-full" open><summary>📖 논리형 전체 해설 — 이 파트를 처음부터 끝까지</summary>
+<details class="nms-full"><summary><span class="nms-full-t">📖 논리형 전체 해설 — 6절 · 약 6분</span><span class="nms-full-toc">수렴과 발산 · 극한 계산 · 등비수열의 극한 · 급수 · 등비급수 · 도형의 등비급수</span></summary>
 <div class="nms-full-sec"><p class="nms-full-h">수렴과 발산 — n이 커질 때 어디로 가는가</p><p>수열은 자연수 n마다 수 a<sub>n</sub>을 하나씩 대응시킨 것이라 그래프는 점 (n, a<sub>n</sub>)만 찍힙니다. n을 한없이 키울 때 <b>어느 번호 이후의 모든 항이 L과 원하는 만큼 가까이 머물면</b> a<sub>n</sub>이 L에 수렴한다고 하고, 극한값은 하나뿐입니다. 수렴하지 않으면 발산이고, 발산은 +∞, −∞, 그리고 한 값으로도 무한대로도 가지 않는 진동((−1)<sup>n</sup>)으로 나눕니다.</p><p>합·차·곱·몫의 극한을 따로 구해 계산하는 것은 <b>두 수열이 모두 수렴할 때만</b> 허락됩니다. a<sub>n</sub> = n, b<sub>n</sub> = −n의 합은 0이지만 ∞ + (−∞)를 계산할 규칙은 없으므로, ∞ − ∞, ∞/∞, 0 × ∞는 식을 바꾸라는 모양일 뿐입니다. 또 항마다 a<sub>n</sub> &lt; b<sub>n</sub>이어도 극한에서는 등호가 될 수 있어, 0 &lt; 1/n이지만 둘 다 0으로 갑니다.</p><p>수렴하는 수열은 모든 항을 가두는 유한한 구간이 있으므로(유계), <b>유계가 아니면 반드시 발산</b>합니다. 그러나 역은 거짓이어서 (−1)<sup>n</sup>은 −1과 1 사이에 갇혀 있어도 진동합니다. 대신 증가하면서 위로 유계이거나 감소하면서 아래로 유계이면 갈 곳이 한 값으로 모이므로 수렴하고(단조수렴정리), 다음 장의 e가 바로 이 방법으로 정의됩니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">극한 계산 — 최고차항 비교와 유리화</p><p>n의 유리식은 분모의 최고차항으로 위아래를 나누면 1/n 꼴이 모두 0으로 사라지므로, 차수가 같으면 최고차항 계수의 비, 분모 차수가 크면 0, 분자 차수가 크면 발산입니다. 거꾸로 ‘극한이 0이 아닌 실수’라는 조건은 <b>차수가 같고 계수비가 그 값</b>이라는 뜻이라 문자 계수를 정하는 데 씁니다. a<sub>n</sub> = (pn² + qn)/(n² + 1)이 2로 수렴하면 p = 2이고, 이때 n(a<sub>n</sub> − 2) = (qn² − 2n)/(n² + 1) → q이므로 그 극한이 3이면 q = 3입니다.</p><p>√(n² + an + b) − n은 ∞ − ∞라서 실제 크기가 가려져 있습니다. 켤레를 곱하면 <b>차가 몫으로 바뀌어</b> (an + b)/(√(n² + an + b) + n)이 되고, n으로 나누면 a/2로 갑니다. n(√(n² + 6n + 1) − n − 3)도 같은 방법으로 −8n/(√(n² + 6n + 1) + n + 3) → −4이며, n &gt; 0이므로 √(n²)은 n으로 꺼내야 부호가 맞습니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">등비수열의 극한 — 공비의 절댓값과 1의 비교</p><p>r<sup>n</sup>은 r &gt; 1이면 +∞, r = 1이면 1, <b>|r| &lt; 1이면 0</b>, r ≤ −1이면 진동합니다. 0 &lt; r &lt; 1이면 r = 1/(1 + p)(p &gt; 0)로 두는데, (1 + p)<sup>n</sup>을 전개하면 1 + np 뒤에 양수인 항만 붙으므로 (1 + p)<sup>n</sup> ≥ 1 + np이고 따라서 0 &lt; r<sup>n</sup> ≤ 1/(1 + np) → 0이고, −1 &lt; r &lt; 0이면 |r<sup>n</sup>| = |r|<sup>n</sup> → 0이라 부호가 바뀌어도 0으로 수렴합니다. r = −1/2를 ‘음수라서 발산’으로 처리하는 것이 대표적인 실수입니다.</p><p>밑이 여러 개이면 <b>절댓값이 가장 큰 밑으로 나눕니다</b>. (3·2<sup>n</sup> + 5<sup>n</sup>)/(2<sup>n</sup> + 3·5<sup>n</sup>)은 5<sup>n</sup>으로 나누면 (2/5)<sup>n</sup> → 0이라 1/3입니다. 직접 구하기 어려운 수열은 같은 극한을 갖는 두 수열 사이에 끼워, 0 &lt; n/(n² + 1) &lt; 1/n에서 n/(n² + 1) → 0처럼 구합니다.</p></div>
@@ -188,7 +187,7 @@
 <div id="nm-game-host"></div>
 <script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"수열의 극한에서 짝이 되는 개념을 연결하세요.","pairs":[{"term":"rⁿ (절댓값 1 미만)","def":"0으로 수렴"},{"term":"급수가 수렴","def":"일반항은 0으로"},{"term":"등비급수의 합","def":"첫째항/(1−공비)"},{"term":"넓이의 공비","def":"닮음비의 제곱"},{"term":"부분합의 극한","def":"그 급수의 합"},{"term":"일반항이 0이 아님","def":"급수는 발산"}]};</script>
 <h2>개념 확인</h2>
-<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
 <div id="nm-quiz-host"></div>
 <script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"공비 r가 −1보다 크고 1보다 작을 때 rⁿ의 극한값은?","choices":["1","양의 무한대","0","진동하며 발산"],"answer":2},{"q":"급수가 수렴할 때 반드시 성립하는 것은?","choices":["일반항의 극한이 1이다","일반항의 극한이 0이다","부분합의 극한이 0이다","공비의 절댓값이 1보다 크다"],"answer":1},{"q":"첫째항이 a, 공비가 r이고 공비의 절댓값이 1보다 작을 때 등비급수의 합은?","choices":["a/(1−r)","a/(1−r²)","r/(1−a)","a(1−r)"],"answer":0},{"q":"닮음비가 r인 도형을 반복해 넓이를 더할 때 공비는?","choices":["r","r의 세제곱","1−r","r의 제곱"],"answer":3},{"q":"일반항이 0에 수렴하는 급수에 대해 옳은 것은?","choices":["항상 수렴한다","항상 발산한다","수렴할 수도 있고 발산할 수도 있다","합은 항상 0이다"],"answer":2}]};</script>
 <h2>이 파트 기출 풀어보기</h2>

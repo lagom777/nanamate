@@ -4,14 +4,13 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>적분 — 수능 수학</title>
 <link rel="stylesheet" href="../styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="../../shared/light-theme.css">
 <script defer src="../../shared/i18n.js"></script>
 <script defer src="../../shared/support.js"></script>
 <script defer src="../../shared/search.js"></script>
 <script defer src="../../shared/difficulty.js"></script>
-<script defer src="../../shared/quizgame3d.js"></script>
-<script defer src="../../shared/learngame3d.js"></script>
+<link rel="stylesheet" href="../../shared/practice-simple.css">
+<script defer src="../../shared/practice-simple.js"></script>
 <link rel="stylesheet" href="../../shared/study-style.css">
 <script defer src="../../shared/study-style.js"></script>
 </head>
@@ -47,7 +46,7 @@
 <div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
 <p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
 <ol class="nms-chain"><li><span class="nms-step">F′ = f인 F가 원시함수 → 도함수가 0인 함수는 상수뿐이라 <b>원시함수끼리는 상수 C만큼 다르다</b></span></li><li><span class="nms-step">구간을 잘게 나눈 직사각형 넓이의 합의 극한이 정적분 → 계산은 <b>F(b) − F(a)</b>, C는 빼는 순간 사라진다</span></li><li><span class="nms-step">정적분은 x축 아래를 음수로 센 <b>부호 있는 넓이</b> → 실제 넓이와 움직인 거리는 부호가 바뀌는 점에서 나눠 절댓값을 더한다</span></li><li><span class="nms-step">위끝까지의 넓이를 위끝으로 미분하면 새로 붙는 띠의 높이 → <b>d/dx ∫<sub>a</sub><sup>x</sup> f(t) dt = f(x)</b>, 위끝이 u(x)면 f(u(x))에 u′(x)를 곱한다</span></li><li><span class="nms-step">그래서 정적분으로 정의된 함수는 <b>먼저 미분해 증감</b>을 읽고, 넓이 비와 이동 거리는 구간을 나눠 계산한다</span></li></ol>
-<details class="nms-full" open><summary>📖 논리형 전체 해설 — 이 파트를 처음부터 끝까지</summary>
+<details class="nms-full"><summary><span class="nms-full-t">📖 논리형 전체 해설 — 6절 · 약 7분</span><span class="nms-full-toc">부정적분 · 정적분 · 미적분의 기본정리 · 넓이 · 속도와 거리 · 수능형</span></summary>
 <div class="nms-full-sec"><p class="nms-full-h">부정적분 — 미분을 거꾸로, 그래서 + C</p><p>F′(x) = f(x)인 F를 f의 원시함수(부정적분)라고 합니다. 미분하면 상수가 사라지므로 x³ + 1도 x³ − 7도 도함수가 3x²이고, 거꾸로 <b>도함수가 같은 함수는 상수만큼만 다릅니다</b>. 그래서 원시함수는 F(x) + C의 모임으로 쓰고, C를 빼먹으면 여러 답 중 하나만 고른 셈이 됩니다.</p><p>적분 공식은 미분 공식을 뒤집어 만듭니다. (x<sup>n+1</sup>)′ = (n + 1)x<sup>n</sup>이므로 <b>∫x<sup>n</sup> dx = x<sup>n+1</sup>/(n + 1) + C</b>, 곧 차수를 하나 올리고 그 차수로 나눕니다. f′(x) = 3x² − 2이고 f(1) = 4이면 f(x) = x³ − 2x + C에서 1 − 2 + C = 4, C = 5처럼 조건 하나가 C를 정하고, 답은 미분해서 원래 함수가 나오는지로 검산합니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">정적분 — 부호 있는 넓이를 원시함수의 차로</p><p>정적분 ∫<sub>a</sub><sup>b</sup> f(x) dx는 구간을 잘게 나눠 세운 직사각형 넓이의 합이 다가가는 값, 곧 x축 위는 양, 아래는 음으로 센 <b>부호 있는 넓이</b>입니다. 계산은 원시함수 F로 F(b) − F(a)를 구하며, F + C를 써도 C − C = 0이라 정적분에는 C가 붙지 않습니다. 넓이가 왜 원시함수의 차와 같은지는 다음 절의 기본정리가 답합니다.</p><p>성질은 넓이의 감각과 맞습니다. ∫<sub>a</sub><sup>a</sup> f = 0이고, 구간을 뒤집으면 ∫<sub>a</sub><sup>b</sup> f = −∫<sub>b</sub><sup>a</sup> f로 부호가 바뀌며, ∫<sub>a</sub><sup>c</sup> f = ∫<sub>a</sub><sup>b</sup> f + ∫<sub>b</sub><sup>c</sup> f는 b가 a와 c 사이가 아니어도 부호 덕분에 성립합니다. 대칭 구간 [−a, a]에서는 <b>기함수의 적분은 0, 우함수의 적분은 0부터 a까지의 두 배</b>입니다. 기함수는 원점 대칭이라 왼쪽과 오른쪽의 부호 있는 넓이가 크기는 같고 부호가 반대여서 상쇄되기 때문이고, 그래서 ∫<sub>−2</sub><sup>2</sup> (x³ − 3x + 2) dx는 홀수 차항을 지우고 ∫<sub>−2</sub><sup>2</sup> 2 dx = 8만 남습니다. 구간이 −a부터 a까지가 아니면 이 지름길은 쓰지 않습니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">미적분의 기본정리 — 넓이를 미분하면 높이</p><p>S(x) = ∫<sub>a</sub><sup>x</sup> f(t) dt를 x까지의 넓이로 보고 x를 h만큼 늘리면, 넓이는 폭 h, 높이 약 f(x)인 가는 띠만큼 늘어납니다. 그래서 (S(x + h) − S(x))/h → f(x), 곧 <b>d/dx ∫<sub>a</sub><sup>x</sup> f(t) dt = f(x)</b>이고 넓이 함수 S가 f의 원시함수입니다. S와 F는 둘 다 f의 원시함수라 상수만큼만 다르고 S(a) = 0이므로 S(x) = F(x) − F(a)이며, 여기에 x = b를 넣은 것이 ∫<sub>a</sub><sup>b</sup> f(x) dx = F(b) − F(a)입니다.</p><p>위끝이 u(x)이면 x가 h만큼 변할 때 위끝은 약 u′(x)h만큼 움직이고 그 자리에 높이 f(u(x))인 띠가 붙으므로 도함수는 <b>f(u(x))·u′(x)</b>이고, 아래끝이 움직이면 구간이 줄어드는 쪽이라 그 항을 뺍니다. G(x) = ∫<sub>0</sub><sup>x²</sup> (t + 1) dt는 직접 적분하면 x⁴/2 + x²이라 G′(x) = 2x³ + 2x이고, 공식으로도 (x² + 1)·2x로 같습니다. ∫<sub>x</sub><sup>2x</sup> 2t dt = 3x²의 도함수 6x도 공식 f(2x)·2 − f(x)·1 = 8x − 2x와 맞습니다.</p><p>정적분이 들어간 등식은 <b>먼저 양변을 미분</b>합니다. ∫<sub>0</sub><sup>x</sup> f(t) dt = x³ − 3x² + 2x이면 양변을 미분해 f(x) = 3x² − 6x + 2를 얻고, x = 0을 넣으면 왼쪽이 0이므로 오른쪽 상수항도 0이어야 이런 연속함수 f가 존재합니다.</p></div>
@@ -220,7 +219,7 @@
 <div id="nm-game-host"></div>
 <script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"적분의 개념을 짝지으세요.","pairs":[{"term":"부정적분","def":"도함수가 f인 함수 전체"},{"term":"정적분","def":"원시함수의 끝값 차이"},{"term":"위치 변화량","def":"속도의 정적분"},{"term":"움직인 거리","def":"속력의 정적분"},{"term":"기함수의 적분","def":"대칭 구간이면 0"},{"term":"우함수의 적분","def":"대칭 구간이면 두 배"}]};</script>
 <h2>개념 확인</h2>
-<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
 <div id="nm-quiz-host"></div>
 <script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"부정적분 ∫ x² dx 로 옳은 것은?","choices":["x³+C","x³/3+C","2x+C","x³/2+C"],"answer":1},{"q":"연속함수 f에 대해, a부터 x까지 f(t)를 적분한 식을 x로 미분하면?","choices":["f(x)","0","f(a)","적분상수 C"],"answer":0},{"q":"위치의 변화량과 움직인 거리를 바르게 말한 것은?","choices":["둘 다 속도의 정적분이다","둘 다 속력의 적분이다","거리는 항상 변화량보다 작다","변화량은 속도의 적분, 거리는 속력의 적분이다"],"answer":3},{"q":"구간 −a에서 a까지 연속인 기함수의 정적분 값은?","choices":["구간의 길이의 두 배","f(a)","0","항상 양수"],"answer":2},{"q":"곡선과 x축 사이의 넓이를 구할 때 정적분에서 처리할 일은?","choices":["적분상수 C를 답에 남긴다","함숫값이 음수인 구간은 부호를 바꿔 더한다","항상 0부터 적분한다","도함수를 한 번 더 구한다"],"answer":1}]};</script>
 <h2>이 파트 기출 풀어보기</h2>

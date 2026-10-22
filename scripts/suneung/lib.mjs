@@ -56,14 +56,13 @@ export function head(title, depth, spec, opts = {}) {
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${title}</title>
 <link rel="stylesheet" href="${up}styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="${up}../shared/light-theme.css">
 <script defer src="${up}../shared/i18n.js"></script>
 <script defer src="${up}../shared/support.js"></script>
 <script defer src="${up}../shared/search.js"></script>
 <script defer src="${up}../shared/difficulty.js"></script>
-<script defer src="${up}../shared/quizgame3d.js"></script>
-<script defer src="${up}../shared/learngame3d.js"></script>${terms}${spec.styles ? `\n<link rel="stylesheet" href="${up}../shared/study-style.css">\n<script defer src="${up}../shared/study-style.js"></script>` : ""}${opts.extra ? "\n" + opts.extra : ""}
+<link rel="stylesheet" href="${up}../shared/practice-simple.css">
+<script defer src="${up}../shared/practice-simple.js"></script>${terms}${spec.styles ? `\n<link rel="stylesheet" href="${up}../shared/study-style.css">\n<script defer src="${up}../shared/study-style.js"></script>` : ""}${opts.extra ? "\n" + opts.extra : ""}
 </head>`;
 }
 
@@ -121,7 +120,7 @@ function games(spec, c, salt = 0) {
 <div id="nm-game-host"></div>
 <script>window.NANAMATE_GAME=${JSON.stringify({ type: "matching", color: spec.color, prompt: c.prompt, pairs: c.pairs })};</script>
 <h2>개념 확인</h2>
-<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
 <div id="nm-quiz-host"></div>
 <script>window.NANAMATE_QUIZ=${JSON.stringify({ color: spec.color, questions: spreadAnswers(c.questions, salt) })};</script>`;
 }
@@ -273,7 +272,9 @@ const doneBox = (key) => `<div class="nms-done" data-done="${key}"><b>✅ 이 �
 <label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div>`;
 /* o: { ex: 대표 예제 주소, done: 끝내기 체크 키, full: true(전체 해설을 여기 펼침) | 주소(전체 해설로 가는 링크) }
  * 전체 해설의 절에 sec.fig = [[그림 id, 이름]…]이 있으면 본문의 그 그림(id="fig-<id>")으로 가는 링크를 붙인다. */
-const fullBlock = (d) => `<details class="nms-full" open><summary>📖 논리형 전체 해설 — 이 파트를 처음부터 끝까지</summary>
+/* 전체 해설은 길어서 기본으로 접어 두고, 접힌 채로도 절 제목(줄표 앞)과 읽는 시간(분당 500자)이 한눈에 보이게 한다 */
+const fullMin = (d) => Math.max(1, Math.round(d.full.reduce((n, s) => n + s.p.join("").replace(/<[^>]+>/g, "").length, 0) / 500));
+const fullBlock = (d) => `<details class="nms-full"><summary><span class="nms-full-t">📖 논리형 전체 해설 — ${d.full.length}절 · 약 ${fullMin(d)}분</span><span class="nms-full-toc">${d.full.map((s) => s.h.split(" — ")[0]).join(" · ")}</span></summary>
 ${d.full.map((sec) => `<div class="nms-full-sec"><p class="nms-full-h">${sec.h}</p>${sec.p.map((x) => `<p>${x}</p>`).join("")}${sec.fig ? `<p class="nms-figlink">${sec.fig.map(([id, name]) => `<a href="#fig-${id}">🖼 그림으로 보기: ${name} ↓</a>`).join("")}</p>` : ""}</div>`).join("\n")}</details>`;
 const logicBlock = (d, o = {}) => `<div class="nms-logic">${d.one ? `<p class="nms-one"><b>하나만 고른다면</b>${boldOne(d.one)}</p>` : ""}
 <div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
@@ -311,9 +312,12 @@ export function stylePage(spec) {
   const S = spec.styles;
   const t = S.types.logic;
   const styled = spec.chapters.filter((c) => S.chapters[c.file]);
+  /* 파트별 공략은 파트마다 접어 두어 제목과 진행률만 한눈에 보이게 한다 */
   const chapterList = styled.map((c) => {
     const i = spec.chapters.indexOf(c);
-    return `<h3><a href="chapters/${c.file}">${i + 1}. ${c.title} →</a> <span class="nms-prog" data-prog="${spec.folder}/${c.file}"></span></h3>${logicBlock(S.chapters[c.file].logic, { ex: c.examples ? `chapters/${c.file}#examples` : null, full: `chapters/${c.file}` })}`;
+    return `<details class="nms-part"><summary><span class="nms-part-h">${i + 1}. ${c.title}</span> <span class="nms-prog" data-prog="${spec.folder}/${c.file}"></span></summary>
+<p class="nms-first"><a href="chapters/${c.file}">이 파트 공부하러 가기 →</a></p>
+${logicBlock(S.chapters[c.file].logic, { ex: c.examples ? `chapters/${c.file}#examples` : null, full: `chapters/${c.file}` })}</details>`;
   }).join("\n");
   const frame = `<div class="nms-frame"><h3>이 과목의 틀 — 장마다 하나만</h3>
 <p class="nms-fit">각 파트에서 ‘하나만 고른다면’을 모은 과목 전체의 뼈대입니다. 파트를 시작하기 전에 이 목록에서 지금 파트의 자리를 확인하고, 시험 직전에는 이 목록만 소리 내어 읽어도 큰 그림이 돌아옵니다.</p>

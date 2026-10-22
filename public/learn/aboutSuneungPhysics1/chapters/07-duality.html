@@ -4,14 +4,13 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>빛과 물질의 이중성 — 수능 물리학Ⅰ</title>
 <link rel="stylesheet" href="../styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="../../shared/light-theme.css">
 <script defer src="../../shared/i18n.js"></script>
 <script defer src="../../shared/support.js"></script>
 <script defer src="../../shared/search.js"></script>
 <script defer src="../../shared/difficulty.js"></script>
-<script defer src="../../shared/quizgame3d.js"></script>
-<script defer src="../../shared/learngame3d.js"></script>
+<link rel="stylesheet" href="../../shared/practice-simple.css">
+<script defer src="../../shared/practice-simple.js"></script>
 <link rel="stylesheet" href="../../shared/term-tips.css">
 <script defer src="../../shared/terms/phys1.js"></script>
 <script defer src="../../shared/term-tips.js"></script>
@@ -49,7 +48,7 @@
 <div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
 <p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
 <ol class="nms-chain"><li><span class="nms-step">빛을 파동으로만 보면 ‘세게 오래 비추면 언젠가 전자가 나와야’ 한다. 그런데 실제로는 진동수가 문턱보다 낮으면 <b>아무리 세게 비춰도 나오지 않는다</b> → 빛은 <b>hf짜리 알갱이</b>로 에너지를 준다</span></li><li><span class="nms-step">전자 하나는 <b>광자 하나를 통째로</b> 받는다 → 그 에너지가 일함수 W보다 커야 탈출하고, 남는 만큼이 운동 에너지가 된다(<b>K_max = hf − W</b>)</span></li><li><span class="nms-step">그래서 <b>진동수는 광전자의 최대 운동 에너지를</b>, <b>세기(광자 수)는 광전자의 수를</b> 정한다 → K_max–f 그래프는 기울기 h(모든 금속이 같음), 가로 절편 f₀</span></li><li><span class="nms-step">거꾸로 입자도 파동처럼 행동한다(<b>물질파 λ = h/p</b>) → <b>운동량이 클수록 파장이 짧다</b></span></li><li><span class="nms-step">파장이 짧을수록 더 작은 것을 구별할 수 있다 → 전자 현미경은 가시광선보다 파장이 짧은 전자의 물질파를 써서 <b>분해능이 높다</b></span></li></ol>
-<details class="nms-full" open><summary>📖 논리형 전체 해설 — 이 파트를 처음부터 끝까지</summary>
+<details class="nms-full"><summary><span class="nms-full-t">📖 논리형 전체 해설 — 6절 · 약 4분</span><span class="nms-full-toc">파동 직관이 틀리는 곳 · K_max = hf − W 끌어내기 · 진동수와 세기는 맡은 일이 다르다 · K_max–f 그래프 읽기 · 빛의 이중성 · 물질파와 전자 현미경</span></summary>
 <div class="nms-full-sec"><p class="nms-full-h">파동 직관이 틀리는 곳 — 광전 효과</p><p>금속에 빛을 비추면 전자가 튀어나오는 현상이 광전 효과입니다. 빛을 파동으로만 생각하면, 세게 비추거나 오래 비추면 에너지가 쌓여 결국 어떤 빛이든 전자가 나와야 합니다. 그런데 실제로는 진동수가 문턱 진동수 f₀보다 낮으면 <b>아무리 세게, 오래 비춰도 전자가 나오지 않고</b>, 문턱보다 높으면 아주 약한 빛에도 곧바로 나옵니다.</p><p>이 사실은 빛이 <b>hf짜리 에너지 알갱이(광자)</b>로 에너지를 준다고 보면 설명됩니다. 전자 하나는 광자 하나의 에너지를 통째로 받으므로, 광자 하나의 에너지가 모자라면 광자 수를 아무리 늘려도 전자 하나가 받는 에너지는 그대로입니다. 그래서 빨간빛을 세게 비춰도 나오지 않던 전자가 약한 자외선에는 나옵니다.</p><p class="nms-figlink"><a href="#fig-photoelectric">🖼 그림으로 보기: 광전 효과 ↓</a></p></div>
 <div class="nms-full-sec"><p class="nms-full-h">K_max = hf − W 끌어내기</p><p>전자가 금속을 빠져나오려면 최소한 일함수 W만큼의 에너지가 필요합니다. 광자 하나의 에너지 hf에서 W를 쓰고 남은 만큼이 운동 에너지가 되므로, 가장 빠른 광전자의 운동 에너지는 <b>K_max = hf − W</b>입니다. hf가 W보다 작으면 남는 에너지가 없으니 방출되지 않고, 문턱 진동수 f₀는 hf₀ = W가 되는 진동수입니다.</p><p>예를 들어 일함수가 2.0 eV인 금속에 광자 에너지 3.5 eV인 빛을 비추면 K_max = 3.5 − 2.0 = <b>1.5 eV</b>이고, 이 전자를 멈추게 하는 정지 전압은 1.5 V입니다. 광자 에너지는 E = hc/λ이고 hc ≈ 1240 eV·nm이므로 파장 400 nm인 빛은 1240/400 = 3.1 eV입니다. 이 빛은 일함수 2.5 eV인 금속에서는 전자를 내보내지만 3.5 eV인 금속에서는 내보내지 못합니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">진동수와 세기는 맡은 일이 다르다</p><p>식 K_max = hf − W에는 빛의 세기가 들어 있지 않습니다. 그래서 <b>진동수는 광전자의 최대 운동 에너지</b>를 정하고, 빛의 세기는 1초에 오는 광자 수, 즉 튀어나오는 광전자의 수(광전류)를 정합니다. 세기를 키우면 광전자 수는 늘지만 K_max는 그대로이고, 진동수를 키우면 K_max가 커집니다.</p><p>광전류–전압 그래프에서는 두 정보가 따로 보입니다. 전압을 충분히 걸어 광전자를 모두 모았을 때의 <b>포화 전류는 세기(광자 수)</b>에 따라, 전류를 0으로 만드는 정지 전압은 K_max/e에 따라 정해집니다. ‘빛을 세게 비추면 광전자의 에너지가 커진다’는 보기는 세기와 진동수의 역할을 섞은 함정입니다.</p></div>
@@ -113,7 +112,7 @@
 <div id="nm-game-host"></div>
 <script>window.NANAMATE_GAME={"type":"matching","color":"#0284c7","prompt":"광전 효과·물질파 관계를 짝지으세요.","pairs":[{"term":"빛의 세기 증가","def":"광전자 수 증가"},{"term":"진동수 증가","def":"최대 운동 에너지 증가"},{"term":"K–f 그래프 기울기","def":"플랑크 상수 h"},{"term":"물질파 파장","def":"λ = h/p"},{"term":"전자 현미경","def":"짧은 파장으로 높은 분해능"}]};</script>
 <h2>개념 확인</h2>
-<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
 <div id="nm-quiz-host"></div>
 <script>window.NANAMATE_QUIZ={"color":"#0284c7","questions":[{"q":"광전 효과에서 최대 운동 에너지를 결정하는 것은?","choices":["빛의 세기","조사 시간","빛의 진동수","금속의 크기"],"answer":2},{"q":"K–f 그래프의 기울기는?","choices":["금속마다 다르다","h로 모두 같다","일함수","0"],"answer":1},{"q":"같은 속력일 때 물질파 파장이 짧은 쪽은?","choices":["질량이 큰 입자","질량이 작은 입자","같다","전하가 큰 입자"],"answer":0},{"q":"전자 현미경의 분해능이 높은 이유는?","choices":["전자의 질량이 커서","전압이 낮아서","전자가 빛이라서","전자의 파장이 짧아서"],"answer":3},{"q":"문턱 진동수보다 작은 빛을 세게 비추면?","choices":["광전자 방출","K가 커짐","방출 없음","시간이 지나면 방출"],"answer":2}]};</script>
 <h2>이 파트 기출 풀어보기</h2>

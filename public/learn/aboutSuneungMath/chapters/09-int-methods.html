@@ -4,14 +4,13 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>여러 가지 적분법 — 수능 수학</title>
 <link rel="stylesheet" href="../styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="../../shared/light-theme.css">
 <script defer src="../../shared/i18n.js"></script>
 <script defer src="../../shared/support.js"></script>
 <script defer src="../../shared/search.js"></script>
 <script defer src="../../shared/difficulty.js"></script>
-<script defer src="../../shared/quizgame3d.js"></script>
-<script defer src="../../shared/learngame3d.js"></script>
+<link rel="stylesheet" href="../../shared/practice-simple.css">
+<script defer src="../../shared/practice-simple.js"></script>
 <link rel="stylesheet" href="../../shared/study-style.css">
 <script defer src="../../shared/study-style.js"></script>
 </head>
@@ -47,7 +46,7 @@
 <div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
 <p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
 <ol class="nms-chain"><li><span class="nms-step">적분은 미분의 거꾸로 → <b>도함수 표를 거꾸로 읽은 것</b>이 기본 적분 표(∫(1/x) dx = ln|x| + C, ∫sin x dx = −cos x + C)</span></li><li><span class="nms-step">합성함수의 미분을 거꾸로 읽으면 <b>치환적분</b> → 속함수의 도함수가 옆에 있으면 u = g(x)로 바꾸고, 정적분이면 구간도 g(a)부터 g(b)까지로 바꾼다</span></li><li><span class="nms-step">곱의 미분 (fg)′ = f′g + fg′을 적분하면 <b>∫fg′ dx = fg − ∫f′g dx</b>(부분적분) → 미분하면 간단해지는 쪽(로그, 다항식)을 f로 고른다</span></li><li><span class="nms-step">구간을 n등분한 직사각형 넓이의 합이 n → ∞에서 정적분 → <b>lim ∑ f(k/n) · (1/n) = ∫<sub>0</sub><sup>1</sup> f(x) dx</b></span></li><li><span class="nms-step">넓이는 |f − g|, 입체의 부피는 단면의 넓이 S(x), 이동 거리는 속력(평면에서는 √(x′² + y′²))을 적분 → 수능은 <b>무엇을 어느 구간에서 적분하는지</b>를 묻는다</span></li></ol>
-<details class="nms-full" open><summary>📖 논리형 전체 해설 — 이 파트를 처음부터 끝까지</summary>
+<details class="nms-full"><summary><span class="nms-full-t">📖 논리형 전체 해설 — 6절 · 약 7분</span><span class="nms-full-toc">기본 적분표는 미분표를 뒤집은 것 · 치환적분 · 부분적분 · 정적분과 급수의 합 · 넓이와 부피 · 속도·대칭·정적분으로 정의된 함수</span></summary>
 <div class="nms-full-sec"><p class="nms-full-h">기본 적분표는 미분표를 뒤집은 것</p><p>부정적분은 미분의 역이므로 적분표는 앞 장의 미분표를 거꾸로 읽은 것입니다. (e<sup>x</sup>)′ = e<sup>x</sup>에서 ∫e<sup>x</sup> dx = e<sup>x</sup> + C, (a<sup>x</sup>)′ = a<sup>x</sup> ln a에서 ∫a<sup>x</sup> dx = a<sup>x</sup>/ln a + C, (ln|x|)′ = 1/x에서 <b>∫(1/x) dx = ln|x| + C</b>입니다. 삼각함수는 (cos x)′ = −sin x라 ∫sin x dx = −cos x + C처럼 부호에 주의하고, ∫sec²x dx = tan x + C, ∫csc²x dx = −cot x + C도 같은 방식입니다.</p><p>sin²x처럼 원시함수가 바로 보이지 않는 식은 배각공식으로 <b>차수를 낮춘 뒤</b> 적분합니다. sin²x = (1 − cos 2x)/2이므로 ∫sin²x dx = x/2 − (1/4)sin 2x + C이고, 미분하면 1/2 − (1/2)cos 2x = sin²x로 돌아옵니다. 수능의 적분 문항은 치환·부분적분으로 값 구하기, 정적분으로 정의된 함수의 미분, 급수를 정적분으로 바꾸기, 넓이·부피·거리 읽기의 네 갈래이고, 모두 이 표 위에서 움직입니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">치환적분 — 합성함수 미분을 거꾸로</p><p>F′ = f일 때 합성함수의 미분 {F(g(x))}′ = f(g(x))·g′(x)를 거꾸로 읽으면 ∫f(g(x))g′(x) dx = F(g(x)) + C입니다. 곧 u = g(x), du = g′(x) dx로 바꾸면 ∫f(u) du가 되므로, <b>속함수의 도함수가 옆에 곱해져 있는지</b>가 치환의 신호입니다. 2x와 x², cos x와 sin x, 1/x과 ln x가 대표적인 짝입니다.</p><p>정적분에서는 변수를 바꿀 때 구간도 함께 바꿉니다. ∫<sub>0</sub><sup>1</sup> 2xe<sup>x²</sup> dx는 u = x²으로 두면 구간도 0~1이 되어 ∫<sub>0</sub><sup>1</sup> e<sup>u</sup> du = e − 1이고, ∫tan x dx는 u = cos x로 −∫du/u = −ln|cos x| + C입니다. <b>u로 바꾸고 구간은 x의 값으로 남겨 두는 것</b>이 가장 흔한 실수이니, 구간을 바꾸거나 원래 변수로 돌아온 뒤 숫자를 넣습니다.</p><p>같은 적분을 두 길로 계산해 보면 규칙이 분명해집니다. ∫<sub>0</sub><sup>π/2</sup> sin x cos x dx는 u = sin x로 두면 구간이 0~1로 바뀌어 ∫<sub>0</sub><sup>1</sup> u du = 1/2이고, 원래 변수로 돌아가 (1/2)sin²x에 π/2와 0을 넣어도 <b>같은 1/2</b>이 나옵니다. 부호는 구간의 순서가 맡으므로, 치환 뒤 아래끝이 위끝보다 커져도 그대로 두고 계산합니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">부분적분 — 곱의 미분을 거꾸로</p><p>(fg)′ = f′g + fg′의 양변을 적분하면 fg = ∫f′g dx + ∫fg′ dx이므로 <b>∫fg′ dx = fg − ∫f′g dx</b>입니다. 한쪽은 미분하고 한쪽은 적분해서 남은 ∫f′g가 처음보다 쉬워지게 고르는 것이 요령입니다. 그래서 다항식 × 지수·삼각함수이면 다항식을 f로 두어 차수를 낮추고, 로그가 있으면 미분하면 1/x로 단순해지는 로그를 f로 둡니다.</p><p>∫<sub>0</sub><sup>1</sup> xe<sup>x</sup> dx는 f = x, g′ = e<sup>x</sup>로 [xe<sup>x</sup>]<sub>0</sub><sup>1</sup> − ∫<sub>0</sub><sup>1</sup> e<sup>x</sup> dx = e − (e − 1) = 1입니다. 로그는 옆에 1이 숨어 있다고 보고 ∫ln x·1 dx = x ln x − ∫x·(1/x) dx = <b>x ln x − x + C</b>로 구하며, ∫<sub>1</sub><sup>e</sup> ln x dx = 1입니다. e<sup>x</sup>sin x처럼 두 번 부분적분하면 원래 적분 I가 되돌아오는 경우는 I = e<sup>x</sup>sin x − e<sup>x</sup>cos x − I를 풀어 I = e<sup>x</sup>(sin x − cos x)/2 + C로 정리합니다.</p></div>
@@ -200,7 +199,7 @@
 <div id="nm-game-host"></div>
 <script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"적분법의 개념과 뜻을 짝지으세요.","pairs":[{"term":"치환적분","def":"속함수로 변수를 교체"},{"term":"부분적분","def":"한쪽 미분, 한쪽 적분"},{"term":"구분구적법","def":"직사각형 합의 극한"},{"term":"입체의 부피","def":"단면의 넓이를 적분"},{"term":"이동 거리","def":"속력을 시간에 적분"},{"term":"연속인 기함수","def":"대칭 구간 적분은 0"}]};</script>
 <h2>개념 확인</h2>
-<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
 <div id="nm-quiz-host"></div>
 <script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"e^x의 부정적분으로 옳은 것은?","choices":["e^x + C","e^x / x + C","x e^x + C","ln|x| + C"],"answer":0},{"q":"부분적분 공식으로 옳은 것은?","choices":["∫ f g′ = f′ g − ∫ f g","∫ f g′ = fg + ∫ f′ g","∫ f g = f′ g′","∫ f g′ = fg − ∫ f′ g"],"answer":3},{"q":"k를 1부터 n까지 f(k/n)에 1/n을 곱해 더한 값의 극한은?","choices":["0부터 n까지 f(x)의 정적분","f(1) 빼기 f(0)","0부터 1까지 f(x)의 정적분","f의 도함수를 모두 더한 값"],"answer":2},{"q":"직선 운동에서 실제로 움직인 거리는?","choices":["속도의 정적분","속력의 정적분","가속도의 절댓값","나중 위치의 절댓값"],"answer":1},{"q":"연속함수 f에 대해, 0부터 x까지 f(t)를 적분한 식을 x로 미분하면?","choices":["f(x)","f'(x)","0","f(0)"],"answer":0}]};</script>
 <h2>이 파트 기출 풀어보기</h2>

@@ -4,14 +4,13 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>실전 총정리 — 수능 물리학Ⅰ</title>
 <link rel="stylesheet" href="../styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="../../shared/light-theme.css">
 <script defer src="../../shared/i18n.js"></script>
 <script defer src="../../shared/support.js"></script>
 <script defer src="../../shared/search.js"></script>
 <script defer src="../../shared/difficulty.js"></script>
-<script defer src="../../shared/quizgame3d.js"></script>
-<script defer src="../../shared/learngame3d.js"></script>
+<link rel="stylesheet" href="../../shared/practice-simple.css">
+<script defer src="../../shared/practice-simple.js"></script>
 <link rel="stylesheet" href="../../shared/term-tips.css">
 <script defer src="../../shared/terms/phys1.js"></script>
 <script defer src="../../shared/term-tips.js"></script>
@@ -44,7 +43,7 @@
 <div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
 <p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
 <ol class="nms-chain"><li><span class="nms-step">문항을 읽으면 <b>먼저 보존량을 정한다</b>(운동량, 역학적 에너지, 질량수·전하량, 진동수) → 쓸 식이 정해진다</span></li><li><span class="nms-step">그래프는 <b>축의 이름과 단위부터</b> 읽고, 기울기와 넓이에 의미를 붙인다</span></li><li><span class="nms-step">표의 빈칸은 <b>다른 칸과의 비율로 채운다</b> → 미지수를 하나(m, v₀, t₀)로 통일하면 계산이 절반으로 준다</span></li><li><span class="nms-step">ㄱ·ㄴ·ㄷ 보기는 보기마다 <b>참·거짓을 따로 판정</b>한다</span></li><li><span class="nms-step">막히는 3점 문항은 <b>표시하고 넘어간다</b> → 쉬운 문제 하나를 먼저 해결하면 굳은 머리가 풀린다</span></li></ol>
-<details class="nms-full" open><summary>📖 논리형 전체 해설 — 이 파트를 처음부터 끝까지</summary>
+<details class="nms-full"><summary><span class="nms-full-t">📖 논리형 전체 해설 — 4절 · 약 2분</span><span class="nms-full-toc">시험의 뼈대 · 문항을 여는 순서 · ㄱ·ㄴ·ㄷ 판정과 함정 문장 · 오답 노트</span></summary>
 <div class="nms-full-sec"><p class="nms-full-h">시험의 뼈대 — 30분에 20문항</p><p>물리학Ⅰ은 20문항 50점, 30분 시험으로 2점 10문항과 3점 10문항입니다. 3점 문항이 앞뒤에 흩어져 있어 <b>번호로 난이도를 짐작할 수 없고</b>, 문항당 평균 1.5분이라 계산을 길게 하면 시간이 모자랍니다. 힘과 운동, 전기와 자기, 파동 세 파트가 전체의 약 3분의 2를 차지하므로 이 세 파트의 풀이 속도가 점수를 좌우합니다.</p><p>시간은 앞부분 1~10번에 약 10분, 중반 11~17번에 약 12분, 후반 18~20번에 약 8분 정도로 배분합니다. 막히는 3점 문항은 표시하고 넘어가 쉬운 문제를 먼저 해결하고 돌아오는 것이 <b>굳은 머리를 푸는 가장 확실한 방법</b>입니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">문항을 여는 순서 — 보존량, 축, 비율</p><p>식을 쓰기 전에 <b>무엇이 보존되는가</b>부터 정합니다. 충돌이면 운동량, 마찰 없는 높이–속력이면 역학적 에너지, 핵반응이면 질량수와 전하량, 굴절이면 진동수가 일정하고, 일정한 것이 정해지면 쓸 식이 정해집니다.</p><p>그래프는 곡선 모양보다 축의 이름과 단위를 먼저 읽고, 기울기와 넓이에 의미를 붙입니다(v–t의 기울기는 가속도·넓이는 변위, P–V의 넓이는 일, Φ–t의 기울기는 유도 기전력, K–f의 기울기는 h). 표의 빈칸 ㉠·㉡은 다른 칸과의 비율로 채우고, 미지수를 m, v₀, t₀처럼 <b>하나로 통일</b>하면 계산이 절반으로 줄어듭니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">ㄱ·ㄴ·ㄷ 판정과 함정 문장</p><p>보기는 하나씩 독립적으로 참·거짓을 먼저 표시한 뒤 선택지를 조합합니다. 확실한 보기 하나만으로도 선택지를 절반 이상 줄일 수 있습니다. 개념 문항에서는 원리를 처음부터 증명하지 말고 <b>이미 세운 사슬을 적용만</b> 하세요.</p><p>보기에는 정해진 함정 문장이 반복됩니다. 최고점에서 가속도 0, 비탄성 충돌에서 운동 에너지 보존, 단열 팽창에서 흡열, 움직이는 쪽이 항상 고유 시간, n형 반도체는 음전하, 선속이 크면 유도 전류가 크다, 매질이 바뀌면 진동수가 변한다, 빛이 세면 광전자의 에너지가 크다, 정지한 전하가 자기력을 받는다가 대표적입니다. 이 문장들을 보면 <b>왜 틀렸는지 한 줄로 말할 수 있어야</b> 시험장에서 바로 걸러집니다.</p></div>
@@ -105,7 +104,7 @@
 <div id="nm-game-host"></div>
 <script>window.NANAMATE_GAME={"type":"matching","color":"#0284c7","prompt":"유형과 접근을 짝지으세요.","pairs":[{"term":"ㄱㄴㄷ 보기","def":"보기별로 참/거짓을 먼저 표시"},{"term":"그래프","def":"축부터 읽기"},{"term":"조건 표","def":"빈칸은 비율로 채우기"},{"term":"보존량","def":"무엇이 보존되는지 먼저 정하기"},{"term":"3점 킬러","def":"막히면 표시하고 마지막에"}]};</script>
 <h2>개념 확인</h2>
-<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
 <div id="nm-quiz-host"></div>
 <script>window.NANAMATE_QUIZ={"color":"#0284c7","questions":[{"q":"물리학Ⅰ 시험의 문항 수와 시간은?","choices":["30문항 50분","20문항 40분","25문항 30분","20문항 30분"],"answer":3},{"q":"3점 문항은 전체 몇 개인가?","choices":["5개","8개","10개","12개"],"answer":2},{"q":"표의 ㉠, ㉡을 채우는 가장 좋은 방법은?","choices":["찍기","다른 칸과의 비율 관계","마지막에 계산","생략"],"answer":1},{"q":"오답 노트에 적어야 할 것은?","choices":["내가 고른 함정 문장","정답 번호","풀이 시간","점수"],"answer":0},{"q":"가장 먼저 읽어야 하는 그래프의 부분은?","choices":["곡선 모양","격자","제목만","축의 이름과 단위"],"answer":3}]};</script>
 <h2>실전으로 풀어보기</h2><p><a class="cta" href="../practice.html">📝 수능 풀어보기 →</a></p>

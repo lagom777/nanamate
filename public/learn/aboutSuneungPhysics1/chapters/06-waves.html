@@ -4,14 +4,13 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>파동의 성질과 활용 — 수능 물리학Ⅰ</title>
 <link rel="stylesheet" href="../styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="../../shared/light-theme.css">
 <script defer src="../../shared/i18n.js"></script>
 <script defer src="../../shared/support.js"></script>
 <script defer src="../../shared/search.js"></script>
 <script defer src="../../shared/difficulty.js"></script>
-<script defer src="../../shared/quizgame3d.js"></script>
-<script defer src="../../shared/learngame3d.js"></script>
+<link rel="stylesheet" href="../../shared/practice-simple.css">
+<script defer src="../../shared/practice-simple.js"></script>
 <link rel="stylesheet" href="../../shared/term-tips.css">
 <script defer src="../../shared/terms/phys1.js"></script>
 <script defer src="../../shared/term-tips.js"></script>
@@ -49,7 +48,7 @@
 <div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
 <p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
 <ol class="nms-chain"><li><span class="nms-step">파동은 매질이 이동하는 것이 아니라 <b>진동(에너지)이 전달되는 것</b>이다 → 매질의 한 점은 제자리에서 진동한다</span></li><li><span class="nms-step">1초에 f번 진동하고 한 번 진동할 때마다 λ만큼 나아가므로 <b>v = fλ</b></span></li><li><span class="nms-step">경계를 지나도 진동의 <b>박자(f)는 파원이 정하므로 그대로</b> → 속력이 바뀌면 파장이 비례해 바뀌고 진행 방향이 꺾인다(굴절, n₁sinθ₁ = n₂sinθ₂)</span></li><li><span class="nms-step"><b>굴절률이 큰 매질에서 작은 매질로</b> 갈 때 입사각이 <b>임계각 이상이면</b> 빠져나갈 수 없어 전부 반사된다(전반사) → 광섬유</span></li><li><span class="nms-step">두 파동이 만나면 변위가 더해진다 → 같은 위상 파원 기준으로 경로차가 파장의 <b>정수배면 보강, 반정수배면 상쇄</b></span></li></ol>
-<details class="nms-full" open><summary>📖 논리형 전체 해설 — 이 파트를 처음부터 끝까지</summary>
+<details class="nms-full"><summary><span class="nms-full-t">📖 논리형 전체 해설 — 6절 · 약 5분</span><span class="nms-full-toc">파동이 전달하는 것 · v = fλ와 두 종류의 그래프 · 굴절 · 전반사와 광통신 · 전자기파 · 간섭</span></summary>
 <div class="nms-full-sec"><p class="nms-full-h">파동이 전달하는 것 — 매질이 아니라 진동</p><p>파동은 매질이 통째로 이동하는 것이 아니라 <b>진동(에너지)이 옆으로 전달되는 것</b>입니다. 물결 위의 나뭇잎이 제자리에서 오르내릴 뿐 물결을 따라가지 않는 것처럼, 매질의 한 점은 제자리에서 진동합니다. 진동 방향이 진행 방향에 수직이면 횡파(빛, 물결파), 나란하면 종파(소리)입니다.</p><p>소리는 매질이 진동하며 전달되므로 <b>매질이 없는 진공에서는 전달되지 않습니다</b>. 반면 빛 같은 전자기파는 매질 없이 진공에서도 전달됩니다. ‘소리도 진공을 통과한다’는 보기는 틀린 문장입니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">v = fλ와 두 종류의 그래프</p><p>한 점은 1초에 f번 진동하고, 한 번 진동할 때마다 파동은 한 파장 λ만큼 나아갑니다. 그래서 1초에 나아가는 거리, 즉 속력은 <b>v = fλ</b>이고 주기는 T = 1/f입니다. 주기가 0.5 s, 파장이 2 m이면 f = 2 Hz, v = 2 × 2 = 4 m/s입니다.</p><p>파동 그래프는 두 종류라 가로축부터 봐야 합니다. 가로축이 위치인 변위–위치 그래프는 한 순간의 모양이라 파장을 읽고, 가로축이 시간인 변위–시간 그래프는 한 점의 진동이라 <b>주기를 읽습니다</b>. 변위–시간 그래프에서 파장을 읽으려 하는 것이 가장 흔한 실수입니다. 변위–위치 그래프에서 다음 순간의 모양은 파형을 진행 방향으로 조금 밀어 보면 알 수 있습니다.</p><p class="nms-figlink"><a href="#fig-wave">🖼 그림으로 보기: 파동 ↓</a></p></div>
 <div class="nms-full-sec"><p class="nms-full-h">굴절 — 진동수는 그대로, 속력과 파장이 바뀐다</p><p>진동수는 파원이 정하고 속력은 매질이 정합니다. 경계면의 한 점은 들어오는 파동과 같은 박자로 진동하며 다음 매질로 파동을 내보내므로 <b>경계를 지나도 진동수는 변하지 않습니다</b>. 매질이 바뀌어 속력이 달라지면 v = fλ에서 f가 그대로이므로 파장이 속력에 비례해 바뀝니다.</p><p>굴절률은 n = c/v로, 굴절률이 큰 매질일수록 빛이 느리고 파장이 짧습니다. 비스듬히 들어간 빛은 진행 방향이 꺾이는데 이것이 굴절이고, 각도는 스넬 법칙 <b>n₁sinθ₁ = n₂sinθ₂</b>로 정해집니다. 굴절률이 큰 매질로 들어가면 법선 쪽으로 꺾이며, 예를 들어 공기에서 굴절률 √2인 유리로 45°로 들어가면 sinθ₂ = (√2/2)/√2 = 1/2이라 굴절각은 30°입니다.</p><p>정리하면 v ∝ λ ∝ 1/n이고 진동수만 그대로입니다. 물결파도 수심이 얕아지면 속력과 파장이 함께 줄어들어, 물결파 사진에서는 <b>파면 간격(파장)이 좁은 쪽이 느린 쪽</b>입니다. 굴절 문항은 그림에서 각도나 파면 간격 중 읽을 수 있는 것을 골라 비를 만들면 풀립니다.</p></div>
@@ -120,7 +119,7 @@
 <div id="nm-game-host"></div>
 <script>window.NANAMATE_GAME={"type":"matching","color":"#0284c7","prompt":"파동 용어와 관계를 짝지으세요.","pairs":[{"term":"v = fλ","def":"파동의 속력"},{"term":"굴절 시 불변","def":"진동수"},{"term":"전반사 조건","def":"큰 굴절률 → 작은 굴절률, 임계각 이상"},{"term":"같은 위상 보강","def":"경로차 = mλ"},{"term":"적외선 이용","def":"열화상·리모컨"}]};</script>
 <h2>개념 확인</h2>
-<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
 <div id="nm-quiz-host"></div>
 <script>window.NANAMATE_QUIZ={"color":"#0284c7","questions":[{"q":"빛이 공기에서 물로 들어갈 때 변하지 않는 것은?","choices":["속력","진동수","파장","굴절각"],"answer":1},{"q":"전반사가 일어나는 방향은?","choices":["굴절률 큰 → 작은","굴절률 작은 → 큰","어느 쪽이든","수직 입사만"],"answer":0},{"q":"같은 위상의 두 파원에서 경로차가 1.5λ이면?","choices":["보강","알 수 없음","굴절","상쇄"],"answer":3},{"q":"진공에서 모든 전자기파의 공통점은?","choices":["파장","진동수","속력","에너지"],"answer":2},{"q":"변위–시간 그래프에서 읽을 수 있는 것은?","choices":["파장","주기","속력","굴절률"],"answer":1}]};</script>
 <h2>이 파트 기출 풀어보기</h2>

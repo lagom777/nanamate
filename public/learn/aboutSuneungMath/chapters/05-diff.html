@@ -4,14 +4,13 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>미분 — 수능 수학</title>
 <link rel="stylesheet" href="../styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="../../shared/light-theme.css">
 <script defer src="../../shared/i18n.js"></script>
 <script defer src="../../shared/support.js"></script>
 <script defer src="../../shared/search.js"></script>
 <script defer src="../../shared/difficulty.js"></script>
-<script defer src="../../shared/quizgame3d.js"></script>
-<script defer src="../../shared/learngame3d.js"></script>
+<link rel="stylesheet" href="../../shared/practice-simple.css">
+<script defer src="../../shared/practice-simple.js"></script>
 <link rel="stylesheet" href="../../shared/study-style.css">
 <script defer src="../../shared/study-style.js"></script>
 </head>
@@ -47,7 +46,7 @@
 <div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
 <p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
 <ol class="nms-chain"><li><span class="nms-step">두 점을 잇는 할선의 기울기(평균변화율)에서 두 점을 한없이 붙이면 접선의 기울기 → <b>f′(a) = lim<sub>h→0</sub> (f(a + h) − f(a))/h</b></span></li><li><span class="nms-step">미분가능하면 연속(f(a + h) − f(a) = h × 평균변화율 → 0 × f′(a) = 0), 역은 거짓 → y = |x|는 x = 0에서 <b>좌미분계수 −1 ≠ 우미분계수 1</b></span></li><li><span class="nms-step">f′ &gt; 0이면 접선이 오른쪽 위를 향해 증가 → 극값은 f′ = 0인 점이 아니라 <b>f′의 부호가 바뀌는 점</b>(y = x<sup>3</sup>의 x = 0은 극값이 아니다)</span></li><li><span class="nms-step">삼차함수는 f′이 이차식이라 판별식의 부호로 개형이 셋으로 갈리고, <b>x = −b/(3a)인 점에 대해 점대칭</b> → 극점의 중점과 극값의 평균이 모두 이 점</span></li><li><span class="nms-step">방정식 f(x) = k의 실근 수는 <b>y = k와 그래프의 교점 수</b>, 속도는 위치의 도함수 → 수능은 접선·극값 조건·미분가능성·실근 개수로 묻는다</span></li></ol>
-<details class="nms-full" open><summary>📖 논리형 전체 해설 — 이 파트를 처음부터 끝까지</summary>
+<details class="nms-full"><summary><span class="nms-full-t">📖 논리형 전체 해설 — 7절 · 약 7분</span><span class="nms-full-toc">미분계수 · 도함수 공식 · 접선의 방정식과 미분가능성 · 증가·감소와 극값 · 삼차함수의 개형과 대칭 · 방정식과 부등식 · 속도와 가속도</span></summary>
 <div class="nms-full-sec"><p class="nms-full-h">미분계수 — 할선이 접선이 되는 극한</p><p>x가 a에서 a + h로 변할 때 (f(a + h) − f(a))/h는 두 점을 잇는 할선의 기울기, 곧 평균변화율입니다. h를 0으로 보내면 두 점이 붙으며 할선이 접선이 되고, 이 극한이 <b>미분계수 f′(a) = lim<sub>h→0</sub> (f(a + h) − f(a))/h</b>입니다. h = 0을 바로 넣으면 0/0이라, 앞 단원의 극한이 바로 이 계산을 위해 필요했습니다. f(x) = x²이면 ((a + h)² − a²)/h = 2a + h이므로 f′(a) = 2a입니다.</p><p>미분계수는 좌·우미분계수가 모두 실수로 존재하고 같을 때만 있습니다. y = |x|는 x = 0에서 오른쪽 기울기 1, 왼쪽 기울기 −1이라 미분가능하지 않지만 끊기지는 않으므로, <b>꺾인 점은 연속이지만 미분가능하지 않은</b> 대표 예입니다. 거꾸로 미분가능하면 항상 연속입니다. f(a + h) − f(a) = h · (f(a + h) − f(a))/h에서 h → 0이면 오른쪽이 0 · f′(a) = 0으로 가기 때문이고, 그래서 조각함수는 경계에서 연속부터 확인합니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">도함수 공식 — 전개하면 한 항만 남는다</p><p>(x + h)³ − x³ = 3x²h + 3xh² + h³을 h로 나누면 3x² + 3xh + h²이고, h → 0이면 3x²만 남습니다. 일반적으로 (x + h)<sup>n</sup>을 전개하면 h가 한 번만 곱해진 항은 nx<sup>n−1</sup>h이고 나머지는 h²을 포함해 사라지므로 <b>(x<sup>n</sup>)′ = nx<sup>n−1</sup></b>입니다. 상수의 도함수는 0이고, 합과 실수배는 항별로 미분합니다.</p><p>곱의 미분은 변화를 둘로 나눠 봅니다. f(x + h)g(x + h) − f(x)g(x) = {f(x + h) − f(x)}g(x + h) + f(x){g(x + h) − g(x)}를 h로 나누고 h → 0으로 보내면 <b>(fg)′ = f′g + fg′</b>입니다. (x² + 1)(x − 2)는 전개해 미분해도, 2x(x − 2) + (x² + 1)로 계산해도 3x² − 4x + 1이고, f′g′으로 쓰면 틀립니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">접선의 방정식과 미분가능성</p><p>점 (a, f(a))에서의 접선은 기울기가 f′(a)이므로 y − f(a) = f′(a)(x − a)입니다. 곡선 밖의 점을 지나는 접선은 <b>접점의 x좌표를 t로 두고</b> 그 점을 접선 식에 넣어 t의 방정식을 풉니다. y = x³에 (2, 0)에서 그은 접선은 접점 (t, t³)에서의 접선 y = 3t²x − 2t³에 (2, 0)을 대입한 2t²(3 − t) = 0에서 t = 0, 3이라 y = 0과 y = 27x − 54입니다.</p><p>검산은 곡선에서 접선을 뺀 식의 인수분해입니다. x³ − 27x + 54 = (x − 3)²(x + 6)으로 접점 x = 3이 중근이고 x = −6에서 한 번 더 만나므로, 접한다는 것은 <b>차가 중근을 가진다</b>는 뜻이지 다른 교점이 없다는 뜻이 아닙니다.</p><p>g(x)|x − c|는 x = c에서 오른쪽 기울기가 g(c), 왼쪽 기울기가 −g(c)이므로 <b>g(c) = 0일 때만 미분가능</b>하고 그때 미분계수는 0입니다. 그래서 |x² − 1|은 x = ±1에서 미분가능하지 않지만, (x² − 4)|x − 2|는 x = 2에서 미분가능합니다. 조각함수가 경계에서 미분가능하려면 연속 조건과 양쪽 도함수가 같다는 조건, 두 식을 세웁니다.</p></div>
@@ -222,7 +221,7 @@
 <div id="nm-game-host"></div>
 <script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"미분의 개념을 짝지으세요.","pairs":[{"term":"평균변화율","def":"두 점을 잇는 기울기"},{"term":"미분계수","def":"그 점의 접선 기울기"},{"term":"극댓값","def":"양쪽 근방에서 가장 큼"},{"term":"최댓값","def":"구간 전체에서 가장 큼"},{"term":"미분가능","def":"좌우 미분계수가 같음"},{"term":"연속","def":"극한과 함숫값이 같음"}]};</script>
 <h2>개념 확인</h2>
-<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
 <div id="nm-quiz-host"></div>
 <script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"미분가능과 연속의 관계로 옳은 것은?","choices":["미분가능하면 연속이다","연속이면 반드시 미분가능하다","둘은 같은 뜻이다","불연속이어도 미분계수가 있을 수 있다"],"answer":0},{"q":"f′(c)=0일 때 항상 옳은 것은?","choices":["x=c에서 극댓값이다","x=c에서 극솟값이다","x=c에서 극값이다","x=c에서 접선의 기울기가 0이다"],"answer":3},{"q":"어떤 구간에서 f′(x)가 양수이면 그 구간에서 함수는?","choices":["감소한다","극값을 가진다","증가한다","상수함수이다"],"answer":2},{"q":"y=|x|가 x=0에서 미분가능하지 않은 이유는?","choices":["함숫값이 없어서","좌미분계수와 우미분계수가 달라서","연속이 아니라서","극한값이 무한대라서"],"answer":1},{"q":"직선 위에서 속도가 음수이고 가속도도 음수이면?","choices":["속력이 늘어난다","속력이 줄어든다","양의 방향으로 움직인다","정지해 있다"],"answer":0}]};</script>
 <h2>이 파트 기출 풀어보기</h2>

@@ -4,14 +4,13 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>물질의 구조와 성질 — 수능 물리학Ⅰ</title>
 <link rel="stylesheet" href="../styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="../../shared/light-theme.css">
 <script defer src="../../shared/i18n.js"></script>
 <script defer src="../../shared/support.js"></script>
 <script defer src="../../shared/search.js"></script>
 <script defer src="../../shared/difficulty.js"></script>
-<script defer src="../../shared/quizgame3d.js"></script>
-<script defer src="../../shared/learngame3d.js"></script>
+<link rel="stylesheet" href="../../shared/practice-simple.css">
+<script defer src="../../shared/practice-simple.js"></script>
 <link rel="stylesheet" href="../../shared/term-tips.css">
 <script defer src="../../shared/terms/phys1.js"></script>
 <script defer src="../../shared/term-tips.js"></script>
@@ -49,7 +48,7 @@
 <div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
 <p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
 <ol class="nms-chain"><li><span class="nms-step">원자 속 전자의 에너지는 아무 값이나 가질 수 없고 <b>정해진 값(준위)만 가능</b>하다(보어 모형) → 수소는 E_n = −13.6/n² eV</span></li><li><span class="nms-step">전자가 준위 사이를 옮겨 갈 때만 그 차이만큼의 광자가 나오거나 흡수된다(<b>hf = ΔE</b>) → 그래서 스펙트럼이 연속된 띠가 아니라 <b>선으로 나온다</b></span></li><li><span class="nms-step">ΔE가 클수록 <b>진동수는 크고 파장은 짧다</b>(λ ≈ 1240/ΔE nm) → 준위 그림의 화살표 길이로 파장을 비교한다</span></li><li><span class="nms-step">원자가 아주 많이 모인 고체에서는 준위가 겹쳐 띠가 된다 → 원자가 띠와 전도띠 사이 간격(<b>띠 간격</b>)이 도체·반도체·절연체를 가른다</span></li><li><span class="nms-step">반도체에 불순물을 넣어 전하 운반자를 만든다(n형은 전자, p형은 양공) → p–n 접합은 <b>한 방향으로만 전류가 흐르고</b>(다이오드), 재결합할 때 <b>띠 간격만큼의 빛</b>을 낸다(LED)</span></li></ol>
-<details class="nms-full" open><summary>📖 논리형 전체 해설 — 이 파트를 처음부터 끝까지</summary>
+<details class="nms-full"><summary><span class="nms-full-t">📖 논리형 전체 해설 — 6절 · 약 5분</span><span class="nms-full-toc">원자 모형의 변천 · 에너지 준위와 선 스펙트럼 · 계열과 전이 화살표 · 고체의 에너지띠 · 반도체 · p–n 접합 다이오드와 LED</span></summary>
 <div class="nms-full-sec"><p class="nms-full-h">원자 모형의 변천 — 실험이 모형을 바꾼다</p><p>원자 모형은 실험 결과를 설명하려고 차례로 고쳐졌습니다. 음극선 실험으로 전자를 발견한 톰슨은 양전하 덩어리에 전자가 박힌 모형을 세웠고, 러더퍼드는 α 입자 대부분이 금박을 그냥 통과하고 일부만 큰 각도로 휘는 것을 보고 <b>원자 중심에 작고 무거운 원자핵</b>이 있다고 결론지었습니다. 양전하가 원자 전체에 고르게 퍼져 있다면 α 입자가 크게 튕겨 나올 수 없기 때문입니다.</p><p>그런데 러더퍼드 모형으로는 수소가 왜 특정한 색의 빛만 내는지 설명할 수 없었습니다. 보어는 <b>전자가 정해진 에너지 준위에만 있을 수 있다</b>고 가정하고, 준위 사이를 옮겨 갈 때만 빛을 흡수·방출한다고 보아 수소의 선 스펙트럼을 설명했습니다. 현대 모형에서는 전자의 위치를 확률로만 나타내는 전자 구름(오비탈)으로 봅니다. 수능은 ‘어떤 실험이 어떤 모형의 근거인가’를 짝짓는 형태로 자주 묻습니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">에너지 준위와 선 스펙트럼 — 계단에서만 설 수 있다</p><p>수소 원자의 에너지 준위는 E_n = −13.6/n² eV입니다. 값이 음수인 것은 전자가 원자핵에 묶여 있다는 뜻으로, n = 1(바닥상태)이 가장 낮고 n이 커질수록 0에 가까워집니다. E₁ = −13.6 eV, E₂ = −3.40 eV, E₃ = −1.51 eV처럼 <b>계단 간격은 위로 갈수록 좁아집니다</b>.</p><p>전자가 높은 준위에서 낮은 준위로 내려오면 두 준위의 차이만큼 에너지를 가진 광자를 방출하고(hf = |E처음 − E나중|), 반대로 그만큼의 광자를 흡수하면 올라갑니다. 준위가 띄엄띄엄하니 가능한 에너지 차도 띄엄띄엄하고, 그래서 <b>연속 스펙트럼이 아니라 선 스펙트럼</b>이 나옵니다. 흡수 스펙트럼의 검은 선이 방출선과 같은 파장에 생기는 것도 같은 준위 차를 쓰기 때문입니다.</p><p>에너지 차가 클수록 진동수가 크고 파장이 짧으며, λ(nm) ≈ 1240/ΔE(eV)로 바로 계산합니다. 3→2 전이는 ΔE = 3.40 − 1.51 = 1.89 eV이므로 λ ≈ 1240/1.89 ≈ <b>656 nm(붉은색 가시광선)</b>입니다. 준위 값이 음수라 부호를 헷갈리기 쉬우니 차이는 항상 절댓값으로 씁니다.</p><p class="nms-figlink"><a href="#fig-hlevel">🖼 그림으로 보기: 수소 원자 에너지 준위 ↓</a></p></div>
 <div class="nms-full-sec"><p class="nms-full-h">계열과 전이 화살표 — 수능이 묻는 방식</p><p>도착하는 준위에 따라 계열이 나뉩니다. n = 1로 떨어지면 라이먼 계열(자외선), n = 2로 떨어지면 발머 계열(가시광선 포함), n = 3으로 떨어지면 파셴 계열(적외선)입니다. 다만 <b>발머 계열이 모두 가시광선인 것은 아니고</b>, 처음 몇 개만 가시광선이며 더 높은 준위에서 떨어질수록 자외선 쪽에 가까워집니다.</p><p>세 전이 a(3→1), b(3→2), c(2→1)처럼 에너지가 이어지면 <b>ΔE(a) = ΔE(b) + ΔE(c)</b>이고, ΔE가 1/λ에 비례하므로 1/λ(a) = 1/λ(b) + 1/λ(c)입니다. 실제 값은 a = 12.09 eV, c = 10.2 eV, b = 1.89 eV라서 파장은 a가 가장 짧고 b가 가장 깁니다. 준위 그림에서는 화살표 길이가 곧 ΔE이므로, 가장 긴 화살표 = 나머지 두 화살표의 합으로 관계를 세우면 됩니다.</p></div>
@@ -118,7 +117,7 @@
 <div id="nm-game-host"></div>
 <script>window.NANAMATE_GAME={"type":"matching","color":"#0284c7","prompt":"반도체·스펙트럼 용어와 뜻을 짝지으세요.","pairs":[{"term":"n형 반도체","def":"5족 첨가, 전자가 운반자"},{"term":"p형 반도체","def":"3족 첨가, 양공이 운반자"},{"term":"순방향","def":"p형에 (+), n형에 (−)"},{"term":"발머 계열","def":"n=2로 전이, 가시광선"},{"term":"띠 간격","def":"원자가 띠와 전도띠 사이"}]};</script>
 <h2>개념 확인</h2>
-<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
 <div id="nm-quiz-host"></div>
 <script>window.NANAMATE_QUIZ={"color":"#0284c7","questions":[{"q":"수소 원자에서 전이 에너지가 가장 큰 것은?","choices":["3→2","4→3","4→2","2→1"],"answer":3},{"q":"LED에서 나오는 빛의 에너지는 무엇으로 정해지는가?","choices":["전원 전압","도선 굵기","띠 간격","저항"],"answer":2},{"q":"다이오드에 전류가 흐르는 연결은?","choices":["p형에 (−)","p형에 (+)","n형에 (+)","어느 쪽이든"],"answer":1},{"q":"온도가 올라가면 전도성이 증가하는 것은?","choices":["반도체","도체","둘 다 감소","절연체만"],"answer":0},{"q":"러더퍼드 실험으로 밝혀진 것은?","choices":["전자의 발견","준위의 양자화","중성자","원자핵의 존재"],"answer":3}]};</script>
 <h2>이 파트 기출 풀어보기</h2>

@@ -4,14 +4,13 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>함수의 극한과 연속 — 수능 수학</title>
 <link rel="stylesheet" href="../styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="../../shared/light-theme.css">
 <script defer src="../../shared/i18n.js"></script>
 <script defer src="../../shared/support.js"></script>
 <script defer src="../../shared/search.js"></script>
 <script defer src="../../shared/difficulty.js"></script>
-<script defer src="../../shared/quizgame3d.js"></script>
-<script defer src="../../shared/learngame3d.js"></script>
+<link rel="stylesheet" href="../../shared/practice-simple.css">
+<script defer src="../../shared/practice-simple.js"></script>
 <link rel="stylesheet" href="../../shared/study-style.css">
 <script defer src="../../shared/study-style.js"></script>
 </head>
@@ -47,7 +46,7 @@
 <div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
 <p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
 <ol class="nms-chain"><li><span class="nms-step">x가 a는 아니면서 a에 다가갈 때 f(x)가 다가가는 값이 극한 → <b>f(a)는 쓰지 않는다</b>(구멍의 높이가 극한, 찍힌 점의 높이가 함숫값)</span></li><li><span class="nms-step">다가가는 방향이 왼쪽·오른쪽 둘이므로 <b>좌극한 = 우극한</b>일 때만 극한값이 있다</span></li><li><span class="nms-step">0/0은 ‘아직 안 보인다’는 신호 → 약분·유리화한 식은 <b>x ≠ a에서 원래 식과 같으므로</b> 극한도 같다, ∞/∞는 최고차항만 비교한다</span></li><li><span class="nms-step">연속 = f(a) 정의 + 극한 존재 + <b>극한 = 함숫값</b> → 분모가 0이 되는 점에서 극한이 실수이려면 분자도 0이어야 하고, 이것이 미정계수를 정한다</span></li><li><span class="nms-step">닫힌 구간에서 연속인 곡선은 중간 높이를 건너뛰지 못한다 → <b>사잇값 정리</b>(f(a), f(b)의 부호가 다르면 (a, b)에 근이 적어도 하나), 최댓값·최솟값도 반드시 있다</span></li></ol>
-<details class="nms-full" open><summary>📖 논리형 전체 해설 — 이 파트를 처음부터 끝까지</summary>
+<details class="nms-full"><summary><span class="nms-full-t">📖 논리형 전체 해설 — 7절 · 약 7분</span><span class="nms-full-toc">극한은 다가가는 높이 · 0/0 꼴 · ∞/∞ 꼴 · 그래프와 연속 · 연속함수의 성질과 합성함수 · 사잇값 정리와 최대·최소 정리 · 수능형</span></summary>
 <div class="nms-full-sec"><p class="nms-full-h">극한은 다가가는 높이 — 그 점의 값은 보지 않는다</p><p>lim<sub>x→a</sub> f(x) = L은 x가 a가 아니면서 a에 한없이 가까워질 때 f(x)가 L에 한없이 가까워진다는 뜻입니다. ‘a가 아니면서’가 핵심인데, 다음 단원의 (f(a + h) − f(a))/h처럼 <b>그 점에서는 값이 없는 식</b>이 어디로 가는지 알아내는 것이 극한의 목적이기 때문입니다. 그래서 극한을 구할 때는 f(a)가 얼마인지, 정의되어 있는지조차 쓰지 않습니다.</p><p>다가가는 방향은 왼쪽(좌극한)과 오른쪽(우극한) 둘이고, <b>둘이 모두 존재하고 같을 때만</b> 극한값이 있습니다. |x|/x는 x &gt; 0에서 1, x &lt; 0에서 −1이라 x → 0에서 극한이 없지만, |x|는 양쪽 모두 0으로 가서 극한이 0입니다. 1/(x − 1)은 분모의 부호가 좌우에서 달라 왼쪽에서 −∞, 오른쪽에서 +∞이므로 극한이 없습니다. 1/(x − 1)²처럼 양쪽이 모두 +∞로 가도 실수에 다가가는 것이 아니므로 극한값은 없고, ‘양의 무한대로 발산한다’고 말합니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">0/0 꼴 — 0을 만드는 공통 인수를 걷어 낸다</p><p>극한의 합·차·곱·몫은 각 극한이 실수로 존재할 때만 따로 구해 계산할 수 있습니다. 분자와 분모가 모두 0으로 가는 0/0은 답이 0이라는 뜻이 아니라 <b>지금 식으로는 안 보인다는 신호</b>입니다. 다항식 p에서 p(a) = 0이면 (x − a)가 인수이므로, 분자·분모의 공통 인수 (x − a)를 약분하면 0을 만들던 원인이 사라집니다.</p><p>lim<sub>x→1</sub> (x² − 3x + 2)/(x − 1)은 (x − 1)(x − 2)/(x − 1) = x − 2로 약분해 −1입니다. 약분은 x ≠ 1에서만 성립하지만 <b>극한은 x = 1을 대입하지 않으므로</b> 약분한 식의 극한과 같습니다. 근호가 있으면 켤레를 곱해 (√A − √B)(√A + √B) = A − B로 근호를 없애면 숨은 인수가 드러나, lim<sub>x→0</sub> (√(1 + x) − 1)/x = lim<sub>x→0</sub> 1/(√(1 + x) + 1) = 1/2입니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">∞/∞ 꼴 — 최고차항끼리 비교한다</p><p>x → ∞에서 분자와 분모가 함께 커지면 크기를 결정하는 것은 최고차항입니다. 분모의 최고차항으로 위아래를 나누면 1/x, 1/x² 같은 항이 0으로 사라지므로 <b>차수가 같으면 최고차항 계수의 비</b>, 분모 차수가 크면 0, 분자 차수가 크면 발산입니다. (3x² − x + 1)/(6x² + 5) → 1/2, (x + 1)/(x² + 1) → 0입니다.</p><p>x → −∞에서는 부호를 한 번 더 봅니다. (2x² + 1)/(3x + 4)는 x → ∞이면 +∞이지만, x → −∞이면 분자는 양수이고 분모는 음수라 −∞입니다. 일반적으로 <b>분자와 분모의 차수 차가 홀수</b>이면 x → −∞에서 부호가 뒤집힙니다. ∞ − ∞ 꼴도 정해지지 않은 모양이므로, 근호가 있으면 켤레를 곱해 ∞/∞ 꼴로 바꾼 뒤 같은 방법으로 비교합니다.</p><p>이 비교가 수능에서는 계수를 정하는 조건으로 쓰입니다. x → ∞에서 (다항식)/(x² + 1)의 극한이 3이라는 조건은 분자가 이차이고 최고차항의 계수가 3이라는 뜻이고, 극한이 0이면 분자가 일차 이하라는 뜻입니다. 그래서 <b>‘극한이 유한하다’는 문장은 차수에 대한 조건</b>으로 먼저 읽습니다.</p></div>
@@ -222,7 +221,7 @@
 <div id="nm-game-host"></div>
 <script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"극한·연속의 개념을 짝지으세요.","pairs":[{"term":"극한값","def":"점 옆에서 다가간 높이"},{"term":"함숫값","def":"그 점에 찍힌 높이"},{"term":"좌극한","def":"작은 쪽에서 다가간 값"},{"term":"우극한","def":"큰 쪽에서 다가간 값"},{"term":"사잇값 정리","def":"사이 값을 적어도 한 번"},{"term":"최대·최소 정리","def":"닫힌 구간이면 최대·최소 존재"}]};</script>
 <h2>개념 확인</h2>
-<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
 <div id="nm-quiz-host"></div>
 <script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"x가 2에 가까워질 때 (x²−4)/(x−2)의 극한값은?","choices":["0","2","존재하지 않는다","4"],"answer":3},{"q":"함수가 x=a에서 연속이기 위한 조건으로 옳은 것은?","choices":["극한값만 존재하면 된다","함숫값만 존재하면 된다","극한값과 함숫값이 있고 서로 같다","미분가능하면 극한은 확인하지 않아도 된다"],"answer":2},{"q":"닫힌 구간에서 연속인 함수에 대해 사잇값 정리가 보장하는 것은?","choices":["방정식의 실근이 정확히 1개이다","두 함숫값 사이의 값을 적어도 한 번 가진다","최댓값이 생기는 점의 위치","그 구간에서 도함수가 양수이다"],"answer":1},{"q":"x가 한없이 커질 때 (2x²+1)/(x²−3)의 극한값은?","choices":["2","0","1","양의 무한대"],"answer":0},{"q":"y=|x|에 대한 설명으로 옳은 것은?","choices":["x=0에서 극한값이 없다","x=0에서 함숫값이 정의되지 않는다","x=0에서 좌극한과 우극한이 다르다","x=0에서 연속이다"],"answer":3}]};</script>
 <h2>이 파트 기출 풀어보기</h2>

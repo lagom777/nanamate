@@ -4,14 +4,13 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>삼각함수 — 수능 수학</title>
 <link rel="stylesheet" href="../styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <link rel="stylesheet" href="../../shared/light-theme.css">
 <script defer src="../../shared/i18n.js"></script>
 <script defer src="../../shared/support.js"></script>
 <script defer src="../../shared/search.js"></script>
 <script defer src="../../shared/difficulty.js"></script>
-<script defer src="../../shared/quizgame3d.js"></script>
-<script defer src="../../shared/learngame3d.js"></script>
+<link rel="stylesheet" href="../../shared/practice-simple.css">
+<script defer src="../../shared/practice-simple.js"></script>
 <link rel="stylesheet" href="../../shared/study-style.css">
 <script defer src="../../shared/study-style.js"></script>
 </head>
@@ -47,7 +46,7 @@
 <div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
 <p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
 <ol class="nms-chain"><li><span class="nms-step">각을 호의 길이로 잰다(<b>호도법</b>, 180° = π) → 반지름 r, 중심각 θ인 부채꼴의 호 l = rθ와 넓이 S = (1/2)r<sup>2</sup>θ가 ‘중심각에 비례한다’는 사실 하나에서 나온다</span></li><li><span class="nms-step">동경이 단위원과 만나는 점 (x, y)로 정의한다: <b>cos θ = x, sin θ = y</b>, tan θ = y/x → 사분면의 부호는 x, y의 부호이고, 점이 원 위에 있으니 sin<sup>2</sup>θ + cos<sup>2</sup>θ = 1</span></li><li><span class="nms-step">2π 돌면 같은 점이라 sin·cos의 주기는 2π, π 돌면 점이 (−x, −y)로 가서 y/x가 그대로이므로 <b>tan의 주기는 π</b></span></li><li><span class="nms-step">y = a sin(bx + c) + d는 기본 그래프를 늘이고 옮긴 것 → <b>진폭 |a|, 주기 2π/|b|</b>, 최댓값 |a| + d, 해의 개수는 한 주기 안의 교점 수 × 주기의 개수</span></li><li><span class="nms-step">삼각형을 외접원에 넣으면 a = 2R sin A(사인법칙), 좌표로 변의 길이를 재면 a<sup>2</sup> = b<sup>2</sup> + c<sup>2</sup> − 2bc cos A(코사인법칙) → <b>마주 보는 쌍이면 사인, 끼인각이면 코사인</b></span></li></ol>
-<details class="nms-full" open><summary>📖 논리형 전체 해설 — 이 파트를 처음부터 끝까지</summary>
+<details class="nms-full"><summary><span class="nms-full-t">📖 논리형 전체 해설 — 7절 · 약 8분</span><span class="nms-full-toc">일반각과 호도법 · 삼각함수는 단위원 위 점의 좌표 · 그래프 · 삼각방정식과 부등식 · 사인법칙과 넓이 · 코사인법칙 · 법칙 고르기와 교점의 개수</span></summary>
 <div class="nms-full-sec"><p class="nms-full-h">일반각과 호도법 — 각은 회전량, 단위는 반지름</p><p>삼각함수에서 각은 꼭짓점의 벌어진 정도가 아니라 동경이 시초선(양의 x축)에서 <b>얼마나 돌았는가</b>입니다. 시계 반대 방향이 양, 시계 방향이 음이고, 한 바퀴를 더 돌아도 동경의 자리는 같으므로 θ와 θ + 360° × n은 같은 위치입니다. 그래서 420°는 60°와, −150°는 210°와 같은 동경이고 삼각함수 값도 같습니다.</p><p>호도법은 각을 호의 길이로 잽니다. 반지름 r인 원에서 <b>호의 길이가 r인 중심각이 1라디안</b>이고, 원 둘레 2πr이 반지름의 2π배이므로 한 바퀴가 2π, 반 바퀴 180°가 π입니다. 따라서 θ(라디안) = θ(도) × π/180이고, 30° = π/6, 60° = π/3, 210° = 7π/6입니다.</p><p>라디안을 쓰면 부채꼴 공식이 단순해집니다. 호의 길이는 중심각에 비례하고 1라디안마다 r이므로 l = rθ, 넓이는 원 전체 πr²의 θ/(2π)이므로 <b>S = (1/2)r²θ = (1/2)rl</b>입니다. 반지름 6, 중심각 π/3이면 l = 2π, S = 6π이고, 60을 그대로 넣어 l = 360이라고 하는 실수는 θ가 라디안이라는 전제를 잊은 것입니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">삼각함수는 단위원 위 점의 좌표</p><p>예각의 삼각비는 직각삼각형이 있어야 정의되므로, 120°나 −30°에도 쓰려면 정의를 넓혀야 합니다. 그래서 단위원(원점이 중심, 반지름 1)에서 각 θ의 동경이 만나는 점을 (x, y)라 하고 <b>cos θ = x, sin θ = y, tan θ = y/x</b>로 정합니다. 예각이면 원래 삼각비와 같고, x = 0인 θ = π/2 + nπ에서는 tan θ가 정의되지 않습니다.</p><p>공식은 이 정의에서 저절로 나옵니다. 점이 단위원 위에 있으니 x² + y² = 1, 곧 <b>sin²θ + cos²θ = 1</b>이고, 양변을 cos²θ로 나누면 1 + tan²θ = 1/cos²θ입니다. 부호는 좌표의 부호라 제1사분면은 모두 양수, 제2사분면은 sin만, 제3사분면은 tan만, 제4사분면은 cos만 양수이며, sin θ = 3/5인 제2사분면의 θ는 cos θ = −4/5, tan θ = −3/4입니다.</p><p>각을 바꾼 값도 점의 대칭으로 읽습니다. π − θ는 점을 y축에 대칭시킨 (−x, y)라 sin은 그대로이고 cos는 부호가 바뀌며, π + θ는 (−x, −y), −θ는 (x, −y)라서 sin(−θ) = −sin θ, cos(−θ) = cos θ이고, π/2 − θ는 x와 y가 바뀌어 sin(π/2 − θ) = cos θ입니다. 값은 <b>각을 0 이상 2π 미만으로 → 사분면으로 부호 → 기준각의 값</b> 순서로 구해, sin 210° = −1/2(제3사분면, 기준각 30°)입니다.</p></div>
 <div class="nms-full-sec"><p class="nms-full-h">그래프 — 주기·진폭·최댓값은 식의 어느 자리에서 오나</p><p>점이 한 바퀴 돌면 같은 좌표로 돌아오므로 y = sin x와 y = cos x의 <b>주기는 2π</b>입니다. tan는 반 바퀴만 돌아도 점이 (−x, −y)가 되어 비 y/x가 같으므로 주기가 π이고, x좌표가 0인 x = π/2 + nπ가 점근선입니다. 또 각에 π/2를 더하면 점 (x, y)가 (−y, x)로 가므로 cos x = sin(x + π/2), 곧 코사인 그래프는 사인 그래프를 왼쪽으로 π/2 옮긴 모양입니다.</p><p>y = a sin(bx + c) + d에서 sin 값은 −1과 1 사이이므로 a를 곱하면 폭이 |a|배가 되고 d를 더하면 그만큼 올라가, <b>최댓값 |a| + d, 최솟값 −|a| + d</b>입니다. bx가 2π만큼 변하려면 x는 2π/|b|만 변하면 되므로 주기는 2π/|b|(tan는 π/|b|)이고, 괄호를 b(x − p) 꼴로 묶어야 좌우 이동량 p가 보입니다. y = 2 sin(2x − π/3) + 1은 2(x − π/6)이라 오른쪽으로 π/6, 주기 π, 최댓값 3, 최솟값 −1입니다.</p><p>y = −2 cos x + 3은 cos x = −1인 x = π에서 최댓값 5, cos x = 1에서 최솟값 1입니다. 최댓값을 −2 + 3 = 1로 쓰는 실수는 진폭이 언제나 |a|라는 것을 놓친 것이고, <b>a가 음수이면 산과 골의 위치만 바뀝니다</b>.</p></div>
@@ -177,7 +176,7 @@
 <div id="nm-game-host"></div>
 <script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"삼각함수의 개념과 공식을 짝지으세요.","pairs":[{"term":"부채꼴의 호의 길이","def":"반지름 곱하기 라디안"},{"term":"사인·코사인의 주기","def":"2π"},{"term":"탄젠트의 주기","def":"π"},{"term":"sin²θ + cos²θ","def":"1"},{"term":"사인법칙","def":"a/sin A = 2R"},{"term":"두 변과 끼인각","def":"코사인법칙과 넓이"}]};</script>
 <h2>개념 확인</h2>
-<p>이 파트 핵심만 고르세요. 게임은 이 페이지 안에서 바로 풀립니다.</p>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
 <div id="nm-quiz-host"></div>
 <script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"60°를 라디안으로 바꾸면?","choices":["π/6","π/3","π/4","π/2"],"answer":1},{"q":"반지름 2, 중심각 π/3인 부채꼴의 호의 길이는?","choices":["2π/3","π/3","π","4π/3"],"answer":0},{"q":"0 이상 2π 미만에서 cos x = 0인 해는 몇 개인가?","choices":["1개","3개","4개","2개"],"answer":3},{"q":"삼각형에서 a/sin A와 같은 값은?","choices":["R","R/2","2R","πR"],"answer":2},{"q":"두 변의 길이가 모두 2이고 끼인각이 60°일 때, 마주 보는 변의 제곱은?","choices":["2","4","6","8"],"answer":1}]};</script>
 <h2>이 파트 기출 풀어보기</h2>
