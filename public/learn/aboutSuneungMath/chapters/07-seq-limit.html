@@ -34,17 +34,16 @@
 <li><a href="10-strategy.html">10. 수능 수학 실전 전략</a></li>
 <li><a href="../summary.html">📌 한눈에 요약</a></li>
 <li><a href="../practice.html">📝 수능 풀어보기</a></li>
-<li><a href="../study-style.html">🧭 성향별 공부법</a></li>
+<li><a href="../study-style.html">🧭 논리형 공부법</a></li>
 </ol></aside>
 <main>
 <header class="paper-header"><h1>수열의 극한</h1><p class="authors">Part 7 · 미적분</p><p class="affiliation">수열의 수렴·발산·극한 계산·등비수열의 극한·급수</p></header>
 <div class="stat-row"><div class="stat"><b>2.2</b><span>회당 문항 수</span></div><div class="stat"><b>6.7점</b><span>회당 배점</span></div><div class="stat"><b>1~3</b><span>회차별 범위</span></div><div class="stat"><b>37</b><span>최근 17회 누적</span></div></div>
-<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2021학년도는 구 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
 <p>미적분의 첫 관문입니다. 수능에서는 <strong>극한값으로 계수를 결정</strong>하고, <strong>등비급수가 되는 도형의 규칙</strong>을 읽어 합을 구하며, <strong>부분합 S<sub>n</sub>과 일반항 a<sub>n</sub>의 관계</strong>로 수렴을 판정합니다. 계산 자체는 최고차항 비교와 유리화, 공비의 절댓값 세 가지로 모입니다. 식을 나누기 전에 “이 극한이 유한한가, 무한인가, 진동인가”를 먼저 분류하는 습관이 점수로 이어집니다.</p>
 <section class="nms" data-nms>
-<div class="nms-top"><b>🧭 내 성향으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">성향별 공부법 전체 →</a></span></div>
-<div class="nms-tabs" role="group" aria-label="공부 성향"><button type="button" data-set="logic">논리형</button><button type="button" data-set="memory">암기형</button><button type="button" data-set="visual">시각형</button><button type="button" data-set="practice">실전형</button></div>
-<div class="nms-pane" data-st="logic"><h4 class="nms-nojs">논리형</h4><p class="nms-one"><b>하나만 고른다면</b><strong>급수의 합은 부분합 S<sub>n</sub>의 극한이다</strong> — 등비급수가 |r| &lt; 1에서만 a/(1 − r)로 모이는 것도, 수렴하면 일반항이 0으로 가는 것도 여기서 나온다.</p>
+<div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
+<div class="nms-logic"><p class="nms-one"><b>하나만 고른다면</b><strong>급수의 합은 부분합 S<sub>n</sub>의 극한이다</strong> — 등비급수가 |r| &lt; 1에서만 a/(1 − r)로 모이는 것도, 수렴하면 일반항이 0으로 가는 것도 여기서 나온다.</p>
 <div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
 <p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
 <ol class="nms-chain"><li><span class="nms-step">n이 커질수록 a<sub>n</sub>이 한 실수 L에 한없이 가까워지면 수렴 → 아니면 발산(+∞, −∞, <b>진동</b>)</span></li><li><span class="nms-step">유리식은 분모의 최고차항으로 나누면 1/n 꼴이 0으로 사라져 <b>최고차항의 계수비</b>가 남는다 → ∞ − ∞는 켤레로 유리화해 ∞/∞ 꼴로 바꾼다</span></li><li><span class="nms-step">등비수열 r<sup>n</sup>은 <b>|r| &lt; 1이면 0</b>, r = 1이면 1, r &gt; 1이면 ∞, r ≤ −1이면 진동 → 밑이 여러 개면 절댓값이 가장 큰 밑으로 나눈다</span></li><li><span class="nms-step">급수의 합은 무한 개를 한꺼번에 더한 값이 아니라 <b>부분합 S<sub>n</sub>의 극한</b> → 수렴하면 a<sub>n</sub> = S<sub>n</sub> − S<sub>n−1</sub> → 0(역은 거짓)</span></li><li><span class="nms-step">등비급수 S<sub>n</sub> = a(1 − r<sup>n</sup>)/(1 − r)은 r<sup>n</sup> → 0일 때만 수렴 → <b>−1 &lt; r &lt; 1에서 합 a/(1 − r)</b>, 도형에서는 길이 공비 r, 넓이 공비 r<sup>2</sup></span></li></ol>
@@ -64,9 +63,6 @@
 <label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
 <label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
 <label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div></div>
-<div class="nms-pane" data-st="memory"><h4 class="nms-nojs">암기형</h4><p class="nms-tip">lim r<sup>n</sup>의 네 경우와 등비급수 표를 외우고, 카드에 <b>‘−1 &lt; r &lt; 1에서만’</b>을 크게 적으세요.</p><p class="nms-fit"><b>암기형에게 이 과목은</b> — 공식과 풀이 순서를 확실히 쌓으면 앞번호 2·3점 문항이 안정됩니다. 다만 수학은 공식을 ‘언제 쓸 수 있는가’가 관건이라 <b>쓸 수 있는 조건까지 함께 외우세요</b>.</p></div>
-<div class="nms-pane" data-st="visual"><h4 class="nms-nojs">시각형</h4><p class="nms-tip">‘한눈에 요약 맵’의 r<sup>n</sup> 그림처럼 점 (n, r<sup>n</sup>)을 직접 찍어 보고, 도형 급수는 <b>첫째 조각과 둘째 조각만</b> 색칠해 공비를 읽으세요.</p><p class="nms-fit"><b>시각형에게 이 과목은</b> — 수학은 그래프 한 장이 식 여러 줄을 대신하는 과목이라 시각형에게 잘 맞습니다. 식을 보면 <b>그래프부터 그리는 습관</b>이 관건입니다.</p></div>
-<div class="nms-pane" data-st="practice"><h4 class="nms-nojs">실전형</h4><p class="nms-tip">극한으로 계수를 정하는 문항과 도형 등비급수 문항을 <b>각각 모아 시간을 재며</b> 반복하세요.</p><p class="nms-fit"><b>실전형에게 이 과목은</b> — 기출 유형이 정해져 있어 효율이 좋지만, 킬러 문항은 조건이 새로 조합되어 <b>패턴만으로는 풀리지 않습니다</b>.</p></div>
 </section>
 <details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">|r| < 1이면 부호가 바뀌어도 수렴 — 급수는 부분합의 극한</span><span class="mg-stat">회당 평균 2.2문항 · 6.7점</span></div>
@@ -139,7 +135,7 @@
 <p>판정법 이름은 이 과목의 범위가 아닙니다. 교과에서 실제로 하는 일은 세 가지입니다. 일반항이 0이 아니면 발산, 등비급수이면 공비의 절댓값으로 판정, 부분합이 닫히면 그 극한을 구합니다.</p>
 <div class="formula">1/(n(n+1)) = 1/n − 1/(n+1)<br>S<sub>n</sub> = 1 − 1/(n+1) → 1</div>
 <p>이웃한 부분합의 차가 일반항이라는 사실을 거꾸로 쓰면, S<sub>n</sub>의 식이 주어졌을 때 합은 lim S<sub>n</sub>이고 일반항의 극한은 0인지 아닌지만 보면 수렴 여부가 갈립니다. lim S<sub>n</sub>이 유한하면 급수는 그 값에 수렴하고, 자동으로 a<sub>n</sub> → 0입니다.</p>
-<p>수렴하는 급수끼리 더하거나 상수배를 하면 합도 그대로 더해지고 상수배가 됩니다. 수렴하는 급수와 발산하는 급수를 더하면 발산합니다. 수렴하는 것을 양쪽으로 옮겨 보면, 차가 발산하기 때문입니다.</p>
+<p>수렴하는 급수끼리 더하거나 상수배를 하면 합도 그대로 더해지고 상수배가 됩니다. 수렴하는 급수와 발산하는 급수를 더하면 발산합니다. 합이 수렴한다고 하면, 그 합에서 수렴하는 급수를 뺀 발산 급수도 수렴해야 하므로 모순이기 때문입니다.</p>
 
 <h2>5. 등비급수와 도형</h2>
 <p>첫째항 a, 공비 r인 등비급수는 a + ar + ar² + … 입니다. 부분합은 r ≠ 1일 때 다음과 같습니다.</p>

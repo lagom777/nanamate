@@ -30,7 +30,7 @@ export const ex = (q, sol) =>
 export const figHead = (...ids) => `<link rel="stylesheet" href="../../shared/figure-explorer.css">
 <script defer src="../../shared/figure-explorer.js"></script>
 ${ids.map((id) => `<script defer src="../../shared/figures/data/${id}.js"></script>\n<script defer src="../../shared/figures/${id}.js"></script>`).join("\n")}`;
-export const figure = (id, view) => `<div data-figure="${id}"${view ? ` data-view="${view}"` : ""}></div>`;
+export const figure = (id, view) => `<div data-figure="${id}" id="fig-${id}${view ? "-" + view : ""}"${view ? ` data-view="${view}"` : ""}></div>`;
 
 export const examsOf = (sub) => EXAMS.filter((e) => e[sub]);
 
@@ -80,7 +80,7 @@ export function aside(spec, active, depth) {
   if (spec.motion !== false) items.push(li(`${up}motion.html`, "🎬 모션 노트", active === "motion"));
   if (spec.summary) items.push(li(`${up}summary.html`, "📌 한눈에 요약", active === "summary"));
   if (spec.practice !== false) items.push(li(`${up}practice.html`, "📝 수능 풀어보기", active === "practice"));
-  if (spec.styles) items.push(li(`${up}study-style.html`, "🧭 성향별 공부법", active === "style"));
+  if (spec.styles) items.push(li(`${up}study-style.html`, "🧭 논리형 공부법", active === "style"));
   (spec.extraLinks || []).forEach((x) => items.push(li(`${up}${x.href}`, x.label, false)));
   return `<aside><a href="${up}../index.html" class="hub-back-link">↑ 통합 허브</a><h3>${spec.short} 목차</h3><ol>
 ${items.join("\n")}
@@ -131,7 +131,7 @@ export function chapterPage(spec, c, i) {
   const prev = spec.chapters[i - 1], next = spec.chapters[i + 1];
   const stat = st
     ? `<div class="stat-row"><div class="stat"><b>${st.avg}</b><span>회당 문항 수</span></div><div class="stat"><b>${st.avgPts}점</b><span>회당 배점</span></div><div class="stat"><b>${st.min}~${st.max}</b><span>회차별 범위</span></div><div class="stat"><b>${st.total}</b><span>최근 ${st.exams}회 누적</span></div></div>
-<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 ${st.exams}회(2018~2021학년도는 구 교육과정)(${st.exams * (spec.qn || 20)}문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>`
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 ${st.exams}회(2018~2020학년도는 2009 개정 교육과정)(${st.exams * (spec.qn || 20)}문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>`
     : "";
   const practice = spec.practice === false ? "" : c.part
     ? `<h2>이 파트 기출 풀어보기</h2>
@@ -175,7 +175,7 @@ export function indexPage(spec) {
   const extraCards = `${spec.motion === false ? "" : `  <a class="outline-card" href="motion.html"><div class="num">MOTION</div><h4>🎬 모션 노트</h4><p>${spec.motionBlurb}</p></a>`}
 ${spec.summary ? `  <a class="outline-card" href="summary.html"><div class="num">SUMMARY</div><h4>📌 한눈에 요약</h4><p>${spec.summaryBlurb}</p></a>` : ""}
 ${spec.practice === false ? "" : `  <a class="outline-card" href="practice.html"><div class="num">PRACTICE</div><h4>📝 수능 풀어보기</h4><p>${spec.practiceBlurb || `실제 시험지 ${examsOf(spec.sub).length}회 ${examsOf(spec.sub).length * (spec.qn || 20)}문항 · 채점 · 해설`}</p></a>`}
-${spec.styles ? `  <a class="outline-card" href="study-style.html"><div class="num">STYLE</div><h4>🧭 성향별 공부법</h4><p>논리형·암기형·시각형·실전형 — 내 성향에 맞춘 공부 순서와 파트별 공략</p></a>` : ""}
+${spec.styles ? `  <a class="outline-card" href="study-style.html"><div class="num">STYLE</div><h4>🧭 논리형 공부법</h4><p>왜 사슬 · 장별 전체 해설 · 말로 설명해 보기 — 원리로 납득하며 공부하는 순서와 파트별 공략</p></a>` : ""}
 ${(spec.extraLinks || []).map((x) => `  <a class="outline-card" href="${x.href}"><div class="num">${x.num}</div><h4>${x.label}</h4><p>${x.blurb}</p></a>`).join("\n")}`;
   let roadmap;
   if (spec.chapters.some((c) => c.group)) {
@@ -261,27 +261,21 @@ function sheetOf(c) {
   return secs.filter((x) => x.blocks.length);
 }
 
-/* ── 성향별 공부법 ──
- * spec.styles = { intro, types: { logic|memory|visual|practice: { fit, principles[], routine[], weekly, trap } },
- *                 chapters: { [file]: { logic: { chain[], keep, derive, trap }, memory, visual, practice } } }
- * 장 첫머리 카드(styleCard)와 과목별 study-style.html(stylePage). 고른 성향은 shared/study-style.js 가 기억한다(기본 논리형). */
-export const STYLE_TYPES = [
-  ["logic", "논리형", "원리·인과로 납득해야 기억한다"],
-  ["memory", "암기형", "정리하고 반복해서 확실히 외운다"],
-  ["visual", "시각형", "그림·도식·지도로 기억한다"],
-  ["practice", "실전형", "문제를 먼저 풀며 개념을 채운다"],
-];
-const styleTabs = () => `<div class="nms-tabs" role="group" aria-label="공부 성향">${STYLE_TYPES.map(([k, name]) => `<button type="button" data-set="${k}">${name}</button>`).join("")}</div>`;
+/* ── 논리형 공부법 ──
+ * spec.styles = { intro, types: { logic: { fit, principles[], routine[], weekly, trap, extra? } },
+ *                 chapters: { [file]: { logic: { one, chain[], keep, derive, trap, explain[], answers[], full[] } } } }
+ * 사용자의 공부 성향(논리형)에만 맞춘 장 첫머리 카드(styleCard)와 과목별 study-style.html(stylePage). 다른 성향은 두지 않는다. */
 /* ‘하나만 고른다면’은 “핵심 — 풀이” 꼴이라 줄표 앞을 굵게, 줄표가 없으면 문장 전체를 굵게 */
 const boldOne = (t) => { const i = t.indexOf(" — "); return i > 0 ? `<strong>${t.slice(0, i)}</strong>${t.slice(i)}` : `<strong>${t}</strong>`; };
 const doneBox = (key) => `<div class="nms-done" data-done="${key}"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
 <label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
 <label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
 <label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div>`;
-/* o: { ex: 대표 예제 주소, done: 끝내기 체크 키, full: true(전체 해설을 여기 펼침) | 주소(전체 해설로 가는 링크) } */
+/* o: { ex: 대표 예제 주소, done: 끝내기 체크 키, full: true(전체 해설을 여기 펼침) | 주소(전체 해설로 가는 링크) }
+ * 전체 해설의 절에 sec.fig = [[그림 id, 이름]…]이 있으면 본문의 그 그림(id="fig-<id>")으로 가는 링크를 붙인다. */
 const fullBlock = (d) => `<details class="nms-full" open><summary>📖 논리형 전체 해설 — 이 파트를 처음부터 끝까지</summary>
-${d.full.map((sec) => `<div class="nms-full-sec"><p class="nms-full-h">${sec.h}</p>${sec.p.map((x) => `<p>${x}</p>`).join("")}</div>`).join("\n")}</details>`;
-const logicBlock = (d, o = {}) => `${d.one ? `<p class="nms-one"><b>하나만 고른다면</b>${boldOne(d.one)}</p>` : ""}
+${d.full.map((sec) => `<div class="nms-full-sec"><p class="nms-full-h">${sec.h}</p>${sec.p.map((x) => `<p>${x}</p>`).join("")}${sec.fig ? `<p class="nms-figlink">${sec.fig.map(([id, name]) => `<a href="#fig-${id}">🖼 그림으로 보기: ${name} ↓</a>`).join("")}</p>` : ""}</div>`).join("\n")}</details>`;
+const logicBlock = (d, o = {}) => `<div class="nms-logic">${d.one ? `<p class="nms-one"><b>하나만 고른다면</b>${boldOne(d.one)}</p>` : ""}
 <div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
 <p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
 <ol class="nms-chain">${d.chain.map((x) => `<li><span class="nms-step">${x}</span></li>`).join("")}</ol>
@@ -291,7 +285,7 @@ ${d.full && o.full === true ? fullBlock(d) : d.full && o.full ? `<p class="nms-f
 <p class="nms-trap"><b>논리형 함정</b>${d.trap}</p>
 ${d.explain ? `<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol>${d.explain.map((x, i) => `<li>${x}${d.answers && d.answers[i] ? `<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>${d.answers[i]}</p></details>` : ""}</li>`).join("")}</ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>` : ""}
 ${o.ex ? `<p class="nms-first">문제부터 부딪치고 싶다면 <a href="${o.ex}">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p>` : ""}
-${o.done ? doneBox(o.done) : ""}`;
+${o.done ? doneBox(o.done) : ""}</div>`;
 /* 논리형 공통 루틴 — 이해가 ‘옮겨 적기’에서 끝나지 않고 내 것이 되게 하는 습관(모든 과목 공통) */
 const LOGIC_COMMON = [
   "<strong>틀부터 빌립니다.</strong> 파트를 읽기 전 표지의 로드맵과 ‘한눈에 요약 맵’으로 큰 덩어리를 5분 봅니다. 틀을 직접 만들려 애쓰지 말고, 있는 틀이 왜 그렇게 짜였는지 이해하는 데 힘을 씁니다. 읽는 동안 ‘지금 이 내용이 틀의 어느 자리인가’를 의식합니다.",
@@ -307,66 +301,44 @@ const LOGIC_COMMON = [
 export function styleCard(spec, c) {
   const d = spec.styles && spec.styles.chapters[c.file];
   if (!d) return "";
-  const pane = (k, name, inner) => `<div class="nms-pane" data-st="${k}"><h4 class="nms-nojs">${name}</h4>${inner}</div>`;
   return `<section class="nms" data-nms>
-<div class="nms-top"><b>🧭 내 성향으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">성향별 공부법 전체 →</a></span></div>
-${styleTabs()}
-${pane("logic", "논리형", logicBlock(d.logic, { ex: c.examples ? "#examples" : null, done: `${spec.folder}/${c.file}`, full: true }))}
-${STYLE_TYPES.slice(1).map(([k, name]) => pane(k, name, `<p class="nms-tip">${d[k]}</p><p class="nms-fit"><b>${name}에게 이 과목은</b> — ${spec.styles.types[k].fit}</p>`)).join("\n")}
+<div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
+${logicBlock(d.logic, { ex: c.examples ? "#examples" : null, done: `${spec.folder}/${c.file}`, full: true })}
 </section>`;
 }
 
 export function stylePage(spec) {
   const S = spec.styles;
-  const check = `<table class="nms-check"><tbody>
-<tr><th>논리형</th><td>“왜 그런데?”가 풀려야 외워진다 · 공식이나 규칙을 스스로 유도해 보고 싶다 · 이유 없이 외우라고 하면 집중이 안 된다</td></tr>
-<tr><th>암기형</th><td>표·목록으로 정리해 반복하면 확실히 남는다 · 카드나 빈칸 채우기가 편하다 · 정해진 분량을 꾸준히 하는 게 잘 맞는다</td></tr>
-<tr><th>시각형</th><td>그림·지도·도식으로 보면 한 번에 기억난다 · 노트에 화살표와 색을 많이 쓴다 · 글로만 된 설명은 잘 안 들어온다</td></tr>
-<tr><th>실전형</th><td>설명보다 문제를 먼저 풀어야 감이 온다 · 틀리면서 배우는 게 빠르다 · 시간을 재고 푸는 게 재미있다</td></tr>
-</tbody></table>`;
-  const chapterList = (k) => spec.chapters.filter((c) => S.chapters[c.file]).map((c) => {
-    const d = S.chapters[c.file];
-    const i = spec.chapters.indexOf(c);
-    return `<h3><a href="chapters/${c.file}">${i + 1}. ${c.title} →</a> <span class="nms-prog" data-prog="${spec.folder}/${c.file}"></span></h3>${k === "logic" ? logicBlock(d.logic, { ex: c.examples ? `chapters/${c.file}#examples` : null, full: `chapters/${c.file}` }) : `<p class="nms-tip">${d[k]}</p>`}`;
-  }).join("\n");
+  const t = S.types.logic;
   const styled = spec.chapters.filter((c) => S.chapters[c.file]);
+  const chapterList = styled.map((c) => {
+    const i = spec.chapters.indexOf(c);
+    return `<h3><a href="chapters/${c.file}">${i + 1}. ${c.title} →</a> <span class="nms-prog" data-prog="${spec.folder}/${c.file}"></span></h3>${logicBlock(S.chapters[c.file].logic, { ex: c.examples ? `chapters/${c.file}#examples` : null, full: `chapters/${c.file}` })}`;
+  }).join("\n");
   const frame = `<div class="nms-frame"><h3>이 과목의 틀 — 장마다 하나만</h3>
 <p class="nms-fit">각 파트에서 ‘하나만 고른다면’을 모은 과목 전체의 뼈대입니다. 파트를 시작하기 전에 이 목록에서 지금 파트의 자리를 확인하고, 시험 직전에는 이 목록만 소리 내어 읽어도 큰 그림이 돌아옵니다.</p>
 <p class="nms-total" data-prog-total="${spec.folder}" data-prog-count="${styled.length}"></p>
 <ol>${styled.map((c) => `<li><a href="chapters/${c.file}">${c.title}</a> <span class="nms-prog" data-prog="${spec.folder}/${c.file}"></span><span class="nms-frame-one">${boldOne(S.chapters[c.file].logic.one || "")}</span></li>`).join("")}</ol></div>`;
-  const panes = STYLE_TYPES.map(([k, name, gist]) => {
-    const t = S.types[k];
-    return `<div class="nms-pane" data-st="${k}">
-<h4 class="nms-nojs">${name}</h4>
-<p class="nms-tip"><strong>${name}</strong> — ${gist}. ${t.fit}</p>
-${k === "logic" ? frame : ""}
-${k === "logic" ? `<div class="nms-common"><h3>논리형 공통 루틴 — 이해가 ‘내 것’이 되게</h3><ol>${LOGIC_COMMON.map((x) => `<li>${x}</li>`).join("")}</ol></div>` : ""}
+  return `${head(`논리형 공부법 — ${spec.label}`, 0, spec, { terms: true })}
+<body><div class="layout">
+${aside(spec, "style", 0)}
+<main>
+<header class="paper-header"><h1>논리형 공부법</h1><p class="authors">${spec.label} · 원리와 인과로 납득하며 공부하기</p><p class="affiliation">각 파트 첫머리의 ‘논리형으로 이 파트 공부하기’ 상자와 같은 사슬·해설을 씁니다. 끝내기 체크와 50분 타이머는 이 사이트의 모든 과목에서 이어집니다.</p></header>
+<p>${S.intro}</p>
+<section class="nms" data-nms>
+<div class="nms-top"><b>논리형으로 이 과목 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button></span></div>
+<p class="nms-tip"><strong>논리형</strong> — 원리·인과로 납득해야 기억한다. ${t.fit}</p>
+${frame}
+<div class="nms-common"><h3>논리형 공통 루틴 — 이해가 ‘내 것’이 되게</h3><ol>${LOGIC_COMMON.map((x) => `<li>${x}</li>`).join("")}</ol></div>
 ${t.extra ? `<div class="nms-extra"><h3>${t.extra.title}</h3><ul>${t.extra.items.map((x) => `<li>${x}</li>`).join("")}</ul></div>` : ""}
 <h3>이 과목의 기본 원칙</h3>
 <ul>${t.principles.map((x) => `<li>${x}</li>`).join("")}</ul>
 <h3>공부 순서</h3>
 <ol class="nms-steps">${t.routine.map((x) => `<li>${x}</li>`).join("")}</ol>
 <p class="nms-kv"><b>한 주 배치</b>${t.weekly}</p>
-<p class="nms-trap"><b>${name} 함정</b>${t.trap}</p>
+<p class="nms-trap"><b>논리형 함정</b>${t.trap}</p>
 <h3>파트별 공략</h3>
-${chapterList(k)}
-</div>`;
-  }).join("\n");
-  return `${head(`성향별 공부법 — ${spec.label}`, 0, spec, { terms: true })}
-<body><div class="layout">
-${aside(spec, "style", 0)}
-<main>
-<header class="paper-header"><h1>성향별 공부법</h1><p class="authors">${spec.label} · 논리형 · 암기형 · 시각형 · 실전형</p><p class="affiliation">고른 성향은 이 사이트의 모든 과목에서 기억되고, 각 파트 첫머리의 ‘내 성향으로 이 파트 공부하기’ 상자도 같은 성향으로 바뀝니다.</p></header>
-<p>${S.intro}</p>
-<section class="nms" data-nms>
-<div class="nms-top"><b>나는 어떤 성향일까?</b></div>
-<p class="nms-fit">아래 중 가장 많이 “맞다” 싶은 줄이 내 성향입니다. 두 가지가 비슷하면 약한 과목에서 더 맞는 쪽을 고르세요.</p>
-${check}
-</section>
-<section class="nms" data-nms>
-<div class="nms-top"><b>내 성향 고르기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button></span></div>
-${styleTabs()}
-${panes}
+${chapterList}
 </section>
 </main></div>
 </body></html>`;

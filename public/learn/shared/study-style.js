@@ -1,12 +1,10 @@
-/* 성향별 공부법 — 성향 전환, 사슬 가리고 떠올리기, 파트 끝내기 체크·진행률, 50분 집중 타이머.
- * 고른 성향('nm-study-style', 기본 논리형), 체크('nm-ss-done'), 타이머('nm-ss-timer')는 localStorage 에 두고 과목을 넘어 이어진다.
- * 스크립트가 없으면 모든 성향이 다 보이고 나머지 기능만 빠진다. */
+/* 논리형 공부법 — 사슬 가리고 떠올리기, 파트 끝내기 체크·진행률, 50분 집중 타이머.
+ * 체크('nm-ss-done')와 타이머('nm-ss-timer')는 localStorage 에 두고 과목을 넘어 이어진다.
+ * 스크립트가 없으면 사슬·해설은 그대로 보이고 이 기능들만 빠진다. */
 (function () {
   'use strict';
-  var KEY = 'nm-study-style';
   var DONE = 'nm-ss-done';
   var TIMER = 'nm-ss-timer';
-  var TYPES = ['logic', 'memory', 'visual', 'practice'];
   var FOCUS = 50 * 60 * 1000;
   var REST = 10 * 60 * 1000;
 
@@ -24,26 +22,9 @@
     for (var i = 0; i < list.length; i++) fn(list[i], i);
   }
 
-  /* ── 성향 전환 ── */
-  function getStyle() {
-    var v = null;
-    try { v = localStorage.getItem(KEY); } catch (e) {}
-    return TYPES.indexOf(v) >= 0 ? v : 'logic';
-  }
-  function applyStyle(v) {
-    each('[data-nms]', function (box) {
-      box.setAttribute('data-cur', v);
-      each('[data-set]', function (b) {
-        var on = b.getAttribute('data-set') === v;
-        b.classList.toggle('is-on', on);
-        b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      }, box);
-    });
-  }
-
-  /* ── 사슬 가리고 떠올리기: 첫 단계만 두고 나머지를 흐리게, 누르면 하나씩 드러난다 ── */
+  /* ── 사슬 가리고 떠올리기: 첫 단계만 두고 나머지를 흐리게, 누르면 하나씩 드러난다(그 파트의 사슬만) ── */
   function setRecall(btn, on) {
-    var pane = btn.closest('.nms-pane') || btn.parentNode.parentNode;
+    var pane = btn.closest('.nms-logic') || btn.parentNode.parentNode;
     pane.classList.toggle('is-recall', on);
     btn.setAttribute('aria-pressed', on ? 'true' : 'false');
     btn.textContent = on ? '👀 모두 보기' : '🙈 가리고 떠올리기';
@@ -181,22 +162,11 @@
   }
 
   function init() {
-    document.documentElement.classList.add('nms-js');
-    applyStyle(getStyle());
     paintDone();
     runTimer();
     document.addEventListener('click', function (e) {
       var t = e.target;
       if (!t || !t.closest) return;
-      var b = t.closest('[data-nms] [data-set]');
-      if (b) {
-        var v = b.getAttribute('data-set');
-        if (TYPES.indexOf(v) >= 0) {
-          try { localStorage.setItem(KEY, v); } catch (err) {}
-          applyStyle(v);
-        }
-        return;
-      }
       var r = t.closest('[data-recall]');
       if (r) { setRecall(r, r.getAttribute('aria-pressed') !== 'true'); return; }
       var li = t.closest('.is-recall .nms-chain li.is-hidden');
@@ -220,7 +190,6 @@
     window.addEventListener('storage', function (e) {
       if (e.key === DONE) paintDone();
       if (e.key === TIMER) runTimer();
-      if (e.key === KEY) applyStyle(getStyle());
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

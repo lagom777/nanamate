@@ -34,17 +34,16 @@
 <li><a href="10-strategy.html">10. 수능 수학 실전 전략</a></li>
 <li><a href="../summary.html">📌 한눈에 요약</a></li>
 <li><a href="../practice.html">📝 수능 풀어보기</a></li>
-<li><a href="../study-style.html">🧭 성향별 공부법</a></li>
+<li><a href="../study-style.html">🧭 논리형 공부법</a></li>
 </ol></aside>
 <main>
 <header class="paper-header"><h1>수열</h1><p class="authors">Part 3 · 수학Ⅰ</p><p class="affiliation">등차·등비수열, 시그마, 수열의 합, 귀납적 정의, 수학적 귀납법</p></header>
 <div class="stat-row"><div class="stat"><b>4.1</b><span>회당 문항 수</span></div><div class="stat"><b>13.9점</b><span>회당 배점</span></div><div class="stat"><b>4~5</b><span>회차별 범위</span></div><div class="stat"><b>69</b><span>최근 17회 누적</span></div></div>
-<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2021학년도는 구 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
 <p>수열은 일반항과 합의 계산, 그리고 합 S<sub>n</sub>에서 항 a<sub>n</sub>을 복원하는 추론이 함께 나옵니다. 등차수열과 등비수열은 공식을 조건에 맞게 쓰고, 그 밖의 수열은 부분분수·분모의 유리화·계차로 합을 상쇄합니다. 점화식은 항을 몇 개 구해 규칙을 찾은 뒤, 수학적 귀납법으로 그 규칙이 모든 자연수에서 성립하는지 확인합니다.</p>
 <section class="nms" data-nms>
-<div class="nms-top"><b>🧭 내 성향으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">성향별 공부법 전체 →</a></span></div>
-<div class="nms-tabs" role="group" aria-label="공부 성향"><button type="button" data-set="logic">논리형</button><button type="button" data-set="memory">암기형</button><button type="button" data-set="visual">시각형</button><button type="button" data-set="practice">실전형</button></div>
-<div class="nms-pane" data-st="logic"><h4 class="nms-nojs">논리형</h4><p class="nms-one"><b>하나만 고른다면</b><strong>수열은 이웃한 항 사이의 규칙이다</strong> — 차가 일정하면 등차, 비가 일정하면 등비, 이웃한 합의 차는 항(a<sub>n</sub> = S<sub>n</sub> − S<sub>n−1</sub>)이다.</p>
+<div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
+<div class="nms-logic"><p class="nms-one"><b>하나만 고른다면</b><strong>수열은 이웃한 항 사이의 규칙이다</strong> — 차가 일정하면 등차, 비가 일정하면 등비, 이웃한 합의 차는 항(a<sub>n</sub> = S<sub>n</sub> − S<sub>n−1</sub>)이다.</p>
 <div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
 <p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
 <ol class="nms-chain"><li><span class="nms-step">이웃한 항의 차가 일정하면 등차 → a<sub>n</sub> = a + (n − 1)d, 합은 <b>처음과 끝의 평균 × 항의 개수</b>(S<sub>n</sub> = n(a + l)/2)</span></li><li><span class="nms-step">이웃한 항의 비가 일정하면 등비 → a<sub>n</sub> = ar<sup>n−1</sup>, 합은 <b>S<sub>n</sub> − rS<sub>n</sub>에서 가운데가 지워져</b> a(r<sup>n</sup> − 1)/(r − 1)(r = 1이면 na)</span></li><li><span class="nms-step">∑는 나눠 더하고 상수를 밖으로 뺄 수 있다 → ∑k, ∑k<sup>2</sup>, ∑k<sup>3</sup> 공식과 <b>이웃끼리 지워지는 꼴</b>(부분분수, 분모의 유리화, 계차)로 합을 닫는다</span></li><li><span class="nms-step">S<sub>n</sub>은 n번째까지의 총합 → 이웃한 두 합의 차가 항이므로 <b>a<sub>n</sub> = S<sub>n</sub> − S<sub>n−1</sub>(n ≥ 2)</b>, 첫째항은 a<sub>1</sub> = S<sub>1</sub>로 따로 확인</span></li><li><span class="nms-step">첫째항과 점화식만 있으면 수열이 정해진다 → 항을 몇 개 써서 규칙을 찾고, ‘1에서 참, k에서 참이면 k + 1에서 참’(<b>수학적 귀납법</b>)으로 모든 자연수에서 확인</span></li></ol>
@@ -65,9 +64,6 @@
 <label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
 <label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
 <label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div></div>
-<div class="nms-pane" data-st="memory"><h4 class="nms-nojs">암기형</h4><p class="nms-tip">등차·등비·∑ 공식을 카드로 만들고 뒷면에 <b>‘r = 1이면 na’, ‘n ≥ 2에서만’</b> 같은 조건을 적으세요.</p><p class="nms-fit"><b>암기형에게 이 과목은</b> — 공식과 풀이 순서를 확실히 쌓으면 앞번호 2·3점 문항이 안정됩니다. 다만 수학은 공식을 ‘언제 쓸 수 있는가’가 관건이라 <b>쓸 수 있는 조건까지 함께 외우세요</b>.</p></div>
-<div class="nms-pane" data-st="visual"><h4 class="nms-nojs">시각형</h4><p class="nms-tip">등차수열의 합은 ‘한눈에 요약 맵’처럼 <b>같은 수열을 뒤집어 붙인 직사각형의 절반</b>으로 그려 보세요.</p><p class="nms-fit"><b>시각형에게 이 과목은</b> — 수학은 그래프 한 장이 식 여러 줄을 대신하는 과목이라 시각형에게 잘 맞습니다. 식을 보면 <b>그래프부터 그리는 습관</b>이 관건입니다.</p></div>
-<div class="nms-pane" data-st="practice"><h4 class="nms-nojs">실전형</h4><p class="nms-tip">S<sub>n</sub>에서 a<sub>n</sub>을 구하는 문항과 점화식 문항을 모아 <b>항을 직접 몇 개 써 보는 것부터</b> 반복하세요.</p><p class="nms-fit"><b>실전형에게 이 과목은</b> — 기출 유형이 정해져 있어 효율이 좋지만, 킬러 문항은 조건이 새로 조합되어 <b>패턴만으로는 풀리지 않습니다</b>.</p></div>
 </section>
 <details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">Sₙ에서 aₙ 복원은 n ≥ 2, 첫째항은 따로 — 점화식은 네다섯 항을 써 보고 푼다</span><span class="mg-stat">회당 평균 4.1문항 · 13.9점</span></div>
