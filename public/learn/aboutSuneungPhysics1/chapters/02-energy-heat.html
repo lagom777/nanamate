@@ -11,6 +11,8 @@
 <script defer src="../../shared/difficulty.js"></script>
 <link rel="stylesheet" href="../../shared/practice-simple.css">
 <script defer src="../../shared/practice-simple.js"></script>
+<link rel="stylesheet" href="../../shared/sections.css">
+<script defer src="../../shared/sections.js"></script>
 <link rel="stylesheet" href="../../shared/term-tips.css">
 <script defer src="../../shared/terms/phys1.js"></script>
 <script defer src="../../shared/term-tips.js"></script>
@@ -38,6 +40,7 @@
 <div class="stat-row"><div class="stat"><b>1.7</b><span>회당 문항 수</span></div><div class="stat"><b>4.3점</b><span>회당 배점</span></div><div class="stat"><b>1~3</b><span>회차별 범위</span></div><div class="stat"><b>50</b><span>최근 29회 누적</span></div></div>
 <p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 29회(2018~2020학년도는 2009 개정 교육과정)(580문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
 <p>이 파트는 두 갈래입니다. 하나는 <strong>빗면·곡면·용수철에서의 역학적 에너지 보존</strong>, 다른 하나는 <strong>기체의 상태 변화와 열기관의 효율</strong>입니다. 앞은 “어디서 얼마가 다른 에너지로 바뀌었는가”를, 뒤는 “Q, ΔU, W의 부호”를 묻습니다. 마찰 구간이 끼어든 <em>높이–속력 문항</em>은 매 시험 후반부(3점)에 단골로 나옵니다.</p>
+<div class="nms-stepband"><b>① 틀 잡기</b><span>5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터</span></div>
 <section class="nms" data-nms>
 <div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
 <div class="nms-logic"><p class="nms-one"><b>하나만 고른다면</b><strong>에너지는 사라지지 않고 형태만 바뀐다</strong> — ‘어디서 얼마가 어디로 갔나’ 장부를 맞추면 풀린다.</p>
@@ -54,12 +57,9 @@
 <p class="nms-kv"><b>외울 것은 이것뿐</b>Q = ΔU + W의 부호 약속(열을 받으면 +, 기체가 일을 하면 +), 이상 기체 U ∝ T, 열효율의 정의</p>
 <p class="nms-kv"><b>나머지는 유도</b>등적·등압·등온·단열 표 전체, 마찰 구간을 지난 뒤의 속력, 순환 과정에서 한 일(P–V 그래프의 넓이)</p>
 <p class="nms-trap"><b>논리형 함정</b>‘단열 = 온도 일정’으로 착각하기 쉽습니다. <b>단열은 열 출입이 0</b>이라는 뜻이고, 팽창하면 일을 한 만큼 온도가 내려갑니다.</p>
-<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>단열 팽창에서 온도가 내려가는 이유를 Q, ΔU, W로 설명해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>단열은 열 출입이 없다는 뜻이라 Q = 0이고, 팽창하면서 기체가 바깥을 밀어 일을 하므로 W는 양수입니다. 제1법칙 Q = ΔU + W에 Q = 0을 넣으면 ΔU = −W, 즉 기체가 한 일만큼 내부 에너지가 줄어듭니다. 이상 기체의 내부 에너지는 온도만 따라가므로 <b>내부 에너지가 줄면 온도가 내려갑니다</b>.</p></details></li><li>마찰 없는 빗면과 곡면으로 같은 높이를 내려오면 왜 나중 속력이 같은지 말해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>마찰이 없으면 일을 하는 힘은 중력뿐이고(수직항력은 운동 방향과 수직이라 일을 하지 않습니다), 이때 역학적 에너지 K + U는 일정합니다. 정지 상태에서 출발하면 줄어든 퍼텐셜 에너지 mgh가 모두 운동 에너지 ½mv²로 바뀌어 v² = 2gh가 되는데, 이 식에는 경로의 모양이나 길이가 들어 있지 않습니다. 그래서 <b>높이 차가 같으면 나중 속력도 같습니다</b>. 다만 걸리는 시간은 경로마다 다를 수 있습니다.</p></details></li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
+
 <p class="nms-first">문제부터 부딪치고 싶다면 <a href="#examples">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p>
-<div class="nms-done" data-done="aboutSuneungPhysics1/02-energy-heat.html"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
-<label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
-<label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
-<label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div></div>
+</div>
 </section>
 <details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">에너지는 사라지지 않고 모양만 바뀐다 — 표 하나로 열역학 그래프 끝</span><span class="mg-stat">회당 평균 1.7문항 · 4.3점</span></div>
@@ -72,29 +72,32 @@
 <p class="mg-ask"><b>수능은 이렇게 묻는다</b>역학적 에너지 보존 + 마찰 구간 → P–V 그래프의 과정별 W·ΔU·Q 부호 → 순환 과정의 열효율</p>
 </div></details>
 <p><a class="cta sm" href="../summary.html#p2">📌 이 파트 한눈에 요약 →</a></p>
-<h2>1. 일과 에너지</h2>
+<div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="sec-bar"><span>본문 5절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
+<details class="sec"><summary><h2>1. 일과 에너지</h2></summary>
 <div class="formula">W = Fs cosθ<br>운동 에너지 K = ½mv²<br>중력 퍼텐셜 에너지 U = mgh<br>탄성 퍼텐셜 에너지 U = ½kx²<br>일·에너지 정리: W<sub>알짜</sub> = ΔK</div>
-<h2>2. 역학적 에너지 보존</h2>
+</details><details class="sec"><summary><h2>2. 역학적 에너지 보존</h2></summary>
 <p>중력·탄성력 같은 <strong>보존력만 일을 하면</strong> 역학적 에너지 E = K + U가 일정합니다. 경로가 곡면이든 빗면이든 <strong>같은 높이면 같은 속력</strong>이고, 경로의 길이나 걸린 시간은 관계가 없습니다.</p>
 <h3>마찰이 있는 구간</h3>
 <p>에너지가 사라지는 것이 아니라 <strong>마찰력이 한 일만큼 열로 바뀝니다</strong>. 마찰 구간을 지나면 손실은 ΔE = (마찰력) × (구간 길이)입니다.</p>
 <div class="formula">높이 h에서 정지 출발 → 마찰 없는 바닥: v² = 2gh<br>길이 L, 마찰 계수 μ인 수평 구간 통과 후: v′² = 2gh − 2μgL</div>
 <h3>용수철</h3>
 <ul><li>수평면에서 x만큼 압축했다가 놓으면 ½kx² = ½mv² → 용수철을 벗어나는 순간 속력이 최대입니다.</li><li>두 물체가 충돌해 용수철이 <em>최대로 압축된 순간</em>에는 두 물체의 속도가 같습니다(상대 속도 0). 이때 줄어든 운동 에너지가 탄성 에너지로 저장됩니다.</li></ul>
-<h2>3. 열과 온도</h2>
+</details><details class="sec"><summary><h2>3. 열과 온도</h2></summary>
 <div class="formula">열량 Q = cmΔT = CΔT (C: 열용량)<br>열평형 온도: 고온 물체가 잃은 열 = 저온 물체가 얻은 열</div>
 <p>같은 열을 받았을 때 온도 변화는 열용량 C에 <strong>반비례</strong>합니다. 열은 항상 <em>고온 → 저온</em>으로 자발적으로 이동합니다.</p>
-<h2>4. 열역학 제1법칙</h2>
+</details><details class="sec"><summary><h2>4. 열역학 제1법칙</h2></summary>
 <div class="formula">Q = ΔU + W<br>(Q: 기체가 흡수한 열, ΔU: 내부 에너지 증가, W: 기체가 외부에 한 일)</div>
 <p>이상 기체의 내부 에너지는 온도에만 비례합니다(U ∝ T). 아래 네 과정의 부호를 <strong>표로 외워 두면</strong> 그래프 문항이 거의 자동으로 풀립니다.</p>
 <div class="tbl-wrap"><table><thead><tr><th>과정</th><th>성질</th><th>W</th><th>ΔU</th><th>Q</th></tr></thead><tbody><tr><td data-l="과정">등적</td><td data-l="성질">V 일정</td><td data-l="W">0</td><td data-l="ΔU">= Q</td><td data-l="Q">T 오르면 흡열</td></tr><tr><td data-l="과정">등압</td><td data-l="성질">P 일정</td><td data-l="W">PΔV (팽창하면 +)</td><td data-l="ΔU">T에 비례</td><td data-l="Q">= ΔU + PΔV</td></tr><tr><td data-l="과정">등온</td><td data-l="성질">T 일정</td><td data-l="W">= Q</td><td data-l="ΔU">0</td><td data-l="Q">팽창하면 흡열</td></tr><tr><td data-l="과정">단열</td><td data-l="성질">Q = 0</td><td data-l="W">= −ΔU</td><td data-l="ΔU">팽창하면 감소</td><td data-l="Q">0 (열 출입 없음)</td></tr></tbody></table></div>
 <p>P–V 그래프에서 <strong>곡선 아래 넓이가 일</strong>입니다. 한 바퀴 도는 순환 과정에서 그래프가 둘러싼 넓이가 열기관이 한 알짜 일입니다.</p>
-<h2>5. 열기관과 열효율</h2>
+</details><details class="sec"><summary><h2>5. 열기관과 열효율</h2></summary>
 <div class="formula">열효율 e = W / Q<sub>고</sub> = 1 − Q<sub>저</sub> / Q<sub>고</sub></div>
-<ul><li>열기관은 고열원에서 Q<sub>고</sub>를 받아 일 W를 하고 저열원에 Q<sub>저</sub>를 버립니다. W = Q<sub>고</sub> − Q<sub>저</sub>.</li><li>열효율은 항상 1보다 작습니다(열역학 제2법칙: 열을 전부 일로 바꾸는 기관은 없음).</li><li>순환 과정 문항에서는 각 과정마다 <em>Q의 부호(흡열/방열)</em>를 먼저 표시하고, 흡열의 합을 Q<sub>고</sub>로 잡습니다.</li></ul>
+<ul><li>열기관은 고열원에서 Q<sub>고</sub>를 받아 일 W를 하고 저열원에 Q<sub>저</sub>를 버립니다. W = Q<sub>고</sub> − Q<sub>저</sub>.</li><li>열효율은 항상 1보다 작습니다(열역학 제2법칙: 열을 전부 일로 바꾸는 기관은 없음).</li><li>순환 과정 문항에서는 각 과정마다 <em>Q의 부호(흡열/방열)</em>를 먼저 표시하고, 흡열의 합을 Q<sub>고</sub>로 잡습니다.</li></ul></details>
 <h2>모션으로 보기</h2>
 <p>이 파트의 개념을 움직이는 그림으로 다시 확인합니다.</p>
 <p><a class="cta sm" href="../motion.html#s4">🎬 역학적 에너지 보존</a> <a class="cta sm" href="../motion.html#s5">🎬 열역학 법칙과 열기관</a></p>
+<div class="nms-stepband"><b>③ 확인하기</b><span>조건이 바뀐 문제로 확인 — 막히면 가장 쉬운 문제부터</span></div>
 <h2>자주 나오는 함정</h2><ul><li><strong>단열 팽창에서 열을 흡수한다</strong> — Q = 0입니다. 팽창하며 일을 한 만큼 내부 에너지가 줄어 온도가 내려갑니다.</li><li><strong>등온 팽창에서 내부 에너지가 증가</strong> — 변하지 않습니다. 흡수한 열이 전부 일로 나갑니다.</li><li><strong>경로가 길수록 속력이 커진다</strong>(또는 빗면이 가파를수록 나중 속력이 크다) — 마찰이 없으면 높이 차이로만 결정됩니다.</li><li><strong>마찰 구간에서 역학적 에너지가 사라진다</strong> — 열로 전환된 것이며, 전체 에너지는 보존됩니다.</li><li><strong>열효율은 흡수한 열이 아니라 ‘고열원에서 받은 열’ 기준</strong>입니다. 방열 과정의 Q를 분모에 넣지 마세요.</li></ul>
 <h2 id="examples">대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>마찰 없는 곡면의 높이 h에서 질량 m 물체를 가만히 놓았다. 곡면 끝에서 길이 L, 마찰 계수 μ인 수평 구간을 지난 뒤 속력은?</summary><div class="example-sol"><p>곡면 끝 속력: mgh = ½mv² → v² = 2gh.</p><p>마찰 구간에서 μmgL만큼 손실: ½mv′² = mgh − μmgL → <strong>v′ = √(2g(h − μL))</strong>. h &lt; μL이면 구간 안에서 멈춥니다.</p></div></details><details class="example"><summary>열기관이 고열원에서 500 J을 흡수하고 저열원으로 300 J을 방출했다. 한 일과 열효율은?</summary><div class="example-sol"><p>W = Q<sub>고</sub> − Q<sub>저</sub> = 500 − 300 = <strong>200 J</strong>.</p><p>e = W / Q<sub>고</sub> = 200 / 500 = <strong>0.4</strong> (40 %).</p></div></details><details class="example"><summary>이상 기체가 압력 2×10⁵ Pa로 일정하게 유지되며 부피가 1 L에서 3 L로 팽창했다. 이 동안 600 J의 열을 흡수했다면 내부 에너지 변화는?</summary><div class="example-sol"><p>등압 과정: W = PΔV = 2×10⁵ × (2×10⁻³) = 400 J.</p><p>Q = ΔU + W → ΔU = 600 − 400 = <strong>200 J</strong> (온도 상승).</p></div></details>
 <h2>난이도별 한 줄 정리</h2>
@@ -121,6 +124,18 @@
 <h2>이 파트 기출 풀어보기</h2>
 <p>수능 물리학Ⅰ 전 시험지에서 이 파트로 분류된 <strong>50문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
 <p><a class="cta" href="../practice.html#part:p2">📝 에너지와 열 모아 풀기 →</a></p>
+<div class="nms-stepband"><b>④ 마무리</b><span>공부 끝 5분 — 말로 설명하고, 오답 한 줄을 남기고, 끝내기 체크</span></div>
+<section class="nms nms-end" data-nms>
+<div class="nms-top"><b>🗣 마무리 — 말로 설명하고 끝내기</b><span class="nms-top-r"><a href="../study-style.html#notes">내 오답 한 줄 모음 →</a></span></div>
+<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>단열 팽창에서 온도가 내려가는 이유를 Q, ΔU, W로 설명해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>단열은 열 출입이 없다는 뜻이라 Q = 0이고, 팽창하면서 기체가 바깥을 밀어 일을 하므로 W는 양수입니다. 제1법칙 Q = ΔU + W에 Q = 0을 넣으면 ΔU = −W, 즉 기체가 한 일만큼 내부 에너지가 줄어듭니다. 이상 기체의 내부 에너지는 온도만 따라가므로 <b>내부 에너지가 줄면 온도가 내려갑니다</b>.</p></details></li><li>마찰 없는 빗면과 곡면으로 같은 높이를 내려오면 왜 나중 속력이 같은지 말해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>마찰이 없으면 일을 하는 힘은 중력뿐이고(수직항력은 운동 방향과 수직이라 일을 하지 않습니다), 이때 역학적 에너지 K + U는 일정합니다. 정지 상태에서 출발하면 줄어든 퍼텐셜 에너지 mgh가 모두 운동 에너지 ½mv²로 바뀌어 v² = 2gh가 되는데, 이 식에는 경로의 모양이나 길이가 들어 있지 않습니다. 그래서 <b>높이 차가 같으면 나중 속력도 같습니다</b>. 다만 걸리는 시간은 경로마다 다를 수 있습니다.</p></details></li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
+<div class="nms-note" data-note="aboutSuneungPhysics1/02-energy-heat.html"><b>✍️ 오답 한 줄</b><span class="nms-note-saved" aria-live="polite"></span>
+<p class="nms-note-hint">틀린 문제 하나를 골라 ‘내가 왜 그렇게 생각했나, 어느 단계에서 틀어졌나’를 한 줄로 적어 두세요. 이 기기에만 저장되고 논리형 공부법 페이지에 모입니다.</p>
+<textarea rows="2" data-note-input aria-label="오답 한 줄" placeholder="예: 조건 하나를 빼고 식을 세움 — 다음엔 조건에 번호부터 붙이기"></textarea></div>
+<div class="nms-done" data-done="aboutSuneungPhysics1/02-energy-heat.html"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
+<label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
+<label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
+<label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div>
+</section>
 <div class="pager"><a href="01-forces.html">← 힘과 운동</a><a href="03-spacetime.html">시간과 공간 →</a></div>
 </main></div>
 </body></html>

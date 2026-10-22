@@ -1,10 +1,11 @@
-/* 논리형 공부법 — 사슬 가리고 떠올리기, 파트 끝내기 체크·진행률, 50분 집중 타이머.
- * 체크('nm-ss-done')와 타이머('nm-ss-timer')는 localStorage 에 두고 과목을 넘어 이어진다.
+/* 논리형 공부법 — 사슬 가리고 떠올리기, 파트 끝내기 체크·진행률, 오답 한 줄, 50분 집중 타이머.
+ * 체크('nm-ss-done'), 오답 한 줄('nm-ss-notes'), 타이머('nm-ss-timer')는 localStorage 에 두고 과목을 넘어 이어진다.
  * 스크립트가 없으면 사슬·해설은 그대로 보이고 이 기능들만 빠진다. */
 (function () {
   'use strict';
   var DONE = 'nm-ss-done';
   var TIMER = 'nm-ss-timer';
+  var NOTES = 'nm-ss-notes';
   var FOCUS = 50 * 60 * 1000;
   var REST = 10 * 60 * 1000;
 
@@ -93,6 +94,44 @@
     paintDone();
   }
 
+  /* ── 오답 한 줄: 파트마다 한 줄을 저장하고 공부법 페이지(#notes)에 모은다 ── */
+  function notesMap() { return load(NOTES, {}) || {}; }
+  function paintNotes() {
+    var map = notesMap();
+    each('[data-note]', function (box) {
+      var v = map[box.getAttribute('data-note')] || '';
+      var ta = box.querySelector('[data-note-input]');
+      if (ta && document.activeElement !== ta && ta.value !== v) ta.value = v;
+      var saved = box.querySelector('.nms-note-saved');
+      if (saved && document.activeElement !== ta) saved.textContent = v ? '저장됨 ✓' : '';
+    });
+    var shown = 0;
+    each('[data-note-show]', function (li) {
+      var v = map[li.getAttribute('data-note-show')] || '';
+      var t = li.querySelector('.nms-note-text');
+      if (t) t.textContent = v;
+      li.hidden = !v;
+      if (v) shown++;
+    });
+    each('.nms-notes-empty', function (p) { p.hidden = shown > 0; });
+  }
+  var noteTimer = 0;
+  function onNote(ta) {
+    var box = ta.closest('[data-note]');
+    if (!box) return;
+    var saved = box.querySelector('.nms-note-saved');
+    if (saved) saved.textContent = '…';
+    clearTimeout(noteTimer);
+    noteTimer = setTimeout(function () {
+      var map = notesMap();
+      var key = box.getAttribute('data-note');
+      var v = ta.value.trim();
+      if (v) map[key] = v; else delete map[key];
+      store(NOTES, map);
+      if (saved) saved.textContent = v ? '저장됨 ✓' : '';
+    }, 400);
+  }
+
   /* ── 50분 집중 + 10분 휴식 타이머: 시작 시각만 저장하므로 다른 파트로 옮겨도 이어진다 ── */
   var chip = null, tick = 0, baseTitle = document.title;
   function timerState() {
@@ -163,6 +202,7 @@
 
   function init() {
     paintDone();
+    paintNotes();
     runTimer();
     document.addEventListener('click', function (e) {
       var t = e.target;
@@ -183,6 +223,9 @@
       var li = e.target && e.target.closest ? e.target.closest('.is-recall .nms-chain li.is-hidden') : null;
       if (li) { e.preventDefault(); reveal(li); }
     });
+    document.addEventListener('input', function (e) {
+      if (e.target && e.target.matches && e.target.matches('[data-note] [data-note-input]')) onNote(e.target);
+    });
     document.addEventListener('change', function (e) {
       if (e.target && e.target.matches && e.target.matches('[data-done] input[data-chk]')) onCheck(e.target);
     });
@@ -190,6 +233,7 @@
     window.addEventListener('storage', function (e) {
       if (e.key === DONE) paintDone();
       if (e.key === TIMER) runTimer();
+      if (e.key === NOTES) paintNotes();
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

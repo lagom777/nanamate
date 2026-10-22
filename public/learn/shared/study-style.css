@@ -152,3 +152,25 @@
 .nms-part[open] { padding: 0 14px 12px; }
 .nms-part[open] > summary { margin: 0 -14px 4px; }
 .nms-part > .nms-first:first-of-type { margin-top: 0 !important; }
+
+/* 장 페이지 공부 순서 띠: ① 틀 잡기 → ② 이해하기 → ③ 확인하기 → ④ 마무리 */
+.nms-stepband { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 40px 0 0; padding: 8px 14px; border-radius: 10px; background: color-mix(in srgb, var(--accent, #16a34a) 10%, var(--bg-card, #fff)); }
+.nms-stepband b { font-size: 1em; color: var(--accent, #16a34a); }
+.nms-stepband span { font-size: .88em; color: var(--text-dim, #4a5468); }
+.nms-stepband + .nms, .nms-stepband + .sec-bar { margin-top: 10px; }
+.nms-stepband + h2 { margin-top: 18px; }
+
+/* 오답 한 줄(마무리 카드)과 공부법 페이지의 모음 */
+.nms-note { margin: 14px 0 0; padding: 10px 14px; border-radius: 12px; border: 1px dashed color-mix(in srgb, #d97706 55%, transparent); background: color-mix(in srgb, #d97706 6%, var(--bg-card, #fff)); }
+.nms-note > b { color: #b45309; }
+.nms-note-saved { margin-left: 8px; font-size: .82em; font-weight: 700; color: var(--accent, #16a34a); }
+.nms-note-hint { margin: 4px 0 8px !important; font-size: .86em; color: var(--text-dim, #4a5468) !important; }
+.nms-note textarea { display: block; width: 100%; min-height: 58px; resize: vertical; box-sizing: border-box; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border, rgba(0,0,0,.15)); background: var(--bg-card, #fff); color: var(--text, #1a1f2e); font: inherit; font-size: .93em; line-height: 1.6; }
+.nms-note textarea:focus { outline: 2px solid color-mix(in srgb, var(--accent, #16a34a) 50%, transparent); outline-offset: 1px; }
+.nms-notes { margin: 14px 0 6px; padding: 4px 16px 12px; border-radius: 12px; border: 1px dashed color-mix(in srgb, #d97706 55%, transparent); }
+.nms-notes ul { margin: 6px 0 0; padding-left: 1.2em; }
+.nms-notes li { margin: 6px 0; line-height: 1.6; }
+.nms-notes li a { margin-right: 8px; font-weight: 700; color: var(--text, #1a1f2e); text-decoration: none; }
+.nms-note-text { color: var(--text, #1a1f2e); }
+.nms-notes-empty { margin: 6px 0 0 !important; font-size: .88em; color: var(--text-mute, #6b7280) !important; }
+.nms-notes-empty[hidden] { display: none; }

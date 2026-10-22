@@ -1,0 +1,14 @@
+/* 본문 절 접기(details.sec): 제목(h2)만 보이고 누르면 펼쳐진다. 사이트 전역 button 규칙(!important)을 덮는다. */
+.sec-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin: 28px 0 6px; padding: 8px 12px; border-radius: 10px; background: var(--bg-elevated, #f5f7fa); font-size: .9em; color: var(--text-dim, #4a5468); }
+.sec-bar .sec-all { appearance: none; cursor: pointer; width: auto !important; padding: 5px 14px !important; border-radius: 999px !important; border: 1px solid var(--border, rgba(0,0,0,.12)) !important; background: var(--bg-card, #fff) !important; color: var(--text, #1a1f2e) !important; font: inherit !important; font-size: .9em !important; font-weight: 600 !important; }
+.sec-bar .sec-all:hover { border-color: var(--accent, #16a34a) !important; }
+details.sec { border-bottom: 1px solid var(--border, rgba(0,0,0,.08)); }
+details.sec > summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; padding: 12px 4px; }
+details.sec > summary::-webkit-details-marker { display: none; }
+details.sec > summary::after { content: "펼치기 ▾"; margin-left: auto; flex: 0 0 auto; font-size: .8em; font-weight: 600; color: var(--text-mute, #6b7280); }
+details.sec[open] > summary::after { content: "접기 ▴"; }
+details.sec > summary > h2 { margin: 0; font-size: 1.28em; }
+details.sec[open] > summary > h2 { font-size: 1.5em; }
+details.sec > summary:hover > h2 { color: var(--accent, #16a34a); }
+details.sec[open] { padding-bottom: 20px; }
+@media (max-width: 640px) { details.sec > summary > h2 { font-size: 1.1em; } details.sec[open] > summary > h2 { font-size: 1.25em; } }

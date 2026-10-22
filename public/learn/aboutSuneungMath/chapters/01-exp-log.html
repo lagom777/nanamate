@@ -11,6 +11,8 @@
 <script defer src="../../shared/difficulty.js"></script>
 <link rel="stylesheet" href="../../shared/practice-simple.css">
 <script defer src="../../shared/practice-simple.js"></script>
+<link rel="stylesheet" href="../../shared/sections.css">
+<script defer src="../../shared/sections.js"></script>
 <link rel="stylesheet" href="../../shared/study-style.css">
 <script defer src="../../shared/study-style.js"></script>
 </head>
@@ -40,6 +42,7 @@
 <div class="stat-row"><div class="stat"><b>3.9</b><span>회당 문항 수</span></div><div class="stat"><b>12.5점</b><span>회당 배점</span></div><div class="stat"><b>3~4</b><span>회차별 범위</span></div><div class="stat"><b>67</b><span>최근 17회 누적</span></div></div>
 <p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
 <p>지수와 로그는 식을 간단히 하는 계산과 그래프를 읽는 문제가 함께 나옵니다. 밑을 하나로 맞추거나 로그의 성질로 식을 줄이고, 부등식에서는 밑이 1보다 큰지 작은지에 따라 방향이 바뀝니다. 그래프에서는 점근선과 지나는 점을 읽고, 지수함수와 로그함수가 서로 역함수라는 사실로 교점과 직선의 관계를 묻습니다.</p>
+<div class="nms-stepband"><b>① 틀 잡기</b><span>5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터</span></div>
 <section class="nms" data-nms>
 <div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
 <div class="nms-logic"><p class="nms-one"><b>하나만 고른다면</b><strong>로그는 지수방정식의 해에 붙인 이름이다</strong> — 지수법칙을 a<sup>x</sup> = M ⇔ x = log<sub>a</sub> M으로 옮기면 로그의 성질과 밑 변환이, x와 y를 바꾸면 y = x에 대칭인 로그함수의 그래프가 나온다.</p>
@@ -57,12 +60,9 @@
 <p class="nms-kv"><b>외울 것은 이것뿐</b>지수법칙 다섯 개, 로그의 정의 a<sup>x</sup> = M ⇔ x = log<sub>a</sub> M과 조건(a &gt; 0, a ≠ 1, M &gt; 0), 밑이 1보다 크면 증가·작으면 감소</p>
 <p class="nms-kv"><b>나머지는 유도</b>로그의 성질 세 개와 밑 변환, 짝수 제곱근의 |a|, 상용로그의 지표와 자릿수, 평행이동한 그래프의 점근선과 지나는 점, 부등식의 방향, 역함수와의 교점</p>
 <p class="nms-trap"><b>논리형 함정</b>식을 정리하는 데 집중하다가 <b>진수 조건을 마지막까지 미루기</b> 쉽습니다. 로그를 하나로 합치면 정의역이 넓어져 무연근이 생길 수 있으므로, log가 보이면 첫 줄에 진수 &gt; 0부터 적으세요.</p>
-<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>log<sub>a</sub>(MN) = log<sub>a</sub> M + log<sub>a</sub> N이 왜 성립하는지 지수법칙에서 출발해 설명해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>log<sub>a</sub> M = p, log<sub>a</sub> N = q라 두면 로그의 정의에 따라 a<sup>p</sup> = M, a<sup>q</sup> = N입니다. 두 식을 곱하면 지수법칙으로 MN = a<sup>p</sup> · a<sup>q</sup> = a<sup>p+q</sup>이고, 이것을 다시 로그의 정의로 읽으면 log<sub>a</sub>(MN) = p + q입니다. 즉 곱의 성질은 <b>‘같은 밑의 곱은 지수를 더한다’를 로그로 옮긴 것</b>입니다. 같은 방법으로 몫은 a<sup>p</sup>/a<sup>q</sup> = a<sup>p−q</sup>에서 차가 되고, 진수의 k제곱은 (a<sup>p</sup>)<sup>k</sup> = a<sup>kp</sup>에서 계수 k가 됩니다.</p></details></li><li>밑이 1보다 크면 y = a<sup>x</sup>와 y = log<sub>a</sub> x의 교점이 왜 직선 y = x 위에만 있는지 말해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>교점을 (p, q)라 하면 y = a<sup>x</sup> 위의 점이므로 q = a<sup>p</sup>이고, y = log<sub>a</sub> x 위의 점이므로 q = log<sub>a</sub> p, 곧 p = a<sup>q</sup>입니다. 만약 p &gt; q라면 a &gt; 1에서 a<sup>x</sup>는 증가하므로 a<sup>p</sup> &gt; a<sup>q</sup>, 즉 q &gt; p가 되어 모순이고, q &gt; p라고 해도 같은 방법으로 모순입니다. 따라서 <b>p = q이고 교점은 y = x 위</b>에 있습니다. 밑이 1보다 작으면 감소함수라 이 비교가 거꾸로 작용해서, 밑이 1/16일 때처럼 y = x 밖의 교점이 생길 수 있습니다.</p></details></li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
+
 <p class="nms-first">문제부터 부딪치고 싶다면 <a href="#examples">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p>
-<div class="nms-done" data-done="aboutSuneungMath/01-exp-log.html"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
-<label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
-<label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
-<label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div></div>
+</div>
 </section>
 <details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">지수법칙 다섯 개와 로그 성질 셋으로 모든 계산이 돌아온다 — 진수 조건과 밑의 대소를 먼저 적는다</span><span class="mg-stat">회당 평균 3.9문항 · 12.5점</span></div>
@@ -75,7 +75,9 @@
 <p class="mg-ask"><b>수능은 이렇게 묻는다</b>로그 값을 성질·밑 변환으로 계산 → 평행이동한 그래프의 점근선과 점의 좌표 → 두 그래프의 교점이 놓인 직선(진수 조건·밑의 대소 먼저)</p>
 </div></details>
 <p><a class="cta sm" href="../summary.html#p1">📌 이 파트 한눈에 요약 →</a></p>
-<h2>1. 거듭제곱근과 지수의 확장</h2>
+<div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="sec-bar"><span>본문 6절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
+<details class="sec"><summary><h2>1. 거듭제곱근과 지수의 확장</h2></summary>
 <p>n이 2 이상의 정수일 때, 방정식 x<sup>n</sup> = a를 만족하는 실수 x를 a의 n제곱근이라고 합니다. 그중에서 대표로 쓰는 값을 <sup>n</sup>√a로 적습니다. a가 0 이상이면 <sup>n</sup>√a도 0 이상이고, a가 음수이면서 n이 홀수일 때만 <sup>n</sup>√a가 음수입니다.</p>
 <div class="tbl-wrap"><table><thead><tr><th>a</th><th>n이 짝수</th><th>n이 홀수</th></tr></thead><tbody><tr><td data-l="a">a &gt; 0</td><td data-l="n이 짝수">실수 근 2개(양수, 음수). <sup>n</sup>√a는 양수</td><td data-l="n이 홀수">실수 근 1개(양수)</td></tr><tr><td data-l="a">a = 0</td><td data-l="n이 짝수">0뿐</td><td data-l="n이 홀수">0뿐</td></tr><tr><td data-l="a">a &lt; 0</td><td data-l="n이 짝수">실수 근 없음</td><td data-l="n이 홀수">실수 근 1개(음수). <sup>n</sup>√a &lt; 0</td></tr></tbody></table></div>
 <p>정의되는 범위에서 (<sup>n</sup>√a)<sup>n</sup> = a입니다. 반대로 a<sup>n</sup>의 n제곱근을 도로 a로 돌릴 때는 짝수·홀수를 가릅니다.</p>
@@ -87,7 +89,7 @@
 <div class="warning-box"><strong>함정:</strong> 밑이 음수이면 유리수 지수를 약분하기 전과 후의 값이 달라지거나, 실수가 아닐 수 있습니다. (−8)<sup>2/6</sup>과 (−8)<sup>1/3</sup>을 같은 것으로 두지 마세요. 유리수 지수는 밑이 양수일 때만 다룹니다.</div>
 <p>수학Ⅰ에서는 이 유리수 지수를 실수 지수까지 넓혀, a &gt; 0이면 a<sup>x</sup>가 모든 실수 x에서 정의된다고 이해합니다. 그래프는 끊기지 않고 이어진 곡선이 됩니다. 극한으로 지수를 정의하는 과정은 이 과목에서 다루지 않습니다.</p>
 
-<h2>2. 지수법칙</h2>
+</details><details class="sec"><summary><h2>2. 지수법칙</h2></summary>
 <p>a &gt; 0, b &gt; 0이고 지수 m, n이 실수일 때 다음이 성립합니다. 계산은 항상 이 다섯 개로 돌아옵니다.</p>
 <div class="formula">a<sup>m</sup> · a<sup>n</sup> = a<sup>m+n</sup><br>a<sup>m</sup> / a<sup>n</sup> = a<sup>m−n</sup><br>(a<sup>m</sup>)<sup>n</sup> = a<sup>mn</sup><br>(ab)<sup>n</sup> = a<sup>n</sup>b<sup>n</sup><br>(a/b)<sup>n</sup> = a<sup>n</sup> / b<sup>n</sup></div>
 <p>같은 밑은 지수를 더하거나 빼고, 거듭제곱의 거듭제곱은 지수를 곱합니다. 밑이 달라도 지수가 같으면 밑끼리 곱하거나 나눕니다.</p>
@@ -95,7 +97,7 @@
 <p>서로 다른 밑은 소수 거듭제곱으로 맞춘 뒤 지수를 비교합니다. 12<sup>1/2</sup> · 3<sup>1/2</sup> = (12 · 3)<sup>1/2</sup> = 36<sup>1/2</sup> = 6입니다. 81<sup>1/4</sup> / 9<sup>1/2</sup> = (3<sup>4</sup>)<sup>1/4</sup> / (3<sup>2</sup>)<sup>1/2</sup> = 3 / 3 = 1입니다.</p>
 <div class="study-tip"><strong>TIP:</strong> 복잡한 식은 모든 밑을 가장 작은 소수의 거듭제곱으로 바꾼 뒤, 지수법칙만 적용하세요. 8, 9, 16, 27, 32는 각각 2<sup>3</sup>, 3<sup>2</sup>, 2<sup>4</sup>, 3<sup>3</sup>, 2<sup>5</sup>입니다.</div>
 
-<h2>3. 로그의 정의, 성질, 밑의 변환</h2>
+</details><details class="sec"><summary><h2>3. 로그의 정의, 성질, 밑의 변환</h2></summary>
 <p>a &gt; 0, a ≠ 1, M &gt; 0일 때 a<sup>x</sup> = M을 만족하는 실수 x를 log<sub>a</sub> M이라고 합니다. a를 밑, M을 진수라고 합니다. 밑은 양수이면서 1이 아니고, 진수는 양수입니다. 이 두 조건이 빠지면 로그는 정의되지 않습니다.</p>
 <div class="formula">a<sup>x</sup> = M ⇔ x = log<sub>a</sub> M<br>log<sub>a</sub> 1 = 0, &nbsp; log<sub>a</sub> a = 1<br>log<sub>a</sub> (a<sup>k</sup>) = k, &nbsp; a<sup>log<sub>a</sub> M</sup> = M</div>
 <p>로그는 지수 방정식의 해를 이름 붙인 것입니다. log<sub>2</sub> 8 = 3인 이유는 2<sup>3</sup> = 8이기 때문이고, log<sub>2</sub> (1/4) = −2인 이유는 2<sup>−2</sup> = 1/4이기 때문입니다.</p>
@@ -108,7 +110,7 @@
 <p>예를 들어 log<sub>4</sub> 8 = log<sub>2</sub> 8 / log<sub>2</sub> 4 = 3/2입니다. 4<sup>3/2</sup> = (2<sup>2</sup>)<sup>3/2</sup> = 2<sup>3</sup> = 8로 맞습니다. log<sub>9</sub> 27 = log<sub>3</sub> 27 / log<sub>3</sub> 9 = 3/2이고, 9<sup>3/2</sup> = 27입니다. 또 log<sub>2</sub> 3 · log<sub>3</sub> 8 = log<sub>2</sub> 8 = 3입니다.</p>
 <div class="info-card"><h4>진수 조건은 식을 간단히 하기 전에 적습니다.</h4><p>log<sub>a</sub> f(x)가 보이면 f(x) &gt; 0을 먼저 씁니다. 로그가 여러 개면 각 진수 조건의 공통 범위가 정의역입니다. 풀이 끝에 나온 후보가 이 범위 밖이면 버립니다.</p></div>
 
-<h2>4. 상용로그의 지표와 가수</h2>
+</details><details class="sec"><summary><h2>4. 상용로그의 지표와 가수</h2></summary>
 <p>밑이 10인 로그를 상용로그라고 하고 log N으로 씁니다. 양의 실수 N을 N = m × 10<sup>n</sup> (1 ≤ m &lt; 10, n은 정수)으로 쓰면</p>
 <div class="formula">log N = n + log m</div>
 <p>n을 지표, log m을 가수라고 합니다. m이 1 이상 10 미만이므로 가수는 0 이상 1 미만입니다. 가수가 같으면 유효숫자가 같습니다. log 2와 log 200은 가수가 같고 지표만 2만큼 다릅니다.</p>
@@ -121,7 +123,7 @@
 <div class="warning-box"><strong>함정:</strong> log 0.02를 −2.3010으로 쓰면 안 됩니다. −2.3010 = −(2 + 0.3010)이라 가수가 음수가 되고, 주어진 근삿값으로는 log 0.005에 해당합니다. 음의 로그는 그 값 이하인 정수 가운데 가장 큰 것을 지표로 둡니다. −1.6990의 지표는 −1이 아니라 −2이고, −1.6990 = −2 + 0.3010이므로 가수는 0.3010입니다.</div>
 <div class="study-tip"><strong>TIP:</strong> 자릿수 문제는 log(a<sup>n</sup>) = n log a를 먼저 계산해 지표 n을 읽고, 자릿수는 지표에 1을 더합니다. 로그 값이 정수로 딱 떨어지면, 예를 들어 log 1000 = 3이면 가수는 0이고 자릿수는 4입니다.</div>
 
-<h2>5. 지수함수와 로그함수의 그래프</h2>
+</details><details class="sec"><summary><h2>5. 지수함수와 로그함수의 그래프</h2></summary>
 <p>a &gt; 0, a ≠ 1일 때 y = a<sup>x</sup>를 지수함수, y = log<sub>a</sub> x를 로그함수라고 합니다. 둘은 서로 역함수이고, 그래프는 직선 y = x에 대하여 대칭입니다.</p>
 <div class="tbl-wrap"><table><thead><tr><th></th><th>y = a<sup>x</sup></th><th>y = log<sub>a</sub> x</th></tr></thead><tbody><tr><td data-l="">정의역</td><td data-l="y = ax">모든 실수</td><td data-l="y = loga x">x &gt; 0</td></tr><tr><td data-l="">치역</td><td data-l="y = ax">y &gt; 0</td><td data-l="y = loga x">모든 실수</td></tr><tr><td data-l="">항상 지나는 점</td><td data-l="y = ax">(0, 1)</td><td data-l="y = loga x">(1, 0)</td></tr><tr><td data-l="">점근선</td><td data-l="y = ax">x축 (y = 0)</td><td data-l="y = loga x">y축 (x = 0)</td></tr><tr><td data-l="">a &gt; 1</td><td data-l="y = ax">증가</td><td data-l="y = loga x">증가</td></tr><tr><td data-l="">0 &lt; a &lt; 1</td><td data-l="y = ax">감소</td><td data-l="y = loga x">감소</td></tr></tbody></table></div>
 <p>밑이 1보다 크면 x가 커질수록 함숫값도 커집니다. 0과 1 사이면 반대입니다. y = (1/a)<sup>x</sup> = a<sup>−x</sup>이므로, y = a<sup>−x</sup>의 그래프는 y = a<sup>x</sup>를 y축에 대하여 대칭이동한 것입니다. a &gt; 1이면 y = a<sup>−x</sup>는 감소합니다. y = −a<sup>x</sup>는 x축 대칭이라 치역이 음수가 되고, 증가·감소도 반대가 됩니다.</p>
@@ -138,7 +140,7 @@
 </ol>
 <div class="info-card"><h4>정의역을 먼저 칠합니다.</h4><p>y = log<sub>2</sub>(x − 1) + 2의 점근선은 x = 1이고 정의역은 x &gt; 1입니다. x = 3이면 log<sub>2</sub> 2 + 2 = 3이라 점 (3, 3), x = 5이면 log<sub>2</sub> 4 + 2 = 4라 점 (5, 4)입니다. x절편은 log<sub>2</sub>(x − 1) = −2에서 x − 1 = 1/4, x = 5/4입니다. y절편은 없습니다. x = 0은 정의역 밖입니다.</p></div>
 
-<h2>6. 방정식·부등식, 역함수, 교점과 직선</h2>
+</details><details class="sec"><summary><h2>6. 방정식·부등식, 역함수, 교점과 직선</h2></summary>
 <p>지수방정식은 밑을 같게 만들거나, 반복되는 a<sup>x</sup>를 문자로 바꿉니다.</p>
 <p>9<sup>x</sup> = 27<sup>x−1</sup>이면 (3<sup>2</sup>)<sup>x</sup> = (3<sup>3</sup>)<sup>x−1</sup>이므로 3<sup>2x</sup> = 3<sup>3x−3</sup>입니다. 밑이 같으면 지수가 같아야 하므로 2x = 3x − 3, x = 3입니다. 검산하면 9<sup>3</sup> = 729, 27<sup>2</sup> = 729입니다.</p>
 <p>2 · 4<sup>x</sup> − 9 · 2<sup>x</sup> + 4 = 0은 t = 2<sup>x</sup> &gt; 0으로 둡니다. 4<sup>x</sup> = t<sup>2</sup>이므로 2t<sup>2</sup> − 9t + 4 = 0, (2t − 1)(t − 4) = 0입니다. t = 1/2 또는 t = 4입니다. 2<sup>x</sup> = 2<sup>−1</sup>이면 x = −1, 2<sup>x</sup> = 2<sup>2</sup>이면 x = 2입니다. x = −1을 넣으면 2 · (1/4) − 9 · (1/2) + 4 = 0.5 − 4.5 + 4 = 0이고, x = 2이면 32 − 36 + 4 = 0입니다. t가 0 이하로 나오면 버립니다.</p>
@@ -154,8 +156,9 @@
 <h3>교점과 넓이</h3>
 <p>정적분은 수학Ⅰ 범위 밖입니다. 이 과목의 넓이 문제는 교점의 좌표를 구한 뒤, 그 점들을 직선으로 이은 삼각형이나 사각형의 넓이로 계산합니다. 곡선과 곡선 사이의 면적을 적분으로 구하는 문제는 아닙니다.</p>
 <p>y = 2<sup>x</sup>, y = 2<sup>−x</sup>, y = 2의 교점을 구하면 다음과 같습니다. 2<sup>x</sup> = 2에서 x = 1, 점 (1, 2). 2<sup>−x</sup> = 2에서 x = −1, 점 (−1, 2). 2<sup>x</sup> = 2<sup>−x</sup>에서 2<sup>2x</sup> = 1, x = 0, 점 (0, 1). 세 점을 꼭짓점으로 하는 삼각형은 밑변의 길이가 2, 높이가 1이므로 넓이는 (1/2) · 2 · 1 = 1입니다.</p>
-<div class="study-tip"><strong>TIP:</strong> 수능형 문항은 보통 세 갈래입니다. 로그 값을 성질과 밑 변환으로 계산하기, 평행이동된 그래프에서 점근선과 점의 좌표를 읽기, 두 그래프의 교점이 어느 직선 위에 있는지 보이기입니다. 식을 풀기 전에 진수 조건과 밑의 대소를 여백에 적고 시작하세요.</div>
+<div class="study-tip"><strong>TIP:</strong> 수능형 문항은 보통 세 갈래입니다. 로그 값을 성질과 밑 변환으로 계산하기, 평행이동된 그래프에서 점근선과 점의 좌표를 읽기, 두 그래프의 교점이 어느 직선 위에 있는지 보이기입니다. 식을 풀기 전에 진수 조건과 밑의 대소를 여백에 적고 시작하세요.</div></details>
 
+<div class="nms-stepband"><b>③ 확인하기</b><span>조건이 바뀐 문제로 확인 — 막히면 가장 쉬운 문제부터</span></div>
 <h2>자주 나오는 함정</h2><ul>
 <li><strong>log(a + b) = log a + log b</strong>로 쓰는 착각. 합으로 갈라지는 것은 진수의 곱입니다.</li>
 <li><strong>밑이 1보다 작아도 부등식 방향을 유지</strong>하는 착각. 0과 1 사이에서는 지수부등식·로그부등식 모두 방향이 바뀝니다.</li>
@@ -191,6 +194,18 @@
 <h2>이 파트 기출 풀어보기</h2>
 <p>수능 수학 전 시험지에서 이 파트로 분류된 <strong>67문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
 <p><a class="cta" href="../practice.html#part:a1">📝 지수와 로그 모아 풀기 →</a></p>
+<div class="nms-stepband"><b>④ 마무리</b><span>공부 끝 5분 — 말로 설명하고, 오답 한 줄을 남기고, 끝내기 체크</span></div>
+<section class="nms nms-end" data-nms>
+<div class="nms-top"><b>🗣 마무리 — 말로 설명하고 끝내기</b><span class="nms-top-r"><a href="../study-style.html#notes">내 오답 한 줄 모음 →</a></span></div>
+<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>log<sub>a</sub>(MN) = log<sub>a</sub> M + log<sub>a</sub> N이 왜 성립하는지 지수법칙에서 출발해 설명해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>log<sub>a</sub> M = p, log<sub>a</sub> N = q라 두면 로그의 정의에 따라 a<sup>p</sup> = M, a<sup>q</sup> = N입니다. 두 식을 곱하면 지수법칙으로 MN = a<sup>p</sup> · a<sup>q</sup> = a<sup>p+q</sup>이고, 이것을 다시 로그의 정의로 읽으면 log<sub>a</sub>(MN) = p + q입니다. 즉 곱의 성질은 <b>‘같은 밑의 곱은 지수를 더한다’를 로그로 옮긴 것</b>입니다. 같은 방법으로 몫은 a<sup>p</sup>/a<sup>q</sup> = a<sup>p−q</sup>에서 차가 되고, 진수의 k제곱은 (a<sup>p</sup>)<sup>k</sup> = a<sup>kp</sup>에서 계수 k가 됩니다.</p></details></li><li>밑이 1보다 크면 y = a<sup>x</sup>와 y = log<sub>a</sub> x의 교점이 왜 직선 y = x 위에만 있는지 말해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>교점을 (p, q)라 하면 y = a<sup>x</sup> 위의 점이므로 q = a<sup>p</sup>이고, y = log<sub>a</sub> x 위의 점이므로 q = log<sub>a</sub> p, 곧 p = a<sup>q</sup>입니다. 만약 p &gt; q라면 a &gt; 1에서 a<sup>x</sup>는 증가하므로 a<sup>p</sup> &gt; a<sup>q</sup>, 즉 q &gt; p가 되어 모순이고, q &gt; p라고 해도 같은 방법으로 모순입니다. 따라서 <b>p = q이고 교점은 y = x 위</b>에 있습니다. 밑이 1보다 작으면 감소함수라 이 비교가 거꾸로 작용해서, 밑이 1/16일 때처럼 y = x 밖의 교점이 생길 수 있습니다.</p></details></li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
+<div class="nms-note" data-note="aboutSuneungMath/01-exp-log.html"><b>✍️ 오답 한 줄</b><span class="nms-note-saved" aria-live="polite"></span>
+<p class="nms-note-hint">틀린 문제 하나를 골라 ‘내가 왜 그렇게 생각했나, 어느 단계에서 틀어졌나’를 한 줄로 적어 두세요. 이 기기에만 저장되고 논리형 공부법 페이지에 모입니다.</p>
+<textarea rows="2" data-note-input aria-label="오답 한 줄" placeholder="예: 조건 하나를 빼고 식을 세움 — 다음엔 조건에 번호부터 붙이기"></textarea></div>
+<div class="nms-done" data-done="aboutSuneungMath/01-exp-log.html"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
+<label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
+<label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
+<label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div>
+</section>
 <div class="pager"><a href="../index.html">← 표지</a><a href="02-trig.html">삼각함수 →</a></div>
 </main></div>
 </body></html>

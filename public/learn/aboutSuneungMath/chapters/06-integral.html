@@ -11,6 +11,8 @@
 <script defer src="../../shared/difficulty.js"></script>
 <link rel="stylesheet" href="../../shared/practice-simple.css">
 <script defer src="../../shared/practice-simple.js"></script>
+<link rel="stylesheet" href="../../shared/sections.css">
+<script defer src="../../shared/sections.js"></script>
 <link rel="stylesheet" href="../../shared/study-style.css">
 <script defer src="../../shared/study-style.js"></script>
 </head>
@@ -40,6 +42,7 @@
 <div class="stat-row"><div class="stat"><b>4.1</b><span>회당 문항 수</span></div><div class="stat"><b>14.8점</b><span>회당 배점</span></div><div class="stat"><b>3~5</b><span>회차별 범위</span></div><div class="stat"><b>70</b><span>최근 17회 누적</span></div></div>
 <p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
 <p>적분은 미분을 거꾸로 가는 계산이고, 정적분은 그 결과를 구간에 적용한 값입니다. 수능에서는 <strong>정적분으로 정의된 함수를 미분</strong>해 극값을 찾고, <strong>삼차함수와 직선 사이 두 넓이의 비</strong>를 구하고, <strong>속도 그래프에서 되돌아온 거리</strong>를 읽는 문제가 자주 나옵니다. 넓이와 이동 거리는 부호가 있는 정적분에 절댓값을 씌운 값입니다.</p>
+<div class="nms-stepband"><b>① 틀 잡기</b><span>5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터</span></div>
 <section class="nms" data-nms>
 <div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
 <div class="nms-logic"><p class="nms-one"><b>하나만 고른다면</b><strong>적분은 미분을 거꾸로 간 것이다</strong> — 정적분은 원시함수의 끝값 차이이고, 위끝이 x인 정적분을 미분하면 피적분함수가 돌아온다.</p>
@@ -56,12 +59,9 @@
 <p class="nms-kv"><b>외울 것은 이것뿐</b>∫x<sup>n</sup> dx = x<sup>n+1</sup>/(n + 1) + C, ∫<sub>a</sub><sup>b</sup> f(x) dx = F(b) − F(a), d/dx ∫<sub>a</sub><sup>x</sup> f(t) dt = f(x), 넓이·거리는 절댓값의 적분</p>
 <p class="nms-kv"><b>나머지는 유도</b>구간 뒤집기와 분할, 우함수·기함수의 대칭 구간 적분, 위끝·아래끝이 함수일 때의 미분, 두 곡선 사이 넓이, 삼차함수와 직선의 넓이 비, 위치 변화량과 움직인 거리</p>
 <p class="nms-trap"><b>논리형 함정</b>계산이 깔끔하게 끝나면 그 값을 바로 넓이로 쓰기 쉽습니다. 정적분은 <b>x축 아래를 음수로 세므로</b> y = x<sup>2</sup> − 1을 −1부터 2까지 적분한 0은 넓이가 아닙니다. 발문이 넓이·거리이면 부호가 바뀌는 점부터 찾으세요.</p>
-<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>d/dx ∫<sub>a</sub><sup>x</sup> f(t) dt = f(x)가 왜 성립하는지 ‘넓이에 새로 붙는 띠’로 설명해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>F(x) = ∫<sub>a</sub><sup>x</sup> f(t) dt를 a부터 x까지 곡선 아래의 부호 있는 넓이로 봅시다. 위끝을 x에서 x + h로 조금 늘리면 넓이는 x와 x + h 사이의 가느다란 띠만큼 늘고, f가 연속이면 그 띠는 높이가 거의 f(x), 폭이 h인 직사각형입니다. 그래서 F(x + h) − F(x)는 거의 f(x) × h이고, h로 나눈 뒤 h → 0으로 보내면 F′(x) = f(x)입니다. 즉 <b>넓이가 늘어나는 빠르기는 끝의 높이</b>이고, 이것이 미분과 적분이 서로 거꾸로인 이유입니다.</p></details></li><li>속도 v(t)를 적분한 값과 |v(t)|를 적분한 값이 언제 다르고, 각각 무엇을 뜻하는지 말해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>∫ v(t) dt는 위치 변화량, 곧 나중 위치에서 처음 위치를 뺀 값이라 앞으로 간 만큼과 되돌아온 만큼이 서로 상쇄됩니다. ∫ |v(t)| dt는 속력의 적분인 움직인 거리라서 되돌아온 길도 모두 더합니다. 그래서 <b>구간 안에서 속도의 부호가 바뀔 때</b> 두 값이 달라지고, 바뀌지 않으면 거리는 변화량의 절댓값과 같습니다. 예를 들어 v(t) = t<sup>2</sup> − 4t + 3을 0부터 4까지 적분하면 변화량은 4/3이지만, t = 1과 t = 3에서 방향이 바뀌어 움직인 거리는 4입니다.</p></details></li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
+
 <p class="nms-first">문제부터 부딪치고 싶다면 <a href="#examples">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p>
-<div class="nms-done" data-done="aboutSuneungMath/06-integral.html"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
-<label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
-<label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
-<label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div></div>
+</div>
 </section>
 <details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">정적분은 부호 있는 값, 넓이는 절댓값 — 변위와 이동 거리를 구분한다</span><span class="mg-stat">회당 평균 4.1문항 · 14.8점</span></div>
@@ -73,7 +73,9 @@
 <p class="mg-ask"><b>수능은 이렇게 묻는다</b>정적분으로 정의된 함수의 극값·증감 → 삼차함수 넓이 비 → 속도 그래프에서 변위와 이동 거리</p>
 </div></details>
 <p><a class="cta sm" href="../summary.html#p6">📌 이 파트 한눈에 요약 →</a></p>
-<h2>1. 부정적분</h2>
+<div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="sec-bar"><span>본문 6절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
+<details class="sec"><summary><h2>1. 부정적분</h2></summary>
 <p>F′(x)=f(x)일 때 F를 f의 원시함수, 또는 부정적분이라고 합니다. 원시함수끼리는 상수만큼 다릅니다. 도함수가 0인 함수는 상수뿐이기 때문입니다. 그래서 적분상수 C를 붙여 함수의 모임으로 씁니다.</p>
 <div class="formula">∫ x<sup>n</sup> dx = x<sup>n+1</sup> / (n+1) + C &nbsp; (n은 0 이상의 정수)<br>∫ c f(x) dx = c ∫ f(x) dx<br>∫ (f+g) dx = ∫ f dx + ∫ g dx<br>∫ (f−g) dx = ∫ f dx − ∫ g dx</div>
 <p>수학Ⅱ에서 부정적분은 다항함수가 대상입니다. 구한 뒤에는 미분해서 원래 함수가 나오는지 확인합니다.</p>
@@ -82,7 +84,7 @@
 <div class="warning-box"><strong>함정:</strong> 부정적분에서 C를 빼먹으면 함수가 하나가 아닙니다. 정적분에서는 원시함수를 어떤 것으로 골라도 C가 빠지므로, 정적분 계산의 마지막 식에는 C를 붙이지 않습니다.</div>
 <div class="study-tip"><strong>TIP:</strong> 미분하면 n x<sup>n−1</sup>이므로, 적분은 차수를 1 올리고 그 차수로 나눕니다. x²의 적분은 x³/3 + C이고, 상수의 적분은 그 상수 곱하기 x입니다. ∫ 1 dx = x+C.</div>
 
-<h2>2. 정적분의 정의와 성질</h2>
+</details><details class="sec"><summary><h2>2. 정적분의 정의와 성질</h2></summary>
 <p>함수 f가 구간 [a, b]에서 연속일 때, 구간을 n등분하여 각 조각 위에 직사각형을 세운 넓이의 합은 n을 한없이 키우면 하나의 값으로 다가갑니다. 그 값을 f의 a에서 b까지의 <strong>정적분</strong>이라 하고 ∫<sub>a</sub><sup>b</sup> f(x) dx 로 씁니다. 계산은 원시함수로 합니다.</p>
 <div class="formula">F′ = f 이면 &nbsp; ∫<sub>a</sub><sup>b</sup> f(x) dx = F(b) − F(a)</div>
 <p>F 대신 F+C를 써도 C−C=0이라 결과는 같습니다. 이 차이를 [F(x)]<sub>a</sub><sup>b</sup> 로 쓰기도 합니다.</p>
@@ -96,7 +98,7 @@
 <p>직접 계산: 원시함수 x⁴/4 − (3/2)x² + 2x. x=2에서 4−6+4=2, x=−2에서 4−6−4=−6. 2−(−6)=8로 같습니다.</p>
 <div class="info-card"><h4>다항식을 나누어 적분하기</h4><p>홀수 차항만 있는 부분은 기함수, 짝수 차항만 있는 부분은 우함수입니다. 대칭 구간에서는 홀수 차항을 지운 뒤 짝수 차항만 0부터 a까지 두 배 하면 됩니다.</p></div>
 
-<h2>3. 정적분과 미분의 관계</h2>
+</details><details class="sec"><summary><h2>3. 정적분과 미분의 관계</h2></summary>
 <p>f가 연속이면, 위끝을 변수 x로 둔 정적분은 x에서 f의 값을 도함수로 가집니다.</p>
 <div class="formula">d/dx ∫<sub>a</sub><sup>x</sup> f(t) dt = f(x)</div>
 <p>아래끝과 위끝이 바뀌면 부호가 바뀝니다.</p>
@@ -112,7 +114,7 @@
 <p>아래끝과 위끝이 모두 움직일 때: ∫<sub>x</sub><sup>2x</sup> 2t dt = (2x)² − x² = 3x²이고 도함수는 6x입니다. 공식은 f(2x)·2 − f(x)·1 = 4x·2 − 2x = 6x로 같습니다.</p>
 <div class="study-tip"><strong>TIP:</strong> 정적분으로 정의된 함수의 극점은, 그 함수를 한 번 미분한 식 즉 피적분함수(위끝이 x일 때)의 부호가 바뀌는 점입니다. 적분을 끝까지 계산하지 않아도 증감은 읽을 수 있습니다. 극값의 크기까지 필요하면 그때 적분합니다.</div>
 
-<h2>4. 곡선과 x축, 두 곡선 사이의 넓이</h2>
+</details><details class="sec"><summary><h2>4. 곡선과 x축, 두 곡선 사이의 넓이</h2></summary>
 <p>정적분 ∫<sub>a</sub><sup>b</sup> f(x) dx 는 x축 위쪽을 양, 아래쪽을 음으로 센 값입니다. 도형의 넓이는 음수 넓이를 인정하지 않으므로 부호를 바꿔 더합니다.</p>
 <div class="formula">곡선 y=f(x)와 x축 사이, a부터 b까지:<br>∫<sub>a</sub><sup>b</sup> |f(x)| dx</div>
 <p>f의 부호가 바뀌는 점, 즉 f(x)=0인 점에서 구간을 나눕니다. 각 조각에서는 f 또는 −f 중 양수가 되는 쪽을 적분합니다.</p>
@@ -132,7 +134,7 @@
 <div class="formula">|a| p³ (p+2q) / 12 &nbsp; 와 &nbsp; |a| q³ (2p+q) / 12<br>비는 p³(p+2q) : q³(2p+q)</div>
 <p>p=q이면 비가 1:1이라 등차일 때의 결론과 맞습니다. 시험에서는 주어진 삼차식을 적분하고, 시간이 있으면 이 비로 검산합니다.</p>
 
-<h2>5. 위치·속도·가속도와 거리</h2>
+</details><details class="sec"><summary><h2>5. 위치·속도·가속도와 거리</h2></summary>
 <p>속도는 위치의 도함수이므로, 위치를 속도로 되돌릴 때는 적분합니다.</p>
 <div class="formula">x(t) = x(t₀) + ∫<sub>t₀</sub><sup>t</sup> v(s) ds<br>v(t) = v(t₀) + ∫<sub>t₀</sub><sup>t</sup> a(s) ds</div>
 <p>시각 t₁에서 t₂까지의 <strong>위치 변화량</strong>은 나중 위치에서 처음 위치를 뺀 값이고, 속도의 정적분과 같습니다. 되돌아오면 양수 부분과 음수 부분이 상쇄됩니다.</p>
@@ -150,7 +152,7 @@
 <div class="tbl-wrap"><table><thead><tr><th>읽는 양</th><th>그래프에서</th></tr></thead><tbody><tr><td data-l="읽는 양">위치 변화량</td><td data-l="그래프에서">t축 위쪽 넓이에서 아래쪽 넓이를 뺀 값</td></tr><tr><td data-l="읽는 양">움직인 거리</td><td data-l="그래프에서">t축 위쪽 넓이와 아래쪽 넓이를 모두 더한 값</td></tr><tr><td data-l="읽는 양">속도가 가장 큰 시각</td><td data-l="그래프에서">그래프의 가장 높은 점 (위치의 최댓값이 아님)</td></tr><tr><td data-l="읽는 양">방향이 바뀌는 시각</td><td data-l="그래프에서">그래프가 t축을 가로지르는 점</td></tr><tr><td data-l="읽는 양">속력이 증가</td><td data-l="그래프에서">그래프가 t축에서 멀어지는 구간</td></tr></tbody></table></div>
 <p>t축에 접하기만 하고 부호가 안 바뀌면 방향은 바뀌지 않습니다. 그 구간의 거리는 위치 변화량의 절댓값과 같습니다.</p>
 
-<h2>6. 수능에서 묻는 방식</h2>
+</details><details class="sec"><summary><h2>6. 수능에서 묻는 방식</h2></summary>
 <h3>정적분으로 정의된 함수</h3>
 <p>F(x)=∫<sub>a</sub><sup>x</sup> f(t) dt 꼴이 나오면 순서는 다음과 같습니다.</p>
 <ol>
@@ -163,8 +165,9 @@
 <h3>삼차함수의 넓이 비</h3>
 <p>곡선과 직선의 교점의 x좌표를 작은 순서로 α, β, γ라 합니다. 차를 a(x−α)(x−β)(x−γ)로 만든 뒤 α~β, β~γ를 따로 적분합니다. 세 점이 등차이면 계산 전에 비가 1:1임을 알고 한 구간만 적분하면 됩니다. 숫자가 나오면 p=β−α, q=γ−β를 p³(p+2q):q³(2p+q)에 넣어 검산합니다.</p>
 <h3>속도 그래프에서 이동 거리</h3>
-<p>그래프가 시간축 아래에 있는 구간을 먼저 표시합니다. 위치 변화량은 (위)−(아래), 거리는 (위)+(아래)입니다. 식으로 주어지면 v(t)=0의 근 중에서 부호가 바뀌는 것만 나누는 점으로 씁니다. 가속도에서 출발하는 문제는 v(0), x(0)으로 적분상수를 두 번 정한 뒤에 같은 일을 합니다.</p>
+<p>그래프가 시간축 아래에 있는 구간을 먼저 표시합니다. 위치 변화량은 (위)−(아래), 거리는 (위)+(아래)입니다. 식으로 주어지면 v(t)=0의 근 중에서 부호가 바뀌는 것만 나누는 점으로 씁니다. 가속도에서 출발하는 문제는 v(0), x(0)으로 적분상수를 두 번 정한 뒤에 같은 일을 합니다.</p></details>
 
+<div class="nms-stepband"><b>③ 확인하기</b><span>조건이 바뀐 문제로 확인 — 막히면 가장 쉬운 문제부터</span></div>
 <h2>자주 나오는 함정</h2><ul>
 <li><strong>부정적분에 C를 빼먹기.</strong> 조건이 없으면 원시함수는 상수만큼 여러 개입니다. 정적분의 계산 결과에는 C를 붙이지 않습니다.</li>
 <li><strong>부호 있는 정적분을 넓이로 쓰기.</strong> x축 아래는 음수로 나오므로, 넓이는 교점에서 구간을 나누어 절댓값을 더합니다.</li>
@@ -225,6 +228,18 @@
 <h2>이 파트 기출 풀어보기</h2>
 <p>수능 수학 전 시험지에서 이 파트로 분류된 <strong>70문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
 <p><a class="cta" href="../practice.html#part:b3">📝 적분 모아 풀기 →</a></p>
+<div class="nms-stepband"><b>④ 마무리</b><span>공부 끝 5분 — 말로 설명하고, 오답 한 줄을 남기고, 끝내기 체크</span></div>
+<section class="nms nms-end" data-nms>
+<div class="nms-top"><b>🗣 마무리 — 말로 설명하고 끝내기</b><span class="nms-top-r"><a href="../study-style.html#notes">내 오답 한 줄 모음 →</a></span></div>
+<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>d/dx ∫<sub>a</sub><sup>x</sup> f(t) dt = f(x)가 왜 성립하는지 ‘넓이에 새로 붙는 띠’로 설명해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>F(x) = ∫<sub>a</sub><sup>x</sup> f(t) dt를 a부터 x까지 곡선 아래의 부호 있는 넓이로 봅시다. 위끝을 x에서 x + h로 조금 늘리면 넓이는 x와 x + h 사이의 가느다란 띠만큼 늘고, f가 연속이면 그 띠는 높이가 거의 f(x), 폭이 h인 직사각형입니다. 그래서 F(x + h) − F(x)는 거의 f(x) × h이고, h로 나눈 뒤 h → 0으로 보내면 F′(x) = f(x)입니다. 즉 <b>넓이가 늘어나는 빠르기는 끝의 높이</b>이고, 이것이 미분과 적분이 서로 거꾸로인 이유입니다.</p></details></li><li>속도 v(t)를 적분한 값과 |v(t)|를 적분한 값이 언제 다르고, 각각 무엇을 뜻하는지 말해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>∫ v(t) dt는 위치 변화량, 곧 나중 위치에서 처음 위치를 뺀 값이라 앞으로 간 만큼과 되돌아온 만큼이 서로 상쇄됩니다. ∫ |v(t)| dt는 속력의 적분인 움직인 거리라서 되돌아온 길도 모두 더합니다. 그래서 <b>구간 안에서 속도의 부호가 바뀔 때</b> 두 값이 달라지고, 바뀌지 않으면 거리는 변화량의 절댓값과 같습니다. 예를 들어 v(t) = t<sup>2</sup> − 4t + 3을 0부터 4까지 적분하면 변화량은 4/3이지만, t = 1과 t = 3에서 방향이 바뀌어 움직인 거리는 4입니다.</p></details></li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
+<div class="nms-note" data-note="aboutSuneungMath/06-integral.html"><b>✍️ 오답 한 줄</b><span class="nms-note-saved" aria-live="polite"></span>
+<p class="nms-note-hint">틀린 문제 하나를 골라 ‘내가 왜 그렇게 생각했나, 어느 단계에서 틀어졌나’를 한 줄로 적어 두세요. 이 기기에만 저장되고 논리형 공부법 페이지에 모입니다.</p>
+<textarea rows="2" data-note-input aria-label="오답 한 줄" placeholder="예: 조건 하나를 빼고 식을 세움 — 다음엔 조건에 번호부터 붙이기"></textarea></div>
+<div class="nms-done" data-done="aboutSuneungMath/06-integral.html"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
+<label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
+<label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
+<label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div>
+</section>
 <div class="pager"><a href="05-diff.html">← 미분</a><a href="07-seq-limit.html">수열의 극한 →</a></div>
 </main></div>
 </body></html>

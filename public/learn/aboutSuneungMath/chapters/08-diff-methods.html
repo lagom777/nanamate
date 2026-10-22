@@ -11,6 +11,8 @@
 <script defer src="../../shared/difficulty.js"></script>
 <link rel="stylesheet" href="../../shared/practice-simple.css">
 <script defer src="../../shared/practice-simple.js"></script>
+<link rel="stylesheet" href="../../shared/sections.css">
+<script defer src="../../shared/sections.js"></script>
 <link rel="stylesheet" href="../../shared/study-style.css">
 <script defer src="../../shared/study-style.js"></script>
 </head>
@@ -40,6 +42,7 @@
 <div class="stat-row"><div class="stat"><b>3.9</b><span>회당 문항 수</span></div><div class="stat"><b>12.7점</b><span>회당 배점</span></div><div class="stat"><b>2~6</b><span>회차별 범위</span></div><div class="stat"><b>66</b><span>최근 17회 누적</span></div></div>
 <p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
 <p>수학Ⅱ의 다항함수 미분 위에, 지수·로그·삼각함수와 합성·역함수·음함수·매개변수가 올라갑니다. 수능은 공식 암기보다 <strong>그래프에서 기울기를 읽어 합성·역함수의 미분계수</strong>를 묻고, <strong>접선의 기울기 조건</strong>, <strong>극값의 개수</strong>, <strong>변곡점에서 볼록이 바뀌는지</strong>를 묻습니다. 각의 단위는 라디안입니다. 이 약속이 어긋나면 sin x / x의 극한부터 무너집니다.</p>
+<div class="nms-stepband"><b>① 틀 잡기</b><span>5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터</span></div>
 <section class="nms" data-nms>
 <div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
 <div class="nms-logic"><p class="nms-one"><b>하나만 고른다면</b><strong>변화율은 이어 곱해진다(연쇄법칙)</strong> — 합성은 겉미분 × 속미분, 역함수는 기울기의 역수, 음함수와 매개변수도 같은 원리로 미분한다.</p>
@@ -57,12 +60,9 @@
 <p class="nms-kv"><b>외울 것은 이것뿐</b>기본 극한 (sin x)/x·(e<sup>x</sup> − 1)/x·ln(1 + x)/x → 1, (e<sup>x</sup>)′ = e<sup>x</sup>, (sin x)′ = cos x, (cos x)′ = −sin x, 덧셈정리, 연쇄법칙</p>
 <p class="nms-kv"><b>나머지는 유도</b>(a<sup>x</sup>)′와 (ln x)′, (tan x)′ = sec<sup>2</sup>x를 비롯한 나머지 삼각함수의 도함수, 몫의 미분, 배각 공식, 역함수·음함수·매개변수의 미분, 이계도함수 판정</p>
 <p class="nms-trap"><b>논리형 함정</b>원리를 이해하면 공식을 어느 점에서 쓰는지는 가볍게 넘기기 쉽습니다. 역함수의 미분계수는 <b>x좌표가 원래 함수의 y좌표인 점</b>에서 읽으므로, f(2) = 5, f′(2) = 4이면 (f<sup>−1</sup>)′(5) = 1/4이고 1/f′(5)가 아닙니다.</p>
-<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>역함수의 미분계수가 원래 미분계수의 역수인 이유를 그래프의 y = x 대칭으로 설명해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>y = f<sup>−1</sup>(x)의 그래프는 y = f(x)의 그래프를 직선 y = x에 대해 뒤집은 것이라, 점 (a, b)는 (b, a)로 가고 그 점의 접선도 함께 뒤집힙니다. 원래 접선이 가로로 1만큼 갈 때 세로로 f′(a)만큼 변한다면, 가로와 세로를 바꾼 접선은 가로로 f′(a)만큼 갈 때 세로로 1만큼 변하므로 기울기가 1/f′(a)입니다. 그래서 b = f(a)일 때 (f<sup>−1</sup>)′(b) = 1/f′(a)이고, 역함수 쪽의 x좌표는 원래의 y좌표 b입니다. f′(a) = 0이면 뒤집힌 접선이 세로가 되어 <b>그 점에서 역함수는 미분가능하지 않습니다</b>.</p></details></li><li>매개변수로 나타낸 곡선의 이계도함수를 (d<sup>2</sup>y/dt<sup>2</sup>)/(d<sup>2</sup>x/dt<sup>2</sup>)로 구하면 왜 틀리는지 말해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>이계도함수 d<sup>2</sup>y/dx<sup>2</sup>는 기울기 dy/dx가 x에 대해 변하는 비율입니다. dy/dx = (dy/dt)/(dx/dt)는 t의 식이므로 먼저 t로 미분해 t에 대한 변화율을 구하고, 그것을 x에 대한 변화율로 바꾸려면 dx/dt로 한 번 더 나눠야 합니다. 반면 (d<sup>2</sup>y/dt<sup>2</sup>)/(d<sup>2</sup>x/dt<sup>2</sup>)는 두 좌표의 t에 대한 이계도함수의 비라서 기울기의 변화율과는 다른 양입니다. 예를 들어 x = t<sup>2</sup>, y = t<sup>3</sup>, t = 2에서 <b>바른 값은 3/8이지만 잘못된 비는 6</b>이 나옵니다.</p></details></li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
+
 <p class="nms-first">문제부터 부딪치고 싶다면 <a href="#examples">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p>
-<div class="nms-done" data-done="aboutSuneungMath/08-diff-methods.html"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
-<label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
-<label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
-<label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div></div>
+</div>
 </section>
 <details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">표준 극한 꼴로 맞추고, 삼각함수는 라디안으로 — 몫·합성·매개변수는 순서를 지켜 미분</span><span class="mg-stat">회당 평균 3.9문항 · 12.7점</span></div>
@@ -75,7 +75,9 @@
 <p class="mg-ask"><b>수능은 이렇게 묻는다</b>표준 극한 꼴 맞추기(미지수 결정) → 합성·매개변수·음함수 미분 → 접선·오목·변곡점·방정식의 근의 개수</p>
 </div></details>
 <p><a class="cta sm" href="../summary.html#p8">📌 이 파트 한눈에 요약 →</a></p>
-<h2>1. 지수함수와 로그함수의 극한</h2>
+<div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="sec-bar"><span>본문 5절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
+<details class="sec"><summary><h2>1. 지수함수와 로그함수의 극한</h2></summary>
 <p>e는 수열 (1 + 1/n)<sup>n</sup>의 극한으로 정의합니다. 이항정리로 전개하면</p>
 <div class="formula">(1 + 1/n)<sup>n</sup> = Σ<sub>k=0</sub><sup>n</sup> (1/k!) · (1 · (1 − 1/n) · … · (1 − (k−1)/n))</div>
 <p>각 곱의 인수는 n이 커지면 커지고, 더해지는 양의 항도 늘어나므로 이 수열은 증가합니다. 또 k ≥ 1이면 k! = 1·2·3·…·k ≥ 2<sup>k−1</sup>이므로 1/k! ≤ 1/2<sup>k−1</sup>입니다. 따라서 수열은 1 + Σ 1/2<sup>k−1</sup> &lt; 1 + 2 = 3보다 작습니다. 증가하고 위로 유계이므로 단조수렴정리에 의해 수렴하고, 그 극한을 e라고 합니다. 2 &lt; e &lt; 3이고, 값은 약 2.718입니다.</p>
@@ -85,7 +87,7 @@
 <div class="study-tip"><strong>TIP:</strong> 꼴을 표준 극한으로 맞춥니다. (e<sup>2x</sup> − 1)/x = 2 · (e<sup>2x</sup> − 1)/(2x) → 2. ln(1+3x)/x = 3 · ln(1+3x)/(3x) → 3입니다. 속 표현 전체를 분모에 만들고, 앞에 남는 상수를 적습니다.</div>
 <p>a<sup>x</sup>는 e<sup>x ln a</sup>로 읽어 둡니다. 미분할 때 이 표현이 그대로 쓰입니다. 정의역은 지수함수가 실수 전체, 로그함수가 양수입니다.</p>
 
-<h2>2. 삼각함수의 덧셈정리와 극한</h2>
+</details><details class="sec"><summary><h2>2. 삼각함수의 덧셈정리와 극한</h2></summary>
 <p>각은 라디안입니다. sin, cos, tan의 그래프와 주기, sin²x + cos²x = 1은 수학Ⅰ의 내용이고, 미적분에서는 덧셈과 극한, 도함수로 넘어갑니다.</p>
 <div class="formula">sin(α+β) = sin α cos β + cos α sin β<br>sin(α−β) = sin α cos β − cos α sin β<br>cos(α+β) = cos α cos β − sin α sin β<br>cos(α−β) = cos α cos β + sin α sin β<br>tan(α+β) = (tan α + tan β) / (1 − tan α tan β)<br>tan(α−β) = (tan α − tan β) / (1 + tan α tan β)</div>
 <p>tan의 분모가 0이면 그 각에서는 정리를 쓰지 않습니다. β = α를 넣으면 배각공식입니다.</p>
@@ -105,7 +107,7 @@
 <div class="tbl-wrap"><table><thead><tr><th>함수</th><th>도함수</th><th>음이 붙는 곳</th></tr></thead><tbody><tr><td data-l="함수">sin x</td><td data-l="도함수">cos x</td><td data-l="음이 붙는 곳">없음</td></tr><tr><td data-l="함수">cos x</td><td data-l="도함수">−sin x</td><td data-l="음이 붙는 곳">코사인의 미분에 음의 부호</td></tr><tr><td data-l="함수">tan x</td><td data-l="도함수">sec² x</td><td data-l="음이 붙는 곳">없음. 정의되는 구간에서 항상 양수</td></tr><tr><td data-l="함수">cot x</td><td data-l="도함수">−csc² x</td><td data-l="음이 붙는 곳">음의 부호</td></tr><tr><td data-l="함수">sec x</td><td data-l="도함수">sec x tan x</td><td data-l="음이 붙는 곳">없음</td></tr><tr><td data-l="함수">csc x</td><td data-l="도함수">−csc x cot x</td><td data-l="음이 붙는 곳">음의 부호</td></tr></tbody></table></div>
 <p>(tan x)'은 몫의 미분으로 확인합니다. (sin x / cos x)' = (cos²x + sin²x) / cos²x = 1/cos²x = sec² x입니다. (sec x)' = (cos x)<sup>−1</sup>의 합성 미분으로 sin x / cos² x = sec x tan x입니다.</p>
 
-<h2>3. 여러 가지 미분법</h2>
+</details><details class="sec"><summary><h2>3. 여러 가지 미분법</h2></summary>
 <p>미분계수는 극한 f'(a) = lim<sub>h→0</sub> (f(a+h) − f(a))/h이고, 그 값이 모든 a에서 함수가 되면 도함수입니다. 미분가능하면 연속입니다. 역은 성립하지 않습니다.</p>
 <h3>지수·로그·삼각함수의 도함수</h3>
 <div class="formula">(e<sup>x</sup>)' = e<sup>x</sup><br>(a<sup>x</sup>)' = a<sup>x</sup> ln a (a &gt; 0, a ≠ 1)<br>(ln x)' = 1/x (x &gt; 0)<br>(log<sub>a</sub> x)' = 1/(x ln a)<br>(ln|x|)' = 1/x (x ≠ 0)</div>
@@ -134,7 +136,7 @@
 <div class="warning-box"><strong>함정:</strong> 이계도함수를 (d²y/dt²) / (d²x/dt²)로 계산하면 틀립니다. 먼저 dy/dx를 t의 식으로 만든 다음, 그 식을 t로 미분하고, dx/dt로 다시 나눕니다.</div>
 <p>x = t², y = t³, t = 2를 보겠습니다. dx/dt = 2t = 4, dy/dt = 3t² = 12, dy/dx = 12/4 = 3입니다. 점은 (4, 8), 접선은 y − 8 = 3(x − 4), 즉 y = 3x − 4입니다. dy/dx = 3t/2이므로 t로 미분하면 3/2, 이것을 dx/dt = 2t로 나누면 d²y/dx² = 3/(4t)입니다. t = 2에서 3/8입니다. 잘못된 비 (6t)/2 = 3t는 t = 2에서 6이 되어 3/8과 다릅니다. t = 0에서는 dx/dt = 0이라 이 공식을 쓰지 않습니다.</p>
 
-<h2>4. 접선, 증감, 오목·볼록, 그래프</h2>
+</details><details class="sec"><summary><h2>4. 접선, 증감, 오목·볼록, 그래프</h2></summary>
 <h3>접선의 방정식</h3>
 <p>곡선 y = f(x) 위의 점 (a, f(a))에서 기울기 f'(a)인 접선은 다음과 같습니다. 음함수·매개변수 곡선도 그 점의 기울기만 구하면 같은 모양입니다.</p>
 <div class="formula">y − f(a) = f'(a) (x − a)</div>
@@ -167,7 +169,7 @@
 <p>표준 개형 두 개만 확실히 잡아 둡니다. y = e<sup>x</sup>는 점 (0, 1)을 지나고, 증가하며 아래로 볼록하고, x → −∞일 때 x축에 붙습니다. y = ln x는 점 (1, 0)을 지나고, 증가하며 위로 볼록하고(이계도함수 −1/x² &lt; 0), x → 0⁺에서 음의 무한대입니다. 둘은 y = x에 대해 대칭입니다.</p>
 <p>f(x) = x e<sup>−x</sup>로 순서를 한 번 밟겠습니다. f'(x) = e<sup>−x</sup>(1 − x)이므로 x &lt; 1에서 증가, x &gt; 1에서 감소, x = 1에서 극대이고 극댓값은 1/e입니다. f''(x) = e<sup>−x</sup>(x − 2)이므로 x &lt; 2에서 위로 볼록, x &gt; 2에서 아래로 볼록, 변곡점은 (2, 2/e²)입니다. x → ∞이면 0에 붙습니다. 먼저 g(u) = e<sup>u</sup> − u − 1로 두면 g(0) = 0, g'(u) = e<sup>u</sup> − 1이라 u &lt; 0에서 g는 감소, u &gt; 0에서 증가합니다. 최솟값이 0이므로 e<sup>u</sup> ≥ 1 + u입니다. u = x/2 &gt; 0이면 e<sup>x/2</sup> ≥ 1 + x/2이고, 양변은 양수이므로 제곱하면 e<sup>x</sup> ≥ (1 + x/2)² = 1 + x + x²/4 ≥ x²/4입니다. 따라서 0 &lt; x e<sup>−x</sup> ≤ 4/x → 0입니다. x → −∞이면 x는 음으로, e<sup>−x</sup>는 양으로 매우 커져 f(x) → −∞입니다. 방정식 x e<sup>−x</sup> = k의 실근 개수는 이 개형과 수평선 y = k의 교점 개수입니다. k &gt; 1/e이면 0개, k = 1/e이면 1개, 0 &lt; k &lt; 1/e이면 2개, k = 0이면 x = 0 하나, k &lt; 0이면 1개입니다.</p>
 
-<h2>5. 방정식·부등식, 속도와 가속도</h2>
+</details><details class="sec"><summary><h2>5. 방정식·부등식, 속도와 가속도</h2></summary>
 <h3>방정식과 부등식</h3>
 <p>방정식 f(x) = k의 실근 개수는 y = f(x)와 직선 y = k의 교점 개수입니다. f(x) = g(x)는 y = f(x) − g(x)와 x축의 교점으로 옮깁니다. 부등호 f(x) ≥ k가 모든 실수에서 성립하려면, 최솟값이 존재할 때 그 최솟값이 k 이상이면 됩니다.</p>
 <div class="formula">e<sup>x</sup> ≥ 1 + x (모든 실수, 등호는 x = 0)<br>ln x ≤ x − 1 (x &gt; 0, 등호는 x = 1)</div>
@@ -191,8 +193,9 @@
 <li><strong>합성함수의 미분값.</strong> (f∘g)'(a) = f'(g(a)) g'(a). 그래프가 주어지면 g(a)의 높이를 읽고, 그 높이에서 f의 기울기를 읽은 다음 g의 기울기를 곱합니다.</li>
 <li><strong>역함수의 미분값.</strong> 점 (a, b)에서의 기울기가 m이면, 역함수 위의 점 (b, a)에서 기울기는 1/m입니다. m = 0이면 미분가능하지 않습니다.</li>
 <li><strong>그래프 추론.</strong> f'의 부호로 f의 증감, f'의 증감으로 f의 오목·볼록을 복원합니다. 극값의 y좌표는 문제의 다른 조건(함수식, 정적분, 통과하는 점)으로 확정합니다.</li>
-</ul>
+</ul></details>
 
+<div class="nms-stepband"><b>③ 확인하기</b><span>조건이 바뀐 문제로 확인 — 막히면 가장 쉬운 문제부터</span></div>
 <h2>자주 나오는 함정</h2><ul>
 <li><strong>도를 라디안으로 착각하기.</strong> x → 0일 때 sin x / x → 1은 라디안일 때만 성립합니다.</li>
 <li><strong>코사인·코시컨트·코탄젠트의 미분 부호를 빼먹기.</strong> (cos x)' = −sin x, (csc x)' = −csc x cot x, (cot x)' = −csc² x입니다.</li>
@@ -228,6 +231,18 @@
 <h2>이 파트 기출 풀어보기</h2>
 <p>수능 수학 전 시험지에서 이 파트로 분류된 <strong>66문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
 <p><a class="cta" href="../practice.html#part:c2">📝 여러 가지 미분법 모아 풀기 →</a></p>
+<div class="nms-stepband"><b>④ 마무리</b><span>공부 끝 5분 — 말로 설명하고, 오답 한 줄을 남기고, 끝내기 체크</span></div>
+<section class="nms nms-end" data-nms>
+<div class="nms-top"><b>🗣 마무리 — 말로 설명하고 끝내기</b><span class="nms-top-r"><a href="../study-style.html#notes">내 오답 한 줄 모음 →</a></span></div>
+<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>역함수의 미분계수가 원래 미분계수의 역수인 이유를 그래프의 y = x 대칭으로 설명해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>y = f<sup>−1</sup>(x)의 그래프는 y = f(x)의 그래프를 직선 y = x에 대해 뒤집은 것이라, 점 (a, b)는 (b, a)로 가고 그 점의 접선도 함께 뒤집힙니다. 원래 접선이 가로로 1만큼 갈 때 세로로 f′(a)만큼 변한다면, 가로와 세로를 바꾼 접선은 가로로 f′(a)만큼 갈 때 세로로 1만큼 변하므로 기울기가 1/f′(a)입니다. 그래서 b = f(a)일 때 (f<sup>−1</sup>)′(b) = 1/f′(a)이고, 역함수 쪽의 x좌표는 원래의 y좌표 b입니다. f′(a) = 0이면 뒤집힌 접선이 세로가 되어 <b>그 점에서 역함수는 미분가능하지 않습니다</b>.</p></details></li><li>매개변수로 나타낸 곡선의 이계도함수를 (d<sup>2</sup>y/dt<sup>2</sup>)/(d<sup>2</sup>x/dt<sup>2</sup>)로 구하면 왜 틀리는지 말해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>이계도함수 d<sup>2</sup>y/dx<sup>2</sup>는 기울기 dy/dx가 x에 대해 변하는 비율입니다. dy/dx = (dy/dt)/(dx/dt)는 t의 식이므로 먼저 t로 미분해 t에 대한 변화율을 구하고, 그것을 x에 대한 변화율로 바꾸려면 dx/dt로 한 번 더 나눠야 합니다. 반면 (d<sup>2</sup>y/dt<sup>2</sup>)/(d<sup>2</sup>x/dt<sup>2</sup>)는 두 좌표의 t에 대한 이계도함수의 비라서 기울기의 변화율과는 다른 양입니다. 예를 들어 x = t<sup>2</sup>, y = t<sup>3</sup>, t = 2에서 <b>바른 값은 3/8이지만 잘못된 비는 6</b>이 나옵니다.</p></details></li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
+<div class="nms-note" data-note="aboutSuneungMath/08-diff-methods.html"><b>✍️ 오답 한 줄</b><span class="nms-note-saved" aria-live="polite"></span>
+<p class="nms-note-hint">틀린 문제 하나를 골라 ‘내가 왜 그렇게 생각했나, 어느 단계에서 틀어졌나’를 한 줄로 적어 두세요. 이 기기에만 저장되고 논리형 공부법 페이지에 모입니다.</p>
+<textarea rows="2" data-note-input aria-label="오답 한 줄" placeholder="예: 조건 하나를 빼고 식을 세움 — 다음엔 조건에 번호부터 붙이기"></textarea></div>
+<div class="nms-done" data-done="aboutSuneungMath/08-diff-methods.html"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
+<label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
+<label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
+<label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div>
+</section>
 <div class="pager"><a href="07-seq-limit.html">← 수열의 극한</a><a href="09-int-methods.html">여러 가지 적분법 →</a></div>
 </main></div>
 </body></html>

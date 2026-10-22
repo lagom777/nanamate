@@ -11,6 +11,8 @@
 <script defer src="../../shared/difficulty.js"></script>
 <link rel="stylesheet" href="../../shared/practice-simple.css">
 <script defer src="../../shared/practice-simple.js"></script>
+<link rel="stylesheet" href="../../shared/sections.css">
+<script defer src="../../shared/sections.js"></script>
 <link rel="stylesheet" href="../../shared/study-style.css">
 <script defer src="../../shared/study-style.js"></script>
 </head>
@@ -40,6 +42,7 @@
 <div class="stat-row"><div class="stat"><b>2.2</b><span>회당 문항 수</span></div><div class="stat"><b>6.7점</b><span>회당 배점</span></div><div class="stat"><b>1~3</b><span>회차별 범위</span></div><div class="stat"><b>37</b><span>최근 17회 누적</span></div></div>
 <p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
 <p>미적분의 첫 관문입니다. 수능에서는 <strong>극한값으로 계수를 결정</strong>하고, <strong>등비급수가 되는 도형의 규칙</strong>을 읽어 합을 구하며, <strong>부분합 S<sub>n</sub>과 일반항 a<sub>n</sub>의 관계</strong>로 수렴을 판정합니다. 계산 자체는 최고차항 비교와 유리화, 공비의 절댓값 세 가지로 모입니다. 식을 나누기 전에 “이 극한이 유한한가, 무한인가, 진동인가”를 먼저 분류하는 습관이 점수로 이어집니다.</p>
+<div class="nms-stepband"><b>① 틀 잡기</b><span>5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터</span></div>
 <section class="nms" data-nms>
 <div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
 <div class="nms-logic"><p class="nms-one"><b>하나만 고른다면</b><strong>급수의 합은 부분합 S<sub>n</sub>의 극한이다</strong> — 등비급수가 |r| &lt; 1에서만 a/(1 − r)로 모이는 것도, 수렴하면 일반항이 0으로 가는 것도 여기서 나온다.</p>
@@ -56,12 +59,9 @@
 <p class="nms-kv"><b>외울 것은 이것뿐</b>lim r<sup>n</sup>의 네 경우, 급수의 합 = lim S<sub>n</sub>, 등비급수의 합 a/(1 − r)과 수렴 조건 −1 &lt; r &lt; 1, ‘수렴하면 일반항 → 0’(역은 거짓)</p>
 <p class="nms-kv"><b>나머지는 유도</b>∞/∞·∞ − ∞ 꼴의 극한값, 극한 조건으로 정하는 계수, 밑이 여러 개인 지수식의 극한, 부분합이 닫히는 급수의 합, 도형 급수의 첫째항과 공비</p>
 <p class="nms-trap"><b>논리형 함정</b>‘일반항이 0으로 가면 합도 어느 값에 모인다’는 직관이 그럴듯하게 느껴집니다. <b>수렴하면 일반항 → 0은 필요조건일 뿐</b>이고, 1/n과 √(n + 1) − √n은 0으로 가지만 부분합은 무한대로 발산합니다.</p>
-<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>등비급수가 −1 &lt; r &lt; 1일 때만 수렴하는 이유를 부분합 S<sub>n</sub>의 식으로 설명해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>첫째항 a가 0이 아니고 r ≠ 1이면 부분합은 S<sub>n</sub> = a(1 − r<sup>n</sup>)/(1 − r)이고, 이 식에서 n에 따라 변하는 것은 r<sup>n</sup>뿐입니다. |r| &lt; 1이면 r<sup>n</sup> → 0이라 S<sub>n</sub>은 a/(1 − r)로 수렴하지만, r &gt; 1이면 r<sup>n</sup>이 한없이 커지고 r ≤ −1이면 진동하므로 S<sub>n</sub>이 한 값에 모이지 않습니다. r = 1이면 S<sub>n</sub> = na라서 역시 발산합니다. 그래서 <b>합 공식 a/(1 − r)는 −1 &lt; r &lt; 1에서만</b> 쓸 수 있습니다.</p></details></li><li>일반항이 0으로 가는데도 급수가 발산하는 예를 하나 들고, 왜 발산하는지 말해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>a<sub>n</sub> = √(n + 1) − √n은 유리화하면 1/(√(n + 1) + √n)이라 n이 커지면 0으로 갑니다. 그런데 부분합을 쓰면 (√2 − 1) + (√3 − √2) + … + (√(n + 1) − √n)에서 가운데가 모두 지워져 S<sub>n</sub> = √(n + 1) − 1이 되고, 이 값은 한없이 커집니다. 급수의 합은 부분합의 극한이므로 이 급수는 발산합니다. 항이 0으로 가도 <b>작아지는 속도가 느리면 쌓인 합은 끝없이 커질 수</b> 있으므로, ‘일반항 → 0’은 수렴의 필요조건일 뿐입니다.</p></details></li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
+
 <p class="nms-first">문제부터 부딪치고 싶다면 <a href="#examples">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p>
-<div class="nms-done" data-done="aboutSuneungMath/07-seq-limit.html"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
-<label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
-<label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
-<label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div></div>
+</div>
 </section>
 <details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">|r| < 1이면 부호가 바뀌어도 수렴 — 급수는 부분합의 극한</span><span class="mg-stat">회당 평균 2.2문항 · 6.7점</span></div>
@@ -74,7 +74,9 @@
 <p class="mg-ask"><b>수능은 이렇게 묻는다</b>차수 비교로 극한값·미지수 결정 → 등비수열 rⁿ의 수렴 범위 → 도형에서 첫째항과 공비를 읽어 등비급수의 합</p>
 </div></details>
 <p><a class="cta sm" href="../summary.html#p7">📌 이 파트 한눈에 요약 →</a></p>
-<h2>1. 수열의 수렴과 발산</h2>
+<div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="sec-bar"><span>본문 5절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
+<details class="sec"><summary><h2>1. 수열의 수렴과 발산</h2></summary>
 <p>수열은 자연수 n에 수 a<sub>n</sub>을 하나씩 대응시킨 목록입니다. 그래프를 그릴 때는 점 (n, a<sub>n</sub>)만 찍습니다. 점을 선으로 이어 보이는 중간 값은 수열이 아닙니다. n은 1, 2, 3, …으로만 움직입니다.</p>
 <h3>수렴의 뜻</h3>
 <p>수열 {a<sub>n</sub>}이 실수 L에 수렴한다는 것은, 아무리 작은 양수 ε을 잡아도 어느 번호 N 이후로는 a<sub>n</sub>이 L에서 ε보다 가깝게 머문다는 뜻입니다.</p>
@@ -89,7 +91,7 @@
 <h3>대소 관계</h3>
 <p>어느 번호 이후 항상 a<sub>n</sub> ≤ b<sub>n</sub>이고 두 수열이 모두 수렴하면, 극한도 lim a<sub>n</sub> ≤ lim b<sub>n</sub>입니다. 부등호가 엄격해도 극한에서는 등호가 될 수 있습니다. 0 &lt; 1/n이지만 둘 다 0으로 수렴합니다. 극한값의 대소로 항의 대소를 역추적하는 것도 되지 않습니다.</p>
 
-<h2>2. 극한값의 계산</h2>
+</details><details class="sec"><summary><h2>2. 극한값의 계산</h2></summary>
 <p>수능의 계산은 대부분 유리식의 차수 비교와, 무리식의 유리화입니다. n은 자연수이므로 n의 거듭제곱은 항상 양수입니다. 같은 식의 실수 함수 극한이 있으면 수열의 극한도 그 값과 같습니다.</p>
 <h3>최고차항 비교</h3>
 <p>분자 차수 p, 분모 차수 q, 최고차항의 계수를 각각 A, B(B ≠ 0)라고 하면 다음과 같습니다.</p>
@@ -104,7 +106,7 @@
 <p>확인: √(n² + n) − n = n / (√(n² + n) + n) → 1/2. √(4n² + n) − 2n = n / (√(4n² + n) + 2n) → 1/4입니다. 앞에 n이 한 번 더 곱해져 있으면, 유리화한 뒤 다시 최고차항으로 나눕니다. 대표 예제의 둘째 문제가 그 계산입니다.</p>
 <div class="info-card"><h4>그래프·식 읽는 순서</h4><p>1) ∞/∞인지 ∞ − ∞인지 분류합니다. 2) 유리식이면 차수를 비교하고, 유한하면 계수비를 읽습니다. 3) 차가 있으면 켤레로 유리화합니다. 4) 문자 계수가 있으면 “유한한 극한” 조건으로 차수를 먼저 맞추고, 남는 문자에 정밀 극한 조건을 넣습니다.</p></div>
 
-<h2>3. 등비수열의 극한과 샌드위치</h2>
+</details><details class="sec"><summary><h2>3. 등비수열의 극한과 샌드위치</h2></summary>
 <p>등비수열 r<sup>n</sup>의 극한은 공비 하나만 보면 됩니다. 수열의 극한에서 가장 자주 갈리는 경계는 r = −1과, 절댓값이 1보다 작은 음수입니다.</p>
 <div class="tbl-wrap"><table><thead><tr><th>r</th><th>lim r<sup>n</sup></th><th>읽는 그림</th></tr></thead><tbody><tr><td data-l="r">r &gt; 1</td><td data-l="lim rn">+∞</td><td data-l="읽는 그림">1, r, r², … 가 위로 튀어 오른다</td></tr><tr><td data-l="r">r = 1</td><td data-l="lim rn">1</td><td data-l="읽는 그림">모든 항이 1</td></tr><tr><td data-l="r">|r| &lt; 1</td><td data-l="lim rn">0</td><td data-l="읽는 그림">양수면 0으로 감소, 음수면 부호가 바뀌며 진폭이 0으로 줄어든다</td></tr><tr><td data-l="r">r ≤ −1</td><td data-l="lim rn">발산(진동)</td><td data-l="읽는 그림">r = −1이면 −1, 1, −1, 1. r &lt; −1이면 진폭이 커지며 부호가 바뀐다</td></tr></tbody></table></div>
 <p>0 &lt; r &lt; 1일 때의 근거는 다음과 같습니다. r = 1/(1+p), p &gt; 0으로 두면 이항정리에서 (1+p)<sup>n</sup> ≥ 1 + np입니다. 따라서 0 &lt; r<sup>n</sup> ≤ 1/(np) → 0입니다. −1 &lt; r &lt; 0이면 |r<sup>n</sup>| = |r|<sup>n</sup> → 0이므로 r<sup>n</sup>도 0으로 수렴합니다. r &gt; 1이면 r = 1+p로 두어 r<sup>n</sup> ≥ 1 + np → ∞입니다.</p>
@@ -117,7 +119,7 @@
 <p>절댓값으로 쓰면 |c<sub>n</sub> − L| ≤ d<sub>n</sub>이고 d<sub>n</sub> → 0일 때 c<sub>n</sub> → L입니다. 등비수열에서 |a<sub>n</sub>| ≤ |r|<sup>n</sup>, |r| &lt; 1이면 a<sub>n</sub> → 0인 것이 이 꼴입니다.</p>
 <div class="study-tip"><strong>TIP:</strong> 샌드위치를 쓸 때는 가운데 식을 그대로 계산하지 말고, 계산되는 위·아래 식으로 바꾸어 두 극한이 같은지 먼저 확인합니다. 위아래 극한이 다르면 정리를 쓸 수 없습니다.</div>
 
-<h2>4. 급수의 수렴과 발산</h2>
+</details><details class="sec"><summary><h2>4. 급수의 수렴과 발산</h2></summary>
 <p>급수 Σ a<sub>n</sub>은 a<sub>1</sub> + a<sub>2</sub> + a<sub>3</sub> + … 이라는 덧셈의 약속입니다. 무한 개를 한 번에 더하는 것이 아니라, <strong>부분합</strong>의 극한으로 정의합니다.</p>
 <div class="formula">S<sub>n</sub> = a<sub>1</sub> + a<sub>2</sub> + … + a<sub>n</sub><br>급수가 수렴한다 ⇔ 수열 {S<sub>n</sub>}이 수렴한다<br>합 S = lim S<sub>n</sub></div>
 <p>발산하면 합이라는 수를 정하지 않습니다. 부분합이 양의 무한대로 가면 “무한대로 발산한다”고 말합니다.</p>
@@ -136,7 +138,7 @@
 <p>이웃한 부분합의 차가 일반항이라는 사실을 거꾸로 쓰면, S<sub>n</sub>의 식이 주어졌을 때 합은 lim S<sub>n</sub>이고 일반항의 극한은 0인지 아닌지만 보면 수렴 여부가 갈립니다. lim S<sub>n</sub>이 유한하면 급수는 그 값에 수렴하고, 자동으로 a<sub>n</sub> → 0입니다.</p>
 <p>수렴하는 급수끼리 더하거나 상수배를 하면 합도 그대로 더해지고 상수배가 됩니다. 수렴하는 급수와 발산하는 급수를 더하면 발산합니다. 합이 수렴한다고 하면, 그 합에서 수렴하는 급수를 뺀 발산 급수도 수렴해야 하므로 모순이기 때문입니다.</p>
 
-<h2>5. 등비급수와 도형</h2>
+</details><details class="sec"><summary><h2>5. 등비급수와 도형</h2></summary>
 <p>첫째항 a, 공비 r인 등비급수는 a + ar + ar² + … 입니다. 부분합은 r ≠ 1일 때 다음과 같습니다.</p>
 <div class="formula">S<sub>n</sub> = a + ar + … + ar<sup>n−1</sup><br>rS<sub>n</sub> = ar + … + ar<sup>n</sup><br>S<sub>n</sub> − rS<sub>n</sub> = a − ar<sup>n</sup><br>S<sub>n</sub> = a(1 − r<sup>n</sup>) / (1 − r)</div>
 <p>|r| &lt; 1이면 r<sup>n</sup> → 0이므로 합이 남습니다. 그 밖의 공비에서는, a = 0인 자명한 경우를 빼면, 일반항이 0으로 가지 않거나 부분합이 진동하므로 발산합니다.</p>
@@ -156,8 +158,9 @@
 <li><strong>등비급수의 도형.</strong> 문장이 아니라 그림에서 첫째항과 공비를 읽습니다. 길이 합인지 넓이 합인지가 공비를 r로 둘지 r²로 둘지 가릅니다.</li>
 <li><strong>S<sub>n</sub>과 a<sub>n</sub>.</strong> 부분합의 극한이 합이고, 일반항은 이웃한 부분합의 차입니다. 합이 유한하면 일반항은 0입니다. 일반항이 0이 아니면 부분합은 수렴하지 않습니다.</li>
 </ul>
-<div class="study-tip"><strong>TIP:</strong> 계산 전에 한 줄만 적습니다. “유한 / 무한 / 진동”, “길이 공비 / 넓이 공비”, “구하는 것이 S인지 a<sub>n</sub>인지”. 이 세 단어가 맞으면 공식은 거의 자동입니다.</div>
+<div class="study-tip"><strong>TIP:</strong> 계산 전에 한 줄만 적습니다. “유한 / 무한 / 진동”, “길이 공비 / 넓이 공비”, “구하는 것이 S인지 a<sub>n</sub>인지”. 이 세 단어가 맞으면 공식은 거의 자동입니다.</div></details>
 
+<div class="nms-stepband"><b>③ 확인하기</b><span>조건이 바뀐 문제로 확인 — 막히면 가장 쉬운 문제부터</span></div>
 <h2>자주 나오는 함정</h2><ul>
 <li><strong>|r| ≥ 1인데 합 공식에 대입하기.</strong> a/(1−r)는 공비의 절댓값이 1보다 작을 때만 성립합니다. r = 1이면 분모가 0이고, 부분합은 na입니다.</li>
 <li><strong>일반항이 0이면 급수가 수렴한다고 판단하기.</strong> 필요조건일 뿐입니다. √(n+1) − √n과 1/n은 0으로 가지만 부분합은 무한대로 갑니다.</li>
@@ -193,6 +196,18 @@
 <h2>이 파트 기출 풀어보기</h2>
 <p>수능 수학 전 시험지에서 이 파트로 분류된 <strong>37문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
 <p><a class="cta" href="../practice.html#part:c1">📝 수열의 극한 모아 풀기 →</a></p>
+<div class="nms-stepband"><b>④ 마무리</b><span>공부 끝 5분 — 말로 설명하고, 오답 한 줄을 남기고, 끝내기 체크</span></div>
+<section class="nms nms-end" data-nms>
+<div class="nms-top"><b>🗣 마무리 — 말로 설명하고 끝내기</b><span class="nms-top-r"><a href="../study-style.html#notes">내 오답 한 줄 모음 →</a></span></div>
+<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>등비급수가 −1 &lt; r &lt; 1일 때만 수렴하는 이유를 부분합 S<sub>n</sub>의 식으로 설명해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>첫째항 a가 0이 아니고 r ≠ 1이면 부분합은 S<sub>n</sub> = a(1 − r<sup>n</sup>)/(1 − r)이고, 이 식에서 n에 따라 변하는 것은 r<sup>n</sup>뿐입니다. |r| &lt; 1이면 r<sup>n</sup> → 0이라 S<sub>n</sub>은 a/(1 − r)로 수렴하지만, r &gt; 1이면 r<sup>n</sup>이 한없이 커지고 r ≤ −1이면 진동하므로 S<sub>n</sub>이 한 값에 모이지 않습니다. r = 1이면 S<sub>n</sub> = na라서 역시 발산합니다. 그래서 <b>합 공식 a/(1 − r)는 −1 &lt; r &lt; 1에서만</b> 쓸 수 있습니다.</p></details></li><li>일반항이 0으로 가는데도 급수가 발산하는 예를 하나 들고, 왜 발산하는지 말해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>a<sub>n</sub> = √(n + 1) − √n은 유리화하면 1/(√(n + 1) + √n)이라 n이 커지면 0으로 갑니다. 그런데 부분합을 쓰면 (√2 − 1) + (√3 − √2) + … + (√(n + 1) − √n)에서 가운데가 모두 지워져 S<sub>n</sub> = √(n + 1) − 1이 되고, 이 값은 한없이 커집니다. 급수의 합은 부분합의 극한이므로 이 급수는 발산합니다. 항이 0으로 가도 <b>작아지는 속도가 느리면 쌓인 합은 끝없이 커질 수</b> 있으므로, ‘일반항 → 0’은 수렴의 필요조건일 뿐입니다.</p></details></li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
+<div class="nms-note" data-note="aboutSuneungMath/07-seq-limit.html"><b>✍️ 오답 한 줄</b><span class="nms-note-saved" aria-live="polite"></span>
+<p class="nms-note-hint">틀린 문제 하나를 골라 ‘내가 왜 그렇게 생각했나, 어느 단계에서 틀어졌나’를 한 줄로 적어 두세요. 이 기기에만 저장되고 논리형 공부법 페이지에 모입니다.</p>
+<textarea rows="2" data-note-input aria-label="오답 한 줄" placeholder="예: 조건 하나를 빼고 식을 세움 — 다음엔 조건에 번호부터 붙이기"></textarea></div>
+<div class="nms-done" data-done="aboutSuneungMath/07-seq-limit.html"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
+<label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
+<label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
+<label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div>
+</section>
 <div class="pager"><a href="06-integral.html">← 적분</a><a href="08-diff-methods.html">여러 가지 미분법 →</a></div>
 </main></div>
 </body></html>

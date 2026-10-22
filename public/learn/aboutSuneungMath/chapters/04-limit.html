@@ -11,6 +11,8 @@
 <script defer src="../../shared/difficulty.js"></script>
 <link rel="stylesheet" href="../../shared/practice-simple.css">
 <script defer src="../../shared/practice-simple.js"></script>
+<link rel="stylesheet" href="../../shared/sections.css">
+<script defer src="../../shared/sections.js"></script>
 <link rel="stylesheet" href="../../shared/study-style.css">
 <script defer src="../../shared/study-style.js"></script>
 </head>
@@ -40,6 +42,7 @@
 <div class="stat-row"><div class="stat"><b>2.0</b><span>회당 문항 수</span></div><div class="stat"><b>6.7점</b><span>회당 배점</span></div><div class="stat"><b>1~3</b><span>회차별 범위</span></div><div class="stat"><b>34</b><span>최근 17회 누적</span></div></div>
 <p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
 <p>수학Ⅱ의 첫 관문입니다. 수능에서는 식을 정리해 <strong>극한값을 구하는 계산</strong>, 그래프에서 <strong>극한과 함숫값을 구별</strong>하는 읽기, 그리고 <strong>연속이 되도록 계수를 정하는 조건</strong>이 한 세트로 나옵니다. 사잇값 정리는 “근이 있다”를 보장하고, 최대·최소 정리는 “닫힌 구간에서 가장 큰 값과 가장 작은 값이 있다”를 보장합니다. 둘 다 연속이 전제입니다.</p>
+<div class="nms-stepband"><b>① 틀 잡기</b><span>5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터</span></div>
 <section class="nms" data-nms>
 <div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
 <div class="nms-logic"><p class="nms-one"><b>하나만 고른다면</b><strong>극한은 다가가며 읽은 높이, 함숫값은 찍힌 점의 높이다</strong> — 좌우 극한과 함숫값이 모두 같을 때만 연속이다.</p>
@@ -57,12 +60,9 @@
 <p class="nms-kv"><b>외울 것은 이것뿐</b>좌극한 = 우극한일 때만 극한값이 있다는 것, 연속의 세 조건, 사잇값 정리·최대·최소 정리의 전제(닫힌 구간에서 연속)</p>
 <p class="nms-kv"><b>나머지는 유도</b>0/0·∞/∞ 꼴의 극한값, ‘분모 → 0이면 분자 → 0’과 미정계수, 불연속점의 개수, f(g(x))의 연속, 근이 있는 구간</p>
 <p class="nms-trap"><b>논리형 함정</b>극한을 구할 때 습관처럼 x = a를 대입해 <b>함숫값을 극한으로 쓰는</b> 실수를 합니다. 그래프 문항은 세로선 x = a를 긋고 왼쪽 높이, 오른쪽 높이, 찍힌 점의 높이를 세 칸에 따로 적으세요.</p>
-<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>lim<sub>x→1</sub> (x<sup>2</sup> − 1)/(x − 1)을 구할 때 x − 1로 약분해도 되는 이유를 ‘극한은 x = 1에서의 값을 보지 않는다’로 설명해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>(x<sup>2</sup> − 1)/(x − 1) = x + 1이라는 약분은 x ≠ 1일 때만 성립하고, x = 1에서는 원래 식이 정의되지도 않습니다. 그런데 x → 1의 극한은 x가 1은 아니면서 1에 한없이 가까워질 때의 값이라, x = 1에서의 사정은 처음부터 쓰지 않습니다. 따라서 x ≠ 1인 모든 점에서 두 식이 같으면 <b>극한도 같으므로</b> 원래 식의 극한값은 lim (x + 1) = 2입니다. 그래프로는 직선 y = x + 1에서 점 (1, 2)만 구멍 난 모양이고, 극한은 그 구멍의 높이입니다.</p></details></li><li>분모가 x − 2인 분수식이 x → 2에서 실수 극한을 가지려면 왜 분자도 x = 2에서 0이어야 하는지 말해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>x → 2이면 분모 x − 2는 0에 가까워집니다. 이때 분자가 0이 아닌 수에 가까워지면 분수의 절댓값이 한없이 커져 발산하므로 실수 극한이 될 수 없습니다. 거꾸로 극한값 L이 실수로 있으면 분자 = (분수) × (x − 2)이므로 분자의 극한은 L × 0 = 0입니다. 분자가 다항식이면 그 극한은 x = 2를 넣은 값이므로 <b>분자에 2를 넣은 값이 0</b>이고, 인수정리에 따라 분자를 (x − 2)로 약분할 수 있습니다.</p></details></li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
+
 <p class="nms-first">문제부터 부딪치고 싶다면 <a href="#examples">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p>
-<div class="nms-done" data-done="aboutSuneungMath/04-limit.html"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
-<label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
-<label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
-<label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div></div>
+</div>
 </section>
 <details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">극한은 ‘구멍의 높이’, 함숫값은 ‘찍힌 점의 높이’ — 세 칸을 따로 읽는다</span><span class="mg-stat">회당 평균 2.0문항 · 6.7점</span></div>
@@ -75,7 +75,9 @@
 <p class="mg-ask"><b>수능은 이렇게 묻는다</b>그래프에서 좌·우극한과 함숫값 읽기 → 0/0·∞/∞ 극한값(미지수 결정) → 불연속점의 개수와 f(g(x))의 연속</p>
 </div></details>
 <p><a class="cta sm" href="../summary.html#p4">📌 이 파트 한눈에 요약 →</a></p>
-<h2>1. 함수의 극한과 좌우극한</h2>
+<div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="sec-bar"><span>본문 5절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
+<details class="sec"><summary><h2>1. 함수의 극한과 좌우극한</h2></summary>
 <p>x가 a는 아니면서 a에 한없이 가까워질 때 f(x)가 실수 L에 한없이 가까워지면, x가 a에 가까워질 때의 극한값을 L이라 하고 다음과 같이 씁니다.</p>
 <div class="formula">lim<sub>x→a</sub> f(x) = L</div>
 <p>a에 ‘가까워지는’ 방향이 둘입니다. a보다 작은 쪽에서 다가가면 <strong>좌극한</strong>, 큰 쪽에서 다가가면 <strong>우극한</strong>입니다.</p>
@@ -94,7 +96,7 @@
 <div class="tbl-wrap"><table><thead><tr><th>함수</th><th>x→1<sup>−</sup></th><th>x→1<sup>+</sup></th><th>x→1</th></tr></thead><tbody><tr><td data-l="함수">1/(x−1)</td><td data-l="x→1−">−∞</td><td data-l="x→1+">+∞</td><td data-l="x→1">극한 없음</td></tr><tr><td data-l="함수">1/(x−1)²</td><td data-l="x→1−">+∞</td><td data-l="x→1+">+∞</td><td data-l="x→1">양의 무한대로 발산</td></tr></tbody></table></div>
 <p>1/(x−1)²은 분모가 제곱이라 0 근처에서 항상 양수입니다. 그래서 양쪽이 모두 +∞입니다. 이때도 실수인 극한값은 없고, “양의 무한대로 발산한다”고 말합니다.</p>
 
-<h2>2. 극한의 성질과 0/0 꼴, ∞/∞ 꼴</h2>
+</details><details class="sec"><summary><h2>2. 극한의 성질과 0/0 꼴, ∞/∞ 꼴</h2></summary>
 <p>lim f(x)와 lim g(x)가 모두 실수로 존재할 때만 아래를 쓸 수 있습니다.</p>
 <div class="formula">lim (f+g) = lim f + lim g<br>lim (f−g) = lim f − lim g<br>lim (cf) = c·lim f<br>lim (fg) = (lim f)·(lim g)<br>lim (f/g) = (lim f)/(lim g) &nbsp; (lim g ≠ 0)</div>
 <p>lim g(x) = L이고 함수 h가 x=L에서 연속이면 lim h(g(x)) = h(L)입니다. 극한이 무한대이거나, ∞−∞, 0/0, ∞/∞처럼 정해지지 않은 꼴이면 이 성질을 그대로 적용하지 않습니다. 식을 먼저 바꿉니다.</p>
@@ -118,7 +120,7 @@
 </ul>
 <div class="warning-box"><strong>함정:</strong> 최고차가 아닌 항까지 남겨 두고 ‘무한대 나누기 무한대’로 멈추면 계수의 비를 놓칩니다. 차수가 같으면 최고차항의 계수 비만 남습니다.</div>
 
-<h2>3. 그래프로 극한 읽기</h2>
+</details><details class="sec"><summary><h2>3. 그래프로 극한 읽기</h2></summary>
 <p>그래프에서 극한은 <strong>점을 따라 곡선을 읽어 가는 값</strong>이고, 함숫값은 <strong>그 x에 찍힌 점의 높이</strong>입니다. 빈 동그라미(구멍)는 ‘여기에는 값이 없거나, 값이 따로 있다’는 표시이고, 극한을 읽을 때는 빈 동그라미의 높이를 따라갑니다.</p>
 <div class="tbl-wrap"><table><thead><tr><th>그래프의 모습</th><th>극한</th><th>함숫값</th><th>x=a에서</th></tr></thead><tbody><tr><td data-l="그래프의 모습">y=x+1 직선인데 (1, 2)만 구멍</td><td data-l="극한">2</td><td data-l="함숫값">없음</td><td data-l="x=a에서">정의되지 않음. 극한은 있음</td></tr><tr><td data-l="그래프의 모습">구멍 (1, 2)와 따로 찍힌 점 (1, 5)</td><td data-l="극한">2</td><td data-l="함숫값">5</td><td data-l="x=a에서">불연속 (극한 ≠ 함숫값)</td></tr><tr><td data-l="그래프의 모습">x=0 왼쪽 높이 0, 오른쪽 높이 1, 점은 1</td><td data-l="극한">없음</td><td data-l="함숫값">1</td><td data-l="x=a에서">점프 불연속</td></tr><tr><td data-l="그래프의 모습">x=1 양쪽에서 위로 치솟음</td><td data-l="극한">없음 (+∞로 발산)</td><td data-l="함숫값">없음</td><td data-l="x=a에서">무한 불연속</td></tr><tr><td data-l="그래프의 모습">끊기지 않고 점이 곡선 위에 있음</td><td data-l="극한">f(a)</td><td data-l="함숫값">f(a)</td><td data-l="x=a에서">연속</td></tr></tbody></table></div>
 <p>첫 줄의 식은 f(x)=(x²−1)/(x−1)입니다. x≠1이면 (x−1)(x+1)/(x−1)=x+1이므로 그래프는 직선 y=x+1에서 (1, 2)만 빠진 모양입니다. 극한은 2, 함숫값은 없습니다.</p>
@@ -126,7 +128,7 @@
 <p>셋째 줄은 f(x)=0 (x&lt;0), f(x)=1 (x≥0)입니다. 왼쪽에서 읽으면 0, 오른쪽에서 읽으면 1입니다. 함숫값은 1이지만 좌극한과 다릅니다.</p>
 <div class="study-tip"><strong>TIP:</strong> 그래프 문항은 세로선 x=a를 그어 보고, 왼쪽 곡선의 높이, 오른쪽 곡선의 높이, 칠해진 점의 높이를 세 칸으로 적습니다. 앞의 둘이 같아야 극한, 셋이 모두 같아야 연속입니다.</div>
 
-<h2>4. 함수의 연속</h2>
+</details><details class="sec"><summary><h2>4. 함수의 연속</h2></summary>
 <p>함수 f가 x=a에서 연속이라는 것은 다음 세 조건이 모두 성립하는 것입니다.</p>
 <div class="formula">(1) f(a)가 정의되어 있다<br>(2) lim<sub>x→a</sub> f(x)가 실수로 존재한다 (좌극한 = 우극한)<br>(3) lim<sub>x→a</sub> f(x) = f(a)</div>
 <p>하나라도 빠지면 x=a에서 불연속입니다. 닫힌 구간 [a, b]에서 연속이라는 것은, 열린 구간 (a, b)의 모든 점에서 연속이고, x=a에서는 우극한만, x=b에서는 좌극한만 함숫값과 같으면 됩니다. 구간 밖은 정의되지 않을 수 있기 때문입니다.</p>
@@ -146,7 +148,7 @@
 <p>반대로 g(x)=x−1처럼 f의 불연속점을 그대로 지나면, 합성도 그 점에서 불연속입니다. f(g(x))가 연속인지 볼 때는 <strong>g(x)가 f의 불연속점에 닿는 x</strong>만 후보로 잡고, 그 점에서 좌극한·우극한·함숫값을 비교합니다.</p>
 <div class="warning-box"><strong>함정:</strong> f(g(x))가 연속이라고 해서 f와 g가 각각 연속인 것은 아닙니다. 위 예시처럼 바깥 함수가 한 점에서 끊겨 있어도, 안쪽 함수가 그 점을 함숫값으로 가지지 않으면 합성은 이어집니다.</div>
 
-<h2>5. 사잇값 정리, 최대·최소 정리, 수능에서 묻는 방식</h2>
+</details><details class="sec"><summary><h2>5. 사잇값 정리, 최대·최소 정리, 수능에서 묻는 방식</h2></summary>
 <h3>사잇값 정리</h3>
 <p>함수 f가 닫힌 구간 [a, b]에서 연속이고 f(a)≠f(b)이면, f(a)와 f(b) 사이에 있는 어떤 수 k에 대해서도 f(c)=k인 c가 열린 구간 (a, b)에 적어도 하나 있습니다. 연속인 곡선은 높이 f(a)에서 높이 f(b)로 가려면 그 사이의 모든 높이를 지나고, 중간을 건너뛰려면 곡선이 끊어져 있어야 합니다.</p>
 <p>정리는 ‘적어도 하나’만 말해 줍니다. 근이 하나뿐인지는 말해주지 않습니다. 또 f(a)와 f(b)의 부호가 같으면 이 정리로는 아무것도 말할 수 없습니다. 그 사이에 근이 있을 수도, 없을 수도 있습니다.</p>
@@ -168,8 +170,9 @@
 <h3>수능형 — 불연속점의 개수</h3>
 <p>후보는 다음뿐입니다. 분모가 0이 되는 점, 조각이 바뀌는 경계, 그리고 문제에서 따로 정의한 점. 각 후보에서 좌극한, 우극한, 함숫값을 표로 적습니다. 셋이 같으면 연속이라 개수에서 뺍니다. 절댓값은 연속을 깨지 않으므로, |x| 자체는 불연속점 후보가 아닙니다. 절댓값은 미분 단원에서 ‘꺾임’으로 다시 봅니다.</p>
 <h3>수능형 — f(g(x))의 연속</h3>
-<p>f의 불연속점 전체를 먼저 적습니다. 그다음 g(x)가 그 불연속점과 같아지는 x를 풉니다. 그 x에서만 f(g(x))의 좌우 극한을 계산합니다. g가 불연속점을 함숫값으로 갖지 않으면, f가 끊어져 있어도 합성은 연속일 수 있습니다. 조건 (가) ‘f는 연속’, (나) ‘g는 이 점에서만 불연속’처럼 역할이 나뉘어 있으면, (가)의 연속점을 (나)의 함숫값이 지나가는지만 보면 됩니다.</p>
+<p>f의 불연속점 전체를 먼저 적습니다. 그다음 g(x)가 그 불연속점과 같아지는 x를 풉니다. 그 x에서만 f(g(x))의 좌우 극한을 계산합니다. g가 불연속점을 함숫값으로 갖지 않으면, f가 끊어져 있어도 합성은 연속일 수 있습니다. 조건 (가) ‘f는 연속’, (나) ‘g는 이 점에서만 불연속’처럼 역할이 나뉘어 있으면, (가)의 연속점을 (나)의 함숫값이 지나가는지만 보면 됩니다.</p></details>
 
+<div class="nms-stepband"><b>③ 확인하기</b><span>조건이 바뀐 문제로 확인 — 막히면 가장 쉬운 문제부터</span></div>
 <h2>자주 나오는 함정</h2><ul>
 <li><strong>극한값과 함숫값을 같은 것으로 보기.</strong> 구멍의 높이가 극한이고, 칠해진 점의 높이가 함숫값입니다. 둘은 따로 읽습니다.</li>
 <li><strong>분모가 0이면 극한이 항상 없다.</strong> 분자도 함께 0이면 약분 뒤에 실수 극한이 나오는 경우가 많습니다.</li>
@@ -227,6 +230,18 @@
 <h2>이 파트 기출 풀어보기</h2>
 <p>수능 수학 전 시험지에서 이 파트로 분류된 <strong>34문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
 <p><a class="cta" href="../practice.html#part:b1">📝 함수의 극한과 연속 모아 풀기 →</a></p>
+<div class="nms-stepband"><b>④ 마무리</b><span>공부 끝 5분 — 말로 설명하고, 오답 한 줄을 남기고, 끝내기 체크</span></div>
+<section class="nms nms-end" data-nms>
+<div class="nms-top"><b>🗣 마무리 — 말로 설명하고 끝내기</b><span class="nms-top-r"><a href="../study-style.html#notes">내 오답 한 줄 모음 →</a></span></div>
+<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>lim<sub>x→1</sub> (x<sup>2</sup> − 1)/(x − 1)을 구할 때 x − 1로 약분해도 되는 이유를 ‘극한은 x = 1에서의 값을 보지 않는다’로 설명해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>(x<sup>2</sup> − 1)/(x − 1) = x + 1이라는 약분은 x ≠ 1일 때만 성립하고, x = 1에서는 원래 식이 정의되지도 않습니다. 그런데 x → 1의 극한은 x가 1은 아니면서 1에 한없이 가까워질 때의 값이라, x = 1에서의 사정은 처음부터 쓰지 않습니다. 따라서 x ≠ 1인 모든 점에서 두 식이 같으면 <b>극한도 같으므로</b> 원래 식의 극한값은 lim (x + 1) = 2입니다. 그래프로는 직선 y = x + 1에서 점 (1, 2)만 구멍 난 모양이고, 극한은 그 구멍의 높이입니다.</p></details></li><li>분모가 x − 2인 분수식이 x → 2에서 실수 극한을 가지려면 왜 분자도 x = 2에서 0이어야 하는지 말해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>x → 2이면 분모 x − 2는 0에 가까워집니다. 이때 분자가 0이 아닌 수에 가까워지면 분수의 절댓값이 한없이 커져 발산하므로 실수 극한이 될 수 없습니다. 거꾸로 극한값 L이 실수로 있으면 분자 = (분수) × (x − 2)이므로 분자의 극한은 L × 0 = 0입니다. 분자가 다항식이면 그 극한은 x = 2를 넣은 값이므로 <b>분자에 2를 넣은 값이 0</b>이고, 인수정리에 따라 분자를 (x − 2)로 약분할 수 있습니다.</p></details></li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
+<div class="nms-note" data-note="aboutSuneungMath/04-limit.html"><b>✍️ 오답 한 줄</b><span class="nms-note-saved" aria-live="polite"></span>
+<p class="nms-note-hint">틀린 문제 하나를 골라 ‘내가 왜 그렇게 생각했나, 어느 단계에서 틀어졌나’를 한 줄로 적어 두세요. 이 기기에만 저장되고 논리형 공부법 페이지에 모입니다.</p>
+<textarea rows="2" data-note-input aria-label="오답 한 줄" placeholder="예: 조건 하나를 빼고 식을 세움 — 다음엔 조건에 번호부터 붙이기"></textarea></div>
+<div class="nms-done" data-done="aboutSuneungMath/04-limit.html"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
+<label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
+<label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
+<label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div>
+</section>
 <div class="pager"><a href="03-sequence.html">← 수열</a><a href="05-diff.html">미분 →</a></div>
 </main></div>
 </body></html>

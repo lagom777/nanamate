@@ -62,7 +62,9 @@ export function head(title, depth, spec, opts = {}) {
 <script defer src="${up}../shared/search.js"></script>
 <script defer src="${up}../shared/difficulty.js"></script>
 <link rel="stylesheet" href="${up}../shared/practice-simple.css">
-<script defer src="${up}../shared/practice-simple.js"></script>${terms}${spec.styles ? `\n<link rel="stylesheet" href="${up}../shared/study-style.css">\n<script defer src="${up}../shared/study-style.js"></script>` : ""}${opts.extra ? "\n" + opts.extra : ""}
+<script defer src="${up}../shared/practice-simple.js"></script>
+<link rel="stylesheet" href="${up}../shared/sections.css">
+<script defer src="${up}../shared/sections.js"></script>${terms}${spec.styles ? `\n<link rel="stylesheet" href="${up}../shared/study-style.css">\n<script defer src="${up}../shared/study-style.js"></script>` : ""}${opts.extra ? "\n" + opts.extra : ""}
 </head>`;
 }
 
@@ -125,6 +127,16 @@ function games(spec, c, salt = 0) {
 <script>window.NANAMATE_QUIZ=${JSON.stringify({ color: spec.color, questions: spreadAnswers(c.questions, salt) })};</script>`;
 }
 
+/* 본문을 절(h2)마다 접어 제목만 보이게 한다. 첫 h2 앞 글은 그대로, 맨 앞에 ‘모두 펼치기’ 줄(shared/sections.js) */
+function foldSections(html) {
+  const s = String(html), at = s.search(/<h2[\s>]/);
+  if (at < 0) return html;
+  // 맨 앞의 h2 도 접히도록 앞글(lead)은 첫 h2 앞에서 잘라 낸다(split 은 0번 자리의 빈 일치를 건너뛴다)
+  const lead = s.slice(0, at), secs = s.slice(at).split(/(?=<h2[\s>])/);
+  return `${lead}<div class="sec-bar"><span>본문 ${secs.length}절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
+${secs.map((x) => { const m = x.match(/^<h2[^>]*>[\s\S]*?<\/h2>/); return m ? `<details class="sec"><summary>${m[0]}</summary>${x.slice(m[0].length)}</details>` : x; }).join("")}`;
+}
+
 export function chapterPage(spec, c, i) {
   const st = c.part ? partStats(spec.sub, c.part) : null;
   const prev = spec.chapters[i - 1], next = spec.chapters[i + 1];
@@ -154,13 +166,16 @@ ${c.lead}
 ${styleCard(spec, c)}
 ${spec.maps ? `<details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary>${mapOf(spec, i)}</details>` : ""}
 ${sumCta}
-${c.body}
+${spec.styles ? stepBand("②", "이해하기", "본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기") : ""}
+${foldSections(c.body)}
 ${motion}
+${spec.styles ? stepBand("③", "확인하기", "조건이 바뀐 문제로 확인 — 막히면 가장 쉬운 문제부터") : ""}
 ${c.traps ? `<h2>자주 나오는 함정</h2>${c.traps}` : ""}
 ${c.examples ? `<h2${spec.styles ? ' id="examples"' : ""}>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p>${c.examples}` : ""}
 ${tabs(c.easy, c.hard)}
 ${games(spec, c, i)}
 ${practice}
+${styleEnd(spec, c)}
 ${nav}
 </main></div>
 </body></html>`;
@@ -277,6 +292,13 @@ const doneBox = (key) => `<div class="nms-done" data-done="${key}"><b>✅ 이 �
 const fullMin = (d) => Math.max(1, Math.round(d.full.reduce((n, s) => n + s.p.join("").replace(/<[^>]+>/g, "").length, 0) / 500));
 const fullBlock = (d) => `<details class="nms-full"><summary><span class="nms-full-t">📖 논리형 전체 해설 — ${d.full.length}절 · 약 ${fullMin(d)}분</span><span class="nms-full-toc">${d.full.map((s) => s.h.split(" — ")[0]).join(" · ")}</span></summary>
 ${d.full.map((sec) => `<div class="nms-full-sec"><p class="nms-full-h">${sec.h}</p>${sec.p.map((x) => `<p>${x}</p>`).join("")}${sec.fig ? `<p class="nms-figlink">${sec.fig.map(([id, name]) => `<a href="#fig-${id}">🖼 그림으로 보기: ${name} ↓</a>`).join("")}</p>` : ""}</div>`).join("\n")}</details>`;
+const explainBlock = (d) => d.explain ? `<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol>${d.explain.map((x, i) => `<li>${x}${d.answers && d.answers[i] ? `<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>${d.answers[i]}</p></details>` : ""}</li>`).join("")}</ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>` : "";
+/* 오답 한 줄: 틀린 문제에서 ‘내가 왜 그렇게 생각했나, 어느 단계에서 틀어졌나’를 남긴다(이 기기에만 저장, shared/study-style.js) */
+const noteBox = (key) => `<div class="nms-note" data-note="${key}"><b>✍️ 오답 한 줄</b><span class="nms-note-saved" aria-live="polite"></span>
+<p class="nms-note-hint">틀린 문제 하나를 골라 ‘내가 왜 그렇게 생각했나, 어느 단계에서 틀어졌나’를 한 줄로 적어 두세요. 이 기기에만 저장되고 논리형 공부법 페이지에 모입니다.</p>
+<textarea rows="2" data-note-input aria-label="오답 한 줄" placeholder="예: 조건 하나를 빼고 식을 세움 — 다음엔 조건에 번호부터 붙이기"></textarea></div>`;
+/* 장 페이지를 공부 습관 순서로 나누는 띠: ① 틀 잡기 → ② 이해하기 → ③ 확인하기 → ④ 마무리 */
+export const stepBand = (n, t, sub) => `<div class="nms-stepband"><b>${n} ${t}</b><span>${sub}</span></div>`;
 const logicBlock = (d, o = {}) => `<div class="nms-logic">${d.one ? `<p class="nms-one"><b>하나만 고른다면</b>${boldOne(d.one)}</p>` : ""}
 <div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
 <p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
@@ -285,7 +307,7 @@ ${d.full && o.full === true ? fullBlock(d) : d.full && o.full ? `<p class="nms-f
 <p class="nms-kv"><b>외울 것은 이것뿐</b>${d.keep}</p>
 <p class="nms-kv"><b>나머지는 유도</b>${d.derive}</p>
 <p class="nms-trap"><b>논리형 함정</b>${d.trap}</p>
-${d.explain ? `<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol>${d.explain.map((x, i) => `<li>${x}${d.answers && d.answers[i] ? `<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>${d.answers[i]}</p></details>` : ""}</li>`).join("")}</ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>` : ""}
+${o.explain === false ? "" : explainBlock(d)}
 ${o.ex ? `<p class="nms-first">문제부터 부딪치고 싶다면 <a href="${o.ex}">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p>` : ""}
 ${o.done ? doneBox(o.done) : ""}</div>`;
 /* 논리형 공통 루틴 — 이해가 ‘옮겨 적기’에서 끝나지 않고 내 것이 되게 하는 습관(모든 과목 공통) */
@@ -303,9 +325,24 @@ const LOGIC_COMMON = [
 export function styleCard(spec, c) {
   const d = spec.styles && spec.styles.chapters[c.file];
   if (!d) return "";
-  return `<section class="nms" data-nms>
+  return `${stepBand("①", "틀 잡기", "5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터")}
+<section class="nms" data-nms>
 <div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
-${logicBlock(d.logic, { ex: c.examples ? "#examples" : null, done: `${spec.folder}/${c.file}`, full: true })}
+${logicBlock(d.logic, { ex: c.examples ? "#examples" : null, full: true, explain: false })}
+</section>`;
+}
+
+/* 장 끝 마무리 카드: 공부 끝 5분 — 말로 설명 → 오답 한 줄 → 끝내기 체크 */
+export function styleEnd(spec, c) {
+  const d = spec.styles && spec.styles.chapters[c.file];
+  if (!d) return "";
+  const key = `${spec.folder}/${c.file}`;
+  return `${stepBand("④", "마무리", "공부 끝 5분 — 말로 설명하고, 오답 한 줄을 남기고, 끝내기 체크")}
+<section class="nms nms-end" data-nms>
+<div class="nms-top"><b>🗣 마무리 — 말로 설명하고 끝내기</b><span class="nms-top-r"><a href="../study-style.html#notes">내 오답 한 줄 모음 →</a></span></div>
+${explainBlock(d.logic)}
+${noteBox(key)}
+${doneBox(key)}
 </section>`;
 }
 
@@ -320,6 +357,10 @@ export function stylePage(spec) {
 <p class="nms-first"><a href="chapters/${c.file}">이 파트 공부하러 가기 →</a></p>
 ${logicBlock(S.chapters[c.file].logic, { ex: c.examples ? `chapters/${c.file}#examples` : null, full: `chapters/${c.file}` })}</details>`;
   }).join("\n");
+  const notes = `<div class="nms-notes" id="notes"><h3>✍️ 내 오답 한 줄 모음</h3>
+<p class="nms-fit">파트마다 마무리 칸에 적은 한 줄입니다. 시험 전에 이것만 다시 읽어도 같은 자리에서 또 틀리는 일을 줄일 수 있습니다.</p>
+<ul>${styled.map((c) => `<li data-note-show="${spec.folder}/${c.file}" hidden><a href="chapters/${c.file}">${c.title}</a><span class="nms-note-text"></span></li>`).join("")}</ul>
+<p class="nms-notes-empty">아직 적은 오답 한 줄이 없습니다. 파트를 마무리할 때 하나씩 남겨 보세요.</p></div>`;
   const frame = `<div class="nms-frame"><h3>이 과목의 틀 — 장마다 하나만</h3>
 <p class="nms-fit">각 파트에서 ‘하나만 고른다면’을 모은 과목 전체의 뼈대입니다. 파트를 시작하기 전에 이 목록에서 지금 파트의 자리를 확인하고, 시험 직전에는 이 목록만 소리 내어 읽어도 큰 그림이 돌아옵니다.</p>
 <p class="nms-total" data-prog-total="${spec.folder}" data-prog-count="${styled.length}"></p>
@@ -334,6 +375,7 @@ ${aside(spec, "style", 0)}
 <div class="nms-top"><b>논리형으로 이 과목 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button></span></div>
 <p class="nms-tip"><strong>논리형</strong> — 원리·인과로 납득해야 기억한다. ${t.fit}</p>
 ${frame}
+${notes}
 <div class="nms-common"><h3>논리형 공통 루틴 — 이해가 ‘내 것’이 되게</h3><ol>${LOGIC_COMMON.map((x) => `<li>${x}</li>`).join("")}</ol></div>
 ${t.extra ? `<div class="nms-extra"><h3>${t.extra.title}</h3><ul>${t.extra.items.map((x) => `<li>${x}</li>`).join("")}</ul></div>` : ""}
 <h3>이 과목의 기본 원칙</h3>
