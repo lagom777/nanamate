@@ -500,6 +500,15 @@ select {
           </div>
         </div>
         <div class="field">
+          <span class="lbl" id="l-next">다음 단어까지</span>
+          <div class="seg" role="radiogroup" aria-labelledby="l-next">
+            <input type="radio" name="next" id="next-1" value="1"><label for="next-1">1초</label>
+            <input type="radio" name="next" id="next-2" value="2"><label for="next-2">2초</label>
+            <input type="radio" name="next" id="next-3" value="3"><label for="next-3">3초</label>
+            <input type="radio" name="next" id="next-5" value="5"><label for="next-5">5초</label>
+          </div>
+        </div>
+        <div class="field">
           <span class="lbl" id="l-sleep">자동 종료 (자기 전에)</span>
           <div class="seg" role="radiogroup" aria-labelledby="l-sleep">
             <input type="radio" name="sleep" id="sleep-0" value="0"><label for="sleep-0">끔</label>
@@ -1608,7 +1617,7 @@ const STAR = '<svg viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 
 
 // settings + stars (per-viewer, browser only)
 const KEY = 'sori-vocab-v1';
-const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '', deck: 'all', grp: '', thm: '', picOnly: false, sleep: 0, viz: true, pic: false, vol: 1 };
+const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, next: 1, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '', deck: 'all', grp: '', thm: '', picOnly: false, sleep: 0, viz: true, pic: false, vol: 1 };
 const SAY = { word: true, mean: true, ety: true, ex: true, exko: false };   // 읽어 줄 항목
 const SAY_KEYS = Object.keys(SAY);
 S.say = { ...SAY };
@@ -1839,6 +1848,7 @@ function updateStatus() {
   const en = S.say.word && `영어 ${S.rep}번`, ko = S.say.mean && '뜻';
   const seq = (S.order === 'en-ko' ? [en, `${S.gap}초`, ko] : [ko, `${S.gap}초`, en])
     .concat(S.say.ety && '어원', S.say.ex && '예문', S.say.exko && '예문 해석').filter(Boolean);
+  seq.push(`${S.next}초 → 다음 단어`);
   const any = SAY_KEYS.some(k => S.say[k]);
   $('sayHint').hidden = any;
   let t = `${any ? seq.join(' → ') : '읽기 꺼짐'} · 끝나면 처음부터 다시`;
@@ -2088,7 +2098,7 @@ async function speakWord(id) {
 async function loop(id) {
   while (id === run) {
     await speakWord(id);
-    await sleep(1200);
+    await sleep(S.next * 1000);   // 다음 단어로 넘어가기 전 쉬는 시간 (설정: 다음 단어까지)
     if (id !== run) return;
     if (sleepAt && Date.now() >= sleepAt) { endSleep(); return; }
     if (pos >= deck.length - 1) buildDeck(); else pos++;
@@ -2135,7 +2145,7 @@ function restartCurrent() {
 
 // controls
 function syncControls() {
-  ['order', 'rate', 'rep', 'gap', 'sleep'].forEach(name => {
+  ['order', 'rate', 'rep', 'gap', 'next', 'sleep'].forEach(name => {
     const r = document.querySelector(`input[name="${name}"][value="${S[name]}"]`);
     if (r) r.checked = true;
   });
