@@ -34,3 +34,12 @@ python3 finalize2.py     # exams.json 병합 + public/learn/suneung-exam 복사
 ## 2018~2021학년도(구 교육과정) · R2 업로드
 `old_dl.py`(다운로드·분류) → `old_ans.py`(정답표, 수학은 가형 홀수형) → `old_crop.py`(국어=통합 45문항 단일 구역, 수학=가형 30문항) → `old_script.py` → `finalize_old.py`(과탐은 `BOARDS=boards_all.json YMIN=2018 YMAX=2021 python batch.py …` 결과 `manifest_old_all.json` 사용). 2018 9월 지구과학Ⅰ 17번은 복수정답(①,⑤)이라 `finalize_old.py`에서 배열로 넣는다.
 문항·시험지 이미지는 저장소에 두지 않는다. `r2up.sh <경로>`(wrangler `r2 object put`)로 Cloudflare R2 버킷 `nanamate-suneung`에 올리고, 플레이어의 `imgBase`(`scripts/suneung/lib.mjs` `IMG_BASE`)가 그 공개 주소를 가리킨다. 병렬은 3 이하로(429 제한), 올린 뒤 HTTP 200을 확인하고 로컬 webp를 지운다.
+
+## 한국사 (2017학년도~, `hist_*`)
+한국사는 2017학년도 수능부터 필수·절대평가(20문항 50점 30분)라 그 해부터 모은다(수능 10회 + 6·9월 모의평가 22회 = 32회, 2027학년도 9월까지).
+```bash
+python3 hist_boards.py            # 게시판에서 한국사 행 → boards_hist.json
+./venv/bin/python hist_batch.py   # PDF → out/<회차>/hist/q01~q20.webp + manifest_hist.json (CROP_DPI=160 CROP_Q=70)
+python3 hist_fix.py               # 2025 수능 정답표(그림)·2017 수능 14번 복수정답 보정, 배점합 50 검증
+```
+그다음 manifest 의 `answers/points` 를 `exams.json` 각 회차의 `hist: {a, p}` 로 넣고(없는 2017 회차는 새로 만든다, 기존 과목 데이터는 건드리지 않는다) webp 를 R2 `nanamate-suneung/<회차>/hist/` 로 올린다. 파트 태그(`t`)는 아직 없어 풀어보기는 회차 단위만 된다.

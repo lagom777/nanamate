@@ -87,6 +87,8 @@
   var meUser = null;
 
   function examList() { return EXAMS.filter(function (e) { return e[SUB]; }); }
+  /* 회차 제목의 '(구 교육과정)'은 2022학년도에 바뀐 국·수·탐 기준이다. 한국사는 2017학년도부터 같은 체제라 붙이지 않는다. */
+  function etitle(e) { return SUB === 'hist' ? e.title.replace(' (구 교육과정)', '') : e.title; }
   function examOf(key) { return examList().filter(function (e) { return e.key === key; })[0]; }
   function isRight(it, a) { return it.ans === 0 ? true : Array.isArray(it.ans) ? it.ans.indexOf(a) >= 0 : a === it.ans; }
   function chLabel(a) { return a ? CIRC[a - 1] : '-'; }
@@ -125,7 +127,7 @@
   function mk(e, n) {
     var s = e[SUB];
     return {
-      id: e.key + '/' + n, ex: e.key, title: e.title, n: n, ans: s.a[n - 1], pts: s.p[n - 1], tag: s.t ? s.t[n - 1] : null,
+      id: e.key + '/' + n, ex: e.key, title: etitle(e), n: n, ans: s.a[n - 1], pts: s.p[n - 1], tag: s.t ? s.t[n - 1] : null,
       num: !!(s.n && s.n.indexOf(n) >= 0),
       img: (cfg.imgBase || cfg.base) + e.key + '/' + SUB + '/q' + pad(n) + '.webp'
     };
@@ -159,7 +161,7 @@
     var ex = examList();
     setSel = el('select', { 'aria-label': '문제 세트', onchange: function () { startSet(setSel.value); } });
     var g1 = el('optgroup', { label: '기출 시험 (' + QN + '문항 · ' + (EXAM_SECONDS / 60) + '분)' });
-    ex.forEach(function (e) { g1.appendChild(el('option', { value: 'exam:' + e.key, text: e.title })); });
+    ex.forEach(function (e) { g1.appendChild(el('option', { value: 'exam:' + e.key, text: etitle(e) })); });
     setSel.appendChild(g1);
     if (HAS_PARTS && !PAPER) {
       var g2 = el('optgroup', { label: '파트별 모아 풀기 (전 시험에서 뽑기)' });
@@ -1188,7 +1190,7 @@
 
   function setLabel() {
     var p = S.set.split(':');
-    if (p[0] === 'exam') return examOf(p[1]).title + (SUB === 'korean' ? ' (' + (S.sel === 'a' ? '화작' : '언매') + ')' : '');
+    if (p[0] === 'exam') return etitle(examOf(p[1])) + (SUB === 'korean' ? ' (' + (S.sel === 'a' ? '화작' : '언매') + ')' : '');
     if (p[0] === 'part') return partName[p[1]] + ' 모아 풀기';
     return '오답 다시 풀기';
   }
