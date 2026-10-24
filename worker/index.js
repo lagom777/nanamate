@@ -1,6 +1,7 @@
 import { b64urlToBytes, bytesToB64url, openSession, safeEqual, sealSession } from './session.js';
 import { failedNext, safeNext } from './safe-next.js';
 import { parseAttempts, validExam, validSub } from './attempts.js';
+import { parseStyle } from './style.js';
 
 const SESSION = 'sn_session';
 const OAUTH = 'sn_oauth';
@@ -165,6 +166,20 @@ async function getStyle(request, env) {
   return json({ style, updated_at: row.updated_at });
 }
 
+async function saveStyle(request, env) {
+  const session = await current(request, env);
+  if (!session) return json({ error: 'unauthorized' }, 401);
+  let body;
+  try { body = await request.json(); } catch { return json({ error: 'bad json' }, 400); }
+  const parsed = parseStyle(body);
+  if (!parsed.ok) return json({ error: 'bad style' }, 400);
+  const now = Date.now();
+  await env.DB.prepare(
+    'INSERT INTO user_styles (user_id, body, updated_at) VALUES (?, ?, ?) ON CONFLICT(user_id) DO UPDATE SET body = excluded.body, updated_at = excluded.updated_at'
+  ).bind(session.uid, JSON.stringify(parsed.style), now).run();
+  return json({ style: parsed.style, updated_at: now });
+}
+
 async function postAttempts(request, env) {
   const session = await current(request, env);
   if (!session) return json({ error: 'unauthorized' }, 401);
@@ -238,6 +253,7 @@ export default {
       }
       if (path === '/api/me' && request.method === 'GET') return await me(request, env);
       if (path === '/api/style' && request.method === 'GET') return await getStyle(request, env);
+      if (path === '/api/style' && request.method === 'POST') return await saveStyle(request, env);
       if (path === '/api/attempts' && request.method === 'POST') return await postAttempts(request, env);
       if (path === '/api/attempts' && request.method === 'GET') return await listAttempts(request, env, url);
       if (path === '/api/export' && request.method === 'GET') return await exportAttempts(request, env, url);

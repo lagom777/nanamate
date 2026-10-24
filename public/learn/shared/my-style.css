@@ -1,4 +1,4 @@
-/* 내 성향 페이지 — 로그인한 본인의 공부 성향. 넓은 화면에서는 카드를 두 칸으로 넉넉하게 펼친다.
+/* 내 정보 페이지 — 로그인한 본인의 공부 성향을 보고 직접 고친다. 넓은 화면에서는 카드를 두 칸으로 넉넉하게 펼친다.
  * 사이트 전역 button 규칙(!important)을 이기려고 .ms 아래 버튼은 !important 를 쓴다. */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap');
 * { box-sizing: border-box; }
@@ -37,8 +37,29 @@ body { margin: 0; }
 .ms-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .ms-links a { display: inline-block; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(0,0,0,.1); background: #fff; color: #1a1f2e; text-decoration: none; font-size: .92em; }
 .ms-links a:hover { border-color: var(--ac); color: var(--ac); }
+.ms-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; margin: 0 0 8px; }
+.ms .ms-edit-btn { padding: 7px 14px !important; border-radius: 10px !important; border: 1px solid color-mix(in srgb, var(--ac) 40%, transparent) !important; background: #fff !important; color: var(--ac) !important; font-weight: 700 !important; }
+.ms .ms-edit-btn:hover { background: color-mix(in srgb, var(--ac) 8%, #fff) !important; }
+.ms-saved { font-size: .88em; font-weight: 700; color: #16a34a; }
+.ms-edit { display: grid; gap: 12px; padding: 16px 18px; border-radius: 14px; border: 1px solid color-mix(in srgb, var(--ac) 30%, transparent); background: #fff; }
+.ms-edit-hint { margin: 0; font-size: .88em; color: #4a5468; }
+.ms-field { display: grid; gap: 4px; }
+.ms-field-t { font-size: .86em; font-weight: 700; color: #1a1f2e; }
+.ms-edit input, .ms-edit textarea { width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(0,0,0,.15); background: #fff; color: #1a1f2e; font: inherit; font-size: .95em; line-height: 1.6; }
+.ms-edit textarea { resize: vertical; }
+.ms-edit input:focus, .ms-edit textarea:focus { outline: 2px solid color-mix(in srgb, var(--ac) 45%, transparent); outline-offset: 1px; }
+.ms-edit-cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.ms-edit-card { display: grid; gap: 8px; padding: 12px 14px; border-radius: 12px; border: 1px dashed rgba(0,0,0,.15); background: #fafbfc; }
+.ms .ms-edit-del { justify-self: end; padding: 0 !important; background: transparent !important; border: 0 !important; color: #6b7280 !important; font-size: .85em !important; text-decoration: underline; }
+.ms .ms-edit-add { justify-self: start; padding: 7px 14px !important; border-radius: 10px !important; border: 1px dashed color-mix(in srgb, var(--ac) 45%, transparent) !important; background: #fff !important; color: var(--ac) !important; font-weight: 600 !important; }
+.ms-edit-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.ms .ms-save { padding: 9px 22px !important; border-radius: 10px !important; border: 0 !important; background: var(--ac) !important; color: #fff !important; font-weight: 700 !important; }
+.ms .ms-save:disabled { opacity: .6; cursor: default; }
+.ms .ms-cancel { padding: 9px 16px !important; border-radius: 10px !important; border: 1px solid rgba(0,0,0,.15) !important; background: #fff !important; color: #4a5468 !important; }
+.ms-edit-status { margin: 0; font-size: .88em; font-weight: 600; color: #b45309; }
 @media (min-width: 900px) {
   .ms { padding: 36px 40px 96px; }
   .ms-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ms-flow { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .ms-edit-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
