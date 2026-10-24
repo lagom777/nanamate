@@ -2,6 +2,7 @@ import { b64urlToBytes, bytesToB64url, openSession, safeEqual, sealSession } fro
 import { failedNext, safeNext } from './safe-next.js';
 import { parseAttempts, validExam, validSub } from './attempts.js';
 import { parseStyle } from './style.js';
+import { parseNotes } from './qnotes.js';
 
 const SESSION = 'sn_session';
 const OAUTH = 'sn_oauth';
@@ -180,6 +181,33 @@ async function saveStyle(request, env) {
   return json({ style: parsed.style, updated_at: now });
 }
 
+async function listNotes(request, env, url) {
+  const session = await current(request, env);
+  if (!session) return json({ error: 'unauthorized' }, 401);
+  const sub = url.searchParams.get('sub');
+  if (!validSub(sub)) return json({ error: 'bad query' }, 400);
+  const { results } = await env.DB.prepare(
+    'SELECT exam, q, marks, memo, updated_at AS ts FROM question_notes WHERE user_id = ? AND sub = ? ORDER BY exam, q LIMIT 5000'
+  ).bind(session.uid, sub).all();
+  return json(results || []);
+}
+
+// 기기마다 고친 시각(ts)이 더 늦은 쪽을 남긴다
+async function saveNotes(request, env) {
+  const session = await current(request, env);
+  if (!session) return json({ error: 'unauthorized' }, 401);
+  let body;
+  try { body = await request.json(); } catch { return json({ error: 'bad json' }, 400); }
+  const parsed = parseNotes(body);
+  if (!parsed.ok) return json({ error: 'bad notes' }, 400);
+  if (parsed.notes.length) {
+    await env.DB.batch(parsed.notes.map((n) => env.DB.prepare(
+      'INSERT INTO question_notes (user_id, sub, exam, q, marks, memo, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT(user_id, sub, exam, q) DO UPDATE SET marks = excluded.marks, memo = excluded.memo, updated_at = excluded.updated_at WHERE excluded.updated_at >= question_notes.updated_at'
+    ).bind(session.uid, n.sub, n.exam, n.q, n.marks, n.memo, n.ts)));
+  }
+  return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
+}
+
 async function postAttempts(request, env) {
   const session = await current(request, env);
   if (!session) return json({ error: 'unauthorized' }, 401);
@@ -254,6 +282,8 @@ export default {
       if (path === '/api/me' && request.method === 'GET') return await me(request, env);
       if (path === '/api/style' && request.method === 'GET') return await getStyle(request, env);
       if (path === '/api/style' && request.method === 'POST') return await saveStyle(request, env);
+      if (path === '/api/qnotes' && request.method === 'GET') return await listNotes(request, env, url);
+      if (path === '/api/qnotes' && request.method === 'POST') return await saveNotes(request, env);
       if (path === '/api/attempts' && request.method === 'POST') return await postAttempts(request, env);
       if (path === '/api/attempts' && request.method === 'GET') return await listAttempts(request, env, url);
       if (path === '/api/export' && request.method === 'GET') return await exportAttempts(request, env, url);

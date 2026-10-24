@@ -53,7 +53,8 @@
 
   var S = {
     set: '', mode: 'exam', items: [], ans: [], graded: false, timer: false, left: EXAM_SECONDS, tick: null,
-    count: 10, revealed: {}, sel: 'a', meta: null, pa: {}, wrongLoading: false, ms: {}, lastActive: null
+    count: 10, revealed: {}, sel: 'a', meta: null, pa: {}, wrongLoading: false, ms: {}, lastActive: null,
+    markMode: false, memoOpen: {}
   };
   var hiddenMs = 0, hiddenAt = 0;
   function activeNow() {
@@ -208,6 +209,10 @@
       fab = el('button', { type: 'button', class: 'pr-fab', text: '📝 답안지', onclick: function () { toggleOmr(); } });
       root.appendChild(fab);
     }
+    /* 위 막대가 로그인 단추 줄로 높아져도 답안지·문항이 그 아래에 붙게 높이를 --pr-bar-h 로 알린다 */
+    var fitBar = function () { root.style.setProperty('--pr-bar-h', bar.offsetHeight + 'px'); };
+    if (window.ResizeObserver) new ResizeObserver(fitBar).observe(bar);
+    fitBar();
     root.appendChild(el('p', { class: 'pr-src', html: '문항 출처: 한국교육과정평가원(KICE) 대학수학능력시험·6월/9월 모의평가 공개 문제지. 문제지에 관한 저작권은 한국교육과정평가원에 있으며, 이 페이지는 학습용으로 문항 이미지를 그대로 보여 주고 정답표로 채점합니다.' + (HAS_PARTS ? ' 파트 분류는 문항 내용 기반 자동 분류라 일부 오차가 있을 수 있습니다.' : '') + (PAPER && SUB === 'english' ? ' 듣기 음성은 제공하지 않으며, 채점 후 듣기평가 대본을 볼 수 있습니다.' : '') }));
   }
 
@@ -433,8 +438,10 @@
     c.appendChild(el('div', { class: 'pr-chk-row' }, [
       el('button', { type: 'button', class: 'pr-chk-btn' + (shown ? ' on' : ''), text: shown ? '해설 접기' : '이 문제 채점 · 해설 보기', onclick: function () { toggleReveal(i); } }),
       shown ? null : el('button', { type: 'button', class: 'pr-chk-btn pr-hint-btn', text: '💡 힌트만', title: '정답은 숨기고 실마리만', onclick: function () { askHint(i); } }),
-      el('button', { type: 'button', class: 'pr-chk-btn pr-ai-btn', text: '🤖 AI 해설' + (shown && S.ans[i] && !isRight(it, S.ans[i]) ? ' · 내 실수 분석' : ''), onclick: function () { askItem(i); } })
+      el('button', { type: 'button', class: 'pr-chk-btn pr-ai-btn', text: '🤖 AI 해설' + (shown && S.ans[i] && !isRight(it, S.ans[i]) ? ' · 내 실수 분석' : ''), onclick: function () { askItem(i); } }),
+      el('button', { type: 'button', class: 'pr-chk-btn pr-memo-btn' + (memoOf(it) ? ' has' : ''), 'data-memo-for': noteKey(it), 'aria-expanded': memoOpen(it, i) ? 'true' : 'false', text: '📝 메모', onclick: function () { toggleMemo(it, i); } })
     ]));
+    if (memoOpen(it, i)) c.appendChild(memoBox(it, i));
     if (!shown && aiRun(hintAiId(i)).status !== 'idle') c.appendChild(el('div', { class: 'pr-explain pr-hint' }, [aiBox(hintAiId(i))]));
     if (shown) c.appendChild(reveal(it, i));
     return c;
@@ -971,6 +978,7 @@
           partName: partName,
           trap: maps.trap,
           explain: maps.explain,
+          notes: reportNotes(),
           imgBase: cfg.imgBase || cfg.base || ''
         };
         var md = window.SnReport.buildReport(reportOpts);
@@ -1095,6 +1103,107 @@
     if (rows.length) SnAuth.record(rows);
   }
 
+  /* ───────── 문제별 메모·선지 표시(○△✕): 이 기기에 바로 저장하고, 로그인하면 계정(/api/qnotes)과 맞춘다 ─────────
+   * notes["<회차>/<번호>"] = { m: 선지 1~5 표시 다섯 글자(o ○ · t △ · x ✕ · - 없음), t: 메모, u: 고친 시각 } */
+  var NOTES = 'sn:' + SUB + ':qn', NOTES_DIRTY = NOTES + ':dirty';
+  var notes = store(NOTES) || {}, noteDirty = store(NOTES_DIRTY) || {}, noteTimer = null;
+  var MARK_SYM = { o: '○', t: '△', x: '✕' }, MARK_NEXT = { '-': 'o', o: 't', t: 'x', x: '-' };
+  function noteQ(it) { return it.sec === 'b' ? 100 + it.n : it.n; } // 국어 언매 35~45 는 화작과 번호가 겹쳐 135~145
+  function noteKey(it) { var ex = it && examKeyOf(it); return ex ? ex + '/' + noteQ(it) : ''; }
+  function noteOf(it) { return notes[noteKey(it)] || null; }
+  function markOf(it, k) { var n = noteOf(it); return n ? n.m.charAt(k - 1) : '-'; }
+  function setNote(it, m, t) {
+    var key = noteKey(it);
+    if (!key) return;
+    var n = notes[key] || { m: '-----', t: '' };
+    notes[key] = { m: m == null ? n.m : m, t: t == null ? n.t : t, u: Date.now() };
+    noteDirty[key] = 1;
+    store(NOTES, notes);
+    store(NOTES_DIRTY, noteDirty);
+    clearTimeout(noteTimer);
+    noteTimer = setTimeout(pushNotes, 800);
+  }
+  function pushNotes() {
+    if (!meUser || !meUser.id || !window.SnAuth) return;
+    var keys = Object.keys(noteDirty).slice(0, 200), sent = {};
+    if (!keys.length) return;
+    var rows = keys.map(function (key) {
+      var p = key.split('/'), n = notes[key] || { m: '-----', t: '', u: Date.now() };
+      sent[key] = n.u;
+      return { exam: p[0], sub: SUB, q: +p[1], marks: n.m === '-----' ? '' : n.m, memo: n.t, ts: n.u };
+    });
+    SnAuth.saveNotes(rows).then(function () {
+      keys.forEach(function (key) { if (notes[key] && notes[key].u === sent[key]) delete noteDirty[key]; });
+      store(NOTES_DIRTY, noteDirty);
+      if (Object.keys(noteDirty).length) { clearTimeout(noteTimer); noteTimer = setTimeout(pushNotes, 800); }
+    }).catch(function () {});
+  }
+  /* 로그인했을 때: 계정 것과 이 기기 것 중 더 늦게 고친 쪽을 남기고, 이 기기에만 있던 것은 계정으로 보낸다 */
+  function pullNotes() {
+    if (!meUser || !meUser.id || !window.SnAuth) return;
+    SnAuth.notes(SUB).then(function (rows) {
+      var seen = {}, changed = false;
+      (rows || []).forEach(function (r) {
+        var key = r.exam + '/' + r.q, mine = notes[key];
+        seen[key] = 1;
+        if (!mine || mine.u < r.ts) { notes[key] = { m: r.marks || '-----', t: r.memo || '', u: r.ts }; delete noteDirty[key]; changed = true; }
+        else if (mine.u > r.ts) noteDirty[key] = 1;
+      });
+      Object.keys(notes).forEach(function (key) { if (!seen[key]) noteDirty[key] = 1; });
+      store(NOTES, notes);
+      store(NOTES_DIRTY, noteDirty);
+      if (changed && !(document.activeElement && document.activeElement.classList.contains('pr-memo-in'))) {
+        if (PAPER) renderOmr(); else S.items.forEach(function (it, i) { refreshCard(i); });
+      }
+      pushNotes();
+    }).catch(function () {});
+  }
+  function cycleMark(i, k) {
+    var it = S.items[i], n = noteOf(it), m = n ? n.m : '-----';
+    setNote(it, m.slice(0, k - 1) + MARK_NEXT[m.charAt(k - 1)] + m.slice(k), null);
+    renderOmr();
+  }
+  /* 메모 칸: 문항 카드는 메모가 있거나 틀린 문제를 채점하면 저절로 열리고, 답안지(국어·영어)는 📝 를 눌러야 열린다 */
+  function memoWanted(it, i) { return isShown(i) && S.ans[i] && !isRight(it, S.ans[i]); }
+  function memoOpen(it, i) {
+    var o = S.memoOpen[noteKey(it)];
+    if (o !== undefined) return o;
+    return !PAPER && !!(memoOf(it) || memoWanted(it, i));
+  }
+  function memoOf(it) { var n = noteOf(it); return n ? n.t : ''; }
+  function memoBox(it, i, cls) {
+    var label = (PAPER ? it.n : i + 1) + '번';
+    var saved = el('span', { class: 'pr-memo-saved', 'aria-live': 'polite' });
+    var ta = el('textarea', {
+      class: 'pr-memo-in', rows: '2', maxlength: '1000', 'aria-label': label + ' 메모',
+      placeholder: memoWanted(it, i) ? '왜 이 답을 골랐나 · 어느 단계에서 틀어졌나 — 한 줄로' : '이 문제에서 남길 것 (풀이 실마리·헷갈린 점)',
+      oninput: function () {
+        setNote(it, null, ta.value);
+        saved.textContent = '저장됨 ✓';
+        var b = document.querySelector('[data-memo-for="' + noteKey(it) + '"]');
+        if (b) b.classList.toggle('has', !!ta.value);
+      }
+    });
+    ta.value = memoOf(it);
+    return el('div', { class: cls || 'pr-memo' }, [el('div', { class: 'pr-memo-h' }, [el('b', { text: '📝 ' + label + ' 메모' }), saved]), ta]);
+  }
+  /* 분석 자료용: 시도 기록과 같은 "<회차>/<번호>" 로 바꾼다(언매 135~145 → 35~45, 화작과 겹치면 지금 고른 선택과목 것) */
+  function reportNotes() {
+    var out = {};
+    Object.keys(notes).forEach(function (key) {
+      var p = key.split('/'), q = +p[1], n = notes[key], b = q > 100;
+      if (!n || (!n.t && n.m === '-----')) return;
+      var k = p[0] + '/' + (b ? q - 100 : q);
+      if (out[k] && !(b ? S.sel === 'b' : S.sel !== 'b')) return;
+      out[k] = { m: n.m, t: n.t };
+    });
+    return out;
+  }
+  function toggleMemo(it, i) {
+    S.memoOpen[noteKey(it)] = !memoOpen(it, i);
+    if (PAPER) renderOmr(); else refreshCard(i);
+  }
+
   /* ───────── paper 렌더 ───────── */
   function renderPaper() {
     var m = S.meta;
@@ -1147,6 +1256,14 @@
   function renderOmr() {
     omr.innerHTML = '';
     omr.appendChild(el('h3', { text: '답안지' }));
+    /* 국어·영어: 선지마다 ○△✕ 를 표시하는 모드(답과 따로 저장) */
+    if (PAPER) {
+      var modeSw = function (on, text) {
+        return el('button', { type: 'button', class: 'pr-mark-sw', 'aria-pressed': S.markMode === on ? 'true' : 'false', text: text, onclick: function () { S.markMode = on; renderOmr(); } });
+      };
+      omr.appendChild(el('div', { class: 'pr-mark-tog', role: 'group', 'aria-label': '답안지 누르기' }, [modeSw(false, '답 고르기'), modeSw(true, '○△✕ 표시')]));
+      if (S.markMode) omr.appendChild(el('p', { class: 'pr-mark-hint', text: '선지 번호를 누를 때마다 ○ → △ → ✕ → 지움. 고른 답은 그대로입니다.' }));
+    }
     var grid = el('div', { class: 'pr-grid' });
     var lastSec = null;
     S.items.forEach(function (it, i) {
@@ -1167,11 +1284,21 @@
         var cls = 'pr-b';
         if (S.ans[i] === k) cls += ' sel';
         if (isShown(i) && it.ans !== 0 && isRight(it, k)) cls += ' right';
-        row.appendChild(el('button', { type: 'button', class: cls, 'aria-label': label + '번 ' + k + '번 선택', text: k, onclick: function () { choose(i, k); } }));
+        var mark = PAPER ? MARK_SYM[markOf(it, k)] : '';
+        row.appendChild(el('button', {
+          type: 'button', class: cls, 'data-mark': mark || false, text: k,
+          'aria-label': label + '번 ' + k + '번 ' + (S.markMode && PAPER ? '표시 바꾸기' : '선택') + (mark ? ' (표시 ' + mark + ')' : ''),
+          onclick: function () { if (PAPER && S.markMode) cycleMark(i, k); else choose(i, k); }
+        }));
       })(k);
       if (PAPER) row.appendChild(el('button', { type: 'button', class: 'pr-chk' + (isShown(i) ? ' on' : ''), title: isShown(i) ? '정답 가리기' : '이 문제 채점', 'aria-label': label + '번 채점', text: '✓', onclick: function () { toggleReveal(i); } }));
       if (PAPER && !it.num) row.appendChild(el('button', { type: 'button', class: 'pr-chk pr-ai-mini', title: 'AI 해설 · 내 실수 분석', 'aria-label': label + '번 AI 해설', text: 'AI', onclick: function () { askItem(i); } }));
+      if (PAPER) row.appendChild(el('button', {
+        type: 'button', class: 'pr-chk pr-memo-mini' + (memoOf(it) ? ' has' : memoWanted(it, i) ? ' want' : ''), title: '메모', 'data-memo-for': noteKey(it),
+        'aria-label': label + '번 메모', 'aria-expanded': memoOpen(it, i) ? 'true' : 'false', text: '📝', onclick: function () { toggleMemo(it, i); }
+      }));
       grid.appendChild(row);
+      if (PAPER && memoOpen(it, i)) grid.appendChild(memoBox(it, i, 'pr-memo pr-omr-memo'));
     });
     omr.appendChild(grid);
     if (!S.graded && S.items.length) {
@@ -1289,6 +1416,7 @@
     var begin = function () { startSet(start); window.scrollTo(0, 0); };
     if (meUser.id && start.indexOf('wrong:') === 0) migrateWrong().then(begin);
     else { begin(); if (meUser.id) migrateWrong(); }
+    pullNotes();
   }).catch(function () {
     root.textContent = '문제 데이터를 불러오지 못했습니다. 로컬에서는 python3 -m http.server로 public/learn을 열어 주세요.';
   });

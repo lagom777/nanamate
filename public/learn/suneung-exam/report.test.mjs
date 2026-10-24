@@ -305,3 +305,19 @@ test('빈 입력', () => {
   assert.doesNotMatch(html, /<img /);
   assert.equal(buildReportHtml(null).startsWith('<!doctype html>'), true);
 });
+
+test('문항 메모와 선지 표시(○△✕)는 현재 오답 상세에만 붙는다', () => {
+  const notes = {
+    '2026-csat/1': { m: 'o-x-t', t: '음성 피드백 방향을\n거꾸로 봄 <b>' },
+    '2026-csat/2': { m: '-----', t: '맞힌 문항 메모' }
+  };
+  const md = report({ notes });
+  const cur = chunk(md, '## 현재 오답 (문항별 최신 시도가 오답)', '## 반복해서 틀린 문항');
+  assert.match(cur, /- 내 메모: 음성 피드백 방향을 \/ 거꾸로 봄 <b>/);
+  assert.match(cur, /- 내 선지 표시: ①○ ③✕ ⑤△/);
+  assert.doesNotMatch(md, /맞힌 문항 메모/);
+  assert.doesNotMatch(report(), /내 메모|내 선지 표시/);
+  const html = buildReportHtml({ subLabel: '생명과학Ⅰ', now: NOW, attempts, exams, sub: 'bio1', partName, imgBase: 'https://img.example/', notes });
+  assert.match(html, /<p>내 메모: 음성 피드백 방향을 \/ 거꾸로 봄 &lt;b&gt;<\/p>/);
+  assert.match(html, /<p>내 선지 표시: ①○ ③✕ ⑤△<\/p>/);
+});

@@ -52,6 +52,20 @@
     return String(picked);
   }
 
+  /* 문항 옆에 남긴 메모와 선지 표시(○△✕). notes["<회차>/<번호>"] = { m: 'o-x-t', t: 메모 } */
+  var MARK_SYM = { o: '○', t: '△', x: '✕' };
+  function noteOf(notes, g) {
+    var n = notes && notes[g.exam + '/' + g.q];
+    if (!n) return null;
+    var marks = [];
+    for (var k = 1; k <= 5; k++) {
+      var s = MARK_SYM[String(n.m || '').charAt(k - 1)];
+      if (s) marks.push(CIRC[k - 1] + s);
+    }
+    var memo = String(n.t || '').trim().replace(/\s*\n\s*/g, ' / ');
+    return memo || marks.length ? { memo: memo, marks: marks.join(' ') } : null;
+  }
+
   function ansLabel(ans, num) {
     if (ans === undefined || ans === null) return null;
     if (Array.isArray(ans)) {
@@ -435,6 +449,9 @@
         lines.push(detailHead(g, model.opts.partName));
         lines.push('- 시도 기록: ' + historyLine(g));
         lines.push('- ' + answerLine(g));
+        var note = noteOf(model.opts.notes, g);
+        if (note && note.memo) lines.push('- 내 메모: ' + note.memo);
+        if (note && note.marks) lines.push('- 내 선지 표시: ' + note.marks);
         var trap = trapText(model.opts.trap, g);
         if (trap) lines.push('- 왜 이 선지를 골랐을까: ' + trap);
         var exp = explainText(model.opts.explain, g);
@@ -549,6 +566,9 @@
         parts.push('<img src="' + esc(src) + '" alt="' + esc(head) + '" loading="eager">');
         parts.push('<p>시도 기록: ' + esc(historyLine(g)) + '</p>');
         parts.push('<p>' + esc(answerLine(g)) + '</p>');
+        var note = noteOf(model.opts.notes, g);
+        if (note && note.memo) parts.push('<p>내 메모: ' + esc(note.memo) + '</p>');
+        if (note && note.marks) parts.push('<p>내 선지 표시: ' + esc(note.marks) + '</p>');
         var trap = trapText(model.opts.trap, g);
         if (trap) parts.push('<p>왜 이 선지를 골랐을까: ' + esc(trap) + '</p>');
         var exp = explainText(model.opts.explain, g);

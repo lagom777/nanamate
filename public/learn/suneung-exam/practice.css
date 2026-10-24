@@ -195,3 +195,35 @@
 .pr-weak-list li { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 5px 0; border-bottom: 1px dashed var(--pr-line); }
 .pr-weak-list li small { color: var(--text-mute, var(--text-dim)); }
 .pr-weak-list .pr-ai-link { flex: 0 0 auto; }
+
+/* ───────── 문제별 메모 · 선지 표시(○△✕) ───────── */
+/* 국어·영어 답안지: 📝 칸이 하나 늘어 넓은 화면에서는 답안지를 조금 넓힌다 */
+@media (min-width: 901px) { .pr-body.paper { grid-template-columns: minmax(0, 1fr) 290px; } }
+.pr-body.paper .pr-row:not(.numrow) { grid-template-columns: 28px repeat(5, 1fr) 24px 24px 24px; }
+.pr-mark-tog { display: flex; gap: 4px; margin: 0 0 8px; padding: 3px; border-radius: 10px; background: var(--pr-el); }
+#practice-root .pr-mark-sw { flex: 1; padding: 5px 6px; border: 0 !important; border-radius: 8px; background: transparent !important; color: var(--text-dim) !important; font: 600 12px var(--font-body, sans-serif); cursor: pointer; }
+#practice-root .pr-mark-sw[aria-pressed="true"] { background: var(--pr-card) !important; color: var(--text) !important; box-shadow: 0 1px 3px rgba(0,0,0,.14); }
+.pr-mark-hint { margin: 0 0 8px !important; font-size: 11.5px; line-height: 1.5; color: var(--text-dim) !important; }
+.pr-b { position: relative; }
+.pr-b[data-mark]::after { content: attr(data-mark); position: absolute; top: -7px; right: -6px; min-width: 13px; padding: 0 1px; border-radius: 7px; background: var(--pr-card); font: 800 11px/13px var(--font-body, sans-serif); text-align: center; pointer-events: none; }
+.pr-b[data-mark="○"]::after { color: #16a34a; }
+.pr-b[data-mark="△"]::after { color: #d97706; }
+.pr-b[data-mark="✕"]::after { color: #dc2626; }
+#practice-root .pr-memo-mini { font-size: 11px; }
+#practice-root .pr-memo-mini.has { background: color-mix(in srgb, #d97706 18%, transparent) !important; border-color: #d97706 !important; }
+#practice-root .pr-memo-mini.want { box-shadow: 0 0 0 2px color-mix(in srgb, var(--pr-bad) 55%, transparent); }
+#practice-root .pr-memo-btn.has::after { content: ' •'; color: #d97706; }
+/* 메모 칸(문항 카드·답안지 공통) */
+.pr-memo { margin-top: 10px; padding: 8px 10px; border-radius: 10px; border: 1px dashed color-mix(in srgb, #d97706 55%, transparent); background: color-mix(in srgb, #d97706 5%, var(--pr-card)); }
+.pr-omr-memo { margin: 2px 0 6px; padding: 6px 8px; }
+.pr-memo-h { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: 13px; }
+.pr-memo-h b { color: #b45309; }
+.pr-memo-saved { font-size: 11.5px; font-weight: 700; color: var(--pr-ok); }
+.pr-memo-in { display: block; width: 100%; min-height: 44px; resize: vertical; box-sizing: border-box; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--pr-line); background: var(--pr-card); color: var(--text); font: 13.5px/1.6 var(--font-body, sans-serif); }
+.pr-memo-in:focus { outline: 2px solid color-mix(in srgb, #d97706 45%, transparent); outline-offset: 1px; }
+/* 위 막대 높이(--pr-bar-h, practice.js 가 잰다)만큼 답안지·문항 이동 위치를 내린다 — 로그인하면 막대가 한 줄 높아진다 */
+@media (min-width: 901px) {
+  .pr-omr { top: calc(var(--pr-bar-h, 118px) + 12px); max-height: calc(100vh - var(--pr-bar-h, 118px) - 32px); }
+  .pr-card { scroll-margin-top: calc(var(--pr-bar-h, 118px) + 12px); }
+  .pr-anchor { scroll-margin-top: calc(var(--pr-bar-h, 108px) + 12px); }
+}

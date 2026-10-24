@@ -75,5 +75,22 @@
       .then(function (r) { if (!r.ok) throw new Error('export'); return r.json(); });
   }
 
-  w.SnAuth = { me: me, login: login, logout: logout, record: record, wrong: wrong, exportAttempts: exportAttempts };
+  /* 문제별 메모·선지 표시(○△✕): 과목 것을 읽고, 바뀐 것만 보낸다 */
+  function notes(sub) {
+    return fetch('/api/qnotes?sub=' + encodeURIComponent(sub), { credentials: 'same-origin', cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error('notes'); return r.json(); });
+  }
+  function saveNotes(rows) {
+    return fetch('/api/qnotes', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ notes: rows })
+    }).then(function (r) {
+      if (r.status === 401) { meCache = { id: null }; throw new Error('auth'); }
+      if (!r.ok) throw new Error('notes');
+    });
+  }
+
+  w.SnAuth = { me: me, login: login, logout: logout, record: record, wrong: wrong, exportAttempts: exportAttempts, notes: notes, saveNotes: saveNotes };
 })(window);
