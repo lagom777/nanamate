@@ -155,6 +155,16 @@ async function me(request, env) {
   return json({ id: row.id, nickname: row.nickname });
 }
 
+async function getStyle(request, env) {
+  const session = await current(request, env);
+  if (!session) return json({ error: 'unauthorized' }, 401);
+  const row = await env.DB.prepare('SELECT body, updated_at FROM user_styles WHERE user_id = ?').bind(session.uid).first();
+  if (!row) return json({ style: null });
+  let style = null;
+  try { style = JSON.parse(row.body); } catch { return json({ error: 'server' }, 500); }
+  return json({ style, updated_at: row.updated_at });
+}
+
 async function postAttempts(request, env) {
   const session = await current(request, env);
   if (!session) return json({ error: 'unauthorized' }, 401);
@@ -227,6 +237,7 @@ export default {
         });
       }
       if (path === '/api/me' && request.method === 'GET') return await me(request, env);
+      if (path === '/api/style' && request.method === 'GET') return await getStyle(request, env);
       if (path === '/api/attempts' && request.method === 'POST') return await postAttempts(request, env);
       if (path === '/api/attempts' && request.method === 'GET') return await listAttempts(request, env, url);
       if (path === '/api/export' && request.method === 'GET') return await exportAttempts(request, env, url);

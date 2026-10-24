@@ -37,3 +37,7 @@
   .nm-m-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 6px 8px; }
   .nm-q-ch { grid-template-columns: 1fr; }
 }
+/* 넓은 화면: 개념 확인 문제를 두 칸 이상으로 */
+@media (min-width: 1280px) {
+  .nm-q-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(480px, 1fr)); }
+}

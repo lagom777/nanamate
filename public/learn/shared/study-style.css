@@ -174,3 +174,18 @@
 .nms-note-text { color: var(--text, #1a1f2e); }
 .nms-notes-empty { margin: 6px 0 0 !important; font-size: .88em; color: var(--text-mute, #6b7280) !important; }
 .nms-notes-empty[hidden] { display: none; }
+/* 넓은 화면: 첫머리 카드는 두 칸(왼쪽 하나만·왜 사슬 / 오른쪽 외울 것·유도·함정)에 전체 해설이 그 아래 두 칸에 걸치고 절도 두 칸,
+ * 마무리 카드는 왼쪽 말로 설명 / 오른쪽 오답 한 줄·끝내기 체크. 좁은 화면은 적힌 순서 그대로 한 칸 */
+@media (min-width: 1280px) {
+  .nms-cols { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-areas: "a b" "full full"; column-gap: 28px; align-items: start; }
+  .nms-col-a { grid-area: a; }
+  .nms-col-b { grid-area: b; }
+  .nms-cols > .nms-full, .nms-cols > .nms-first { grid-area: full; }
+  .nms-full-body { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; align-items: start; }
+  .nms-full-body > .nms-full-sec:nth-child(2) { border-top: 0; padding-top: 0; }
+  .nms-end { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); grid-template-areas: "top top" "ex note" "ex done"; column-gap: 24px; align-items: start; }
+  .nms-end > .nms-top { grid-area: top; }
+  .nms-end > .nms-explain { grid-area: ex; }
+  .nms-end > .nms-note { grid-area: note; }
+  .nms-end > .nms-done { grid-area: done; }
+}

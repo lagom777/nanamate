@@ -193,4 +193,13 @@ details.mg-wrap[open] > summary { margin-bottom:6px; }
 @media print { .mg-card { break-inside:avoid; } }
 
 
+.hub-back-link.my-style-link { margin-top:-10px; }
+/* 넓은 화면(전체 화면): 본문 칸을 넓혀 카드·표를 옆으로 펼친다. 긴 글줄은 읽기 좋게 60em, 영상·그림은 1000px 까지만 */
+@media (min-width:1280px) {
+  main, main.wide, .sumpage main { max-width:1480px; padding:56px 64px 100px; }
+  main p, main li { max-width:60em; }
+  [data-braintour], [data-figure] { max-width:1000px; }
+  .trap-list > ul { columns:2; column-gap:40px; }
+  .trap-list li { break-inside:avoid; }
+}
 @media print { aside, .sum-chips, .cta { display:none !important; } .layout { display:block !important; } .sum-part { break-before:page; } }

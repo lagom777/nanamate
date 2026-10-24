@@ -19,7 +19,7 @@ export const spec = {
 
 function asideFor(active) {
   const li = (href, label, on) => `<li><a href="${href}"${on ? ' style="color:var(--accent);font-weight:600;"' : ""}>${label}</a></li>`;
-  return `<aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>${spec.short} 목차</h3><ol>
+  return `<aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><a href="../my-style.html" class="hub-back-link my-style-link">🙋 내 성향</a><h3>${spec.short} 목차</h3><ol>
 ${li("index.html", "표지 · 안내", active === "index")}
 ${SUBS.map((s) => li(s.file, `📝 ${s.label} 풀어보기`, active === s.sub)).join("\n")}
 </ol></aside>`;
