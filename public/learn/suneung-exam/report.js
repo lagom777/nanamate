@@ -52,8 +52,9 @@
     return String(picked);
   }
 
-  /* 문항 옆에 남긴 메모와 선지 표시(○△✕). notes["<회차>/<번호>"] = { m: 'o-x-t', t: 메모 } */
+  /* 문항 옆에 남긴 메모·선지 표시(○△✕)·헷갈림·내가 고른 오답 원인. notes["<회차>/<번호>"] = { m: 'o-x-t', t: 메모, f: 0·1, c: 원인 } */
   var MARK_SYM = { o: '○', t: '△', x: '✕' };
+  var CAUSE_NAME = { concept: '개념 모름', cond: '조건 놓침', choice: '선지 판단 실수', calc: '계산 실수', time: '시간 부족' };
   function noteOf(notes, g) {
     var n = notes && notes[g.exam + '/' + g.q];
     if (!n) return null;
@@ -63,7 +64,33 @@
       if (s) marks.push(CIRC[k - 1] + s);
     }
     var memo = String(n.t || '').trim().replace(/\s*\n\s*/g, ' / ');
-    return memo || marks.length ? { memo: memo, marks: marks.join(' ') } : null;
+    var cause = CAUSE_NAME[n.c] || '';
+    return memo || marks.length || cause || n.f ? { memo: memo, marks: marks.join(' '), cause: cause, unsure: !!n.f } : null;
+  }
+  /* 내가 고른 원인 집계(많은 순)와, 헷갈림 표시했지만 지금 오답 목록에는 없는 문항 */
+  function causeTable(notes) {
+    var cnt = {}, total = 0;
+    Object.keys(notes || {}).forEach(function (k) {
+      var c = notes[k] && notes[k].c;
+      if (!CAUSE_NAME[c]) return;
+      cnt[c] = (cnt[c] || 0) + 1;
+      total++;
+    });
+    var rows = Object.keys(cnt).sort(function (a, b) { return cnt[b] - cnt[a]; }).map(function (c) { return [CAUSE_NAME[c], cnt[c], pct(cnt[c], total)]; });
+    return { rows: rows, total: total };
+  }
+  function unsureList(model) {
+    var cur = {};
+    model.current.forEach(function (g) { cur[g.exam + '/' + g.q] = 1; });
+    var notes = model.opts.notes || {}, out = [];
+    Object.keys(notes).sort().forEach(function (k) {
+      if (!notes[k] || !notes[k].f || cur[k]) return;
+      var i = k.lastIndexOf('/'), exam = k.slice(0, i), q = Number(k.slice(i + 1));
+      var g = { exam: exam, q: q };
+      var n = noteOf(notes, g);
+      out.push({ head: qMeta(model.opts.exams, model.opts.sub, exam, q).title + ' ' + q + '번', note: n });
+    });
+    return out;
   }
 
   function ansLabel(ans, num) {
@@ -440,6 +467,14 @@
       lines.push('| ' + m.name + ' | ' + m.n + ' | ' + m.ok + ' | ' + pct(m.ok, m.n) + ' |');
     });
     lines.push('');
+    var ct = causeTable(model.opts.notes);
+    if (ct.total) {
+      lines.push('## 내가 고른 오답 원인 (' + ct.total + '문항)');
+      lines.push('| 원인 | 문항 | 비율 |');
+      lines.push('|---|---:|---:|');
+      ct.rows.forEach(function (r) { lines.push('| ' + r[0] + ' | ' + r[1] + ' | ' + r[2] + ' |'); });
+      lines.push('');
+    }
     lines.push('## 현재 오답 (문항별 최신 시도가 오답)');
     if (!model.current.length) {
       lines.push('없음');
@@ -450,6 +485,8 @@
         lines.push('- 시도 기록: ' + historyLine(g));
         lines.push('- ' + answerLine(g));
         var note = noteOf(model.opts.notes, g);
+        if (note && note.cause) lines.push('- 내가 고른 오답 원인: ' + note.cause);
+        if (note && note.unsure) lines.push('- 헷갈림 표시함');
         if (note && note.memo) lines.push('- 내 메모: ' + note.memo);
         if (note && note.marks) lines.push('- 내 선지 표시: ' + note.marks);
         var trap = trapText(model.opts.trap, g);
@@ -462,6 +499,15 @@
         lines.push('');
         lines.push('외 ' + (model.current.length - 60) + '문항');
       }
+    }
+    var ul = unsureList(model);
+    if (ul.length) {
+      lines.push('');
+      lines.push('## 헷갈림 표시한 문항 (맞혔지만 확신이 없던 것)');
+      ul.forEach(function (u) {
+        var n = u.note;
+        lines.push('- ' + u.head + (n && n.cause ? ' · 이유: ' + n.cause : '') + (n && n.memo ? ' · 메모: ' + n.memo : '') + (n && n.marks ? ' · 선지 표시: ' + n.marks : ''));
+      });
     }
     lines.push('');
     lines.push('## 반복해서 틀린 문항 (오답 시도 2회 이상)');
@@ -552,6 +598,11 @@
     parts.push(htmlTable(['모드', '시도', '정답', '정답률'], model.time.modes.map(function (m) {
       return [m.name, m.n, m.ok, pct(m.ok, m.n)];
     })));
+    var hct = causeTable(model.opts.notes);
+    if (hct.total) {
+      parts.push('<h2>내가 고른 오답 원인 (' + hct.total + '문항)</h2>');
+      parts.push(htmlTable(['원인', '문항', '비율'], hct.rows));
+    }
     parts.push('<h2>현재 오답 (문항별 최신 시도가 오답)</h2>');
     if (!model.current.length) {
       parts.push('<p>없음</p>');
@@ -567,6 +618,8 @@
         parts.push('<p>시도 기록: ' + esc(historyLine(g)) + '</p>');
         parts.push('<p>' + esc(answerLine(g)) + '</p>');
         var note = noteOf(model.opts.notes, g);
+        if (note && note.cause) parts.push('<p>내가 고른 오답 원인: ' + esc(note.cause) + '</p>');
+        if (note && note.unsure) parts.push('<p>헷갈림 표시함</p>');
         if (note && note.memo) parts.push('<p>내 메모: ' + esc(note.memo) + '</p>');
         if (note && note.marks) parts.push('<p>내 선지 표시: ' + esc(note.marks) + '</p>');
         var trap = trapText(model.opts.trap, g);
@@ -576,6 +629,14 @@
         parts.push('</section>');
       });
       if (model.current.length > 30) parts.push('<p>외 ' + (model.current.length - 30) + '문항</p>');
+    }
+    var hul = unsureList(model);
+    if (hul.length) {
+      parts.push('<h2>헷갈림 표시한 문항 (맞혔지만 확신이 없던 것)</h2>');
+      parts.push('<ul>' + hul.map(function (u) {
+        var n = u.note;
+        return '<li>' + esc(u.head + (n && n.cause ? ' · 이유: ' + n.cause : '') + (n && n.memo ? ' · 메모: ' + n.memo : '') + (n && n.marks ? ' · 선지 표시: ' + n.marks : '')) + '</li>';
+      }).join('') + '</ul>');
     }
     parts.push('</body></html>');
     return parts.join('\n');

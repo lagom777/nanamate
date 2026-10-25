@@ -321,3 +321,22 @@ test('문항 메모와 선지 표시(○△✕)는 현재 오답 상세에만 �
   assert.match(html, /<p>내 메모: 음성 피드백 방향을 \/ 거꾸로 봄 &lt;b&gt;<\/p>/);
   assert.match(html, /<p>내 선지 표시: ①○ ③✕ ⑤△<\/p>/);
 });
+
+test('내가 고른 오답 원인은 집계하고, 헷갈림 표시한 맞힌 문항은 따로 모은다', () => {
+  const notes = {
+    '2026-csat/1': { m: '-----', t: '', f: 0, c: 'cond' },
+    '2026-csat/2': { m: 'o----', t: '확신 없이 골랐음', f: 1, c: 'choice' }
+  };
+  const md = report({ notes });
+  assert.match(md, /## 내가 고른 오답 원인 \(2문항\)\n\| 원인 \| 문항 \| 비율 \|\n\|---\|---:\|---:\|\n\| (조건 놓침|선지 판단 실수) \| 1 \| 50% \|/);
+  const cur = chunk(md, '## 현재 오답 (문항별 최신 시도가 오답)', '## 헷갈림 표시한 문항');
+  assert.match(cur, /- 내가 고른 오답 원인: 조건 놓침/);
+  const uns = chunk(md, '## 헷갈림 표시한 문항 (맞혔지만 확신이 없던 것)', '## 반복해서 틀린 문항');
+  assert.match(uns, /- 2026학년도 대학수학능력시험 2번 · 이유: 선지 판단 실수 · 메모: 확신 없이 골랐음 · 선지 표시: ①○/);
+  assert.doesNotMatch(uns, / 1번/);
+  assert.doesNotMatch(report(), /내가 고른 오답 원인|헷갈림 표시한 문항/);
+  const html = buildReportHtml({ subLabel: '생명과학Ⅰ', now: NOW, attempts, exams, sub: 'bio1', partName, imgBase: 'https://img.example/', notes });
+  assert.match(html, /<h2>내가 고른 오답 원인 \(2문항\)<\/h2>/);
+  assert.match(html, /<p>내가 고른 오답 원인: 조건 놓침<\/p>/);
+  assert.match(html, /<h2>헷갈림 표시한 문항 \(맞혔지만 확신이 없던 것\)<\/h2>\n<ul><li>2026학년도 대학수학능력시험 2번 · 이유: 선지 판단 실수/);
+});

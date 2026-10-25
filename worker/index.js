@@ -187,7 +187,7 @@ async function listNotes(request, env, url) {
   const sub = url.searchParams.get('sub');
   if (!validSub(sub)) return json({ error: 'bad query' }, 400);
   const { results } = await env.DB.prepare(
-    'SELECT exam, q, marks, memo, updated_at AS ts FROM question_notes WHERE user_id = ? AND sub = ? ORDER BY exam, q LIMIT 5000'
+    'SELECT exam, q, marks, memo, unsure, cause, updated_at AS ts FROM question_notes WHERE user_id = ? AND sub = ? ORDER BY exam, q LIMIT 5000'
   ).bind(session.uid, sub).all();
   return json(results || []);
 }
@@ -202,8 +202,8 @@ async function saveNotes(request, env) {
   if (!parsed.ok) return json({ error: 'bad notes' }, 400);
   if (parsed.notes.length) {
     await env.DB.batch(parsed.notes.map((n) => env.DB.prepare(
-      'INSERT INTO question_notes (user_id, sub, exam, q, marks, memo, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?) ON CONFLICT(user_id, sub, exam, q) DO UPDATE SET marks = excluded.marks, memo = excluded.memo, updated_at = excluded.updated_at WHERE excluded.updated_at >= question_notes.updated_at'
-    ).bind(session.uid, n.sub, n.exam, n.q, n.marks, n.memo, n.ts)));
+      'INSERT INTO question_notes (user_id, sub, exam, q, marks, memo, unsure, cause, updated_at) VALUES (?1, ?2, ?3, ?4, ?5, ?6, COALESCE(?7, 0), COALESCE(?8, \'\'), ?9) ON CONFLICT(user_id, sub, exam, q) DO UPDATE SET marks = excluded.marks, memo = excluded.memo, unsure = COALESCE(?7, question_notes.unsure), cause = COALESCE(?8, question_notes.cause), updated_at = excluded.updated_at WHERE excluded.updated_at >= question_notes.updated_at'
+    ).bind(session.uid, n.sub, n.exam, n.q, n.marks, n.memo, n.unsure, n.cause, n.ts)));
   }
   return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
 }
