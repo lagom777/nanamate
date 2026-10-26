@@ -42,6 +42,7 @@ test('메모 형식: 맞는 것은 그대로, 다섯 칸이 모두 비면 빈 �
   const { unsure, cause, ...old } = one;
   assert.deepEqual(parseNotes({ notes: [old] }).notes[0], { ...old, unsure: null, cause: null });
   assert.equal(parseNotes({ notes: [{ ...one, unsure: 0, cause: '' }] }).ok, true);
+  assert.equal(parseNotes({ notes: [{ ...one, unsure: 1_700_000_000_000 }] }).notes[0].unsure, 1_700_000_000_000);
 });
 
 test('메모 형식: 틀리면 통째로 거부', () => {
@@ -58,7 +59,8 @@ test('메모 형식: 틀리면 통째로 거부', () => {
     { notes: [{ ...one, memo: 3 }] },
     { notes: [{ ...one, ts: -1 }] },
     { notes: [{ ...one, ts: 1.5 }] },
-    { notes: [{ ...one, unsure: 2 }] },
+    { notes: [{ ...one, unsure: -1 }] },
+    { notes: [{ ...one, unsure: 1.5 }] },
     { notes: [{ ...one, unsure: true }] },
     { notes: [{ ...one, cause: 'lazy' }] },
   ];

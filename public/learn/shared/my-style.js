@@ -162,14 +162,49 @@
     title.focus();
   }
 
+  /* 📅 오늘 다시 풀 오답(1·3·7일, /api/due): 과목마다 개수와 그 과목 풀어보기로 가는 길. 국어·영어(시험지형)는 목록 창(#due) */
+  var SUBJECTS = [
+    ['korean', '국어', 'aboutSuneungKorean/practice.html', 1], ['math', '수학', 'aboutSuneungMath/practice.html'],
+    ['english', '영어', 'aboutSuneungEnglish/practice.html', 1], ['hist', '한국사', 'aboutSuneungHistory/practice.html'],
+    ['phys1', '물리학Ⅰ', 'aboutSuneungPhysics1/practice.html'], ['chem1', '화학Ⅰ', 'aboutSuneungChem1/practice.html'],
+    ['bio1', '생명과학Ⅰ', 'aboutSuneungBio1/practice.html'], ['earth1', '지구과학Ⅰ', 'aboutSuneungEarth1/practice.html'],
+    ['phys2', '물리학Ⅱ', 'aboutSuneungScience2/practice-phys2.html'], ['chem2', '화학Ⅱ', 'aboutSuneungScience2/practice-chem2.html'],
+    ['bio2', '생명과학Ⅱ', 'aboutSuneungScience2/practice-bio2.html'], ['earth2', '지구과학Ⅱ', 'aboutSuneungScience2/practice-earth2.html']
+  ];
+  function paintDue(box, j) {
+    var n = {};
+    (j.due || []).forEach(function (r) { n[r.sub] = (n[r.sub] || 0) + 1; });
+    box.textContent = '';
+    box.appendChild(el('h2', null, '📅 오늘 다시 풀 오답'));
+    box.appendChild(el('p', 'ms-due-sub', '틀리거나 헷갈린 문제를 1·3·7일 뒤에 다시 풉니다. 그날 맞히면 다음 간격으로, 틀리면 다음 날 다시 나와요.'));
+    var ul = el('ul', 'ms-due-list');
+    SUBJECTS.forEach(function (s) {
+      if (!n[s[0]]) return;
+      var li = el('li');
+      li.appendChild(el('b', null, s[1]));
+      li.appendChild(el('span', null, n[s[0]] + '문항'));
+      var a = el('a', null, '풀러 가기 →');
+      a.href = s[2] + (s[3] ? '#due' : '#due:today');
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+    box.appendChild(ul.children.length ? ul : el('p', 'ms-due-none', '오늘은 다시 풀 문제가 없어요 ✓'));
+    if (j.next && j.next.length) {
+      box.appendChild(el('p', 'ms-due-next', '다음 7일: ' + j.next.map(function (x) { return x.date.slice(5).replace('-', '/') + ' ' + x.n + '문항'; }).join(' · ')));
+    }
+    box.hidden = false;
+  }
+
   function init() {
     var body = document.querySelector('[data-ms-body]');
     var auth = document.querySelector('[data-ms-auth]');
+    var dueBox = document.querySelector('[data-ms-due]');
     if (!body) return;
     if (!window.SnAuth) { msg(body, '로그인 기능을 불러오지 못했어요. 새로 고침해 주세요.'); return; }
     SnAuth.me().then(function (me) {
       if (auth) paintAuth(auth, me);
       if (!me.id) { loginCard(body); return; }
+      if (dueBox && SnAuth.due) SnAuth.due().then(function (j) { paintDue(dueBox, j); }).catch(function () {});
       return fetch('/api/style', { credentials: 'same-origin', cache: 'no-store' }).then(function (r) {
         if (r.status === 401) { loginCard(body); return; }
         if (!r.ok) throw new Error('style');

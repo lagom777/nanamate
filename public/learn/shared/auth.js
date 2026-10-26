@@ -92,5 +92,11 @@
     });
   }
 
-  w.SnAuth = { me: me, login: login, logout: logout, record: record, wrong: wrong, exportAttempts: exportAttempts, notes: notes, saveNotes: saveNotes };
+  /* 오늘 다시 풀 오답(1·3·7일): sub 를 주면 그 과목만 */
+  function due(sub) {
+    return fetch('/api/due' + (sub ? '?sub=' + encodeURIComponent(sub) : ''), { credentials: 'same-origin', cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error('due'); return r.json(); });
+  }
+
+  w.SnAuth = { me: me, login: login, logout: logout, record: record, wrong: wrong, exportAttempts: exportAttempts, notes: notes, saveNotes: saveNotes, due: due };
 })(window);

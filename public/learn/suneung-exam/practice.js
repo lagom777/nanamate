@@ -54,7 +54,7 @@
   var S = {
     set: '', mode: 'exam', items: [], ans: [], graded: false, timer: false, left: EXAM_SECONDS, tick: null,
     count: 10, revealed: {}, sel: 'a', meta: null, pa: {}, wrongLoading: false, ms: {}, lastActive: null,
-    markMode: false, memoOpen: {}, pendingJump: null, wrongRows: null
+    markMode: false, memoOpen: {}, pendingJump: null, wrongRows: null, due: null, dueNext: null
   };
   var hiddenMs = 0, hiddenAt = 0;
   function activeNow() {
@@ -155,7 +155,7 @@
   }
 
   /* ───────── UI shell ───────── */
-  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, authBox, exportMsg, exportTimer, exporting = false, fitBar = null;
+  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, authBox, exportMsg, exportTimer, exporting = false, fitBar = null, dueBtn = null, dueOpt = null;
 
   function buildShell() {
     root.innerHTML = '';
@@ -175,6 +175,7 @@
     if (!PAPER) {
       var g3 = el('optgroup', { label: '내 오답' });
       g3.appendChild(el('option', { value: 'wrong:all', text: '틀린·헷갈린 문제 다시 풀기' }));
+      g3.appendChild(dueOpt = el('option', { value: 'due:today', text: '오늘 다시 풀 오답' }));
       setSel.appendChild(g3);
     }
 
@@ -196,7 +197,7 @@
     progEl = el('span', { class: 'pr-prog' });
     bar = el('div', { class: 'pr-bar' }, [
       el('div', { class: 'pr-bar-row' }, row1),
-      el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), timerEl, weakBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn', onclick: function () { openWeak(); } }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn', text: '📊 오답 원인', onclick: openCauses }), progEl])
+      el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), timerEl, weakBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn', onclick: function () { openWeak(); } }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn', text: '📊 오답 원인', onclick: openCauses }), dueBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-due-btn', text: '📅 오늘 다시 풀', onclick: openDue }), progEl])
     ]);
     authBox = el('div', { class: 'pr-auth' });
     bar.appendChild(authBox);
@@ -311,6 +312,29 @@
       }).catch(function () { list.textContent = '시험지 데이터를 불러오지 못했습니다.'; });
       return;
     }
+    if (setId.indexOf('due:') === 0) {
+      S.items = [];
+      S.ans = [];
+      S.graded = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
+      S.mode = 'practice';
+      S.wrongLoading = !!(meUser && meUser.id && window.SnAuth);
+      setSel.value = setId;
+      try { history.replaceState(null, '', '#' + encodeURIComponent(setId)); } catch (e) {}
+      renderAll();
+      if (!S.wrongLoading) return;
+      var reqD = setId;
+      SnAuth.due(SUB).then(function (j) {
+        if (S.set !== reqD) return;
+        S.wrongLoading = false;
+        setDue(j);
+        S.items = dueItems();
+        S.ans = S.items.map(function () { return 0; });
+        armClock();
+        renderAll();
+        window.scrollTo && root.scrollIntoView && root.scrollIntoView({ block: 'start' });
+      }).catch(function () { if (S.set !== reqD) return; S.wrongLoading = false; renderAll(); });
+      return;
+    }
     if (setId.indexOf('wrong:') === 0 && meUser && meUser.id && window.SnAuth) {
       S.items = [];
       S.ans = [];
@@ -384,7 +408,8 @@
     if (PAPER) renderPaper();
     else {
       if (!S.items.length) {
-        list.appendChild(el('p', { class: 'pr-empty', text: S.wrongLoading ? '오답을 불러오는 중…' : '아직 저장된 오답이 없습니다. 문제를 풀고 채점하면 틀린 문항이, 🤔 헷갈림을 눌러 두면 맞힌 문항도 여기에 모입니다.' }));
+        if (S.set.indexOf('due:') === 0) list.appendChild(el('p', { class: 'pr-empty', text: S.wrongLoading ? '오늘 다시 풀 문제를 불러오는 중…' : meUser && meUser.id ? '오늘 다시 풀 오답이 없습니다 ✓ 틀리거나 헷갈린 문제는 1·3·7일 뒤에 여기로 돌아옵니다.' : '로그인하면 틀리거나 헷갈린 문제를 1·3·7일 뒤에 다시 풀도록 날짜별로 챙겨 드립니다.' }));
+        else list.appendChild(el('p', { class: 'pr-empty', text: S.wrongLoading ? '오답을 불러오는 중…' : '아직 저장된 오답이 없습니다. 문제를 풀고 채점하면 틀린 문항이, 🤔 헷갈림을 눌러 두면 맞힌 문항도 여기에 모입니다.' }));
       }
       S.items.forEach(function (it, i) { list.appendChild(card(it, i)); });
     }
@@ -415,6 +440,7 @@
       el('span', { class: 'pr-no', text: (i + 1) }),
       el('span', { class: 'pr-meta', text: it.title + ' · ' + it.n + '번 · ' + it.pts + '점' }),
       it.tag && partName[it.tag] ? el('a', { class: 'pr-tag', href: partHref[it.tag] || '#', text: partName[it.tag] }) : null,
+      it.dueInfo ? el('span', { class: 'pr-due-tag', text: '📅 ' + dueText(it.dueInfo) }) : null,
       unsureOf(it) ? el('span', { class: 'pr-unsure-tag', text: '🤔 헷갈림' }) : null,
       causeOf(it) ? el('span', { class: 'pr-cause-tag', text: CAUSE_NAME[causeOf(it)] }) : null
     ]);
@@ -1102,7 +1128,7 @@
   function sendAttempt(i) {
     if (!window.SnAuth) return;
     var row = attemptOf(S.items[i], i);
-    if (row) SnAuth.record([row]);
+    if (row) { SnAuth.record([row]); dueSoon(); }
   }
   function sendGraded() {
     if (!window.SnAuth) return;
@@ -1111,7 +1137,7 @@
       var row = attemptOf(it, i, ts);
       if (row) rows.push(row);
     });
-    if (rows.length) SnAuth.record(rows);
+    if (rows.length) { SnAuth.record(rows); dueSoon(); }
   }
 
   /* ───────── 문제별 노트: 메모·선지 표시(○△✕)·헷갈림·오답 원인. 이 기기에 바로 저장하고, 로그인하면 계정(/api/qnotes)과 맞춘다 ─────────
@@ -1151,7 +1177,7 @@
     var rows = keys.map(function (key) {
       var p = key.split('/'), n = notes[key] || { m: '-----', t: '', u: Date.now() };
       sent[key] = n.u;
-      return { exam: p[0], sub: SUB, q: +p[1], marks: n.m === '-----' ? '' : n.m, memo: n.t, unsure: n.f ? 1 : 0, cause: n.c || '', ts: n.u };
+      return { exam: p[0], sub: SUB, q: +p[1], marks: n.m === '-----' ? '' : n.m, memo: n.t, unsure: n.f || 0, cause: n.c || '', ts: n.u };
     });
     SnAuth.saveNotes(rows).then(function () {
       keys.forEach(function (key) { if (notes[key] && notes[key].u === sent[key]) delete noteDirty[key]; });
@@ -1168,7 +1194,7 @@
         var key = r.exam + '/' + r.q, mine = notes[key];
         seen[key] = 1;
         if (!mine || mine.u < r.ts) {
-          notes[key] = { m: r.marks || '-----', t: r.memo || '', f: r.unsure ? 1 : 0, c: r.cause || '', u: r.ts };
+          notes[key] = { m: r.marks || '-----', t: r.memo || '', f: r.unsure || 0, c: r.cause || '', u: r.ts };
           delete noteDirty[key];
           changed = true;
         } else if (mine.u > r.ts) noteDirty[key] = 1;
@@ -1188,7 +1214,7 @@
     renderOmr();
   }
   function redraw(i) { if (!PAPER) refreshCard(i); renderOmr(); }
-  function toggleUnsure(it, i) { setNote(it, { f: unsureOf(it) ? 0 : 1 }); redraw(i); }
+  function toggleUnsure(it, i) { setNote(it, { f: unsureOf(it) ? 0 : Date.now() }); redraw(i); } // f: 표시한 시각(오늘 다시 풀 오답의 시작일)
   function pickCause(it, i, c) { setNote(it, { c: causeOf(it) === c ? '' : c }); redraw(i); }
   /* 메모 칸: 문항 카드는 노트가 있거나 틀린 문제를 채점하면 저절로 열리고, 답안지(국어·영어)는 📝 를 눌러야 열린다 */
   function memoWanted(it, i) { return isShown(i) && S.ans[i] && !isRight(it, S.ans[i]); }
@@ -1334,6 +1360,64 @@
       ]));
     });
     return el('details', { class: 'pr-review' }, [el('summary', { text: '🔁 다시 볼 문제 (' + rows.length + ')' }), ul]);
+  }
+  /* 📅 오늘 다시 풀 오답(1·3·7일, /api/due): 문항 카드 과목은 세트로, 국어·영어는 목록에서 그 문항으로 */
+  var dueTimer = null;
+  function setDue(j) { S.due = (j && j.due) || []; S.dueNext = (j && j.next) || []; }
+  function paintDue() {
+    var n = S.due ? S.due.length : null;
+    if (dueBtn) dueBtn.textContent = '📅 오늘 다시 풀' + (n === null ? '' : ' ' + n);
+    if (dueOpt) dueOpt.textContent = '오늘 다시 풀 오답' + (n === null ? '' : ' (' + n + ')');
+  }
+  function loadDue(open) {
+    if (!meUser || !meUser.id || !window.SnAuth) { if (open) openDue(); return; }
+    SnAuth.due(SUB).then(function (j) { setDue(j); paintDue(); if (open) openDue(); }).catch(function () {});
+  }
+  function dueSoon() {
+    if (!meUser || !meUser.id) return;
+    clearTimeout(dueTimer);
+    dueTimer = setTimeout(function () { loadDue(false); }, 2000);
+  }
+  function dueText(r) { return r.step + '일 뒤 복습' + (r.late ? ' · ' + r.late + '일 밀림' : ''); }
+  function dueItems() {
+    var items = [];
+    (S.due || []).forEach(function (r) {
+      var e = examOf(r.exam), q = +r.q;
+      if (!e || !(q >= 1 && q <= QN)) return;
+      var it = mk(e, q);
+      it.dueInfo = r;
+      items.push(it);
+    });
+    return shuffle(items);
+  }
+  function dueTarget(r) {
+    var q = +r.q;
+    if (q > 100) return { sec: 'b', n: q - 100 };
+    return { sec: PAPER && SUB === 'korean' && q >= 35 ? S.sel : 'c', n: q };
+  }
+  function openDue() {
+    if (!meUser || !meUser.id || !window.SnAuth) {
+      showDlg('📅 오늘 다시 풀 오답', el('div', {}, [
+        el('p', { class: 'pr-ai-note', text: '로그인하면 틀리거나 헷갈린 문제를 1·3·7일 뒤에 다시 풀도록 날짜별로 챙겨 드립니다.' }),
+        window.SnAuth ? el('button', { type: 'button', class: 'pr-kakao', text: '카카오로 로그인', onclick: function () { SnAuth.login(); } }) : null
+      ]));
+      return;
+    }
+    if (!PAPER) { startSet('due:today'); return; }
+    if (!S.due) { loadDue(true); return; }
+    var box = el('div', { class: 'pr-due' }), ul = el('ul');
+    S.due.forEach(function (r) {
+      var t = dueTarget(r), e = examOf(r.exam);
+      if (!e) return;
+      ul.appendChild(el('li', {}, [
+        el('a', { href: '#', text: shortTitle(e) + ' ' + (t.sec === 'a' ? '화작 ' : t.sec === 'b' ? '언매 ' : '') + t.n + '번', onclick: function (ev) { ev.preventDefault(); goQuestion(r.exam, t.sec, t.n); } }),
+        ' · ' + (r.why === 'unsure' ? '헷갈림' : '오답') + ' · ' + dueText(r)
+      ]));
+    });
+    box.appendChild(ul.children.length ? ul : el('p', { class: 'pr-ai-note', text: '오늘 다시 풀 오답이 없습니다 ✓' }));
+    var next = (S.dueNext || []).map(function (x) { return x.date.slice(5).replace('-', '/') + ' ' + x.n + '문항'; }).join(' · ');
+    box.appendChild(el('p', { class: 'pr-ai-foot', text: '문항을 다시 풀고 ✓(채점)를 누르면 다음 복습(3일·7일 뒤)으로 넘어갑니다. 틀리면 내일 다시 나옵니다.' + (next ? ' 다음 7일: ' + next : '') }));
+    showDlg('📅 오늘 다시 풀 오답 (' + ul.children.length + ')', box);
   }
   /* 📊 오답 원인: 이 과목에서 내가 고른 원인을 모두 센다 */
   function openCauses() {
@@ -1495,6 +1579,7 @@
     var p = S.set.split(':');
     if (p[0] === 'exam') return etitle(examOf(p[1])) + (SUB === 'korean' ? ' (' + (S.sel === 'a' ? '화작' : '언매') + ')' : '');
     if (p[0] === 'part') return partName[p[1]] + ' 모아 풀기';
+    if (p[0] === 'due') return '오늘 다시 풀 오답';
     return '틀린·헷갈린 문제 다시 풀기';
   }
 
@@ -1588,13 +1673,15 @@
     if (sv === 'a' || sv === 'b') S.sel = sv;
     if (selSel) selSel.value = S.sel;
     var h = decodeURIComponent((location.hash || '').slice(1));
-    var start = /^(exam|part|wrong):/.test(h) ? h : 'exam:' + ex[0].key;
+    var wantDue = h === 'due' || h.indexOf('due:') === 0;
+    var start = /^(exam|part|wrong):/.test(h) || (wantDue && !PAPER) ? (h === 'due' ? 'due:today' : h) : 'exam:' + ex[0].key;
     if (start.indexOf('exam:') === 0 && !examOf(start.slice(5))) start = 'exam:' + ex[0].key;
     if (start.indexOf('part:') === 0 && !partName[start.slice(5)]) start = 'exam:' + ex[0].key;
     var begin = function () { startSet(start); window.scrollTo(0, 0); };
     if (meUser.id && start.indexOf('wrong:') === 0) migrateWrong().then(begin);
     else { begin(); if (meUser.id) migrateWrong(); }
     pullNotes();
+    loadDue(PAPER && wantDue);
     if (PAPER && meUser.id && window.SnAuth) SnAuth.wrong(SUB).then(function (rows) { S.wrongRows = rows; renderOmr(); }).catch(function () {});
   }).catch(function () {
     root.textContent = '문제 데이터를 불러오지 못했습니다. 로컬에서는 python3 -m http.server로 public/learn을 열어 주세요.';

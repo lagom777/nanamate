@@ -3,6 +3,7 @@ import { failedNext, safeNext } from './safe-next.js';
 import { parseAttempts, validExam, validSub } from './attempts.js';
 import { parseStyle } from './style.js';
 import { parseNotes } from './qnotes.js';
+import { dueList } from './due.js';
 
 const SESSION = 'sn_session';
 const OAUTH = 'sn_oauth';
@@ -208,6 +209,21 @@ async function saveNotes(request, env) {
   return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
 }
 
+// 오늘 다시 풀 오답(1·3·7일): sub 가 없으면 모든 과목
+async function due(request, env, url) {
+  const session = await current(request, env);
+  if (!session) return json({ error: 'unauthorized' }, 401);
+  const sub = url.searchParams.get('sub');
+  if (sub !== null && !validSub(sub)) return json({ error: 'bad query' }, 400);
+  const where = sub ? ' AND sub = ?' : '';
+  const args = sub ? [session.uid, sub] : [session.uid];
+  const [att, flags] = await env.DB.batch([
+    env.DB.prepare('SELECT sub, exam, q, ok, ts FROM attempts WHERE user_id = ?' + where + ' ORDER BY ts LIMIT 20000').bind(...args),
+    env.DB.prepare('SELECT sub, exam, q, unsure, updated_at AS ts FROM question_notes WHERE user_id = ? AND unsure > 0' + where).bind(...args),
+  ]);
+  return json(dueList(att.results || [], flags.results || [], Date.now()));
+}
+
 async function postAttempts(request, env) {
   const session = await current(request, env);
   if (!session) return json({ error: 'unauthorized' }, 401);
@@ -284,6 +300,7 @@ export default {
       if (path === '/api/style' && request.method === 'POST') return await saveStyle(request, env);
       if (path === '/api/qnotes' && request.method === 'GET') return await listNotes(request, env, url);
       if (path === '/api/qnotes' && request.method === 'POST') return await saveNotes(request, env);
+      if (path === '/api/due' && request.method === 'GET') return await due(request, env, url);
       if (path === '/api/attempts' && request.method === 'POST') return await postAttempts(request, env);
       if (path === '/api/attempts' && request.method === 'GET') return await listAttempts(request, env, url);
       if (path === '/api/export' && request.method === 'GET') return await exportAttempts(request, env, url);
