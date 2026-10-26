@@ -2,6 +2,7 @@
 import { note, tip, tbl, examsOf } from "./lib.mjs";
 import { maps } from "./maps-korean.mjs";
 import { styles } from "./content/style-korean.mjs";
+import { ebsPage } from "./ebs-2027-page.mjs";
 
 const load = async (n) => { try { return (await import(`./content/${n}.mjs`)).chapters; } catch { return []; } };
 const ko2 = await load("ko-2");
@@ -27,6 +28,7 @@ export const spec = {
   h1: "수능 국어,<br><em>독서·문학·선택</em><br>파트별로",
   authors: "2015 개정 교육과정 · 2027학년도 수능까지 · 실제 시험지 " + N + "회 풀어보기",
   affiliation: "독서 5파트 · 문학 5파트 · 화법과 작문/언어와 매체 · 전략 · 수능 풀어보기(채점)",
+  extraLinks: [{ href: "ebs-2027.html", label: "🎯 2027 EBS 연계 정리", num: "EBS", blurb: "수특·수완 문학 작품 카드 · 6·9모 출제 표시 · 회독 체크 · 독서 지문 주제" }],
   summary: true, summaryBlurb: "파트별 표·기호·함정을 카드 한 장씩에 — 시험 직전 훑어보기용", maps, extraCss,
   motion: false, kind: "paper", qn: 45, minutes: 80,
   practiceBlurb: `실제 시험지 ${N}회 · 공통 34 + 선택 11문항 · 답안지 채점`,
@@ -39,3 +41,5 @@ ${tbl(["영역", "파트", "핵심"], [["독서", "1 총론 · 2 인문·철학�
 ${tip("독서는 문단 구조(핵심어 → 관계)를 붙잡는 훈련이 먼저입니다. 문학은 작품 갈래별 ‘묻는 방식’이 정해져 있으니 6→7→8→9 순으로 한 갈래씩 잡고, 선택과목은 자신의 선택 하나만 집중해서 보세요.")}`,
   after: `<h2>기출 데이터</h2><p>수능 2018~2026학년도, 6월·9월 모의평가 2018~2027학년도(2018~2020학년도는 2009 개정, 2021학년도부터 2015 개정 교육과정 시험) <strong>${N}회</strong> 시험지의 지문·문항 이미지와 정답·배점이 들어 있습니다. 홀수형 기준이고, 2018~2021학년도는 선택과목 없는 통합 45문항 시험이며, 지문은 단(段) 단위 이미지로 이어 붙여 보여 줍니다.</p>`,
 };
+// 2027 EBS 연계 정리 페이지(수특·수완) — 국어 노트와 함께 생성
+spec.extra = { "ebs-2027.html": ebsPage(spec) };
