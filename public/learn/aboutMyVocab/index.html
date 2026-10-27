@@ -550,6 +550,7 @@ select {
 </div>
 
 <script src="viz.js?v=3"></script>
+<script src="ety-talk.js?v=1"></script>
 <script src="themes.js"></script>
 <script src="examples.js"></script>
 <script>
@@ -2057,7 +2058,7 @@ async function speakWord(id) {
   const ko = () => S.say.mean ? say(w.m, 'ko-KR', koSel, els.mean, 1, id) : Promise.resolve();
   const extras = async () => {
     const parts = [
-      ['ety', () => w.e && say(etySpeech(w.e), 'ko-KR', koSel, els.ety.parentElement, 1, id)],
+      ['ety', () => w.e && say(window.etyTalk ? etyTalk(w.e) : etySpeech(w.e), 'ko-KR', koSel, els.ety.parentElement, 1, id)],   // 말하듯 읽기(ety-talk.js), 못 불러오면 예전 방식
       ['ex', () => w.x && say(w.x, 'en-US', enSel, els.exEn, S.rate, id)],
       ['exko', () => w.xk && say(w.xk, 'ko-KR', koSel, els.exKo, 1, id)],
     ];
