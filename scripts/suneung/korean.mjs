@@ -2,6 +2,7 @@
 import { note, tip, tbl, examsOf } from "./lib.mjs";
 import { maps } from "./maps-korean.mjs";
 import { styles } from "./content/style-korean.mjs";
+import { quick } from "./content/quick-korean.mjs";
 import { ebsPage } from "./ebs-2027-page.mjs";
 
 const load = async (n) => { try { return (await import(`./content/${n}.mjs`)).chapters; } catch { return []; } };
@@ -22,7 +23,7 @@ const extraCss = `
 const N = examsOf("korean").length;
 
 export const spec = {
-  sub: "korean", styles, folder: "aboutSuneungKorean", label: "수능 국어", short: "국어", color: "#b45309",
+  sub: "korean", styles, quick, folder: "aboutSuneungKorean", label: "수능 국어", short: "국어", color: "#b45309",
   glow: "rgba(180,83,9,0.12)", border: "rgba(180,83,9,0.16)",
   asideSub: "수능 국어 — 독서·문학·선택 + 기출",
   h1: "수능 국어,<br><em>독서·문학·선택</em><br>파트별로",

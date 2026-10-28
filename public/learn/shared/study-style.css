@@ -189,3 +189,43 @@
   .nms-end > .nms-note { grid-area: note; }
   .nms-end > .nms-done { grid-area: done; }
 }
+
+/* ⚡ 짧게 보기 — 장 첫 화면: 핵심 한 줄 · 순서 칸(→) · 짝 맞춘 용어 · 예 · 조심 (+ 그림 재생기) */
+.nmq { margin: 12px 0 14px; padding: 18px 20px 16px; border-radius: 16px; border: 1px solid color-mix(in srgb, var(--accent, #16a34a) 32%, transparent); background: linear-gradient(180deg, color-mix(in srgb, var(--accent, #16a34a) 8%, var(--bg-card, #fff)), var(--bg-card, #fff) 120px); box-shadow: 0 6px 22px rgba(15, 23, 42, .06); }
+.nmq-h { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.nmq-h b { font-size: .95em; color: var(--accent, #16a34a); }
+.nmq-h span { padding: 1px 8px; border-radius: 999px; font-size: .72em; font-weight: 700; color: var(--accent, #16a34a); background: color-mix(in srgb, var(--accent, #16a34a) 12%, transparent); }
+.nmq-one { margin: 0 0 14px !important; font-size: 1.14em; font-weight: 800; line-height: 1.55; letter-spacing: -0.01em; color: var(--text-strong, #0a0e1a) !important; }
+.nmq-flow { counter-reset: nmq; list-style: none; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 22px; margin: 0 0 12px; padding: 0; }
+.nmq-flow li { counter-increment: nmq; position: relative; margin: 0; padding: 32px 12px 11px; border-radius: 12px; border: 1px solid var(--border, rgba(0,0,0,.08)); background: var(--bg-card, #fff); font-size: .93em; line-height: 1.55; color: var(--text, #1a1f2e) !important; }
+.nmq-flow li::before { content: counter(nmq); position: absolute; left: 12px; top: 9px; width: 20px; height: 20px; border-radius: 50%; background: var(--accent, #16a34a); color: #fff; font-size: .74em; font-weight: 800; line-height: 20px; text-align: center; }
+.nmq-flow li + li::after { content: "→"; position: absolute; left: -17px; top: 50%; transform: translateY(-50%); font-weight: 800; color: var(--accent, #16a34a); }
+.nmq-keys-h { margin: 0 0 6px !important; font-size: .8em; font-weight: 800; color: var(--accent, #16a34a) !important; }
+.nmq-keys { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr)); gap: 6px; margin: 0 0 10px; }
+.nmq-keys > div { display: flex; gap: 8px; align-items: baseline; padding: 6px 10px; border-radius: 9px; background: var(--bg-elevated, #f5f7fa); font-size: .9em; line-height: 1.5; }
+.nmq-keys dt { flex: none; font-weight: 800; color: var(--accent, #16a34a); }
+.nmq-keys dd { margin: 0; color: var(--text, #1a1f2e); }
+.nmq-ex, .nmq-trap { display: flex; align-items: baseline; gap: 10px; margin: 8px 0 0 !important; padding: 9px 12px; border-radius: 10px; font-size: .93em; line-height: 1.6; color: var(--text, #1a1f2e) !important; }
+.nmq-ex { background: var(--bg-elevated, #f5f7fa); }
+.nmq-trap { background: color-mix(in srgb, #dc2626 7%, var(--bg-card, #fff)); }
+.nmq-ex > b, .nmq-trap > b { flex: none; padding: 1px 8px; border-radius: 6px; font-size: .78em; color: #fff; }
+.nmq-ex > b { background: var(--accent, #16a34a); }
+.nmq-trap > b { background: #dc2626; }
+.nmq mark { padding: 0 2px; border-radius: 3px; background: color-mix(in srgb, #f59e0b 32%, transparent); color: inherit; }
+.nmq-play { margin-top: 14px; }
+@media (max-width: 760px) {
+  .nmq { padding: 14px 14px 12px; }
+  .nmq-one { font-size: 1.06em; }
+  .nmq-flow { grid-auto-flow: row; gap: 14px; }
+  .nmq-flow li { padding: 9px 12px 9px 40px; }
+  .nmq-flow li::before { top: 50%; transform: translateY(-50%); }
+  .nmq-flow li + li::after { content: "↓"; left: 17px; top: -15px; transform: none; font-size: .9em; }
+}
+details.nmq-more { margin: 0 0 10px; }
+details.nmq-more > summary { cursor: pointer; list-style: none; padding: 10px 14px; border: 1px solid var(--border, rgba(0,0,0,.1)); border-radius: 10px; background: var(--bg-card, #fff); font-weight: 700; color: var(--text, #1a1f2e); }
+details.nmq-more > summary::-webkit-details-marker { display: none; }
+details.nmq-more > summary::after { content: " 펼치기 ▾"; font-size: .8em; font-weight: 600; color: var(--text-mute, #6b7280); }
+details.nmq-more[open] > summary::after { content: " 접기 ▴"; }
+details.nmq-more > summary span { margin-left: 8px; font-size: .84em; font-weight: 500; color: var(--text-mute, #6b7280); }
+details.nmq-more > .nms { margin-top: 8px; }
+@media (max-width: 640px) { details.nmq-more > summary span { display: block; margin: 2px 0 0; } }

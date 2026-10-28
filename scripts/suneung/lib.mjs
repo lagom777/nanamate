@@ -156,17 +156,20 @@ export function chapterPage(spec, c, i) {
     : "";
   const sumCta = spec.summary ? `<p><a class="cta sm" href="../summary.html#p${i + 1}">📌 이 파트 한눈에 요약 →</a></p>` : "";
   const nav = `<div class="pager">${prev ? `<a href="${prev.file}">← ${prev.title}</a>` : `<a href="../index.html">← 표지</a>`}${next ? `<a href="${next.file}">${next.title} →</a>` : spec.practice === false ? "" : `<a href="../practice.html">수능 풀어보기 →</a>`}</div>`;
-  return `${head(`${c.title} — ${spec.label}`, 1, spec, { terms: true, extra: c.headExtra })}
+  // 짧게 보기가 있는 장: 첫 화면은 그 카드만 — 통계·도입글은 ② 이해하기 머리로, 요약 맵은 접어 둔다
+  const short = spec.quick && spec.quick[c.file];
+  const extra = [c.headExtra, short && short.player ? playerHead(short.player) : ""].filter(Boolean).join("\n");
+  return `${head(`${c.title} — ${spec.label}`, 1, spec, { terms: true, extra })}
 <body><div class="layout">
 ${aside(spec, c.file, 1)}
 <main>
 <header class="paper-header"><h1>${c.title}</h1><p class="authors">Part ${i + 1} · ${c.unit}</p><p class="affiliation">${c.sub}</p></header>
-${stat}
-${c.lead}
+${short ? "" : `${stat}\n${c.lead}`}
 ${styleCard(spec, c)}
-${spec.maps ? `<details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary>${mapOf(spec, i)}</details>` : ""}
+${spec.maps ? `<details class="mg-wrap"${short ? "" : " open"}><summary>📌 이 파트 한눈에 요약 맵</summary>${mapOf(spec, i)}</details>` : ""}
 ${sumCta}
 ${spec.styles ? stepBand("②", "이해하기", "본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기") : ""}
+${short ? `${stat}\n${c.lead}` : ""}
 ${foldSections(c.body)}
 ${motion}
 ${spec.styles ? stepBand("③", "확인하기", "조건이 바뀐 문제로 확인 — 막히면 가장 쉬운 문제부터") : ""}
@@ -323,14 +326,34 @@ const LOGIC_COMMON = [
   "<strong>50분 한 덩어리, 작은 마감.</strong> 50분 안에 주제 하나를 끝내는 단위로 계획하고, 큰 목표 하나보다 매일 끝낼 수 있는 작은 마감을 둡니다. 막혀서 손이 안 가면 그 과목에서 가장 쉬운 문제 하나부터 풉니다."
 ];
 
+/* ⚡ 짧게 보기(spec.quick[file]) — { one, how[3~4], keysH?, keys?[[말, 뜻]], ex, trap, player? }.
+ * 이게 있는 장은 첫 화면을 이 카드 하나로 두고, 논리형 카드·요약 맵은 접어 둔다(긴 글은 지우지 않고 접는다).
+ * player 는 shared/players/<이름>.js 의 그림 재생기(shared/player.js)를 카드 안에 띄운다. */
+const shortCard = (s) => `<section class="nmq" aria-label="짧게 보기">
+<div class="nmq-h"><b>⚡ 짧게 보기</b><span>30초</span></div>
+<p class="nmq-one">${s.one}</p>
+<ol class="nmq-flow">${s.how.map((x) => `<li>${x}</li>`).join("")}</ol>
+${s.keys ? `${s.keysH ? `<p class="nmq-keys-h">${s.keysH}</p>` : ""}<dl class="nmq-keys">${s.keys.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>` : ""}
+${s.ex ? `<p class="nmq-ex"><b>예</b><span>${s.ex}</span></p>` : ""}
+${s.trap ? `<p class="nmq-trap"><b>조심</b><span>${s.trap}</span></p>` : ""}
+${s.player ? `<div class="nmq-play" data-player="${s.player}"></div>` : ""}
+</section>`;
+export const playerHead = (name, up = "../") => `<link rel="stylesheet" href="${up}../shared/player.css">
+<script defer src="${up}../shared/players/${name}.js"></script>
+<script defer src="${up}../shared/player.js"></script>`;
+
 export function styleCard(spec, c) {
   const d = spec.styles && spec.styles.chapters[c.file];
-  if (!d) return "";
-  return `${stepBand("①", "틀 잡기", "5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터")}
-<section class="nms" data-nms>
+  const s = spec.quick && spec.quick[c.file];
+  if (!d && !s) return "";
+  const card = d ? `<section class="nms" data-nms>
 <div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
 ${logicBlock(d.logic, { ex: c.examples ? "#examples" : null, full: true, explain: false })}
-</section>`;
+</section>` : "";
+  if (!s) return `${stepBand("①", "틀 잡기", "5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터")}\n${card}`;
+  return `${stepBand("①", "틀 잡기", "30초 — ‘짧게 보기’만 먼저. 더 필요할 때 아래를 펼치기")}
+${shortCard(s)}
+${card ? `<details class="nmq-more"><summary>🧭 논리형 틀 자세히<span>하나만 고른다면 · 왜 사슬 · 함정</span></summary>\n${card}</details>` : ""}`;
 }
 
 /* 장 끝 마무리 카드: 공부 끝 5분 — 말로 설명 → 오답 한 줄 → 끝내기 체크 */
