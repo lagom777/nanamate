@@ -178,7 +178,7 @@
 /* ── 선지 대조 재생기(players/diff.js): 지문·선지 카드 · 훑기 · 바뀐 곳 · 판정 ── */
 .df { position: absolute; inset: 0; }
 .df.is-intro .df-cards, .df:not(.is-intro) .df-steps { display: none; }
-.df-cards { position: absolute; left: 4%; right: 4%; top: 21%; display: flex; flex-direction: column; gap: 1.2cqw; }
+.df-cards { position: absolute; left: 4%; right: 4%; top: 47%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 1.2cqw; }
 .df-card { display: flex; align-items: baseline; gap: 1.2cqw; padding: 1.2cqw 1.5cqw; border-radius: 1.2cqw; border: 1px solid rgba(255, 255, 255, .13); background: rgba(255, 255, 255, .05); font-size: max(13px, 2cqw); line-height: 1.75; }
 .df-lab { flex: none; padding: .1cqw .8cqw; border-radius: .6cqw; font-size: .72em; font-weight: 800; letter-spacing: .04em; }
 .df-pass .df-lab { color: #93c5fd; background: rgba(147, 197, 253, .14); }
@@ -217,7 +217,7 @@
   .ph-mini i { width: 5.6cqw; height: 6.6cqw; font-size: 3.4cqw; }
   .pl-box:has(.df) { aspect-ratio: auto; min-height: 290px; }
   .df { position: relative; inset: auto; padding: 66px 10px 12px; }
-  .df-cards, .df-steps { position: static; }
+  .df-cards, .df-steps { position: static; transform: none; }
   .df-cards { gap: 8px; }
   .df-card { flex-direction: column; gap: 4px; padding: 8px 10px; }
   .df-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }

@@ -3,6 +3,7 @@ import { note, tip, tbl, examsOf } from "./lib.mjs";
 import { UNITS, TERR, TERR_ORDER } from "./hist-scenes.mjs";
 import { motionPages, mapPage, sceneIndex } from "./hist-motion.mjs";
 import { styles } from "./content/style-hist.mjs";
+import { quick } from "./content/quick-hist.mjs";
 
 const load = async (n) => { try { return (await import(`./content/${n}.mjs`)).chapters; } catch { return []; } };
 const chapters = [...(await load("hi-1")), ...(await load("hi-2")), ...(await load("hi-3")), ...(await load("hi-memo")), ...(await load("st-hi"))];
@@ -18,7 +19,7 @@ UNITS.forEach((u, k) => {
 });
 
 export const spec = {
-  sub: "hist", styles, folder: "aboutSuneungHistory", label: "수능 한국사", short: "한국사", color: "#be123c",
+  sub: "hist", styles, quick, folder: "aboutSuneungHistory", label: "수능 한국사", short: "한국사", color: "#be123c",
   glow: "rgba(190,18,60,0.12)", border: "rgba(190,18,60,0.16)",
   asideSub: "수능 한국사 — 시대별 9파트 + 암기법 + 전략",
   h1: "수능 한국사,<br><em>시대별</em>로<br>흐름 잡기",
