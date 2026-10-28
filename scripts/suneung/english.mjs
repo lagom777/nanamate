@@ -2,13 +2,14 @@
 import { note, tip, tbl, examsOf } from "./lib.mjs";
 import { maps } from "./maps-english.mjs";
 import { styles } from "./content/style-english.mjs";
+import { quick } from "./content/quick-english.mjs";
 
 const load = async (n) => { try { return (await import(`./content/${n}.mjs`)).chapters; } catch { return []; } };
 const chapters = [...(await load("en-1")), ...(await load("en-2")), ...(await load("st-en"))];
 const N = examsOf("english").length;
 
 export const spec = {
-  sub: "english", styles, folder: "aboutSuneungEnglish", label: "수능 영어", short: "영어", color: "#2563eb",
+  sub: "english", styles, quick, folder: "aboutSuneungEnglish", label: "수능 영어", short: "영어", color: "#2563eb",
   glow: "rgba(37,99,235,0.12)", border: "rgba(37,99,235,0.16)",
   asideSub: "수능 영어 — 듣기·독해 유형 + 기출",
   h1: "수능 영어,<br><em>유형별</em>로<br>정리하기",
