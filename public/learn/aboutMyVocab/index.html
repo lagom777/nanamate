@@ -339,6 +339,23 @@ select {
 .star svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; }
 .star[aria-pressed="true"] { color: var(--star); }
 .star[aria-pressed="true"] svg { fill: var(--star); stroke: var(--star); }
+/* 아는 단어(제외): 재생에서는 건너뛰고, 목록에는 흐리게 남겨 다시 넣을 수 있게 */
+.know svg, .know-btn svg { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.know[aria-pressed="true"] { color: var(--accent); }
+.know[aria-pressed="true"] circle { fill: var(--accent); stroke: var(--accent); }
+.know[aria-pressed="true"] path { stroke: var(--on-accent); }
+.list li.known .row { opacity: .5; }
+.list.known-view li.known .row { opacity: 1; }
+.list-tools { display: flex; align-items: center; gap: 10px; }
+.list-tools .pill small { margin-left: 6px; font-size: 11px; font-weight: 500; opacity: .7; }
+.marks { display: grid; justify-items: center; gap: 4px; }
+.know-btn { height: 38px; display: inline-flex; align-items: center; gap: 6px; padding: 0 16px 0 12px; font-size: 14px; }
+.know-btn svg { width: 18px; height: 18px; }
+.know-btn.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+/* 버튼 바로 아래 잠깐 뜨는 알림 — 화면 위에 띄우면 버튼을 가려 연달아 누를 때 '되돌리기'를 잘못 누르게 된다 */
+.notice { margin: 0; min-height: 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0 4px; text-align: center; font-size: 13.5px; color: var(--ink-2); }
+.notice:empty { display: none; }
+.notice button { height: 32px; padding: 0 8px; border: 0; background: none; color: var(--accent); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
@@ -445,6 +462,10 @@ select {
         <span class="badge" id="sleepBadge" hidden></span>
       </button>
     </div>
+    <div class="marks">
+      <button class="pill know-btn" id="knowBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.3 12.3l2.5 2.5 4.9-5.2"/></svg><span id="knowLbl">이 단어 제외</span></button>
+      <p class="notice" id="notice" aria-live="polite"></p>
+    </div>
     <p class="status" id="status"></p>
     <p class="warn" id="ttsFail" role="alert" hidden></p>
     <p class="keys"><span class="desk">스페이스 재생·정지 · ← → 이동 · 카드를 누르면 다시 듣기</span><span class="touch">카드를 좌우로 밀면 넘어가고, 누르면 다시 들어요</span></p>
@@ -541,7 +562,7 @@ select {
   <div class="side" id="side">
     <div class="vz-slot" id="vizSlotSide"></div>
     <section aria-label="전체 단어 목록">
-      <div class="list-head"><h2>전체 단어</h2><span id="starCount">★ 0</span></div>
+      <div class="list-head"><h2 id="listTitle">전체 단어</h2><div class="list-tools"><button class="pill" id="knownView" type="button" aria-pressed="false" hidden>제외한 단어만<small id="knownCount">0</small></button><span id="starCount">★ 0</span></div></div>
       <label class="find"><input id="find" type="search" placeholder="단어, 뜻 검색" autocomplete="off" enterkeyhint="search" aria-label="단어 검색"></label>
       <p class="find-empty" id="findEmpty" hidden>찾는 단어가 없어요.</p>
       <ol class="list" id="list"></ol>
@@ -1615,22 +1636,25 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const TTS = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const STAR = '<svg viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg>';
+const CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.3 12.3l2.5 2.5 4.9-5.2"/></svg>';
 
-// settings + stars (per-viewer, browser only)
+// settings + stars + known (per-viewer, browser only)
 const KEY = 'sori-vocab-v1';
 const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, next: 1, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '', deck: 'all', grp: '', thm: '', picOnly: false, sleep: 0, viz: true, pic: false, vol: 1 };
 const SAY = { word: true, mean: true, ety: true, ex: true, exko: false };   // 읽어 줄 항목
 const SAY_KEYS = Object.keys(SAY);
 S.say = { ...SAY };
 let stars = new Set();
+let known = new Set();   // 아는 단어(제외) — 별표처럼 단어 기준, 재생할 때 건너뛴다
 let WORDS = [];   // 지금 고른 단어장·파트의 단어
 try {
   const d = JSON.parse(localStorage.getItem(KEY) || '{}');
   if (d.S) Object.assign(S, d.S);
   S.say = { ...SAY, ...(d.S && d.S.say) };   // 저장본에 없는 항목은 기본값으로
   if (Array.isArray(d.stars)) stars = new Set(d.stars.map(k => String(k).replace(/^wordmaster:/, '')));   // 예전 키 이름 정리
+  if (Array.isArray(d.known)) known = new Set(d.known.map(String));
 } catch (e) {}
-function save() { try { localStorage.setItem(KEY, JSON.stringify({ S, stars: [...stars] })); } catch (e) {} }
+function save() { try { localStorage.setItem(KEY, JSON.stringify({ S, stars: [...stars], known: [...known] })); } catch (e) {} }
 
 const els = {
   card: $('card'), pos: $('pos'), count: $('count'), word: $('word'), mean: $('mean'), note: $('note'), ety: $('ety'),
@@ -1639,17 +1663,31 @@ const els = {
 };
 
 // deck = order of word indices for this round; pos = place in deck
+// 제외한 단어도 차례에는 남겨 두고 넘어갈 때 건너뛴다 — 다시 넣으면 그 자리부터 바로 다시 나온다
 let deck = [], pos = 0, swiped = 0, peek = -1;
+const isKnown = i => known.has(WORDS[i].k);
 function buildDeck(keep) {
   let d = WORDS.map((_, i) => i);
-  if (S.starOnly) { const f = d.filter(i => stars.has(WORDS[i].k)); if (f.length) d = f; }
+  if (S.starOnly) { const f = d.filter(i => stars.has(WORDS[i].k)); if (f.some(i => !isKnown(i))) d = f; }
   if (S.shuffle) {
     for (let i = d.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [d[i], d[j]] = [d[j], d[i]]; }
     if (keep != null && d.includes(keep)) { d.splice(d.indexOf(keep), 1); d.unshift(keep); }
   }
   deck = d;
-  pos = keep != null && deck.includes(keep) ? deck.indexOf(keep) : 0;
-  $('starHint').hidden = !(S.starOnly && !WORDS.some(w => stars.has(w.k)));
+  pos = keep != null && deck.includes(keep) ? deck.indexOf(keep) : Math.max(0, deck.findIndex(i => !isKnown(i)));
+  syncStarHint();
+}
+function syncStarHint() {
+  const starred = WORDS.filter(w => stars.has(w.k)), h = $('starHint');
+  h.hidden = !(S.starOnly && !starred.some(w => !known.has(w.k)));
+  h.textContent = starred.length ? '별표한 단어를 모두 제외해서 전체를 읽어요.' : '아직 별표한 단어가 없어서 전체를 읽어요. 어려운 단어에 ★를 눌러 두세요.';
+}
+// 이번 차례에서 다음 단어 — 제외한 단어는 건너뛰고, 차례가 끝나면 새로 짠다. 남은 단어가 없으면 -1
+function nextPos() {
+  for (let p = pos + 1; p < deck.length; p++) if (!isKnown(deck[p])) return p;
+  if (!WORDS.some(w => !known.has(w.k))) return -1;
+  buildDeck();
+  return pos;
 }
 
 // 단어 한 장 해설(viz.js) — 데스크톱은 목록 위(카드 옆), 모바일은 카드 바로 아래
@@ -1698,13 +1736,14 @@ function renderViz(w, hidden, wordMasked) {
 }
 
 // list (단어장·파트가 바뀔 때마다 다시 그린다)
-let rows = [], rowStars = [];
+let rows = [], rowStars = [], rowKnown = [], knownView = false;   // knownView: 제외한 단어만 보기
 function renderList() {
   els.list.innerHTML = WORDS.map((w, i) =>
     `<li><button class="row" type="button" data-i="${i}"><span class="num">${pad(i + 1)}</span>` +
     `<span class="rw">${w.w}<span class="rpos">${w.pos}</span>${hasViz(w) ? '<span class="rv rv-viz">해설</span>' : ''}${hasClip(w) ? '<span class="rv">영상</span>' : ''}</span><span class="rm">${w.m}</span>` +
     `<span class="re"><b>어원</b>${w.e}</span>` +
     (w.x ? `<span class="re rx"><b>예문</b><i lang="en">${esc(w.x)}</i></span>` : '') + `</button>` +
+    `<button class="icon-btn know" type="button" data-know="${i}" aria-pressed="false" aria-label="${w.w} 제외" title="아는 단어 — 재생에서 빼기 (다시 누르면 다시 넣기)">${CHECK}</button>` +
     `<button class="icon-btn star" type="button" data-star="${i}" aria-pressed="false" aria-label="${w.w} 별표">${STAR}</button></li>`
   ).join('');
   rows = [...els.list.children];
@@ -1713,20 +1752,30 @@ function renderList() {
     li.dataset.q = (rx ? li.textContent.replace(rx.textContent, '') : li.textContent).toLowerCase();
   });
   rowStars = rows.map(li => li.querySelector('.star'));
+  rowKnown = rows.map(li => li.querySelector('.know'));
   lastShown = -1;
-  els.list.scrollTop = 0;
-  applyFind();
+  setKnownView(false);
 }
-function applyFind() {
+function applyFind(grow) {
   const q = ($('find').value || '').trim().toLowerCase();
   let n = 0;
   rows.forEach(li => {
-    const show = !q || li.dataset.q.includes(q);
-    li.hidden = !show;
-    if (show) n++;
+    const show = (!q || li.dataset.q.includes(q)) && (!knownView || li.classList.contains('known'));
+    if (!grow || show) li.hidden = !show;   // grow: 새로 뺀 단어는 더 보여 주되, 방금 다시 넣은 줄은 그대로 둔다
+    if (!li.hidden) n++;
   });
   const empty = $('findEmpty');
-  if (empty) empty.hidden = !q || n > 0;
+  if (empty) empty.hidden = !(q || knownView) || n > 0;
+}
+// 제외한 단어만 모아 보기 — 여기서 다시 넣어도 줄은 그대로 두어 잘못 누른 것을 바로 되돌릴 수 있게
+function setKnownView(on) {
+  knownView = on;
+  $('knownView').setAttribute('aria-pressed', on);
+  $('knownView').hidden = !on && !WORDS.some(w => known.has(w.k));
+  $('listTitle').textContent = on ? '제외한 단어' : '전체 단어';
+  els.list.classList.toggle('known-view', on);
+  els.list.scrollTop = 0;
+  applyFind();
 }
 
 // 어원 도해: 'com(함께) + modus(척도) → 쓰기에 알맞은 것 → 상품' 같은 문자열을 블록·화살표 그림으로
@@ -1794,7 +1843,6 @@ function render(revealed) {
   const hidden = S.hide && !revealed;
   const picQ = S.pic && hasPic(w) && !revealed;   // 그림 먼저: 단어·뜻은 가리고 그림만 보여 준다
   els.pos.textContent = w.pos;
-  els.count.textContent = `${pad(pos + 1)} / ${pad(deck.length)}`;
   els.word.textContent = w.w;
   els.mean.textContent = w.m;
   els.note.textContent = w.note || '';
@@ -1818,7 +1866,7 @@ function render(revealed) {
   $('hideMean').setAttribute('aria-pressed', S.hideMean);
   document.body.classList.toggle('hide-mean', S.hideMean);
   els.cardStar.setAttribute('aria-pressed', stars.has(w.k));
-  els.bar.style.width = `${((pos + 1) / deck.length) * 100}%`;
+  updateCount();
   if (i !== lastShown) {
     lastShown = i;
     rows.forEach((li, k) => li.classList.toggle('current', k === i));
@@ -1838,12 +1886,46 @@ function syncStars() {
   rowStars.forEach((b, i) => b.setAttribute('aria-pressed', stars.has(WORDS[i].k)));
   els.cardStar.setAttribute('aria-pressed', stars.has(WORDS[deck[pos]].k));
   $('starCount').textContent = `★ ${WORDS.filter(w => stars.has(w.k)).length}`;
-  $('starHint').hidden = !(S.starOnly && !WORDS.some(w => stars.has(w.k)));
+  syncStarHint();
 }
 function toggleStar(i) {
   const k = WORDS[i].k;
   stars.has(k) ? stars.delete(k) : stars.add(k);
   save(); syncStars();
+}
+// 카드 머리의 '몇 번째 / 모두'와 진행 막대(제외한 단어는 세지 않는다), 그리고 '이 단어 제외' 버튼
+function updateCount() {
+  const live = deck.filter(i => !isKnown(i)), cur = deck[pos];
+  const at = isKnown(cur) ? -1 : live.indexOf(cur);
+  const done = at >= 0 ? at + 1 : deck.slice(0, pos).filter(i => !isKnown(i)).length;
+  els.count.textContent = at >= 0 ? `${pad(at + 1)} / ${pad(live.length)}` : '제외됨';
+  els.bar.style.width = live.length ? `${(done / live.length) * 100}%` : '0%';
+  const b = $('knowBtn');
+  b.classList.toggle('on', at < 0);
+  $('knowLbl').textContent = at < 0 ? '제외 취소' : '이 단어 제외';
+  b.title = at < 0 ? '재생 목록에 다시 넣어요' : '아는 단어는 빼고 모르는 단어만 들어요 (단어 목록에서 다시 넣을 수 있어요)';
+}
+function syncKnown() {
+  rows.forEach((li, i) => {
+    const on = known.has(WORDS[i].k);
+    li.classList.toggle('known', on);
+    rowKnown[i].setAttribute('aria-pressed', on);
+  });
+  const n = WORDS.filter(w => known.has(w.k)).length;
+  $('knownCount').textContent = n;
+  $('knownView').hidden = !n && !knownView;
+  if (knownView) applyFind(true);
+  syncStarHint(); updateCount(); updateStatus();
+}
+function toggleKnown(i) {
+  const k = WORDS[i].k;
+  known.has(k) ? known.delete(k) : known.add(k);
+  save(); syncKnown();
+}
+// 남은 단어가 없다(모두 제외) — 재생을 멈춘다. 상태 줄이 다시 넣는 곳을 알려 준다
+function allDone() {
+  if (playing) setPlaying(false);
+  stop(); render(true); updateStatus();
 }
 function updateStatus() {
   const en = S.say.word && `영어 ${S.rep}번`, ko = S.say.mean && '뜻';
@@ -1852,6 +1934,7 @@ function updateStatus() {
   seq.push(`${S.next}초 → 다음 단어`);
   const any = SAY_KEYS.some(k => S.say[k]);
   $('sayHint').hidden = any;
+  if (!WORDS.some(w => !known.has(w.k))) { $('status').textContent = '남은 단어가 없어요 — 모두 제외했어요. 단어 목록에서 다시 넣을 수 있어요'; return; }
   let t = `${any ? seq.join(' → ') : '읽기 꺼짐'} · 끝나면 처음부터 다시`;
   if (S.sleep) t += sleepAt ? ` · 🌙 ${fmtLeft(sleepAt - Date.now())} 뒤 자동 종료` : ` · 🌙 재생하면 ${S.sleep}분 뒤 자동 종료`;
   $('status').textContent = t;
@@ -1927,6 +2010,7 @@ function loadSource() {
   renderList();
   peek = -1;
   buildDeck();
+  syncKnown();
 }
 function changeSource(deck, grp, thm) {
   if (deck === S.deck && grp === S.grp && thm === S.thm) return;
@@ -2102,7 +2186,9 @@ async function loop(id) {
     await sleep(S.next * 1000);   // 다음 단어로 넘어가기 전 쉬는 시간 (설정: 다음 단어까지)
     if (id !== run) return;
     if (sleepAt && Date.now() >= sleepAt) { endSleep(); return; }
-    if (pos >= deck.length - 1) buildDeck(); else pos++;
+    const p = nextPos();
+    if (p < 0) { allDone(); return; }
+    pos = p;
   }
 }
 function start() {
@@ -2122,8 +2208,21 @@ function setPlaying(p) {
   armSleep();
 }
 function toggle() {
-  if (playing) { setPlaying(false); stop(); render(true); }
-  else { setPlaying(true); start(); }
+  if (playing) { setPlaying(false); stop(); render(true); return; }
+  if (isKnown(deck[pos])) {   // 지금 카드가 제외한 단어면 다음 단어부터
+    const p = nextPos();
+    if (p < 0) return notice('남은 단어가 없어요. 단어 목록에서 다시 넣어 주세요');
+    pos = p;
+  }
+  setPlaying(true); start();
+}
+// ← → 이동: 제외한 단어는 건너뛴다 (모두 제외했으면 그냥 한 칸씩)
+function move(dir) {
+  for (let n = 1; n < deck.length; n++) {
+    const p = ((pos + dir * n) % deck.length + deck.length) % deck.length;
+    if (!isKnown(deck[p])) return go(p, dir);
+  }
+  go(isKnown(deck[pos]) ? pos + dir : pos, dir);
 }
 function go(p, dir) {
   pos = (p + deck.length) % deck.length;
@@ -2188,8 +2287,37 @@ koSel.addEventListener('change', () => { S.koVoice = koSel.value; save(); });
 
 els.play.addEventListener('click', toggle);
 $('pkToggle').addEventListener('click', () => { const on = $('pickers').classList.toggle('open'); $('pkToggle').setAttribute('aria-expanded', on); });
-$('prev').addEventListener('click', () => go(pos - 1, -1));
-$('next').addEventListener('click', () => go(pos + 1, 1));
+$('prev').addEventListener('click', () => move(-1));
+$('next').addEventListener('click', () => move(1));
+
+// '이 단어 제외' 아래 잠깐 뜨는 알림 (undo를 주면 '되돌리기' 버튼이 붙는다)
+let noticeT = 0;
+function notice(msg, undo) {
+  const el = $('notice');
+  el.textContent = msg;
+  if (undo) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.textContent = '되돌리기';
+    b.addEventListener('click', () => { clearNotice(); undo(); });
+    el.append(b);
+  }
+  clearTimeout(noticeT); noticeT = setTimeout(clearNotice, 6000);
+}
+function clearNotice() { clearTimeout(noticeT); $('notice').textContent = ''; }
+
+// '이 단어 제외': 표시하고 바로 다음 단어로. 잘못 눌렀으면 '되돌리기'로 그 단어에 돌아간다
+$('knowBtn').addEventListener('click', () => {
+  const w = WORDS[deck[pos]];
+  if (known.has(w.k)) { clearNotice(); return toggleKnown(deck[pos]); }   // 제외 취소
+  toggleKnown(deck[pos]);
+  notice(`‘${w.w}’ 제외했어요`, () => {
+    known.delete(w.k); save(); syncKnown();
+    const i = WORDS.indexOf(w);
+    if (deck.includes(i)) go(deck.indexOf(i), -1);
+  });
+  const p = nextPos();
+  if (p < 0) allDone(); else go(p, 1);
+});
 
 // swipe left/right on the card: fires as soon as the finger has moved far enough,
 // so it still works if the host app cancels the touch later
@@ -2205,7 +2333,7 @@ $('next').addEventListener('click', () => go(pos + 1, 1));
     if (Math.abs(dx) < 38 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
     if (Date.now() - lastFire < 350) { done = true; return; }
     done = true; lastFire = Date.now(); swiped = Date.now();
-    go(pos + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+    move(dx < 0 ? 1 : -1);
   };
   const end = () => { on = false; };
   const c = els.card;
@@ -2229,7 +2357,7 @@ els.mean.addEventListener('click', e => {
   peek = peek === deck[pos] ? -1 : deck[pos]; render(!playing);
 });
 els.cardStar.addEventListener('click', () => toggleStar(deck[pos]));
-$('find').addEventListener('input', applyFind);
+$('find').addEventListener('input', () => applyFind());
 $('find').addEventListener('keydown', e => {
   if (e.key !== 'Enter') return;
   const li = rows.find(row => !row.hidden);
@@ -2240,14 +2368,17 @@ $('find').addEventListener('keydown', e => {
 els.list.addEventListener('click', e => {
   const s = e.target.closest('[data-star]');
   if (s) return toggleStar(Number(s.dataset.star));
+  const k = e.target.closest('[data-know]');
+  if (k) return toggleKnown(Number(k.dataset.know));
   const row = e.target.closest('.row');
   if (row) jumpTo(Number(row.dataset.i));
 });
+$('knownView').addEventListener('click', () => setKnownView(!knownView));
 document.addEventListener('keydown', e => {
   if (e.metaKey || e.ctrlKey || e.altKey || e.target.closest('input, select, textarea, button')) return;
   if (e.code === 'Space') { e.preventDefault(); toggle(); }
-  else if (e.key === 'ArrowRight') { e.preventDefault(); go(pos + 1, 1); }
-  else if (e.key === 'ArrowLeft') { e.preventDefault(); go(pos - 1, -1); }
+  else if (e.key === 'ArrowRight') { e.preventDefault(); move(1); }
+  else if (e.key === 'ArrowLeft') { e.preventDefault(); move(-1); }
 });
 
 // boot
