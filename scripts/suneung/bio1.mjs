@@ -2,6 +2,7 @@
 import { f, note, warn, tip, tbl, ex, partStats, examsOf, figHead, figure } from "./lib.mjs";
 import { maps } from "./maps-bio1.mjs";
 import { styles } from "./content/style-bio1.mjs";
+import { quick } from "./content/quick-bio1.mjs";
 
 const U1 = "Ⅰ. 생명과학의 이해", U2 = "Ⅱ. 사람의 물질대사", U3 = "Ⅲ. 항상성과 몸의 조절", U4 = "Ⅳ. 유전", U5 = "Ⅴ. 생태계와 상호 작용";
 const COLOR = "#16a34a";
@@ -470,7 +471,7 @@ chapters.push({
 });
 
 export const spec = {
-  sub: "bio1", styles, folder: "aboutSuneungBio1", label: "수능 생명과학Ⅰ", short: "생명과학Ⅰ", color: COLOR, termsData: "bio1",
+  sub: "bio1", styles, quick, folder: "aboutSuneungBio1", label: "수능 생명과학Ⅰ", short: "생명과학Ⅰ", color: COLOR, termsData: "bio1",
   glow: "rgba(22,163,74,0.12)", border: "rgba(22,163,74,0.18)",
   asideSub: "수능 생명과학Ⅰ — 5단원 8파트 + 모션 + 기출",
   h1: "수능 생명과학Ⅰ,<br><em>파트별</em>로<br>끝까지",
