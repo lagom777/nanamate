@@ -39,10 +39,18 @@
 </ol></aside>
 <main>
 <header class="paper-header"><h1>지수와 로그</h1><p class="authors">Part 1 · 수학Ⅰ</p><p class="affiliation">거듭제곱근·지수법칙·로그의 정의와 성질·지수함수와 로그함수</p></header>
-<div class="stat-row"><div class="stat"><b>3.9</b><span>회당 문항 수</span></div><div class="stat"><b>12.5점</b><span>회당 배점</span></div><div class="stat"><b>3~4</b><span>회차별 범위</span></div><div class="stat"><b>67</b><span>최근 17회 누적</span></div></div>
-<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
-<p>지수와 로그는 식을 간단히 하는 계산과 그래프를 읽는 문제가 함께 나옵니다. 밑을 하나로 맞추거나 로그의 성질로 식을 줄이고, 부등식에서는 밑이 1보다 큰지 작은지에 따라 방향이 바뀝니다. 그래프에서는 점근선과 지나는 점을 읽고, 지수함수와 로그함수가 서로 역함수라는 사실로 교점과 직선의 관계를 묻습니다.</p>
-<div class="nms-stepband"><b>① 틀 잡기</b><span>5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터</span></div>
+
+<div class="nms-stepband"><b>① 틀 잡기</b><span>30초 — ‘짧게 보기’만 먼저. 더 필요할 때 아래를 펼치기</span></div>
+<section class="nmq" aria-label="짧게 보기">
+<div class="nmq-h"><b>⚡ 짧게 보기</b><span>30초</span></div>
+<p class="nmq-one">로그는 ‘밑을 몇 제곱하면 이 수가 되나’의 답. 2<sup>3</sup> = 8이라 log<sub>2</sub> 8 = 3.</p>
+<ol class="nmq-flow"><li>log가 보이면 → 진수(log 안의 수) &gt; 0부터 적기</li><li>밑이 다르면 → 같은 밑으로 (8 = 2<sup>3</sup>, 9 = 3<sup>2</sup>)</li><li>부등식 → 밑이 1보다 작으면 부등호 뒤집기</li><li>그래프 → 점근선과 지나는 점 (0, 1)·(1, 0)부터</li></ol>
+<p class="nmq-keys-h">로그 계산은 이 넷으로</p><dl class="nmq-keys"><div><dt>곱</dt><dd>log<sub>a</sub>(MN) = log<sub>a</sub> M + log<sub>a</sub> N</dd></div><div><dt>몫</dt><dd>log<sub>a</sub>(M/N) = log<sub>a</sub> M − log<sub>a</sub> N</dd></div><div><dt>거듭제곱</dt><dd>log<sub>a</sub>(M<sup>k</sup>) = k log<sub>a</sub> M</dd></div><div><dt>밑 바꾸기</dt><dd>log<sub>a</sub> b = log<sub>c</sub> b / log<sub>c</sub> a</dd></div></dl>
+<p class="nmq-ex"><b>예</b><span>log<sub>2</sub>(x − 1) + log<sub>2</sub>(x + 1) = 3 → x<sup>2</sup> − 1 = 8 → x = ±3. 진수 &gt; 0이라 <mark>x = 3만</mark></span></p>
+<p class="nmq-trap"><b>조심</b><span>log(M + N) ≠ log M + log N — 합으로 쪼개지는 건 곱의 로그뿐</span></p>
+
+</section>
+<details class="nmq-more"><summary>🧭 논리형 틀 자세히<span>하나만 고른다면 · 왜 사슬 · 함정</span></summary>
 <section class="nms" data-nms>
 <div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
 <div class="nms-logic"><div class="nms-cols"><div class="nms-col-a"><p class="nms-one"><b>하나만 고른다면</b><strong>로그는 지수방정식의 해에 붙인 이름이다</strong> — 지수법칙을 a<sup>x</sup> = M ⇔ x = log<sub>a</sub> M으로 옮기면 로그의 성질과 밑 변환이, x와 y를 바꾸면 y = x에 대칭인 로그함수의 그래프가 나온다.</p>
@@ -63,8 +71,8 @@
 
 <p class="nms-first">문제부터 부딪치고 싶다면 <a href="#examples">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p></div></div>
 </div>
-</section>
-<details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
+</section></details>
+<details class="mg-wrap"><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">지수법칙 다섯 개와 로그 성질 셋으로 모든 계산이 돌아온다 — 진수 조건과 밑의 대소를 먼저 적는다</span><span class="mg-stat">회당 평균 3.9문항 · 12.5점</span></div>
 <div class="mg-grid"><section class="mg-card c1"><h3><i>🔢</i>거듭제곱근과 지수법칙</h3><div class="mg-f">n이 홀수: ⁿ√(aⁿ) = a    n이 짝수: ⁿ√(aⁿ) = |a|<br>a^(m/n) = (ⁿ√a)^m = ⁿ√(a^m)   (a > 0)<br>aᵐ·aⁿ = aᵐ⁺ⁿ    aᵐ/aⁿ = aᵐ⁻ⁿ    (aᵐ)ⁿ = aᵐⁿ<br>(ab)ⁿ = aⁿbⁿ    (a/b)ⁿ = aⁿ/bⁿ</div><div class="mg-tbl"><table><thead><tr><th>a</th><th>n 짝수</th><th>n 홀수</th></tr></thead><tbody><tr><th scope="row">a > 0</th><td data-l="n 짝수">실근 2개(±)</td><td data-l="n 홀수">실근 1개(+)</td></tr><tr><th scope="row">a = 0</th><td data-l="n 짝수">0뿐</td><td data-l="n 홀수">0뿐</td></tr><tr><th scope="row">a < 0</th><td data-l="n 짝수">실근 없음</td><td data-l="n 홀수">실근 1개(−)</td></tr></tbody></table></div><p class="mg-note tip"><span>💡</span>유리수 지수는 밑이 양수일 때만. 모든 밑을 가장 작은 소수의 거듭제곱(8=2³, 9=3², 27=3³)으로 맞춘 뒤 지수만 계산합니다.</p></section>
 <section class="mg-card c2"><h3><i>📏</i>로그의 정의·성질·밑 변환</h3><div class="mg-f">aˣ = M ⇔ x = logₐ M    logₐ1 = 0, logₐa = 1<br>logₐ(aᵏ) = k    a^(logₐM) = M<br>logₐ b = log_c b / log_c a = 1 / log_b a<br>logₐ b · log_b c = logₐ c</div><div class="mg-tbl"><table><thead><tr><th>성질</th><th>식</th></tr></thead><tbody><tr><th scope="row">곱</th><td data-l="식">logₐ(MN) = logₐM + logₐN</td></tr><tr><th scope="row">몫</th><td data-l="식">logₐ(M/N) = logₐM − logₐN</td></tr><tr><th scope="row">거듭제곱</th><td data-l="식">logₐ(Mᵏ) = k logₐM</td></tr></tbody></table></div><p class="mg-note warn"><span>⚠</span>진수 조건을 식을 간단히 하기 전에 먼저 적습니다. logₐ(M+N) ≠ logₐM + logₐN, (logₐM)² ≠ 2logₐM.</p></section>
@@ -76,6 +84,9 @@
 </div></details>
 <p><a class="cta sm" href="../summary.html#p1">📌 이 파트 한눈에 요약 →</a></p>
 <div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="stat-row"><div class="stat"><b>3.9</b><span>회당 문항 수</span></div><div class="stat"><b>12.5점</b><span>회당 배점</span></div><div class="stat"><b>3~4</b><span>회차별 범위</span></div><div class="stat"><b>67</b><span>최근 17회 누적</span></div></div>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>지수와 로그는 식을 간단히 하는 계산과 그래프를 읽는 문제가 함께 나옵니다. 밑을 하나로 맞추거나 로그의 성질로 식을 줄이고, 부등식에서는 밑이 1보다 큰지 작은지에 따라 방향이 바뀝니다. 그래프에서는 점근선과 지나는 점을 읽고, 지수함수와 로그함수가 서로 역함수라는 사실로 교점과 직선의 관계를 묻습니다.</p>
 <div class="sec-bar"><span>본문 6절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
 <details class="sec"><summary><h2>1. 거듭제곱근과 지수의 확장</h2></summary>
 <p>n이 2 이상의 정수일 때, 방정식 x<sup>n</sup> = a를 만족하는 실수 x를 a의 n제곱근이라고 합니다. 그중에서 대표로 쓰는 값을 <sup>n</sup>√a로 적습니다. a가 0 이상이면 <sup>n</sup>√a도 0 이상이고, a가 음수이면서 n이 홀수일 때만 <sup>n</sup>√a가 음수입니다.</p>

@@ -39,10 +39,18 @@
 </ol></aside>
 <main>
 <header class="paper-header"><h1>함수의 극한과 연속</h1><p class="authors">Part 4 · 수학Ⅱ</p><p class="affiliation">극한값·좌우극한·극한의 성질·연속과 불연속·사잇값 정리</p></header>
-<div class="stat-row"><div class="stat"><b>2.0</b><span>회당 문항 수</span></div><div class="stat"><b>6.7점</b><span>회당 배점</span></div><div class="stat"><b>1~3</b><span>회차별 범위</span></div><div class="stat"><b>34</b><span>최근 17회 누적</span></div></div>
-<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
-<p>수학Ⅱ의 첫 관문입니다. 수능에서는 식을 정리해 <strong>극한값을 구하는 계산</strong>, 그래프에서 <strong>극한과 함숫값을 구별</strong>하는 읽기, 그리고 <strong>연속이 되도록 계수를 정하는 조건</strong>이 한 세트로 나옵니다. 사잇값 정리는 “근이 있다”를 보장하고, 최대·최소 정리는 “닫힌 구간에서 가장 큰 값과 가장 작은 값이 있다”를 보장합니다. 둘 다 연속이 전제입니다.</p>
-<div class="nms-stepband"><b>① 틀 잡기</b><span>5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터</span></div>
+
+<div class="nms-stepband"><b>① 틀 잡기</b><span>30초 — ‘짧게 보기’만 먼저. 더 필요할 때 아래를 펼치기</span></div>
+<section class="nmq" aria-label="짧게 보기">
+<div class="nmq-h"><b>⚡ 짧게 보기</b><span>30초</span></div>
+<p class="nmq-one">극한은 다가가며 읽은 높이, 함숫값은 찍힌 점의 높이. 둘이 같아야 연속.</p>
+<ol class="nmq-flow"><li>그래프 → 왼쪽 높이·오른쪽 높이·찍힌 점을 따로 적기</li><li>0/0 꼴 → 인수분해·유리화로 약분한 뒤 대입</li><li>∞/∞ 꼴 → 차수 같으면 최고차항 계수 비, 분모가 높으면 0</li><li>분모 → 0인데 극한이 실수 → 분자도 → 0</li></ol>
+
+<p class="nmq-ex"><b>예</b><span>lim<sub>x→1</sub> (x<sup>2</sup> + ax − 3)/(x − 1)이 실수면 분자도 0 → 1 + a − 3 = 0, <mark>a = 2</mark> (극한은 x + 3 → 4)</span></p>
+<p class="nmq-trap"><b>조심</b><span>극한에 f(a)를 그냥 넣기 ✕ — 구멍 높이(극한)와 찍힌 점(함숫값)은 따로</span></p>
+
+</section>
+<details class="nmq-more"><summary>🧭 논리형 틀 자세히<span>하나만 고른다면 · 왜 사슬 · 함정</span></summary>
 <section class="nms" data-nms>
 <div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
 <div class="nms-logic"><div class="nms-cols"><div class="nms-col-a"><p class="nms-one"><b>하나만 고른다면</b><strong>극한은 다가가며 읽은 높이, 함숫값은 찍힌 점의 높이다</strong> — 좌우 극한과 함숫값이 모두 같을 때만 연속이다.</p>
@@ -63,8 +71,8 @@
 
 <p class="nms-first">문제부터 부딪치고 싶다면 <a href="#examples">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p></div></div>
 </div>
-</section>
-<details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
+</section></details>
+<details class="mg-wrap"><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">극한은 ‘구멍의 높이’, 함숫값은 ‘찍힌 점의 높이’ — 세 칸을 따로 읽는다</span><span class="mg-stat">회당 평균 2.0문항 · 6.7점</span></div>
 <div class="mg-grid"><section class="mg-card c1 wide"><h3><i>🕳️</i>극한 vs 함숫값</h3><figure class="mg-fig"><svg viewBox="0 0 300 164" role="img" aria-label="극한값과 함숫값" preserveAspectRatio="xMidYMid meet"><line class="ln" x1="40" y1="118" x2="292" y2="118"/><line class="ln" x1="40" y1="118" x2="40" y2="8"/><polygon class="ah" points="292,118 286,115 286,121"/><polygon class="ah" points="40,8 37,14 43,14"/><text x="292" y="132" text-anchor="end" class="t-m">x</text><text x="46" y="12" class="t-m">y</text><path class="a" d="M40 88 L93 61.5"/><path class="a" d="M107 54.5 L190 13"/><circle class="box" cx="100" cy="58" r="4.5"/><circle class="ptb" cx="100" cy="28" r="4"/><line class="dash" x1="40" y1="58" x2="96" y2="58"/><line class="dash" x1="100" y1="118" x2="100" y2="62"/><text x="36" y="62" text-anchor="end" class="t-a">2</text><text x="100" y="132" text-anchor="middle" class="t-m">1</text><text x="112" y="74" class="t-a">극한 = 2</text><text x="108" y="28" class="t-b">f(1) = 3</text><text x="150" y="148" text-anchor="middle" class="t-a">구멍의 높이 = 극한</text><text x="150" y="162" text-anchor="middle" class="t-b">찍힌 점의 높이 = 함숫값</text></svg><figcaption>x = 1에서 극한은 2, 함숫값은 3 → 극한 ≠ 함숫값이라 불연속</figcaption></figure><div class="mg-tbl"><table><thead><tr><th>상황</th><th>극한값</th><th>읽는 말</th></tr></thead><tbody><tr><th scope="row">좌극한 = 우극한 = L</th><td data-l="극한값">L</td><td data-l="읽는 말">수렴</td></tr><tr><th scope="row">좌극한 ≠ 우극한</th><td data-l="극한값">없다</td><td data-l="읽는 말">발산</td></tr><tr><th scope="row">양쪽 모두 +∞</th><td data-l="극한값">없다</td><td data-l="읽는 말">양의 무한대로 발산</td></tr><tr><th scope="row">한쪽 +∞, 다른 쪽 −∞</th><td data-l="극한값">없다</td><td data-l="읽는 말">발산</td></tr></tbody></table></div><p class="mg-note tip"><span>💡</span>극한은 그 점의 함숫값(정의 여부까지)을 보지 않습니다. 그래프 문항은 x = a에 세로선을 긋고 왼쪽 높이 · 오른쪽 높이 · 찍힌 점 높이를 세 칸에 적습니다.</p></section>
 <section class="mg-card c2"><h3><i>🧮</i>극한 계산: 0/0, ∞/∞</h3><div class="mg-tbl"><table><thead><tr><th>꼴</th><th>방법</th><th>예</th></tr></thead><tbody><tr><th scope="row">0/0</th><td data-l="방법">인수분해</td><td data-l="예">(x²−3x+2)/(x−1) → x−2 → −1</td></tr><tr><th scope="row">0/0 (근호)</th><td data-l="방법">유리화</td><td data-l="예">(√(1+x)−1)/x → 1/(√(1+x)+1) → 1/2</td></tr><tr><th scope="row">∞/∞</th><td data-l="방법">최고차항 비교</td><td data-l="예">차수 같음 → 계수비, 분모가 크면 0, 분자가 크면 발산</td></tr></tbody></table></div><p class="mg-note warn"><span>⚠</span>0/0은 ‘답이 0’이 아니라 ‘식을 바꿔야 한다’는 신호. x → −∞는 차수 차가 홀수면 부호가 반대.</p></section>
@@ -76,6 +84,9 @@
 </div></details>
 <p><a class="cta sm" href="../summary.html#p4">📌 이 파트 한눈에 요약 →</a></p>
 <div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="stat-row"><div class="stat"><b>2.0</b><span>회당 문항 수</span></div><div class="stat"><b>6.7점</b><span>회당 배점</span></div><div class="stat"><b>1~3</b><span>회차별 범위</span></div><div class="stat"><b>34</b><span>최근 17회 누적</span></div></div>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>수학Ⅱ의 첫 관문입니다. 수능에서는 식을 정리해 <strong>극한값을 구하는 계산</strong>, 그래프에서 <strong>극한과 함숫값을 구별</strong>하는 읽기, 그리고 <strong>연속이 되도록 계수를 정하는 조건</strong>이 한 세트로 나옵니다. 사잇값 정리는 “근이 있다”를 보장하고, 최대·최소 정리는 “닫힌 구간에서 가장 큰 값과 가장 작은 값이 있다”를 보장합니다. 둘 다 연속이 전제입니다.</p>
 <div class="sec-bar"><span>본문 5절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
 <details class="sec"><summary><h2>1. 함수의 극한과 좌우극한</h2></summary>
 <p>x가 a는 아니면서 a에 한없이 가까워질 때 f(x)가 실수 L에 한없이 가까워지면, x가 a에 가까워질 때의 극한값을 L이라 하고 다음과 같이 씁니다.</p>

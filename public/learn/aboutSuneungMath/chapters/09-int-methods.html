@@ -39,10 +39,18 @@
 </ol></aside>
 <main>
 <header class="paper-header"><h1>여러 가지 적분법</h1><p class="authors">Part 9 · 미적분</p><p class="affiliation">치환적분·부분적분·정적분과 급수의 관계·넓이·부피·속도와 거리</p></header>
-<div class="stat-row"><div class="stat"><b>1.9</b><span>회당 문항 수</span></div><div class="stat"><b>6.6점</b><span>회당 배점</span></div><div class="stat"><b>0~4</b><span>회차별 범위</span></div><div class="stat"><b>33</b><span>최근 17회 누적</span></div></div>
-<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
-<p>적분법 단원의 수능 문항은 크게 네 갈래입니다. <strong>치환·부분적분으로 정적분 값을 구하기</strong>, <strong>정적분으로 정의된 함수를 미분하기</strong>, <strong>급수의 합을 정적분으로 바꾸기</strong>, <strong>넓이·부피·이동 거리를 적분으로 읽기</strong>입니다. 평면 위를 움직인 거리와 곡선의 길이도 속력을 적분하는 같은 원리로 다루고, 회전체의 부피는 2015 개정 미적분에서 다루지 않습니다. 정적분은 “부호가 있는 넓이”, 실제 넓이와 이동 거리는 절댓값을 적분한 값이라는 구분이 채점 포인트를 가릅니다.</p>
-<div class="nms-stepband"><b>① 틀 잡기</b><span>5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터</span></div>
+
+<div class="nms-stepband"><b>① 틀 잡기</b><span>30초 — ‘짧게 보기’만 먼저. 더 필요할 때 아래를 펼치기</span></div>
+<section class="nmq" aria-label="짧게 보기">
+<div class="nmq-h"><b>⚡ 짧게 보기</b><span>30초</span></div>
+<p class="nmq-one">치환적분은 합성함수의 미분을, 부분적분은 곱의 미분을 거꾸로 쓴 것.</p>
+<ol class="nmq-flow"><li>속의 미분이 곁에 곱해져 있음 → u = 속으로 치환</li><li>곱인데 치환이 안 됨 → 부분적분 (로그·다항식을 미분 쪽에)</li><li>lim ∑ f(k/n) · (1/n) → ∫<sub>0</sub><sup>1</sup> f(x) dx</li><li>부피 → 단면의 넓이 S(x)를 적분</li></ol>
+<p class="nmq-keys-h">두 공식</p><dl class="nmq-keys"><div><dt>치환</dt><dd>∫f(g(x))g′(x) dx = ∫f(u) du</dd></div><div><dt>부분적분</dt><dd>∫fg′ dx = fg − ∫f′g dx</dd></div></dl>
+<p class="nmq-ex"><b>예</b><span>∫<sub>0</sub><sup>1</sup> xe<sup>x</sup> dx: x는 미분, e<sup>x</sup>는 적분 → [xe<sup>x</sup>]<sub>0</sub><sup>1</sup> − ∫<sub>0</sub><sup>1</sup> e<sup>x</sup> dx = e − (e − 1) = <mark>1</mark></span></p>
+<p class="nmq-trap"><b>조심</b><span>치환하고 구간은 그대로 ✕ — u = sin x면 0~π/2가 0~1로</span></p>
+
+</section>
+<details class="nmq-more"><summary>🧭 논리형 틀 자세히<span>하나만 고른다면 · 왜 사슬 · 함정</span></summary>
 <section class="nms" data-nms>
 <div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
 <div class="nms-logic"><div class="nms-cols"><div class="nms-col-a"><p class="nms-one"><b>하나만 고른다면</b><strong>적분법은 미분법을 거꾸로 읽은 것이다</strong> — 치환적분은 합성함수의 미분을, 부분적분은 곱의 미분을 적분한 식이다.</p>
@@ -62,8 +70,8 @@
 
 <p class="nms-first">문제부터 부딪치고 싶다면 <a href="#examples">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p></div></div>
 </div>
-</section>
-<details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
+</section></details>
+<details class="mg-wrap"><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">치환하면 구간도 함께 바꾼다 — 넓이는 절댓값, 부피는 단면의 넓이</span><span class="mg-stat">회당 평균 1.9문항 · 6.6점</span></div>
 <div class="mg-grid"><section class="mg-card c1"><h3><i>📚</i>기본 적분 표</h3><div class="mg-tbl"><table><thead><tr><th>∫</th><th>결과</th><th>∫</th><th>결과</th></tr></thead><tbody><tr><th scope="row">eˣ</th><td data-l="결과">eˣ + C</td><td data-l="∫">sec²x</td><td data-l="결과">tan x + C</td></tr><tr><th scope="row">aˣ</th><td data-l="결과">aˣ/ln a + C</td><td data-l="∫">csc²x</td><td data-l="결과">−cot x + C</td></tr><tr><th scope="row">1/x</th><td data-l="결과">ln|x| + C</td><td data-l="∫">sec x tan x</td><td data-l="결과">sec x + C</td></tr><tr><th scope="row">sin x</th><td data-l="결과">−cos x + C</td><td data-l="∫">csc x cot x</td><td data-l="결과">−csc x + C</td></tr><tr><th scope="row">cos x</th><td data-l="결과">sin x + C</td><td data-l="∫">sin²x</td><td data-l="결과">x/2 − ¼sin2x + C</td></tr></tbody></table></div></section>
 <section class="mg-card c2"><h3><i>🔄</i>치환적분</h3><div class="mg-f">u = g(x), du = g′(x)dx<br>∫ f(g(x))g′(x)dx = ∫ f(u)du<br>∫ₐᵇ f(g)g′dx = ∫ g(a)→g(b) f(u)du</div><p class="mg-note tip"><span>💡</span>치환 신호: 속함수의 도함수가 옆에 붙어 있다 (2x와 x², cos x와 sin x, eˣ, 1/x와 ln x). 구간은 새 변수로 바꾸거나, 전부 원래 변수로 되돌립니다.</p></section>
@@ -76,6 +84,9 @@
 </div></details>
 <p><a class="cta sm" href="../summary.html#p9">📌 이 파트 한눈에 요약 →</a></p>
 <div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="stat-row"><div class="stat"><b>1.9</b><span>회당 문항 수</span></div><div class="stat"><b>6.6점</b><span>회당 배점</span></div><div class="stat"><b>0~4</b><span>회차별 범위</span></div><div class="stat"><b>33</b><span>최근 17회 누적</span></div></div>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>적분법 단원의 수능 문항은 크게 네 갈래입니다. <strong>치환·부분적분으로 정적분 값을 구하기</strong>, <strong>정적분으로 정의된 함수를 미분하기</strong>, <strong>급수의 합을 정적분으로 바꾸기</strong>, <strong>넓이·부피·이동 거리를 적분으로 읽기</strong>입니다. 평면 위를 움직인 거리와 곡선의 길이도 속력을 적분하는 같은 원리로 다루고, 회전체의 부피는 2015 개정 미적분에서 다루지 않습니다. 정적분은 “부호가 있는 넓이”, 실제 넓이와 이동 거리는 절댓값을 적분한 값이라는 구분이 채점 포인트를 가릅니다.</p>
 <div class="sec-bar"><span>본문 5절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
 <details class="sec"><summary><h2>1. 부정적분과 치환적분</h2></summary>
 <p>F'(x) = f(x)이면 F를 f의 원시함수, ∫ f(x) dx = F(x) + C를 부정적분이라고 합니다. 상수 C를 빼먹으면 원시함수를 하나만 고른 것이 됩니다. 정적분은 수학Ⅱ에서 이미 정의된 양을 쓰고, 이 단원에서는 피적분함수의 종류를 넓힙니다.</p>

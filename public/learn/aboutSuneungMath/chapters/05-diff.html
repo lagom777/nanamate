@@ -39,10 +39,18 @@
 </ol></aside>
 <main>
 <header class="paper-header"><h1>미분</h1><p class="authors">Part 5 · 수학Ⅱ</p><p class="affiliation">미분계수·도함수·접선·증감과 극값·그래프·방정식과 부등식·속도와 가속도</p></header>
-<div class="stat-row"><div class="stat"><b>4.9</b><span>회당 문항 수</span></div><div class="stat"><b>15.4점</b><span>회당 배점</span></div><div class="stat"><b>4~6</b><span>회차별 범위</span></div><div class="stat"><b>83</b><span>최근 17회 누적</span></div></div>
-<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
-<p>미분은 한 점에서의 변화율입니다. 수능은 <strong>접선의 방정식</strong>, <strong>극값 조건으로 계수를 정하는 문제</strong>, <strong>절댓값이 붙은 식이 미분가능한 점</strong>, 그리고 <strong>삼차함수의 대칭</strong>을 반복해서 묻습니다. 도함수의 부호가 증가·감소를 정하고, 부호가 바뀌는 곳이 극값입니다. 속도는 위치의 도함수, 가속도는 속도의 도함수입니다.</p>
-<div class="nms-stepband"><b>① 틀 잡기</b><span>5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터</span></div>
+
+<div class="nms-stepband"><b>① 틀 잡기</b><span>30초 — ‘짧게 보기’만 먼저. 더 필요할 때 아래를 펼치기</span></div>
+<section class="nmq" aria-label="짧게 보기">
+<div class="nmq-h"><b>⚡ 짧게 보기</b><span>30초</span></div>
+<p class="nmq-one">f′(x)는 접선의 기울기. +면 오르고 −면 내려가며, 부호가 바뀌는 곳이 극값.</p>
+<ol class="nmq-flow"><li>접선 → 접점 (t, f(t))와 기울기 f′(t)로 식 세우기</li><li>모양 → f′를 인수분해해 부호표 (+ − +)</li><li>극값 → f′의 부호가 바뀌는 점에서만</li><li>f(x) = k의 실근 수 → y = k와 그래프의 교점 수</li></ol>
+<p class="nmq-keys-h">기본 식</p><dl class="nmq-keys"><div><dt>(x<sup>n</sup>)′</dt><dd>nx<sup>n−1</sup></dd></div><div><dt>곱</dt><dd>(fg)′ = f′g + fg′</dd></div><div><dt>접선</dt><dd>y − f(a) = f′(a)(x − a)</dd></div><div><dt>극대 / 극소</dt><dd>f′ 부호가 + → − / − → +</dd></div></dl>
+<p class="nmq-ex"><b>예</b><span>f(x) = x<sup>3</sup> − 3x → f′ = 3(x + 1)(x − 1), 부호 + − + → <mark>x = −1에서 극대 2</mark>, x = 1에서 극소 −2</span></p>
+<p class="nmq-trap"><b>조심</b><span>f′(c) = 0만 보고 극값이라 하기 ✕ — y = x<sup>3</sup>은 x = 0 양쪽 다 오르막</span></p>
+
+</section>
+<details class="nmq-more"><summary>🧭 논리형 틀 자세히<span>하나만 고른다면 · 왜 사슬 · 함정</span></summary>
 <section class="nms" data-nms>
 <div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
 <div class="nms-logic"><div class="nms-cols"><div class="nms-col-a"><p class="nms-one"><b>하나만 고른다면</b><strong>도함수의 부호가 그래프의 모양을 정한다</strong> — f′ &gt; 0이면 증가, f′ &lt; 0이면 감소, 부호가 바뀌는 점이 극값이다.</p>
@@ -63,8 +71,8 @@
 
 <p class="nms-first">문제부터 부딪치고 싶다면 <a href="#examples">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p></div></div>
 </div>
-</section>
-<details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
+</section></details>
+<details class="mg-wrap"><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">f′의 부호 변화가 극값 — 연속이라고 미분가능하지 않다</span><span class="mg-stat">회당 평균 4.9문항 · 15.4점</span></div>
 <div class="mg-grid"><section class="mg-card c1 wide"><h3><i>📉</i>미분계수와 접선</h3><div class="mg-f">f′(a) = lim (f(a+h) − f(a)) / h<br>접선: y − f(a) = f′(a)(x − a)<br>(xⁿ)′ = nxⁿ⁻¹    (fg)′ = f′g + fg′</div><dl class="mg-kv"><div><dt>미분가능 ⇒ 연속</dt><dd>역은 거짓 — y = |x|는 x = 0에서 연속이지만 미분계수 없음</dd></div><div><dt>조각 함수</dt><dd>경계에서 먼저 연속, 그다음 좌·우 도함수 비교</dd></div><div><dt>|g(x)|</dt><dd>g(c) = 0이어도 곱해진 다항식이 0이면 미분가능</dd></div></dl></section>
 <section class="mg-card c2 wide"><h3><i>⛰️</i>삼차함수의 개형</h3><figure class="mg-fig"><svg viewBox="0 0 300 142" role="img" aria-label="삼차함수의 극값과 변곡점" preserveAspectRatio="xMidYMid meet"><line class="ln" x1="30" y1="75" x2="290" y2="75"/><line class="ln" x1="150" y1="6" x2="150" y2="138"/><polygon class="ah" points="290,75 284,72 284,78"/><polygon class="ah" points="150,6 147,12 153,12"/><text x="290" y="89" text-anchor="end" class="t-m">x</text><text x="156" y="10" class="t-m">y</text><line class="dash" x1="85" y1="39" x2="125" y2="39"/><line class="dash" x1="175" y1="111" x2="215" y2="111"/><path class="a" d="M60 111 L64.5 95.9 L69 82.8 L73.5 71.6 L82.5 54.8 L105 39 L127.5 50.3 L150 75 L172.5 99.8 L195 111 L217.5 95.3 L226.5 78.4 L231 67.2 L235.5 54.1 L240 39"/><circle class="ptb" cx="105" cy="39" r="3.5"/><circle class="ptb" cx="195" cy="111" r="3.5"/><circle class="pt" cx="150" cy="75" r="3.5"/><text x="105" y="27" text-anchor="middle" class="t-b">극대  f′: + → −</text><text x="195" y="128" text-anchor="middle" class="t-b">극소  f′: − → +</text><text x="160" y="66" class="t-m">변곡점</text></svg><figcaption>f′(x) = 0에서 부호가 바뀌어야 극값 · 변곡점에서 대칭</figcaption></figure><div class="mg-tbl"><table><thead><tr><th>f′의 부호</th><th>모양</th><th>이름</th></tr></thead><tbody><tr><th scope="row">+ → −</th><td data-l="모양">증가 후 감소</td><td data-l="이름">극대</td></tr><tr><th scope="row">− → +</th><td data-l="모양">감소 후 증가</td><td data-l="이름">극소</td></tr><tr><th scope="row">안 바뀜</th><td data-l="모양">계속 증가/감소</td><td data-l="이름">극값 아님 (y = x³의 x = 0)</td></tr></tbody></table></div><div class="mg-tbl"><table><thead><tr><th>D = b² − 3ac</th><th>f′ = 0</th><th>그래프 (a > 0)</th></tr></thead><tbody><tr><th scope="row">D > 0</th><td data-l="f′ = 0">서로 다른 두 실근</td><td data-l="그래프 (a > 0)">증가 → 감소 → 증가 (극대·극소)</td></tr><tr><th scope="row">D = 0</th><td data-l="f′ = 0">중근</td><td data-l="그래프 (a > 0)">극값 없이 증가</td></tr><tr><th scope="row">D < 0</th><td data-l="f′ = 0">실근 없음</td><td data-l="그래프 (a > 0)">극값 없이 증가</td></tr></tbody></table></div><p class="mg-note tip"><span>💡</span>삼차함수의 변곡점의 x좌표는 m = −b/(3a), 그 점에 대해 대칭.</p></section>
@@ -75,6 +83,9 @@
 </div></details>
 <p><a class="cta sm" href="../summary.html#p5">📌 이 파트 한눈에 요약 →</a></p>
 <div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="stat-row"><div class="stat"><b>4.9</b><span>회당 문항 수</span></div><div class="stat"><b>15.4점</b><span>회당 배점</span></div><div class="stat"><b>4~6</b><span>회차별 범위</span></div><div class="stat"><b>83</b><span>최근 17회 누적</span></div></div>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>미분은 한 점에서의 변화율입니다. 수능은 <strong>접선의 방정식</strong>, <strong>극값 조건으로 계수를 정하는 문제</strong>, <strong>절댓값이 붙은 식이 미분가능한 점</strong>, 그리고 <strong>삼차함수의 대칭</strong>을 반복해서 묻습니다. 도함수의 부호가 증가·감소를 정하고, 부호가 바뀌는 곳이 극값입니다. 속도는 위치의 도함수, 가속도는 속도의 도함수입니다.</p>
 <div class="sec-bar"><span>본문 6절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
 <details class="sec"><summary><h2>1. 평균변화율과 미분계수</h2></summary>
 <p>x가 a에서 b까지 바뀔 때 함숫값의 변화를 x의 변화로 나눈 것이 평균변화율입니다. 두 점 (a, f(a)), (b, f(b))를 잇는 직선의 기울기입니다.</p>

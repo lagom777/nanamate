@@ -39,10 +39,18 @@
 </ol></aside>
 <main>
 <header class="paper-header"><h1>여러 가지 미분법</h1><p class="authors">Part 8 · 미적분</p><p class="affiliation">지수·로그함수·삼각함수의 극한과 미분·몫·합성·역함수·음함수·매개변수 미분·도함수의 활용</p></header>
-<div class="stat-row"><div class="stat"><b>3.9</b><span>회당 문항 수</span></div><div class="stat"><b>12.7점</b><span>회당 배점</span></div><div class="stat"><b>2~6</b><span>회차별 범위</span></div><div class="stat"><b>66</b><span>최근 17회 누적</span></div></div>
-<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
-<p>수학Ⅱ의 다항함수 미분 위에, 지수·로그·삼각함수와 합성·역함수·음함수·매개변수가 올라갑니다. 수능은 공식 암기보다 <strong>그래프에서 기울기를 읽어 합성·역함수의 미분계수</strong>를 묻고, <strong>접선의 기울기 조건</strong>, <strong>극값의 개수</strong>, <strong>변곡점에서 볼록이 바뀌는지</strong>를 묻습니다. 각의 단위는 라디안입니다. 이 약속이 어긋나면 sin x / x의 극한부터 무너집니다.</p>
-<div class="nms-stepband"><b>① 틀 잡기</b><span>5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터</span></div>
+
+<div class="nms-stepband"><b>① 틀 잡기</b><span>30초 — ‘짧게 보기’만 먼저. 더 필요할 때 아래를 펼치기</span></div>
+<section class="nmq" aria-label="짧게 보기">
+<div class="nmq-h"><b>⚡ 짧게 보기</b><span>30초</span></div>
+<p class="nmq-one">함수 안에 함수(합성)는 ‘겉 미분 × 속 미분’. 역함수·음함수·매개변수도 이 원리.</p>
+<ol class="nmq-flow"><li>f(g(x)) → f′(g(x)) × g′(x)</li><li>역함수 → 기울기는 역수 1/f′(a)</li><li>x, y 섞인 식(음함수) → 양변 미분 후 y′로 정리</li><li>x, y가 t의 식 → dy/dx = (dy/dt) ÷ (dx/dt)</li></ol>
+<p class="nmq-keys-h">외울 도함수·극한</p><dl class="nmq-keys"><div><dt>(e<sup>x</sup>)′</dt><dd>e<sup>x</sup></dd></div><div><dt>(ln x)′</dt><dd>1/x</dd></div><div><dt>(sin x)′</dt><dd>cos x</dd></div><div><dt>(cos x)′</dt><dd>−sin x</dd></div><div><dt>x → 0</dt><dd>(sin x)/x → 1, (e<sup>x</sup> − 1)/x → 1 (라디안)</dd></div></dl>
+<p class="nmq-ex"><b>예</b><span>y = sin(x<sup>2</sup>) → 겉 sin을 미분해 cos(x<sup>2</sup>), 속 x<sup>2</sup>을 미분해 2x → y′ = <mark>2x cos(x<sup>2</sup>)</mark></span></p>
+<p class="nmq-trap"><b>조심</b><span>f(2) = 5, f′(2) = 4면 (f<sup>−1</sup>)′(5) = 1/4 (1/f′(5) ✕)</span></p>
+
+</section>
+<details class="nmq-more"><summary>🧭 논리형 틀 자세히<span>하나만 고른다면 · 왜 사슬 · 함정</span></summary>
 <section class="nms" data-nms>
 <div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
 <div class="nms-logic"><div class="nms-cols"><div class="nms-col-a"><p class="nms-one"><b>하나만 고른다면</b><strong>변화율은 이어 곱해진다(연쇄법칙)</strong> — 합성은 겉미분 × 속미분, 역함수는 기울기의 역수, 음함수와 매개변수도 같은 원리로 미분한다.</p>
@@ -63,8 +71,8 @@
 
 <p class="nms-first">문제부터 부딪치고 싶다면 <a href="#examples">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p></div></div>
 </div>
-</section>
-<details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
+</section></details>
+<details class="mg-wrap"><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">표준 극한 꼴로 맞추고, 삼각함수는 라디안으로 — 몫·합성·매개변수는 순서를 지켜 미분</span><span class="mg-stat">회당 평균 3.9문항 · 12.7점</span></div>
 <div class="mg-grid"><section class="mg-card c1"><h3><i>e</i>지수·로그·삼각함수의 극한</h3><div class="mg-f">lim(1+x)^(1/x) = e    lim ln(1+x)/x = 1<br>lim (eˣ−1)/x = 1    lim (aˣ−1)/x = ln a<br>lim sin x/x = 1    lim tan x/x = 1<br>lim (1−cos x)/x² = 1/2</div><dl class="mg-kv"><div><dt>꼴 맞추기</dt><dd>(e²ˣ−1)/x = 2·(e²ˣ−1)/(2x) → 2,  ln(1+3x)/x → 3</dd></div><div><dt>각의 단위</dt><dd>sin x/x → 1은 라디안일 때만</dd></div></dl></section>
 <section class="mg-card c2"><h3><i>➕</i>덧셈정리·배각</h3><div class="mg-f">sin(α±β) = sinα cosβ ± cosα sinβ<br>cos(α±β) = cosα cosβ ∓ sinα sinβ<br>tan(α±β) = (tanα ± tanβ)/(1 ∓ tanα tanβ)<br>sin2α = 2sinα cosα<br>cos2α = cos²α − sin²α = 2cos²α − 1 = 1 − 2sin²α</div></section>
@@ -76,6 +84,9 @@
 </div></details>
 <p><a class="cta sm" href="../summary.html#p8">📌 이 파트 한눈에 요약 →</a></p>
 <div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="stat-row"><div class="stat"><b>3.9</b><span>회당 문항 수</span></div><div class="stat"><b>12.7점</b><span>회당 배점</span></div><div class="stat"><b>2~6</b><span>회차별 범위</span></div><div class="stat"><b>66</b><span>최근 17회 누적</span></div></div>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>수학Ⅱ의 다항함수 미분 위에, 지수·로그·삼각함수와 합성·역함수·음함수·매개변수가 올라갑니다. 수능은 공식 암기보다 <strong>그래프에서 기울기를 읽어 합성·역함수의 미분계수</strong>를 묻고, <strong>접선의 기울기 조건</strong>, <strong>극값의 개수</strong>, <strong>변곡점에서 볼록이 바뀌는지</strong>를 묻습니다. 각의 단위는 라디안입니다. 이 약속이 어긋나면 sin x / x의 극한부터 무너집니다.</p>
 <div class="sec-bar"><span>본문 5절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
 <details class="sec"><summary><h2>1. 지수함수와 로그함수의 극한</h2></summary>
 <p>e는 수열 (1 + 1/n)<sup>n</sup>의 극한으로 정의합니다. 이항정리로 전개하면</p>
