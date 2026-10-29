@@ -1,0 +1,2280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>나만의 영단어장 — nanamate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+:root {
+  --desk: #E6EBF2; --card: #FFFFFF; --panel: #F3F5F9;
+  --ink: #141D2B; --ink-2: #465367; --ink-3: #737E92;
+  --line: #D2D9E4; --rule: #DCE6F2; --margin: #E06A62; --red-ink: #C0433B;
+  --accent: #2344C4; --accent-soft: #E2E8FB; --on-accent: #FFFFFF;
+  --pencil: #555D6D; --star: #D4951A; --mask: #C6D0DF;
+  --track: #C5CEDB; --knob: #FFFFFF;
+  --shadow: 0 1px 2px rgba(20,29,43,.08), 0 14px 30px -16px rgba(20,29,43,.32);
+  --serif: "Literata", "Iowan Old Style", Georgia, serif;
+  --sans: "IBM Plex Sans KR", -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --pen: "Nanum Pen Script", "Apple SD Gothic Neo", cursive;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --desk: #0E131A; --card: #18202C; --panel: #141B25;
+    --ink: #E6EBF2; --ink-2: #AAB5C6; --ink-3: #7E8A9E;
+    --line: #273243; --rule: #202A39; --margin: #A9544D; --red-ink: #EC8F87;
+    --accent: #93A8FF; --accent-soft: #1D2747; --on-accent: #0E131A;
+    --pencil: #A7B0BF; --star: #E5B04A; --mask: #2E394B;
+    --track: #3A465A; --knob: #F2F4F8;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 16px 32px -16px rgba(0,0,0,.75);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --desk: #0E131A; --card: #18202C; --panel: #141B25;
+  --ink: #E6EBF2; --ink-2: #AAB5C6; --ink-3: #7E8A9E;
+  --line: #273243; --rule: #202A39; --margin: #A9544D; --red-ink: #EC8F87;
+  --accent: #93A8FF; --accent-soft: #1D2747; --on-accent: #0E131A;
+  --pencil: #A7B0BF; --star: #E5B04A; --mask: #2E394B;
+  --track: #3A465A; --knob: #F2F4F8;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 16px 32px -16px rgba(0,0,0,.75);
+}
+
+* { box-sizing: border-box; }
+body { background: var(--desk); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.55; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.app {
+  max-width: 1060px; margin: 0 auto;
+  padding-inline: clamp(16px, 4vw, 32px); padding-block: 28px 56px;
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px;
+}
+@media (min-width: 880px) {
+  .app { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); column-gap: 40px; align-items: start; }
+  .stage { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 20px); }
+  .list { max-height: min(720px, calc(100vh - 150px)); overflow-y: auto; }
+}
+
+.top { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; }
+.back { flex-basis: 100%; font-size: 13px; color: var(--ink-3); text-decoration: none; }
+.back:hover { color: var(--accent); }
+.top h1 { margin: 0; font-size: 26px; font-weight: 600; letter-spacing: -0.01em; text-wrap: balance; }
+.top p { margin: 0; color: var(--ink-2); font-size: 14px; }
+.pickers { grid-column: 1 / -1; display: grid; gap: 8px; }
+.pk { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.pk-lbl { min-width: 3em; font-size: 12px; font-weight: 600; color: var(--ink-3); }
+.pk-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.pk-chips .pill small { margin-left: 6px; font-size: 11px; font-weight: 500; opacity: .7; }
+.warn { grid-column: 1 / -1; margin: 0; padding: 12px 14px; border: 1px solid var(--margin); border-radius: 8px; color: var(--red-ink); font-size: 14px; }
+
+/* index card */
+.stage { display: grid; gap: 16px; }
+.card {
+  position: relative; border-radius: 6px; box-shadow: var(--shadow); cursor: pointer;
+  min-height: clamp(280px, 38vw, 340px); display: flex; flex-direction: column;
+  background:
+    linear-gradient(var(--margin), var(--margin)) 0 52px / 100% 1.5px no-repeat,
+    repeating-linear-gradient(to bottom, transparent 0 31px, var(--rule) 31px 32px) 0 52px / 100% calc(100% - 52px) no-repeat,
+    var(--card);
+}
+.card-head { height: 52px; display: flex; align-items: center; gap: 12px; padding: 0 8px 0 20px; }
+.pos { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--red-ink); }
+.count { font-family: var(--mono); font-size: 13px; color: var(--ink-3); font-variant-numeric: tabular-nums; margin-right: auto; }
+.pill {
+  height: 30px; padding: 0 12px; border-radius: 15px; cursor: pointer; white-space: nowrap;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink-2); font-size: 13px;
+}
+.pill:hover { border-color: var(--ink-3); }
+.pill:disabled { opacity: .35; cursor: not-allowed; }
+.pill:disabled:hover { border-color: var(--line); }
+.pill[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 600; }
+.mean.peekable span { cursor: pointer; }
+.hide-mean .rm { color: transparent; border-radius: 4px; background: repeating-linear-gradient(-45deg, var(--mask) 0 5px, transparent 5px 10px); user-select: none; }
+.hide-mean .row:hover .rm { color: var(--ink-2); background: none; }
+.hide-mean .re { display: none; }
+.hide-mean .row:hover .re { display: block; }
+.re.rx i { font-family: var(--serif); }
+.icon-btn {
+  width: 40px; height: 40px; display: grid; place-items: center; border: 0; border-radius: 8px;
+  background: transparent; color: var(--ink-3); cursor: pointer;
+}
+.icon-btn:hover { background: var(--panel); color: var(--ink); }
+.icon-btn svg { width: 20px; height: 20px; }
+.card-body {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; padding: 20px 20px 32px; text-align: center;
+}
+.word span {
+  display: inline-block; font-family: var(--serif); font-weight: 600;
+  font-size: clamp(2.1rem, 8vw, 3.5rem); line-height: 1.12; letter-spacing: -0.01em; overflow-wrap: anywhere;
+}
+.mean span { display: inline-block; font-size: clamp(1.15rem, 3.8vw, 1.45rem); font-weight: 500; color: var(--ink); }
+.note { font-family: var(--pen); font-size: 1.5rem; line-height: 1.2; color: var(--pencil); transform: rotate(-1.5deg); }
+.note.ghost, .ety.ghost, .ex.ghost { visibility: hidden; }
+.ety { margin: 4px 0 0; width: 100%; max-width: 34em; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); }
+.ety, .ex-en, .ex-ko { border-radius: 8px; transition: background .2s, color .2s; }
+.ety.speaking, .ex-en.speaking, .ex-ko.speaking { background: var(--accent-soft); }
+.ex { width: 100%; max-width: 34em; display: grid; gap: 1px; justify-items: center; }
+.ex p { margin: 0; padding: 0 6px; text-wrap: pretty; }
+.ex-en { font-family: var(--serif); font-size: 15px; font-style: italic; line-height: 1.45; color: var(--ink); }
+.ex-en b { font-weight: 600; color: var(--accent); }
+.ex-ko { font-size: 12.5px; line-height: 1.45; color: var(--ink-3); }
+.emap { display: flex; flex-wrap: wrap; align-items: stretch; justify-content: center; gap: 6px 5px; margin-top: 8px; }
+.emap .eb { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-width: 54px; padding: 5px 10px 6px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+.emap .eb small { font-size: 10px; line-height: 1.2; color: var(--ink-3); }
+.emap .eb b { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; line-height: 1.2; color: var(--accent); }
+.emap .eb i { font-style: normal; font-size: 12px; line-height: 1.3; color: var(--ink-2); }
+.emap .eb.aff b { color: var(--ink-2); }
+.emap .eb.txt { max-width: 100%; text-align: center; }
+.emap .eop { align-self: center; color: var(--ink-3); font-weight: 600; }
+.emap .ea { align-self: center; color: var(--accent); font-weight: 700; }
+.emap .es { align-self: center; padding: 5px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--ink); font-size: 12.5px; line-height: 1.35; text-align: center; }
+.emap .es.last { background: var(--accent); color: var(--on-accent); font-weight: 600; }
+/* 단어 한 장 해설 패널 (viz.js) */
+.vz-slot:empty { display: none; }
+.side { display: grid; gap: 20px; min-width: 0; }
+@media (min-width: 880px) { body:not(.no-viz) .side .list { max-height: 340px; } }
+.vz { --vz: #2b8cc4; background: var(--card); border-radius: 14px; border-top: 4px solid var(--vz); box-shadow: var(--shadow); overflow: hidden; transition: filter .25s, opacity .25s; }
+.vz.ghost { filter: blur(14px); opacity: .55; pointer-events: none; user-select: none; }
+.vz-head { padding: 14px 18px 10px; }
+.vz-tag { display: inline-block; padding: 2px 10px; border-radius: 999px; font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .05em; color: var(--vz); background: color-mix(in srgb, var(--vz) 12%, transparent); }
+.vz-word { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; margin-top: 8px; }
+.vz-ctl .vz-word { margin: 0; flex: 1; min-width: 0; justify-content: center; text-align: center; }
+.vz-word.masked b { color: transparent; border-radius: 4px; user-select: none; background: repeating-linear-gradient(-45deg, var(--mask) 0 5px, transparent 5px 10px); }
+.vz-word b { font-family: var(--serif); font-size: 1.7rem; font-weight: 600; line-height: 1.15; }
+.vz-word i { font-style: normal; font-family: var(--mono); font-size: 12.5px; color: var(--ink-3); }
+.vz-word span { font-family: var(--mono); font-size: 12.5px; color: var(--red-ink); }
+.vz-kr { margin-top: 2px; font-size: 1.05rem; font-weight: 600; color: var(--vz); }
+.vz-lead { margin: 6px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+.vz-scene { margin: 0 14px; border-radius: 12px; overflow: hidden; line-height: 0; background: var(--panel); }
+.vz-scene svg { display: block; width: 100%; height: auto; font-family: var(--sans); }
+.vz-steps { list-style: none; margin: 0; padding: 14px 18px 4px; display: grid; gap: 10px; }
+.vz-steps li { display: flex; gap: 11px; align-items: flex-start; cursor: pointer; transition: opacity .3s; }
+.vz[data-state="run"] .vz-steps li:not(.on), .vz[data-state="pause"] .vz-steps li:not(.on) { opacity: .38; }
+.vz-steps li.on .n { box-shadow: 0 0 0 4px color-mix(in srgb, var(--vz) 22%, transparent); }
+.vz-steps .n { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; margin-top: 1px; background: var(--vz); color: #fff; font-size: 12px; font-weight: 700; }
+.vz-steps b { display: block; font-size: 14px; font-weight: 600; line-height: 1.35; }
+.vz-steps span:not(.n) { display: block; font-size: 13px; line-height: 1.45; color: var(--ink-2); }
+.vz-steps em { display: block; margin-top: 1px; font-style: normal; font-size: 12.5px; line-height: 1.4; color: var(--ink-3); }
+.vz-foot { margin-top: 14px; padding: 14px 18px 16px; display: grid; gap: 10px; background: var(--panel); }
+.vz-org { font-size: 12.5px; line-height: 1.5; color: var(--ink-2); }
+.vz-org b { margin-right: 8px; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .04em; color: var(--red-ink); }
+.vz-ex p { margin: 0; }
+.vz-ex .en { font-family: var(--serif); font-size: 14px; font-style: italic; line-height: 1.45; }
+.vz-ex .ko { font-size: 12.5px; color: var(--ink-3); }
+.vz-rel { display: flex; flex-wrap: wrap; gap: 6px; }
+.vz-rel span { padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-size: 12.5px; font-weight: 500; }
+.vz-rel em { margin-left: 6px; font-style: normal; font-weight: 400; color: var(--ink-3); }
+/* 그림만 보여 주는 해설 */
+.vz.pic .vz-scene { margin-top: 14px; }
+.vz.pic .vz-ctl { padding-bottom: 16px; }
+/* 해설 재생기 */
+.vz-ctl { display: flex; align-items: center; gap: 12px; padding: 12px 18px 0; }
+.vz-scene { cursor: pointer; -webkit-tap-highlight-color: transparent; }   /* 장면을 누르면 처음부터 다시 */
+.vz-scene:focus-visible { outline: 3px solid var(--vz); outline-offset: 3px; }
+.vz-segs { position: absolute; width: 0; height: 0; overflow: hidden; opacity: 0; pointer-events: none; }   /* 단계 타이머 전용 — 화면에는 보이지 않는다 */
+.vz-seg { flex: 1; height: 36px; touch-action: manipulation; padding: 0; border: 0; background: none; cursor: pointer; display: flex; align-items: center; }
+.vz-seg b { display: block; width: 100%; height: 4px; border-radius: 2px; overflow: hidden; background: color-mix(in srgb, var(--vz) 16%, var(--line)); }
+.vz-seg i { display: block; width: 0; height: 100%; background: var(--vz); }
+.vz-seg.done i { width: 100%; }
+.vz-seg.run i { animation: vz-fill var(--t, 3.8s) linear forwards; }
+.vz-time { min-width: 3.2em; text-align: right; font-family: var(--mono); font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+/* 장면 속 등장·움직임 (data-s 단계에 맞춰 .in이 붙는다) */
+/* --k = 단계 길이/4초: 단계가 짧을수록 등장·이동도 그만큼 빨라진다 */
+.vz-scene .vs { opacity: 0; transition: opacity calc(.6s * var(--k, 1)) ease calc(var(--dl, 0s) * var(--k, 1)), transform calc(.8s * var(--k, 1)) cubic-bezier(.2,.8,.2,1) calc(var(--dl, 0s) * var(--k, 1)), clip-path calc(var(--d, 1.4s) * var(--k, 1)) cubic-bezier(.45,0,.2,1) calc(var(--dl, 0s) * var(--k, 1)), stroke-dashoffset calc(var(--d, 1.4s) * var(--k, 1)) ease-in-out calc(var(--dl, 0s) * var(--k, 1)); }
+.vz-scene .vs.in { opacity: 1; }
+.vz-scene .up { transform: translateY(12px); }
+.vz-scene .pop { transform-box: fill-box; transform-origin: center; transform: scale(.3); }
+.vz-scene .up.in, .vz-scene .pop.in { transform: none; }
+.vz-scene .wipe { clip-path: inset(0 100% 0 0); }
+.vz-scene .wipe-d { clip-path: inset(0 0 100% 0); }
+.vz-scene .wipe.in, .vz-scene .wipe-d.in { clip-path: inset(0 0 0 0); }
+.vz-scene .draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.vz-scene .draw.in { stroke-dashoffset: 0; }
+.vz-scene .mv { transform: var(--from); transition: transform calc(var(--d, 1.6s) * var(--k, 1)) var(--ease, ease-in-out) calc(var(--dl, 0s) * var(--k, 1)); }
+.vz-scene .mv.in { transform: none; }
+.vz-scene.vz-reset * { transition: none !important; }
+.vz-scene .a-fall { animation: vz-fall 3.2s linear infinite; }
+.vz-scene .a-drip { animation: vz-drip 1.6s ease-in infinite; }
+.vz-scene .a-dash { animation: vz-dash 1.4s linear infinite; }
+.vz-scene .a-bob { animation: vz-bob 1.2s ease-in-out infinite; }
+.vz-scene .a-flap { transform-box: fill-box; transform-origin: 50% 100%; animation: vz-flap .16s ease-in-out infinite alternate; }
+.vz-scene .a-pulse { transform-box: fill-box; transform-origin: center; animation: vz-pulse 1.4s ease-out infinite; }
+.vz-scene .a-slide { animation: vz-slide 1.8s linear infinite; }
+.vz-scene .a-flow { animation: vz-flow 1.1s linear infinite; }
+.vz-scene .a-flip { transform-box: fill-box; transform-origin: center; animation: vz-flip 4s ease-in-out infinite; }
+.vz-scene .a-press { animation: vz-press .9s ease-in-out infinite; }
+.vz-scene .a-rise { animation: vz-rise 3.4s linear infinite; }
+@keyframes vz-fill { to { width: 100%; } }
+@keyframes vz-fall { 0% { transform: translateY(-14px); opacity: 0; } 20%, 70% { opacity: 1; } 100% { transform: translateY(26px); opacity: 0; } }
+@keyframes vz-drip { 0% { transform: translateY(-4px); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateY(16px); opacity: 0; } }
+@keyframes vz-dash { to { stroke-dashoffset: -30; } }
+@keyframes vz-bob { 50% { transform: translateY(-3px); } }
+@keyframes vz-flap { to { transform: scaleY(.55); } }
+@keyframes vz-pulse { 0% { transform: scale(.8); opacity: .9; } 100% { transform: scale(1.9); opacity: 0; } }
+@keyframes vz-slide { from { transform: translateX(-20px); } to { transform: none; } }
+@keyframes vz-flow { from { transform: translateX(-30px); } to { transform: none; } }
+@keyframes vz-flip { 0%, 40% { transform: rotate(0); } 50%, 90% { transform: rotate(180deg); } 100% { transform: rotate(360deg); } }
+@keyframes vz-press { 50% { transform: translateY(4px); } }
+@keyframes vz-rise { 0% { transform: translateY(14px); opacity: 0; } 25% { opacity: .9; } 100% { transform: translateY(-34px); opacity: 0; } }
+.vz[data-state="pause"] .vz-scene *, .vz[data-state="pause"] .vz-seg i { animation-play-state: paused !important; }
+@media (prefers-reduced-motion: reduce) {
+  .vz-scene *, .vz-seg i { animation: none !important; transition: none !important; }
+  .vz-seg.run i { width: 100%; }
+}
+.rv { margin-left: 6px; padding: 0 6px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 10.5px; font-weight: 600; vertical-align: 1px; }
+.no-viz .rv { display: none; }
+.ety-lbl { font-family: var(--mono); font-size: 11px; color: var(--red-ink); margin-right: 8px; letter-spacing: .04em; }
+.ex .ety-lbl { margin: 0 0 1px; }
+.word span, .mean span { transition: color .2s; }
+.speaking { color: var(--accent) !important; }
+.masked {
+  color: transparent !important; border-radius: 4px; user-select: none;
+  background: repeating-linear-gradient(-45deg, var(--mask) 0 5px, transparent 5px 10px);
+}
+
+.progress { height: 3px; border-radius: 2px; background: var(--line); overflow: hidden; }
+.progress span { display: block; height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+
+.transport { display: flex; align-items: center; justify-content: center; gap: 24px; }
+.t-btn {
+  width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+}
+.t-btn:hover { border-color: var(--ink-3); }
+.t-btn svg { width: 22px; height: 22px; fill: currentColor; }
+.t-btn.play { width: 68px; height: 68px; border: 0; background: var(--accent); color: var(--on-accent); }
+.t-btn.play svg { width: 28px; height: 28px; }
+.t-btn:disabled { opacity: .4; cursor: not-allowed; }
+[hidden] { display: none !important; }
+.t-btn.sleep { position: absolute; right: 0; width: 44px; height: 44px; color: var(--ink-3); }
+.t-btn.sleep svg { width: 19px; height: 19px; }
+.t-btn.sleep[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.t-btn .badge { position: absolute; top: -6px; right: -6px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; display: grid; place-items: center; background: var(--ink); color: var(--card); font-size: 10.5px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.transport { position: relative; }
+.t-btn.shuffle { position: absolute; left: 0; width: 44px; height: 44px; color: var(--ink-3); }
+.t-btn.shuffle svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.t-btn.shuffle[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+
+.status { margin: 0; text-align: center; font-size: 14px; color: var(--ink-2); }
+.keys { margin: -8px 0 0; text-align: center; font-size: 12px; color: var(--ink-3); }
+.keys .touch { display: none; }
+@media (hover: none) { .keys .desk { display: none; } .keys .touch { display: inline; } }
+
+/* settings */
+.settings { border-top: 1px solid var(--line); padding-top: 18px; display: grid; gap: 18px; }
+.settings h2, .list-head h2 { margin: 0; font-size: 13px; font-weight: 600; color: var(--ink-2); letter-spacing: .04em; }
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; }
+@media (max-width: 420px) { .fields { grid-template-columns: minmax(0, 1fr); } }
+.field { display: grid; gap: 6px; min-width: 0; }
+.lbl { font-size: 12px; color: var(--ink-3); }
+.field.vol { grid-column: 1 / -1; }
+.vol .lbl { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
+#vol { width: 100%; margin: 4px 0 0; accent-color: var(--accent); cursor: pointer; }
+.seg { display: flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.seg input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.seg label {
+  flex: 1; text-align: center; padding: 6px 4px; border-radius: 6px; cursor: pointer; white-space: nowrap;
+  font-size: 13px; color: var(--ink-2); font-variant-numeric: tabular-nums;
+}
+.seg input:checked + label { background: var(--card); color: var(--ink); font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,.14); }
+.seg input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.toggles { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+.toggles.say { gap: 2px 22px; }
+.say .switch { min-height: 40px; }
+.switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font-size: 14px; }
+.switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.track { flex: none; position: relative; width: 36px; height: 22px; border-radius: 11px; background: var(--track); transition: background .15s; }
+.track::after {
+  content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--knob); box-shadow: 0 1px 2px rgba(0,0,0,.3); transition: transform .15s;
+}
+.switch input:checked + .track { background: var(--accent); }
+.switch input:checked + .track::after { transform: translateX(14px); }
+.switch input:focus-visible + .track { outline: 2px solid var(--accent); outline-offset: 2px; }
+select {
+  width: 100%; max-width: 100%; font: inherit; font-size: 14px; color: var(--ink);
+  background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px;
+}
+.hint { margin: -8px 0 0; font-size: 13px; color: var(--ink-3); }
+
+/* word list */
+.list-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.list-head span { font-family: var(--mono); font-size: 13px; color: var(--ink-3); }
+.find { display: block; margin: 0 0 10px; }
+.find input {
+  width: 100%; font: inherit; font-size: 15px; color: var(--ink);
+  background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px;
+}
+.find input::placeholder { color: var(--ink-3); }
+.find-empty { margin: 8px 0 0; font-size: 13px; color: var(--ink-3); }
+.list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); position: relative; }
+.list li { display: flex; align-items: center; gap: 4px; border-bottom: 1px solid var(--line); }
+.re { grid-column: 2 / -1; font-size: 12.5px; line-height: 1.45; color: var(--ink-3); }
+.re b { font-family: var(--mono); font-weight: 500; font-size: 10.5px; color: var(--red-ink); margin-right: 6px; letter-spacing: .04em; }
+.card { touch-action: pan-y; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.card-body.slide-l { animation: slideL .22s ease-out; }
+.card-body.slide-r { animation: slideR .22s ease-out; }
+@keyframes slideL { from { opacity: 0; transform: translateX(36px); } to { opacity: 1; transform: none; } }
+@keyframes slideR { from { opacity: 0; transform: translateX(-36px); } to { opacity: 1; transform: none; } }
+.row {
+  flex: 1; min-width: 0; display: grid; grid-template-columns: 2.2em minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 2px 12px; align-items: baseline; padding: 10px 8px; margin: 3px 0;
+  border: 0; border-radius: 6px; background: none; text-align: left; cursor: pointer;
+}
+.row:hover { background: var(--panel); }
+.num { font-family: var(--mono); font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.rw { font-family: var(--serif); font-weight: 500; font-size: 17px; overflow-wrap: anywhere; }
+.rpos { font-family: var(--mono); font-size: 11px; color: var(--red-ink); margin-left: 6px; }
+.rm { font-size: 14px; color: var(--ink-2); }
+.current .row { background: var(--accent-soft); }
+.current .rw { color: var(--accent); }
+@media (max-width: 480px) {
+  .row { grid-template-columns: 2em minmax(0, 1fr); }
+  .rm { grid-column: 2; }
+}
+.star svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; }
+.star[aria-pressed="true"] { color: var(--star); }
+.star[aria-pressed="true"] svg { fill: var(--star); stroke: var(--star); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+/* 필터 접기 버튼은 좁은 화면에서만 */
+.pk-toggle { display: none; }
+.pk-toggle i { margin-left: 6px; font-style: normal; font-size: 11px; opacity: .6; }
+.pk-toggle[aria-expanded="true"] i { display: inline-block; transform: rotate(180deg); }
+
+/* 그림 해설 한 칸(실영상은 뺐다). 장면 비율을 고정해 두어 그림을 불러오는 동안·단어가 바뀔 때도 아래 칸이 밀리지 않는다.
+   hidden이어도 자리는 그대로 둔다. */
+.vz-slot { display: block; }
+.vz-slot > aside[hidden] { display: block !important; visibility: hidden; }
+.vz-scene { aspect-ratio: 560 / 300; }
+.no-viz .vz-slot { display: none; }
+/* 카드도 고정 높이: 어원 도해 줄 수가 달라도 카드가 늘었다 줄었다 하며 아래 칸을 밀지 않게.
+   높이는 896단어 실측 99% 이상이 들어가는 값, 넘치는 몇 단어만 카드 안에서 스크롤 */
+.card { min-height: 0; height: 430px; }
+.card-body { min-height: 0; overflow-y: auto; justify-content: safe center; scrollbar-width: thin; }
+@media (max-width: 879px) { .card { height: 352px; } }
+
+/* 모바일: 카드·해설·재생 버튼이 한 화면에 들어오게 줄인다 */
+@media (max-width: 879px) {
+  .app { padding-block: 8px 40px; gap: 10px; }
+  .top { flex-wrap: nowrap; align-items: center; gap: 10px; }
+  .back { flex: none; flex-basis: auto; }
+  .top h1 { flex: 1; min-width: 0; font-size: 1.1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .top > p { display: none; }
+  .pk-toggle { display: inline-flex; align-items: center; flex: none; max-width: 52%; height: 32px; }
+  .pk-toggle span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pickers:not(.open) { display: none; }
+  .stage { gap: 8px; }
+  .card { min-height: 262px; }   /* 어원 줄 수가 달라도 카드 높이가 거의 안 바뀌게 */
+  .card-body { gap: 6px; padding: 8px 16px 14px; }
+  .ety { margin-top: 0; }
+  .emap { margin-top: 4px; }
+  .vz.pic .vz-scene { margin-top: 8px; }
+  .vz.pic .vz-ctl { padding: 6px 14px 8px; gap: 10px; }
+  .t-btn { width: 46px; height: 46px; }
+  .t-btn.play { width: 60px; height: 60px; }
+  .keys { margin-top: -2px; }
+}
+</style>
+
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <a href="../index.html" class="back">↑ 통합 허브</a>
+    <h1>나만의 영단어장</h1>
+    <button class="pill pk-toggle" id="pkToggle" type="button" aria-expanded="false" aria-controls="pickers"><span id="pkSummary"></span><i aria-hidden="true">▾</i></button>
+    <p><b id="deckName"></b> · <span id="total"></span>개 단어 · 영어 발음을 듣고 뜻을 떠올려 보세요</p>
+  </header>
+  <section class="pickers" id="pickers" aria-label="단어장 선택">
+    <div class="pk"><span class="pk-lbl">단어장</span><div class="pk-chips" id="deckPick"></div></div>
+    <div class="pk" id="thmRow" hidden><span class="pk-lbl">주제</span><div class="pk-chips" id="thmPick"></div></div>
+    <div class="pk" id="grpRow" hidden><span class="pk-lbl">어원</span><div class="pk-chips" id="grpPick"></div></div>
+    <div class="pk" id="vizRow" hidden><span class="pk-lbl">그림 해설</span><div class="pk-chips" id="vizPick"></div></div>
+  </section>
+  <p class="warn" id="noTts" hidden>이 브라우저는 음성 읽기를 지원하지 않아요. Chrome이나 Safari에서 열어 주세요.</p>
+
+  <section class="stage" aria-label="단어 카드">
+    <div class="card" id="card">
+      <div class="card-head">
+        <span class="pos" id="pos"></span>
+        <span class="count" id="count"></span>
+        <button class="pill" id="hideMean" type="button" aria-pressed="false" title="뜻만 가리기 (눈으로 볼 때만, 소리는 그대로)">뜻 가리기</button>
+        <button class="icon-btn" id="replay" type="button" aria-label="다시 듣기" title="다시 듣기">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>
+        </button>
+        <button class="icon-btn star" id="cardStar" type="button" aria-pressed="false" aria-label="어려운 단어로 표시" title="어려운 단어로 표시">
+          <svg viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg>
+        </button>
+      </div>
+      <div class="card-body" aria-live="polite">
+        <div class="word"><span id="word"></span></div>
+        <div class="mean"><span id="mean"></span></div>
+        <div class="note" id="note"></div>
+        <div class="ety"><span class="ety-lbl">어원</span><div id="ety"></div></div>
+        <div class="ex" id="ex"><span class="ety-lbl">예문</span><p class="ex-en" id="exEn" lang="en"></p><p class="ex-ko" id="exKo"></p></div>
+      </div>
+    </div>
+
+    <div class="progress" aria-hidden="true"><span id="bar"></span></div>
+    <div class="vz-slot" id="vizSlotStage"></div>
+
+    <div class="transport">
+      <button class="t-btn shuffle" id="shuffle" type="button" aria-pressed="false" aria-label="랜덤 재생" title="랜덤 재생 (순서 섞기)">
+        <svg viewBox="0 0 24 24"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+      </button>
+      <button class="t-btn" id="prev" type="button" aria-label="이전 단어">
+        <svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM19.5 5.5v13L9.5 12z"/></svg>
+      </button>
+      <button class="t-btn play" id="play" type="button" aria-label="재생">
+        <svg id="icPlay" viewBox="0 0 24 24"><path d="M8 5.2v13.6L19 12z"/></svg>
+        <svg id="icPause" viewBox="0 0 24 24" hidden><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+      </button>
+      <button class="t-btn" id="next" type="button" aria-label="다음 단어">
+        <svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4.5 5.5v13L14.5 12z"/></svg>
+      </button>
+      <button class="t-btn sleep" id="sleepBtn" type="button" aria-pressed="false" aria-label="자동 종료 타이머 끔" title="자동 종료 타이머 (누를 때마다 5·10·15·30·60분·끔)">
+        <svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        <span class="badge" id="sleepBadge" hidden></span>
+      </button>
+    </div>
+    <p class="status" id="status"></p>
+    <p class="warn" id="ttsFail" role="alert" hidden></p>
+    <p class="keys"><span class="desk">스페이스 재생·정지 · ← → 이동 · 카드를 누르면 다시 듣기</span><span class="touch">카드를 좌우로 밀면 넘어가고, 누르면 다시 들어요</span></p>
+
+    <div class="settings">
+      <h2>재생 설정</h2>
+      <div class="field">
+        <span class="lbl" id="l-say">읽어 줄 항목</span>
+        <div class="toggles say" role="group" aria-labelledby="l-say">
+          <label class="switch"><input type="checkbox" id="say-word" data-say="word"><span class="track"></span>영어 단어</label>
+          <label class="switch"><input type="checkbox" id="say-mean" data-say="mean"><span class="track"></span>뜻</label>
+          <label class="switch"><input type="checkbox" id="say-ety" data-say="ety"><span class="track"></span>어원</label>
+          <label class="switch"><input type="checkbox" id="say-ex" data-say="ex"><span class="track"></span>예문</label>
+          <label class="switch"><input type="checkbox" id="say-exko" data-say="exko"><span class="track"></span>예문 해석</label>
+        </div>
+      </div>
+      <p class="hint" id="sayHint" hidden>읽을 항목이 모두 꺼져 있어요. 카드만 넘어가요.</p>
+      <div class="fields">
+        <div class="field vol">
+          <label class="lbl" for="vol"><span>음량</span><output id="volOut" for="vol">100%</output></label>
+          <input type="range" id="vol" min="0" max="100" step="5" value="100">
+        </div>
+        <div class="field">
+          <span class="lbl" id="l-order">순서</span>
+          <div class="seg" role="radiogroup" aria-labelledby="l-order">
+            <input type="radio" name="order" id="order-enko" value="en-ko"><label for="order-enko">영어 → 뜻</label>
+            <input type="radio" name="order" id="order-koen" value="ko-en"><label for="order-koen">뜻 → 영어</label>
+          </div>
+        </div>
+        <div class="field">
+          <span class="lbl" id="l-rate">영어 속도</span>
+          <div class="seg" role="radiogroup" aria-labelledby="l-rate">
+            <input type="radio" name="rate" id="rate-07" value="0.7"><label for="rate-07">0.7×</label>
+            <input type="radio" name="rate" id="rate-09" value="0.9"><label for="rate-09">0.9×</label>
+            <input type="radio" name="rate" id="rate-10" value="1"><label for="rate-10">1×</label>
+            <input type="radio" name="rate" id="rate-12" value="1.2"><label for="rate-12">1.2×</label>
+          </div>
+        </div>
+        <div class="field">
+          <span class="lbl" id="l-rep">영어 반복</span>
+          <div class="seg" role="radiogroup" aria-labelledby="l-rep">
+            <input type="radio" name="rep" id="rep-1" value="1"><label for="rep-1">1번</label>
+            <input type="radio" name="rep" id="rep-2" value="2"><label for="rep-2">2번</label>
+            <input type="radio" name="rep" id="rep-3" value="3"><label for="rep-3">3번</label>
+          </div>
+        </div>
+        <div class="field">
+          <span class="lbl" id="l-gap">생각할 시간</span>
+          <div class="seg" role="radiogroup" aria-labelledby="l-gap">
+            <input type="radio" name="gap" id="gap-1" value="1"><label for="gap-1">1초</label>
+            <input type="radio" name="gap" id="gap-2" value="2"><label for="gap-2">2초</label>
+            <input type="radio" name="gap" id="gap-4" value="4"><label for="gap-4">4초</label>
+          </div>
+        </div>
+        <div class="field">
+          <span class="lbl" id="l-next">다음 단어까지</span>
+          <div class="seg" role="radiogroup" aria-labelledby="l-next">
+            <input type="radio" name="next" id="next-1" value="1"><label for="next-1">1초</label>
+            <input type="radio" name="next" id="next-2" value="2"><label for="next-2">2초</label>
+            <input type="radio" name="next" id="next-3" value="3"><label for="next-3">3초</label>
+            <input type="radio" name="next" id="next-5" value="5"><label for="next-5">5초</label>
+          </div>
+        </div>
+        <div class="field">
+          <span class="lbl" id="l-sleep">자동 종료 (자기 전에)</span>
+          <div class="seg" role="radiogroup" aria-labelledby="l-sleep">
+            <input type="radio" name="sleep" id="sleep-0" value="0"><label for="sleep-0">끔</label>
+            <input type="radio" name="sleep" id="sleep-5" value="5"><label for="sleep-5">5분</label>
+            <input type="radio" name="sleep" id="sleep-10" value="10"><label for="sleep-10">10분</label>
+            <input type="radio" name="sleep" id="sleep-15" value="15"><label for="sleep-15">15분</label>
+            <input type="radio" name="sleep" id="sleep-30" value="30"><label for="sleep-30">30분</label>
+            <input type="radio" name="sleep" id="sleep-60" value="60"><label for="sleep-60">60분</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="toggles">
+        <label class="switch"><input type="checkbox" id="opt-hide"><span class="track"></span>정답 가리기</label>
+        <label class="switch"><input type="checkbox" id="opt-shuffle"><span class="track"></span>순서 섞기</label>
+        <label class="switch"><input type="checkbox" id="opt-star"><span class="track"></span>★ 단어만</label>
+        <label class="switch"><input type="checkbox" id="opt-viz"><span class="track"></span>그림·어원 도해</label>
+        <label class="switch"><input type="checkbox" id="opt-pic"><span class="track"></span>그림 먼저 (맞히기)</label>
+      </div>
+      <p class="hint" id="starHint" hidden>아직 별표한 단어가 없어서 전체를 읽어요. 어려운 단어에 ★를 눌러 두세요.</p>
+
+      <div class="fields">
+        <label class="field"><span class="lbl">영어 목소리</span><select id="voice-en"></select></label>
+        <label class="field"><span class="lbl">한국어 목소리</span><select id="voice-ko"></select></label>
+      </div>
+      <p class="hint" id="voiceHint" hidden>이 기기에서 한국어 음성을 찾지 못했어요. 뜻이 어색하게 읽히면 기기 설정에서 한국어 음성을 내려받아 주세요.</p>
+    </div>
+  </section>
+
+  <div class="side" id="side">
+    <div class="vz-slot" id="vizSlotSide"></div>
+    <section aria-label="전체 단어 목록">
+      <div class="list-head"><h2>전체 단어</h2><span id="starCount">★ 0</span></div>
+      <label class="find"><input id="find" type="search" placeholder="단어, 뜻 검색" autocomplete="off" enterkeyhint="search" aria-label="단어 검색"></label>
+      <p class="find-empty" id="findEmpty" hidden>찾는 단어가 없어요.</p>
+      <ol class="list" id="list"></ol>
+    </section>
+  </div>
+</div>
+
+<script src="viz.js?v=3"></script>
+<script src="themes.js"></script>
+<script src="examples.js"></script>
+<script>
+const YEONGILMAN = [
+  { w: 'revise', pos: 'v.', m: '수정, 개정', e: 're(다시) + videre(보다) → 다시 보고 고치다' },
+  { w: 'indifferent', pos: 'adj.', m: '무관심한', note: '별로 다르지않네~', e: 'in(아닌) + different(다른) → 차이를 두지 않는 → 신경 안 쓰는' },
+  { w: 'spatial', pos: 'adj.', m: '공간의', e: 'spatium(공간) → space의 형용사형' },
+  { w: 'establish', pos: 'v.', m: '세우다', e: 'stabilis(안정된, stare 서다) → 단단히 서게 하다' },
+  { w: 'engage', pos: 'v.', m: '교류', e: 'en(안에) + gage(담보, 서약) → 약속으로 묶다 → 관여하다' },
+  { w: 'immediate', pos: 'adj.', m: '즉각적인', e: 'im(아닌) + medius(중간) → 사이에 낀 것이 없는 → 바로' },
+  { w: 'sophisticated', pos: 'adj.', m: '정교한, 세련된', e: 'sophos(그리스어: 지혜로운) → 지식을 갖춘 → 세련된' },
+  { w: 'compassion', pos: 'n.', m: '동정심', e: 'com(함께) + pati(고통받다) → 함께 아파함' },
+  { w: 'exacerbate', pos: 'v.', m: '악화', e: 'ex(강조) + acerbus(쓴, 거친) → 더 쓰게 만들다' },
+  { w: 'introduction', pos: 'n.', m: '유입', e: 'intro(안으로) + ducere(이끌다) → 안으로 데려옴' },
+  { w: 'sympathetic', pos: 'adj.', m: '교감신경의', e: 'syn(함께) + pathos(느낌) → 함께 느끼는' },
+  { w: 'consequences', pos: 'n.', m: '결과', note: '함께 따르는. 시퀀스가 순서라서', e: 'con(함께) + sequi(따르다) → 뒤따라오는 것' },
+  { w: 'reliance', pos: 'n.', m: '의존', e: 're(뒤로) + ligare(묶다) → 기대어 묶여 있음' },
+  { w: 'cognition', pos: 'n.', m: '의식', e: 'co(강조) + gnoscere(알다) → 알아차림' },
+  { w: 'homogeneous', pos: 'adj.', m: '동종의, 동질적인', e: 'homos(같은) + genos(종류) → 같은 종류의' },
+  { w: 'exploitation', pos: 'n.', m: '착취', e: 'ex(밖으로) + plicare(접다) → 펼쳐서 뽑아 씀' },
+  { w: 'distribution', pos: 'n.', m: '유통', note: 'distribute : 나눠주다', e: 'dis(따로따로) + tribuere(나누어 주다)' },
+  { w: 'prevailing', pos: 'adj.', m: '지배적인', e: 'prae(앞에) + valere(힘이 세다) → 앞서 우세한' },
+  { w: 'ambiguity', pos: 'n.', m: '모호한', e: 'ambi(양쪽) + agere(몰다) → 이쪽저쪽으로 흔들림' },
+  { w: 'derive', pos: 'v.', m: '파생하다', e: 'de(~에서) + rivus(시냇물) → 물줄기를 끌어오다' },
+  { w: 'further', pos: 'v. · adv.', m: '촉진시키다, 게다가', e: '고대영어 furthor, forth(앞으로)의 비교급 → 더 앞으로' },
+  { w: 'convention', pos: 'n.', m: '집회', e: 'con(함께) + venire(오다) → 함께 모임 → 모두가 따르는 관습' },
+  { w: 'distinctive', pos: 'adj.', m: '독특한', e: 'dis(따로) + stinguere(찔러 표시하다) → 구별되게 표시된' },
+  { w: 'preference', pos: 'n.', m: '선호', e: 'prae(앞에) + ferre(가져오다) → 앞에 놓음' },
+  { w: 'retention', pos: 'n.', m: '보유, 유지', e: 're(뒤로) + tenere(붙잡다) → 붙잡아 둠' },
+  { w: 'commitment', pos: 'n.', m: '책임, 전념', note: '너무 다양하다', e: 'com(함께) + mittere(보내다) → 맡겨 보냄 → 자신을 내맡김' },
+  { w: 'drain', pos: 'v.', m: '배수하다', e: '고대영어 dreahnian(물기를 빼다), dry와 같은 뿌리' },
+  { w: 'equilibrium', pos: 'n.', m: '마음의 평형, 평형', e: 'aequi(같은) + libra(저울) → 저울이 수평인 상태' },
+  { w: 'accommodate', pos: 'v.', m: '수용하다, 숙박시키다, 맞추다', e: 'ad(~에) + com(함께) + modus(척도) → 치수를 맞춰 주다' },
+  { w: 'draft', pos: 'n. · v.', m: '초안, 징병, 외풍', e: '고대영어 dragan(끌다, draw와 같은 뿌리) → 끌어 그린 밑그림' },
+  { w: 'fierce', pos: 'adj.', m: '사나운, 격렬한', e: 'ferus(야생의) → 길들지 않은' },
+  { w: 'steep', pos: 'adj.', m: '가파른, 급격한', e: '고대영어 steap(높이 솟은)' },
+  { w: 'depreciate', pos: 'v.', m: '가치가 떨어지다, 평가절하하다', e: 'de(아래로) + pretium(가격) → 값이 내려가다' },
+  { w: 'sublime', pos: 'adj.', m: '숭고한, 장엄한', e: 'sub(~까지) + limen(문 위 상인방) → 높이 치솟은' },
+  { w: 'ingredient', pos: 'n.', m: '재료, 성분', e: 'in(안에) + gradi(걸어가다) → 안으로 들어가는 것' },
+  { w: 'appliance', pos: 'n.', m: '가전제품, 기구', e: 'ad(~에) + plicare(접다, 붙이다) → 갖다 대어 쓰는 것 (apply)' },
+  { w: 'deteriorate', pos: 'v.', m: '악화되다, 나빠지다', e: 'deterior(더 나쁜, de 아래로) → 더 나빠지다' },
+  { w: 'recipient', pos: 'n.', m: '받는 사람, 수령인', e: 're(뒤로) + capere(잡다, 받다) → 받아 드는 사람' },
+  { w: 'transaction', pos: 'n.', m: '거래, 처리', e: 'trans(가로질러) + agere(행하다) → 끝까지 해냄' },
+  { w: 'expertise', pos: 'n.', m: '전문 지식, 전문 기술', e: 'experiri(시험해 보다) → 경험으로 얻은 것 (experience와 같은 뿌리)' },
+  { w: 'inferior', pos: 'adj.', m: '열등한, 하위의', e: 'inferus(아래의)의 비교급 → 더 아래에 있는' },
+  { w: 'facilitate', pos: 'v.', m: '용이하게 하다, 촉진하다', e: 'facilis(쉬운, facere 하다) → 쉽게 만들다' },
+  { w: 'optimal', pos: 'adj.', m: '최적의', e: 'optimus(최고의, bonus의 최상급)' },
+  { w: 'empirical', pos: 'adj.', m: '경험적인, 실증적인', e: 'empeiria(그리스어: 경험, peira 시도) → 직접 해 봐서 아는' },
+  { w: 'ethnic', pos: 'adj.', m: '민족의, 인종의', e: 'ethnos(그리스어: 민족, 무리)' },
+  { w: 'coverage', pos: 'n.', m: '보도, 적용 범위, 보상 범위', e: 'cover(덮다) + -age(범위) → 덮는 범위' },
+  { w: 'incorporate', pos: 'v.', m: '통합하다, 포함하다', e: 'in(안에) + corpus(몸) → 한 몸 안에 넣다' },
+  { w: 'radical', pos: 'adj.', m: '근본적인, 급진적인', e: 'radix(뿌리) → 뿌리까지 건드리는' },
+  { w: 'infer', pos: 'v.', m: '추론하다', e: 'in(안으로) + ferre(가져오다) → 결론을 끌어오다' },
+  { w: 'subordinate', pos: 'adj. · n.', m: '종속된, 부하', e: 'sub(아래) + ordinare(순서를 정하다) → 아래 순서에 놓인' },
+  { w: 'dilute', pos: 'v.', m: '희석하다, 약하게 하다', e: 'dis(따로) + luere(씻다) → 씻어서 흩다' },
+  { w: 'evoke', pos: 'v.', m: '불러일으키다, 떠올리게 하다', e: 'e(밖으로) + vocare(부르다) → 불러내다' },
+  { w: 'revelation', pos: 'n.', m: '폭로, 계시, 뜻밖의 새 사실', e: 're(반대로) + velum(베일) → 베일을 걷어냄' },
+  { w: 'nurture', pos: 'v. · n.', m: '양육하다, 기르다, 양육', e: 'nutrire(먹이다, 기르다) → nutrition과 같은 뿌리' },
+  { w: 'vague', pos: 'adj.', m: '막연한, 흐릿한', e: 'vagus(떠도는) → 한곳에 머물지 않는' },
+  { w: 'aesthetic', pos: 'adj.', m: '미적인, 미학의', e: 'aisthesis(그리스어: 감각, 지각) → 감각으로 느끼는' },
+  { w: 'avalanche', pos: 'n.', m: '눈사태, 쇄도', e: '프랑스어 avaler(아래로 내려가다, à val 골짜기로)' },
+  { w: 'kin', pos: 'n.', m: '친척, 혈족', e: '고대영어 cynn(가족, 종족) → kind(종류)와 같은 뿌리' },
+  { w: 'martial', pos: 'adj.', m: '전쟁의, 군대의', e: 'Mars(로마의 전쟁 신) → martial arts 무술' },
+  { w: 'niche', pos: 'n.', m: '틈새, 적소', e: '프랑스어 niche(벽감), nicher(둥지를 틀다) → 딱 맞는 자리' },
+  { w: 'retrospect', pos: 'n.', m: '회상, 회고', e: 'retro(뒤로) + specere(보다) → 뒤돌아봄' },
+  { w: 'offspring', pos: 'n.', m: '자식, 새끼', e: 'off(떨어져) + spring(솟다) → 몸에서 솟아 나온 것' },
+  { w: 'incline', pos: 'v.', m: '기울다, ~하는 경향이 있다', e: 'in(안으로) + clinare(기울다) → ~쪽으로 기울이다' },
+  { w: 'reluctant', pos: 'adj.', m: '꺼리는', e: 're(맞서) + luctari(싸우다) → 버티며 저항하는' },
+  { w: 'instruct', pos: 'v.', m: '가르치다, 지시하다', e: 'in(안에) + struere(쌓다) → 머릿속에 쌓아 주다' },
+  { w: 'refine', pos: 'v.', m: '정제하다, 다듬다', e: 're(다시) + fine(순수한) → 다시 순수하게 만들다' },
+  { w: 'flatter', pos: 'v.', m: '아첨하다', e: '고대 프랑스어 flater(쓰다듬다) → 쓰다듬듯 비위를 맞추다' },
+  { w: 'stir', pos: 'v.', m: '젓다, 자극하다', e: '고대 영어 styrian(움직이다) → 가만있던 것을 휘저어 움직이다' },
+  { w: 'swell', pos: 'v.', m: '부풀다, 팽창하다', e: '고대 영어 swellan(부풀어 오르다)' },
+  { w: 'deprive', pos: 'v.', m: '빼앗다', e: 'de(분리) + privare(떼어 놓다, private과 같은 뿌리) → 가진 것을 떼어 내다' },
+  { w: 'corrupt', pos: 'adj.', m: '부패한, 타락시키다', e: 'cor(완전히) + rumpere(깨다) → 완전히 깨져 망가진' },
+  { w: 'disregard', pos: 'v.', m: '무시하다', e: 'dis(반대) + regard(주의) → 주의하지 않다' },
+  { w: 'domesticate', pos: 'v.', m: '길들이다', e: 'domus(집) → 집에서 기르다' },
+  { w: 'invariable', pos: 'adj.', m: '변하지 않는', e: 'in(아닌) + vary(변하다) + able → 변할 수 없는' },
+  { w: 'drastic', pos: 'adj.', m: '극단적인, 급격한', e: '그리스어 drastikos(효력이 강한), dran(행하다) → 행동이 강하게 먹히는' },
+  { w: 'devour', pos: 'v.', m: '게걸스럽게 먹다', e: 'de(아래로) + vorare(삼키다) → 삼켜 버리다' },
+  { w: 'patronize', pos: 'v.', m: '후원하다, 깔보다', e: 'pater(아버지) → patron(보호자) → 아버지처럼 돌보다 → 생색내다' },
+  { w: 'subsequent', pos: 'adj.', m: '뒤이은, 그 다음의', e: 'sub(아래, 뒤에) + sequi(따르다) → 바로 뒤따르는' },
+  { w: 'substantial', pos: 'adj.', m: '상당한, 실질적인', e: 'sub(아래) + stare(서다) → 밑에 단단히 서 있는 → 실체 있는 → 상당한' },
+  { w: 'suburb', pos: 'n.', m: '교외', e: 'sub(아래, 가까이) + urbs(도시) → 도시 가까이' },
+  { w: 'maneuver', pos: 'n.', m: '책략, 조종하다', e: 'manu(손) + operari(일하다) → 손으로 능숙하게 다루다' },
+  { w: 'thrive', pos: 'v.', m: '번성하다', e: '고대 노르드어 thrifask(스스로를 이롭게 하다) → 잘 자라다' },
+  { w: 'sanction', pos: 'n.', m: '제재, 승인', e: 'sancire(신성하게 하다, 승인하다) → 허가도 되고 처벌도 되는 반대말 겸용 단어' },
+  { w: 'awe', pos: 'n.', m: '경외감', e: '고대 노르드어 agi(두려움) → 두려움 섞인 존경' },
+  { w: 'soothe', pos: 'v.', m: '달래다', e: '고대 영어 sothian(옳다고 확인하다) → 맞장구쳐 주다 → 진정시키다' },
+  { w: 'disparity', pos: 'n.', m: '격차, 불균형', e: 'dis(떨어져) + par(같은) → 같지 않음' },
+  { w: 'evaporate', pos: 'v.', m: '증발하다', e: 'e(밖으로) + vapor(증기) → 증기가 되어 나가다' },
+  { w: 'indecision', pos: 'n.', m: '우유부단', e: 'in(아닌) + decision(결정) → 결정 못 함' },
+  { w: 'affordable', pos: 'adj.', m: '감당할 수 있는, 알맞은 가격의', e: 'afford(~할 여유가 있다) + able → 살 만한' },
+  { w: 'physiology', pos: 'n.', m: '생리학', e: 'physis(자연) + logia(학문) → 몸이 작동하는 이치를 연구' },
+  { w: 'confer', pos: 'v.', m: '수여하다, 상의하다', e: 'con(함께) + ferre(나르다) → 함께 가져오다 → 의견을 나누다 / 안겨 주다' },
+  { w: 'curb', pos: 'v.', m: '억제하다', e: '프랑스어 courber(굽히다), curvus(굽은) → 휘어서 막다' },
+  { w: 'recess', pos: 'n.', m: '휴식, 쉬는 시간', e: 're(뒤로) + cedere(가다) → 뒤로 물러남 → 쉬는 시간' },
+  { w: 'probe', pos: 'v.', m: '캐묻다, 조사하다', e: 'probare(시험하다) → 깊이 찔러 시험해 보다' },
+  { w: 'reciprocate', pos: 'v.', m: '보답하다', e: 're(뒤로) + pro(앞으로) → 앞뒤로 오가다 → 주고받다' },
+  { w: 'inspection', pos: 'n.', m: '검사, 점검', e: 'in(안을) + specere(보다) → 들여다봄' },
+  { w: 'retrieve', pos: 'v.', m: '되찾다, 회수하다', e: 're(다시) + 프랑스어 trouver(찾다) → 다시 찾아오다' },
+  { w: 'solitary', pos: 'adj.', m: '혼자의, 고독한', e: 'solus(혼자) → sole, solo와 같은 뿌리' },
+  { w: 'weary', pos: 'adj.', m: '지친', e: '고대 영어 werig(지친) → 기운이 다 빠진' },
+  { w: 'superficial', pos: 'adj.', m: '피상적인, 겉만의', e: 'super(위) + facies(얼굴, 표면) → 겉면만 있는' },
+  { w: 'enthusiastic', pos: 'adj.', m: '열광적인', e: 'en(안에) + theos(신) → 신이 들린 듯 열렬한' },
+  { w: 'conform', pos: 'v.', m: '따르다, 순응하다', e: 'con(함께) + forma(모양) → 같은 모양으로 맞추다' },
+  { w: 'hierarchy', pos: 'n.', m: '계층, 위계', e: 'hieros(신성한) + archia(지배) → 성직자의 신성한 서열' },
+  { w: 'insulate', pos: 'v.', m: '절연하다, 단열하다', e: 'insula(섬) → 섬처럼 떼어 놓다' },
+  { w: 'forge', pos: 'v.', m: '구축하다, 위조하다', e: '라틴어 fabrica(대장간) → 쇠를 두드려 만들다 → 만들어 내다 / 가짜로 만들다' },
+  { w: 'integral', pos: 'adj.', m: '필수적인', e: 'in(아닌) + tangere(건드리다) → 손대지 않은 온전한 → 빠질 수 없는 구성 요소' },
+  { w: 'ritualize', pos: 'v.', m: '의례화하다', e: 'ritus(의식) + ize → 의식으로 만들다' },
+  { w: 'irrational', pos: 'adj.', m: '비합리적인', e: 'ir(아닌) + ratio(이성, 계산) + al → 이치에 맞지 않는' },
+  { w: 'proportion', pos: 'n.', m: '비율, 균형', e: 'pro(~에 대해) + portio(몫) → 전체에 대한 몫' },
+  { w: 'straightforward', pos: 'adj.', m: '간단한, 솔직한', e: 'straight(곧은) + forward(앞으로) → 곧장 앞으로 나아가는' },
+  { w: 'attentive', pos: 'adj.', m: '주의 깊은', e: 'at(~쪽으로) + tendere(뻗다) → 마음을 뻗어 향함' },
+  { w: 'sincerity', pos: 'n.', m: '진심', e: 'sincerus(순수한, 거짓 없는) → 꾸밈없는 마음' },
+  { w: 'scheme', pos: 'n.', m: '계획, 책략', e: '그리스어 skhema(형태, 모양) → 짜 놓은 구도 → 계획 / 음모' },
+  { w: 'tender', pos: 'adj.', m: '부드러운, 제출하다', e: 'tener(부드러운) / tendere(내밀다) → 내밀다 → 제출하다. 서로 다른 뿌리가 한 철자' },
+  { w: 'endeavor', pos: 'n.', m: '노력, 애쓰다', e: 'en(~하게 하다) + 프랑스어 deveir(의무) → 의무를 다하려 힘쓰다' },
+  { w: 'intrigue', pos: 'v.', m: '흥미를 끌다, 음모', e: 'intricare(얽히게 하다) → 얽힌 일에 마음이 끌림 (intricate)' },
+  { w: 'notorious', pos: 'adj.', m: '악명 높은', e: 'notus(알려진) → 나쁜 쪽으로 알려진 (note, notice)' },
+  { w: 'overtake', pos: 'v.', m: '추월하다', e: 'over(넘어) + take(잡다) → 넘어서 앞지르다' },
+  { w: 'legitimate', pos: 'adj.', m: '합법적인, 정당한', e: 'lex(법) → 법에 맞는 (legal과 같은 뿌리)' },
+  { w: 'prolific', pos: 'adj.', m: '다작의, 다산의', e: 'proles(자손) + facere(만들다) → 많이 낳는' },
+  { w: 'undermine', pos: 'v.', m: '훼손하다, 약화시키다', e: 'under(아래) + mine(굴 파다) → 밑에 굴을 파서 무너뜨리다' },
+  { w: 'startle', pos: 'v.', m: '깜짝 놀라게 하다', e: '고대 영어 steartlian(뛰어오르다) → 펄쩍 뛰게 만들다' },
+  { w: 'strain', pos: 'n.', m: '긴장, 부담', e: 'stringere(팽팽히 당기다) → 팽팽히 당겨져 부담이 걸림 (stress, strict)' },
+  { w: 'setback', pos: 'n.', m: '차질, 후퇴', e: 'set(놓다) + back(뒤로) → 뒤로 밀려 놓임' },
+  { w: 'pollinate', pos: 'v.', m: '수분하다', e: 'pollen(꽃가루) + ate → 꽃가루를 옮기다' },
+  { w: 'surge', pos: 'n.', m: '급증, 쇄도', e: 'sub(아래) + regere(똑바로 하다) → surgere(솟아오르다) → 솟구침' },
+  { w: 'vendor', pos: 'n.', m: '판매업자, 노점상', e: 'vendere(팔다) → vend(팔다)' },
+  { w: 'utter', pos: 'v.', m: '말하다, 완전한', e: 'out(밖)의 비교급 → 입 밖으로 내놓다 / 완전히 밖에 있는 → 완전한' },
+  { w: 'surpass', pos: 'v.', m: '능가하다', e: 'sur(넘어) + 프랑스어 passer(지나가다) → 지나쳐 앞서다' },
+  { w: 'deference', pos: 'n.', m: '존중, 경의', e: 'de(아래로) + ferre(나르다) → 남의 뜻 쪽으로 몸을 낮춤' },
+  { w: 'sediment', pos: 'n.', m: '침전물', e: 'sedere(앉다) → 바닥에 가라앉아 앉은 것 (sit)' },
+  { w: 'adverse', pos: 'adj.', m: '불리한, 해로운', e: 'ad(~쪽으로) + vertere(돌리다) → 맞서 돌아선 → 반대의' },
+  { w: 'affirmative', pos: 'adj.', m: '긍정의', e: 'af(~에) + firmare(단단히 하다) → 확고히 인정하는 (firm)' },
+  { w: 'barren', pos: 'adj.', m: '불모의, 메마른', e: '고대 프랑스어 baraigne(불임의) → 열매 맺지 못하는' },
+  { w: 'candid', pos: 'adj.', m: '솔직한', e: 'candidus(하얀, 빛나는) → 티 없이 하얀 → 숨김없는 (candle, candidate)' },
+  { w: 'combustion', pos: 'n.', m: '연소', e: 'com(강조) + urere(태우다) → 완전히 태움' },
+  { w: 'communal', pos: 'adj.', m: '공동의', e: 'communis(공동의) → common의 형용사형' },
+  { w: 'disobedience', pos: 'n.', m: '불복종', e: 'dis(반대) + obedience(ob 쪽으로 + audire 듣다) → 귀 기울이지 않음' },
+  { w: 'console', pos: 'v.', m: '위로하다', e: 'con(함께) + solari(위로하다) → 함께 마음을 달래다' },
+  { w: 'contagion', pos: 'n.', m: '전염', e: 'con(함께) + tangere(닿다) → 서로 닿아 옮음' },
+  { w: 'contempt', pos: 'n.', m: '경멸', e: 'con(강조) + temnere(얕보다) → 철저히 얕봄' },
+  { w: 'crude', pos: 'adj.', m: '가공하지 않은, 조잡한', e: 'crudus(날것의) → 날것 그대로 → 거친' },
+  { w: 'monetary', pos: 'adj.', m: '통화의, 금전의', e: 'moneta(조폐소가 있던 신전) → money' },
+  { w: 'dissent', pos: 'n.', m: '반대, 이의', e: 'dis(떨어져) + sentire(느끼다) → 다르게 느낌' },
+  { w: 'downplay', pos: 'v.', m: '축소해서 말하다', e: 'down(낮게) + play(다루다) → 별것 아닌 듯 낮춰 말하다' },
+  { w: 'equanimity', pos: 'n.', m: '평정심', e: 'aequus(같은) + animus(마음) → 늘 한결같은 마음' },
+  { w: 'formidable', pos: 'adj.', m: '만만찮은, 가공할', e: 'formido(공포) → 두려워할 만한' },
+  { w: 'humility', pos: 'n.', m: '겸손', e: 'humus(땅) → 땅에 붙은 낮은 자세 (human, humble)' },
+  { w: 'multitude', pos: 'n.', m: '다수, 군중', e: 'multus(많은) → multi-와 같은 뿌리' },
+  { w: 'indispensable', pos: 'adj.', m: '없어서는 안 될', e: 'in(아닌) + dis(떨어져) + pendere(달다) → 따로 덜어 낼 수 없는' },
+  { w: 'liability', pos: 'n.', m: '법적 책임, 부담', e: 'ligare(묶다) → 묶여 있는 의무 (liable)' },
+  { w: 'pester', pos: 'v.', m: '괴롭히다, 졸라 대다', e: '프랑스어 empestrer(말의 발을 묶다) → 달라붙어 성가시게 하다' },
+  { w: 'obscure', pos: 'adj.', m: '모호한, 잘 알려지지 않은', e: 'ob(덮어) + scurus(덮인) → 덮여서 안 보이는' },
+  { w: 'deviate', pos: 'v.', m: '벗어나다', e: 'de(떨어져) + via(길) → 길에서 벗어나다' },
+  { w: 'peripheral', pos: 'adj.', m: '주변적인', e: 'peri(둘레) + pherein(나르다) → 둘레를 따라 도는 → 가장자리의' },
+  { w: 'petition', pos: 'n.', m: '청원, 탄원', e: 'petere(구하다) → 간청함' },
+  { w: 'oblivion', pos: 'n.', m: '망각, 잊힌 상태', e: 'oblivisci(잊다) → 기억에서 사라진 상태' },
+  { w: 'restless', pos: 'adj.', m: '불안한, 쉬지 못하는', e: 'rest(쉼) + less(없는) → 쉼이 없는' },
+  { w: 'perish', pos: 'v.', m: '죽다, 소멸하다', e: 'per(완전히) + ire(가다) → 완전히 가 버리다' },
+  { w: 'rhetorical', pos: 'adj.', m: '수사적인', e: 'rhetor(연설가) → 말솜씨에 관한' },
+  { w: 'stale', pos: 'adj.', m: '신선하지 않은, 케케묵은', e: '고대 프랑스어 estale(고여 있는) → 오래 놓여 신선함을 잃은' },
+  { w: 'scenic', pos: 'adj.', m: '경치가 좋은', e: 'skene(무대) → scene → 무대 같은 풍경' },
+  { w: 'utilitarian', pos: 'adj.', m: '실용적인', e: 'utilis(쓸모 있는) → utility → 쓸모를 따지는' },
+  { w: 'synthetic', pos: 'adj.', m: '합성의, 인조의', e: 'syn(함께) + tithenai(놓다) → 함께 놓아 만든' },
+  { w: 'arbitrary', pos: 'adj.', m: '임의적인, 제멋대로의', e: 'arbiter(심판) → 심판 마음대로 정하는' },
+  { w: 'induce', pos: 'v.', m: '유도하다, 일으키다', e: 'in(안으로) + ducere(이끌다) → 끌어들이다' },
+  { w: 'unencumbered', pos: 'adj.', m: '방해받지 않는, 짐 없는', e: 'un(아닌) + encumber(en 안에 + 프랑스어 combre 장애물) → 장애물이 없는' },
+  { w: 'assemble', pos: 'v.', m: '모으다, 조립하다', e: 'as(~로) + simul(함께) → 한곳에 모으다' },
+  { w: 'explicit', pos: 'adj.', m: '명시적인, 분명한', e: 'ex(밖으로) + plicare(접다) → 펼쳐 놓은 → 분명한' },
+  { w: 'hinder', pos: 'v.', m: '방해하다', e: 'hind(뒤) → 뒤로 잡아당기다' },
+  { w: 'implication', pos: 'n.', m: '함축, 암시', e: 'in(안에) + plicare(접다) → 안에 접혀 들어 있는 의미' },
+  { w: 'impose', pos: 'v.', m: '부과하다, 강요하다', e: 'in(위에) + ponere(놓다) → 위에 얹다' },
+  { w: 'inhibit', pos: 'v.', m: '억제하다', e: 'in(안에) + habere(잡다) → 붙들어 막다' },
+  { w: 'scarcity', pos: 'n.', m: '부족, 희소', e: 'scarce(드문) + ity → 귀해서 모자람' },
+  { w: 'tease', pos: 'v.', m: '놀리다, 괴롭히다', e: '고대 영어 tæsan(잡아 뜯다) → 자꾸 건드려 성가시게 하다' },
+  { w: 'presumable', pos: 'adj.', m: '추정할 수 있는', e: 'pre(미리) + sumere(취하다) → 미리 그렇다고 받아들이다 + able' },
+  { w: 'restraint', pos: 'n.', m: '억제, 자제', e: 're(뒤로) + stringere(팽팽히 당기다) → 뒤로 잡아당겨 묶음' },
+  { w: 'subsidize', pos: 'v.', m: '보조금을 주다', e: 'sub(아래) + sedere(앉다) → subsidium(뒤에 대기하는 예비대) → 뒤에서 돕다' },
+  { w: 'termination', pos: 'n.', m: '종료, 해고', e: 'terminus(경계, 끝) → 끝을 냄' },
+  { w: 'wreck', pos: 'v.', m: '파괴하다, 난파시키다', e: '고대 노르드어 wrek(파도에 밀려온 것) → 부서져 떠밀려 온 잔해' },
+  { w: 'adhere', pos: 'v.', m: '들러붙다, 고수하다', e: 'ad(~에) + haerere(붙다) → 달라붙다 (adhesive)' },
+  { w: 'alleviate', pos: 'v.', m: '완화하다', e: 'al(~쪽으로) + levis(가벼운) → 가볍게 해 주다 (levitate)' },
+  { w: 'crave', pos: 'v.', m: '갈망하다', e: '고대 영어 crafian(요구하다) → 간절히 요구하다' },
+  { w: 'contemplate', pos: 'v.', m: '숙고하다', e: 'con(강조) + templum(점술가가 하늘을 관측하던 구역) → 한곳을 오래 응시하다 → 깊이 생각하다' },
+  { w: 'disperse', pos: 'v.', m: '흩뜨리다, 흩어지다', e: 'dis(떨어져) + spargere(뿌리다) → 사방으로 뿌리다' },
+  { w: 'entail', pos: 'v.', m: '수반하다', e: 'en(~하게 하다) + tail(상속 제한 법률 용어) → 반드시 따라오게 묶다' },
+  { w: 'fatality', pos: 'n.', m: '사망자, 치명성', e: 'fatum(운명) → 정해진 운명 → 죽음' },
+  { w: 'fraud', pos: 'n.', m: '사기', e: 'fraus(속임, 해악) → 속임수' },
+  { w: 'inflate', pos: 'v.', m: '부풀리다', e: 'in(안으로) + flare(불다) → 바람을 불어 넣다' },
+  { w: 'divulge', pos: 'v.', m: '누설하다', e: 'di(사방으로) + vulgus(대중) → 대중에게 퍼뜨리다 (vulgar)' },
+  { w: 'liken', pos: 'v.', m: '비유하다', e: 'like(닮은) + en → 닮았다고 하다' },
+  { w: 'contaminate', pos: 'v.', m: '오염시키다', e: 'con(함께) + tangere(닿다) → 더러운 것과 닿아 물들다' },
+  { w: 'dignity', pos: 'n.', m: '존엄, 품위', e: 'dignus(가치 있는) → 존중받을 만한 가치' },
+  { w: 'prevail', pos: 'v.', m: '우세하다, 널리 퍼지다', e: 'pre(앞서) + valere(힘이 세다) → 힘으로 앞서다' },
+  { w: 'proponent', pos: 'n.', m: '지지자, 옹호자', e: 'pro(앞에) + ponere(놓다) → 주장을 앞에 내놓는 사람' },
+  { w: 'refashion', pos: 'v.', m: '다시 만들다', e: 're(다시) + fashion(만들다) → 새 모양으로 고쳐 만들다' },
+  { w: 'intertwine', pos: 'v.', m: '뒤얽히다', e: 'inter(서로) + twine(꼬다) → 서로 꼬이다' },
+  { w: 'shrub', pos: 'n.', m: '관목', e: '고대 영어 scrybb(덤불) → 키 작은 떨기나무' },
+  { w: 'submerge', pos: 'v.', m: '잠기게 하다', e: 'sub(아래) + mergere(담그다) → 물속에 담그다 (emerge의 반대)' },
+  { w: 'advent', pos: 'n.', m: '도래, 출현', e: 'ad(~로) + venire(오다) → 다가옴' },
+  { w: 'affluent', pos: 'adj.', m: '부유한', e: 'af(~쪽으로) + fluere(흐르다) → 재물이 흘러 들어오는 (fluid)' },
+  { w: 'agenda', pos: 'n.', m: '안건, 의제', e: 'agere(행하다) → 해야 할 일들' },
+  { w: 'anarchy', pos: 'n.', m: '무정부 상태', e: 'an(없는) + archos(지배자) → 다스리는 자가 없음' },
+  { w: 'suppress', pos: 'v.', m: '억누르다, 진압하다', e: 'sub(아래) + premere(누르다) → 아래로 눌러 놓다' },
+  { w: 'decent', pos: 'adj.', m: '괜찮은, 품위 있는', e: 'decere(어울리다) → 격에 맞는' },
+  { w: 'authenticate', pos: 'v.', m: '진짜임을 증명하다', e: 'authentikos(진짜의) → 진본임을 확인하다' },
+  { w: 'asymmetry', pos: 'n.', m: '비대칭', e: 'a(아닌) + syn(함께) + metron(잰 것) → 함께 재어 맞지 않음' },
+  { w: 'apparatus', pos: 'n.', m: '기구, 장치', e: 'ap(~를 위해) + parare(준비하다) → 준비해 둔 도구' },
+  { w: 'concur', pos: 'v.', m: '동의하다', e: 'con(함께) + currere(달리다) → 같은 방향으로 달려 의견이 만남' },
+  { w: 'bland', pos: 'adj.', m: '싱거운, 특징 없는', e: 'blandus(부드러운) → 자극 없이 순한' },
+  { w: 'conviction', pos: 'n.', m: '확신, 유죄 판결', e: 'con(완전히) + vincere(이기다) → 완전히 설득됨 / 유죄를 입증함' },
+  { w: 'benevolent', pos: 'adj.', m: '자애로운', e: 'bene(좋게) + velle(바라다) → 남에게 좋기를 바라는' },
+  { w: 'consensus', pos: 'n.', m: '합의', e: 'con(함께) + sentire(느끼다) → 함께 같게 느낌' },
+  { w: 'convergence', pos: 'n.', m: '수렴', e: 'con(함께) + vergere(기울다) → 한곳으로 기울어 모임' },
+  { w: 'drawback', pos: 'n.', m: '단점', e: 'draw(끌어당기다) + back(뒤로) → 뒤로 잡아당기는 것' },
+  { w: 'clumsy', pos: 'adj.', m: '서투른', e: '고대 노르드어 klumsa(감각이 마비되다) → 손이 굳은 듯 어설픈' },
+  { w: 'defective', pos: 'adj.', m: '결함이 있는', e: 'de(떨어져) + facere(만들다) → 제대로 만들어지지 못한 (defect)' },
+  { w: 'farsighted', pos: 'adj.', m: '원시의, 선견지명 있는', e: 'far(멀리) + sight(보다) → 멀리 보는' },
+  { w: 'definitive', pos: 'adj.', m: '확정적인, 결정적인', e: 'de(완전히) + finire(끝내다) → 끝맺어 더 다툴 수 없는' },
+  { w: 'degenerative', pos: 'adj.', m: '퇴행성의', e: 'de(아래로) + genus(종류, 태생) → 본래 상태에서 점점 나빠지는' },
+  { w: 'stipulate', pos: 'v.', m: '규정하다, 명기하다', e: 'stipulari(계약 조건을 요구하다) → 조건으로 못 박다' },
+  { w: 'disproportionate', pos: 'adj.', m: '불균형한', e: 'dis(아닌) + proportion(비율) → 비율이 맞지 않는' },
+  { w: 'dormant', pos: 'adj.', m: '휴면 중인', e: 'dormire(자다) → 잠자고 있는 (dormitory)' },
+  { w: 'dreary', pos: 'adj.', m: '음울한, 따분한', e: '고대 영어 dreorig(슬픈) → 침울한' },
+  { w: 'eligible', pos: 'adj.', m: '자격이 있는', e: 'e(밖으로) + legere(고르다) → 골라 뽑힐 만한' },
+  { w: 'evade', pos: 'v.', m: '피하다, 회피하다', e: 'e(밖으로) + vadere(가다) → 빠져나가다' },
+  { w: 'faculty', pos: 'n.', m: '능력, 교수진', e: 'facultas(능력), facilis(쉬운) → 쉽게 해내는 힘 → 능력 / 학문 분야의 교수진' },
+  { w: 'famine', pos: 'n.', m: '기근', e: 'fames(굶주림) → 굶주림' },
+  { w: 'demolition', pos: 'n.', m: '철거, 파괴', e: 'de(반대) + moliri(짓다) → 지은 것을 허묾' },
+  { w: 'frenzy', pos: 'n.', m: '광란', e: '그리스어 phren(마음) → 정신 착란 → 마음이 날뛰는 상태' },
+  { w: 'discernible', pos: 'adj.', m: '식별할 수 있는', e: 'dis(떨어져) + cernere(가려내다) → 갈라서 알아볼 수 있는' },
+  { w: 'dysfunctional', pos: 'adj.', m: '기능 장애의', e: 'dys(나쁜) + function(기능) → 제대로 작동하지 않는' },
+  { w: 'friction', pos: 'n.', m: '마찰, 불화', e: 'fricare(문지르다) → 맞비빔' },
+  { w: 'fulfilling', pos: 'adj.', m: '성취감을 주는', e: 'ful(가득) + fill(채우다) → 가득 채워 주는' },
+  { w: 'glimpse', pos: 'n.', m: '흘끗 봄', e: '중세 영어 glimsen(희미하게 빛나다) → 얼핏 보이는 빛' },
+  { w: 'grin', pos: 'v.', m: '씩 웃다', e: '고대 영어 grennian(이를 드러내다) → 이를 드러내고 웃다' },
+  { w: 'heritage', pos: 'n.', m: '유산', e: 'heres(상속인) → 물려받은 것' },
+  { w: 'impart', pos: 'v.', m: '전하다, 나눠 주다', e: 'im(안으로) + partire(나누다) → 몫을 나눠 주다' },
+  { w: 'distress', pos: 'n.', m: '고통, 괴로움', e: 'dis(떨어져) + stringere(팽팽히 당기다) → 이리저리 잡아당겨 아픔' },
+  { w: 'incompetent', pos: 'adj.', m: '무능한', e: 'in(아닌) + competent(com 함께 + petere 구하다 → 알맞은) → 맞는 능력이 없는' },
+  { w: 'indulge', pos: 'v.', m: '마음껏 하다, 응석을 받아 주다', e: 'indulgere(너그럽게 허락하다) → 원하는 대로 봐주다' },
+  { w: 'insanity', pos: 'n.', m: '정신이상, 광기', e: 'in(아닌) + sanus(건강한) → 온전하지 못함 (sane)' },
+  { w: 'insurmountable', pos: 'adj.', m: '극복할 수 없는', e: 'in(아닌) + sur(넘어) + mount(오르다) → 넘어 오를 수 없는' },
+  { w: 'introspective', pos: 'adj.', m: '자기 성찰적인', e: 'intro(안으로) + specere(보다) → 자기 속을 들여다보는' },
+  { w: 'intuitive', pos: 'adj.', m: '직관적인', e: 'in(안으로) + tueri(보다) → 안을 바로 꿰뚫어 봄' },
+  { w: 'irreplaceable', pos: 'adj.', m: '대체할 수 없는', e: 'ir(아닌) + replace(대체하다) + able' },
+  { w: 'meticulous', pos: 'adj.', m: '꼼꼼한, 세심한', e: 'metus(두려움) → 실수가 두려워 하나하나 살피는' },
+  { w: 'legacy', pos: 'n.', m: '유산', e: 'legare(위임하다, 유언으로 남기다) → 물려준 것' },
+  { w: 'leisurely', pos: 'adj.', m: '느긋한', e: 'licere(허락되다) → leisure(자유 시간) + ly → 서두르지 않는' },
+  { w: 'mandatory', pos: 'adj.', m: '의무적인', e: 'manus(손) + dare(주다) → 손에 쥐여 준 명령 (mandate)' },
+  { w: 'maternity', pos: 'n.', m: '임신, 출산, 모성', e: 'mater(어머니) → 어머니 됨' },
+  { w: 'municipal', pos: 'adj.', m: '시의, 지방 자치의', e: 'munus(의무) + capere(맡다) → 의무를 맡은 자치 도시' },
+  { w: 'needy', pos: 'adj.', m: '가난한, 도움이 필요한', e: 'need(필요) + y → 필요한 게 많은' },
+  { w: 'negligence', pos: 'n.', m: '부주의, 태만', e: 'neg(아닌) + legere(주의해서 고르다) → 신경 써서 챙기지 않음' },
+  { w: 'imperceptible', pos: 'adj.', m: '감지할 수 없는', e: 'im(아닌) + per(완전히) + capere(잡다) → 포착되지 않는' },
+  { w: 'litter', pos: 'n.', m: '쓰레기, 한배 새끼', e: 'lectus(침대) → 깔아 놓은 잠자리 → 어질러진 것 / 한배에 난 새끼' },
+  { w: 'morale', pos: 'n.', m: '사기, 의욕', e: '프랑스어 moral(정신적인) → 집단의 정신 상태' },
+  { w: 'pessimism', pos: 'n.', m: '비관주의', e: 'pessimus(가장 나쁜) → 최악을 보는 태도 (optimism 반대)' },
+  { w: 'pervasive', pos: 'adj.', m: '만연한', e: 'per(통해) + vadere(가다) → 구석구석 스며 퍼지는' },
+  { w: 'proficient', pos: 'adj.', m: '능숙한', e: 'pro(앞으로) + facere(하다) → 앞서 해내는' },
+  { w: 'prosperous', pos: 'adj.', m: '번영하는', e: 'pro(앞으로) + sperare(바라다) → 바라던 대로 잘 풀리는' },
+  { w: 'reclaim', pos: 'v.', m: '되찾다, 개간하다', e: 're(다시) + clamare(외치다) → 내 것이라 다시 요구하다' },
+  { w: 'redundant', pos: 'adj.', m: '불필요한, 중복되는', e: 're(다시) + undare(넘치다) → 넘쳐 나는' },
+  { w: 'remnant', pos: 'n.', m: '나머지, 잔재', e: 're(뒤에) + manere(머물다) → 뒤에 남은 것' },
+  { w: 'replicate', pos: 'v.', m: '복제하다, 재현하다', e: 're(다시) + plicare(접다) → 접어서 되돌림 → 똑같이 되풀이' },
+  { w: 'respiratory', pos: 'adj.', m: '호흡의', e: 're(다시) + spirare(숨 쉬다) → 거듭 숨 쉬는' },
+  { w: 'rigorous', pos: 'adj.', m: '엄격한, 철저한', e: 'rigere(뻣뻣하다) → 굽힘 없이 딱딱한' },
+  { w: 'stereotype', pos: 'n.', m: '고정관념', e: 'stereos(단단한) + typos(찍어낸 틀) → 한번 굳으면 똑같이 찍히는 인쇄판' },
+  { w: 'speculate', pos: 'v.', m: '추측하다, 투기하다', e: 'specula(망루), specere(보다) → 망루에서 내다봄 → 짐작' },
+  { w: 'spontaneity', pos: 'n.', m: '자발성', e: 'sponte(자기 뜻으로) → 시키지 않아도 저절로' },
+  { w: 'sneak', pos: 'v.', m: '살금살금 가다', e: '뱀처럼 기어가듯 몰래 움직이다 (기원은 불확실)' },
+  { w: 'renowned', pos: 'adj.', m: '유명한', e: 're(다시) + nominare(이름을 부르다) → 거듭 이름이 불리는' },
+  { w: 'solidarity', pos: 'n.', m: '연대', e: 'solidus(단단한) → 한 덩어리로 단단히 뭉침' },
+  { w: 'tedious', pos: 'adj.', m: '지루한', e: 'taedium(싫증) → 질리는' },
+  { w: 'stern', pos: 'adj.', m: '엄한', e: '고대 영어 styrne(엄격한)' },
+  { w: 'subtract', pos: 'v.', m: '빼다', e: 'sub(아래로) + trahere(끌다) → 아래로 끌어내다' },
+  { w: 'suspicious', pos: 'adj.', m: '의심스러운', e: 'sub(아래) + specere(보다) → 밑에서 올려다보며 살핌 (suspect)' },
+  { w: 'susceptible', pos: 'adj.', m: '영향을 받기 쉬운', e: 'sub(아래) + capere(잡다) → 밑에서 받아들일 수 있는' },
+  { w: 'temperament', pos: 'n.', m: '기질', e: 'temperare(적당히 섞다) → 섞인 비율에 따라 정해지는 타고난 성질' },
+  { w: 'testimony', pos: 'n.', m: '증언', e: 'testis(증인) → testify(증언하다)' },
+  { w: 'underpin', pos: 'v.', m: '뒷받침하다', e: 'under(아래) + pin(버팀목) → 밑에서 받치다' },
+  { w: 'unpaved', pos: 'adj.', m: '포장되지 않은', e: 'un(아닌) + pave(포장하다) + ed' },
+  { w: 'viable', pos: 'adj.', m: '실행 가능한', e: '프랑스어 vie(생명) + able → 살아갈 수 있는 → 성립할 수 있는' },
+  { w: 'verification', pos: 'n.', m: '검증', e: 'verus(참) + facere(만들다) → 참임을 확인함' },
+  { w: 'vie', pos: 'v.', m: '경쟁하다', e: '프랑스어 envier(내기를 걸다) → 판돈을 걸며 겨루다' },
+  { w: 'stride', pos: 'v.', m: '성큼성큼 걷다', e: '고대 영어 stridan(다리를 벌리다) → 다리를 크게 벌려 걷다' },
+  { w: 'unimpeded', pos: 'adj.', m: '방해받지 않는', e: 'un(아닌) + im(안에) + pes(발) → 발이 묶이지 않은 (impede)' },
+  { w: 'adjacent', pos: 'adj.', m: '인접한', e: 'ad(~쪽에) + jacere(놓이다) → 바로 옆에 놓인' },
+  { w: 'withhold', pos: 'v.', m: '보류하다, 주지 않다', e: 'with(뒤로) + hold(쥐다) → 뒤로 움켜쥐고 내놓지 않다' },
+  { w: 'ambiguous', pos: 'adj.', m: '모호한', e: 'ambi(양쪽) + agere(몰다) → 양쪽으로 끌려 정해지지 않은' },
+  { w: 'approval', pos: 'n.', m: '승인', e: 'ap(~에) + probare(좋다고 시험하다) → 괜찮다고 인정함' },
+  { w: 'assess', pos: 'v.', m: '평가하다', e: 'ad(~옆에) + sedere(앉다) → 재판관 옆에 앉아 세액을 매기다' },
+  { w: 'complementary', pos: 'adj.', m: '보완적인', e: 'com(완전히) + plere(채우다) → 모자란 곳을 채워 완성 (complete)' },
+  { w: 'comprise', pos: 'v.', m: '구성하다, 포함하다', e: 'com(함께) + prehendere(붙잡다) → 한데 쥐다' },
+  { w: 'conceive', pos: 'v.', m: '생각해 내다, 임신하다', e: 'con(함께) + capere(잡다) → 마음속에 품다 / 아이를 품다' },
+  { w: 'confine', pos: 'v.', m: '가두다, 한정하다', e: 'con(함께) + finis(경계) → 경계 안에 묶다' },
+  { w: 'decay', pos: 'v.', m: '썩다, 쇠퇴하다', e: 'de(아래로) + cadere(떨어지다) → 점점 떨어져 무너짐' },
+  { w: 'dispose', pos: 'v.', m: '배치하다, 처분하다', e: 'dis(따로) + ponere(놓다) → 따로따로 놓다 → (dispose of) 처리하다' },
+  { w: 'specify', pos: 'v.', m: '명시하다, 구체적으로 말하다', e: 'species(종류, 모양) + -fy(~하게 하다) → 종류·세부를 분명히 하다' },
+  { w: 'unattainable', pos: 'adj.', m: '이룰 수 없는', e: 'un(아닌) + attain(이르다) + able(할 수 있는) → 닿을 수 없는' },
+  { w: 'abound', pos: 'v.', m: '풍부하다, 많이 있다', e: 'ab(밖으로) + undare(물결치다) → 물이 넘치듯 → 넘칠 만큼 많다' },
+  { w: 'vain', pos: 'adj.', m: '헛된, 허영심 많은', e: 'vanus(빈, 헛된) → 속이 빈 (in vain: 헛되이)' },
+  { w: 'exemplify', pos: 'v.', m: '예증하다, 본보기가 되다', e: 'exemplum(본보기) + facere(만들다)' },
+  { w: 'accord', pos: 'n.', m: '일치, 합의, 부여하다', e: 'ad(~에) + cor(마음) → 마음을 맞추다' },
+  { w: 'authorize', pos: 'v.', m: '권한을 주다, 승인하다', e: 'author(권위자, 창시자) + -ize(~하게 하다) → 권위를 부여하다' },
+  { w: 'belittle', pos: 'v.', m: '깎아내리다, 얕보다', e: 'be(~하게 하다) + little(작은) → 작게 만들다' },
+  { w: 'besiege', pos: 'v.', m: '포위하다, 에워싸다', e: 'be(둘레에) + siege(포위, sedere 앉다) → 둘러싸고 자리 잡다' },
+  { w: 'compatible', pos: 'adj.', m: '호환되는, 양립 가능한', e: 'com(함께) + pati(견디다) → 함께 견딜 수 있는' },
+  { w: 'chronic', pos: 'adj.', m: '만성의', e: 'chronos(시간) → 오래 끄는' },
+  { w: 'covert', pos: 'adj.', m: '은밀한, 비밀의', e: 'cover(덮다)의 옛 형태 → 덮여 감춰진' },
+  { w: 'cram', pos: 'v.', m: '억지로 채워 넣다, 벼락치기 하다', e: '고대 영어 crammian(채워 넣다) → 욱여넣다' },
+  { w: 'unprecedented', pos: 'adj.', m: '전례 없는', e: 'un(없는) + pre(먼저) + cedere(가다) + -ed → 먼저 간 선례가 없는' },
+  { w: 'designate', pos: 'v.', m: '지정하다', e: 'de(밖으로) + signare(표시하다)' },
+  { w: 'dictate', pos: 'v.', m: '받아쓰게 하다, 명령하다', e: 'dictare(되풀이해 말하다, dicere 말하다) → 불러 주다 → 지시하다' },
+  { w: 'anatomy', pos: 'n.', m: '해부(학), 해부학적 구조', e: 'ana(위로, 완전히) + tomia(자르기) → 잘라서 열어 봄' },
+  { w: 'epidemic', pos: 'n.', m: '유행병, 만연', e: 'epi(~위에) + demos(사람들) → 사람들 사이에 퍼진' },
+  { w: 'figurative', pos: 'adj.', m: '비유적인', e: 'figura(모양) + -ative → 모양을 빌려 나타내는' },
+  { w: 'fleeting', pos: 'adj.', m: '순식간의, 덧없는', e: 'fleet(빨리 지나가다) + -ing → 스쳐 지나가는' },
+  { w: 'fortify', pos: 'v.', m: '강화하다, 요새화하다', e: 'fortis(강한) + -fy(만들다) → 강하게 하다' },
+  { w: 'impair', pos: 'v.', m: '손상시키다, 해치다', e: 'im(강조) + pejor(더 나쁜) → 더 나쁘게 만들다' },
+  { w: 'incur', pos: 'v.', m: '(손해·비난 등을) 초래하다', e: 'in(안으로) + currere(달리다) → 안으로 달려들다 → 뒤집어쓰다' },
+  { w: 'inscribe', pos: 'v.', m: '새기다, 적다', e: 'in(안에) + scribere(쓰다) → 표면에 새겨 쓰다' },
+  { w: 'irrigate', pos: 'v.', m: '물을 대다', e: 'ir(in, 안으로) + rigare(물을 대다) → 물을 끌어 넣다' },
+  { w: 'mourn', pos: 'v.', m: '애도하다', e: '고대 영어 murnan(슬퍼하다)' },
+  { w: 'oblige', pos: 'v.', m: '강요하다, 은혜를 베풀다', e: 'ob(~쪽으로) + ligare(묶다) → 의무로 묶다' },
+  { w: 'prescribe', pos: 'v.', m: '처방하다, 규정하다', e: 'pre(미리) + scribere(쓰다) → 미리 적어 두다' },
+  { w: 'refute', pos: 'v.', m: '반박하다', e: 're(되받아) + futare(두들기다) → 주장을 되받아 눌러 버리다' },
+  { w: 'regressive', pos: 'adj.', m: '퇴행하는, 퇴보하는', e: 're(뒤로) + gradi(걷다) → 뒤로 걷는 (progressive의 반대)' },
+  { w: 'resent', pos: 'v.', m: '분개하다, 원망하다', e: 're(다시) + sentire(느끼다) → 되새기며 느끼다' },
+  { w: 'dissolve', pos: 'v.', m: '녹다, 해산하다', e: 'dis(떨어져) + solvere(풀다)' },
+  { w: 'postulate', pos: 'v.', m: '가정하다, 요구하다', e: 'postulare(요구하다) → 요구해서 전제로 삼다' },
+  { w: 'stroll', pos: 'v.', m: '산책하다, 거닐다', e: '독일어 strolch(떠돌이)에서 왔다고 보는 설 → 어슬렁거리다' },
+  { w: 'tenant', pos: 'n.', m: '세입자', e: 'tenere(붙잡다) → 빌려 쥐고 있는 사람' },
+  { w: 'thrust', pos: 'v.', m: '세게 밀다', e: '고대 노르드어 thrysta(밀다)' },
+  { w: 'validate', pos: 'v.', m: '입증하다, 유효하게 하다', e: 'valere(힘이 있다) + -ate → 효력이 있게 하다' },
+  { w: 'tyrant', pos: 'n.', m: '폭군', e: '그리스어 tyrannos(독재자)' },
+  { w: 'constrain', pos: 'v.', m: '제약하다, 강요하다', e: 'con(함께) + stringere(죄다) → 꽉 묶다' },
+  { w: 'preliminary', pos: 'adj.', m: '예비의', e: 'pre(앞서) + limen(문턱) → 문턱 앞의' },
+  { w: 'nomadic', pos: 'adj.', m: '유목의, 떠돌아다니는', e: 'nomas(풀밭을 찾아 떠도는, 그리스어) → 풀을 따라 옮겨 다니는' },
+  { w: 'deform', pos: 'v.', m: '변형시키다, 기형으로 만들다', e: 'de(떨어져) + forma(모양) → 본래 모양을 잃게 하다' },
+  { w: 'superstitious', pos: 'adj.', m: '미신적인, 미신을 믿는', e: 'super(위에) + stare(서다) → 이성 위에 서 있는 믿음' },
+  { w: 'conscientious', pos: 'adj.', m: '양심적인, 성실한', e: 'con(함께) + scire(알다) → 양심(conscience) → 양심에 따라 꼼꼼한' },
+  { w: 'perspiration', pos: 'n.', m: '땀', e: 'per(통해) + spirare(숨 쉬다) → 피부로 내쉬는 것' },
+  { w: 'deliberate', pos: 'adj.', m: '신중한, 고의적인 (v. 숙고하다)', e: 'de(완전히) + librare(저울질하다) → 신중히 따져 보다' },
+  { w: 'lease', pos: 'n.', m: '임대차 계약, 임대하다', e: '고대 프랑스어 lesser(놓아주다) → 빌려주다' },
+  { w: 'encompass', pos: 'v.', m: '포함하다, 둘러싸다', e: 'en(만들다) + compass(둘레) → 둘레를 두르다' },
+  { w: 'proclaim', pos: 'v.', m: '선언하다, 선포하다', e: 'pro(앞에) + clamare(외치다) → 앞에서 외치다' },
+  { w: 'impoverish', pos: 'v.', m: '가난하게 하다', e: 'im(en, ~하게 하다) + pauper(가난한) → 가난해지게 하다' },
+  { w: 'aversion', pos: 'n.', m: '혐오, 반감', e: 'a(떨어져) + vertere(돌리다) → 얼굴을 돌림' },
+  { w: 'cumulative', pos: 'adj.', m: '누적되는', e: 'cumulus(쌓인 더미)' },
+  { w: 'contradict', pos: 'v.', m: '반박하다, 모순되다', e: 'contra(반대) + dicere(말하다)' },
+  { w: 'augment', pos: 'v.', m: '증가시키다, 늘리다', e: 'augere(늘리다) → 더하다 (auction과 같은 뿌리)' },
+  { w: 'behold', pos: 'v.', m: '보다, 바라보다', e: 'be(강조) + hold(지켜보다, 고대 영어 healdan) → 눈여겨 지켜보다' },
+  { w: 'proactive', pos: 'adj.', m: '선제적인, 주도적인', e: 'pro(앞서) + active(활동적인) → 미리 앞서 행동하는' },
+  { w: 'compelling', pos: 'adj.', m: '강력한, 설득력 있는', e: 'com(함께) + pellere(몰다) → 몰아붙여 따르게 하는' },
+  { w: 'extravagant', pos: 'adj.', m: '낭비하는, 지나친', e: 'extra(밖으로) + vagari(떠돌다) → 선을 벗어나 떠돌다' },
+  { w: 'expel', pos: 'v.', m: '쫓아내다, 퇴학시키다', e: 'ex(밖으로) + pellere(몰다) → 밖으로 몰아내다' },
+  { w: 'truce', pos: 'n.', m: '휴전, 정전', e: '고대 영어 treow(약속, 믿음) → true와 같은 뿌리 → 믿고 맺은 약속' },
+  { w: 'reconcile', pos: 'v.', m: '화해시키다, 조화시키다', e: 're(다시) + conciliare(합치다) → 다시 맞추다' },
+  { w: 'inexhaustible', pos: 'adj.', m: '무궁무진한', e: 'in(없는) + exhaust(다 써 버리다) + ible(할 수 있는) → 바닥날 수 없는' },
+  { w: 'poise', pos: 'n.', m: '침착, 균형', e: '고대 프랑스어 peser(무게를 달다) → 무게의 균형 → 침착한 자세' },
+  { w: 'stifle', pos: 'v.', m: '숨 막히게 하다, 억누르다', e: '고대 노르드어 stifla(막다)에서 왔다고 보는 설 → 틀어막다' },
+  { w: 'deadlock', pos: 'n.', m: '교착 상태', e: 'dead(움직이지 않는) + lock(자물쇠) → 꽉 잠겨 움직이지 않음' },
+  { w: 'omission', pos: 'n.', m: '생략, 누락', e: 'o(ob, ~쪽으로) + mittere(보내다) → 내버려 두다 → 빠뜨림' },
+  { w: 'aboriginal', pos: 'adj.', m: '원주민의, 토착의', e: 'ab(~로부터) + origine(처음) → 처음부터 있던' },
+  { w: 'indignant', pos: 'adj.', m: '분개한', e: 'in(아닌) + dignus(마땅한) → 부당하다고 느끼는' },
+  { w: 'desert', pos: 'v.', m: '버리다 (n. 사막)', e: 'de(반대) + serere(잇다) → 이어진 것을 끊다 → 버리다 → 버려진 땅(사막)' },
+  { w: 'sojourn', pos: 'n.', m: '단기 체류, 머묾', e: 'sub(아래) + diurnum(하루) → 하루하루 머묾' },
+  { w: 'brag', pos: 'v.', m: '자랑하다, 뽐내다', e: '중세 영어 brag(뽐냄, 큰소리) → 허풍 떨다' },
+  { w: 'grievous', pos: 'adj.', m: '통탄할, 심각한', e: 'grief(깊은 슬픔, 괴로움) + -ous → 괴로움을 주는' },
+  { w: 'captive', pos: 'n.', m: '포로 (adj. 사로잡힌)', e: 'capere(잡다) + -ive → 잡힌' },
+  { w: 'bureaucratize', pos: 'v.', m: '관료화하다', e: 'bureau(사무소) + -cracy(지배) + -ize(~하게 하다) → 관료가 지배하게 하다' },
+  { w: 'condense', pos: 'v.', m: '응축하다, 요약하다', e: 'con(강조) + densus(빽빽한)' },
+  { w: 'elicit', pos: 'v.', m: '끌어내다, 이끌어 내다', e: 'e(밖으로) + licere(꾀다) → 밖으로 꾀어 끌어내다' },
+  { w: 'quiver', pos: 'v.', m: '떨다, 떨리다', e: '중세 영어, 가볍게 떠는 모습을 나타내는 말 → 가볍게 떨다' },
+  { w: 'evacuate', pos: 'v.', m: '대피시키다, 비우다', e: 'e(밖으로) + vacuus(빈) → 비워 내다' },
+  { w: 'electoral', pos: 'adj.', m: '선거의', e: 'e(밖으로) + legere(고르다) → 골라 뽑는 → election의 형용사' },
+  { w: 'authoritarian', pos: 'adj.', m: '권위주의적인', e: 'authority(권위) + -arian(~주의자) → 권위에 복종을 요구하는' },
+  { w: 'disdain', pos: 'n.', m: '경멸 (v. 경멸하다)', e: 'dis(반대) + dignari(합당하다고 여기다) → 가치 없다고 봄' },
+  { w: 'seductive', pos: 'adj.', m: '유혹적인', e: 'se(옆으로) + ducere(이끌다) → 옆길로 이끄는' },
+  { w: 'relish', pos: 'v.', m: '즐기다, 맛보다', e: '옛 프랑스어 reles(뒤에 남은 것) → 뒷맛 → 맛보며 즐기다' },
+  { w: 'indigenous', pos: 'adj.', m: '토착의', e: 'indu(안에) + gignere(낳다) → 그 땅에서 태어난' },
+  { w: 'condemn', pos: 'v.', m: '비난하다, 선고하다', e: 'con(완전히) + damnare(해를 끼치다, 유죄로 하다) → 유죄로 단정하다' },
+  { w: 'extinguish', pos: 'v.', m: '(불을) 끄다, 없애다', e: 'ex(완전히) + stinguere(끄다) → 꺼 버리다' },
+  { w: 'criterion', pos: 'n.', m: '기준 (복수 criteria)', e: 'krites(재판관, 그리스어) → 판단하는 잣대' },
+  { w: 'freight', pos: 'n.', m: '화물, 화물 운송', e: '네덜란드어 vracht(운임) → 실어 나르는 짐' },
+  { w: 'imperative', pos: 'adj.', m: '필수적인, 명령의', e: 'in(안에) + parare(준비하다·명령하다) → 명령할 수 있는 → 꼭 해야 하는' },
+  { w: 'resourceful', pos: 'adj.', m: '수완 좋은, 지략 있는', e: 'resource(자원, re 다시 + surgere 솟다) + ful → 방도가 끊이지 않는' },
+  { w: 'ingratitude', pos: 'n.', m: '배은망덕', e: 'in(아닌) + gratus(고마운) + -tude → 고마워하지 않음' },
+  { w: 'shabby', pos: 'adj.', m: '낡은, 초라한', e: 'shab(옴, 딱지) + -y → 옴 오른 듯 헐어빠진' },
+  { w: 'certify', pos: 'v.', m: '증명하다, 보증하다', e: 'certus(확실한) + -fy(만들다) → 확실하게 하다' },
+  { w: 'assert', pos: 'v.', m: '주장하다', e: 'ad(~에) + serere(잇다) → 자기 쪽에 붙여 단호히 말하다' },
+  { w: 'inhale', pos: 'v.', m: '숨을 들이쉬다', e: 'in(안으로) + halare(숨 쉬다)' },
+  { w: 'segregate', pos: 'v.', m: '분리하다, 차별하다', e: 'se(떨어져) + grex(무리) → 무리에서 떼어 놓다' },
+  { w: 'excavate', pos: 'v.', m: '발굴하다, 파다', e: 'ex(밖으로) + cavus(구멍) → 구멍을 파내다' },
+  { w: 'sewage', pos: 'n.', m: '하수, 오물', e: 'sewer(하수관) + age → 하수관으로 흘려보내는 것' },
+  { w: 'marital', pos: 'adj.', m: '결혼의, 부부의', e: 'maritus(남편) + -al → 부부 관계의' },
+  { w: 'tilt', pos: 'v.', m: '기울다, 기울이다', e: '중세 영어 tylten(넘어뜨리다, 기울이다) → 한쪽으로 기울이다' },
+  { w: 'deploy', pos: 'v.', m: '배치하다, 전개하다', e: 'dis(반대) + plicare(접다) → 접힌 것을 펼치다 → 펼쳐 배치하다' },
+  { w: 'intimidate', pos: 'v.', m: '위협하다, 겁주다', e: 'in(안으로) + timidus(겁 많은) → 겁을 불어넣다' },
+  { w: 'disjoin', pos: 'v.', m: '분리하다, 떼어 놓다', e: 'dis(떼어) + join(잇다) → 이은 것을 떼다' },
+  { w: 'contend', pos: 'v.', m: '다투다, 주장하다', e: 'con(함께) + tendere(뻗다) → 서로 맞서 겨루다' },
+  { w: 'catalyst', pos: 'n.', m: '촉매, 촉진제', e: 'kata(아래로, 완전히) + lysis(풀림) → 반응을 풀어 놓는 것' },
+  { w: 'altruistic', pos: 'adj.', m: '이타적인', e: 'alter(다른 사람) + -ism → 타인을 위하는' },
+  { w: 'posture', pos: 'n.', m: '자세, 태도', e: 'ponere(놓다) → positura(놓인 모양) → 몸을 놓은 모양' },
+  { w: 'intact', pos: 'adj.', m: '손상되지 않은', e: 'in(아닌) + tactus(건드린) → 손대지 않은' },
+  { w: 'immerse', pos: 'v.', m: '담그다, 몰입시키다', e: 'im(안에) + mergere(잠그다) → 물속에 푹 잠그다 → 몰두하게 하다' },
+  { w: 'traverse', pos: 'v.', m: '가로지르다, 횡단하다', e: 'tra(trans, 가로질러) + vertere(돌리다) → 가로질러 건너가다' },
+  { w: 'pious', pos: 'adj.', m: '독실한, 경건한', e: 'pius(경건한, 의무에 충실한) → 신을 공경하는' },
+  { w: 'savor', pos: 'v.', m: '음미하다, 맛보다', e: 'sapor(맛) ← sapere(맛이 나다) → 맛을 음미하다' },
+  { w: 'verse', pos: 'n.', m: '시, 운문', e: 'versus(고랑, 줄) ← vertere(돌리다) → 줄을 바꿔 가며 쓰는 글' },
+  { w: 'strangle', pos: 'v.', m: '목 졸라 죽이다', e: 'strangale(밧줄, 그리스어) → 밧줄로 목을 조르다' },
+  { w: 'hostage', pos: 'n.', m: '인질', e: '옛 프랑스어 ostage(담보로 잡힌 사람) → 담보로 잡힌 사람' },
+  { w: 'rash', pos: 'adj.', m: '성급한, 발진', e: '게르만어 계통 rasch(재빠른) → 앞뒤 재지 않는 성급한' },
+  { w: 'pledge', pos: 'n.', m: '서약, 약속, 맹세하다', e: '고대 프랑스어 plege(보증, 담보)' },
+  { w: 'inconsistent', pos: 'adj.', m: '일관성 없는, 모순되는', e: 'in(아닌) + con(함께) + sistere(서다) → 함께 서지 못하는' },
+  { w: 'traitor', pos: 'n.', m: '배신자, 반역자', e: 'tradere(넘겨주다) → 적에게 넘기는 사람' },
+  { w: 'unfounded', pos: 'adj.', m: '근거 없는', e: 'un(없는) + found(기초를 놓다, fundus 바닥) + -ed → 토대가 없는' },
+  { w: 'connotation', pos: 'n.', m: '함축 의미', e: 'con(함께) + notare(표시하다) → 함께 따라붙는 의미' },
+  { w: 'marginalize', pos: 'v.', m: '소외시키다, 주변으로 밀어내다', e: 'margin(가장자리) + -ize(~하게 하다) → 가장자리로 밀어내다' },
+  { w: 'legislature', pos: 'n.', m: '입법부, 입법 기관', e: 'legis(법) + latus(제안된) → 법을 제안·제정하는 기관' },
+  { w: 'retort', pos: 'v.', m: '쏘아붙이다, 반박', e: 're(되돌려) + torquere(비틀다) → 되받아 던짐' },
+  { w: 'plead', pos: 'v.', m: '간청하다, 변호하다', e: 'placitum(마음에 듦, placere) → 호의를 구해 청하다' },
+  { w: 'grim', pos: 'adj.', m: '엄한, 암울한', e: '고대 영어 grimm(사나운) → 험악한' },
+];
+
+// 워드 단어장
+const WORDMASTER = [
+  { w: 'commodity', pos: 'n.', m: '상품, 물품', e: 'com(함께) + modus(척도, 알맞음) → 쓰기에 알맞은 것 → 편리한 물건 → 상품' },
+  { w: 'constant', pos: 'adj.', m: '끊임없는, 일정한', e: 'con(함께) + stare(서다) → 계속 서 있는 → 변하지 않는' },
+  { w: 'compose', pos: 'v.', m: '구성하다, 작곡하다, 침착하게 하다', e: 'com(함께) + pose(놓다) → 함께 놓아 만들다' },
+  { w: 'construct', pos: 'v.', m: '건설하다, 구성하다', e: 'con(함께) + struere(쌓다) → 쌓아 올리다' },
+  { w: 'resident', pos: 'n.', m: '거주자, 주민', e: 're(뒤에) + sedere(앉다) → 눌러앉아 사는 사람' },
+  { w: 'remark', pos: 'n.', m: '발언, 언급하다, 알아차리다', e: 're(강조) + 프랑스어 marquer(표시하다) → 눈에 띄어 한마디 하다' },
+  { w: 'moral', pos: 'adj.', m: '도덕적인, 교훈', e: 'mos(관습, 도덕) → 풍습에 관한' },
+  { w: 'qualify', pos: 'v.', m: '자격을 얻다, 자격을 주다', e: 'qualis(어떤 종류의) + facere(만들다) → 어떤 성질을 갖추게 하다' },
+  { w: 'recall', pos: 'v.', m: '기억해 내다, 소환하다, 회수하다', e: 're(다시) + call(부르다) → 다시 불러오다' },
+  { w: 'mass', pos: 'n.', m: '덩어리, 대량, 질량', e: '그리스어 maza(반죽 덩어리) → 덩어리' },
+  { w: 'awful', pos: 'adj.', m: '끔찍한, 지독한', e: 'awe(경외, 두려움) + ful → 두려움을 일으키는 → 끔찍한' },
+  { w: 'grant', pos: 'v.', m: '주다, 승인하다, 보조금', e: '고대 프랑스어 granter(보증하다, 허락하다) ← credere(믿다)' },
+  { w: 'extinct', pos: 'adj.', m: '멸종된, 꺼진', e: 'ex(밖으로) + stinguere(끄다) → 불이 꺼진 → 사라진' },
+  { w: 'institute', pos: 'n.', m: '기관, 협회, 도입하다', e: 'in(안에) + statuere(세우다) → 안에 세워 놓다' },
+  { w: 'ashamed', pos: 'adj.', m: '부끄러운', e: 'a(강조) + shame(수치) + ed → 수치를 느끼는' },
+  { w: 'reproduce', pos: 'v.', m: '번식하다, 복제하다, 재현하다', e: 're(다시) + produce(만들어 내다)' },
+  { w: 'formal', pos: 'adj.', m: '공식적인, 격식을 차린', e: 'forma(모양, 형식) → 형식을 갖춘' },
+  { w: 'rite', pos: 'n.', m: '의식, 의례', e: 'ritus(종교 의식, 관습)' },
+  { w: 'descend', pos: 'v.', m: '내려가다, 유래하다', e: 'de(아래로) + scandere(오르다) → 아래로 오르다 → 내려가다' },
+  { w: 'eager', pos: 'adj.', m: '열망하는, 간절한', e: 'acer(날카로운) → 날카롭게 달려드는 → 열렬한' },
+  { w: 'spare', pos: 'v.', m: '아끼다, 할애하다, 여분의', e: '고대 영어 sparian(아끼다)' },
+  { w: 'discipline', pos: 'n.', m: '훈련, 규율, 학문 분야', e: 'discipulus(제자) → disciplina(가르침) → 훈육' },
+  { w: 'thrive', pos: 'v.', m: '번성하다', e: '고대 노르드어 thrifask(스스로를 이롭게 하다) → 잘 자라다' },
+  { w: 'scarce', pos: 'adj.', m: '부족한, 드문', e: '고대 프랑스어 escars(제한된, 모자란)' },
+  { w: 'regulate', pos: 'v.', m: '규제하다, 조절하다', e: 'regula(규칙, 자) → 규칙에 맞추다' },
+  { w: 'yield', pos: 'v.', m: '산출하다, 양보하다, 수확량', e: '고대 영어 gieldan(지불하다) → 내주다 → 산출하다' },
+  { w: 'contemporary', pos: 'adj.', m: '현대의, 동시대의', e: 'con(함께) + tempus(시간) → 같은 시대의' },
+  { w: 'cottage', pos: 'n.', m: '시골집, 작은 집', e: '중세 영어 cote(오두막) + age' },
+  { w: 'prey', pos: 'n.', m: '먹이, 희생자, 잡아먹다', e: 'praeda(전리품, 노획물) → 사냥감' },
+  { w: 'pupil', pos: 'n.', m: '학생, 눈동자', e: 'pupilla(작은 소녀, 인형) → 눈동자에 비친 작은 모습 / 어린 학생' },
+  { w: 'spice', pos: 'n.', m: '향신료', e: 'species(종류) → 특별한 물품 → 향신료' },
+  { w: 'tempt', pos: 'v.', m: '유혹하다, 부추기다', e: 'temptare(시험하다, 건드려 보다)' },
+  { w: 'dine', pos: 'v.', m: '식사하다', e: 'dis(떨어져) + ieiunus(굶은) → 굶기를 깨뜨리다 → 식사하다' },
+  { w: 'wreck', pos: 'v.', m: '난파시키다, 망가뜨리다, 잔해', e: '고대 노르드어 wrek(파도에 밀려온 것) → 부서진 잔해' },
+  { w: 'trait', pos: 'n.', m: '특성, 특징', e: 'trahere(끌다) → 그어진 선 → 특징' },
+  { w: 'address', pos: 'n.', m: '주소, 연설, 다루다', e: 'ad(~쪽으로) + directus(곧은) → 곧게 향하다' },
+  { w: 'contrary', pos: 'adj.', m: '반대의', e: 'contra(반대로) → 반대쪽의' },
+  { w: 'commute', pos: 'v.', m: '통근하다, 감형하다', e: 'com(함께) + mutare(바꾸다) → 서로 바꾸다 → 오가며 바꿔 타다' },
+  { w: 'retail', pos: 'n.', m: '소매, 소매하다', e: 're(다시) + 고대 프랑스어 tailler(자르다) → 잘라서 파는 것' },
+  { w: 'nurture', pos: 'v.', m: '양육하다, 기르다', e: 'nutrire(먹이다, 기르다)' },
+  { w: 'impose', pos: 'v.', m: '부과하다, 강요하다', e: 'in(위에) + ponere(놓다) → 위에 얹다' },
+  { w: 'criteria', pos: 'n.', m: '기준들 (criterion의 복수)', e: '그리스어 kriterion(판단의 기준), krinein(가르다)' },
+  { w: 'spill', pos: 'v.', m: '쏟다, 엎지르다', e: '고대 영어 spillan(죽이다, 쏟아 버리다) → 쏟다' },
+  { w: 'tragic', pos: 'adj.', m: '비극적인', e: '그리스어 tragos(염소) + ode(노래) → 염소의 노래 → 비극' },
+  { w: 'conscious', pos: 'adj.', m: '의식하는, 의식이 있는', e: 'con(함께) + scire(알다) → 함께 알고 있는' },
+  { w: 'arctic', pos: 'adj.', m: '북극의', e: '그리스어 arktos(곰) → 큰곰자리 아래의 → 북쪽의' },
+  { w: 'dilute', pos: 'v.', m: '희석하다, 묽게 하다', e: 'di(떨어져) + luere(씻다) → 씻어 내어 묽게' },
+  { w: 'dim', pos: 'adj.', m: '어둑한, 희미한, 어둡게 하다', e: '고대 영어 dimm(어두운)' },
+  { w: 'errand', pos: 'n.', m: '심부름', e: '고대 영어 aerende(전갈, 용건)' },
+  { w: 'pile', pos: 'n.', m: '더미, 쌓다', e: 'pila(기둥, 돌무더기) → 쌓아 올린 것' },
+  { w: 'stiffen', pos: 'v.', m: '뻣뻣해지다, 굳다', e: 'stiff(뻣뻣한) + en(~하게 하다)' },
+  { w: 'ethnic', pos: 'adj.', m: '민족의, 인종의', e: '그리스어 ethnos(민족, 사람 무리)' },
+  { w: 'wholesale', pos: 'n.', m: '도매', e: 'whole(전체) + sale(판매) → 통째로 대량 판매' },
+  { w: 'germ', pos: 'n.', m: '세균, 싹', e: 'germen(싹, 씨눈) → 생명의 씨앗' },
+  { w: 'drift', pos: 'v.', m: '표류하다, 떠돌다', e: '중세 영어 drift(몰려가는 것) ← drive(몰다)' },
+  { w: 'confront', pos: 'v.', m: '직면하다, 맞서다', e: 'con(함께) + frons(이마, 얼굴) → 얼굴을 맞대다' },
+  { w: 'dispose', pos: 'v.', m: '배치하다, 처분하다', e: 'dis(따로) + ponere(놓다) → 따로따로 놓다 → (dispose of) 처리하다' },
+  { w: 'optimal', pos: 'adj.', m: '최적의', e: 'optimus(가장 좋은)' },
+  { w: 'dynasty', pos: 'n.', m: '왕조', e: '그리스어 dynasteia(권력, 지배) ← dynasthai(힘이 있다)' },
+  { w: 'temper', pos: 'n.', m: '성질, 화, 완화하다', e: 'temperare(적당히 섞다) → 균형 → 성미' },
+  { w: 'undoubtedly', pos: 'adv.', m: '의심할 여지 없이', e: 'un(아닌) + doubt(의심) + ed + ly' },
+  { w: 'raft', pos: 'n.', m: '뗏목', e: '고대 노르드어 raptr(통나무, 서까래)' },
+  { w: 'soak', pos: 'v.', m: '흠뻑 적시다, 담그다', e: '고대 영어 socian(젖다, 스며들다)' },
+  { w: 'craft', pos: 'n.', m: '공예, 기술', e: '고대 영어 craeft(힘, 기술)' },
+  { w: 'cease', pos: 'v.', m: '그치다, 중단하다', e: 'cessare(멈추다)' },
+  { w: 'unify', pos: 'v.', m: '통일하다', e: 'unus(하나) + facere(만들다) → 하나로 만들다' },
+  { w: 'bump', pos: 'v.', m: '부딪치다, 혹', e: '소리를 흉내 낸 말(쿵 부딪치는 소리)' },
+  { w: 'doom', pos: 'n.', m: '불운, 파멸, 운명', e: '고대 영어 dom(판결) → 정해진 운명' },
+  { w: 'graze', pos: 'v.', m: '풀을 뜯다, 스치다', e: '고대 영어 grasian ← graes(풀)' },
+  { w: 'strain', pos: 'n.', m: '긴장, 부담, 잡아당기다', e: 'stringere(팽팽히 당기다) → 팽팽히 당겨 부담이 걸림' },
+  { w: 'glacier', pos: 'n.', m: '빙하', e: 'glacies(얼음)' },
+  { w: 'celebrity', pos: 'n.', m: '유명 인사', e: 'celeber(북적이는, 이름난) → 유명함' },
+  { w: 'editorial', pos: 'n.', m: '사설, 편집의', e: 'e(밖으로) + dare(주다) → 내어 펴내다 → 편집자의 글' },
+  { w: 'crawl', pos: 'v.', m: '기어가다', e: '고대 노르드어 krafla(긁다)와 관련된 말로 봄(어원 불확실)' },
+  { w: 'diabetes', pos: 'n.', m: '당뇨병', e: 'dia(통과해) + bainein(가다) → 물이 몸을 그냥 통과해 나감' },
+  { w: 'congestion', pos: 'n.', m: '혼잡, 정체, 충혈', e: 'con(함께) + gerere(나르다) → 한곳에 쌓여 몰림' },
+  { w: 'constitute', pos: 'v.', m: '구성하다, 설립하다', e: 'con(함께) + statuere(세우다) → 함께 세워 이루다' },
+  { w: 'barter', pos: 'v.', m: '물물교환하다', e: '고대 프랑스어 barater(거래하다, 속이다)' },
+  { w: 'vague', pos: 'adj.', m: '모호한, 막연한', e: 'vagus(떠도는) → 정처 없는 → 분명치 않은' },
+  { w: 'rough', pos: 'adj.', m: '거친, 대략적인', e: '고대 영어 ruh(털 많은, 거친)' },
+  { w: 'disgrace', pos: 'n.', m: '불명예, 수치, 망신시키다', e: 'dis(반대) + grace(은총, 호의) → 호의를 잃음' },
+  { w: 'chore', pos: 'n.', m: '허드렛일, 집안일', e: '고대 영어 cierr(일의 차례, 한 번의 일)에서 변한 말' },
+  { w: 'fossil', pos: 'n.', m: '화석', e: 'fossilis(땅에서 파낸) ← fodere(파다)' },
+  { w: 'pottery', pos: 'n.', m: '도자기', e: '고대 프랑스어 pot(단지) + ery(만드는 곳·물건)' },
+  { w: 'polish', pos: 'v.', m: '닦다, 다듬다', e: 'polire(매끄럽게 하다)' },
+  { w: 'strive', pos: 'v.', m: '애쓰다, 노력하다', e: '고대 프랑스어 estriver(다투다, 싸우다) → 힘껏 겨루다' },
+  { w: 'radiant', pos: 'adj.', m: '빛나는, 환한', e: 'radius(광선) → radiare(빛을 내다)' },
+  { w: 'exclaim', pos: 'v.', m: '소리치다, 외치다', e: 'ex(밖으로) + clamare(외치다)' },
+  { w: 'decay', pos: 'v.', m: '썩다, 쇠퇴하다', e: 'de(아래로) + cadere(떨어지다) → 점점 무너짐' },
+  { w: 'wage', pos: 'n.', m: '임금, 급료', e: '고대 북부 프랑스어 wage(담보, 약속) → 약속한 보수' },
+  { w: 'dwindle', pos: 'v.', m: '점점 줄어들다', e: '고대 영어 dwinan(시들다, 줄어들다) → 조금씩 줄어듦' },
+  { w: 'accuse', pos: 'v.', m: '비난하다, 고발하다', e: 'ac(~에게) + causa(이유, 소송) → 이유를 들어 소송하다' },
+  { w: 'vicious', pos: 'adj.', m: '사악한, 악랄한, 맹렬한', e: 'vitium(결점, 악덕) → 악덕에 찬' },
+  { w: 'copper', pos: 'n.', m: '구리', e: '라틴어 Cyprium aes(키프로스의 금속) → 키프로스 섬에서 나던 금속' },
+  { w: 'famine', pos: 'n.', m: '기근', e: 'fames(굶주림) → 굶주림' },
+  { w: 'string', pos: 'n.', m: '끈, 줄, 현', e: '고대 영어 streng(끈) → 팽팽한 줄' },
+  { w: 'cope', pos: 'v.', m: '대처하다, 감당하다', e: '고대 프랑스어 colper(때리다) → 맞부딪쳐 견뎌 내다' },
+  { w: 'obedient', pos: 'adj.', m: '순종하는', e: 'ob(~쪽으로) + audire(듣다) → 귀 기울이는' },
+  { w: 'depict', pos: 'v.', m: '묘사하다, 그리다', e: 'de(강조) + pingere(그리다) → 그려 내다' },
+  { w: 'hence', pos: 'adv.', m: '그러므로, 지금부터', e: '고대 영어 heonan(여기서부터) → 여기로부터 → 그러므로' },
+  { w: 'wilderness', pos: 'n.', m: '황야, 광야', e: 'wild(야생의) + deer(짐승) + ness → 야생 짐승이 사는 곳' },
+  { w: 'flush', pos: 'v.', m: '얼굴이 붉어지다, 물을 내리다', e: '중세 영어 flusshen(솟구치다) → 피가 확 솟아 붉어지다 / 물이 확 쏟아지다' },
+  { w: 'omit', pos: 'v.', m: '생략하다, 빠뜨리다', e: 'ob(반대로) + mittere(보내다) → 보내지 않고 두다' },
+  { w: 'despair', pos: 'n.', m: '절망', e: 'de(떨어져) + sperare(바라다) → 희망이 없어짐' },
+  { w: 'compact', pos: 'adj.', m: '소형의, 밀집한', e: 'com(함께) + pangere(고정하다) → 단단히 합쳐진' },
+  { w: 'astonish', pos: 'v.', m: '깜짝 놀라게 하다', e: 'ex(밖으로) + tonare(천둥치다) → 천둥 맞은 듯 놀라다' },
+  { w: 'inflate', pos: 'v.', m: '부풀리다', e: 'in(안으로) + flare(불다) → 바람을 불어 넣다' },
+  { w: 'physician', pos: 'n.', m: '의사', e: 'physis(자연) → 몸의 자연을 다루는 사람' },
+  { w: 'passage', pos: 'n.', m: '통로, 구절, 경과', e: 'passer(지나가다) + age → 지나가는 곳' },
+  { w: 'vessel', pos: 'n.', m: '그릇, 선박, 혈관', e: 'vas(그릇) → 무언가를 담는 것' },
+  { w: 'marble', pos: 'n.', m: '대리석, 구슬', e: 'marmaros(반짝이는 돌)' },
+  { w: 'edible', pos: 'adj.', m: '먹을 수 있는', e: 'edere(먹다) + ible(~할 수 있는)' },
+  { w: 'tablet', pos: 'n.', m: '알약, 판', e: 'tabula(판, 널빤지) + let(작은) → 작은 판' },
+  { w: 'roam', pos: 'v.', m: '돌아다니다, 방랑하다', e: '중세 영어 romen(떠돌다), 어원 불확실' },
+  { w: 'decent', pos: 'adj.', m: '품위 있는, 괜찮은', e: 'decere(어울리다) → 격에 맞는' },
+  { w: 'distortion', pos: 'n.', m: '왜곡', e: 'dis(떨어져) + torquere(비틀다) → 비틀어 놓음' },
+  { w: 'bud', pos: 'n.', m: '싹, 봉오리', e: '중세 영어 budde(싹), 어원 불확실' },
+  { w: 'peasant', pos: 'n.', m: '소작농, 농민', e: 'pagus(시골 마을) → 시골 사람' },
+  { w: 'diminish', pos: 'v.', m: '줄이다, 줄어들다', e: 'de(완전히) + minuere(작게 하다)' },
+  { w: 'tenant', pos: 'n.', m: '세입자', e: 'tenere(붙잡다) → 빌려 쥐고 있는 사람' },
+  { w: 'pavement', pos: 'n.', m: '포장도로, 인도', e: 'pavire(다져 두드리다) → 다져 놓은 바닥' },
+  { w: 'sacred', pos: 'adj.', m: '신성한', e: 'sacer(신성한)' },
+  { w: 'revise', pos: 'v.', m: '수정하다, 개정하다', e: 're(다시) + videre(보다) → 다시 보고 고치다' },
+  { w: 'resent', pos: 'v.', m: '분개하다, 원망하다', e: 're(다시) + sentire(느끼다) → 되새기며 느끼다' },
+  { w: 'abrupt', pos: 'adj.', m: '갑작스러운, 퉁명스러운', e: 'ab(떨어져) + rumpere(깨다) → 뚝 끊어진' },
+  { w: 'refine', pos: 'v.', m: '정제하다, 다듬다', e: 're(다시) + fine(순수한) → 다시 순수하게 만들다' },
+  { w: 'suspend', pos: 'v.', m: '매달다, 중단하다, 정학시키다', e: 'sub(아래) + pendere(매달다) → 아래에 매달다' },
+  { w: 'monetary', pos: 'adj.', m: '통화의, 금전의', e: 'moneta(조폐소가 있던 신전) → money' },
+  { w: 'collapse', pos: 'v.', m: '붕괴하다, 무너지다', e: 'col(함께) + labi(미끄러지다) → 함께 무너져 내리다' },
+  { w: 'monologue', pos: 'n.', m: '독백', e: 'monos(혼자) + logos(말) → 혼자 하는 말' },
+  { w: 'prescribe', pos: 'v.', m: '처방하다, 규정하다', e: 'pre(미리) + scribere(쓰다) → 미리 적어 두다' },
+  { w: 'masculine', pos: 'adj.', m: '남성의, 남자다운', e: 'masculus(수컷, 남자)' },
+  { w: 'frown', pos: 'v.', m: '눈살을 찌푸리다', e: '고대 프랑스어 froigner(코를 찡그리다)' },
+  { w: 'astound', pos: 'v.', m: '경악시키다', e: 'astonish와 같은 뿌리 → 천둥 맞은 듯 크게 놀라게 함' },
+  { w: 'disguise', pos: 'v.', m: '변장하다, 위장하다', e: 'dis(떨어져) + guise(모습) → 모습을 바꾸다' },
+  { w: 'sermon', pos: 'n.', m: '설교', e: 'sermo(말, 이야기)' },
+  { w: 'foster', pos: 'v.', m: '육성하다, 기르다', e: '고대 영어 fostrian(먹이다, 기르다)' },
+  { w: 'reform', pos: 'v.', m: '개혁하다', e: 're(다시) + forma(형태) → 다시 짜다' },
+  { w: 'convention', pos: 'n.', m: '관습, 대회, 협약', e: 'con(함께) + venire(오다) → 함께 모여 정한 것' },
+  { w: 'devastate', pos: 'v.', m: '황폐화시키다', e: 'de(완전히) + vastare(황폐하게 하다)' },
+  { w: 'reap', pos: 'v.', m: '수확하다, 거두다', e: '고대 영어 ripan(거두다)' },
+  { w: 'nourish', pos: 'v.', m: '영양을 공급하다', e: 'nutrire(먹이다)' },
+  { w: 'bulletin', pos: 'n.', m: '공보, 게시, 회보', e: 'bulla(도장 찍은 문서) → 작은 공문서' },
+  { w: 'affair', pos: 'n.', m: '일, 사건, 불륜', e: 'a(~로) + faire(하다) → 해야 할 일' },
+  { w: 'contend', pos: 'v.', m: '다투다, 주장하다', e: 'con(함께) + tendere(뻗다) → 서로 맞서 겨루다' },
+  { w: 'concrete', pos: 'adj.', m: '구체적인, 콘크리트', e: 'con(함께) + crescere(자라다) → 함께 자라 굳은' },
+  { w: 'literate', pos: 'adj.', m: '읽고 쓸 줄 아는', e: 'littera(글자)' },
+  { w: 'lease', pos: 'n.', m: '임대차 계약, 임대하다', e: '고대 프랑스어 lesser(놓아주다) → 빌려주다' },
+  { w: 'perseverance', pos: 'n.', m: '인내, 끈기', e: 'per(끝까지) + severus(엄격한) → 끝까지 밀고 나감' },
+  { w: 'fatal', pos: 'adj.', m: '치명적인', e: 'fatum(운명) → 운명이 정한 → 죽음의' },
+  { w: 'invert', pos: 'v.', m: '뒤집다', e: 'in(안으로) + vertere(돌리다) → 돌려 뒤집다' },
+  { w: 'startle', pos: 'v.', m: '깜짝 놀라게 하다', e: '고대 영어 steartlian(뛰어오르다) → 펄쩍 뛰게 만들다' },
+  { w: 'renowned', pos: 'adj.', m: '유명한', e: 're(다시) + nominare(이름을 부르다) → 거듭 이름이 불리는' },
+  { w: 'era', pos: 'n.', m: '시대, 연대', e: '라틴어 aera(기준이 되는 연도)' },
+  { w: 'withdraw', pos: 'v.', m: '철수하다, 인출하다', e: 'with(뒤로) + draw(끌다) → 뒤로 끌어당기다' },
+  { w: 'mischief', pos: 'n.', m: '장난, 해악', e: 'mis(나쁘게) + chief(끝, 결과) → 나쁜 결과 → 해악·장난' },
+  { w: 'discriminate', pos: 'v.', m: '차별하다, 구별하다', e: 'dis(떨어져) + cernere(가르다) → 갈라 놓다' },
+  { w: 'exemplify', pos: 'v.', m: '예증하다, 본보기가 되다', e: 'exemplum(본보기) + facere(만들다)' },
+  { w: 'peculiar', pos: 'adj.', m: '독특한, 이상한', e: 'peculium(개인 재산, 가축) → 자기만의 것 → 특유한' },
+  { w: 'sake', pos: 'n.', m: '이익, 목적, ~을 위해', e: '고대 영어 sacu(소송, 이유) → for the sake of ~을 위해' },
+  { w: 'groom', pos: 'n.', m: '신랑, 마부, 단장하다', e: '중세 영어 grom(소년, 시종) → 말을 돌보는 사람 → 몸을 단장하다' },
+  { w: 'tender', pos: 'adj.', m: '부드러운, 제출하다', e: 'tener(부드러운) / tendere(내밀다) → 내밀다 → 제출하다' },
+  { w: 'mow', pos: 'v.', m: '풀을 베다', e: '고대 영어 mawan(베다)' },
+  { w: 'evolve', pos: 'v.', m: '진화하다, 발전하다', e: 'e(밖으로) + volvere(굴리다) → 펼쳐져 나오다' },
+  { w: 'afflict', pos: 'v.', m: '괴롭히다, 고통을 주다', e: 'af(~에) + fligere(치다) → 쳐서 괴롭히다' },
+  { w: 'empirical', pos: 'adj.', m: '경험적인', e: '그리스어 empeiria(경험) ← en(안에) + peira(시도)' },
+  { w: 'coherent', pos: 'adj.', m: '일관성 있는', e: 'co(함께) + haerere(붙다) → 서로 붙어 있는' },
+  { w: 'intolerable', pos: 'adj.', m: '참을 수 없는', e: 'in(아닌) + tolerare(견디다) + able' },
+  { w: 'conceive', pos: 'v.', m: '생각해 내다, 임신하다', e: 'con(함께) + capere(잡다) → 마음에 품다' },
+  { w: 'weep', pos: 'v.', m: '울다, 눈물 흘리다', e: '고대 영어 wepan(울부짖다)' },
+  { w: 'absurd', pos: 'adj.', m: '터무니없는', e: 'ab(강조) + surdus(귀먹은) → 소리가 어긋난 → 어리석은' },
+  { w: 'prone', pos: 'adj.', m: '~하기 쉬운, 엎드린', e: 'pronus(앞으로 기운)' },
+  { w: 'compulsive', pos: 'adj.', m: '강박적인', e: 'com(함께) + pellere(몰다) → 몰아붙여진' },
+  { w: 'malnutrition', pos: 'n.', m: '영양실조', e: 'mal(나쁜) + nutrition(영양)' },
+  { w: 'boast', pos: 'v.', m: '자랑하다', e: '중세 영어 bost(자랑), 어원 불확실' },
+  { w: 'incentive', pos: 'n.', m: '유인책, 동기', e: 'in(안에) + canere(노래하다) → 곡조를 이끄는 것 → 부추기는 것' },
+  { w: 'wrestle', pos: 'v.', m: '씨름하다, 몸싸움하다', e: '고대 영어 wraestlian ← wraestan(비틀다)' },
+  { w: 'Confucian', pos: 'adj.', m: '유교의', e: '공자(Confucius)의 가르침에 관한' },
+  { w: 'draft', pos: 'n.', m: '초안, 징병, 외풍', e: 'draw(끌다)의 명사형 → 끌어당긴 것 → 초안' },
+  { w: 'crude', pos: 'adj.', m: '가공하지 않은, 조잡한', e: 'crudus(날것의) → 날것 그대로' },
+  { w: 'dismay', pos: 'v.', m: '실망시키다, 경악하게 하다', e: 'dis(떨어져) + 고대 프랑스어 esmayer(힘을 빼앗다)' },
+  { w: 'molecule', pos: 'n.', m: '분자', e: 'moles(덩어리) + cule(작은) → 작은 덩어리' },
+  { w: 'reservoir', pos: 'n.', m: '저수지', e: 're(뒤에) + servare(지키다) → 따로 간직해 두는 곳' },
+  { w: 'conform', pos: 'v.', m: '따르다, 순응하다', e: 'con(함께) + forma(모양) → 같은 모양으로 맞추다' },
+  { w: 'tangible', pos: 'adj.', m: '만질 수 있는, 실재하는', e: 'tangere(만지다) + ible' },
+  { w: 'archaeology', pos: 'n.', m: '고고학', e: 'arkhaios(오래된) + logia(학문)' },
+  { w: 'breed', pos: 'v.', m: '번식시키다, 기르다', e: '고대 영어 bredan(기르다) ← brod(새끼)' },
+  { w: 'embody', pos: 'v.', m: '구현하다, 구체화하다', e: 'em(안에) + body(몸) → 몸을 입히다' },
+  { w: 'intact', pos: 'adj.', m: '손상되지 않은', e: 'in(아닌) + tactus(건드린) → 손대지 않은' },
+  { w: 'trim', pos: 'v.', m: '다듬다, 손질하다', e: '고대 영어 trymman(튼튼히 하다) → 정돈하다 → 다듬다' },
+  { w: 'confine', pos: 'v.', m: '가두다, 한정하다', e: 'con(함께) + finis(경계) → 경계 안에 묶다' },
+  { w: 'anecdote', pos: 'n.', m: '일화', e: 'an(아닌) + ekdotos(출판된) → 공개되지 않은 이야기' },
+  { w: 'pledge', pos: 'n.', m: '서약, 약속, 맹세하다', e: '고대 프랑스어 plege(보증, 담보)' },
+  { w: 'temperate', pos: 'adj.', m: '온화한, 절제하는', e: 'temperare(적당히 섞다) → 지나치지 않은' },
+  { w: 'mock', pos: 'v.', m: '조롱하다', e: '고대 프랑스어 mocquer(비웃다)' },
+  { w: 'disclose', pos: 'v.', m: '공개하다, 드러내다', e: 'dis(반대) + claudere(닫다) → 닫힌 것을 열다' },
+  { w: 'grind', pos: 'v.', m: '갈다, 빻다', e: '고대 영어 grindan(갈다)' },
+  { w: 'damp', pos: 'adj.', m: '축축한', e: '중세 저지 독일어 damp(증기, 연기) → 축축한' },
+  { w: 'signify', pos: 'v.', m: '의미하다, 나타내다', e: 'signum(표시) + facere(만들다) → 표시를 만들다' },
+  { w: 'flourish', pos: 'v.', m: '번창하다', e: 'flos(꽃) → 꽃피우다' },
+  { w: 'sole', pos: 'adj.', m: '유일한', e: 'solus(혼자)' },
+  { w: 'divine', pos: 'adj.', m: '신의, 신성한', e: 'divus(신의) ← deus(신)' },
+  { w: 'revenue', pos: 'n.', m: '수입, 세입', e: 're(다시) + venire(오다) → 되돌아오는 것' },
+  { w: 'corrupt', pos: 'adj.', m: '부패한', e: 'cor(완전히) + rumpere(깨다) → 완전히 망가진' },
+  { w: 'equator', pos: 'n.', m: '적도', e: 'aequare(같게 하다) → 낮과 밤이 같아지는 선' },
+  { w: 'arithmetic', pos: 'n.', m: '산수, 연산', e: '그리스어 arithmos(수)' },
+  { w: 'cognitive', pos: 'adj.', m: '인지의', e: 'co(강조) + gnoscere(알다) → 알아차림의' },
+  { w: 'hinder', pos: 'v.', m: '방해하다', e: 'hind(뒤) → 뒤로 잡아당기다' },
+  { w: 'controversy', pos: 'n.', m: '논란', e: 'contra(반대) + vertere(돌리다) → 반대쪽으로 돌아선 논쟁' },
+  { w: 'flattery', pos: 'n.', m: '아첨', e: '고대 프랑스어 flater(쓰다듬다) → 쓰다듬듯 비위를 맞춤' },
+  { w: 'hygiene', pos: 'n.', m: '위생', e: '그리스어 hygieia(건강) ← 건강의 여신 Hygieia' },
+  { w: 'contaminate', pos: 'v.', m: '오염시키다', e: 'con(함께) + tangere(닿다) → 더러운 것과 닿아 물들다' },
+  { w: 'herd', pos: 'n.', m: '떼, 무리', e: '고대 영어 heord(가축 떼)' },
+  { w: 'subjective', pos: 'adj.', m: '주관적인', e: 'sub(아래) + jacere(던지다) → 생각하는 주체 아래에 놓인 → 주관적인' },
+  { w: 'trivial', pos: 'adj.', m: '사소한, 하찮은', e: 'tri(셋) + via(길) → 세 갈래 길, 누구나 지나는 흔한 곳 → 하찮은' },
+  { w: 'accord', pos: 'n.', m: '일치, 합의, 부여하다', e: 'ad(~에) + cor(마음) → 마음을 맞추다' },
+  { w: 'sewage', pos: 'n.', m: '하수, 오물', e: 'sewer(하수관) + age → 하수관으로 흘려보내는 것' },
+  { w: 'reconciliation', pos: 'n.', m: '화해, 조화', e: 're(다시) + con(함께) + ciliare(맺다) → 다시 한자리로 모음' },
+  { w: 'warrant', pos: 'n.', m: '영장, 보증하다, 정당화하다', e: '고대 북부 프랑스어 warant(보증, 보호) → 보증하는 문서' },
+  { w: 'complement', pos: 'n.', m: '보완물, 보충하다', e: 'com(완전히) + plere(채우다) → 모자란 곳을 채워 완성' },
+  { w: 'halt', pos: 'v.', m: '멈추다, 중단', e: '독일어 halten(멈추다)가 군대 구호 Halt!로 들어옴' },
+  { w: 'ponder', pos: 'v.', m: '숙고하다', e: 'ponderare(무게를 달다) ← pondus(무게) → 무게를 재듯 곰곰이 생각하다' },
+  { w: 'burglar', pos: 'n.', m: '빈집털이, 강도', e: '중세 라틴어 burgulator ← burgus(요새, 마을) → 집에 침입하는 도둑' },
+  { w: 'stroke', pos: 'n.', m: '뇌졸중, 타격, 쓰다듬다', e: '고대 영어 strican(쓰다듬다, 치다) → 한 번 치기·긋기 → 맞은 듯 쓰러지는 병' },
+  { w: 'cluster', pos: 'n.', m: '무리, 송이', e: '고대 영어 clyster(송이, 덩어리)' },
+  { w: 'plea', pos: 'n.', m: '간청, 탄원, 항변', e: '고대 프랑스어 plait(재판, 탄원) → 호소' },
+  { w: 'derive', pos: 'v.', m: '유래하다, 끌어내다', e: 'de(아래로) + rivus(시내) → 물줄기를 끌어내다' },
+  { w: 'lame', pos: 'adj.', m: '절뚝거리는, 설득력 없는', e: '고대 영어 lama(불구의) → 다리를 저는 → 힘 없는' },
+  { w: 'sour', pos: 'adj.', m: '신, 시큼한, 상한', e: '고대 영어 sur(시큼한)' },
+  { w: 'embrace', pos: 'v.', m: '껴안다, 받아들이다', e: 'em(안에) + bracchium(팔) → 팔 안에 안다' },
+  { w: 'swell', pos: 'v.', m: '부풀다, 팽창하다', e: '고대 영어 swellan(부풀어 오르다)' },
+  { w: 'accommodate', pos: 'v.', m: '수용하다, 맞추다', e: 'ac(~에) + com(함께) + modus(척도) → 알맞게 맞추다' },
+  { w: 'cozy', pos: 'adj.', m: '아늑한', e: '18세기 스코틀랜드·북잉글랜드에서 퍼진 말, 어원 불확실' },
+  { w: 'obsess', pos: 'v.', m: '사로잡다, 집착하다', e: 'ob(맞서) + sedere(앉다) → 둘러싸고 앉아 포위하다 → 마음을 점령하다' },
+  { w: 'suitor', pos: 'n.', m: '구혼자', e: 'sequi(따르다) → 쫓아다니는 사람 → 구혼자' },
+  { w: 'discreet', pos: 'adj.', m: '신중한, 분별 있는', e: 'dis(떨어져) + cernere(가르다) → 분별하는 → 조심스러운' },
+  { w: 'pioneer', pos: 'n.', m: '개척자, 선구자', e: '프랑스어 pionnier ← pion(보병) → 앞서 길을 닦는 병사' },
+  { w: 'assert', pos: 'v.', m: '주장하다', e: 'ad(~에) + serere(잇다) → 자기 쪽에 붙여 단호히 말하다' },
+  { w: 'elaborate', pos: 'adj.', m: '정교한, 상세히 설명하다', e: 'e(밖으로) + laborare(일하다) → 애써 만들어 낸 → 정교한' },
+  { w: 'auditorium', pos: 'n.', m: '강당, 객석', e: 'audire(듣다) + orium(장소) → 듣는 곳' },
+  { w: 'radioactive', pos: 'adj.', m: '방사성의', e: 'radius(광선) + active → 광선(방사선)을 내는' },
+  { w: 'impair', pos: 'v.', m: '손상시키다, 해치다', e: 'im(강조) + pejor(더 나쁜) → 더 나쁘게 만들다' },
+  { w: 'bruise', pos: 'n.', m: '멍, 멍들게 하다', e: '고대 영어 brysan(으깨다)' },
+  { w: 'attorney', pos: 'n.', m: '변호사, 대리인', e: 'at(~에) + tourner(돌리다) → 일을 맡겨진 사람' },
+  { w: 'sanitation', pos: 'n.', m: '위생(시설)', e: 'sanus(건강한) → sanitas(건강) → 위생' },
+  { w: 'heredity', pos: 'n.', m: '유전', e: 'heres(상속인) → 물려받음' },
+  { w: 'shed', pos: 'v.', m: '흘리다, 벗다, 헛간', e: '고대 영어 sceadan(나누다, 떨어뜨리다)' },
+  { w: 'plow', pos: 'n.', m: '쟁기, 쟁기질하다', e: '고대 영어 ploh(쟁기)' },
+  { w: 'prolong', pos: 'v.', m: '연장하다', e: 'pro(앞으로) + longus(긴) → 길게 늘이다' },
+  { w: 'induce', pos: 'v.', m: '유도하다, 유발하다', e: 'in(안으로) + ducere(이끌다) → 이끌어 들이다' },
+  { w: 'ornament', pos: 'n.', m: '장식(품)', e: 'ornare(꾸미다) + ment' },
+  { w: 'speculate', pos: 'v.', m: '추측하다, 투기하다', e: 'specula(망루) ← specere(보다) → 망루에서 내다봄' },
+  { w: 'breathtaking', pos: 'adj.', m: '숨이 멎을 듯한', e: 'breath(숨) + take(앗아 가다) + ing → 숨을 앗아 갈 만큼' },
+  { w: 'overturn', pos: 'v.', m: '뒤집다, 뒤엎다', e: 'over(위로) + turn(돌리다)' },
+  { w: 'ripe', pos: 'adj.', m: '익은, 무르익은', e: '고대 영어 ripe(수확할 때가 된) ← reap과 같은 뿌리' },
+  { w: 'conflict', pos: 'n.', m: '갈등, 충돌', e: 'con(함께) + fligere(치다) → 서로 부딪침' },
+  { w: 'vapor', pos: 'n.', m: '증기', e: '라틴어 vapor(김, 증기)' },
+  { w: 'tuition', pos: 'n.', m: '수업료, 교육', e: 'tueri(지켜보다) → tuitio(보호, 지도) → 가르침' },
+  { w: 'inhale', pos: 'v.', m: '숨을 들이쉬다', e: 'in(안으로) + halare(숨 쉬다)' },
+  { w: 'asymmetry', pos: 'n.', m: '비대칭', e: 'a(아닌) + syn(함께) + metron(잰 것) → 함께 재어 맞지 않음' },
+  { w: 'loop', pos: 'n.', m: '고리, 반복 구간', e: '중세 영어 loupe(고리), 어원 불확실' },
+  { w: 'withstand', pos: 'v.', m: '견디다, 버티다', e: 'with(맞서) + stand(서다) → 맞서 서 있다' },
+  { w: 'implement', pos: 'v.', m: '이행하다, 도구', e: 'in + plere(채우다) → 채워 완성하다 → 실행하다 / 쓰는 도구' },
+  { w: 'collide', pos: 'v.', m: '충돌하다', e: 'col(함께) + laedere(치다) → 서로 부딪치다' },
+  { w: 'memorial', pos: 'n.', m: '기념비, 추모의', e: 'memor(기억하는) → 기억을 위한 것' },
+  { w: 'wander', pos: 'v.', m: '돌아다니다, 헤매다', e: '고대 영어 wandrian(방랑하다) ← wendan(돌다)' },
+  { w: 'antibiotic', pos: 'n.', m: '항생제', e: 'anti(반대) + bios(생명) → 세균의 생명에 맞서는 것' },
+  { w: 'overtake', pos: 'v.', m: '추월하다, 덮치다', e: 'over(넘어) + take(잡다) → 넘어서 앞지르다' },
+  { w: 'preoccupation', pos: 'n.', m: '몰두, 선입견', e: 'pre(미리) + occupare(차지하다) → 마음을 미리 차지함' },
+  { w: 'provoke', pos: 'v.', m: '도발하다, 유발하다', e: 'pro(앞으로) + vocare(부르다) → 불러내어 자극하다' },
+  { w: 'sprain', pos: 'v.', m: '삐다', e: '고대 프랑스어 espreindre(짜내다, 비틀다)' },
+  { w: 'stool', pos: 'n.', m: '등받이 없는 의자', e: '고대 영어 stol(의자, 자리)' },
+  { w: 'fad', pos: 'n.', m: '일시적 유행', e: '19세기에 퍼진 구어, 어원 불확실' },
+  { w: 'rust', pos: 'n.', m: '녹, 녹슬다', e: '고대 영어 rust ← read(붉은)와 같은 뿌리 → 붉은 것' },
+  { w: 'gymnastics', pos: 'n.', m: '체조', e: 'gymnos(벌거벗은) → 벌거벗고 하던 운동' },
+  { w: 'gross', pos: 'adj.', m: '총(합)의, 엄청난, 역겨운', e: 'grossus(굵은, 두꺼운) → 큰 → 총합 / 거친' },
+  { w: 'tariff', pos: 'n.', m: '관세, 요금표', e: '아랍어 taʿrif(알림, 공지) → 공표된 요금' },
+  { w: 'yeast', pos: 'n.', m: '효모', e: '고대 영어 gist(끓어오르는 것) → 거품 내는 균' },
+  { w: 'skyscraper', pos: 'n.', m: '고층 건물', e: 'sky(하늘) + scrape(긁다) + er → 하늘을 긁는 건물' },
+  { w: 'spade', pos: 'n.', m: '삽', e: '고대 영어 spadu(삽)' },
+  { w: 'surplus', pos: 'n.', m: '잉여, 흑자', e: 'sur(넘어서) + plus(더) → 넘치는 것' },
+  { w: 'integration', pos: 'n.', m: '통합', e: 'in(아닌) + tangere(건드리다) → integer(온전한) → 하나로 온전히 합침' },
+  { w: 'hypothesis', pos: 'n.', m: '가설', e: 'hypo(아래) + tithenai(놓다) → 밑에 깔아 둔 가정' },
+  { w: 'affirm', pos: 'v.', m: '확언하다, 긍정하다', e: 'af(~에) + firmare(단단히 하다) → 확고히 말하다' },
+  { w: 'reed', pos: 'n.', m: '갈대', e: '고대 영어 hreod(갈대)' },
+  { w: 'fatigue', pos: 'n.', m: '피로', e: 'fatigare(지치게 하다)' },
+  { w: 'peel', pos: 'v.', m: '껍질을 벗기다, 껍질', e: 'pilare(털을 뽑다) → 벗겨 내다' },
+  { w: 'bias', pos: 'n.', m: '편견, 편향', e: '프랑스어 biais(비스듬한) → 한쪽으로 기울어짐' },
+  { w: 'tread', pos: 'v.', m: '밟다, 걷다', e: '고대 영어 tredan(밟다)' },
+  { w: 'vomit', pos: 'v.', m: '토하다', e: 'vomere(토하다)' },
+  { w: 'prophecy', pos: 'n.', m: '예언', e: 'pro(앞서) + phanai(말하다) → 앞서 말함' },
+  { w: 'correspond', pos: 'v.', m: '일치하다, 편지를 주고받다', e: 'cor(함께) + respondere(응답하다) → 서로 응답하다' },
+  { w: 'cling', pos: 'v.', m: '달라붙다, 매달리다', e: '고대 영어 clingan(들러붙다)' },
+  { w: 'mutation', pos: 'n.', m: '돌연변이, 변화', e: 'mutare(바꾸다)' },
+  { w: 'obscure', pos: 'adj.', m: '모호한, 잘 알려지지 않은', e: 'ob(덮어) + scurus(덮인) → 덮여서 안 보이는' },
+  { w: 'tyrant', pos: 'n.', m: '폭군', e: '그리스어 tyrannos(독재자)' },
+  { w: 'intriguing', pos: 'adj.', m: '흥미를 자아내는', e: 'intricare(얽히게 하다) → 마음을 얽어 끄는' },
+  { w: 'restrain', pos: 'v.', m: '억제하다, 제지하다', e: 're(뒤로) + stringere(팽팽히 당기다) → 뒤로 잡아당기다' },
+  { w: 'aid', pos: 'n.', m: '도움, 돕다', e: 'ad(~에게) + juvare(돕다)' },
+  { w: 'flour', pos: 'n.', m: '밀가루', e: 'flower와 같은 말 — 가루의 가장 좋은 부분(꽃)' },
+  { w: 'garment', pos: 'n.', m: '의복', e: '고대 프랑스어 garnement(장비, 옷) ← garnir(갖추다)' },
+  { w: 'spontaneous', pos: 'adj.', m: '자발적인, 자연 발생적인', e: 'sponte(자기 뜻으로)' },
+  { w: 'pasture', pos: 'n.', m: '목초지', e: 'pascere(풀을 먹이다) → 가축이 풀 뜯는 곳' },
+  { w: 'crust', pos: 'n.', m: '딱딱한 껍질, 빵 껍질', e: 'crusta(껍데기)' },
+  { w: 'plunge', pos: 'v.', m: '뛰어들다, 급락하다', e: 'plumbum(납) → 납처럼 가라앉다' },
+  { w: 'nasty', pos: 'adj.', m: '불쾌한, 못된', e: '중세 영어에서 온 말, 어원 불확실' },
+  { w: 'deed', pos: 'n.', m: '행위, 증서', e: '고대 영어 daed(행위) ← do(하다)' },
+  { w: 'canal', pos: 'n.', m: '운하, 수로', e: 'canalis(관, 수로)' },
+  { w: 'adverse', pos: 'adj.', m: '불리한, 해로운', e: 'ad(~쪽으로) + vertere(돌리다) → 맞서 돌아선 → 반대의' },
+  { w: 'censorship', pos: 'n.', m: '검열', e: 'censere(평가하다) → censor(검열관) + ship' },
+  { w: 'verbal', pos: 'adj.', m: '말의, 언어의', e: 'verbum(말, 단어)' },
+  { w: 'liberate', pos: 'v.', m: '해방하다', e: 'liber(자유로운)' },
+  { w: 'contemplate', pos: 'v.', m: '숙고하다', e: 'templum(점술가가 하늘을 관측하던 구역) → 한곳을 오래 응시하다' },
+  { w: 'segregation', pos: 'n.', m: '분리, 격리', e: 'se(따로) + grex(무리) → 무리에서 따로 떼어 놓음' },
+  { w: 'irrigation', pos: 'n.', m: '관개', e: 'in(안으로) + rigare(물을 대다)' },
+  { w: 'consecutive', pos: 'adj.', m: '연속적인', e: 'con(함께) + sequi(따르다) → 잇따르는' },
+  { w: 'refuge', pos: 'n.', m: '피난(처)', e: 're(뒤로) + fugere(달아나다) → 달아나 숨는 곳' },
+  { w: 'norm', pos: 'n.', m: '규범, 표준', e: 'norma(목수의 자, 기준)' },
+  { w: 'drowsy', pos: 'adj.', m: '졸리는', e: '고대 영어 drusian(가라앉다, 처지다)' },
+  { w: 'inspect', pos: 'v.', m: '검사하다, 점검하다', e: 'in(안을) + specere(보다) → 들여다봄' },
+  { w: 'primitive', pos: 'adj.', m: '원시의, 초기의', e: 'primus(첫째의) → 가장 처음의' },
+  { w: 'compress', pos: 'v.', m: '압축하다', e: 'com(함께) + premere(누르다)' },
+  { w: 'steep', pos: 'adj.', m: '가파른, 급격한', e: '고대 영어 steap(높이 솟은)' },
+  { w: 'cemetery', pos: 'n.', m: '공동묘지', e: '그리스어 koimeterion(잠자는 곳) ← koiman(재우다)' },
+  { w: 'feast', pos: 'n.', m: '잔치, 향연', e: 'festa(축제)' },
+  { w: 'commemorate', pos: 'v.', m: '기념하다', e: 'com(함께) + memorare(기억하다) → 함께 기억하다' },
+  { w: 'chronic', pos: 'adj.', m: '만성의', e: 'chronos(시간) → 오래 끄는' },
+  { w: 'designate', pos: 'v.', m: '지정하다', e: 'de(밖으로) + signare(표시하다)' },
+  { w: 'shiver', pos: 'v.', m: '떨다, 전율', e: '중세 영어 chiveren, 어원 불확실' },
+  { w: 'improvise', pos: 'v.', m: '즉흥적으로 하다', e: 'in(아닌) + providere(미리 보다) → 미리 준비하지 않은' },
+  { w: 'executive', pos: 'n.', m: '경영진, 행정의', e: 'ex(밖으로) + sequi(따르다) → 끝까지 따라가 실행하는' },
+  { w: 'authentic', pos: 'adj.', m: '진짜의, 진정한', e: 'authentes(직접 행한 사람) → 진본의' },
+  { w: 'compel', pos: 'v.', m: '강요하다', e: 'com(함께) + pellere(몰다) → 몰아붙이다' },
+  { w: 'incline', pos: 'v.', m: '기울다, ~하는 경향이 있다', e: 'in(안으로) + clinare(기울다) → ~쪽으로 기울이다' },
+  { w: 'attain', pos: 'v.', m: '달성하다, 이르다', e: 'at(~에) + tangere(닿다) → 닿다 → 이르다' },
+  { w: 'deficient', pos: 'adj.', m: '부족한', e: 'de(떨어져) + facere(하다) → 모자라게 함' },
+  { w: 'outlaw', pos: 'n.', m: '범법자, 금지하다', e: '고대 노르드어 utlagi(법의 보호 밖의 사람)' },
+  { w: 'squeeze', pos: 'v.', m: '짜다, 쥐어짜다', e: '고대 영어 cwysan(으깨다)' },
+  { w: 'consent', pos: 'n.', m: '동의(하다)', e: 'con(함께) + sentire(느끼다) → 같은 마음을 가지다' },
+  { w: 'nuisance', pos: 'n.', m: '골칫거리', e: 'nocere(해치다) → 해로운 것 → 성가신 것' },
+  { w: 'sweep', pos: 'v.', m: '쓸다, 휩쓸다', e: '고대 영어 swapan(쓸다)' },
+  { w: 'surpass', pos: 'v.', m: '능가하다', e: 'sur(넘어) + 프랑스어 passer(지나가다) → 지나쳐 앞서다' },
+  { w: 'correlation', pos: 'n.', m: '상관관계', e: 'cor(함께) + relation(관계)' },
+  { w: 'aesthetics', pos: 'n.', m: '미학', e: '그리스어 aisthesis(감각, 지각) → 감각으로 느끼는 아름다움' },
+  { w: 'earnest', pos: 'adj.', m: '진지한', e: '고대 영어 eornost(진지, 열의)' },
+  { w: 'tremble', pos: 'v.', m: '떨다', e: 'tremere(떨다)' },
+  { w: 'slaughter', pos: 'n.', m: '도살, 학살', e: '고대 노르드어 slatr(도살한 고기)' },
+  { w: 'deplete', pos: 'v.', m: '고갈시키다', e: 'de(반대) + plere(채우다) → 채운 것을 비우다' },
+  { w: 'blunt', pos: 'adj.', m: '무딘, 직설적인', e: '중세 영어 blunt, 어원 불확실 — 날이 무디다 → 말이 거침없다' },
+  { w: 'blow', pos: 'v.', m: '불다, 타격', e: '고대 영어 blawan(불다)' },
+  { w: 'ballot', pos: 'n.', m: '투표(용지)', e: '이탈리아어 ballotta(작은 공) → 작은 공으로 투표하던 데서' },
+  { w: 'resilience', pos: 'n.', m: '회복력, 탄성', e: 're(뒤로) + salire(뛰다) → 튕겨 되돌아옴' },
+  { w: 'amplify', pos: 'v.', m: '증폭하다', e: 'amplus(넓은, 큰) + facere(만들다)' },
+  { w: 'contradict', pos: 'v.', m: '반박하다, 모순되다', e: 'contra(반대) + dicere(말하다)' },
+  { w: 'falsify', pos: 'v.', m: '위조하다, 거짓으로 꾸미다', e: 'falsus(거짓의) + facere(만들다)' },
+  { w: 'steer', pos: 'v.', m: '조종하다, 이끌다', e: '고대 영어 steoran(이끌다)' },
+  { w: 'affection', pos: 'n.', m: '애정', e: 'af(~에) + facere(하다) → 마음이 쏠린 상태' },
+  { w: 'bid', pos: 'v.', m: '입찰하다, 명령하다', e: '고대 영어 biddan(요구하다)와 beodan(내놓다)이 합쳐진 말' },
+  { w: 'compost', pos: 'n.', m: '퇴비', e: 'compositum(함께 놓은 것) → 섞어 삭힌 것' },
+  { w: 'temperament', pos: 'n.', m: '기질', e: 'temperare(적당히 섞다) → 섞인 비율에 따라 정해지는 타고난 성질' },
+  { w: 'shred', pos: 'n.', m: '조각, 갈기갈기 찢다', e: '고대 영어 screade(조각)' },
+  { w: 'tribute', pos: 'n.', m: '찬사, 공물', e: 'tribuere(할당하다, 바치다) → 바치는 것' },
+  { w: 'artery', pos: 'n.', m: '동맥', e: 'arteria(공기관, 동맥)' },
+  { w: 'inherent', pos: 'adj.', m: '내재된, 고유한', e: 'in(안에) + haerere(붙다) → 안에 붙어 있는' },
+  { w: 'harass', pos: 'v.', m: '괴롭히다', e: '프랑스어 harer(개를 부추겨 덤비게 하다) → 끊임없이 공격하다' },
+  { w: 'narrative', pos: 'n.', m: '서사, 이야기', e: 'narrare(이야기하다) ← gnarus(아는)' },
+  { w: 'sneak', pos: 'v.', m: '살금살금 가다', e: '뱀처럼 기어가듯 몰래 움직이다 (기원은 불확실)' },
+  { w: 'obstruct', pos: 'v.', m: '막다, 방해하다', e: 'ob(맞서) + struere(쌓다) → 앞에 쌓아 막다' },
+  { w: 'heatstroke', pos: 'n.', m: '열사병', e: 'heat(열) + stroke(타격, 쓰러짐)' },
+  { w: 'oval', pos: 'adj.', m: '타원형(의)', e: 'ovum(알) → 달걀 모양' },
+  { w: 'vocation', pos: 'n.', m: '천직, 직업', e: 'vocare(부르다) → 부름받은 일' },
+  { w: 'fellow', pos: 'n.', m: '동료, 녀석', e: '고대 노르드어 felagi(동업자) ← fe(재물) + lag(놓다) → 재산을 함께 둔 사람' },
+  { w: 'mandate', pos: 'n.', m: '명령, 권한', e: 'manus(손) + dare(주다) → 손에 쥐여 준 명령' },
+  { w: 'perish', pos: 'v.', m: '죽다, 소멸하다', e: 'per(완전히) + ire(가다) → 완전히 가 버리다' },
+  { w: 'statesman', pos: 'n.', m: '정치가', e: 'state(국가) + man → 국가의 일을 맡은 사람' },
+  { w: 'connotation', pos: 'n.', m: '함축 의미', e: 'con(함께) + notare(표시하다) → 함께 따라붙는 의미' },
+  { w: 'mortgage', pos: 'n.', m: '담보 대출', e: '고대 프랑스어 mort(죽은) + gage(담보) → 갚으면 소멸하는 담보' },
+  { w: 'mimic', pos: 'v.', m: '흉내 내다', e: '그리스어 mimos(흉내 내는 배우)' },
+  { w: 'unearth', pos: 'v.', m: '파내다, 밝혀내다', e: 'un(반대) + earth(땅) → 땅에서 꺼내다' },
+  { w: 'wail', pos: 'v.', m: '통곡하다', e: '울부짖는 소리를 흉내 낸 말, 고대 노르드어에서 들어옴' },
+  { w: 'stride', pos: 'v.', m: '성큼성큼 걷다, 큰 걸음', e: '고대 영어 stridan(다리를 벌리다) → 다리를 크게 벌려 걷다' },
+  { w: 'applicant', pos: 'n.', m: '지원자', e: 'ap(~에게) + plicare(접다, 붙이다) → 붙어서 청하는 사람' },
+  { w: 'disprove', pos: 'v.', m: '반증하다', e: 'dis(반대) + prove(증명하다)' },
+  { w: 'hemisphere', pos: 'n.', m: '반구', e: 'hemi(절반) + sphaira(구)' },
+  { w: 'recur', pos: 'v.', m: '되풀이되다', e: 're(다시) + currere(달리다) → 다시 달려오다' },
+  { w: 'indigenous', pos: 'adj.', m: '토착의', e: 'indu(안에) + gignere(낳다) → 그 땅에서 태어난' },
+  { w: 'morale', pos: 'n.', m: '사기', e: '프랑스어 moral(정신적인) → 집단의 정신 상태' },
+  { w: 'yearn', pos: 'v.', m: '갈망하다', e: '고대 영어 giernan(바라다)' },
+  { w: 'sway', pos: 'v.', m: '흔들리다, 영향을 주다', e: '고대 노르드어 sveigja(구부리다, 흔들다)와 관련' },
+  { w: 'foremost', pos: 'adj.', m: '맨 앞의, 가장 중요한', e: 'fore(앞) + most → 가장 앞선' },
+  { w: 'regime', pos: 'n.', m: '정권, 체제', e: 'regere(다스리다)' },
+  { w: 'terminate', pos: 'v.', m: '끝내다', e: 'terminus(경계, 끝)' },
+  { w: 'rebel', pos: 'n.', m: '반역자, 저항하다', e: 're(다시) + bellum(전쟁) → 다시 전쟁을 일으키다' },
+  { w: 'meanwhile', pos: 'adv.', m: '그동안에', e: 'mean(중간) + while(동안) → 그 사이에' },
+  { w: 'folklore', pos: 'n.', m: '민속, 구전 문화', e: 'folk(민중) + lore(지식, 전승)' },
+  { w: 'preliminary', pos: 'adj.', m: '예비의', e: 'pre(앞서) + limen(문턱) → 문턱 앞의' },
+  { w: 'proliferation', pos: 'n.', m: '급증, 확산', e: 'proles(자손) + ferre(나르다) → 자손을 낳아 늘림' },
+  { w: 'amend', pos: 'v.', m: '개정하다, 고치다', e: 'e(밖으로) + mendum(흠) → 흠을 없애다' },
+  { w: 'recess', pos: 'n.', m: '휴식 시간, 휴회', e: 're(뒤로) + cedere(가다) → 뒤로 물러남' },
+  { w: 'autonomy', pos: 'n.', m: '자치, 자율', e: 'autos(스스로) + nomos(법) → 스스로 법을 정함' },
+  { w: 'mourn', pos: 'v.', m: '애도하다', e: '고대 영어 murnan(슬퍼하다)' },
+  { w: 'evoke', pos: 'v.', m: '불러일으키다', e: 'e(밖으로) + vocare(부르다) → 불러내다' },
+  { w: 'latitude', pos: 'n.', m: '위도, 자유', e: 'latus(넓은) → 넓이 → 위도·활동 폭' },
+  { w: 'maternal', pos: 'adj.', m: '어머니의', e: 'mater(어머니)' },
+  { w: 'prestigious', pos: 'adj.', m: '명망 있는', e: 'praestigium(눈속임, 환상) → 눈을 현혹하는 → 위신' },
+  { w: 'friction', pos: 'n.', m: '마찰, 불화', e: 'fricare(문지르다) → 맞비빔' },
+  { w: 'insomnia', pos: 'n.', m: '불면증', e: 'in(아닌) + somnus(잠)' },
+  { w: 'intermediate', pos: 'adj.', m: '중간의', e: 'inter(사이) + medius(가운데)' },
+  { w: 'shatter', pos: 'v.', m: '산산이 부수다', e: '중세 영어 schateren(흩뿌리다)' },
+  { w: 'paradigm', pos: 'n.', m: '패러다임, 모범', e: 'para(곁에) + deiknynai(보여 주다) → 나란히 놓고 보이는 본보기' },
+  { w: 'pollute', pos: 'v.', m: '오염시키다', e: 'pollutus(더럽혀진)' },
+  { w: 'altruism', pos: 'n.', m: '이타주의', e: '프랑스어 altruisme ← alter(다른 사람) → 남을 위함' },
+  { w: 'fiber', pos: 'n.', m: '섬유, 식이섬유', e: 'fibra(섬유, 가는 실)' },
+  { w: 'spectator', pos: 'n.', m: '관중', e: 'spectare(바라보다)' },
+  { w: 'medieval', pos: 'adj.', m: '중세의', e: 'medium(가운데) + aevum(시대) → 중간 시대' },
+  { w: 'analogy', pos: 'n.', m: '유추, 비유', e: 'ana(~에 따라) + logos(비례) → 비례 관계' },
+  { w: 'snatch', pos: 'v.', m: '낚아채다', e: '중세 영어 snacchen, 어원 불확실' },
+  { w: 'composure', pos: 'n.', m: '침착', e: 'compose(침착하게 하다) + ure' },
+  { w: 'indulge', pos: 'v.', m: '마음껏 하다, 응석을 받아 주다', e: 'indulgere(너그럽게 허락하다) → 원하는 대로 봐주다' },
+  { w: 'meadow', pos: 'n.', m: '목초지, 풀밭', e: '고대 영어 maed(풀밭) ← mow(베다)와 같은 뿌리' },
+  { w: 'complacent', pos: 'adj.', m: '자기만족에 빠진', e: 'com(강조) + placere(기쁘게 하다) → 스스로 흡족한' },
+  { w: 'explicit', pos: 'adj.', m: '명시적인', e: 'ex(밖으로) + plicare(접다) → 펼쳐 놓은 → 분명한' },
+  { w: 'sturdy', pos: 'adj.', m: '튼튼한', e: '고대 프랑스어 estourdi(깜짝 놀란, 어지러운) → 완고한 → 튼튼한' },
+  { w: 'primate', pos: 'n.', m: '영장류', e: 'primus(첫째의) → 첫째 가는 동물' },
+  { w: 'imperial', pos: 'adj.', m: '제국의', e: 'imperium(명령권, 통치) ← imperare(명령하다)' },
+  { w: 'populate', pos: 'v.', m: '살다, 거주시키다', e: 'populus(사람들)' },
+  { w: 'frugal', pos: 'adj.', m: '검소한', e: 'frux(열매, 결실) → frugi(쓸모 있는) → 알뜰한' },
+  { w: 'rejoice', pos: 'v.', m: '크게 기뻐하다', e: 're(강조) + 고대 프랑스어 joir(기뻐하다) ← joy' },
+  { w: 'comprise', pos: 'v.', m: '구성하다, 포함하다', e: 'com(함께) + prehendere(붙잡다) → 한데 쥐다' },
+  { w: 'textile', pos: 'n.', m: '직물', e: 'texere(짜다)' },
+  { w: 'approximate', pos: 'adj.', m: '대략의, 근접하다', e: 'ap(~에) + proximus(가장 가까운)' },
+  { w: 'terrain', pos: 'n.', m: '지형', e: 'terra(땅)' },
+  { w: 'clumsy', pos: 'adj.', m: '서투른', e: '고대 노르드어 klumsa(감각이 마비되다) → 손이 굳은 듯 어설픈' },
+  { w: 'predator', pos: 'n.', m: '포식자', e: 'praedari(약탈하다) ← praeda(먹이)' },
+  { w: 'condense', pos: 'v.', m: '응축하다, 요약하다', e: 'con(강조) + densus(빽빽한)' },
+  { w: 'poise', pos: 'n.', m: '침착, 균형', e: '고대 프랑스어 peser(무게를 달다) → 무게의 균형 → 침착한 자세' },
+  { w: 'disciple', pos: 'n.', m: '제자', e: 'discipulus(학생)' },
+  { w: 'gust', pos: 'n.', m: '돌풍', e: '고대 노르드어 gustr(돌풍)' },
+  { w: 'compatible', pos: 'adj.', m: '호환되는, 양립 가능한', e: 'com(함께) + pati(견디다) → 함께 견딜 수 있는' },
+  { w: 'verdict', pos: 'n.', m: '평결', e: 'ver(진실) + dicere(말하다) → 진실을 말함' },
+  { w: 'stall', pos: 'n.', m: '가판대, 마구간, 시동이 꺼지다', e: '고대 영어 steall(서 있는 자리)' },
+  { w: 'apparatus', pos: 'n.', m: '기구, 장치', e: 'ap(~를 위해) + parare(준비하다) → 준비해 둔 도구' },
+  { w: 'hail', pos: 'n.', m: '우박, 환호하다', e: '우박은 고대 영어 hagol(우박), 환호하다는 고대 노르드어 heill(건강)에서 — 서로 다른 뿌리' },
+  { w: 'outburst', pos: 'n.', m: '폭발, 분출', e: 'out(밖으로) + burst(터지다)' },
+  { w: 'vanity', pos: 'n.', m: '허영', e: 'vanus(텅 빈) → 헛됨 → 허영' },
+  { w: 'obesity', pos: 'n.', m: '비만', e: 'ob(강조) + edere(먹다) → 너무 먹어 살찐' },
+  { w: 'indispensable', pos: 'adj.', m: '없어서는 안 될', e: 'in(아닌) + dis(떨어져) + pendere(달다) → 따로 덜어 낼 수 없는' },
+  { w: 'outdated', pos: 'adj.', m: '구식의', e: 'out(벗어난) + date(날짜) → 시대에서 벗어난' },
+  { w: 'counteract', pos: 'v.', m: '상쇄하다, 중화하다', e: 'counter(반대) + act → 맞서 작용하다' },
+  { w: 'discourse', pos: 'n.', m: '담론, 담화', e: 'dis(사방으로) + currere(달리다) → 이리저리 오가는 말' },
+  { w: 'bribe', pos: 'n.', m: '뇌물(을 주다)', e: '고대 프랑스어 bribe(구걸하는 빵 조각) → 거저 얻는 것 → 뇌물' },
+  { w: 'perspiration', pos: 'n.', m: '땀', e: 'per(통해) + spirare(숨 쉬다) → 피부로 내쉬는 것' },
+  { w: 'retention', pos: 'n.', m: '보유, 유지', e: 're(뒤로) + tenere(붙잡다) → 붙들어 둠' },
+  { w: 'notion', pos: 'n.', m: '개념, 생각', e: 'noscere(알다) → notio(인식)' },
+  { w: 'oversee', pos: 'v.', m: '감독하다', e: 'over(위에서) + see(보다)' },
+  { w: 'contagious', pos: 'adj.', m: '전염되는', e: 'con(함께) + tangere(닿다) → 서로 닿아 옮는' },
+  { w: 'deterioration', pos: 'n.', m: '악화', e: 'deterior(더 나쁜) → 점점 나빠짐' },
+  { w: 'janitor', pos: 'n.', m: '관리인', e: 'janua(문) → 문지기' },
+  { w: 'blush', pos: 'v.', m: '얼굴을 붉히다', e: '고대 영어 blyscan(붉게 빛나다)' },
+  { w: 'intervene', pos: 'v.', m: '개입하다', e: 'inter(사이) + venire(오다) → 사이에 들어오다' },
+  { w: 'nomad', pos: 'n.', m: '유목민', e: '그리스어 nomas(떠도는) ← nemein(풀을 먹이다)' },
+  { w: 'cuisine', pos: 'n.', m: '요리(법)', e: '프랑스어 cuisine(부엌, 요리) ← coquere(요리하다)' },
+  { w: 'solvent', pos: 'n.', m: '용매, 지불 능력이 있는', e: 'solvere(풀다) → 녹이는 것' },
+  { w: 'ascent', pos: 'n.', m: '상승, 오르막', e: 'a(~로) + scandere(오르다)' },
+  { w: 'spur', pos: 'n.', m: '박차, 자극하다', e: '고대 영어 spora(말을 모는 쇠붙이)' },
+  { w: 'scheme', pos: 'n.', m: '계획, 책략', e: '그리스어 skhema(형태, 모양) → 짜 놓은 구도' },
+  { w: 'brisk', pos: 'adj.', m: '활기찬, 빠른', e: '16세기에 쓰이기 시작한 말, 어원 불확실' },
+  { w: 'exile', pos: 'n.', m: '추방, 망명', e: 'ex(밖으로) → 고향 땅 밖으로 내쫓김' },
+  { w: 'unanimous', pos: 'adj.', m: '만장일치의', e: 'unus(하나) + animus(마음) → 한마음의' },
+  { w: 'deviation', pos: 'n.', m: '일탈, 편차', e: 'de(떨어져) + via(길) → 길에서 벗어남' },
+  { w: 'dissolve', pos: 'v.', m: '녹다, 해산하다', e: 'dis(떨어져) + solvere(풀다)' },
+  { w: 'constraint', pos: 'n.', m: '제약', e: 'con(함께) + stringere(묶다) → 함께 옭아맴' },
+  { w: 'fling', pos: 'v.', m: '내던지다', e: '중세 영어, 고대 노르드어 계통, 어원 불확실' },
+  { w: 'delude', pos: 'v.', m: '속이다', e: 'de(아래로) + ludere(놀다) → 놀려 속이다' },
+  { w: 'dehydrate', pos: 'v.', m: '탈수시키다', e: 'de(제거) + hydor(물) → 물기를 빼다' },
+  { w: 'metabolism', pos: 'n.', m: '신진대사', e: 'meta(변화) + ballein(던지다) → 바뀌는 과정' },
+  { w: 'pinch', pos: 'v.', m: '꼬집다, 조금', e: '고대 북부 프랑스어 pincier(꼬집다)' },
+  { w: 'punctual', pos: 'adj.', m: '시간을 엄수하는', e: 'punctum(점) → 정확한 한 점의 때' },
+  { w: 'arbitrary', pos: 'adj.', m: '임의적인', e: 'arbiter(심판) → 심판 마음대로 정하는' },
+  { w: 'aviate', pos: 'v.', m: '비행하다', e: 'avis(새) → 새처럼 날다' },
+  { w: 'headquarters', pos: 'n.', m: '본부', e: 'head(머리) + quarters(숙소) → 머리가 되는 곳' },
+  { w: 'delegate', pos: 'n.', m: '대표, 위임하다', e: 'de(아래로) + legare(보내다) → 대리로 보냄' },
+  { w: 'thorn', pos: 'n.', m: '가시', e: '고대 영어 thorn(가시)' },
+  { w: 'renovate', pos: 'v.', m: '개조하다', e: 're(다시) + novare(새롭게 하다)' },
+  { w: 'wrench', pos: 'v.', m: '비틀다, 렌치', e: '고대 영어 wrencan(비틀다)' },
+  { w: 'retort', pos: 'v.', m: '쏘아붙이다, 반박', e: 're(되돌려) + torquere(비틀다) → 되받아 던짐' },
+  { w: 'shudder', pos: 'v.', m: '몸서리치다', e: '중세 네덜란드어 schudden(흔들다)' },
+  { w: 'coexist', pos: 'v.', m: '공존하다', e: 'co(함께) + exist(존재하다)' },
+  { w: 'drawback', pos: 'n.', m: '단점', e: 'draw(끌어당기다) + back(뒤로) → 뒤로 잡아당기는 것' },
+  { w: 'dispute', pos: 'v.', m: '논쟁하다, 분쟁', e: 'dis(떨어져) + putare(생각하다, 셈하다) → 서로 다르게 따져 보다' },
+  { w: 'stack', pos: 'n.', m: '더미, 쌓다', e: '고대 노르드어 stakkr(건초 더미)' },
+  { w: 'reprove', pos: 'v.', m: '꾸짖다', e: 're(다시) + probare(시험하다) → 잘못을 따져 나무라다' },
+  { w: 'engross', pos: 'v.', m: '몰두시키다', e: 'en(안에) + gros(큰) → 크게 사들이다 → 마음을 온통 차지하다' },
+  { w: 'bulk', pos: 'n.', m: '대부분, 부피', e: '고대 노르드어 bulki(짐, 화물)' },
+  { w: 'despise', pos: 'v.', m: '경멸하다', e: 'de(아래로) + specere(보다) → 내려다보다' },
+  { w: 'manuscript', pos: 'n.', m: '원고, 필사본', e: 'manu(손) + scribere(쓰다) → 손으로 쓴 것' },
+  { w: 'flee', pos: 'v.', m: '달아나다', e: '고대 영어 fleon(달아나다)' },
+  { w: 'prehistoric', pos: 'adj.', m: '선사 시대의', e: 'pre(전) + historia(역사)' },
+  { w: 'predecessor', pos: 'n.', m: '전임자', e: 'pre(앞서) + decedere(물러나다) → 앞서 떠난 사람' },
+  { w: 'alienate', pos: 'v.', m: '소외시키다', e: 'alienus(남의) ← alius(다른)' },
+  { w: 'subordinate', pos: 'adj.', m: '종속된, 부하', e: 'sub(아래) + ordinare(순서를 정하다) → 아래 서열에 둔' },
+  { w: 'furnish', pos: 'v.', m: '제공하다, 가구를 갖추다', e: '프랑스어 fournir(공급하다)' },
+  { w: 'fume', pos: 'n.', m: '연기, 씩씩대다', e: 'fumus(연기)' },
+  { w: 'staple', pos: 'n.', m: '주식, 주요한', e: '중세 네덜란드어 stapel(시장, 저장소) → 주요 교역품' },
+  { w: 'dispersal', pos: 'n.', m: '분산', e: 'dis(떨어져) + spargere(뿌리다)' },
+  { w: 'eloquent', pos: 'adj.', m: '웅변의, 유창한', e: 'e(밖으로) + loqui(말하다) → 막힘없이 말하는' },
+  { w: 'innermost', pos: 'adj.', m: '가장 깊은', e: 'inner(안쪽의) + most' },
+  { w: 'hazardous', pos: 'adj.', m: '위험한', e: '프랑스어 hasard(우연, 주사위 놀이) ← 아랍어 az-zahr(주사위)' },
+  { w: 'detergent', pos: 'n.', m: '세제', e: 'de(떨어져) + tergere(닦다) → 닦아 내는 것' },
+  { w: 'rash', pos: 'adj.', m: '성급한, 발진', e: '게르만어 계통 rasch(재빠른) → 앞뒤 재지 않는 성급한' },
+  { w: 'bypass', pos: 'n.', m: '우회(로), 우회하다', e: 'by(옆으로) + pass(지나다)' },
+  { w: 'dispense', pos: 'v.', m: '나눠 주다, 면제하다', e: 'dis(사방으로) + pendere(무게를 달다) → 저울에 달아 나눠 줌' },
+  { w: 'tact', pos: 'n.', m: '재치, 요령', e: 'tangere(만지다) → 섬세하게 건드림' },
+  { w: 'monotonous', pos: 'adj.', m: '단조로운', e: 'monos(하나) + tonos(음) → 한 가지 음의' },
+  { w: 'eligible', pos: 'adj.', m: '자격이 있는', e: 'e(밖으로) + legere(고르다) → 골라 뽑힐 만한' },
+  { w: 'hierarchy', pos: 'n.', m: '계층', e: 'hieros(신성한) + archia(지배) → 성직자의 신성한 서열' },
+  { w: 'enact', pos: 'v.', m: '제정하다, 상연하다', e: 'en(~하게 하다) + act → 법으로 만들다' },
+  { w: 'legitimate', pos: 'adj.', m: '합법적인', e: 'lex(법) → 법에 맞는' },
+  { w: 'landslide', pos: 'n.', m: '산사태, 압승', e: 'land(땅) + slide(미끄러지다) → 땅이 무너짐 → 압도적 승리' },
+  { w: 'plausible', pos: 'adj.', m: '그럴듯한', e: 'plaudere(박수치다) → 박수 받을 만한 → 그럴듯한' },
+  { w: 'endow', pos: 'v.', m: '부여하다, 기부하다', e: 'en(안에) + dower(지참금, 재산) → 재산을 주다' },
+  { w: 'extrinsic', pos: 'adj.', m: '외적인', e: 'extrinsecus(밖에서) ↔ intrinsic(내적인)' },
+  { w: 'frantic', pos: 'adj.', m: '정신없는, 필사적인', e: '그리스어 phrēn(마음·정신, 원래는 횡격막) → phrenitis(뇌염, 정신착란) → phrenitikos → 라틴어 phreneticus → 고대 프랑스어 frenetique → 중세 영어 frentik → 정신이 나간 듯 날뛰는 (frenzy·frenetic·schizophrenia의 -phren-과 같은 뿌리)' },
+  { w: 'moan', pos: 'v.', m: '신음하다', e: '중세 영어 mone(탄식), 어원 불확실' },
+  { w: 'subdue', pos: 'v.', m: '진압하다, 억누르다', e: 'sub(아래) + ducere(이끌다) → 아래로 끌어내리다' },
+  { w: 'conviction', pos: 'n.', m: '확신, 유죄 판결', e: 'con(완전히) + vincere(이기다) → 완전히 설득됨 / 유죄를 입증함' },
+  { w: 'stout', pos: 'adj.', m: '튼튼한, 뚱뚱한', e: '고대 프랑스어 estout(강한, 용감한) ← 게르만어' },
+  { w: 'reckon', pos: 'v.', m: '계산하다, 생각하다', e: '고대 영어 gerecenian(설명하다, 세다)' },
+  { w: 'entail', pos: 'v.', m: '수반하다', e: 'en(~하게 하다) + tail(상속 제한 법률 용어) → 반드시 따라오게 묶다' },
+  { w: 'offspring', pos: 'n.', m: '자식, 새끼', e: 'off(떨어져) + spring(솟다) → 몸에서 솟아 나온 것' },
+  { w: 'detest', pos: 'v.', m: '몹시 싫어하다', e: 'de(떨어져) + testari(증언하다) → 저주하듯 증언하다' },
+  { w: 'defy', pos: 'v.', m: '거역하다, 무시하다', e: 'de(떨어져) + fidus(신뢰) → 신뢰를 거두다 → 도전하다' },
+  { w: 'inference', pos: 'n.', m: '추론', e: 'in(안으로) + ferre(나르다) → 안으로 끌어들인 결론' },
+  { w: 'refraction', pos: 'n.', m: '굴절', e: 're(뒤로) + frangere(부수다) → 꺾임' },
+  { w: 'dusk', pos: 'n.', m: '황혼', e: '고대 영어 dox(어두운)' },
+  { w: 'antagonist', pos: 'n.', m: '적대자', e: 'anti(반대) + agonistes(싸우는 사람)' },
+  { w: 'thrust', pos: 'v.', m: '세게 밀다', e: '고대 노르드어 thrysta(밀다)' },
+  { w: 'creed', pos: 'n.', m: '신조', e: 'credo(나는 믿는다)' },
+  { w: 'equate', pos: 'v.', m: '동일시하다', e: 'aequare(같게 하다) ← aequus(같은)' },
+  { w: 'misplace', pos: 'v.', m: '잘못 두다', e: 'mis(잘못) + place(두다)' },
+  { w: 'auditory', pos: 'adj.', m: '청각의', e: 'audire(듣다)' },
+  { w: 'missionary', pos: 'n.', m: '선교사', e: 'mittere(보내다) → 보냄을 받은 사람' },
+  { w: 'cosmopolitan', pos: 'adj.', m: '세계적인, 국제적인', e: 'kosmos(세계) + polites(시민) → 세계 시민의' },
+  { w: 'embed', pos: 'v.', m: '박아 넣다', e: 'em(안에) + bed(바닥) → 바닥에 깊이 넣다' },
+  { w: 'erosion', pos: 'n.', m: '침식', e: 'e(밖으로) + rodere(갉다) → 갉아 없앰' },
+  { w: 'feat', pos: 'n.', m: '위업', e: 'factum(행한 일) ← facere(하다)' },
+  { w: 'utensil', pos: 'n.', m: '기구, 용구', e: 'uti(쓰다) → 쓸모 있는 것' },
+  { w: 'intrude', pos: 'v.', m: '침입하다', e: 'in(안으로) + trudere(밀다)' },
+  { w: 'grumble', pos: 'v.', m: '투덜대다', e: '중세 네덜란드어 grommen(투덜대다)' },
+  { w: 'landfill', pos: 'n.', m: '쓰레기 매립(지)', e: 'land(땅) + fill(메우다)' },
+  { w: 'scrutiny', pos: 'n.', m: '정밀 조사', e: 'scrutari(뒤져 살피다) ← scruta(잡동사니)' },
+  { w: 'reckless', pos: 'adj.', m: '무모한', e: 'reck(걱정하다) + less → 신경 쓰지 않는' },
+  { w: 'synthetic', pos: 'adj.', m: '합성의', e: 'syn(함께) + tithenai(놓다) → 함께 놓아 만든' },
+  { w: 'outset', pos: 'n.', m: '시작, 착수', e: 'out(밖으로) + set(출발하다) → 출발점' },
+  { w: 'peril', pos: 'n.', m: '위험', e: 'periculum(시험, 위험)' },
+  { w: 'liable', pos: 'adj.', m: '책임이 있는, ~하기 쉬운', e: 'ligare(묶다) → 묶여 있는' },
+  { w: 'pitfall', pos: 'n.', m: '함정, 위험', e: 'pit(구덩이) + fall(떨어지다) → 빠지는 구덩이' },
+  { w: 'uncover', pos: 'v.', m: '드러내다', e: 'un(반대) + cover(덮다)' },
+  { w: 'limb', pos: 'n.', m: '팔다리, 큰 가지', e: '고대 영어 lim(손발)' },
+  { w: 'setback', pos: 'n.', m: '차질, 후퇴', e: 'set(놓다) + back(뒤로) → 뒤로 밀려 놓임' },
+  { w: 'prudent', pos: 'adj.', m: '신중한', e: 'providens(내다보는) ← pro(앞) + videre(보다) → 앞을 내다보는' },
+  { w: 'solidify', pos: 'v.', m: '굳히다', e: 'solidus(단단한) + facere(만들다)' },
+  { w: 'grudge', pos: 'n.', m: '원한', e: '고대 프랑스어 grouchier(투덜대다) → 속으로 품은 원망' },
+  { w: 'transcend', pos: 'v.', m: '초월하다', e: 'trans(넘어서) + scandere(오르다)' },
+  { w: 'tangle', pos: 'v.', m: '엉키다, 엉킨 것', e: '중세 영어 tangilen, 스칸디나비아어 계통 → 얽히다' },
+  { w: 'subsidy', pos: 'n.', m: '보조금', e: 'sub(아래) + sedere(앉다) → subsidium(뒤에 대기하는 예비대) → 뒤에서 돕는 돈' },
+  { w: 'pollination', pos: 'n.', m: '수분', e: 'pollen(꽃가루) → 꽃가루를 옮김' },
+  { w: 'prosper', pos: 'v.', m: '번영하다', e: 'prosperus(운이 좋은) ← pro(향해) + spes(희망)' },
+  { w: 'veterinarian', pos: 'n.', m: '수의사', e: 'veterina(짐 나르는 가축) → 가축을 돌보는 사람' },
+  { w: 'cumulative', pos: 'adj.', m: '누적되는', e: 'cumulus(쌓인 더미)' },
+  { w: 'discrete', pos: 'adj.', m: '별개의, 분리된', e: 'dis(떨어져) + cernere(가르다) → 갈라진' },
+  { w: 'fluctuation', pos: 'n.', m: '변동', e: 'fluctus(물결) ← fluere(흐르다)' },
+];
+// 묶어 고르기 — 어원(공통 어근·접두사)과 주제(의미). 단어장이 바뀌면 그 단어장의 단어로 다시 센다. 둘을 함께 고르면 교집합.
+function etyGroups(words) {
+  const SKIP = new Set(['con', 'com', 'cor', 'col', 'syn', 'dis', 'sub', 'pre', 'pro', 'contra', 'per', 'sur', 'over', 'out', 'with', 'take', 'back', 'draw', 'land', 'set', 'mis', 'anti', 'inter', 'ex', 'cover']);
+  const PREFIX = [['con', 'con-·com- 함께', ['con', 'com', 'cor', 'col', 'syn']], ['dis', 'dis- 떨어져', ['dis']], ['sub', 'sub- 아래', ['sub']], ['pre', 'pre- 미리', ['pre']], ['pro', 'pro- 앞으로', ['pro']]];
+  const info = words.map(w => {
+    const t = new Map();
+    for (const m of w.e.matchAll(/([a-z][a-zA-Z-]{2,})\(([^)]+)\)/g)) { const k = m[1].toLowerCase(); if (!t.has(k)) t.set(k, m[2]); }
+    return t;
+  });
+  const roots = new Map();
+  words.forEach((w, i) => info[i].forEach((g, k) => {
+    if (SKIP.has(k)) return;
+    if (!roots.has(k)) roots.set(k, { label: `${k} ${g}`, words: [] });
+    roots.get(k).words.push(w);
+  }));
+  const groups = [];
+  PREFIX.forEach(([key, label, ks]) => {
+    const ws = words.filter((w, i) => ks.some(k => info[i].has(k)));
+    if (ws.length >= 4) groups.push({ key, label, words: ws });
+  });
+  [...roots].filter(([, o]) => o.words.length >= 3).sort((x, y) => y[1].words.length - x[1].words.length)
+    .forEach(([k, o]) => groups.push({ key: k, label: o.label, words: o.words }));
+  const used = new Set(groups.flatMap(g => g.words));
+  groups.push({ key: 'etc', label: '기타', words: words.filter(w => !used.has(w)) });
+  return groups.filter(g => g.words.length);
+}
+function themeGroups(words) {
+  const by = new Map((window.THEMES || []).map(t => [t.key, { key: t.key, label: t.label, words: [] }]));
+  const misc = { key: 'misc', label: '그 밖', words: [] };
+  words.forEach(w => {
+    const k = w.w.toLowerCase();
+    const t = (window.THEMES || []).find(x => x.words.has(k));
+    (t ? by.get(t.key) : misc).words.push(w);
+  });
+  return [...by.values(), misc].filter(g => g.words.length);
+}
+// 별표는 단어 기준 — 두 단어장에 같은 단어가 있으면 별표도 함께 보인다
+[YEONGILMAN, WORDMASTER].forEach(a => a.forEach(w => {
+  w.k = w.w;
+  const x = (window.EXAMPLES || {})[w.w.toLowerCase()];
+  if (x) { w.x = x[0]; w.xk = x[1]; }
+}));
+// '전체'는 두 단어장을 합치되, 겹치는 단어는 한 번만 (VOCA 쪽을 쓴다)
+const ALLWORDS = YEONGILMAN.concat((() => {
+  const seen = new Set(YEONGILMAN.map(w => w.w.toLowerCase()));
+  return WORDMASTER.filter(w => !seen.has(w.w.toLowerCase()));
+})());
+const DECKS = [
+  { id: 'all', name: '전체', words: ALLWORDS },
+  { id: 'yeongilman', name: 'VOCA', words: YEONGILMAN },
+  { id: 'wordmaster', name: '워드', words: WORDMASTER },
+];
+
+const $ = id => document.getElementById(id);
+const pad = n => String(n).padStart(2, '0');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const TTS = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const STAR = '<svg viewBox="0 0 24 24"><path d="M12 3.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg>';
+
+// settings + stars (per-viewer, browser only)
+const KEY = 'sori-vocab-v1';
+const S = { order: 'en-ko', rate: 0.9, rep: 2, gap: 2, next: 1, hide: false, hideMean: false, shuffle: true, starOnly: false, enVoice: '', koVoice: '', deck: 'all', grp: '', thm: '', picOnly: false, sleep: 0, viz: true, pic: false, vol: 1 };
+const SAY = { word: true, mean: true, ety: true, ex: true, exko: false };   // 읽어 줄 항목
+const SAY_KEYS = Object.keys(SAY);
+S.say = { ...SAY };
+let stars = new Set();
+let WORDS = [];   // 지금 고른 단어장·파트의 단어
+try {
+  const d = JSON.parse(localStorage.getItem(KEY) || '{}');
+  if (d.S) Object.assign(S, d.S);
+  S.say = { ...SAY, ...(d.S && d.S.say) };   // 저장본에 없는 항목은 기본값으로
+  if (Array.isArray(d.stars)) stars = new Set(d.stars.map(k => String(k).replace(/^wordmaster:/, '')));   // 예전 키 이름 정리
+} catch (e) {}
+function save() { try { localStorage.setItem(KEY, JSON.stringify({ S, stars: [...stars] })); } catch (e) {} }
+
+const els = {
+  card: $('card'), pos: $('pos'), count: $('count'), word: $('word'), mean: $('mean'), note: $('note'), ety: $('ety'),
+  ex: $('ex'), exEn: $('exEn'), exKo: $('exKo'),
+  bar: $('bar'), cardStar: $('cardStar'), list: $('list'), play: $('play'),
+};
+
+// deck = order of word indices for this round; pos = place in deck
+let deck = [], pos = 0, swiped = 0, peek = -1;
+function buildDeck(keep) {
+  let d = WORDS.map((_, i) => i);
+  if (S.starOnly) { const f = d.filter(i => stars.has(WORDS[i].k)); if (f.length) d = f; }
+  if (S.shuffle) {
+    for (let i = d.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [d[i], d[j]] = [d[j], d[i]]; }
+    if (keep != null && d.includes(keep)) { d.splice(d.indexOf(keep), 1); d.unshift(keep); }
+  }
+  deck = d;
+  pos = keep != null && deck.includes(keep) ? deck.indexOf(keep) : 0;
+  $('starHint').hidden = !(S.starOnly && !WORDS.some(w => stars.has(w.k)));
+}
+
+// 단어 한 장 해설(viz.js) — 데스크톱은 목록 위(카드 옆), 모바일은 카드 바로 아래
+const VFILE = new Set();      // viz/index.json 에 있는 단어 (파일로 된 그림만 보여 주는 해설)
+const vload = new Map();      // 단어 → 불러오는 중/끝난 Promise
+const vk = w => w.w.toLowerCase();
+const hasViz = w => !!(window.VIZ && window.VIZ[vk(w)]) || VFILE.has(vk(w));
+const hasPic = w => !!(window.VIZ && window.VIZ[vk(w)] && window.VIZ[vk(w)].pic) || VFILE.has(vk(w));
+const hasClip = w => !!(window.CLIPS && window.CLIPS[vk(w)]);
+function ensureViz(w) {
+  const k = vk(w);
+  if (window.VIZ[k] || !VFILE.has(k)) return Promise.resolve();
+  if (!vload.has(k)) vload.set(k, fetch(`viz/${encodeURIComponent(k)}.svg`).then(r => r.ok ? r.text() : Promise.reject()).then(t => {
+    const a = n => (t.match(new RegExp(`data-${n}="([^"]*)"`)) || [])[1];
+    window.VIZ[k] = { pic: true, n: Number(a('n')) || 3, t: Number(a('t')) || 4, color: a('c') || '#2b8cc4', scene: t };
+  }).catch(() => { VFILE.delete(k); }));
+  return vload.get(k);
+}
+const vizEl = document.createElement('aside');
+vizEl.setAttribute('aria-label', '그림 해설');
+const wide = window.matchMedia('(min-width: 880px)');
+function placeViz() {
+  const slot = $(wide.matches ? 'vizSlotSide' : 'vizSlotStage');
+  slot.append(vizEl);
+  if (window.clipPlace) window.clipPlace(slot);
+}
+wide.addEventListener('change', placeViz);
+placeViz();
+// 그림을 불러오는 동안 같은 크기의 빈 틀 — 자리를 미리 잡아 두어 그림이 도착해도 칸이 튀지 않게
+const VIZ_SKEL = `<div class="vz pic skel" data-state="idle"><div class="vz-scene"></div><div class="vz-ctl"><div class="vz-word"><b>&nbsp;</b></div></div></div>`;
+let vizWord = '', vizCtl = null;
+// 낭독을 시작한 단어의 그림이 이미 끝나 있으면 처음부터 다시(가려 둔 그림은 그대로)
+function replayViz() { const r = vizEl.firstElementChild; if (vizCtl && r && !r.classList.contains('ghost')) vizCtl.replay(); }
+function renderViz(w, hidden, wordMasked) {
+  if (S.viz && VFILE.has(vk(w)) && !window.VIZ[vk(w)]) {
+    ensureViz(w).then(() => { if (WORDS[deck[pos]] === w) render(lastRev); });
+  }
+  const h = S.viz && window.vizHtml ? window.vizHtml(w.w) : null;
+  $('side').classList.toggle('has-viz', !!h);
+  vizEl.hidden = !S.viz;
+  if (!h) { vizWord = ''; vizCtl = null; vizEl.innerHTML = S.viz ? VIZ_SKEL : ''; return; }
+  if (vizWord !== w.w) { vizEl.innerHTML = h; vizWord = w.w; vizCtl = window.vizMount(vizEl.firstElementChild, !hidden); }
+  else if (!hidden) vizCtl.reveal();   // 가렸던 뜻을 펼치면 그때 재생
+  vizEl.firstElementChild.classList.toggle('ghost', hidden);
+  const vw = vizEl.querySelector('.vz-word'); if (vw) vw.classList.toggle('masked', !!wordMasked);
+}
+
+// list (단어장·파트가 바뀔 때마다 다시 그린다)
+let rows = [], rowStars = [];
+function renderList() {
+  els.list.innerHTML = WORDS.map((w, i) =>
+    `<li><button class="row" type="button" data-i="${i}"><span class="num">${pad(i + 1)}</span>` +
+    `<span class="rw">${w.w}<span class="rpos">${w.pos}</span>${hasViz(w) ? '<span class="rv rv-viz">해설</span>' : ''}${hasClip(w) ? '<span class="rv">영상</span>' : ''}</span><span class="rm">${w.m}</span>` +
+    `<span class="re"><b>어원</b>${w.e}</span>` +
+    (w.x ? `<span class="re rx"><b>예문</b><i lang="en">${esc(w.x)}</i></span>` : '') + `</button>` +
+    `<button class="icon-btn star" type="button" data-star="${i}" aria-pressed="false" aria-label="${w.w} 별표">${STAR}</button></li>`
+  ).join('');
+  rows = [...els.list.children];
+  rows.forEach(li => {   // 검색은 예문을 빼고 단어·뜻·어원에서만
+    const rx = li.querySelector('.rx');
+    li.dataset.q = (rx ? li.textContent.replace(rx.textContent, '') : li.textContent).toLowerCase();
+  });
+  rowStars = rows.map(li => li.querySelector('.star'));
+  lastShown = -1;
+  els.list.scrollTop = 0;
+  applyFind();
+}
+function applyFind() {
+  const q = ($('find').value || '').trim().toLowerCase();
+  let n = 0;
+  rows.forEach(li => {
+    const show = !q || li.dataset.q.includes(q);
+    li.hidden = !show;
+    if (show) n++;
+  });
+  const empty = $('findEmpty');
+  if (empty) empty.hidden = !q || n > 0;
+}
+
+// 어원 도해: 'com(함께) + modus(척도) → 쓰기에 알맞은 것 → 상품' 같은 문자열을 블록·화살표 그림으로
+const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const LANG = /^((?:고대 북부 |고대 |중세 )?(?:영어|프랑스어|노르드어|네덜란드어|독일어|라틴어|그리스어|이탈리아어|아랍어|스칸디나비아어)|저지 독일어)\s+(.+)$/;
+function splitTop(str) {
+  const toks = [], ops = []; let depth = 0, cur = '';
+  for (let i = 0; i < str.length; i++) {
+    const c = str[i];
+    if (c === '(') depth++; else if (c === ')') depth--;
+    if (!depth && (str.startsWith(' + ', i) || str.startsWith(' / ', i))) { toks.push(cur); ops.push(str[i + 1]); cur = ''; i += 2; continue; }
+    cur += c;
+  }
+  toks.push(cur);
+  return { toks, ops };
+}
+// 첫 여는 괄호가 문자열 맨 끝에서 닫힐 때만 '말(뜻)' 한 덩어리로 본다 (예: 'niche(벽감), nicher(둥지)'는 제외)
+function closesAtEnd(t) {
+  let d = 0;
+  for (let i = 0; i < t.length; i++) {
+    if (t[i] === '(') d++;
+    else if (t[i] === ')') { d--; if (d === 0) return i === t.length - 1; }
+  }
+  return false;
+}
+function etyBlock(t) {
+  t = t.trim();
+  const m = t.match(/^([^()]+?)\s*\(([\s\S]*)\)$/);
+  if (m && !m[1].includes(',') && closesAtEnd(t)) {
+    let label = m[1].trim(), tag = '';
+    const l = label.match(LANG);
+    if (l) { tag = l[1]; label = l[2]; }
+    return `<span class="eb">${tag ? `<small>${esc(tag)}</small>` : ''}<b>${esc(label)}</b><i>${esc(m[2])}</i></span>`;
+  }
+  if (/^[A-Za-z-]+$/.test(t)) return `<span class="eb aff"><b>${esc(t)}</b></span>`;
+  return `<span class="eb txt"><i>${esc(t)}</i></span>`;
+}
+function etyDiagram(w) {
+  const segs = w.e.split(' → ');
+  const { toks, ops } = splitTop(segs[0]);
+  let h = toks.map((t, i) => etyBlock(t) + (i < ops.length ? `<span class="eop">${ops[i]}</span>` : '')).join('');
+  segs.slice(1).forEach((t, i, a) => { h += `<span class="ea">→</span><span class="es${i === a.length - 1 ? ' last' : ''}">${esc(t.trim())}</span>`; });
+  return `<div class="emap">${h}</div>`;
+}
+// 예문 속 표제어(변화형 포함)를 굵게: 앞부분이 같은 단어를 찾는다 (fled·swollen 같은 불규칙형은 그대로 둔다)
+function exHtml(w) {
+  const stem = w.w.toLowerCase().slice(0, Math.max(3, w.w.length - 2));
+  let hit = false;
+  return w.x.split(/(\b[A-Za-z][A-Za-z-]*\b)/).map(t => {
+    if (!hit && /^[A-Za-z]/.test(t) && t.toLowerCase().startsWith(stem)) { hit = true; return `<b>${esc(t)}</b>`; }
+    return esc(t);
+  }).join('');
+}
+// 한국어 음성으로 어원을 읽기 좋게: 're(다시) + videre(보다) → 다시 보고 고치다' → 're 다시, videre 보다. 다시 보고 고치다.'
+function etySpeech(e) {
+  return e.replace(/\s*\(([^()]*)\)(?=\s|$)/g, ' $1,').replace(/\s*\(([^()]*)\)/g, ' $1 ').replace(/,(\s*)(?=[+→←/]|$)/g, '$1')
+    .replace(/\s*\+\s*/g, ', ').replace(/\s*[→←]\s*/g, '. ').replace(/\s*\/\s*/g, ', ')
+    .replace(/(^|\s)-|-(?=[\s,.]|$)/g, '$1').replace(/,\s*([,.])/g, '$1').replace(/\s+([,.])/g, '$1').replace(/\s+/g, ' ').trim();
+}
+
+let lastShown = -1, lastRev = true;
+function render(revealed) {
+  lastRev = revealed;
+  const i = deck[pos], w = WORDS[i];
+  const hidden = S.hide && !revealed;
+  const picQ = S.pic && hasPic(w) && !revealed;   // 그림 먼저: 단어·뜻은 가리고 그림만 보여 준다
+  els.pos.textContent = w.pos;
+  els.count.textContent = `${pad(pos + 1)} / ${pad(deck.length)}`;
+  els.word.textContent = w.w;
+  els.mean.textContent = w.m;
+  els.note.textContent = w.note || '';
+  els.note.hidden = !w.note;
+  els.note.classList.toggle('ghost', hidden || picQ);
+  els.ety.innerHTML = S.viz ? etyDiagram(w) : esc(w.e);
+  els.ety.setAttribute('aria-label', w.e);
+  els.ety.parentElement.classList.toggle('ghost', hidden || picQ);
+  els.ex.hidden = !w.x;
+  els.exEn.innerHTML = w.x ? exHtml(w) : '';
+  els.exKo.textContent = w.xk || '';
+  els.ex.classList.toggle('ghost', hidden || picQ);
+  els.word.classList.toggle('masked', (hidden && S.order === 'ko-en') || picQ);
+  const meanOff = S.hideMean && peek !== i;
+  els.mean.classList.toggle('masked', (hidden && S.order === 'en-ko') || meanOff || picQ);
+  els.mean.parentElement.classList.toggle('peekable', S.hideMean);
+  if (meanOff) { els.note.classList.add('ghost'); els.ety.parentElement.classList.add('ghost'); els.ex.classList.add('ghost'); }
+  document.body.classList.toggle('no-viz', !S.viz);
+  renderViz(w, (hidden || meanOff) && !picQ, (hidden && S.order === 'ko-en') || picQ);
+  if (window.clipShow) window.clipShow(w.w, hidden || meanOff || picQ, S.viz);
+  $('hideMean').setAttribute('aria-pressed', S.hideMean);
+  document.body.classList.toggle('hide-mean', S.hideMean);
+  els.cardStar.setAttribute('aria-pressed', stars.has(w.k));
+  els.bar.style.width = `${((pos + 1) / deck.length) * 100}%`;
+  if (i !== lastShown) {
+    lastShown = i;
+    rows.forEach((li, k) => li.classList.toggle('current', k === i));
+    scrollRow(rows[i]);
+  }
+}
+function scrollRow(li) {
+  const box = els.list;
+  if (playing) return;   // 재생 중에는 목록을 따라가지 않는다(단어마다 목록이 움직이면 어지럽다)
+  if (box.scrollHeight <= box.clientHeight + 1) return;
+  const top = li.offsetTop, bottom = top + li.offsetHeight;
+  if (top >= box.scrollTop && bottom <= box.scrollTop + box.clientHeight) return;   // 이미 보이면 가만히 둔다
+  box.scrollTop = top - box.clientHeight / 2 + li.offsetHeight / 2;                  // 슝 가는 애니메이션 없이 바로
+
+}
+function syncStars() {
+  rowStars.forEach((b, i) => b.setAttribute('aria-pressed', stars.has(WORDS[i].k)));
+  els.cardStar.setAttribute('aria-pressed', stars.has(WORDS[deck[pos]].k));
+  $('starCount').textContent = `★ ${WORDS.filter(w => stars.has(w.k)).length}`;
+  $('starHint').hidden = !(S.starOnly && !WORDS.some(w => stars.has(w.k)));
+}
+function toggleStar(i) {
+  const k = WORDS[i].k;
+  stars.has(k) ? stars.delete(k) : stars.add(k);
+  save(); syncStars();
+}
+function updateStatus() {
+  const en = S.say.word && `영어 ${S.rep}번`, ko = S.say.mean && '뜻';
+  const seq = (S.order === 'en-ko' ? [en, `${S.gap}초`, ko] : [ko, `${S.gap}초`, en])
+    .concat(S.say.ety && '어원', S.say.ex && '예문', S.say.exko && '예문 해석').filter(Boolean);
+  seq.push(`${S.next}초 → 다음 단어`);
+  const any = SAY_KEYS.some(k => S.say[k]);
+  $('sayHint').hidden = any;
+  let t = `${any ? seq.join(' → ') : '읽기 꺼짐'} · 끝나면 처음부터 다시`;
+  if (S.sleep) t += sleepAt ? ` · 🌙 ${fmtLeft(sleepAt - Date.now())} 뒤 자동 종료` : ` · 🌙 재생하면 ${S.sleep}분 뒤 자동 종료`;
+  $('status').textContent = t;
+}
+
+// 자동 종료 타이머: 재생을 시작한 순간부터 센다. 시간이 되면 지금 읽던 단어를 끝내고 멈춘다.
+const SLEEP_STEPS = [0, 5, 10, 15, 30, 60];
+let sleepAt = 0, sleepTick = null;
+const fmtLeft = ms => { const t = Math.max(0, Math.ceil(ms / 1000)); return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`; };
+function updateSleepUI() {
+  const b = $('sleepBadge');
+  b.hidden = !S.sleep;
+  b.textContent = S.sleep ? (sleepAt ? Math.max(1, Math.ceil((sleepAt - Date.now()) / 60000)) : S.sleep) : '';
+  $('sleepBtn').setAttribute('aria-pressed', !!S.sleep);
+  $('sleepBtn').setAttribute('aria-label', S.sleep ? `자동 종료 타이머 ${S.sleep}분` : '자동 종료 타이머 끔');
+  const r = document.getElementById('sleep-' + S.sleep); if (r) r.checked = true;
+}
+function armSleep() {
+  clearInterval(sleepTick); sleepTick = null; sleepAt = 0;
+  if (playing && S.sleep) {
+    sleepAt = Date.now() + S.sleep * 60000;
+    sleepTick = setInterval(() => {
+      if (Date.now() > sleepAt + 30000) return endSleep(); // 음성이 멈춰 루프가 안 돌 때를 대비한 안전장치
+      updateSleepUI(); updateStatus();
+    }, 1000);
+  }
+  updateSleepUI(); updateStatus();
+}
+function setSleep(min) { S.sleep = min; save(); armSleep(); }
+function endSleep() {
+  setPlaying(false); stop(); render(true);
+  $('status').textContent = '🌙 설정한 시간이 지나 멈췄어요. 안녕히 주무세요';
+}
+
+// 단어장·어원 고르기
+function renderPickers(d) {
+  $('deckPick').innerHTML = DECKS.map(x =>
+    `<button class="pill" type="button" data-deck="${x.id}" aria-pressed="${x.id === d.id}">${x.name}<small>${x.words.length}</small></button>`).join('');
+  // 다른 줄에서 고른 것과 겹치는 단어 수를 세고, 겹침이 없는 칩은 누를 수 없게 한다
+  const pick = groups => { const g = groups.find(x => x.key === (groups === d.ety ? S.grp : S.thm)); return g ? new Set(g.words) : null; };
+  const row = (id, attr, cur, groups, other) => {
+    $(id + 'Row').hidden = !groups.length;
+    const n = g => other ? g.filter(w => other.has(w)).length : g.length;
+    const chip = (key, label, count) => `<button class="pill" type="button" data-${attr}="${key}" aria-pressed="${cur === key}"${count ? '' : ' disabled'}>${label}<small>${count}</small></button>`;
+    $(id + 'Pick').innerHTML = chip('', '전체', n(d.words)) + groups.map(g => chip(g.key, g.label, n(g.words))).join('');
+  };
+  row('thm', 'thm', S.thm, d.thm, pick(d.ety));
+  row('grp', 'grp', S.grp, d.ety, pick(d.thm));
+}
+// 그림 해설이 있는 단어만 골라 보기 (지금 고른 단어장·주제·어원 안에서)
+function renderVizRow() {
+  const n = WORDS.filter(hasViz).length;
+  $('vizRow').hidden = !(n || S.picOnly);
+  $('vizPick').innerHTML = `<button class="pill" type="button" data-piconly="1" aria-pressed="${S.picOnly}">그림 있는 단어만<small>${n}</small></button>`;
+}
+function loadSource() {
+  const d = DECKS.find(x => x.id === S.deck) || DECKS[0];
+  S.deck = d.id;
+  d.ety = d.ety || etyGroups(d.words);
+  d.thm = d.thm || themeGroups(d.words);
+  let g = d.ety.find(x => x.key === S.grp), t = d.thm.find(x => x.key === S.thm);
+  if (!g) S.grp = '';
+  if (!t) S.thm = '';
+  const inG = g && new Set(g.words), inT = t && new Set(t.words);
+  WORDS = d.words.filter(w => (!inG || inG.has(w)) && (!inT || inT.has(w)));
+  if (!WORDS.length) { S.grp = ''; S.thm = ''; g = t = null; WORDS = d.words; }   // 겹침이 없으면 전체로
+  if (S.picOnly) { const only = WORDS.filter(hasViz); if (only.length) WORDS = only; }
+  $('deckName').textContent = d.name + (t ? ` · ${t.label}` : '') + (g ? ` · ${g.label}` : '');
+  $('total').textContent = WORDS.length;
+  $('pkSummary').textContent = `${$('deckName').textContent} ${WORDS.length}`;
+  renderPickers(d);
+  renderVizRow();
+  renderList();
+  peek = -1;
+  buildDeck();
+}
+function changeSource(deck, grp, thm) {
+  if (deck === S.deck && grp === S.grp && thm === S.thm) return;
+  if (playing) setPlaying(false);
+  stop();
+  S.deck = deck; S.grp = grp; S.thm = thm;
+  loadSource(); render(true); syncStars(); save();
+}
+$('pickers').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  if (b.dataset.deck) changeSource(b.dataset.deck, '', '');
+  else if (b.dataset.grp != null) changeSource(S.deck, b.dataset.grp, S.thm);
+  else if (b.dataset.thm != null) changeSource(S.deck, S.grp, b.dataset.thm);
+  else if (b.dataset.piconly != null) { S.picOnly = !S.picOnly; if (playing) setPlaying(false); stop(); loadSource(); render(true); syncStars(); save(); }
+});
+
+// 파일로 된 그림 목록 — 받아 오면 칩 개수·필터를 다시 계산
+fetch('viz/index.json').then(r => r.ok ? r.json() : []).then(a => {
+  if (!Array.isArray(a) || !a.length) return;
+  a.forEach(x => VFILE.add(String(x).toLowerCase()));
+  if (S.picOnly) { stop(); loadSource(); render(true); syncStars(); return; }
+  renderVizRow();
+  // 목록을 다시 그리면 스크롤·검색이 풀리므로 '해설' 표시만 끼워 넣는다
+  rows.forEach((li, i) => {
+    const rw = li.querySelector('.rw');
+    if (!hasViz(WORDS[i]) || rw.querySelector('.rv-viz')) return;
+    rw.querySelector('.rpos').insertAdjacentHTML('afterend', '<span class="rv rv-viz">해설</span>');
+    li.dataset.q += ' 해설';
+  });
+  const w = WORDS[deck[pos]];
+  if (w && VFILE.has(vk(w))) render(lastRev);   // 첫 카드가 목록보다 먼저 그려졌으면 해설을 이제 붙인다
+}).catch(() => {});
+
+// voices
+let voices = [];
+const enSel = $('voice-en'), koSel = $('voice-ko');
+function fillSelect(sel, list, value, fallback) {
+  sel.innerHTML = '';
+  if (!list.length) sel.add(new Option(fallback, ''));
+  list.forEach(v => sel.add(new Option(`${v.name} · ${v.lang}`, v.voiceURI)));
+  sel.value = value;
+}
+function loadVoices() {
+  if (!TTS) return;
+  voices = speechSynthesis.getVoices();
+  const isUS = v => /en[-_]US/i.test(v.lang);
+  const en = voices.filter(v => /^en/i.test(v.lang)).sort((a, b) => isUS(b) - isUS(a) || a.name.localeCompare(b.name));
+  const ko = voices.filter(v => /^ko/i.test(v.lang));
+  const pick = (list, re, saved) =>
+    (list.find(v => v.voiceURI === saved) || list.find(v => re.test(v.name)) || list[0] || {}).voiceURI || '';
+  fillSelect(enSel, en, pick(en, /Samantha|Google US English|Aria|Jenny|Ava|Allison/i, S.enVoice), '기본 영어 음성');
+  fillSelect(koSel, ko, pick(ko, /Yuna|유나|Google|SunHi|Heami/i, S.koVoice), '기본 한국어 음성');
+  $('voiceHint').hidden = ko.length > 0 || voices.length === 0;
+}
+const voiceFor = sel => voices.find(v => v.voiceURI === sel.value) || null;
+
+// speech engine: every start bumps `run`; stale loops see the mismatch and exit
+let run = 0, playing = false, pending = null, keepAlive = null, wake = null;
+function stop() {
+  run++;
+  let cancelled = false;
+  if (TTS) {
+    if (speechSynthesis.speaking || speechSynthesis.pending) { speechSynthesis.cancel(); cancelled = true; }
+  }
+  if (pending) pending();
+  if (picSkip) picSkip();
+  [els.word, els.mean, els.ety.parentElement, els.exEn, els.exKo].forEach(el => el.classList.remove('speaking'));
+  return cancelled;
+}
+function showTtsFail(msg) {
+  const el = $('ttsFail');
+  if (msg) { el.textContent = msg; el.hidden = false; } else { el.hidden = true; }
+}
+function say(text, lang, sel, el, rate, id) {
+  return new Promise(resolve => {
+    if (id !== run || !TTS) return resolve();
+    const u = new SpeechSynthesisUtterance(text);
+    const v = voiceFor(sel);
+    u.lang = v ? v.lang : lang; u.rate = rate; u.volume = S.vol;
+    if (v) u.voice = v;
+    let timer, watch, started = false;
+    const done = () => {
+      clearTimeout(timer); clearTimeout(watch);
+      el.classList.remove('speaking');
+      if (pending === done) pending = null;
+      resolve();
+    };
+    u.onstart = () => { started = true; showTtsFail(''); };
+    u.onend = done;
+    u.onerror = e => {
+      const code = e && e.error;
+      if (code && code !== 'canceled' && code !== 'interrupted' && id === run) {
+        showTtsFail('소리를 낼 수 없어요 (' + code + '). 브라우저(Chrome·Safari)에서 직접 열거나, 무음 모드와 미디어 볼륨을 확인해 주세요.');
+      }
+      done();
+    };
+    timer = setTimeout(done, 3000 + text.length * 250 / rate); // some browsers drop onend
+    watch = setTimeout(() => {
+      if (!started && id === run) showTtsFail('소리가 시작되지 않았어요. 무음 모드·미디어 볼륨을 확인하거나, 앱 안이 아닌 Chrome·Safari에서 열어 주세요.');
+    }, 1800);
+    pending = done; keepAlive = u;
+    el.classList.add('speaking');
+    try { speechSynthesis.resume(); } catch (e) {}
+    speechSynthesis.speak(u);
+  });
+}
+let picSkip = null;
+function picWait(id) {
+  return new Promise(res => {
+    const root = vizEl.firstElementChild;
+    const t = setTimeout(() => finish(), 25000);   // 그림을 멈춰 둔 채로 두면 25초 뒤 공개
+    function finish() { clearTimeout(t); picSkip = null; if (root) root.removeEventListener('vzend', finish); res(); }
+    picSkip = finish;
+    if (!root || root.dataset.state === 'end') return finish();
+    root.addEventListener('vzend', finish);
+  });
+}
+async function speakWord(id) {
+  const w = WORDS[deck[pos]];
+  // 항목을 껐는지는 읽기 직전에 본다 — 재생 중에 스위치를 바꿔도 다음 항목부터 바로 따른다
+  const en = async () => {
+    for (let r = 0; r < S.rep; r++) {
+      if (r) await sleep(450);
+      if (id !== run || !S.say.word) return;
+      await say(w.w, 'en-US', enSel, els.word, S.rate, id);
+    }
+  };
+  const ko = () => S.say.mean ? say(w.m, 'ko-KR', koSel, els.mean, 1, id) : Promise.resolve();
+  const extras = async () => {
+    const parts = [
+      ['ety', () => w.e && say(etySpeech(w.e), 'ko-KR', koSel, els.ety.parentElement, 1, id)],
+      ['ex', () => w.x && say(w.x, 'en-US', enSel, els.exEn, S.rate, id)],
+      ['exko', () => w.xk && say(w.xk, 'ko-KR', koSel, els.exKo, 1, id)],
+    ];
+    for (const [k, fn] of parts) {
+      if (id !== run) return;
+      if (!S.say[k]) continue;
+      await sleep(600);
+      if (id !== run) return;
+      if (S.say[k]) await fn();
+    }
+  };
+  if (S.pic && hasPic(w)) {
+    await ensureViz(w);
+    if (id !== run) return;
+    render(false);   // 단어·뜻은 가리고 그림만 재생 — 그림이 끝나거나 카드를 누르면 정답 공개
+    replayViz();
+    await picWait(id);
+    if (id !== run) return;
+    await sleep(500);
+    if (id !== run) return;
+    render(true);
+    await (S.order === 'en-ko' ? en() : ko());
+    await sleep(500);
+    if (id !== run) return;
+    await (S.order === 'en-ko' ? ko() : en());
+    await extras();
+    return;
+  }
+  render(false);
+  replayViz();
+  await (S.order === 'en-ko' ? en() : ko());
+  await sleep(S.gap * 1000);
+  if (id !== run) return;
+  render(true);
+  await (S.order === 'en-ko' ? ko() : en());
+  await extras();
+}
+async function loop(id) {
+  while (id === run) {
+    await speakWord(id);
+    await sleep(S.next * 1000);   // 다음 단어로 넘어가기 전 쉬는 시간 (설정: 다음 단어까지)
+    if (id !== run) return;
+    if (sleepAt && Date.now() >= sleepAt) { endSleep(); return; }
+    if (pos >= deck.length - 1) buildDeck(); else pos++;
+  }
+}
+function start() {
+  const hadQueue = stop();
+  const id = run;
+  const go_ = () => { if (id === run) playing ? loop(id) : speakWord(id); };
+  // Phones only allow speech started inside the tap itself, so speak right now.
+  // Only when we just cancelled something do we wait a beat (cancel+speak in one tick can be dropped).
+  if (hadQueue) setTimeout(go_, 120); else go_();
+}
+function setPlaying(p) {
+  playing = p;
+  $('icPlay').toggleAttribute('hidden', p); $('icPause').toggleAttribute('hidden', !p);   // SVG 요소는 .hidden 프로퍼티가 속성에 반영되지 않는다
+  els.play.setAttribute('aria-label', p ? '일시정지' : '재생');
+  if (p) { navigator.wakeLock?.request('screen').then(l => { wake = l; }).catch(() => {}); }
+  else { try { wake?.release(); } catch (e) {} wake = null; }
+  armSleep();
+}
+function toggle() {
+  if (playing) { setPlaying(false); stop(); render(true); }
+  else { setPlaying(true); start(); }
+}
+function go(p, dir) {
+  pos = (p + deck.length) % deck.length;
+  render(false);
+  if (dir && !reduceMotion) {
+    const b = els.card.querySelector('.card-body');
+    b.classList.remove('slide-l', 'slide-r');
+    void b.offsetWidth;
+    b.classList.add(dir > 0 ? 'slide-l' : 'slide-r');
+  }
+  start();
+}
+function jumpTo(i) {
+  if (!deck.includes(i)) { S.starOnly = false; $('opt-star').checked = false; buildDeck(i); save(); }
+  go(deck.indexOf(i));
+}
+function restartCurrent() {
+  if (playing) go(pos); else { stop(); render(true); }
+}
+
+// controls
+function syncControls() {
+  ['order', 'rate', 'rep', 'gap', 'next', 'sleep'].forEach(name => {
+    const r = document.querySelector(`input[name="${name}"][value="${S[name]}"]`);
+    if (r) r.checked = true;
+  });
+  $('opt-hide').checked = S.hide;
+  $('opt-shuffle').checked = S.shuffle;
+  $('shuffle').setAttribute('aria-pressed', S.shuffle);
+  $('opt-star').checked = S.starOnly;
+  $('opt-viz').checked = S.viz;
+  $('opt-pic').checked = S.pic;
+  SAY_KEYS.forEach(k => { $('say-' + k).checked = !!S.say[k]; });
+  $('vol').value = Math.round(S.vol * 100); $('volOut').textContent = Math.round(S.vol * 100) + '%';
+}
+document.querySelectorAll('.seg input').forEach(r => r.addEventListener('change', () => {
+  S[r.name] = r.name === 'order' ? r.value : Number(r.value);
+  save(); updateStatus();
+  if (r.name === 'order') restartCurrent();
+  if (r.name === 'sleep') armSleep();
+}));
+$('vol').addEventListener('input', e => { S.vol = Number(e.target.value) / 100; $('volOut').textContent = e.target.value + '%'; });
+$('vol').addEventListener('change', () => { save(); go(pos); });   // 놓으면 현재 단어를 새 음량으로 다시 들려준다
+$('sleepBtn').addEventListener('click', () => setSleep(SLEEP_STEPS[(SLEEP_STEPS.indexOf(S.sleep) + 1) % SLEEP_STEPS.length]));
+$('opt-hide').addEventListener('change', e => { S.hide = e.target.checked; save(); restartCurrent(); });
+document.querySelectorAll('[data-say]').forEach(c => c.addEventListener('change', () => {
+  S.say[c.dataset.say] = c.checked; save(); updateStatus();
+}));
+function setShuffle(on) {
+  S.shuffle = on;
+  $('opt-shuffle').checked = on;
+  $('shuffle').setAttribute('aria-pressed', on);
+  save(); buildDeck(deck[pos]); restartCurrent();
+}
+$('opt-shuffle').addEventListener('change', e => setShuffle(e.target.checked));
+$('shuffle').addEventListener('click', () => setShuffle(!S.shuffle));
+$('opt-viz').addEventListener('change', e => { S.viz = e.target.checked; save(); render(!playing); });
+$('opt-pic').addEventListener('change', e => { S.pic = e.target.checked; save(); restartCurrent(); });
+$('opt-star').addEventListener('change', e => { S.starOnly = e.target.checked; save(); buildDeck(deck[pos]); restartCurrent(); });
+enSel.addEventListener('change', () => { S.enVoice = enSel.value; save(); });
+koSel.addEventListener('change', () => { S.koVoice = koSel.value; save(); });
+
+els.play.addEventListener('click', toggle);
+$('pkToggle').addEventListener('click', () => { const on = $('pickers').classList.toggle('open'); $('pkToggle').setAttribute('aria-expanded', on); });
+$('prev').addEventListener('click', () => go(pos - 1, -1));
+$('next').addEventListener('click', () => go(pos + 1, 1));
+
+// swipe left/right on the card: fires as soon as the finger has moved far enough,
+// so it still works if the host app cancels the touch later
+(function () {
+  let sx = 0, sy = 0, on = false, done = false, lastFire = 0;
+  const begin = (x, y, target) => {
+    if (target.closest && target.closest('button')) { on = false; return; }
+    on = true; done = false; sx = x; sy = y;
+  };
+  const move = (x, y) => {
+    if (!on || done) return;
+    const dx = x - sx, dy = y - sy;
+    if (Math.abs(dx) < 38 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+    if (Date.now() - lastFire < 350) { done = true; return; }
+    done = true; lastFire = Date.now(); swiped = Date.now();
+    go(pos + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+  };
+  const end = () => { on = false; };
+  const c = els.card;
+  c.addEventListener('touchstart', e => { if (e.touches.length === 1) begin(e.touches[0].clientX, e.touches[0].clientY, e.target); else on = false; }, { passive: true });
+  c.addEventListener('touchmove', e => { const t = e.touches[0]; if (t) move(t.clientX, t.clientY); }, { passive: true });
+  c.addEventListener('touchend', e => { const t = e.changedTouches[0]; if (t) move(t.clientX, t.clientY); end(); }, { passive: true });
+  c.addEventListener('touchcancel', end, { passive: true });
+  if (window.PointerEvent) {
+    c.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') begin(e.clientX, e.clientY, e.target); });
+    c.addEventListener('pointermove', e => { if (e.pointerType !== 'mouse') move(e.clientX, e.clientY); });
+    c.addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') { move(e.clientX, e.clientY); end(); } });
+    c.addEventListener('pointercancel', end);
+  }
+})();
+$('replay').addEventListener('click', () => go(pos));
+els.card.addEventListener('click', e => { if (Date.now() - swiped < 500) return; if (e.target.closest('button')) return; if (picSkip) picSkip(); else go(pos); });
+$('hideMean').addEventListener('click', () => { S.hideMean = !S.hideMean; peek = -1; save(); render(!playing); });
+els.mean.addEventListener('click', e => {
+  if (!S.hideMean) return;
+  e.stopPropagation();
+  peek = peek === deck[pos] ? -1 : deck[pos]; render(!playing);
+});
+els.cardStar.addEventListener('click', () => toggleStar(deck[pos]));
+$('find').addEventListener('input', applyFind);
+$('find').addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const li = rows.find(row => !row.hidden);
+  if (!li) return;
+  e.preventDefault();
+  li.querySelector('.row').click();
+});
+els.list.addEventListener('click', e => {
+  const s = e.target.closest('[data-star]');
+  if (s) return toggleStar(Number(s.dataset.star));
+  const row = e.target.closest('.row');
+  if (row) jumpTo(Number(row.dataset.i));
+});
+document.addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey || e.target.closest('input, select, textarea, button')) return;
+  if (e.code === 'Space') { e.preventDefault(); toggle(); }
+  else if (e.key === 'ArrowRight') { e.preventDefault(); go(pos + 1, 1); }
+  else if (e.key === 'ArrowLeft') { e.preventDefault(); go(pos - 1, -1); }
+});
+
+// boot
+try {
+  syncControls();
+  loadSource();
+  render(true);
+  syncStars();
+  updateSleepUI();
+  updateStatus();
+} catch (err) {
+  const w = $('noTts'); w.hidden = false; w.textContent = '불러오는 중 문제가 생겼어요. 새로고침해 주세요. (' + err.message + ')';
+}
+// fonts load after first paint so a slow font server can never block the page
+try {
+  const f = document.createElement('link');
+  f.rel = 'stylesheet';
+  f.href = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Literata:opsz,wght@7..72,500;7..72,600&family=Nanum+Pen+Script&display=swap';
+  document.head.appendChild(f);
+} catch (e) {}
+if (TTS) {
+  loadVoices();
+  speechSynthesis.addEventListener?.('voiceschanged', loadVoices);
+  setTimeout(loadVoices, 600);
+} else {
+  $('noTts').hidden = false;
+  ['play', 'prev', 'next', 'replay'].forEach(id => { $(id).disabled = true; });
+}
+</script>
+
+</body></html>

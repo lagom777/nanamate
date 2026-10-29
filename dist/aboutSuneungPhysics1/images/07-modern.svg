@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%" style="background:#0a0e1a; font-family:'IBM Plex Sans KR', -apple-system, sans-serif;">
+  <defs>
+    <!-- Background Gradients -->
+    <radialGradient id="bg-glow" cx="20%" cy="15%" r="60%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.18"/>
+      <stop offset="60%" stop-color="#0a0e1a" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#05070d"/>
+    </radialGradient>
+    
+    <linearGradient id="card-grad-0" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="card-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="card-grad-2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.05"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="card-shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(99, 102, 241, 0.4)" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="675" fill="url(#bg-glow)"/>
+  
+  <!-- Subtle Grid Pattern Lines -->
+  <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
+    <line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="545" x2="1200" y2="545"/>
+    <line x1="400" y1="0" x2="400" y2="675"/>
+    <line x1="800" y1="0" x2="800" y2="675"/>
+  </g>
+
+  <!-- Top Header Bar -->
+  <g transform="translate(40, 32)">
+    <!-- Brand / Topic Badge -->
+    <rect x="0" y="0" width="180" height="30" rx="6" fill="#1e293b" stroke="#6366f1" stroke-width="1.2"/>
+    <circle cx="15" cy="15" r="4" fill="#6366f1"/>
+    <text x="28" y="20" fill="#f1f5f9" font-size="12" font-weight="700" letter-spacing="1.5">수능 물리학 핵심요약</text>
+    <text x="145" y="20" fill="#6366f1" font-size="12" font-weight="800">PART 07</text>
+    
+    <!-- Main Titles -->
+    <text x="0" y="68" fill="#ffffff" font-size="34" font-weight="800" letter-spacing="-0.5">특수 상대성 이론</text>
+    <text x="0" y="94" fill="#94a3b8" font-size="14" font-weight="500">Relativity Postulates, Time Dilation &amp; Length Contraction</text>
+
+    <!-- Right Side Indicator -->
+    <g transform="translate(940, 10)">
+      <rect x="0" y="0" width="180" height="60" rx="10" fill="#111827" stroke="#334155" stroke-width="1"/>
+      <text x="90" y="26" fill="#64748b" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">NANAMATE EDUTECH</text>
+      <text x="90" y="47" fill="#6366f1" font-size="13" font-weight="800" text-anchor="middle">한눈에 보는 핵심 맵</text>
+    </g>
+  </g>
+
+  <!-- 3 Summary Cards -->
+  
+        <!-- Card 1 -->
+        <g transform="translate(40, 160)">
+          <!-- Card Background &amp; Glow -->
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="#111827" fill-opacity="0.9" stroke="#6366f1" stroke-width="1.2" filter="url(#card-shadow)"/>
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="url(#card-grad-0)" fill-opacity="0.3"/>
+          
+          <!-- Card Header Badge -->
+          <rect x="18" y="18" width="130" height="24" rx="12" fill="#6366f1" fill-opacity="0.2" stroke="#6366f1" stroke-width="1"/>
+          <text x="83" y="34" fill="#a5b4fc" font-size="11" font-weight="700" text-anchor="middle">상대성 이론 2대 가설</text>
+          
+          <!-- Card Title -->
+          <text x="18" y="62" fill="#f8fafc" font-size="16" font-weight="700">상대성 원리와 광속 불변 원리</text>
+          <line x1="18" y1="74" x2="342" y2="74" stroke="#334155" stroke-width="1"/>
+          
+          <!-- Card Content Body -->
+          <g transform="translate(0, 30)">
+            
+                <g transform="translate(18, 50)">
+                  <rect x="0" y="0" width="280" height="90" rx="8" fill="#0f172a" stroke="#4f46e5" stroke-width="1.5"/>
+                  <text x="12" y="24" fill="#818cf8" font-size="12" font-weight="700">1. 상대성 원리</text>
+                  <text x="12" y="45" fill="#cbd5e1" font-size="11">모든 관성계에서 물리 법칙은 동일한 형태로 성립</text>
+                  <text x="12" y="65" fill="#a5b4fc" font-size="12" font-weight="700">2. 광속 불변 원리 (진공 중 빛의 속력 c)</text>
+                  <text x="12" y="85" fill="#fcd34d" font-size="11.5" font-weight="700">모든 관찰자에게 광원/관찰자 운동 상관없이 c로 일정!</text>
+
+                  <rect x="0" y="100" width="280" height="92" rx="8" fill="#0f172a" stroke="#334155"/>
+                  <text x="12" y="124" fill="#38bdf8" font-size="12" font-weight="700">동시성의 상대성</text>
+                  <text x="12" y="146" fill="#cbd5e1" font-size="11.5">한 관찰자에게 '동시'인 두 사건이 다른 관찰자에게는</text>
+                  <text x="12" y="166" fill="#cbd5e1" font-size="11.5"><tspan fill="#38bdf8" font-weight="700">'동시가 아닐 수 있다'</tspan> (시간의 절대성 붕괴)</text>
+                </g>
+                
+          </g>
+        </g>
+        
+        <!-- Card 2 -->
+        <g transform="translate(420, 160)">
+          <!-- Card Background &amp; Glow -->
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="#111827" fill-opacity="0.9" stroke="#6366f1" stroke-width="1.2" filter="url(#card-shadow)"/>
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="url(#card-grad-1)" fill-opacity="0.3"/>
+          
+          <!-- Card Header Badge -->
+          <rect x="18" y="18" width="130" height="24" rx="12" fill="#6366f1" fill-opacity="0.2" stroke="#6366f1" stroke-width="1"/>
+          <text x="83" y="34" fill="#a5b4fc" font-size="11" font-weight="700" text-anchor="middle">시간 지연 &amp; 길이 수축</text>
+          
+          <!-- Card Title -->
+          <text x="18" y="62" fill="#f8fafc" font-size="16" font-weight="700">움직이는 시계와 고유 물리량</text>
+          <line x1="18" y1="74" x2="342" y2="74" stroke="#334155" stroke-width="1"/>
+          
+          <!-- Card Content Body -->
+          <g transform="translate(0, 30)">
+            
+                <g transform="translate(18, 50)">
+                  <rect x="0" y="0" width="280" height="92" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="1.2"/>
+                  <text x="12" y="24" fill="#c7d2fe" font-size="12" font-weight="700">시간 지연 (Time Dilation): Δt = γ · Δt₀</text>
+                  <text x="12" y="47" fill="#cbd5e1" font-size="11.5">정지 관찰자가 볼 때, 운동하는 대상의 <tspan fill="#f43f5e" font-weight="700">시간이 느리게 감</tspan></text>
+                  <text x="12" y="68" fill="#a5b4fc" font-size="11" font-family="monospace">로렌츠 인자 γ = 1 / √(1 - v²/c²) ≥ 1</text>
+                  <text x="12" y="85" fill="#fcd34d" font-size="10.5">고유 시간 Δt₀: 사건이 일어난 좌표에서 정지한 관찰자의 시간</text>
+
+                  <rect x="0" y="102" width="280" height="90" rx="8" fill="#1e293b" stroke="#334155"/>
+                  <text x="12" y="126" fill="#34d399" font-size="12" font-weight="700">길이 수축 (Length Contraction): L = L₀ / γ</text>
+                  <text x="12" y="148" fill="#cbd5e1" font-size="11.5">운동하는 방향으로만 <tspan fill="#34d399" font-weight="700">길이가 줄어듦</tspan> (수직방향 수축 없음)</text>
+                  <text x="12" y="168" fill="#cbd5e1" font-size="11">고유 길이 L₀: 대상에 대해 정지한 관찰자가 측정한 길이</text>
+                </g>
+                
+          </g>
+        </g>
+        
+        <!-- Card 3 -->
+        <g transform="translate(800, 160)">
+          <!-- Card Background &amp; Glow -->
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="#111827" fill-opacity="0.9" stroke="#6366f1" stroke-width="1.2" filter="url(#card-shadow)"/>
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="url(#card-grad-2)" fill-opacity="0.3"/>
+          
+          <!-- Card Header Badge -->
+          <rect x="18" y="18" width="130" height="24" rx="12" fill="#6366f1" fill-opacity="0.2" stroke="#6366f1" stroke-width="1"/>
+          <text x="83" y="34" fill="#a5b4fc" font-size="11" font-weight="700" text-anchor="middle">질량-에너지 등가성</text>
+          
+          <!-- Card Title -->
+          <text x="18" y="62" fill="#f8fafc" font-size="16" font-weight="700">E = mc² 과 뮤온의 발견</text>
+          <line x1="18" y1="74" x2="342" y2="74" stroke="#334155" stroke-width="1"/>
+          
+          <!-- Card Content Body -->
+          <g transform="translate(0, 30)">
+            
+                <g transform="translate(18, 50)">
+                  <rect x="0" y="0" width="280" height="92" rx="8" fill="#1e293b" stroke="#334155"/>
+                  <text x="12" y="24" fill="#fcd34d" font-size="12" font-weight="700">아인슈타인 질량-에너지 등가 공식</text>
+                  <text x="12" y="48" fill="#ffffff" font-size="14" font-family="monospace" font-weight="800">E = m c² = γ m₀ c²</text>
+                  <text x="12" y="70" fill="#cbd5e1" font-size="11">정지 에너지 E₀ = m₀ c²</text>
+                  <text x="12" y="86" fill="#cbd5e1" font-size="11">물체의 에너지가 증가하면 질량도 증가함</text>
+
+                  <rect x="0" y="102" width="280" height="90" rx="8" fill="#1e293b" stroke="#334155"/>
+                  <text x="12" y="126" fill="#38bdf8" font-size="12" font-weight="700">🎯 뮤온(Muon)의 지표면 도달 실험</text>
+                  <text x="12" y="148" fill="#cbd5e1" font-size="11">지상 관찰자 관점: 뮤온의 수명이 늘어남 (<tspan fill="#38bdf8" font-weight="700">시간지연</tspan>)</text>
+                  <text x="12" y="168" fill="#cbd5e1" font-size="11">뮤온 관점: 대기 거리가 짧아짐 (<tspan fill="#34d399" font-weight="700">길이수축</tspan>)</text>
+                </g>
+                
+          </g>
+        </g>
+        
+
+  <!-- Bottom Tag Bar -->
+  <g transform="translate(0, 45)">
+    
+        <rect x="40" y="565" width="123" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="101.5" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#광속불변원리(c)</text>
+        
+        <rect x="175" y="565" width="101" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="225.5" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#동시성의상대성</text>
+        
+        <rect x="288" y="565" width="145" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="360.5" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#시간지연Δt=γΔt₀</text>
+        
+        <rect x="445" y="565" width="134" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="512.0" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#길이수축L=L₀/γ</text>
+        
+        <rect x="591" y="565" width="79" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="630.5" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#E=mc²</text>
+        
+        <rect x="682" y="565" width="90" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="727.0" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#뮤온도달실험</text>
+        
+  </g>
+
+  <!-- Footer Watermark -->
+  <text x="1160" y="650" fill="#475569" font-size="11" font-weight="500" text-anchor="end">nanamate.study · High School Physics Core Summary</text>
+</svg>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>데이터베이스: 관계형 모델부터 분산 시스템까지</title>
+<link rel="stylesheet" href="styles.css">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script defer src="toggle.js"></script>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f7fa;
+    color: #2d3748;
+    line-height: 1.6;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 100vh;
+  }
+
+  aside {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 28px 20px;
+    position: sticky;
+    top: 0;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+
+  .hub-back-link {
+    display: block;
+    padding: 10px 14px !important;
+    margin-bottom: 18px !important;
+    background: linear-gradient(120deg, #7b5cff, #00d4ff) !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.04em !important;
+    text-align: center !important;
+    box-shadow: 0 6px 18px -6px rgba(123, 92, 255, 0.5) !important;
+    transition: transform 0.2s ease !important;
+  }
+
+  .hub-back-link:hover {
+    transform: translateY(-2px);
+  }
+
+  aside h3 {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 16px;
+    opacity: 0.95;
+  }
+
+  aside ol {
+    list-style-position: inside;
+    font-size: 13px;
+  }
+
+  aside ol li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  aside ol li a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  aside ol li a:hover {
+    color: #fff;
+  }
+
+  main {
+    padding: 48px 60px;
+    max-width: 1200px;
+  }
+
+  .paper-header {
+    background: white;
+    padding: 48px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .paper-title {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    color: #1a202c;
+  }
+
+  .paper-title em {
+    font-style: italic;
+    color: #667eea;
+  }
+
+  .paper-subtitle {
+    font-size: 16px;
+    color: #718096;
+    margin-bottom: 8px;
+  }
+
+  .paper-affiliation {
+    font-size: 12px;
+    color: #a0aec0;
+    letter-spacing: 0.05em;
+  }
+
+  /* 3D Cube */
+  .scene-3d {
+    perspective: 1200px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 60px 0;
+  }
+
+  .cube {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotateCube 20s infinite linear;
+  }
+
+  .cube-face {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .cube-face:nth-child(1) { transform: translateZ(100px); }
+  .cube-face:nth-child(2) { transform: rotateY(180deg) translateZ(100px); }
+  .cube-face:nth-child(3) { transform: rotateY(90deg) translateZ(100px); }
+  .cube-face:nth-child(4) { transform: rotateY(-90deg) translateZ(100px); }
+  .cube-face:nth-child(5) { transform: rotateX(90deg) translateZ(100px); }
+  .cube-face:nth-child(6) { transform: rotateX(-90deg) translateZ(100px); }
+
+  @keyframes rotateCube {
+    0% { transform: rotateX(0deg) rotateY(0deg); }
+    100% { transform: rotateX(360deg) rotateY(360deg); }
+  }
+
+  /* Easy Version Box */
+  .easy-box {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+    border-left: 4px solid #667eea;
+    padding: 24px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+  }
+
+  .easy-box h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #2d3748;
+  }
+
+  .easy-box p {
+    font-size: 14px;
+    color: #4a5568;
+    line-height: 1.8;
+  }
+
+  /* Paper Version */
+  .paper-version {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    margin-bottom: 40px;
+  }
+
+  .paper-version h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #2d3748;
+  }
+
+  .abstract {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #4a5568;
+  }
+
+  .abstract p {
+    margin-bottom: 16px;
+  }
+
+  /* Chapter Cards */
+  .chapters-section {
+    margin-bottom: 40px;
+  }
+
+  .chapters-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 28px;
+    color: #2d3748;
+  }
+
+  .chapters-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .chapter-card {
+    background: white;
+    border-radius: 12px;
+    padding: 28px 24px;
+    text-decoration: none;
+    color: inherit;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .chapter-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+    transform: translateY(-4px);
+  }
+
+  .chapter-num {
+    display: inline-block;
+    background: linear-gradient(120deg, #667eea, #764ba2);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .chapter-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #2d3748;
+  }
+
+  .chapter-desc {
+    font-size: 13px;
+    color: #718096;
+    line-height: 1.6;
+  }
+
+  /* File Structure */
+  .file-structure {
+    background: white;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .file-structure h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #2d3748;
+  }
+
+  .file-structure pre {
+    background: #f7fafc;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 13px;
+    color: #2d3748;
+    border-left: 4px solid #667eea;
+  }
+
+  @media (max-width: 1024px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+
+    aside {
+      position: relative;
+      max-height: none;
+    }
+
+    main {
+      padding: 32px 24px;
+    }
+
+    .chapters-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .paper-title {
+      font-size: 32px;
+    }
+
+    .chapters-grid {
+      grid-template-columns: 1fr;
+    }
+
+    main {
+      padding: 20px 16px;
+    }
+  }
+</style>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="index.html">📖 표지 · 초록</a></li>
+    <li><a href="chapters/01-relational.html">1. 관계형 DB 기초</a></li>
+    <li><a href="chapters/02-sql.html">2. SQL 핵심</a></li>
+    <li><a href="chapters/03-normalization.html">3. 정규화</a></li>
+    <li><a href="chapters/04-index.html">4. 인덱스와 최적화</a></li>
+    <li><a href="chapters/05-transaction.html">5. 트랜잭션과 동시성</a></li>
+    <li><a href="chapters/06-nosql.html">6. NoSQL</a></li>
+    <li><a href="chapters/07-distributed.html">7. 분산 DB</a></li>
+    <li><a href="chapters/08-modeling.html">8. 데이터 모델링</a></li>
+    <li><a href="chapters/09-patterns.html">9. 실전 설계 패턴</a></li>
+  </ol>
+</aside>
+<main>
+
+<!-- Paper Header -->
+<div class="paper-header">
+  <h1 class="paper-title">데이터베이스,<br>그 <em>구조와 원리</em>에<br>관하여</h1>
+  <p class="paper-subtitle">A Comprehensive Guide to Database Systems — From Relational Models to Distributed Architecture</p>
+  <p class="paper-affiliation">Vol. 04 · May 2026 · aboutDB Editorial</p>
+</div>
+
+<!-- 3D Cube -->
+<div class="scene-3d">
+  <div class="cube">
+    <div class="cube-face">SELECT</div>
+    <div class="cube-face">JOIN</div>
+    <div class="cube-face">INDEX</div>
+    <div class="cube-face">ACID</div>
+    <div class="cube-face">Shard</div>
+    <div class="cube-face">Schema</div>
+  </div>
+</div>
+
+<!-- Easy Version Box -->
+<div class="easy-box">
+  <h4>📚 이 문서란?</h4>
+  <p>
+    데이터베이스의 핵심 개념부터 실전 설계 패턴까지, 관계형 모델의 근간부터 최신 분산 시스템까지 아우르는 종합 가이드입니다.
+    각 장은 이론적 기초(Codd의 관계 모델, CAP 정리)와 실용적 도구(B-Tree 인덱싱, 트랜잭션 격리 수준)를 균형있게 다룹니다.
+    데이터 엔지니어, 백엔드 개발자, 시스템 설계자를 위한 필독 문서입니다.
+  </p>
+</div>
+
+<!-- Paper Version -->
+<div class="paper-version">
+  <h2>초록 (Abstract)</h2>
+  <div class="abstract">
+    <p>
+      본 논문은 현대 데이터베이스 시스템의 전체 스펙트럼을 다룬다. 첫째, 관계형 모델의 탄생 배경(Codd, 1970)부터 SQL의 문법과 의미론을 살펴본다. 둘째, 정규화 이론(1NF ∉ BCNF, 함수종속)을 통해 논리적 스키마 설계의 원칙을 확립한다. 셋째, B-Tree 인덱싱과 쿼리 옵티마이저를 통해 성능 최적화의 메커니즘을 분석한다.
+    </p>
+    <p>
+      넷째, ACID 특성과 격리 수준(Isolation Level)을 기반으로 트랜잭션 동시성 제어의 이론과 실제를 다룬다. 다섯째, Document, Key-Value, Graph, Column Family 등의 NoSQL 패러다임을 비교 분석하며, 각각의 적용 사례를 제시한다. 여섯째, CAP 정리와 일관성 모델(Strong Consistency, Eventual Consistency)을 통해 분산 시스템의 트레이드오프를 논의하고, 샤딩(Sharding)과 복제(Replication) 전략을 검토한다.
+    </p>
+    <p>
+      마지막으로, ER 다이어그램과 정규화 과정을 통한 스키마 설계, 이벤트 소싱(Event Sourcing)과 CQRS 패턴, 대규모 마이그레이션 전략 등 실전 설계 패턴을 제시한다. 본 가이드는 학부 수준의 데이터베이스 개론을 넘어, 업계 실무에서 요구되는 깊이 있는 이해와 의사결정 능력을 배양하도록 구성되었다.
+    </p>
+  </div>
+</div>
+
+<!-- Chapter Cards -->
+<div class="chapters-section">
+  <h2 class="chapters-title">📚 장별 구성</h2>
+  <div class="chapters-grid">
+    <a href="chapters/01-relational.html" class="chapter-card">
+      <div class="chapter-num">1장</div>
+      <h3 class="chapter-title">관계형 DB 기초</h3>
+      <p class="chapter-desc">Codd의 관계 모델, 릴레이션과 튜플, 속성과 도메인, 기본키와 외래키 개념</p>
+    </a>
+
+    <a href="chapters/02-sql.html" class="chapter-card">
+      <div class="chapter-num">2장</div>
+      <h3 class="chapter-title">SQL 핵심</h3>
+      <p class="chapter-desc">DML · DDL · 집계함수 · 서브쿼리 · 윈도우함수와 고급 쿼리 작성법</p>
+    </a>
+
+    <a href="chapters/03-normalization.html" class="chapter-card">
+      <div class="chapter-num">3장</div>
+      <h3 class="chapter-title">정규화</h3>
+      <p class="chapter-desc">1NF → BCNF · 함수종속 · 이상 현상(Anomaly) 제거의 원칙</p>
+    </a>
+
+    <a href="chapters/04-index.html" class="chapter-card">
+      <div class="chapter-num">4장</div>
+      <h3 class="chapter-title">인덱스와 최적화</h3>
+      <p class="chapter-desc">B-Tree · Hash Index · 쿼리 플랜 분석 · 성능 튜닝 기법</p>
+    </a>
+
+    <a href="chapters/05-transaction.html" class="chapter-card">
+      <div class="chapter-num">5장</div>
+      <h3 class="chapter-title">트랜잭션과 동시성</h3>
+      <p class="chapter-desc">ACID 특성 · 격리수준 · 잠금(Lock) 메커니즘 · Deadlock 해결</p>
+    </a>
+
+    <a href="chapters/06-nosql.html" class="chapter-card">
+      <div class="chapter-num">6장</div>
+      <h3 class="chapter-title">NoSQL</h3>
+      <p class="chapter-desc">Document · Key-Value · Graph · Column Family 모델 비교</p>
+    </a>
+
+    <a href="chapters/07-distributed.html" class="chapter-card">
+      <div class="chapter-num">7장</div>
+      <h3 class="chapter-title">분산 DB</h3>
+      <p class="chapter-desc">CAP 정리 · 일관성 모델 · 샤딩과 복제 전략 · 합의 알고리즘</p>
+    </a>
+
+    <a href="chapters/08-modeling.html" class="chapter-card">
+      <div class="chapter-num">8장</div>
+      <h3 class="chapter-title">데이터 모델링</h3>
+      <p class="chapter-desc">ER 다이어그램 · 스키마 설계 원칙 · 비정규화(Denormalization) 기법</p>
+    </a>
+
+    <a href="chapters/09-patterns.html" class="chapter-card">
+      <div class="chapter-num">9장</div>
+      <h3 class="chapter-title">실전 설계 패턴</h3>
+      <p class="chapter-desc">이벤트 소싱 · CQRS · 마이그레이션 · 대규모 시스템 사례 분석</p>
+    </a>
+  </div>
+</div>
+
+<!-- File Structure -->
+<div class="file-structure">
+  <h3>📁 파일 구조</h3>
+  <pre>aboutDatabase/
+├── index.html                 # 본 표지 및 초록
+├── styles.css                 # 전체 스타일시트
+├── toggle.js                  # 토글 기능 (Dark Mode 등)
+└── chapters/
+    ├── 01-relational.html     # 1장: 관계형 DB 기초
+    ├── 02-sql.html            # 2장: SQL 핵심
+    ├── 03-normalization.html  # 3장: 정규화
+    ├── 04-index.html          # 4장: 인덱스와 최적화
+    ├── 05-transaction.html    # 5장: 트랜잭션과 동시성
+    ├── 06-nosql.html          # 6장: NoSQL
+    ├── 07-distributed.html    # 7장: 분산 DB
+    ├── 08-modeling.html       # 8장: 데이터 모델링
+    └── 09-patterns.html       # 9장: 실전 설계 패턴
+  </pre>
+</div>
+
+</main>
+</div>
+</body>
+</html>

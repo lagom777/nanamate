@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>발달 | 심리학 기초</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+  <script defer src="../shared/quizgame3d.js"></script>
+  <script defer src="../shared/learngame3d.js"></script>
+</head>
+<body>
+
+<aside>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h1><a href="index.html">심리학 기초</a></h1>
+  <div class="sub">PSYCHOLOGY FROM ZERO</div>
+  <nav>
+    <ol>
+      <li><a href="index.html" class="chap">🏠 목차</a></li>
+      <li><a href="ch01.html" class="chap">1. 심리학이란?</a></li>
+      <li><a href="ch02.html" class="chap">2. 뇌와 신경계</a></li>
+      <li><a href="ch03.html" class="chap">3. 감각과 지각</a></li>
+      <li><a href="ch04.html" class="chap">4. 학습</a></li>
+      <li><a href="ch05.html" class="chap">5. 기억</a></li>
+      <li><a href="ch06.html" class="chap">6. 발달</a></li>
+      <li><a href="ch07.html" class="chap">7. 성격</a></li>
+      <li><a href="ch08.html" class="chap">8. 사회심리학</a></li>
+      <li><a href="ch09.html" class="chap">9. 이상심리·치료</a></li>
+      <li><a href="ch10.html" class="chap">10. 동기와 정서</a></li>
+      <li><a href="ch11.html" class="chap">11. 인지 — 사고·언어·지능</a></li>
+      <li><a href="ch12.html" class="chap">12. 의식 — 수면·꿈·각성</a></li>
+      <li><a href="ch13.html" class="chap">13. 스트레스와 건강심리</a></li>
+      <li><a href="ch14.html" class="chap">14. 심리검사의 세계</a></li>
+      <li><a href="ch15.html" class="chap">15. 긍정심리학</a></li>
+      <li><a href="quiz.html" class="chap">📝 확인 퀴즈</a></li>
+    </ol>
+  </nav>
+  <button id="theme-btn" onclick="toggleTheme()">다크 모드 전환</button>
+</aside>
+
+<main>
+  <div class="page-nav">
+    <a href="index.html">← 목차로</a>
+  </div>
+
+  <section class="chapter" id="ch6">
+    <div class="chap-num">CHAPTER 06</div>
+    <h2>발달 — 사람은 어떻게 자라는가</h2>
+<span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 전 생애 발달 — 영아에서 노년까지 자라는 마음</span>
+<div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const COL=0xa855f7;const line=new THREE.Mesh(new THREE.BoxGeometry(7.6,0.05,0.05),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.4}));line.position.y=-1.4;s.add(line);const stages=['감각운동기','전조작기','구체적 조작기','형식적 조작기','성인'];for(let i=0;i<5;i++){const rad=0.28+i*0.2;const m=new THREE.Mesh(new THREE.SphereGeometry(rad,18,18),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.55+i*0.09}));m.position.set((i-2)*1.7,-1.4+rad,0);s.add(m);const t=lbl(stages[i],'#e9d5ff');t.position.set((i-2)*1.7,-1.4+rad*2+0.45,0);s.add(t);}
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 피아제 인지발달 4단계: 감각운동기 → 전조작기 → 구체적 조작기 → 형식적 조작기.','감각운동기(0~2세): 대상영속성을 획득 — 안 보여도 존재함을 압니다.','전조작기는 보존 개념이 없어 좁고 높은 컵의 물이 \'더 많다\'고 답합니다.','에릭슨은 사회적 자아의 발달을 8단계 위기로 설명 — 청소년기는 정체감 vs 역할혼미.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script>
+
+    <div class="en">Developmental Psychology</div>
+
+    <p>발달심리학은 '사람이 태어나서 죽을 때까지 어떻게 변하는가'를 연구합니다. 신체만이 아니라 <strong>사고, 감정, 관계</strong> 모두 단계별로 변화합니다.</p>
+
+    <h3>6.1 피아제의 인지발달 4단계</h3>
+    <p>스위스의 <strong>장 피아제</strong>는 자기 아이들을 관찰하면서 "아이는 어른의 축소판이 아니라, 전혀 다른 방식으로 세상을 이해한다"는 걸 발견했습니다.</p>
+
+    <figure class="figure">
+      <svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg">
+        <text x="340" y="22" text-anchor="middle" font-size="14" font-weight="bold" fill="#5b4b8a">피아제의 인지발달 4단계</text>
+        <line x1="40" y1="190" x2="640" y2="190" stroke="#5b4b8a" stroke-width="2"/>
+        <g stroke="#5b4b8a" stroke-width="2">
+          <line x1="60" y1="185" x2="60" y2="195"/>
+          <line x1="180" y1="185" x2="180" y2="195"/>
+          <line x1="360" y1="185" x2="360" y2="195"/>
+          <line x1="500" y1="185" x2="500" y2="195"/>
+          <line x1="640" y1="185" x2="640" y2="195"/>
+        </g>
+        <text x="60" y="212" text-anchor="middle" font-size="11" fill="#6b6b6b">0세</text>
+        <text x="180" y="212" text-anchor="middle" font-size="11" fill="#6b6b6b">2세</text>
+        <text x="360" y="212" text-anchor="middle" font-size="11" fill="#6b6b6b">7세</text>
+        <text x="500" y="212" text-anchor="middle" font-size="11" fill="#6b6b6b">11세</text>
+        <text x="640" y="212" text-anchor="middle" font-size="11" fill="#6b6b6b">성인</text>
+
+        <rect x="60" y="55" width="120" height="120" rx="8" fill="#ffd6d6" stroke="#5b4b8a" stroke-width="2"/>
+        <text x="120" y="80" text-anchor="middle" font-size="12" font-weight="bold" fill="#5b4b8a">감각운동기</text>
+        <text x="120" y="96" text-anchor="middle" font-size="9" fill="#6b6b6b">0~2세</text>
+        <text x="120" y="122" text-anchor="middle" font-size="10" fill="#2b2b2b">오감·운동으로</text>
+        <text x="120" y="138" text-anchor="middle" font-size="10" fill="#2b2b2b">세상 이해</text>
+        <text x="120" y="158" text-anchor="middle" font-size="10" fill="#d97757" font-weight="bold">대상영속성 획득</text>
+
+        <rect x="190" y="55" width="160" height="120" rx="8" fill="#fff0cc" stroke="#5b4b8a" stroke-width="2"/>
+        <text x="270" y="80" text-anchor="middle" font-size="12" font-weight="bold" fill="#5b4b8a">전조작기</text>
+        <text x="270" y="96" text-anchor="middle" font-size="9" fill="#6b6b6b">2~7세</text>
+        <text x="270" y="122" text-anchor="middle" font-size="10" fill="#2b2b2b">상징(언어) 사용</text>
+        <text x="270" y="138" text-anchor="middle" font-size="10" fill="#d97757" font-weight="bold">자기중심성</text>
+        <text x="270" y="158" text-anchor="middle" font-size="10" fill="#2b2b2b">(보존 개념 ✗)</text>
+
+        <rect x="360" y="55" width="130" height="120" rx="8" fill="#dce9f5" stroke="#5b4b8a" stroke-width="2"/>
+        <text x="425" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#5b4b8a">구체적 조작기</text>
+        <text x="425" y="96" text-anchor="middle" font-size="9" fill="#6b6b6b">7~11세</text>
+        <text x="425" y="122" text-anchor="middle" font-size="10" fill="#d97757" font-weight="bold">보존 개념 획득</text>
+        <text x="425" y="138" text-anchor="middle" font-size="10" fill="#2b2b2b">논리적 사고</text>
+        <text x="425" y="158" text-anchor="middle" font-size="10" fill="#2b2b2b">(구체물에 한정)</text>
+
+        <rect x="500" y="55" width="140" height="120" rx="8" fill="#e0f0dc" stroke="#5b4b8a" stroke-width="2"/>
+        <text x="570" y="80" text-anchor="middle" font-size="11" font-weight="bold" fill="#5b4b8a">형식적 조작기</text>
+        <text x="570" y="96" text-anchor="middle" font-size="9" fill="#6b6b6b">11세 ~</text>
+        <text x="570" y="122" text-anchor="middle" font-size="10" fill="#d97757" font-weight="bold">추상적 사고</text>
+        <text x="570" y="138" text-anchor="middle" font-size="10" fill="#2b2b2b">가설적 추론</text>
+        <text x="570" y="158" text-anchor="middle" font-size="10" fill="#2b2b2b">"만약 ~라면"</text>
+      </svg>
+      <figcaption>피아제의 4단계. 각 단계는 사고방식의 질적인 도약을 뜻합니다.</figcaption>
+    </figure>
+
+    <div class="example">
+      <span class="label">예시 — 대상영속성</span>
+      6개월 아기 앞에서 장난감을 담요로 덮으면, 아기는 "장난감이 사라졌다"고 생각합니다. <b>눈에 안 보이면 존재하지 않는 것</b>이죠. 8개월쯤 되면 "담요 뒤에 아직 있구나"를 이해합니다 → 대상영속성 획득.
+    </div>
+    <div class="example">
+      <span class="label">예시 — 보존 개념</span>
+      같은 양의 물을 <b>똑같이 생긴 두 컵</b>에 따라 보여주고, 한쪽을 <b>좁고 높은 컵</b>에 옮겨 붓습니다. 전조작기 아이는 "이쪽이 더 많아!"라고 답합니다. 높이만 보고 판단하죠. 구체적 조작기 아이는 "양은 똑같아"라고 답합니다.
+    </div>
+
+    <h3>6.2 에릭슨의 심리사회 발달 8단계</h3>
+    <p>피아제가 '생각'의 발달을 봤다면, <strong>에릭슨</strong>은 '사회적 자아'의 발달을 봤습니다. 각 단계마다 해결해야 할 <b>심리사회적 위기</b>가 있다고 했습니다.</p>
+
+    <figure class="figure">
+      <svg viewBox="0 0 680 400" xmlns="http://www.w3.org/2000/svg">
+        <text x="340" y="22" text-anchor="middle" font-size="14" font-weight="bold" fill="#5b4b8a">에릭슨의 심리사회 발달 8단계</text>
+        <g font-size="11">
+          <rect x="20" y="40" width="640" height="40" rx="6" fill="#f3efe6" stroke="#5b4b8a" stroke-width="1"/>
+          <text x="35" y="64" font-weight="bold" fill="#2b2b2b">1. 영아기 (0~1)</text>
+          <text x="195" y="64" font-weight="bold" fill="#5b4b8a">신뢰 vs 불신</text>
+          <text x="360" y="64" fill="#6b6b6b">양육자의 일관된 돌봄 → 세상은 안전하다는 기본 신뢰</text>
+
+          <rect x="20" y="84" width="640" height="40" rx="6" fill="#ede9f5" stroke="#5b4b8a" stroke-width="1"/>
+          <text x="35" y="108" font-weight="bold" fill="#2b2b2b">2. 유아기 (1~3)</text>
+          <text x="195" y="108" font-weight="bold" fill="#5b4b8a">자율성 vs 수치</text>
+          <text x="360" y="108" fill="#6b6b6b">스스로 하기(배변·걷기) → 자율성, 과잉 통제 시 수치</text>
+
+          <rect x="20" y="128" width="640" height="40" rx="6" fill="#f3efe6" stroke="#5b4b8a" stroke-width="1"/>
+          <text x="35" y="152" font-weight="bold" fill="#2b2b2b">3. 학령전기 (3~6)</text>
+          <text x="195" y="152" font-weight="bold" fill="#5b4b8a">주도성 vs 죄책</text>
+          <text x="360" y="152" fill="#6b6b6b">놀이·계획을 주도 → 주도성, 과잉 제지 시 죄책감</text>
+
+          <rect x="20" y="172" width="640" height="40" rx="6" fill="#ede9f5" stroke="#5b4b8a" stroke-width="1"/>
+          <text x="35" y="196" font-weight="bold" fill="#2b2b2b">4. 학령기 (6~12)</text>
+          <text x="195" y="196" font-weight="bold" fill="#5b4b8a">근면성 vs 열등</text>
+          <text x="360" y="196" fill="#6b6b6b">학교·또래에서 성취 → 근면성, 실패 반복 시 열등감</text>
+
+          <rect x="20" y="216" width="640" height="40" rx="6" fill="#fde8dc" stroke="#d97757" stroke-width="2"/>
+          <text x="35" y="240" font-weight="bold" fill="#2b2b2b">5. 청소년기 (12~18)</text>
+          <text x="195" y="240" font-weight="bold" fill="#d97757">정체감 vs 역할혼미</text>
+          <text x="360" y="240" fill="#6b6b6b">"나는 누구인가" 탐색 → 핵심 단계 ⭐</text>
+
+          <rect x="20" y="260" width="640" height="40" rx="6" fill="#ede9f5" stroke="#5b4b8a" stroke-width="1"/>
+          <text x="35" y="284" font-weight="bold" fill="#2b2b2b">6. 초기 성인 (18~40)</text>
+          <text x="195" y="284" font-weight="bold" fill="#5b4b8a">친밀감 vs 고립</text>
+          <text x="360" y="284" fill="#6b6b6b">타인과 깊은 관계 형성 → 친밀감, 실패 시 고립</text>
+
+          <rect x="20" y="304" width="640" height="40" rx="6" fill="#f3efe6" stroke="#5b4b8a" stroke-width="1"/>
+          <text x="35" y="328" font-weight="bold" fill="#2b2b2b">7. 중년 (40~65)</text>
+          <text x="195" y="328" font-weight="bold" fill="#5b4b8a">생산성 vs 침체</text>
+          <text x="360" y="328" fill="#6b6b6b">다음 세대 양육·기여 → 생산성, 실패 시 침체</text>
+
+          <rect x="20" y="348" width="640" height="40" rx="6" fill="#ede9f5" stroke="#5b4b8a" stroke-width="1"/>
+          <text x="35" y="372" font-weight="bold" fill="#2b2b2b">8. 노년 (65~)</text>
+          <text x="195" y="372" font-weight="bold" fill="#5b4b8a">자아통합 vs 절망</text>
+          <text x="360" y="372" fill="#6b6b6b">삶 전체를 수용 → 자아통합, 후회 시 절망</text>
+        </g>
+      </svg>
+      <figcaption>에릭슨의 8단계. 청소년기의 '정체감 확립'은 가장 많이 인용되는 단계입니다.</figcaption>
+    </figure>
+
+    <h3>6.3 애착 — 에인즈워스의 '낯선 상황'</h3>
+    <p><strong>존 보울비</strong>는 아기와 양육자 사이의 정서적 유대를 <b>애착</b>이라 불렀고, <strong>메리 에인즈워스</strong>는 '낯선 상황 실험'으로 애착 유형을 분류했습니다.</p>
+    <ol>
+      <li><strong>안정 애착 (약 60%)</strong> — 엄마가 사라지면 울다가, 돌아오면 반기고 금방 안정됨. 엄마를 "안전 기지"로 삼아 세상을 탐색.</li>
+      <li><strong>회피 애착 (약 20%)</strong> — 엄마가 사라져도 무관심하고, 돌아와도 반기지 않음. 감정을 차단한 것으로 해석.</li>
+      <li><strong>저항(양가) 애착 (약 10%)</strong> — 엄마가 사라지면 극도로 불안, 돌아오면 매달리면서도 밀어냄.</li>
+      <li><strong>혼란 애착 (약 10%)</strong> — 일관된 패턴이 없음. 학대·방임 환경과 연관.</li>
+    </ol>
+    <div class="tip">
+      <span class="label">성인기까지</span>
+      초기 애착 유형은 성인이 되어서도 <b>연애·대인관계 방식</b>에 영향을 미친다는 연구가 많습니다(성인 애착 이론). 단, '운명'은 아니고 후천적 경험으로 바뀔 수 있습니다.
+    </div>
+  </section>
+
+  <div class="page-nav-bottom">
+    <a href="ch05.html">← 이전</a>
+    <div class="spacer"></div>
+    <a href="ch07.html">다음 →</a>
+  </div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한마디로 하면?</h3>
+  <p>발달은 사람이 <b>태어나서 나이 들 때까지 어떻게 변해가는지</b>를 알아보는 거예요. 키만 크는 게 아니라 생각·감정·친구관계까지 평생 함께 자라요! 🌱➡️🌳</p>
+
+  <h3>🤔 이게 왜 재밌냐면</h3>
+  <p>발달은 우리 주변 곳곳에서 볼 수 있어요.</p>
+  <ul>
+    <li>🙈 아기가 '까꿍!' 놀이에 까르르 웃는 건 '안 보여도 있구나'를 막 알았기 때문이에요.</li>
+    <li>🧑‍🤝‍🧑 사춘기에 친구를 제일 중요하게 여기는 건 '나는 누구지?'를 찾는 과정이에요.</li>
+    <li>👵 나이 들어서도 새 걸 배울 수 있는 건 뇌가 평생 변할 수 있기 때문이에요.</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 이 단어만 알면 돼!</h4>
+    <ul>
+      <li><strong>발달(Development)</strong>: 평생에 걸친 변화</li>
+      <li><strong>애착(Attachment)</strong>: 아기와 돌봐주는 사람 사이의 마음의 끈</li>
+      <li><strong>대상영속성(Object Permanence)</strong>: 안 보여도 그것이 계속 있다는 걸 아는 능력</li>
+      <li><strong>발달과업(Developmental Task)</strong>: 각 나이에 꼭 익혀야 할 능력</li>
+      <li><strong>본성과 양육(Nature &amp; Nurture)</strong>: 타고난 것(유전)과 자라온 환경의 협동</li>
+    </ul>
+  </div>
+
+  <h3>📖 쉽게 풀어볼게!</h3>
+  <p>스위스의 피아제 박사는 "아이는 <b>작은 어른</b>이 아니라, 세상을 아예 다른 방식으로 이해한다"는 걸 알아냈어요. 예를 들어 어린 아이에게 <b>같은 양의 물</b>을 좁고 긴 컵에 부으면 "이게 더 많아!"라고 해요. 높이만 보고 판단하는 거죠. 조금 더 크면 "양은 똑같아"라고 알게 돼요. 이렇게 생각하는 방식이 단계별로 쑥쑥 자라요. 🧠</p>
+  <p>또 에릭슨 박사는 나이마다 풀어야 할 '숙제'가 있다고 했어요. 특히 <b>청소년기의 숙제는 "나는 누구인가"를 찾는 것</b>이에요. 그리고 아기 때 돌봐주는 사람과 만든 <b>애착</b>은 평생 마음의 바탕이 돼요. 발달은 강물과 비슷해요. 큰 줄기는 다 비슷하지만, 굽이굽이 풍경은 사람마다 달라요! 🏞️</p>
+
+  <div class="study-tip">
+    <strong>💡 이렇게 해봐:</strong> 내 인생의 중요한 순간들을 나이별로 적어봐요. 발달 이론이 딱딱한 공부가 아니라 '내 이야기'로 다가와요!
+  </div>
+
+  <h3>✅ 오늘의 정리</h3>
+  <ul>
+    <li>발달은 평생에 걸쳐, 여러 영역이 함께 변하는 것! 🌳</li>
+    <li>타고난 것(유전)과 환경이 서로 협동해요.</li>
+    <li>나이마다 풀어야 할 '발달 숙제'가 있어요.</li>
+    <li>어릴 적 애착은 평생 마음의 바탕이 돼요.</li>
+    <li>큰 흐름은 비슷해도 사람마다 다르게 자라요.</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>피아제의 인지발달 이론은 감각운동기(0-2), 전조작기(2-7), 구체적조작기(7-11), 형식적조작기(11세 이후) 4단계로 구성되며, 동화-조절-평형화의 인지 적응 메커니즘을 핵심으로 합니다. 비고츠키의 사회문화 이론은 근접발달영역(ZPD)과 비계설정(scaffolding)을 통해 학습이 사회적 상호작용 속에서 일어남을 강조합니다. 에릭슨의 심리사회 발달 8단계는 신뢰 대 불신, 자율 대 수치, 친밀 대 고립, 자아통합 대 절망 등 평생에 걸친 위기와 해결을 제시합니다. 보울비와 에인스워스의 애착 이론은 안정·회피·저항·혼란 애착 유형이 성인기 관계 양식까지 영향을 미친다는 점을 보여 주며, 콜버그의 도덕 발달 6단계는 처벌 회피에서 보편 윤리 원칙까지의 진보를 그립니다. 현대에는 행동유전학(쌍둥이·입양 연구)이 거의 모든 심리 특성에 유전 영향이 30-60%임을 밝혔으며, 후성유전학(epigenetics)은 환경 경험이 유전자 발현을 조절함을 보여 줍니다.</p>
+
+  <h3>고전 실험과 사례</h3>
+  <div class="info-card">
+    <h4>🧠 실험 1 — 할로우의 원숭이 애착 실험</h4>
+    <p>새끼 붉은털원숭이에게 우유를 주는 철사 어미와 우유는 없지만 부드러운 천 어미를 동시에 제공하자, 원숭이는 천 어미에 더 오래 매달렸습니다. 애착의 본질이 영양 공급이 아닌 접촉 위안임을 보여 준 결정적 실험입니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>🧠 실험 2 — 에인스워스의 낯선 상황</h4>
+    <p>12-18개월 영아와 어머니의 분리·재결합 반응을 관찰해 안정 애착, 회피 애착, 저항 애착의 유형을 분류했습니다. 이후 혼란 애착이 추가되었고, 이 유형들은 성인기 연애 양식과도 연결됨이 종단 연구로 확인되었습니다.</p>
+  </div>
+
+  <h3>임상/실생활 응용</h3>
+  <p>임상에서는 부모-자녀 상호작용 치료(PCIT), 애착 기반 가족 치료가 활용되고, 학교에서는 비고츠키의 비계설정 원리로 협력 학습을 설계합니다. 노화 영역에서는 인지 예비능(cognitive reserve)을 강화하는 평생 학습과 사회적 활동이 치매 위험을 낮춘다는 증거가 축적되었습니다. 정책 차원에서는 어린이집 질, 산전 영양, 부모 휴가가 발달 결과에 어떤 영향을 주는지 종단 연구로 평가됩니다.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ 자주 하는 오해:</strong> "결정적 시기를 놓치면 끝이다"라는 생각은 과장입니다. 언어처럼 민감기가 분명한 영역도 있지만, 인간의 뇌는 평생 가소성을 가지며 적절한 개입은 후기에도 효과가 있습니다.
+  </div>
+
+<h3>전문가 레벨</h3>
+  <p>현대 발달과학은 다층적·역동적·생애주기 관점을 통합합니다. 발달의 동적체계 이론(Thelen)은 운동발달조차 신경, 근육, 환경, 과제 요구의 상호작용으로 보며, 단계론적 견해를 비판합니다. 행동유전학과 분자유전학의 결합으로 GWAS는 인지능력, 정신질환에 영향을 미치는 다유전자 위험점수(polygenic risk score)를 산출하지만, 효과는 작고 환경 조절이 강력합니다. GxE(유전자×환경) 상호작용은 5-HTTLPR 다형성과 스트레스성 우울증의 관계처럼 복잡성을 보이며, 후성유전학은 모성 양육이 자손의 글루코코르티코이드 수용체 발현을 조절한다는 Meaney의 연구로 유명합니다. 발달정신병리학(developmental psychopathology)은 정상과 이상이 같은 발달 메커니즘의 변이라고 보며, 등결과성(equifinality)과 다결과성(multifinality)으로 경로의 비단선성을 설명합니다.</p>
+
+  <h3>측정과 통계</h3>
+  <p>종단 연구의 분석에는 잠재성장곡선(LGCM), 다층모형(HLM), 잠재변수성장혼합(LCGM)이 사용됩니다. 발달 변화의 모양(선형/비선형), 변화율의 개인차, 변화의 예측변수를 동시에 추정할 수 있죠. 쌍둥이 모형(ACE 모형)은 유전, 공유환경, 비공유환경의 분산 분해를 제공하며, 후성유전 시계(Horvath clock)는 생물학적 노화를 정량화합니다.</p>
+
+  <h3>최신 연구</h3>
+  <p>첫째, 산전 환경의 장기효과: DOHaD(Developmental Origins of Health and Disease) 가설로 산모 스트레스, 영양이 자녀의 정신건강에 미치는 후성유전적 영향이 연구됩니다. 둘째, 디지털 양육 환경: 스크린 타임, SNS 사용이 청소년 우울·자존감에 미치는 영향이 종단으로 추적되고 있습니다. 셋째, 노화의 슈퍼에이저(SuperAgers) 연구: 80대에도 청년 수준의 기억력을 보이는 이들의 신경학적·생활습관 특성이 분석되고 있습니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li><strong>발달신경과학</strong>: 뇌 성숙과 가소성</li>
+    <li><strong>행동유전학</strong>: 형질의 유전·환경 분해</li>
+    <li><strong>발달정신병리학</strong>: 정상-이상 연속선</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>책: 『The Developing Mind』(Siegel)</li>
+    <li>책: 『Mind in Society』(Vygotsky)</li>
+    <li>저널: Child Development, Developmental Psychology</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>🎓 사고 실험:</strong> 만약 일생을 한 번 더 살 수 있다면, 어떤 발달 시기에 어떤 변화를 주고 싶은가요? 그 변화가 정말 다른 결과를 만들지, 등결과성 가설로 어떻게 평가할 수 있을지 생각해 보세요.
+  </div>
+</div>
+
+  <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+
+<h2>🕹️ 직접 해보기 — 피아제 인지발달 단계</h2>
+<p>피아제의 인지발달 4단계를 어린 나이부터 순서대로 배열하세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#d97757","prompt":"피아제 인지발달 단계를 순서대로 배열하세요","steps":["감각운동기(0~2세)","전조작기(2~7세)","구체적 조작기(7~11세)","형식적 조작기(11세~)"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d97757","questions":[{"q":"인지발달 4단계를 제시한 학자는?","choices":["피아제","에릭슨","보울비","에인즈워스"],"answer":0},{"q":"눈에 안 보여도 존재함을 아는 것은?","choices":["보존 개념","대상영속성","자기중심성","애착"],"answer":1},{"q":"청소년기의 심리사회적 위기는?","choices":["신뢰 vs 불신","친밀감 vs 고립","정체감 vs 역할혼미","자율성 vs 수치"],"answer":2},{"q":"가장 흔한 애착 유형은?","choices":["회피 애착","저항 애착","혼란 애착","안정 애착"],"answer":3},{"q":"'낯선 상황' 실험을 한 학자는?","choices":["에인즈워스","피아제","프로이트","에릭슨"],"answer":0}]};</script>
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>

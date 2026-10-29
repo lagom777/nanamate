@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+:root { --bg:#0a0e1a; --bg-panel:#0f1623; --bg-card:#141c2c; --bg-elevated:#1c2538; --text:#e6ecf5; --text-dim:#9aa6bb; --text-mute:#647088; --accent:#7c3aed; --accent-glow:rgba(124,58,237,0.18); --border:rgba(124,58,237,0.25); --font-display:'Space Grotesk','IBM Plex Sans KR',sans-serif; --font-body:'IBM Plex Sans KR',-apple-system,sans-serif; --font-mono:'JetBrains Mono',monospace; }
+* { box-sizing:border-box; } html { scroll-behavior:smooth; }
+body { margin:0; background:var(--bg); color:var(--text); font-family:var(--font-body); font-size:16px; line-height:1.75; -webkit-font-smoothing:antialiased; }
+.layout { display:grid; grid-template-columns:280px minmax(0,1fr); min-height:100vh; }
+aside { background:var(--bg-panel); border-right:1px solid var(--border); padding:40px 24px; position:sticky; top:0; height:100vh; overflow-y:auto; }
+aside::before { content:'aboutTEPS'; display:block; font-family:var(--font-display); font-size:1.5em; font-weight:700; color:var(--accent); margin-bottom:8px; }
+aside::after { content:'토플 — TOEFL iBT'; display:block; font-size:0.78em; color:var(--text-mute); margin-bottom:28px; padding-bottom:20px; border-bottom:1px solid var(--border); }
+aside h3 { font-size:0.7em; text-transform:uppercase; letter-spacing:0.15em; color:var(--text-mute); margin:0 0 12px; }
+aside ol { list-style:none; padding:0; margin:0; }
+aside ol li { margin-bottom:4px; }
+aside ol li a { display:block; padding:8px 12px; border-radius:8px; color:var(--text-dim); text-decoration:none; font-size:0.88em; transition:all 0.2s; }
+aside ol li a:hover { background:var(--accent-glow); color:var(--accent); }
+aside ol li.muted { padding:8px 12px; font-size:0.86em; color:var(--text-mute); }
+.hub-back-link { display:block; padding:10px 14px; margin-bottom:18px; background:linear-gradient(135deg,#7c3aed,#0e7490); color:#fff; text-decoration:none; border-radius:10px; font-size:13px; font-weight:600; text-align:center; transition:transform 0.2s; }
+.hub-back-link:hover { transform:translateY(-2px); }
+main { padding:60px 80px 100px; max-width:900px; }
+.paper-header { margin-bottom:40px; padding-bottom:30px; border-bottom:1px solid var(--border); }
+.paper-header h1 { font-family:var(--font-display); font-size:3em; font-weight:700; line-height:1.1; margin:0 0 16px; }
+.paper-header h1 em { color:var(--accent); font-style:normal; }
+.paper-header .authors { color:var(--text-dim); font-size:0.95em; margin:0 0 8px; }
+.paper-header .affiliation { color:var(--text-mute); font-size:0.82em; font-family:var(--font-mono); }
+h2 { font-family:var(--font-display); font-size:1.6em; font-weight:700; margin:48px 0 16px; padding-left:18px; position:relative; }
+h2::before { content:''; position:absolute; left:0; top:6px; bottom:6px; width:4px; background:var(--accent); border-radius:2px; }
+p { margin:0 0 16px; }
+.outline-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px; margin:24px 0 0; }
+.outline-card { padding:16px 18px; background:var(--bg-elevated); border-radius:10px; border:1px solid var(--border); }
+.outline-card .num { font-family:var(--font-mono); font-size:0.78em; color:var(--accent); letter-spacing:0.08em; }
+.outline-card h4 { font-family:var(--font-display); font-size:1.0em; font-weight:600; margin:6px 0 4px; }
+.outline-card p { font-size:0.85em; color:var(--text-dim); margin:0; }
+.coming-soon { display:inline-block; padding:4px 10px; background:#fef3c7; color:#92400e; font-size:0.72em; font-weight:700; border-radius:999px; margin-left:8px; letter-spacing:0.04em; }
+@media (max-width:900px) { .layout { grid-template-columns:1fr; } aside { position:static; height:auto; border-right:none; border-bottom:1px solid var(--border); padding:24px; } main { padding:40px 24px 80px; } .paper-header h1 { font-size:2em; } }

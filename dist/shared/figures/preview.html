@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>그림 미리보기</title>
+  <link rel="stylesheet" href="../light-theme.css">
+  <link rel="stylesheet" href="../figure-explorer.css">
+  <style>
+    html, body { max-width: 100%; overflow-x: hidden; }
+    body { margin: 0; padding: 24px 16px 48px; }
+    .pv-wrap { margin: 0 auto; }
+    .pv-block { margin: 0 0 36px; }
+    .pv-block h2 { font-size: 1rem; margin: 0 0 8px; }
+    #errs { margin: 16px auto 0; font: 13px/1.45 ui-monospace, monospace; white-space: pre-wrap; }
+    #errs p { margin: 0 0 6px; }
+  </style>
+  <script>
+    (function () {
+      var box = null;
+      function line(msg) {
+        if (!box) box = document.getElementById('errs');
+        if (!box) {
+          (window.__fgErrs || (window.__fgErrs = [])).push(msg);
+          return;
+        }
+        var p = document.createElement('p');
+        p.className = 'fgx-error';
+        p.textContent = msg;
+        box.appendChild(p);
+      }
+      window.__fgLogErr = line;
+      window.addEventListener('error', function (ev) {
+        var where = ev.filename ? ' (' + ev.filename + ':' + ev.lineno + ')' : '';
+        line((ev.message || 'error') + where);
+      });
+      window.addEventListener('unhandledrejection', function (ev) {
+        var r = ev.reason;
+        line(r && r.stack ? String(r.stack) : String(r));
+      });
+      var orig = console.error;
+      console.error = function () {
+        var i, parts = [], a;
+        for (i = 0; i < arguments.length; i++) {
+          a = arguments[i];
+          parts.push(a && a.stack ? String(a.stack) : String(a));
+        }
+        line(parts.join(' '));
+        if (orig) orig.apply(console, arguments);
+      };
+    })();
+  </script>
+</head>
+<body>
+  <div class="pv-wrap" id="wrap"></div>
+  <div id="errs" aria-live="polite"></div>
+  <script src="../figure-explorer.js"></script>
+  <script>
+    (function () {
+      var q = new URLSearchParams(location.search);
+      var raw = (q.get('f') || '').split(',');
+      var ids = [];
+      var i, s, w, zoom, wrap, errs;
+      for (i = 0; i < raw.length; i++) {
+        s = raw[i].replace(/^\s+|\s+$/g, '');
+        if (s) ids.push(s);
+      }
+      w = parseInt(q.get('w') || '740', 10);
+      if (!w || w < 1) w = 740;
+      zoom = parseFloat(q.get('zoom') || '1');
+      if (!zoom || zoom <= 0) zoom = 1;
+      wrap = document.getElementById('wrap');
+      errs = document.getElementById('errs');
+      wrap.style.maxWidth = w + 'px';
+      errs.style.maxWidth = w + 'px';
+      wrap.style.zoom = String(zoom);
+      if (window.__fgErrs && window.__fgErrs.length && window.__fgLogErr) {
+        var queued = window.__fgErrs.slice();
+        window.__fgErrs = [];
+        for (i = 0; i < queued.length; i++) window.__fgLogErr(queued[i]);
+      }
+
+      function logErr(msg) {
+        if (window.__fgLogErr) window.__fgLogErr(msg);
+      }
+
+      function loadScript(src, done) {
+        var node = document.createElement('script');
+        node.src = src;
+        node.onload = function () { done(true); };
+        node.onerror = function () { done(false); };
+        document.body.appendChild(node);
+      }
+
+      function finish() {
+        var n, id, block, h, div;
+        for (n = 0; n < ids.length; n++) {
+          id = ids[n];
+          block = document.createElement('section');
+          block.className = 'pv-block';
+          h = document.createElement('h2');
+          h.textContent = id;
+          div = document.createElement('div');
+          div.setAttribute('data-figure', id);
+          block.appendChild(h);
+          block.appendChild(div);
+          wrap.appendChild(block);
+        }
+        if (window.NMFIG && NMFIG.mountAll) NMFIG.mountAll();
+      }
+
+      function loadId(index) {
+        if (index >= ids.length) { finish(); return; }
+        var id = ids[index];
+        loadScript('data/' + id + '.js', function (okData) {
+          loadScript(id + '.js', function (okDef) {
+            var api = window.NMFIG;
+            if (!okData && !(api && api._data && api._data[id])) {
+              logErr('스크립트를 불러오지 못했습니다: data/' + id + '.js');
+            }
+            if (!okDef && !(api && api._defs && api._defs[id])) {
+              logErr('스크립트를 불러오지 못했습니다: ' + id + '.js');
+            }
+            loadId(index + 1);
+          });
+        });
+      }
+
+      if (!ids.length) logErr('그림 id가 없습니다. 주소에 ?f=demo,demo2 처럼 넣어 주세요.');
+      else loadId(0);
+    })();
+  </script>
+</body>
+</html>

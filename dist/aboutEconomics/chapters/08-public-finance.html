@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8. 재정학 — aboutEconomics</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">📊 표지</a></li><li><a href="01-micro.html">1. 미시경제학</a></li><li><a href="02-macro.html">2. 거시경제학</a></li><li><a href="03-finance.html">3. 금융과 투자</a></li><li><a href="04-trade.html">4. 국제무역</a></li><li><a href="05-behavioral.html">5. 행동경제학</a></li><li><a href="06-development.html">6. 경제발전</a></li><li><a href="07-labor.html">7. 노동경제학</a></li><li><a href="08-public-finance.html">8. 재정학</a></li><li><a href="09-crypto-fintech.html">9. 크립토/핀테크</a></li></ol></aside>
+<main><header class="paper-header"><h1><em>재정학</em></h1><p class="authors">Chapter 8 — Public Finance & Taxation</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 납세자에게서 정부로 모인 세금이 다시 지출로 재분배되는 재정 순환</span>
+<h2>재정학 개요</h2><p>Public Finance & Taxation의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>공공재와 외부효과로 인한 시장 실패를 교정하는 정부의 조세 정책과 재정 지출의 효율성·형평성을 다룹니다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한마디로!</h3>
+  <p>재정학은 "정부가 세금을 어떻게 걷고, 어디에 쓰는가"를 연구하는 학문이에요. 🏛️</p>
+  <h3>🤔 왜 중요할까?</h3>
+  <p>어른들 월급에서 떼는 소득세, 마트 영수증에 붙은 부가가치세 🧾, 그 돈으로 지어진 학교·병원·도로·공원! 🏫 우리가 매일 쓰는 것들이 다 세금으로 만들어져요. 이걸 알면 어른들이 보는 정치 뉴스가 훨씬 재밌게 들린답니다.</p>
+  <div class="info-card">
+    <h4>🌱 이 낱말만 알면 끝!</h4>
+    <ul>
+      <li><strong>세입:</strong> 정부가 걷는 돈(세금) 💰</li>
+      <li><strong>세출:</strong> 정부가 쓰는 돈 💸</li>
+      <li><strong>국채:</strong> 정부가 빌리는 돈 🧾</li>
+      <li><strong>공공재:</strong> 모두 함께 쓰는 것(국방·도로 등) 🌉</li>
+      <li><strong>외부효과:</strong> 거래에 안 낀 딴 사람에게 미치는 영향 🌫️</li>
+    </ul>
+  </div>
+  <h3>📖 나라의 가계부로 생각해봐요</h3>
+  <p>정부의 살림은 아주아주 큰 가계부 같아요. 📒 들어오는 돈(세금)과 나가는 돈(예산)을 맞추고, 모자라면 빚(국채)을 내죠. 다른 점은? 이 결정이 우리나라 5천만 명 모두에게 동시에 영향을 준다는 거예요! 😮 그리고 세금은 돈만 걷는 게 아니라 사람들 행동도 바꿔요. 담배에 세금을 많이 붙이면 담배를 덜 사고 🚭, 매연 나오는 연료에 세금을 붙이면 덜 쓰게 되죠. 정부는 "어려운 사람을 돕는 것"과 "경제에 힘이 빠지지 않게 하는 것" 사이에서 늘 균형을 잡는답니다. ⚖️</p>
+  <div class="study-tip"><strong>💡 이렇게 해봐요:</strong> "내가 대통령이라면 세금을 어디에 쓸까?"를 상상해 보세요. 🤔 학교? 병원? 공원? 우선순위를 정하는 게 바로 재정이에요!</div>
+  <h3>✨ 한눈에 정리!</h3>
+  <ul>
+    <li>재정학은 정부의 세금·예산·빚을 다뤄요. 🏛️</li>
+    <li>세금은 돈도 걷고 행동도 바꿔요. 🔀</li>
+    <li>공공재와 외부효과는 정부가 나서는 이유예요. 🌉</li>
+    <li>"돕기"와 "효율" 사이 균형이 영원한 숙제예요. ⚖️</li>
+    <li>나랏빚은 미래 세대에게 넘어갈 수 있어요. ⏭️</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>재정학의 출발점은 후생경제학 두 정리에 기반한 시장실패 분석입니다. 공공재의 비경합성·비배제성으로 인한 무임승차 문제, 외부효과로 인한 사회적 한계비용과 사적 한계비용의 괴리, 정보비대칭으로 인한 보험시장 실패가 정부 개입의 정당화 근거입니다. 조세는 효율비용(Excess Burden, 자중손실)과 재분배 효과를 동시에 가지며, Ramsey 최적과세 원리는 비탄력적 재화에 더 높은 세율을 부과해 효율 손실을 줄입니다. 한편 형평성을 고려한 Mirrlees 최적소득세는 노동공급 탄력성과 한계효용 체감을 결합해 비선형 누진세율을 도출합니다. 사회보험은 도덕적 해이와 역선택 문제를 다루며 실업보험·건강보험·연금에 적용됩니다. 정부 부채의 지속가능성은 세대 간 회계와 세대 간 형평성 분석으로 평가됩니다.</p>
+  <h3>핵심 모델/공식</h3>
+  <div class="formula">자중손실: DWL ≈ ½·t²·(εD·εS/(εD+εS))·PQ<br>Ramsey 룰: t_i/(1+t_i) = k/ε_i<br>정부 예산제약: ΔB = G − T + r·B<br>지속가능성: r < g (Blanchard 조건)</div>
+  <h3>대표 사례</h3>
+  <div class="info-card">
+    <h4>📊 사례 1 — 부가가치세의 효율성</h4>
+    <p>한국은 1977년 부가가치세 10%를 도입해 거래단계마다 세금이 매겨지는 누적식 매출세의 비효율을 해소했습니다. VAT는 세원이 넓고 효율비용이 작아 OECD 다수 국가에서 핵심 세목입니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>📊 사례 2 — 탄소세, 스웨덴</h4>
+    <p>1991년 도입된 스웨덴 탄소세는 톤당 130달러대까지 인상되었지만 GDP는 1990년 대비 80% 이상 성장했습니다. 가격 신호로 행동을 바꾼 외부효과 내부화의 모범 사례입니다.</p>
+  </div>
+  <h3>현실 응용</h3>
+  <p>한국의 종합부동산세 논쟁은 재산세의 누진성과 효율비용 사이의 갈등이 잘 드러난 사례입니다. 청년기본자산·기본소득 논의는 재분배의 새로운 형태를 시험합니다. 또한 탄소중립 이행을 위한 탄소국경조정세(CBAM)와 국내 배출권거래제 가격 연동이 산업정책과 결합되고 있으며, 인구감소에 따른 국민연금·건강보험 재정의 지속가능성이 핵심 정책 과제입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 명목 부담자=실제 부담자라는 가정. 세금 귀착(Tax Incidence)은 수요·공급 탄력성에 따라 결정됩니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>현대 재정학의 표준 분석틀은 충분통계 접근(Sufficient Statistics)입니다. Saez(2001)는 최적소득세 설계가 세 가지 충분통계, 즉 과세표준 탄력성, 한계 분포 형태, 사회후생 가중치만으로 결정될 수 있음을 보였습니다. Chetty의 일련의 연구는 행정데이터와 자연실험으로 ETI(Elasticity of Taxable Income)를 정밀 추정합니다. 재정승수(Fiscal Multiplier) 분석은 SVAR, 자연실험(Mountford-Uhlig, Ramey), 세입·세출 변화의 외생적 식별로 0.5~2.0 사이의 폭넓은 추정치를 보고합니다. 라이프사이클·세대중첩(OLG) 모형은 사회보장과 부채의 세대간 효과를 분석하며, Auerbach-Kotlikoff 모형은 정책 시뮬레이션의 표준입니다. 부의 분배와 자본세에서는 Saez-Zucman의 부유세 논의, Piketty의 r>g 명제 평가, Chamley-Judd의 0% 자본세 결과의 강건성 비판이 활발합니다. 행동공공재정은 현저성, 디폴트, 사회규범을 조세설계에 통합합니다.</p>
+  <h3>수리 모델</h3>
+  <div class="formula">Saez 최적소득세: T'(z)/(1−T'(z)) = (1/e)·(1−F(z))/(z·f(z))·(1 − ḡ(z))<br>OLG 정부예산: K_{t+1} = s(w_t, r_{t+1}, T_t)·N_t<br>충분통계 후생: dW/dτ = −η·dB/dτ + Σ_i g_i·dY_i/dτ<br>Ricardian 등가: ΔB → ΔT_future, dC = 0</div>
+  <h3>최신 연구</h3>
+  <p>최부유층 소득·자산 측정의 새로운 방법(Saez-Zucman, Smith-Zidar-Zwick)과 글로벌 부유세 논의가 활발합니다. 디지털세 OECD 합의(Pillar 1·2)와 다국적기업 이익이전(BEPS) 분석, 탄소국경조정과 글로벌 최저법인세의 후생효과, 그리고 행정데이터 결합을 통한 재정정책 효과의 미시-거시 연결 분석이 주요 흐름입니다. 한국에서는 인구감소와 연금개혁의 세대간 형평성, 부동산 보유세의 자산 가격 효과 분석이 핵심 주제입니다.</p>
+  <h3>관련 분야</h3>
+  <ul>
+    <li>지방재정학 — 분권과 재정조정</li>
+    <li>사회보험경제학 — 연금·실업·건강보험</li>
+    <li>환경재정학 — 탄소가격과 그린정책</li>
+  </ul>
+  <h3>추가 자료</h3>
+  <ul>
+    <li>Auerbach & Feldstein, <em>Handbook of Public Economics</em></li>
+    <li>Piketty, <em>Capital in the Twenty-First Century</em></li>
+    <li>한국조세재정연구원·NBER Public Economics</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 한국 국민연금의 미래 30년 재정전망을 OLG 모형으로 시뮬레이션하고 보험료율·소득대체율·정년 변화의 후생효과를 비교해 보세요.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 세입 vs 세출 분류</h2>
+<p>정부 재정의 들어오는 돈과 나가는 돈을 두 그룹으로 나눠 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#0891b2","prompt":"항목을 알맞은 그룹으로 분류하세요","groups":[{"name":"세입(거두는 돈)","items":["소득세","부가가치세","취득세"]},{"name":"세출(쓰는 돈)","items":["국방","도로","복지"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0891b2","questions":[{"q":"정부가 거두는 돈을 뜻하는 말은?","choices":["세출","세입","국채","공공재"],"answer":1},{"q":"국방·도로처럼 모두가 쓰는 재화는?","choices":["사유재","외부효과","국채","공공재"],"answer":3},{"q":"정부가 빌리는 돈은?","choices":["국채","세입","세출","기금"],"answer":0},{"q":"한국의 부가가치세 도입 연도는?","choices":["1965년","1971년","1977년","1988년"],"answer":2},{"q":"비탄력적 재화에 높은 세율을 매기는 원리?","choices":["미를리스","새즈","램지","피케티"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,11);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const govt=new THREE.Mesh(new THREE.CylinderGeometry(0.9,0.9,1.2,6),new THREE.MeshBasicMaterial({color:0xfbbf24,wireframe:true}));s.add(govt);s.userData.govt=govt;
+  const govtL=lbl('정부','#b45309');govtL.position.set(0,1.5,0);s.add(govtL);
+  const NC=8;const citizens=[],flows=[];for(let i=0;i<NC;i++){const ang=i/NC*Math.PI*2;const rad=4.0;const cz=new THREE.Mesh(new THREE.ConeGeometry(0.3,0.7,6),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.55,0.5,0.55)}));cz.position.set(Math.cos(ang)*rad,0,Math.sin(ang)*rad);s.add(cz);citizens.push(cz);const tax=new THREE.Mesh(new THREE.BoxGeometry(0.16,0.16,0.16),new THREE.MeshBasicMaterial({color:0x22c55e}));s.add(tax);const spend=new THREE.Mesh(new THREE.BoxGeometry(0.16,0.16,0.16),new THREE.MeshBasicMaterial({color:0xf87171}));s.add(spend);flows.push({tax,spend,ang,rad,ph:i/NC});}
+  s.userData.citizens=citizens;s.userData.flows=flows;
+  const czL=lbl('납세자(시민)','#0e7490');czL.position.set(4.0,0.9,0);s.add(czL);
+  const taxL=lbl('세금 → 세입','#15803d');taxL.position.set(-2.0,1.2,2.0);s.add(taxL);
+  const spendL=lbl('지출 → 세출','#b91c1c');spendL.position.set(2.0,-1.2,-2.0);s.add(spendL);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 납세자에게서 정부로 모인 세금이 다시 지출로 재분배되는 재정 순환.','세입(세금)은 정부로 들어오고, 세출(지출)은 시민에게 되돌아갑니다.','공공재(국방·도로)는 정부가 세금으로 모두에게 공급합니다.','외부효과를 바로잡는 세금(탄소세 등)으로 시장 실패를 보완합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.govt.rotation.y+=0.01;s.userData.flows.forEach(o=>{const ft=(T*0.4+o.ph)%1;const ox=Math.cos(o.ang)*o.rad,oz=Math.sin(o.ang)*o.rad;o.tax.position.set(ox*(1-ft),0.2*Math.sin(ft*Math.PI),oz*(1-ft));const fs=(T*0.4+o.ph+0.5)%1;o.spend.position.set(ox*fs,-0.2*Math.sin(fs*Math.PI),oz*fs);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

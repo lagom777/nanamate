@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6장. NoSQL</title>
+<link rel="stylesheet" href="../styles.css">
+<script defer src="../toggle.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📖 표지 · 초록</a></li>
+    <li><a href="01-relational.html">1. 관계형 DB 기초</a></li>
+    <li><a href="02-sql.html">2. SQL 핵심</a></li>
+    <li><a href="03-normalization.html">3. 정규화</a></li>
+    <li><a href="04-index.html">4. 인덱스와 최적화</a></li>
+    <li><a href="05-transaction.html">5. 트랜잭션과 동시성</a></li>
+    <li><a href="06-nosql.html">6. NoSQL</a></li>
+    <li><a href="07-distributed.html">7. 분산 DB</a></li>
+    <li><a href="08-modeling.html">8. 데이터 모델링</a></li>
+    <li><a href="09-patterns.html">9. 실전 설계 패턴</a></li>
+  </ol>
+</aside>
+<main>
+
+<h1>6장. NoSQL</h1>
+
+<section id="section-1">
+  <h2>1. NoSQL이란?</h2>
+
+  <div class="easy-version">
+    <h4>쉬운 설명</h4>
+    <p>관계형 DB는 모든 데이터를 테이블(행과 열)에 넣으려고 합니다. 하지만 모든 데이터가 표 형식에 맞지는 않습니다:</p>
+    <ul>
+      <li><strong>SNS 게시글:</strong> 작성자, 내용, 사진 여러 장, 댓글(개수 미정)...</li>
+      <li><strong>쇼핑몰 상품:</strong> 가구는 "가로×세로×높이", 의류는 "사이즈 옵션", 음식은 "유통기한"...</li>
+      <li><strong>사용자 프로필:</strong> 누군가는 25개의 취미, 누군가는 1개...</li>
+    </ul>
+    <p><strong>NoSQL:</strong> "Not Only SQL". 표 형식 대신 더 자유로운 형태로 저장하는 데이터베이스입니다.</p>
+  </div>
+
+  <div class="paper-version">
+    <h4>논문 수준 설명</h4>
+    <p><strong>NoSQL의 등장:</strong> 2000년대 웹 서비스 확산으로 빅데이터 처리 필요성 증가. 기존 RDBMS의 확장성(Scalability) 한계 극복을 위해 등장.</p>
+    <p><strong>특징:</strong></p>
+    <ul>
+      <li>스키마리스(Schema-less): 사전에 구조 정의 불필요</li>
+      <li>수평 확장(Horizontal Scaling): 여러 서버에 분산 저장 용이</li>
+      <li>높은 처리량(High Throughput)</li>
+      <li>느슨한 일관성(Eventual Consistency)</li>
+    </ul>
+    <p><strong>CAP 정리 예고:</strong> Consistency, Availability, Partition tolerance 중 2개만 선택 가능</p>
+  </div>
+</section>
+
+<section id="section-2">
+  <h2>2. Document DB (MongoDB)</h2>
+
+  <div class="easy-version">
+    <h4>쉬운 설명</h4>
+    <p>서류 봉투를 생각해봅시다. 봉투 안에는 여권, 사진, 메모, 뭐든 들어갈 수 있습니다.</p>
+    <p>Document DB는 JSON 형태로 다양한 데이터를 한곳에 담을 수 있습니다:</p>
+    <pre style="background:#f5f5f5;padding:10px;border-radius:6px;overflow-x:auto;"><code>{
+  "이름": "김철수",
+  "나이": 30,
+  "취미": ["축구", "영화"],
+  "주소": {
+    "시": "서울",
+    "구": "강남구"
+  }
+}</code></pre>
+    <p>모든 필드가 필수일 필요 없음. 어떤 사람은 "직업" 필드가 있고, 어떤 사람은 없을 수 있습니다.</p>
+  </div>
+
+  <div class="paper-version">
+    <h4>논문 수준 설명</h4>
+    <p><strong>BSON (Binary JSON):</strong> MongoDB의 저장 형식. JSON과 호환되지만 바이너리 인코딩으로 더 효율적.</p>
+    <p><strong>스키마리스의 장단점:</strong></p>
+    <ul>
+      <li><strong>장점:</strong> 유연성, 빠른 개발 속도</li>
+      <li><strong>단점:</strong> 데이터 무결성 보장 어려움, 쿼리 복잡성 증가</li>
+    </ul>
+    <p><strong>내장(Embedding) vs 참조(Referencing):</strong></p>
+    <ul>
+      <li>내장: 관련 데이터를 한 문서 안에 포함 (중복 가능, 한 번에 조회)</li>
+      <li>참조: 다른 문서의 ID를 참조 (정규화, 여러 번 조회 필요)</li>
+    </ul>
+    <p><strong>트랜잭션:</strong> MongoDB 4.0+에서 멀티 문서 트랜잭션 지원 (다만 RDBMS보다 제한적)</p>
+  </div>
+</section>
+
+<section id="section-3">
+  <h2>3. Key-Value & Column-Family</h2>
+
+  <div class="easy-version">
+    <h4>쉬운 설명</h4>
+    <p><strong>Key-Value DB:</strong> 사물함처럼 번호(키)로 물건(값)을 꺼냅니다. "123번 사물함에 뭐가 있지?" → 바로 꺼냄.</p>
+    <ul>
+      <li>예: Redis, Memcached</li>
+      <li>용도: 캐시, 세션 저장, 실시간 순위판</li>
+    </ul>
+    <p><strong>Column-Family DB:</strong> 거대한 스프레드시트. 수억 개의 행을 빠르게 처리합니다.</p>
+    <ul>
+      <li>예: Cassandra, HBase</li>
+      <li>용도: 시계열 데이터(시간에 따른 센서 값), 로그 저장</li>
+    </ul>
+  </div>
+
+  <div class="paper-version">
+    <h4>논문 수준 설명</h4>
+    <p><strong>Redis 데이터 구조:</strong> String, List, Set, Sorted Set, Hash, Stream 등을 지원하는 In-Memory 저장소.</p>
+    <p><strong>Cassandra의 파티션 전략:</strong> 일관된 해싱(Consistent Hashing)을 사용하여 데이터를 여러 노드에 분산. 한 노드 장애 시 다른 노드로 빠르게 재조정.</p>
+    <p><strong>LSM-Tree (Log-Structured Merge-Tree):</strong></p>
+    <ul>
+      <li>쓰기 연산 최적화</li>
+      <li>메모리의 정렬된 맵(MemTable) → 디스크의 정렬된 문자열 테이블(SSTable)로 쓰기</li>
+      <li>읽기 시 여러 SSTable을 병합 검색</li>
+    </ul>
+    <p><strong>Cassandra의 일관성 모델:</strong> Eventual Consistency. 쓰기 후 일부 레플리카는 즉시 최신값 보장 불가.</p>
+  </div>
+</section>
+
+<section id="section-4">
+  <h2>4. Graph DB</h2>
+
+  <div class="easy-version">
+    <h4>쉬운 설명</h4>
+    <p>인맥 지도를 그려봅시다:</p>
+    <ul>
+      <li><strong>노드:</strong> 사람 (김철수, 이영희...)</li>
+      <li><strong>간선:</strong> 관계 (친구, 직장 동료, 친척...)</li>
+    </ul>
+    <p>이 구조에서 "김철수와 가장 가까운 사람은?" 또는 "친구의 친구 중 같은 취미를 가진 사람은?"을 빠르게 찾을 수 있습니다.</p>
+    <p>예: Facebook의 친구 추천, Netflix의 콘텐츠 추천, Google Maps의 경로 검색</p>
+  </div>
+
+  <div class="paper-version">
+    <h4>논문 수준 설명</h4>
+    <p><strong>속성 그래프 모델(Property Graph Model):</strong></p>
+    <ul>
+      <li>노드: 엔티티. name, age 등의 속성 가짐</li>
+      <li>간선: 관계. relation_type, weight 등의 속성 가짐</li>
+    </ul>
+    <p><strong>Cypher 쿼리 언어:</strong> Neo4j의 표준 쿼리 언어. SQL과 유사하지만 그래프 패턴 매칭에 최적화.</p>
+    <pre style="background:#f5f5f5;padding:10px;border-radius:6px;overflow-x:auto;"><code>MATCH (a:Person)-[:FRIEND]-(b:Person)
+WHERE a.name = '김철수'
+RETURN b.name</code></pre>
+    <p><strong>그래프 순회 알고리즘:</strong> BFS (Breadth-First Search), DFS (Depth-First Search), Dijkstra (최단 경로), PageRank 등</p>
+  </div>
+</section>
+
+<div class="threejs-container" id="nosql-3d" style="margin:40px 0;">
+  <div class="threejs-label">3D · NOSQL 데이터 모델 시각화</div>
+  <div id="nosql-canvas" style="width:100%;height:600px;background:#f5f5f5;border-radius:8px;position:relative;"></div>
+  <div class="threejs-controls" style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+    <button onclick="focusModel('document')" style="padding:8px 12px;background:#7b5cff;color:#fff;border:none;border-radius:6px;cursor:pointer;">Document</button>
+    <button onclick="focusModel('keyvalue')" style="padding:8px 12px;background:#00d4ff;color:#fff;border:none;border-radius:6px;cursor:pointer;">Key-Value</button>
+    <button onclick="focusModel('column')" style="padding:8px 12px;background:#ff6b9d;color:#fff;border:none;border-radius:6px;cursor:pointer;">Column</button>
+    <button onclick="focusModel('graph')" style="padding:8px 12px;background:#ffa502;color:#fff;border:none;border-radius:6px;cursor:pointer;">Graph</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  let scene, camera, renderer, models = {};
+
+  function initNoSQLScene() {
+    const container = document.getElementById('nosql-canvas');
+    if (!container) return;
+
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xf5f5f5);
+
+    camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.set(0, 0, 25);
+
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.shadowMap.enabled = true;
+    container.appendChild(renderer.domElement);
+
+    // Lighting
+    const light1 = new THREE.DirectionalLight(0xffffff, 0.8);
+    light1.position.set(15, 15, 15);
+    light1.castShadow = true;
+    scene.add(light1);
+
+    const light2 = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(light2);
+
+    createNoSQLModels();
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+  }
+
+  function createNoSQLModels() {
+    // Document Model
+    models.document = createDocumentModel();
+    models.document.position.set(-12, 0, 0);
+    scene.add(models.document);
+
+    // Key-Value Model
+    models.keyvalue = createKeyValueModel();
+    models.keyvalue.position.set(-4, 0, 0);
+    scene.add(models.keyvalue);
+
+    // Column Family Model
+    models.column = createColumnModel();
+    models.column.position.set(4, 0, 0);
+    scene.add(models.column);
+
+    // Graph Model
+    models.graph = createGraphModel();
+    models.graph.position.set(12, 0, 0);
+    scene.add(models.graph);
+  }
+
+  function createDocumentModel() {
+    const group = new THREE.Group();
+    const geometry = new THREE.BoxGeometry(3, 4, 0.5);
+    const material = new THREE.MeshPhongMaterial({ color: 0x7b5cff });
+    const box = new THREE.Mesh(geometry, material);
+    box.castShadow = true;
+    group.add(box);
+
+    const canvas = createTextCanvas('Document\n{...JSON...}', 0x7b5cff);
+    const texture = new THREE.CanvasTexture(canvas);
+    const labelMat = new THREE.MeshBasicMaterial({ map: texture });
+    const label = new THREE.Mesh(new THREE.PlaneGeometry(2.9, 3.9), labelMat);
+    label.position.z = 0.3;
+    group.add(label);
+
+    return group;
+  }
+
+  function createKeyValueModel() {
+    const group = new THREE.Group();
+
+    for (let i = 0; i < 3; i++) {
+      const geometry = new THREE.BoxGeometry(1.5, 0.6, 0.3);
+      const material = new THREE.MeshPhongMaterial({ color: 0x00d4ff });
+      const box = new THREE.Mesh(geometry, material);
+      box.position.y = 1 - i * 0.8;
+      box.castShadow = true;
+      group.add(box);
+
+      const canvas = createTextCanvas(`key${i}`, 0x00d4ff, 12);
+      const texture = new THREE.CanvasTexture(canvas);
+      const label = new THREE.Mesh(new THREE.PlaneGeometry(1.4, 0.5), new THREE.MeshBasicMaterial({ map: texture }));
+      label.position.z = 0.2;
+      label.position.y = 1 - i * 0.8;
+      group.add(label);
+    }
+
+    return group;
+  }
+
+  function createColumnModel() {
+    const group = new THREE.Group();
+
+    for (let x = 0; x < 3; x++) {
+      for (let y = 0; y < 3; y++) {
+        const geometry = new THREE.BoxGeometry(0.6, 0.6, 0.3);
+        const material = new THREE.MeshPhongMaterial({ color: 0xff6b9d });
+        const box = new THREE.Mesh(geometry, material);
+        box.position.x = (x - 1) * 0.8;
+        box.position.y = (y - 1) * 0.8;
+        box.castShadow = true;
+        group.add(box);
+      }
+    }
+
+    return group;
+  }
+
+  function createGraphModel() {
+    const group = new THREE.Group();
+
+    // Create nodes
+    const nodePositions = [
+      [0, 1.5, 0],
+      [-1.2, -0.5, 0],
+      [1.2, -0.5, 0],
+      [0, -2, 0]
+    ];
+
+    const nodes = [];
+    nodePositions.forEach((pos, i) => {
+      const geometry = new THREE.SphereGeometry(0.4, 32, 32);
+      const material = new THREE.MeshPhongMaterial({ color: 0xffa502 });
+      const sphere = new THREE.Mesh(geometry, material);
+      sphere.position.set(...pos);
+      sphere.castShadow = true;
+      group.add(sphere);
+      nodes.push(sphere);
+    });
+
+    // Create edges
+    const edges = [[0, 1], [0, 2], [1, 2], [1, 3], [2, 3]];
+    edges.forEach(([i, j]) => {
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array([
+        ...nodePositions[i],
+        ...nodePositions[j]
+      ]);
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const line = new THREE.Line(geometry, new THREE.LineBasicMaterial({ color: 0xffa502, linewidth: 2 }));
+      group.add(line);
+    });
+
+    return group;
+  }
+
+  function createTextCanvas(text, color, size = 16) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 256;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.font = `bold ${size}px Arial`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    text.split('\n').forEach((line, i) => {
+      ctx.fillText(line, 128, 128 - 20 + i * 40);
+    });
+    return canvas;
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Gentle rotation
+    Object.values(models).forEach(model => {
+      if (model) {
+        model.rotation.y += 0.005;
+      }
+    });
+
+    renderer.render(scene, camera);
+  }
+
+  window.focusModel = function(modelType) {
+    const targetPos = {
+      'document': -12,
+      'keyvalue': -4,
+      'column': 4,
+      'graph': 12
+    };
+
+    const target = targetPos[modelType];
+    const duration = 800;
+    const startZ = camera.position.z;
+    const startX = camera.position.x;
+    const startTime = Date.now();
+
+    function animateCamera() {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      camera.position.x = startX + (target - startX) * progress;
+      camera.position.z = startZ + (20 - startZ) * progress;
+      camera.lookAt(target, 0, 0);
+
+      if (progress < 1) {
+        requestAnimationFrame(animateCamera);
+      }
+    }
+
+    animateCamera();
+  };
+
+  window.addEventListener('load', initNoSQLScene);
+})();
+</script>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--rule);">
+  <a href="05-transaction.html" style="text-decoration:none;">← 트랜잭션과 동시성</a>
+  <a href="07-distributed.html" style="text-decoration:none;">분산 DB →</a>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎮 한 줄로 말하면?</h3>
+  <p>NoSQL은 <strong>표(테이블) 말고 다양한 모양으로 데이터를 저장하는 DB 가족</strong>이에요! 🧰</p>
+
+  <h3>🤔 이게 왜 중요할까?</h3>
+  <p>관계형 DB가 잘 못 풀던 문제를 NoSQL이 도와줘요!</p>
+  <ul>
+    <li>📱 SNS 프로필처럼 사람마다 모양이 다른 데이터 → 도큐먼트 DB!</li>
+    <li>💬 실시간 채팅 메시지 저장 → 키-값 DB(Redis)!</li>
+    <li>🕸️ 친구 추천 같은 관계 탐색 → 그래프 DB!</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 꼭 기억할 낱말</h4>
+    <ul>
+      <li><strong>도큐먼트 DB</strong>: JSON 같은 문서 단위로 저장 (MongoDB). 📄</li>
+      <li><strong>키-값 DB</strong>: 단순한 키와 값 짝 (Redis, DynamoDB). 🔑</li>
+      <li><strong>컬럼 패밀리</strong>: 행+열이지만 유연한 스키마 (Cassandra). 📊</li>
+      <li><strong>그래프 DB</strong>: 점(노드)과 선(관계)을 저장 (Neo4j). 🕸️</li>
+      <li><strong>스키마리스</strong>: 칸을 미리 안 정해도 되는 자유로움! 🆓</li>
+    </ul>
+  </div>
+
+  <h3>🧰 도구함으로 쉽게!</h3>
+  <p>NoSQL은 사실 "Not Only SQL", 즉 <strong>"SQL만 쓰지 말자"</strong>는 뜻이에요. SQL을 미워하는 게 아니라 다른 모양도 같이 쓰자는 거죠!</p>
+  <p>관계형 DB가 잘 정돈된 엑셀 시트라면, NoSQL은 더 자유로운 <strong>도구함</strong>이에요. 도큐먼트 DB는 카드마다 다른 내용을 적어 카드 상자에 넣는 방식! 키-값 DB는 번호만 알면 확 꺼내는 사물함! 컬럼 패밀리는 줄마다 칸이 달라도 되는 거대한 표! 그래프 DB는 친구 관계도처럼 점과 선을 그대로 저장해요.</p>
+  <p>NoSQL은 <strong>대용량 분산 처리</strong>랑 <strong>유연한 스키마</strong>가 강점이에요. 대신 트랜잭션과 조인은 약해요. 그래서 다 NoSQL로 하는 게 아니라 문제 모양에 맞는 도구를 골라 써요. 거래는 RDBMS, 캐시는 Redis, 추천은 Neo4j처럼요. 이렇게 골라 쓰는 걸 <strong>폴리글랏 퍼시스턴스</strong>라고 불러요! 🎨</p>
+
+  <div class="study-tip">
+    <strong>💡 학습 TIP:</strong> 처음엔 MongoDB랑 Redis 딱 두 가지만 가볍게 만져 보세요. 이 둘로 NoSQL의 80%를 체험할 수 있어요! 😊
+  </div>
+
+  <h3>✅ 오늘의 정리</h3>
+  <ul>
+    <li>🧰 NoSQL은 관계형이 아닌 다양한 데이터 모델의 총칭이에요.</li>
+    <li>📄 도큐먼트·🔑 키-값·📊 컬럼 패밀리·🕸️ 그래프 네 종류가 대표!</li>
+    <li>💪 대용량 분산과 유연한 스키마가 강점.</li>
+    <li>😅 트랜잭션과 조인은 약점.</li>
+    <li>🎯 문제 종류에 맞춰 골라 쓰는 게 정석!</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>NoSQL 운동은 2000년대 후반 구글의 Bigtable 논문, 아마존의 Dynamo 논문에서 시작되었습니다. CAP 정리는 분산 시스템이 일관성·가용성·분할허용성 셋 중 둘만 동시에 만족할 수 있다는 명제이며, NoSQL은 대부분 AP 또는 CP 진영을 선택합니다. BASE(Basically Available, Soft state, Eventual consistency)는 ACID의 대안으로 제시된 약한 일관성 모델입니다. 도큐먼트 DB는 임베디드 도큐먼트로 조인을 줄이고, MongoDB는 BSON 형식으로 JSON을 확장한 바이너리 문서를 저장합니다. 컬럼 패밀리 DB(Cassandra)는 LSM 트리 기반으로 쓰기 성능이 뛰어나며, 파티션 키와 클러스터링 키 설계가 성능을 좌우합니다. 키-값 DB는 인메모리(Redis)와 디스크(DynamoDB) 계열로 나뉘며, Redis는 자료구조 서버로서 큐·세트·해시·정렬세트·스트림까지 제공합니다. 그래프 DB는 인덱스 프리 인접성(Index-free Adjacency)으로 다단계 탐색이 빠릅니다.</p>
+
+  <h3>실전 SQL/쿼리</h3>
+  <pre><code>// MongoDB: 도큐먼트 조회와 임베디드 업데이트
+db.users.find(
+  { country: "KR", "preferences.theme": "dark" },
+  { name: 1, email: 1 }
+).limit(10);
+
+db.users.updateOne(
+  { _id: ObjectId("...") },
+  { $push: { orders: { order_id: 9001, amount: 35000 } } }
+);
+
+// Redis: 키-값과 자료구조
+SET session:abc123 "{\"user_id\":1001}" EX 1800
+ZADD leaderboard 9999 "alice"
+ZADD leaderboard 8500 "bob"
+ZREVRANGE leaderboard 0 9 WITHSCORES
+
+// Cassandra: 시계열 적재 패턴
+CREATE TABLE sensor_data (
+  device_id   text,
+  bucket_day  date,
+  ts          timestamp,
+  value       double,
+  PRIMARY KEY ((device_id, bucket_day), ts)
+) WITH CLUSTERING ORDER BY (ts DESC);</code></pre>
+
+  <h3>예제</h3>
+  <div class="info-card">
+    <h4>💻 예제 1: 채팅 시스템</h4>
+    <p>메시지는 Cassandra에 (room_id, ts) 키로 저장해 시계열 조회를 빠르게, 사용자 프로필은 MongoDB에 도큐먼트로, 온라인 상태는 Redis Hash로 관리합니다. 폴리글랏 조합의 전형입니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>💻 예제 2: 추천 시스템</h4>
+    <p>회원-상품-카테고리를 Neo4j 그래프로 표현하고 (회원)-[구매]->(상품)<-[구매]-(다른회원) 패턴 매칭으로 협업 필터링을 구현합니다. 다단계 관계 탐색이 SQL보다 훨씬 직관적입니다.</p>
+  </div>
+
+  <h3>실무 응용</h3>
+  <p>넷플릭스는 Cassandra에 시청 기록을, DynamoDB에 사용자 세션을, Elasticsearch에 검색 인덱스를 저장하는 폴리글랏 아키텍처로 유명합니다. 또한 우버는 시간대별 위치 데이터를 LSM 기반 NoSQL에 적재하고, MongoDB는 헤드라인 뉴스나 카탈로그 같이 자주 변하는 콘텐츠 관리에 자주 쓰입니다. Redis는 세션, 캐시, 작업 큐, 분산 락 등 인프라성 용도로 거의 모든 회사에서 사용됩니다.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ 자주 하는 실수:</strong> 트랜잭션과 조인이 필요한 데이터를 NoSQL에 강제로 넣다가 일관성 사고를 겪는 경우가 흔합니다. 또 MongoDB의 무차별 임베딩은 도큐먼트 크기 한계(16MB)에 부딪힙니다.
+  </div>
+
+<h3>전문가 레벨</h3>
+  <p>Dynamo 스타일 시스템은 일관성 해싱으로 데이터를 노드에 분산하고, 가상 노드(vnode)로 로드 균형을 맞춥니다. 복제는 N개의 복제본을 두고, R+W>N이면 강한 일관성, 그 미만이면 결과적 일관성을 갖습니다. 충돌 해소는 Last-Write-Wins나 벡터 클럭, CRDT(Conflict-free Replicated Data Type) 등이 사용됩니다. Cassandra는 LSM 트리 + Merkle 트리 기반 anti-entropy 복구, 힌티드 핸드오프, 리드 리페어로 가용성을 극대화합니다. MongoDB는 4.0부터 다중 도큐먼트 트랜잭션을 도입했지만, 단일 샤드 트랜잭션이 권장 사용 패턴입니다. DynamoDB의 글로벌 테이블은 멀티 리전 active-active 복제를 제공하며, 시간 기반 충돌 해소를 사용합니다. 그래프 DB는 다단계 패턴 매칭의 효율을 위해 인접 리스트를 디스크에 클러스터링합니다. 벡터 DB는 HNSW 그래프 인덱스로 ANN(Approximate Nearest Neighbor) 검색을 수행하며, 메타데이터 필터링과 결합한 하이브리드 검색이 표준이 되었습니다.</p>
+
+  <h3>고급 패턴</h3>
+  <pre><code>// MongoDB: 트랜잭션 + 인덱스 힌트
+const session = client.startSession();
+session.startTransaction({ readConcern: { level: "snapshot" } });
+try {
+  await orders.insertOne({ ... }, { session });
+  await inventory.updateOne(
+    { sku: "ABC", qty: { $gte: 1 } },
+    { $inc: { qty: -1 } },
+    { session, hint: "sku_1" }
+  );
+  await session.commitTransaction();
+} catch (e) {
+  await session.abortTransaction();
+}
+
+// Redis Streams로 이벤트 소싱
+XADD orders * type "OrderPlaced" payload "{...}"
+XGROUP CREATE orders consumers $ MKSTREAM
+XREADGROUP GROUP consumers worker1 COUNT 100 BLOCK 5000 STREAMS orders >
+
+// Cassandra 광역 카운터 패턴
+UPDATE event_counter
+SET    count = count + 1
+WHERE  event_id = ? AND bucket_hour = ?;</code></pre>
+
+  <h3>최신 동향</h3>
+  <p>벡터 데이터베이스(Pinecone, Weaviate, Milvus, pgvector)는 LLM 시대의 RAG 파이프라인에서 핵심 인프라가 되었습니다. 또한 Time-series DB(InfluxDB, TimescaleDB, QuestDB)는 IoT와 관측 영역에서 빠르게 확산 중이며, ScyllaDB는 Cassandra를 C++로 재구현해 단일 노드 처리량을 크게 끌어올렸습니다. CRDT 기반 협업 DB(Yjs, Automerge)는 실시간 협업 도구의 백본으로 자리 잡았습니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li>분산 시스템: 일관성 해싱, 가십 프로토콜.</li>
+    <li>벡터 검색과 임베딩 학습.</li>
+    <li>CRDT와 오프라인 우선 협업 모델.</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>Dynamo 논문 — Amazon (2007).</li>
+    <li>Bigtable 논문 — Google (2006).</li>
+    <li>"Cassandra: The Definitive Guide" — Eben Hewitt 외.</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>🎓 도전 과제:</strong> 글로벌 멀티 리전 SaaS의 사용자 프로필을 DynamoDB 글로벌 테이블, MongoDB Atlas 글로벌 클러스터, Cassandra NetworkTopologyStrategy 세 가지로 모델링하고 일관성/지연/비용 트레이드오프를 비교 정리해 보세요.
+  </div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — NoSQL 유형 분류</h2>
+<p>각 데이터베이스 제품을 알맞은 NoSQL 유형으로 분류해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#0d6efd","prompt":"DB 제품을 유형별로 분류하세요","groups":[{"name":"키-값 DB","items":["Redis","DynamoDB"]},{"name":"컬럼 패밀리","items":["Cassandra"]},{"name":"그래프 DB","items":["Neo4j"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d6efd","questions":[{"q":"NoSQL의 의미로 맞는 것은?","choices":["No SQL","Not Only SQL","New SQL","Non SQL"],"answer":1},{"q":"MongoDB는 어떤 유형의 DB인가?","choices":["그래프 DB","키-값 DB","도큐먼트 DB","컬럼 패밀리"],"answer":2},{"q":"Redis는 어떤 유형의 DB인가?","choices":["키-값 DB","도큐먼트 DB","그래프 DB","관계형 DB"],"answer":0},{"q":"MongoDB의 저장 형식은?","choices":["XML","CSV","YAML","BSON"],"answer":3},{"q":"Neo4j의 표준 쿼리 언어는?","choices":["SQL","Cypher","GraphQL","XPath"],"answer":1}]};</script>
+</main>
+</div>
+</body>
+</html>

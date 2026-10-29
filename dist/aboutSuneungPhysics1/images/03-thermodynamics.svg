@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%" style="background:#0a0e1a; font-family:'IBM Plex Sans KR', -apple-system, sans-serif;">
+  <defs>
+    <!-- Background Gradients -->
+    <radialGradient id="bg-glow" cx="20%" cy="15%" r="60%">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.18"/>
+      <stop offset="60%" stop-color="#0a0e1a" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#05070d"/>
+    </radialGradient>
+    
+    <linearGradient id="card-grad-0" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="card-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="card-grad-2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.05"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="card-shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(239, 68, 68, 0.4)" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="675" fill="url(#bg-glow)"/>
+  
+  <!-- Subtle Grid Pattern Lines -->
+  <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
+    <line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="545" x2="1200" y2="545"/>
+    <line x1="400" y1="0" x2="400" y2="675"/>
+    <line x1="800" y1="0" x2="800" y2="675"/>
+  </g>
+
+  <!-- Top Header Bar -->
+  <g transform="translate(40, 32)">
+    <!-- Brand / Topic Badge -->
+    <rect x="0" y="0" width="180" height="30" rx="6" fill="#1e293b" stroke="#ef4444" stroke-width="1.2"/>
+    <circle cx="15" cy="15" r="4" fill="#ef4444"/>
+    <text x="28" y="20" fill="#f1f5f9" font-size="12" font-weight="700" letter-spacing="1.5">수능 물리학 핵심요약</text>
+    <text x="145" y="20" fill="#ef4444" font-size="12" font-weight="800">PART 03</text>
+    
+    <!-- Main Titles -->
+    <text x="0" y="68" fill="#ffffff" font-size="34" font-weight="800" letter-spacing="-0.5">열역학 — 법칙과 열기관</text>
+    <text x="0" y="94" fill="#94a3b8" font-size="14" font-weight="500">Thermodynamics Laws, P-V Diagrams &amp; Heat Engines</text>
+
+    <!-- Right Side Indicator -->
+    <g transform="translate(940, 10)">
+      <rect x="0" y="0" width="180" height="60" rx="10" fill="#111827" stroke="#334155" stroke-width="1"/>
+      <text x="90" y="26" fill="#64748b" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">NANAMATE EDUTECH</text>
+      <text x="90" y="47" fill="#ef4444" font-size="13" font-weight="800" text-anchor="middle">한눈에 보는 핵심 맵</text>
+    </g>
+  </g>
+
+  <!-- 3 Summary Cards -->
+  
+        <!-- Card 1 -->
+        <g transform="translate(40, 160)">
+          <!-- Card Background &amp; Glow -->
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="#111827" fill-opacity="0.9" stroke="#ef4444" stroke-width="1.2" filter="url(#card-shadow)"/>
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="url(#card-grad-0)" fill-opacity="0.3"/>
+          
+          <!-- Card Header Badge -->
+          <rect x="18" y="18" width="130" height="24" rx="12" fill="#ef4444" fill-opacity="0.2" stroke="#ef4444" stroke-width="1"/>
+          <text x="83" y="34" fill="#fca5a5" font-size="11" font-weight="700" text-anchor="middle">열역학 제1법칙</text>
+          
+          <!-- Card Title -->
+          <text x="18" y="62" fill="#f8fafc" font-size="16" font-weight="700">에너지 보존: Q = ΔU + W</text>
+          <line x1="18" y1="74" x2="342" y2="74" stroke="#334155" stroke-width="1"/>
+          
+          <!-- Card Content Body -->
+          <g transform="translate(0, 30)">
+            
+                <g transform="translate(18, 50)">
+                  <rect x="0" y="0" width="280" height="92" rx="8" fill="#0f172a" stroke="#dc2626" stroke-width="1.5"/>
+                  <text x="12" y="24" fill="#f87171" font-size="12" font-weight="700">열역학 제1법칙 공식</text>
+                  <text x="12" y="48" fill="#ffffff" font-size="14" font-family="monospace" font-weight="800">Q = ΔU + W</text>
+                  <text x="12" y="70" fill="#cbd5e1" font-size="11.5">Q: 흡수한 열량 / ΔU: 내부 에너지 변화 / W: 기체가 한 일</text>
+                  <text x="12" y="86" fill="#38bdf8" font-size="11">단원자 분자 내부 에너지: <tspan font-weight="700">U = 3/2 nRT (온도 T에만 비례!)</tspan></text>
+
+                  <rect x="0" y="102" width="280" height="90" rx="8" fill="#0f172a" stroke="#334155"/>
+                  <text x="12" y="126" fill="#34d399" font-size="12" font-weight="700">기체가 한 일 W = P · ΔV</text>
+                  <text x="12" y="148" fill="#cbd5e1" font-size="11.5">P-V 그래프 아래 면적 = 기체가 한 일</text>
+                  <text x="12" y="168" fill="#cbd5e1" font-size="11">부피 팽창(ΔV&gt;0) ⟶ W &gt; 0  /  압축(ΔV&lt;0) ⟶ W &lt; 0</text>
+                </g>
+                
+          </g>
+        </g>
+        
+        <!-- Card 2 -->
+        <g transform="translate(420, 160)">
+          <!-- Card Background &amp; Glow -->
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="#111827" fill-opacity="0.9" stroke="#ef4444" stroke-width="1.2" filter="url(#card-shadow)"/>
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="url(#card-grad-1)" fill-opacity="0.3"/>
+          
+          <!-- Card Header Badge -->
+          <rect x="18" y="18" width="130" height="24" rx="12" fill="#ef4444" fill-opacity="0.2" stroke="#ef4444" stroke-width="1"/>
+          <text x="83" y="34" fill="#fca5a5" font-size="11" font-weight="700" text-anchor="middle">기체의 4대 열역학 과정</text>
+          
+          <!-- Card Title -->
+          <text x="18" y="62" fill="#f8fafc" font-size="16" font-weight="700">등압·등적·등온·단열 과정</text>
+          <line x1="18" y1="74" x2="342" y2="74" stroke="#334155" stroke-width="1"/>
+          
+          <!-- Card Content Body -->
+          <g transform="translate(0, 30)">
+            
+                <g transform="translate(18, 50)">
+                  <rect x="0" y="0" width="280" height="188" rx="8" fill="#1e293b" stroke="#334155"/>
+                  <text x="12" y="24" fill="#fcd34d" font-size="12" font-weight="700">4대 열역학 상태 변화 비교표</text>
+                  
+                  <text x="12" y="48" fill="#38bdf8" font-size="11" font-weight="700">1. 등적 과정 (V=일정, ΔV=0):</text>
+                  <text x="12" y="65" fill="#cbd5e1" font-size="11">   W = 0  ⟹  <tspan fill="#ffffff" font-weight="700">Q = ΔU</tspan> (열이 전부 내부 에너지로)</text>
+                  
+                  <text x="12" y="86" fill="#34d399" font-size="11" font-weight="700">2. 등압 과정 (P=일정):</text>
+                  <text x="12" y="103" fill="#cbd5e1" font-size="11">   W = PΔV  ⟹  <tspan fill="#ffffff" font-weight="700">Q = ΔU + W</tspan> (온도도 변하고 일도 함)</text>
+                  
+                  <text x="12" y="124" fill="#f43f5e" font-size="11" font-weight="700">3. 등온 과정 (T=일정, ΔT=0):</text>
+                  <text x="12" y="141" fill="#cbd5e1" font-size="11">   ΔU = 0  ⟹  <tspan fill="#ffffff" font-weight="700">Q = W</tspan> (흡수한 열이 전부 일로 전환)</text>
+                  
+                  <text x="12" y="162" fill="#a855f7" font-size="11" font-weight="700">4. 단열 과정 (Q=0):</text>
+                  <text x="12" y="179" fill="#cbd5e1" font-size="11">   <tspan fill="#ffffff" font-weight="700">ΔU = -W</tspan> (단열 팽창: W&gt;0 ⟹ ΔU&lt;0 온도 하강! 구름형성)</text>
+                </g>
+                
+          </g>
+        </g>
+        
+        <!-- Card 3 -->
+        <g transform="translate(800, 160)">
+          <!-- Card Background &amp; Glow -->
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="#111827" fill-opacity="0.9" stroke="#ef4444" stroke-width="1.2" filter="url(#card-shadow)"/>
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="url(#card-grad-2)" fill-opacity="0.3"/>
+          
+          <!-- Card Header Badge -->
+          <rect x="18" y="18" width="130" height="24" rx="12" fill="#ef4444" fill-opacity="0.2" stroke="#ef4444" stroke-width="1"/>
+          <text x="83" y="34" fill="#fca5a5" font-size="11" font-weight="700" text-anchor="middle">열역학 제2법칙 &amp; 열효율</text>
+          
+          <!-- Card Title -->
+          <text x="18" y="62" fill="#f8fafc" font-size="16" font-weight="700">열기관의 순환과 열효율 e</text>
+          <line x1="18" y1="74" x2="342" y2="74" stroke="#334155" stroke-width="1"/>
+          
+          <!-- Card Content Body -->
+          <g transform="translate(0, 30)">
+            
+                <g transform="translate(18, 50)">
+                  <rect x="0" y="0" width="280" height="92" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="1.2"/>
+                  <text x="12" y="24" fill="#fca5a5" font-size="12" font-weight="700">열기관의 열효율 e</text>
+                  <text x="12" y="48" fill="#ffffff" font-size="13" font-family="monospace" font-weight="800">e = W / Q₁ = (Q₁ - Q₂) / Q₁ = 1 - Q₂ / Q₁</text>
+                  <text x="12" y="70" fill="#cbd5e1" font-size="11">Q₁: 고열원 흡수열  /  Q₂: 저열원 방출열  /  W: 알짜 일</text>
+                  <text x="12" y="86" fill="#fcd34d" font-size="10.5">P-V 순환곡선 한 바퀴의 닫힌 면적 = 한 번 순환당 알짜 일 W</text>
+
+                  <rect x="0" y="102" width="280" height="90" rx="8" fill="#1e293b" stroke="#334155"/>
+                  <text x="12" y="126" fill="#38bdf8" font-size="12" font-weight="700">열역학 제2법칙 (엔트로피 / 방향성)</text>
+                  <text x="12" y="148" fill="#cbd5e1" font-size="11">열은 자발적으로 저온 ⟶ 고온으로 이동 불가</text>
+                  <text x="12" y="168" fill="#f43f5e" font-size="11.5" font-weight="700">열효율 100%(e = 1)인 영구 기관은 존재할 수 없음!</text>
+                </g>
+                
+          </g>
+        </g>
+        
+
+  <!-- Bottom Tag Bar -->
+  <g transform="translate(0, 45)">
+    
+        <rect x="40" y="565" width="90" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="85.0" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#Q=ΔU+W</text>
+        
+        <rect x="142" y="565" width="167" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="225.5" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#내부에너지U=3/2nRT</text>
+        
+        <rect x="321" y="565" width="112" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="377.0" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#P-V그래프면적</text>
+        
+        <rect x="445" y="565" width="112" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="501.0" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#단열팽창온도하강</text>
+        
+        <rect x="569" y="565" width="156" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="647.0" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#열효율e=1-Q₂/Q₁</text>
+        
+        <rect x="737" y="565" width="101" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="787.5" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#열역학제2법칙</text>
+        
+  </g>
+
+  <!-- Footer Watermark -->
+  <text x="1160" y="650" fill="#475569" font-size="11" font-weight="500" text-anchor="end">nanamate.study · High School Physics Core Summary</text>
+</svg>

@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2. 진화와 기능 — aboutFear</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🟣 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>진화와 기능</em></h1>
+  <p class="authors">Chapter 2 — Evolution &amp; Function</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 진화적 기능 — 생존을 도운 적응의 갈래</span>
+
+<h2>진화와 기능 개요</h2>
+<p>공포는 포식자가 가득한 환경에서 살아남은 조상들의 유산이다. 뱀·거미·높이·어둠을 두려워하는 능력은 단순한 약점이 아니라 수백만 년 동안 선택받은 생존 도구다. 현대인의 사회적 공포 — 평가·거절·실패 — 도 같은 회로가 새로운 자극을 학습한 결과다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>공포 회로는 포식자 회피·위험 예측이라는 진화적 기능을 위해 설계되었고, 그 회로가 인간의 추상적·사회적 위협까지 재활용되고 있다. 우리가 두려워하는 자극의 절반은 본능적, 절반은 학습된 것이다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>한 줄로 이해하기 🦕</h3><p>공포는 옛날 조상들이 살아남으려고 물려준, 세상에서 가장 오래된 생존 도구야! 🛡️</p>
+  <h3>왜 중요할까? 🤔</h3><p>뱀을 한 번도 본 적 없는데 사진만 봐도 소름 돋는 이유가 뭘까? 🐍 우리 뇌가 아주아주 먼 옛날 환경에 맞춰 만들어졌기 때문이야. 그때는 뱀·절벽·어둠이 진짜 목숨을 위협했거든. 그러니까 겁이 나는 건 "내가 약해서"가 아니라 "뇌가 원래 그렇게 만들어져서"야. 😌 이걸 알면 무서움을 조금 멀리서 바라볼 여유가 생겨.</p>
+  <div class="info-card"><h4>🌱 꼭 알아둘 말</h4><ul><li><strong>타고난 공포</strong>: 배우지 않아도 무서운 것(뱀·높이·어둠). 🐍</li><li><strong>배운 공포</strong>: 경험하면서 나중에 생긴 공포. 📚</li><li><strong>공포 배우기 쉬움(prepared learning)</strong>: 어떤 건 유난히 빨리 무서워지게 돼 있어. ⚡</li><li><strong>포식자 피하기</strong>: 공포의 가장 오래된 임무! 🦁</li><li><strong>사회적 위협</strong>: 따돌림·거절처럼 사람들 사이에서 생긴 새로운 무서움. 🙅</li></ul></div>
+  <h3>쉽게 풀어보기 🧩</h3><p>재밌는 사실! 아기들도 뱀 사진엔 눈이 확 쏠리는데, 사실 더 위험한 자동차나 콘센트엔 그런 반응이 없어. 🚗🔌 왜냐면 우리 뇌는 아직도 옛날 정글에 맞춰져 있고, 현대 도시의 위험엔 적응을 못 했거든. 그래서 비행기보다 거미를, 자동차보다 어둠을 더 무서워해. ✈️🕷️ 이 "안 맞음(불일치)"을 알면 이상한 공포의 정체가 보여!</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 내가 이유 없이 무서워하는 것 하나를 골라, "옛날 조상한테는 이게 왜 위험했을까?" 상상해보자! 🕵️</div>
+  <h3>한 장 요약 📌</h3><ul><li>공포는 아주 오래된 생존 도구! 🛡️</li><li>뱀·높이·어둠 공포는 타고나는 거야. 🐍</li><li>사람 사이의 공포도 같은 뇌 회로를 다시 쓴 거야. 🔁</li><li>어떤 건 유난히 빨리 무서워지게 돼 있어. ⚡</li><li>뇌와 현대 세상이 안 맞아서 이상한 공포가 생겨. 🌆</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>Martin Seligman의 prepared learning 이론은 어떤 자극은 다른 자극보다 훨씬 쉽게 공포 조건화된다고 본다. 뱀·거미·높이·어둠은 단 한 번의 부정 경험으로도 강한 공포 학습이 일어나지만, 꽃·전기 콘센트·총은 같은 횟수의 조건화로는 거의 학습이 안 된다. 이는 진화적으로 위협이었던 자극에 대해 뇌가 "학습 준비 상태"로 기울어져 있음을 의미한다. Öhman과 Mineka의 고전 실험은 원숭이들이 뱀에 대한 공포는 동영상 한 번으로도 학습하지만, 꽃에 대해서는 같은 자극을 줘도 학습되지 않음을 보였다. 또한 인간 사회 공포의 진화적 뿌리는 "집단에서 추방되는 것 = 생존 위협"이라는 등식에 있다. 수렵채집 시대에 집단 추방은 사실상 사망 선고였기에, 거절·평가 위협에 대한 회로가 신체적 위협 회로와 거의 동일하게 작동한다. fMRI 연구는 사회적 거절이 신체 통증과 같은 뇌 영역(전대상피질·도)을 활성화함을 보여준다.</p>
+  <h3>핵심 메커니즘</h3><div class="info-card"><h4>📐 prepared learning</h4><p>P(공포 학습) = f(자극의 진화적 위협성). 진화적 위협이었던 자극일수록 적은 횟수로 강한 공포 학습이 일어난다. 뱀·거미·높이는 high prepared, 꽃·콘센트는 low prepared 자극이다.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>아이가 처음 본 거미 한 마리에 놀라 평생 거미공포증이 생기는 경우는 흔하지만, 비슷한 강도로 콘센트에 감전된 아이가 콘센트 공포증을 갖는 경우는 드물다 — prepared learning의 비대칭이다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>발표 공포는 "수백 명 앞에서 평가받는 것"이라는 진화적으로 새로운 자극이지만, 뇌는 그것을 "집단의 시선 = 포식자의 시선"으로 처리한다. 그래서 청중 앞에서 동공이 확장되고 손이 떨리는 신체 반응이 일어난다.</p></div>
+  <h3>응용 사례</h3><p>한국 사회의 대학·취업 면접 공포는 진화적 사회 위협 회로가 극대화되는 환경이다. 좁은 방, 위계적 평가, 즉각적 결과 통보가 "집단 심판"의 모든 요소를 갖춘다. 면접 코칭에서 "면접관도 사람이다"라는 인지 재구성이 효과적인 이유는 진화적으로 활성화된 "집단 위협 프레임"을 깨주기 때문이다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 비합리적 공포를 "내가 약해서"로 해석하는 것 — 사실은 뇌의 진화적 설계 때문이며, 약함의 증거가 아니다.</div>
+
+<h3>전문가 레벨 이해</h3><p>진화심리학에서 공포 회로는 "module hypothesis"로 설명된다. Cosmides와 Tooby는 인간 뇌가 일반 학습 기계가 아니라 진화적 도전마다 특화된 모듈로 구성된다고 주장했다. 공포 모듈은 포식자 탐지·사회적 평가·질병 회피·높이·고립 등 여러 하위 모듈로 분기된다. 특히 시각 시스템의 위협 우선 처리(threat-priority processing)는 검증된 현상으로, 사람 얼굴 군중 속에 분노 얼굴 하나가 있으면 행복 얼굴 하나보다 빨리 탐지된다(face-in-the-crowd effect). 뱀·거미 이미지는 100밀리초 이하의 무의식적 노출에서도 편도체를 활성화시킨다. 또한 disgust(혐오)와 fear(공포)는 진화적으로 분기된 자매 시스템으로, 질병 회피라는 새로운 위협 범주를 위해 분화됐다는 가설이 유력하다. 최근에는 공포 회로가 단순 회피가 아니라 "예측 오류 학습 시스템"이라는 관점이 강해진다 — 편도체는 위협의 시간·공간 분포를 통계적으로 학습하는 베이즈 회로라는 것이다. 이 관점은 PTSD를 "위협 예측 모델의 왜곡"으로 재해석한다.</p>
+  <h3>최신 연구·동향</h3><p>뇌영상 연구는 공포 회로의 진화적 보존성을 강조한다. 인간·원숭이·쥐의 편도체 회로는 핵심 구조가 거의 동일하며, 광유전학으로 쥐 편도체를 활성화하면 인간 공포 반응과 동형의 행동이 나온다. 최근 fMRI 메타분석은 "사회적 거절"과 "신체적 위협"이 부분적으로 같은 신경 회로를 공유함을 재확인했다(neural overlap hypothesis).</p>
+  <h3>관련 분야</h3><ul><li>진화심리학(Evolutionary Psychology)</li><li>비교신경과학(Comparative Neuroscience)</li><li>사회신경과학(Social Neuroscience)</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"The Adapted Mind" — Barkow, Cosmides &amp; Tooby</li><li>"Fear: A Cultural History" — Joanna Bourke</li><li>"Snakes, Spiders, and Other Creepy Crawlies" — Arne Öhman</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 본인이 가진 비합리적 공포 1개를 골라 "이 공포가 조상 환경에서 어떤 적응적 의미가 있었을까"를 한 페이지로 추적해보자.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 공포 학습 준비성 분류</h2>
+<p>각 자극을 학습 준비성(prepared learning) 그룹으로 분류하세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#8b5cf6","prompt":"공포 자극을 학습 준비성으로 분류하세요","groups":[{"name":"본능적·high prepared","items":["뱀","거미","높이","어둠"]},{"name":"low prepared","items":["꽃","콘센트","총"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#8b5cf6","questions":[{"q":"태어날 때부터 갖춘 공포를 뭐라 하나?","choices":["학습된 공포","본능적 공포","사회적 공포","인지 공포"],"answer":1},{"q":"자극별 공포 학습 편향을 뜻하는 개념은?","choices":["망각","둔감화","prepared learning","무작위 학습"],"answer":2},{"q":"공포 회로의 가장 오래된 기능은?","choices":["포식자 회피","언어","소화","번식"],"answer":0},{"q":"prepared learning을 제시한 학자는?","choices":["Freud","Pavlov","Skinner","Seligman"],"answer":3},{"q":"군중 속에서 빨리 탐지되는 표정은?","choices":["행복 얼굴","분노 얼굴","슬픈 얼굴","무표정"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#e9defb';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const COL=0x8b5cf6;function branch(x,y,len,ang,d){if(d<=0)return;const x2=x+Math.cos(ang)*len,y2=y+Math.sin(ang)*len;s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,y,0),new THREE.Vector3(x2,y2,0)]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.5})));const n=new THREE.Mesh(new THREE.SphereGeometry(0.08+d*0.03,10,10),new THREE.MeshBasicMaterial({color:COL}));n.position.set(x2,y2,0);s.add(n);branch(x2,y2,len*0.72,ang+0.5,d-1);branch(x2,y2,len*0.72,ang-0.5,d-1);}branch(0,-2.6,1.5,Math.PI/2,4);
+  const _CL='#e9defb';function _L(t,x,y,cc){var L=lbl(t,cc||_CL);L.position.set(x,y,0);s.add(L);}_L('타고난 공포',-2.7,1.4);_L('배운 공포',2.7,1.4);_L('prepared learning',0,3.1,'#ffe9a8');_L('사회적 위협',0,-3.0);
+  const hintEl=document.querySelector('.interact-hint');const caps=['공포는 수백만 년 생존을 도운 오래된 적응 — 계통수처럼 여러 갈래로 진화했습니다.','뱀·높이·어둠 같은 타고난 공포와 경험으로 배운 공포가 같은 회로를 함께 씁니다.','prepared learning: 조상을 위협한 뱀·거미 같은 대상은 유난히 빠르고 강하게 학습됩니다.','포식자 회피에 쓰던 회로가 평가·배척 같은 사회적 위협에도 재사용됩니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1. 고대 그리스 철학 — aboutPhilosophy</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">🏛️ 표지</a></li>
+<li><a href="01-ancient-greek.html">1. 고대 그리스</a></li><li><a href="02-eastern.html">2. 동양 철학</a></li>
+<li><a href="03-medieval.html">3. 중세 철학</a></li><li><a href="04-rationalism.html">4. 합리론/경험론</a></li>
+<li><a href="05-kant.html">5. 칸트/관념론</a></li><li><a href="06-existentialism.html">6. 실존주의</a></li>
+<li><a href="07-ethics.html">7. 윤리학</a></li><li><a href="08-political.html">8. 정치철학</a></li>
+<li><a href="09-contemporary.html">9. 현대 철학</a></li></ol></aside>
+<main><header class="paper-header"><h1><em>고대 그리스 철학</em></h1><p class="authors">Chapter 1 — Socrates, Plato & Aristotle</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 소크라테스→플라톤→아리스토텔레스로 이어지는 사제 계보</span>
+<h2>고대 그리스 철학 개요</h2><p>이 챕터에서는 고대 그리스 철학의 핵심 사상과 철학자들의 관계를 3D로 탐구합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>소크라테스의 문답법과 덕론, 플라톤의 이데아론, 아리스토텔레스의 형상·질료론과 목적론적 윤리학을 탐구합니다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한 줄 요약</h3><p>먼 옛날 그리스 사람들이 "세상은 뭘로 만들어졌지? 우리는 어떻게 살아야 하지?"를 신 이야기(신화)가 아니라 스스로 머리로 생각(이성)해서 묻기 시작했어요. 이게 바로 철학의 시작이에요! 🏛️</p>
+  <h3>🤔 이런 거 궁금했죠?</h3><p>친구가 "정의(옳은 것)가 뭐야?"라고 물으면 딱 대답할 수 있나요? 지금 보는 책상이 진짜로 "있는" 걸 어떻게 알죠? "행복한 삶"의 기준은 누가 정하는 걸까요? 놀랍게도 2,500년 전 아테네 광장에서 사람들이 딱 이런 질문으로 수다를 떨었답니다. 😀</p>
+  <div class="info-card"><h4>🌱 꼭 기억할 친구들</h4><ul>
+    <li><strong>탈레스</strong>: "세상 모든 건 물로 되어 있어!"라고 처음 추측한 최초의 철학자 💧</li>
+    <li><strong>소크라테스</strong>: "너 자신을 알라!" — 내가 모른다는 걸 아는 게 똑똑해지는 첫걸음 (책은 한 권도 안 썼어요)</li>
+    <li><strong>플라톤</strong>: 눈에 보이는 세상 너머에 변하지 않는 진짜 "이데아"가 있대요</li>
+    <li><strong>아리스토텔레스</strong>: 모든 건 도토리가 참나무 되듯 "목적(텔로스)"을 향해 자란대요 🌰</li>
+    <li><strong>로고스</strong>: 온 우주에 흐르는 이성의 질서</li>
+  </ul></div>
+  <h3>📖 이야기로 쉽게</h3><p>플라톤의 <strong>"동굴 이야기"</strong>를 들어볼까요? 동굴 안에 묶여 벽만 보는 사람들이 있어요. 등 뒤 불빛이 만든 그림자를 보고 "저게 세상 전부야!"라고 믿죠. 그런데 한 명이 풀려나 동굴 밖으로 나가 진짜 태양과 진짜 물건을 봐요. 다시 들어와 "저건 그림자일 뿐이야!"라고 외치지만 사람들은 안 믿어요. 즉, 우리가 눈으로 보는 건 그림자 같은 것이고, 진짜(이데아)는 머리로 생각해야 보인다는 뜻이에요. 한편 아리스토텔레스는 "도토리가 참나무가 되듯 모든 것엔 되어야 할 목적이 있다"고 봤어요. 그럼 사람의 목적은? 바로 <strong>에우다이모니아</strong>(잘 사는 행복), 즉 착하고 훌륭한 마음(덕, 아레테)을 실천하며 사는 거래요. 😊</p>
+  <div class="study-tip"><strong>💡 꿀팁:</strong> 소크라테스 → 플라톤 → 아리스토텔레스는 스승과 제자 사이예요! 제자가 스승 생각을 이어받으면서도 "그건 좀 아닌데?"라고 고치며 서양 철학이 자랐답니다.</div>
+  <h3>✏️ 세 줄 정리</h3><ul>
+    <li>철학은 신화 대신 이성(로고스)으로 세상을 묻기 시작하며 태어났어요</li>
+    <li>소크라테스는 질문을 던져 스스로 깨닫게 하는 대화법을 썼어요</li>
+    <li>플라톤은 이데아, 아리스토텔레스는 목적과 관찰을 중요하게 봤어요</li>
+    <li>"좋은 삶이란 뭘까?"라는 질문이 윤리학의 출발점이 됐어요</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>논변 깊이</h3><p>플라톤의 이데아론은 단순히 "본질이 따로 있다"는 주장이 아니라, 보편자(universal)와 개별자(particular)의 관계를 묻는 형이상학적 논변입니다. 우리는 수많은 "아름다운 것들"을 만나지만, "아름다움 그 자체"가 없다면 어떻게 그것들을 모두 아름답다고 부를 수 있을까요? 플라톤은 보편자가 개별자보다 더 실재적이라고 보았습니다. 그러나 그의 제자 아리스토텔레스는 이를 비판합니다. "제3의 인간 논증"에서 그는 묻습니다: 인간 A와 인간 B가 모두 "인간 이데아"를 공유한다면, A·B·이데아 사이의 닮음을 설명하려면 또 다른 상위 이데아가 필요하고, 이는 무한 후퇴에 빠진다. 따라서 보편자는 개별자에 내재(immanent)해야 한다는 것이 그의 형상-질료(hylomorphism) 이론의 출발입니다. 한편 소크라테스의 "덕은 지식이다"라는 명제는 도덕적 약함(akrasia)을 부정하는 강력한 주지주의 입장이며, 이는 후대에 스토아 학파로 이어집니다.</p>
+  <h3>주요 사상가/저작</h3>
+  <div class="info-card"><h4>📖 플라톤 — 『국가』, 『파이돈』, 『향연』</h4><p>『국가』 7권의 동굴의 비유와 선분의 비유를 통해 인식론과 정치철학을 통합합니다. 철인왕(philosopher-king) 사상은 "지혜로운 자가 통치해야 정의로운 폴리스가 가능하다"는 엘리트주의적 주장이며, 영혼 삼분설(이성·기개·욕망)이 폴리스의 세 계급(통치자·수호자·생산자)에 대응됩니다.</p></div>
+  <div class="info-card"><h4>📖 아리스토텔레스 — 『니코마코스 윤리학』, 『형이상학』, 『정치학』</h4><p>4원인설(질료인·형상인·작용인·목적인)로 자연과 인공물 모두를 설명합니다. 윤리학에서는 "중용(메소테스)"을 강조하며, 용기는 비겁과 만용 사이의 중간이라고 분석합니다. "인간은 정치적 동물(zoon politikon)"이라는 명제는 폴리스 공동체 없이는 인간성이 완성되지 않는다는 주장입니다.</p></div>
+  <div class="info-card"><h4>📖 헤라클레이토스 vs 파르메니데스</h4><p>"같은 강에 두 번 들어갈 수 없다"의 헤라클레이토스는 만물 유전(panta rhei)을 주장한 반면, 파르메니데스는 "있는 것은 있고 없는 것은 없다"며 변화를 환상으로 보았습니다. 이 대립이 플라톤 이데아론의 배경이 됩니다.</p></div>
+  <h3>현대적 의미</h3><p>첫째, AI 윤리에서 아리스토텔레스의 덕윤리는 규칙 기반 윤리(공리주의·의무론)의 한계를 보완하는 대안으로 부활하고 있습니다. "AI에게 어떤 성품을 학습시킬 것인가"는 덕윤리적 질문입니다. 둘째, 정치철학에서 플라톤의 철인정치 비판은 민주주의 이론의 영원한 화두이며, 칼 포퍼의 『열린사회와 그 적들』이 이를 정면으로 다뤘습니다. 셋째, 현대 형이상학에서 보편자 논쟁(실재론 vs 명목론)은 여전히 진행 중입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "소크라테스가 책을 썼다"는 잘못된 생각입니다. 소크라테스는 글을 남기지 않았고, 우리가 아는 그의 사상은 플라톤의 대화편을 통한 간접 증언입니다. 따라서 "역사적 소크라테스"와 "플라톤의 소크라테스"를 구분하는 것은 학문적으로 중요한 문제입니다.</div>
+
+<h3>전문가 레벨</h3><p>플라톤 후기 대화편 『파르메니데스』는 그가 자신의 이데아론에 가한 자기비판으로 평가됩니다. 특히 "참여(methexis)"와 "분유(分有)" 개념의 모호성이 문제가 됩니다. 만약 모든 개별자가 이데아를 "부분적으로" 공유한다면 이데아는 분할 가능한가? 분할 불가능하다면 어떻게 다수에 동시에 임재(臨在)하는가? 이 난제는 중세 보편논쟁(universalia)으로 이어져 토마스 아퀴나스의 온건 실재론, 오컴의 유명론으로 분기됩니다. 한편 아리스토텔레스의 『형이상학』 Z권에서 우시아(ousia, 실체)는 (1) 개별자, (2) 종(eidos), (3) 류(genos), (4) 본질(to ti en einai) 사이에서 의미가 흔들리며, 이는 현대 분석 형이상학의 트로프 이론(trope theory)과 본질주의 부활(에세셜리즘)에 영감을 주었습니다. 또한 소크라테스의 엘렝코스(elenchos, 논박법)는 단순한 대화 기법이 아니라, 명제 집합의 일관성 검증을 통한 부정적 변증법으로 재해석되며, 그레고리 블라스토스의 연구가 이 분야를 정초했습니다.</p>
+  <h3>주요 논쟁</h3><p>첫째, "통일된 플라톤"인가 "발전하는 플라톤"인가? 블라스토스는 초기·중기·후기 대화편에서 사상이 변모한다고 보지만, 튀빙겐 학파(가이저, 크레머)는 "쓰이지 않은 교설"(agrapha dogmata)에서 일관된 체계가 있다고 주장합니다. 둘째, 아리스토텔레스의 잠재태(dynamis)와 현실태(energeia) 구분이 인과 환원주의에 대한 답이 될 수 있는가? 현대 신아리스토텔레스주의자(누스바움, 푸트)들은 이를 통해 자연주의 윤리학을 재구성합니다. 셋째, 소크라테스의 다이몬(daimonion)의 위상: 종교적 직관인가, 합리적 양심의 메타포인가?</p>
+  <h3>최신 연구</h3><p>첫째, 실험철학(x-phi)이 소크라테스의 도덕 직관 검증을 정량화하고 있으며, 노브(Knobe) 효과 연구는 고대의 의도성 개념을 재조명합니다. 둘째, 신경과학과 결합한 "체화된 인지(embodied cognition)" 이론이 아리스토텔레스의 영혼-신체 일원론을 부활시키고 있습니다. 셋째, 디지털 인문학으로 플라톤 대화편의 문체 통계 분석(stylometry)이 진행되어 위서(僞書) 판별과 시기 추정이 정밀해지고 있습니다.</p>
+  <h3>관련 분야</h3><ul>
+    <li>고전 문헌학(Classical Philology) — 원전 비평과 사본 전승 연구</li>
+    <li>정치사상사 — 레오 스트라우스 학파의 정치적 독해</li>
+    <li>인지과학 — 아리스토텔레스 심리철학의 기능주의적 재해석</li>
+  </ul>
+  <h3>추가 자료</h3><ul>
+    <li>Vlastos, G., 『Socrates: Ironist and Moral Philosopher』</li>
+    <li>Burnyeat, M., 『The Theaetetus of Plato』</li>
+    <li>Stanford Encyclopedia of Philosophy: "Aristotle's Metaphysics"</li>
+    <li>Kahn, C., 『Plato and the Socratic Dialogue』</li>
+  </ul>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 플라톤의 이데아 세계가 정말 존재한다면, "AI의 이데아"도 존재할까요? 그렇다면 GPT-4와 GPT-5는 같은 이데아를 분유하는 개별자인가, 서로 다른 종(species)인가? 이 질문은 보편자 논쟁을 디지털 존재론으로 확장합니다.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 고대 그리스 사제 계보</h2>
+<p>탈레스부터 아리스토텔레스까지, 등장 순서대로 배치해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#d4a047","prompt":"서양 철학의 사제 계보를 시대순으로 놓아보세요","steps":["탈레스","소크라테스","플라톤","아리스토텔레스"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d4a047","questions":[{"q":"만물의 근원을 물이라고 본 철학자는?","choices":["플라톤","소크라테스","탈레스","아리스토텔레스"],"answer":2},{"q":"동굴의 비유를 제시한 철학자는?","choices":["소크라테스","플라톤","탈레스","아리스토텔레스"],"answer":1},{"q":"'너 자신을 알라'와 관련된 인물은?","choices":["아리스토텔레스","플라톤","탈레스","소크라테스"],"answer":3},{"q":"제3의 인간 논증으로 이데아론을 비판한 이는?","choices":["아리스토텔레스","플라톤","파르메니데스","헤라클레이토스"],"answer":0},{"q":"만물 유전(판타 레이)을 주장한 사람은?","choices":["파르메니데스","소크라테스","헤라클레이토스","플라톤"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,9.5);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=26,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0064,cv.height*0.0064,1);return sp;}
+  const lineage=new THREE.Group();const ys=[3,0,-3];const sizes=[0.7,1,1.3];
+  for(let i=0;i<3;i++){const col=new THREE.Color().setHSL(0.58-i*0.13,0.6,0.6);
+    const node=new THREE.Mesh(new THREE.OctahedronGeometry(sizes[i],0),new THREE.MeshBasicMaterial({color:col,wireframe:true}));
+    node.position.set(0,ys[i],0);lineage.add(node);
+    const halo=new THREE.Mesh(new THREE.RingGeometry(sizes[i]+0.25,sizes[i]+0.35,32),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.5,side:THREE.DoubleSide}));
+    halo.position.set(0,ys[i],0);lineage.add(halo);}
+  for(let i=0;i<2;i++){const lg=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,ys[i],0),new THREE.Vector3(0,ys[i+1],0)]);
+    lineage.add(new THREE.Line(lg,new THREE.LineBasicMaterial({color:0x88aaff})));}
+  s.add(lineage);s.userData.nodes=lineage.children;
+  // 사제 계보 라벨 (위→아래: 소크라테스→플라톤→아리스토텔레스)
+  [['소크라테스','#1d4ed8',3],['플라톤','#6d28d9',0],['아리스토텔레스','#15803d',-3]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(2.0,d[2],0);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 서양 철학의 뿌리 — 소크라테스→플라톤→아리스토텔레스 사제 계보.','소크라테스: 질문으로 무지를 깨우는 산파술 — "캐묻지 않는 삶은 살 가치가 없다".','플라톤: 변치 않는 참된 실재 "이데아"를 제시하고 아카데메이아를 세움.','아리스토텔레스: 논리학을 체계화하고 자연을 경험으로 관찰 — 만학의 아버지.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.rotation.y+=0.003;s.userData.nodes.forEach((n,i)=>{if(n.geometry.type==='OctahedronGeometry'){n.rotation.y+=0.01+i*0.004;n.rotation.x+=0.006;}});r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

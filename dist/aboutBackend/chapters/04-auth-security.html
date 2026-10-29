@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4. 인증과 보안 — aboutBackend</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🖥️ 표지 · 소개</a></li>
+    <li><a href="01-server-basics.html">1. 서버 기초</a></li>
+    <li><a href="02-http-api.html">2. HTTP와 API 설계</a></li>
+    <li><a href="03-nodejs-express.html">3. Node.js와 Express</a></li>
+    <li><a href="04-auth-security.html" style="color:var(--accent);font-weight:600;">4. 인증과 보안</a></li>
+    <li><a href="05-middleware-routing.html">5. 미들웨어와 라우팅</a></li>
+    <li><a href="06-file-streaming.html">6. 파일 처리와 스트리밍</a></li>
+    <li><a href="07-caching-queue.html">7. 캐싱과 메시지 큐</a></li>
+    <li><a href="08-microservices.html">8. 마이크로서비스</a></li>
+    <li><a href="09-deploy-devops.html">9. 배포와 DevOps</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>인증과<br><em>보안</em></h1>
+  <p class="authors">Chapter 4 — Authentication, Authorization & Security</p>
+  <p class="affiliation">JWT 인증 흐름 시뮬레이터 포함</p>
+</header>
+
+<h2>인증 vs 인가</h2>
+<p>인증(Authentication)은 "당신이 누구인가?"를 확인하는 과정이고, 인가(Authorization)는 "당신이 무엇을 할 수 있는가?"를 결정하는 과정입니다. 로그인이 인증이라면, 관리자 페이지 접근 권한 확인이 인가입니다.</p>
+
+<h2>JWT 인증 흐름 시뮬레이터</h2>
+<p>"로그인" 버튼을 눌러 클라이언트→서버→DB 인증 과정과 JWT 토큰 발급 흐름을 관찰하세요. 실패 모드에서는 인증 거부 과정을 볼 수 있습니다.</p>
+
+<div class="scene-3d" id="auth-scene">
+  <div class="scene-controls">
+    <button id="login-btn">🔑 로그인 시뮬레이션</button>
+    <label><input type="checkbox" id="fail-toggle"> 인증 실패 모드</label>
+    <label id="auth-status" style="color:#00ff88;">대기 중...</label>
+  </div>
+</div>
+<span class="interact-hint">🔑 로그인 버튼을 눌러 JWT 인증 흐름을 관찰하세요</span>
+
+<h2>세션 기반 vs 토큰 기반</h2>
+<div class="info-card">
+  <h4>🍪 세션/쿠키 방식</h4>
+  <p>서버가 세션 ID를 생성하고 쿠키에 저장합니다. 매 요청마다 쿠키를 통해 세션을 확인합니다. 서버에 상태를 저장하므로 수평 확장이 어렵습니다.</p>
+</div>
+
+<div class="info-card http">
+  <h4>🎫 JWT (JSON Web Token) 방식</h4>
+  <p>서버가 서명된 토큰을 발급하고 클라이언트가 보관합니다. 서버에 상태를 저장하지 않아(Stateless) 확장이 쉽습니다. 토큰 탈취에 대비한 만료 시간 설정이 중요합니다.</p>
+</div>
+
+<h2>JWT 구조</h2>
+<div class="formula">Header . Payload . Signature</div>
+
+<div class="code-block" data-title="JWT 토큰 구조">// Header: 알고리즘과 토큰 타입
+{ "alg": "HS256", "typ": "JWT" }
+
+// Payload: 사용자 정보 (Claims)
+{
+  "sub": "user123",
+  "name": "홍길동",
+  "role": "admin",
+  "iat": 1716000000,
+  "exp": 1716086400
+}
+
+// Signature: 위변조 방지 서명
+HMACSHA256(
+  base64(header) + "." + base64(payload),
+  secret_key
+)</div>
+
+<h2>JWT 디코더</h2>
+<div class="simulator-panel">
+  <h4>🔍 JWT 토큰 분석기</h4>
+  <div class="simulator-row">
+    <input type="text" id="jwt-input" value="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTIzIiwibmFtZSI6Iu2Zjeq4uOuPmSIsInJvbGUiOiJhZG1pbiJ9.signature" style="font-size:0.75em;">
+    <button onclick="decodeJWT()" style="padding:8px 16px;background:var(--accent);color:#000;border:none;border-radius:6px;font-weight:600;cursor:pointer;">분석</button>
+  </div>
+  <div id="jwt-output" class="simulator-output">// JWT 토큰을 입력하고 분석을 누르세요</div>
+</div>
+
+<h2>OAuth 2.0</h2>
+<div class="flow-horizontal">
+  <span class="flow-node">사용자</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node active">앱 (Client)</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">인증 서버</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">Access Token</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">리소스 서버</span>
+</div>
+
+<h2>보안 위협과 방어</h2>
+<div class="info-card security">
+  <h4>💉 SQL Injection</h4>
+  <p>사용자 입력을 직접 쿼리에 넣으면 악의적인 SQL이 실행될 수 있습니다. Prepared Statement와 ORM을 사용하여 방어합니다.</p>
+</div>
+
+<div class="info-card security">
+  <h4>🔗 XSS (Cross-Site Scripting)</h4>
+  <p>악성 스크립트가 웹 페이지에 주입되어 사용자 정보를 탈취합니다. 입력값 이스케이프와 Content-Security-Policy 헤더로 방어합니다.</p>
+</div>
+
+<div class="info-card security">
+  <h4>🔄 CSRF (Cross-Site Request Forgery)</h4>
+  <p>인증된 사용자의 권한으로 의도하지 않은 요청을 보냅니다. CSRF 토큰과 SameSite 쿠키 설정으로 방어합니다.</p>
+</div>
+
+<div class="code-block" data-title="Express에서 JWT 인증 구현">const jwt = require('jsonwebtoken');
+
+// 로그인 엔드포인트
+app.post('/api/login', async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findByEmail(email);
+  if (!user || !await bcrypt.compare(password, user.hash)) {
+    return res.status(401).json({ error: '인증 실패' });
+  }
+  const token = jwt.sign(
+    { sub: user.id, role: user.role },
+    process.env.JWT_SECRET,
+    { expiresIn: '24h' }
+  );
+  res.json({ token });
+});
+
+// 인증 미들웨어
+function authMiddleware(req, res, next) {
+  const token = req.headers.authorization?.split(' ')[1];
+  try {
+    req.user = jwt.verify(token, process.env.JWT_SECRET);
+    next();
+  } catch {
+    res.status(401).json({ error: '유효하지 않은 토큰' });
+  }
+}</div>
+
+<div class="info-card queue">
+  <h4>💡 탐구 과제</h4>
+  <p>시뮬레이터에서 인증 성공/실패를 번갈아 시도해보세요. 실패 시 서버의 보안 방패가 어떻게 반응하는지 관찰하고, JWT 디코더에서 토큰의 세 부분을 분석해보세요.</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🤔 이게 뭐냐면?</h3><p>인증(Authentication)은 "너 진짜 너 맞아?"를 확인하는 거예요. 🪪 인가(Authorization)는 "그걸 해도 되는 권한이 있어?"를 확인하고요. 보안은 이 둘을 뚫으려는 나쁜 공격을 다 막는 일이에요! 🛡️</p>
+  <h3>👀 왜 중요할까?</h3><p>비밀번호가 한 번 새면 회사가 통째로 위험해져요. 😱 2017년 Equifax라는 회사는 무려 1억 4천만 명의 정보가 새어 나갔어요! 토스·카카오 같은 금융 앱은 보안이 곧 믿음이에요. 백엔드 개발자가 가장 먼저 챙겨야 할 부분이랍니다. 💪</p>
+  <div class="info-card"><h4>🌱 이 말은 꼭 알아두자</h4><ul><li><strong>해시</strong>: 비밀번호를 되돌릴 수 없게 뒤섞기 (bcrypt, Argon2) 🔀</li><li><strong>세션</strong>: 서버가 "너 로그인했지" 기억하는 방법 🧠</li><li><strong>JWT</strong>: 내 폰에 저장하는 서명된 출입증 🎫</li><li><strong>HTTPS</strong>: 대화를 암호로 잠근 안전한 HTTP 🔒</li><li><strong>CSRF/XSS</strong>: 대표적인 웹 공격 이름 👾</li></ul></div>
+  <h3>🎯 놀이공원으로 이해하기</h3><p>비밀번호를 그대로 저장하면? DB가 털릴 때 다 들통나요! 😨 그래서 되돌릴 수 없게 뒤섞어(해시) 저장해요. 로그인에 성공하면 서버가 "출입증"(세션 ID나 토큰)을 줘요. 🎟️ 놀이공원 팔찌처럼요! 그다음부터는 매번 이 팔찌를 보여주면 "아, 아까 그 사람!" 하고 알아봐요. 인가는 그 위에서 "이 팔찌는 VIP 구역도 들어갈 수 있나?"를 정하는 별도의 단계예요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> OWASP Top 10을 처음부터 끝까지 한 번 읽어보세요! 보안 사고의 90%가 여기 적힌 문제에서 나와요. 📖</div>
+  <h3>🍬 한 입 요약</h3><ul><li>인증(누구야?) ≠ 인가(해도 돼?), 둘 다 필요해요</li><li>비밀번호는 절대 그대로 저장하면 안 돼요</li><li>HTTPS는 선택이 아니라 필수!</li><li>출입증(토큰·세션)은 만료·취소 규칙이 꼭 필요해요</li><li>딱 필요한 권한만 주기(최소 권한 원칙)</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>세션 방식은 서버가 sessionId ↔ 사용자 매핑을 보관하며, 무효화가 즉시 가능하지만 수평 확장 시 공유 저장소(Redis)가 필요합니다. JWT는 stateless라 확장에 유리하지만, 토큰을 즉시 무효화하기 어려워 짧은 만료 + refresh token 조합이 표준입니다. OAuth 2.0은 인증을 위임하는 프로토콜이고, OIDC는 그 위에 신원 정보를 얹은 표준입니다. 카카오/구글 로그인이 그 예입니다. 패스워드 해시는 bcrypt(cost 12 이상) 또는 Argon2id가 권장됩니다. CSRF는 SameSite 쿠키와 토큰으로, XSS는 출력 인코딩과 CSP 헤더로 방어합니다. SQL Injection은 prepared statement(파라미터 바인딩)로 사실상 완전히 막을 수 있습니다.</p>
+  <h3>핵심 코드 패턴</h3>
+  <pre><code>// 안전한 비밀번호 비교
+import bcrypt from 'bcrypt';
+const hash = await bcrypt.hash(password, 12);
+const ok   = await bcrypt.compare(input, hash);
+
+// JWT 발급/검증
+const token = jwt.sign({sub:user.id}, process.env.SECRET, {expiresIn:'15m'});</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1: Refresh Token 회전</h4><p>access 15분 + refresh 14일. refresh를 한 번 사용하면 새 access와 새 refresh를 발급하고 이전 refresh는 무효화합니다. 탈취 시 영향을 한 사이클로 제한합니다.</p></div>
+  <div class="info-card"><h4>📐 예제 2: Rate Limit + 잠금</h4><p>로그인 실패 5회면 IP/계정에 점진적 잠금. 분당 N회로 무차별 대입을 막고, 캡차로 보강합니다.</p></div>
+  <h3>응용 사례</h3><p>금융권은 보안 토큰이나 PKI 기반 인증서를 결합해 2FA를 강제합니다. SaaS는 SSO(SAML, OIDC)로 회사 단위 로그인을 제공해 보안과 편의성을 동시에 챙깁니다. 모바일 앱은 키체인/Keystore에 토큰을 저장하고 생체인증으로 잠금을 한 번 더 걸어 분실 시 위험을 줄입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> JWT를 localStorage에 두면 XSS 한 방에 토큰이 새 나갑니다. HttpOnly 쿠키 + SameSite 조합이 일반적으로 더 안전합니다.</div>
+
+<h3>전문가 레벨 이해</h3><p>현대 보안은 "Zero Trust"가 표준 사고방식입니다. 내부망조차 기본 신뢰하지 않고 모든 요청을 인증·인가·검증합니다. mTLS로 서비스 간 통신을 인증하고, OPA(Open Policy Agent)·SpiceDB·Cedar로 인가 정책을 코드 외부에서 선언적으로 관리합니다. 비밀(secret) 관리는 HashiCorp Vault, AWS Secrets Manager, KMS 같은 전용 시스템으로 분리하고 정기 회전을 자동화합니다. WebAuthn/Passkey는 비밀번호 자체를 없애는 방향으로, 사용자 디바이스의 개인키로 challenge에 서명합니다. CSP·Subresource Integrity·Trusted Types로 브라우저 측 공격 표면을 좁힙니다. SBOM과 SCA로 의존성 취약점을 추적하고, secret scanning과 SAST/DAST를 CI에 통합합니다.</p>
+  <h3>최신 연구·동향</h3><p>Passkey가 Apple, Google, Microsoft 모두에서 표준이 되어 비밀번호의 종말을 앞당기고 있습니다. PQC(Post-Quantum Cryptography)는 NIST 표준화가 끝나면서 TLS·SSH 구현체들이 단계적으로 도입 중입니다. 컨피덴셜 컴퓨팅(SGX, SEV)은 메모리 상에서도 데이터를 암호화한 채 처리해 클라우드 운영자조차 평문에 접근하지 못하게 합니다.</p>
+  <h3>관련 분야</h3><ul><li>위협 모델링과 STRIDE</li><li>암호학 기초(대칭/비대칭, 해시, HKDF)</li><li>침해 대응(IR)과 포렌식</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"Cryptography Engineering" — Ferguson, Schneier, Kohno</li><li>OWASP ASVS, Cheat Sheet Series</li><li>Google BeyondCorp 백서</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 자체 인증 시스템에 Passkey(WebAuthn) 로그인을 추가하고 기존 비밀번호 흐름과 위험·UX·운영 비용을 비교 보고서로 작성하세요.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 인증 방식 vs 보안 위협 분류</h2>
+<p>각 항목이 인증 방식인지 웹 보안 위협인지 알맞은 그룹으로 분류하세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#00ff88","prompt":"각 항목을 알맞은 그룹으로 분류하세요","groups":[{"name":"인증 방식","items":["세션/쿠키","JWT","OAuth 2.0"]},{"name":"보안 위협","items":["SQL Injection","XSS","CSRF"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00ff88","questions":[{"q":"\"당신이 누구인가\"를 확인하는 과정은?","choices":["인가","인증","캐싱","라우팅"],"answer":1},{"q":"JWT 구조에 포함되지 않는 것은?","choices":["Header","Payload","Signature","Session"],"answer":3},{"q":"SQL Injection 방어 방법은?","choices":["Prepared Statement","쿠키 삭제","포트 변경","캐시 사용"],"answer":0},{"q":"서버에 상태를 저장하지 않는 방식은?","choices":["세션 방식","쿠키 방식","JWT 방식","로그 방식"],"answer":2},{"q":"CSRF 방어에 쓰이는 쿠키 설정은?","choices":["Secure","SameSite","MaxAge","Domain"],"answer":1}]};</script>
+</main>
+</div>
+
+<script>
+function decodeJWT() {
+  const input = document.getElementById('jwt-input').value.trim();
+  const output = document.getElementById('jwt-output');
+  const parts = input.split('.');
+  if (parts.length !== 3) { output.textContent = '❌ JWT는 3개의 파트로 구성되어야 합니다 (Header.Payload.Signature)'; return; }
+  try {
+    const header = JSON.parse(atob(parts[0].replace(/-/g,'+').replace(/_/g,'/')));
+    const payload = JSON.parse(atob(parts[1].replace(/-/g,'+').replace(/_/g,'/')));
+    output.textContent = `📋 Header:\n${JSON.stringify(header, null, 2)}\n\n📋 Payload:\n${JSON.stringify(payload, null, 2)}\n\n🔐 Signature:\n${parts[2].substring(0, 20)}...`;
+  } catch(e) { output.textContent = '❌ 디코딩 실패: ' + e.message; }
+}
+
+(function() {
+  const container = document.getElementById('auth-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 5, 14);
+  camera.lookAt(0, 0, 0);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Client
+  const client = new THREE.Mesh(new THREE.SphereGeometry(0.6, 16, 16), new THREE.MeshBasicMaterial({ color: 0x60a5fa }));
+  client.position.set(-6, 0, 0);
+  scene.add(client);
+
+  // Server
+  const server = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.8, 1), new THREE.MeshBasicMaterial({ color: 0x00ff88 }));
+  scene.add(server);
+
+  // Security shield (torus around server)
+  const shield = new THREE.Mesh(new THREE.TorusGeometry(1.8, 0.06, 8, 32), new THREE.MeshBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.3 }));
+  scene.add(shield);
+  const shield2 = new THREE.Mesh(new THREE.TorusGeometry(1.8, 0.06, 8, 32), new THREE.MeshBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.3 }));
+  shield2.rotation.y = Math.PI / 2;
+  scene.add(shield2);
+
+  // DB
+  const db = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 1.2, 16), new THREE.MeshBasicMaterial({ color: 0xa78bfa }));
+  db.position.set(6, 0, 0);
+  scene.add(db);
+
+  // Connection lines
+  [[-6,0,0],[0,0,0],[6,0,0]].reduce((prev, curr) => {
+    if (prev) { const g = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...prev), new THREE.Vector3(...curr)]); scene.add(new THREE.Line(g, new THREE.LineBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.12 }))); }
+    return curr;
+  }, null);
+
+  scene.add(new THREE.GridHelper(20, 20, 0x0a3a0a, 0x0a3a0a)).position.y = -3;
+
+  const packets = [];
+  const statusLabel = document.getElementById('auth-status');
+
+  function startLogin() {
+    const willFail = document.getElementById('fail-toggle').checked;
+    const p = new THREE.Mesh(new THREE.SphereGeometry(0.18, 10, 10), new THREE.MeshBasicMaterial({ color: 0xfbbf24 }));
+    p.position.set(-6, 0, 0);
+    scene.add(p);
+    packets.push({ mesh: p, phase: 0, t: 0, willFail });
+    statusLabel.textContent = '🔑 인증 요청 전송 중...';
+    statusLabel.style.color = '#fbbf24';
+  }
+
+  document.getElementById('login-btn').addEventListener('click', startLogin);
+
+  let shieldGlow = 0;
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = Date.now() * 0.001;
+    server.rotation.y = t * 0.2;
+    shield.rotation.x = t * 0.5;
+    shield.rotation.z = t * 0.3;
+    shield2.rotation.x = t * 0.3 + 1;
+    shield2.rotation.z = t * 0.5 + 1;
+    db.rotation.y = -t * 0.3;
+
+    // Shield glow effect
+    if (shieldGlow > 0) {
+      shieldGlow -= 0.02;
+      shield.material.opacity = 0.3 + shieldGlow * 0.7;
+      shield2.material.opacity = 0.3 + shieldGlow * 0.7;
+    }
+
+    for (let i = packets.length - 1; i >= 0; i--) {
+      const p = packets[i];
+      p.t += 0.015;
+      if (p.t >= 1) {
+        p.t = 0;
+        p.phase++;
+        // Phases: 0=client→server, 1=server→db, 2=db→server, 3=server→client(token or reject)
+        if (p.phase === 2 && p.willFail) {
+          // Auth failed at DB check
+          p.mesh.material.color.setHex(0xef4444);
+          shield.material.color.setHex(0xef4444);
+          shield2.material.color.setHex(0xef4444);
+          shieldGlow = 1;
+          statusLabel.textContent = '❌ 인증 실패 — 401 Unauthorized';
+          statusLabel.style.color = '#ef4444';
+          setTimeout(() => { shield.material.color.setHex(0x00ff88); shield2.material.color.setHex(0x00ff88); }, 1500);
+        }
+        if (p.phase === 3 && !p.willFail) {
+          p.mesh.material.color.setHex(0x00ff88); // JWT token (green)
+          shield.material.color.setHex(0x00ff88);
+          shieldGlow = 1;
+          statusLabel.textContent = '✅ JWT 토큰 발급 완료';
+          statusLabel.style.color = '#00ff88';
+        }
+        if (p.phase > 3 || (p.phase > 2 && p.willFail)) {
+          scene.remove(p.mesh);
+          packets.splice(i, 1);
+          continue;
+        }
+      }
+      const positions = [[-6,0,0],[0,0,0],[6,0,0],[0,0,0],[-6,0,0]];
+      const from = new THREE.Vector3(...positions[p.phase]);
+      const to = new THREE.Vector3(...positions[p.phase + 1]);
+      p.mesh.position.lerpVectors(from, to, p.t);
+      p.mesh.position.y += Math.sin(p.t * Math.PI) * 0.8;
+    }
+
+    renderer.render(scene, camera);
+  }
+  animate();
+  setTimeout(startLogin, 1000);
+
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+})();
+</script>
+</body>
+</html>

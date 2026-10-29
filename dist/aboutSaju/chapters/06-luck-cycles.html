@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6. 대운과 세운 — aboutSaju</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">🔮 표지</a></li>
+<li><a href="01-basics.html">1. 사주명리 기초</a></li><li><a href="02-heavenly-stems.html">2. 천간</a></li>
+<li><a href="03-earthly-branches.html">3. 지지</a></li><li><a href="04-five-elements.html">4. 오행</a></li>
+<li><a href="05-reading-chart.html">5. 명식 해석</a></li><li><a href="06-luck-cycles.html">6. 대운과 세운</a></li>
+<li><a href="07-compatibility.html">7. 궁합</a></li><li><a href="08-career.html">8. 직업과 재물</a></li>
+<li><a href="09-modern-application.html">9. 현대적 활용</a></li></ol></aside>
+<main><header class="paper-header"><h1><em>대운과 세운</em></h1><p class="authors">Chapter 6 — Luck Cycles & Annual Fortune</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 대운(10년)·세운(1년) — 시간을 따라 흐르는 운</span>
+<h2>대운과 세운 개요</h2><p>이 챕터에서는 대운과 세운의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>10년 주기로 변화하는 대운(大運)의 흐름과 매년 찾아오는 세운(歲運)의 결합을 통해 인생의 계절과 기회를 읽습니다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능. 본 자료는 전통 명리학 이론을 학술적으로 다루며, 운명을 단정하기보다 사고의 도구로 활용하는 것을 권장합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🌊 한 줄 요약!</h3>
+  <p><strong>대운(大運)</strong>은 약 10년마다 바뀌는 큰 시간 흐름, <strong>세운(歲運)</strong>은 1년마다 바뀌는 흐름이에요. 이 흐름이 내 명식과 만나서 "요즘 시기 분위기"를 만든다고 본답니다. 🕰️</p>
+  <h3>🎮 이거 왜 재밌을까?</h3>
+  <p>인생을 한 장의 사진이 아니라 <strong>흐르는 영상</strong>처럼 볼 수 있어요! 🎬 "언제 도전하고 언제 충전할까?" 생각하는 힌트가 되고, 지난 시간을 돌아보는 데도 좋아요. 미래를 딱 정하는 게 아니라 "가능성 지도"로 쓰는 거예요.</p>
+  <div class="info-card"><h4>🌱 꼭 기억할 말</h4><ul>
+    <li><strong>대운(大運)</strong>: 약 10년 단위의 큰 흐름 🌊</li>
+    <li><strong>세운(歲運)</strong>: 1년 단위의 흐름 📅</li>
+    <li><strong>월운(月運)</strong>: 한 달 단위의 흐름 🌙</li>
+    <li><strong>입운(入運)</strong>: 새 대운에 들어가는 순간 🚪</li>
+    <li><strong>대운수(大運數)</strong>: 첫 대운이 시작되는 나이 🔢</li>
+  </ul></div>
+  <h3>🚣 쉽게 풀어보기</h3>
+  <p>대운은 인생이라는 <strong>강</strong>을 따라 흐르는 물길 변화예요. 🚣 어떤 구간은 햇볕 좋은 너른 평야, 어떤 구간은 바위 많은 협곡! 같은 물이라도 지나는 곳에 따라 흐름이 달라지죠.</p>
+  <p>사람도 마찬가지예요. 같은 명식이라도 어떤 대운을 지나느냐에 따라 경험이 달라진다고 봐요. <strong>세운</strong>은 그 안에서 해마다 생기는 작은 변화고요. 🍂</p>
+  <p>봄 같은 명식을 가진 사람이 봄 같은 대운을 만나면 자기 결을 살리기 쉽고, 다른 흐름을 만나면 적응 과제를 받는 식이에요. 중요한 건, 좋다·나쁘다로 딱 자르지 않고 <strong>"지금은 어떤 태도가 어울릴까?"</strong> 생각하는 도구로 쓰는 거예요! 🧭</p>
+  <div class="study-tip"><strong>💡 꿀팁:</strong> 내 지난 10년을 떠올리고, 그때 대운 글자가 뭐였는지 만세력에서 찾아보세요. 기억이랑 맞춰보면 사주가 훨씬 실감나요! ⏮️</div>
+  <h3>📦 한입 정리</h3>
+  <ul>
+    <li>대운 = 10년, 세운 = 1년 흐름! 🌊</li>
+    <li>흐름이 명식과 만나 시기 분위기를 만들어요.</li>
+    <li>좋고 나쁨이 아니라 "어울림"으로 봐요.</li>
+    <li>운은 가능성의 그림일 뿐, 정해진 미래가 아니에요.</li>
+    <li>돌아보기·계획 세우기 도구로 쓰면 최고! 🧭</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3><p>대운은 월주를 기준으로 순행 또는 역행으로 진행됩니다. 양남음녀는 순행, 음남양녀는 역행이라는 전통적 규칙이 있어 대운의 천간지지가 어떤 순서로 펼쳐지는지가 결정됩니다. 대운수, 즉 첫 대운의 시작 나이는 입절 직후의 시간차를 일정 비율로 환산해 산출합니다. 일반적으로 대운은 천간 5년·지지 5년의 구분으로 본다는 견해와, 한 글자 10년이 함께 작용한다는 견해가 공존합니다. 세운은 그해의 천간지지로 표시되며, 명식 및 대운과 합·충·형·해·파의 작용을 일으킵니다. 또한 천간은 천간끼리, 지지는 지지끼리 작용하므로 명식의 어떤 글자와 어떤 운의 글자가 만나는지를 세밀하게 추적합니다. 운에서 들어오는 글자가 명식의 부족한 오행을 보태는지, 강한 오행을 더 강하게 만드는지에 따라 시기적 색채가 달라집니다. 격국과 용신의 관점에서는 운이 용신을 도와주는 시기를 길운, 기신을 강화하는 시기를 흉운으로 분류하기도 합니다.</p>
+  <h3>실전 풀이</h3>
+  <div class="info-card"><h4>📅 사례 1</h4><p>신약한 명식이 인성 대운을 만나면 자기 자원이 채워지는 시기로 해석되어 학업·자기계발이 두드러질 가능성으로 이야기되곤 합니다. 다만 이는 한 해 한 해 다르게 작동하는 가능성의 흐름일 뿐 결정론적 예측이 아닙니다.</p></div>
+  <div class="info-card"><h4>📅 사례 2</h4><p>신강한 명식이 식상 대운을 만나면 표현과 활동의 시기로 평가되며, 자신의 능력을 외부로 풀어내는 흐름으로 해석되기도 합니다. 다만 식상이 너무 강해질 경우 과로의 가능성도 함께 살펴 균형 있는 자기 관리가 권장됩니다.</p></div>
+  <h3>대운/세운 응용</h3><p>대운과 세운이 같은 방향의 글자를 강화하면 그 시기의 색채는 더욱 또렷해진다고 봅니다. 반대로 대운과 세운이 충돌하면 변화의 자극이 더 크게 느껴진다는 해석도 있습니다. 또한 명식의 핵심 글자와 운의 글자가 합을 이루면 새로운 인연·기회가 강조되는 시기로 다루어집니다. 어떤 경우든 절대적 예측이 아니라 자기 점검과 계획의 도구로 활용하는 것이 권장됩니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> 길운이라고 해서 아무것도 하지 않아도 좋은 일이 오는 것이 아니며, 흉운이라고 해서 무조건 나쁜 일만 일어나는 것도 아닙니다. 운은 환경의 결일 뿐, 결과를 만드는 것은 본인의 선택과 행동이라는 점이 학술적 해석의 기본 태도입니다.</div>
+
+<h3>전문가 레벨</h3><p>심화 단계의 운 해석에서는 명식과 운 사이의 다층 작용을 입체적으로 다룹니다. 첫째, 천간끼리의 합·극·생, 둘째, 지지끼리의 삼합·방합·육합·충·형·해·파, 셋째, 천간과 지지의 십이운성 작용, 넷째, 운에서 들어온 글자가 명식의 격국과 용신에 미치는 영향, 다섯째, 운으로 인한 격국 변화 가능성 등을 함께 검토합니다. 가령 명식의 용신이 운에서 합거(合去)되어 사라지는 경우와, 기신이 운에서 합화하여 다른 오행으로 바뀌는 경우는 해석이 크게 달라집니다. 또한 운의 시작점인 입운, 대운 천간 지지의 비중 차이, 운의 끝자락에서 다음 운으로 이어지는 점이전(漸移轉)의 개념까지 정밀하게 다룹니다. 십이운성 관점에서는 운에서 들어오는 글자가 명식의 일간에 대해 장생·관대·건록·제왕·쇠·병·사·묘·절·태·양·욕 어디에 해당하는가에 따라 기운의 강약과 분위기가 달라진다고 봅니다. 이런 다층 분석은 학술적 해석의 정수에 해당하며, 결정론에 빠지지 않도록 다중 시나리오로 사고하는 훈련이 권장됩니다.</p>
+  <h3>고전 이론과 학파</h3><p>『자평진전』은 운에서의 격국 변화를 정교하게 다루었고, 『적천수』는 운과 명식의 청탁 변화를 핵심 주제로 삼았습니다. 『궁통보감』은 조후의 관점에서 운이 절기적 균형에 어떻게 기여하는가를 강조합니다. 한국 명리학은 자평을 토대로 조후를 함께 사용하는 절충적 흐름이며, 일본 추명학은 십이운성과 신살의 결합으로 운을 해석하는 특징을 보입니다.</p>
+  <h3>현대적 해석</h3><p>현대 시간심리학과 비교하면 운의 흐름은 인생 단계별 발달 과제와 부분적으로 연결됩니다. 또 사회과학에서는 코호트 효과와 결합해 같은 시기를 사는 세대의 공통 경험을 명리적으로 살펴보는 시도도 있습니다. 어떤 경우든 가능성의 시야로 다루는 것이 학술적입니다.</p>
+  <h3>관련 분야</h3><ul>
+    <li><strong>발달심리학</strong>: 인생 단계 이론과 비교</li>
+    <li><strong>사회학</strong>: 코호트 연구와 결합</li>
+    <li><strong>역사학</strong>: 시대별 운의 사회문화적 해석</li>
+    <li><strong>철학</strong>: 운명과 자유의지 논쟁</li>
+  </ul>
+  <h3>추가 자료</h3><ul>
+    <li>『자평진전평주』</li>
+    <li>『적천수천미』 행운 관련 장</li>
+    <li>『궁통보감』 절기와 운</li>
+    <li>현대 시간심리학 입문서</li>
+  </ul>
+  <div class="success-box"><strong>🎓 학술적 탐구:</strong> 자기 과거 운의 흐름을 회고적으로 정리하고, 거기에서 일관된 패턴이 어떻게 나타났는가를 적어 보면 결정론이 아닌 해석학으로서의 명리를 체감할 수 있습니다.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 다른 하나 찾기</h2>
+<p>네 보기 중 성격이 다른 하나를 찾아보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#ff4d8d","prompt":"넷 중 성격이 다른 하나를 고르세요","rounds":[{"items":["대운","세운","월운","용신"],"odd":3,"why":"용신은 시간 흐름이 아니라 균형 오행"},{"items":["10년 단위","1년 단위","한 달 단위","오행 분류"],"odd":3,"why":"나머지는 운의 시간 단위"},{"items":["입운","대운수","순행·역행","상생"],"odd":3,"why":"상생은 오행 관계, 나머지는 대운 개념"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ff4d8d","questions":[{"q":"대운은 약 몇 년 단위인가?","choices":["1년","5년","10년","60년"],"answer":2},{"q":"1년 단위의 운은?","choices":["세운","월운","대운","입운"],"answer":0},{"q":"첫 대운이 시작되는 나이는?","choices":["입운","대운수","월운","세운"],"answer":1},{"q":"대운이 순행하는 경우는?","choices":["음남양녀","양남양녀","음남음녀","양남음녀"],"answer":3},{"q":"용신을 돕는 운의 분류는?","choices":["흉운","길운","입운","월운"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const COL=0xff4d8d;const line=new THREE.Mesh(new THREE.BoxGeometry(8,0.06,0.06),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.5}));s.add(line);const stops=[];for(let i=0;i<8;i++){const x=(i-3.5)*1.1;const m=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.9,0.3),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.7}));m.position.set(x,0.6,0);s.add(m);stops.push(x);}const marker=new THREE.Mesh(new THREE.ConeGeometry(0.28,0.6,16),new THREE.MeshBasicMaterial({color:0xffe08a}));marker.position.y=-0.6;s.add(marker);
+  const Ld=lbl('대운(10년)','#ffb3cd');Ld.position.set(0,1.9,0);s.add(Ld);const Ln=lbl('대운수','#ff9dc0');Ln.position.set(-3.85,1.4,0);s.add(Ln);const Lt=lbl('시간','#cc8fa8');Lt.position.set(4.6,0,0);s.add(Lt);const Ly=lbl('세운(1년)','#ffe08a');Ly.position.set(0,-0.65,0);marker.add(Ly);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 대운 — 약 10년마다 바뀌는 큰 흐름. 여덟 블록이 인생의 물길 구간입니다.','노란 화살표는 세운 — 1년 단위로 흐르며 명식과 만나 그 해의 분위기를 만듭니다.','첫 대운이 시작되는 나이가 대운수, 새 대운에 들어가는 순간이 입운입니다.','길운·흉운도 결과를 정하지 않습니다 — 운은 환경의 결일 뿐, 결과는 선택과 행동이 만듭니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const x=-3.85+((T*0.5)%8)*1.1;marker.position.x=x;s.rotation.y+=0.0;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

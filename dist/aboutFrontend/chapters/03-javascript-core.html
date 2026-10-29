@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3장. JavaScript 핵심</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        main {
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #555;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            line-height: 1.8;
+            color: #666;
+            margin: 1rem 0;
+        }
+
+        li {
+            line-height: 1.8;
+            color: #666;
+            margin: 0.5rem 0;
+        }
+
+        .container {
+            display: flex;
+            gap: 2rem;
+        }
+
+        aside {
+            flex: 0 0 220px;
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 12px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        aside h3 {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        aside ol {
+            list-style: none;
+            padding: 0;
+        }
+
+        aside li {
+            margin: 0.5rem 0;
+        }
+
+        aside a {
+            color: #7b5cff;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+
+        aside a:hover {
+            color: #00d4ff;
+        }
+
+        .hub-back-link {
+            display: block;
+            padding: 10px 14px;
+            margin-bottom: 18px;
+            background: linear-gradient(120deg, #7b5cff, #00d4ff);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-align:left;
+            box-shadow: 0 6px 18px -6px rgba(123, 92, 255, 0.5);
+            transition: transform 0.2s ease;
+        }
+
+        .hub-back-link:hover {
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #7b5cff;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* JS Console/REPL */
+        .repl-demo {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .repl-container {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 1rem;
+            height: 400px;
+            background: #1e1e1e;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .repl-input-area {
+            padding: 1rem;
+            border-bottom: 2px solid #444;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .repl-prompt {
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            user-select: none;
+        }
+
+        .repl-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .repl-input::placeholder {
+            color: #666;
+        }
+
+        .repl-output {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .repl-line {
+            margin: 0.5rem 0;
+        }
+
+        .repl-output-line {
+            color: #00ff00;
+        }
+
+        .repl-error-line {
+            color: #ff6b6b;
+        }
+
+        .repl-info-line {
+            color: #00d4ff;
+        }
+
+        /* Closure Visualization */
+        .closure-demo {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .scope-diagram {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .scope-box {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            color: white;
+        }
+
+        .scope-title {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .scope-var {
+            font-family: 'Courier New', monospace;
+            padding: 0.5rem;
+            margin: 0.25rem 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* Event Loop Visualization */
+        .event-loop-demo {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .event-loop-container {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            position: relative;
+        }
+
+        .event-loop-demo button {
+            padding: 10px 20px;
+            margin-top: 1.5rem;
+            background: linear-gradient(120deg, #7b5cff, #00d4ff);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .event-loop-demo button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px -6px rgba(123, 92, 255, 0.5);
+        }
+
+        /* 3D Event Loop */
+        .three-d-container {
+            width: 100%;
+            height: 500px;
+            background: #f0f2f5;
+            border-radius: 12px;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .async-example {
+            background: #fff;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .async-input {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .async-input textarea {
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            resize: none;
+            height: 150px;
+        }
+
+        .async-input textarea:focus {
+            outline: none;
+            border-color: #7b5cff;
+        }
+
+        .async-btn {
+            padding: 10px 20px;
+            background: #7b5cff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: start;
+            margin-top: 1rem;
+        }
+
+        .async-btn:hover {
+            background: #6a4ecc;
+            transform: translateY(-2px);
+        }
+
+        .async-output {
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #eee;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align:left;
+        }
+
+        .nav-btn.prev {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .nav-btn.prev:hover {
+            background: #e0e0e0;
+            transform: translateX(-2px);
+        }
+
+        .nav-btn.next {
+            background: linear-gradient(120deg, #7b5cff, #00d4ff);
+            color: white;
+        }
+
+        .nav-btn.next:hover {
+            transform: translateX(2px);
+            box-shadow: 0 6px 18px -6px rgba(123, 92, 255, 0.5);
+        }
+
+        .feature-list {
+            background: #f5f7fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #7b5cff;
+            margin: 1.5rem 0;
+        }
+
+        .feature-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            color: #333;
+        }
+
+        .feature-list code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #7b5cff;
+            font-weight: 600;
+        }
+    </style>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+            <h3>전체 목차</h3>
+            <ol>
+                <li><a href="../index.html">📖 표지 · 소개</a></li>
+                <li><a href="01-html-basics.html">1. HTML 기초</a></li>
+                <li><a href="02-css-layout.html">2. CSS와 레이아웃</a></li>
+                <li><a href="03-javascript-core.html">3. JavaScript 핵심</a></li>
+                <li><a href="04-dom-manipulation.html">4. DOM 조작</a></li>
+                <li><a href="05-react-components.html">5. React와 컴포넌트</a></li>
+                <li><a href="06-state-management.html">6. 상태관리</a></li>
+                <li><a href="07-responsive-design.html">7. 반응형 디자인</a></li>
+                <li><a href="08-performance.html">8. 성능 최적화</a></li>
+                <li><a href="09-build-deploy.html">9. 빌드도구와 배포</a></li>
+            </ol>
+        </aside>
+
+        <main>
+            <h1>3장. JavaScript 핵심</h1>
+
+            <h2 class="section-title">3.1 변수와 타입</h2>
+            <p>
+                JavaScript는 동적 타입 언어로, 변수는 런타임에 어떤 타입이든 가질 수 있습니다.
+                ES6부터 세 가지 변수 선언 방식이 있습니다.
+            </p>
+
+            <div class="feature-list">
+                <ul>
+                    <li><code>var</code>: 함수 스코프, 호이스팅됨, 재선언 가능 (레거시)</li>
+                    <li><code>let</code>: 블록 스코프, 호이스팅되지만 접근 불가, 재선언 불가 (권장)</li>
+                    <li><code>const</code>: 블록 스코프, 재할당 불가, 초기화 필수 (권장)</li>
+                </ul>
+            </div>
+
+            <div class="code-block">
+// 변수 선언
+const name = "김철수";     // 문자열
+let age = 28;              // 숫자
+var isActive = true;       // 불린
+
+// 타입 확인
+console.log(typeof name);      // "string"
+console.log(typeof age);       // "number"
+console.log(typeof isActive);  // "boolean"
+
+// 원시 타입 vs 참조 타입
+const primitive = 42;          // 원시: 값으로 복사
+const reference = {id: 1};     // 참조: 주소로 복사
+            </div>
+
+            <p><strong>원시 타입(Primitive Types):</strong> string, number, boolean, null, undefined, symbol, bigint</p>
+            <p><strong>참조 타입(Reference Types):</strong> object, array, function</p>
+
+            <h2 class="section-title">3.2 함수와 클로저</h2>
+            <p>
+                함수는 JavaScript의 핵심입니다. 함수는 일급 객체로, 변수에 할당되거나 다른 함수의 인자로 전달될 수 있습니다.
+                클로저는 함수가 자신의 스코프 밖의 변수에 접근할 수 있는 현상입니다.
+            </p>
+
+            <div class="code-block">
+// 함수 선언
+function add(a, b) {
+  return a + b;
+}
+
+// 함수 표현식
+const multiply = function(a, b) {
+  return a * b;
+};
+
+// 화살표 함수 (Arrow Function)
+const divide = (a, b) => a / b;
+const greet = (name) => `안녕하세요, ${name}!`;
+
+// 클로저
+function makeCounter() {
+  let count = 0;
+  return function() {
+    return ++count;
+  };
+}
+
+const counter = makeCounter();
+console.log(counter()); // 1
+console.log(counter()); // 2
+            </div>
+
+            <div class="closure-demo">
+                <h3>클로저 시각화</h3>
+                <p>
+                    클로저는 함수와 그 함수가 선언된 렉시컬 환경의 조합입니다.
+                    내부 함수는 외부 함수의 변수에 접근할 수 있습니다.
+                </p>
+
+                <div class="scope-diagram">
+                    <div class="scope-box">
+                        <div class="scope-title">Global Scope (전역 스코프)</div>
+                        <div class="scope-var">const makeCounter = function() { ... }</div>
+                        <div class="scope-var">const counter = makeCounter()</div>
+
+                        <div style="margin-top: 1rem; border: 2px solid white; border-radius: 6px; padding: 1rem;">
+                            <div class="scope-title">makeCounter Scope (함수 스코프)</div>
+                            <div class="scope-var">let count = 0 ← 클로저가 기억하는 변수</div>
+
+                            <div style="margin-top: 0.5rem; border: 2px dashed white; border-radius: 6px; padding: 0.75rem;">
+                                <div class="scope-title" style="margin: 0; margin-bottom: 0.5rem;">Inner Function (반환된 함수)</div>
+                                <div class="scope-var">return ++count</div>
+                                <p style="color: rgba(255,255,255,0.7); font-size: 11px; margin-top: 0.5rem;">
+                                    이 함수는 count 변수에 접근할 수 있습니다!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">3.3 비동기 프로그래밍</h2>
+            <p>
+                JavaScript는 단일 스레드이지만 비동기 작업을 지원합니다.
+                콜백, Promise, async/await 세 가지 방식이 있습니다.
+            </p>
+
+            <div class="code-block">
+// 콜백 (Callback) - 콜백 지옥 문제
+setTimeout(() => {
+  console.log("1초 후");
+}, 1000);
+
+// Promise - 상태 관리
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => resolve("완료!"), 1000);
+});
+
+promise.then(result => console.log(result));
+
+// async/await - 동기처럼 작성
+async function fetchData() {
+  try {
+    const response = await fetch('https://api.example.com/data');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('에러:', error);
+  }
+}
+            </div>
+
+            <div class="async-example">
+                <h3>비동기 순서 시각화</h3>
+                <p>
+                    아래 코드를 실행하여 JavaScript의 이벤트 루프가 어떻게 작동하는지 확인해보세요.
+                    콜 스택, 마이크로태스크 큐, 태스크 큐의 순서를 이해하는 것이 중요합니다.
+                </p>
+
+                <div class="async-input">
+                    <div>
+                        <label for="async-code"><strong>실행할 코드:</strong></label>
+                        <textarea id="async-code">console.log("시작");
+
+setTimeout(() => {
+  console.log("setTimeout (1ms)");
+}, 1);
+
+Promise.resolve()
+  .then(() => {
+    console.log("Promise 1");
+  })
+  .then(() => {
+    console.log("Promise 2");
+  });
+
+console.log("끝");</textarea>
+                    </div>
+                    <div>
+                        <label><strong>실행 순서:</strong></label>
+                        <div class="async-output" id="async-output">
+                            여기에 실행 결과가 표시됩니다.
+                        </div>
+                    </div>
+                </div>
+
+                <button class="async-btn" onclick="runAsyncCode()">▶ 코드 실행</button>
+            </div>
+
+            <h2 class="section-title">3.4 ES6+ 주요 기능</h2>
+
+            <h3 style="color: #555; margin-top: 1.5rem;">Destructuring (구조 분해)</h3>
+            <div class="code-block">
+// 배열 구조 분해
+const [first, second, ...rest] = [1, 2, 3, 4, 5];
+
+// 객체 구조 분해
+const {name, age, city = "서울"} = {name: "김철수", age: 28};
+
+// 함수 매개변수 구조 분해
+const greet = ({name, age}) => {
+  console.log(`${name}은 ${age}세입니다.`);
+};
+            </div>
+
+            <h3 style="color: #555; margin-top: 1.5rem;">Spread Operator (스프레드 연산자)</h3>
+            <div class="code-block">
+// 배열 펼침
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1, 4, 5];  // [1, 2, 3, 4, 5]
+
+// 객체 펼침
+const obj1 = {a: 1, b: 2};
+const obj2 = {...obj1, c: 3};  // {a: 1, b: 2, c: 3}
+
+// 함수 인자 펼침
+const numbers = [1, 2, 3];
+Math.max(...numbers);  // 3
+            </div>
+
+            <h3 style="color: #555; margin-top: 1.5rem;">Template Literals (템플릿 리터럴)</h3>
+            <div class="code-block">
+const name = "김철수";
+const age = 28;
+
+// 백틱으로 감싸고 ${} 사용
+const message = `${name}은 ${age}세입니다.`;
+
+// 멀티라인 문자열
+const html = `
+  &lt;div&gt;
+    &lt;h1&gt;${name}&lt;/h1&gt;
+    &lt;p&gt;나이: ${age}&lt;/p&gt;
+  &lt;/div&gt;
+`;
+            </div>
+
+            <h2 class="section-title">3.5 프로토타입과 클래스</h2>
+            <p>
+                JavaScript의 모든 객체는 프로토타입을 통해 다른 객체를 상속받습니다.
+                ES6 클래스는 프로토타입 기반 상속을 더 쉽게 만들어줍니다.
+            </p>
+
+            <div class="code-block">
+// 프로토타입 기반 상속
+function Animal(name) {
+  this.name = name;
+}
+
+Animal.prototype.speak = function() {
+  console.log(`${this.name}이 울었습니다.`);
+};
+
+// ES6 클래스
+class Dog extends Animal {
+  constructor(name, breed) {
+    super(name);
+    this.breed = breed;
+  }
+
+  speak() {
+    console.log(`${this.name}이 멍멍 울었습니다.`);
+  }
+}
+
+const dog = new Dog("뽀삐", "골든 리트리버");
+dog.speak();  // "뽀삐이 멍멍 울었습니다."
+            </div>
+
+            <h2 class="section-title">인터랙티브: JavaScript REPL</h2>
+            <p>
+                아래 콘솔에서 JavaScript 코드를 실행해보세요.
+                Enter를 눌러 코드를 실행합니다.
+            </p>
+
+            <div class="repl-demo">
+                <div class="repl-container">
+                    <div class="repl-input-area">
+                        <span class="repl-prompt">></span>
+                        <input type="text" id="repl-input" class="repl-input" placeholder="JavaScript 코드를 입력하세요...">
+                    </div>
+                    <div class="repl-output" id="repl-output">
+                        <div class="repl-line repl-info-line">JavaScript REPL이 준비되었습니다. 코드를 입력하세요.</div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">3D 시각화: 이벤트 루프</h2>
+            <p>
+                JavaScript의 이벤트 루프를 3D로 시각화했습니다.
+                마우스로 드래그하여 회전시켜보세요.
+            </p>
+
+            <div id="three-d-container" class="three-d-container"></div>
+
+            <div class="nav-buttons">
+                <a href="02-css-layout.html" class="nav-btn prev">← 이전: CSS와 레이아웃</a>
+                <a href="04-dom-manipulation.html" class="nav-btn next">다음: DOM 조작 →</a>
+            </div>
+
+            <h2>📚 난이도별 학습</h2>
+            <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
+            <div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+            <div class="difficulty-content" data-level="easy">
+              <span class="difficulty-badge easy">🟢 쉬움</span>
+              <h3>🎯 딱 한 줄!</h3>
+              <p>JavaScript(JS)는 웹페이지에 <strong>움직임</strong>을 넣는 말이에요. 클릭하면 반응하고, 입력하면 계산하고! 🤖</p>
+              <h3>😎 왜 배워요?</h3>
+              <p>쇼핑몰 장바구니 합계 자동 계산, 로그인할 때 "이메일 형식이 틀렸어요" 알림, 지도에서 마커 끌어 옮기기… 이런 살아있는 동작은 거의 다 JS가 해요! 게다가 JS 하나로 웹, 서버(Node.js), 스마트폰 앱(React Native)까지 만들 수 있어요. 만능 재주꾼! 🛠️</p>
+              <div class="info-card">
+                <h4>🌱 이 말들만 알아두자</h4>
+                <ul>
+                  <li><strong>변수</strong>: 값을 담는 상자 (<code>let</code>·<code>const</code>) 📦</li>
+                  <li><strong>함수</strong>: 여러 번 다시 쓰는 코드 묶음</li>
+                  <li><strong>객체 / 배열</strong>: 여러 값을 한데 묶는 방법</li>
+                  <li><strong>이벤트</strong>: 클릭·키 입력 같은 사용자 신호 🔔</li>
+                  <li><strong>비동기</strong>: 오래 걸리는 일을 기다리지 않고 처리하기 ⏳</li>
+                </ul>
+              </div>
+              <h3>🤖 쉽게 풀어보기</h3>
+              <p>JS를 <strong>부엌 도우미 로봇</strong>이라고 생각해봐요!</p>
+              <ul>
+                <li>📦 <code>let 재료 = "양파"</code> → "재료 통에 양파를 담아둬"</li>
+                <li>📖 <code>function 썰기() {...}</code> → "썰기 매뉴얼"을 만들어두고, <code>썰기()</code>로 부를 때마다 재사용!</li>
+                <li>🗂️ 객체 = "양파 카드에 색=흰색, 매운맛=강함 적어둔 메모", 배열 = "양파 3개를 한 바구니에"</li>
+                <li>🔔 이벤트 = "주인이 종을 울리면(<code>click</code>) 약속한 일을 하기"</li>
+              </ul>
+              <p>제일 중요한 건 <strong>비동기</strong>! 라면 끓는 동안 멍 때리지 않고 도마를 정리하다가, 라면이 다 되면 알림 받고 처리하는 것과 똑같아요. 이게 바로 <code>async/await</code>예요. 🍜</p>
+              <div class="study-tip">
+                <strong>💡 꿀팁:</strong> 브라우저에서 <strong>F12 → Console</strong>에 코드를 직접 쳐보면 결과가 바로 나와요! 두꺼운 책 대신 작은 프로젝트(투두리스트, 계산기, 가위바위보)를 만들며 필요한 문법을 그때그때 검색하세요. ✂️
+              </div>
+              <h3>📝 오늘의 정리</h3>
+              <ul>
+                <li>기본은 <code>const</code>, 값을 바꿔야 할 때만 <code>let</code></li>
+                <li>함수는 변수에 담고 다른 함수에 넘길 수도 있어요 (일급 객체)</li>
+                <li>배열 도구 <code>map</code>·<code>filter</code>·<code>reduce</code>와 친해지기</li>
+                <li>이벤트 → 리스너 함수 → 상태 변경 → 화면 업데이트 흐름</li>
+                <li>비동기는 Promise·<code>async/await</code>로 깔끔하게!</li>
+              </ul>
+            </div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+                <p>JavaScript는 단일 스레드 이벤트 루프 기반 언어로, 콜 스택(Call Stack), 태스크 큐(Task Queue), 마이크로태스크 큐(Microtask Queue)가 협력해 비동기 작업을 처리합니다. <code>Promise.then</code>은 마이크로태스크로, <code>setTimeout</code>은 매크로태스크로 스케줄링되며 마이크로태스크가 항상 우선합니다. 클로저(Closure)는 함수가 선언될 당시의 렉시컬 환경을 기억하는 메커니즘으로 모듈 패턴, 메모이제이션, 커링의 토대가 됩니다. <code>this</code>는 호출 방식(메서드/함수/생성자/화살표)에 따라 결정되며, 화살표 함수는 자체 <code>this</code>가 없어 상위 스코프를 그대로 사용합니다. ES2015 이후 도입된 디스트럭처링·스프레드·템플릿 리터럴·옵셔널 체이닝·널리시 코얼레싱은 가독성을 크게 개선합니다.</p>
+                <h3>핵심 코드 패턴</h3>
+                <pre><code>// 디바운스: 입력 끝나고 N ms 후에만 실행
+function debounce(fn, wait = 300) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), wait);
+  };
+}
+
+// fetch + 에러 핸들링 + AbortController
+async function getJSON(url, signal) {
+  const res = await fetch(url, { signal });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}</code></pre>
+                <h3>대표 예제</h3>
+                <div class="info-card">
+                    <h4>💻 예제 1: 검색 자동완성</h4>
+                    <p>입력 이벤트에 디바운스를 걸고 AbortController로 이전 요청을 취소하면, 빠르게 타이핑해도 마지막 검색어만 서버에 도달합니다.</p>
+                </div>
+                <div class="info-card">
+                    <h4>💻 예제 2: 무한 스크롤</h4>
+                    <p><code>IntersectionObserver</code>로 마지막 카드가 화면에 보이는 순간을 감지해 다음 페이지를 로드하면, 스크롤 이벤트보다 훨씬 효율적입니다.</p>
+                </div>
+                <h3>실무 응용</h3>
+                <p>실무에서는 (1) <code>localStorage</code>·<code>IndexedDB</code>로 오프라인 캐시, (2) Web Worker로 무거운 계산을 메인 스레드에서 분리, (3) <code>structuredClone()</code>으로 깊은 복사를 안전하게 수행합니다. 대형 폼은 상태 머신(XState) 라이브러리로 모델링해 버그를 줄이는 추세입니다.</p>
+                <div class="warning-box">
+                    <strong>⚠️ 자주 하는 실수:</strong> <code>==</code> 대신 <code>===</code> 사용하기, 콜백 지옥 피하고 async/await 활용, 배열을 <code>forEach</code>로만 처리하지 말고 변환에는 <code>map</code> 사용, <code>this</code> 바인딩 문제는 화살표 함수로 해결.
+                </div>
+
+<h3>전문가 레벨</h3>
+                <p>V8 엔진은 인터프리터(Ignition)와 최적화 컴파일러(TurboFan, Maglev)로 코드를 실행하며, 모노모픽한 객체 형태(Hidden Class)를 유지할 때 가장 빠른 인라인 캐시를 사용합니다. 동일 객체에 동일 순서로 프로퍼티를 추가하고, 객체 형태를 도중에 바꾸지 않는 것이 성능에 유리합니다. 가비지 컬렉션은 세대별 마크-앤-스위프 방식으로, 짧게 사는 객체는 New Space에서, 오래 사는 객체는 Old Space에서 처리됩니다. 메모리 누수의 가장 흔한 원인은 분리된 DOM 노드를 클로저가 잡고 있는 경우와, 전역 이벤트 리스너 미해제입니다. <code>Proxy</code>·<code>Reflect</code>는 Vue·MobX 같은 반응성 시스템의 기반이며, <code>WeakMap</code>·<code>WeakRef</code>는 메모리 친화적 캐시 구현에 필수입니다. 또한 ES Modules의 정적 분석 가능 구조 덕분에 트리 셰이킹과 코드 스플리팅이 가능합니다.</p>
+                <h3>고급 패턴</h3>
+                <pre><code>// Proxy 기반 반응성 시스템 (Vue 3 핵심 아이디어 단순화)
+const targetMap = new WeakMap();
+let activeEffect = null;
+
+function reactive(obj) {
+  return new Proxy(obj, {
+    get(target, key) {
+      track(target, key);
+      const v = Reflect.get(target, key);
+      return typeof v === 'object' && v !== null ? reactive(v) : v;
+    },
+    set(target, key, value) {
+      const ok = Reflect.set(target, key, value);
+      trigger(target, key);
+      return ok;
+    }
+  });
+}
+function effect(fn) { activeEffect = fn; fn(); activeEffect = null; }
+function track(t, k) { /* deps 등록 */ }
+function trigger(t, k) { /* deps 실행 */ }</code></pre>
+                <h3>최신 트렌드</h3>
+                <p>(1) <strong>Signals</strong>(Solid·Preact·Angular): 더 세밀한 반응성으로 가상 DOM을 대체하려는 흐름, (2) <strong>Temporal API</strong>: <code>Date</code>를 대체할 표준 시간 API로 시간대·기간 처리가 단순해짐, (3) <strong>WebAssembly와의 결합</strong>: 무거운 연산을 Rust/Go로 작성해 JS와 통신하는 하이브리드 아키텍처가 확산.</p>
+                <h3>관련 분야</h3>
+                <ul>
+                    <li>컴파일러/번들러(Babel, SWC, esbuild) 내부</li>
+                    <li>런타임 최적화(V8, JavaScriptCore, SpiderMonkey)</li>
+                    <li>타입 시스템(TypeScript, Flow, hindley-milner 추론)</li>
+                </ul>
+                <h3>추가 자료</h3>
+                <ul>
+                    <li>📖 You Don't Know JS Yet (Kyle Simpson)</li>
+                    <li>📺 JSConf "What the heck is the event loop?" (Philip Roberts)</li>
+                    <li>🔬 V8 Blog — 엔진 최적화 사례</li>
+                </ul>
+                <div class="success-box">
+                    <strong>🎓 도전 과제:</strong> 100ms 안에 60fps로 동작하는 가상 스크롤 컴포넌트를 직접 구현해보세요. RequestAnimationFrame 스케줄링과 풀링 전략이 핵심입니다.
+                </div>
+</div>
+        
+<h2>🕹️ 직접 해보기 — 이벤트 루프 분류하기</h2>
+<p>이벤트 루프를 이루는 요소들을 역할별로 분류해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#0ea5e9","prompt":"이벤트 루프 구성요소를 역할별로 분류하세요","groups":[{"name":"비동기 큐","items":["마이크로태스크 큐","태스크 큐"]},{"name":"동기 실행","items":["콜 스택"]},{"name":"외부 처리","items":["Web APIs","setTimeout"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0ea5e9","questions":[{"q":"재할당이 불가능한 선언은?","choices":["var","let","const","function"],"answer":2},{"q":"JavaScript의 스레드 모델은?","choices":["단일 스레드","듀얼 스레드","멀티 스레드","무스레드"],"answer":0},{"q":"백틱과 ${}를 쓰는 문법은?","choices":["구조 분해","스프레드","화살표 함수","템플릿 리터럴"],"answer":3},{"q":"Promise.then이 들어가는 큐는?","choices":["콜 스택","마이크로태스크 큐","태스크 큐","렌더 큐"],"answer":1},{"q":"외부 함수의 변수를 기억하는 것은?","choices":["호이스팅","프로토타입","클로저","이벤트 루프"],"answer":2}]};</script>
+</main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // JavaScript REPL
+        const replInput = document.getElementById('repl-input');
+        const replOutput = document.getElementById('repl-output');
+        const outputLines = [];
+
+        function addOutput(text, type = 'output') {
+            const line = document.createElement('div');
+            line.className = `repl-line repl-${type}-line`;
+            line.textContent = text;
+            replOutput.appendChild(line);
+            replOutput.scrollTop = replOutput.scrollHeight;
+        }
+
+        replInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const code = replInput.value.trim();
+                if (code) {
+                    addOutput(`> ${code}`, 'output-line');
+
+                    try {
+                        const result = eval(code);
+                        if (result !== undefined) {
+                            addOutput(String(result), 'output');
+                        }
+                    } catch (error) {
+                        addOutput(`Error: ${error.message}`, 'error');
+                    }
+
+                    replInput.value = '';
+                }
+            }
+        });
+
+        // Async Example
+        function runAsyncCode() {
+            const asyncOutput = document.getElementById('async-output');
+            asyncOutput.innerHTML = '';
+
+            const logs = [];
+
+            // Intercept console.log
+            const originalLog = console.log;
+            console.log = function(...args) {
+                logs.push(args.join(' '));
+            };
+
+            try {
+                // 시뮬레이션된 실행
+                logs.push("시작");
+
+                // setTimeout 시뮬레이션
+                const timeoutLog = setTimeout(() => {
+                    logs.push("setTimeout (1ms)");
+                }, 0);
+
+                // Promise 시뮬레이션
+                Promise.resolve()
+                    .then(() => {
+                        logs.push("Promise 1");
+                    })
+                    .then(() => {
+                        logs.push("Promise 2");
+                    });
+
+                logs.push("끝");
+
+                // 실제 동작을 기다린 후 표시
+                setTimeout(() => {
+                    asyncOutput.innerHTML = '';
+                    logs.forEach((log) => {
+                        const div = document.createElement('div');
+                        div.style.color = '#333';
+                        div.textContent = log;
+                        asyncOutput.appendChild(div);
+                    });
+                    console.log = originalLog;
+                }, 100);
+            } catch (error) {
+                const div = document.createElement('div');
+                div.style.color = '#ff6b6b';
+                div.textContent = `Error: ${error.message}`;
+                asyncOutput.appendChild(div);
+                console.log = originalLog;
+            }
+        }
+
+        // Three.js Event Loop Visualization
+        function initEventLoopVisualization() {
+            const container = document.getElementById('three-d-container');
+            if (!container || typeof THREE === 'undefined') return;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            // Scene setup
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf0f2f5);
+
+            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            camera.position.set(0, 5, 15);
+
+            let renderer;
+            try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); } catch (e) { return; }
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+
+            // Create circular track
+            const track = [];
+            const positions = [
+                { pos: [-8, 0, 0], label: 'Call Stack', color: 0xff6b6b },
+                { pos: [0, 8, 0], label: 'Microtask Queue', color: 0x4ecdc4 },
+                { pos: [8, 0, 0], label: 'Task Queue', color: 0xffd93d },
+                { pos: [0, -8, 0], label: 'Web APIs', color: 0xa8edea },
+            ];
+
+            const boxes = [];
+            const labels = [];
+
+            positions.forEach((data) => {
+                // Create box
+                const geometry = new THREE.BoxGeometry(2.5, 2.5, 2.5);
+                const material = new THREE.MeshPhongMaterial({ color: data.color });
+                const mesh = new THREE.Mesh(geometry, material);
+                mesh.position.set(...data.pos);
+                mesh.userData = data;
+                scene.add(mesh);
+                boxes.push({ mesh, data });
+
+                track.push(data.pos);
+            });
+
+            // Create circular track line
+            const trackGeometry = new THREE.BufferGeometry();
+            const trackPoints = [];
+            for (let i = 0; i <= 100; i++) {
+                const angle = (i / 100) * Math.PI * 2;
+                const x = Math.cos(angle) * 10;
+                const y = Math.sin(angle) * 10;
+                trackPoints.push(new THREE.Vector3(x, y, 0));
+            }
+            trackGeometry.setFromPoints(trackPoints);
+            const trackLine = new THREE.Line(trackGeometry, new THREE.LineBasicMaterial({ color: 0xcccccc, linewidth: 2 }));
+            scene.add(trackLine);
+
+            // Lighting
+            const light1 = new THREE.DirectionalLight(0xffffff, 1);
+            light1.position.set(10, 10, 10);
+            scene.add(light1);
+
+            const light2 = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(light2);
+
+            // 본문 용어 라벨 (콜 스택·마이크로태스크 큐·태스크 큐·Web APIs·이벤트 루프)
+            const L1 = lbl('콜 스택 (Call Stack)', '#d94f4f'); L1.position.set(-8, 2.4, 0); L1.scale.multiplyScalar(2); scene.add(L1);
+            const L2 = lbl('마이크로태스크 큐', '#1fa89e'); L2.position.set(0, 10.4, 0); L2.scale.multiplyScalar(2); scene.add(L2);
+            const L3 = lbl('태스크 큐', '#b8940f'); L3.position.set(8, 2.4, 0); L3.scale.multiplyScalar(2); scene.add(L3);
+            const L4 = lbl('Web APIs', '#3d8f8a'); L4.position.set(0, -10.4, 0); L4.scale.multiplyScalar(2); scene.add(L4);
+            const L5 = lbl('이벤트 루프', '#7b5cff'); L5.position.set(0, 0, 0.5); L5.scale.multiplyScalar(2); scene.add(L5);
+
+            // 한국어 캡션 순환 (.interact-hint)
+            let hintEl = document.querySelector('.interact-hint');
+            if (!hintEl) { hintEl = document.createElement('span'); hintEl.className = 'interact-hint'; hintEl.style.cssText = 'display:inline-block;padding:4px 12px;margin:8px 0;border:1px solid rgba(123,92,255,0.35);border-radius:20px;font-size:0.85em;'; container.parentNode.insertBefore(hintEl, container); }
+            const caps = [
+                '⟳ 드래그로 회전 — 보라 구슬이 도는 고리가 이벤트 루프: 콜 스택이 비면 큐에서 작업을 꺼내 실행합니다.',
+                'Promise.then은 마이크로태스크 큐로, setTimeout은 태스크 큐로 — 마이크로태스크가 항상 우선합니다.',
+                'setTimeout·fetch는 Web APIs가 처리한 뒤 콜백을 큐에 넣습니다. JavaScript는 단일 스레드입니다.',
+                '그래서 실행 순서는 "시작 → 끝 → Promise 1 → Promise 2 → setTimeout" 순이 됩니다.'
+            ];
+            let capIdx = 0, capT = 0;
+            hintEl.textContent = caps[0];
+
+            // Animation particles moving around the loop
+            const particleGeometry = new THREE.SphereGeometry(0.3, 8, 8);
+            const particleMaterial = new THREE.MeshPhongMaterial({ color: 0x7b5cff });
+            const particles = [];
+
+            for (let i = 0; i < 3; i++) {
+                const particle = new THREE.Mesh(particleGeometry, particleMaterial.clone());
+                particle.userData.progress = i / 3;
+                particles.push(particle);
+                scene.add(particle);
+            }
+
+            // Mouse interaction
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+            let rotation = { x: 0, y: 0 };
+
+            renderer.domElement.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+
+            renderer.domElement.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const deltaX = e.clientX - previousMousePosition.x;
+                    const deltaY = e.clientY - previousMousePosition.y;
+                    rotation.y += deltaX * 0.01;
+                    rotation.x += deltaY * 0.01;
+                    previousMousePosition = { x: e.clientX, y: e.clientY };
+                }
+            });
+
+            renderer.domElement.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+
+            renderer.domElement.addEventListener('mouseleave', () => {
+                isDragging = false;
+            });
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                capT += 0.016;
+                if (capT > 4.5) { capT = 0; capIdx = (capIdx + 1) % caps.length; hintEl.textContent = caps[capIdx]; }
+
+                if (!isDragging) {
+                    rotation.y += 0.003;
+                }
+
+                scene.rotation.x = rotation.x;
+                scene.rotation.y = rotation.y;
+
+                // Animate particles moving around track
+                particles.forEach((particle, idx) => {
+                    const speed = 0.01 + idx * 0.001;
+                    particle.userData.progress += speed;
+                    if (particle.userData.progress > 1) {
+                        particle.userData.progress -= 1;
+                    }
+
+                    const angle = particle.userData.progress * Math.PI * 2;
+                    particle.position.x = Math.cos(angle) * 10;
+                    particle.position.y = Math.sin(angle) * 10;
+                    particle.position.z = 2;
+                });
+
+                // Rotate boxes
+                boxes.forEach((box) => {
+                    box.mesh.rotation.x += 0.005;
+                    box.mesh.rotation.y += 0.008;
+                });
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                const newWidth = container.clientWidth;
+                const newHeight = container.clientHeight;
+                camera.aspect = newWidth / newHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(newWidth, newHeight);
+            });
+        }
+
+        // Initialize when ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initEventLoopVisualization);
+        } else {
+            initEventLoopVisualization();
+        }
+    </script>
+</body>
+</html>

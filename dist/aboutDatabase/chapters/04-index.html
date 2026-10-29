@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4장. 인덱스와 최적화</title>
+<link rel="stylesheet" href="../styles.css">
+<script defer src="../toggle.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📖 표지 · 초록</a></li>
+    <li><a href="01-relational.html">1. 관계형 DB 기초</a></li>
+    <li><a href="02-sql.html">2. SQL 핵심</a></li>
+    <li><a href="03-normalization.html">3. 정규화</a></li>
+    <li><a href="04-index.html">4. 인덱스와 최적화</a></li>
+    <li><a href="05-transaction.html">5. 트랜잭션과 동시성</a></li>
+    <li><a href="06-nosql.html">6. NoSQL</a></li>
+    <li><a href="07-distributed.html">7. 분산 DB</a></li>
+    <li><a href="08-modeling.html">8. 데이터 모델링</a></li>
+    <li><a href="09-patterns.html">9. 실전 설계 패턴</a></li>
+  </ol>
+</aside>
+<main>
+
+<h1>4장. 인덱스와 최적화</h1>
+
+<section id="section-1">
+  <h2>1. 인덱스란?</h2>
+
+  <div class="easy-version">
+    <h4>쉬운 설명</h4>
+    <p>인덱스는 책의 목차나 색인과 같습니다. 전체 페이지를 하나하나 넘기지 않고, 원하는 내용을 바로 찾을 수 있게 해줍니다.</p>
+    <p>예를 들어, 1000명의 학생 정보에서 "이름이 김철수인 학생"을 찾을 때:</p>
+    <ul>
+      <li><strong>인덱스 없음:</strong> 1000명을 처음부터 끝까지 하나씩 확인 → 평균 500번</li>
+      <li><strong>인덱스 있음:</strong> 알파벳 목차로 "김"을 찾으면 → 약 10번</li>
+    </ul>
+  </div>
+
+  <div class="paper-version">
+    <h4>논문 수준 설명</h4>
+    <p><strong>정의:</strong> 인덱스(Index)는 데이터 테이블의 특정 컬럼에 대해 별도의 데이터 구조(주로 B-Tree)를 유지하여 검색 성능을 개선하는 메커니즘입니다.</p>
+    <p><strong>시간복잡도:</strong></p>
+    <ul>
+      <li>Full Scan: O(n) - n은 테이블의 행 수</li>
+      <li>B-Tree 인덱스: O(log n)</li>
+    </ul>
+    <p><strong>비용:</strong> 인덱스 유지에 따른 쓰기 작업 오버헤드, 저장 공간 증가</p>
+  </div>
+</section>
+
+<section id="section-2">
+  <h2>2. B-Tree와 B+Tree</h2>
+
+  <div class="easy-version">
+    <h4>쉬운 설명</h4>
+    <p>B-Tree는 도서관의 분류 체계와 같습니다:</p>
+    <ul>
+      <li><strong>1층:</strong> 큰 카테고리 (문학, 과학, 역사...)</li>
+      <li><strong>2층:</strong> 작은 카테고리 (한국 문학, 외국 문학...)</li>
+      <li><strong>3층:</strong> 원하는 책을 찾음</li>
+    </ul>
+    <p>B+Tree는 B-Tree의 개선판으로, 리프 노드들이 서로 연결되어 있어서 범위 검색이 더 빠릅니다.</p>
+  </div>
+
+  <div class="paper-version">
+    <h4>논문 수준 설명</h4>
+    <p><strong>B-Tree 특성:</strong></p>
+    <ul>
+      <li>차수(Order) m인 B-Tree는 최대 m개의 자식을 가짐</li>
+      <li>모든 리프 노드는 같은 깊이(균형 유지)</li>
+      <li>삽입/삭제 시 분할(split)과 병합(merge) 연산 수행</li>
+    </ul>
+    <p><strong>B+Tree vs B-Tree:</strong> B+Tree는 내부 노드에 데이터를 저장하지 않고 인덱스만 저장, 리프 노드에만 실제 데이터 저장. 리프 노드를 연결 리스트로 연결하여 범위 검색 시 O(log n) 후 선형 순회.</p>
+  </div>
+</section>
+
+<section id="section-3">
+  <h2>3. 쿼리 실행 계획(EXPLAIN)</h2>
+
+  <div class="easy-version">
+    <h4>쉬운 설명</h4>
+    <p>내비게이션이 목적지로 가는 최적 경로를 미리 알려주듯이, 데이터베이스도 SQL 쿼리를 실행하기 전에 최적 경로를 계획합니다.</p>
+    <p>이 계획을 확인하려면 SQL 앞에 EXPLAIN을 붙입니다:</p>
+    <code>EXPLAIN SELECT * FROM users WHERE age > 30;</code>
+    <p>이 명령은 DB가 어떤 경로로 데이터를 찾을 것인지 보여줍니다.</p>
+  </div>
+
+  <div class="paper-version">
+    <h4>논문 수준 설명</h4>
+    <p><strong>쿼리 옵티마이저:</strong> 가능한 모든 실행 계획의 비용을 추정하고 최소 비용 계획을 선택합니다.</p>
+    <p><strong>비용 기반 최적화(Cost-Based Optimization):</strong></p>
+    <ul>
+      <li>Full Scan: I/O 비용 = 전체 페이지 수</li>
+      <li>Index Scan: I/O 비용 = 인덱스 높이 + 결과 페이지 수</li>
+      <li>Index Seek: 가장 효율적 (인덱스로 범위를 좁힌 후 검색)</li>
+    </ul>
+    <p><strong>통계 정보:</strong> 카디널리티(Cardinality), 페이지 수, 히스토그램을 기반으로 계산</p>
+  </div>
+</section>
+
+<section id="section-4">
+  <h2>4. 인덱스 설계 전략</h2>
+
+  <div class="easy-version">
+    <h4>쉬운 설명</h4>
+    <p>어디에 인덱스를 걸어야 빨리 찾을 수 있을까?</p>
+    <ul>
+      <li><strong>WHERE 절:</strong> 가장 자주 검색하는 컬럼</li>
+      <li><strong>JOIN 절:</strong> 두 테이블을 연결하는 컬럼</li>
+      <li><strong>ORDER BY 절:</strong> 정렬하는 컬럼</li>
+    </ul>
+    <p>예: "users 테이블에서 나이 > 30인 사람을 찾는다" → age 컬럼에 인덱스!</p>
+  </div>
+
+  <div class="paper-version">
+    <h4>논문 수준 설명</h4>
+    <p><strong>복합 인덱스(Composite Index):</strong> 여러 컬럼을 함께 인덱싱. 순서가 중요 (WHERE a AND b vs WHERE b AND a에서 성능 차이)</p>
+    <p><strong>커버링 인덱스(Covering Index):</strong> 인덱스만으로 쿼리가 완성되어 테이블 접근이 불필요</p>
+    <p><strong>선택도(Selectivity):</strong> 컬럼의 고유값 비율. 선택도가 높을수록 인덱싱 효과 큼</p>
+    <p><strong>카디널리티(Cardinality):</strong> 컬럼의 서로 다른 값의 개수. 낮은 카디널리티(성별 등)는 인덱싱 효율 낮음</p>
+  </div>
+</section>
+
+<div class="threejs-container" id="btree-3d">
+  <div class="threejs-label">3D · B-TREE INDEX 시각화</div>
+  <div id="canvas-container" style="width:100%;height:600px;background:#f5f5f5;border-radius:8px;position:relative;"></div>
+  <div class="threejs-controls" style="margin-top:12px;display:flex;gap:8px;justify-content:center;">
+    <button onclick="searchBTree(15)" style="padding:8px 12px;background:#7b5cff;color:#fff;border:none;border-radius:6px;cursor:pointer;">검색: 15</button>
+    <button onclick="searchBTree(42)" style="padding:8px 12px;background:#7b5cff;color:#fff;border:none;border-radius:6px;cursor:pointer;">검색: 42</button>
+    <button onclick="searchBTree(78)" style="padding:8px 12px;background:#7b5cff;color:#fff;border:none;border-radius:6px;cursor:pointer;">검색: 78</button>
+    <button onclick="resetBTree()" style="padding:8px 12px;background:#999;color:#fff;border:none;border-radius:6px;cursor:pointer;">초기화</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  let scene, camera, renderer, btreeGroup, searchPath = [];
+
+  function initScene() {
+    const container = document.getElementById('canvas-container');
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xf5f5f5);
+
+    camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.z = 15;
+
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.shadowMap.enabled = true;
+    container.appendChild(renderer.domElement);
+
+    // Lighting
+    const light1 = new THREE.DirectionalLight(0xffffff, 0.8);
+    light1.position.set(10, 10, 10);
+    light1.castShadow = true;
+    scene.add(light1);
+
+    const light2 = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(light2);
+
+    btreeGroup = new THREE.Group();
+    scene.add(btreeGroup);
+
+    createBTree();
+    animate();
+  }
+
+  function createBTree() {
+    btreeGroup.clear();
+
+    // Root node
+    const rootBox = createNode(0, 6, 0, [30, 50]);
+    btreeGroup.add(rootBox);
+
+    // Level 2 nodes
+    for (let i = 0; i < 3; i++) {
+      const x = -6 + i * 6;
+      const y = 2;
+      const nodeBox = createNode(x, y, 0, [15 + i*10, 35 + i*10, 60 + i*10]);
+      btreeGroup.add(nodeBox);
+
+      // Connect to root
+      drawLine(0, 6, 0, x, y, 0);
+    }
+
+    // Level 3 (leaf nodes)
+    const leafPositions = [
+      [-8, -2, 0, [10, 20]],
+      [-4, -2, 0, [25, 35]],
+      [0, -2, 0, [42, 55, 70]],
+      [4, -2, 0, [78, 85, 92]],
+      [8, -2, 0, [100, 110]]
+    ];
+
+    leafPositions.forEach(([x, y, z, values]) => {
+      const leafBox = createNode(x, y, z, values);
+      btreeGroup.add(leafBox);
+    });
+  }
+
+  function createNode(x, y, z, values) {
+    const group = new THREE.Group();
+
+    const geometry = new THREE.BoxGeometry(2.5, 1.2, 0.5);
+    const material = new THREE.MeshPhongMaterial({ color: 0x7b5cff });
+    const box = new THREE.Mesh(geometry, material);
+    box.position.set(x, y, z);
+    box.castShadow = true;
+    box.userData = { values: values, x: x, y: y, z: z };
+    group.add(box);
+
+    // Label
+    const canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 128;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 20px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(values.join(', '), 128, 64);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    const labelGeom = new THREE.PlaneGeometry(2.4, 1.1);
+    const labelMat = new THREE.MeshBasicMaterial({ map: texture });
+    const labelMesh = new THREE.Mesh(labelGeom, labelMat);
+    labelMesh.position.z = 0.3;
+    group.add(labelMesh);
+
+    return group;
+  }
+
+  function drawLine(x1, y1, z1, x2, y2, z2) {
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array([x1, y1, z1, x2, y2, z2]);
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    const material = new THREE.LineBasicMaterial({ color: 0xcccccc, linewidth: 2 });
+    const line = new THREE.Line(geometry, material);
+    btreeGroup.add(line);
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+  }
+
+  window.searchBTree = function(value) {
+    resetBTree();
+
+    // Reset colors
+    btreeGroup.children.forEach(child => {
+      if (child.children[0] && child.children[0].material) {
+        child.children[0].material.color.set(0x7b5cff);
+      }
+    });
+
+    // Simulate search path
+    const path = findSearchPath(value);
+
+    // Highlight path
+    let delay = 0;
+    path.forEach(node => {
+      setTimeout(() => {
+        if (node.children[0] && node.children[0].material) {
+          node.children[0].material.color.set(0x00d4ff);
+        }
+      }, delay);
+      delay += 300;
+    });
+  };
+
+  function findSearchPath(value) {
+    const path = [];
+    btreeGroup.children.forEach(child => {
+      if (child.userData && child.userData.values) {
+        const values = child.userData.values;
+        if (values.includes(value) ||
+            (value >= Math.min(...values) && value <= Math.max(...values))) {
+          path.push(child);
+        }
+      }
+    });
+    return path;
+  }
+
+  window.resetBTree = function() {
+    btreeGroup.children.forEach(child => {
+      if (child.children[0] && child.children[0].material) {
+        child.children[0].material.color.set(0x7b5cff);
+      }
+    });
+  };
+
+  window.addEventListener('load', initScene);
+})();
+</script>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--rule);">
+  <a href="03-normalization.html" style="text-decoration:none;">← 정규화</a>
+  <a href="05-transaction.html" style="text-decoration:none;">트랜잭션과 동시성 →</a>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎮 한 줄로 말하면?</h3>
+  <p>인덱스는 <strong>책 뒤에 있는 '찾아보기(색인)'처럼, 원하는 데이터를 순식간에 찾게 해주는 정렬된 목록</strong>이에요! 🔍</p>
+
+  <h3>🤔 이게 왜 중요할까?</h3>
+  <p>인덱스 없는 DB는 매번 첫 장부터 끝까지 넘기는 책이랑 같아요. 😮‍💨</p>
+  <ul>
+    <li>⚡ 회원 100만 명 중 이메일 하나 찾기: 인덱스가 있으면 0.001초, 없으면 5초!</li>
+    <li>🐢 대신 인덱스가 너무 많으면 저장(쓰기)이 느려져요.</li>
+    <li>🔎 검색·정렬·연결(조인) 전부 인덱스 영향을 받아요.</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 꼭 기억할 낱말</h4>
+    <ul>
+      <li><strong>인덱스(Index)</strong>: 검색을 빠르게 해주는 정렬된 자료구조. 📇</li>
+      <li><strong>풀스캔(Full Scan)</strong>: 인덱스 없이 모든 줄을 다 훑기. 🐌</li>
+      <li><strong>유니크 인덱스</strong>: 중복 값을 막아주는 인덱스.</li>
+      <li><strong>복합 인덱스</strong>: 두 개 이상 칸을 묶은 인덱스.</li>
+      <li><strong>실행계획(EXPLAIN)</strong>: DB가 어떻게 처리할지 알려주는 설명서. 📋</li>
+    </ul>
+  </div>
+
+  <h3>📖 책 찾아보기로 쉽게!</h3>
+  <p>두꺼운 책에서 "데이터베이스"라는 단어를 찾는다고 해봐요.</p>
+  <p>찾아보기(색인)가 있으면? 👉 알파벳 순서로 D를 찾아 페이지 번호를 보고, 바로 그 쪽으로 펼치면 끝! 색인이 없으면? 😱 첫 장부터 끝까지 다 읽어야 해요.</p>
+  <p>인덱스가 바로 이 색인이에요. 보통 <strong>B-트리</strong>라는 균형 잡힌 구조로 만들어져서, 데이터가 100만 건이든 1억 건이든 <strong>몇 단계만</strong> 내려가면 찾아내요! 진짜 빠르죠? 🚀</p>
+  <p>하지만 색인을 만들면 종이가 더 드는 것처럼, 인덱스도 공간을 쓰고 데이터를 바꿀 때마다 같이 고쳐야 해요. 그래서 <strong>아무 데나 다 만들면 안 되고</strong>, 자주 찾는 칸에만 신중히 만들어요. 기본키, 외래키, 자주 검색하는 칸, 정렬 기준 칸이 좋은 후보예요! 👍</p>
+
+  <div class="study-tip">
+    <strong>💡 학습 TIP:</strong> EXPLAIN 명령을 매일 한 번씩 써 보세요. 처음엔 어려워 보여도 "인덱스를 탔나? 풀스캔인가?" 이 두 가지만 구별해도 큰 발전이에요! 🎯
+  </div>
+
+  <h3>✅ 오늘의 정리</h3>
+  <ul>
+    <li>📇 인덱스는 책의 색인 같은 자료구조예요.</li>
+    <li>🌳 대부분 B-트리로 만들어져서 아주 빨라요.</li>
+    <li>⚡ 읽기는 빨라지지만 쓰기는 살짝 느려져요.</li>
+    <li>🙅 모든 칸에 만들 필요는 없어요.</li>
+    <li>📋 EXPLAIN으로 인덱스 사용 여부를 확인해요.</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>인덱스는 검색 시간복잡도를 O(N)에서 O(log N)으로 낮춥니다. B-트리(B+ 트리)는 디스크 I/O 친화적인 다진 균형 트리이며, 노드 한 개가 페이지(보통 16KB) 크기와 일치합니다. PostgreSQL은 B-트리, GIN, GiST, BRIN, Hash 등 다양한 인덱스를 제공합니다. 인덱스를 타려면 SARGable한 조건이어야 하며, WHERE 절에 함수가 씌워지거나 형변환이 발생하면 인덱스가 무력화됩니다. 복합 인덱스의 컬럼 순서는 매우 중요해서, 가장 선택도가 높은(distinct 값이 많은) 컬럼이 앞에 와야 효과적입니다. 다만 등호 조건과 범위 조건이 섞이면 등호→범위 순서가 일반적인 권장입니다. 커버링 인덱스(Covering Index)는 SELECT 절의 모든 컬럼을 포함해 테이블 접근을 생략하게 해 주는 최적화입니다. 부분 인덱스(Partial Index)는 WHERE 조건을 만족하는 행만 인덱싱해 크기와 비용을 줄입니다.</p>
+
+  <h3>실전 SQL/쿼리</h3>
+  <pre><code>-- 단일 인덱스
+CREATE INDEX idx_member_email ON member (email);
+
+-- 복합 인덱스 (선택도 높은 컬럼 앞에)
+CREATE INDEX idx_orders_member_date ON orders (member_id, created_at DESC);
+
+-- 커버링 인덱스 (PostgreSQL INCLUDE)
+CREATE INDEX idx_orders_cover
+  ON orders (member_id)
+  INCLUDE (order_id, amount, created_at);
+
+-- 부분 인덱스: 활성 회원만
+CREATE INDEX idx_member_active_email
+  ON member (email)
+  WHERE  status = 'ACTIVE';
+
+-- 실행계획 확인
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT order_id, amount FROM orders
+WHERE  member_id = 1001
+ORDER  BY created_at DESC
+LIMIT  10;</code></pre>
+
+  <h3>예제</h3>
+  <div class="info-card">
+    <h4>💻 예제 1: 로그인 조회 최적화</h4>
+    <p>이메일과 비밀번호 해시로 로그인하는 시스템에서, email 컬럼에 유니크 인덱스를 두면 로그인 응답이 1ms 이하로 빨라집니다. 동시에 중복 가입을 막는 효과도 있습니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>💻 예제 2: 페이지네이션</h4>
+    <p>OFFSET 100000 같은 큰 오프셋은 인덱스를 타도 느립니다. 마지막 본 created_at 값을 기준으로 WHERE created_at < ? ORDER BY created_at DESC LIMIT 20 형태의 키셋 페이지네이션을 쓰면 일정한 응답 시간을 보장합니다.</p>
+  </div>
+
+  <h3>실무 응용</h3>
+  <p>대형 커머스의 검색 화면은 인덱스 외에 Elasticsearch 같은 역색인 검색엔진을 별도로 운영합니다. 또한 시계열 로그 시스템은 BRIN 인덱스로 대용량 데이터의 범위 조회를 효율화하며, 지리 공간 데이터는 GiST/SP-GiST로 KNN(가장 가까운 N개) 질의를 지원합니다. 인덱스 튜닝은 슬로우 쿼리 로그 → 실행계획 분석 → 인덱스 추가/조정 사이클로 진행됩니다.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ 자주 하는 실수:</strong> 모든 컬럼에 인덱스를 만들면 INSERT/UPDATE가 급격히 느려집니다. 또 LIKE '%abc%'처럼 앞쪽 와일드카드는 인덱스를 못 탑니다. 이런 경우엔 trigram 인덱스나 검색엔진을 검토해야 합니다.
+  </div>
+
+<h3>전문가 레벨</h3>
+  <p>인덱스 내부는 B+ 트리, LSM 트리, R-트리, 비트맵, 해시 등 다양한 자료구조로 구현됩니다. InnoDB는 클러스터드 인덱스(테이블 자체가 PK 순서대로 정렬)와 세컨더리 인덱스(PK를 가리키는 포인터)로 나뉘며, 따라서 PK 길이가 길수록 모든 인덱스가 함께 비대해집니다. PostgreSQL은 힙 + 보조 인덱스 구조로 PK도 별도 인덱스이며, HOT(Heap-Only Tuples) 업데이트로 인덱스 갱신을 줄입니다. LSM 트리(RocksDB, Cassandra)는 쓰기를 메모리 메모테이블에 모아 SSTable로 컴팩션하는 방식으로 쓰기 처리량을 극대화합니다. 옵티마이저는 비용 모델로 인덱스 스캔, 비트맵 인덱스 스캔, 인덱스 온리 스캔, 시퀀셜 스캔을 비교합니다. 카디널리티 추정 오류로 옵티마이저가 풀스캔을 잘못 선택하면 통계를 ANALYZE로 갱신하거나 확장 통계(extended statistics)로 컬럼 간 상관관계를 학습시켜야 합니다. 함수 인덱스, 표현식 인덱스, 다중 컬럼 GIN, 트리그램 GIN(pg_trgm)은 풀텍스트와 LIKE 검색을 가속합니다. 또한 Z-ordering, BRIN min/max 인덱스, Bloom 필터 인덱스는 데이터 레이크하우스 환경에서 핵심 최적화 도구입니다.</p>
+
+  <h3>고급 패턴</h3>
+  <pre><code>-- 표현식 인덱스: 대소문자 무시 검색
+CREATE INDEX idx_member_email_lower
+  ON member (LOWER(email));
+
+-- pg_trgm 트리그램 인덱스: 부분 문자열 검색 가속
+CREATE EXTENSION pg_trgm;
+CREATE INDEX idx_product_name_trgm
+  ON product USING GIN (name gin_trgm_ops);
+
+-- 인덱스 사용 강제 비교 (PostgreSQL)
+SET enable_seqscan = off;
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT * FROM orders WHERE member_id = 1001;
+SET enable_seqscan = on;
+
+-- 인덱스 사용 통계 모니터링
+SELECT relname, indexrelname, idx_scan, idx_tup_read
+FROM   pg_stat_user_indexes
+ORDER  BY idx_scan ASC;  -- 사용 안 되는 인덱스 발굴</code></pre>
+
+  <h3>최신 동향</h3>
+  <p>벡터 인덱스(HNSW, IVF, ScaNN)는 임베딩 기반 유사도 검색의 핵심으로, pgvector·Milvus·Weaviate가 대표 구현입니다. 또한 Apache Iceberg와 Delta Lake는 통계 기반 파일 프루닝과 Z-order 정렬로 페타바이트 규모의 분석 쿼리를 가속합니다. AI 옵티마이저(예: 쿼리 실행계획에 ML을 적용한 Bao, Neo)도 학계와 산업계의 활발한 연구 영역입니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li>분산 인덱스: Elasticsearch의 샤드 라우팅과 역색인.</li>
+    <li>벡터 검색: HNSW 그래프 구조와 PQ(Product Quantization).</li>
+    <li>스토리지 엔진: B+ 트리 vs LSM 트리 트레이드오프.</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>"Use The Index, Luke!" — Markus Winand.</li>
+    <li>"Database Internals" Part I — Alex Petrov.</li>
+    <li>PostgreSQL의 Index Types 공식 문서.</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>🎓 도전 과제:</strong> 1억 행 주문 테이블에 대해 (member_id, created_at) 복합 인덱스, 동일 컬럼의 BRIN 인덱스, 부분 인덱스 세 가지를 만들어 동일 쿼리의 실행계획과 I/O 통계를 비교하고, 운영 환경 적합성을 정리해 보세요.
+  </div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 인덱스 용어 상황 판단</h2>
+<p>인덱스 핵심 용어와 설명을 보고 알맞은 답을 고르세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0d6efd","prompt":"용어와 설명을 짝지으세요","pairs":[{"term":"인덱스","def":"검색을 빠르게 하는 정렬된 자료구조"},{"term":"풀스캔","def":"인덱스 없이 모든 행을 훑음"},{"term":"유니크 인덱스","def":"중복 값을 막는 인덱스"},{"term":"복합 인덱스","def":"두 개 이상 컬럼을 묶은 인덱스"},{"term":"EXPLAIN","def":"쿼리 처리 방식을 보여줌"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d6efd","questions":[{"q":"인덱스를 책에 비유하면?","choices":["표지","색인","본문","부록"],"answer":1},{"q":"쿼리 실행 계획을 확인하는 명령은?","choices":["SHOW","DESCRIBE","EXPLAIN","COMMIT"],"answer":2},{"q":"인덱스의 대표적인 단점은?","choices":["읽기 느려짐","보안 약화","조회 불가","쓰기 느려짐"],"answer":3},{"q":"B-Tree 인덱스의 검색 시간복잡도는?","choices":["O(log n)","O(n)","O(1)","O(n²)"],"answer":0},{"q":"인덱스만으로 쿼리가 완성되는 인덱스는?","choices":["유니크 인덱스","커버링 인덱스","부분 인덱스","해시 인덱스"],"answer":1}]};</script>
+</main>
+</div>
+</body>
+</html>

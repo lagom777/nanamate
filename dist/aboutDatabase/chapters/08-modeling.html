@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8장. 데이터 모델링</title>
+<link rel="stylesheet" href="../styles.css">
+<script defer src="../toggle.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📖 표지 · 초록</a></li>
+    <li><a href="01-relational.html">1. 관계형 DB 기초</a></li>
+    <li><a href="02-sql.html">2. SQL 핵심</a></li>
+    <li><a href="03-normalization.html">3. 정규화</a></li>
+    <li><a href="04-index.html">4. 인덱스와 최적화</a></li>
+    <li><a href="05-transaction.html">5. 트랜잭션과 동시성</a></li>
+    <li><a href="06-nosql.html">6. NoSQL</a></li>
+    <li><a href="07-distributed.html">7. 분산 DB</a></li>
+    <li><a href="08-modeling.html">8. 데이터 모델링</a></li>
+    <li><a href="09-patterns.html">9. 실전 설계 패턴</a></li>
+  </ol>
+</aside>
+<main>
+<h1>8장. 데이터 모델링</h1>
+
+<section class="content-section">
+<h2>1. 데이터 모델링이란?</h2>
+
+<div class="easy-version">
+<h4>쉬운 설명</h4>
+<p>건축가가 건물을 짓기 전에 설계도를 그리듯이, 데이터베이스를 만들기 전에 먼저 구조를 그리는 과정입니다.</p>
+<p><strong>순서:</strong> 생각 → 종이에 그리기 → 테이블 생성 → 데이터 입력</p>
+<p><strong>왜 필요한가?</strong> 설계도 없이 지으면 나중에 고치기 비쌉니다. DB도 마찬가지입니다.</p>
+<p><strong>예:</strong> 온라인 쇼핑몰을 만들려면, 고객 정보, 상품, 주문, 배송 정보 등을 어떻게 저장할지 미리 정합니다.</p>
+</div>
+
+<div class="paper-version">
+<h4>학술 설명</h4>
+<p><strong>데이터 모델링의 3단계:</strong></p>
+<ul>
+  <li><strong>개념적 모델링:</strong> 비즈니스 요구사항 분석. 엔티티, 속성, 관계 추출.</li>
+  <li><strong>논리적 모델링:</strong> DBMS 독립적인 구조 설계. ER 다이어그램, 정규화 적용.</li>
+  <li><strong>물리적 모델링:</strong> 실제 DBMS에 맞게 구현. 인덱스, 파티셔닝, 저장 공간 고려.</li>
+</ul>
+<p><strong>핵심 산출물:</strong> ER 다이어그램, 정규화된 스키마, 물리적 설계 문서</p>
+<p><strong>표준:</strong> IDEF1X, UML, Crow's Foot 표기법</p>
+</div>
+</section>
+
+<!-- 3D 학습 시각화: ER → 스키마 변환 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 데이터 모델링: ER이 테이블이 되는 규칙</div>
+  <div id="db3d-08" style="width:100%;height:430px;"></div>
+  <div id="db3d-08-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">엔티티·관계가 기계적으로 테이블·FK로 변환됩니다.</div>
+</div>
+
+
+<section class="content-section">
+<h2>2. ER 다이어그램</h2>
+
+<div class="easy-version">
+<h4>쉬운 설명</h4>
+<p>데이터의 구조를 그림으로 표현하는 방법입니다.</p>
+<p><strong>기본 요소:</strong></p>
+<ul>
+  <li><strong>네모(엔티티):</strong> 사람, 상품, 주문 등 데이터의 대상</li>
+  <li><strong>다이아몬드(관계):</strong> 두 엔티티 간의 관계. "구매한다", "소속된다" 등</li>
+  <li><strong>선:</strong> 엔티티와 관계를 연결</li>
+</ul>
+<p><strong>예:</strong> 고객이 상품을 구매하면, 고객 엔티티에서 구매라는 다이아몬드를 거쳐 상품 엔티티로 연결됩니다.</p>
+<p><strong>카디널리티:</strong> 1명의 고객이 여러 상품을 살 수 있다. (1:N 관계)</p>
+</div>
+
+<div class="paper-version">
+<h4>학술 설명</h4>
+<p><strong>ER 모델의 구성요소:</strong></p>
+<ul>
+  <li><strong>엔티티(Entity):</strong> 데이터의 단위. 약한 엔티티(Weak Entity)는 부모 엔티티에 존재 의존.</li>
+  <li><strong>속성(Attribute):</strong> 엔티티의 특성. 단순/복합, 저장/유도 속성.</li>
+  <li><strong>관계(Relationship):</strong> 엔티티 간의 연관. 재귀 관계, 다항 관계 가능.</li>
+</ul>
+<p><strong>표기법:</strong></p>
+<ul>
+  <li><strong>Chen 표기법:</strong> 원, 다이아몬드, 선으로 표현. 학술용.</li>
+  <li><strong>Crow's Foot:</strong> 까마귀 발처럼 그림. 실무 표준.</li>
+</ul>
+<p><strong>카디널리티(Cardinality):</strong> 1:1, 1:N, M:N. 최소/최대 카디널리티 지정.</p>
+<p><strong>참여 제약(Participation Constraint):</strong> 전체 vs 부분 참여</p>
+</div>
+</section>
+
+<section class="content-section">
+<h2>3. 스키마 설계 원칙</h2>
+
+<div class="easy-version">
+<h4>쉬운 설명</h4>
+<p>좋은 테이블을 만들기 위한 5가지 규칙:</p>
+<ol>
+  <li><strong>중복 최소화:</strong> 같은 데이터를 여러 곳에 저장하지 않기</li>
+  <li><strong>명확한 이름:</strong> "name"보다 "customer_name", "product_name" 처럼 구체적으로</li>
+  <li><strong>적절한 타입:</strong> 나이는 INTEGER, 설명은 TEXT, 가격은 DECIMAL</li>
+  <li><strong>NULL 관리:</strong> NULL이 꼭 필요한 경우에만 허용. 기본값 설정</li>
+  <li><strong>관계 명시:</strong> 어떤 테이블이 어떤 테이블과 관련되는지 FK로 명시</li>
+</ol>
+<p><strong>효과:</strong> 이 규칙을 따르면 데이터 오류가 줄고, 쿼리가 빨라집니다.</p>
+</div>
+
+<div class="paper-version">
+<h4>학술 설명</h4>
+<p><strong>정규화 기반 설계:</strong> 1NF → 2NF → 3NF → BCNF로 단계적 정규화</p>
+<p><strong>반정규화(Denormalization):</strong> 성능을 위해 의도적으로 정규화 규칙 완화</p>
+<ul>
+  <li>계산된 속성 저장 (합, 평균)</li>
+  <li>중복된 속성 추가 (빈번한 조인 회피)</li>
+  <li>컬럼 분할/통합</li>
+</ul>
+<p><strong>물리 설계 고려사항:</strong></p>
+<ul>
+  <li>인덱스 전략: 조회가 많은 컬럼에 인덱스</li>
+  <li>파티셔닝: 대용량 테이블을 범위/해시로 분할</li>
+  <li>저장 포맷: ROW vs COLUMN 스토리지</li>
+</ul>
+</div>
+</section>
+
+<section class="content-section">
+<h2>4. 실무 모델링 프로세스</h2>
+
+<div class="easy-version">
+<h4>쉬운 설명</h4>
+<p><strong>4단계 프로세스:</strong></p>
+<ol>
+  <li><strong>요구사항 수집:</strong> "우리는 뭘 저장해야 할까?" 고객, 상품, 주문...</li>
+  <li><strong>ER 다이어그램 작성:</strong> 위의 2번 섹션처럼 그리기</li>
+  <li><strong>테이블 생성:</strong> CREATE TABLE 쿼리로 실제 테이블 만들기</li>
+  <li><strong>검증:</strong> 정말 필요한 데이터를 모두 저장할 수 있는가? 테스트.</li>
+</ol>
+<p><strong>팁:</strong> 처음엔 최대한 정규화하고, 나중에 성능 이유로 반정규화합니다.</p>
+</div>
+
+<div class="paper-version">
+<h4>학술 설명</h4>
+<p><strong>상세 모델링 프로세스:</strong></p>
+<ol>
+  <li><strong>요구사항 분석:</strong> 비즈니스 프로세스 이해, 데이터 플로우 분석</li>
+  <li><strong>도메인 분석:</strong> 각 도메인(고객, 상품 등)의 속성, 제약 조건 파악</li>
+  <li><strong>개념 모델링:</strong> 고수준 ER 다이어그램</li>
+  <li><strong>비즈니스 규칙 매핑:</strong> "고객은 최대 1명의 판매 담당자를 가진다" 등</li>
+  <li><strong>논리 모델링:</strong> 정규화, 테이블 추출, 속성 정의</li>
+  <li><strong>물리 설계:</strong> 인덱스, 파티셔닝, 뷰, 저장 프로시저</li>
+</ol>
+<p><strong>검증 방법:</strong> 데이터 업데이트 이상(Anomaly) 검사, 쿼리 성능 테스트</p>
+</div>
+</section>
+
+<section class="content-section">
+<h2>ER 다이어그램 예시: E-Commerce</h2>
+
+<div class="interactive-demo">
+  <h4>📐 E-Commerce ER 다이어그램</h4>
+  <div class="schema-diagram">
+    <div class="db-table-card" style="left: 20px; top: 20px;">
+      <div class="table-name">Users</div>
+      <div class="table-cols">
+        <span class="pk">🔑 user_id</span>
+        <span>email</span>
+        <span>name</span>
+        <span>created_at</span>
+      </div>
+    </div>
+
+    <div class="db-table-card" style="left: 220px; top: 20px;">
+      <div class="table-name">Categories</div>
+      <div class="table-cols">
+        <span class="pk">🔑 cat_id</span>
+        <span>name</span>
+        <span>description</span>
+      </div>
+    </div>
+
+    <div class="db-table-card" style="left: 420px; top: 20px;">
+      <div class="table-name">Products</div>
+      <div class="table-cols">
+        <span class="pk">🔑 product_id</span>
+        <span class="fk">📌 cat_id</span>
+        <span>name</span>
+        <span>price</span>
+        <span>stock</span>
+      </div>
+    </div>
+
+    <div class="db-table-card" style="left: 20px; top: 200px;">
+      <div class="table-name">Orders</div>
+      <div class="table-cols">
+        <span class="pk">🔑 order_id</span>
+        <span class="fk">📌 user_id</span>
+        <span>order_date</span>
+        <span>total_price</span>
+        <span>status</span>
+      </div>
+    </div>
+
+    <div class="db-table-card" style="left: 220px; top: 200px;">
+      <div class="table-name">OrderItems</div>
+      <div class="table-cols">
+        <span class="pk">🔑 item_id</span>
+        <span class="fk">📌 order_id</span>
+        <span class="fk">📌 product_id</span>
+        <span>quantity</span>
+        <span>unit_price</span>
+      </div>
+    </div>
+
+    <!-- Connection lines visualization -->
+    <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;">
+      <line x1="120" y1="80" x2="220" y2="80" stroke="#7b5cff" stroke-width="2" stroke-dasharray="5,5"/>
+      <line x1="270" y1="80" x2="420" y2="80" stroke="#7b5cff" stroke-width="2" stroke-dasharray="5,5"/>
+      <line x1="70" y1="120" x2="70" y2="200" stroke="#00d4ff" stroke-width="2" stroke-dasharray="5,5"/>
+      <line x1="270" y1="200" x2="420" y2="120" stroke="#00d4ff" stroke-width="2" stroke-dasharray="5,5"/>
+      <text x="140" y="65" font-size="11" fill="#7b5cff">1:N</text>
+      <text x="300" y="110" font-size="11" fill="#00d4ff">N:M</text>
+    </svg>
+  </div>
+
+  <div style="margin-top: 280px; padding: 20px; background: rgba(123,92,255,0.1); border-radius: 8px; border-left: 4px solid #7b5cff;">
+    <h5>관계 설명</h5>
+    <ul>
+      <li><strong>Categories → Products:</strong> 1:N (한 카테고리는 여러 상품을 가짐)</li>
+      <li><strong>Users → Orders:</strong> 1:N (한 고객은 여러 주문을 할 수 있음)</li>
+      <li><strong>Orders → Products:</strong> M:N (주문과 상품의 다대다 관계는 OrderItems 중간 테이블로 해결)</li>
+    </ul>
+  </div>
+</div>
+
+<style>
+.schema-diagram {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background: rgba(10,14,39,0.5);
+  border: 1px solid #7b5cff;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.db-table-card {
+  position: absolute;
+  background: linear-gradient(135deg, rgba(123,92,255,0.2), rgba(0,212,255,0.1));
+  border: 2px solid #7b5cff;
+  border-radius: 8px;
+  padding: 12px;
+  width: 160px;
+  box-shadow: 0 4px 12px rgba(123,92,255,0.3);
+  transition: transform 0.2s;
+}
+
+.db-table-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(123,92,255,0.5);
+}
+
+.table-name {
+  font-weight: 700;
+  color: #00d4ff;
+  font-size: 14px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #7b5cff;
+  padding-bottom: 6px;
+}
+
+.table-cols {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+}
+
+.table-cols span {
+  color: #ccc;
+  padding: 2px 4px;
+}
+
+.pk {
+  color: #ffff00;
+  font-weight: 600;
+}
+
+.fk {
+  color: #ff9900;
+  font-weight: 600;
+}
+</style>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--rule);">
+  <a href="07-distributed.html" style="text-decoration:none;">← 분산 DB</a>
+  <a href="09-patterns.html" style="text-decoration:none;">실전 설계 패턴 →</a>
+</div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎮 한 줄로 말하면?</h3>
+  <p>데이터 모델링은 <strong>"우리 서비스에 필요한 정보를 어떻게 데이터로 담을까?"를 미리 설계하는 일</strong>이에요! 📐</p>
+
+  <h3>🤔 이게 왜 중요할까?</h3>
+  <p>모델링을 잘못하면 두고두고 고생해요! 😭</p>
+  <ul>
+    <li>🚧 이미 출시한 서비스의 표 구조를 바꾸려면 데이터 이사(마이그레이션)와 멈춤(다운타임)이 필요해요.</li>
+    <li>🌀 모델이 실제 개념과 어긋나면 모든 쿼리가 복잡해져요.</li>
+    <li>✨ 잘 만든 모델은 새 기능 추가가 쉽고 성능도 좋아요!</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 꼭 기억할 낱말</h4>
+    <ul>
+      <li><strong>엔티티(Entity)</strong>: 시스템이 다루는 주인공. 회원, 상품, 주문! 🧍</li>
+      <li><strong>속성(Attribute)</strong>: 엔티티의 특징. 이름, 가격, 날짜.</li>
+      <li><strong>관계(Relationship)</strong>: 엔티티끼리의 연결. "회원이 주문한다". 🔗</li>
+      <li><strong>ERD</strong>: 엔티티-관계 다이어그램, 모델의 그림. 🗺️</li>
+      <li><strong>카디널리티</strong>: 관계의 수량. 1:1, 1:N, M:N.</li>
+    </ul>
+  </div>
+
+  <h3>🏠 집 설계도로 쉽게!</h3>
+  <p>데이터 모델링은 <strong>집 짓기 전에 설계도를 그리는 일</strong>과 비슷해요! 방을 어디 둘지, 화장실은 몇 개로 할지 미리 정해야 짓고 나서 후회를 안 하죠.</p>
+  <p>모델링도 똑같이, 시스템이 다룰 정보를 종이에 미리 그려 봐요. 무엇이 중요한 <strong>엔티티</strong>인지, 그것들 사이에 어떤 <strong>관계</strong>가 있는지 정리하는 거예요.</p>
+  <p>보통 세 단계로 진행해요! 🪜 개념 모델(큰 그림) → 논리 모델(정규화·규칙을 반영한 설계도) → 물리 모델(실제 DB에 맞춰 인덱스·자료형까지 정한 최종 도면). 이걸 <strong>ERD</strong>라는 그림으로 그리면 한눈에 보여서 같이 일하기 편해요!</p>
+  <p>제일 중요한 마음가짐은 <strong>"데이터는 오래 산다"</strong>는 거예요. 코드는 자주 갈아엎어도, 데이터는 회사가 차곡차곡 모은 보물이라 함부로 못 바꿔요. 그래서 모델링은 신중하게, 그리고 그 분야 전문가와 함께 해야 해요! 🤝</p>
+
+  <div class="study-tip">
+    <strong>💡 학습 TIP:</strong> dbdiagram.io나 draw.io로 ERD를 직접 그려 보세요. 머릿속에만 있는 그림은 같이 일할 수가 없어요! 🖍️
+  </div>
+
+  <h3>✅ 오늘의 정리</h3>
+  <ul>
+    <li>📐 모델링은 비즈니스를 데이터로 표현하는 작업.</li>
+    <li>🧍 엔티티, 속성, 관계가 기본 요소.</li>
+    <li>🪜 개념 → 논리 → 물리 세 단계로 진행.</li>
+    <li>🗺️ ERD로 그림 그려서 협업.</li>
+    <li>⏳ 나중에 바꾸기 어려우니 신중하게!</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>데이터 모델링은 OLTP와 OLAP에서 접근법이 다릅니다. OLTP는 정규화 기반의 ER 모델로 트랜잭션 무결성을 우선하고, OLAP은 차원 모델링(Dimensional Modeling)으로 분석 쿼리 성능을 우선합니다. Kimball의 스타 스키마는 사실 테이블(Fact)과 차원 테이블(Dimension)로 구성되며, 스노우플레이크 스키마는 차원을 다시 정규화한 변형입니다. SCD(Slowly Changing Dimension)는 차원 변경을 추적하는 방식으로 Type 1(덮어쓰기), Type 2(이력 보존), Type 3(이전값 컬럼) 등이 있습니다. 도메인 주도 설계(DDD)의 애그리게이트는 일관성 경계를 정해 트랜잭션 단위와 NoSQL 도큐먼트 경계를 도출합니다. 식별자 전략은 자연키 vs 대리키, 정수 vs UUID, ULID vs Snowflake ID 등 다양하며, 분산 환경에서는 노드 충돌을 피하기 위해 시간+노드 비트 조합이 표준입니다. 시간성 데이터(이력)는 valid_from/valid_to 컬럼이나 별도 이력 테이블, 양방향 시간(bitemporal) 모델로 표현합니다.</p>
+
+  <h3>실전 SQL/쿼리</h3>
+  <pre><code>-- 스타 스키마 예시
+CREATE TABLE dim_customer (
+  customer_sk   BIGINT PRIMARY KEY,  -- 대리키
+  customer_id   VARCHAR(20),         -- 자연키
+  name          VARCHAR(100),
+  region        VARCHAR(50),
+  valid_from    DATE,
+  valid_to      DATE,
+  is_current    BOOLEAN
+);
+
+CREATE TABLE dim_product (
+  product_sk    BIGINT PRIMARY KEY,
+  product_id    VARCHAR(30),
+  category      VARCHAR(50)
+);
+
+CREATE TABLE fact_sales (
+  sale_id       BIGINT PRIMARY KEY,
+  customer_sk   BIGINT REFERENCES dim_customer(customer_sk),
+  product_sk    BIGINT REFERENCES dim_product(product_sk),
+  date_sk       INT,
+  quantity      INT,
+  amount        DECIMAL(12,2)
+);
+
+-- 분석 쿼리
+SELECT  d.region, p.category, SUM(f.amount) AS revenue
+FROM    fact_sales f
+JOIN    dim_customer d ON f.customer_sk = d.customer_sk
+JOIN    dim_product  p ON f.product_sk  = p.product_sk
+WHERE   d.is_current
+GROUP   BY d.region, p.category;</code></pre>
+
+  <h3>예제</h3>
+  <div class="info-card">
+    <h4>💻 예제 1: 이커머스 도메인</h4>
+    <p>회원·상품·주문·결제·배송을 핵심 애그리게이트로 분리합니다. 주문은 결제와 배송의 식별자를 참조하지만 트랜잭션 경계는 분리해 마이크로서비스로 발전 가능하게 둡니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>💻 예제 2: SaaS 멀티테넌시</h4>
+    <p>tenant_id를 거의 모든 테이블의 첫 컬럼으로 두고, 인덱스와 RLS(Row Level Security)로 격리합니다. 큰 테넌트는 별도 스키마로 분리하는 하이브리드 모델이 자주 쓰입니다.</p>
+  </div>
+
+  <h3>실무 응용</h3>
+  <p>대기업 데이터 웨어하우스는 Inmon식 정규화 모델 위에 Kimball식 데이터마트를 두는 하이브리드가 일반적입니다. 또한 데이터 볼트(Data Vault) 모델링은 변경 추적과 감사 가능성에 강점이 있어 금융권에서 채택됩니다. 도메인 주도 설계는 마이크로서비스 분해와 함께 사용되어 서비스별 자체 DB를 갖는 데이터 분산 패턴으로 이어집니다.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ 자주 하는 실수:</strong> 모든 곳에 UUID를 박으면 인덱스가 비대해지고 클러스터드 인덱스(InnoDB) 환경에서 페이지 분할이 잦아집니다. 또 SCD 없이 차원에 덮어쓰기만 하면 과거 매출 분석이 왜곡됩니다.
+  </div>
+
+<h3>전문가 레벨</h3>
+  <p>데이터 볼트 2.0은 Hub(비즈니스 키), Link(관계), Satellite(속성·이력)로 이력과 무결성을 분리해 모델링합니다. 변경 데이터 캡처(CDC)는 WAL이나 binlog를 읽어 운영 DB의 변화를 분석 시스템으로 전파하며, Debezium·Maxwell·AWS DMS가 대표 도구입니다. 이벤트 소싱은 상태 대신 사건의 로그를 1차 모델로 두고 읽기 모델을 투영(Projection)으로 구성하며, CQRS와 결합해 읽기·쓰기 모델을 명확히 분리합니다. 시간성 모델은 transaction time과 valid time을 동시에 추적하는 bitemporal 형태로 발전하며, 회계와 보험에서 표준입니다. NoSQL 모델링에서는 액세스 패턴 우선 설계(특히 DynamoDB의 single-table design)가 핵심이며, GSI/LSI와 sparse index, denormalization 패턴이 결합됩니다. 그래프 모델링은 노드와 관계의 라벨, 속성을 어떻게 분포시키느냐가 쿼리 성능과 직결되며, 추천·사기 탐지·지식 그래프에서 핵심입니다. 또한 LLM RAG에는 정규화된 사실 테이블 위에 임베딩 컬럼이나 벡터 인덱스를 결합한 하이브리드 모델이 자리 잡고 있습니다.</p>
+
+  <h3>고급 패턴</h3>
+  <pre><code>-- 데이터 볼트 핵심 구조 예시
+CREATE TABLE hub_customer (
+  customer_hk   CHAR(64) PRIMARY KEY,   -- 해시 키
+  customer_bk   VARCHAR(50) NOT NULL,   -- 비즈니스 키
+  load_dts      TIMESTAMP NOT NULL,
+  record_source VARCHAR(50)
+);
+
+CREATE TABLE sat_customer_profile (
+  customer_hk   CHAR(64),
+  load_dts      TIMESTAMP,
+  hash_diff     CHAR(64),
+  name          VARCHAR(100),
+  email         VARCHAR(100),
+  PRIMARY KEY (customer_hk, load_dts)
+);
+
+-- DynamoDB single-table design (개념)
+-- PK = ORG#<id>, SK = USER#<id> | SUB#<id>
+-- GSI1: GSI1PK = USER#<id>, GSI1SK = ORG#<id>
+-- 한 테이블로 다대다·계층·시간 정렬을 모두 표현
+
+-- bitemporal 갱신 패턴
+INSERT INTO contract_history
+  (contract_id, valid_from, valid_to, txn_from, txn_to, ...)
+VALUES (?, ?, ?, NOW(), 'infinity', ...);
+UPDATE contract_history SET txn_to = NOW()
+  WHERE contract_id = ? AND txn_to = 'infinity'
+    AND (valid_from, valid_to) OVERLAPS (?, ?);</code></pre>
+
+  <h3>최신 동향</h3>
+  <p>데이터 메시 아키텍처는 도메인 팀이 데이터 제품을 소유하고 표준 인터페이스로 발행하는 분산 데이터 운영 모델을 제시합니다. 또한 dbt와 Iceberg/Delta는 SQL 중심의 모델링을 코드화·버전관리하는 표준이 되었으며, 시맨틱 레이어(Cube, Looker)는 비즈니스 메트릭을 코드로 정의해 일관성을 보장합니다. 그래프와 벡터, 시계열을 통합 처리하는 멀티모달 DB가 새로운 흐름입니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li>도메인 주도 설계(DDD)와 이벤트 스토밍.</li>
+    <li>차원 모델링(Kimball)과 데이터 볼트(Linstedt).</li>
+    <li>지식 그래프와 시맨틱 웹.</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>"The Data Warehouse Toolkit" — Ralph Kimball.</li>
+    <li>"Building a Scalable Data Warehouse with Data Vault 2.0" — Linstedt 외.</li>
+    <li>"Domain-Driven Design" — Eric Evans.</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>🎓 도전 과제:</strong> 보험 청구 시스템을 정규화 ER 모델, 차원 모델, 데이터 볼트 모델로 각각 설계하고, 동일 KPI(월별 손해율)를 산출하는 ETL 파이프라인 복잡도와 변경 영향도를 비교 분석해 보세요.
+  </div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 모델링 단계 순서</h2>
+<p>데이터 모델링이 진행되는 단계 순서대로 배치해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#0d6efd","prompt":"데이터 모델링 단계를 순서대로 놓으세요","steps":["요구사항 분석","개념적 모델링","논리적 모델링","물리적 모델링"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d6efd","questions":[{"q":"데이터 모델링 3단계의 첫 단계는?","choices":["물리적 모델링","논리적 모델링","개념적 모델링","통계 모델링"],"answer":2},{"q":"ER 다이어그램에서 네모가 뜻하는 것은?","choices":["엔티티","관계","속성","키"],"answer":0},{"q":"한 고객이 여러 주문을 하는 관계는?","choices":["1:1","1:N","M:N","재귀 관계"],"answer":1},{"q":"M:N 관계를 해결하는 방법은?","choices":["뷰 생성","인덱스 추가","트리거","중간 테이블"],"answer":3},{"q":"실무 표준 ER 표기법은?","choices":["Chen","UML","Crow's Foot","시퀀스"],"answer":2}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('db3d-08');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('db3d-08-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,1.6,13.5);camera.lookAt(0,0.2,0);
+  function entity(x,y,t,c){
+    var m=box(2.4,1.1,0.6,c,0.95);m.position.set(x,y,0);scene.add(m);
+    var L=lbl(t,24,'#ffffff',0.95);L.position.set(x,y,0.4);scene.add(L);
+    return m;
+  }
+  var cust=entity(-6,2.2,'고객',0x5b6bd6);
+  var order=entity(0,2.2,'주문',0x2f9e63);
+  var prod=entity(6,2.2,'상품',0xe07a3f);
+  function diamond(x,y,t){
+    var g=new THREE.Mesh(new THREE.OctahedronGeometry(0.8),mat(0xffc83c,0.9));
+    g.scale.set(1.3,0.8,0.5);g.position.set(x,y,0);scene.add(g);
+    var L=lbl(t,21,'#7a5c10',0.85);L.position.set(x,y-1.1,0);scene.add(L);
+    return g;
+  }
+  diamond(-3,2.2,'주문한다 1:N');
+  diamond(3,2.2,'담는다 N:M');
+  scene.add(line(V(-4.8,2.2,0),V(-3.9,2.2,0),0x9aa6c0,0.8));
+  scene.add(line(V(-2.1,2.2,0),V(-1.2,2.2,0),0x9aa6c0,0.8));
+  scene.add(line(V(1.2,2.2,0),V(2.1,2.2,0),0x9aa6c0,0.8));
+  scene.add(line(V(3.9,2.2,0),V(4.8,2.2,0),0x9aa6c0,0.8));
+  var one=lbl('1',24,'#39415a',0.9);one.position.set(-4.5,2.7,0);scene.add(one);
+  var n1=lbl('N',24,'#39415a',0.9);n1.position.set(-1.5,2.7,0);scene.add(n1);
+  var n2=lbl('N',24,'#39415a',0.9);n2.position.set(1.5,2.7,0);scene.add(n2);
+  var m2=lbl('M',24,'#39415a',0.9);m2.position.set(4.5,2.7,0);scene.add(m2);
+  var erL=lbl('개념 모델 (ER 다이어그램): 사각형=엔티티, 마름모=관계',23,'#39415a',1);erL.position.set(0,4.2,0);scene.add(erL);
+  // physical tables
+  function table(x,t,rows2,c,extra){
+    var g=new THREE.Group();
+    var hd=box(2.8,0.5,0.35,c,0.97);hd.position.set(x,-0.6,0);g.add(hd);
+    var hL=lbl(t,20,'#ffffff',0.8);hL.position.set(x,-0.6,0.3);g.add(hL);
+    rows2.forEach(function(rt,i){
+      var isFk=rt.indexOf('FK')>=0;
+      var b=box(2.8,0.44,0.3,isFk?0xfff0c8:0xdde3ee,0.97);b.position.set(x,-1.15-i*0.5,0);g.add(b);
+      var L=lbl(rt,18,isFk?'#9a6b00':'#39415a',0.72);L.position.set(x,-1.15-i*0.5,0.28);g.add(L);
+    });
+    scene.add(g);return g;
+  }
+  var tc=table(-6,'customer',['id (PK)','name','address'],0x5b6bd6);
+  var to=table(-2,'orders',['id (PK)','date','customer_id (FK)'],0x2f9e63);
+  var tj=table(2,'order_item',['order_id (FK)','product_id (FK)','qty'],0x9b59b6);
+  var tp=table(6,'product',['id (PK)','name','price'],0xe07a3f);
+  var fkLines=[
+    line(V(-3.4,-2.15,0),V(-4.6,-1.15,0),0x5b6bd6,0.9),
+    line(V(0.6,-1.15,0),V(-0.6,-1.15,0),0x2f9e63,0.9),
+    line(V(3.4,-1.65,0),V(4.6,-1.15,0),0xe07a3f,0.9)
+  ];
+  fkLines.forEach(function(l){scene.add(l);});
+  var phyL=lbl('물리 모델: 1:N → FK 컬럼 / N:M → 연결 테이블(order_item)로 분해',23,'#39415a',1);phyL.position.set(0,-3.6,0);scene.add(phyL);
+  function showPhy(o){
+    [tc,to,tj,tp].forEach(function(g){g.children.forEach(function(m){if(m.material)m.material.opacity=o*0.97;});});
+    fkLines.forEach(function(l){l.material.opacity=o*0.9;});
+    phyL.material.opacity=o;
+  }
+  showPhy(0);
+  var pulse=sph(0.14,0xd6455b);pulse.visible=false;scene.add(pulse);
+  var phases=[
+    {dur:4.5,cap:'1단계 개념 모델링: 업무를 그림으로 — "고객이 주문한다(1:N), 주문이 상품을 담는다(N:M)". 아직 DB 얘기가 아니라 "업무 규칙" 얘기입니다.',
+     enter:function(){showPhy(0);pulse.visible=false;},
+     update:function(u){var k=Math.floor(u*6)%3;[cust,order,prod].forEach(function(m,i){m.scale.setScalar(i===k?1.1:1);});}},
+    {dur:4.5,cap:'2단계 변환 규칙 ①: 1:N 관계는 "N쪽에 FK 컬럼"으로 — 주문 테이블에 customer_id가 생깁니다(노란 행).',
+     update:function(u){
+       showPhy(ez(Math.min(1,u*1.8))*1);
+       pulse.visible=true;
+       pulse.position.lerpVectors(V(-6,1.7,0),V(-2,-2.15,0),ez(u));
+     }},
+    {dur:4.5,cap:'변환 규칙 ②: N:M은 테이블 둘로 직접 연결할 수 없습니다 → 가운데 "연결 테이블(order_item)"이 태어나 FK 두 개로 양쪽을 잡습니다.',
+     update:function(u){
+       pulse.position.lerpVectors(V(3,1.7,0),V(2,-1.4,0),ez(u));
+       tj.children.forEach(function(m){if(m.material&&m.material.color&&m.geometry&&m.geometry.type==='BoxGeometry')m.scale.setScalar(1+0.06*Math.sin(u*10));});
+     }},
+    {dur:4.5,cap:'완성된 스키마: 엔티티→테이블, 관계→FK, N:M→연결 테이블. ER의 모든 도형이 기계적으로 변환됩니다 — 모델링이 설계의 8할인 이유.',
+     enter:function(){pulse.visible=false;},
+     update:function(u){fkLines.forEach(function(l,i){l.material.opacity=0.5+0.45*Math.abs(Math.sin(u*6+i));});}}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

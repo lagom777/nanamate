@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7. 임상과 병리 — aboutPrideHope</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🌸 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>임상과 병리</em></h1>
+  <p class="authors">Chapter 7 — Clinical & Pathology</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 임상 — 과하거나 모자랄 때(스펙트럼)</span>
+
+<h2>임상과 병리 개요</h2>
+<p>우울증·번아웃·중독의 핵심에는 희망 결핍(hopelessness)과 자긍심 결핍이 있다. 반대로 자긍심이 병리적으로 비대해지면 자기애성 성격장애(narcissism)가 된다. 임상 평가의 핵심 척도와 자살 예측 인자로서의 hopelessness는 정신의학의 가장 중요한 변수다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>Beck의 연구는 "hopelessness가 우울 자체보다 자살의 더 강력한 예측 인자"임을 보였다. 자긍심·희망 결핍은 정신질환의 공통 핵심 증상이며, 회복은 이 두 정서의 복원에서 시작된다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>👀 한 줄로 이해하기</h3><p>희망이 흐릿해지면 마음이 아프고, 희망이 완전히 꺼지면 아주 위험해질 수 있어. 그래서 희망을 지키는 게 정말 중요해. 🕯️</p>
+  <h3>🤔 왜 중요할까?</h3><p>마음이 힘든 사람에게 제일 위험한 신호는 '슬픔' 자체가 아니라 "내일도 똑같을 거야", "달라질 게 없어" 같은 생각이야. 그래서 누군가에게 "기분 어때?"보다 "내일 기대되는 거 있어?"라고 묻는 게 더 중요할 때가 있어. 이 신호를 알아채면 사람을 도울 수 있어! 🤝</p>
+  <div class="info-card"><h4>🌱 꼭 알아둘 말</h4><ul>
+    <li><strong>희망 결핍(hopelessness)</strong>: "앞으로 좋은 일 없을 거야"라는 생각</li>
+    <li><strong>학습된 무기력</strong>: 계속 안 되니까 아예 시도조차 안 하게 되는 것</li>
+    <li><strong>번아웃</strong>: 힘이 완전히 방전된 상태 🔋</li>
+    <li><strong>나르시시즘</strong>: 자긍심이 너무 부풀어 오른 상태 (작은 지적에도 와르르)</li>
+    <li><strong>BHS</strong>: 희망이 얼마나 남았는지 재보는 검사지</li>
+  </ul></div>
+  <h3>🔍 조금 더 풀어보면</h3><p>마음이 힘들 때 가장 위험한 건 "어차피 안 돼"라는 생각이 딱딱하게 굳는 거야. 이러면 행동을 멈추게 되고, 안 움직이니 기쁨 회로가 더 약해지고, 그래서 더 힘들어지는 '악순환'에 빠져. (셀리그만 박사가 실험으로 이 '학습된 무기력'을 밝혔어.) 반대쪽 극단인 나르시시즘은 자긍심이 풍선처럼 너무 부푼 상태라, 작은 바늘(비판) 하나에도 뻥 터져버려. 🎈💥</p>
+  <div class="study-tip"><strong>💡 오늘의 꿀팁:</strong> 주변 친구가 "다 의미 없어", "어차피 안 돼"를 자꾸 말하면 마음이 힘들다는 신호야. 그럴 땐 어른이나 전문가에게 도움을 요청하도록 도와주자. 🫶</div>
+  <h3>📌 한 장 요약</h3><ul>
+    <li>희망 결핍이 가장 위험한 신호</li>
+    <li>학습된 무기력 = 시도 자체를 포기</li>
+    <li>번아웃 = 힘이 방전된 상태</li>
+    <li>나르시시즘 = 자긍심이 너무 부풀어 오름</li>
+    <li>"내일 기대돼?"가 중요한 질문</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>Beck의 인지치료 모델은 우울증의 핵심을 "부정 인지 삼제(negative cognitive triad)" — 자기·세계·미래에 대한 부정 신념으로 본다. 미래에 대한 부정 신념이 바로 hopelessness다. Beck Hopelessness Scale(BHS) 20문항은 1974년 개발 후 자살 예측 도구로 표준이 되었다. BHS 9점 이상이 자살 위험 임계로 알려져 있고, 한국어판도 표준화되어 있다. Seligman의 학습된 무기력 이론은 우울증의 동물 모델을 제공했고, 이후 "학습된 낙관(learned optimism)" 이론으로 발전해 긍정심리학의 토대가 되었다. Maslach의 번아웃 모델은 정서적 소진, 비인격화, 개인 성취 감소의 3차원으로 구성되며, 개인 성취 감소가 자기 효능감 고갈의 직접 지표다. 나르시시즘은 grandiose narcissism(과장형)과 vulnerable narcissism(취약형)으로 나뉘며, 후자는 우울·자살 위험이 높다.</p>
+  <h3>핵심 메커니즘</h3>
+  <div class="info-card"><h4>📐 자살 위험 평가의 핵심 변수</h4><p>우울 점수(BDI) + 희망 결핍 점수(BHS) + 자살 사고(SSI). 메타분석에서 BHS가 BDI보다 자살 예측력이 일관되게 강함. 임상에서 "기분 어떠세요?"보다 "미래가 어떻게 보이세요?"가 더 중요한 평가 질문.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>번아웃 직장인: 정서적 소진 + 냉소화 + 성취감 상실. 자기 효능감 4원천 모두 손상 — 작은 성공 부재, 동료 비교, 부정 피드백, 만성 피로. 회복은 4원천 재공급에서 시작된다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>나르시시스트의 취약성: 평소 과장된 자긍심이 작은 비판에 폭발적 분노 또는 깊은 우울로 무너진다. 진정 자긍심이 아닌 오만 자긍심의 구조적 불안정성이 원인이다.</p></div>
+  <h3>응용 사례</h3><p>한국 자살 예방 게이트키퍼 교육은 BHS 단축형 4문항을 핵심 도구로 사용한다. 한국형 자살 예측 모델(K-SCAN)은 hopelessness를 가장 큰 가중치로 둔다. 직장 번아웃 평가에서는 MBI 한국판이 표준이며, 개인 성취 감소 항목이 자기 효능감 회복 개입의 표적이 된다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "우울하면 자살 위험이 높다"는 단순화. Beck 연구에서 우울만 있고 희망이 살아 있으면 자살 위험은 낮다 — hopelessness가 결정 변수다.</div>
+
+<h3>전문가 레벨 이해</h3><p>Beck 등(1985)의 종단 연구는 BHS 점수 9점 이상이 5-10년 후 자살 완료를 11배 높임을 보였고, 이는 자살학의 가장 인용되는 발견 중 하나다. Brown 등(2000)의 5년 추적 연구는 BHS의 자살 예측력이 BDI를 능가함을 재확인했다. 학습된 무기력 모델은 Seligman·Maier의 1967년 개 실험에서 시작되어, 2016년 동일 연구진이 "Learned Helplessness at Fifty"에서 신경과학적 메커니즘을 재정립했다 — 무기력은 학습되는 것이 아니라 디폴트 반응이며, 학습되는 것은 "통제 가능성(controllability)"의 인식이다. 이는 vmPFC-DRN 회로 발견과 연결된다. 나르시시즘 연구는 NPI(Narcissistic Personality Inventory)와 PNI(Pathological Narcissism Inventory)의 두 측정 전통으로 나뉘며, 한국 표본에서 grandiose narcissism 점수가 서구보다 낮고 vulnerable narcissism이 상대적으로 높음이 보고된다.</p>
+  <h3>최신 연구·동향</h3><p>2023년 한국 청년 자살 종단 연구(K-SCAN)는 SNS 사회 비교가 hopelessness 매개로 자살 사고를 증가시킴을 보였다. 디지털 자살 위험 예측 AI는 BHS 데이터와 SNS 텍스트 분석을 결합해 ROC 0.85 수준 정확도를 달성했다. 케타민의 신속 우울·자살 사고 감소 효과는 hopelessness 회로의 빠른 회복으로 해석된다.</p>
+  <h3>관련 분야</h3><ul>
+    <li>임상심리학(Clinical Psychology)</li>
+    <li>자살학(Suicidology)</li>
+    <li>정신의학(Psychiatry)</li>
+  </ul>
+  <h3>추가 학습 자료</h3><ul>
+    <li>"Why People Die by Suicide" — Thomas Joiner</li>
+    <li>"Learned Optimism" — Martin Seligman</li>
+    <li>"Disorders of Narcissism" — Elsa Ronningstam</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> Beck Hopelessness Scale 20문항 자가검사를 실시하고, 본인 점수와 임상 임계(9점) 위치를 분석하라. 9점 이상이면 전문가 상담 권장.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 임상 용어 상황 판단</h2>
+<p>임상 용어와 설명을 보고 알맞은 답을 고르세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#f472b6","prompt":"임상 용어와 설명을 짝지으세요","pairs":[{"term":"희망 결핍","def":"미래에 좋은 일이 없다는 인지"},{"term":"학습된 무기력","def":"통제 불가 경험 후 시도 포기"},{"term":"번아웃","def":"자기 효능감 고갈"},{"term":"나르시시즘","def":"자긍심의 병리적 비대"},{"term":"BHS","def":"희망 결핍 표준 측정 척도"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f472b6","questions":[{"q":"자살의 가장 강력한 예측 인자는?","choices":["슬픔","피로","희망 결핍","분노"],"answer":2},{"q":"자긍심이 병리적으로 비대해진 것은?","choices":["우울증","불안장애","공포증","나르시시즘"],"answer":3},{"q":"통제 불가 후 시도를 포기하는 현상은?","choices":["학습된 무기력","번아웃","조증","강박"],"answer":0},{"q":"희망 결핍 표준 측정 척도는?","choices":["IQ 검사","BHS","혈압계","MMPI"],"answer":1},{"q":"번아웃은 무엇의 고갈인가?","choices":["근력","자기 효능감","기억력","시력"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const COL=0xf472b6;const N=15;const bars=[];for(let i=0;i<N;i++){const x=(i-(N-1)/2)*0.42;const col2=new THREE.Color().setHSL(0.0+0.33*(i/(N-1)),0.6,0.55);const b=new THREE.Mesh(new THREE.BoxGeometry(0.3,1,0.3),new THREE.MeshBasicMaterial({color:col2}));b.position.x=x;s.add(b);bars.push(b);}const marker=new THREE.Mesh(new THREE.ConeGeometry(0.22,0.5,12),new THREE.MeshBasicMaterial({color:0xffffff}));marker.position.y=1.4;s.add(marker);s.userData.m=marker;s.userData.N=N;const MK=lbl('BHS 척도','#ffffff');MK.position.set(0,0.55,0);marker.add(MK);
+  const marks=[[-2.7,'희망 결핍'],[-1.0,'학습된 무기력'],[1.0,'번아웃'],[2.7,'나르시시즘']];marks.forEach(function(mk){const L=lbl(mk[1],'#fde2ea');L.position.set(mk[0],1.05,0);s.add(L);});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 빨강에서 초록으로 가는 스펙트럼 — 자긍심·희망은 모자라도 넘쳐도 병리가 됩니다.','희망 결핍(hopelessness)과 학습된 무기력은 자살 위험의 핵심 예측 변수입니다.','번아웃은 자기 효능감의 고갈, 나르시시즘은 자긍심의 병리적 비대입니다.','BHS(벡 무망감 척도)는 희망 결핍을 표준화해 측정하는 도구입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const N=s.userData.N;const x=Math.sin(T*0.8)*(N-1)/2*0.42;s.userData.m.position.x=x;s.rotation.y+=0.0;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

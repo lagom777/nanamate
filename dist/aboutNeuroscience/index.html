@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>뇌과학: 마음의 기계를 3D로 탐구하다</title><link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="index.html">🧠 표지 · 소개</a></li>
+<li><a href="chapters/01-neurons.html">1. 뉴런과 시냅스</a></li>
+<li><a href="chapters/02-brain-anatomy.html">2. 뇌 해부학</a></li>
+<li><a href="chapters/03-sensory.html">3. 감각과 지각</a></li>
+<li><a href="chapters/04-memory.html">4. 기억과 학습</a></li>
+<li><a href="chapters/05-emotion.html">5. 정서와 동기</a></li>
+<li><a href="chapters/06-consciousness.html">6. 의식과 수면</a></li>
+<li><a href="chapters/07-neuroplasticity.html">7. 신경가소성</a></li>
+<li><a href="chapters/08-disorders.html">8. 뇌질환과 장애</a></li>
+<li><a href="chapters/09-neurotech.html">9. 뇌공학과 AI</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1>뇌과학,<br><em>마음</em>의 기계를<br>3D로 탐구하다</h1>
+<p class="authors">Interactive Neuroscience Lab — The Brain in 3D</p>
+<p class="affiliation">Vol. 16 · May 2026 · aboutNeuroscience Editorial</p></header>
+<div class="scene-3d" id="intro-scene"></div>
+<span class="interact-hint">🧠 뉴런 네트워크 시뮬레이션</span>
+<h2>뇌과학이란?</h2>
+<p>뇌과학(신경과학)은 뇌와 신경계의 구조, 기능, 발달, 그리고 질병을 연구하는 학문입니다. 860억 개의 뉴런이 만들어내는 의식, 기억, 감정의 비밀을 3D 시뮬레이션으로 탐구합니다.</p>
+<div class="info-card"><h4>왜 뇌과학인가?</h4><p>21세기의 마지막 프론티어. 인공지능, 정신건강, 뇌-컴퓨터 인터페이스까지 — 뇌를 이해하는 것이 미래의 열쇠입니다.</p></div>
+</main></div>
+<script>
+(function() {
+  const container = document.getElementById('intro-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 3, 10);camera.lookAt(0,0,0);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Neural network
+  const neurons = [];
+  for (let i = 0; i < 40; i++) {
+    const mesh = new THREE.Mesh(new THREE.SphereGeometry(0.12, 12, 12), new THREE.MeshBasicMaterial({ color: 0x818cf8 }));
+    mesh.position.set((Math.random()-0.5)*10, (Math.random()-0.5)*6, (Math.random()-0.5)*6);
+    scene.add(mesh); neurons.push(mesh);
+  }
+  // Synaptic connections
+  for (let i = 0; i < neurons.length; i++) {
+    const numConn = 1 + Math.floor(Math.random()*3);
+    for (let c = 0; c < numConn; c++) {
+      const j = Math.floor(Math.random()*neurons.length);
+      if (j === i) continue;
+      const geo = new THREE.BufferGeometry().setFromPoints([neurons[i].position, neurons[j].position]);
+      scene.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: 0x818cf8, transparent: true, opacity: 0.1 })));
+    }
+  }
+  // Signal pulses
+  const pulses = [];
+  for (let i = 0; i < 15; i++) {
+    const p = new THREE.Mesh(new THREE.SphereGeometry(0.06, 8, 8), new THREE.MeshBasicMaterial({ color: 0xfbbf24 }));
+    const from = Math.floor(Math.random()*neurons.length);
+    const to = Math.floor(Math.random()*neurons.length);
+    pulses.push({ mesh: p, from, to, t: Math.random() });
+    scene.add(p);
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    pulses.forEach(p => {
+      p.t += 0.008;
+      if (p.t > 1) { p.t = 0; p.from = p.to; p.to = Math.floor(Math.random()*neurons.length); }
+      p.mesh.position.lerpVectors(neurons[p.from].position, neurons[p.to].position, p.t);
+    });
+    scene.rotation.y += 0.002;
+    renderer.render(scene, camera);
+  }
+  animate();
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+})();
+</script></body></html>

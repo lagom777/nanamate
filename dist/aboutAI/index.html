@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>인공지능: 이론, 아키텍처, 그리고 현대적 응용에 관한 종합적 고찰</title>
+<link rel="stylesheet" href="styles.css">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script defer src="toggle.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="index.html">📖 표지 · 초록</a></li>
+    <li><a href="chapters/01-history.html">1–2. 서론 · 역사</a></li>
+    <li><a href="chapters/02-foundations.html">3–4. 수학 · ML 이론</a></li>
+    <li><a href="chapters/03-neural.html">5. 신경망과 딥러닝</a></li>
+    <li><a href="chapters/04-transformer.html">6. Attention · Transformer</a></li>
+    <li><a href="chapters/05-llm.html">7. 대규모 언어모델</a></li>
+    <li><a href="chapters/06-generative.html">8. 생성모델</a></li>
+    <li><a href="chapters/07-rl-multimodal.html">9–10. 강화학습 · 멀티모달</a></li>
+    <li><a href="chapters/08-safety-frontiers.html">11–13. 안전성 · 프런티어 · 결론</a></li>
+    <li><a href="chapters/09-references.html">참고문헌</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>인공지능,<br>그 <em>이론과 아키텍처</em>에<br>관하여</h1>
+  <p class="authors">A Survey on Artificial Intelligence — Theory, Architectures, and Modern Applications</p>
+  <p class="affiliation">Vol. 01  ·  April 2026  ·  aboutAI Editorial</p>
+</header>
+
+<div class="scene-3d">
+  <div class="cube">
+    <div class="cube-face front">Input<br>Tensor<br>[B, N, D]</div>
+    <div class="cube-face back">Output<br>Logits</div>
+    <div class="cube-face right">Batch<br>Dim</div>
+    <div class="cube-face left">Feature<br>Dim</div>
+    <div class="cube-face top">Sequence<br>Length</div>
+    <div class="cube-face bottom">Embedding</div>
+  </div>
+</div>
+<p class="fig-title">그림 0. 딥러닝의 기본 자료구조: 3차원 텐서. 배치(B) × 시퀀스(N) × 특징(D). 모든 현대 아키텍처가 이 형태의 텐서를 변환한다.</p>
+
+<div class="easy-version"><div class="easy-box">
+<h4>🧒 이 문서는 뭔가요?</h4>
+<p><strong>AI 전반을 처음부터 끝까지 정리한 자료.</strong> 역사 → 수학 기초 → 신경망 → Transformer → ChatGPT → 그림 그리는 AI → 강화학습 → 안전성까지 9개 장으로 나눠져 있습니다.</p>
+<div class="analogy">두 버전이 있어요. 오른쪽 위 버튼으로 전환:
+<ul>
+  <li>🧒 <strong>쉬운 버전</strong> — 비유·예시 중심 (지금 보고 있는 노란 박스)</li>
+  <li>📄 <strong>논문 버전</strong> — 수식·전문용어 포함 (깊게 공부할 때)</li>
+</ul></div>
+<div class="example">처음 AI를 배운다면 <strong>쉬운 버전으로 전체 흐름을 읽고</strong>, 관심 있는 장만 논문 버전으로 깊게 들어가는 걸 추천!</div>
+</div></div>
+<div class="paper-version">
+<div class="abstract">
+  <h2>초록 (Abstract)</h2>
+  <p>
+    본 문서는 인공지능(Artificial Intelligence, AI)의 이론적 토대와 현대적 구현을 체계적으로 기술한다.
+    1950년대 McCulloch-Pitts 뉴런과 Turing의 계산 이론에서 출발하여, 퍼셉트론의 한계와 AI 겨울,
+    통계적 학습의 부상, 2012년 AlexNet에 의한 딥러닝 혁명, 그리고 2017년 Transformer 아키텍처의 등장으로
+    시작된 파운데이션 모델 시대에 이르기까지의 궤적을 추적한다.
+    이어 선형대수·확률론·정보이론·최적화 이론이라는 네 가지 수학적 축을 중심으로 기계학습의 형식적 기반을 제시하고,
+    PAC 학습 프레임워크, 편향-분산 분해, 정규화 이론을 논한다.
+    딥러닝의 경우 역전파, 합성곱 신경망, 순환 신경망, 그리고 자기주의(self-attention) 메커니즘을 수식과 함께 기술한다.
+    현대 대규모 언어모델(LLM)에 대해서는 다음 토큰 예측에 기반한 사전학습, Chinchilla 스케일링 법칙,
+    창발적 능력(emergent abilities), RLHF 기반 정렬, 그리고 chain-of-thought에 기반한 추론 능력을 다룬다.
+    생성모델에서는 변분 오토인코더(VAE), 생성적 적대 신경망(GAN), 확산 모델(Diffusion Model), 그리고 Flow Matching을 통합적으로 제시한다.
+    마지막으로 멀티모달 학습, AI 안전성과 정렬 문제, 그리고 현재의 연구 프런티어를 조망한다.
+  </p>
+  <p class="keywords">
+    <strong>주제어:</strong> 인공지능, 기계학습, 딥러닝, Transformer, 대규모 언어모델, 생성모델, 강화학습, 정렬
+  </p>
+</div>
+</div>
+
+
+<h2 style="margin-top:50px;">📚 장별 구성</h2>
+<div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:18px; margin:25px 0;">
+  <a href="chapters/01-history.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">1–2장</strong><br>서론 · 역사적 전개<br>
+      <span style="font-size:0.85em; color:#555;">Turing에서 GPT까지 80년</span>
+    </div>
+  </a>
+  <a href="chapters/02-foundations.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">3–4장</strong><br>수학적 기초 · ML 이론<br>
+      <span style="font-size:0.85em; color:#555;">선형대수·확률·정보·최적화</span>
+    </div>
+  </a>
+  <a href="chapters/03-neural.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">5장</strong><br>신경망과 딥러닝<br>
+      <span style="font-size:0.85em; color:#555;">MLP · CNN · RNN · 역전파</span>
+    </div>
+  </a>
+  <a href="chapters/04-transformer.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">6장</strong><br>Attention · Transformer<br>
+      <span style="font-size:0.85em; color:#555;">현대 AI의 심장</span>
+    </div>
+  </a>
+  <a href="chapters/05-llm.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">7장</strong><br>대규모 언어모델<br>
+      <span style="font-size:0.85em; color:#555;">스케일링 · RLHF · 추론</span>
+    </div>
+  </a>
+  <a href="chapters/06-generative.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">8장</strong><br>생성모델<br>
+      <span style="font-size:0.85em; color:#555;">VAE · GAN · Diffusion · Flow</span>
+    </div>
+  </a>
+  <a href="chapters/07-rl-multimodal.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">9–10장</strong><br>강화학습 · 멀티모달<br>
+      <span style="font-size:0.85em; color:#555;">AlphaGo · CLIP · VLM</span>
+    </div>
+  </a>
+  <a href="chapters/08-safety-frontiers.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">11–13장</strong><br>안전성 · 프런티어 · 결론<br>
+      <span style="font-size:0.85em; color:#555;">정렬 · 해석가능성 · AGI</span>
+    </div>
+  </a>
+  <a href="chapters/09-references.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">참고문헌</strong><br>38편의 주요 논문<br>
+      <span style="font-size:0.85em; color:#555;">1943 ~ 2024</span>
+    </div>
+  </a>
+</div>
+
+<h2 style="margin-top:50px;">📂 파일 구조</h2>
+<pre><code>E:/aboutAI/
+├── index.html              ← 이 페이지 (표지)
+├── styles.css              ← 모든 스타일 (수정 시 전체 페이지에 반영)
+├── split.py                ← 이 분할을 만든 스크립트
+└── chapters/
+    ├── 01-history.html     (서론 · 역사)
+    ├── 02-foundations.html (수학 · ML 이론)
+    ├── 03-neural.html      (신경망)
+    ├── 04-transformer.html (Transformer)
+    ├── 05-llm.html         (대규모 언어모델)
+    ├── 06-generative.html  (생성모델)
+    ├── 07-rl-multimodal.html (강화학습 · 멀티모달)
+    ├── 08-safety-frontiers.html (안전성 · 프런티어)
+    └── 09-references.html  (참고문헌)
+</code></pre>
+
+<p style="margin-top:30px; color:#555; font-style:italic;">
+💡 수정 팁: 디자인은 <code>styles.css</code>만 편집하면 모든 페이지에 반영됩니다.
+개별 장의 내용은 해당 <code>chapters/*.html</code>만 수정하면 됩니다.
+</p>
+
+</main>
+</div>
+</body>
+</html>

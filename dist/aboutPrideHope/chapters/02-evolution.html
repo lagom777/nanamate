@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2. 진화와 기능 — aboutPrideHope</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🌸 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>진화와 기능</em></h1>
+  <p class="authors">Chapter 2 — Evolution & Function</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 진화적 기능 — 생존을 도운 적응의 갈래</span>
+
+<h2>진화와 기능 개요</h2>
+<p>자긍심과 희망은 인간 집단 생존의 두 축이다. 자긍심은 성취를 사회 신호로 변환해 지위와 협력 자원을 얻게 하고, 희망은 단기 보상 없이도 장기 목표를 향해 행동을 지속하게 한다. 단기 강화에만 의존하는 다른 동물과 달리, 인간은 희망 덕분에 수년·수십 년의 계획을 수행할 수 있다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>자긍심은 "내가 가치 있는 사람임을 집단에 알리는 신호"이며, 희망은 "보상이 없는 어두운 길에서 계속 걷게 하는 내적 동력"이다. 두 정서가 함께 작동해야 인간 특유의 장기 협력과 성취가 가능해진다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>👀 한 줄로 이해하기</h3><p>자긍심은 "내가 잘했어!"를 사람들에게 보여주는 신호등 🚦, 희망은 깜깜할 때도 앞으로 한 발 내딛게 해주는 손전등 🔦 이야.</p>
+  <h3>🤔 왜 중요할까?</h3><p>동물은 대부분 눈앞의 먹이만 좇아. 먹이가 없으면 바로 멈추지. 그런데 사람은 5년 뒤 시험을 위해 오늘 책을 펴고, 30년 뒤를 위해 저축도 해! 이렇게 먼 미래를 향해 달릴 수 있는 건 '희망'이라는 엔진 덕분이야. 그리고 자긍심은 내 노력을 남들이 알아보게 해줘서 더 많은 기회를 얻게 해줘. 이 두 감정이 힘을 합쳐서 문명이 만들어졌대! 🏛️</p>
+  <div class="info-card"><h4>🌱 꼭 알아둘 말</h4><ul>
+    <li><strong>자긍심 표정</strong>: 가슴 펴고, 팔 들고, 씩 웃는 모습 (전 세계 공통!) 🙌</li>
+    <li><strong>사회적 지위</strong>: 무리 안에서 내가 있는 위치</li>
+    <li><strong>장기 보상 지향</strong>: 지금 참고 나중에 더 큰 상 받기</li>
+    <li><strong>승리 자세</strong>: 이겼을 때 저절로 나오는 자랑스러운 포즈</li>
+    <li><strong>희망의 진화</strong>: 잘 안 풀려도 계속 도전하게 만든 힘</li>
+  </ul></div>
+  <h3>🔍 조금 더 풀어보면</h3><p>1만 년 전 사냥꾼이 큰 사슴을 잡아왔다고 상상해봐. 자랑하지 않으면 아무도 그가 잘한 걸 몰라. 그런데 가슴 펴고 씩 웃으면 말 안 해도 "내가 해냈어!"가 전해져. 그럼 다음에 또 사냥에 불려가지! 반대로 일주일 내내 빈손이어도 다시 사냥 나가게 하는 힘이 희망이야. "다음엔 잡을 거야!"가 없으면 포기하고, 그럼 무리가 다 굶어. 😥 재밌는 건, 태어날 때부터 앞이 안 보이는 운동선수도 경기에서 이기면 똑같이 가슴을 펴고 팔을 번쩍 들어! 본 적도 없는데 말이야. 그래서 자긍심 표정은 배우는 게 아니라 타고나는 거래. 😮</p>
+  <div class="study-tip"><strong>💡 오늘의 꿀팁:</strong> 최근에 뿌듯했던 순간을 떠올려봐. 그때 어떻게 표현했어? 친구한테 자랑? SNS에 올림? 아니면 그냥 씩 웃음? 😄</div>
+  <h3>📌 한 장 요약</h3><ul>
+    <li>자긍심 = 내 성취를 남에게 알리는 신호</li>
+    <li>희망 = 먼 목표까지 달리게 하는 엔진</li>
+    <li>자긍심 표정은 시각장애인도 똑같아 → 타고남</li>
+    <li>두 감정이 사람만의 긴 협동을 가능하게 함</li>
+    <li>자랑을 너무 참으면 오히려 힘이 약해질 수 있어</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>Tracy의 자긍심 신호 가설(pride signal hypothesis)은 자긍심을 "지위 신호 시스템"으로 본다. 이 시스템은 두 가지 진화적 기능을 수행한다 — 우월성(dominance) 신호와 존경(prestige) 신호다. 진정 자긍심은 존경 기반 지위를, 오만 자긍심은 우월성 기반 지위를 추구한다. 두 경로는 모두 적응적이지만 사회적 비용이 다르다. 한편 희망의 진화적 기능은 불확실한 환경에서 행동 지속성을 유지하는 것이다. 다윈은 정서를 "행동 준비 시스템"으로 정의했는데, 희망은 그중에서도 가장 시간 지평이 긴 시스템이다. 호프 시스템은 인간 뇌의 전전두엽 확장과 함께 진화했고, 도파민 보상 예측 회로를 길게 늘이는 적응이었다.</p>
+  <h3>핵심 메커니즘</h3>
+  <div class="info-card"><h4>📐 자긍심·희망의 적응적 기능</h4><p>자긍심 = 성취 → 사회 신호 → 지위 → 자원 접근. 희망 = 미래 보상 예측 → 도파민 유지 → 행동 지속 → 장기 성취. 두 시스템이 결합하면 인간은 다른 종이 따라올 수 없는 협력적 장기 프로젝트를 수행할 수 있다.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>올림픽 금메달 수상자: 시상대에서의 가슴 펴기·팔 들기·미소는 학습이 아닌 진화적 자긍심 표정이다. Tracy 연구에서 시각장애로 한 번도 본 적 없는 선수들도 같은 자세를 보였다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>10년 전공 후 박사학위 취득: 단기 보상이 거의 없는 10년을 견디는 힘은 희망이다. 도파민이 결과가 아닌 진행 자체에서 분비되도록 길게 늘어난 시간 지평이 인간 진화의 핵심이다.</p></div>
+  <h3>응용 사례</h3><p>한국의 시험·입시 문화는 자긍심의 진화적 기능을 왜곡한다. "잘난 척하지 말라"는 규범이 자긍심 신호를 차단하면, 성취는 사회적 자원 접근으로 이어지지 않는다. 노력은 보상받지 못하고 동력은 약해진다. K-스포츠는 예외적으로 자긍심 신호가 허용되는 영역이다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 자긍심 표정을 "문화적 학습"으로 보는 통념은 틀렸다. 시각장애인 연구가 결정적으로 반증했다.</div>
+
+<h3>전문가 레벨 이해</h3><p>Tracy & Matsumoto(2008, PNAS)의 시각장애인 올림픽 선수 연구는 정서 진화 연구의 이정표다. 30개국 132명 시각장애인·비장애인 유도 선수의 승패 직후 자세를 분석했고, 자긍심 표정(가슴 펴기·팔 들기·고개 들기·미소)과 수치심 표정(어깨 처지기·고개 숙이기)이 시각 학습 없이도 보편적으로 나타났다. 이는 두 정서가 진화적으로 내장된 신호 시스템임을 의미한다. Henrich & Gil-White(2001)는 인간 지위 시스템이 우월성(공포 기반)과 존경(가치 기반)의 두 경로로 진화했다고 주장했고, Tracy는 이를 자긍심 모델에 통합했다. 희망의 진화는 시간 할인(temporal discounting) 곡선의 평탄화와 관련된다 — 인간은 다른 영장류보다 미래 보상을 덜 평가절하한다.</p>
+  <h3>최신 연구·동향</h3><p>2020년대 cross-cultural pride 연구는 자긍심 표현 수용성에서 동·서양 차이가 크지만, 정서 자체의 보편성은 확고함을 보였다. 희망의 비교문화 연구는 Snyder Hope Scale의 국가 간 비교가 활발해지고 있고, 한국은 OECD 평균보다 낮은 희망 점수를 보인다.</p>
+  <h3>관련 분야</h3><ul>
+    <li>진화심리학(Evolutionary Psychology)</li>
+    <li>비교문화심리학(Cross-cultural Psychology)</li>
+    <li>행동경제학(Behavioral Economics)</li>
+  </ul>
+  <h3>추가 학습 자료</h3><ul>
+    <li>"Take Pride" — Jessica Tracy</li>
+    <li>"The Status Game" — Will Storr</li>
+    <li>"The Marshmallow Test" — Walter Mischel</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 본인이 최근 6개월간 가졌던 자긍심 사건 5개를 적고, 각 사건이 사회적 어떤 기능(지위·자원·관계)을 했는지 분석하라.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 다른 하나 찾기</h2>
+<p>넷 중 성격이 다른 하나를 골라 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#f472b6","prompt":"넷 중 성격이 다른 하나를 고르세요","rounds":[{"items":["가슴 펴기","팔 들기","미소","어깨 처지기"],"odd":3,"why":"어깨 처지기는 수치심 표정"},{"items":["존경 신호","우월성 신호","지위 신호","단기 보상"],"odd":3,"why":"단기 보상은 희망과 대비되는 동물적 동력"},{"items":["희망","장기 보상 지향","도파민 지속","승리 자세"],"odd":3,"why":"승리 자세는 자긍심 표현"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f472b6","questions":[{"q":"자긍심은 성취를 무엇으로 바꾸나?","choices":["사회 신호","물질 자원","신체 능력","언어"],"answer":0},{"q":"장기 목표 지속의 정서 엔진은?","choices":["분노","공포","희망","혐오"],"answer":2},{"q":"자긍심 표정의 특징은?","choices":["문화별 학습","선천적·보편","최근 발명","동물만"],"answer":1},{"q":"Tracy 지위 신호의 두 경로는?","choices":["우월성과 존경","공포와 분노","사랑과 미움","과거와 미래"],"answer":0},{"q":"시각장애인 선수 자긍심 연구자는?","choices":["Bandura","Freud","Snyder","Tracy & Matsumoto"],"answer":3}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0.5,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const COL=0xf472b6;function branch(x,y,len,ang,d){if(d<=0)return;const x2=x+Math.cos(ang)*len,y2=y+Math.sin(ang)*len;s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(x,y,0),new THREE.Vector3(x2,y2,0)]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.5})));const n=new THREE.Mesh(new THREE.SphereGeometry(0.08+d*0.03,10,10),new THREE.MeshBasicMaterial({color:COL}));n.position.set(x2,y2,0);s.add(n);branch(x2,y2,len*0.72,ang+0.5,d-1);branch(x2,y2,len*0.72,ang-0.5,d-1);}branch(0,-2.6,1.5,Math.PI/2,4);
+  const marks=[['자긍심 표정',-2.3,1.1],['사회적 지위',2.3,1.1],['승리 자세',0,1.95],['장기 보상 지향',2.5,-0.2],['희망의 진화',0,-2.95]];marks.forEach(function(mk){const L=lbl(mk[0],'#fbd6e8');L.position.set(mk[1],mk[2],0);s.add(L);});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 아래 뿌리에서 위로 갈라지는 가지는 자긍심·희망이 생존을 도운 적응의 갈래입니다.','자긍심 표정(가슴 펴기·팔 들기·미소)은 사회적 지위를 알리는 신호로 진화했습니다.','희망은 장기 보상 지향을 낳아, 즉각적 이익 대신 먼 미래의 성취를 좇게 합니다.','승리 자세는 학습이 아니라 진화적으로 내장된 신호 — 시각장애 선수도 동일하게 보입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4. 디지털 마케팅 — aboutMarketing</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📈 표지 · 소개</a></li>
+    <li><a href="01-fundamentals.html">1. 마케팅 기초</a></li>
+    <li><a href="02-consumer-psychology.html">2. 소비자 심리</a></li>
+    <li><a href="03-branding.html">3. 브랜딩 전략</a></li>
+    <li><a href="04-digital-marketing.html">4. 디지털 마케팅</a></li>
+    <li><a href="05-social-media.html">5. 소셜 미디어</a></li>
+    <li><a href="06-content-marketing.html">6. 콘텐츠 마케팅</a></li>
+    <li><a href="07-advertising.html">7. 광고와 캠페인</a></li>
+    <li><a href="08-analytics.html">8. 데이터 분석</a></li>
+    <li><a href="09-growth-hacking.html">9. 그로스 해킹</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>디지털 마케팅</em></h1>
+  <p class="authors">Chapter 4 — Digital Marketing & SEO</p>
+</header>
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 인지에서 전환까지 좁아지는 디지털 마케팅 퍼널</span>
+<h2>디지털 마케팅 개요</h2>
+<p>이 챕터에서는 디지털 마케팅의 핵심 전략과 프레임워크를 3D 시각화와 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>검색엔진 최적화(SEO), 검색광고(SEM), 소셜 및 이메일 마케팅을 통해 타겟 고객을 유입시키고 디지털 전환율을 높입니다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한 줄로 이해하기</h3>
+  <p>디지털 마케팅은 검색·SNS·이메일·앱 같은 <strong>인터넷 세상</strong>에서 손님을 만나고 끌어당기는 마케팅이에요. 📱 가장 큰 마법은? <strong>모든 게 숫자(데이터)로 기록</strong>된다는 점이에요!</p>
+
+  <h3>🤔 왜 중요할까?</h3>
+  <ul>
+    <li>🔍 유튜브·구글에서 자전거 고치는 법 보다가 그 브랜드 자전거를 사게 돼요. → 이게 <strong>SEO</strong>의 힘!</li>
+    <li>📸 인스타에서 광고 하나 보고 처음 듣는 화장품을 사게 돼요. → 딱 맞는 사람에게 보여주는 <strong>정밀 광고</strong>!</li>
+    <li>📦 <strong>쿠팡</strong>이 1등이 된 비결도 검색·추천·광고를 착착 합친 디지털 시스템 덕분이에요.</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 꼭 알아둘 말</h4>
+    <ul>
+      <li><strong>SEO</strong>: 검색했을 때 위쪽에 뜨게 만드는 작업. (돈 안 내는 자연 검색) 🔝</li>
+      <li><strong>SEM/PPC</strong>: 클릭할 때마다 돈 내는 유료 검색 광고. 💸</li>
+      <li><strong>CTR/CVR</strong>: 클릭률(얼마나 눌렀나) / 전환율(얼마나 샀나).</li>
+      <li><strong>랜딩 페이지</strong>: 광고 누르면 도착하는 첫 화면. 🛬</li>
+      <li><strong>리타기팅</strong>: 한 번 왔던 사람을 쫓아다니며 다시 보여주는 광고. 👀</li>
+    </ul>
+  </div>
+
+  <h3>🏪 길거리 가게로 쉽게!</h3>
+  <p>디지털 마케팅을 동네 가게에 비유하면요.</p>
+  <ul>
+    <li>🛣️ <strong>SEO</strong> = 대로변 목 좋은 가게</li>
+    <li>🪧 <strong>광고</strong> = 사거리의 큰 간판</li>
+    <li>💌 <strong>이메일</strong> = 단골에게 보내는 문자</li>
+    <li>🍢 <strong>콘텐츠</strong> = 가게 앞 시식 코너</li>
+  </ul>
+  <p>다른 점은? 누가 어떻게 들어왔는지, 어디서 머뭇거렸는지 <strong>전부 기록</strong>된다는 거예요! 그래서 하루 만 원만 써도 며칠 안에 어떤 광고가 잘 먹히는지 바로 알 수 있어요. 덕분에 작은 스타트업도 큰 회사랑 같은 운동장에서 겨룰 수 있게 됐죠. 💪</p>
+
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 자주 검색하는 단어 5개를 적고, 검색 결과에서 뭐가 '광고'이고 뭐가 '자연 검색'인지 나눠 보세요. 광고의 구조가 한눈에 보여요! 🔎</div>
+
+  <h3>✅ 기억해요</h3>
+  <ul>
+    <li>핵심은 '측정'과 '빠른 반복'! 🔁</li>
+    <li>SEO는 오래 가는 자산, 광고는 빠른 부스터. 🚀</li>
+    <li>모든 채널은 손님 여정의 한 조각일 뿐.</li>
+    <li>랜딩 페이지가 좋아야 광고가 잘 돼요.</li>
+    <li>데이터를 안 보면 디지털 마케팅이 아니에요! 📊</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>전략 깊이</h3>
+  <p>중급 단계에서는 채널을 ‘퍼포먼스’와 ‘브랜드’로 이분법적으로 보지 않고, 전체 미디어 믹스를 ‘퍼포먼스-브랜드 연속체’로 이해합니다. 검색 광고는 구매 의도가 강한 하단 퍼널을 잡는 데 효율적이지만, 신규 수요 창출은 상단 퍼널의 디스플레이·동영상이 담당해야 합니다. 또 쿠키 deprecation과 iOS ATT 정책 이후 데이터 신호 손실이 본격화되면서, 1st party data 수집 전략(가입, 멤버십, 뉴스레터)과 컨버전 API(서버 사이드 트래킹) 도입이 표준이 되었습니다. SEO는 단순 키워드 최적화에서 ‘토픽 클러스터’와 ‘E-E-A-T(경험·전문성·권위·신뢰)’ 중심으로 진화했고, 구글의 AI Overviews 도입으로 ‘답변형 콘텐츠’가 검색 결과에 직접 노출되는 변화가 시작되었습니다. 한편 광고 운영은 키워드·소재 단위 미세 조정에서 알고리즘 친화적 자동화(Performance Max, Advantage+) 중심으로 빠르게 이동하고 있습니다.</p>
+
+  <h3>대표 사례 분석</h3>
+  <div class="info-card">
+    <h4>📈 사례 1 — Notion의 SEO 토픽 클러스터</h4>
+    <p>Notion은 ‘Notion 템플릿’, ‘Notion 사용법’ 같은 사용자 의도별 토픽 허브를 만들고 그 안에 수백 개의 하위 글을 연결해 검색 점유율을 빠르게 끌어올렸습니다. 이는 단일 키워드보다 ‘주제 권위’를 노린 SEO 전략의 모범 사례입니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>📈 사례 2 — 쿠팡의 검색 광고 운영</h4>
+    <p>쿠팡은 검색 결과 페이지 안에 광고와 자연 결과를 정교하게 결합하고, 알고리즘 기반의 자동 입찰을 통해 셀러의 광고 효율을 극대화했습니다. 이는 광고가 단순 노출이 아니라 ‘검색 경험의 일부’로 통합된 사례입니다.</p>
+  </div>
+
+  <h3>실무 응용</h3>
+  <p>실무에서 디지털 마케팅을 운영할 때는 첫째, 전체 퍼널 단계별 KPI(인지·고려·전환·재구매)를 정의하고 채널을 매핑합니다. 둘째, 주간 단위로 캠페인을 출시하고 학습 결과를 누적하는 ‘growth backlog’를 운영합니다. 셋째, 매월 마지막 주에는 채널별 인크리멘털 기여도를 검토해 예산을 재배분합니다. 이때 단순 ROAS가 아닌 LTV/CAC와 페이백 기간을 함께 봐야 ‘싸 보이지만 실속 없는 채널’의 함정을 피할 수 있습니다.</p>
+
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 마지막 클릭 어트리뷰션만 보고 검색 광고에 예산을 몰아주면, 실제로 수요를 만든 상단 퍼널 채널이 과소평가되어 장기 성장 동력이 약해집니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>심화 디지털 마케팅은 데이터 인프라와 머신러닝 운영 능력의 영역으로 들어갑니다. 현대 기업은 CDP(Customer Data Platform)를 중심으로 사용자 식별 그래프를 구성하고, 클린룸(clean room)을 통해 미디어 파트너와 안전하게 1st party data를 결합하며, MLOps 기반의 LTV 예측 모델로 캠페인을 의사결정합니다. 검색의 영역에서도 LLM 기반 답변 인터페이스의 등장은 ‘쿼리 → 페이지 → 클릭’이라는 SEO 가치 사슬을 ‘쿼리 → 답변 인용’ 모델로 재구성하고 있으며, 이를 GEO(Generative Engine Optimization)라는 새로운 분야로 통합하려는 움직임이 활발합니다. 광고 시장에서는 입찰 알고리즘이 사실상 블랙박스화되면서 ‘크리에이티브 다양성’과 ‘신호 품질’이 효율을 좌우하는 핵심 변수로 떠올랐고, 이는 곧 광고 운영자가 미디어 바이어보다 데이터 엔지니어·프롬프트 엔지니어에 가까워진다는 의미입니다. 결국 디지털 마케팅의 경쟁력은 채널 운영 노하우보다 데이터 인프라와 자동화 시스템의 성숙도에 비례하게 되었습니다.</p>
+
+  <h3>측정과 분석 모델</h3>
+  <p>심화 측정은 멀티터치 어트리뷰션의 한계를 인정하고 ‘인크리멘털리티’를 진실의 기준으로 삼습니다. 베이지안 마케팅 믹스 모델링은 채널별 사후분포로 예산 탄력성을 추정하며, 지오 실험은 동질적 지역 쌍을 구성해 캠페인의 인과 효과를 측정합니다. 또한 미디어 믹스 모델과 어트리뷰션 모델을 결합한 하이브리드 모델(triangulation)이 확산되며, 단기와 장기 효과(adstock, carryover)를 동시에 추정하는 시도가 표준이 되고 있습니다. 사용자 단의 분석에서는 LTV 예측, 이탈 예측, 가격 민감도 모델이 결합되어 ‘예측 기반 캠페인 자동화’의 기반이 됩니다.</p>
+
+  <h3>최신 트렌드</h3>
+  <p>첫째, 생성형 AI 기반의 ‘크리에이티브 자동 생산’이 광고 ROI의 새로운 핵심 변수로 부상하고 있습니다. 둘째, 리테일 미디어 네트워크가 디지털 광고의 제3 거인으로 자리잡으며, 구매 신호 직전의 광고 가치가 재평가되고 있습니다. 셋째, 검색 결과의 형태가 답변형으로 바뀌면서 ‘인용 가능한 콘텐츠’와 구조화된 데이터(schema.org)의 중요성이 다시 커지고 있습니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li>데이터 엔지니어링과 MLOps</li>
+    <li>마케팅 사이언스와 인과추론</li>
+    <li>프라이버시 기술과 데이터 거버넌스</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>Avinash Kaushik, <em>Web Analytics 2.0</em></li>
+    <li>Google Robyn 오픈소스 MMM 프로젝트</li>
+    <li>Search Engine Journal, Moz, Ahrefs의 SEO 리서치 블로그</li>
+  </ul>
+
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 가상의 D2C 브랜드 한 곳을 설정하고, 6개월간의 채널 믹스 시뮬레이션과 인크리멘털 테스트 계획, 베이지안 MMM 가설을 포함한 실행 플랜을 설계해 보세요.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 디지털 용어 짝 맞추기</h2>
+<p>디지털 마케팅 용어와 설명을 알맞게 연결해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#e040fb","prompt":"용어와 설명을 짝지으세요","pairs":[{"term":"SEO","def":"자연 검색 상위 노출 작업"},{"term":"SEM/PPC","def":"클릭당 과금되는 유료 검색 광고"},{"term":"CTR/CVR","def":"클릭률과 전환율"},{"term":"랜딩 페이지","def":"광고 클릭 후 도착하는 첫 화면"},{"term":"리타기팅","def":"방문자에게 다시 광고를 노출"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#e040fb","questions":[{"q":"검색 엔진 최적화의 약자는?","choices":["SEM","SEO","PPC","CTR"],"answer":1},{"q":"광고 클릭 후 도착하는 첫 화면은?","choices":["대시보드","퍼널","랜딩 페이지","홈페이지"],"answer":2},{"q":"방문자에게 다시 광고하는 기법은?","choices":["리타기팅","SEO","CVR","앵커링"],"answer":0},{"q":"토픽 클러스터 SEO의 모범 기업은?","choices":["쿠팡","메타","Notion","구글"],"answer":2},{"q":"마지막 클릭만 보면 과소평가되는 것은?","choices":["검색 광고","하단 퍼널","랜딩 페이지","상단 퍼널"],"answer":3}]};</script>
+</main>
+</div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const stages=4;for(let i=0;i<stages;i++){const rad=2.2-i*0.5;const yy=2.1-i*1.3;const disc=new THREE.Mesh(new THREE.CylinderGeometry(rad,rad-0.45,0.18,40,1,true),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.55-i*0.12,0.7,0.55),wireframe:true,side:THREE.DoubleSide}));disc.position.y=yy;s.add(disc);}const flow=[];for(let i=0;i<50;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(0.07,6,6),new THREE.MeshBasicMaterial({color:0x6fe3ff}));m.userData={ang:Math.random()*6.28,y:Math.random()*5-2.4};s.add(m);flow.push(m);}
+  const _sl=[['인지',2.1,2.9],['고려',0.8,2.4],['전환',-0.5,1.9],['재구매',-1.8,1.5]];_sl.forEach(function(d){var t=lbl(d[0],0x2a7bb5);t.position.set(d[2],d[1],0);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 디지털 마케팅은 인지에서 전환까지 좁아지는 퍼널로 고객을 이동시킵니다.','SEO는 자연 검색 상위 노출, SEM/PPC는 클릭당 과금되는 유료 검색 광고입니다.','CTR(클릭률)과 CVR(전환율)이 각 단계의 효율을 보여주는 핵심 지표입니다.','리타기팅은 이탈한 방문자를 랜딩 페이지로 다시 불러 전환을 높입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}flow.forEach(p=>{p.userData.y-=0.035;if(p.userData.y<-2.6)p.userData.y=2.6;const t=(2.6-p.userData.y)/5.2;const rr=(2.0-t*1.7)*0.92;p.userData.ang+=0.03;p.position.set(Math.cos(p.userData.ang)*rr,p.userData.y,Math.sin(p.userData.ang)*rr);});s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body>
+</html>

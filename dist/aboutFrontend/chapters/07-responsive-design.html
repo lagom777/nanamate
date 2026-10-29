@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7장. 반응형 디자인 | 프론트엔드 학습 사이트</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .chapter-title {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #222;
+    }
+
+    .chapter-subtitle {
+      font-size: 1.1em;
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    section {
+      margin-bottom: 60px;
+    }
+
+    .section-title {
+      font-size: 1.8em;
+      color: #7b5cff;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #00d4ff;
+    }
+
+    .section-content {
+      font-size: 1em;
+      line-height: 1.8;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    code {
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      color: #d63384;
+    }
+
+    .code-block {
+      background: #2d3748;
+      color: #e2e8f0;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 15px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+
+    /* Interactive Components */
+    .interactive-container {
+      background: linear-gradient(135deg, #f5f7fa 0%, #eff4f9 100%);
+      border: 2px solid #e0e7ff;
+      border-radius: 12px;
+      padding: 30px;
+      margin: 30px 0;
+    }
+
+    .interactive-title {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #7b5cff;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Viewport Resizer */
+    .viewport-resizer {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .viewport-preview-container {
+      position: relative;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+      height: 500px;
+      resize: horizontal;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .viewport-preview-iframe {
+      border: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    .viewport-dimensions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      background: #f0f4f8;
+      border-radius: 6px;
+      font-weight: bold;
+      color: #7b5cff;
+    }
+
+    .breakpoint-indicators {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    .breakpoint-badge {
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 0.9em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .breakpoint-badge.mobile {
+      background: #fef3c7;
+      color: #b45309;
+      border-color: #fcd34d;
+    }
+
+    .breakpoint-badge.tablet {
+      background: #d1fae5;
+      color: #065f46;
+      border-color: #6ee7b7;
+    }
+
+    .breakpoint-badge.desktop {
+      background: #dbeafe;
+      color: #0c4a6e;
+      border-color: #7dd3fc;
+    }
+
+    .breakpoint-badge:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* Media Query Builder */
+    .media-query-builder {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .builder-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 15px;
+    }
+
+    .builder-control {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .builder-label {
+      font-weight: bold;
+      color: #333;
+      font-size: 0.95em;
+    }
+
+    .builder-select,
+    .builder-input {
+      padding: 10px 12px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.95em;
+      font-family: inherit;
+    }
+
+    .builder-select:focus,
+    .builder-input:focus {
+      outline: none;
+      border-color: #7b5cff;
+      box-shadow: 0 0 0 3px rgba(123, 92, 255, 0.1);
+    }
+
+    .generated-query {
+      background: #2d3748;
+      color: #e2e8f0;
+      padding: 15px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      border-left: 4px solid #7b5cff;
+      word-break: break-all;
+    }
+
+    /* Live Preview Section */
+    .live-preview-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .preview-card {
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+    }
+
+    .preview-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      transform: translateY(-2px);
+    }
+
+    .preview-label {
+      padding: 10px 15px;
+      background: #f0f4f8;
+      border-bottom: 2px solid #e0e7ff;
+      font-weight: bold;
+      color: #7b5cff;
+      text-align:left;
+      font-size: 0.9em;
+    }
+
+    .preview-content {
+      padding: 15px;
+      height: 400px;
+      background: white;
+      overflow: auto;
+    }
+
+    .responsive-demo {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 10px;
+      height: 100%;
+    }
+
+    .demo-box {
+      background: linear-gradient(135deg, #7b5cff, #00d4ff);
+      border-radius: 6px;
+      padding: 15px;
+      color: white;
+      text-align:left;
+      font-weight: bold;
+      word-break: break-word;
+    }
+
+    .tip-box {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+
+    .tip-box strong {
+      color: #b45309;
+    }
+
+    .note-box {
+      background: #e0e7ff;
+      border-left: 4px solid #7b5cff;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 20px 0;
+    }
+
+    .note-box strong {
+      color: #7b5cff;
+    }
+
+    /* Navigation */
+    .chapter-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 2px solid #e0e7ff;
+    }
+
+    .nav-button {
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      border: 2px solid #7b5cff;
+      color: #7b5cff;
+    }
+
+    .nav-button:hover {
+      background: #7b5cff;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .nav-button.next {
+      background: linear-gradient(120deg, #7b5cff, #00d4ff);
+      color: white;
+      border: none;
+    }
+
+    .nav-button.next:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(123, 92, 255, 0.4);
+    }
+  </style>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+  <div class="layout-wrapper">
+    <aside>
+      <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+      <h3>전체 목차</h3>
+      <ol>
+        <li><a href="../index.html">📖 표지 · 소개</a></li>
+        <li><a href="01-html-basics.html">1. HTML 기초</a></li>
+        <li><a href="02-css-layout.html">2. CSS와 레이아웃</a></li>
+        <li><a href="03-javascript-core.html">3. JavaScript 핵심</a></li>
+        <li><a href="04-dom-manipulation.html">4. DOM 조작</a></li>
+        <li><a href="05-react-components.html">5. React와 컴포넌트</a></li>
+        <li><a href="06-state-management.html">6. 상태관리</a></li>
+        <li><a href="07-responsive-design.html">7. 반응형 디자인</a></li>
+        <li><a href="08-performance.html">8. 성능 최적화</a></li>
+        <li><a href="09-build-deploy.html">9. 빌드도구와 배포</a></li>
+      </ol>
+    </aside>
+
+    <main>
+      <h1 class="chapter-title">7장. 반응형 디자인</h1>
+      <p class="chapter-subtitle">다양한 기기에서 완벽하게 동작하는 웹사이트 만들기</p>
+
+      <!-- Section 7.1 -->
+      <section>
+        <h2 class="section-title">7.1 반응형 디자인이란?</h2>
+        <div class="section-content">
+          <p>반응형 디자인(Responsive Web Design)은 모든 기기의 화면 크기와 해상도에 최적화되어 보이는 웹사이트를 만드는 설계 철학입니다. 데스크톱, 태블릿, 모바일 폰 등 다양한 기기에서 사용자에게 최고의 경험을 제공합니다.</p>
+
+          <p><strong>Responsive vs Adaptive의 차이:</strong></p>
+          <ul style="margin-left: 20px; color: #555;">
+            <li><strong>Responsive:</strong> CSS 미디어 쿼리와 유동적 레이아웃으로 모든 크기에 부드럽게 적응합니다.</li>
+            <li><strong>Adaptive:</strong> 특정 고정 크기(768px, 1024px 등)에 맞추어 레이아웃을 변경합니다.</li>
+          </ul>
+        </div>
+
+        <div class="note-box">
+          <strong>모바일 퍼스트 철학:</strong> 먼저 모바일 버전을 디자인하고 구현한 후, 더 큰 화면을 위해 기능을 추가합니다. 이는 성능과 접근성 측면에서 모두 이점이 있습니다.
+        </div>
+
+        <div class="code-block">/* 모바일 퍼스트 접근: 기본은 모바일 스타일 */
+body {
+  font-size: 14px;
+  padding: 10px;
+}
+
+/* 태블릿 이상 */
+@media (min-width: 768px) {
+  body {
+    font-size: 16px;
+    padding: 20px;
+  }
+}
+
+/* 데스크톱 이상 */
+@media (min-width: 1024px) {
+  body {
+    font-size: 18px;
+    padding: 40px;
+  }
+}</div>
+      </section>
+
+<!-- 3D 학습 시각화: 브레이크포인트 리플로우 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 반응형: 뷰포트가 줄면 레이아웃이 변신</div>
+  <div id="fe3d-07" style="width:100%;height:430px;"></div>
+  <div id="fe3d-07-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">1200→768→480px, 미디어 쿼리가 발동하는 순간들.</div>
+</div>
+
+
+      <!-- Section 7.2 -->
+      <section>
+        <h2 class="section-title">7.2 미디어 쿼리</h2>
+        <div class="section-content">
+          <p>미디어 쿼리(<code>@media</code>)는 특정 조건(화면 크기, 기기 타입 등)에서만 CSS 규칙을 적용하는 기능입니다.</p>
+
+          <p><strong>기본 문법:</strong></p>
+        </div>
+
+        <div class="code-block">@media (조건) {
+  /* 조건을 만족할 때 적용되는 스타일 */
+}
+
+/* 실제 예시 */
+@media (max-width: 767px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .container {
+    width: 90%;
+  }
+}</div>
+
+        <p style="margin-top: 20px; color: #555;">
+          <strong>주요 Breakpoint 전략:</strong>
+        </p>
+        <ul style="margin-left: 20px; color: #555;">
+          <li><strong>Mobile:</strong> 320px ~ 479px (스마트폰)</li>
+          <li><strong>Small Mobile:</strong> 480px ~ 639px (큰 폰)</li>
+          <li><strong>Tablet:</strong> 640px ~ 1023px (아이패드)</li>
+          <li><strong>Desktop:</strong> 1024px 이상 (노트북, 데스크톱)</li>
+        </ul>
+
+        <div class="interactive-container">
+          <div class="interactive-title">🎯 미디어 쿼리 빌더</div>
+          <div class="media-query-builder">
+            <div class="builder-controls">
+              <div class="builder-control">
+                <label class="builder-label">조건 유형</label>
+                <select class="builder-select" id="queryType">
+                  <option value="max-width">최대 너비</option>
+                  <option value="min-width">최소 너비</option>
+                  <option value="range">너비 범위</option>
+                </select>
+              </div>
+              <div class="builder-control">
+                <label class="builder-label">값 1 (px)</label>
+                <input type="number" class="builder-input" id="value1" value="768" min="0">
+              </div>
+              <div class="builder-control">
+                <label class="builder-label">값 2 (px, 범위용)</label>
+                <input type="number" class="builder-input" id="value2" value="1024" min="0" disabled>
+              </div>
+            </div>
+            <div class="generated-query" id="generatedQuery">@media (max-width: 768px) { }</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 7.3 -->
+      <section>
+        <h2 class="section-title">7.3 유동적 레이아웃</h2>
+        <div class="section-content">
+          <p>픽셀(px) 고정값 대신 백분율(%), 뷰포트 단위(vw/vh), 현대적인 CSS 함수(clamp, min, max)를 사용하여 다양한 화면에 자동으로 맞추는 방법입니다.</p>
+        </div>
+
+        <div class="code-block">/* 백분율로 유동적 너비 설정 */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 뷰포트 단위 */
+.hero {
+  height: 100vh; /* 뷰포트 높이 100% */
+}
+
+/* clamp()로 반응형 폰트 크기 */
+h1 {
+  font-size: clamp(24px, 5vw, 48px);
+  /* 최소 24px, 권장 5vw, 최대 48px */
+}
+
+/* min()과 max() */
+.sidebar {
+  width: min(300px, 25%); /* 300px 또는 25% 중 더 작은 값 */
+  padding: max(10px, 2vw);
+}</div>
+
+        <div class="tip-box">
+          <strong>💡 Tip:</strong> <code>clamp()</code>를 사용하면 min-max-width 대신 하나의 값으로 반응형 속성을 설정할 수 있습니다. 가장 현대적이고 효율적인 방법입니다!
+        </div>
+      </section>
+
+      <!-- Section 7.4 -->
+      <section>
+        <h2 class="section-title">7.4 반응형 이미지와 미디어</h2>
+        <div class="section-content">
+          <p>모바일에서는 작은 이미지 파일을, 데스크톱에서는 고해상도 이미지를 제공하여 성능과 사용자 경험을 동시에 개선합니다.</p>
+        </div>
+
+        <div class="code-block"><!-- srcset으로 해상도별 이미지 -->
+&lt;img
+  src="image-800.jpg"
+  srcset="image-400.jpg 400w,
+          image-800.jpg 800w,
+          image-1200.jpg 1200w"
+  sizes="(max-width: 600px) 90vw,
+         (max-width: 1024px) 70vw,
+         800px"
+  alt="반응형 이미지"&gt;
+
+<!-- picture 태그로 포맷별 이미지 -->
+&lt;picture&gt;
+  &lt;source srcset="image.webp" type="image/webp"&gt;
+  &lt;source srcset="image.jpg" type="image/jpeg"&gt;
+  &lt;img src="image-fallback.jpg" alt="이미지"&gt;
+&lt;/picture&gt;
+
+/* object-fit으로 이미지 비율 유지 */
+img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover; /* 비율 유지하면서 영역 채우기 */
+}</div>
+      </section>
+
+      <!-- Section 7.5 -->
+      <section>
+        <h2 class="section-title">7.5 모바일 퍼스트 전략과 Progressive Enhancement</h2>
+        <div class="section-content">
+          <p><strong>Progressive Enhancement(점진적 향상):</strong> 모든 사용자에게 기본 기능을 제공하고, 더 강력한 기기에서는 추가 기능과 개선된 경험을 제공합니다.</p>
+
+          <p style="margin-top: 15px;">구현 순서:</p>
+          <ol style="margin-left: 20px; color: #555;">
+            <li>HTML로 시맨틱한 구조 작성 (모든 기기에서 기본적으로 작동)</li>
+            <li>모바일 CSS 스타일 (기본 레이아웃 및 스타일)</li>
+            <li>태블릿, 데스크톱 CSS 추가 (향상된 레이아웃)</li>
+            <li>JavaScript 기능 (interactivity, 선택사항)</li>
+          </ol>
+        </div>
+
+        <div class="note-box">
+          <strong>왜 모바일 퍼스트인가?</strong> 모바일 사용자 수가 데스크톱을 넘었고, 모바일에서 최적화하면 더 가볍고 빠른 사이트가 됩니다.
+        </div>
+      </section>
+
+      <!-- Interactive Viewport Resizer -->
+      <section>
+        <h2 class="section-title">🎨 실습: Viewport 크기 조정 시뮬레이터</h2>
+        <div class="interactive-container">
+          <div class="interactive-title">📱 반응형 미리보기</div>
+          <div class="viewport-resizer">
+            <div class="viewport-dimensions">
+              <span>현재 너비: <span id="currentWidth">375</span>px</span>
+              <span id="currentBreakpoint">📱 모바일</span>
+            </div>
+            <div id="viewportContainer" style="border: 2px solid #ddd; border-radius: 8px; overflow: hidden; position: relative; background: white;">
+              <div id="resizeableContent" style="width: 375px; height: 500px; background: white; padding: 20px; overflow-y: auto; transition: width 0.2s ease;">
+                <h3 style="color: #7b5cff; margin-top: 0;">반응형 테스트 콘텐츠</h3>
+                <p style="color: #555; line-height: 1.6;">화면 너비를 조정하면서 레이아웃이 어떻게 변하는지 관찰하세요.</p>
+                <div id="responseiveDemo" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-top: 20px;">
+                  <div style="background: linear-gradient(135deg, #7b5cff, #00d4ff); color: white; padding: 20px; border-radius: 6px; text-align:left; font-weight: bold;">상자 1</div>
+                  <div style="background: linear-gradient(135deg, #f093fb, #f5576c); color: white; padding: 20px; border-radius: 6px; text-align:left; font-weight: bold;">상자 2</div>
+                  <div style="background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; padding: 20px; border-radius: 6px; text-align:left; font-weight: bold;">상자 3</div>
+                </div>
+              </div>
+              <input type="range" id="resizeSlider" min="320" max="1440" value="375" style="width: 100%; height: 30px; margin-top: 10px; cursor: pointer;">
+            </div>
+            <div class="breakpoint-indicators">
+              <div class="breakpoint-badge mobile" onclick="setViewportWidth(375)">📱 모바일 (375px)</div>
+              <div class="breakpoint-badge tablet" onclick="setViewportWidth(768)">📱 태블릿 (768px)</div>
+              <div class="breakpoint-badge desktop" onclick="setViewportWidth(1024)">🖥️데스크톱 (1024px)</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Live Preview Section -->
+      <section>
+        <h2 class="section-title">🖼️ 반응형 레이아웃 라이브 프리뷰</h2>
+        <div class="live-preview-section">
+          <div class="preview-card">
+            <div class="preview-label">📱 모바일 (375px)</div>
+            <div class="preview-content">
+              <div class="responsive-demo" style="grid-template-columns: 1fr;">
+                <div class="demo-box">헤더</div>
+                <div class="demo-box">콘텐츠 1</div>
+                <div class="demo-box">콘텐츠 2</div>
+                <div class="demo-box">사이드바</div>
+                <div class="demo-box">푸터</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-card">
+            <div class="preview-label">📱 태블릿 (768px)</div>
+            <div class="preview-content">
+              <div class="responsive-demo" style="grid-template-columns: 2fr 1fr;">
+                <div style="grid-column: 1/-1; background: linear-gradient(135deg, #7b5cff, #00d4ff); border-radius: 6px; padding: 15px; color: white; text-align:left; font-weight: bold;">헤더</div>
+                <div class="demo-box">콘텐츠 1</div>
+                <div class="demo-box">사이드바</div>
+                <div class="demo-box">콘텐츠 2</div>
+                <div style="grid-column: 1/-1; background: linear-gradient(135deg, #7b5cff, #00d4ff); border-radius: 6px; padding: 15px; color: white; text-align:left; font-weight: bold;">푸터</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-card">
+            <div class="preview-label">🖥️ 데스크톱 (1024px+)</div>
+            <div class="preview-content">
+              <div class="responsive-demo" style="grid-template-columns: 3fr 1fr;">
+                <div style="grid-column: 1/-1; background: linear-gradient(135deg, #7b5cff, #00d4ff); border-radius: 6px; padding: 15px; color: white; text-align:left; font-weight: bold;">헤더</div>
+                <div class="demo-box">콘텐츠 1</div>
+                <div class="demo-box">사이드바</div>
+                <div class="demo-box">콘텐츠 2</div>
+                <div style="grid-column: 1/-1; background: linear-gradient(135deg, #7b5cff, #00d4ff); border-radius: 6px; padding: 15px; color: white; text-align:left; font-weight: bold;">푸터</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Navigation -->
+      <div class="chapter-nav">
+        <a href="06-state-management.html" class="nav-button">← 이전: 상태관리</a>
+        <span style="color: #999; font-weight: bold;">7 / 10</span>
+        <a href="08-performance.html" class="nav-button next">다음: 성능 최적화 →</a>
+      </div>
+
+      <h2>📚 난이도별 학습</h2>
+      <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
+      <div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+      <div class="difficulty-content" data-level="easy">
+        <span class="difficulty-badge easy">🟢 쉬움</span>
+        <h3>🎯 딱 한 줄!</h3>
+        <p>반응형 디자인은 <strong>코드 한 벌</strong>로 폰·태블릿·컴퓨터 모두에서 예쁘게 보이게 만드는 기술이에요! 📱💻</p>
+        <h3>😎 왜 배워요?</h3>
+        <p>한국은 웹 방문의 70% 이상이 스마트폰이래요! 폰에서 글자가 잘리거나 버튼이 눌리지 않으면 사람들은 바로 떠나요. 게다가 구글도 모바일 화면을 먼저 보고 검색 순위를 매겨서(Mobile-First), 반응형은 이제 필수예요. 🔍</p>
+        <div class="info-card">
+          <h4>🌱 이 말들만 알아두자</h4>
+          <ul>
+            <li><strong>뷰포트(Viewport)</strong>: 화면에서 보이는 영역</li>
+            <li><strong>미디어 쿼리</strong>: 화면 크기에 따라 다른 CSS 적용</li>
+            <li><strong>중단점(Breakpoint)</strong>: 레이아웃이 바뀌는 기준 크기</li>
+            <li><strong>유동 그리드</strong>: %·fr로 비율에 맞춰 늘고 주는 배치</li>
+            <li><strong>모바일 우선</strong>: 작은 화면부터 만들고 넓혀가기</li>
+          </ul>
+        </div>
+        <h3>👕 쉽게 풀어보기</h3>
+        <p>반응형은 <strong>신축성 좋은 옷</strong>이랑 똑같아요! 키 작은 사람도 큰 사람도 다 맞는 옷처럼, 화면이 커지거나 작아져도 잘리거나 헐렁하지 않게 알아서 늘고 줄어요.</p>
+        <ul>
+          <li>🔧 핵심 도구는 <strong>미디어 쿼리</strong>: "화면이 768px보다 넓으면 이 스타일 추가해줘" 같은 조건문!</li>
+          <li>📱 보통 폰을 기본으로 만들고, 화면이 커지면 사이드바를 넣거나 카드 칸을 늘려요 (모바일 우선). 작은 화면이 제일 까다로우니 거기서 시작하면 쉬워요.</li>
+          <li>🖼️ 이미지는 <code>max-width: 100%</code>만 줘도 칸에 맞게 줄어들고, 글자는 <code>rem</code>·<code>clamp()</code>로 화면에 맞춰 커져요.</li>
+        </ul>
+        <div class="study-tip">
+          <strong>💡 꿀팁:</strong> 크롬 개발자 도구의 디바이스 모드(<strong>Ctrl+Shift+M</strong>)로 아이폰·갤럭시·아이패드를 바로 흉내 내며 확인할 수 있어요! 📲
+        </div>
+        <h3>📝 오늘의 정리</h3>
+        <ul>
+          <li>모바일 우선 설계 + 미디어 쿼리로 큰 화면 대응</li>
+          <li>고정 px 대신 %·rem·fr·<code>clamp()</code> 사용</li>
+          <li>이미지는 <code>max-width: 100%</code>·<code>srcset</code></li>
+          <li>중단점은 콘텐츠가 깨지는 지점에서 정하기</li>
+          <li>터치 버튼은 최소 44×44px! 손가락으로 눌러야 하니까 👆</li>
+        </ul>
+      </div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+        <p>모던 반응형은 미디어 쿼리만으로는 부족하고, 컴포넌트 자체가 자기 크기에 적응해야 합니다. 이를 위해 <code>@container</code> 컨테이너 쿼리가 도입되어 카드가 사이드바에 있을 때와 메인에 있을 때 다른 모양이 되도록 자율 결정을 할 수 있습니다. 글자 크기는 <code>font-size: clamp(1rem, 0.5rem + 1.5vw, 1.5rem)</code>처럼 최소·이상·최대 값을 한 줄로 지정하면 미디어 쿼리 없이 부드럽게 스케일됩니다. 이미지 최적화는 <code>srcset</code>·<code>sizes</code>로 해상도와 너비를 브라우저에 맡기고, <code>picture</code> + <code>source media</code>로 아트 디렉션(모바일에선 세로 사진, 데스크톱에선 가로 사진)을 분리합니다. 접근성 측면에선 <code>prefers-reduced-motion</code>으로 모션을 줄이고, <code>prefers-color-scheme</code>으로 다크 모드를 자동 적용해야 합니다.</p>
+        <h3>핵심 코드 패턴</h3>
+        <pre><code>/* 컨테이너 쿼리: 카드가 부모 너비에 따라 자율 변형 */
+.card { container-type: inline-size; }
+
+@container (min-width: 480px) {
+  .card { display: grid; grid-template-columns: 120px 1fr; gap: 1rem; }
+}
+
+/* 유체 타이포그래피 + 다크 모드 자동 */
+:root { color-scheme: light dark; }
+h1 { font-size: clamp(1.5rem, 1rem + 2vw, 3rem); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition: none !important; }
+}</code></pre>
+        <h3>대표 예제</h3>
+        <div class="info-card">
+          <h4>💻 예제 1: Holy Grail 레이아웃</h4>
+          <p>헤더·사이드바 2개·메인·푸터를 Grid로 정의하고 모바일에선 단일 컬럼으로 자동 스택, 데스크톱에선 5영역 배치되도록 <code>grid-template-areas</code>를 미디어 쿼리로 교체합니다.</p>
+        </div>
+        <div class="info-card">
+          <h4>💻 예제 2: 적응형 내비게이션</h4>
+          <p>모바일에선 햄버거 메뉴, 데스크톱에선 가로 메뉴로 바뀌는 패턴은 동일 마크업에 CSS만 변경(또는 <code>:has()</code>로 선택)하는 방식이 유지보수에 유리합니다.</p>
+        </div>
+        <h3>실무 응용</h3>
+        <p>실무에선 (1) Tailwind <code>sm/md/lg/xl</code> 유틸로 컴포넌트 단위 빠른 반응형, (2) Next/Image·next/font로 이미지·폰트 자동 최적화, (3) Storybook 디바이스 뷰포트 애드온으로 모든 컴포넌트의 반응형 회귀 테스트를 진행합니다.</p>
+        <div class="warning-box">
+          <strong>⚠️ 자주 하는 실수:</strong> 디자이너가 준 PC 시안만 그대로 구현, 절대 px 폰트로 줌 기능 무력화, 가로 스크롤이 생기는 모바일 페이지(<code>overflow-x</code> 디버그 필수), 320px 화면을 안 보고 출시.
+        </div>
+
+<h3>전문가 레벨</h3>
+        <p>반응형의 미래는 "디바이스 기반"에서 "사용자 의도·환경 기반"으로 이동 중입니다. 컨테이너 쿼리는 컴포넌트 컴포지션을 진정한 "재사용 가능"으로 만들었고, <code>@container style()</code>은 부모의 커스텀 프로퍼티 값에 따라 자식 스타일을 바꾸는 단계로 진화 중입니다. <code>aspect-ratio</code> 속성과 <code>view-timeline</code>은 스크롤 기반 애니메이션을 CSS만으로 구현 가능케 하며, <code>@scope</code>는 스타일 격리 문제를 해결합니다. 픽셀 비율(DPR)·OLED 번인·HDR 색역까지 고려해야 하는 시대에는 <code>color: oklch()</code>, <code>display-p3</code> 색공간을 사용해 정확한 색을 보장합니다. 또한 폴더블·롤러블 디바이스 지원을 위한 Viewport Segments API와 Foldable Display Posture API가 진행 중입니다.</p>
+        <h3>고급 패턴</h3>
+        <pre><code>/* 스크롤 기반 애니메이션 + 컨테이너 쿼리 + scope */
+@scope (.product-card) {
+  :scope { container: card / inline-size; }
+
+  .image {
+    animation: zoom linear;
+    animation-timeline: view();
+    animation-range: cover 20% cover 80%;
+  }
+
+  @container card (width &gt; 600px) {
+    :scope { display: grid; grid-template-columns: 2fr 3fr; }
+  }
+}
+
+@keyframes zoom { from { scale: 1 } to { scale: 1.1 } }</code></pre>
+        <h3>최신 트렌드</h3>
+        <p>(1) <strong>CSS Anchor Positioning</strong>: tooltip·popover를 자바스크립트 없이 정확히 위치, (2) <strong>Intrinsic Web Design</strong>(Jen Simmons): 화면 기반에서 콘텐츠 기반 레이아웃으로 전환, (3) <strong>Polypane·Responsively</strong> 같은 멀티 뷰포트 동시 디버그 도구의 표준화.</p>
+        <h3>관련 분야</h3>
+        <ul>
+          <li>접근성 + 인터내셔널라이제이션(LTR/RTL)</li>
+          <li>모션·애니메이션 디자인(주의: 멀미)</li>
+          <li>디바이스별 입력 모달리티(<code>any-pointer: coarse/fine</code>)</li>
+        </ul>
+        <h3>추가 자료</h3>
+        <ul>
+          <li>📖 "Every Layout" (Heydon Pickering, Andy Bell)</li>
+          <li>📺 Una Kravets — Container Queries Deep Dive</li>
+          <li>🔬 Chrome Status — Viewport Segments API</li>
+        </ul>
+        <div class="success-box">
+          <strong>🎓 도전 과제:</strong> 320px·768px·1280px·2560px·울트라와이드(3440px)에서 모두 자연스러운 대시보드를 미디어 쿼리 없이 컨테이너 쿼리만으로 구현해보세요.
+        </div>
+</div>
+    
+<h2>🕹️ 직접 해보기 — 다른 하나 찾기</h2>
+<p>각 묶음에서 성격이 다른 하나를 골라 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#0ea5e9","prompt":"각 묶음에서 성격이 다른 하나를 고르세요","rounds":[{"items":["rem","em","%","px"],"odd":3,"why":"px만 절대 단위, 나머지는 상대 단위"},{"items":["뷰포트","미디어 쿼리","중단점","Babel"],"odd":3,"why":"Babel은 빌드 도구, 나머지는 반응형 개념"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0ea5e9","questions":[{"q":"조건부로 CSS를 적용하는 기능은?","choices":["키프레임","미디어 쿼리","변수","트랜지션"],"answer":1},{"q":"모바일 퍼스트 전략이란?","choices":["모바일부터 디자인","PC부터 디자인","태블릿 전용 개발","앱 전용 개발"],"answer":0},{"q":"뷰포트 높이 100%를 뜻하는 값은?","choices":["100vw","100px","100vh","100em"],"answer":2},{"q":"최소·권장·최대를 한 번에 쓰는 함수는?","choices":["min()","max()","calc()","clamp()"],"answer":3},{"q":"해상도별 이미지를 지정하는 속성은?","choices":["srcset","alt","loading","object-fit"],"answer":0}]};</script>
+</main>
+  </div>
+
+  <script>
+    // Media Query Builder
+    const queryType = document.getElementById('queryType');
+    const value1 = document.getElementById('value1');
+    const value2 = document.getElementById('value2');
+    const generatedQuery = document.getElementById('generatedQuery');
+
+    function updateQuery() {
+      let query = '';
+      if (queryType.value === 'max-width') {
+        query = `@media (max-width: ${value1.value}px) { }`;
+      } else if (queryType.value === 'min-width') {
+        query = `@media (min-width: ${value1.value}px) { }`;
+      } else if (queryType.value === 'range') {
+        query = `@media (min-width: ${value1.value}px) and (max-width: ${value2.value}px) { }`;
+      }
+      generatedQuery.textContent = query;
+    }
+
+    queryType.addEventListener('change', () => {
+      value2.disabled = queryType.value !== 'range';
+      updateQuery();
+    });
+    value1.addEventListener('input', updateQuery);
+    value2.addEventListener('input', updateQuery);
+
+    // Viewport Resizer
+    const resizeSlider = document.getElementById('resizeSlider');
+    const resizeableContent = document.getElementById('resizeableContent');
+    const currentWidth = document.getElementById('currentWidth');
+    const currentBreakpoint = document.getElementById('currentBreakpoint');
+
+    function updateViewport(width) {
+      resizeableContent.style.width = width + 'px';
+      currentWidth.textContent = width;
+
+      if (width <= 479) {
+        currentBreakpoint.textContent = '📱 모바일 (320-479px)';
+      } else if (width <= 639) {
+        currentBreakpoint.textContent = '📱 큰 폰 (480-639px)';
+      } else if (width <= 1023) {
+        currentBreakpoint.textContent = '📱 태블릿 (640-1023px)';
+      } else {
+        currentBreakpoint.textContent = '🖥️ 데스크톱 (1024px+)';
+      }
+    }
+
+    function setViewportWidth(width) {
+      resizeSlider.value = width;
+      updateViewport(width);
+    }
+
+    resizeSlider.addEventListener('input', (e) => {
+      updateViewport(parseInt(e.target.value));
+    });
+  </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('fe3d-07');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('fe3d-07-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,1.2,13.5);camera.lookAt(0,0.2,0);
+  var vw=new THREE.Mesh(new THREE.BoxGeometry(1,1,0.3),new THREE.MeshBasicMaterial({color:0x39415a,wireframe:true,transparent:true,opacity:0.8}));
+  vw.position.set(0,0.4,0);scene.add(vw);
+  var sizeL=lbl('1200px — 데스크톱',27,'#39415a',1.05);sizeL.position.set(0,4.6,0);scene.add(sizeL);
+  function setSize(t){scene.remove(sizeL);if(sizeL.material.map)sizeL.material.map.dispose();sizeL.material.dispose();sizeL=lbl(t,27,'#39415a',1.05);sizeL.position.set(0,4.6,0);scene.add(sizeL);}
+  var mq=lbl('',24,'#d6455b',1);mq.position.set(0,-4.0,0);scene.add(mq);
+  function setMq(t){scene.remove(mq);if(mq.material.map)mq.material.map.dispose();mq.material.dispose();mq=lbl(t,24,'#d6455b',1);mq.position.set(0,-4.0,0);scene.add(mq);}
+  var header=box(1,0.5,0.4,0x5b6bd6,0.95);scene.add(header);
+  var burger=box(0.5,0.35,0.45,0xd6455b,0);scene.add(burger);
+  var cards=[];
+  for(var i=0;i<3;i++){var c=box(1,1.2,0.4,[0x2f9e63,0xe07a3f,0x9b59b6][i],0.95);scene.add(c);cards.push(c);}
+  var sidebar=box(1,1.2,0.4,0xffc83c,0.95);scene.add(sidebar);
+  var footer=box(1,0.4,0.4,0x9aa6c0,0.95);scene.add(footer);
+  // layout functions: W = viewport width in world units, H height
+  function layoutDesktop(W,H){
+    header.visible=true;header.scale.set(W-0.4,0.5,1);header.position.set(0,H/2-0.55,0.2);
+    burger.material.opacity=0;
+    var cw=(W-0.4-2.2)/3;
+    cards.forEach(function(c,i){c.scale.set(cw,1.6,1);c.position.set(-W/2+0.2+1.0+cw/2+i*(cw+0.15)+0,0.45,0.2);c.position.x=-W/2+0.2+cw/2+i*(cw+0.12);c.visible=true;});
+    sidebar.scale.set(1.7,1.6,1);sidebar.position.set(W/2-1.05,0.45,0.2);sidebar.visible=true;
+    cards.forEach(function(c,i){var cw2=(W-0.4-1.9-0.24)/3;c.scale.x=cw2;c.position.x=-W/2+0.2+cw2/2+i*(cw2+0.12);});
+    footer.scale.set(W-0.4,0.4,1);footer.position.set(0,-H/2+0.45,0.2);
+  }
+  function layoutTablet(W,H){
+    header.visible=true;header.scale.set(W-0.3,0.5,1);header.position.set(0,H/2-0.55,0.2);
+    burger.material.opacity=0;
+    var cw=(W-0.3-0.12)/2;
+    cards[0].scale.set(cw,1.3,1);cards[0].position.set(-W/2+0.15+cw/2,0.85,0.2);
+    cards[1].scale.set(cw,1.3,1);cards[1].position.set(W/2-0.15-cw/2,0.85,0.2);
+    cards[2].scale.set(cw,1.3,1);cards[2].position.set(-W/2+0.15+cw/2,-0.6,0.2);
+    sidebar.scale.set(cw,1.3,1);sidebar.position.set(W/2-0.15-cw/2,-0.6,0.2);
+    footer.scale.set(W-0.3,0.4,1);footer.position.set(0,-H/2+0.4,0.2);
+  }
+  function layoutMobile(W,H){
+    header.visible=true;header.scale.set(W-0.2,0.45,1);header.position.set(0,H/2-0.45,0.2);
+    burger.material.opacity=0.95;burger.position.set(W/2-0.45,H/2-0.45,0.45);
+    var ch=0.78;
+    cards.forEach(function(c,i){c.scale.set(W-0.2,ch,1);c.position.set(0,H/2-1.1-i*(ch+0.12),0.2);});
+    sidebar.scale.set(W-0.2,ch,1);sidebar.position.set(0,H/2-1.1-3*(ch+0.12),0.2);
+    footer.scale.set(W-0.2,0.35,1);footer.position.set(0,-H/2+0.35,0.2);
+  }
+  var st={W:10,H:6.4,mode:'d'};
+  function apply(){
+    vw.scale.set(st.W,st.H,1);
+    if(st.mode==='d')layoutDesktop(st.W,st.H);
+    else if(st.mode==='t')layoutTablet(st.W,st.H);
+    else layoutMobile(st.W,st.H);
+  }
+  apply();
+  function shrink(w0,w1,h0,h1){return function(u){st.W=w0+(w1-w0)*ez(u);st.H=h0+(h1-h0)*ez(u);apply();};}
+  var phases=[
+    {dur:4,cap:'데스크톱(1200px): 헤더 + 3열 카드 + 사이드바 + 푸터. 공간이 넉넉하니 가로로 폅니다.',
+     enter:function(){st.mode='d';setSize('1200px — 데스크톱');setMq('');apply();},
+     update:shrink(10,10,6.4,6.4)},
+    {dur:3.5,cap:'뷰포트가 줄어듭니다… 768px에 닿는 순간 @media (max-width:768px) 규칙이 발동 — 3열이 2열로 재배치!',
+     enter:function(){setMq('@media (max-width: 768px) { … }');},
+     update:function(u){shrink(10,7.2,6.4,6.0)(u);if(u>0.85&&st.mode!=='t'){st.mode='t';setSize('768px — 태블릿');apply();}}},
+    {dur:3.5,cap:'더 줄어들어 480px — 두 번째 브레이크포인트: 모든 블록이 1열 스택으로, 내비는 햄버거(빨강)로 접힙니다.',
+     enter:function(){setMq('@media (max-width: 480px) { … }');},
+     update:function(u){shrink(7.2,4.0,6.0,6.6)(u);if(u>0.85&&st.mode!=='m'){st.mode='m';setSize('480px — 모바일');apply();}}},
+    {dur:4.5,cap:'모바일 퍼스트: 기본 CSS는 "1열(모바일)"로 짜고, min-width 쿼리로 화면이 커질 때 열을 "추가"합니다 — 거꾸로 확장해 봅시다.',
+     update:function(u){
+       if(u<0.5){shrink(4.0,7.2,6.6,6.0)(u*2);if(u>0.42&&st.mode!=='t'){st.mode='t';setSize('768px — 태블릿');apply();}}
+       else{shrink(7.2,10,6.0,6.4)((u-0.5)*2);if(u>0.92&&st.mode!=='d'){st.mode='d';setSize('1200px — 데스크톱');setMq('@media (min-width: 769px) { … }');apply();}}
+     }}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

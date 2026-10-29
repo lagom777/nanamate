@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>물리학: 자연의 법칙을 3D로 탐험하다</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="index.html">🔬 표지 · 소개</a></li>
+    <li><a href="chapters/01-mechanics.html">1. 역학 · 뉴턴의 세계</a></li>
+    <li><a href="chapters/02-energy.html">2. 에너지와 운동량</a></li>
+    <li><a href="chapters/03-thermodynamics.html">3. 열역학</a></li>
+    <li><a href="chapters/04-waves.html">4. 파동과 소리</a></li>
+    <li><a href="chapters/05-optics.html">5. 빛과 광학</a></li>
+    <li><a href="chapters/06-electromagnetism.html">6. 전자기학</a></li>
+    <li><a href="chapters/07-modern.html">7. 현대물리 · 상대성</a></li>
+    <li><a href="chapters/08-quantum.html">8. 양자역학</a></li>
+    <li><a href="chapters/09-nuclear.html">9. 핵물리와 입자</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>물리학,<br>자연의 <em>법칙</em>을<br>3D로 탐험하다</h1>
+  <p class="authors">Interactive Physics Lab — Laws of Nature in Three Dimensions</p>
+  <p class="affiliation">Vol. 03 · May 2026 · aboutPhysics Editorial</p>
+</header>
+
+<div class="scene-3d" id="intro-scene"></div>
+<span class="interact-hint">⟳ 마우스로 드래그하여 회전 · 스크롤로 확대/축소</span>
+
+<h2>물리학이란?</h2>
+<p>물리학은 자연의 가장 근본적인 법칙을 탐구하는 학문입니다. 아주 작은 원자핵 속 쿼크에서부터 우주 전체의 팽창에 이르기까지, 물질과 에너지의 상호작용을 수학적 언어로 기술합니다.</p>
+
+<p>이 학습 사이트에서는 단순히 공식을 외우는 것이 아니라, Three.js를 활용한 3D 시뮬레이션으로 물리 현상을 직접 체험합니다. 변수를 조절하고, 결과를 눈으로 확인하며, 직관을 쌓아가세요.</p>
+
+<h2>학습 로드맵</h2>
+
+<div class="info-card">
+  <h4>📐 챕터 1–2: 고전역학</h4>
+  <p>뉴턴의 운동법칙부터 에너지 보존까지. 포물선 운동, 충돌, 진자를 3D로 시뮬레이션합니다.</p>
+</div>
+
+<div class="info-card energy">
+  <h4>🔥 챕터 3: 열역학</h4>
+  <p>분자 운동론, 엔트로피, 열기관. 기체 분자의 무작위 운동을 실시간으로 관찰합니다.</p>
+</div>
+
+<div class="info-card wave">
+  <h4>🌊 챕터 4–5: 파동과 빛</h4>
+  <p>횡파/종파, 간섭, 회절, 렌즈와 거울. 파동의 중첩을 3D 메시로 시각화합니다.</p>
+</div>
+
+<div class="info-card">
+  <h4>⚡ 챕터 6: 전자기학</h4>
+  <p>전기장, 자기장, 맥스웰 방정식. 대전 입자의 궤적을 실시간으로 추적합니다.</p>
+</div>
+
+<div class="info-card quantum">
+  <h4>🌀 챕터 7–9: 현대물리</h4>
+  <p>특수상대성이론, 양자역학, 핵물리. 시공간 왜곡, 파동함수, 핵분열을 시각화합니다.</p>
+</div>
+
+<h2>물리학의 위대한 공식들</h2>
+<div class="formula">F = ma &nbsp;&nbsp;|&nbsp;&nbsp; E = mc² &nbsp;&nbsp;|&nbsp;&nbsp; ∇ × E = −∂B/∂t</div>
+
+<p>각 챕터에서는 이 공식들이 실제로 어떤 현상을 만들어내는지 직접 눈으로 확인할 수 있습니다. 왼쪽 사이드바에서 챕터를 선택하여 학습을 시작하세요.</p>
+
+</main>
+</div>
+
+<script>
+// Intro 3D Scene - 궤도 운동하는 입자들
+(function() {
+  const container = document.getElementById('intro-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 3, 8);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Central mass
+  const centerGeo = new THREE.SphereGeometry(0.6, 32, 32);
+  const centerMat = new THREE.MeshBasicMaterial({ color: 0x00d4ff, transparent: true, opacity: 0.9 });
+  const center = new THREE.Mesh(centerGeo, centerMat);
+  scene.add(center);
+
+  // Glow
+  const glowGeo = new THREE.SphereGeometry(0.9, 32, 32);
+  const glowMat = new THREE.MeshBasicMaterial({ color: 0x00d4ff, transparent: true, opacity: 0.15 });
+  scene.add(new THREE.Mesh(glowGeo, glowMat));
+
+  // Orbiting particles
+  const particles = [];
+  const colors = [0xff6b35, 0xa855f7, 0x10b981, 0xfbbf24, 0xef4444];
+  for (let i = 0; i < 30; i++) {
+    const geo = new THREE.SphereGeometry(0.08 + Math.random() * 0.08, 16, 16);
+    const mat = new THREE.MeshBasicMaterial({ color: colors[i % colors.length] });
+    const mesh = new THREE.Mesh(geo, mat);
+    const radius = 2 + Math.random() * 3;
+    const speed = 0.3 + Math.random() * 0.5;
+    const phase = Math.random() * Math.PI * 2;
+    const tilt = (Math.random() - 0.5) * 1.2;
+    particles.push({ mesh, radius, speed, phase, tilt });
+    scene.add(mesh);
+  }
+
+  // Orbit rings
+  for (let r = 2; r <= 5; r += 1) {
+    const ringGeo = new THREE.RingGeometry(r - 0.01, r + 0.01, 64);
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0x00d4ff, transparent: true, opacity: 0.08, side: THREE.DoubleSide });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.rotation.x = -Math.PI / 2;
+    scene.add(ring);
+  }
+
+  // Grid helper
+  const grid = new THREE.GridHelper(20, 20, 0x1a2340, 0x1a2340);
+  grid.position.y = -2;
+  scene.add(grid);
+
+  // Mouse interaction
+  let mouseX = 0, mouseY = 0;
+  container.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = Date.now() * 0.001;
+
+    particles.forEach(p => {
+      const angle = t * p.speed + p.phase;
+      p.mesh.position.x = Math.cos(angle) * p.radius;
+      p.mesh.position.z = Math.sin(angle) * p.radius;
+      p.mesh.position.y = Math.sin(angle * 2) * p.tilt;
+    });
+
+    // Smooth camera follow mouse
+    camera.position.x += (mouseX * 3 - camera.position.x) * 0.02;
+    camera.position.y += (-mouseY * 2 + 3 - camera.position.y) * 0.02;
+    camera.lookAt(0, 0, 0);
+
+    center.rotation.y = t * 0.5;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

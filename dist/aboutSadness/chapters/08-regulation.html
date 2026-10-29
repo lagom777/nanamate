@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8. 조절과 치료 — aboutSadness</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🔵 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>조절과 치료</em></h1>
+  <p class="authors">Chapter 8 — Regulation &amp; Therapy</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 조절 — 감정의 온도를 되돌리는 피드백</span>
+
+<h2>조절과 치료 개요</h2>
+<p>우울증 치료의 표준은 단일 무기가 아니라 조합이다. 약물(SSRI·SNRI), 심리치료(CBT·BA·MBCT), 생활(운동·수면·햇빛), 사회적 지지가 4축으로 결합될 때 효과가 가장 크다. 그리고 ketamine·psilocybin·TMS·DBS 같은 새로운 치료가 빠르게 임상에 진입하고 있다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>모든 우울증에 듣는 단일 치료는 없다. 환자 표현형과 우선 증상(수면, 식욕, 무력감, 자살사고, 불안)에 따라 약물 선택이 달라진다. 그리고 약물과 심리치료의 병용이 단독 치료보다 일관되게 우수하다는 메타분석이 누적됐다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🌈 한 줄로 이해하기</h3><p>우울증 치료는 약·상담·생활습관·사람의 도움, 이 네 가지를 함께 쓰는 게 기본이에요. 🧩</p>
+  <h3>💙 왜 알아두면 좋을까?</h3><p>한 가지 방법만으로 우울에서 빠져나오긴 어려워요. 약은 뇌 신호의 볼륨을, 상담은 생각의 습관을, 운동·잠은 몸의 기초를, 사람은 회복할 환경을 만들어 줘요. 네 가지가 팀처럼 함께할 때 가장 잘 나아요. 🤝 한국은 정신과 진료에 건강보험이 잘 되어 있고, 무료로 도와주는 곳도 많아요. "조용히 혼자 버티기"가 아니라 "여러 도움을 함께 쓰기"가 요즘의 방법이에요.</p>
+  <div class="info-card"><h4>🌱 쉬운 낱말 사전</h4><ul><li><strong>SSRI</strong> 💊: 가장 먼저 쓰는 대표 항우울제예요.</li><li><strong>CBT(인지행동치료)</strong> 🗣️: 생각·감정·행동의 순환을 다루는 상담이에요.</li><li><strong>MBCT</strong> 🧘: 마음챙김을 더한 상담으로, 재발을 막는 데 좋아요.</li><li><strong>TMS</strong> 🧲: 머리 밖에서 자기장으로 뇌를 부드럽게 자극하는 치료예요.</li><li><strong>광치료</strong> 💡: 밝은 빛을 매일 쬐는 겨울 우울(SAD) 치료예요.</li></ul></div>
+  <h3>🔍 좀 더 쉽게 풀어보기</h3><p>약(SSRI)은 뇌 신호인 세로토닌을 늘려 회복을 도와요. 그래서 효과가 보통 2~4주 뒤에 천천히 나타나요. ⏳ CBT는 부정적인 자동 생각을 알아채고 다른 생각으로 바꾸는 연습이에요. MBCT는 우울이 한 번 나은 사람의 재발을 크게 줄여 줘요. TMS는 머리 밖에서 자기장으로 뇌를 자극하는 안 아픈 치료로, 한국에서도 보험이 넓어졌어요. 🧲</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 약·상담·생활·사람, 네 칸짜리 표를 그려 보세요. 비어 있는 칸이 바로 채우면 좋을 부분이에요. 🧩</div>
+  <h3>📝 한 장 정리</h3><ul><li>약·상담·생활·사람, 네 가지 조합이 기본이에요. 🧩</li><li>SSRI는 먼저 쓰는 약이고 효과는 2~4주 뒤에 와요. 💊</li><li>CBT·행동활성화·MBCT가 근거가 튼튼한 상담이에요.</li><li>TMS·광치료·ECT는 뇌를 직접 돕는 방법이에요. 🧲</li><li>한국의 건강보험·바우처가 문턱을 크게 낮췄어요.</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>CBT의 핵심 기법은 (1) 자동사고 식별, (2) 인지 왜곡 명명, (3) 증거 검토와 대안 사고 만들기, (4) 행동 실험이다. 행동활성화(BA)는 CBT에서 행동 측면을 떼어낸 간소화 버전이며 가벼운~중등도 우울에서 CBT와 동등한 효과를 보인다. MBCT(Mindfulness-Based Cognitive Therapy, Segal·Williams·Teasdale)는 8주 그룹 프로그램으로, 우울 재발 예방에 표적화돼 있다. 회복기 환자의 재발률을 40%대 감소시킨다는 메타분석이 있다. SSRI는 fluoxetine, sertraline, escitalopram 등이 대표적이며 부작용 프로파일에 따라 선택한다. SNRI(venlafaxine, duloxetine)는 통증·불안 동반 시 고려된다. TMS는 좌측 dorsolateral PFC를 표적으로 하루 30분, 4~6주 시행하며 비반응성 우울의 30~40%에서 관해를 유도한다. 광치료는 10,000 lux를 매일 아침 30분, 특히 SAD에서 1차 치료다.</p>
+  <h3>핵심 메커니즘</h3><div class="info-card"><h4>📐 CBT 인지 왜곡 8가지</h4><p>이분법적 사고, 과잉일반화, 정신적 여과, 긍정 무시, 성급한 결론, 확대·축소, 정서적 추론, "해야 한다" 진술이 우울증의 대표적 인지 왜곡이다. 일지에 기록하며 명명하는 것만으로도 자동사고의 힘이 약해진다.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>"이번 일도 망했다, 나는 늘 실패한다"는 과잉일반화다. CBT에서는 "이번 일은 어떤 부분이 어떻게 안 됐는지"로 구체화하고, 과거 성공 데이터를 함께 본다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>MBCT 8주 프로그램은 호흡 명상·바디스캔·정좌 명상을 매일 30~40분 수련하며, 자동사고를 "사실"이 아닌 "마음의 사건"으로 보는 메타인지 능력을 키운다.</p></div>
+  <h3>응용 사례</h3><p>한국에서는 정신건강 진료의 건강보험 적용이 확대되고, 청년마음건강바우처가 8~12회기 무료 심리상담을 제공한다. 직장 EAP는 임직원에게 무기명 6~8회기 단기 상담을 제공한다. TMS는 2020년대 들어 보험 적용 범위가 늘어 임상 접근성이 크게 개선됐다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> SSRI 효과가 1주 만에 안 보인다고 임의 중단하면 효과가 영영 안 나타난다. 최소 4~6주는 적정 용량으로 유지하고 의사와 함께 평가한다.</div>
+
+<h3>전문가 레벨 이해</h3><p>Ketamine·esketamine은 NMDA 수용체 차단을 통해 글루타메이트 시스템에 작용하며, 수 시간 내 항우울 효과가 나타나는 패러다임 전환적 약물이다. Esketamine 비강 스프레이는 2019년 FDA 승인, 한국에서도 2020년대 도입됐다. 그러나 해리·혈압 상승·남용 위험 때문에 의료기관 내 투여가 원칙이다. Psilocybin RCT(NEJM 2022, Carhart-Harris)는 치료저항성 우울 환자에서 단 1~2회 투여로 SSRI에 비견되는 효과를 보였다. 작용 기전은 5-HT2A 수용체를 통한 DMN 가소성 증가와 자기 서사의 재구성으로 가정된다. DBS for TRD는 sgACC·복측 capsule·MFB 등 다양한 표적이 시험되고 있으며 환자 개별화가 핵심이다. 디지털 치료제(DTx)는 미국 FDA가 reSET·EndeavorRx 등을 정식 의료기기로 승인하면서 한국도 식약처가 우울증 DTx 임상시험을 허가하는 흐름이다. 정밀 정신의학(precision psychiatry)은 유전자·뇌영상·디지털 표현형을 결합해 환자별 최적 치료를 매칭하려는 시도다.</p>
+  <h3>최신 연구·동향</h3><p>사이코델릭 보조 심리치료의 FDA 검토가 진행되고 있으나 도입은 약물별로 단계가 다르다. MDMA 보조 심리치료(PTSD)는 phase 3를 마치고 FDA에 승인을 신청했으나, 2024년 FDA가 승인을 보류하고 추가 임상 데이터를 요구해 추가 phase 3 시험이 필요한 상태다. Psilocybin은 우울증 대상 phase 3 임상이 별도로 진행 중으로 아직 신청 단계 이전이다. 한국에서도 의료용 사이코델릭 임상 도입에 대한 학계 논의가 시작됐다. 디지털 치료제와 AI 챗봇 상담의 효과·안전성 RCT가 빠르게 누적되고 있다.</p>
+  <h3>관련 분야</h3><ul><li>정신약리학(Psychopharmacology)</li><li>임상심리학(Clinical Psychology)</li><li>중재신경과학(Interventional Neuroscience)</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"Feeling Good" — David Burns</li><li>"The Mindful Way Through Depression" — Williams &amp; Teasdale</li><li>"How to Change Your Mind" — Michael Pollan</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 본인 또는 가까운 사람의 우울 조절 전략을 약물·심리치료·생활·관계 4축 매트릭스로 정리하고, 가장 비어 있는 축을 6주간 보강해 효과를 측정해보자.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 치료법 분류</h2>
+<p>우울증 치료법을 알맞은 그룹으로 분류해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#60a5fa","prompt":"우울증 치료를 알맞은 그룹으로 분류하세요","groups":[{"name":"약물 치료","items":["SSRI","SNRI","ketamine"]},{"name":"심리치료","items":["CBT","MBCT"]},{"name":"회로 자극","items":["TMS","ECT"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#60a5fa","questions":[{"q":"항우울제의 1차 선택약은?","choices":["SSRI","ECT","광치료","TMS"],"answer":0},{"q":"사고·감정·행동을 다루는 심리치료?","choices":["MRI","CBT","TMS","ECT"],"answer":1},{"q":"자기장으로 뇌를 자극하는 치료는?","choices":["ECT","SSRI","TMS","CBT"],"answer":2},{"q":"SSRI 효과가 나타나는 시기는?","choices":["즉시","1일","1주","2~4주"],"answer":3},{"q":"우울 재발 예방 8주 프로그램은?","choices":["SSRI","MBCT","DBS","ECT"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const COL=0x60a5fa;const tube=new THREE.Mesh(new THREE.CylinderGeometry(0.25,0.25,3.4,16,1,true),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.4}));s.add(tube);const bulb=new THREE.Mesh(new THREE.SphereGeometry(0.5,18,18),new THREE.MeshBasicMaterial({color:COL}));bulb.position.y=-1.9;s.add(bulb);const lvl=new THREE.Mesh(new THREE.SphereGeometry(0.3,16,16),new THREE.MeshBasicMaterial({color:0xffe08a}));s.add(lvl);s.userData.lvl=lvl;const loop=new THREE.Mesh(new THREE.TorusGeometry(1.5,0.03,8,48),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.3}));loop.position.x=2.2;s.add(loop);
+  const Llv=lbl('SSRI(세로토닌↑)','#ffe08a');Llv.position.set(1.35,0,0);lvl.add(Llv);
+  const L1=lbl('감정 온도','#93c5fd');L1.position.set(0,2.15,0);s.add(L1);const L2=lbl('CBT·MBCT 순환','#bfdbfe');L2.position.set(2.2,1.9,0);s.add(L2);const L3=lbl('TMS·광치료','#93c5fd');L3.position.set(-2.3,0.9,0);s.add(L3);const L4=lbl('운동·수면·사회적 지지','#dbeafe');L4.position.set(-1.2,-2.6,0);s.add(L4);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 온도계 속 노란 구는 감정의 온도 — 치료는 내려간 온도를 정상으로 되돌리는 피드백 과정입니다.','SSRI는 세로토닌을 늘리는 1차 항우울제 — 효과는 2~4주 뒤에 천천히 나타납니다.','오른쪽 고리는 CBT — 생각·감정·행동의 순환을 알아채고 바꾸는 심리치료이고, MBCT는 재발을 막습니다.','약물(SSRI·SNRI)·심리치료(CBT·MBCT)·생활(운동·수면·햇빛)·사회적 지지, 4축이 함께할 때 효과가 가장 큽니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.lvl.position.y=Math.sin(T*1.2)*1.2*Math.exp(-((T*0.2)%6)*0.0)+0.0;s.userData.lvl.position.y=Math.sin(T)*1.0;s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

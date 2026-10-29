@@ -1,0 +1,191 @@
+/* 논리형 공부법 상자(.nms). 수능 과목 페이지 변수(--accent, --bg-card …)를 쓴다. */
+.nms {
+  margin: 28px 0;
+  padding: 18px 20px 16px;
+  border: 1px solid var(--border, rgba(0,0,0,.08));
+  border-left: 4px solid var(--accent, #16a34a);
+  border-radius: 14px;
+  background: var(--bg-card, #fff);
+}
+.nms-top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 14px; margin-bottom: 12px; }
+.nms-top b { font-size: 1.02em; color: var(--text, #1a1f2e); }
+.nms-top a { font-size: .84em; color: var(--accent, #16a34a); text-decoration: none; }
+.nms-top a:hover { text-decoration: underline; }
+.nms-fit { margin: 0 0 10px !important; font-size: .92em; color: var(--text-dim, #4a5468); }
+.nms-chain { counter-reset: nms; list-style: none; margin: 0 0 12px; padding: 0; }
+.nms-chain li { counter-increment: nms; position: relative; margin: 0 0 8px; padding: 0 0 0 30px; line-height: 1.7; color: var(--text, #1a1f2e); }
+.nms-chain li::before {
+  content: counter(nms);
+  position: absolute; left: 0; top: .15em;
+  width: 21px; height: 21px; border-radius: 50%;
+  background: color-mix(in srgb, var(--accent, #16a34a) 16%, transparent);
+  color: var(--accent, #16a34a);
+  font-size: .78em; font-weight: 700; text-align: center; line-height: 21px;
+}
+.nms-chain li + li::after {
+  content: "";
+  position: absolute; left: 10px; top: -8px; height: 8px; border-left: 2px solid color-mix(in srgb, var(--accent, #16a34a) 35%, transparent);
+}
+.nms-kv { margin: 6px 0 !important; padding: 8px 12px; border-radius: 10px; background: var(--bg-elevated, #f5f7fa); font-size: .93em; line-height: 1.65; color: var(--text, #1a1f2e) !important; }
+.nms-kv > b:first-child { display: inline-block; min-width: 92px; margin-right: 6px; color: var(--accent, #16a34a); }
+.nms-trap { margin: 8px 0 0 !important; padding: 8px 12px; border-left: 3px solid #d97706; border-radius: 8px; background: color-mix(in srgb, #d97706 10%, transparent); font-size: .92em; line-height: 1.65; color: var(--text, #1a1f2e) !important; }
+.nms-trap > b:first-child { color: #b45309; margin-right: 6px; }
+.nms-tip { margin: 0 !important; font-size: .98em; line-height: 1.75; color: var(--text, #1a1f2e) !important; }
+.nms ul, .nms ol.nms-steps { margin: 0 0 10px; padding-left: 1.3em; }
+.nms ul li, .nms ol.nms-steps li { margin: 4px 0; line-height: 1.7; color: var(--text, #1a1f2e); }
+.nms h3 { margin: 22px 0 8px; font-size: 1.05em; }
+.nms h3 a { color: inherit; text-decoration: none; }
+.nms h3 a:hover { color: var(--accent, #16a34a); }
+@media (max-width: 640px) {
+  .nms { padding: 14px 14px 12px; }
+  .nms-kv > b:first-child { display: block; margin-bottom: 2px; }
+}
+
+/* 논리형: 하나만 고른다면 · 말로 설명해 보기 · 문제 먼저 · 공통 루틴 */
+.nms-one { margin: 0 0 12px !important; padding: 10px 14px; border-radius: 12px; background: color-mix(in srgb, var(--accent, #16a34a) 12%, var(--bg-card, #fff)); border: 1px solid color-mix(in srgb, var(--accent, #16a34a) 30%, transparent); font-size: .98em; line-height: 1.7; font-weight: 600; color: var(--text, #1a1f2e) !important; }
+.nms-one b { display: block; margin-bottom: 2px; font-size: .82em; color: var(--accent, #16a34a); }
+.nms-explain { margin: 12px 0 0; padding: 10px 14px 8px; border-radius: 12px; border: 1px dashed color-mix(in srgb, var(--accent, #16a34a) 45%, transparent); }
+.nms-explain > b { color: var(--accent, #16a34a); }
+.nms-explain ol { margin: 6px 0 6px; padding-left: 1.3em; }
+.nms-explain li { margin: 4px 0; line-height: 1.7; color: var(--text, #1a1f2e); }
+.nms-explain p { margin: 0 !important; font-size: .86em; color: var(--text-dim, #4a5468) !important; }
+.nms-first { margin: 10px 0 0 !important; font-size: .9em; color: var(--text-dim, #4a5468) !important; }
+.nms-first a { color: var(--accent, #16a34a); font-weight: 600; }
+.nms-common, .nms-extra { margin: 14px 0 6px; padding: 4px 16px 10px; border-radius: 12px; background: var(--bg-elevated, #f5f7fa); }
+.nms-common h3, .nms-extra h3 { margin-top: 12px !important; }
+.nms-common ol { padding-left: 1.3em; margin: 0; }
+.nms-common li, .nms-extra li { margin: 6px 0; line-height: 1.7; color: var(--text, #1a1f2e); }
+.nms-extra { background: color-mix(in srgb, #d97706 9%, var(--bg-card, #fff)); }
+
+/* 하나만 고른다면: 줄표 앞 핵심만 굵게 */
+.nms-one { font-weight: 500 !important; }
+.nms-one strong { font-weight: 800; }
+/* 굵게 표시한 핵심 구절 */
+.nms b, .nms strong { font-weight: 800; }
+.nms-chain b { color: var(--text, #1a1f2e); background: linear-gradient(transparent 62%, color-mix(in srgb, var(--accent, #16a34a) 22%, transparent) 62%); }
+
+/* 사슬 가리고 떠올리기 */
+.nms-chain-h { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 2px 0 8px; }
+.nms-chain-h > span { font-size: .82em; font-weight: 700; color: var(--accent, #16a34a); }
+.nms .nms-recall, .nms .nms-timer-btn {
+  appearance: none; cursor: pointer; width: auto !important; min-height: 30px;
+  border: 1px solid var(--border, rgba(0,0,0,.12)) !important; background: var(--bg-card, #fff) !important; color: var(--text, #1a1f2e) !important;
+  border-radius: 999px !important; padding: 4px 12px !important; font: inherit !important; font-size: .8em !important; font-weight: 600 !important; line-height: 1.4 !important;
+}
+.nms .nms-recall:hover, .nms .nms-timer-btn:hover { border-color: var(--accent, #16a34a) !important; }
+.nms .nms-recall[aria-pressed="true"] { background: var(--accent, #16a34a) !important; color: #fff !important; border-color: transparent !important; }
+.nms-recall-hint { display: none; margin: 0 0 8px !important; font-size: .84em; color: var(--text-dim, #4a5468) !important; }
+.is-recall .nms-recall-hint { display: block; }
+.nms-chain li.is-hidden { cursor: pointer; }
+.nms-chain li.is-hidden .nms-step { filter: blur(6px); user-select: none; -webkit-user-select: none; transition: filter .2s; }
+.nms-chain li.is-hidden:hover .nms-step { filter: blur(5px); }
+.nms-chain li.is-hidden:focus-visible { outline: 2px solid var(--accent, #16a34a); outline-offset: 2px; border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) { .nms-chain li.is-hidden .nms-step { transition: none; } }
+
+/* 말로 설명해 보기 — 모범 설명 */
+.nms-ans { margin: 6px 0 4px; }
+.nms-ans summary { cursor: pointer; display: inline-block; font-size: .84em; font-weight: 700; color: var(--accent, #16a34a); list-style: none; }
+.nms-ans summary::-webkit-details-marker { display: none; }
+.nms-ans summary::before { content: "▸ "; }
+.nms-ans[open] summary::before { content: "▾ "; }
+.nms-ans p { margin: 6px 0 2px !important; padding: 8px 12px; border-radius: 10px; background: var(--bg-elevated, #f5f7fa); font-size: .92em !important; line-height: 1.7; color: var(--text, #1a1f2e) !important; }
+
+/* 이 파트 끝내기 체크 */
+.nms-done { margin: 14px 0 0; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--border, rgba(0,0,0,.1)); background: var(--bg-card, #fff); }
+.nms-done > b { color: var(--text, #1a1f2e); }
+.nms-done-n { margin-left: 6px; font-size: .86em; font-weight: 700; color: var(--accent, #16a34a); }
+.nms-done label { display: flex; align-items: flex-start; gap: 8px; margin: 6px 0 0; font-size: .92em; line-height: 1.55; color: var(--text, #1a1f2e); cursor: pointer; }
+.nms-done input[type="checkbox"] { appearance: auto !important; -webkit-appearance: checkbox !important; position: static !important; opacity: 1 !important; width: 17px !important; height: 17px !important; margin: 3px 0 0 !important; flex: 0 0 auto; accent-color: var(--accent, #16a34a); }
+.nms-done.is-complete { border-color: var(--accent, #16a34a); background: color-mix(in srgb, var(--accent, #16a34a) 8%, var(--bg-card, #fff)); }
+
+/* 진행률·과목의 틀 */
+.nms-prog { margin-left: 4px; font-size: .78em; font-weight: 700; color: var(--text-mute, #6b7280); }
+.nms-prog.is-part { color: #b45309; }
+.nms-prog.is-complete { color: var(--accent, #16a34a); }
+.nms-total { margin: 4px 0 8px !important; font-size: .9em; font-weight: 700; color: var(--accent, #16a34a) !important; }
+.nms-frame { margin: 14px 0 6px; padding: 4px 16px 12px; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--accent, #16a34a) 30%, transparent); }
+.nms-frame ol { margin: 4px 0 0; padding-left: 1.4em; }
+.nms-frame li { margin: 8px 0; line-height: 1.6; }
+.nms-frame li > a { font-weight: 700; color: var(--text, #1a1f2e); text-decoration: none; }
+.nms-frame li > a:hover { color: var(--accent, #16a34a); }
+.nms-frame-one { display: block; font-size: .92em; color: var(--text-dim, #4a5468); }
+.nms-frame-one strong { color: var(--text, #1a1f2e); }
+
+/* 상단 오른쪽 버튼 줄 */
+.nms-top-r { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+
+/* 50분 타이머 칩(화면 왼쪽 아래 고정) */
+.nms-timer { position: fixed; left: 50%; transform: translateX(-50%); bottom: 16px; z-index: 9000; display: flex; align-items: center; gap: 8px; max-width: calc(100vw - 32px); padding: 8px 10px 8px 14px; border-radius: 999px; background: #1a1f2e; color: #fff; box-shadow: 0 6px 24px rgba(0,0,0,.18); font-size: .88rem; line-height: 1.4; }
+.nms-timer[hidden] { display: none; }
+.nms-timer.is-rest { background: #0f766e; }
+.nms-timer.is-over { background: #16a34a; }
+.nms-timer-t { font-variant-numeric: tabular-nums; }
+.nms-timer .nms-timer-x { appearance: none; cursor: pointer; width: 26px !important; height: 26px; padding: 0 !important; border: none !important; border-radius: 50% !important; background: rgba(255,255,255,.18) !important; color: #fff !important; font: inherit !important; font-size: .8rem !important; line-height: 26px !important; }
+@media (max-width: 640px) { .nms-timer { bottom: 8px; font-size: .8rem; } }
+
+/* 논리형 전체 해설 */
+.nms-full { margin: 10px 0 14px; border: 1px solid color-mix(in srgb, var(--accent, #16a34a) 28%, transparent); border-radius: 12px; background: var(--bg-card, #fff); }
+.nms-full > summary { cursor: pointer; padding: 10px 14px; list-style: none; }
+.nms-full > summary::-webkit-details-marker { display: none; }
+.nms-full-t { font-weight: 800; color: var(--accent, #16a34a); }
+.nms-full-t::after { content: " 펼치기 ▾"; font-size: .8em; font-weight: 600; color: var(--text-mute, #6b7280); }
+.nms-full[open] .nms-full-t::after { content: " 접기 ▴"; }
+.nms-full-toc { display: block; margin-top: 4px; font-size: .84em; line-height: 1.6; color: var(--text-dim, #4a5468); }
+.nms-full[open] .nms-full-toc { display: none; }
+.nms-full-sec { padding: 0 16px 6px; }
+.nms-full-sec + .nms-full-sec { border-top: 1px dashed var(--border, rgba(0,0,0,.1)); padding-top: 8px; }
+.nms-full-h { margin: 6px 0 6px !important; font-weight: 800; font-size: 1em; color: var(--text, #1a1f2e) !important; }
+.nms-full-sec p:not(.nms-full-h) { margin: 0 0 10px !important; line-height: 1.85; font-size: .97em; color: var(--text, #1a1f2e) !important; }
+.nms-full b { background: linear-gradient(transparent 62%, color-mix(in srgb, var(--accent, #16a34a) 22%, transparent) 62%); }
+
+/* 전체 해설에서 본문 그림으로 가는 링크 */
+.nms-figlink { display: flex; flex-wrap: wrap; gap: 6px 10px; margin: -2px 0 10px !important; }
+.nms-figlink a { display: inline-block; padding: 4px 12px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--accent, #16a34a) 40%, transparent); background: color-mix(in srgb, var(--accent, #16a34a) 8%, var(--bg-card, #fff)); font-size: .86em; font-weight: 700; color: var(--accent, #16a34a); text-decoration: none; }
+.nms-figlink a:hover { background: color-mix(in srgb, var(--accent, #16a34a) 16%, var(--bg-card, #fff)); }
+
+/* 공부법 페이지: 파트별 공략을 파트마다 접기 */
+.nms-part { margin: 8px 0; border: 1px solid var(--border, rgba(0,0,0,.1)); border-radius: 12px; background: var(--bg-card, #fff); }
+.nms-part > summary { cursor: pointer; list-style: none; padding: 10px 14px; font-weight: 700; color: var(--text, #1a1f2e); }
+.nms-part > summary::-webkit-details-marker { display: none; }
+.nms-part > summary::before { content: "▸ "; color: var(--accent, #16a34a); }
+.nms-part[open] > summary::before { content: "▾ "; }
+.nms-part[open] { padding: 0 14px 12px; }
+.nms-part[open] > summary { margin: 0 -14px 4px; }
+.nms-part > .nms-first:first-of-type { margin-top: 0 !important; }
+
+/* 장 페이지 공부 순서 띠: ① 틀 잡기 → ② 이해하기 → ③ 확인하기 → ④ 마무리 */
+.nms-stepband { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 40px 0 0; padding: 8px 14px; border-radius: 10px; background: color-mix(in srgb, var(--accent, #16a34a) 10%, var(--bg-card, #fff)); }
+.nms-stepband b { font-size: 1em; color: var(--accent, #16a34a); }
+.nms-stepband span { font-size: .88em; color: var(--text-dim, #4a5468); }
+.nms-stepband + .nms, .nms-stepband + .sec-bar { margin-top: 10px; }
+.nms-stepband + h2 { margin-top: 18px; }
+
+/* 오답 한 줄(마무리 카드)과 공부법 페이지의 모음 */
+.nms-note { margin: 14px 0 0; padding: 10px 14px; border-radius: 12px; border: 1px dashed color-mix(in srgb, #d97706 55%, transparent); background: color-mix(in srgb, #d97706 6%, var(--bg-card, #fff)); }
+.nms-note > b { color: #b45309; }
+.nms-note-saved { margin-left: 8px; font-size: .82em; font-weight: 700; color: var(--accent, #16a34a); }
+.nms-note-hint { margin: 4px 0 8px !important; font-size: .86em; color: var(--text-dim, #4a5468) !important; }
+.nms-note textarea { display: block; width: 100%; min-height: 58px; resize: vertical; box-sizing: border-box; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border, rgba(0,0,0,.15)); background: var(--bg-card, #fff); color: var(--text, #1a1f2e); font: inherit; font-size: .93em; line-height: 1.6; }
+.nms-note textarea:focus { outline: 2px solid color-mix(in srgb, var(--accent, #16a34a) 50%, transparent); outline-offset: 1px; }
+.nms-notes { margin: 14px 0 6px; padding: 4px 16px 12px; border-radius: 12px; border: 1px dashed color-mix(in srgb, #d97706 55%, transparent); }
+.nms-notes ul { margin: 6px 0 0; padding-left: 1.2em; }
+.nms-notes li { margin: 6px 0; line-height: 1.6; }
+.nms-notes li a { margin-right: 8px; font-weight: 700; color: var(--text, #1a1f2e); text-decoration: none; }
+.nms-note-text { color: var(--text, #1a1f2e); }
+.nms-notes-empty { margin: 6px 0 0 !important; font-size: .88em; color: var(--text-mute, #6b7280) !important; }
+.nms-notes-empty[hidden] { display: none; }
+/* 넓은 화면: 첫머리 카드는 두 칸(왼쪽 하나만·왜 사슬 / 오른쪽 외울 것·유도·함정)에 전체 해설이 그 아래 두 칸에 걸치고 절도 두 칸,
+ * 마무리 카드는 왼쪽 말로 설명 / 오른쪽 오답 한 줄·끝내기 체크. 좁은 화면은 적힌 순서 그대로 한 칸 */
+@media (min-width: 1280px) {
+  .nms-cols { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-areas: "a b" "full full"; column-gap: 28px; align-items: start; }
+  .nms-col-a { grid-area: a; }
+  .nms-col-b { grid-area: b; }
+  .nms-cols > .nms-full, .nms-cols > .nms-first { grid-area: full; }
+  .nms-full-body { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; align-items: start; }
+  .nms-full-body > .nms-full-sec:nth-child(2) { border-top: 0; padding-top: 0; }
+  .nms-end { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); grid-template-areas: "top top" "ex note" "ex done"; column-gap: 24px; align-items: start; }
+  .nms-end > .nms-top { grid-area: top; }
+  .nms-end > .nms-explain { grid-area: ex; }
+  .nms-end > .nms-note { grid-area: note; }
+  .nms-end > .nms-done { grid-area: done; }
+}

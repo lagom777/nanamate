@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 항성 — aboutAstronomy</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🌌 표지 · 소개</a></li>
+    <li><a href="01-celestial-mechanics.html">1. 천체역학</a></li>
+    <li><a href="02-solar-system.html">2. 태양계</a></li>
+    <li><a href="03-stars.html" style="color:var(--accent);font-weight:600;">3. 항성</a></li>
+    <li><a href="04-galaxies.html">4. 은하</a></li>
+    <li><a href="05-cosmology.html">5. 우주론</a></li>
+    <li><a href="06-black-holes.html">6. 블랙홀</a></li>
+    <li><a href="07-exoplanets.html">7. 외계행성</a></li>
+    <li><a href="08-observational.html">8. 관측천문학</a></li>
+    <li><a href="09-space-exploration.html">9. 우주탐사</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>항성:<br><em>별</em>의 일생</h1>
+  <p class="authors">Chapter 3 — Stars: Birth, Life, and Death</p>
+  <p class="affiliation">HR도 시뮬레이터 · 별의 진화 시각화</p>
+</header>
+
+<h2>별은 어떻게 태어나는가?</h2>
+<p>거대 분자 구름(Giant Molecular Cloud) 속에서 중력 불안정이 일어나면, 가스와 먼지가 수축하여 원시별(protostar)이 됩니다. 중심 온도가 약 1,000만 K에 도달하면 수소 핵융합이 점화되고, 별이 탄생합니다.</p>
+
+<div class="info-card stellar">
+  <h4>⭐ 주계열성 (Main Sequence)</h4>
+  <p>별 일생의 약 90%를 차지하는 안정 단계. 수소를 헬륨으로 바꾸는 핵융합으로 빛을 냅니다. 태양은 약 46억 년째 주계열에 있으며, 앞으로 약 50억 년 더 남았습니다.</p>
+</div>
+
+<h2>HR도 (헤르츠스프룽-러셀도)</h2>
+<p>HR도는 별의 표면 온도(가로축, 오른쪽이 차가움)와 광도(세로축)를 나타낸 천문학의 핵심 도구입니다. 슬라이더를 움직여 별의 질량을 바꾸면 진화 경로가 달라지는 것을 관찰하세요.</p>
+
+<div class="scene-3d" id="hr-scene">
+  <div class="scene-controls">
+    <label>별 질량: <span id="mass-val">1.0</span> M☉</label>
+    <input type="range" id="mass-slider" min="1" max="40" value="10">
+    <label>진화 단계: <span id="stage-val">주계열</span></label>
+    <input type="range" id="evo-slider" min="0" max="100" value="0">
+    <button id="animate-btn">▶ 자동 진화</button>
+  </div>
+</div>
+<span class="interact-hint">⭐ 질량을 바꾸면 별의 크기·색·운명이 달라집니다</span>
+
+<h2>별의 분류</h2>
+<div class="formula">
+분광형: O – B – A – F – G – K – M &nbsp;&nbsp;(뜨거움 → 차가움)
+</div>
+
+<div class="info-card">
+  <h4>🔵 O·B형 (청색 거성)</h4>
+  <p>표면 온도 10,000~50,000K. 태양보다 10~100배 무겁고, 수백만 년 내에 초신성으로 폭발합니다. 예: 리겔, 스피카</p>
+</div>
+
+<div class="info-card stellar">
+  <h4>☀️ F·G·K형 (태양형)</h4>
+  <p>표면 온도 3,700~7,500K. 태양은 G2V형으로 표면 온도 5,778K. 수십억 년의 안정된 수명을 가집니다.</p>
+</div>
+
+<div class="info-card blackhole">
+  <h4>🔴 M형 (적색왜성)</h4>
+  <p>표면 온도 2,400~3,700K. 전체 별의 약 75%를 차지. 수조 년의 수명으로 우주 나이보다 오래 삽니다. 예: 프록시마 센타우리</p>
+</div>
+
+<h2>별의 죽음</h2>
+<h3>저질량 별 (태양 이하~8M☉)</h3>
+<p>수소 고갈 → 적색거성 → 행성상 성운 방출 → 백색왜성으로 서서히 식어감. 찬드라세카르 한계(1.4M☉) 이하의 핵만 남습니다.</p>
+
+<h3>고질량 별 (8M☉ 이상)</h3>
+<p>탄소, 네온, 규소까지 연소 → 철 핵 형성 → 중력 붕괴 → 초신성 폭발(II형). 잔해는 중성자별 또는 블랙홀이 됩니다.</p>
+
+<div class="formula">
+광도-질량 관계: L ∝ M³·⁵ &nbsp;&nbsp;|&nbsp;&nbsp; 수명: τ ∝ M⁻²·⁵ &nbsp;&nbsp;|&nbsp;&nbsp; 슈테판-볼츠만: L = 4πR²σT⁴
+</div>
+
+<div class="info-card galaxy">
+  <h4>💥 초신성과 원소 합성</h4>
+  <p>철보다 무거운 원소(금, 은, 우라늄 등)는 초신성 폭발이나 중성자별 병합의 극한 환경에서 만들어집니다. 우리 몸의 원소는 문자 그대로 별의 잔해입니다.</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🌟 한 줄로 말하면?</h3><p>별은 스스로 반짝반짝 빛을 내는 <strong>거대한 가스 덩어리</strong>예요. 중심에서 핵융합으로 에너지를 뿜어내죠! ⭐</p>
+  <h3>🤔 왜 중요할까?</h3><p>우리 태양도 사실 별 하나예요. 별이 없었다면 지구도, 우리도 없었을 거예요. 별이 만든 원소(탄소·산소·철)가 지금 우리 몸을 이루고 있고, 별이 죽으면 그 재료로 새 별과 행성이 태어나요. "우리는 별의 부스러기"라는 말, 시가 아니라 진짜 과학이랍니다! ✨</p>
+  <div class="info-card"><h4>🌱 꼭 알아둘 말들</h4><ul><li><strong>주계열</strong> — 별이 수소를 태우며 안정적으로 사는 시기</li><li><strong>HR 도표</strong> — 별의 밝기(광도)와 온도를 한눈에 보는 지도 🗺️</li><li><strong>적색거성</strong> — 수소를 다 쓰고 뚱뚱하게 부푼 별</li><li><strong>초신성</strong> — 무거운 별이 펑! 터지는 화려한 죽음 💥</li><li><strong>광년</strong> — 빛이 1년 동안 달려간 거리 (9.46 × 10¹² km!)</li></ul></div>
+  <h3>💡 쉽게 풀어보기</h3><p>우주에 떠 있던 가스 구름이 자기 중력으로 뭉치고 뭉치면 가운데가 점점 뜨거워져요. 온도가 <strong>1,000만 K</strong>를 넘는 순간, 수소 핵융합이 확 켜지면서 별이 탄생해요! 🔥 그다음엔 안에서 밀어내는 핵융합 힘과 밖에서 짓누르는 중력이 팽팽하게 줄다리기를 하며 오래오래 안정하게 지내요(주계열). 그러다 연료가 바닥나면 균형이 깨져서 뚱뚱하게 부풀거나 펑 터지죠. 재밌는 건, 별의 운명은 <strong>처음 무게</strong>가 정한다는 거예요. 가벼운 별은 오래오래 살고, 무거운 별은 짧고 화려하게 살아요!</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> HR 도표를 직접 손으로 그려 보세요. 별의 한평생을 한 장으로 보는 최고의 지도예요! 🗺️</div>
+  <h3>📌 요약 3초 컷</h3><ul><li>별 = 중력과 핵융합의 줄다리기 균형</li><li>처음 무게(질량)가 별의 운명을 결정</li><li>일생: 주계열 → 적색거성 → 백색왜성 또는 초신성</li><li>무거운 원소는 전부 별 안에서 만들어져요</li><li>HR 도표는 별의 일생을 보여주는 지도!</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>주계열별의 광도는 질량의 3.5제곱에 비례합니다(L ∝ M^3.5). 따라서 질량이 2배 늘면 광도는 약 11배가 됩니다. 수명은 M⁻²·⁵에 비례해 무거운 별일수록 빠르게 연료를 소진합니다. 태양은 약 100억 년, O형 별은 수백만 년 산다. 슈테판-볼츠만 법칙 L = 4πR²σT⁴로 별의 광도·반지름·온도가 묶입니다. 빈의 변위법칙은 표면 온도와 최대 방사 파장을 연결합니다(λ_max T = 2.898 × 10⁻³ m·K).</p>
+  <h3>핵심 공식과 의미</h3><div class="formula">L ∝ M³·⁵ &nbsp;&nbsp; τ ∝ M⁻²·⁵ &nbsp;&nbsp; L = 4πR²σT⁴</div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1: 별의 거리(시차법)</h4><p>지구 공전을 이용해 가까운 별의 연주시차를 측정. 1 pc = 시차 1″인 거리.</p></div>
+  <div class="info-card"><h4>📐 예제 2: 도플러 시프트로 외계행성</h4><p>별이 행성에 끌려 미세하게 흔들리는 운동이 별빛의 적색·청색 편이로 나타나 외계행성을 검출.</p></div>
+  <h3>응용 사례</h3><p>가이아(Gaia) 탐사선은 10억 개 별의 거리·운동을 정밀 측정해 우주의 3D 지도를 만들었습니다. 한국 천문연구원의 BOAO·KMTNet은 외계행성·은하·암흑물질 관측에 기여합니다. 일반인이 시민과학(Galaxy Zoo, Planet Hunters)으로 별 분류에 참여하기도 합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "별이 깜빡인다"는 별 고유 현상이 아니라 지구 대기의 굴절 변동입니다. 행성은 면 광원이라 덜 깜빡입니다.</div>
+
+<h3>전문가 레벨 이해</h3><p>별의 구조와 진화는 4개의 별 구조 방정식(질량 보존, 정역학 평형, 에너지 보존, 에너지 수송)으로 기술됩니다. 대류·복사 수송, 혼합 길이 이론, 회전·자기장 효과가 정밀 모델링에 들어갑니다. 무거운 별의 마지막 단계에서는 광분리·중성미자 손실이 폭발 직전 단계를 좌우합니다. 중성자별 병합은 r-process 원소의 주요 원천이며 2017년 GW170817 사건으로 광학·전파·중력파 다중 메신저 천문학이 본격화되었습니다. 적색거성·점근거성가지(AGB)에서 일어나는 s-process는 또 다른 원소 합성 경로입니다. 별이 다양한 단계에서 자기 회전과 자기장에 의해 자기 활동·플레어를 일으키며 이는 외계행성 거주 가능성에도 영향을 줍니다.</p>
+  <h3>최신 연구·동향</h3><p>JWST는 초기 우주의 1세대 별(Pop III) 후보와 별 탄생 영역을 적외선으로 들여다보고 있습니다. KMTNet 미시중력렌즈 탐사로 자유 부유 행성과 작은 외계행성이 추가 발견되고 있습니다. 중성자별 합병의 킬로노바 후속 관측이 r-process 합성 메커니즘을 정량적으로 묶고 있습니다.</p>
+  <h3>관련 분야</h3><ul><li>항성 동역학과 별 진화 시뮬레이션</li><li>천체 물리 분광학</li><li>중력파·다중 메신저 천문학</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>Kippenhahn & Weigert, "Stellar Structure and Evolution"</li><li>NASA ADS, ESO Telescope Bibliography</li><li>한국천문연구원 e-Learning</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> Hayashi track과 Henyey track를 HR 도표 위에 그려 별의 전주계열 진화를 설명하고, 1M⊙과 20M⊙ 별의 차이를 정리하세요.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 별의 일생 순서</h2>
+<p>태양 정도 질량 별이 거치는 단계를 순서대로 놓아 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#7b9fff","prompt":"태양 정도 질량 별의 일생을 순서대로 놓으세요","steps":["분자 구름","원시별","주계열","적색거성","행성상 성운","백색왜성"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7b9fff","questions":[{"q":"별 일생의 약 90%를 차지하는 단계는?","choices":["원시별","적색거성","주계열","백색왜성"],"answer":2},{"q":"분광형 중 가장 뜨거운 별의 형은?","choices":["M형","G형","K형","O형"],"answer":3},{"q":"태양의 분광형은?","choices":["G2V","O5","M1","A0"],"answer":0},{"q":"백색왜성 핵의 찬드라세카르 한계는?","choices":["0.5M☉","1.4M☉","3M☉","8M☉"],"answer":1},{"q":"철보다 무거운 원소가 만들어지는 곳은?","choices":["행성 대기","주계열성 중심","초신성 폭발","성간 먼지"],"answer":2}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('hr-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 500);
+  camera.position.set(0, 0, 20);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // HR도 배경 그리드
+  // X축: 온도 (왼쪽=뜨거움=파랑, 오른쪽=차가움=빨강) -8 ~ 8
+  // Y축: 광도 (아래=어두움, 위=밝음) -6 ~ 6
+
+  // 축 라벨용 스프라이트 생성 함수
+  function makeLabel(text, x, y, size) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 256; canvas.height = 64;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#9aa3c4';
+    ctx.font = (size || 20) + 'px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(text, 128, 40);
+    const tex = new THREE.CanvasTexture(canvas);
+    const mat = new THREE.SpriteMaterial({ map: tex, transparent: true });
+    const sprite = new THREE.Sprite(mat);
+    sprite.position.set(x, y, 0);
+    sprite.scale.set(4, 1, 1);
+    return sprite;
+  }
+
+  // 그리드 선
+  const gridMat = new THREE.LineBasicMaterial({ color: 0x7b9fff, transparent: true, opacity: 0.06 });
+  for (let i = -8; i <= 8; i += 2) {
+    const vGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(i, -7, 0), new THREE.Vector3(i, 7, 0)]);
+    scene.add(new THREE.Line(vGeo, gridMat));
+    const hGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-9, i * 0.8, 0), new THREE.Vector3(9, i * 0.8, 0)]);
+    scene.add(new THREE.Line(hGeo, gridMat));
+  }
+
+  // 축 레이블
+  scene.add(makeLabel('← 뜨거움 (O형)    표면 온도    차가움 (M형) →', 0, -7.5, 18));
+  scene.add(makeLabel('광', -9.5, 2, 16));
+  scene.add(makeLabel('도', -9.5, 1, 16));
+  scene.add(makeLabel('↑', -9.5, 3.5, 22));
+
+  // 온도 라벨
+  const tempLabels = ['40000K', '20000K', '10000K', '7000K', '5500K', '4000K', '3000K'];
+  const tempX = [-7, -4.5, -2, 0, 2, 4.5, 7];
+  tempLabels.forEach((t, i) => scene.add(makeLabel(t, tempX[i], -6.8, 14)));
+
+  // 주계열 배경 별들 (랜덤)
+  const bgStars = [];
+  const msStarData = [];
+  for (let i = 0; i < 120; i++) {
+    // 주계열 대각선 + 랜덤 산포
+    const t = Math.random(); // 0=뜨거움(왼), 1=차가움(오른)
+    const x = -7 + t * 14 + (Math.random() - 0.5) * 2;
+    const y = 5.5 - t * 10 + (Math.random() - 0.5) * 2;
+    const temp = 40000 - t * 37000;
+    const color = starColor(temp);
+    const size = 0.08 + (1 - t) * 0.15 + Math.random() * 0.05;
+
+    const geo = new THREE.SphereGeometry(size, 8, 8);
+    const mat = new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 0.4 });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(x, y, -1);
+    scene.add(mesh);
+    bgStars.push(mesh);
+  }
+
+  // 적색거성 영역
+  for (let i = 0; i < 20; i++) {
+    const x = 3 + Math.random() * 5;
+    const y = 1 + Math.random() * 4;
+    const geo = new THREE.SphereGeometry(0.15 + Math.random() * 0.1, 8, 8);
+    const mat = new THREE.MeshBasicMaterial({ color: 0xff6633, transparent: true, opacity: 0.3 });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(x, y, -1);
+    scene.add(mesh);
+  }
+
+  // 백색왜성 영역
+  for (let i = 0; i < 15; i++) {
+    const x = -4 + Math.random() * 6;
+    const y = -5 + Math.random() * 2;
+    const geo = new THREE.SphereGeometry(0.06, 8, 8);
+    const mat = new THREE.MeshBasicMaterial({ color: 0xccddff, transparent: true, opacity: 0.35 });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(x, y, -1);
+    scene.add(mesh);
+  }
+
+  // 영역 라벨
+  scene.add(makeLabel('주계열', -2, 1.5, 16));
+  scene.add(makeLabel('적색거성', 5.5, 3.5, 14));
+  scene.add(makeLabel('백색왜성', -1, -4.5, 14));
+  scene.add(makeLabel('초거성', 3, 5.5, 14));
+
+  // 추적할 별 (큰 구체)
+  const trackerGeo = new THREE.SphereGeometry(0.4, 24, 24);
+  const trackerMat = new THREE.MeshBasicMaterial({ color: 0xffdd44 });
+  const tracker = new THREE.Mesh(trackerGeo, trackerMat);
+  scene.add(tracker);
+
+  // 글로우
+  const glowMesh = new THREE.Mesh(
+    new THREE.SphereGeometry(0.6, 24, 24),
+    new THREE.MeshBasicMaterial({ color: 0xffdd44, transparent: true, opacity: 0.15 })
+  );
+  scene.add(glowMesh);
+
+  // 진화 경로 라인
+  const pathPoints = [];
+  const pathGeo = new THREE.BufferGeometry();
+  const pathMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
+  const pathLine = new THREE.Line(pathGeo, pathMat);
+  scene.add(pathLine);
+
+  function starColor(temp) {
+    if (temp > 25000) return 0x9bb0ff;
+    if (temp > 10000) return 0xaabfff;
+    if (temp > 7500) return 0xcad7ff;
+    if (temp > 6000) return 0xfff4e8;
+    if (temp > 5000) return 0xffd2a1;
+    if (temp > 3700) return 0xffaa66;
+    return 0xff6633;
+  }
+
+  // 진화 경로 계산 (질량에 따라)
+  function getEvolutionPath(mass) {
+    const path = [];
+    // 주계열 위치
+    const msTemp = Math.min(40000, 5778 * Math.pow(mass, 0.54));
+    const msLum = Math.pow(mass, 3.5);
+    const msX = -7 + (1 - (msTemp - 3000) / 37000) * 14;
+    const msY = -5 + Math.log10(msLum + 0.01) * 2.5 + 3;
+
+    path.push({ x: msX, y: Math.min(msY, 6), temp: msTemp, stage: '주계열', size: 0.3 + Math.log10(mass + 1) * 0.2 });
+
+    if (mass < 0.5) {
+      // 저질량: 천천히 식어감
+      path.push({ x: msX + 1, y: msY - 1, temp: msTemp * 0.8, stage: '냉각 중', size: 0.25 });
+      path.push({ x: msX + 2, y: msY - 3, temp: 3500, stage: '백색왜성', size: 0.1 });
+    } else if (mass < 8) {
+      // 중질량: 적색거성 → 행성상 성운 → 백색왜성
+      path.push({ x: msX + 2, y: msY + 0.5, temp: msTemp * 0.7, stage: '준거성', size: 0.4 });
+      path.push({ x: 5, y: Math.min(msY + 2, 5.5), temp: 4000, stage: '적색거성', size: 0.7 });
+      path.push({ x: 6, y: Math.min(msY + 3, 6), temp: 3500, stage: '적색거성 꼭대기', size: 0.9 });
+      path.push({ x: -1, y: msY + 1, temp: 8000, stage: '행성상 성운', size: 0.3 });
+      path.push({ x: -3, y: -4.5, temp: 15000, stage: '백색왜성', size: 0.1 });
+    } else {
+      // 고질량: 초거성 → 초신성
+      path.push({ x: msX + 1, y: Math.min(msY + 0.5, 6), temp: msTemp * 0.8, stage: '진화 중', size: 0.5 });
+      path.push({ x: 3, y: Math.min(msY + 1, 6.2), temp: 5000, stage: '황색 초거성', size: 0.8 });
+      path.push({ x: 6, y: Math.min(msY + 1.5, 6.5), temp: 3500, stage: '적색 초거성', size: 1.2 });
+      path.push({ x: 6.5, y: 7, temp: 3200, stage: '초신성 직전', size: 1.5 });
+      path.push({ x: 0, y: 7, temp: 50000, stage: '초신성 폭발!', size: 0.05 });
+    }
+    return path;
+  }
+
+  // 컨트롤
+  const massSlider = document.getElementById('mass-slider');
+  const massVal = document.getElementById('mass-val');
+  const evoSlider = document.getElementById('evo-slider');
+  const stageVal = document.getElementById('stage-val');
+  let currentPath = getEvolutionPath(1.0);
+  let autoAnimate = false;
+  let autoTime = 0;
+
+  function updateStar() {
+    const mass = massSlider.value / 10;
+    massVal.textContent = mass.toFixed(1);
+    currentPath = getEvolutionPath(mass);
+
+    const evo = evoSlider.value / 100;
+    const pathIdx = evo * (currentPath.length - 1);
+    const i0 = Math.floor(pathIdx);
+    const i1 = Math.min(i0 + 1, currentPath.length - 1);
+    const frac = pathIdx - i0;
+
+    const p0 = currentPath[i0];
+    const p1 = currentPath[i1];
+    const x = p0.x + (p1.x - p0.x) * frac;
+    const y = p0.y + (p1.y - p0.y) * frac;
+    const temp = p0.temp + (p1.temp - p0.temp) * frac;
+    const size = p0.size + (p1.size - p0.size) * frac;
+
+    tracker.position.set(x, y, 0.5);
+    tracker.scale.setScalar(size);
+    const col = new THREE.Color(starColor(temp));
+    trackerMat.color = col;
+    glowMesh.position.copy(tracker.position);
+    glowMesh.scale.setScalar(size * 1.8);
+    glowMesh.material.color = col;
+
+    stageVal.textContent = p0.stage;
+
+    // 경로 그리기
+    const pts = currentPath.map(p => new THREE.Vector3(p.x, p.y, 0.3));
+    pathGeo.setFromPoints(pts);
+  }
+
+  massSlider.addEventListener('input', () => { updateStar(); });
+  evoSlider.addEventListener('input', () => { updateStar(); });
+
+  document.getElementById('animate-btn').addEventListener('click', function() {
+    autoAnimate = !autoAnimate;
+    this.textContent = autoAnimate ? '⏸ 일시정지' : '▶ 자동 진화';
+    if (autoAnimate) { evoSlider.value = 0; autoTime = 0; }
+  });
+
+  updateStar();
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = Date.now() * 0.001;
+
+    if (autoAnimate) {
+      autoTime += 0.3;
+      evoSlider.value = Math.min(autoTime, 100);
+      updateStar();
+      if (autoTime >= 100) {
+        autoAnimate = false;
+        document.getElementById('animate-btn').textContent = '▶ 자동 진화';
+      }
+    }
+
+    // 배경 별 반짝임
+    bgStars.forEach((s, i) => {
+      s.material.opacity = 0.3 + Math.sin(t * 2 + i) * 0.15;
+    });
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

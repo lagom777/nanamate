@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. Node.js와 Express — aboutBackend</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🖥️ 표지 · 소개</a></li>
+    <li><a href="01-server-basics.html">1. 서버 기초</a></li>
+    <li><a href="02-http-api.html">2. HTTP와 API 설계</a></li>
+    <li><a href="03-nodejs-express.html" style="color:var(--accent);font-weight:600;">3. Node.js와 Express</a></li>
+    <li><a href="04-auth-security.html">4. 인증과 보안</a></li>
+    <li><a href="05-middleware-routing.html">5. 미들웨어와 라우팅</a></li>
+    <li><a href="06-file-streaming.html">6. 파일 처리와 스트리밍</a></li>
+    <li><a href="07-caching-queue.html">7. 캐싱과 메시지 큐</a></li>
+    <li><a href="08-microservices.html">8. 마이크로서비스</a></li>
+    <li><a href="09-deploy-devops.html">9. 배포와 DevOps</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>Node.js와<br><em>Express</em></h1>
+  <p class="authors">Chapter 3 — Node.js Runtime & Express Framework</p>
+  <p class="affiliation">이벤트 루프 3D 시각화 포함</p>
+</header>
+
+<h2>Node.js란?</h2>
+<p>Node.js는 Chrome V8 엔진 기반의 JavaScript 런타임입니다. 브라우저 밖에서 JavaScript를 실행할 수 있게 해주며, 비동기 I/O와 이벤트 기반 아키텍처로 높은 동시성을 제공합니다.</p>
+
+<h2>이벤트 루프 시각화</h2>
+<p>Node.js의 핵심인 이벤트 루프를 3D로 관찰하세요. 다양한 타입의 태스크가 이벤트 루프를 통해 처리되는 과정을 볼 수 있습니다.</p>
+
+<div class="scene-3d" id="eventloop-scene">
+  <div class="scene-controls">
+    <button id="add-timer">⏱ Timer 추가</button>
+    <button id="add-io">💾 I/O 추가</button>
+    <button id="add-micro">⚡ Microtask 추가</button>
+  </div>
+</div>
+<span class="interact-hint">⟳ 버튼을 눌러 이벤트 루프에 태스크를 추가하세요</span>
+
+<h2>이벤트 루프 단계</h2>
+<div class="flow-horizontal">
+  <span class="flow-node active">Timers</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">Pending I/O</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">Poll</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">Check</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">Close</span>
+</div>
+
+<div class="info-card">
+  <h4>⏱ Timers 단계</h4>
+  <p>setTimeout()과 setInterval()의 콜백이 실행됩니다. 최소 지연 시간이 지난 콜백부터 순서대로 실행합니다.</p>
+</div>
+
+<div class="info-card docker">
+  <h4>💾 Poll 단계</h4>
+  <p>I/O 관련 콜백을 실행합니다. 파일 읽기, 네트워크 요청 완료 등의 콜백이 여기서 처리됩니다.</p>
+</div>
+
+<div class="info-card http">
+  <h4>⚡ Microtask Queue</h4>
+  <p>Promise의 .then()과 process.nextTick()은 매 단계 사이에서 먼저 처리됩니다. 가장 높은 우선순위를 가집니다.</p>
+</div>
+
+<h2>Express 프레임워크</h2>
+<p>Express는 Node.js의 가장 널리 쓰이는 웹 프레임워크로, 미들웨어 기반의 깔끔한 구조를 제공합니다.</p>
+
+<div class="code-block" data-title="app.js — Express 기본 설정">const express = require('express');
+const app = express();
+
+// 미들웨어
+app.use(express.json());
+
+// 라우트
+app.get('/api/users', (req, res) => {
+  res.json({ users: [{ id: 1, name: '김철수' }] });
+});
+
+app.post('/api/users', (req, res) => {
+  const { name, email } = req.body;
+  res.status(201).json({ id: Date.now(), name, email });
+});
+
+app.listen(3000, () => {
+  console.log('Express server on port 3000');
+});</div>
+
+<h2>비동기 패턴</h2>
+<div class="code-block" data-title="콜백 → Promise → async/await 진화">// 1. 콜백 (Callback Hell)
+fs.readFile('a.txt', (err, a) => {
+  fs.readFile('b.txt', (err, b) => {
+    fs.readFile('c.txt', (err, c) => {
+      console.log(a + b + c);  // 중첩 깊어짐
+    });
+  });
+});
+
+// 2. Promise 체이닝
+readFileAsync('a.txt')
+  .then(a => readFileAsync('b.txt'))
+  .then(b => readFileAsync('c.txt'))
+  .then(c => console.log(c));
+
+// 3. async/await (권장)
+async function readAll() {
+  const a = await readFileAsync('a.txt');
+  const b = await readFileAsync('b.txt');
+  const c = await readFileAsync('c.txt');
+  console.log(a + b + c);
+}</div>
+
+<div class="info-card queue">
+  <h4>📦 npm 패키지 관리</h4>
+  <p>npm(Node Package Manager)으로 수백만 개의 오픈소스 패키지를 설치할 수 있습니다. package.json이 프로젝트의 의존성을 관리합니다.</p>
+</div>
+
+<div class="terminal-block">
+<span class="terminal-prompt">npm init -y</span>
+<span class="terminal-prompt">npm install express cors dotenv</span>
+<span style="color:#00ff88;">added 58 packages in 2.1s</span>
+<span class="terminal-prompt">npm run dev</span>
+<span style="color:#f59e0b;">[nodemon]</span> watching path(s): *.*
+<span style="color:#00ff88;">Server running at http://localhost:3000</span>
+</div>
+
+<div class="info-card security">
+  <h4>💡 탐구 과제</h4>
+  <p>시각화에서 Timer, I/O, Microtask를 번갈아 추가해보세요. Microtask가 다른 태스크보다 항상 먼저 처리되는지 관찰해보세요.</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🤔 이게 뭐냐면?</h3><p>원래 자바스크립트는 웹 브라우저 안에서만 살았어요. 🕸️ 그런데 Node.js가 "브라우저 밖에서도 자바스크립트를 돌릴 수 있게" 해줬어요! Express는 그 위에서 웹 서버를 뚝딱 만들게 도와주는 인기 짱 도구예요. 🛠️</p>
+  <h3>👀 왜 중요할까?</h3><p>슬랙, 우버, 페이팔, 넷플릭스 일부가 Node.js로 돌아가요! 🚀 프론트엔드랑 같은 언어(자바스크립트)로 백엔드까지 만들 수 있어서, 한 언어만 배워도 앞뒤 다 만들 수 있어요. 그래서 처음 시작하기 정말 좋아요. 👍</p>
+  <div class="info-card"><h4>🌱 이 말은 꼭 알아두자</h4><ul><li><strong>런타임</strong>: 자바스크립트를 실제로 돌리는 엔진 (V8) ⚙️</li><li><strong>이벤트 루프</strong>: 여러 일을 차례차례 처리하는 똑똑한 순번 담당 🔄</li><li><strong>npm/pnpm</strong>: 필요한 부품을 설치해주는 도구 상자 📦</li><li><strong>미들웨어</strong>: 요청과 응답 사이에서 일하는 함수 🚪</li><li><strong>라우터</strong>: 어떤 주소를 어떤 함수에 연결할지 정하는 지도 🗺️</li></ul></div>
+  <h3>🎯 식당 점원으로 이해하기</h3><p>Node.js의 비밀은 "기다리지 않기"예요! ⏱️ 점원이 손님 주문을 받아 주방에 넘긴 뒤, 음식 나오기를 멍하니 기다리지 않고 바로 다음 손님을 받아요. 이게 바로 비동기·논블로킹이에요! 덕분에 한 명이 일해도 아주 많은 손님을 척척 상대할 수 있어요. Express는 여기에 편한 도구를 더해서 5분 만에 API를 만들게 해줘요. 🎉</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 빈 폴더에서 `npm init -y` → `npm i express` → app.js를 직접 한 줄씩 써보세요! 어떤 줄이 무슨 일을 하는지 또렷하게 보여요. 👀</div>
+  <h3>🍬 한 입 요약</h3><ul><li>Node.js = V8 + 이벤트 루프 + libuv</li><li>Express = 라우팅 + 미들웨어 도우미</li><li>기다리지 않는 비동기로 많이 처리해요</li><li>npm에 쓸 수 있는 부품이 엄청 많아요</li><li>가볍고 풀스택 시작에 딱!</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>Node.js의 이벤트 루프는 6단계 페이즈(timers → pending callbacks → idle/prepare → poll → check → close)로 구성됩니다. setImmediate vs setTimeout, process.nextTick, Promise(microtask)의 우선순위 차이가 여기서 결정됩니다. libuv 워커 스레드 풀은 기본 4개로 fs, crypto, dns 같은 시스템 호출을 처리합니다. CPU 집약 작업은 worker_threads로 분리하지 않으면 이벤트 루프가 막혀 전체 응답이 느려집니다. Express의 미들웨어는 함수 시그니처 (req, res, next)를 따르며, next() 호출 여부와 에러 미들웨어(err, req, res, next)의 4-인자 시그니처가 분기 기준입니다.</p>
+  <h3>핵심 코드 패턴</h3>
+  <pre><code>const express = require('express');
+const app = express();
+app.use(express.json());
+app.get('/api/users/:id', async (req, res, next) =&gt; {
+  try {
+    const user = await db.users.findById(req.params.id);
+    if (!user) return res.status(404).json({error:'not found'});
+    res.json(user);
+  } catch (e) { next(e); }
+});</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1: 라우터 분리</h4><p>routes/users.js에서 `const router = express.Router(); router.get('/', ...)` 후 `app.use('/api/users', router)`로 모듈화합니다. 파일이 커지면 도메인 단위로 분리합니다.</p></div>
+  <div class="info-card"><h4>📐 예제 2: 에러 처리 미들웨어</h4><p>모든 라우트 뒤에 (err, req, res, next) 시그니처의 미들웨어를 두어 비동기 에러를 한 곳에서 잡고, 환경별로 스택을 노출할지 결정합니다.</p></div>
+  <h3>응용 사례</h3><p>SaaS의 백오피스 API는 Express + TypeScript + Prisma 조합이 흔합니다. 인증은 Passport.js 또는 직접 작성한 JWT 미들웨어, 검증은 zod/joi, 문서는 swagger-jsdoc으로 자동 생성하는 식으로 결합합니다. Express 5.x부터는 비동기 핸들러의 에러가 자동으로 next로 전파됩니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> bcrypt.hashSync 같은 동기 호출을 요청 핸들러에서 그대로 쓰면 이벤트 루프가 막힙니다. 비동기 버전을 쓰거나 워커 스레드로 분리하세요.</div>
+
+<h3>전문가 레벨 이해</h3><p>대규모 Node.js 시스템에서는 메모리·이벤트 루프·GC 관측이 핵심입니다. clinic.js, 0x, autocannon으로 핫스팟을 찾고, --prof와 --inspect로 V8 프로파일을 분석합니다. 이벤트 루프 지연(event loop lag)을 ms 단위로 모니터링하고 50ms 이상 지속되면 알람을 울리는 것이 SRE 베스트 프랙티스입니다. Express는 단순하지만 한계가 있어 Fastify, NestJS, Hono로 옮기는 사례가 늘고 있습니다. Fastify는 schema-first JSON 직렬화로 Express보다 2~3배 빠른 처리량을 보입니다. Nest는 DI·모듈·데코레이터 기반으로 대규모 협업에 유리하지만 학습 곡선이 있습니다.</p>
+  <h3>최신 연구·동향</h3><p>Node.js 20+ 는 빌트인 test runner, fetch 글로벌, single-executable application(SEA)을 도입했습니다. Bun과 Deno가 대안 런타임으로 부상하며, Bun은 Zig 기반으로 시작 시간과 처리량에서 우위를 보이고 Deno는 보안 모델과 표준 라이브러리에 강점이 있습니다. Cloudflare Workers, Vercel Edge처럼 V8 isolate를 직접 쓰는 엣지 런타임은 일부 Node API만 지원하므로 코드 호환성을 의식해 작성해야 합니다.</p>
+  <h3>관련 분야</h3><ul><li>비동기 패턴 심화(generator, async iterator)</li><li>JIT 컴파일과 V8 인라인 캐시</li><li>네이티브 애드온(N-API, node-gyp)</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"Node.js Design Patterns" — Mario Casciaro</li><li>공식 Node.js 문서 — Diagnostics 섹션</li><li>NearForm Tech Talks(YouTube)</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> Express vs Fastify로 같은 REST API를 작성하고 autocannon으로 1만 요청 부하 테스트해 RPS, p99 레이턴시, 메모리를 비교하세요.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 어울리지 않는 하나 고르기</h2>
+<p>각 묶음에서 성격이 다른 하나를 찾아보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#00ff88","prompt":"같은 부류가 아닌 하나를 고르세요","rounds":[{"items":["Timers","Poll","Check","npm"],"odd":3,"why":"npm은 패키지 매니저, 나머지는 이벤트 루프 단계"},{"items":["콜백","Promise","async/await","V8"],"odd":3,"why":"V8은 실행 엔진, 나머지는 비동기 작성 방식"},{"items":["express.json()","app.get()","setTimeout()","app.use()"],"odd":2,"why":"setTimeout은 타이머, 나머지는 Express API"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00ff88","questions":[{"q":"Node.js가 기반으로 하는 엔진은?","choices":["libuv","npm","V8","Express"],"answer":2},{"q":"Node.js의 패키지 관리 도구는?","choices":["npm","Docker","Redis","Nginx"],"answer":0},{"q":"setTimeout 콜백이 실행되는 단계는?","choices":["Poll","Close","Check","Timers"],"answer":3},{"q":"가장 높은 우선순위로 처리되는 큐는?","choices":["Timer 큐","Microtask 큐","I/O 큐","Close 큐"],"answer":1},{"q":"권장되는 비동기 작성 방식은?","choices":["콜백 중첩","동기 처리","async/await","이벤트 폴링"],"answer":2}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('eventloop-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, container.clientWidth/container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 8, 10);
+  camera.lookAt(0, 0, 0);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Event loop ring
+  const ringGeo = new THREE.TorusGeometry(4, 0.08, 8, 64);
+  const ringMat = new THREE.MeshBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.4 });
+  const ring = new THREE.Mesh(ringGeo, ringMat);
+  ring.rotation.x = -Math.PI / 2;
+  scene.add(ring);
+
+  // Call stack (center tower)
+  const stackGeo = new THREE.BoxGeometry(1.2, 3, 1.2);
+  const stackMat = new THREE.MeshBasicMaterial({ color: 0x00ff88, wireframe: true, transparent: true, opacity: 0.3 });
+  scene.add(new THREE.Mesh(stackGeo, stackMat));
+
+  // Phase markers on the ring
+  const phases = ['Timers', 'I/O', 'Poll', 'Check', 'Close'];
+  phases.forEach((name, i) => {
+    const angle = (i / phases.length) * Math.PI * 2;
+    const marker = new THREE.Mesh(
+      new THREE.BoxGeometry(0.5, 0.5, 0.5),
+      new THREE.MeshBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.6 })
+    );
+    marker.position.set(Math.cos(angle) * 4, 0, Math.sin(angle) * 4);
+    scene.add(marker);
+  });
+
+  const grid = new THREE.GridHelper(16, 16, 0x0a3a0a, 0x0a3a0a);
+  grid.position.y = -2;
+  scene.add(grid);
+
+  // Task system
+  const tasks = [];
+  const taskColors = { timer: 0xfbbf24, io: 0x60a5fa, micro: 0x00ff88 };
+
+  function addTask(type) {
+    const color = taskColors[type];
+    const size = type === 'micro' ? 0.2 : 0.3;
+    const mesh = new THREE.Mesh(
+      new THREE.BoxGeometry(size, size, size),
+      new THREE.MeshBasicMaterial({ color })
+    );
+    const startAngle = Math.random() * Math.PI * 2;
+    mesh.position.set(Math.cos(startAngle) * 5.5, 2, Math.sin(startAngle) * 5.5);
+    scene.add(mesh);
+    tasks.push({ mesh, angle: startAngle, radius: 5.5, speed: type === 'micro' ? 0.04 : 0.02, phase: 'entering', t: 0, type });
+  }
+
+  document.getElementById('add-timer').addEventListener('click', () => addTask('timer'));
+  document.getElementById('add-io').addEventListener('click', () => addTask('io'));
+  document.getElementById('add-micro').addEventListener('click', () => addTask('micro'));
+
+  // Initial tasks
+  for (let i = 0; i < 3; i++) addTask(['timer', 'io', 'micro'][i]);
+
+  let mx = 0, my = 0;
+  container.addEventListener('mousemove', e => {
+    const r = container.getBoundingClientRect();
+    mx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+    my = ((e.clientY - r.top) / r.height - 0.5) * 2;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = Date.now() * 0.001;
+    ring.rotation.z = t * 0.2;
+
+    for (let i = tasks.length - 1; i >= 0; i--) {
+      const task = tasks[i];
+      if (task.phase === 'entering') {
+        task.radius -= 0.03;
+        if (task.radius <= 4) { task.radius = 4; task.phase = 'orbiting'; task.t = 0; }
+      } else if (task.phase === 'orbiting') {
+        task.angle += task.speed;
+        task.t += 0.005;
+        if (task.t > 1) { task.phase = 'processing'; task.t = 0; }
+      } else if (task.phase === 'processing') {
+        task.t += 0.02;
+        task.mesh.position.lerpVectors(task.mesh.position, new THREE.Vector3(0, 1.5, 0), 0.05);
+        task.mesh.scale.setScalar(1 - task.t * 0.5);
+        if (task.t > 1) { scene.remove(task.mesh); tasks.splice(i, 1); continue; }
+      }
+      if (task.phase !== 'processing') {
+        task.mesh.position.x = Math.cos(task.angle) * task.radius;
+        task.mesh.position.z = Math.sin(task.angle) * task.radius;
+        task.mesh.position.y = Math.sin(t * 2 + i) * 0.3;
+      }
+      task.mesh.rotation.x += 0.02;
+      task.mesh.rotation.y += 0.03;
+    }
+
+    camera.position.x += (mx * 3 - camera.position.x) * 0.02;
+    camera.position.y += (-my * 2 + 8 - camera.position.y) * 0.02;
+    camera.lookAt(0, 0, 0);
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+})();
+</script>
+</body>
+</html>

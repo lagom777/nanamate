@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>지구과학: 3D 인터랙티브 학습</title>
+<link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;border:none;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="index.html">🌍 표지 · 소개</a></li>
+    <li><a href="chapters/01-structure.html">1. 지구의 구조</a></li>
+    <li><a href="chapters/02-plate-tectonics.html">2. 판구조론</a></li>
+    <li><a href="chapters/03-minerals-rocks.html">3. 광물과 암석</a></li>
+    <li><a href="chapters/04-atmosphere.html">4. 대기과학</a></li>
+    <li><a href="chapters/05-oceanography.html">5. 해양학</a></li>
+    <li><a href="chapters/06-climate-change.html">6. 기후변화</a></li>
+    <li><a href="chapters/07-geological-time.html">7. 지질시대</a></li>
+    <li><a href="chapters/08-natural-disasters.html">8. 자연재해</a></li>
+    <li><a href="chapters/09-resources-environment.html">9. 자원과 환경</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>지구과학,<br>그 <em>구조와 역동성</em>에<br>관하여</h1>
+  <p class="authors">Interactive Earth Science — 3D Simulations & Explorations</p>
+  <p class="affiliation">Vol. 01  ·  May 2026  ·  aboutEarthScience</p>
+</header>
+
+<div class="threejs-container" data-label="3D Earth" id="earth-hero">
+  <div class="threejs-info">🖱️ 드래그: 회전<br>스크롤: 확대/축소</div>
+</div>
+<p class="fig-title">그림 0. 우리의 행성 지구. 마우스로 회전하며 탐색해보세요.</p>
+
+<div class="info-box">
+<h4 style="margin-top:0; font-family: var(--font-display); font-size:1.25em; text-transform:none; letter-spacing:normal;">🧒 이 사이트는 뭔가요?</h4>
+<p><strong>지구과학 전반을 3D 시뮬레이션과 함께 배우는 인터랙티브 학습 자료입니다.</strong> 지구 내부 구조부터 기후변화까지 9개 챕터로 구성되어 있습니다.</p>
+<p>각 챕터에는 Three.js 기반 3D 시뮬레이션이 포함되어 있어, 직접 조작하며 지구과학 개념을 체험할 수 있습니다.</p>
+</div>
+
+<h2 style="margin-top:50px;">📚 챕터 구성</h2>
+<div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:18px; margin:25px 0;">
+  <a href="chapters/01-structure.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:var(--ocean);">1장</strong><br>지구의 구조<br>
+      <span style="font-size:0.85em; color:var(--ink-mute);">🔬 3D 지구 단면 슬라이스</span>
+    </div>
+  </a>
+  <a href="chapters/02-plate-tectonics.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:var(--volcanic);">2장</strong><br>판구조론<br>
+      <span style="font-size:0.85em; color:var(--ink-mute);">🌋 판 이동 시뮬레이션</span>
+    </div>
+  </a>
+  <a href="chapters/03-minerals-rocks.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:var(--mineral);">3장</strong><br>광물과 암석<br>
+      <span style="font-size:0.85em; color:var(--ink-mute);">💎 3D 결정 구조 탐색</span>
+    </div>
+  </a>
+  <a href="chapters/04-atmosphere.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:var(--atmosphere);">4장</strong><br>대기과학<br>
+      <span style="font-size:0.85em; color:var(--ink-mute);">🌤️ 대기순환 3D 모델</span>
+    </div>
+  </a>
+  <a href="chapters/05-oceanography.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:var(--ocean);">5장</strong><br>해양학<br>
+      <span style="font-size:0.85em; color:var(--ink-mute);">🌊 해류 시뮬레이션</span>
+    </div>
+  </a>
+  <a href="chapters/06-climate-change.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:var(--volcanic);">6장</strong><br>기후변화<br>
+      <span style="font-size:0.85em; color:var(--ink-mute);">🌡️ 기후 변수 조절 실험</span>
+    </div>
+  </a>
+  <a href="chapters/07-geological-time.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:var(--earth);">7장</strong><br>지질시대<br>
+      <span style="font-size:0.85em; color:var(--ink-mute);">⏳ 46억년 타임라인</span>
+    </div>
+  </a>
+  <a href="chapters/08-natural-disasters.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:var(--magma);">8장</strong><br>자연재해<br>
+      <span style="font-size:0.85em; color:var(--ink-mute);">🌊 지진파 전파 시뮬레이션</span>
+    </div>
+  </a>
+  <a href="chapters/09-resources-environment.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:var(--mineral);">9장</strong><br>자원과 환경<br>
+      <span style="font-size:0.85em; color:var(--ink-mute);">♻️ 지구 자원 분포 시각화</span>
+    </div>
+  </a>
+</div>
+
+</main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// Hero Earth 3D
+(function() {
+  const container = document.getElementById('earth-hero');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.z = 3;
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  container.appendChild(renderer.domElement);
+
+  // Earth sphere with procedural texture
+  const earthGeo = new THREE.SphereGeometry(1, 64, 64);
+
+  // Create procedural earth-like colors
+  const canvas = document.createElement('canvas');
+  canvas.width = 512;
+  canvas.height = 256;
+  const ctx = canvas.getContext('2d');
+
+  // Ocean base
+  ctx.fillStyle = '#1565c0';
+  ctx.fillRect(0, 0, 512, 256);
+
+  // Simplified continents
+  ctx.fillStyle = '#2e7d32';
+  // North America
+  ctx.beginPath();
+  ctx.ellipse(100, 80, 40, 35, 0, 0, Math.PI * 2);
+  ctx.fill();
+  // South America
+  ctx.beginPath();
+  ctx.ellipse(130, 160, 20, 40, 0.2, 0, Math.PI * 2);
+  ctx.fill();
+  // Europe/Africa
+  ctx.beginPath();
+  ctx.ellipse(260, 100, 25, 50, 0, 0, Math.PI * 2);
+  ctx.fill();
+  // Asia
+  ctx.beginPath();
+  ctx.ellipse(350, 80, 60, 40, 0, 0, Math.PI * 2);
+  ctx.fill();
+  // Australia
+  ctx.beginPath();
+  ctx.ellipse(400, 170, 20, 15, 0, 0, Math.PI * 2);
+  ctx.fill();
+  // Antarctica
+  ctx.fillStyle = '#eceff1';
+  ctx.fillRect(0, 230, 512, 26);
+  // Arctic
+  ctx.fillRect(0, 0, 512, 15);
+
+  // Add some noise/variation
+  for (let i = 0; i < 2000; i++) {
+    const x = Math.random() * 512;
+    const y = Math.random() * 256;
+    ctx.fillStyle = `rgba(${Math.random() > 0.5 ? '30,100,50' : '20,80,160'}, 0.15)`;
+    ctx.fillRect(x, y, 3, 3);
+  }
+
+  const earthTex = new THREE.CanvasTexture(canvas);
+  const earthMat = new THREE.MeshPhongMaterial({
+    map: earthTex,
+    shininess: 25,
+    specular: 0x333333
+  });
+  const earth = new THREE.Mesh(earthGeo, earthMat);
+  scene.add(earth);
+
+  // Atmosphere glow
+  const atmosGeo = new THREE.SphereGeometry(1.05, 64, 64);
+  const atmosMat = new THREE.MeshPhongMaterial({
+    color: 0x4fc3f7,
+    transparent: true,
+    opacity: 0.15,
+    side: THREE.FrontSide
+  });
+  const atmos = new THREE.Mesh(atmosGeo, atmosMat);
+  scene.add(atmos);
+
+  // Lights
+  const sunLight = new THREE.DirectionalLight(0xffffff, 1.2);
+  sunLight.position.set(5, 3, 5);
+  scene.add(sunLight);
+  const ambientLight = new THREE.AmbientLight(0x404060, 0.4);
+  scene.add(ambientLight);
+
+  // Stars background
+  const starsGeo = new THREE.BufferGeometry();
+  const starPositions = [];
+  for (let i = 0; i < 1000; i++) {
+    starPositions.push((Math.random() - 0.5) * 100);
+    starPositions.push((Math.random() - 0.5) * 100);
+    starPositions.push((Math.random() - 0.5) * 100);
+  }
+  starsGeo.setAttribute('position', new THREE.Float32BufferAttribute(starPositions, 3));
+  const starsMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.15 });
+  scene.add(new THREE.Points(starsGeo, starsMat));
+
+  // Mouse interaction
+  let isDragging = false;
+  let prevMouse = { x: 0, y: 0 };
+  let rotVel = { x: 0, y: 0.003 };
+
+  container.addEventListener('mousedown', (e) => { isDragging = true; prevMouse = { x: e.clientX, y: e.clientY }; });
+  container.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - prevMouse.x;
+    const dy = e.clientY - prevMouse.y;
+    rotVel.y = dx * 0.005;
+    rotVel.x = dy * 0.005;
+    prevMouse = { x: e.clientX, y: e.clientY };
+  });
+  container.addEventListener('mouseup', () => { isDragging = false; });
+  container.addEventListener('mouseleave', () => { isDragging = false; });
+  container.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    camera.position.z = Math.max(1.5, Math.min(6, camera.position.z + e.deltaY * 0.003));
+  }, { passive: false });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    if (!isDragging) {
+      rotVel.y += (0.003 - rotVel.y) * 0.02;
+      rotVel.x *= 0.95;
+    }
+    earth.rotation.y += rotVel.y;
+    earth.rotation.x += rotVel.x;
+    atmos.rotation.y = earth.rotation.y;
+    atmos.rotation.x = earth.rotation.x;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

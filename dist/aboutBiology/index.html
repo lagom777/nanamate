@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>생물학: 생명의 신비를 3D로 탐험하다</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="index.html">🧬 표지 · 소개</a></li>
+    <li><a href="chapters/01-cell.html">1. 세포 · 생명의 단위</a></li>
+    <li><a href="chapters/02-dna.html">2. DNA와 유전학</a></li>
+    <li><a href="chapters/03-evolution.html">3. 진화</a></li>
+    <li><a href="chapters/04-ecology.html">4. 생태학</a></li>
+    <li><a href="chapters/05-physiology.html">5. 인체생리학</a></li>
+    <li><a href="chapters/06-microbiology.html">6. 미생물학</a></li>
+    <li><a href="chapters/07-botany.html">7. 식물학</a></li>
+    <li><a href="chapters/08-zoology.html">8. 동물학</a></li>
+    <li><a href="chapters/09-biotech.html">9. 생명공학</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>생물학,<br>생명의 <em>신비</em>를<br>3D로 탐험하다</h1>
+  <p class="authors">Interactive Biology Lab — Mysteries of Life in Three Dimensions</p>
+  <p class="affiliation">Vol. 04 · May 2026 · aboutBiology Editorial</p>
+</header>
+
+<div class="scene-3d" id="intro-scene"></div>
+<span class="interact-hint">⟳ 마우스로 드래그하여 회전 · 스크롤로 확대/축소</span>
+
+<h2>생물학이란?</h2>
+<p>생물학은 생명 현상의 본질을 탐구하는 학문입니다. 분자 수준의 DNA 복제에서부터 지구 전체 생태계의 상호작용까지, 살아있는 모든 것의 구조와 기능, 진화를 연구합니다.</p>
+
+<p>이 학습 사이트에서는 Three.js를 활용한 3D 시뮬레이션으로 생명 현상을 직접 체험합니다. 세포를 분해하고, DNA를 회전시키며, 생태계를 관찰하세요.</p>
+
+<h2>학습 로드맵</h2>
+
+<div class="info-card cell">
+  <h4>🔬 챕터 1: 세포</h4>
+  <p>생명의 기본 단위. 3D 세포 모델을 분해하여 소기관의 구조와 기능을 탐험합니다.</p>
+</div>
+
+<div class="info-card dna">
+  <h4>🧬 챕터 2: DNA와 유전학</h4>
+  <p>이중나선 구조, 복제, 전사, 번역. DNA의 아름다운 구조를 3D로 관찰합니다.</p>
+</div>
+
+<div class="info-card evolution">
+  <h4>🦎 챕터 3: 진화</h4>
+  <p>자연선택, 돌연변이, 종분화. 세대를 거친 형질 변화를 시뮬레이션합니다.</p>
+</div>
+
+<div class="info-card ecology">
+  <h4>🌍 챕터 4: 생태학</h4>
+  <p>먹이사슬, 에너지 흐름, 개체군 동태. 생태계의 균형을 실시간으로 관찰합니다.</p>
+</div>
+
+<div class="info-card">
+  <h4>❤️ 챕터 5–9: 생리학에서 생명공학까지</h4>
+  <p>인체의 심장 박동, 미생물의 분열, 식물의 광합성, 동물의 다양성, 그리고 유전자 편집까지.</p>
+</div>
+
+<h2>생물학의 핵심 원리</h2>
+<div class="formula">세포설 &nbsp;&nbsp;|&nbsp;&nbsp; 중심원리(DNA→RNA→단백질) &nbsp;&nbsp;|&nbsp;&nbsp; 자연선택</div>
+
+<p>각 챕터에서는 이 원리들이 생명 현상에 어떻게 작용하는지 직접 눈으로 확인할 수 있습니다. 왼쪽 사이드바에서 챕터를 선택하여 학습을 시작하세요.</p>
+
+</main>
+</div>
+
+<script>
+// Intro 3D Scene - 부유하는 세포와 DNA 나선
+(function() {
+  const container = document.getElementById('intro-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 3, 8);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // Central cell
+  const cellGeo = new THREE.SphereGeometry(1.2, 32, 32);
+  const cellMat = new THREE.MeshBasicMaterial({ color: 0x00e676, transparent: true, opacity: 0.3, wireframe: true });
+  const cell = new THREE.Mesh(cellGeo, cellMat);
+  scene.add(cell);
+
+  // Nucleus
+  const nucleusGeo = new THREE.SphereGeometry(0.5, 24, 24);
+  const nucleusMat = new THREE.MeshBasicMaterial({ color: 0xff6b9d, transparent: true, opacity: 0.7 });
+  const nucleus = new THREE.Mesh(nucleusGeo, nucleusMat);
+  scene.add(nucleus);
+
+  // DNA helix
+  const dnaGroup = new THREE.Group();
+  for (let i = 0; i < 80; i++) {
+    const t = i * 0.15;
+    const x1 = Math.cos(t) * 0.3;
+    const z1 = Math.sin(t) * 0.3;
+    const y1 = t * 0.12 - 3;
+    const geo = new THREE.SphereGeometry(0.04, 8, 8);
+    const mat = new THREE.MeshBasicMaterial({ color: i % 2 === 0 ? 0x00e676 : 0x10b9d6 });
+    const sphere = new THREE.Mesh(geo, mat);
+    sphere.position.set(x1, y1, z1);
+    dnaGroup.add(sphere);
+
+    const x2 = Math.cos(t + Math.PI) * 0.3;
+    const z2 = Math.sin(t + Math.PI) * 0.3;
+    const sphere2 = new THREE.Mesh(geo.clone(), new THREE.MeshBasicMaterial({ color: i % 2 === 0 ? 0xff6b9d : 0xfbbf24 }));
+    sphere2.position.set(x2, y1, z2);
+    dnaGroup.add(sphere2);
+
+    // connecting rungs
+    if (i % 4 === 0) {
+      const rungGeo = new THREE.CylinderGeometry(0.015, 0.015, 0.6, 4);
+      const rungMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.3 });
+      const rung = new THREE.Mesh(rungGeo, rungMat);
+      rung.position.set((x1+x2)/2, y1, (z1+z2)/2);
+      rung.rotation.z = Math.PI/2;
+      rung.rotation.y = t;
+      dnaGroup.add(rung);
+    }
+  }
+  dnaGroup.position.set(3, 0, 0);
+  scene.add(dnaGroup);
+
+  // Floating organelles
+  const organelles = [];
+  const colors = [0x00e676, 0xff6b9d, 0xa855f7, 0x10b9d6, 0xfbbf24];
+  for (let i = 0; i < 20; i++) {
+    const geo = new THREE.SphereGeometry(0.06 + Math.random() * 0.1, 12, 12);
+    const mat = new THREE.MeshBasicMaterial({ color: colors[i % colors.length], transparent: true, opacity: 0.6 });
+    const mesh = new THREE.Mesh(geo, mat);
+    const radius = 2 + Math.random() * 3;
+    const speed = 0.2 + Math.random() * 0.4;
+    const phase = Math.random() * Math.PI * 2;
+    const tilt = (Math.random() - 0.5) * 1.5;
+    organelles.push({ mesh, radius, speed, phase, tilt });
+    scene.add(mesh);
+  }
+
+  // Mouse interaction
+  let mouseX = 0, mouseY = 0;
+  container.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = Date.now() * 0.001;
+
+    cell.rotation.y = t * 0.3;
+    cell.rotation.x = Math.sin(t * 0.2) * 0.2;
+    nucleus.rotation.y = -t * 0.5;
+
+    dnaGroup.rotation.y = t * 0.4;
+    dnaGroup.position.y = Math.sin(t * 0.5) * 0.3;
+
+    organelles.forEach(p => {
+      const angle = t * p.speed + p.phase;
+      p.mesh.position.x = Math.cos(angle) * p.radius;
+      p.mesh.position.z = Math.sin(angle) * p.radius;
+      p.mesh.position.y = Math.sin(angle * 2) * p.tilt;
+    });
+
+    camera.position.x += (mouseX * 3 - camera.position.x) * 0.02;
+    camera.position.y += (-mouseY * 2 + 3 - camera.position.y) * 0.02;
+    camera.lookAt(0, 0, 0);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+})();
+</script>
+</body>
+</html>

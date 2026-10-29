@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 신경 메커니즘 — aboutPrideHope</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🌸 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>신경 메커니즘</em></h1>
+  <p class="authors">Chapter 3 — Neural Mechanisms</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 신경 회로 — 뇌 영역들의 연결과 작동</span>
+
+<h2>신경 메커니즘 개요</h2>
+<p>자긍심과 희망은 보상 회로(VTA-NAc)와 자기 평가 회로(mPFC)의 결합으로 만들어진다. 도파민이 보상 예측을, mPFC가 "그 보상의 주체가 나"라는 자기 표상을 제공한다. 두 회로가 만나는 지점에서 "내가 해낸다"는 자기 효능감의 신경 기반이 형성된다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>자긍심·희망은 단일 영역이 아니라 회로 시스템이다. mPFC(자기 표상), NAc(보상), VTA(도파민), ACC(동기 추적)의 네 영역이 협력해야 작동한다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>👀 한 줄로 이해하기</h3><p>자긍심과 희망은 뇌 속 '기쁨 담당팀'과 '나 담당팀'이 하이파이브할 때 생기는 감정이야! 🙌🧠</p>
+  <h3>🤔 왜 중요할까?</h3><p>이 팀들이 지치면 우울, 무기력, 번아웃이 와. 기쁨팀이 둔해지면 뭘 해도 안 기쁘고, '나 담당팀'이 삐뚤어지면 성공해도 "난 부족해"라고 말해버려. 뇌의 어디가 힘든지 알면, 어디를 쉬게 하고 어떻게 채워야 할지 딱 짚을 수 있어!</p>
+  <div class="info-card"><h4>🌱 꼭 알아둘 말</h4><ul>
+    <li><strong>VTA-NAc 회로</strong>: 기쁨과 의욕을 만드는 '보상팀' ✨</li>
+    <li><strong>도파민</strong>: 이 팀이 쓰는 '기분 좋아지는 물질'</li>
+    <li><strong>mPFC(내측 전전두엽)</strong>: "이거 내가 한 거야!"라고 말하는 '나 담당'</li>
+    <li><strong>ACC(전대상피질)</strong>: "얼마나 노력했지?"를 재는 '노력 계량기'</li>
+    <li><strong>옥시토신</strong>: 사람들과의 사이에서 나오는 뿌듯함 호르몬</li>
+  </ul></div>
+  <h3>🔍 조금 더 풀어보면</h3><p>"시험 합격!"은 그냥 기쁨이 아니야. ① 보상팀이 "상 왔다!" 외치고 ② '나 담당'이 "이거 내가 한 거야" 하고 도장을 쾅 찍고 ③ '노력 계량기'가 "내가 열심히 해서야!"라고 연결해줘. 이 세 신호가 딱 만나면 그냥 기쁨이 '자긍심'으로 레벨업해! ⬆️ 희망은 똑같은 팀들이 미래를 향해 일할 때야. "앞으로 상 받을 수 있어!"라는 기대가 도파민을 계속 흘려보내서 나를 움직이게 해.</p>
+  <div class="study-tip"><strong>💡 오늘의 꿀팁:</strong> 큰 상 하나보다 작은 상 여러 개가 뇌 팀을 더 자주 깨워! 그러니까 큰 목표는 잘게 쪼개는 게 이득이야. 🍰</div>
+  <h3>📌 한 장 요약</h3><ul>
+    <li>자긍심·희망 = 보상팀 ➕ 나 담당팀의 합작</li>
+    <li>도파민이 기쁨·의욕 신호를 보냄</li>
+    <li>mPFC가 "주체는 나"라고 도장 찍음</li>
+    <li>ACC가 노력과 결과를 이어줌</li>
+    <li>이 팀들이 약해지면 우울·무기력이 옴</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>Takahashi 등(2008)의 fMRI 연구는 자긍심 상황(자신의 좋은 행동 상상)에서 mPFC와 좌측 후두정엽이 강하게 활성화됨을 보였다. 같은 자극에서 죄책감 조건은 mPFC + 측두엽 접합부(TPJ)가 활성화되어, 두 자기 평가 정서가 같은 mPFC 허브를 공유하되 보조 영역이 다름을 시사한다. 희망의 신경 기반 연구는 ACC와 PFC의 연결성이 핵심임을 보인다. ACC는 "노력 가치(effort value)"를 코딩하며, 이 가치 신호가 약하면 행동이 시작되지 않는다. 우울증에서 흔히 보이는 무기력은 ACC-PFC 연결 약화의 직접 결과다. 자기 효능감의 신경 표상은 ventral striatum 보상 학습 신호의 적분으로 모델링된다 — 작은 성공의 누적이 자기 효능감 회로를 키운다.</p>
+  <h3>핵심 메커니즘</h3>
+  <div class="info-card"><h4>📐 자긍심·희망의 4영역 회로</h4><p>① VTA → 도파민 분비. ② NAc → 보상 감지. ③ mPFC → "주체는 나"라는 자기 표상. ④ ACC → 노력-결과 연결. 네 영역이 동시에 활성화되면 단순 기쁨이 자긍심·희망으로 진화한다. 한 영역이라도 끊기면 정서가 약해진다.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>장기 학습 후 시험 합격: NAc(보상) + mPFC(나) + ACC(내 노력이 만든) 동시 활성화로 강력한 자긍심. 같은 합격이라도 "운"으로 해석하면 ACC 활성이 약해 자긍심이 약해진다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>우울증 환자: VTA 도파민 분비 둔화 + mPFC 자기 평가 부정 편향. 같은 성취 자극에도 보상 회로가 켜지지 않아 "성공해도 기쁘지 않다"가 발생한다.</p></div>
+  <h3>응용 사례</h3><p>한국 학생의 시험 후 무기력은 단순 피로가 아니라 ACC-PFC 회로의 일시적 고갈일 가능성이 크다. 작은 성공 경험을 자주 만들어 회로를 회복시키는 것이 휴식보다 중요하다. BCI(뇌-컴퓨터 인터페이스) 연구는 자기 효능감 회로의 직접 측정·강화를 실험하고 있다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> "도파민만 늘리면 자긍심이 생긴다"는 오해. 도파민은 보상 신호일 뿐, mPFC 자기 평가가 없으면 자긍심으로 진화하지 않는다.</div>
+
+<h3>전문가 레벨 이해</h3><p>Takahashi 등(2008)의 자긍심 fMRI 연구 이후, 자긍심 신경상관 연구는 두 자긍심(진정·오만)의 회로 분리를 시도해왔다. 오만 자긍심은 ventral striatum 과활성 + mPFC 자기 인플레이션으로 나타나며, 나르시시즘 척도와 강한 상관을 보인다. Schultz의 도파민 보상 예측 오류(RPE) 이론은 희망의 신경 기반을 설명한다 — 희망은 양의 예측 오류가 누적된 상태로, 미래 보상 예측이 도파민 톤을 지속적으로 유지하게 한다. Berridge의 "wanting vs liking" 구분은 자긍심 회로의 이해를 깊게 했다. 자긍심은 단순 liking(쾌락)이 아니라 wanting(동기)의 자기 지향 형태다. 한국 연구에서 Lee 등(2020)은 한국인 성공·실패 자극에 대한 mPFC 반응이 서구 표본보다 자기-타자 구분이 약함을 보고했다.</p>
+  <h3>최신 연구·동향</h3><p>2024년 들어 광유전학(optogenetics)을 통한 NAc 직접 자극이 동물 모델에서 희망 유사 행동(persistence)을 증가시킴이 보고되었다. 인간에서는 비침습 뇌자극(tDCS)으로 mPFC를 자극해 자기 효능감을 일시적으로 높이는 실험이 진행 중이다. AI 기반 신경표상 디코딩으로 자긍심·희망의 실시간 측정이 시도되고 있다.</p>
+  <h3>관련 분야</h3><ul>
+    <li>인지신경과학(Cognitive Neuroscience)</li>
+    <li>계산신경과학(Computational Neuroscience)</li>
+    <li>신경경제학(Neuroeconomics)</li>
+  </ul>
+  <h3>추가 학습 자료</h3><ul>
+    <li>"The Molecule of More" — Daniel Lieberman</li>
+    <li>"Behave" — Robert Sapolsky</li>
+    <li>"Affective Neuroscience" — Jaak Panksepp</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 본인의 자긍심·희망 회로 도식을 그려보라 — 어떤 자극이 VTA·NAc·mPFC·ACC를 각각 활성화하는지 본인의 일상에서 매핑하라.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 뇌 영역 분류</h2>
+<p>각 뇌 영역을 역할에 맞게 분류해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#f472b6","prompt":"각 뇌 영역을 역할에 맞게 분류하세요","groups":[{"name":"보상 회로","items":["VTA","NAc","도파민"]},{"name":"자기 평가·동기","items":["mPFC","ACC"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#f472b6","questions":[{"q":"자긍심은 보상 회로와 무슨 회로?","choices":["운동 회로","시각 회로","자기 평가 회로","청각 회로"],"answer":2},{"q":"보상 예측 신경전달물질은?","choices":["도파민","세로토닌","인슐린","멜라토닌"],"answer":0},{"q":"'주체는 나'를 표상하는 영역은?","choices":["소뇌","해마","시상","mPFC"],"answer":3},{"q":"ACC가 코딩하는 가치는?","choices":["노력 가치","색 정보","언어 정보","후각"],"answer":0},{"q":"2008 자긍심 fMRI 활성 영역은?","choices":["후두엽","mPFC","편도체","뇌간"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,7);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const COL=0xf472b6;const brain=new THREE.Mesh(new THREE.SphereGeometry(2.0,20,16),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.35}));s.add(brain);const reg=[];const pts=[[-0.8,-0.3,0.6],[0.8,-0.3,0.6],[0,0.7,-0.4],[0,-0.9,-0.2]];const rnm=['VTA-NAc 회로','mPFC','ACC','옥시토신'];pts.forEach((p,idx)=>{const m=new THREE.Mesh(new THREE.SphereGeometry(0.26,16,16),new THREE.MeshBasicMaterial({color:0xffe08a}));m.position.set(p[0]*1.5,p[1]*1.5,p[2]*1.5);s.add(m);reg.push(m);const L=lbl(rnm[idx],'#fff2cc');L.position.set(m.position.x,m.position.y+0.5,m.position.z);s.add(L);});for(let i=0;i<reg.length;i++)for(let j=i+1;j<reg.length;j++)s.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([reg[i].position,reg[j].position]),new THREE.LineBasicMaterial({color:COL,transparent:true,opacity:0.3})));
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 네 노란 구는 자긍심·희망의 핵심 뇌 영역 — 서로 연결되어 하나의 회로로 작동합니다.','VTA-NAc 회로는 도파민 보상 경로로 성취의 자긍심을 강화합니다.','mPFC(내측 전전두엽)는 자기 평가를, ACC(전대상피질)는 기대와 갈등을 처리합니다.','옥시토신은 사회적 유대와 자긍심 표현을 매개합니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}brain.rotation.y+=0.004;reg.forEach((m,i)=>m.scale.setScalar(0.8+0.3*Math.sin(T*3+i)));s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

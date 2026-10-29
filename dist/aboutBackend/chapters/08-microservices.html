@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8. 마이크로서비스 — aboutBackend</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🖥️ 표지 · 소개</a></li>
+    <li><a href="01-server-basics.html">1. 서버 기초</a></li>
+    <li><a href="02-http-api.html">2. HTTP와 API 설계</a></li>
+    <li><a href="03-nodejs-express.html">3. Node.js와 Express</a></li>
+    <li><a href="04-auth-security.html">4. 인증과 보안</a></li>
+    <li><a href="05-middleware-routing.html">5. 미들웨어와 라우팅</a></li>
+    <li><a href="06-file-streaming.html">6. 파일 처리와 스트리밍</a></li>
+    <li><a href="07-caching-queue.html">7. 캐싱과 메시지 큐</a></li>
+    <li><a href="08-microservices.html" style="color:var(--accent);font-weight:600;">8. 마이크로서비스</a></li>
+    <li><a href="09-deploy-devops.html">9. 배포와 DevOps</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>마이크로서비스</em><br>아키텍처</h1>
+  <p class="authors">Chapter 8 — Microservices Architecture & Patterns</p>
+  <p class="affiliation">분산 서비스 통신 시뮬레이터 포함</p>
+</header>
+
+<h2>모놀리식 vs 마이크로서비스</h2>
+<p>모놀리식 아키텍처는 모든 기능이 하나의 코드베이스에 있습니다. 간단하지만 규모가 커지면 배포, 확장, 유지보수가 어려워집니다. 마이크로서비스는 각 기능을 독립된 서비스로 분리하여 개별적으로 개발, 배포, 확장할 수 있게 합니다.</p>
+
+<h2>마이크로서비스 통신 시뮬레이터</h2>
+<p>"주문 처리" 버튼을 누르면 API Gateway를 통해 여러 서비스가 순차적으로 호출되는 과정을 관찰할 수 있습니다. "서킷 브레이커" 모드에서는 장애가 있는 서비스를 우회하는 패턴을 확인하세요.</p>
+
+<div class="scene-3d" id="micro-scene">
+  <div class="scene-controls">
+    <button id="order-btn">🛒 주문 처리</button>
+    <label><input type="checkbox" id="circuit-toggle"> ⚡ 서킷 브레이커</label>
+    <label id="micro-status" style="color:#00ff88;">대기 중...</label>
+  </div>
+</div>
+<span class="interact-hint">🛒 주문 처리를 시작하고 서비스 간 통신을 관찰하세요</span>
+
+<h2>핵심 패턴</h2>
+<div class="info-card">
+  <h4>🚪 API Gateway</h4>
+  <p>모든 외부 요청의 단일 진입점입니다. 인증, 라우팅, 속도 제한, 로깅을 중앙에서 처리합니다. Kong, AWS API Gateway, Nginx 등이 대표적입니다.</p>
+</div>
+
+<div class="info-card http">
+  <h4>🔍 서비스 디스커버리</h4>
+  <p>서비스 인스턴스의 위치(IP/포트)를 동적으로 찾습니다. Consul, etcd, Kubernetes DNS 등이 사용됩니다.</p>
+</div>
+
+<div class="info-card security">
+  <h4>⚡ 서킷 브레이커</h4>
+  <p>장애가 발생한 서비스 호출을 빠르게 실패시켜 연쇄 장애를 방지합니다. Closed → Open → Half-Open 세 상태로 동작합니다.</p>
+</div>
+
+<div class="info-card queue">
+  <h4>📜 사가 패턴 (Saga)</h4>
+  <p>분산 트랜잭션을 로컬 트랜잭션의 연속으로 처리합니다. 실패 시 보상 트랜잭션(compensation)으로 롤백합니다.</p>
+</div>
+
+<h2>서비스 간 통신</h2>
+<div class="flow-horizontal">
+  <span class="flow-node">Client</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node active">API Gateway</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">Auth</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">Order</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">Payment</span>
+  <span class="flow-arrow">→</span>
+  <span class="flow-node">Notify</span>
+</div>
+
+<div class="code-block" data-title="API Gateway 라우팅 설정">// gateway/index.js
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
+app.use('/api/auth', createProxyMiddleware({
+  target: 'http://auth-service:4001',
+  pathRewrite: { '^/api/auth': '' }
+}));
+
+app.use('/api/orders', createProxyMiddleware({
+  target: 'http://order-service:4002',
+  pathRewrite: { '^/api/orders': '' }
+}));
+
+app.use('/api/payments', createProxyMiddleware({
+  target: 'http://payment-service:4003',
+  pathRewrite: { '^/api/payments': '' }
+}));</div>
+
+<div class="code-block" data-title="서킷 브레이커 구현">const CircuitBreaker = require('opossum');
+
+const options = {
+  timeout: 3000,     // 3초 타임아웃
+  errorThreshold: 50, // 50% 실패 시 Open
+  resetTimeout: 10000  // 10초 후 Half-Open
+};
+
+const breaker = new CircuitBreaker(callPaymentService, options);
+
+breaker.on('open', () =>
+  console.log('서킷 OPEN — 장애 감지'));
+breaker.on('halfOpen', () =>
+  console.log('서킷 HALF-OPEN — 재시도 중'));
+breaker.on('close', () =>
+  console.log('서킷 CLOSED — 정상 복구'));
+
+// 사용
+const result = await breaker.fire(orderId);</div>
+
+<div class="info-card docker">
+  <h4>💡 탐구 과제</h4>
+  <p>서킷 브레이커 모드를 켜고 주문을 처리해보세요. Payment 서비스가 장애일 때 요청이 어떻게 처리되는지 관찰하고, 연쇄 장애 방지 원리를 이해해보세요.</p>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🤔 이게 뭐냐면?</h3><p>마이크로서비스는 큰 앱을 하나로 뭉치지 않고, "작은 서비스 여러 개로 쪼개서" 각자 따로 배포하고 키우는 방법이에요! 🧩 레고 블록을 하나씩 조립하는 느낌이죠. 🧱</p>
+  <h3>👀 왜 중요할까?</h3><p>넷플릭스, 우버, 카카오, 토스 같은 큰 서비스는 수십~수백 개의 작은 서비스로 돌아가요! 🏢 결제팀, 추천팀, 알림팀이 서로 방해하지 않고 동시에 일할 수 있거든요. 하지만 작은 팀에는 오히려 독이 될 수도 있어서, 좋은 점과 힘든 점을 꼭 함께 알아야 해요. ⚖️</p>
+  <div class="info-card"><h4>🌱 이 말은 꼭 알아두자</h4><ul><li><strong>모놀리식</strong>: 다 붙어있는 한 덩어리 앱 🍞</li><li><strong>API 게이트웨이</strong>: 외부 손님이 들어오는 정문 🚪</li><li><strong>서비스 디스커버리</strong>: 어떤 서비스가 어디 있는지 찾기 🔍</li><li><strong>서킷 브레이커</strong>: 고장이 번지지 않게 딱 끊는 차단기 🔌</li><li><strong>분산 추적</strong>: 요청이 어떤 서비스들을 거쳤는지 따라가기 👣</li></ul></div>
+  <h3>🎯 식당으로 이해하기</h3><p>작은 가게는 한 사람이 요리·서빙·계산·청소를 다 해요. 근데 한 가지만 막혀도 가게 전체가 멈춰버려요! 😱 큰 식당은 주방, 홀, 계산대, 청소가 따로 나뉘어 있어서, 한 곳에 문제가 생겨도 나머지는 계속 돌아가요. 👍 대신 서로 말 맞추는 게 좀 번거롭죠. 마이크로서비스도 똑같아요! 자유롭고 잘 커지는 대신, 관리하고 지켜보는 일이 훨씬 복잡해져요.</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 정말 나눠야 하는지부터 생각해보세요! 팀이 5명도 안 되는데 마이크로서비스를 쓰면 80%는 후회해요. 겉만 쪼갠 "분산 모놀리스"가 제일 무서운 함정이에요. ⚠️</div>
+  <h3>🍬 한 입 요약</h3><ul><li>따로 배포 · 따로 데이터 · 따로 확장</li><li>HTTP, gRPC, 메시지 큐로 서로 대화해요</li><li>로그·메트릭·트레이스로 지켜보기가 필수</li><li>실패는 늘 일어나요 — 재시도·서킷 브레이커가 기본</li><li>분산 트랜잭션 대신 Saga 패턴을 써요</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>서비스 경계는 비즈니스 도메인의 Bounded Context를 기준으로 나누는 것이 정석입니다(DDD). 한 서비스는 한 가지 책임만 갖고, 자신만의 DB를 소유하며, 다른 서비스의 DB에 직접 접근하지 않습니다. 동기 통신(HTTP/gRPC)은 일관성을 다루기 쉬우나 가용성이 결합되고, 비동기 통신(이벤트)은 결합도를 낮추지만 일관성을 별도로 설계해야 합니다. 분산 트랜잭션은 2PC 대신 Saga(Choreography 또는 Orchestration)와 보상 트랜잭션으로 표현합니다. 인증은 보통 API 게이트웨이에서 일괄 처리하고 내부 통신은 mTLS와 JWT로 보강합니다.</p>
+  <h3>핵심 통신 패턴</h3>
+  <pre><code>// gRPC 클라이언트 호출(타임아웃 + 재시도 + 서킷브레이커)
+const result = await circuit.execute(() =&gt;
+  pRetry(() =&gt; client.getOrder({id}, {deadline: Date.now()+200}),
+    {retries: 2}));</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1: Saga 결제 흐름</h4><p>주문 생성 → 재고 차감 → 결제 → 배송 예약. 단계마다 보상 액션을 정의해 결제 실패 시 재고 복구를 트리거합니다.</p></div>
+  <div class="info-card"><h4>📐 예제 2: Outbox 패턴</h4><p>DB 트랜잭션 안에 이벤트 row를 함께 기록한 뒤 outbox publisher가 안전하게 큐로 흘려보내 "DB 커밋과 이벤트 발행의 원자성"을 만듭니다.</p></div>
+  <h3>응용 사례</h3><p>토스 송금은 송금/거래/한도/이상거래 탐지/알림 서비스가 협력해 한 건의 송금을 완성합니다. 카카오 모빌리티는 위치, 매칭, 결제, 정산 서비스를 분리해 운영합니다. 모두 분산 추적(OpenTelemetry)으로 한 송금 요청의 전체 경로를 한 화면에서 들여다봅니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 서비스를 너무 잘게 쪼개면 한 화면을 그리는 데 수십 번 RPC가 필요해 레이턴시·운영 비용이 폭증합니다. "독립 배포가 가능한 최소 단위"가 좋은 기준입니다.</div>
+
+<h3>전문가 레벨 이해</h3><p>현대 마이크로서비스 운영의 본질은 "변하는 토폴로지에서 안정성과 관측성을 어떻게 자동화하느냐"입니다. Kubernetes는 서비스 디스커버리, 자가 치유, 롤링 업데이트를 표준화했고, Istio·Linkerd 같은 서비스 메시는 mTLS·트래픽 정책·관측성을 사이드카로 주입합니다. eBPF 기반 Cilium은 사이드카 없이 같은 일을 더 적은 오버헤드로 합니다. 분산 시스템의 한계(CAP, FLP, PACELC)는 설계 전반에 직접 영향을 주며, 데이터 영역에서는 CDC + 스트리밍 ETL로 도메인 경계를 가로지르는 분석/검색 인덱스를 일관되게 만듭니다. 카나리·블루-그린·feature flag로 배포 위험을 낮추고, SLO 기반 운영(에러 버짓)으로 변경 속도와 안정성의 균형을 잡습니다.</p>
+  <h3>최신 연구·동향</h3><p>"분산 모놀리스" 경험 누적 후 "모듈러 모놀리스 → 필요할 때 추출"이라는 역방향 흐름이 주류 의견으로 자리잡았습니다. Cell-based 아키텍처(AWS)는 장애 격리 단위를 셀로 정의해 폭발 반경(blast radius)을 좁힙니다. 서버리스 마이크로서비스는 Lambda/Workers + 이벤트 브리지로 인프라 운영 부담을 줄입니다.</p>
+  <h3>관련 분야</h3><ul><li>DDD와 이벤트 스토밍</li><li>서비스 메시와 zero-trust 네트워크</li><li>SRE와 카오스 엔지니어링</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"Building Microservices(2nd)" — Sam Newman</li><li>"Microservices Patterns" — Chris Richardson</li><li>Netflix Tech Blog, Uber Engineering</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 모놀리스 한 도메인을 추출해 마이크로서비스로 분리하고, 분산 추적·서킷브레이커·Saga 보상 흐름을 갖춘 완전한 배포 파이프라인을 구성하세요.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 어울리지 않는 하나 고르기</h2>
+<p>각 묶음에서 성격이 다른 하나를 찾아보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#00ff88","prompt":"같은 부류가 아닌 하나를 고르세요","rounds":[{"items":["API Gateway","서킷 브레이커","사가 패턴","모놀리식"],"odd":3,"why":"모놀리식은 아키텍처 유형, 나머지는 마이크로서비스 패턴"},{"items":["Closed","Open","Half-Open","Locked"],"odd":3,"why":"서킷 브레이커 상태는 Closed/Open/Half-Open 세 가지"},{"items":["Consul","etcd","Kubernetes DNS","RabbitMQ"],"odd":3,"why":"RabbitMQ는 메시지 브로커, 나머지는 서비스 디스커버리"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#00ff88","questions":[{"q":"모든 외부 요청의 단일 진입점은?","choices":["API Gateway","DB","캐시","DNS"],"answer":0},{"q":"모든 기능이 한 코드베이스에 있는 구조는?","choices":["마이크로서비스","서버리스","모놀리식","분산 캐시"],"answer":2},{"q":"연쇄 장애를 막는 패턴은?","choices":["사가 패턴","서킷 브레이커","캐싱","라우팅"],"answer":1},{"q":"서킷 브레이커의 상태가 아닌 것은?","choices":["Closed","Open","Half-Open","Locked"],"answer":3},{"q":"사가 패턴의 실패 시 롤백 수단은?","choices":["재부팅","캐시 삭제","보상 트랜잭션","포트 변경"],"answer":2}]};</script>
+</main>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('micro-scene');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, container.clientWidth/container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 8, 14);
+  camera.lookAt(0, 0, 0);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // API Gateway (top)
+  const gateway = new THREE.Mesh(new THREE.BoxGeometry(3, 0.6, 1.5), new THREE.MeshBasicMaterial({ color: 0x00ff88 }));
+  gateway.position.set(0, 4, 0);
+  scene.add(gateway);
+  const gwWire = new THREE.Mesh(new THREE.BoxGeometry(3.3, 0.8, 1.7), new THREE.MeshBasicMaterial({ color: 0x00ff88, wireframe: true, transparent: true, opacity: 0.2 }));
+  gwWire.position.copy(gateway.position);
+  scene.add(gwWire);
+
+  // Service nodes
+  const serviceData = [
+    { name: 'Auth', color: 0xfbbf24, pos: [-6, -1, 0] },
+    { name: 'User', color: 0x60a5fa, pos: [-3, -1, 0] },
+    { name: 'Order', color: 0x10b981, pos: [0, -1, 0] },
+    { name: 'Payment', color: 0xef4444, pos: [3, -1, 0] },
+    { name: 'Notify', color: 0xa78bfa, pos: [6, -1, 0] },
+  ];
+  const services = [];
+  serviceData.forEach(s => {
+    const mesh = new THREE.Mesh(new THREE.SphereGeometry(0.6, 16, 16), new THREE.MeshBasicMaterial({ color: s.color }));
+    mesh.position.set(...s.pos);
+    scene.add(mesh);
+    // Connection to gateway
+    const g = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...s.pos), gateway.position]);
+    scene.add(new THREE.Line(g, new THREE.LineBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.1 })));
+    services.push({ mesh, ...s });
+  });
+
+  // Inter-service connections
+  [[2,3],[3,4],[0,2]].forEach(([a,b]) => {
+    const g = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(...serviceData[a].pos), new THREE.Vector3(...serviceData[b].pos)
+    ]);
+    scene.add(new THREE.Line(g, new THREE.LineBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.06 })));
+  });
+
+  const grid = new THREE.GridHelper(20, 20, 0x0a3a0a, 0x0a3a0a);
+  grid.position.y = -4;
+  scene.add(grid);
+
+  const packets = [];
+  const statusLabel = document.getElementById('micro-status');
+
+  function processOrder() {
+    const circuitBreaker = document.getElementById('circuit-toggle').checked;
+    // Flow: Gateway → Auth → Order → Payment → Notify
+    const flowIndices = [0, 2, 3, 4]; // Auth, Order, Payment, Notify
+    const p = new THREE.Mesh(new THREE.SphereGeometry(0.2, 10, 10), new THREE.MeshBasicMaterial({ color: 0xfbbf24 }));
+    p.position.copy(gateway.position);
+    scene.add(p);
+    packets.push({ mesh: p, flowIndices, step: -1, t: 0, circuitBreaker, failed: false });
+    statusLabel.textContent = '🛒 주문 요청 → API Gateway';
+    statusLabel.style.color = '#fbbf24';
+  }
+  document.getElementById('order-btn').addEventListener('click', processOrder);
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = Date.now() * 0.001;
+    gateway.rotation.y = t * 0.1;
+    services.forEach((s, i) => { s.mesh.rotation.y = t * 0.3 + i; });
+
+    for (let i = packets.length - 1; i >= 0; i--) {
+      const p = packets[i];
+      p.t += 0.02;
+
+      if (p.t >= 1) {
+        p.t = 0;
+        p.step++;
+
+        if (p.step >= p.flowIndices.length) {
+          // Return to gateway
+          if (!p.returning) {
+            p.returning = true;
+            p.mesh.material.color.setHex(0x00ff88);
+            statusLabel.textContent = '✅ 주문 처리 완료!';
+            statusLabel.style.color = '#00ff88';
+          } else {
+            scene.remove(p.mesh);
+            packets.splice(i, 1);
+          }
+          continue;
+        }
+
+        const svcIdx = p.flowIndices[p.step];
+        const svc = services[svcIdx];
+
+        // Circuit breaker: fail at Payment (index 3)
+        if (p.circuitBreaker && svcIdx === 3) {
+          svc.mesh.material.color.setHex(0x555555);
+          p.mesh.material.color.setHex(0xef4444);
+          statusLabel.textContent = '⚡ 서킷 OPEN — Payment 장애 → Fallback';
+          statusLabel.style.color = '#ef4444';
+          setTimeout(() => { svc.mesh.material.color.setHex(svc.color); }, 1500);
+          // Skip payment, go to notify
+          p.step++;
+          if (p.step >= p.flowIndices.length) { p.returning = true; continue; }
+        } else {
+          statusLabel.textContent = `→ ${svc.name} 서비스 처리 중...`;
+          svc.mesh.scale.setScalar(1.3);
+          setTimeout(() => svc.mesh.scale.setScalar(1), 300);
+        }
+      }
+
+      // Animate position
+      let from, to;
+      if (p.returning) {
+        from = services[p.flowIndices[p.flowIndices.length - 1]].mesh.position;
+        to = gateway.position;
+      } else if (p.step < 0) {
+        from = gateway.position;
+        to = services[p.flowIndices[0]].mesh.position;
+      } else if (p.step < p.flowIndices.length - 1) {
+        from = services[p.flowIndices[p.step]].mesh.position;
+        to = services[p.flowIndices[p.step + 1]].mesh.position;
+      } else {
+        from = services[p.flowIndices[p.step]].mesh.position;
+        to = gateway.position;
+      }
+      p.mesh.position.lerpVectors(from, to, p.t);
+      p.mesh.position.y += Math.sin(p.t * Math.PI) * 0.8;
+    }
+
+    renderer.render(scene, camera);
+  }
+  animate();
+  setTimeout(processOrder, 1000);
+
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+})();
+</script>
+</body>
+</html>

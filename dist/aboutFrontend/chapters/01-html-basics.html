@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1장. HTML 기초 — 웹의 뼈대</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .html-editor {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            gap: 1rem;
+            height: 500px;
+        }
+
+        .editor-panel {
+            display: flex;
+            flex-direction: column;
+            background: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .editor-label {
+            padding: 10px 12px;
+            background: #333;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .editor-content {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        textarea.editor-input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            resize: none;
+            background: #fff;
+            color: #333;
+        }
+
+        .preview-frame {
+            flex: 1;
+            border: none;
+            background: #fff;
+        }
+
+        .semantic-diagram {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .semantic-box {
+            background: white;
+            border: 3px solid #7b5cff;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.5rem;
+            text-align:left;
+            font-weight: 600;
+            color: #7b5cff;
+            position: relative;
+        }
+
+        .semantic-header {
+            background: linear-gradient(120deg, #ff6b6b, #ff9671);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .semantic-nav {
+            background: linear-gradient(120deg, #4ecdc4, #44a08d);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .semantic-main {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .semantic-article {
+            background: linear-gradient(120deg, #a8edea, #fed6e3);
+            color: #333;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .semantic-aside {
+            background: linear-gradient(120deg, #ffecd2, #fcb69f);
+            color: #333;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .semantic-footer {
+            background: linear-gradient(120deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align:left;
+        }
+
+        .three-d-container {
+            width: 100%;
+            height: 500px;
+            background: #f0f2f5;
+            border-radius: 12px;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .form-demo {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .form-section {
+            margin: 1.5rem 0;
+        }
+
+        .form-section label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-section input,
+        .form-section select,
+        .form-section textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-section input:focus,
+        .form-section select:focus,
+        .form-section textarea:focus {
+            outline: none;
+            border-color: #7b5cff;
+            box-shadow: 0 0 0 3px rgba(123, 92, 255, 0.1);
+        }
+
+        .form-section input:invalid {
+            border-color: #ff6b6b;
+        }
+
+        .accessibility-guide {
+            background: #fffacd;
+            border-left: 4px solid #ffd700;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #7b5cff;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #eee;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align:left;
+        }
+
+        .nav-btn.prev {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .nav-btn.prev:hover {
+            background: #e0e0e0;
+            transform: translateX(-2px);
+        }
+
+        .nav-btn.next {
+            background: linear-gradient(120deg, #7b5cff, #00d4ff);
+            color: white;
+        }
+
+        .nav-btn.next:hover {
+            transform: translateX(2px);
+            box-shadow: 0 6px 18px -6px rgba(123, 92, 255, 0.5);
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #555;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            line-height: 1.8;
+            color: #666;
+            margin: 1rem 0;
+        }
+
+        li {
+            line-height: 1.8;
+            color: #666;
+            margin: 0.5rem 0;
+        }
+
+        .container {
+            display: flex;
+            gap: 2rem;
+        }
+
+        aside {
+            flex: 0 0 220px;
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 12px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        aside h3 {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        aside ol {
+            list-style: none;
+            padding: 0;
+        }
+
+        aside li {
+            margin: 0.5rem 0;
+        }
+
+        aside a {
+            color: #7b5cff;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+
+        aside a:hover {
+            color: #00d4ff;
+        }
+
+        .hub-back-link {
+            display: block;
+            padding: 10px 14px;
+            margin-bottom: 18px;
+            background: linear-gradient(120deg, #7b5cff, #00d4ff);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-align:left;
+            box-shadow: 0 6px 18px -6px rgba(123, 92, 255, 0.5);
+            transition: transform 0.2s ease;
+        }
+
+        .hub-back-link:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+            <h3>전체 목차</h3>
+            <ol>
+                <li><a href="../index.html">📖 표지 · 소개</a></li>
+                <li><a href="01-html-basics.html">1. HTML 기초</a></li>
+                <li><a href="02-css-layout.html">2. CSS와 레이아웃</a></li>
+                <li><a href="03-javascript-core.html">3. JavaScript 핵심</a></li>
+                <li><a href="04-dom-manipulation.html">4. DOM 조작</a></li>
+                <li><a href="05-react-components.html">5. React와 컴포넌트</a></li>
+                <li><a href="06-state-management.html">6. 상태관리</a></li>
+                <li><a href="07-responsive-design.html">7. 반응형 디자인</a></li>
+                <li><a href="08-performance.html">8. 성능 최적화</a></li>
+                <li><a href="09-build-deploy.html">9. 빌드도구와 배포</a></li>
+            </ol>
+        </aside>
+
+        <main>
+            <h1>1장. HTML 기초 — 웹의 뼈대</h1>
+
+            <h2 class="section-title">1.1 HTML이란?</h2>
+            <p>
+                HTML(HyperText Markup Language)은 웹 문서의 구조와 내용을 정의하는 마크업 언어입니다.
+                "마크업"이란 콘텐츠에 태그(tag)라는 레이블을 붙여 그 의미를 명시하는 것을 의미합니다.
+            </p>
+            <p>
+                HTML5는 현재 표준 버전으로, 의미 있는 구조(semantic structure)를 강조합니다.
+                문서의 각 부분이 무엇을 의미하는지 명확히 함으로써 브라우저, 검색 엔진, 스크린 리더 등이
+                콘텐츠를 올바르게 이해할 수 있습니다.
+            </p>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="ko"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;페이지 제목&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;제목&lt;/h1&gt;
+    &lt;p&gt;단락&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h2 class="section-title">1.2 시맨틱 태그 (Semantic Tags)</h2>
+            <p>
+                시맨틱 태그는 콘텐츠의 의미를 명확히 전달하는 HTML 요소들입니다.
+                <code>&lt;div&gt;</code>처럼 의미 없는 범용 컨테이너 대신, 각 부분의 용도를 명시하는 태그를 사용합니다.
+            </p>
+
+            <div class="semantic-diagram">
+                <div class="semantic-header">
+                    &lt;header&gt; — 사이트/섹션 헤더
+                </div>
+                <div class="semantic-nav">
+                    &lt;nav&gt; — 네비게이션 메뉴
+                </div>
+                <div class="semantic-main">
+                    <div class="semantic-article">
+                        <strong>&lt;main&gt; + &lt;article&gt;</strong><br>
+                        주요 콘텐츠
+                    </div>
+                    <div class="semantic-aside">
+                        <strong>&lt;aside&gt;</strong><br>
+                        보조 정보
+                    </div>
+                </div>
+                <div class="semantic-footer">
+                    &lt;footer&gt; — 사이트 푸터
+                </div>
+            </div>
+
+            <p><strong>주요 시맨틱 태그:</strong></p>
+            <ul style="margin-left: 1.5rem; color: #666;">
+                <li><code>&lt;header&gt;</code>: 소개 또는 탐색 정보</li>
+                <li><code>&lt;nav&gt;</code>: 네비게이션 링크</li>
+                <li><code>&lt;main&gt;</code>: 문서의 주요 콘텐츠</li>
+                <li><code>&lt;section&gt;</code>: 주제별 콘텐츠 그룹</li>
+                <li><code>&lt;article&gt;</code>: 독립적인 콘텐츠 (블로그 글, 뉴스 기사 등)</li>
+                <li><code>&lt;aside&gt;</code>: 보조 정보 (사이드바 등)</li>
+                <li><code>&lt;footer&gt;</code>: 푸터</li>
+            </ul>
+
+            <h2 class="section-title">1.3 폼과 입력 (Forms & Input)</h2>
+            <p>폼은 사용자로부터 데이터를 수집하는 가장 중요한 메커니즘입니다. HTML5는 다양한 입력 타입을 지원합니다.</p>
+
+            <div class="form-demo">
+                <h3>폼 요소 실습</h3>
+                <form onsubmit="return false;">
+                    <div class="form-section">
+                        <label for="name">이름 (필수):</label>
+                        <input type="text" id="name" name="name" required placeholder="홍길동">
+                    </div>
+
+                    <div class="form-section">
+                        <label for="email">이메일:</label>
+                        <input type="email" id="email" name="email" placeholder="example@example.com">
+                    </div>
+
+                    <div class="form-section">
+                        <label for="age">나이:</label>
+                        <input type="number" id="age" name="age" min="0" max="120">
+                    </div>
+
+                    <div class="form-section">
+                        <label for="dob">생년월일:</label>
+                        <input type="date" id="dob" name="dob">
+                    </div>
+
+                    <div class="form-section">
+                        <label for="color">좋아하는 색:</label>
+                        <input type="color" id="color" name="color" value="#7b5cff">
+                    </div>
+
+                    <div class="form-section">
+                        <label for="category">카테고리:</label>
+                        <select id="category" name="category">
+                            <option value="">선택하세요</option>
+                            <option value="frontend">프론트엔드</option>
+                            <option value="backend">백엔드</option>
+                            <option value="fullstack">풀스택</option>
+                        </select>
+                    </div>
+
+                    <div class="form-section">
+                        <label for="message">메시지:</label>
+                        <textarea id="message" name="message" rows="4" placeholder="여기에 입력하세요..."></textarea>
+                    </div>
+
+                    <div class="form-section">
+                        <label>
+                            <input type="checkbox" name="agree"> 약관에 동의합니다
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+            <h2 class="section-title">1.4 접근성 (Accessibility, a11y)</h2>
+            <p>
+                접근성은 장애가 있는 사용자를 포함한 모든 사용자가 웹 콘텐츠를 이용할 수 있도록
+                하는 것입니다. HTML은 접근성의 기초입니다.
+            </p>
+
+            <div class="accessibility-guide">
+                <strong>접근성 모범 사례:</strong>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li><strong>Alt 텍스트:</strong> 모든 이미지에 설명적인 alt 속성 추가<br>
+                        <code>&lt;img src="logo.png" alt="회사 로고"&gt;</code></li>
+                    <li><strong>의미 있는 링크:</strong> "여기를 클릭" 대신 명확한 링크 텍스트<br>
+                        <code>&lt;a href="/guide"&gt;HTML 가이드&lt;/a&gt;</code></li>
+                    <li><strong>헤딩 구조:</strong> h1→h2→h3 순서대로 중첩<br>
+                        스크린 리더가 문서 구조를 이해할 수 있도록</li>
+                    <li><strong>라벨 요소:</strong> 폼 입력에 &lt;label&gt; 항상 사용<br>
+                        <code>&lt;label for="email"&gt;이메일:&lt;/label&gt;&lt;input id="email"&gt;</code></li>
+                    <li><strong>ARIA 속성:</strong> 복잡한 UI에 <code>role</code>, <code>aria-label</code> 등 추가</li>
+                </ul>
+            </div>
+
+            <h2 class="section-title">인터랙티브: HTML 에디터</h2>
+            <p>아래에서 HTML을 직접 입력하고 실시간 미리보기를 확인해보세요.</p>
+
+            <div class="html-editor">
+                <div class="editor-panel">
+                    <div class="editor-label">HTML 입력</div>
+                    <div class="editor-content">
+                        <textarea id="html-input" class="editor-input" placeholder="&lt;h1&gt;제목&lt;/h1&gt;
+&lt;p&gt;단락&lt;/p&gt;">&lt;h1&gt;안녕하세요!&lt;/h1&gt;
+&lt;p&gt;이것은 HTML 에디터입니다.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;HTML을 입력하세요&lt;/li&gt;
+  &lt;li&gt;실시간으로 미리보기가 표시됩니다&lt;/li&gt;
+  &lt;li&gt;시맨틱 태그를 사용해보세요!&lt;/li&gt;
+&lt;/ul&gt;</textarea>
+                    </div>
+                </div>
+                <div class="editor-panel">
+                    <div class="editor-label">실시간 미리보기</div>
+                    <div class="editor-content">
+                        <iframe id="preview-frame" class="preview-frame"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">3D 시각화: DOM 트리 구조</h2>
+            <p>아래는 HTML 문서의 구조를 3D로 표현한 DOM 트리입니다. 마우스로 드래그하여 회전시켜보세요.</p>
+            <div id="three-d-container" class="three-d-container"></div>
+
+            <div class="nav-buttons">
+                <button class="nav-btn prev" onclick="history.back()">← 이전</button>
+                <a href="02-css-layout.html" class="nav-btn next">다음: CSS와 레이아웃 →</a>
+            </div>
+
+            <h2>📚 난이도별 학습</h2>
+            <p>본인 수준에 맞춰 탭 선택. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어 학습 가능.</p>
+            <div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+            <div class="difficulty-content" data-level="easy">
+              <span class="difficulty-badge easy">🟢 쉬움</span>
+              <h3>🎯 딱 한 줄!</h3>
+              <p>HTML은 웹페이지의 <strong>뼈대</strong>를 만드는 말이에요. "여기는 제목!", "여기는 사진!" 하고 태그로 이름표를 붙이는 거죠. 🦴</p>
+              <h3>😎 왜 배워요?</h3>
+              <p>세상 모든 웹페이지는 HTML로 시작해요! 유튜브도, 쇼핑몰도, 학교 홈페이지도요. HTML이 없으면 웹페이지는 한 글자도 안 보여요. 게다가 이름표를 잘 붙여두면 구글 같은 검색엔진(SEO)도 "아하, 여기가 제목이구나!" 하고 척척 알아봐요. 🔍</p>
+              <div class="info-card">
+                <h4>🌱 이 말들만 알아두자</h4>
+                <ul>
+                  <li><strong>태그(Tag)</strong>: <code>&lt;p&gt;</code>처럼 꺾쇠 &lt; &gt; 로 감싼 이름표 🏷️</li>
+                  <li><strong>요소(Element)</strong>: 시작 태그 + 내용 + 끝 태그를 통째로!</li>
+                  <li><strong>속성(Attribute)</strong>: 태그에 붙이는 추가 정보 (예: <code>href="..."</code>)</li>
+                  <li><strong>시맨틱(Semantic)</strong>: "의미가 담긴" 태그 쓰기 👍</li>
+                  <li><strong>DOCTYPE</strong>: 맨 첫 줄에 "나 HTML5야!" 하고 외치는 인사 👋</li>
+                </ul>
+              </div>
+              <h3>🏠 쉽게 풀어보기</h3>
+              <p>HTML로 웹페이지 만드는 건 <strong>집 짓기</strong>랑 똑같아요!</p>
+              <ul>
+                <li>🏷️ <code>&lt;!DOCTYPE html&gt;</code> → "이 집은 HTML5 규칙으로 지어요" 명패</li>
+                <li>🧱 <code>&lt;html&gt;</code> → 집 전체를 감싸는 바깥벽</li>
+                <li>📦 <code>&lt;head&gt;</code> → 안 보이는 창고 (제목·글꼴 같은 설정 보관)</li>
+                <li>🛋️ <code>&lt;body&gt;</code> → 사람이 사는 진짜 방 (여기 있는 게 화면에 보여요!)</li>
+                <li>📢 <code>&lt;h1&gt;</code>은 큰 간판, <code>&lt;p&gt;</code>는 보통 글, <code>&lt;a&gt;</code>는 다른 방으로 가는 문, <code>&lt;img&gt;</code>는 벽에 건 그림!</li>
+              </ul>
+              <p>태그가 엄청 많아 보이지만 걱정 마요. 자주 쓰는 건 20개쯤이고, 나머지는 필요할 때 검색하면 돼요. 😉</p>
+              <div class="study-tip">
+                <strong>💡 꿀팁:</strong> 메모장에 코드를 적고 <code>.html</code>로 저장한 뒤 더블클릭! 브라우저에서 바로 열려요. 조금 바꾸고 새로고침(F5) 하는 게 제일 빠른 연습법이에요. 🔁
+              </div>
+              <h3>📝 오늘의 정리</h3>
+              <ul>
+                <li>HTML = 웹의 뼈대, 태그로 의미를 표시!</li>
+                <li>태그는 시작 <code>&lt;p&gt;</code> ~ 끝 <code>&lt;/p&gt;</code> 짝꿍으로 쓴다</li>
+                <li>시맨틱 태그(<code>header</code>, <code>main</code>, <code>article</code>)로 뜻을 분명하게</li>
+                <li>사진엔 <code>alt</code>, 입력칸엔 <code>label</code> 꼭 붙이기 (모두를 위한 배려 ♿)</li>
+                <li>HTML5가 지금 쓰는 최신 버전!</li>
+              </ul>
+            </div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+                <p>HTML 문서는 브라우저에 의해 파싱되어 DOM(Document Object Model) 트리로 변환됩니다. 파서는 토큰화(Tokenization)와 트리 구축(Tree Construction)이라는 두 단계를 거쳐 각 태그를 노드로 만들고 부모-자식 관계를 형성합니다. 이때 <code>&lt;script&gt;</code> 태그는 기본적으로 파싱을 차단하기 때문에, <code>defer</code>나 <code>async</code> 속성으로 로딩 전략을 제어해야 렌더링 성능이 떨어지지 않습니다. <code>&lt;meta charset="UTF-8"&gt;</code>은 가능한 한 head 최상단에 둬야 인코딩 오해석을 막을 수 있고, <code>&lt;meta name="viewport"&gt;</code>는 모바일 반응형의 출발점입니다. 폼은 <code>required</code>, <code>pattern</code>, <code>minlength</code>처럼 브라우저 단계에서 검증을 시도하지만, 보안상 서버 측 검증을 반드시 병행해야 합니다.</p>
+                <h3>핵심 코드 패턴</h3>
+                <pre><code>&lt;!-- 시맨틱 + 접근성을 동시에 챙긴 폼 --&gt;
+&lt;form action="/api/signup" method="post" novalidate&gt;
+  &lt;label for="email"&gt;이메일&lt;/label&gt;
+  &lt;input id="email" name="email" type="email"
+         autocomplete="email" required
+         aria-describedby="email-help"&gt;
+  &lt;small id="email-help"&gt;회사 이메일을 입력하세요&lt;/small&gt;
+
+  &lt;button type="submit"&gt;가입&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                <h3>대표 예제</h3>
+                <div class="info-card">
+                    <h4>💻 예제 1: 블로그 글 구조</h4>
+                    <p><code>&lt;article&gt;</code> 안에 <code>&lt;header&gt;</code>(제목·작성일)와 본문 섹션, <code>&lt;footer&gt;</code>(태그·공유 버튼)를 배치하면 RSS 리더, AMP, 검색엔진이 정확히 콘텐츠 단위를 인식합니다.</p>
+                </div>
+                <div class="info-card">
+                    <h4>💻 예제 2: 이미지 반응형</h4>
+                    <p><code>&lt;picture&gt;</code> + <code>&lt;source srcset&gt;</code>으로 화면 크기·DPR에 맞춰 다른 이미지를 내려보내면 모바일 데이터 사용량을 50% 이상 줄일 수 있습니다.</p>
+                </div>
+                <h3>실무 응용</h3>
+                <p>실제 프로젝트에서는 (1) Open Graph 메타 태그로 카카오톡·페이스북 미리보기 카드를 디자인하고, (2) JSON-LD 구조화 데이터를 삽입해 구글 검색 결과의 별점·가격을 노출시키며, (3) <code>&lt;dialog&gt;</code> 요소로 자바스크립트 의존도가 낮은 모달을 구현합니다. 대형 커머스에서는 상품 페이지마다 <code>itemprop</code>(microdata)을 추가해 가격 비교 사이트에 노출되도록 합니다.</p>
+                <div class="warning-box">
+                    <strong>⚠️ 자주 하는 실수:</strong> <code>&lt;div&gt;</code>로 모든 영역을 감싸는 "div 수프"는 SEO·접근성에 치명적입니다. 또한 <code>&lt;b&gt;</code>·<code>&lt;i&gt;</code> 대신 의미를 가진 <code>&lt;strong&gt;</code>·<code>&lt;em&gt;</code>을 사용하고, 이미지 <code>alt</code>를 빈 문자열로 두는 것은 장식용 이미지일 때만 허용됩니다.
+                </div>
+
+<h3>전문가 레벨</h3>
+                <p>HTML 파서는 WHATWG 명세에 따라 상태 머신(State Machine) 기반으로 동작하며, 잘못된 태그도 가능한 한 복구(error recovery)하도록 설계되었습니다. 이 관용성 때문에 닫지 않은 태그도 렌더링되지만, 결과적으로 DOM 구조가 달라져 CSS 선택자나 JS 쿼리가 의도와 다르게 동작할 수 있습니다. 브라우저는 HTML을 받자마자 Preload Scanner를 가동해 이후 등장할 리소스를 선제 다운로드하므로, <code>rel="preload"</code>·<code>rel="modulepreload"</code>·<code>rel="preconnect"</code> 힌트를 head에 적절히 배치하는 것이 LCP(Largest Contentful Paint) 최적화의 핵심입니다. 또한 Shadow DOM과 결합한 Web Components는 스타일·구조 캡슐화를 제공해 디자인 시스템에 자주 활용되며, <code>&lt;template&gt;</code>·<code>&lt;slot&gt;</code> 요소가 그 기반입니다. 접근성 측면에서는 ARIA를 남용하지 말고 "First rule of ARIA: don't use ARIA"를 따라 네이티브 시맨틱을 우선해야 합니다.</p>
+                <h3>고급 패턴</h3>
+                <pre><code>// Custom Element + Shadow DOM
+class UserCard extends HTMLElement {
+  static observedAttributes = ['name', 'role'];
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
+  connectedCallback() {
+    this.render();
+  }
+  attributeChangedCallback() { this.render(); }
+  render() {
+    this.shadowRoot.innerHTML = `
+      &lt;style&gt;:host{display:block;padding:1rem;border:1px solid #ccc}&lt;/style&gt;
+      &lt;h3&gt;${this.getAttribute('name')}&lt;/h3&gt;
+      &lt;p&gt;${this.getAttribute('role')}&lt;/p&gt;
+    `;
+  }
+}
+customElements.define('user-card', UserCard);</code></pre>
+                <h3>최신 트렌드</h3>
+                <p>(1) <strong>View Transitions API</strong>로 페이지 전환 애니메이션을 HTML/CSS만으로 구현 가능, (2) <strong>Declarative Shadow DOM</strong>은 SSR 환경에서도 Web Components 사용을 가능케 하며, (3) <strong>HTML Streaming</strong>(<code>Transfer-Encoding: chunked</code>)으로 React Server Components처럼 콘텐츠를 점진적으로 흘려보내 TTFB를 개선하는 패턴이 확산 중입니다.</p>
+                <h3>관련 분야</h3>
+                <ul>
+                    <li>SEO 엔지니어링 (구조화 데이터, Core Web Vitals)</li>
+                    <li>웹 접근성 감리(WCAG 2.2, Section 508)</li>
+                    <li>이메일 HTML(테이블 기반 레거시 마크업)</li>
+                </ul>
+                <h3>추가 자료</h3>
+                <ul>
+                    <li>📖 HTML Living Standard (WHATWG)</li>
+                    <li>📺 web.dev "Learn HTML" 코스</li>
+                    <li>🔬 Chromium Blink 렌더러 소스 코드 (HTMLParser.cpp)</li>
+                </ul>
+                <div class="success-box">
+                    <strong>🎓 도전 과제:</strong> 자바스크립트 없이 HTML/CSS만으로 다단계 폼 위저드를 구현해보세요. <code>&lt;details&gt;</code>·<code>:has()</code>·<code>:target</code> 의사클래스가 핵심 도구입니다.
+                </div>
+</div>
+        
+<h2>🕹️ 직접 해보기 — HTML 핵심 용어 상황 판단</h2>
+<p>HTML 기본 용어와 설명을 연결해 보며 개념을 정리해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0ea5e9","prompt":"HTML 핵심 용어와 설명을 짝지어 보세요","pairs":[{"term":"태그","def":"꺽쇠로 감싼 표시"},{"term":"요소","def":"시작 태그+내용+종료 태그 전체"},{"term":"속성","def":"태그에 부여하는 추가 정보"},{"term":"시맨틱","def":"의미를 명확히 전달하는 태그"},{"term":"DOCTYPE","def":"HTML5 표준임을 알리는 선언"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0ea5e9","questions":[{"q":"HTML의 역할은?","choices":["구조와 내용 정의","스타일 정의","데이터베이스 관리","서버 통신"],"answer":0},{"q":"네비게이션 메뉴에 쓰는 태그는?","choices":["<header>","<nav>","<aside>","<footer>"],"answer":1},{"q":"이미지 설명을 넣는 속성은?","choices":["src","href","alt","title"],"answer":2},{"q":"보조 정보(사이드바)에 알맞은 태그는?","choices":["<main>","<article>","<section>","<aside>"],"answer":3},{"q":"HTML5 표준임을 알리는 선언은?","choices":["DOCTYPE","charset","viewport","lang"],"answer":0}]};</script>
+</main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // HTML 에디터 기능
+        const htmlInput = document.getElementById('html-input');
+        const previewFrame = document.getElementById('preview-frame');
+
+        function updatePreview() {
+            const html = htmlInput.value;
+            const doc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+            doc.open();
+            doc.write(`
+                <!DOCTYPE html>
+                <html lang="ko">
+                <head>
+                    <meta charset="UTF-8">
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 1rem; background: #f9f9f9; }
+                        h1, h2, h3 { color: #333; margin-top: 1.5rem; }
+                        p, li { line-height: 1.6; color: #555; }
+                        ul, ol { margin-left: 1.5rem; }
+                        code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; }
+                    </style>
+                  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+</head>
+                <body>
+                    ${html}
+                </body>
+                </html>
+            `);
+            doc.close();
+        }
+
+        htmlInput.addEventListener('input', updatePreview);
+        updatePreview();
+
+        // Three.js DOM Tree Visualization
+        function initThreeJsVisualization() {
+            const container = document.getElementById('three-d-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            // Scene setup
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf0f2f5);
+
+            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            camera.position.set(0, 0, 15);
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // Create DOM tree structure
+            const nodeData = [
+                { name: 'html', pos: [0, 0, 0], color: 0xff6b6b },
+                { name: 'head', pos: [-5, -3, 0], color: 0x4ecdc4 },
+                { name: 'body', pos: [5, -3, 0], color: 0x4ecdc4 },
+                { name: 'meta', pos: [-8, -6, 0], color: 0xa8edea },
+                { name: 'title', pos: [-2, -6, 0], color: 0xa8edea },
+                { name: 'header', pos: [2, -6, 0], color: 0xffecd2 },
+                { name: 'main', pos: [6, -6, 0], color: 0xffecd2 },
+                { name: 'footer', pos: [10, -6, 0], color: 0xffecd2 },
+            ];
+
+            const nodes = [];
+            const connections = [];
+
+            // Create boxes for each node
+            nodeData.forEach((data) => {
+                const geometry = new THREE.BoxGeometry(2, 1, 0.5);
+                const material = new THREE.MeshPhongMaterial({ color: data.color });
+                const mesh = new THREE.Mesh(geometry, material);
+                mesh.position.set(...data.pos);
+                mesh.userData.name = data.name;
+                scene.add(mesh);
+                nodes.push({ mesh, data });
+            });
+
+            // Create connections between parent and child nodes
+            const connectionPairs = [
+                [0, 1], [0, 2], // html -> head, body
+                [1, 3], [1, 4], [1, 5], // head -> meta, title, header
+                [2, 6], [2, 7], // body -> main, footer
+            ];
+
+            connectionPairs.forEach(([parentIdx, childIdx]) => {
+                const parent = nodeData[parentIdx];
+                const child = nodeData[childIdx];
+                const points = [
+                    new THREE.Vector3(...parent.pos),
+                    new THREE.Vector3(...child.pos),
+                ];
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                const material = new THREE.LineBasicMaterial({ color: 0xcccccc, linewidth: 2 });
+                const line = new THREE.Line(geometry, material);
+                scene.add(line);
+            });
+
+            // Lighting
+            const light1 = new THREE.DirectionalLight(0xffffff, 1);
+            light1.position.set(10, 10, 10);
+            scene.add(light1);
+
+            const light2 = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(light2);
+
+            // Mouse interaction for rotation
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+            let rotation = { x: 0, y: 0 };
+
+            renderer.domElement.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+
+            renderer.domElement.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const deltaX = e.clientX - previousMousePosition.x;
+                    const deltaY = e.clientY - previousMousePosition.y;
+                    rotation.y += deltaX * 0.01;
+                    rotation.x += deltaY * 0.01;
+                    previousMousePosition = { x: e.clientX, y: e.clientY };
+                }
+            });
+
+            renderer.domElement.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+
+            renderer.domElement.addEventListener('mouseleave', () => {
+                isDragging = false;
+            });
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // Auto-rotation when not dragging
+                if (!isDragging) {
+                    rotation.y += 0.003;
+                }
+
+                scene.rotation.x = rotation.x;
+                scene.rotation.y = rotation.y;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                const newWidth = container.clientWidth;
+                const newHeight = container.clientHeight;
+                camera.aspect = newWidth / newHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(newWidth, newHeight);
+            });
+        }
+
+        // Initialize Three.js when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initThreeJsVisualization);
+        } else {
+            initThreeJsVisualization();
+        }
+    </script>
+</body>
+</html>
