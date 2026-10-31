@@ -258,3 +258,44 @@
 /* 📅 오늘 다시 풀 오답 */
 .pr-due-tag { flex: none; font-size: 11.5px; font-weight: 700; padding: 1px 8px; border-radius: 999px; color: #1d4ed8; background: color-mix(in srgb, #2563eb 12%, transparent); }
 .pr-due ul { margin: 0; padding-left: 1.2em; font-size: 14px; line-height: 1.9; }
+
+/* 📋 오답 노트 · 오답 한 장 (시험지·내 답·원인·메모·해설·AI 분석·비슷한 실제 기출) */
+.pr-nb-sum { margin: 0 0 10px; font-size: 13.5px; color: var(--text-dim); }
+.pr-nb-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+#practice-root .pr-nb-row { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: 1px solid var(--pr-line) !important; border-radius: 10px; background: var(--pr-el) !important; color: var(--text) !important; font: inherit; font-size: 14px; text-align: left; cursor: pointer; }
+#practice-root .pr-nb-row:hover { border-color: var(--accent) !important; }
+.pr-nb-row b { flex: none; }
+.pr-nb-tags { display: flex; flex-wrap: wrap; gap: 4px; min-width: 0; }
+.pr-nb-tags span { padding: 1px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 700; color: var(--text-dim); background: var(--pr-card); }
+.pr-nb-tags .pr-nb-w { color: #fff; background: var(--pr-bad); }
+.pr-nb-tags .pr-nb-u { color: #92400e; background: #fde68a; }
+.pr-nb-tags .pr-nb-c { color: #fff; background: #b45309; }
+.pr-nb-go { margin-left: auto; flex: none; font-size: 12.5px; font-weight: 700; color: var(--accent); }
+.pr-sheet-top { display: flex; justify-content: space-between; gap: 10px; margin: 0 0 10px; font-size: 13.5px; }
+.pr-sheet-q { margin: 0 0 10px; }
+.pr-crops { display: flex; flex-direction: column; gap: 4px; padding: 8px; border-radius: 8px; background: #fff; }
+.pr-crop { position: relative; overflow: hidden; width: 100%; max-width: 660px; margin: 0 auto; }
+.pr-crop img { display: block; width: 100%; height: auto; }
+.pr-sheet-ans { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 0 0 8px; font-size: 15px; }
+.pr-sheet-ok { font-weight: 800; color: var(--pr-ok); }
+.pr-sheet-bad { font-weight: 800; color: var(--pr-bad); }
+.pr-sheet-mute { font-weight: 700; color: var(--text-dim); }
+.pr-sheet-ans .pr-tag { margin-left: auto; }
+.pr-sheet-memo { margin: 8px 0; }
+.pr-sheet-exp { margin: 10px 0; border: 1px solid var(--pr-line); border-radius: 10px; background: var(--pr-el); }
+.pr-sheet-exp > summary { cursor: pointer; padding: 8px 12px; font-weight: 700; }
+.pr-sheet-exp > .pr-exp-body { padding: 0 12px 10px; font-size: 14px; line-height: 1.7; }
+.pr-sheet-sec { margin: 14px 0 0; padding: 12px 0 0; border-top: 1px dashed var(--pr-line); }
+.pr-sheet-sec h4 { margin: 0 0 8px; font-size: 15px; }
+.pr-sheet-hint { margin: 6px 0; font-size: 12.5px; color: var(--text-dim); }
+.pr-sim { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 10px; margin: 8px 0; }
+.pr-mini { padding: 10px; border: 1px solid var(--pr-line); border-radius: 10px; background: var(--pr-el); }
+.pr-mini-h { margin: 0 0 6px; font-size: 13px; color: var(--text-dim); }
+.pr-mini-h b { color: var(--text); }
+.pr-mini .pr-paper, .pr-mini .pr-crops { max-height: 440px; overflow: auto; }
+.pr-mini-ch { margin-top: 8px; }
+.pr-mini .pr-numrow { margin-top: 8px; }
+.pr-mini-res { margin: 6px 0 0; min-height: 1.2em; font-size: 14px; font-weight: 800; }
+.pr-mini-res.ok { color: var(--pr-ok); }
+.pr-mini-res.bad { color: var(--pr-bad); }
+.pr-sheet-link { font-size: 12.5px; }

@@ -98,5 +98,27 @@
       .then(function (r) { if (!r.ok) throw new Error('due'); return r.json(); });
   }
 
-  w.SnAuth = { me: me, login: login, logout: logout, record: record, wrong: wrong, exportAttempts: exportAttempts, notes: notes, saveNotes: saveNotes, due: due };
+  /* 계정별 AI 키(AI 해설): 있는지와 앞뒤 몇 글자만 받는다. 저장은 saveAiKey('sk-ant-…'), 지우기는 saveAiKey(null).
+     키 원문은 서버에 암호화해 두고 다시 내려오지 않는다 — AI 요청은 /api/claude 가 이 키로 전달한다 */
+  function aiKey() {
+    return fetch('/api/aikey', { credentials: 'same-origin', cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error('aikey'); return r.json(); });
+  }
+  function saveAiKey(key) {
+    return fetch('/api/aikey', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: key })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (r.ok) return j;
+        var e = new Error(j.error || 'aikey');
+        e.code = r.status === 401 ? 'login' : j.error;
+        throw e;
+      });
+    });
+  }
+
+  w.SnAuth = { me: me, login: login, logout: logout, record: record, wrong: wrong, exportAttempts: exportAttempts, notes: notes, saveNotes: saveNotes, due: due, aiKey: aiKey, saveAiKey: saveAiKey };
 })(window);

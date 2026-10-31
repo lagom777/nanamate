@@ -4,6 +4,7 @@ import { parseAttempts, validExam, validSub } from './attempts.js';
 import { parseStyle } from './style.js';
 import { parseNotes } from './qnotes.js';
 import { dueList } from './due.js';
+import { anthropicError, keyHint, keyWorks, openKey, relayMessages, sealKey, validKey } from './aikey.js';
 
 const SESSION = 'sn_session';
 const OAUTH = 'sn_oauth';
@@ -279,6 +280,45 @@ async function wrong(request, env, url) {
   return json(results || []);
 }
 
+// 계정별 AI 키: 있는지와 앞뒤 몇 글자만 알려 준다(원문은 내려보내지 않는다)
+async function getAiKey(request, env) {
+  const session = await current(request, env);
+  if (!session) return json({ error: 'unauthorized' }, 401);
+  const row = await env.DB.prepare('SELECT hint, updated_at FROM ai_keys WHERE user_id = ?').bind(session.uid).first();
+  return json(row ? { has: true, hint: row.hint, updated_at: row.updated_at } : { has: false });
+}
+
+// { key: 'sk-ant-…' } 저장(살아 있는 키인지 먼저 확인) · { key: null } 지우기
+async function saveAiKey(request, env) {
+  const session = await current(request, env);
+  if (!session) return json({ error: 'unauthorized' }, 401);
+  let body;
+  try { body = await request.json(); } catch { return json({ error: 'bad json' }, 400); }
+  if (body && body.key === null) {
+    await env.DB.prepare('DELETE FROM ai_keys WHERE user_id = ?').bind(session.uid).run();
+    return json({ has: false });
+  }
+  const key = body && typeof body.key === 'string' ? body.key.trim() : '';
+  if (!validKey(key)) return json({ error: 'bad key' }, 400);
+  if (!(await keyWorks(key))) return json({ error: 'key rejected' }, 400);
+  const sealed = await sealKey(env.SESSION_SECRET, session.uid, key);
+  const hint = keyHint(key), now = Date.now();
+  await env.DB.prepare(
+    'INSERT INTO ai_keys (user_id, iv, ct, hint, updated_at) VALUES (?, ?, ?, ?, ?) ON CONFLICT(user_id) DO UPDATE SET iv = excluded.iv, ct = excluded.ct, hint = excluded.hint, updated_at = excluded.updated_at'
+  ).bind(session.uid, sealed.iv, sealed.ct, hint, now).run();
+  return json({ has: true, hint, updated_at: now });
+}
+
+// 브라우저의 SDK 가 baseURL 을 /api/claude 로 두고 보낸 Messages 요청을 계정 키로 전달
+async function claudeRelay(request, env, url) {
+  const session = await current(request, env);
+  if (!session) return anthropicError(401, 'nanamate_login', '로그인이 풀렸습니다. 다시 로그인해 주세요.');
+  const row = await env.DB.prepare('SELECT iv, ct FROM ai_keys WHERE user_id = ?').bind(session.uid).first();
+  const key = row && await openKey(env.SESSION_SECRET, session.uid, row.iv, row.ct);
+  if (!key) return anthropicError(400, 'nanamate_nokey', '계정에 저장된 API 키가 없습니다.');
+  return relayMessages(request, key, url.search);
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -305,6 +345,9 @@ export default {
       if (path === '/api/attempts' && request.method === 'GET') return await listAttempts(request, env, url);
       if (path === '/api/export' && request.method === 'GET') return await exportAttempts(request, env, url);
       if (path === '/api/wrong' && request.method === 'GET') return await wrong(request, env, url);
+      if (path === '/api/aikey' && request.method === 'GET') return await getAiKey(request, env);
+      if (path === '/api/aikey' && request.method === 'POST') return await saveAiKey(request, env);
+      if (path === '/api/claude/v1/messages' && request.method === 'POST') return await claudeRelay(request, env, url);
       return new Response('not found', { status: 404, headers: { 'Cache-Control': 'no-store' } });
     } catch {
       return json({ error: 'server' }, 500);
