@@ -326,7 +326,7 @@ const LOGIC_COMMON = [
   "<strong>50분 한 덩어리, 작은 마감.</strong> 50분 안에 주제 하나를 끝내는 단위로 계획하고, 큰 목표 하나보다 매일 끝낼 수 있는 작은 마감을 둡니다. 막혀서 손이 안 가면 그 과목에서 가장 쉬운 문제 하나부터 풉니다."
 ];
 
-/* ⚡ 짧게 보기(spec.quick[file]) — { one, how[3~4], keysH?, keys?[[말, 뜻]], ex, trap, player? }.
+/* ⚡ 짧게 보기(spec.quick[file]) — { one, how[3~4], keysH?, keys?[[말, 뜻]], ex, trap, player?, mem? }.
  * 이게 있는 장은 첫 화면을 이 카드 하나로 두고, 논리형 카드·요약 맵은 접어 둔다(긴 글은 지우지 않고 접는다).
  * player 는 shared/players/<이름>.js 의 그림 재생기(shared/player.js)를 카드 안에 띄운다. */
 const shortCard = (s) => `<section class="nmq" aria-label="짧게 보기">
@@ -337,6 +337,15 @@ ${s.keys ? `${s.keysH ? `<p class="nmq-keys-h">${s.keysH}</p>` : ""}<dl class="n
 ${s.ex ? `<p class="nmq-ex"><b>예</b><span>${s.ex}</span></p>` : ""}
 ${s.trap ? `<p class="nmq-trap"><b>조심</b><span>${s.trap}</span></p>` : ""}
 ${s.player ? `<div class="nmq-play" data-player="${s.player}"></div>` : ""}
+</section>`;
+/* 🧠 이렇게 외우기(spec.quick[file].mem) — [{ h: 외울 것, say?: 소리 내어 외울 말({글자}는 굵게), map: [[말, 뜻]], note?: 한 줄 }].
+ * 짧게 보기 바로 아래에 펼쳐 둔다. 앞글자·숫자·장면으로 묶되, 사실은 장 본문과 같은 것만 쓴다. */
+const memCard = (list) => `<section class="nmm" aria-label="이렇게 외우기">
+<div class="nmq-h"><b>🧠 이렇게 외우기</b><span>소리 내어 한 번</span></div>
+<div class="nmm-list">${list.map((m) => `<div class="nmm-item"><p class="nmm-t">${m.h}</p>
+${m.say ? `<p class="nmm-say">${m.say.replace(/\{([^}]+)\}/g, "<b>$1</b>")}</p>` : ""}
+<dl class="nmm-map">${m.map.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
+${m.note ? `<p class="nmm-note">${m.note}</p>` : ""}</div>`).join("\n")}</div>
 </section>`;
 export const playerHead = (name, up = "../") => `<link rel="stylesheet" href="${up}../shared/player.css">
 <script defer src="${up}../shared/players/${name}.js"></script>
@@ -352,7 +361,7 @@ ${logicBlock(d.logic, { ex: c.examples ? "#examples" : null, full: true, explain
 </section>` : "";
   if (!s) return `${stepBand("①", "틀 잡기", "5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터")}\n${card}`;
   return `${stepBand("①", "틀 잡기", "30초 — ‘짧게 보기’만 먼저. 더 필요할 때 아래를 펼치기")}
-${shortCard(s)}
+${shortCard(s)}${s.mem ? `\n${memCard(s.mem)}` : ""}
 ${card ? `<details class="nmq-more"><summary>🧭 논리형 틀 자세히<span>하나만 고른다면 · 왜 사슬 · 함정</span></summary>\n${card}</details>` : ""}`;
 }
 
