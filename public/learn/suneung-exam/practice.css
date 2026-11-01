@@ -299,3 +299,48 @@
 .pr-mini-res.ok { color: var(--pr-ok); }
 .pr-mini-res.bad { color: var(--pr-bad); }
 .pr-sheet-link { font-size: 12.5px; }
+
+/* 등급: 결과 칸 — 내 등급 + 1~8등급 최저 원점수(내 등급 칸 강조, '–'는 그 시험에 없는 등급) */
+.pr-grade { margin: 8px 0 4px; }
+.pr-grade-main { margin: 0; font-size: 13px; color: var(--text-dim); }
+.pr-grade-main b { font: 700 22px var(--font-display, sans-serif); color: var(--accent); margin-right: 2px; }
+.pr-cuts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; margin: 6px 0 0; padding: 0; list-style: none; }
+.pr-cuts li { display: flex; justify-content: center; align-items: baseline; gap: 3px; padding: 3px 0; border: 1px solid var(--pr-line); border-radius: 6px; font: 11px var(--font-mono, monospace); color: var(--text-dim); }
+.pr-cuts li i { font-style: normal; font-size: 10px; }
+.pr-cuts li b { font-weight: 600; color: var(--text); }
+.pr-cuts li.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.pr-cuts li.on b { color: #fff; }
+.pr-grade-src { margin: 4px 0 0; font-size: 11px; line-height: 1.5; color: var(--text-mute, var(--text-dim)); }
+
+/* 사진 크게 보기 창(그림을 누르면) — 늘 어두운 바탕 */
+.pr-paper img, .pr-strip img, .pr-crop img { cursor: zoom-in; }
+.pr-zoom { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(8, 12, 20, .96); color: #e5e7eb; }
+.pr-zoom[open] { display: flex; flex-direction: column; }
+.pr-zoom::backdrop { background: rgba(0, 0, 0, .6); }
+.pr-zoom-bar { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-bottom: 1px solid rgba(255, 255, 255, .12); }
+.pr-zoom-b { min-width: 40px; height: 36px; padding: 0 12px; border: 1px solid rgba(255, 255, 255, .25); border-radius: 8px; background: rgba(255, 255, 255, .08); color: #fff; font: 600 15px var(--font-body, sans-serif); cursor: pointer; }
+#practice-root .pr-zoom-b { background: rgba(255, 255, 255, .08) !important; color: #fff !important; border: 1px solid rgba(255, 255, 255, .25) !important; }
+#practice-root .pr-zoom-b:hover { background: rgba(255, 255, 255, .18) !important; }
+.pr-zoom-b:last-child { margin-left: auto; }
+.pr-zoom-pct { min-width: 46px; text-align: center; font: 13px var(--font-mono, monospace); }
+.pr-zoom-tip { font-size: 12px; color: rgba(255, 255, 255, .6); }
+.pr-zoom-sc { flex: 1 1 auto; overflow: auto; padding: 12px; touch-action: pan-x pan-y; overscroll-behavior: contain; cursor: grab; }
+.pr-zoom-sc.drag { cursor: grabbing; }
+.pr-zoom-node { display: block; max-width: none; height: auto; margin: 0 auto; background: #fff; border-radius: 6px; user-select: none; -webkit-user-select: none; }
+.pr-zoom-node img, img.pr-zoom-node { cursor: inherit; }
+.pr-zoom-node .pr-crop { max-width: none; }
+@media (max-width: 640px) { .pr-zoom-tip { display: none; } }
+
+/* 🔍 크게 보기: 목차를 접고 본문 폭 제한을 풀어 문항 그림을 칸 가득(작은 그림도 키워서) 보인다 */
+body.pr-big-page .layout { grid-template-columns: minmax(0, 1fr); }
+body.pr-big-page .layout > aside { display: none; }
+body.pr-big-page main.wide { max-width: none; padding-left: 24px; padding-right: 24px; }
+.pr-big .pr-img { width: 100%; }
+.pr-big .pr-paper { padding: 6px; }
+.pr-big .pr-strip { max-width: none; padding: 6px; }
+.pr-big .pr-crop { max-width: none; }
+@media (max-width: 900px) {
+  body.pr-big-page main.wide { padding-left: 8px; padding-right: 8px; }
+  .pr-big .pr-card { padding: 10px 6px 12px; }
+  .pr-big .pr-paper, .pr-big .pr-strip { padding: 2px; }
+}

@@ -155,7 +155,7 @@
   }
 
   /* ───────── UI shell ───────── */
-  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, authBox, exportMsg, exportTimer, exporting = false, fitBar = null, dueBtn = null, dueOpt = null;
+  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, authBox, exportMsg, exportTimer, exporting = false, fitBar = null, dueBtn = null, dueOpt = null, bigBtn = null;
 
   function buildShell() {
     root.innerHTML = '';
@@ -194,10 +194,11 @@
       row1.push(selSel);
     } else row1.push(countWrap);
     timerEl = el('button', { type: 'button', class: 'pr-timer', onclick: toggleTimer, 'aria-label': '타이머 켜기/끄기' });
+    bigBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-big-btn', title: '문항 그림을 칸 가득 크게 보여요. 그림을 누르면 화면 가득 따로 확대돼요.', onclick: toggleBig });
     progEl = el('span', { class: 'pr-prog' });
     bar = el('div', { class: 'pr-bar' }, [
       el('div', { class: 'pr-bar-row' }, row1),
-      el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), timerEl, weakBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn', onclick: function () { openWeak(); } }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-nb-btn', text: '📋 오답 노트', onclick: openNotebook }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn', text: '📊 오답 원인', onclick: openCauses }), dueBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-due-btn', text: '📅 오늘 다시 풀', onclick: openDue }), progEl])
+      el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), timerEl, bigBtn, weakBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn', onclick: function () { openWeak(); } }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-nb-btn', text: '📋 오답 노트', onclick: openNotebook }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn', text: '📊 오답 원인', onclick: openCauses }), dueBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-due-btn', text: '📅 오늘 다시 풀', onclick: openDue }), progEl])
     ]);
     authBox = el('div', { class: 'pr-auth' });
     bar.appendChild(authBox);
@@ -213,8 +214,10 @@
     /* 위 막대가 로그인 단추 줄로 높아져도 답안지·문항이 그 아래에 붙게 높이를 --pr-bar-h 로 알린다 */
     fitBar = function () { root.style.setProperty('--pr-bar-h', bar.offsetHeight + 'px'); };
     if (window.ResizeObserver) new ResizeObserver(fitBar).observe(bar);
+    S.big = !!store('sn:pr:big');
+    applyBig();
     fitBar();
-    root.appendChild(el('p', { class: 'pr-src', html: '문항 출처: 한국교육과정평가원(KICE) 대학수학능력시험·6월/9월 모의평가 공개 문제지. 문제지에 관한 저작권은 한국교육과정평가원에 있으며, 이 페이지는 학습용으로 문항 이미지를 그대로 보여 주고 정답표로 채점합니다.' + (HAS_PARTS ? ' 파트 분류는 문항 내용 기반 자동 분류라 일부 오차가 있을 수 있습니다.' : '') + (PAPER && SUB === 'english' ? ' 듣기 음성은 제공하지 않으며, 채점 후 듣기평가 대본을 볼 수 있습니다.' : '') }));
+    root.appendChild(el('p', { class: 'pr-src', html: '문항 출처: 한국교육과정평가원(KICE) 대학수학능력시험·6월/9월 모의평가 공개 문제지. 문제지에 관한 저작권은 한국교육과정평가원에 있으며, 이 페이지는 학습용으로 문항 이미지를 그대로 보여 주고 정답표로 채점합니다.' + (HAS_PARTS ? ' 파트 분류는 문항 내용 기반 자동 분류라 일부 오차가 있을 수 있습니다.' : '') + (PAPER && SUB === 'english' ? ' 듣기 음성은 제공하지 않으며, 채점 후 듣기평가 대본을 볼 수 있습니다.' : '') + (ABS_CUT[SUB] ? '' : ' 채점 후 등급은 <a href="https://www.ebsi.co.kr/ebs/xip/xipa/retrievePastGrdCutWrongAnswerRate.ebs?tab=1" target="_blank" rel="noopener">EBSi 역대 등급컷</a>(원점수는 EBSi 자체분석, 표준점수는 평가원) 기준 예상입니다.') }));
   }
 
   function setMode(m) {
@@ -778,6 +781,111 @@
     showDlg(title, aiBox(id));
   }
 
+  /* ───────── 사진 크게 보기: 문항·시험지 그림을 누르면 화면 가득 띄운다(＋ − · Ctrl+휠·트랙패드 · 두 손가락으로 확대, 끌어서 이동).
+     🔍 크게 보기 단추는 목록의 그림 자체를 칸 가득 키운다(목차를 접고 본문 폭을 넓힘) ───────── */
+  var zoomDlg = null, zoomSc = null, zoomNode = null, zoomPct = null, zoomZ = 1, zoomBase = 0;
+  function zoomSet(z, cx, cy) {
+    z = Math.max(0.5, Math.min(5, z));
+    var r = zoomSc.getBoundingClientRect();
+    if (cx == null) { cx = r.left + r.width / 2; cy = r.top + r.height / 2; }
+    var a = zoomNode.getBoundingClientRect();
+    var fx = a.width ? (cx - a.left) / a.width : 0.5, fy = a.height ? (cy - a.top) / a.height : 0.5;   // 커서·손가락 아래 지점이 제자리에 남게
+    zoomZ = z;
+    zoomNode.style.width = Math.round(zoomBase * z) + 'px';
+    var b = zoomNode.getBoundingClientRect();
+    zoomSc.scrollLeft += b.left + fx * b.width - cx;
+    zoomSc.scrollTop += b.top + fy * b.height - cy;
+    zoomPct.textContent = Math.round(z * 100) + '%';
+  }
+  function zoomBuild() {
+    var btn = function (text, label, f) { return el('button', { type: 'button', class: 'pr-zoom-b', 'aria-label': label, text: text, onclick: f }); };
+    zoomPct = el('span', { class: 'pr-zoom-pct' });
+    zoomSc = el('div', { class: 'pr-zoom-sc' });
+    zoomDlg = el('dialog', { class: 'pr-zoom', 'aria-label': '사진 크게 보기' }, [
+      el('div', { class: 'pr-zoom-bar' }, [
+        btn('−', '작게', function () { zoomSet(zoomZ / 1.25); }), zoomPct, btn('+', '크게', function () { zoomSet(zoomZ * 1.25); }),
+        btn('맞춤', '화면 너비에 맞추기', function () { zoomSet(1); }),
+        el('span', { class: 'pr-zoom-tip', text: '두 손가락·Ctrl+휠로 확대 · 끌어서 이동 · 두 번 누르면 2배' }),
+        btn('✕', '닫기', function () { zoomDlg.close(); })
+      ]),
+      zoomSc
+    ]);
+    zoomDlg.addEventListener('close', function () { zoomSc.innerHTML = ''; zoomNode = null; });
+    zoomDlg.addEventListener('keydown', function (e) {
+      if (e.key === '+' || e.key === '=') zoomSet(zoomZ * 1.25);
+      else if (e.key === '-') zoomSet(zoomZ / 1.25);
+      else if (e.key === '0') zoomSet(1);
+      else return;
+      e.preventDefault();
+    });
+    zoomSc.addEventListener('dblclick', function (e) { zoomSet(zoomZ > 1.05 ? 1 : 2, e.clientX, e.clientY); });
+    zoomSc.addEventListener('wheel', function (e) {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      zoomSet(zoomZ * Math.exp(-Math.max(-50, Math.min(50, e.deltaY)) * 0.01), e.clientX, e.clientY);
+    }, { passive: false });
+    zoomSc.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    var drag = null;   // 마우스로 끌어 옮기기(손가락은 브라우저 스크롤 그대로)
+    zoomSc.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      drag = { x: e.clientX, y: e.clientY, l: zoomSc.scrollLeft, t: zoomSc.scrollTop };
+      zoomSc.setPointerCapture(e.pointerId);
+      zoomSc.classList.add('drag');
+    });
+    zoomSc.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      zoomSc.scrollLeft = drag.l - (e.clientX - drag.x);
+      zoomSc.scrollTop = drag.t - (e.clientY - drag.y);
+    });
+    var endDrag = function () { drag = null; zoomSc.classList.remove('drag'); };
+    zoomSc.addEventListener('pointerup', endDrag);
+    zoomSc.addEventListener('pointercancel', endDrag);
+    var pinch = null;   // 두 손가락 벌리기·오므리기
+    var dist = function (t) { return Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY); };
+    zoomSc.addEventListener('touchstart', function (e) { if (e.touches.length === 2) pinch = { d: dist(e.touches), z: zoomZ }; }, { passive: true });
+    zoomSc.addEventListener('touchmove', function (e) {
+      if (!pinch || e.touches.length !== 2) return;
+      e.preventDefault();
+      zoomSet(pinch.z * dist(e.touches) / pinch.d, (e.touches[0].clientX + e.touches[1].clientX) / 2, (e.touches[0].clientY + e.touches[1].clientY) / 2);
+    }, { passive: false });
+    zoomSc.addEventListener('touchend', function (e) { if (e.touches.length < 2) pinch = null; });
+    root.appendChild(zoomDlg);
+  }
+  /* host: 그림 하나(img) 또는 국어·영어 문항 조각 묶음(.pr-crops) — 복제해서 띄운다 */
+  function openZoom(host, img) {
+    if (!zoomDlg) zoomBuild();
+    zoomSc.innerHTML = '';
+    zoomNode = host === img ? el('img', { src: img.currentSrc || img.src, alt: img.alt }) : host.cloneNode(true);
+    zoomNode.classList.add('pr-zoom-node');
+    zoomSc.appendChild(zoomNode);
+    if (!zoomDlg.open) zoomDlg.showModal();
+    zoomBase = Math.max(240, Math.min(zoomSc.clientWidth - 24, (img.naturalWidth || 800) * 2));
+    zoomZ = 1;
+    zoomNode.style.width = zoomBase + 'px';
+    zoomPct.textContent = '100%';
+    zoomSc.scrollLeft = 0; zoomSc.scrollTop = 0;
+  }
+  root.addEventListener('click', function (e) {
+    var t = e.target;
+    if (!t || t.tagName !== 'IMG' || (zoomDlg && zoomDlg.contains(t))) return;
+    var host = t.closest('.pr-crops') || (t.closest('.pr-paper, .pr-strip') ? t : null);
+    if (host) openZoom(host, t);
+  });
+  function applyBig() {
+    root.classList.toggle('pr-big', !!S.big);
+    document.body.classList.toggle('pr-big-page', !!S.big);
+    if (!bigBtn) return;
+    bigBtn.setAttribute('aria-pressed', S.big ? 'true' : 'false');
+    bigBtn.classList.toggle('on', !!S.big);
+    bigBtn.textContent = S.big ? '🔍 크게 보기 켬' : '🔍 크게 보기';
+  }
+  function toggleBig() {
+    S.big = !S.big;
+    store('sn:pr:big', S.big ? 1 : null);
+    applyBig();
+    if (fitBar) fitBar();
+  }
+
   /* ───────── 파트별 약점 노트: AI 해설이 짚은 '몰랐던 것'을 과목별로 이 브라우저에 모은다 ───────── */
   function weakList() { return store('sn:' + SUB + ':weak') || []; }
   function weakSave(list) { store('sn:' + SUB + ':weak', list); renderWeakBtn(); }
@@ -949,7 +1057,8 @@
         if (u && !seen[u] && imgs.length < (PAPER ? 6 : 8)) { seen[u] = 1; imgs.push(u); }
       }
     });
-    var head = setLabel() + ' · ' + r.sc + '/' + r.tot + '점 · ' + r.right + '/' + r.n + '문항 정답' + (r.unanswered ? ' · 미풀이 ' + r.unanswered : '') + (S.usedTimer && r.used > 0 ? ' · 소요 ' + fmtTime(r.used) : '') + ' · ' + (S.mode === 'exam' ? '시험 모드' : '연습 모드');
+    var gc = gradeCuts();
+    var head = setLabel() + ' · ' + r.sc + '/' + r.tot + '점' + (gc ? ' (예상 ' + gradeOf(r.sc, gc) + '등급)' : '') + ' · ' + r.right + '/' + r.n + '문항 정답' + (r.unanswered ? ' · 미풀이 ' + r.unanswered : '') + (S.usedTimer && r.used > 0 ? ' · 소요 ' + fmtTime(r.used) : '') + ' · ' + (S.mode === 'exam' ? '시험 모드' : '연습 모드');
     var content = imgs.map(imgBlock);
     var chips = [['약점 복습 계획', '이번 결과의 약점 단원 위주로 3일짜리 복습 계획을 하루 단위로 짜 주세요.'], ['다음 시험 전략', '다음 시험에서 시간 배분과 문항 순서를 어떻게 바꾸면 좋을지 구체적으로 알려 주세요.']];
     content.push({ type: 'text', text: '이번에 푼 세트의 내 기록입니다.\n' + head + '\n\n' + rows.join('\n') +
@@ -1862,7 +1971,7 @@
     if (hist.length) {
       var h = el('details', { class: 'pr-hist' }, [el('summary', { text: '내 기록 (최근 ' + Math.min(hist.length, 8) + '회)' })]);
       hist.slice(-8).reverse().forEach(function (r) {
-        h.appendChild(el('div', { class: 'pr-hrow', text: r.d + ' · ' + r.s + ' · ' + r.sc + ' / ' + r.t + '점' }));
+        h.appendChild(el('div', { class: 'pr-hrow', text: r.d + ' · ' + r.s + ' · ' + r.sc + ' / ' + r.t + '점' + (r.g ? ' · ' + r.g + '등급' : '') }));
       });
       omr.appendChild(h);
     }
@@ -1898,8 +2007,8 @@
     }
     S.result = { sc: sc, tot: tot, right: right, n: S.items.length, wrong: wrongIds, unanswered: S.ans.filter(function (a) { return !a; }).length, used: EXAM_SECONDS - S.left, bySec: bySec, listen: listen };
     var hist = store('sn:' + SUB + ':hist') || [];
-    var d = new Date();
-    hist.push({ d: (d.getMonth() + 1) + '/' + d.getDate(), s: setLabel(), sc: sc, t: tot });
+    var d = new Date(), gc = gradeCuts();
+    hist.push({ d: (d.getMonth() + 1) + '/' + d.getDate(), s: setLabel(), sc: sc, t: tot, g: gc ? gradeOf(sc, gc) : undefined });
     store('sn:' + SUB + ':hist', hist.slice(-40));
     sendGraded();
     renderAll();
@@ -1907,17 +2016,47 @@
     else omr.scrollIntoView && omr.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  function engGrade(sc) {
-    var cuts = [90, 80, 70, 60, 50, 40, 30, 20];
-    for (var i = 0; i < cuts.length; i++) if (sc >= cuts[i]) return (i + 1) + '등급';
-    return '9등급';
+  /* 등급: 영어·한국사는 절대평가 점수 기준, 탐구와 2021학년도까지의 국어·수학(가형)은 EBSi 역대 등급컷(원점수, cuts.json).
+     cuts 는 1~8등급 최저점 — null 은 그 시험에 없는 등급(위 등급 비율이 커서 비어 있음) */
+  var ABS_CUT = { english: [90, 80, 70, 60, 50, 40, 30, 20], hist: [40, 35, 30, 25, 20, 15, 10, 5] };
+  var CUTS = null;
+  function gradeCuts() {
+    if (S.set.indexOf('exam:') !== 0) return null;
+    if (ABS_CUT[SUB]) return ABS_CUT[SUB];
+    var c = CUTS && CUTS[S.set.slice(5)];
+    return (c && c[SUB]) || null;
+  }
+  function gradeOf(sc, cuts) {
+    for (var i = 0; i < cuts.length; i++) if (cuts[i] != null && sc >= cuts[i]) return i + 1;
+    return 9;
+  }
+  function gradeBox(sc) {
+    var cuts = gradeCuts();
+    if (!cuts) {
+      if (S.set.indexOf('exam:') === 0 && (SUB === 'korean' || SUB === 'math') && +S.set.slice(5, 9) >= 2022)
+        return el('p', { class: 'pr-sub', text: '등급: 2022학년도부터 국어·수학은 선택과목에 따라 같은 원점수도 등급이 달라서 원점수 등급컷이 공개되지 않아요(평가원·EBSi는 표준점수 컷만).' });
+      return null;
+    }
+    var g = gradeOf(sc, cuts), up = -1;
+    for (var j = g - 2; j >= 0; j--) if (cuts[j] != null) { up = j; break; }
+    var ol = el('ol', { class: 'pr-cuts', 'aria-label': '등급별 최저 원점수' });
+    cuts.forEach(function (c, i) {
+      ol.appendChild(el('li', { class: i + 1 === g ? 'on' : '', title: c == null ? '이 시험은 ' + (i + 1) + '등급이 비어 있어요(위 등급 비율이 커서)' : (i + 1) + '등급 ' + c + '점 이상' },
+        [el('i', { text: (i + 1) + '등급' }), el('b', { text: c == null ? '–' : c })]));
+    });
+    return el('div', { class: 'pr-grade' }, [
+      el('p', { class: 'pr-grade-main' }, [el('b', { text: g + '등급' }), up >= 0 ? ' · ' + (up + 1) + '등급까지 ' + (cuts[up] - sc) + '점' : '']),
+      ol,
+      el('p', { class: 'pr-grade-src', text: ABS_CUT[SUB] ? '절대평가 — 정해진 점수 기준' : 'EBSi 역대 등급컷(원점수) 기준 예상 · 실제 등급은 표준점수로 정해져요' })
+    ]);
   }
 
   function resultPanel() {
     var r = S.result;
     var box = el('div', { class: 'pr-result' });
     box.appendChild(el('div', { class: 'pr-score' }, [el('b', { text: r.sc }), ' / ' + r.tot + '점']));
-    if (SUB === 'english' && S.set.indexOf('exam:') === 0) box.appendChild(el('p', { class: 'pr-sub', text: '절대평가 환산 ' + engGrade(r.sc) + ' (원점수 90점 이상 1등급 기준)' }));
+    var gb = gradeBox(r.sc);
+    if (gb) box.appendChild(gb);
     box.appendChild(el('p', { class: 'pr-sub', text: r.right + ' / ' + r.n + '문항 정답' + (r.unanswered ? ' · 미풀이 ' + r.unanswered : '') + (S.usedTimer && r.used > 0 ? ' · 소요 ' + fmtTime(r.used) : '') }));
     if (PAPER) {
       var ks0 = Object.keys(r.bySec);
@@ -1954,9 +2093,11 @@
   /* ───────── boot ───────── */
   var examsP = fetch(cfg.base + 'exams.json').then(function (r) { return r.json(); });
   var meP = window.SnAuth ? SnAuth.me() : Promise.resolve({ id: null });
-  Promise.all([examsP, meP]).then(function (pair) {
+  var cutsP = ABS_CUT[SUB] ? null : fetch(cfg.base + 'cuts.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+  Promise.all([examsP, meP, cutsP]).then(function (pair) {
     EXAMS = pair[0].exams;
     meUser = pair[1] && pair[1].id ? pair[1] : { id: null };
+    CUTS = pair[2] && pair[2].cuts;
     var ex = examList();
     buildShell();
     refreshAuth();
