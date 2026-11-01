@@ -136,6 +136,7 @@
       timeEl.textContent = fmt(T) + ' / ' + fmt(TOTAL);
     }
     function frame(ts) {
+      if (!root.isConnected) return;   // 페이지가 재생기를 떼어 내면(창 닫기) 멈춘다
       var dt = lastTs ? Math.min(0.1, (ts - lastTs) / 1000) : 0;
       lastTs = ts;
       if (playing) {
@@ -259,6 +260,8 @@
       mount(h, def);
     });
   }
+  // 나중에 붙인 [data-player] 자리(예: 눌러서 여는 창)는 페이지가 이걸 다시 불러 띄운다
+  window.NM_PLAYER_INIT = init;
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
