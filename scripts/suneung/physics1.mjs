@@ -431,6 +431,7 @@ export const spec = {
     { img: "images/09-nuclear.svg", title: "원자핵 — 핵반응과 질량결손", desc: "질량 결손 ΔE=Δmc², 전하량·질량수 보존, 우라늄 핵분열, 핵융합", chapter: "03-spacetime.html" },
   ],
   summary: true, summaryBlurb: "파트별 공식·그래프·비교표·함정을 카드 한 장씩에 — 시험 직전 훑어보기용", maps,
+  extraLinks: [{ href: "../suneung-ebs/index.html#physics1", label: "🔒 수특 그림 모음", num: "EBS", blurb: "2027 수능특강 그림·그래프를 장별로 훑어보기 — 내 계정으로 로그인해야 열림" }],
   motionBlurb: "23개 핵심 개념을 움직이는 그림으로",
   chapters,
   intro: `<h2>이 노트가 다루는 것</h2>

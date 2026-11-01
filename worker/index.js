@@ -5,6 +5,7 @@ import { parseStyle } from './style.js';
 import { parseNotes } from './qnotes.js';
 import { dueList } from './due.js';
 import { anthropicError, keyHint, keyWorks, openKey, relayMessages, sealKey, validKey } from './aikey.js';
+import { ebsDenied, ebsKey } from './ebs.js';
 
 const SESSION = 'sn_session';
 const OAUTH = 'sn_oauth';
@@ -310,6 +311,21 @@ async function saveAiKey(request, env) {
 }
 
 // 브라우저의 SDK 가 baseURL 을 /api/claude 로 두고 보낸 Messages 요청을 계정 키로 전달
+async function ebsFile(request, env, path) {
+  const denied = ebsDenied(await current(request, env), env.EBS_OWNER);
+  if (denied) return json({ error: denied === 401 ? 'login' : 'owner' }, denied);
+  const key = ebsKey(path);
+  const obj = key && env.EBS ? await env.EBS.get(key) : null;
+  if (!obj) return json({ error: 'not found' }, 404);
+  return new Response(obj.body, {
+    headers: {
+      'Content-Type': key.endsWith('.json') ? 'application/json; charset=utf-8' : 'image/webp',
+      'Cache-Control': 'private, max-age=86400',
+      'X-Robots-Tag': 'noindex',
+    },
+  });
+}
+
 async function claudeRelay(request, env, url) {
   const session = await current(request, env);
   if (!session) return anthropicError(401, 'nanamate_login', '로그인이 풀렸습니다. 다시 로그인해 주세요.');
@@ -348,6 +364,7 @@ export default {
       if (path === '/api/aikey' && request.method === 'GET') return await getAiKey(request, env);
       if (path === '/api/aikey' && request.method === 'POST') return await saveAiKey(request, env);
       if (path === '/api/claude/v1/messages' && request.method === 'POST') return await claudeRelay(request, env, url);
+      if (path.startsWith('/api/ebs/') && request.method === 'GET') return await ebsFile(request, env, path);
       return new Response('not found', { status: 404, headers: { 'Cache-Control': 'no-store' } });
     } catch {
       return json({ error: 'server' }, 500);

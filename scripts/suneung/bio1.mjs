@@ -493,6 +493,7 @@ export const spec = {
   authors: "2015 개정 교육과정 · 2027학년도 수능까지 · 실제 기출 " + examsOf("bio1").length + "회 " + examsOf("bio1").length * 20 + "문항으로 검증",
   affiliation: "5단원 · 8파트 · 27개 모션 · 수능 풀어보기(채점·해설)",
   summary: true, summaryBlurb: "파트별 공식·그림·비교표·함정을 카드 한 장씩에 — 시험 직전 훑어보기용", maps,
+  extraLinks: [{ href: "../suneung-ebs/index.html#bio1", label: "🔒 수특 그림 모음", num: "EBS", blurb: "2027 수능특강 그림·그래프를 장별로 훑어보기 — 내 계정으로 로그인해야 열림" }],
   motionBlurb: "27개 핵심 개념을 움직이는 그림으로",
   chapters,
   intro: `<h2>이 노트가 다루는 것</h2>
