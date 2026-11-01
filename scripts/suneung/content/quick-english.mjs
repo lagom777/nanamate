@@ -1,6 +1,7 @@
 // 수능 영어 — 파트별 ‘⚡ 짧게 보기’(장 맨 위 카드). 긴 해설은 그대로 두고 접어 둔다(lib.mjs styleCard).
 // 형식: { one: 핵심 한 줄, how: 순서 3~4칸, keysH?/keys?: 제목과 [[말, 뜻]], ex: 예 하나, trap: 조심 하나 }
 // 쉬운 말로, 칸마다 한 줄. 어려운 용어를 쓰면 그 자리에서 풀어 쓴다. 사실은 각 장 본문(content/en-*.mjs, st-en.mjs)에서만 가져온다.
+// mem?: 🧠 이렇게 외우기 — [{ h, say?(앞글자 {굵게}), map: [[말, 뜻]], note? }]. 외울 목록이 있는 장에만, 사실은 본문(en-*.mjs, st-en.mjs)과 같은 것만.
 export const quick = {
   "01-listening.html": {
     one: "다음 문제 선지를 미리 보고 들을 단어를 정한다. 말이 바뀌면 마지막 말이 답.",
@@ -19,6 +20,18 @@ export const quick = {
     ],
     ex: "“Two tickets, please. <mark>Wait</mark>, make it three.” → 2장 ✕, 3장 값으로 계산",
     trap: "놓친 문제를 되짚다 다음 문제까지 놓침 — 별표만 하고 넘어가기",
+    mem: [
+      { h: "시각 — past는 지나고, to는 다가간다", say: "{past}는 {더하고}, {to}는 {뺀다}",
+        map: [["a quarter", "4분의 1 시간 = 15분"], ["a quarter past four", "4시 + 15분 = 4시 15분"], ["half past four", "4시 30분"], ["ten to four", "4시 − 10분 = 3시 50분"]] },
+      { h: "말 바꾸는 신호 — 주문 바꾸는 장면", say: "“{실은}… {잠깐}! {대신} {차라리} 그거 {빼고}요”",
+        map: [["Actually", "실은"], ["Wait", "잠깐"], ["instead", "대신"], ["rather", "차라리"], ["except", "~빼고"]],
+        note: "들리면 방금 적은 숫자에 줄 — 답은 바뀐 뒤의 조건." },
+      { h: "teen과 ty — 힘이 어디에", say: "{teen}은 {뒤}가 길고, {ty}는 {앞}이 세다",
+        map: [["fifteen · thirteen", "뒤 teen이 길고 n으로 끝"], ["fifty · thirty", "앞이 세다"]],
+        note: "선지에 15와 50이 같이 있으면 그 한 자리가 함정." },
+      { h: "속뜻 영어 = 우리말 말투",
+        map: [["You can say that again.", "백번 맞아"], ["No wonder.", "어쩐지"], ["That’s easier said than done.", "말이야 쉽지"], ["Don’t mention it.", "별말씀을 (감사에 대한 답)"], ["It’s up to you.", "네가 정해"]] },
+    ],
   },
   "02-main-idea.html": {
     one: "목적·주장·요지·주제·제목은 같은 결론을 모양만 바꿔 묻는다. 결론부터 한 줄로.",
@@ -38,6 +51,16 @@ export const quick = {
     ],
     ex: "Many believe talent is everything. <mark>However</mark>, practice matters more. → 요지는 뒤 문장 (앞은 남들 생각)",
     trap: "글보다 센 말(always·모든)로 넓힌 선지 ✕ — 글이 말한 데까지만",
+    mem: [
+      { h: "18~24번 — 일곱 글자로", say: "{목}{심}{주}{함} {요}{주}{제}",
+        map: [["18 목적", "글을 보낸 이유"], ["19 심경", "감정 A → B"], ["20 주장", "~해야 한다"], ["21 함축", "밑줄의 속뜻"], ["22 요지", "우리말 한 문장"], ["23 주제", "영어 명사구"], ["24 제목", "명사구, 비유 OK"]],
+        note: "‘태정태세문단세’처럼 소리로. 주제 → 제목은 끝말잇기." },
+      { h: "표지 = 화살표", say: "However는 {꺾고}, For example은 {내려가고}, Therefore는 {닫는다}",
+        map: [["↩ 꺾기", "However · Nevertheless · On the other hand — 뒤가 필자 방향"], ["↓ 내려가기", "For example · For instance · such as — 사례 하나"], ["⇒ 닫기", "Therefore · Thus · As a result — 필자의 정리"], ["= 같은 말", "In other words · That is"]] },
+      { h: "감정 단어 — 뿌리로",
+        map: [["anxious", "angere(조이다) → 목이 조이듯 불안"], ["relieved", "re(다시) + lev(가볍게) → 짐을 내려놓은 안도"], ["frustrated", "frustra(헛되이) → 헛수고에 답답"], ["indifferent", "in(아니) + different(다른) → 차이를 못 느끼는 무관심"], ["nostalgic", "nostos(집에 돌아옴) + algia(아픔) → 그리움"], ["sympathetic", "sym(함께) + pathy(느낌) → 동정"]],
+        note: "optimistic(optimus, 최선) ↔ pessimistic(pessimus, 최악)도 한 쌍으로." },
+    ],
   },
   "03-details.html": {
     one: "선지마다 자료의 그 칸만 맞춰 본다. 틀린 선지는 딱 한 조각만 다르다.",
@@ -58,6 +81,14 @@ export const quick = {
     ],
     ex: "The class moved online in 2022 and <mark>returned</mark> in 2024. → 선지 ‘2022년부터 지금까지 온라인’ ✕",
     trap: "50명을 50%로 읽기 — %는 전체 합으로 나눠야 나온다",
+    mem: [
+      { h: "안내문 일곱 칸 — 단어를 칸 이름으로", say: "{언제} {어디서} {누가} {얼마}에? + {마감} · {필수} · {금지}",
+        map: [["어디서", "venue"], ["누가", "eligibility · limited to"], ["얼마", "fee · free of charge"], ["마감", "deadline · no later than · prior to"], ["필수 / 선택", "required · mandatory / optional"], ["금지", "prohibited · not allowed"]] },
+      { h: "도표 단골 — 말 그대로 풀기",
+        map: [["second only to B", "B에게만 지는 2위 — 1위는 B"], ["outnumber", "out(넘어서) + number(수) → 수에서 앞섬"], ["account for", "전체 가운데 그 몫을 차지"], ["respectively", "앞 이름 순서대로 하나씩 짝"]] },
+      { h: "조건 말 — 천장과 바닥", say: "{up to}는 {천장}, {at least}는 {바닥}, {unless}는 {if not}",
+        map: [["up to 12", "12 이하"], ["at least 12", "12 이상"], ["unless you are a member", "회원이 아니면 안 됨 = 회원만"], ["hardly any seats", "자리가 거의 없음"]] },
+    ],
   },
   "04-grammar-vocab.html": {
     one: "29번은 꾸밈말을 걷고 주어·동사를 맞춰 본다. 30번은 글 흐름과 반대인 낱말.",
@@ -78,6 +109,18 @@ export const quick = {
     ],
     ex: "The box of old letters <mark>were</mark> found. → (of old letters)를 걷으면 주어는 box → was",
     trap: "30번: 모르는 단어를 답으로 — 어려운 것 ≠ 틀린 것",
+    mem: [
+      { h: "저절로 되는 일은 수동 ✕", say: "{일어나고} {나타나고} {사라지고} {오르고} {도착하는} 건 당할 수 없다",
+        map: [["happen · occur", "일어나다 — was happened ✕"], ["appear · disappear", "나타나다 · 사라지다"], ["rise · arrive", "오르다 · 도착하다"], ["consist of", "이루어지다 — is consisted of ✕"]] },
+      { h: "a가 끼면 목적어를 데려온다", say: "r{a}ise · l{a}y는 {무엇을}, rise · lie는 {혼자}",
+        map: [["rise – rose – risen", "스스로 오르다 (The curtain rose.)"], ["raise – raised – raised", "무엇을 올리다 (She raised her hand.)"], ["lie – lay – lain", "눕다 — 목적어 없음"], ["lay – laid – laid", "놓다 — 목적어 있음"]],
+        note: "lay는 lie의 과거이기도 — 목적어가 있나, 눕나 놓나로 가른다." },
+      { h: "감정 분사 — 사람은 -ed", say: "{느끼는} 사람은 {-ed}, {느끼게 하는} 쪽은 {-ing}",
+        map: [["interested · bored · confused", "그렇게 느끼는 사람"], ["interesting · boring · confusing", "그렇게 느끼게 하는 대상"], ["One visitor looked confused.", "방문객이 혼란을 느낌 (confusing ✕)"]] },
+      { h: "to는 앞으로, -ing는 이미", say: "{to}는 {앞으로} 할 일, {-ing}는 {이미 한} 일",
+        map: [["remember to lock / locking", "잠글 것을 / 잠근 것을 기억"], ["stop to rest / resting", "쉬려고 멈춤 / 쉬던 걸 멈춤"], ["뒤에 to", "decide · hope · plan · promise · want · refuse"], ["뒤에 -ing", "enjoy · finish · avoid · mind · keep · consider · suggest"]],
+        note: "아래 두 목록은 뜻만으로 안 맞는 것(suggest)도 있어 목록째 기억." },
+    ],
   },
   "05-blank.html": {
     one: "빈칸은 선지 보기 전에 우리말로 채운다. 방향은 옆의 however · so가 정한다.",
@@ -97,6 +140,16 @@ export const quick = {
     ],
     ex: "단골인 이유: He greets us by name. He saves our favorite bread for us. → 공통점 ‘<mark>주인과 친한 사이</mark>’",
     trap: "지문 단어가 많이 겹치는 선지 ≠ 정답 — 겹침은 함정일 때가 많다",
+    mem: [
+      { h: "방향을 뒤집는 작은 말 여덟", say: "작은 말 하나가 {예측 전체}를 뒤집는다",
+        map: [["not · never", "아니다 · 결코 아니다"], ["hardly · rarely", "거의 · 좀처럼 ~않다 (hardly improved = 거의 안 나아짐)"], ["unless · without", "~하지 않으면 · ~없이"], ["few · little", "거의 없는 (셀 수 있는 것 · 없는 것)"]] },
+      { h: "버리는 쪽은 어디에", say: "{but} {앞}, {than} · {of} {뒤}가 버리는 쪽",
+        map: [["not A but B", "A를 버리고 B"], ["B rather than A", "A를 버리고 B"], ["B instead of A", "A를 버리고 B"]],
+        note: "A에 나온 명사가 선지에 다시 보이면 필자가 버린 쪽일 수 있다." },
+      { h: "정답 자리에 자주 오는 ‘덮는 말’ — 뿌리로",
+        map: [["perspective", "per(꿰뚫어) + spect(보다) → 관점"], ["assumption", "as + sume(받아들이다) → 미리 받아들인 전제"], ["constraint", "con + strain(조이다) → 묶는 제약"], ["tendency", "tend(뻗다·향하다) → 한쪽으로 기우는 경향"], ["balance", "bi(둘) + lanx(접시) → 접시 둘인 저울, 균형"], ["trade-off", "하나를 내주고 하나를 얻는 맞바꿈"]],
+        note: "정답 목록은 아니다 — 지문의 사례가 그 말 안에 들어가는지만 본다." },
+    ],
   },
   "06-indirect.html": {
     one: "This · The · They는 앞에 나온 걸 가리킨다. 그게 먼저 나와야 맞다.",
@@ -116,6 +169,14 @@ export const quick = {
     ],
     ex: "<mark>A</mark> crack appeared in the wall. <mark>The</mark> crack grew wider. → 순서를 바꾸면 The crack이 가리킬 게 없다",
     trap: "내용이 그럴듯한 순서로 맞추기 — This · The가 가리킬 게 있는지가 먼저",
+    mem: [
+      { h: "순서 단서 넷 — 앞글자", say: "{지}{정}석에 {연}{시} 놓기",
+        map: [["지 — 지시어", "it · they · this · such → 받을 말이 앞에"], ["정 — 정관사", "a crack → the crack (처음 → 다시)"], ["연 — 연결어", "However · For example · Therefore → 바로 앞과 그 관계"], ["시 — 시간", "At first → then → finally"]],
+        note: "시간으로 먼저 정해도 마지막엔 대명사로 검산." },
+      { h: "요약문 (A)(B) — 앞 덩어리와 뒤 덩어리", say: "(A)는 {앞} 덩어리, (B)는 {뒤} 덩어리",
+        map: [["남 → 나", "통념 → 반박"], ["옛 → 지금", "used to → now"], ["왜 → 그래서", "원인·문제 → 결과"]],
+        note: "경계는 however · but · now · as a result. 사례 이름 대신 한 단계 위의 말로." },
+    ],
   },
   "07-long.html": {
     one: "한 글로 여러 문제. 한 번 읽으며 표시하고, 다시 볼 땐 표시한 곳만.",
@@ -134,6 +195,14 @@ export const quick = {
     ],
     ex: "He wrapped his coat around <mark>Ali</mark> and thanked <mark>Dana</mark>. → 이름이 나온 Ali · Dana는 He ✕ → 남은 Mr. Park",
     trap: "45번: 같은 단어가 보여도 not 하나 빠지면 불일치",
+    mem: [
+      { h: "인물 메모 — 세 줄", say: "여백엔 {이}{성}{관}계 — {이}름 · {성}별 · {관}계",
+        map: [["이름", "Ms. Han · Jun · Nari"], ["성별", "he / she로 후보 절반이 먼저 빠진다"], ["관계", "his sister = Jun의 누이"]] },
+      { h: "대명사 지우는 순서", say: "{성별·수} → {그 동작을 할 사람} → {가까운 이름}은 후보만",
+        map: [["목적어로 다시 나온 이름", "주어가 아니다 — she thanked Nari의 she ≠ Nari"], ["아직 안 온 사람", "그 장면의 동작을 못 한다"]] },
+      { h: "이야기 네 칸", say: "{상}황 → {문}제 → {행}동 → {결}과",
+        map: [["상황", "이름·관계·장소 — 첫 블록"], ["문제", "At first · but · however 뒤"], ["행동", "누가 무엇을 — 44번 지칭의 핵심"], ["결과", "finally · then — 45번 일치의 결말 근거"]] },
+    ],
   },
   "08-strategy.html": {
     one: "쉬운 유형은 빨리 끝내고 빈칸·순서·삽입·장문에 시간을 남긴다. 답은 다 채운다.",
