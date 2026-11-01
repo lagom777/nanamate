@@ -151,7 +151,8 @@ export function chapterPage(spec, c, i) {
     : `<h2>실전으로 풀어보기</h2><p><a class="cta" href="../practice.html">📝 수능 풀어보기 →</a></p>`;
   const motion = c.motion
     ? `<h2>모션으로 보기</h2>
-<p>이 파트의 개념을 움직이는 그림으로 다시 확인합니다.</p>
+<p>이 파트의 개념을 움직이는 그림으로 먼저 봅니다. 그림을 누르면 멈추고, 🔁는 한 장면 반복입니다.</p>
+<div class="mo-embed" style="position:relative;padding-top:calc(56.25% + 60px);margin:12px 0 10px"><iframe src="../motion.html?embed&amp;only=${c.motion.map(([n]) => n).join(",")}" loading="lazy" title="${c.title} — 움직이는 그림" style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:12px"></iframe></div>
 <p>${c.motion.map(([n, label]) => `<a class="cta sm" href="../motion.html#s${n}">🎬 ${label}</a>`).join(" ")}${c.motionPage ? ` <a class="cta" href="../motion/${c.motionPage}">▶ 이 파트 모션 전체 재생</a>` : ""}${c.mapLink ? ` <a class="cta sm" href="../${c.mapLink}">🗺️ 영토 변화 지도</a>` : ""}</p>`
     : "";
   const sumCta = spec.summary ? `<p><a class="cta sm" href="../summary.html#p${i + 1}">📌 이 파트 한눈에 요약 →</a></p>` : "";
@@ -170,8 +171,8 @@ ${spec.maps ? `<details class="mg-wrap"${short ? "" : " open"}><summary>📌 이
 ${sumCta}
 ${spec.styles ? stepBand("②", "이해하기", "본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기") : ""}
 ${short ? `${stat}\n${c.lead}` : ""}
-${foldSections(c.body)}
 ${motion}
+${foldSections(c.body)}
 ${spec.styles ? stepBand("③", "확인하기", "조건이 바뀐 문제로 확인 — 막히면 가장 쉬운 문제부터") : ""}
 ${c.traps ? `<h2>자주 나오는 함정</h2><div class="trap-list">${c.traps}</div>` : ""}
 ${c.examples ? `<h2${spec.styles ? ' id="examples"' : ""}>대표 예제</h2><p>눌러서 풀이를 펼치세요.</p>${c.examples}` : ""}

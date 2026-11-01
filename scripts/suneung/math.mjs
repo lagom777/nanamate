@@ -3,9 +3,13 @@ import { note, tip, tbl, examsOf } from "./lib.mjs";
 import { maps } from "./maps-math.mjs";
 import { styles } from "./content/style-math.mjs";
 import { quick } from "./content/quick-math.mjs";
+import { motionLinks } from "./build-motion.mjs";
 
 const load = async (n) => { try { return (await import(`./content/${n}.mjs`)).chapters; } catch { return []; } };
 const chapters = [...(await load("math-1")), ...(await load("math-2")), ...(await load("math-3")), ...(await load("st-math"))];
+// 모션 노트 장면 중 이 장 file 이 붙은 것을 장 노트의 '🎬 모션으로 보기' 링크로
+const ml = motionLinks("math");
+for (const c of chapters) if (ml[c.file]) c.motion = ml[c.file];
 const N = examsOf("math").length;
 
 export const spec = {
@@ -27,7 +31,7 @@ export const spec = {
     { img: "images/09-integration.svg", title: "적분과 통계", desc: "미적분학 기본정리(FTC), 곡선 넓이 공식, 중복조합, 정규분포 표준화 Z", chapter: "06-integral.html" },
   ],
   summary: true, summaryBlurb: "파트별 공식·그래프·비교표·함정을 카드 한 장씩에 — 시험 직전 훑어보기용", maps,
-  motion: false, kind: "items", qn: 30, minutes: 100,
+  motion: true, motionBlurb: "그래프가 움직이며 바뀌는 것 — 밑·주기·기울기·넓이가 변할 때 무엇이 따라 변하나", kind: "items", qn: 30, minutes: 100,
   practiceBlurb: `실제 시험지 ${N}회 ${N * 30}문항(2022~: 공통 22 + 미적분 8, ~2021: 가형) · 단답형 입력 · 채점`,
   chapters,
   intro: `<h2>이 노트가 다루는 것</h2>

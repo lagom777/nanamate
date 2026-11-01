@@ -4,6 +4,7 @@ import { maps } from "./maps-korean.mjs";
 import { styles } from "./content/style-korean.mjs";
 import { quick } from "./content/quick-korean.mjs";
 import { ebsPage } from "./ebs-2027-page.mjs";
+import { motionLinks } from "./build-motion.mjs";
 
 const load = async (n) => { try { return (await import(`./content/${n}.mjs`)).chapters; } catch { return []; } };
 const ko2 = await load("ko-2");
@@ -20,6 +21,9 @@ const extraCss = `
 .poem-g b { margin-right:6px; color:var(--accent); }
 .poem-r { margin:0; font-size:.92em; line-height:1.75; }
 @media (max-width:640px) { .poem { padding:14px 14px 12px; } .poem-t { font-size:.98em; } }`;
+// 모션 노트 장면 중 이 장 file 이 붙은 것을 장 노트의 '🎬 모션으로 보기' 링크로
+const ml = motionLinks("korean");
+for (const c of chapters) if (ml[c.file]) c.motion = ml[c.file];
 const N = examsOf("korean").length;
 
 export const spec = {
@@ -31,7 +35,7 @@ export const spec = {
   affiliation: "독서 5파트 · 문학 5파트 · 화법과 작문/언어와 매체 · 전략 · 수능 풀어보기(채점)",
   extraLinks: [{ href: "ebs-2027.html", label: "🎯 2027 EBS 연계 정리", num: "EBS", blurb: "수특·수완 문학 작품 카드 · 6·9모 출제 표시 · 회독 체크 · 독서 지문 주제" }],
   summary: true, summaryBlurb: "파트별 표·기호·함정을 카드 한 장씩에 — 시험 직전 훑어보기용", maps, extraCss,
-  motion: false, kind: "paper", qn: 45, minutes: 80,
+  motion: true, motionBlurb: "문학 개념을 움직이는 그림으로 — 화자·시점·구성·갈래·형식, 독서·문법 한 장면씩", kind: "paper", qn: 45, minutes: 80,
   practiceBlurb: `실제 시험지 ${N}회 · 공통 34 + 선택 11문항 · 답안지 채점`,
   chapters,
   intro: `<h2>이 노트가 다루는 것</h2>
