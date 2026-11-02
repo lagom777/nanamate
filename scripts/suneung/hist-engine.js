@@ -244,7 +244,7 @@ function polyPart(pts,f){if(f>=1)return pts;let L=0;const seg2=[];for(let i=1;i<
   let rem=L*f;const out=[pts[0]];for(let i=1;i<pts.length;i++){if(rem>=seg2[i-1]){out.push(pts[i]);rem-=seg2[i-1];}else{const u=rem/seg2[i-1];out.push([lerp(pts[i-1][0],pts[i][0],u),lerp(pts[i-1][1],pts[i][1],u)]);break;}}return out;}
 /* A 스냅숏에서 B 스냅숏으로 k(0~1)만큼 옮겨 간 지도. 같은 key 의 영역은 모양·색·이름표가 이어 움직이고, 새 영역은 번지듯 생기고, 없어지는 영역은 스러진다. */
 function drawTerritory(c,A,B,k,bx){
-  A=A||EMPTY_T;B=B||EMPTY_T;const P=terrProj(bx),sz=Math.max(.75,Math.min(1.35,bx.h/450));
+  A=A||EMPTY_T;B=B||EMPTY_T;const P=terrProj(bx),sz=Math.max(.75,Math.min(1.35,bx.h/450))*(bx.fs||1); // fs: 좁은 화면에서 지도 글자 키우기
   const ra=prep(A),rb=prep(B),used=new Set(),items=[];
   rb.forEach(b=>{const a=ra.find(x=>x.key===b.key&&!used.has(x));if(a){used.add(a);items.push({a,b});}else items.push({b});});
   ra.forEach(a=>{if(!used.has(a))items.unshift({a});});
@@ -278,7 +278,7 @@ function drawTerritory(c,A,B,k,bx){
   ln({lines:(B.lines||[]).filter(l=>an.has(l.n))},1,1);ln({lines:(B.lines||[]).filter(l=>!an.has(l.n))},ease(clamp(k*1.4-.3)),1);
   // 이름표
   labels.forEach(L=>{if(L.x==null)return;const [x,y]=P(L.x,L.y);
-    const draw=(g,a,dy)=>{if(!g||a<=.02)return;TS(c,g.n,x,y+dy,{size:(g.fs||16)*sz,w:800,alpha:a});if(g.s)TS(c,g.s,x,y+dy+17*sz,{size:11.5*sz,w:600,color:'#DCE6F0',alpha:a*.95,lw:3});};
+    const draw=(g,a,dy)=>{if(!g||a<=.02)return;TS(c,g.n,x,y+dy,{size:(g.fs||16)*sz,w:800,alpha:a});if(g.s&&!bx.compact)TS(c,g.s,x,y+dy+17*sz,{size:11.5*sz,w:600,color:'#DCE6F0',alpha:a*.95,lw:3});};
     if(L.from&&L.to){if(L.from.n===L.to.n&&L.from.s===L.to.s)draw(L.to,1,0);else{draw(L.from,1-L.kr,-8*L.kr*sz);draw(L.to,L.kr,8*(1-L.kr)*sz);}}
     else if(L.to)draw(L.to,L.kr,6*(1-L.kr)*sz);else draw(L.from,1-L.kr,0);});
   // 핀: 같은 이름은 그대로, 새 핀은 톡 튀어나오고, 없어지는 핀은 흐려진다

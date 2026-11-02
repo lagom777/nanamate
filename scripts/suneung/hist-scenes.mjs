@@ -1,3 +1,4 @@
+import { PIC_SCENES } from "./hist-scenes-pics.mjs";
 // 수능 한국사 모션 노트 장면 데이터 — 그리는 일은 hist-engine.js 의 템플릿이 한다. 사실은 content/hi-*.mjs 와 같다.
 export const UNITS = [
   { k: "1", e: "🪨", name: "선사·고조선", c: "#F4B544", file: "01-prehistory.html" },
@@ -607,4 +608,11 @@ TERR_SCENES.forEach((x) => {
     pts: (sn.length > 6 ? sn.filter((_, i) => i % Math.ceil(sn.length / 6) === 0) : sn).map((s) => `<em>${s.y}</em> ${s.king ? `<b>${s.king.n}</b> · ` : ""}${s.d}`),
     dur: sn.length > 8 ? sn.length * 4.4 : sn.length > 4 ? sn.length * 5.4 : Math.max(10, sn.length * 6.5), still: 5.5, snaps: x.snaps,
   });
+});
+
+/* 그림 장면(hist-scenes-pics.mjs)을 파트마다 퀴즈 바로 앞에 끼워 넣는다. */
+PIC_SCENES.forEach((x) => {
+  const q = scenes.findIndex((s) => s.u === x.u && s.type === "quiz");
+  const at = q >= 0 ? q : scenes.map((s) => s.u).lastIndexOf(x.u) + 1;
+  scenes.splice(at, 0, x);
 });

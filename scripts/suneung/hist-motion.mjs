@@ -7,7 +7,7 @@ import { LEARN } from "./lib.mjs";
 import { UNITS, scenes, TERR, TERR_ORDER } from "./hist-scenes.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const ENGINE = fs.readFileSync(path.join(HERE, "hist-engine.js"), "utf8");
+const ENGINE = fs.readFileSync(path.join(HERE, "hist-engine.js"), "utf8") + "\n" + fs.readFileSync(path.join(HERE, "hist-pics.js"), "utf8");
 
 /* 합본 안에서의 장면 번호(챕터의 모션 링크용) */
 export const sceneIndex = (u) => scenes.map((s, i) => ({ i, s })).filter((x) => x.s.u === u).map((x) => ({ i: x.i, title: x.s.title }));
@@ -21,6 +21,13 @@ const EXTRA_CSS = `
 .pl a[aria-current="page"]{background:var(--c,var(--acc));border-color:var(--c,var(--acc));color:var(--bg)}
 .sum-grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))!important}
 .chip .em{margin-right:4px}
+.ptog,.bigtip{display:none}
+@media (max-width:640px){
+  .panel:not(.open) #p-fx,.panel:not(.open) #p-pts{display:none}
+  .ptog{display:inline-flex;align-self:flex-start;margin:6px 0 2px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);font:12px var(--fm);cursor:pointer}
+  .bigtip{display:inline-flex;position:absolute;right:8px;bottom:8px;z-index:3;padding:5px 10px;border:1px solid var(--acc);border-radius:999px;background:rgba(9,19,31,.86);color:var(--acc);font:12px var(--fm);cursor:pointer}
+  .stage.big .bigtip{display:none}
+}
 `;
 
 function pageHtml({ src, title, h1, backs, base, unitsHere, list, linkNav, footer }) {
@@ -95,6 +102,11 @@ HERE_UNITS.forEach(k=>{const u=UNITS[k],col=document.createElement('div');col.cl
   $('sum').appendChild(col);});
 $('sum').addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(!b)return;go(+b.dataset.i);
   document.querySelector('.player').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});});
+/* 좁은 화면: 그림이 먼저 — 요점 글은 접어 두고, 그림 위에 '크게 보기' 버튼 */
+{const tog=document.createElement('button');tog.className='ptog';tog.type='button';tog.textContent='📝 요점 펼치기';
+  tog.onclick=()=>{const o=$('panel').classList.toggle('open');tog.textContent=o?'📝 요점 접기':'📝 요점 펼치기';};$('p-sub').after(tog);
+  const bt=document.createElement('button');bt.className='bigtip';bt.type='button';bt.textContent='⛶ 가로로 크게 보기';
+  bt.onclick=e=>{e.stopPropagation();setBig(true);};stage.appendChild(bt);}
 function frame(now){
   const dt=last==null?0:Math.min(.05,(now-last)/1000);last=now;
   if(playing){t+=dt*speed;if(t>=S[idx].dur){if(loop)t=0;else go(idx+1);}}
@@ -191,7 +203,7 @@ input[type=range]{flex:1;accent-color:var(--acc);height:28px;min-width:0}
 .tick:hover{border-color:var(--c)}.tick[aria-current="true"]{background:color-mix(in srgb,var(--c) 18%,transparent);border-color:var(--c)}
 .tick:focus-visible,.btn:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .note{color:var(--dim);font-size:12px;font-family:var(--fm)}
-@media (max-width:900px){.board{grid-template-columns:1fr}.info{border-left:0;border-top:1px solid var(--line)}
+@media (max-width:900px){.board{grid-template-columns:minmax(0,1fr)}.board>*{min-width:0}.info{border-left:0;border-top:1px solid var(--line);padding:18px 16px}
   .tick{flex-basis:96px}}
 </style>
 </head>
@@ -263,10 +275,11 @@ function frame(now){const dt=last==null?0:Math.min(.05,(now-last)/1000);last=now
   $('slider').value=v;
   const a=Math.floor(v+1e-6),k=v-a,A=SN[a],B=SN[Math.min(SN.length-1,a+1)];
   ctx.setTransform(cv.width/MW,0,0,cv.height/MH,0,0);ctx.clearRect(0,0,MW,MH);
-  drawTerritory(ctx,TERR[A.id],k>0?TERR[B.id]:null,k,{x:0,y:0,w:MW,h:MH});
+  const NARROW=cv.clientWidth<560,FS=NARROW?Math.min(1.45,560/cv.clientWidth):1; // 좁은 화면: 글자는 키우고 보조 설명은 생략(겹침 방지)
+  drawTerritory(ctx,TERR[A.id],k>0?TERR[B.id]:null,k,{x:0,y:0,w:MW,h:MH,fs:FS,compact:NARROW});
   const ka=ease(Math.max(0,Math.min(1,k*1.6-.2))),ca=CH[A.u].c,cb=CH[B.u].c;
-  ctx.save();ctx.beginPath();ctx.rect(14,10,400,92);ctx.clip();
-  const yo=(s,col,al,dy)=>{TS(ctx,s.y,22,40+dy,{size:30,font:DISP,w:400,align:'left',color:col,lw:6,alpha:al});TS(ctx,s.t,22,74+dy,{size:16,align:'left',lw:5,alpha:al});};
+  ctx.save();ctx.beginPath();ctx.rect(14,10,MW-28,92*FS);ctx.clip();
+  const yo=(s,col,al,dy)=>{TS(ctx,s.y,22,(40+dy)*FS,{size:30*FS,font:DISP,w:400,align:'left',color:col,lw:6,alpha:al});TS(ctx,s.t,22,(74+dy)*FS,{size:16*FS,align:'left',lw:5,alpha:al});};
   if(k>0&&B!==A){yo(A,ca,1-ka,-26*ka);yo(B,cb,ka,26*(1-ka));}else yo(A,ca,1,0);ctx.restore();
   panel(Math.round(v));requestAnimationFrame(frame);}
 const h0=SN.findIndex(s=>'#'+s.id===location.hash);if(h0>=0)v=h0;panel(Math.round(v));
