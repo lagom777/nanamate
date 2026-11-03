@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>경영통계학: 데이터로 결정하는 경영의 언어</title><link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="index.html">📊 표지 · 소개</a></li>
+<li><a href="chapters/01-basics.html">1. 통계학이란 무엇인가</a></li>
+<li><a href="chapters/02-descriptive.html">2. 기술통계: 자료의 요약</a></li>
+<li><a href="chapters/03-probability.html">3. 확률의 기초</a></li>
+<li><a href="chapters/04-distributions.html">4. 확률분포</a></li>
+<li><a href="chapters/05-sampling.html">5. 표본추출과 표본분포</a></li>
+<li><a href="chapters/06-estimation.html">6. 모수추정과 신뢰구간</a></li>
+<li><a href="chapters/07-hypothesis.html">7. 가설검정</a></li>
+<li><a href="chapters/08-regression.html">8. 상관과 회귀분석</a></li>
+<li><a href="chapters/09-decision.html">9. 통계적 의사결정</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1>경영통계학,<br><em>데이터</em>로 결정하는<br>경영의 언어</h1>
+<p class="authors">Business Statistics — From Samples to Sound Decisions</p>
+<p class="affiliation">Vol. 48 · July 2026 · aboutBizStats Editorial</p></header>
+<div class="scene-3d" id="intro-scene"></div>
+<span class="interact-hint">📊 표본(밝은 점)으로 모집단(구름)을 추론한다</span>
+<h2>경영통계학이란?</h2>
+<p>경영통계학(Business Statistics)은 경영 의사결정에 필요한 데이터를 <strong>수집·요약·분석·해석</strong>하는 통계학의 응용 분야입니다. 전수조사가 불가능할 때 <strong>표본</strong>으로 <strong>모집단</strong>을 추론하고, 불확실성 속에서 근거 있는 결론을 내리는 방법론 — 고객 만족도 조사, 품질관리, 매출 예측, A/B 테스트가 모두 여기에 속합니다.</p>
+<div class="info-card"><h4>왜 경영에서 통계인가?</h4><p>"느낌으로 아는 것"과 "<strong>데이터로 아는 것</strong>"은 다릅니다. 신제품 반응, 광고 효과, 불량률 변화 — 통계는 이 불확실한 질문들에 '얼마나 확신할 수 있는지'까지 함께 답해 줍니다.</p></div>
+</main></div>
+<script>
+(function() {
+  const container = document.getElementById('intro-scene');
+  if (!container || typeof THREE === 'undefined') return;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 2.4, 11); camera.lookAt(0, 0, 0);
+  let renderer; try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); } catch(e){ return; }
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // 모집단 구름(흐린 점들)
+  const pop = [];
+  for (let i = 0; i < 90; i++) {
+    const d = new THREE.Mesh(new THREE.SphereGeometry(0.09, 8, 8), new THREE.MeshBasicMaterial({ color: 0xc4b5fd, transparent: true, opacity: 0.55 }));
+    d.position.set((Math.random()-0.5)*9, (Math.random()-0.5)*4.5, (Math.random()-0.5)*3);
+    scene.add(d); pop.push(d);
+  }
+  // 표본(밝은 점들 — 앞쪽에 모음)
+  const samp = [];
+  for (let i = 0; i < 9; i++) {
+    const d = new THREE.Mesh(new THREE.SphereGeometry(0.2, 12, 12), new THREE.MeshBasicMaterial({ color: 0x7c3aed }));
+    const a = (i/9)*Math.PI*2;
+    d.position.set(Math.cos(a)*1.6, Math.sin(a)*1.1, 2.2);
+    scene.add(d); samp.push(d);
+  }
+  // 표본 → 추론 화살(막대그래프로)
+  const bars = [];
+  const bh = [0.7, 1.3, 1.9, 1.5, 1.0];
+  for (let i = 0; i < 5; i++) {
+    const b = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1, 0.5), new THREE.MeshBasicMaterial({ color: 0xa855f7 }));
+    b.position.set(2.8 + i*0.75, -1.6, 1.2);
+    b.scale.y = bh[i];
+    scene.add(b); bars.push(b);
+  }
+  let t = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    t += 0.006;
+    samp.forEach((d,i)=>{ const a=(i/9)*Math.PI*2 + t*1.4; d.position.set(Math.cos(a)*1.6, Math.sin(a)*1.1, 2.2); });
+    bars.forEach((b,i)=>{ b.scale.y = bh[i]*(1+0.12*Math.sin(t*3+i)); });
+    scene.rotation.y = Math.sin(t*0.5)*0.15;
+    renderer.render(scene, camera);
+  }
+  animate();
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+})();
+</script></body></html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5. 행동경제학 — aboutEconomics</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">📊 표지</a></li><li><a href="01-micro.html">1. 미시경제학</a></li><li><a href="02-macro.html">2. 거시경제학</a></li><li><a href="03-finance.html">3. 금융과 투자</a></li><li><a href="04-trade.html">4. 국제무역</a></li><li><a href="05-behavioral.html">5. 행동경제학</a></li><li><a href="06-development.html">6. 경제발전</a></li><li><a href="07-labor.html">7. 노동경제학</a></li><li><a href="08-public-finance.html">8. 재정학</a></li><li><a href="09-crypto-fintech.html">9. 크립토/핀테크</a></li></ol></aside>
+<main><header class="paper-header"><h1><em>행동경제학</em></h1><p class="authors">Chapter 5 — Behavioral Economics & Psychology</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 준거점을 기준으로 손실을 더 크게 느끼는 전망이론의 비대칭 가치함수</span>
+<h2>행동경제학 개요</h2><p>Behavioral Economics & Psychology의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>인간의 제한된 합리성, 전망 이론(Prospect Theory), 휴리스틱과 넛지(Nudge) 등 심리학과 경제학의 융합을 다룹니다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한마디로!</h3>
+  <p>행동경제학은 "사람은 생각보다 엉뚱한 선택을 한다"는 걸 연구하는 학문이에요. 🤪</p>
+  <h3>🤔 왜 재밌을까?</h3>
+  <p>"30% 할인!"이라는 글자에 홀려 필요 없는 걸 사고 🛍️, 손해 본 건 아까워서 못 버리는데 이득 본 건 얼른 챙기고, "이번 한 번만!"이 자꾸 반복되죠. 우리 마음은 이렇게 자주 삐끗해요. 그런 순간을 콕콕 짚어 주는 게 행동경제학이랍니다! 😆</p>
+  <div class="info-card">
+    <h4>🌱 이 낱말만 알면 끝!</h4>
+    <ul>
+      <li><strong>휴리스틱:</strong> 빨리 결정하려는 마음의 지름길 🏃</li>
+      <li><strong>손실회피:</strong> 얻는 기쁨보다 잃는 아픔이 더 큰 것 😣</li>
+      <li><strong>현재편향:</strong> 나중보다 지금 당장을 더 좋아하는 것 🍭</li>
+      <li><strong>넛지:</strong> 강요 없이 살짝 좋은 선택으로 미는 것 👉</li>
+      <li><strong>앵커링:</strong> 처음 본 숫자에 마음이 끌려가는 것 ⚓</li>
+    </ul>
+  </div>
+  <h3>📖 두 마음으로 생각해봐요</h3>
+  <p>우리 머릿속엔 두 명의 내가 살아요. 🧠 하나는 번개처럼 빠른 "직감이(시스템1)", 하나는 차근차근 따지는 "계산이(시스템2)"예요. 카너먼이라는 학자가 밝혀낸 거죠. 평소엔 직감이가 거의 다 결정하니까 실수가 자주 나요! 마트가 "1+1!"이라고 외치면 안 사려던 것도 카트에 쏙 담기고, "10만원 → 6만원" 표시를 보면 6만원이 진짜 싼지 따지지도 않고 "우와 싸다!" 하게 되죠. ⚓ 행동경제학은 이런 인간적인 모습을 인정하고, 더 똑똑한 선택을 돕는 방법을 찾는답니다!</p>
+  <div class="study-tip"><strong>💡 이렇게 해봐요:</strong> 충동구매를 했다면 "나 왜 샀지?"를 적어 보세요. ✍️ 내 마음의 습관이 보이면, 벌써 절반은 이긴 거예요!</div>
+  <h3>✨ 한눈에 정리!</h3>
+  <ul>
+    <li>사람은 완벽한 계산기가 아니에요. 🤖</li>
+    <li>잃는 아픔은 얻는 기쁨보다 약 2배 커요. 😣</li>
+    <li>지금 당장의 즐거움을 더 크게 느껴요. 🍭</li>
+    <li>넛지는 살짝 밀어 좋은 선택을 도와요. 👉</li>
+    <li>내 습관을 알면 더 똑똑해질 수 있어요! 💡</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>행동경제학의 출발점은 카너먼-트버스키의 전망이론(Prospect Theory)입니다. 사람들은 효용을 절대 부의 수준이 아닌 기준점 대비 변화로 인식하며, 손실 영역에서는 위험추구적이고 이익 영역에서는 위험회피적입니다. 손실 가중치는 약 2.25배로 측정됩니다. 또한 확률 가중함수는 작은 확률은 과대평가, 큰 확률은 과소평가하는 형태를 띱니다. 휴리스틱으로는 가용성, 대표성, 닻내림이 잘 알려져 있고, 행동편향에는 확증편향·후견지명편향·과신·이용가능성 폭포 등이 있습니다. 시간선호의 비합리성은 쌍곡할인(Hyperbolic Discounting)으로 표현되며, 자기통제 문제와 약속장치(Commitment Device)의 필요성을 설명합니다. 사회적 선호로는 공정성, 호혜성, 비교효용이 있으며 최후통첩게임과 독재자게임으로 실험됩니다.</p>
+  <h3>핵심 모델/공식</h3>
+  <div class="formula">전망이론 가치함수: v(x) = x^α (x≥0), v(x) = −λ(−x)^β (x<0), λ≈2.25<br>쌍곡할인: D(t) = 1/(1+kt)<br>준쌍곡: U = u(c0) + βΣδ^t u(ct)</div>
+  <h3>대표 사례</h3>
+  <div class="info-card">
+    <h4>📊 사례 1 — 영국 장기기증 옵트아웃</h4>
+    <p>장기기증 동의를 기본값으로 설정한 국가(스페인·오스트리아)는 90% 이상의 기증율을, 비동의가 기본값인 국가(독일·미국)는 15% 이하를 보입니다. 디폴트 설계의 강력한 효과를 보여 줍니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>📊 사례 2 — 401(k) 자동가입</h4>
+    <p>미국에서 자동가입을 도입한 기업의 퇴직연금 가입율이 30%대에서 90%대로 급등했습니다. 같은 선택지인데 디폴트만 바꾼 결과입니다.</p>
+  </div>
+  <h3>현실 응용</h3>
+  <p>한국의 청년도약계좌·청년희망적금은 정부 매칭으로 손실회피와 즉시 보상을 활용한 저축 유도 설계입니다. 카드사의 "할부 0%" 마케팅은 분할 비용으로 현재편향을 자극합니다. 다이어트 앱의 보증금 시스템은 손실회피로 운동을 강제하는 약속장치이며, 정부의 금연구역·고열량 표시제도는 넛지의 대표적 응용입니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 넛지를 만능으로 보기. 깊은 구조적 문제는 정보 제공이나 디폴트 변경만으로 해결되지 않습니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>현대 행동경제학은 신경경제학(Neuroeconomics), 행동게임이론, 행동공공경제학으로 분화하고 있습니다. fMRI를 통해 보상 예측과 위험 의사결정의 신경 상관물(복측선조체, 안와전두피질, 편도체)이 식별되었으며, 도파민 시스템과 가치학습의 연결이 강화학습 모델로 형식화됩니다. 행동게임이론에서는 Level-k 사고와 인지적 위계 모형이 신경게임 균형을 대체하며, 학습이 균형으로 수렴하는지를 분석합니다. 행동공공경제는 조세설계에서 현저성(salience), 사회규범, 공정성을 통합하며, Chetty의 세금 현저성 실험과 Saez의 행동최적조세 이론이 있습니다. 또한 Akerlof-Shiller의 동물적 심리(Animal Spirits) 거시론과 Gabaix의 행동거시(BGE)는 합리적 기대 가정을 완화한 거시모형을 발전시킵니다. 대규모 자연실험과 메타분석을 통해 효과크기의 일반화 가능성과 출판편향이 정밀하게 검증됩니다.</p>
+  <h3>수리 모델</h3>
+  <div class="formula">CARA-prospect 결합: U(W) = E[v(W − W_ref)]<br>Level-k: σ_k = BR(σ_{k−1}), σ_0 ~ uniform<br>준쌍곡 자기통제: max βΣδ^t u(c_t), β<1<br>현저성가중: w_i = α_i v_i / Σα_j v_j</div>
+  <h3>최신 연구</h3>
+  <p>대규모 행정데이터와 RCT를 결합한 행동개입의 외부타당성 연구가 활발히 진행되고 있으며, 알고리즘 의사결정 환경에서의 행동편향 분석(추천시스템 의존, 자동화 편향)이 새로운 주제로 부상하고 있습니다. 또한 LLM과 인간의 행동을 비교하는 행동AI 연구, 기후행동 변화 디자인, 디지털 중독 메커니즘 분석이 주요 흐름입니다.</p>
+  <h3>관련 분야</h3>
+  <ul>
+    <li>신경경제학 — 의사결정의 뇌 상관물</li>
+    <li>실험경제학 — 통제실험과 자연실험</li>
+    <li>행동공공정책 — 넛지 유닛과 정책설계</li>
+  </ul>
+  <h3>추가 자료</h3>
+  <ul>
+    <li>Kahneman, <em>Thinking, Fast and Slow</em></li>
+    <li>Thaler & Sunstein, <em>Nudge</em></li>
+    <li>Behavioural Insights Team(영국 BIT) 보고서</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 한국의 청년 저축 행태를 손실회피·현재편향 관점에서 분석하고, 청년도약계좌의 행동경제학적 설계 요소를 평가해 보세요.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 행동경제 용어 상황 판단</h2>
+<p>사람의 비합리성을 설명하는 용어와 뜻을 보고 알맞은 답을 고르세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0891b2","prompt":"용어와 설명을 짝지으세요","pairs":[{"term":"휴리스틱","def":"빠른 판단을 위한 마음의 지름길"},{"term":"손실회피","def":"손실을 이익보다 더 크게 느끼는 경향"},{"term":"현재편향","def":"지금의 만족을 과대평가하는 경향"},{"term":"넛지","def":"강요 없이 좋은 선택을 유도하는 설계"},{"term":"앵커링","def":"처음 본 숫자에 끌려가는 현상"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0891b2","questions":[{"q":"강요 없이 좋은 선택을 유도하는 설계는?","choices":["앵커링","넛지","휴리스틱","손실회피"],"answer":1},{"q":"처음 본 숫자에 끌려가는 현상은?","choices":["현재편향","손실회피","넛지","앵커링"],"answer":3},{"q":"시스템1·시스템2를 설명한 학자는?","choices":["카너먼","탈러","스펜스","베커"],"answer":0},{"q":"전망이론의 손실 가중치는 약 몇 배?","choices":["1.5배","3배","2.25배","5배"],"answer":2},{"q":"401(k) 자동가입 후 가입율은?","choices":["30%대","50%대","70%대","90%대"],"answer":3}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const vPts=[];for(let i=0;i<=60;i++){const x=-3.5+i*(7/60);const v=x>=0?2.2*Math.pow(x/3.5,0.6):-2.2*2.25*Math.pow(-x/3.5,0.6);vPts.push(new THREE.Vector3(x,Math.max(-3,Math.min(3,v)),0));}
+  const valueCurve=new THREE.Line(new THREE.BufferGeometry().setFromPoints(vPts),new THREE.LineBasicMaterial({color:0x8b5cf6}));s.add(valueCurve);
+  const axH=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-3.8,0,0),new THREE.Vector3(3.8,0,0)]),new THREE.LineBasicMaterial({color:0x94a3b8}));s.add(axH);
+  const axV=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,-3,0),new THREE.Vector3(0,3,0)]),new THREE.LineBasicMaterial({color:0x94a3b8}));s.add(axV);
+  const ref=new THREE.Mesh(new THREE.SphereGeometry(0.28,18,18),new THREE.MeshBasicMaterial({color:0xfbbf24}));s.add(ref);s.userData.ref=ref;
+  const gain=new THREE.Mesh(new THREE.TetrahedronGeometry(0.32),new THREE.MeshBasicMaterial({color:0x22c55e}));s.add(gain);s.userData.gain=gain;
+  const loss=new THREE.Mesh(new THREE.TetrahedronGeometry(0.32),new THREE.MeshBasicMaterial({color:0xef4444}));s.add(loss);s.userData.loss=loss;
+  const curveL=lbl('가치함수','#7c3aed');curveL.position.set(2.6,2.4,0);s.add(curveL);
+  const refL=lbl('준거점','#b45309');refL.position.set(0.9,0.5,0);s.add(refL);
+  const gainL=lbl('이익 영역','#15803d');gainL.position.set(3.0,0.45,0);s.add(gainL);
+  const lossL=lbl('손실 영역 (더 가파름)','#b91c1c');lossL.position.set(-2.3,-0.5,0);s.add(lossL);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 준거점을 기준으로 손실을 더 크게 느끼는 전망이론의 비대칭 가치함수.','손실회피: 같은 크기라도 손실이 이익보다 약 2.25배 더 아프게 느껴집니다.','준거점(reference point)을 기준으로 이익과 손실을 따로 평가합니다.','현재편향·앵커링·넛지 — 사람은 합리성에서 체계적으로 벗어납니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const u=0.5+0.5*Math.sin(T*0.9);const gx=u*3.5;s.userData.gain.position.set(gx,2.2*Math.pow(u,0.6),0);const lx=u*3.5;s.userData.loss.position.set(-lx,-2.2*2.25*Math.pow(u,0.6),0);s.userData.gain.rotation.y+=0.04;s.userData.loss.rotation.y+=0.04;s.userData.ref.scale.setScalar(0.9+0.2*Math.sin(T*2));s.rotation.y=0.18*Math.sin(T*0.35);r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -33,6 +33,7 @@
 <li><a href="09-int-methods.html">9. 여러 가지 적분법</a></li>
 <li class="grp">전략</li>
 <li><a href="10-strategy.html">10. 수능 수학 실전 전략</a></li>
+<li><a href="../motion.html">🎬 모션 노트</a></li>
 <li><a href="../summary.html">📌 한눈에 요약</a></li>
 <li><a href="../practice.html">📝 수능 풀어보기</a></li>
 <li><a href="../study-style.html">🧭 논리형 공부법</a></li>
@@ -49,6 +50,17 @@
 <p class="nmq-ex"><b>예</b><span>∫<sub>0</sub><sup>2</sup> (x − 1) dx = 0이지만, 넓이는 x = 1에서 끊어 1/2 + 1/2 = <mark>1</mark></span></p>
 <p class="nmq-trap"><b>조심</b><span>속도를 적분한 값을 거리로 쓰기 ✕ — 거리는 |v|를 적분 (되돌아온 길까지)</span></p>
 
+</section>
+<section class="nmm" aria-label="이렇게 외우기">
+<div class="nmq-h"><b>🧠 이렇게 외우기</b><span>소리 내어 한 번</span></div>
+<div class="nmm-list"><div class="nmm-item"><p class="nmm-t">우함수·기함수 — 한자가 곧 답</p>
+<p class="nmm-say"><b>우</b>(偶, 짝)는 <b>두 배</b>, <b>기</b>(奇, 홀)는 <b>0</b></p>
+<dl class="nmm-map"><div><dt>우함수 偶</dt><dd>f(−x) = f(x), 짝수 차항·상수 — y축 대칭 → ∫<sub>−a</sub><sup>a</sup> = 2∫<sub>0</sub><sup>a</sup></dd></div><div><dt>기함수 奇</dt><dd>f(−x) = −f(x), 홀수 차항 — 원점 대칭 → ∫<sub>−a</sub><sup>a</sup> = 0</dd></div></dl>
+<p class="nmm-note">−a부터 a까지일 때만. 다항식은 홀수 차항을 지우고 짝수 차항만 두 배.</p></div>
+<div class="nmm-item"><p class="nmm-t">위치·속도·가속도 사다리</p>
+<p class="nmm-say"><b>미분</b>은 한 칸 <b>아래</b>로, <b>적분</b>은 한 칸 <b>위</b>로</p>
+<dl class="nmm-map"><div><dt>사다리</dt><dd>위치 x — 속도 v — 가속도 a</dd></div><div><dt>변위</dt><dd>∫v dt — 되돌아온 만큼 빠진다</dd></div><div><dt>이동 거리</dt><dd>∫|v| dt — 간 길을 다 더한다</dd></div></dl>
+</div></div>
 </section>
 <details class="nmq-more"><summary>🧭 논리형 틀 자세히<span>하나만 고른다면 · 왜 사슬 · 함정</span></summary>
 <section class="nms" data-nms>
@@ -85,6 +97,10 @@
 <div class="stat-row"><div class="stat"><b>4.1</b><span>회당 문항 수</span></div><div class="stat"><b>14.8점</b><span>회당 배점</span></div><div class="stat"><b>3~5</b><span>회차별 범위</span></div><div class="stat"><b>70</b><span>최근 17회 누적</span></div></div>
 <p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
 <p>적분은 미분을 거꾸로 가는 계산이고, 정적분은 그 결과를 구간에 적용한 값입니다. 수능에서는 <strong>정적분으로 정의된 함수를 미분</strong>해 극값을 찾고, <strong>삼차함수와 직선 사이 두 넓이의 비</strong>를 구하고, <strong>속도 그래프에서 되돌아온 거리</strong>를 읽는 문제가 자주 나옵니다. 넓이와 이동 거리는 부호가 있는 정적분에 절댓값을 씌운 값입니다.</p>
+<h2>모션으로 보기</h2>
+<p>이 파트의 개념을 움직이는 그림으로 먼저 봅니다. 그림을 누르면 멈추고, 🔁는 한 장면 반복입니다.</p>
+<div class="mo-embed" style="position:relative;padding-top:calc(56.25% + 60px);margin:12px 0 10px"><iframe src="../motion.html?embed&amp;only=10,11" loading="lazy" title="적분 — 움직이는 그림" style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:12px"></iframe></div>
+<p><a class="cta sm" href="../motion.html#s10">🎬 정적분과 넓이 — 직사각형에서 |f|까지</a> <a class="cta sm" href="../motion.html#s11">🎬 속도 그래프로 위치와 이동 거리</a></p>
 <div class="sec-bar"><span>본문 6절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
 <details class="sec"><summary><h2>1. 부정적분</h2></summary>
 <p>F′(x)=f(x)일 때 F를 f의 원시함수, 또는 부정적분이라고 합니다. 원시함수끼리는 상수만큼 다릅니다. 도함수가 0인 함수는 상수뿐이기 때문입니다. 그래서 적분상수 C를 붙여 함수의 모임으로 씁니다.</p>
@@ -177,7 +193,6 @@
 <p>곡선과 직선의 교점의 x좌표를 작은 순서로 α, β, γ라 합니다. 차를 a(x−α)(x−β)(x−γ)로 만든 뒤 α~β, β~γ를 따로 적분합니다. 세 점이 등차이면 계산 전에 비가 1:1임을 알고 한 구간만 적분하면 됩니다. 숫자가 나오면 p=β−α, q=γ−β를 p³(p+2q):q³(2p+q)에 넣어 검산합니다.</p>
 <h3>속도 그래프에서 이동 거리</h3>
 <p>그래프가 시간축 아래에 있는 구간을 먼저 표시합니다. 위치 변화량은 (위)−(아래), 거리는 (위)+(아래)입니다. 식으로 주어지면 v(t)=0의 근 중에서 부호가 바뀌는 것만 나누는 점으로 씁니다. 가속도에서 출발하는 문제는 v(0), x(0)으로 적분상수를 두 번 정한 뒤에 같은 일을 합니다.</p></details>
-
 <div class="nms-stepband"><b>③ 확인하기</b><span>조건이 바뀐 문제로 확인 — 막히면 가장 쉬운 문제부터</span></div>
 <h2>자주 나오는 함정</h2><div class="trap-list"><ul>
 <li><strong>부정적분에 C를 빼먹기.</strong> 조건이 없으면 원시함수는 상수만큼 여러 개입니다. 정적분의 계산 결과에는 C를 붙이지 않습니다.</li>

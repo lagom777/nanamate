@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5. 소셜 미디어 — aboutMarketing</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📈 표지 · 소개</a></li>
+    <li><a href="01-fundamentals.html">1. 마케팅 기초</a></li>
+    <li><a href="02-consumer-psychology.html">2. 소비자 심리</a></li>
+    <li><a href="03-branding.html">3. 브랜딩 전략</a></li>
+    <li><a href="04-digital-marketing.html">4. 디지털 마케팅</a></li>
+    <li><a href="05-social-media.html">5. 소셜 미디어</a></li>
+    <li><a href="06-content-marketing.html">6. 콘텐츠 마케팅</a></li>
+    <li><a href="07-advertising.html">7. 광고와 캠페인</a></li>
+    <li><a href="08-analytics.html">8. 데이터 분석</a></li>
+    <li><a href="09-growth-hacking.html">9. 그로스 해킹</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>소셜 미디어</em></h1>
+  <p class="authors">Chapter 5 — Social Media Marketing</p>
+</header>
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 중심에서 사방으로 퍼지는 소셜 바이럴 확산 네트워크</span>
+<h2>소셜 미디어 개요</h2>
+<p>이 챕터에서는 소셜 미디어의 핵심 전략과 프레임워크를 3D 시각화와 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>소셜 플랫폼별 알고리즘과 사용자 행동을 이해하여 참여도 높은 인터랙티브 콘텐츠를 기획하고 커뮤니티 팬덤을 형성합니다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한 줄로 이해하기</h3>
+  <p>소셜 미디어 마케팅은 인스타·유튜브·틱톡 같은 곳에서 콘텐츠와 대화로 브랜드를 알리고 <strong>팬을 만드는 일</strong>이에요. 📲 핵심은? '나만 떠드는 광고'가 아니라 '서로 주고받는 관계'라는 점!</p>
+
+  <h3>🤔 왜 중요할까?</h3>
+  <ul>
+    <li>🧱 <strong>레고</strong>는 유튜브로 그냥 장난감 회사가 아니라 '이야기가 있는 콘텐츠 회사'가 됐어요.</li>
+    <li>👕 <strong>무신사 스탠다드</strong>는 인스타의 감성 톤으로 '멋진 일상복 브랜드'가 됐어요.</li>
+    <li>🥛 <strong>야쿠르트 프레딧 라이브</strong>는 50대 넘는 어르신도 라이브 방송으로 쇼핑하게 만들었어요!</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 꼭 알아둘 말</h4>
+    <ul>
+      <li><strong>인게이지먼트</strong>: 좋아요·댓글·공유·저장처럼 사람들이 적극 반응하는 것. 👍</li>
+      <li><strong>알고리즘 노출</strong>: 플랫폼이 사람마다 콘텐츠를 골라서 보여주는 시스템. 🤖</li>
+      <li><strong>UGC</strong>: 회사가 아니라 '사용자가 직접 만든' 콘텐츠. (후기, 인증샷!) 📷</li>
+      <li><strong>인플루언서</strong>: 특정 무리에서 영향력이 큰 크리에이터. ⭐</li>
+      <li><strong>숏폼</strong>: 60초 안쪽의 짧은 영상. (쇼츠·틱톡·릴스) 🎬</li>
+    </ul>
+  </div>
+
+  <h3>🏛️ 시장 광장으로 쉽게!</h3>
+  <p>소셜 미디어를 옛날 '시장 광장'이라고 생각해 보세요. 누군가는 큰 소리로 호객하고, 누군가는 노래하고, 누군가는 단골과 도란도란 이야기해요. 사람들은 소리 지르는 사람보다 <strong>친근하게 대화하는 사람</strong>에게 다가가요.</p>
+  <p>알고리즘은 '사람들이 잠깐이라도 멈춰서 본 콘텐츠'를 더 자주 보여줘요. 그래서 재밌는 역설이 생겨요 — <strong>팔려고 애쓸수록 안 팔린다!</strong> 😲 진짜 유용한 정보, 솔직한 후기, 재밌는 이야기를 꾸준히 올리면 팔로워가 늘고, 그중 몇 명이 자연스럽게 손님이 돼요. 인플루언서의 진짜 후기 한 편이 광고 100편보다 셀 때도 많답니다!</p>
+
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 좋아하는 브랜드 SNS 3곳의 최근 게시물 30개를 보고, '정보·재미·세계관·세일' 중 뭐가 많은지 나눠 보세요. 잘하는 운영의 비율이 보여요. 📊</div>
+
+  <h3>✅ 기억해요</h3>
+  <ul>
+    <li>소셜 미디어는 광고가 아니라 '관계 자본'! 🤝</li>
+    <li>알고리즘은 '오래 머무는 콘텐츠'에 상을 줘요.</li>
+    <li>UGC(사용자 후기)는 가장 믿음직한 콘텐츠!</li>
+    <li>플랫폼마다 분위기와 사용자 행동이 달라요.</li>
+    <li>한 방 이벤트보다 '꾸준함'이 강해요. 💪</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>전략 깊이</h3>
+  <p>중급 단계에서는 소셜 미디어를 ‘플랫폼 알고리즘 × 콘텐츠 포맷 × 커뮤니티 코드’의 함수로 이해해야 합니다. 인스타그램의 릴스, 유튜브의 쇼츠, 틱톡의 FYP는 모두 ‘체류 시간(watch time)’과 ‘완결 시청률(completion rate)’을 핵심 신호로 삼지만 톤은 매우 다릅니다. 인스타그램은 라이프스타일 큐레이션, 유튜브는 깊이 있는 정보, 틱톡은 트렌드 챌린지에 더 친화적입니다. 또 인플루언서 마케팅은 단발 협찬에서 ‘크리에이터 IP 공동 운영’ 모델로 진화했고, 브랜드는 더 이상 한 번의 노출이 아니라 콘텐츠 자산 공동 소유에 투자합니다. 한편 ‘소셜 커머스’ 영역은 라이브 방송, 리뷰 기반 추천, 큐레이션 마켓이 결합된 복합 채널로 성장하고 있으며, 한국과 중국에서는 이미 메인 e커머스 채널의 한 축으로 자리잡았습니다.</p>
+
+  <h3>대표 사례 분석</h3>
+  <div class="info-card">
+    <h4>📈 사례 1 — 듀오링고의 틱톡 운영</h4>
+    <p>듀오링고는 마스코트 부엉이를 활용한 ‘이상한 캐릭터 마케팅’으로 틱톡 알고리즘에 강하게 노출되며 무료로 수억 회 도달을 만들었습니다. 본질은 어학 앱이지만, 마스코트 IP를 콘텐츠 자산으로 운영해 ‘노출 자체가 광고비를 대신하는 모델’을 구축했습니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>📈 사례 2 — 올리브영의 리뷰·라이브 통합</h4>
+    <p>올리브영은 자체 앱과 인스타그램·유튜브에 흩어진 사용자 후기·라이브 콘텐츠를 한 화면에 통합해, 사회적 증거를 구매 직전 단계에 노출시키는 운영 전략으로 전환율을 끌어올렸습니다.</p>
+  </div>
+
+  <h3>실무 응용</h3>
+  <p>실무에서는 첫째, 채널별 핵심 KPI(도달, 인게이지먼트율, 저장수, 트래픽 유입)를 분리해 운영합니다. 둘째, 콘텐츠 캘린더를 ‘정보·재미·세계관·CTA’의 네 카테고리로 나누고 비율을 일정하게 유지합니다. 셋째, 인플루언서는 단발 협찬 대신 분기 단위의 시리즈 협업으로 운영해 신뢰 누적 효과를 노립니다. 또한 매 분기 ‘리포스트 가이드’를 정비해 UGC 자산이 누락 없이 흡수되도록 시스템화합니다.</p>
+
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 모든 플랫폼에 같은 콘텐츠를 그대로 재활용하는 ‘크로스포스팅 함정’은 알고리즘 노출에 큰 손해를 줍니다. 플랫폼별로 첫 3초의 후크와 자막 구조를 반드시 다르게 설계해야 합니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>심화 단계의 소셜 미디어 마케팅은 ‘크리에이터 이코노미’와 ‘플랫폼 정책’의 상호작용을 동시에 다룹니다. 플랫폼은 광고 인벤토리 확대와 사용자 체류 시간 극대화를 위해 알고리즘을 끊임없이 변경하며, 이는 곧 도달 분포의 극단화를 만들어 ‘바이럴 콘텐츠 1편이 잡지 광고 1년치보다 큰 효과’를 내는 구조를 만듭니다. 동시에 ‘소셜 그래프’ 기반의 추천에서 ‘관심 그래프’ 기반의 추천으로 패러다임이 이동하면서, 팔로워 수보다 콘텐츠 적합도가 더 큰 변수가 되었습니다. 또한 GenAI 기반의 자동 콘텐츠 생산이 가능해지면서, 콘텐츠 양과 품질의 트레이드오프를 운영적으로 관리하는 ‘브랜드 콘텐츠 팩토리’ 모델이 부상하고 있습니다. 한편 GDPR, DSA 같은 규제는 소셜 광고의 타깃팅 정밀도를 점진적으로 떨어뜨리고 있어, 운영자는 정밀 타깃팅 의존도를 줄이고 ‘콘텐츠로 정렬되는 잠재 고객’을 만드는 능력을 키워야 합니다.</p>
+
+  <h3>측정과 분석 모델</h3>
+  <p>심화 측정은 단순 인게이지먼트율이 아니라 ‘완결 시청률 곡선’, ‘리텐션 곡선’, ‘재방문률(returning viewer rate)’을 핵심 지표로 삼습니다. 또한 소셜 콘텐츠가 직접 매출과 어떻게 연결되는지 측정하기 위해 ‘브랜드 리프트 스터디’와 ‘인크리멘털 컨버전 테스트’가 주요 검증 도구로 사용됩니다. 인플루언서 캠페인은 코호트별 LTV, 첫 구매 카테고리, 7일·30일 재구매율을 함께 추적해 단기 ROAS를 넘어선 가치 측정을 시도합니다. 또한 NLP 기반 감성 분석과 토픽 모델링은 댓글·후기에서 추출되는 정성 데이터를 정량화하는 도구로 자리잡았습니다.</p>
+
+  <h3>최신 트렌드</h3>
+  <p>첫째, AI 아바타·가상 인플루언서가 콘텐츠 양산의 새로운 축으로 떠오르며, 글로벌 캠페인의 다국어·다지역 운영이 손쉬워졌습니다. 둘째, 라이브 커머스가 단순 판매에서 ‘콘텐츠 IP’로 진화하며, 호스트가 곧 브랜드인 모델이 확산되고 있습니다. 셋째, ‘다크 소셜(메신저·DM·비공개 그룹)’의 영향력이 커지며 공개 지표만으로는 측정이 어려운 ‘보이지 않는 영향력’을 다루는 전략이 필요해졌습니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li>크리에이터 이코노미와 IP 비즈니스</li>
+    <li>네트워크 과학과 사회연결망 분석</li>
+    <li>플랫폼 규제와 데이터 정책</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>Gary Vaynerchuk, <em>Jab, Jab, Jab, Right Hook</em></li>
+    <li>Mark Schaefer, <em>Marketing Rebellion</em></li>
+    <li>Meta·TikTok For Business의 공식 캠페인 케이스 리포트</li>
+  </ul>
+
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 가상의 식음료 D2C 브랜드를 위해 인스타그램·틱톡·유튜브 채널별 1개월 콘텐츠 캘린더와 KPI, 인플루언서 시리즈 기획서를 작성해 보세요.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 소셜 개념 분류하기</h2>
+<p>각 항목을 알맞은 그룹으로 분류해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#e040fb","prompt":"항목을 알맞은 그룹으로 분류하세요","groups":[{"name":"숏폼 플랫폼","items":["유튜브 쇼츠","틱톡","릴스"]},{"name":"소셜 마케팅 용어","items":["인게이지먼트","UGC","인플루언서"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#e040fb","questions":[{"q":"사용자가 만든 콘텐츠의 약자는?","choices":["CTA","KPI","FYP","UGC"],"answer":3},{"q":"60초 이내 짧은 영상 콘텐츠는?","choices":["숏폼","롱폼","배너","팟캐스트"],"answer":0},{"q":"좋아요·댓글 등 적극 반응은?","choices":["알고리즘","인게이지먼트","리치","도달"],"answer":1},{"q":"부엉이 마스코트로 틱톡 성공한 앱은?","choices":["듀오링고","올리브영","레고","토스"],"answer":0},{"q":"같은 콘텐츠 재활용의 함정은?","choices":["다크 소셜","라이브 커머스","크로스포스팅","UGC"],"answer":2}]};</script>
+</main>
+</div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const core=new THREE.Mesh(new THREE.SphereGeometry(0.5,16,16),new THREE.MeshBasicMaterial({color:0xff3c7a,wireframe:true}));s.add(core);const nodes=[];const N=18;for(let i=0;i<N;i++){const ph=Math.acos(1-2*(i+0.5)/N);const th=Math.PI*(1+Math.sqrt(5))*i;const R=2.7;const x=Math.cos(th)*Math.sin(ph)*R,y=Math.cos(ph)*R,z=Math.sin(th)*Math.sin(ph)*R;const nd=new THREE.Mesh(new THREE.SphereGeometry(0.18,8,8),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.9,0.7,0.6)}));nd.position.set(x,y,z);s.add(nd);nodes.push(nd);const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.BufferAttribute(new Float32Array([0,0,0,x,y,z]),3));s.add(new THREE.Line(lg,new THREE.LineBasicMaterial({color:0xff6fa0,transparent:true,opacity:0.45})));}
+  const _l1=lbl('인플루언서',0xd12e63);_l1.position.set(0,0.95,0);s.add(_l1);if(nodes[2]){var _l2=lbl('인게이지먼트',0x8a4de0);_l2.position.copy(nodes[2].position).add(new THREE.Vector3(0,0.4,0));s.add(_l2);}if(nodes[11]){var _l3=lbl('UGC',0x8a4de0);_l3.position.copy(nodes[11].position).add(new THREE.Vector3(0,0.4,0));s.add(_l3);}
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 좋아요·댓글·공유·저장 같은 인게이지먼트가 알고리즘 노출을 키웁니다.','알고리즘이 사용자별로 콘텐츠를 추천해 중심에서 사방으로 퍼집니다.','인플루언서와 UGC(사용자 생성 콘텐츠)가 확산의 핵심 동력입니다.','숏폼(쇼츠·틱톡·릴스)은 짧은 영상으로 빠르게 도달합니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const cs=1+Math.sin(T*3)*0.18;core.scale.setScalar(cs);nodes.forEach((n,i)=>{const p=1+Math.max(0,Math.sin(T*3-i*0.4))*0.5;n.scale.setScalar(p);});s.rotation.y+=0.005;s.rotation.x=Math.sin(T*0.3)*0.2;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9-10장. 강화학습과 멀티모달 AI</title>
+<link rel="stylesheet" href="../styles.css">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script defer src="../toggle.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📖 표지 · 초록</a></li>
+    <li><a href="01-history.html">1–2. 서론 · 역사</a></li>
+    <li><a href="02-foundations.html">3–4. 수학 · ML 이론</a></li>
+    <li><a href="03-neural.html">5. 신경망과 딥러닝</a></li>
+    <li><a href="04-transformer.html">6. Attention · Transformer</a></li>
+    <li><a href="05-llm.html">7. 대규모 언어모델</a></li>
+    <li><a href="06-generative.html">8. 생성모델</a></li>
+    <li><a href="07-rl-multimodal.html">9–10. 강화학습 · 멀티모달</a></li>
+    <li><a href="08-safety-frontiers.html">11–13. 안전성 · 프런티어 · 결론</a></li>
+    <li><a href="09-references.html">참고문헌</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec9">
+<h2>9. 강화학습</h2>
+<div class="easy-version"><div class="easy-box">
+<h4>🧒 강화학습 = 강아지 훈련</h4>
+<p><strong>잘하면 간식(보상), 잘못하면 무보상.</strong> 계속 시도 → 스스로 최적 전략을 찾는다.</p>
+<div class="analogy">
+<ul>
+  <li><strong>AlphaGo</strong> = 수백만 번 자기 자신과 바둑 두며 실력 쌓기</li>
+  <li><strong>게임 AI</strong> = 마리오 1억 번 플레이하며 클리어법 터득</li>
+  <li><strong>Q값</strong> = "이 상황에서 이 행동하면 미래에 얼마나 좋아지는가?" 기대 점수</li>
+</ul>
+</div>
+<div class="example"><strong>AlphaFold</strong>는 강화학습은 아니지만, "50년 난제"였던 단백질 구조 예측을 풀어낸 역사적 사건. 신약 개발 속도를 획기적으로 올림.</div>
+</div></div>
+<div class="paper-version">
+
+<p>
+강화학습(RL)은 에이전트가 환경과의 상호작용을 통해 누적 보상을 최대화하는 정책을 학습하는 패러다임이다.
+Markov Decision Process (MDP) $(\mathcal{S}, \mathcal{A}, P, r, \gamma)$에서 목표는:
+\[
+\pi^* = \arg\max_\pi \mathbb{E}\left[\sum_{t=0}^\infty \gamma^t r_t\right]
+\]
+</p>
+
+<h3>9.1 가치 함수와 Bellman 방정식</h3>
+<p>
+상태가치 $V^\pi(s) = \mathbb{E}^\pi[G_t | s_t = s]$, 행동가치 $Q^\pi(s,a)$는 다음을 만족한다:
+\[
+Q^\pi(s,a) = \mathbb{E}[r + \gamma \mathbb{E}_{a'\sim\pi}[Q^\pi(s',a')]]
+\]
+최적 가치는 Bellman 최적방정식의 고정점이다.
+</p>
+
+<h3>9.2 주요 알고리즘</h3>
+<ul>
+  <li><strong>Q-Learning</strong>: $Q(s,a) \leftarrow Q(s,a) + \alpha[r + \gamma \max_{a'}Q(s',a') - Q(s,a)]$. Tabular 설정에서 최적으로 수렴.</li>
+  <li><strong>DQN</strong>(Mnih et al., 2015): 신경망으로 $Q$ 근사, 경험 재현과 타겟 네트워크로 안정화. Atari에서 인간 수준 달성.</li>
+  <li><strong>REINFORCE</strong>: $\nabla_\theta J(\theta) = \mathbb{E}[\nabla_\theta \log \pi_\theta(a|s) \cdot G_t]$. 정책 그래디언트의 기본형.</li>
+  <li><strong>Actor-Critic</strong>: 정책(actor)과 가치(critic)를 동시 학습. A2C, A3C.</li>
+  <li><strong>PPO</strong>(Schulman et al., 2017): 클리핑된 대리 목적함수로 안정적 업데이트. LLM 정렬에 사용.</li>
+  <li><strong>SAC</strong>(Haarnoja et al., 2018): 최대 엔트로피 RL. 연속 제어의 표준.</li>
+</ul>
+
+<h3>9.3 주요 성과</h3>
+<p>
+AlphaGo(Silver et al., 2016)는 MCTS와 딥러닝을 결합해 이세돌을 이겼다.
+AlphaZero(2017)는 인간 기보 없이 자기대국만으로 바둑·체스·쇼기를 초인 수준으로 정복했다.
+AlphaStar, OpenAI Five는 실시간 전략·MOBA 게임에서 프로를 이겼다.
+AlphaFold 2(Jumper et al., 2021)는 단백질 구조 예측의 "50년 문제"를 해결하였다.
+</p>
+
+</div>
+</section>
+
+<!-- 3D 학습 시각화: 강화학습 — 보상으로 배우는 그리드월드 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 강화학습: 시행착오 → 가치 → 정책</div>
+  <div id="ai3d-07" style="width:100%;height:430px;"></div>
+  <div id="ai3d-07-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">에이전트가 보상 신호만으로 최단 경로를 찾아가는 과정.</div>
+</div>
+
+
+<section id="sec10">
+<h2>10. 멀티모달 AI</h2>
+<div class="easy-version"><div class="easy-box">
+<h4>🧒 멀티모달 = 여러 감각을 하나로</h4>
+<p><strong>이미지·텍스트·소리를 다 이해하는 AI.</strong> 핵심 아이디어: 모두 같은 "벡터 공간"에 놓기.</p>
+<div class="analogy">여러 나라 말(이미지어, 글자어, 소리어)을 하나의 <strong>"번역기 언어"</strong>로 통일. 그 언어로는 고양이 사진 = "고양이"라는 글자 = "야옹" 소리.</div>
+<div class="example">
+<ul>
+  <li><strong>CLIP</strong>: "이 사진이 '강아지 달리기'라는 설명과 얼마나 어울리나?" 계산기</li>
+  <li><strong>GPT-4V / Claude 3</strong>: 사진 보여주면 설명하고 질문에 답하는 AI</li>
+  <li><strong>Sora / Veo</strong>: 글 쓰면 영상을 만들어줌</li>
+</ul>
+</div>
+</div></div>
+<div class="paper-version">
+
+
+<svg class="svg-figure" viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+  <!-- Image side -->
+  <rect x="20" y="30" width="100" height="60" fill="#1a4b8f" rx="4"/>
+  <text x="70" y="65" text-anchor="middle" fill="#fff" font-size="12">🖼 이미지</text>
+  <rect x="20" y="100" width="100" height="60" fill="#1a4b8f" rx="4"/>
+  <text x="70" y="135" text-anchor="middle" fill="#fff" font-size="12">🖼 이미지</text>
+  <rect x="20" y="170" width="100" height="60" fill="#1a4b8f" rx="4"/>
+  <text x="70" y="205" text-anchor="middle" fill="#fff" font-size="12">🖼 이미지</text>
+  <!-- vision encoder -->
+  <rect x="140" y="70" width="70" height="150" fill="#6428a0" rx="6"/>
+  <text x="175" y="140" text-anchor="middle" fill="#fff" font-size="12" transform="rotate(-90 175 140)">Vision Encoder (ViT)</text>
+  <!-- Text side -->
+  <rect x="480" y="30" width="100" height="60" fill="#c85028" rx="4"/>
+  <text x="530" y="55" text-anchor="middle" fill="#fff" font-size="11">"고양이"</text>
+  <text x="530" y="75" text-anchor="middle" fill="#fff" font-size="11">"a photo of cat"</text>
+  <rect x="480" y="100" width="100" height="60" fill="#c85028" rx="4"/>
+  <text x="530" y="130" text-anchor="middle" fill="#fff" font-size="11">"강아지"</text>
+  <rect x="480" y="170" width="100" height="60" fill="#c85028" rx="4"/>
+  <text x="530" y="200" text-anchor="middle" fill="#fff" font-size="11">"자동차"</text>
+  <!-- text encoder -->
+  <rect x="390" y="70" width="70" height="150" fill="#a02864" rx="6"/>
+  <text x="425" y="140" text-anchor="middle" fill="#fff" font-size="12" transform="rotate(-90 425 140)">Text Encoder</text>
+  <!-- shared embedding space -->
+  <ellipse cx="300" cy="145" rx="80" ry="60" fill="none" stroke="#080" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="300" y="100" text-anchor="middle" font-size="12" font-weight="bold" fill="#080">공유 임베딩 공간</text>
+  <!-- dots -->
+  <circle cx="270" cy="130" r="6" fill="#1a4b8f"/>
+  <circle cx="275" cy="135" r="6" fill="#c85028"/>
+  <circle cx="310" cy="160" r="6" fill="#1a4b8f"/>
+  <circle cx="315" cy="165" r="6" fill="#c85028"/>
+  <circle cx="290" cy="175" r="6" fill="#1a4b8f"/>
+  <circle cx="340" cy="140" r="6" fill="#c85028"/>
+  <!-- arrows to shared -->
+  <path d="M 210,145 L 225,145" stroke="#333" stroke-width="1.5" marker-end="url(#arr5)"/>
+  <path d="M 390,145 L 375,145" stroke="#333" stroke-width="1.5" marker-end="url(#arr5)"/>
+  <defs>
+    <marker id="arr5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+  <!-- InfoNCE bottom -->
+  <rect x="120" y="250" width="360" height="50" fill="#f5f4ef" stroke="#ccc" rx="6"/>
+  <text x="300" y="272" text-anchor="middle" font-size="12" font-family="serif" font-weight="bold">InfoNCE: 쌍 맞추기 게임</text>
+  <text x="300" y="290" text-anchor="middle" font-size="11" font-style="italic" fill="#555">올바른 이미지↔텍스트 쌍의 유사도 극대화, 오답 쌍은 분리</text>
+</svg>
+<p class="fig-title">그림 13. CLIP의 대조학습. 4억 쌍의 (이미지, 텍스트)를 공유 벡터공간에 매핑하여 제로샷 분류·검색·생성 조건 부여를 가능하게 했다.</p>
+
+<h3>10.1 CLIP과 대조 학습</h3>
+<p>
+Radford et al.(2021)의 <strong>CLIP</strong>은 4억 쌍의 (이미지, 텍스트)에 대해 InfoNCE 손실로 공동 임베딩 공간을 학습하였다:
+\[
+\mathcal{L} = -\log \frac{\exp(\mathrm{sim}(I_i, T_i)/\tau)}{\sum_{j}\exp(\mathrm{sim}(I_i, T_j)/\tau)}
+\]
+결과 모델은 제로샷 분류, 텍스트-이미지 검색, 그리고 Stable Diffusion의 텍스트 조건부여에서 핵심 구성요소가 되었다.
+</p>
+
+<h3>10.2 시각-언어 모델 (VLM)</h3>
+<p>
+GPT-4V, Claude 3, Gemini, LLaVA는 이미지를 LLM의 입력 공간으로 사영하는 어댑터를 두어 멀티모달 대화를 가능하게 한다.
+전형적 구조: CLIP/SigLIP 비전 인코더 → MLP 또는 Q-Former → LLM.
+</p>
+
+<h3>10.3 텍스트-투-비디오와 세계 모델</h3>
+<p>
+Sora(2024), Veo, Kling 등은 잠재 확산과 Transformer 백본을 결합한 텍스트-투-비디오 모델이다.
+이들이 <em>암묵적 세계 모델</em>을 학습하는지에 대한 논쟁이 있으며, 물리적 일관성은 여전히 활발한 연구 주제이다.
+</p>
+
+</div>
+</section>
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="06-generative.html" style="text-decoration:none;">← 생성모델</a><a href="08-safety-frontiers.html" style="text-decoration:none;">안전성·프런티어 →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎮 한마디로 말하면?</h3>
+  <p>강화학습(RL)은 <strong>이것저것 해보다가 상(보상)을 제일 많이 받는 방법을 스스로 배우는 AI</strong>예요! 강아지한테 간식 주며 훈련시키는 것과 똑같죠 🐶. 멀티모달 AI는 <strong>글·그림·소리·영상을 한꺼번에 다루는</strong> 만능 AI로, GPT-4o·Gemini가 대표예요.</p>
+  <div class="analogy">🍄 마리오 게임 비유! 처음엔 어디로 갈지 몰라 자꾸 죽어요. 그런데 코인 먹으면 점수 올라가고(상), 구덩이에 빠지면 죽죠(벌). 수만 번 하다 보면 "언제 어떻게 움직여야 점수 최고?"를 저절로 배워요. 이게 강화학습!</div>
+  <h3>🌟 우리 생활 어디에 있을까?</h3>
+  <ul>
+    <li>♟️ 알파고가 이세돌 9단을 이겼어요 → 강화학습의 역사적 사건!</li>
+    <li>🚗 자율주행·로봇·게임 AI가 강화학습을 써요.</li>
+    <li>📷 사진 찍고 "이게 뭐야?" 물으면 답해줘요 → 멀티모달!</li>
+  </ul>
+  <div class="info-card"><h4>🌱 이 말만 알면 돼!</h4><ul>
+    <li><strong>에이전트</strong>: 행동을 결정하는 학습자 (게임 캐릭터 같은 것)</li>
+    <li><strong>상태 / 행동 / 보상</strong>: 강화학습의 3대 요소</li>
+    <li><strong>정책(policy)</strong>: "이런 상황엔 이렇게 움직여!"라는 규칙</li>
+    <li><strong>탐험 vs 활용</strong>: 새 길에 도전할까 vs 아는 좋은 길로 갈까</li>
+    <li><strong>멀티모달</strong>: 글·그림·소리를 함께 처리 / <strong>CLIP</strong>: 그림과 글을 같은 공간에 연결</li>
+  </ul></div>
+  <div class="study-tip">💡 <strong>공부 팁:</strong> 강화학습은 게임으로 배우는 게 최고예요! 그리고 멀티모달은 ChatGPT나 Claude에 사진을 던지고 이것저것 물어보는 게 가장 빠른 학습법이에요 📸</div>
+  <h3>✨ 세 줄 정리</h3>
+  <ul>
+    <li>강화학습 = 시행착오 + 보상으로 정책 배우기</li>
+    <li>대표 성과: 알파고, AlphaFold, ChatGPT(RLHF)</li>
+    <li>멀티모달 = 글+그림+소리를 함께 보는 AI (GPT-4o)</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
+  <p>강화학습은 마르코프 의사결정 과정(MDP) ⟨S, A, P, R, γ⟩로 형식화됩니다. 에이전트는 정책 π(a|s)를 학습해 누적 할인 보상 G_t = Σ γ^k r_(t+k+1)의 기댓값을 최대화합니다. Bellman 방정식 V^π(s) = E[r + γV^π(s')]가 핵심이고, Q-learning은 Q*(s,a) = E[r + γ max_a' Q*(s',a')]를 부트스트래핑합니다. DQN(Mnih 2015)은 신경망으로 Q를 근사하여 Atari 49개 게임에서 인간 수준을 달성했습니다. Policy gradient(REINFORCE)는 ∇J = E[∇log π(a|s) · G_t]로 직접 정책을 업데이트하며, PPO(Schulman 2017)는 clipped objective로 안정성을 확보해 사실상 표준이 되었습니다. AlphaGo(Silver 2016)는 supervised learning + self-play RL + MCTS로 인간 챔피언을 이겼고, AlphaZero(2017)는 인간 데이터 없이도 같은 성능을 달성했습니다. 멀티모달은 CLIP(Radford 2021)이 이미지-텍스트 contrastive learning으로 4억 쌍을 학습해 zero-shot 분류를 가능케 했습니다. LLaVA, BLIP-2는 vision encoder를 LLM에 연결하는 어댑터(Q-Former, MLP projector) 구조이고, GPT-4o, Gemini는 처음부터 통합 토큰화로 학습됩니다.</p>
+  <h3>핵심 개념과 코드</h3>
+  <pre><code># Stable-Baselines3로 PPO 학습 (CartPole)
+import gymnasium as gym
+from stable_baselines3 import PPO
+
+env = gym.make("CartPole-v1")
+model = PPO("MlpPolicy", env, verbose=1, n_steps=2048,
+            learning_rate=3e-4, gamma=0.99)
+model.learn(total_timesteps=50_000)
+
+obs, _ = env.reset()
+for _ in range(500):
+    action, _ = model.predict(obs, deterministic=True)
+    obs, reward, terminated, truncated, _ = env.step(action)
+    if terminated or truncated:
+        obs, _ = env.reset()</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>💻 예제 1 — AlphaFold 2</h4><p>단백질 구조 예측에 강화학습이 직접적이진 않지만, MSA + Evoformer + Structure Module의 end-to-end 학습은 RL의 정신을 이어받았습니다. CASP14에서 GDT_TS 92점으로 50년 묵은 생물학 난제를 해결, 2024 노벨화학상의 토대가 되었습니다.</p></div>
+  <div class="info-card"><h4>💻 예제 2 — CLIP의 Zero-Shot</h4><p>CLIP은 이미지와 텍스트를 같은 임베딩 공간에 매핑합니다. 분류기를 만들 때 별도 학습 없이 "a photo of a {label}" 텍스트와 이미지의 코사인 유사도로 zero-shot 분류가 가능합니다. ImageNet에서 ResNet-50과 비슷한 성능을 fine-tuning 없이 달성했습니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① 로봇 제어: Boston Dynamics, Tesla Optimus, Figure 01이 RL + sim-to-real로 실세계 동작 학습. ② 자율주행: Wayve, Comma.ai가 end-to-end RL/imitation learning 시도. ③ 추천 시스템: 컨텍스트 밴딧, off-policy RL로 클릭률·체류시간 최적화. ④ ChatGPT의 RLHF는 LLM에 RL을 적용한 가장 큰 상용 사례. ⑤ 멀티모달 의료: 방사선 영상 + 환자 기록을 함께 분석하는 GPT-4 Med, Med-PaLM-M.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> RL은 보상 함수 설계가 가장 어렵습니다. 보상 해킹(reward hacking)으로 의도치 않은 행동을 학습할 수 있어요. 예: 청소 로봇이 쓰레기를 숨기기. 또 sample efficiency가 낮아 시뮬레이터 없이는 비현실적이며, sim-to-real gap도 큽니다.</div>
+
+<h3>전문가 레벨 이해</h3>
+  <p>현대 RL의 이론적 토대는 dynamic programming(Bellman), 최적제어(Pontryagin), 그리고 stochastic approximation(Robbins-Monro)에 있습니다. Policy gradient theorem(Sutton 1999)은 ∇J(θ) = E_π[Q^π(s,a) ∇log π_θ(a|s)]로, 정책 매개변수에 대한 기대 누적 보상의 기울기를 직접 추정합니다. Actor-Critic은 advantage A(s,a) = Q(s,a) − V(s)로 분산 감소를 시도하고, GAE(Schulman 2016)는 λ-return으로 bias-variance trade-off를 제어합니다. PPO의 clipped surrogate objective L^CLIP = E[min(r_t A_t, clip(r_t, 1−ε, 1+ε) A_t)]는 단순하지만 강력하며, ChatGPT의 RLHF에 직접 사용됩니다. Offline RL(D4RL, Conservative Q-Learning)은 분포 외 행동의 over-estimation을 막는 것이 핵심 이슈입니다. World Model(Ha & Schmidhuber, Dreamer 시리즈)은 환경 모델을 학습하고 내부 simulation으로 정책을 학습하여 sample efficiency를 크게 높입니다. AlphaZero·MuZero(Schrittwieser 2020)는 plan-aware learning의 결정판입니다. 멀티모달은 contrastive(CLIP), generative(BLIP, GPT-4V), interleaved(Flamingo, IDEFICS), unified tokenization(GPT-4o, Chameleon, Gemini) 패러다임으로 진화했습니다. Vision Language Action Model(VLA: RT-2, OpenVLA)은 멀티모달 + 행동 토큰으로 로봇 정책을 LLM처럼 학습합니다.</p>
+  <h3>수학적 기초</h3>
+  <div class="formula">$$\text{Bellman Optimality: } Q^*(s, a) = \mathbb{E}[r + \gamma \max_{a'} Q^*(s', a')]$$
+  $$\text{Policy Gradient: } \nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta}[\nabla_\theta \log \pi_\theta(a|s) \cdot A^{\pi_\theta}(s, a)]$$
+  $$\text{PPO Clipped: } L^{CLIP}(\theta) = \mathbb{E}_t\left[\min(r_t(\theta) A_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon) A_t)\right]$$
+  $$\text{CLIP contrastive: } \mathcal{L} = -\frac{1}{2}\sum_i \log \frac{\exp(\langle v_i, t_i\rangle / \tau)}{\sum_j \exp(\langle v_i, t_j\rangle / \tau)} + (\text{symmetric})$$</div>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>RL for reasoning</strong>: DeepSeek-R1, OpenAI o1·o3는 GRPO/REINFORCE로 chain-of-thought를 직접 보상 학습. 수학·코딩에서 인간 전문가 수준. ② <strong>Embodied AI</strong>: RT-2, OpenVLA, RoboCat은 로봇에 LLM을 연결해 자연어 명령으로 작업 수행. ③ <strong>World Models</strong>: Genie 2, GameNGen, Sora가 인터랙티브 시뮬레이션 가능한 비디오 생성. ④ <strong>Agentic AI</strong>: Claude Computer Use, Operator, Manus는 멀티모달 LLM이 GUI를 직접 조작.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>최적제어</strong>: HJB 방정식, LQR, MPC와 RL의 통합</li>
+    <li><strong>게임이론</strong>: Nash equilibrium, multi-agent RL, mean-field game</li>
+    <li><strong>신경과학</strong>: dopamine = TD error, basal ganglia = actor-critic</li>
+    <li><strong>인지과학</strong>: 의미 통합(grounding), 다감각 통합 이론</li>
+    <li><strong>로봇공학</strong>: SLAM, manipulation, sim-to-real transfer</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Sutton & Barto, <em>Reinforcement Learning: An Introduction</em> (2판, 무료 PDF)</li>
+    <li>📖 Silver et al. <em>Mastering the game of Go with deep neural networks and tree search</em></li>
+    <li>📖 Radford et al. <em>Learning Transferable Visual Models from Natural Language Supervision</em> (CLIP)</li>
+    <li>📺 David Silver의 RL Course (DeepMind, YouTube)</li>
+    <li>📺 OpenAI Spinning Up in Deep RL</li>
+    <li>🔬 키워드: PPO, GRPO, MCTS, world model, VLA, contrastive learning</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> Atari Pong 환경에서 PPO를 처음부터 구현해 인간 수준 성능을 달성한 뒤, 같은 모델에 픽셀 외에 보드 위 점수 텍스트(OCR)를 함께 입력하는 멀티모달 변형을 시도해보세요. 다중 모달리티 융합의 효과와 한계를 직접 체감할 수 있습니다.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 강화학습 용어 상황 판단</h2>
+<p>강화학습과 멀티모달 핵심 용어를 보고 알맞은 답을 고르세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"trace","color":"#b8441c","prompt":"강화학습 에이전트 한 바퀴 — 상태부터 정책 갱신까지 루프를 따라가세요","stages":[{"name":"상태(state) 관측","why":"지금 환경이 어떤지 관찰합니다 (게임 화면, 센서 등)."},{"name":"정책으로 행동 선택","why":"policy π(a|s) 또는 Q값으로 행동을 고릅니다."},{"name":"환경이 보상 반환","why":"잘하면 +보상, 못하면 0/−보상 신호를 받아요."},{"name":"다음 상태로 전이","why":"행동 결과로 s′가 되고 에피소드가 이어집니다."},{"name":"가치·정책 업데이트","why":"Q-Learning/PPO 등으로 ‘다음에 더 잘’ 배우게 갱신."},{"name":"멀티모달 정렬 (CLIP 등)","why":"이미지-텍스트를 같은 공간에 두어 시각·언어를 함께 이해."}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b8441c","questions":[{"q":"RL 에이전트가 최대화하는 것은?","choices":["누적 보상","손실 함수","엔트로피","파라미터 수"],"answer":0},{"q":"2016년 이세돌을 이긴 AI는?","choices":["DQN","AlphaGo","AlphaFold","MuZero"],"answer":1},{"q":"CLIP이 학습한 이미지·텍스트 쌍 수는?","choices":["100만 쌍","1000만 쌍","4억 쌍","40억 쌍"],"answer":2},{"q":"LLM 정렬에 쓰이는 RL 알고리즘은?","choices":["DQN","SAC","REINFORCE","PPO"],"answer":3},{"q":"단백질 구조 예측을 해결한 모델은?","choices":["AlphaZero","AlphaFold 2","AlphaStar","OpenAI Five"],"answer":1}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('ai3d-07');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('ai3d-07-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,10,8.5);camera.lookAt(0,0,0);
+  var CS=1.7;
+  function cpos(c,r){return V((c-2)*CS,0,(r-2)*CS);}
+  var tiles={};
+  for(var c=0;c<5;c++)for(var r=0;r<5;r++){
+    var t=box(1.55,0.18,1.55,0xe3e8f2,1);var p=cpos(c,r);t.position.set(p.x,-0.09,p.z);scene.add(t);tiles[c+','+r]=t;
+  }
+  tiles['4,0'].material.color.set(0x2f9e63);tiles['2,2'].material.color.set(0xd6455b);
+  var gl=lbl('목표 +1',26,'#2f9e63',1);var gp=cpos(4,0);gl.position.set(gp.x,0.8,gp.z);scene.add(gl);
+  var tl=lbl('함정 -1',26,'#d6455b',1);var tp=cpos(2,2);tl.position.set(tp.x,0.8,tp.z);scene.add(tl);
+  var agent=sph(0.42,0x5b6bd6);scene.add(agent);
+  var al=lbl('에이전트',24,'#5b6bd6',0.9);scene.add(al);
+  var arrows={};
+  function setArrow(c,r,dc,dr,op){
+    var k=c+','+r;
+    if(!arrows[k]){
+      var cone=new THREE.Mesh(new THREE.ConeGeometry(0.18,0.5,10),mat(0x2f9e63,0));
+      var p=cpos(c,r);cone.position.set(p.x,0.35,p.z);scene.add(cone);arrows[k]=cone;
+    }
+    var a=arrows[k];
+    a.rotation.set(0,0,0);
+    if(dc===1)a.rotation.z=-Math.PI/2;else if(dc===-1)a.rotation.z=Math.PI/2;
+    else if(dr===1)a.rotation.x=Math.PI/2;else if(dr===-1)a.rotation.x=-Math.PI/2;
+    a.material.opacity=Math.max(a.material.opacity,op);
+  }
+  var ep1=[[0,4],[1,4],[1,3],[2,3],[2,2]];
+  var ep2=[[0,4],[0,3],[1,3],[1,2],[1,1],[2,1],[3,1],[3,0],[4,0]];
+  var ep3=[[0,4],[0,3],[0,2],[0,1],[0,0],[1,0],[2,0],[3,0],[4,0]];
+  function walk(path){return function(u){
+    var f=ez(u)*(path.length-1),i=Math.min(path.length-2,Math.floor(f)),fr=f-i;
+    var a=cpos(path[i][0],path[i][1]),b=cpos(path[i+1][0],path[i+1][1]);
+    agent.position.lerpVectors(a,b,fr);agent.position.y=0.45+Math.abs(Math.sin(fr*Math.PI))*0.25;
+    al.position.set(agent.position.x,agent.position.y+0.9,agent.position.z);
+  };}
+  function learn(path,col,frac){return function(u){
+    var n=Math.floor(ez(u)*path.length);
+    for(var i=0;i<n;i++){
+      var k=path[i][0]+','+path[i][1];
+      if(k==='4,0'||k==='2,2')continue;
+      var strength=(i+1)/path.length*frac;
+      tiles[k].material.color.lerp(new THREE.Color(col),0.06*strength*10/path.length+0.02);
+      if(col===0x2f9e63&&i<path.length-1)setArrow(path[i][0],path[i][1],path[i+1][0]-path[i][0],path[i+1][1]-path[i][1],0.25+strength*0.75);
+    }
+  };}
+  var phases=[
+    {dur:4.5,cap:'에피소드 1: 아직 아는 것이 없어 무작위로 탐험 — 함정(-1)에 빠졌습니다.',
+     enter:function(){agent.material.color.set(0x5b6bd6);},update:walk(ep1)},
+    {dur:2.2,cap:'보상 -1 신호가 방금 지나온 경로의 가치를 깎습니다 (바닥이 붉어짐 = 낮아진 가치).',
+     update:learn(ep1,0xd6455b,0.5)},
+    {dur:5.5,cap:'에피소드 2: 함정을 피해 돌아가는 경로를 시도 — 목표(+1) 도달!',update:walk(ep2)},
+    {dur:2.5,cap:'보상 +1이 거쳐온 상태들의 가치를 끌어올립니다 — 목표에 가까울수록 강하게 (화살표 = 학습된 방향).',
+     update:learn(ep2,0x2f9e63,1)},
+    {dur:4.5,cap:'에피소드 3: 학습된 가치(화살표)를 따라 망설임 없이 최단 경로로 — 시행착오가 "정책"이 되었습니다.',update:walk(ep3)},
+    {dur:3,cap:'강화학습 = 정답 없이 보상 신호만으로 행동 전략을 스스로 찾는 학습. AlphaGo·RLHF의 토대입니다.',
+     update:learn(ep3,0x2f9e63,1)},
+    {dur:0.6,cap:'리셋…',enter:function(){
+      for(var c=0;c<5;c++)for(var r=0;r<5;r++){var k=c+','+r;if(k!=='4,0'&&k!=='2,2')tiles[k].material.color.set(0xe3e8f2);}
+      for(var k2 in arrows){arrows[k2].material.opacity=0;}
+    }}
+  ];
+  function always(t){camera.position.set(Math.sin(t*0.08)*2,10,8.5);camera.lookAt(0,0,0);}
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

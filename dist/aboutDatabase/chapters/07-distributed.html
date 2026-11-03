@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7장. 분산 데이터베이스</title>
+<link rel="stylesheet" href="../styles.css">
+<script defer src="../toggle.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📖 표지 · 초록</a></li>
+    <li><a href="01-relational.html">1. 관계형 DB 기초</a></li>
+    <li><a href="02-sql.html">2. SQL 핵심</a></li>
+    <li><a href="03-normalization.html">3. 정규화</a></li>
+    <li><a href="04-index.html">4. 인덱스와 최적화</a></li>
+    <li><a href="05-transaction.html">5. 트랜잭션과 동시성</a></li>
+    <li><a href="06-nosql.html">6. NoSQL</a></li>
+    <li><a href="07-distributed.html">7. 분산 DB</a></li>
+    <li><a href="08-modeling.html">8. 데이터 모델링</a></li>
+    <li><a href="09-patterns.html">9. 실전 설계 패턴</a></li>
+  </ol>
+</aside>
+<main>
+<h1>7장. 분산 데이터베이스</h1>
+
+<section class="content-section">
+<h2>1. 분산 DB란?</h2>
+
+<div class="easy-version">
+<h4>쉬운 설명</h4>
+<p>하나의 데이터베이스를 여러 컴퓨터에 나눠 저장하는 것입니다. 예를 들어, 당신이 운영하는 온라인 쇼핑몰이 매우 커져서 하나의 서버로는 감당할 수 없다면, 데이터를 여러 서버에 분산시킵니다.</p>
+<p><strong>장점:</strong> 한 서버가 망가져도 다른 서버가 서비스를 유지합니다. 동시에 더 많은 사람들을 처리할 수 있습니다.</p>
+<p><strong>비유:</strong> 하나의 도서관이 너무 커져서 여러 지점을 열어 책을 분산 보관하는 것과 같습니다.</p>
+</div>
+
+<div class="paper-version">
+<h4>학술 설명</h4>
+<p><strong>분산 데이터베이스 시스템(DDBMS)</strong>은 물리적으로 떨어진 여러 노드에 데이터가 분산되어 저장되며, 네트워크를 통해 통신하는 시스템입니다.</p>
+<p><strong>확장성 전략:</strong></p>
+<ul>
+  <li><strong>수평 확장(Scale-out):</strong> 더 많은 서버를 추가. 분산 DB의 목표.</li>
+  <li><strong>수직 확장(Scale-up):</strong> 기존 서버의 성능을 높임. 비용이 높음.</li>
+</ul>
+<p><strong>핵심 과제:</strong> 분산된 데이터의 일관성, 가용성, 신뢰성 유지</p>
+</div>
+</section>
+
+<section class="content-section">
+<h2>2. CAP 정리</h2>
+
+<div class="easy-version">
+<h4>쉬운 설명</h4>
+<p>분산 DB는 3가지 중 최대 2가지만 완벽히 보장할 수 있습니다:</p>
+<ul>
+  <li><strong>일관성(Consistency):</strong> 모든 노드가 같은 데이터를 본다</li>
+  <li><strong>가용성(Availability):</strong> 언제든 응답한다</li>
+  <li><strong>분할내성(Partition Tolerance):</strong> 네트워크 끊김을 견딘다</li>
+</ul>
+<p><strong>삼각형 비유:</strong> 삼각형 중에 2개의 꼭짓점만 잡을 수 있다면, 하나는 버려야 한다는 뜻입니다.</p>
+<p><strong>실제:</strong> 은행(일관성 중심) vs SNS(가용성 중심)</p>
+</div>
+
+<div class="paper-version">
+<h4>학술 설명</h4>
+<p><strong>Brewer의 CAP 정리(2000):</strong> 분산 시스템은 C, A, P 중 최대 2개만 동시에 만족할 수 있다.</p>
+<p><strong>Gilbert & Lynch의 증명(2002):</strong> 네트워크 분할 상황에서 일관성과 가용성을 동시에 보장 불가능함을 증명.</p>
+<p><strong>실무 분류:</strong></p>
+<ul>
+  <li>CA: 전통적 RDBMS (네트워크 분할 가정하지 않음)</li>
+  <li>AP: Dynamo, Cassandra (최종 일관성)</li>
+  <li>CP: MongoDB, HBase (가용성 포기)</li>
+</ul>
+<p><strong>PACELC 확장:</strong> 네트워크가 정상일 때 Latency-Consistency 트레이드오프도 고려</p>
+</div>
+</section>
+
+<section class="content-section">
+<h2>3. 샤딩(Sharding)</h2>
+
+<div class="easy-version">
+<h4>쉬운 설명</h4>
+<p>데이터를 규칙에 따라 여러 서버로 분산하는 방법입니다.</p>
+<p><strong>도서관 비유:</strong> 도서관 분관을 만들 때, A~M 성씨 책은 강남지점에, N~ㅎ 성씨 책은 강북지점에 보관합니다.</p>
+<p><strong>장점:</strong> 각 서버가 작은 데이터만 관리하므로 빠릅니다.</p>
+<p><strong>문제:</strong> 한 서버에 데이터가 몰릴 수 있습니다 (핫스팟).</p>
+</div>
+
+<div class="paper-version">
+<h4>학술 설명</h4>
+<p><strong>샤딩 전략:</strong></p>
+<ul>
+  <li><strong>해시 샤딩:</strong> hash(key) % N으로 샤드 결정. 균등 분산.</li>
+  <li><strong>레인지 샤딩:</strong> 범위로 분할. 범위 쿼리에 유리하지만 핫스팟 발생 가능.</li>
+  <li><strong>디렉토리 샤딩:</strong> 매핑 테이블 사용. 유연하지만 조회 비용 증가.</li>
+</ul>
+<p><strong>컨시스턴트 해싱:</strong> 노드 추가/제거 시 대부분의 데이터 이동을 피함.</p>
+<p><strong>핫스팟 문제:</strong> 일부 샤드에 데이터가 집중. 해결책: 샤드 재분배, 마이크로 샤딩</p>
+</div>
+</section>
+
+<section class="content-section">
+<h2>4. 복제(Replication)</h2>
+
+<div class="easy-version">
+<h4>쉬운 설명</h4>
+<p>같은 데이터를 여러 서버에 복사해 저장하는 방법입니다.</p>
+<p><strong>도서관 비유:</strong> 인기 있는 책은 여러 도서관에 비치합니다. 하나가 불타도 다른 곳에 책이 남아있습니다.</p>
+<p><strong>장점:</strong> 서버 장애에 강합니다. 읽기 성능도 향상됩니다.</p>
+<p><strong>문제:</strong> 모든 복제본을 최신으로 유지해야 합니다.</p>
+</div>
+
+<div class="paper-version">
+<h4>학술 설명</h4>
+<p><strong>복제 토폴로지:</strong></p>
+<ul>
+  <li><strong>마스터-슬레이브:</strong> 주 노드가 쓰기, 부 노드가 읽기. 단순하지만 주 노드가 병목.</li>
+  <li><strong>멀티마스터:</strong> 모든 노드가 쓰기 가능. 충돌 해결이 복잡.</li>
+  <li><strong>피어-투-피어:</strong> 모든 노드가 동등. 가장 탄력적.</li>
+</ul>
+<p><strong>일관성 모델:</strong></p>
+<ul>
+  <li><strong>강한 일관성:</strong> 모든 읽기가 최신 데이터 보장. 느림.</li>
+  <li><strong>최종 일관성(Eventual Consistency):</strong> 결국 일관성 도달. 빠르지만 임시 불일치 발생.</li>
+</ul>
+<p><strong>쿼럼(Quorum) 기반 복제:</strong> N개 복제본 중 W개 쓰기, R개 읽기로 일관성 조정</p>
+</div>
+</section>
+
+<section class="content-section">
+<h2>3D 시각화: 분산 노드</h2>
+
+<div class="threejs-container" id="dist-3d">
+  <div class="threejs-label">3D · DISTRIBUTED NODES</div>
+  <div class="threejs-controls">
+    <button onclick="simulateFailure()">노드 장애</button>
+    <button onclick="simulateReplication()">데이터 복제</button>
+    <button onclick="resetNodes()">초기화</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+let scene, camera, renderer, nodes = [], particles = [];
+
+function initDistributedViz() {
+  const container = document.getElementById('dist-3d');
+  const width = container.clientWidth;
+  const height = 400;
+
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0a0e27);
+
+  camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+  camera.position.z = 15;
+
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(width, height);
+  renderer.shadowMap.enabled = true;
+  container.appendChild(renderer.domElement);
+
+  // Create nodes in circular arrangement
+  const nodeCount = 7;
+  for (let i = 0; i < nodeCount; i++) {
+    const angle = (i / nodeCount) * Math.PI * 2;
+    const x = Math.cos(angle) * 8;
+    const y = Math.sin(angle) * 8;
+
+    const geometry = new THREE.SphereGeometry(0.8, 32, 32);
+    const material = new THREE.MeshStandardMaterial({
+      color: 0x00d4ff,
+      emissive: 0x00a8ff,
+      metalness: 0.6,
+      roughness: 0.4
+    });
+    const sphere = new THREE.Mesh(geometry, material);
+    sphere.position.set(x, y, 0);
+    sphere.castShadow = true;
+    sphere.receiveShadow = true;
+    sphere.userData = { index: i, failed: false };
+    scene.add(sphere);
+    nodes.push(sphere);
+  }
+
+  // Create connections between nodes
+  const geometry = new THREE.BufferGeometry();
+  const positions = [];
+  for (let i = 0; i < nodes.length; i++) {
+    const next = (i + 1) % nodes.length;
+    positions.push(nodes[i].position.x, nodes[i].position.y, nodes[i].position.z);
+    positions.push(nodes[next].position.x, nodes[next].position.y, nodes[next].position.z);
+  }
+  geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
+  const lineMaterial = new THREE.LineBasicMaterial({ color: 0x7b5cff, linewidth: 2 });
+  const lines = new THREE.LineSegments(geometry, lineMaterial);
+  scene.add(lines);
+
+  // Lights
+  const light = new THREE.DirectionalLight(0xffffff, 1);
+  light.position.set(10, 10, 10);
+  light.castShadow = true;
+  scene.add(light);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+  animate();
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  nodes.forEach((node, i) => {
+    if (!node.userData.failed) {
+      node.rotation.x += 0.005;
+      node.rotation.y += 0.008;
+    }
+  });
+
+  renderer.render(scene, camera);
+}
+
+function simulateFailure() {
+  const randomIdx = Math.floor(Math.random() * nodes.length);
+  const node = nodes[randomIdx];
+  node.userData.failed = !node.userData.failed;
+
+  if (node.userData.failed) {
+    node.material.color.setHex(0xff4444);
+    node.material.emissive.setHex(0xff0000);
+  } else {
+    node.material.color.setHex(0x00d4ff);
+    node.material.emissive.setHex(0x00a8ff);
+  }
+}
+
+function simulateReplication() {
+  const source = nodes[0];
+  const target = nodes[Math.floor(Math.random() * (nodes.length - 1)) + 1];
+
+  // Create moving particle
+  const particleGeometry = new THREE.SphereGeometry(0.3, 16, 16);
+  const particleMaterial = new THREE.MeshStandardMaterial({
+    color: 0xffff00,
+    emissive: 0xffff00
+  });
+  const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+  particle.position.copy(source.position);
+  particle.userData = { target: target, progress: 0 };
+  scene.add(particle);
+
+  const animate = () => {
+    particle.userData.progress += 0.02;
+    if (particle.userData.progress < 1) {
+      particle.position.lerpVectors(source.position, target.position, particle.userData.progress);
+      requestAnimationFrame(animate);
+    } else {
+      scene.remove(particle);
+    }
+  };
+  animate();
+}
+
+function resetNodes() {
+  nodes.forEach(node => {
+    node.userData.failed = false;
+    node.material.color.setHex(0x00d4ff);
+    node.material.emissive.setHex(0x00a8ff);
+  });
+}
+
+// Initialize on load
+window.addEventListener('load', initDistributedViz);
+window.addEventListener('resize', () => {
+  const container = document.getElementById('dist-3d');
+  const width = container.clientWidth;
+  camera.aspect = width / 400;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, 400);
+});
+</script>
+</section>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--rule);">
+  <a href="06-nosql.html" style="text-decoration:none;">← NoSQL</a>
+  <a href="08-modeling.html" style="text-decoration:none;">데이터 모델링 →</a>
+</div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎮 한 줄로 말하면?</h3>
+  <p>분산 데이터베이스는 <strong>데이터를 여러 컴퓨터(노드)에 나눠 두고 다 같이 일하게 하는 시스템</strong>이에요! 🖥️🖥️🖥️</p>
+
+  <h3>🤔 이게 왜 중요할까?</h3>
+  <p>컴퓨터 한 대로 감당 안 되는 큰 규모엔 분산이 꼭 필요해요!</p>
+  <ul>
+    <li>🌍 전 세계 SNS는 빠른 응답을 위해 여러 대륙에 데이터센터를 둬요.</li>
+    <li>🛡️ 한 대가 고장 나도 다른 노드가 대신 답해서 안 멈춰요!</li>
+    <li>📈 사용자가 늘면 노드를 하나씩 더 붙여요(수평 확장).</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 꼭 기억할 낱말</h4>
+    <ul>
+      <li><strong>샤딩(Sharding)</strong>: 데이터를 조각내 여러 노드에 나누기. ✂️</li>
+      <li><strong>복제(Replication)</strong>: 같은 데이터를 여러 노드에 복사. 📑</li>
+      <li><strong>리더/팔로워</strong>: 쓰기를 받는 노드와 그걸 따라가는 노드.</li>
+      <li><strong>일관성</strong>: 어디서 읽어도 같은 값이 보이는 정도.</li>
+      <li><strong>가용성</strong>: 요청에 응답할 수 있는 능력.</li>
+    </ul>
+  </div>
+
+  <h3>📚 도서관 체인으로 쉽게!</h3>
+  <p>분산 DB는 <strong>도서관 체인</strong>이랑 비슷해요! 도서관이 한 도시에만 있으면 멀리 사는 사람은 힘들죠. 그래서 같은 책을 여러 도서관에 복사해 두면(<strong>복제</strong>) 가까운 데서 빌릴 수 있어요.</p>
+  <p>책이 너무 많아 한 건물에 안 들어가면? 분야별로 나눠 다른 건물에 둬요(<strong>샤딩</strong>). ✂️</p>
+  <p>문제는, 한 도서관에서 책 내용을 고치면 다른 도서관에도 전해져야 한다는 거예요. 바로 전하면 정확하지만 느리고, 천천히 전하면 빠르지만 잠깐 다른 값이 보일 수 있어요. 이 밀당이 바로 <strong>일관성</strong> 문제예요! ⚖️</p>
+  <p>또 도서관 한 곳이 정전으로 닫혀도 다른 곳은 열려 있어야죠. 이게 <strong>가용성</strong>이에요. 분산 DB는 이 균형을 잘 맞추는 기술의 총합이라, 큰 회사일수록 이 노하우가 보물이랍니다! 💎 (대신 운영은 훨씬 복잡해요 😅)</p>
+
+  <div class="study-tip">
+    <strong>💡 학습 TIP:</strong> MySQL 마스터-슬레이브 복제를 직접 만들어 보세요. 마스터에 넣은 데이터가 슬레이브에 도착하는 시간을 재보면 '복제 지연'이 손에 잡혀요! ⏱️
+  </div>
+
+  <h3>✅ 오늘의 정리</h3>
+  <ul>
+    <li>🖥️ 분산 DB는 여러 노드로 데이터를 처리해요.</li>
+    <li>✂️ 샤딩은 나누기, 📑 복제는 사본 만들기.</li>
+    <li>⚖️ 일관성과 가용성은 종종 밀당 관계.</li>
+    <li>🛡️ 고장 나도 자동 복구가 큰 장점!</li>
+    <li>😅 대신 운영은 한 대보다 훨씬 복잡해요.</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>CAP 정리(Brewer)는 네트워크 분할 상황에서 일관성과 가용성 중 하나를 포기해야 한다는 명제입니다. PACELC는 분할이 없을 때도 지연(Latency)과 일관성 중 하나를 골라야 한다는 확장 모델입니다. 일관성 모델은 강한 일관성, 선형성(Linearizability), 순차 일관성, 인과 일관성, 결과적 일관성으로 단계가 있습니다. 복제 토폴로지는 단일 리더(Primary-Replica), 다중 리더(Multi-Master), 리더리스(Dynamo 스타일)로 나뉘며, 각각 충돌 해소 전략이 다릅니다. 샤딩은 범위 기반(Range), 해시 기반(Hash), 디렉토리 기반(Lookup)으로 나뉘며, 핫스팟을 피하고 리밸런싱 비용을 줄이는 설계가 핵심입니다. 합의 알고리즘 Raft와 Paxos는 분산 시스템에서 단일 진실의 원천을 정하는 데 사용되며, etcd, Consul, CockroachDB가 Raft 기반입니다. 분산 트랜잭션은 2PC와 Saga가 대표적이며, 현대 NewSQL은 외부 일관성을 제공하기 위해 정밀한 시계 동기화나 HLC를 활용합니다.</p>
+
+  <h3>실전 SQL/쿼리</h3>
+  <pre><code>-- MySQL 비동기 복제 설정 핵심 부분
+-- (Primary)
+CHANGE REPLICATION SOURCE TO
+  SOURCE_HOST = 'primary.example.com',
+  SOURCE_USER = 'repl_user',
+  SOURCE_AUTO_POSITION = 1;
+START REPLICA;
+SHOW REPLICA STATUS\G
+
+-- 복제 지연 모니터링
+SELECT TIME_TO_SEC(TIMEDIFF(NOW(), Last_Update))
+FROM   performance_schema.replication_applier_status_by_worker;
+
+-- PostgreSQL 논리 복제 (CDC 기반)
+CREATE PUBLICATION pub_orders FOR TABLE orders;
+-- 구독자 측
+CREATE SUBSCRIPTION sub_orders
+  CONNECTION 'host=primary dbname=app user=repl'
+  PUBLICATION pub_orders;</code></pre>
+
+  <h3>예제</h3>
+  <div class="info-card">
+    <h4>💻 예제 1: 글로벌 사용자 분산</h4>
+    <p>아시아·유럽·미주 세 리전에 클러스터를 두고, 사용자 ID 해시로 1차 라우팅, 사용자 거주 리전 메타데이터로 2차 라우팅합니다. 쓰기 지연을 줄이기 위해 거주 리전을 홈 샤드로 지정합니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>💻 예제 2: 읽기 부하 분산</h4>
+    <p>리더에 쓰기를, 다수의 팔로워에 읽기를 라우팅합니다. 복제 지연이 민감한 쿼리(예: 결제 완료 직후 주문 내역 조회)는 리더로 강제하거나 read-after-write 토큰을 사용합니다.</p>
+  </div>
+
+  <h3>실무 응용</h3>
+  <p>유튜브와 인스타그램은 사용자 ID 기반 샤딩을 핵심 전략으로 사용합니다. 또한 Discord는 메시지를 Cassandra와 ScyllaDB에 채널 ID로 샤딩해 처리량을 확보합니다. AWS Aurora는 스토리지 계층을 분산 로그로 재설계해 컴퓨트와 스토리지를 분리했고, Google Spanner는 글로벌 ACID 트랜잭션을 TrueTime API로 실현했습니다.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ 자주 하는 실수:</strong> 샤딩 키를 잘못 고르면 핫스팟이 생겨 한 노드만 죽도록 일합니다. 또 복제 지연을 무시하고 팔로워에서 즉시 조회하면 "방금 저장한 게 안 보여요" 사건이 벌어집니다.
+  </div>
+
+<h3>전문가 레벨</h3>
+  <p>합의 알고리즘 Paxos는 안전성과 활성을 모두 갖춘 메시지 패싱 모델로, 단일 합의(Single-Decree)와 다중 합의(Multi-Paxos)로 확장됩니다. Raft는 강한 리더 모델과 로그 복제 구조로 구현 난도를 낮췄으며, etcd·Consul·TiKV가 대표 사용처입니다. ZAB은 Zookeeper의 합의 프로토콜로 원자 브로드캐스트에 특화되어 있습니다. 분산 트랜잭션의 외부 일관성을 위해 Spanner는 GPS와 원자시계로 정밀 시간 동기화(TrueTime)를 보장하고, CockroachDB는 HLC로 비교적 저렴하게 인과 순서를 부여합니다. 멀티 리전 ACID는 커밋 대기(commit wait)나 폐쇄형 타임스탬프 같은 기법이 결합됩니다. CRDT(Conflict-free Replicated Data Type)는 카운터·세트·맵·시퀀스를 수학적으로 합치 가능하게 정의해 다중 리더 환경에서도 충돌 없이 수렴합니다. Yjs와 Automerge는 협업 편집기에, Riak DT는 일반 분산 응용에 활용됩니다. 분산 옵티마이저는 데이터 지역성을 고려해 push-down 조인과 분산 윈도우 함수를 실행하며, 데이터 스큐와 네트워크 셔플 비용이 핵심 병목입니다.</p>
+
+  <h3>고급 패턴</h3>
+  <pre><code>-- CockroachDB: 멀티 리전 테이블 정의
+ALTER DATABASE app PRIMARY REGION "asia-northeast1";
+ALTER DATABASE app ADD REGION "europe-west1";
+ALTER DATABASE app ADD REGION "us-east4";
+
+CREATE TABLE users (
+  id UUID PRIMARY KEY,
+  name TEXT,
+  home_region crdb_internal_region NOT NULL
+)
+LOCALITY REGIONAL BY ROW AS home_region;
+
+-- Spanner: 외부 일관성 보장 SELECT
+SELECT * FROM Orders
+  WHERE OrderId = @id
+  AS OF TIMESTAMP '2024-06-01T00:00:00Z';
+
+-- Vitess: 샤딩 키 기반 라우팅 힌트
+/*+ vt+ shard_session=true */
+SELECT * FROM users WHERE user_id = 12345;</code></pre>
+
+  <h3>최신 동향</h3>
+  <p>NewSQL(Spanner, CockroachDB, TiDB, YugabyteDB)은 ACID와 수평 확장의 양립을 추구하며 글로벌 서비스의 새로운 기본값이 되어 가고 있습니다. 또한 서버리스 분산 DB(Aurora Serverless v2, Neon, PlanetScale)는 자동 스케일링과 분기 기반 개발 워크플로를 제공합니다. 데이터 메시(Data Mesh) 아키텍처는 도메인 단위로 데이터를 분산 소유하는 조직적 접근법으로 떠오르고 있습니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li>합의 알고리즘 이론(Paxos, Raft, EPaxos).</li>
+    <li>CRDT와 오프라인 협업 도구.</li>
+    <li>Jepsen 같은 분산 시스템 검증 도구.</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>"Designing Data-Intensive Applications" — Martin Kleppmann.</li>
+    <li>"Database Internals" Part II — Alex Petrov.</li>
+    <li>Spanner 논문(2012)과 후속 연구들.</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>🎓 도전 과제:</strong> 100만 QPS 글로벌 결제 시스템을 단일 리더 RDBMS, 다중 리더 NewSQL, 리더리스 NoSQL 세 가지 토폴로지로 설계해 가용성·일관성·복구 시간 목표를 정량 비교해 보세요.
+  </div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 다른 하나 찾기</h2>
+<p>같은 묶음에 어울리지 않는 하나를 골라보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#0d6efd","prompt":"성격이 다른 하나를 고르세요","rounds":[{"items":["해시 샤딩","레인지 샤딩","디렉토리 샤딩","복제"],"odd":3,"why":"나머지는 샤딩 방식, 복제는 데이터 복사 기법"},{"items":["일관성","가용성","분할내성","샤딩"],"odd":3,"why":"나머지는 CAP 정리의 세 요소, 샤딩은 분산 기법"},{"items":["마스터-슬레이브","멀티마스터","피어-투-피어","수직 확장"],"odd":3,"why":"나머지는 복제 토폴로지, 수직 확장은 확장 방식"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d6efd","questions":[{"q":"서버를 추가해 확장하는 방식은?","choices":["수직 확장","수평 확장","단일 확장","캐시 확장"],"answer":1},{"q":"데이터를 규칙대로 여러 서버에 나누는 것은?","choices":["복제","캐싱","샤딩","백업"],"answer":2},{"q":"같은 데이터를 여러 서버에 복사하는 것은?","choices":["복제","샤딩","정규화","인덱싱"],"answer":0},{"q":"CAP 중 동시에 보장 가능한 최대 개수는?","choices":["1개","3개","4개","2개"],"answer":3},{"q":"일부 샤드에 데이터가 몰리는 문제는?","choices":["데드락","핫스팟","팬텀 리드","오버플로"],"answer":1}]};</script>
+</main>
+</div>
+</body>
+</html>

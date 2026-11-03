@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9. 크립토와 핀테크 — aboutEconomics</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">📊 표지</a></li><li><a href="01-micro.html">1. 미시경제학</a></li><li><a href="02-macro.html">2. 거시경제학</a></li><li><a href="03-finance.html">3. 금융과 투자</a></li><li><a href="04-trade.html">4. 국제무역</a></li><li><a href="05-behavioral.html">5. 행동경제학</a></li><li><a href="06-development.html">6. 경제발전</a></li><li><a href="07-labor.html">7. 노동경제학</a></li><li><a href="08-public-finance.html">8. 재정학</a></li><li><a href="09-crypto-fintech.html">9. 크립토/핀테크</a></li></ol></aside>
+<main><header class="paper-header"><h1><em>크립토와 핀테크</em></h1><p class="authors">Chapter 9 — Cryptocurrency, Blockchain & FinTech</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 해시로 연결되어 순차적으로 쌓이는 블록체인 분산원장의 블록 사슬</span>
+<h2>크립토와 핀테크 개요</h2><p>Cryptocurrency, Blockchain & FinTech의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>블록체인 분산원장, 스마트 계약, 암호화폐와 디파이(DeFi), 중앙은행 디지털화폐(CBDC)가 금융 생태계에 미치는 변화를 조망합니다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한마디로!</h3>
+  <p>크립토와 핀테크는 디지털 기술로 "돈과 금융"을 새롭게 바꾸는 영역이에요. 📱</p>
+  <h3>🤔 왜 신기할까?</h3>
+  <p>예전엔 은행 가서 줄 서야 했던 송금이 토스로 1초면 끝! ⚡ 한 번도 만난 적 없는 외국인에게 비트코인으로 1분 만에 돈을 보낼 수도 있어요. 카카오페이 하나면 결제·투자·보험까지 앱에서 다 되고요. 세상 참 빨라졌죠? 😄</p>
+  <div class="info-card">
+    <h4>🌱 이 낱말만 알면 끝!</h4>
+    <ul>
+      <li><strong>블록체인:</strong> 여러 컴퓨터가 함께 쓰는 위조 어려운 장부 🔗</li>
+      <li><strong>암호화폐:</strong> 블록체인 위에서 만들어진 디지털 돈 🪙</li>
+      <li><strong>스테이블코인:</strong> 달러에 값을 맞춘 디지털 돈 💵</li>
+      <li><strong>디파이(DeFi):</strong> 은행 없이 코드로 돌아가는 금융 🤖</li>
+      <li><strong>CBDC:</strong> 중앙은행이 만드는 디지털 화폐 🏦</li>
+    </ul>
+  </div>
+  <h3>📖 마을 장부로 생각해봐요</h3>
+  <p>보통 돈을 보낼 땐 은행이 중간에서 "A 통장에서 빼고 B 통장에 넣기"를 해 줘요. 블록체인은 이 중간자를 없애고, 마을 사람 모두가 똑같은 장부를 들고 "누가 누구에게 얼마 보냈다"를 동시에 적는 방식이에요! 📓 그래서 위조가 아주 어렵고 24시간 돌아가죠. 핀테크는 기존 금융을 스마트폰·AI로 더 편하게 만든 거예요. 토스가 송금 수수료를 없애고, 카카오뱅크가 "통장 개설 5분!"을 만든 게 그 예랍니다. 📲 대신 값이 심하게 오르내리고 해킹 위험도 있어서, 조심조심 다가가야 해요! ⚠️</p>
+  <div class="study-tip"><strong>💡 이렇게 해봐요:</strong> 비트코인을 사기 전에 "백서(설명서)"를 한번 읽어 보세요. 📄 딱 9페이지에 디지털 돈의 원리가 다 담겨 있어요!</div>
+  <h3>✨ 한눈에 정리!</h3>
+  <ul>
+    <li>블록체인은 중개자를 줄인 공동 장부예요. 🔗</li>
+    <li>핀테크는 금융을 더 쉽고 빠르게 만들어요. ⚡</li>
+    <li>스테이블코인은 값을 안정시킨 디지털 달러예요. 💵</li>
+    <li>디파이는 코드로 자동으로 돌아가는 금융이에요. 🤖</li>
+    <li>새로움과 위험이 함께 있으니 조심해요! ⚠️</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>화폐의 세 기능(교환매개·가치저장·계산단위) 관점에서 비트코인은 변동성이 커서 교환매개 기능이 약하지만, 디지털 금으로서 가치저장 기능이 부각됩니다. 스테이블코인은 가치 안정으로 교환매개 기능을 회복하지만 발행자 신뢰와 준비자산 투명성 문제가 따릅니다. 블록체인의 합의 알고리즘은 작업증명(PoW)과 지분증명(PoS)으로 구분되며, 에너지 소비·탈중앙성·확정성에서 트레이드오프가 존재합니다. 디파이는 자동시장조성자(AMM, Uniswap의 x·y=k 공식), 담보 대출(Aave, Compound), 합성자산을 핵심 구성요소로 합니다. 임퍼머넌트 로스는 유동성 공급자가 가격 변동 시 발생하는 기회비용 손실입니다. 토큰경제는 네트워크 가치(Metcalfe의 법칙)와 토큰 인플레이션 일정의 영향을 받습니다.</p>
+  <h3>핵심 모델/공식</h3>
+  <div class="formula">AMM 가격: x·y = k, P = y/x<br>임퍼머넌트 손실: IL = 2√(p)/(1+p) − 1, p = 가격비<br>금융화 화폐수량설: MV = PT<br>Metcalfe: V ∝ n²</div>
+  <h3>대표 사례</h3>
+  <div class="info-card">
+    <h4>📊 사례 1 — Terra/Luna 붕괴</h4>
+    <p>2022년 5월 알고리즘 스테이블코인 UST와 Luna가 일주일 만에 99% 폭락하며 약 400억 달러가 증발했습니다. 알고리즘 안정화 메커니즘의 한계와 자기실현적 뱅크런이 결합된 사건입니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>📊 사례 2 — 카카오뱅크의 인터넷전문은행 혁신</h4>
+    <p>2017년 출범한 카카오뱅크는 5년 만에 가입자 2천만 명, 흑자전환에 성공했습니다. 모바일 UX와 데이터 기반 신용평가로 기존 은행의 경쟁 구도를 재편했습니다.</p>
+  </div>
+  <h3>현실 응용</h3>
+  <p>한국은행과 주요 시중은행은 CBDC 모의실험을 진행 중이며, 한국의 가상자산 이용자 보호법(2024)은 거래소 자산 분리 보관과 시세조종 처벌을 명문화했습니다. 비트코인 ETF의 미국 승인 이후 기관 자금 유입이 가속화되고 있고, 토큰증권(STO) 발행이 부동산·미술품·매출채권 같은 비유동자산의 토큰화로 확장되고 있습니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 고수익 약속 디파이 프로토콜을 무비판 신뢰. 스마트 컨트랙트 버그·러그풀·해킹 위험이 상존합니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>크립토 자산 가격결정은 전통 자산가격모형의 확장으로 다뤄집니다. Cong-Li-Wang의 토큰가격 모형은 네트워크 사용가치와 투기 프리미엄을 분리하며, Pagnotta의 PoW 균형은 채굴 비용과 토큰 가격, 네트워크 보안성의 동시 결정을 분석합니다. 디파이의 시장미시구조는 AMM의 손실/리밸런싱(LVR) 분석(Milionis-Moallemi-Roughgarden)과 MEV(Maximal Extractable Value) 추출 분석으로 발전했습니다. 스테이블코인 안정성은 디스컨트 동학과 자기실현적 디페그(Self-fulfilling depeg) 모형으로 분석되며, Eichengreen의 통화경쟁 관점에서 다중 통화 균형이 가능합니다. CBDC의 거시효과는 Brunnermeier-Niepelt의 등가 정리와 Andolfatto의 화폐정책 전달경로 분석이 표준이며, 은행 디스인터미디에이션 위험과 결제 효율성의 트레이드오프가 핵심입니다. 또한 Crypto Asset Pricing Factors 연구(Liu-Tsyvinski-Wu)는 시장·규모·모멘텀이 크립토 횡단면 수익률을 설명함을 보입니다.</p>
+  <h3>수리 모델</h3>
+  <div class="formula">PoW 균형: c·H = R·p, B = c·H/(R·p)<br>LVR: rate = ½·σ²·V<br>스테이블 디페그 RBC: dP = κ(P*−P)dt + σdW − λ·1{run}<br>크립토 3요인: R_i − Rf = α + β_M·MKT + β_S·SIZE + β_MOM·MOM</div>
+  <h3>최신 연구</h3>
+  <p>MEV의 정량 측정과 분배 분석(Daian 등), 영지식 증명 기반 ZK-Rollup의 확장성·프라이버시 트레이드오프, 그리고 토큰화된 실물자산(RWA)의 자본시장 효과가 활발히 연구됩니다. CBDC의 도매·소매 설계, 외환·결제·금융안정 효과의 정량 추정(BIS, IMF), 한국 가상자산 시장의 김치프리미엄 차익거래 분석과 자본통제의 역할도 주요 주제입니다. AI와 블록체인의 결합으로 검증 가능한 ML 추론, 분산형 데이터·연산 시장의 메커니즘 디자인도 새로운 연구 영역으로 부상하고 있습니다.</p>
+  <h3>관련 분야</h3>
+  <ul>
+    <li>금융규제 — MiCA, 가상자산법, 스테이블코인 규제</li>
+    <li>결제시스템 — 도매 결제, 토큰화 예금</li>
+    <li>메커니즘 디자인 — 토큰경제와 인센티브 설계</li>
+  </ul>
+  <h3>추가 자료</h3>
+  <ul>
+    <li>Harvey, Ramachandran & Santoro, <em>DeFi and the Future of Finance</em></li>
+    <li>BIS Working Papers — Digital currencies 시리즈</li>
+    <li>Nakamoto(2008), <em>Bitcoin: A Peer-to-Peer Electronic Cash System</em></li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 한국 원화 거래소와 해외 거래소 간 김치프리미엄 시계열을 분석해 자본통제·환율·차익거래 마찰 변수와의 관계를 정량 추정해 보세요.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 송금이 처리되는 과정</h2>
+<p>블록체인에서 거래가 기록되는 단계를 순서대로 맞춰 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#0891b2","prompt":"블록체인에서 거래가 확정되는 과정을 순서대로 클릭하세요","steps":["거래 요청 발생","분산된 컴퓨터에 전파","합의 알고리즘으로 검증","새 블록에 기록","앞 블록 해시로 연결"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0891b2","questions":[{"q":"달러 등에 가치 연동된 암호자산은?","choices":["비트코인","스테이블코인","토큰증권","디파이"],"answer":1},{"q":"중앙은행이 발행하는 디지털 화폐는?","choices":["디파이","스테이블코인","블록체인","CBDC"],"answer":3},{"q":"비트코인 백서의 분량은?","choices":["9페이지","50페이지","100페이지","300페이지"],"answer":0},{"q":"Terra/Luna 붕괴로 증발한 금액은?","choices":["40억 달러","100억 달러","400억 달러","1조 달러"],"answer":2},{"q":"유니스왑 AMM의 핵심 공식은?","choices":["x+y=k","x·y=k","x−y=k","x/y=k"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,2,11);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const blocks=[];const NB=7;for(let i=0;i<NB;i++){const blk=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.8,0.8),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.13+i*0.02,0.7,0.55),wireframe:true}));blk.position.set(-4.2+i*1.4,(i%2===0?0.4:-0.4),0);s.add(blk);blocks.push(blk);const bL=lbl('블록 '+(i+1),'#92400e');bL.position.set(blk.position.x,blk.position.y+0.75,0);s.add(bL);if(i>0){const ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints([blocks[i-1].position.clone(),blk.position.clone()]),new THREE.LineBasicMaterial({color:0x10b981}));s.add(ln);}}
+  s.userData.blocks=blocks;
+  const chainL=lbl('블록체인 · 분산원장','#047857');chainL.position.set(0,2.4,0);s.add(chainL);
+  const hashL=lbl('해시로 연결','#15803d');hashL.position.set(-2.1,-1.4,0);s.add(hashL);
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(0.6,0.05,8,32),new THREE.MeshBasicMaterial({color:0xfbbf24}));s.add(ring);s.userData.ring=ring;
+  const newL=lbl('새 블록 추가','#b45309');s.add(newL);s.userData.newL=newL;
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 해시로 연결되어 순차적으로 쌓이는 블록체인 분산원장의 블록 사슬.','각 블록은 앞 블록의 해시를 담아 연결 — 위변조가 매우 어렵습니다.','중개기관 없이 분산된 컴퓨터들이 함께 장부를 검증·기록합니다.','암호화폐·스테이블코인·디파이·CBDC가 이 위에서 작동합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const active=Math.floor(T*0.7)%s.userData.blocks.length;s.userData.blocks.forEach((b,i)=>{b.rotation.x+=0.01;b.rotation.y+=0.015;const sc=i===active?1.35+0.1*Math.sin(T*5):1;b.scale.setScalar(sc);});const ab=s.userData.blocks[active];s.userData.ring.position.copy(ab.position);s.userData.newL.position.set(ab.position.x,ab.position.y-0.9,0);s.userData.ring.rotation.z+=0.06;s.rotation.y=0.2*Math.sin(T*0.3);r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

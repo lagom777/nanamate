@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>확인 퀴즈 | 심리학 기초</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<aside>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h1><a href="index.html">심리학 기초</a></h1>
+  <div class="sub">PSYCHOLOGY FROM ZERO</div>
+  <nav>
+    <ol>
+      <li><a href="index.html" class="chap">🏠 목차</a></li>
+      <li><a href="ch01.html" class="chap">1. 심리학이란?</a></li>
+      <li><a href="ch02.html" class="chap">2. 뇌와 신경계</a></li>
+      <li><a href="ch03.html" class="chap">3. 감각과 지각</a></li>
+      <li><a href="ch04.html" class="chap">4. 학습</a></li>
+      <li><a href="ch05.html" class="chap">5. 기억</a></li>
+      <li><a href="ch06.html" class="chap">6. 발달</a></li>
+      <li><a href="ch07.html" class="chap">7. 성격</a></li>
+      <li><a href="ch08.html" class="chap">8. 사회심리학</a></li>
+      <li><a href="ch09.html" class="chap">9. 이상심리·치료</a></li>
+      <li><a href="ch10.html" class="chap">10. 동기와 정서</a></li>
+      <li><a href="ch11.html" class="chap">11. 인지 — 사고·언어·지능</a></li>
+      <li><a href="ch12.html" class="chap">12. 의식 — 수면·꿈·각성</a></li>
+      <li><a href="ch13.html" class="chap">13. 스트레스와 건강심리</a></li>
+      <li><a href="ch14.html" class="chap">14. 심리검사의 세계</a></li>
+      <li><a href="ch15.html" class="chap">15. 긍정심리학</a></li>
+      <li><a href="quiz.html" class="chap">📝 확인 퀴즈</a></li>
+    </ol>
+  </nav>
+  <button id="theme-btn" onclick="toggleTheme()">다크 모드 전환</button>
+</aside>
+
+<main>
+  <div class="page-nav">
+    <a href="index.html">← 목차로</a>
+  </div>
+
+  <section class="chapter" id="quiz">
+    <div class="chap-num">FINAL</div>
+    <h2>확인 퀴즈</h2>
+    <div class="en">Knowledge Check</div>
+
+    <p>지금까지 1장부터 10장까지 함께 살펴본 내용을 점검해 볼 시간입니다. 아래에는 사이트 전체를 아우르는 객관식 문제 <strong>10개</strong>가 준비되어 있습니다. 각 문제 아래의 보기 중 하나를 클릭하면 정답 여부가 즉시 표시됩니다. 정답을 고르면 초록색으로, 오답을 고르면 빨간색으로 바뀝니다. 너무 부담 갖지 말고, 틀려도 괜찮으니 자신이 어떤 부분을 더 복습해야 할지 확인하는 도구로 활용해 보세요.</p>
+
+    <div class="quiz-item">
+      <div class="q">Q1. 최초의 심리학 실험실을 1879년에 세운 사람은 누구일까요?</div>
+      <button onclick="mark(this,false)">지그문트 프로이트</button>
+      <button onclick="mark(this,true)">빌헬름 분트</button>
+      <button onclick="mark(this,false)">윌리엄 제임스</button>
+      <button onclick="mark(this,false)">존 왓슨</button>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q2. 대뇌피질에서 시각 정보를 주로 처리하는 영역은 어느 곳일까요?</div>
+      <button onclick="mark(this,false)">전두엽</button>
+      <button onclick="mark(this,false)">측두엽</button>
+      <button onclick="mark(this,true)">후두엽</button>
+      <button onclick="mark(this,false)">두정엽</button>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q3. 파블로프의 개 실험에서, 학습이 끝난 뒤 침 분비를 유발하게 된 종소리는 무엇이라고 부를까요?</div>
+      <button onclick="mark(this,false)">무조건 자극(UCS)</button>
+      <button onclick="mark(this,true)">조건 자극(CS)</button>
+      <button onclick="mark(this,false)">조건 반응(CR)</button>
+      <button onclick="mark(this,false)">중성 자극(NS)</button>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q4. 조작적 조건형성에서 "안전벨트를 매면 시끄러운 경고음이 멈춘다"는 어떤 유형의 강화·처벌에 해당할까요?</div>
+      <button onclick="mark(this,false)">정적 강화</button>
+      <button onclick="mark(this,true)">부적 강화</button>
+      <button onclick="mark(this,false)">정적 처벌</button>
+      <button onclick="mark(this,false)">부적 처벌</button>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q5. 앳킨슨-시프린 기억 모델에서 단기기억(작업기억)의 일반적인 용량은 얼마라고 알려져 있을까요?</div>
+      <button onclick="mark(this,false)">정확히 5개로 고정되어 있다</button>
+      <button onclick="mark(this,true)">약 7±2 항목</button>
+      <button onclick="mark(this,false)">약 20개 항목</button>
+      <button onclick="mark(this,false)">사실상 무한</button>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q6. 피아제의 인지발달 단계 중 '대상영속성(눈에 보이지 않아도 사물이 존재한다는 이해)'이 획득되는 단계는?</div>
+      <button onclick="mark(this,true)">감각운동기</button>
+      <button onclick="mark(this,false)">전조작기</button>
+      <button onclick="mark(this,false)">구체적 조작기</button>
+      <button onclick="mark(this,false)">형식적 조작기</button>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q7. 프로이트의 성격 이론에서 '쾌락 원리'에 따라 즉각적 만족을 추구하는 성격 구성요소는?</div>
+      <button onclick="mark(this,true)">원초아(id)</button>
+      <button onclick="mark(this,false)">자아(ego)</button>
+      <button onclick="mark(this,false)">초자아(superego)</button>
+      <button onclick="mark(this,false)">무의식(unconscious)</button>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q8. 다음 중 Big Five(5요인) 성격 모델에 포함되지 <strong>않는</strong> 것은?</div>
+      <button onclick="mark(this,false)">성실성</button>
+      <button onclick="mark(this,false)">외향성</button>
+      <button onclick="mark(this,true)">지능</button>
+      <button onclick="mark(this,false)">우호성</button>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q9. 밀그램의 복종 실험에서 실험자의 지시에 따라 최대 전압(450V)까지 누른 참가자의 비율은 약 얼마였을까요?</div>
+      <button onclick="mark(this,false)">약 10%</button>
+      <button onclick="mark(this,false)">약 37%</button>
+      <button onclick="mark(this,true)">약 65%</button>
+      <button onclick="mark(this,false)">약 90%</button>
+    </div>
+
+    <div class="quiz-item">
+      <div class="q">Q10. 정서 이론 중 "신체 반응과 그에 대한 인지적 해석이 합쳐져야 비로소 정서가 된다"고 본 이론은?</div>
+      <button onclick="mark(this,false)">제임스-랑게 이론</button>
+      <button onclick="mark(this,false)">캐논-바드 이론</button>
+      <button onclick="mark(this,true)">샥터-싱어 2요인 이론</button>
+      <button onclick="mark(this,false)">다윈의 진화 이론</button>
+    </div>
+
+    <div class="tip">
+      <span class="label">CONGRATS</span>
+      여기까지 도달하신 여러분, 정말 수고하셨습니다! 심리학의 첫 문턱을 무사히 넘으셨습니다. 점수가 높든 낮든 그 자체보다 중요한 것은, 자신이 어떤 주제에서 흔들렸는지 확인하는 것입니다. 틀린 문제가 있다면 부담 없이 해당 장으로 돌아가 다시 한 번 천천히 읽어 보세요. 심리학은 한 번에 외우는 학문이 아니라, 일상의 경험과 만나면서 조금씩 깊어지는 학문입니다. 앞으로도 자신과 타인의 마음을 이해하는 즐거운 여정을 이어가시길 바랍니다.
+    </div>
+  </section>
+
+  <div class="page-nav-bottom">
+    <a href="ch15.html">← 이전</a>
+    <div class="spacer"></div>
+    <a href="index.html">🏠 목차로 돌아가기</a>
+  </div>
+
+  <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>

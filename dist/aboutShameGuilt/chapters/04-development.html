@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4. 발달과 학습 — aboutShameGuilt</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🟪 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>발달과 학습</em></h1>
+  <p class="authors">Chapter 4 — Development &amp; Learning</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 발달 — 나이에 따라 자라는 감정</span>
+
+<h2>발달과 학습 개요</h2>
+<p>수치심과 죄책감은 자기 인식이 출현하는 18개월부터 발달의 무대에 오른다. 영아의 거울 자기 인식 직후부터 수치 표정이 관찰되며, 만 3세 무렵 죄책감의 인지적 토대가 형성된다. 청소년기에는 사회적 비교 능력의 폭발과 함께 수치심이 정서 생활의 중심에 선다. 어릴 적 양육자가 행동을 비난했는지 존재를 비난했는지가 평생의 자기 비난 패턴을 결정한다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>"왜 이걸 했니"는 죄책감을, "왜 너는 그러니"는 수치심을 심는다. 양육자의 언어가 아이의 자기 평가 회로를 직접 조립한다. 청소년기까지 누적된 패턴이 평생의 기본값을 만든다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🌱 한 줄로 이해하기</h3><p>수치심·죄책감은 아기가 "거울 속 저게 나구나!"를 알아본 뒤부터 자라기 시작해요. 그리고 어른이 해주는 말투에 따라 색깔이 달라져요. 🎨</p>
+  <h3>왜 중요할까? 🤔</h3><p>"네가 한 행동이 잘못이야"와 "너는 왜 그 모양이니"는 어른 귀엔 비슷해 보여도, 아이 마음엔 완전히 다르게 새겨져요. 앞의 말은 "다음엔 고치면 돼"를 배우게 하고, 뒤의 말은 "난 원래 못난 애야"를 배우게 해요. 어릴 때 나 자신을 콕콕 찌르는 말을 자꾸 들은 사람은, 커서도 작은 실수에 "역시 난 안 돼"라고 자동으로 반응하게 돼요. 이렇게 마음에 눌어붙은 부끄러움을 <strong>독성 수치</strong>라고 불러요. 그러니 우리가 서로에게 하는 말이 정말 중요해요. 그리고 지금 부끄러움을 자주 느낀다고 해서 이상한 게 절대 아니에요. 모두가 거쳐가는 자연스러운 과정이에요. 😊</p>
+  <div class="info-card"><h4>🌱 꼭 알아둘 말</h4><ul><li><strong>거울 속 나 알아보기</strong> 🪞: 18개월쯤 거울 속 얼굴이 나인 걸 아는 능력.</li><li><strong>부끄러운 표정</strong> 😳: 눈 피하기·고개 숙이기·얼굴 빨개짐 같은 몸짓.</li><li><strong>독성 수치</strong> 🖤: 자꾸 혼나서 마음에 눌어붙은 부끄러움.</li><li><strong>행동 혼내기 vs 사람 혼내기</strong>: 뭘 콕 집느냐의 차이예요.</li><li><strong>어린 시절 힘든 경험(ACE)</strong>: 오래가는 부끄러움의 씨앗이 될 수 있어요.</li></ul></div>
+  <h3>쉽게 풀어보기 ✏️</h3><p>세 살 아이가 컵을 쏟았어요. "어이쿠, 컵이 미끄러웠구나? 같이 닦자!"는 그 <em>일</em>을 이야기하는 거예요. 🧽 하지만 "또 사고 쳤어! 넌 왜 이렇게 칠칠맞니"는 그 <em>아이</em>를 콕 찌르는 거예요. 앞의 말은 "실수는 누구나 해, 고치면 돼"를, 뒤의 말은 "난 문제 있는 애야"를 마음에 심어요. 그리고 초등 고학년쯤 되면 부모님보다 <strong>친구들의 눈</strong>이 훨씬 크게 느껴지기 시작해요. 그래서 이 나이에 부끄러움이 유난히 크게 느껴지는 건 아주 정상이에요. 👫</p>
+  <div class="study-tip"><strong>💡 이렇게 해봐요:</strong> 동생이나 친구에게 뭐라고 말한 뒤 "방금 내가 <em>한 일</em>을 짚었나, <em>그 사람</em>을 짚었나?" 하고 스스로 물어봐요. 이 한 번의 점검이 마음의 상처를 크게 줄여줘요. 💗</div>
+  <h3>🌟 한 장 정리</h3><ul><li>부끄러운 표정은 18개월부터 보여요. 🪞</li><li>죄책감을 아는 힘은 세 살쯤 자라요.</li><li>초등 고학년~청소년기엔 친구 눈이 커져요. 👫</li><li>어른의 말투가 아이 마음을 조립해요.</li><li>지금 부끄러움을 느끼는 건 아주 자연스러워요. 😊</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>Michael Lewis 1992의 발달 모델에 따르면 자기 의식적 정서는 두 단계로 출현한다. 1단계(15-24개월)는 자기 인식의 출현으로 당혹감·수치심 기초가 나타나고, 2단계(2.5-3세)는 평가 기준 내재화로 죄책감·자긍심이 가능해진다. Kochanska 등의 종단 연구는 양육자의 power assertion(권위적 통제)과 induction(설명 중심 훈육)이 아동의 양심 발달 경로를 다르게 만든다고 보였다. Power assertion은 외부 통제 의존과 수치심 회로를, induction은 내적 죄책감과 친사회성을 강화한다. 청소년기에는 전전두피질 발달과 social brain 성숙으로 사회 비교 능력이 급증한다. Somerville 2013은 13-17세에 또래 시선에 대한 자기 의식 반응(self-conscious arousal)이 정점을 찍음을 보였다. 이 시기에 SNS가 추가로 수치심 자극을 폭발적으로 증가시킨다. 또한 발달 트라우마 모델(Schore, van der Kolk)은 반복적 양육 실패가 정서 조절 회로의 비가역적 손상을 만들 수 있음을 경고한다. 어린 시절 toxic shame의 누적은 성인기 우울·자해·중독·섭식장애의 핵심 매개 변수다.</p>
+  <h3>핵심 메커니즘</h3><div class="info-card"><h4>📐 양육 언어의 회로 효과</h4><p>"네 행동이 ~다"(induction) → vmPFC의 행동 평가 회로 강화 → 죄책감 + 회복 행동. "너는 ~한 아이다"(labeling) → mPFC의 자기 표상 회로에 부정 라벨 각인 → 만성 수치심. 동일 빈도라도 표적 차이가 평생의 자기 평가 기본값을 만든다.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>시험 성적이 떨어진 자녀에게 "이번 단원 복습이 부족했네, 다음에 어떻게 할까"는 induction으로 죄책감과 행동 변화를 유도한다. 반면 "너는 머리가 그 정도밖에 안 되니"는 labeling으로 만성 수치심을 학습시킨다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>중학생이 친구 앞에서 발표 실수를 했을 때, 또래의 한순간 웃음이 mPFC에 강하게 각인된다. 발달 중인 뇌는 사회적 위협을 성인보다 2-3배 더 크게 처리하기에, 이 한 장면이 평생의 발표 불안 시드가 될 수 있다.</p></div>
+  <h3>응용 사례</h3><p>한국 양육 문화의 "왜 그것밖에 못하니" "옆집 누구는 다 한다더라" 같은 비교 비난은 행동 비난을 가장한 존재 비난이다. 이 언어 패턴은 행동 변화를 만들지 못하고 자기 부정만을 학습시킨다. 한국 교육부의 학생 자해율 증가 통계는 이 양육·교육 언어와 무관하지 않다. 부모교육 프로그램(예: Gordon의 PET, 비폭력 대화 NVC)은 행동 단위 피드백을 핵심 기술로 가르친다.</p>
+  <div class="warning-box">⚠️ 자주 하는 실수: "엄하게 키워야 정신 차린다"는 통념은 power assertion이 단기 순응을 만들지만 장기적으로는 외부 의존과 만성 수치를 키운다는 종단 데이터를 무시한다.</div>
+
+<h3>전문가 레벨 이해</h3><p>발달 정신병리학에서 toxic shame은 ACE(Adverse Childhood Experiences) 점수와 강한 용량-반응 관계를 보인다. Felitti의 원 ACE 연구(1998)는 어린 시절 학대·방임·가정 역기능이 성인기 우울·자살·중독의 위험을 거의 비례적으로 증가시킴을 보였고, 후속 연구들은 그 매개 정서가 수치심임을 입증했다. Schore의 right-brain attachment 이론은 양육자와의 정서 조율 실패가 우반구 정서 회로의 발달을 손상시킨다고 본다. 청소년기 수치심 처리의 특수성은 social brain의 미성숙에서 비롯된다. Blakemore 2008은 mPFC의 회백질 가지치기가 청소년기까지 계속됨을 보였고, 이 시기 자기 평가 회로는 또래 피드백에 과민하다. Steinberg의 dual systems model은 보상 회로(NAcc)와 통제 회로(dlPFC)의 발달 불일치가 청소년 위험 행동의 신경적 기반이라 본다. 이 불일치는 수치심 회복 능력의 미성숙과도 연결된다. 또한 Tangney의 종단 연구는 아동기 수치 경향성(shame-proneness)이 성인기 정신건강 결과를 강력하게 예측함을, 죄책 경향성(guilt-proneness)이 친사회적 결과를 예측함을 일관되게 보였다.</p>
+  <h3>최신 연구·동향</h3><p>최근에는 청소년기 SNS 사용과 수치심의 인과 관계 연구가 활발하다. Twenge &amp; Haidt의 generation Z 연구는 2012년 이후 SNS 보급과 청소년 우울·자해·자살의 동시 급증을 보고했고, 그 매개 변수로 사회 비교와 공개 수치 노출이 지목된다. 또한 디지털 native 세대의 수치심 처리 패턴은 이전 세대와 질적으로 다르다는 가설이 검증 중이다.</p>
+  <h3>관련 분야</h3><ul><li>발달 정신병리학(Developmental Psychopathology)</li><li>애착 이론(Attachment Theory)</li><li>청소년 사회신경과학(Adolescent Social Neuroscience)</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"Healing the Shame That Binds You" — John Bradshaw</li><li>"The Developing Mind" — Daniel Siegel</li><li>"The Body Keeps the Score" — Bessel van der Kolk</li></ul>
+  <div class="success-box">🎓 도전 과제: 본인이 반복적으로 겪는 자기 비난 1가지를 골라, 어린 시절 어느 양육자/교사/상황에서 처음 들었던 말과 어떻게 연결되는지 5분간 자유 서술로 추적해보자.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 발달 순서 맞추기</h2>
+<p>수치심·죄책감이 자라는 발달 시기를 순서대로 배열해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#a78bfa","prompt":"발달 시기순으로 올바르게 배열하세요","steps":["18개월 거울 자기 인식","자기 의식적 표정 출현","만 3세 죄책감 인지","청소년기 사회 비교 정점","성인기 자기 평가 기본값"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#a78bfa","questions":[{"q":"거울 자기 인식이 나타나는 시기는?","choices":["18개월","6개월","5세","10세"],"answer":0},{"q":"수치심을 심는 양육 언어는?","choices":["왜 이걸 했니","같이 닦자","다음엔 어떻게","너는 왜 그러니"],"answer":3},{"q":"반복 비난으로 내면화된 만성 수치는?","choices":["회복 행동","독성 수치","자긍심","당혹감"],"answer":1},{"q":"자기 의식적 정서 발달 모델 학자는?","choices":["Neff","Gilbert","Michael Lewis","Cook"],"answer":2},{"q":"설명 중심 훈육 방식은?","choices":["power assertion","induction","labeling","비교"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const COL=0xa78bfa;const line=new THREE.Mesh(new THREE.BoxGeometry(7.5,0.05,0.05),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.4}));line.position.y=-1.3;s.add(line);const st=[];const dnm=['자기 인식','당혹감·수치심','평가 기준 내재화','죄책감·자긍심','또래 평가'];for(let i=0;i<5;i++){const x=(i-2)*1.6;const rad=0.25+i*0.22;const m=new THREE.Mesh(new THREE.SphereGeometry(rad,18,18),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.6+i*0.08}));m.position.set(x,-1.3+rad,0);s.add(m);st.push(m);const L=lbl(dnm[i]);L.position.set(0,rad+0.4,0);m.add(L);}const arrow=new THREE.Mesh(new THREE.ConeGeometry(0.18,0.45,12),new THREE.MeshBasicMaterial({color:0xffe08a}));arrow.rotation.z=-Math.PI/2;arrow.position.set(4,-1.3,0);s.add(arrow);
+  const TL=lbl('연령: 15개월 → 청소년','#c9c2e8');TL.position.set(0,-2.15,0);s.add(TL);
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 왼쪽에서 오른쪽으로 커지는 구는 자기 의식적 정서의 발달 순서 — 자기 인식에서 시작해 죄책감·자긍심, 또래 평가로 나아갑니다.','Michael Lewis: 1단계(15~24개월) 자기 인식→당혹감·수치심, 2단계(2.5~3세) 평가 기준 내재화→죄책감·자긍심이 가능해집니다.','"네 행동이~"(induction)는 죄책감·회복 행동을, "너는~한 아이야"(labeling)는 만성 수치심을 각인시킵니다.','독성 수치(toxic shame)는 ACE(어린 시절 힘든 경험) 점수와 강한 용량-반응 관계를 보입니다(Felitti 1998).'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}st.forEach((m,i)=>m.position.y=-1.3+m.geometry.parameters.radius+Math.sin(T*1.5+i)*0.08);s.rotation.y+=0.0;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

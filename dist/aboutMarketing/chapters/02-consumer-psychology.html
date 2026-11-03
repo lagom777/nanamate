@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2. 소비자 심리 — aboutMarketing</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📈 표지 · 소개</a></li>
+    <li><a href="01-fundamentals.html">1. 마케팅 기초</a></li>
+    <li><a href="02-consumer-psychology.html">2. 소비자 심리</a></li>
+    <li><a href="03-branding.html">3. 브랜딩 전략</a></li>
+    <li><a href="04-digital-marketing.html">4. 디지털 마케팅</a></li>
+    <li><a href="05-social-media.html">5. 소셜 미디어</a></li>
+    <li><a href="06-content-marketing.html">6. 콘텐츠 마케팅</a></li>
+    <li><a href="07-advertising.html">7. 광고와 캠페인</a></li>
+    <li><a href="08-analytics.html">8. 데이터 분석</a></li>
+    <li><a href="09-growth-hacking.html">9. 그로스 해킹</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>소비자 심리</em></h1>
+  <p class="authors">Chapter 2 — Consumer Psychology & Behavior</p>
+</header>
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 직관의 시스템1과 숙고의 시스템2, 두 뇌의 의사결정</span>
+<h2>소비자 심리 개요</h2>
+<p>이 챕터에서는 소비자 심리의 핵심 전략과 프레임워크를 3D 시각화와 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>소비자의 인지적 편향, 감정적 동기, 사회적 증거를 분석하여 구매 결정 여정을 파악하고 고객 경험을 최적화합니다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한 줄로 이해하기</h3>
+  <p>소비자 심리는 "사람들이 왜 이건 사고, 저건 안 살까?"를 알아내는 <strong>마음의 비밀</strong>이에요. 🧠 놀랍게도 우리는 꼼꼼히 계산해서 사는 게 아니라, 그때그때 '기분'과 '느낌'으로 살 때가 훨씬 많대요!</p>
+
+  <h3>🤔 왜 중요할까?</h3>
+  <p>회사들은 물건이 아니라 사실 '기분'을 팔아요.</p>
+  <ul>
+    <li>☕ <strong>스타벅스</strong>는 커피만 파는 게 아니라 '편하게 쉬는 나만의 공간' 느낌을 팔아요.</li>
+    <li>🍎 <strong>애플</strong>은 "이걸 쓰면 나는 특별해"라는 기분을 줘서 팬을 만들었어요.</li>
+    <li>👕 <strong>무신사</strong>는 "나도 옷 좀 안다!"는 자신감을 줘서 패션앱 1등이 됐어요.</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 꼭 알아둘 말</h4>
+    <ul>
+      <li><strong>매슬로우의 욕구 단계</strong>: 배고픔 같은 기본 욕구부터 '멋진 나 되기'까지 5단계로 나눈 마음의 사다리. 🪜</li>
+      <li><strong>사회적 증거</strong>: 남들이 많이 고르면 나도 따라가는 심리. ("이거 많이들 사네?") 👥</li>
+      <li><strong>손실 회피</strong>: 얻는 기쁨보다 잃는 게 약 2배 더 싫은 마음. 😖</li>
+      <li><strong>앵커링 효과</strong>: 처음 본 숫자가 기준이 되는 것. (원래 5만원 → 2만원! 싸 보이죠?) ⚓</li>
+      <li><strong>FOMO</strong>: '놓칠까 봐 조마조마'한 마음. "한정판! 마감 임박!"의 힘. ⏰</li>
+    </ul>
+  </div>
+
+  <h3>🚗 내 머릿속 운전자 두 명!</h3>
+  <p>우리 머릿속엔 운전자가 두 명 살아요.</p>
+  <ul>
+    <li>⚡ <strong>시스템 1</strong>: 빠르고 척척 결정하는 성격. 과자 집을 때 등장!</li>
+    <li>🐢 <strong>시스템 2</strong>: 느리고 신중한 성격. 비싼 자전거 고를 때 등장!</li>
+  </ul>
+  <p>마케터는 주로 빠른 '시스템 1'을 상대해요. 그래서 색깔, 음악, 카피 한 줄에 마음이 확 움직이죠. 우리는 스스로 똑똑하게 고른다고 믿지만, 사실 옆에 붙은 가격표나 줄 선 사람 수 같은 작은 힌트에 쉽게 흔들려요. 별점 4.3점보다 4.7점 가게에 사람이 훨씬 몰리는 것도 바로 이 심리 때문이에요! ⭐</p>
+
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 최근 일주일 동안 '나도 모르게' 산 물건 3개를 떠올려 보세요. 어떤 심리가 나를 움직였을까요? 🕵️</div>
+
+  <h3>✅ 기억해요</h3>
+  <ul>
+    <li>사는 결정은 '머리'보다 '마음'이 먼저! ❤️</li>
+    <li>주변 상황이 '똑똑한 선택'을 흔들어요.</li>
+    <li>희소성·사회적 증거·손실 회피는 최강 트리거! 💪</li>
+    <li>브랜드는 물건과 함께 '소속감'도 팔아요.</li>
+    <li>심리는 착하게 써야 오래 믿어줘요. 😇</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>전략 깊이</h3>
+  <p>중급 마케터는 단편적인 심리 트릭을 넘어, 고객 여정 전체에 심리 원리를 ‘설계’합니다. 행동경제학자 카너먼과 트버스키가 정리한 프로스펙트 이론은 이익보다 손실에 민감한 인간의 본성을 모델화했고, 이는 무료 체험, 환불 보장, 정기 구독 모델의 설계 원리가 되었습니다. 치알디니의 6대 설득 원리(상호성, 일관성, 사회적 증거, 호감, 권위, 희소성)는 광고 카피와 랜딩 페이지의 표준 체크리스트로 자리잡았습니다. 또 인지 부조화 이론은 구매 후 후기 요청과 멤버십 강화 메일이 왜 효과적인지 설명해 줍니다. 사용자가 한 번 결정을 내리면 자기 행동을 합리화하기 위해 더 강한 충성도를 보이는 경향이 있기 때문입니다. 더 나아가 ‘가격의 심리학’에서는 단순한 할인보다 비교 기준점을 제시하는 가격 구조(decoy pricing)가 더 큰 매출 변화를 만든다는 점이 반복적으로 검증되어 왔습니다.</p>
+
+  <h3>대표 사례 분석</h3>
+  <div class="info-card">
+    <h4>📈 사례 1 — 아마존의 1-Click과 손실 회피</h4>
+    <p>아마존은 결제 단계를 줄여 ‘이미 카트에 있다’는 심리적 소유감을 강화했고, 무료 반품 정책으로 손실 회피 부담을 줄여 충동구매 장벽을 크게 낮추었습니다. 또한 별점과 리뷰 수를 노출해 사회적 증거를 극대화하는 화면 구성은 업계 표준이 되었습니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>📈 사례 2 — 컬리의 후기 큐레이션</h4>
+    <p>컬리는 식품 구매라는 비교적 보수적인 카테고리에서 ‘다른 사람들도 만족했다’는 신호를 강하게 노출하고, 사용자에 가까운 톤의 후기 콘텐츠를 큐레이션해 신뢰를 쌓았습니다. 이는 사회적 증거와 호감 원리를 결합한 대표적 사례입니다.</p>
+  </div>
+
+  <h3>실무 응용</h3>
+  <p>실무에서 심리 원리를 적용할 때는 가설을 명시한 뒤 A/B 테스트로 검증하는 절차가 필수입니다. 첫째, 고객 여정의 마찰 지점을 도식화하고 각 지점별로 작동할 만한 심리 트리거를 후보로 적습니다. 둘째, 트리거를 한 번에 한 가지만 바꾼 실험을 설계해 인과 관계를 명확히 합니다. 셋째, 결과가 좋더라도 장기 LTV에 부정적 영향이 없는지 코호트별로 추적합니다. 단기 클릭률을 끌어올리는 트릭은 많지만, 결국 장기 신뢰를 깎으면 마케팅 비용은 더 커집니다.</p>
+
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> ‘다크 패턴’으로 분류되는 강압적 카운트다운, 거짓 재고 표시 같은 기법은 단기 매출에 도움이 되지만 신뢰 자산을 빠르게 소모해 결국 광고비 효율을 악화시킵니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>심화 단계에서는 소비자 심리를 신경과학과 데이터 사이언스의 언어로 다룹니다. 신경마케팅(neuromarketing)은 fMRI, 시선 추적, EEG 데이터를 활용해 광고가 작동하는 두뇌 영역을 측정하며, 이러한 무의식적 반응이 자기 보고형 설문보다 매출 예측력이 높다는 연구가 누적되어 있습니다. 더불어 행동 데이터(behavioral data) 기반의 마이크로 세분화는 단순 인구통계 세그먼트를 넘어, 동일한 사용자라도 시간대와 맥락(상황적 요인)에 따라 다른 페르소나로 작동한다고 가정합니다. 또 ‘영향력 다이내믹스(influence dynamics)’ 관점에서 보면 한 명의 핵심 사용자(슈퍼 유저)가 미치는 네트워크 효과가 광고비보다 더 큰 자산이 될 수 있으며, 이는 추천 시스템과 커뮤니티 설계의 이론적 기반이 됩니다. 한편 카너먼의 ‘피크-엔드 룰(peak-end rule)’은 사용자 경험의 평가가 가장 강한 순간과 마지막 순간으로 요약된다는 사실을 보여주어 UX 설계자에게 결정적 힌트를 제공합니다. 결과적으로 전문가 마케터는 ‘평균 고객’이 아니라 ‘맥락에 따른 행동 분포’를 다루는 역량을 갖춰야 합니다.</p>
+
+  <h3>측정과 분석 모델</h3>
+  <p>심화 분석에서는 멀티 암드 밴딧(MAB) 알고리즘이 단순 A/B 테스트를 대체해, 노출과 학습을 동시에 진행하며 최적 메시지를 자동 탐색합니다. 또한 인과추론 기법(인스트루멘털 변수, 차분의 차분, 회귀 불연속)이 자기 선택 편향을 통제하기 위해 도입되며, 베이지안 계층 모델은 세그먼트별 효과를 부분 풀링(partial pooling)으로 추정해 데이터가 적은 구간의 정확도를 높입니다. 행동 시퀀스 분석에는 LSTM·Transformer 기반의 이탈 예측 모델이 활용되어 ‘이 사용자가 7일 내 이탈할 확률’을 추정하고, 이 확률을 사용한 동적 인터벤션이 LTV를 의미 있게 끌어올린 사례가 다수 보고되고 있습니다.</p>
+
+  <h3>최신 트렌드</h3>
+  <p>첫째, AI 에이전트가 소비자를 대신해 비교·구매하는 ‘에이전트 커머스’ 시대가 다가오면서, 알고리즘이 이해하기 쉬운 메시지 구조와 메타데이터의 중요성이 급부상하고 있습니다. 둘째, 디지털 디톡스와 ‘느린 소비(slow consumption)’ 트렌드는 과도한 자극형 광고에 대한 반작용으로 작동하며, 진정성과 윤리적 브랜드 메시지가 더 큰 가치를 갖게 만들고 있습니다. 셋째, 감정 인식 AI가 영상·음성 데이터를 분석해 광고 크리에이티브의 감정 곡선을 정량화하는 시도가 확대되고 있습니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li>행동경제학과 사회심리학</li>
+    <li>인지신경과학과 신경마케팅</li>
+    <li>UX 리서치와 인지인체공학</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>Daniel Kahneman, <em>Thinking, Fast and Slow</em></li>
+    <li>Robert Cialdini, <em>Influence</em></li>
+    <li>Richard Thaler & Cass Sunstein, <em>Nudge</em></li>
+  </ul>
+
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 임의의 랜딩 페이지 한 개를 골라 6대 설득 원리 체크리스트로 진단하고, 가설별 A/B 테스트 설계와 예상 효과 크기를 정량화한 보고서를 작성해 보세요.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 심리 트리거 짝 맞추기</h2>
+<p>소비자 심리 용어와 설명을 알맞게 연결해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#e040fb","prompt":"용어와 설명을 짝지으세요","pairs":[{"term":"사회적 증거","def":"남의 선택을 보고 따라가는 심리"},{"term":"손실 회피","def":"손실을 이득보다 크게 느끼는 경향"},{"term":"앵커링 효과","def":"처음 본 숫자가 판단 기준이 됨"},{"term":"FOMO","def":"놓칠까 봐 두려운 심리"},{"term":"시스템 1","def":"빠르고 직관적인 사고"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#e040fb","questions":[{"q":"빠르고 직관적인 사고 체계는?","choices":["시스템 1","시스템 2","퍼널","앵커"],"answer":0},{"q":"처음 본 숫자가 기준이 되는 효과는?","choices":["손실 회피","앵커링 효과","FOMO","희소성"],"answer":1},{"q":"남의 선택을 따라가는 심리는?","choices":["손실 회피","희소성","사회적 증거","앵커링"],"answer":2},{"q":"6대 설득 원리를 정리한 학자는?","choices":["카너먼","탈러","켈러","치알디니"],"answer":3},{"q":"1-Click으로 구매 장벽 낮춘 기업은?","choices":["아마존","컬리","토스","무신사"],"answer":0}]};</script>
+</main>
+</div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const sys1=new THREE.Mesh(new THREE.IcosahedronGeometry(1.3,1),new THREE.MeshBasicMaterial({color:0xff4060,wireframe:true}));sys1.position.set(-2.3,0,0);s.add(sys1);const sys2=new THREE.Mesh(new THREE.OctahedronGeometry(1.3,1),new THREE.MeshBasicMaterial({color:0x3c9bff,wireframe:true}));sys2.position.set(2.3,0,0);s.add(sys2);const bg=new THREE.BufferGeometry();bg.setAttribute('position',new THREE.BufferAttribute(new Float32Array([-2.3,0,0,2.3,0,0]),3));s.add(new THREE.Line(bg,new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:0.4})));const signal=new THREE.Mesh(new THREE.SphereGeometry(0.22,10,10),new THREE.MeshBasicMaterial({color:0xffd23c}));s.add(signal);
+  const _l1=lbl('시스템 1 · 직관',0xc23050);_l1.position.set(-2.3,1.7,0);s.add(_l1);const _l2=lbl('시스템 2 · 숙고',0x2c7bd0);_l2.position.set(2.3,1.7,0);s.add(_l2);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 직관의 시스템 1과 숙고의 시스템 2가 함께 소비자의 의사결정을 만듭니다.','시스템 1은 빠르고 자동적인 직관 — 대부분의 구매 결정이 여기서 일어납니다.','시스템 2는 느리고 신중한 숙고 — 자동차·보험처럼 큰 지출일수록 활발히 일합니다.','사회적 증거·손실 회피·앵커링·FOMO가 시스템 1을 자극하는 대표 심리입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}signal.position.x=Math.sin(T*2.2)*2.3;const s1=1+Math.max(0,Math.sin(T*2.2+Math.PI/2))*0.25;sys1.scale.setScalar(s1);const s2=1+Math.max(0,-Math.sin(T*2.2+Math.PI/2))*0.25;sys2.scale.setScalar(s2);sys1.rotation.y-=0.02;sys2.rotation.y+=0.01;sys2.rotation.x+=0.01;s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body>
+</html>

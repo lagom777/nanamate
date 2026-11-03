@@ -258,3 +258,89 @@
 /* 📅 오늘 다시 풀 오답 */
 .pr-due-tag { flex: none; font-size: 11.5px; font-weight: 700; padding: 1px 8px; border-radius: 999px; color: #1d4ed8; background: color-mix(in srgb, #2563eb 12%, transparent); }
 .pr-due ul { margin: 0; padding-left: 1.2em; font-size: 14px; line-height: 1.9; }
+
+/* 📋 오답 노트 · 오답 한 장 (시험지·내 답·원인·메모·해설·AI 분석·비슷한 실제 기출) */
+.pr-nb-sum { margin: 0 0 10px; font-size: 13.5px; color: var(--text-dim); }
+.pr-nb-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+#practice-root .pr-nb-row { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border: 1px solid var(--pr-line) !important; border-radius: 10px; background: var(--pr-el) !important; color: var(--text) !important; font: inherit; font-size: 14px; text-align: left; cursor: pointer; }
+#practice-root .pr-nb-row:hover { border-color: var(--accent) !important; }
+.pr-nb-row b { flex: none; }
+.pr-nb-tags { display: flex; flex-wrap: wrap; gap: 4px; min-width: 0; }
+.pr-nb-tags span { padding: 1px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 700; color: var(--text-dim); background: var(--pr-card); }
+.pr-nb-tags .pr-nb-w { color: #fff; background: var(--pr-bad); }
+.pr-nb-tags .pr-nb-u { color: #92400e; background: #fde68a; }
+.pr-nb-tags .pr-nb-c { color: #fff; background: #b45309; }
+.pr-nb-go { margin-left: auto; flex: none; font-size: 12.5px; font-weight: 700; color: var(--accent); }
+.pr-sheet-top { display: flex; justify-content: space-between; gap: 10px; margin: 0 0 10px; font-size: 13.5px; }
+.pr-sheet-q { margin: 0 0 10px; }
+.pr-crops { display: flex; flex-direction: column; gap: 4px; padding: 8px; border-radius: 8px; background: #fff; }
+.pr-crop { position: relative; overflow: hidden; width: 100%; max-width: 660px; margin: 0 auto; }
+.pr-crop img { display: block; width: 100%; height: auto; }
+.pr-sheet-ans { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 0 0 8px; font-size: 15px; }
+.pr-sheet-ok { font-weight: 800; color: var(--pr-ok); }
+.pr-sheet-bad { font-weight: 800; color: var(--pr-bad); }
+.pr-sheet-mute { font-weight: 700; color: var(--text-dim); }
+.pr-sheet-ans .pr-tag { margin-left: auto; }
+.pr-sheet-memo { margin: 8px 0; }
+.pr-sheet-exp { margin: 10px 0; border: 1px solid var(--pr-line); border-radius: 10px; background: var(--pr-el); }
+.pr-sheet-exp > summary { cursor: pointer; padding: 8px 12px; font-weight: 700; }
+.pr-sheet-exp > .pr-exp-body { padding: 0 12px 10px; font-size: 14px; line-height: 1.7; }
+.pr-sheet-sec { margin: 14px 0 0; padding: 12px 0 0; border-top: 1px dashed var(--pr-line); }
+.pr-sheet-sec h4 { margin: 0 0 8px; font-size: 15px; }
+.pr-sheet-hint { margin: 6px 0; font-size: 12.5px; color: var(--text-dim); }
+.pr-sim { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 10px; margin: 8px 0; }
+.pr-mini { padding: 10px; border: 1px solid var(--pr-line); border-radius: 10px; background: var(--pr-el); }
+.pr-mini-h { margin: 0 0 6px; font-size: 13px; color: var(--text-dim); }
+.pr-mini-h b { color: var(--text); }
+.pr-mini .pr-paper, .pr-mini .pr-crops { max-height: 440px; overflow: auto; }
+.pr-mini-ch { margin-top: 8px; }
+.pr-mini .pr-numrow { margin-top: 8px; }
+.pr-mini-res { margin: 6px 0 0; min-height: 1.2em; font-size: 14px; font-weight: 800; }
+.pr-mini-res.ok { color: var(--pr-ok); }
+.pr-mini-res.bad { color: var(--pr-bad); }
+.pr-sheet-link { font-size: 12.5px; }
+
+/* 등급: 결과 칸 — 내 등급 + 1~8등급 최저 원점수(내 등급 칸 강조, '–'는 그 시험에 없는 등급) */
+.pr-grade { margin: 8px 0 4px; }
+.pr-grade-main { margin: 0; font-size: 13px; color: var(--text-dim); }
+.pr-grade-main b { font: 700 22px var(--font-display, sans-serif); color: var(--accent); margin-right: 2px; }
+.pr-cuts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; margin: 6px 0 0; padding: 0; list-style: none; }
+.pr-cuts li { display: flex; justify-content: center; align-items: baseline; gap: 3px; padding: 3px 0; border: 1px solid var(--pr-line); border-radius: 6px; font: 11px var(--font-mono, monospace); color: var(--text-dim); }
+.pr-cuts li i { font-style: normal; font-size: 10px; }
+.pr-cuts li b { font-weight: 600; color: var(--text); }
+.pr-cuts li.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.pr-cuts li.on b { color: #fff; }
+.pr-grade-src { margin: 4px 0 0; font-size: 11px; line-height: 1.5; color: var(--text-mute, var(--text-dim)); }
+
+/* 사진 크게 보기 창(그림을 누르면) — 늘 어두운 바탕 */
+.pr-paper img, .pr-strip img, .pr-crop img { cursor: zoom-in; }
+.pr-zoom { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(8, 12, 20, .96); color: #e5e7eb; }
+.pr-zoom[open] { display: flex; flex-direction: column; }
+.pr-zoom::backdrop { background: rgba(0, 0, 0, .6); }
+.pr-zoom-bar { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-bottom: 1px solid rgba(255, 255, 255, .12); }
+.pr-zoom-b { min-width: 40px; height: 36px; padding: 0 12px; border: 1px solid rgba(255, 255, 255, .25); border-radius: 8px; background: rgba(255, 255, 255, .08); color: #fff; font: 600 15px var(--font-body, sans-serif); cursor: pointer; }
+#practice-root .pr-zoom-b { background: rgba(255, 255, 255, .08) !important; color: #fff !important; border: 1px solid rgba(255, 255, 255, .25) !important; }
+#practice-root .pr-zoom-b:hover { background: rgba(255, 255, 255, .18) !important; }
+.pr-zoom-b:last-child { margin-left: auto; }
+.pr-zoom-pct { min-width: 46px; text-align: center; font: 13px var(--font-mono, monospace); }
+.pr-zoom-tip { font-size: 12px; color: rgba(255, 255, 255, .6); }
+.pr-zoom-sc { flex: 1 1 auto; overflow: auto; padding: 12px; touch-action: pan-x pan-y; overscroll-behavior: contain; cursor: grab; }
+.pr-zoom-sc.drag { cursor: grabbing; }
+.pr-zoom-node { display: block; max-width: none; height: auto; margin: 0 auto; background: #fff; border-radius: 6px; user-select: none; -webkit-user-select: none; }
+.pr-zoom-node img, img.pr-zoom-node { cursor: inherit; }
+.pr-zoom-node .pr-crop { max-width: none; }
+@media (max-width: 640px) { .pr-zoom-tip { display: none; } }
+
+/* 🔍 크게 보기: 목차를 접고 본문 폭 제한을 풀어 문항 그림을 칸 가득(작은 그림도 키워서) 보인다 */
+body.pr-big-page .layout { grid-template-columns: minmax(0, 1fr); }
+body.pr-big-page .layout > aside { display: none; }
+body.pr-big-page main.wide { max-width: none; padding-left: 24px; padding-right: 24px; }
+.pr-big .pr-img { width: 100%; }
+.pr-big .pr-paper { padding: 6px; }
+.pr-big .pr-strip { max-width: none; padding: 6px; }
+.pr-big .pr-crop { max-width: none; }
+@media (max-width: 900px) {
+  body.pr-big-page main.wide { padding-left: 8px; padding-right: 8px; }
+  .pr-big .pr-card { padding: 10px 6px 12px; }
+  .pr-big .pr-paper, .pr-big .pr-strip { padding: 2px; }
+}

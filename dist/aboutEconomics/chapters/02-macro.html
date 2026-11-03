@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2. 거시경제학 — aboutEconomics</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">📊 표지</a></li><li><a href="01-micro.html">1. 미시경제학</a></li><li><a href="02-macro.html">2. 거시경제학</a></li><li><a href="03-finance.html">3. 금융과 투자</a></li><li><a href="04-trade.html">4. 국제무역</a></li><li><a href="05-behavioral.html">5. 행동경제학</a></li><li><a href="06-development.html">6. 경제발전</a></li><li><a href="07-labor.html">7. 노동경제학</a></li><li><a href="08-public-finance.html">8. 재정학</a></li><li><a href="09-crypto-fintech.html">9. 크립토/핀테크</a></li></ol></aside>
+<main><header class="paper-header"><h1><em>거시경제학</em></h1><p class="authors">Chapter 2 — GDP, Inflation & Monetary Policy</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 호황·후퇴·침체·회복으로 순환하는 경기 사이클과 중앙은행의 금리 조절</span>
+<h2>거시경제학 개요</h2><p>GDP, Inflation & Monetary Policy의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>GDP, 물가상승률(인플레이션), 실업률 등 거시경제 지표와 중앙은행의 통화정책·정부의 재정정책 상호작용을 다룹니다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한마디로!</h3>
+  <p>거시경제학은 나라 전체를 한눈에 보는 "경제 계기판" 읽는 법이에요. 🚗</p>
+  <h3>🤔 왜 중요할까?</h3>
+  <p>작년이랑 똑같이 장을 봤는데 영수증 금액이 더 커졌다면? 그게 바로 물가 상승(인플레이션)이에요. 📈 "청년 취업이 힘들대"는 실업률 이야기, "한국은행이 금리 올린대"는 통화정책 이야기고요. 이런 뉴스가 내 용돈, 우리 집 대출, 부모님 월급이랑 다 연결돼 있답니다!</p>
+  <div class="info-card">
+    <h4>🌱 이 낱말만 알면 끝!</h4>
+    <ul>
+      <li><strong>GDP:</strong> 나라가 1년간 만든 모든 것의 값어치 🏭</li>
+      <li><strong>인플레이션:</strong> 물가가 계속 오르는 것 🎈</li>
+      <li><strong>실업률:</strong> 일하고 싶은데 일자리가 없는 사람 비율 😢</li>
+      <li><strong>기준금리:</strong> 중앙은행이 정하는 "돈의 값" 🏦</li>
+      <li><strong>경기순환:</strong> 잘나갈 때(호황)와 힘들 때(불황)의 반복 🔁</li>
+    </ul>
+  </div>
+  <h3>📖 자동차로 생각해봐요</h3>
+  <p>나라 경제는 커다란 자동차 같아요. 🚙 GDP는 속도계, 물가는 연료가 얼마나 타는지, 실업률은 엔진 힘을 보여줘요. 차가 너무 빨리 달리면(과열) 위험하고, 너무 느리면(침체) 목적지에 못 가죠. 그래서 중앙은행이 액셀과 브레이크를 번갈아 밟듯 금리를 조절해요! 코로나 때 정부가 재난지원금을 푼 건 멈춰가는 차에 연료를 부은 거고, 2022년부터 금리를 올린 건 뜨거워진 엔진을 식히는 브레이크였답니다. 🛑</p>
+  <div class="study-tip"><strong>💡 이렇게 해봐요:</strong> 뉴스에서 "물가", "금리", "GDP"가 나오면 귀를 쫑긋! 📻 매달 나오는 물가 소식만 챙겨 봐도 경제 흐름이 보여요.</div>
+  <h3>✨ 한눈에 정리!</h3>
+  <ul>
+    <li>거시경제학은 나라 전체의 경제를 봐요. 🌏</li>
+    <li>GDP·물가·실업률이 3대 계기판이에요. 📊</li>
+    <li>중앙은행은 금리로, 정부는 예산으로 운전해요. 🚗</li>
+    <li>경기는 좋았다 나빴다를 반복해요. 🔁</li>
+    <li>이 흐름이 내 지갑에 바로 영향을 줘요! 💸</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>거시경제학은 케인즈학파와 통화주의(시카고학파)의 두 축으로 발전해 왔습니다. 케인즈는 1930년대 대공황을 분석하며 유효수요 부족이 불황의 원인이라 주장하고, 정부의 적극적 재정지출을 처방했습니다. 반면 프리드먼은 인플레이션이 결국 통화량의 함수라며 통화공급의 안정적 관리를 강조했습니다. 현대 거시는 새케인즈학파와 실물경기변동(RBC) 모형이 결합된 동태확률일반균형(DSGE) 모형으로 발전했고, 중앙은행들은 테일러 준칙에 따라 인플레이션 갭과 산출 갭을 보며 기준금리를 조정합니다. 단기에는 명목임금·가격 경직성으로 통화정책이 실물에 영향을 주지만, 장기에는 화폐중립성이 성립한다는 합의가 형성되어 있습니다.</p>
+  <h3>핵심 모델/공식</h3>
+  <div class="formula">GDP = C + I + G + (X − M)<br>피셔방정식: i = r + π^e<br>오쿤의 법칙: ΔU ≈ −0.5(g − g*)<br>테일러 준칙: i = r* + π + 0.5(π − π*) + 0.5(y − y*)</div>
+  <h3>대표 사례</h3>
+  <div class="info-card">
+    <h4>📊 사례 1 — 2008 금융위기와 양적완화</h4>
+    <p>리먼브라더스 파산 후 미 연준은 기준금리를 0%까지 내리고 4조 달러 규모의 채권을 매입(QE1·2·3)해 디플레이션을 방어했습니다. 비전통적 통화정책의 대표 사례입니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>📊 사례 2 — 2022 인플레이션 쇼크</h4>
+    <p>코로나 유동성과 우크라이나 전쟁 공급충격이 결합해 미국 CPI가 9.1%까지 치솟자 연준은 11회에 걸쳐 525bp의 급격한 금리인상을 단행했습니다. 이로 인해 한국 기준금리도 3.5%까지 올라갔습니다.</p>
+  </div>
+  <h3>현실 응용</h3>
+  <p>금리 인상은 변동금리 주택담보대출 보유 가구의 가처분소득을 직접 감소시키고, 환율 상승은 수입물가를 통해 외식·에너지 가격을 끌어올립니다. 정부의 추경(추가경정예산)은 단기 경기부양 수단이지만 국가채무비율을 높여 미래 세대의 부담이 됩니다. 투자 측면에서는 명목금리에서 기대인플레이션을 뺀 실질금리가 자산 배분의 핵심 변수로 작용합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 명목 GDP 증가를 그대로 성장으로 해석하기. 인플레이션을 제거한 실질 GDP가 진짜 성장 지표입니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>현대 거시경제학의 표준 분석틀은 미시적 기초를 갖춘 동태확률일반균형(DSGE) 모델입니다. 대표적 모형으로는 Smets-Wouters 모델과 Christiano-Eichenbaum-Evans 모델이 있으며, 임금·가격의 칼보 경직성(Calvo Pricing), 합리적 기대, 효용극대화 가계, 경쟁적 기업, 통화·재정정책 규칙을 통합합니다. 2008년 위기 이후 금융 부문을 명시적으로 도입한 BGG(Bernanke-Gertler-Gilchrist) 형태의 금융가속도 모형이 표준이 되었으며, 영점하한(ZLB)에서의 비전통적 정책 효과를 분석하는 신케인지언 ZLB 모형이 발전했습니다. 한편 이질적 가계 거시(HANK, Heterogeneous Agent New Keynesian)는 부의 분포가 정책효과를 어떻게 변화시키는지 미시-거시 연결을 통해 분석합니다. 또한 재정의 지속가능성(Blanchard의 r−g 논의), 중앙은행 독립성, 인플레이션 목표제, 명목 GDP 목표제 등 정책 프레임워크 논쟁이 활발합니다.</p>
+  <h3>수리 모델</h3>
+  <div class="formula">신케인지언 IS: y_t = E_t y_{t+1} − (1/σ)(i_t − E_t π_{t+1} − r*)<br>신케인지언 PC: π_t = β E_t π_{t+1} + κ y_t<br>오일러방정식: u'(c_t) = β(1+r) E_t u'(c_{t+1})<br>정부 예산제약: B_{t+1} = (1+r)B_t + G_t − T_t</div>
+  <h3>최신 연구</h3>
+  <p>HANK 모델 기반의 통화정책 전달경로 재해석(Kaplan-Moll-Violante)은 부유한 자산보유 가계와 유동성 제약 가계의 반응이 어떻게 다른지를 보입니다. 기후거시(Climate Macro)는 탄소가격과 전환위험을 DSGE에 내재화하며, 디지털 화폐(CBDC) 도입이 통화정책 전달경로와 금융중개에 미치는 영향이 활발히 연구되고 있습니다. 또한 인플레이션 동학에서 임금-물가 나선(Wage-Price Spiral) 부재 논쟁(Bernanke-Blanchard 2024)은 코로나 이후 인플레이션의 공급충격적 성격을 강조합니다.</p>
+  <h3>관련 분야</h3>
+  <ul>
+    <li>국제거시 — 환율·자본흐름·통화동맹</li>
+    <li>재정학 — 정부지출과 조세의 거시효과</li>
+    <li>금융거시 — 금융마찰과 시스템 리스크</li>
+  </ul>
+  <h3>추가 자료</h3>
+  <ul>
+    <li>Galí, <em>Monetary Policy, Inflation, and the Business Cycle</em></li>
+    <li>Woodford, <em>Interest and Prices</em></li>
+    <li>한국은행 BOK 경제연구·BIS Working Papers</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 한국의 2022~2024년 인플레이션 사이클을 신케인지언 PC 곡선으로 추정하고 통화정책 반응함수를 평가해 보세요.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 거시 지표 골라내기</h2>
+<p>넷 중 성격이 다른 하나를 골라 거시경제 개념을 정리해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#0891b2","prompt":"넷 중 어울리지 않는 하나를 고르세요","rounds":[{"items":["GDP","인플레이션","실업률","비교우위"],"odd":3,"why":"비교우위는 국제무역 개념이고 나머지는 거시 지표입니다."},{"items":["기준금리","양적완화","통화정책","분산투자"],"odd":3,"why":"분산투자는 투자 전략이고 나머지는 통화정책 수단입니다."},{"items":["호황","후퇴","침체","듀레이션"],"odd":3,"why":"듀레이션은 채권 개념이고 나머지는 경기순환 국면입니다."}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0891b2","questions":[{"q":"GDP가 측정하는 것은?","choices":["국가 총생산","물가 상승률","실업자 수","정책금리"],"answer":0},{"q":"물가가 지속적으로 오르는 현상은?","choices":["디플레이션","경기순환","인플레이션","실업"],"answer":2},{"q":"중앙은행이 정하는 정책금리는?","choices":["환율","실질금리","시장금리","기준금리"],"answer":3},{"q":"인플레이션은 통화량의 함수라고 한 학자는?","choices":["케인즈","프리드먼","솔로우","리카도"],"answer":1},{"q":"2022년 미국 CPI 최고 상승률은?","choices":["3.5%","5.1%","9.1%","12.0%"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,2,10);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const wavePts=[];for(let i=0;i<=60;i++){const x=-5+i*(10/60);wavePts.push(new THREE.Vector3(x,0,0));}
+  const wave=new THREE.Line(new THREE.BufferGeometry().setFromPoints(wavePts),new THREE.LineBasicMaterial({color:0x60a5fa}));s.add(wave);s.userData.wave=wave;
+  const trend=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-5,-1.6,0),new THREE.Vector3(5,1.6,0)]),new THREE.LineBasicMaterial({color:0x94a3b8}));s.add(trend);
+  const cb=new THREE.Mesh(new THREE.IcosahedronGeometry(0.7,0),new THREE.MeshBasicMaterial({color:0xfbbf24,wireframe:true}));cb.position.set(0,2.6,0);s.add(cb);s.userData.cb=cb;
+  const ringG=new THREE.Mesh(new THREE.TorusGeometry(1.1,0.04,8,40),new THREE.MeshBasicMaterial({color:0xf59e0b}));ringG.position.copy(cb.position);s.add(ringG);s.userData.ring=ringG;
+  const cbL=lbl('중앙은행 · 기준금리','#b45309');cbL.position.set(0,3.7,0);s.add(cbL);
+  const gdpL=lbl('실질 GDP 추세','#64748b');gdpL.position.set(3.9,2.0,0);s.add(gdpL);
+  const cycL=lbl('경기순환','#3b82f6');cycL.position.set(-4.2,1.4,0);s.add(cycL);
+  const boomL=lbl('호황','#16a34a');boomL.position.set(-1.4,2.0,0);s.add(boomL);
+  const bustL=lbl('침체','#dc2626');bustL.position.set(1.6,-1.5,0);s.add(bustL);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 호황·후퇴·침체·회복으로 순환하는 경기 사이클과 중앙은행의 금리 조절.','GDP = C + I + G + (X − M) — 한 나라가 1년간 생산한 모든 재화·서비스의 가치.','인플레이션이 치솟으면 중앙은행은 기준금리를 올려 물가를 잡습니다.','오쿤의 법칙·필립스 곡선 — 성장·실업·물가는 서로 맞물려 움직입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const w=s.userData.wave;const arr=w.geometry.attributes.position;for(let i=0;i<arr.count;i++){const x=arr.getX(i);arr.setY(i,x*0.32+1.4*Math.sin(x*1.1-T*1.4));}arr.needsUpdate=true;s.userData.cb.rotation.y+=0.02;s.userData.cb.rotation.x+=0.01;s.userData.ring.rotation.z+=0.03;s.rotation.y=0.25*Math.sin(T*0.3);r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

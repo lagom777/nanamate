@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8. 조절과 치료 — aboutSurprise</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🟠 표지</a></li>
+    <li><a href="01-definition.html">1. 정의와 본질</a></li>
+    <li><a href="02-evolution.html">2. 진화와 기능</a></li>
+    <li><a href="03-neural.html">3. 신경 메커니즘</a></li>
+    <li><a href="04-development.html">4. 발달과 학습</a></li>
+    <li><a href="05-culture.html">5. 문화와 표현</a></li>
+    <li><a href="06-daily.html">6. 일상에서 다루기</a></li>
+    <li><a href="07-clinical.html">7. 임상과 병리</a></li>
+    <li><a href="08-regulation.html">8. 조절과 치료</a></li>
+    <li><a href="09-future.html">9. 응용과 미래</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>조절과 치료</em></h1>
+  <p class="authors">Chapter 8 — Regulation &amp; Therapy</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 조절 — 감정의 온도를 되돌리는 피드백</span>
+
+<h2>조절과 치료 개요</h2>
+<p>놀람 회로의 조절은 양방향이다. 과도한 쪽은 점진 둔감화·안전 학습·노출 치료로 낮추고, 둔화된 쪽은 행동 활성화·새로움 처방·사이키델릭 보조 치료로 끌어올린다. 치료의 목표는 놀람을 없애는 것이 아니라 적절한 보정(calibration)을 회복하는 것이다.</p>
+
+<div class="info-card"><h4>핵심 개념</h4><p>노출 치료(exposure therapy)는 "공포의 학습된 연결을 다시 학습으로 풀어내는" 방식이다. 행동 활성화(behavioral activation)는 줄어든 도파민 회로를 작은 보상 활동으로 재시동한다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🔧 한 줄로 이해하기</h3><p>너무 큰 놀람은 천천히 "안전해"를 다시 가르치고, 사라진 놀람은 작은 활동으로 회로를 다시 켜. 이게 치료의 두 방향이야!</p>
+  <h3>🤔 왜 중요할까?</h3><p>놀람 회로는 다시 회복되는 회로야. 알맞은 도움을 받으면 PTSD도 우울도 많이 좋아져. 그런데 그냥 두면 점점 굳어버려. 그러니까 나나 가까운 사람의 놀람 상태가 평소랑 다르면, 빨리 알아채고 도움을 청하는 게 제일 중요해. 요즘은 마음 도와주는 곳이 많아졌으니, 도움받는 걸 부끄러워할 이유가 하나도 없어! 💪</p>
+  <div class="info-card"><h4>🌱 알아두면 좋은 말</h4><ul><li><strong>안전 신호</strong>: "위험 없어!"를 알려주는 주변 단서야.</li><li><strong>점진 노출</strong>: 약한 것부터 조금씩 익숙해지는 치료야.</li><li><strong>호흡 조절</strong>: 천천히 숨 쉬어 흥분을 빨리 가라앉히는 도구야.</li><li><strong>행동 활성화</strong>: 작은 즐거운 일로 회로를 다시 켜는 치료야.</li><li><strong>안전 학습</strong>: 무섭던 것이 안전과 연결되도록 다시 배우는 거야.</li></ul></div>
+  <h3>🪜 쉽게 풀어보기</h3><p>사고 뒤 지하철을 못 타게 된 사람이라면, 첫 주엔 역 입구까지만, 다음 주엔 플랫폼까지만, 그다음 주엔 딱 한 정거장만 타는 식으로 한 계단씩 올라가. 매번 "봐, 아무 일도 안 일어났지?" 하는 안전 경험이 쌓이면서 뇌의 경비원(편도체)이 새로 배워. 반대로 우울로 기운 빠진 사람은 작은 즐거움(산책·좋아하는 노래)을 미리 계획표에 넣고 "기분이 안 좋아도 일단 하기"를 해. 두 치료 모두 "기분 좋아지면 움직이자"가 아니라 "움직이면 기분이 따라온다"는 원리야! 🎈</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 무서운 일은 1단계부터 10단계로 쪼개서 가장 쉬운 1단계부터 시작해봐. 이게 모든 노출 치료의 첫 번째 비밀이야!</div>
+  <h3>📄 한 장 요약</h3><ul><li>치료 목표는 놀람 없애기가 아니라 알맞게 맞추기야.</li><li>너무 큰 놀람 → 노출·안전 학습으로 낮춰.</li><li>사라진 놀람 → 작은 활동으로 다시 켜.</li><li>행동이 먼저, 기분은 따라와(움직이면 기분 UP!).</li><li>천천히, 그리고 꾸준히가 가장 중요해.</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3><p>PTSD의 1차 권장 치료는 prolonged exposure(PE)와 cognitive processing therapy(CPT)다. PE는 외상 기억의 상상 노출(imaginal exposure)과 회피해온 상황의 실제 노출(in vivo exposure)을 결합한다. EMDR(eye movement desensitization and reprocessing)은 좌우 안구 운동을 노출에 결합한 변형 치료다. 신경적 기제는 모두 fear extinction — vmPFC가 편도체의 공포 반응을 새로운 안전 맥락 정보로 억제하는 학습이다. 우울증의 행동 활성화는 Lewinsohn의 1970년대 모델에서 출발해 Jacobson이 정교화했다. 핵심은 "기분이 좋아질 때까지 기다리지 말고, 작은 즐거움/숙달 활동을 먼저 스케줄링한다"이다. 약물치료 측면에서 SSRI는 두 질환 모두 1차 약물이며, prazosin은 PTSD의 야간 악몽에 특화돼 있다. ketamine과 esketamine은 빠른 항우울 효과와 함께 학습 가소성 증대를 통해 새로운 안전 학습을 촉진한다는 가설이 있다.</p>
+  <h3>핵심 메커니즘</h3><div class="info-card"><h4>📐 노출 치료의 학습 원리</h4><p>원학습: 자극 X → 위협 → 공포. 노출: 자극 X → (반복) → 위협 없음 → 안전 학습이 원학습을 억제. 두 학습이 병존하므로 맥락이 바뀌면 재발 가능. 따라서 다맥락 노출(multi-context exposure)이 핵심.</p></div>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>📐 예제 1</h4><p>운전 사고 후 PTSD를 겪는 환자에게 가상현실(VR) 노출 치료가 활용된다. 안전한 환경에서 단계적으로 운전 장면을 재경험하며 startle reactivity가 회기마다 측정 가능하게 감소한다.</p></div>
+  <div class="info-card"><h4>📐 예제 2</h4><p>우울증 환자에게 "오늘 30분 햇볕 산책, 친구 1명에게 연락, 좋아하던 음악 1곡 듣기" 같은 행동 활성화 메뉴를 미리 짜두면 4-6주 후 BDI 점수가 유의하게 감소한다.</p></div>
+  <h3>응용 사례</h3><p>한국에서 PTSD 치료 보급은 천안함·세월호·이태원 이후 빠르게 확대됐다. 보훈처와 국방부는 군 트라우마 PTSD 전문 치료 프로그램을 운영하며, 서울대·삼성의료원·서울아산병원에 PTSD 클리닉이 있다. 디지털 치료제(digital therapeutics)로 한국 식약처에서 승인된 우울·불면 앱들도 행동 활성화·이완 훈련 모듈을 핵심으로 한다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 노출 치료를 자의로 너무 강하게 시작하면 재외상(retraumatization)이 발생할 수 있다. 반드시 전문가 지도 하 점진적 단계가 필요하다.</div>
+
+<h3>전문가 레벨 이해</h3><p>현대 노출 치료의 이론적 기반은 Bouton의 fear extinction이 erasure가 아닌 새로운 안전 학습이라는 발견이다. 따라서 spontaneous recovery, renewal, reinstatement 같은 재발 기전이 발생한다. 이를 보완하는 inhibitory learning model(Craske)은 expectancy violation의 극대화, deepened extinction, multi-context exposure, reinforced extinction을 권장한다. 정밀 정신의학에서 prediction error 처리의 EEG 바이오마커(MMN, P300)와 fMRI VTA 반응성은 항우울 치료 반응의 예측 인자로 연구된다. NMDA 매개 학습 가소성 가설은 ketamine의 빠른 항우울 효과를 설명한다 — 단발 ketamine 투여 후 mTOR 경로 활성화로 시냅스 가소성이 증대돼, 이 짧은 가소성 창에서 새로운 인지·정서 학습이 가속화된다. Psilocybin-assisted therapy는 5HT2A 활성화를 통한 self-referential network의 일시적 해체와 함께 awe-like 경험을 유도해, 치료 저항성 우울에 효과를 보인다. Active inference 프레임에서는 이러한 약물 효과를 "high-precision priors의 일시적 약화로 새로운 학습 창이 열리는 것"으로 통합 설명한다.</p>
+  <h3>최신 연구·동향</h3><p>2024년 FDA는 esketamine을 치료 저항성 우울 단독 치료로 승인했고, psilocybin은 breakthrough therapy designation 단계다. 디지털 치료제 분야에서는 VR 노출과 biofeedback 결합 치료가 PTSD 1차 보조 치료로 확립되어 가고 있다. 한국 정밀 정신의학 분야는 KAIST·서울대 정신의학 연구실에서 EEG·HRV 기반 치료 반응 예측 모델을 개발 중이다.</p>
+  <h3>관련 분야</h3><ul><li>인지행동치료(Cognitive Behavioral Therapy)</li><li>정신약리학(Psychopharmacology)</li><li>디지털 치료제(Digital Therapeutics)</li></ul>
+  <h3>추가 학습 자료</h3><ul><li>"Cognitive Therapy of Depression" — Aaron Beck</li><li>"Prolonged Exposure Therapy for PTSD" — Edna Foa</li><li>"How to Change Your Mind" — Michael Pollan</li></ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 본인의 과도 놀람(또는 회피 행동) 1개를 골라 1-10단계 노출 위계를 만들고, 4주간 주 2회씩 점진 둔감화 실험을 기록해보자.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 점진 노출 단계 순서</h2>
+<p>지하철 공포 점진 둔감화의 단계를 약한 것부터 배열하세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#fbbf24","prompt":"점진 노출 치료의 순서(약→강)는?","steps":["역 입구만 다녀오기","플랫폼까지 내려가기","한 정거장만 타기","여러 정거장 이동","안전 학습이 누적되어 회복"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#fbbf24","questions":[{"q":"놀람 치료의 목표는?","choices":["적절한 보정 회복","놀람 완전 제거","감정 차단","기억 삭제"],"answer":0},{"q":"약한 자극부터 익숙해지기?","choices":["단식","점진 노출","수면","약물 중단"],"answer":1},{"q":"행동 활성화의 원리는?","choices":["행동이 기분을 이끈다","기분이 먼저","약이 우선","휴식이 우선"],"answer":0},{"q":"PTSD의 1차 치료는?","choices":["가변 보상","까꿍놀이","지속 노출(PE)","습관화"],"answer":2},{"q":"노출 치료의 신경 기제는?","choices":["안전 학습","기억 삭제","신경 제거","감각 차단"],"answer":0}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const COL=0xfbbf24;const tube=new THREE.Mesh(new THREE.CylinderGeometry(0.25,0.25,3.4,16,1,true),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.4}));s.add(tube);const bulb=new THREE.Mesh(new THREE.SphereGeometry(0.5,18,18),new THREE.MeshBasicMaterial({color:COL}));bulb.position.y=-1.9;s.add(bulb);const lvl=new THREE.Mesh(new THREE.SphereGeometry(0.3,16,16),new THREE.MeshBasicMaterial({color:0xffe08a}));s.add(lvl);s.userData.lvl=lvl;const loop=new THREE.Mesh(new THREE.TorusGeometry(1.5,0.03,8,48),new THREE.MeshBasicMaterial({color:COL,transparent:true,opacity:0.3}));loop.position.x=2.2;s.add(loop);
+  [['점진 노출',-2.1,1.5],['안전 신호',-2.1,0.4],['호흡 조절',-2.1,-0.7],['행동 활성화',2.2,-1.1]].forEach(function(p){var l=lbl(p[0],'#39415a');l.position.set(p[1],p[2],0);s.add(l);});var Lf=lbl('피드백','#b45309');Lf.position.set(2.2,1.7,0);s.add(Lf);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 온도계와 피드백 고리는 놀람을 다시 가라앉히는 조절 과정입니다.','점진 노출: 약한 자극부터 단계적으로 마주하며 안전을 학습합니다.','안전 신호와 호흡 조절이 과각성의 온도를 내립니다.','행동 활성화는 무감동에서 다시 반응을 끌어올리는 방법입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.lvl.position.y=Math.sin(T*1.2)*1.2*Math.exp(-((T*0.2)%6)*0.0)+0.0;s.userData.lvl.position.y=Math.sin(T)*1.0;s.rotation.y+=0.001;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

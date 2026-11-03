@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>여러 가지 적분법 — 수능 수학</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<link rel="stylesheet" href="../../shared/practice-simple.css">
+<script defer src="../../shared/practice-simple.js"></script>
+<link rel="stylesheet" href="../../shared/sections.css">
+<script defer src="../../shared/sections.js"></script>
+<link rel="stylesheet" href="../../shared/study-style.css">
+<script defer src="../../shared/study-style.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><a href="../../my-style.html" class="hub-back-link my-style-link">🙋 내 성향</a><h3>수학 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li class="grp">수학Ⅰ</li>
+<li><a href="01-exp-log.html">1. 지수와 로그</a></li>
+<li><a href="02-trig.html">2. 삼각함수</a></li>
+<li><a href="03-sequence.html">3. 수열</a></li>
+<li class="grp">수학Ⅱ</li>
+<li><a href="04-limit.html">4. 함수의 극한과 연속</a></li>
+<li><a href="05-diff.html">5. 미분</a></li>
+<li><a href="06-integral.html">6. 적분</a></li>
+<li class="grp">미적분</li>
+<li><a href="07-seq-limit.html">7. 수열의 극한</a></li>
+<li><a href="08-diff-methods.html">8. 여러 가지 미분법</a></li>
+<li><a href="09-int-methods.html" style="color:var(--accent);font-weight:600;">9. 여러 가지 적분법</a></li>
+<li class="grp">전략</li>
+<li><a href="10-strategy.html">10. 수능 수학 실전 전략</a></li>
+<li><a href="../summary.html">📌 한눈에 요약</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+<li><a href="../study-style.html">🧭 논리형 공부법</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>여러 가지 적분법</h1><p class="authors">Part 9 · 미적분</p><p class="affiliation">치환적분·부분적분·정적분과 급수의 관계·넓이·부피·속도와 거리</p></header>
+<div class="stat-row"><div class="stat"><b>1.9</b><span>회당 문항 수</span></div><div class="stat"><b>6.6점</b><span>회당 배점</span></div><div class="stat"><b>0~4</b><span>회차별 범위</span></div><div class="stat"><b>33</b><span>최근 17회 누적</span></div></div>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>적분법 단원의 수능 문항은 크게 네 갈래입니다. <strong>치환·부분적분으로 정적분 값을 구하기</strong>, <strong>정적분으로 정의된 함수를 미분하기</strong>, <strong>급수의 합을 정적분으로 바꾸기</strong>, <strong>넓이·부피·이동 거리를 적분으로 읽기</strong>입니다. 평면 위를 움직인 거리와 곡선의 길이도 속력을 적분하는 같은 원리로 다루고, 회전체의 부피는 2015 개정 미적분에서 다루지 않습니다. 정적분은 “부호가 있는 넓이”, 실제 넓이와 이동 거리는 절댓값을 적분한 값이라는 구분이 채점 포인트를 가릅니다.</p>
+<div class="nms-stepband"><b>① 틀 잡기</b><span>5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터</span></div>
+<section class="nms" data-nms>
+<div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
+<div class="nms-logic"><div class="nms-cols"><div class="nms-col-a"><p class="nms-one"><b>하나만 고른다면</b><strong>적분법은 미분법을 거꾸로 읽은 것이다</strong> — 치환적분은 합성함수의 미분을, 부분적분은 곱의 미분을 적분한 식이다.</p>
+<div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
+<p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
+<ol class="nms-chain"><li><span class="nms-step">적분은 미분의 거꾸로 → <b>도함수 표를 거꾸로 읽은 것</b>이 기본 적분 표(∫(1/x) dx = ln|x| + C, ∫sin x dx = −cos x + C)</span></li><li><span class="nms-step">합성함수의 미분을 거꾸로 읽으면 <b>치환적분</b> → 속함수의 도함수가 옆에 있으면 u = g(x)로 바꾸고, 정적분이면 구간도 g(a)부터 g(b)까지로 바꾼다</span></li><li><span class="nms-step">곱의 미분 (fg)′ = f′g + fg′을 적분하면 <b>∫fg′ dx = fg − ∫f′g dx</b>(부분적분) → 미분하면 간단해지는 쪽(로그, 다항식)을 f로 고른다</span></li><li><span class="nms-step">구간을 n등분한 직사각형 넓이의 합이 n → ∞에서 정적분 → <b>lim ∑ f(k/n) · (1/n) = ∫<sub>0</sub><sup>1</sup> f(x) dx</b></span></li><li><span class="nms-step">넓이는 |f − g|, 입체의 부피는 단면의 넓이 S(x), 이동 거리는 속력(평면에서는 √(x′² + y′²))을 적분 → 수능은 <b>무엇을 어느 구간에서 적분하는지</b>를 묻는다</span></li></ol></div>
+<details class="nms-full"><summary><span class="nms-full-t">📖 논리형 전체 해설 — 6절 · 약 7분</span><span class="nms-full-toc">기본 적분표는 미분표를 뒤집은 것 · 치환적분 · 부분적분 · 정적분과 급수의 합 · 넓이와 부피 · 속도·대칭·정적분으로 정의된 함수</span></summary>
+<div class="nms-full-body"><div class="nms-full-sec"><p class="nms-full-h">기본 적분표는 미분표를 뒤집은 것</p><p>부정적분은 미분의 역이므로 적분표는 앞 장의 미분표를 거꾸로 읽은 것입니다. (e<sup>x</sup>)′ = e<sup>x</sup>에서 ∫e<sup>x</sup> dx = e<sup>x</sup> + C, (a<sup>x</sup>)′ = a<sup>x</sup> ln a에서 ∫a<sup>x</sup> dx = a<sup>x</sup>/ln a + C, (ln|x|)′ = 1/x에서 <b>∫(1/x) dx = ln|x| + C</b>입니다. 삼각함수는 (cos x)′ = −sin x라 ∫sin x dx = −cos x + C처럼 부호에 주의하고, ∫sec²x dx = tan x + C, ∫csc²x dx = −cot x + C도 같은 방식입니다.</p><p>sin²x처럼 원시함수가 바로 보이지 않는 식은 배각공식으로 <b>차수를 낮춘 뒤</b> 적분합니다. sin²x = (1 − cos 2x)/2이므로 ∫sin²x dx = x/2 − (1/4)sin 2x + C이고, 미분하면 1/2 − (1/2)cos 2x = sin²x로 돌아옵니다. 수능의 적분 문항은 치환·부분적분으로 값 구하기, 정적분으로 정의된 함수의 미분, 급수를 정적분으로 바꾸기, 넓이·부피·거리 읽기의 네 갈래이고, 모두 이 표 위에서 움직입니다.</p></div>
+<div class="nms-full-sec"><p class="nms-full-h">치환적분 — 합성함수 미분을 거꾸로</p><p>F′ = f일 때 합성함수의 미분 {F(g(x))}′ = f(g(x))·g′(x)를 거꾸로 읽으면 ∫f(g(x))g′(x) dx = F(g(x)) + C입니다. 곧 u = g(x), du = g′(x) dx로 바꾸면 ∫f(u) du가 되므로, <b>속함수의 도함수가 옆에 곱해져 있는지</b>가 치환의 신호입니다. 2x와 x², cos x와 sin x, 1/x과 ln x가 대표적인 짝입니다.</p><p>정적분에서는 변수를 바꿀 때 구간도 함께 바꿉니다. ∫<sub>0</sub><sup>1</sup> 2xe<sup>x²</sup> dx는 u = x²으로 두면 구간도 0~1이 되어 ∫<sub>0</sub><sup>1</sup> e<sup>u</sup> du = e − 1이고, ∫tan x dx는 u = cos x로 −∫du/u = −ln|cos x| + C입니다. <b>u로 바꾸고 구간은 x의 값으로 남겨 두는 것</b>이 가장 흔한 실수이니, 구간을 바꾸거나 원래 변수로 돌아온 뒤 숫자를 넣습니다.</p><p>같은 적분을 두 길로 계산해 보면 규칙이 분명해집니다. ∫<sub>0</sub><sup>π/2</sup> sin x cos x dx는 u = sin x로 두면 구간이 0~1로 바뀌어 ∫<sub>0</sub><sup>1</sup> u du = 1/2이고, 원래 변수로 돌아가 (1/2)sin²x에 π/2와 0을 넣어도 <b>같은 1/2</b>이 나옵니다. 부호는 구간의 순서가 맡으므로, 치환 뒤 아래끝이 위끝보다 커져도 그대로 두고 계산합니다.</p></div>
+<div class="nms-full-sec"><p class="nms-full-h">부분적분 — 곱의 미분을 거꾸로</p><p>(fg)′ = f′g + fg′의 양변을 적분하면 fg = ∫f′g dx + ∫fg′ dx이므로 <b>∫fg′ dx = fg − ∫f′g dx</b>입니다. 한쪽은 미분하고 한쪽은 적분해서 남은 ∫f′g가 처음보다 쉬워지게 고르는 것이 요령입니다. 그래서 다항식 × 지수·삼각함수이면 다항식을 f로 두어 차수를 낮추고, 로그가 있으면 미분하면 1/x로 단순해지는 로그를 f로 둡니다.</p><p>∫<sub>0</sub><sup>1</sup> xe<sup>x</sup> dx는 f = x, g′ = e<sup>x</sup>로 [xe<sup>x</sup>]<sub>0</sub><sup>1</sup> − ∫<sub>0</sub><sup>1</sup> e<sup>x</sup> dx = e − (e − 1) = 1입니다. 로그는 옆에 1이 숨어 있다고 보고 ∫ln x·1 dx = x ln x − ∫x·(1/x) dx = <b>x ln x − x + C</b>로 구하며, ∫<sub>1</sub><sup>e</sup> ln x dx = 1입니다. e<sup>x</sup>sin x처럼 두 번 부분적분하면 원래 적분 I가 되돌아오는 경우는 I = e<sup>x</sup>sin x − e<sup>x</sup>cos x − I를 풀어 I = e<sup>x</sup>(sin x − cos x)/2 + C로 정리합니다.</p></div>
+<div class="nms-full-sec"><p class="nms-full-h">정적분과 급수의 합 — 직사각형을 쌓는다</p><p>[a, b]를 n등분해 너비 Δx = (b − a)/n인 직사각형을 세우고 높이를 오른쪽 끝 x<sub>k</sub> = a + kΔx의 함숫값으로 잡아 더하면, n → ∞에서 <b>lim ∑f(x<sub>k</sub>)Δx = ∫<sub>a</sub><sup>b</sup> f(x) dx</b>입니다. 가장 흔한 꼴은 [0, 1]의 lim ∑<sub>k=1</sub><sup>n</sup> f(k/n)·(1/n) = ∫<sub>0</sub><sup>1</sup> f(x) dx이고, 왼쪽 끝을 써도 항 하나의 차이가 0으로 사라져 같은 값입니다.</p><p>합을 정적분으로 바꿀 때는 <b>너비 1/n을 먼저 떼어 내고</b> 남은 부분을 f(k/n)으로 읽습니다. ∑k²/n³ = ∑(k/n)²·(1/n) → ∫<sub>0</sub><sup>1</sup> x² dx = 1/3이고, √(n + k)/n<sup>3/2</sup> = (1/n)√(1 + k/n)이라 그 합의 극한은 ∫<sub>0</sub><sup>1</sup> √(1 + x) dx = (2/3)(2√2 − 1)입니다. 1/n을 빼먹으면 정적분의 약 n배를 구하게 되고, ∫1/(1 + x²) dx처럼 역삼각함수가 필요한 꼴은 범위 밖이라 만들지 않습니다.</p></div>
+<div class="nms-full-sec"><p class="nms-full-h">넓이와 부피 — 단면을 적분한다</p><p>정적분은 x축 아래를 음수로 세는 <b>부호 있는 넓이</b>라서 실제 넓이는 ∫|f(x)| dx, 두 곡선 사이는 ∫|f(x) − g(x)| dx입니다. y = sin x를 0부터 2π까지 그냥 적분하면 0이지만 넓이는 2 + 2 = 4이고, y = √x와 y = x²은 0~1에서 √x가 위라 넓이가 2/3 − 1/3 = 1/3입니다.</p><p>입체를 x축에 수직으로 얇게 썰면 두께 Δx인 조각의 부피는 단면의 넓이 S(x)에 Δx를 곱한 것이므로, 이를 더한 극한이 <b>V = ∫<sub>a</sub><sup>b</sup> S(x) dx</b>입니다. 밑면이 0 ≤ x ≤ 1에서 y = 0과 y = √x 사이이고 단면이 한 변 √x인 정사각형이면 S(x) = x라 V = 1/2이며, 단면이 원이 아니므로 π를 붙이지 않습니다. 정삼각형 단면이면 (√3/4)s², 지름이 s인 반원 단면이면 πs²/8처럼 단면의 넓이 공식만 바뀝니다.</p><p>단면이 반지름 f(x)인 원이면 S = π{f(x)}²이고, 곡선을 x축 둘레로 돌린 회전체의 부피 π∫{f(x)}² dx도 이 경우일 뿐입니다. 2015 개정 교육과정은 회전체의 부피를 따로 다루지 않으므로, 수능 대비로는 <b>단면의 넓이를 구해 적분한다</b>는 원리 하나면 충분합니다.</p></div>
+<div class="nms-full-sec"><p class="nms-full-h">속도·대칭·정적분으로 정의된 함수</p><p>속도의 적분은 변위, 속력의 적분은 이동 거리입니다. v(t) = cos t, 0 ≤ t ≤ π이면 변위는 sin π − sin 0 = 0이지만 cos t가 π/2에서 음수로 바뀌므로 <b>거리는 1 + 1 = 2</b>이고, x(t) = sin t로 1까지 갔다 돌아온 것과 맞습니다.</p><p>평면 위를 움직인 거리도 속력을 적분하므로 <b>∫√((dx/dt)² + (dy/dt)²) dt</b>이고, 곡선 y = f(x)의 길이는 x = t, y = f(t)로 보면 ∫√(1 + {f′(x)}²) dx입니다. x = e<sup>t</sup> cos t, y = e<sup>t</sup> sin t의 속력은 √2 e<sup>t</sup>라 t = 0부터 1까지 움직인 거리가 √2(e − 1)이고, y = (2/3)x<sup>3/2</sup>은 1 + (y′)² = 1 + x라 x = 0부터 3까지의 길이가 14/3입니다.</p><p>대칭 구간에서는 우함수·기함수를 먼저 갈라 ∫<sub>−π/2</sub><sup>π/2</sup> x cos x dx = 0처럼 처리하고, [0, a]에서는 <b>u = a − x 치환</b>으로 얻은 ∫<sub>0</sub><sup>a</sup> f(x) dx = ∫<sub>0</sub><sup>a</sup> f(a − x) dx를 원래 식과 더합니다. ∫<sub>0</sub><sup>π/2</sup> sin<sup>n</sup>x/(sin<sup>n</sup>x + cos<sup>n</sup>x) dx는 두 피적분함수의 합이 1이라 2I = π/2, I = π/4입니다. 다만 대칭 지름길은 구간 안에서 연속일 때만 쓰므로, x = 0에서 정의되지 않는 1/x를 −1부터 1까지 적분해 0이라고 쓰면 틀립니다.</p><p>위끝이 x인 정적분을 미분하면 피적분함수가 돌아오고, 위끝이 x²이면 <b>속미분 2x를 곱해</b> F(x) = ∫<sub>0</sub><sup>x²</sup> e<sup>−t</sup> dt의 F′(1) = 2/e입니다. 이것은 값 F(1) = 1 − 1/e와 다른 질문이고, 피적분함수에 위끝과 같은 x가 있으면 ∫<sub>0</sub><sup>x</sup> (x − t)f(t) dt = x∫<sub>0</sub><sup>x</sup> f(t) dt − ∫<sub>0</sub><sup>x</sup> tf(t) dt처럼 밖으로 뺀 뒤 곱의 미분을 쓰면, xf(x)끼리 지워져 도함수가 ∫<sub>0</sub><sup>x</sup> f(t) dt로 남습니다.</p></div></div></details>
+<div class="nms-col-b"><p class="nms-kv"><b>외울 것은 이것뿐</b>기본 적분 표(도함수 표를 거꾸로), 치환 u = g(x)와 구간 바꾸기, 부분적분 ∫fg′ dx = fg − ∫f′g dx, lim ∑ f(k/n) · (1/n) = ∫<sub>0</sub><sup>1</sup> f(x) dx</p>
+<p class="nms-kv"><b>나머지는 유도</b>∫tan x dx, ∫ln x dx, ∫sin<sup>2</sup>x dx(배각으로), 되돌아오는 부분적분(e<sup>x</sup> sin x), 구간 [a, b]의 구분구적, 넓이·단면 부피·이동 거리, 평면 위 움직인 거리와 곡선의 길이, 정적분으로 정의된 함수의 미분</p>
+<p class="nms-trap"><b>논리형 함정</b>치환이 보이면 변수만 바꾸고 <b>정적분의 구간을 그대로 두는</b> 실수를 합니다. u = sin x로 치환했으면 구간도 0부터 π/2까지에서 0부터 1까지로 바꾸거나, 끝까지 원래 변수로 돌아가 계산하세요.</p>
+
+<p class="nms-first">문제부터 부딪치고 싶다면 <a href="#examples">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p></div></div>
+</div>
+</section>
+<details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
+<div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">치환하면 구간도 함께 바꾼다 — 넓이는 절댓값, 부피는 단면의 넓이</span><span class="mg-stat">회당 평균 1.9문항 · 6.6점</span></div>
+<div class="mg-grid"><section class="mg-card c1"><h3><i>📚</i>기본 적분 표</h3><div class="mg-tbl"><table><thead><tr><th>∫</th><th>결과</th><th>∫</th><th>결과</th></tr></thead><tbody><tr><th scope="row">eˣ</th><td data-l="결과">eˣ + C</td><td data-l="∫">sec²x</td><td data-l="결과">tan x + C</td></tr><tr><th scope="row">aˣ</th><td data-l="결과">aˣ/ln a + C</td><td data-l="∫">csc²x</td><td data-l="결과">−cot x + C</td></tr><tr><th scope="row">1/x</th><td data-l="결과">ln|x| + C</td><td data-l="∫">sec x tan x</td><td data-l="결과">sec x + C</td></tr><tr><th scope="row">sin x</th><td data-l="결과">−cos x + C</td><td data-l="∫">csc x cot x</td><td data-l="결과">−csc x + C</td></tr><tr><th scope="row">cos x</th><td data-l="결과">sin x + C</td><td data-l="∫">sin²x</td><td data-l="결과">x/2 − ¼sin2x + C</td></tr></tbody></table></div></section>
+<section class="mg-card c2"><h3><i>🔄</i>치환적분</h3><div class="mg-f">u = g(x), du = g′(x)dx<br>∫ f(g(x))g′(x)dx = ∫ f(u)du<br>∫ₐᵇ f(g)g′dx = ∫ g(a)→g(b) f(u)du</div><p class="mg-note tip"><span>💡</span>치환 신호: 속함수의 도함수가 옆에 붙어 있다 (2x와 x², cos x와 sin x, eˣ, 1/x와 ln x). 구간은 새 변수로 바꾸거나, 전부 원래 변수로 되돌립니다.</p></section>
+<section class="mg-card c3"><h3><i>✂️</i>부분적분</h3><div class="mg-f">∫ f g′ dx = f g − ∫ f′ g dx<br>∫ ln x dx = x ln x − x + C<br>∫ eˣ sin x dx = eˣ(sin x − cos x)/2 + C</div><p class="mg-note warn"><span>⚠</span>부호: 경계항 fg를 만든 뒤 빼는 건 f′g의 적분. 로그는 미분하는 쪽, 다항식×지수는 다항식을 미분하는 쪽.</p></section>
+<section class="mg-card c4"><h3><i>Σ</i>구분구적: 합 → 정적분</h3><div class="mg-f">lim Σ f(k/n)·(1/n) = ∫₀¹ f(x)dx<br>lim Σ f(a + k(b−a)/n)·(b−a)/n = ∫ₐᵇ f(x)dx</div><ol class="mg-flow"><li><b>1/n(너비) 만들기</b><span></span></li><li><b>f(k/n) 확인</b><span></span></li><li><b>k/n → x, 1/n → dx</b><span>구간 결정</span></li></ol></section>
+<section class="mg-card c5 wide"><h3><i>🧊</i>넓이와 입체도형의 부피</h3><figure class="mg-fig"><svg viewBox="0 0 300 150" role="img" aria-label="단면의 넓이로 구하는 부피" preserveAspectRatio="xMidYMid meet"><line class="ln" x1="20" y1="118" x2="285" y2="118"/><path class="fl" d="M50 118 C60 58 240 58 250 118 Z"/><path class="a" d="M50 118 C60 58 240 58 250 118"/><path class="fb" d="M146 73 L154 73 L154 118 L146 118 Z"/><text x="150" y="64" text-anchor="middle" class="t-b">단면 S(x)</text><text x="50" y="132" text-anchor="middle" class="t-m">a</text><text x="150" y="132" text-anchor="middle" class="t-m">x</text><text x="250" y="132" text-anchor="middle" class="t-m">b</text><text x="150" y="22" text-anchor="middle" class="t-a">V = ∫ₐᵇ S(x) dx   (단면의 넓이를 적분)</text></svg><figcaption>축에 수직으로 자른 단면의 모양(정사각형·정삼각형·반원)을 먼저 정하고, 그 넓이 S(x)를 구간에서 적분</figcaption></figure><dl class="mg-kv"><div><dt>넓이</dt><dd>곡선과 x축 ∫|f|, 두 곡선 사이 ∫|f−g|</dd></div><div><dt>단면이 주어진 입체</dt><dd>V = ∫ₐᵇ S(x) dx (정사각형 단면은 변², π 없음)</dd></div><div><dt>다른 단면</dt><dd>정삼각형 (√3/4)s², 지름이 s인 반원 πs²/8</dd></div></dl></section>
+<section class="mg-card c6 wide"><h3><i>🔁</i>속도·거리, 대칭, 정적분으로 정의된 함수</h3><div class="mg-f">변위 = ∫v dt,  이동 거리 = ∫|v| dt<br>∫₀ᵃ f(x)dx = ∫₀ᵃ f(a−x)dx = ½∫₀ᵃ [f(x)+f(a−x)]dx<br>d/dx ∫₀ˣ² f(t)dt = f(x²)·2x<br>평면: 거리 = ∫√((dx/dt)² + (dy/dt)²) dt,  곡선 y = f(x)의 길이 = ∫√(1 + {f′(x)}²) dx</div><p class="mg-note tip"><span>💡</span>계산이 길어지면 미분으로 되돌려 검산합니다 (부정적분 → 미분, 정적분으로 정의된 함수 → 특정 점의 미분계수).</p></section></div>
+<div class="mg-traps"><h3>⚠ 이 파트 함정 — 이렇게 속입니다</h3><ul><li><s>치환만 하고 정적분 구간은 그대로</s><b>→</b><em>구간도 g(a)~g(b)로, 또는 전부 원래 변수로</em></li><li><s>부분적분 부호를 더하기로</s><b>→</b><em>fg − ∫f′g</em></li><li><s>구분구적에서 너비를 빼먹음</s><b>→</b><em>합만 쓰면 약 n배 — k/n과 1/n이 함께</em></li><li><s>넓이를 부호 있는 적분으로 상쇄</s><b>→</b><em>sin x를 0~2π 적분한 0은 넓이가 아님</em></li><li><s>단면 모양을 확인하지 않고 π를 붙임</s><b>→</b><em>정사각형 변², 정삼각형 (√3/4)s², π는 원·반원 단면에만</em></li><li><s>이동 거리를 변위로</s><b>→</b><em>∫|v|</em></li><li><s>위끝이 x²인데 2x를 빼먹음</s><b>→</b><em>f(x²)·2x</em></li><li><s>불연속인 기함수의 대칭 적분 = 0</s><b>→</b><em>1/x를 −1~1에서 0이라 하지 않음</em></li></ul></div>
+<p class="mg-ask"><b>수능은 이렇게 묻는다</b>치환·부분적분으로 정적분 계산(구간 처리) → 급수의 극한을 정적분으로 → 넓이·단면의 부피·이동 거리(평면 포함)</p>
+</div></details>
+<p><a class="cta sm" href="../summary.html#p9">📌 이 파트 한눈에 요약 →</a></p>
+<div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="sec-bar"><span>본문 5절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
+<details class="sec"><summary><h2>1. 부정적분과 치환적분</h2></summary>
+<p>F'(x) = f(x)이면 F를 f의 원시함수, ∫ f(x) dx = F(x) + C를 부정적분이라고 합니다. 상수 C를 빼먹으면 원시함수를 하나만 고른 것이 됩니다. 정적분은 수학Ⅱ에서 이미 정의된 양을 쓰고, 이 단원에서는 피적분함수의 종류를 넓힙니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>적분</th><th>결과</th><th>확인 방법</th></tr></thead><tbody><tr><td data-l="적분">∫ e<sup>x</sup> dx</td><td data-l="결과">e<sup>x</sup> + C</td><td data-l="확인 방법">그대로 미분</td></tr><tr><td data-l="적분">∫ a<sup>x</sup> dx</td><td data-l="결과">a<sup>x</sup> / ln a + C</td><td data-l="확인 방법">(a<sup>x</sup>)' = a<sup>x</sup> ln a</td></tr><tr><td data-l="적분">∫ (1/x) dx</td><td data-l="결과">ln|x| + C</td><td data-l="확인 방법">x &lt; 0에서도 (ln|x|)' = 1/x</td></tr><tr><td data-l="적분">∫ sin x dx</td><td data-l="결과">−cos x + C</td><td data-l="확인 방법">부호</td></tr><tr><td data-l="적분">∫ cos x dx</td><td data-l="결과">sin x + C</td><td data-l="확인 방법">그대로</td></tr><tr><td data-l="적분">∫ sec² x dx</td><td data-l="결과">tan x + C</td><td data-l="확인 방법">(tan x)'</td></tr><tr><td data-l="적분">∫ csc² x dx</td><td data-l="결과">−cot x + C</td><td data-l="확인 방법">부호</td></tr><tr><td data-l="적분">∫ sec x tan x dx</td><td data-l="결과">sec x + C</td><td data-l="확인 방법">(sec x)'</td></tr><tr><td data-l="적분">∫ csc x cot x dx</td><td data-l="결과">−csc x + C</td><td data-l="확인 방법">부호</td></tr></tbody></table></div>
+<p>a &gt; 0, a ≠ 1입니다. sin²x, cos²x는 배각으로 차수를 낮춘 뒤 적분합니다.</p>
+<div class="formula">sin²x = (1 − cos 2x)/2<br>∫ sin²x dx = x/2 − (1/4) sin 2x + C</div>
+<p>미분으로 검산하면 1/2 − (1/2) cos 2x = (1 − cos 2x)/2 = sin²x입니다.</p>
+<h3>치환적분법</h3>
+<p>속함수의 미분이 피적분함수 안에 보이면 변수로 치환합니다.</p>
+<div class="formula">u = g(x), du = g'(x) dx<br>∫ f(g(x)) g'(x) dx = ∫ f(u) du</div>
+<p>정적분에서는 구간도 새 변수로 바꿉니다. x가 a에서 b까지이면 u는 g(a)에서 g(b)까지입니다. 순서가 뒤집혀도 그대로 두면 됩니다. 부호는 구간의 순서가 담당합니다.</p>
+<div class="formula">∫<sub>a</sub><sup>b</sup> f(g(x)) g'(x) dx = ∫<sub>g(a)</sub><sup>g(b)</sup> f(u) du</div>
+<p>∫<sub>0</sub><sup>1</sup> 2x e<sup>x²</sup> dx에서 u = x²이면 du = 2x dx, x = 0 → 0, x = 1 → 1이므로 ∫<sub>0</sub><sup>1</sup> e<sup>u</sup> du = e − 1입니다.</p>
+<p>∫ tan x dx = ∫ sin x / cos x dx는 u = cos x, du = −sin x dx로 두면 −∫ du/u = −ln|u| + C = −ln|cos x| + C입니다. ln|sec x| + C와 같습니다.</p>
+<p>∫<sub>0</sub><sup>π/2</sup> sin x cos x dx를 u = sin x로 두면 du = cos x dx, 구간은 0에서 1까지입니다. ∫<sub>0</sub><sup>1</sup> u du = 1/2입니다. 원래 변수로 돌아가 [ (1/2) sin² x ]<sub>0</sub><sup>π/2</sup> = 1/2로 계산해도 같습니다.</p>
+<div class="warning-box"><strong>함정:</strong> 변수만 u로 바꾸고 적분 구간은 0과 π/2에 남겨 두면 ∫<sub>0</sub><sup>π/2</sup> u du처럼 서로 다른 세계의 문자가 한 식에 남습니다. 구간을 바꾸거나, 전부 원래 변수로 되돌린 뒤에 숫자를 넣습니다. 둘을 섞지 않습니다.</div>
+<div class="study-tip"><strong>TIP:</strong> 치환이 보이는 신호는 “속함수의 도함수가 옆에 붙어 있는가”입니다. 2x와 x², cos x와 sin x, e<sup>x</sup>과 e<sup>x</sup> 자신, 1/x와 ln x가 대표적인 쌍입니다.</div>
+
+</details><details class="sec"><summary><h2>2. 부분적분</h2></summary>
+<p>곱의 미분 (fg)' = f'g + fg'를 적분하면 부분적분 공식이 됩니다. 한쪽은 미분하고 한쪽은 적분합니다.</p>
+<div class="formula">∫ f g' dx = f g − ∫ f' g dx<br>정적분: ∫<sub>a</sub><sup>b</sup> f g' dx = [f g]<sub>a</sub><sup>b</sup> − ∫<sub>a</sub><sup>b</sup> f' g dx</div>
+<p>고르는 기준은 단순합니다. 미분하면 간단해지는 쪽을 f, 적분하기 쉬운 쪽을 g'에 둡니다. 다항함수 × 지수·삼각이면 다항함수를 미분합니다. 로그가 있으면 로그를 미분합니다. 로그는 옆에 1이 숨어 있다고 보고 ∫ ln x · 1 dx로 시작합니다.</p>
+<div class="formula">∫ ln x dx = x ln x − ∫ x · (1/x) dx = x ln x − x + C</div>
+<p>검산: (x ln x − x)' = ln x + x·(1/x) − 1 = ln x입니다. 정적분으로 보면 ∫<sub>1</sub><sup>e</sup> ln x dx = [x ln x − x]<sub>1</sub><sup>e</sup> = (e − e) − (0 − 1) = 1입니다.</p>
+<p>∫<sub>0</sub><sup>1</sup> x e<sup>x</sup> dx는 f = x, g' = e<sup>x</sup>입니다.</p>
+<div class="formula">[x e<sup>x</sup>]<sub>0</sub><sup>1</sup> − ∫<sub>0</sub><sup>1</sup> e<sup>x</sup> dx = (e − 0) − (e − 1) = 1</div>
+<p>부정적분 e<sup>x</sup>(x − 1)에 0과 1을 넣어도 (0) − (1·(−1)) = 1입니다.</p>
+<p>∫ e<sup>x</sup> sin x dx처럼 같은 모양이 되돌아오면 두 번 부분적분한 뒤 원래 적분을 한쪽으로 모읍니다. 먼저 sin x를 미분하는 쪽으로 두면</p>
+<div class="formula">∫ e<sup>x</sup> sin x dx = e<sup>x</sup> sin x − ∫ e<sup>x</sup> cos x dx</div>
+<p>두 번째도 cos x를 미분하면 ∫ e<sup>x</sup> cos x dx = e<sup>x</sup> cos x + ∫ e<sup>x</sup> sin x dx입니다. 대입하면</p>
+<div class="formula">I = e<sup>x</sup> sin x − e<sup>x</sup> cos x − I<br>2I = e<sup>x</sup>(sin x − cos x)<br>I = e<sup>x</sup>(sin x − cos x)/2 + C</div>
+<p>미분하면 e<sup>x</sup>/2 · (sin x − cos x + cos x + sin x) = e<sup>x</sup> sin x입니다. 공식이 맞습니다.</p>
+<div class="info-card"><h4>부분적분의 부호</h4><p>경계항 fg를 만든 뒤 빼는 적분은 f'와 g의 곱입니다. 더하기로 적으면 부호가 통째로 뒤집힙니다. 정적분에서는 경계항을 아래끝·위끝에 넣은 값과, 남은 적분의 부호를 따로 검산하는 편이 안전합니다.</p></div>
+
+</details><details class="sec"><summary><h2>3. 정적분과 급수의 합</h2></summary>
+<p>구간 [a, b]를 너비 Δx = (b − a)/n인 n개의 소구간으로 똑같이 나누고, 각 소구간의 오른쪽 끝에서 함숫값을 읽어 직사각형의 넓이를 더합니다. n → ∞이면 이 합은 정적분으로 갑니다. 이것을 구분구적법이라고 합니다.</p>
+<div class="formula">x<sub>k</sub> = a + k(b−a)/n (k = 1, 2, …, n)<br>lim Σ<sub>k=1</sub><sup>n</sup> f(x<sub>k</sub>) Δx = ∫<sub>a</sub><sup>b</sup> f(x) dx</div>
+<p>가장 많이 보이는 꼴은 구간 [0, 1]입니다. Δx = 1/n, 오른쪽 끝은 k/n입니다.</p>
+<div class="formula">lim<sub>n→∞</sub> Σ<sub>k=1</sub><sup>n</sup> f(k/n) · (1/n) = ∫<sub>0</sub><sup>1</sup> f(x) dx</div>
+<p>왼쪽 끝 k = 0부터 n−1까지를 써도, 연속함수이면 항 하나의 차이는 0으로 사라져 같은 정적분입니다. 예를 들어 Σ<sub>k=1</sub><sup>n</sup> e<sup>k/n</sup> · (1/n) → ∫<sub>0</sub><sup>1</sup> e<sup>x</sup> dx = e − 1입니다.</p>
+<div class="info-card"><h4>합을 정적분으로 바꾸는 순서</h4><p>1) 1/n 또는 (b−a)/n이 너비로 떨어져 나오게 식을 고칩니다. 2) 남은 부분이 f(k/n) 또는 f(a + k(b−a)/n)인지 확인합니다. 3) 너비를 dx로, k/n을 x로 읽어 적분 구간을 적습니다. 너비 1/n을 빼먹으면 합이 n배 커진 채 극한을 구하게 됩니다.</p></div>
+<p>다항 꼴의 기본형은 lim Σ<sub>k=1</sub><sup>n</sup> k²/n³ = lim Σ (k/n)² · (1/n) = ∫<sub>0</sub><sup>1</sup> x² dx = 1/3입니다. 분수 식은 분모의 n 거듭제곱으로 나누어 k/n을 만듭니다. √(n+k) / n<sup>3/2</sup> = (1/n) √(1 + k/n)이므로 합의 극한은 ∫<sub>0</sub><sup>1</sup> √(1+x) dx입니다. 이 값은 대표 예제에서 계산합니다.</p>
+<p>역으로, 정적분이 주어지고 그것을 급수로 읽을 수도 있습니다. 다만 수능에서는 급수 → 정적분 방향이 더 자주 나옵니다. 정적분으로 바뀐 뒤에는 치환·부분적분·대칭으로 값을 구합니다.</p>
+<div class="warning-box"><strong>함정:</strong> ∫ 1/(1+x²) dx = arctan x 같은 역삼각함수 적분은 2015 개정 미적분의 범위 밖입니다. 구분구적 합을 억지로 그 꼴로 만들지 말고, 거듭제곱·지수·로그·삼각함수의 정적분으로 끝나는 합인지 먼저 확인합니다.</div>
+
+</details><details class="sec"><summary><h2>4. 넓이와 입체도형의 부피</h2></summary>
+<h3>넓이</h3>
+<p>연속함수의 정적분 ∫<sub>a</sub><sup>b</sup> f(x) dx는 곡선과 x축 사이의 <strong>부호 있는 넓이</strong>입니다. x축 아래는 음수로 들어갑니다. 실제 넓이는 절댓값을 적분합니다.</p>
+<div class="formula">곡선과 x축: ∫<sub>a</sub><sup>b</sup> |f(x)| dx<br>두 곡선 사이: ∫<sub>a</sub><sup>b</sup> |f(x) − g(x)| dx</div>
+<p>부호가 바뀌는 점, 두 곡선이 만나는 점에서 구간을 쪼갭니다. y = sin x를 0부터 2π까지 그냥 적분하면 [−cos x]<sub>0</sub><sup>2π</sup> = 0입니다. 실제 넓이는 0부터 π까지 2, π부터 2π까지 sin x가 음이므로 −sin x를 적분한 2를 더해 4입니다.</p>
+<p>y = √x와 y = x²은 x = 0, x = 1에서 만납니다. 0과 1 사이에서는 √x가 위쪽입니다. √0.25 = 0.5, 0.25² = 0.0625이므로 위로 확인됩니다.</p>
+<div class="formula">넓이 = ∫<sub>0</sub><sup>1</sup> (√x − x²) dx = [ (2/3) x<sup>3/2</sup> − x³/3 ]<sub>0</sub><sup>1</sup> = 2/3 − 1/3 = 1/3</div>
+<h3>단면이 주어진 입체</h3>
+<p>x = a에서 x = b까지, x축에 수직인 단면의 넓이가 S(x)로 주어지면 부피는 그 넓이의 적분입니다. 단면이 원이나 반원이 아니면 π를 붙이지 않습니다.</p>
+<div class="formula">V = ∫<sub>a</sub><sup>b</sup> S(x) dx</div>
+<p>밑면이 0 ≤ x ≤ 1에서 y = 0과 y = √x 사이이고, 단면이 한 변 √x인 정사각형이면 S(x) = x입니다. 부피는 ∫<sub>0</sub><sup>1</sup> x dx = 1/2입니다. 한 변이 s(x)인 정삼각형 단면이면 S(x) = (√3 / 4) s(x)², 지름이 s(x)인 반원 단면이면 S(x) = (1/2) π (s(x)/2)² = π s(x)² / 8입니다.</p>
+<p>단면이 원인 입체도 같은 원리라 S(x) = π{r(x)}²을 적분합니다. 다만 곡선을 축 둘레로 돌려 만든 회전체의 부피는 2015 개정 미적분에서 다루지 않으므로, 수능 대비로는 문제가 알려 주는 단면의 모양에서 넓이를 구해 적분하는 데 집중합니다.</p>
+<p>넓이 비·부피 비 문항은 적분을 끝까지 계산하기 전에, 공통 인수를 약분할 수 있는지 봅니다. 같은 구간에 같은 단면 모양이 닮음비 k로 늘어나 있으면 넓이 비는 k², 부피 비는 k³인 경우가 많습니다. 구간이 다르면 적분을 각각 계산한 뒤 나눕니다.</p>
+<div class="study-tip"><strong>TIP:</strong> 그림에서 먼저 적을 두 가지: 단면이 어느 축에 수직인지, 그 단면이 어떤 모양(정사각형·정삼각형·반원·원)인지입니다. 모양에 맞는 넓이 공식을 쓰고, π는 원·반원 단면에만 붙입니다.</div>
+
+</details><details class="sec"><summary><h2>5. 속도·거리, 대칭, 정적분으로 정의된 함수</h2></summary>
+<h3>변위와 이동 거리</h3>
+<p>속도 v(t)를 적분하면 위치의 변화, 즉 변위입니다. 실제로 움직인 거리는 속력의 적분입니다. 방향이 바뀌면 둘은 다릅니다.</p>
+<div class="formula">변위 = x(b) − x(a) = ∫<sub>a</sub><sup>b</sup> v(t) dt<br>이동 거리 = ∫<sub>a</sub><sup>b</sup> |v(t)| dt</div>
+<p>v(t) = cos t, 0 ≤ t ≤ π이면 변위는 [sin t]<sub>0</sub><sup>π</sup> = 0입니다. cos t는 0부터 π/2까지 양수, 그 뒤 π까지 음수입니다. 거리는 ∫<sub>0</sub><sup>π/2</sup> cos t dt + ∫<sub>π/2</sub><sup>π</sup> (−cos t) dt = 1 + 1 = 2입니다. x(0) = 0이면 x(t) = sin t라서, 1까지 갔다가 0으로 돌아오는 거리 2와 맞습니다.</p>
+<p>속도가 0이 되는 시각을 먼저 찾고, 그 시각으로 구간을 나누어 각 구간에서 v의 부호를 확인한 뒤 절댓값을 적분합니다. 가속도 a(t)만 주어지면 v(t) = v(t<sub>0</sub>) + ∫<sub>t₀</sub><sup>t</sup> a(s) ds로 속도를 복원한 다음 같은 일을 합니다.</p>
+<h3>평면 위를 움직인 거리와 곡선의 길이</h3>
+<p>좌표평면 위를 움직이는 점의 위치가 (x, y) = (f(t), g(t))이면 속력은 √((dx/dt)² + (dy/dt)²)이고, 움직인 거리는 직선 운동과 마찬가지로 속력을 적분한 값입니다. 곡선 y = f(x)의 길이는 x = t, y = f(t)로 곡선을 따라 움직이는 점이 지나간 거리로 보면 같은 식에서 나옵니다.</p>
+<div class="formula">움직인 거리 s = ∫<sub>a</sub><sup>b</sup> √((dx/dt)² + (dy/dt)²) dt<br>곡선 y = f(x)의 길이 l = ∫<sub>a</sub><sup>b</sup> √(1 + {f′(x)}²) dx</div>
+<p>x = e<sup>t</sup> cos t, y = e<sup>t</sup> sin t이면 dx/dt = e<sup>t</sup>(cos t − sin t), dy/dt = e<sup>t</sup>(sin t + cos t)라서 제곱의 합이 2e<sup>2t</sup>, 속력이 √2 e<sup>t</sup>입니다. t = 0부터 t = 1까지 움직인 거리는 ∫<sub>0</sub><sup>1</sup> √2 e<sup>t</sup> dt = √2 (e − 1)입니다.</p>
+<p>곡선 y = (2/3) x<sup>3/2</sup>은 y′ = √x라 1 + (y′)² = 1 + x이고, x = 0부터 x = 3까지의 길이는 ∫<sub>0</sub><sup>3</sup> √(1 + x) dx = (2/3)(4<sup>3/2</sup> − 1) = 14/3입니다. 근호 안이 간단한 식이 되도록 짜인 문항이 많으므로, 1 + (y′)²부터 정리해 봅니다.</p>
+<h3>대칭으로 정적분 계산</h3>
+<p>f가 [−a, a]에서 연속일 때, 우함수 f(−x) = f(x)이면 적분은 오른쪽의 두 배, 기함수 f(−x) = −f(x)이면 적분은 0입니다.</p>
+<div class="formula">우함수: ∫<sub>−a</sub><sup>a</sup> f(x) dx = 2 ∫<sub>0</sub><sup>a</sup> f(x) dx<br>기함수: ∫<sub>−a</sub><sup>a</sup> f(x) dx = 0</div>
+<p>예를 들어 cos x는 우함수이므로 ∫<sub>−π/2</sub><sup>π/2</sup> cos x dx = 2 ∫<sub>0</sub><sup>π/2</sup> cos x dx = 2입니다. x cos x는 기함수이고 연속이므로 ∫<sub>−π/2</sub><sup>π/2</sup> x cos x dx = 0입니다.</p>
+<div class="warning-box"><strong>함정:</strong> 기함수라고 해서 항상 대칭 구간 적분이 0은 아닙니다. 구간 안에서 연속이어야 합니다. 1/x는 기함수로 보이지만 x = 0에서 정의되지 않고 적분도 수렴하지 않습니다. 0이라고 쓰지 않습니다.</div>
+<p>구간을 뒤집는 치환도 자주 씁니다. u = a − x로 두면 다음이 성립합니다.</p>
+<div class="formula">∫<sub>0</sub><sup>a</sup> f(x) dx = ∫<sub>0</sub><sup>a</sup> f(a − x) dx<br>따라서 적분 = (1/2) ∫<sub>0</sub><sup>a</sup> [ f(x) + f(a − x) ] dx</div>
+<p>I = ∫<sub>0</sub><sup>π/2</sup> sin<sup>n</sup> x / (sin<sup>n</sup> x + cos<sup>n</sup> x) dx에서 n은 자연수입니다. f(π/2 − x)는 분자만 cos<sup>n</sup> x로 바뀌고 분모는 같습니다. f(x) + f(π/2 − x) = 1이므로 2I = ∫<sub>0</sub><sup>π/2</sup> 1 dx = π/2, I = π/4입니다. n = 2이면 피적분함수가 sin² x가 되고, ∫<sub>0</sub><sup>π/2</sup> (1 − cos 2x)/2 dx = π/4로 직접 계산한 값과 같습니다.</p>
+<h3>정적분으로 정의된 함수</h3>
+<p>f가 연속이면 위끝이 x인 정적분을 미분하면 피적분함수가 돌아옵니다. 이것이 미적분의 기본 정리입니다.</p>
+<div class="formula">d/dx ∫<sub>a</sub><sup>x</sup> f(t) dt = f(x)<br>d/dx ∫<sub>u(x)</sub><sup>v(x)</sup> f(t) dt = f(v(x)) v'(x) − f(u(x)) u'(x)</div>
+<p>위끝만 x²처럼 함수이면 연쇄법칙을 한 번 더 곱합니다. F(x) = ∫<sub>0</sub><sup>x²</sup> e<sup>−t</sup> dt이면 F'(x) = e<sup>−x²</sup> · 2x입니다. F'(1) = 2/e입니다. 값 자체는 F(1) = ∫<sub>0</sub><sup>1</sup> e<sup>−t</sup> dt = 1 − 1/e입니다. 미분한 결과와 적분한 결과는 다른 질문입니다.</p>
+<p>적분 변수와 위끝은 다른 문자를 씁니다. ∫<sub>0</sub><sup>x</sup> f(x) dx처럼 쓰면 위끝의 x와 적분 변수가 섞입니다. ∫<sub>0</sub><sup>x</sup> f(t) dt로 적습니다. 위끝과 아래끝이 모두 상수이면 적분은 상수이고, x로 미분하면 0입니다.</p>
+<p>피적분함수 안에 위끝과 같은 문자가 들어 있으면 그 문자를 적분 밖으로 뺍니다. f가 연속일 때</p>
+<div class="formula">∫<sub>0</sub><sup>x</sup> (x − t) f(t) dt = x ∫<sub>0</sub><sup>x</sup> f(t) dt − ∫<sub>0</sub><sup>x</sup> t f(t) dt</div>
+<p>곱의 미분과 기본 정리로 미분하면 ∫<sub>0</sub><sup>x</sup> f(t) dt + x f(x) − x f(x) = ∫<sub>0</sub><sup>x</sup> f(t) dt입니다. x f(x)가 서로 상쇄됩니다.</p>
+<h3>수능에서 묻는 방식</h3>
+<ul>
+<li><strong>정적분으로 정의된 함수.</strong> 양변을 미분합니다. 위끝·아래끝에 함수가 있으면 연쇄법칙을 곱하고, 아래끝이면 빼는 쪽입니다. 미정 함수가 있으면 미분한 식을 다시 적분하거나 특정 점을 대입해 상수를 정합니다.</li>
+<li><strong>대칭.</strong> 구간이 −a에서 a이면 우함수·기함수를 먼저 분리합니다. 0에서 a이고 피적분함수에 a − x가 보이면 치환해 두 식을 더합니다.</li>
+<li><strong>넓이·부피 비.</strong> 어느 쪽이 위인지, 회전축이 무엇인지, 단면이 원인지 다각형인지를 그림에 표시한 뒤 적분합니다. 공통 인수는 약분합니다.</li>
+<li><strong>급수를 정적분으로.</strong> 합을 (너비) × f(오른쪽 끝)으로 고친 뒤 구간 [0, 1] 또는 [a, b]의 적분으로 바꿉니다. 그 다음에야 적분을 계산합니다.</li>
+</ul>
+<div class="study-tip"><strong>TIP:</strong> 계산이 길어지면 미분으로 되돌려 검산합니다. 부정적분은 미분해서 원래 함수가 나오는지, 정적분으로 정의된 함수는 특정 점의 미분계수가 피적분함수 값과 맞는지 확인합니다.</div></details>
+
+<div class="nms-stepband"><b>③ 확인하기</b><span>조건이 바뀐 문제로 확인 — 막히면 가장 쉬운 문제부터</span></div>
+<h2>자주 나오는 함정</h2><div class="trap-list"><ul>
+<li><strong>치환만 하고 정적분 구간은 그대로 두기.</strong> u = g(x)로 바꾸었으면 구간도 g(a)에서 g(b)로 바꾸거나, 전부 원래 변수로 돌아옵니다.</li>
+<li><strong>부분적분의 부호를 더하기로 적기.</strong> ∫ f g' = fg − ∫ f' g입니다. 로그는 미분하는 쪽, 다항식×지수는 다항식을 미분하는 쪽에 둡니다.</li>
+<li><strong>구분구적에서 너비 (b−a)/n을 빼먹기.</strong> 함숫값의 합만 더하면 정적분의 약 n배가 됩니다. k/n과 1/n이 함께 있어야 합니다.</li>
+<li><strong>넓이를 부호 있는 적분으로 계산해 상쇄시키기.</strong> x축 아래나 두 곡선의 위아래가 바뀌면 구간을 나누어 절댓값을 적분합니다. sin x를 0부터 2π까지 적분한 0은 넓이가 아닙니다.</li>
+<li><strong>단면의 모양을 확인하지 않고 넓이 공식을 섞기.</strong> 정사각형 단면은 변², 정삼각형은 (√3/4)×변², 지름이 s인 반원은 πs²/8입니다. π는 원·반원 단면에만 붙습니다.</li>
+<li><strong>이동 거리를 변위로 구하기.</strong> ∫ v(t) dt는 위치의 차이고, 실제 거리는 ∫ |v(t)| dt입니다. 속도의 부호가 바뀌면 다릅니다.</li>
+<li><strong>위끝이 x²인데 f(x²)만 쓰고 2x를 빼먹기.</strong> d/dx ∫<sub>0</sub><sup>x²</sup> f(t) dt = f(x²) · 2x입니다. 적분 변수와 위끝에 같은 문자를 쓰지 않습니다.</li>
+<li><strong>ln|x|의 절댓값과, 불연속인 기함수의 대칭 적분.</strong> ∫ 1/x dx = ln|x| + C입니다. 1/x를 −1부터 1까지 적분해 0이라고 하지 않습니다.</li>
+</ul></div>
+<h2 id="examples">대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>∫(0부터 1) 2x e^(x²) dx 를 구하시오.</summary><div class="example-sol"><p>u = x²으로 두면 du = 2x dx입니다. x = 0이면 u = 0, x = 1이면 u = 1입니다.</p><p>∫<sub>0</sub><sup>1</sup> e<sup>u</sup> du = [e<sup>u</sup>]<sub>0</sub><sup>1</sup> = e − 1입니다.</p><p>원래 변수로 검산하면 원시함수는 e<sup>x²</sup>이고, e<sup>1</sup> − e<sup>0</sup> = e − 1입니다.</p></div></details><details class="example"><summary>∫(0부터 1) x e^x dx 를 구하시오.</summary><div class="example-sol"><p>다항식을 미분하는 쪽에 둡니다. f = x, g' = e<sup>x</sup>, g = e<sup>x</sup>입니다.</p><p>[x e<sup>x</sup>]<sub>0</sub><sup>1</sup> − ∫<sub>0</sub><sup>1</sup> e<sup>x</sup> dx = e − [e<sup>x</sup>]<sub>0</sub><sup>1</sup> = e − (e − 1) = <strong>1</strong>입니다.</p><p>부정적분 e<sup>x</sup>(x − 1)에 끝점을 넣으면 e<sup>1</sup>(0) − e<sup>0</sup>(−1) = 1입니다.</p></div></details><details class="example"><summary>n이 무한대로 갈 때, k=1부터 n까지 √(n+k) / n^(3/2) 을 더한 값의 극한은?</summary><div class="example-sol"><p>한 항을 k/n 꼴로 고칩니다.</p><p>√(n+k) / n<sup>3/2</sup> = √(n+k) / (n √n) = √( (n+k)/n ) / n = (1/n) √(1 + k/n)입니다.</p><p>따라서 합은 Σ<sub>k=1</sub><sup>n</sup> √(1 + k/n) · (1/n)이고, 극한은 ∫<sub>0</sub><sup>1</sup> √(1+x) dx입니다.</p><p>∫ (1+x)<sup>1/2</sup> dx = (2/3) (1+x)<sup>3/2</sup>이므로 [ (2/3)(1+x)<sup>3/2</sup> ]<sub>0</sub><sup>1</sup> = (2/3)(2<sup>3/2</sup> − 1)입니다.</p><p>2<sup>3/2</sup> = 2√2이므로 값은 <strong>(2/3)(2√2 − 1)</strong>입니다.</p></div></details><details class="example"><summary>F(x) = ∫(0부터 x²) e^(−t) dt 일 때 F(1)과 F'(1)은?</summary><div class="example-sol"><p>값과 미분계수는 다른 질문입니다.</p><p>F(1) = ∫<sub>0</sub><sup>1</sup> e<sup>−t</sup> dt = [−e<sup>−t</sup>]<sub>0</sub><sup>1</sup> = −e<sup>−1</sup> − (−1) = <strong>1 − 1/e</strong>입니다.</p><p>위끝이 x²이므로 연쇄법칙을 곱합니다. F'(x) = e<sup>−x²</sup> · 2x입니다.</p><p>F'(1) = e<sup>−1</sup> · 2 = <strong>2/e</strong>입니다. 2x를 빼먹으면 1/e이 되어 틀립니다.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>치환은 속을 새 문자로, 부분적분은 한쪽을 미분하고 한쪽을 적분합니다. 넓이와 이동 거리는 절댓값, 입체의 부피는 단면의 넓이를 적분합니다.</p><ul><li>급수 합은 (1/n)과 f(k/n)이 보이면 0부터 1까지의 정적분입니다.</li><li>위끝이 x인 적분을 미분하면 피적분함수가 돌아옵니다. 위끝이 x²이면 2x를 곱합니다.</li><li>속도의 적분은 변위, 속력의 적분은 이동 거리입니다. 평면 위에서는 속력 √((dx/dt)² + (dy/dt)²)을 적분합니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>정적분으로 정의된 함수 문항은 양변을 x로 미분하는 것을 첫 줄로 고정합니다. 위끝·아래끝이 함수이면 f(위끝)·위끝'에서 f(아래끝)·아래끝'을 뺍니다. 피적분함수 안에 x가 남아 있으면 x를 적분 밖으로 뺀 뒤 곱의 미분을 씁니다. 상수가 남으면 x에 아래끝을 넣어 0이 되는 조건을 사용합니다.</p><p>구분구적은 합의 일반항을 (너비)×(함숫값)으로 고치는 일이 본문이고, 적분 계산은 그 다음입니다. 넓이·부피는 그림에 위쪽 곡선과 단면 모양을 표시한 뒤 식을 세웁니다. 속도 문항은 v(t) = 0인 시각으로 구간을 나눈 다음에야 절댓값을 적분합니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>적분법의 개념과 뜻을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"적분법의 개념과 뜻을 짝지으세요.","pairs":[{"term":"치환적분","def":"속함수로 변수를 교체"},{"term":"부분적분","def":"한쪽 미분, 한쪽 적분"},{"term":"구분구적법","def":"직사각형 합의 극한"},{"term":"입체의 부피","def":"단면의 넓이를 적분"},{"term":"이동 거리","def":"속력을 시간에 적분"},{"term":"연속인 기함수","def":"대칭 구간 적분은 0"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"e^x의 부정적분으로 옳은 것은?","choices":["e^x + C","e^x / x + C","x e^x + C","ln|x| + C"],"answer":0},{"q":"부분적분 공식으로 옳은 것은?","choices":["∫ f g′ = f′ g − ∫ f g","∫ f g′ = fg + ∫ f′ g","∫ f g = f′ g′","∫ f g′ = fg − ∫ f′ g"],"answer":3},{"q":"k를 1부터 n까지 f(k/n)에 1/n을 곱해 더한 값의 극한은?","choices":["0부터 n까지 f(x)의 정적분","f(1) 빼기 f(0)","0부터 1까지 f(x)의 정적분","f의 도함수를 모두 더한 값"],"answer":2},{"q":"직선 운동에서 실제로 움직인 거리는?","choices":["속도의 정적분","속력의 정적분","가속도의 절댓값","나중 위치의 절댓값"],"answer":1},{"q":"연속함수 f에 대해, 0부터 x까지 f(t)를 적분한 식을 x로 미분하면?","choices":["f(x)","f'(x)","0","f(0)"],"answer":0}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 수학 전 시험지에서 이 파트로 분류된 <strong>33문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:c3">📝 여러 가지 적분법 모아 풀기 →</a></p>
+<div class="nms-stepband"><b>④ 마무리</b><span>공부 끝 5분 — 말로 설명하고, 오답 한 줄을 남기고, 끝내기 체크</span></div>
+<section class="nms nms-end" data-nms>
+<div class="nms-top"><b>🗣 마무리 — 말로 설명하고 끝내기</b><span class="nms-top-r"><a href="../study-style.html#notes">내 오답 한 줄 모음 →</a></span></div>
+<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>부분적분 공식 ∫fg′ dx = fg − ∫f′g dx가 곱의 미분에서 어떻게 나오는지 설명해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>곱의 미분은 (fg)′ = f′g + fg′입니다. 양변을 적분하면 왼쪽은 미분을 되돌린 fg가 되므로, 적분상수를 빼고 쓰면 fg = ∫f′g dx + ∫fg′ dx입니다. 여기서 ∫f′g dx를 왼쪽으로 옮기면 ∫fg′ dx = fg − ∫f′g dx가 됩니다. 즉 부분적분은 <b>한쪽을 미분하고 다른 쪽을 적분해 더 쉬운 적분으로 바꾸는 것</b>이라, 미분하면 간단해지는 로그나 다항식을 f로 고릅니다.</p></details></li><li>lim ∑<sub>k=1</sub><sup>n</sup> f(k/n) · (1/n)이 왜 ∫<sub>0</sub><sup>1</sup> f(x) dx가 되는지 직사각형으로 말해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>구간 [0, 1]을 n등분하면 소구간의 폭은 1/n이고, k번째 소구간의 오른쪽 끝은 x = k/n입니다. 그 끝의 높이 f(k/n)로 직사각형을 세우면 넓이가 f(k/n) · (1/n)이므로, k = 1부터 n까지 더한 합은 직사각형 n개로 곡선 아래의 부호 있는 넓이를 근사한 값입니다. n을 한없이 키우면 직사각형이 가늘어지며 그 합이 정적분 ∫<sub>0</sub><sup>1</sup> f(x) dx로 갑니다. 그래서 합을 볼 때 <b>폭 1/n은 dx로, k/n은 x로</b> 읽으면 됩니다.</p></details></li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
+<div class="nms-note" data-note="aboutSuneungMath/09-int-methods.html"><b>✍️ 오답 한 줄</b><span class="nms-note-saved" aria-live="polite"></span>
+<p class="nms-note-hint">틀린 문제 하나를 골라 ‘내가 왜 그렇게 생각했나, 어느 단계에서 틀어졌나’를 한 줄로 적어 두세요. 이 기기에만 저장되고 논리형 공부법 페이지에 모입니다.</p>
+<textarea rows="2" data-note-input aria-label="오답 한 줄" placeholder="예: 조건 하나를 빼고 식을 세움 — 다음엔 조건에 번호부터 붙이기"></textarea></div>
+<div class="nms-done" data-done="aboutSuneungMath/09-int-methods.html"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
+<label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
+<label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
+<label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div>
+</section>
+<div class="pager"><a href="08-diff-methods.html">← 여러 가지 미분법</a><a href="10-strategy.html">수능 수학 실전 전략 →</a></div>
+</main></div>
+</body></html>

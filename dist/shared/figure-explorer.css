@@ -1,0 +1,501 @@
+/* 그림 엔진. 선택자는 .fgx 안으로만. 호스트의 button·제목·문단 !important를 이긴다. */
+.fgx {
+  --fgx-accent: var(--accent, #16a34a);
+  --fgx-ink: var(--text, #1a1f2e);
+  --fgx-dim: var(--text-dim, #4a5468);
+  --fgx-mute: var(--text-mute, #6b7280);
+  --fgx-line: var(--border, rgba(0, 0, 0, 0.08));
+  --fgx-card: var(--bg-card, #fff);
+  --fgx-elev: var(--bg-elevated, #f5f7fa);
+  --fgx-c1: #2563eb;
+  --fgx-c2: #dc2626;
+  --fgx-c3: #d97706;
+  --fgx-c4: #16a34a;
+  --fgx-c5: #7c3aed;
+  --fgx-c6: #0891b2;
+  --fgx-c7: #db2777;
+  --fgx-c8: #65748b;
+  --fgx-c1-soft: color-mix(in srgb, #2563eb 18%, #fff);
+  --fgx-c2-soft: color-mix(in srgb, #dc2626 18%, #fff);
+  --fgx-c3-soft: color-mix(in srgb, #d97706 18%, #fff);
+  --fgx-c4-soft: color-mix(in srgb, #16a34a 18%, #fff);
+  --fgx-c5-soft: color-mix(in srgb, #7c3aed 18%, #fff);
+  --fgx-c6-soft: color-mix(in srgb, #0891b2 18%, #fff);
+  --fgx-c7-soft: color-mix(in srgb, #db2777 18%, #fff);
+  --fgx-c8-soft: color-mix(in srgb, #65748b 18%, #fff);
+  container: fgx / inline-size;
+  max-width: 100%;
+  color: var(--fgx-ink);
+  font-size: 1rem;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+.fgx *,
+.fgx *::before,
+.fgx *::after { box-sizing: border-box; }
+.fgx h3,
+.fgx h4,
+.fgx p,
+.fgx ul,
+.fgx li,
+.fgx span,
+.fgx label {
+  margin: 0;
+  font: inherit;
+  color: var(--fgx-ink);
+}
+.fgx h3,
+.fgx h4 { color: var(--fgx-ink) !important; }
+.fgx ul { padding-left: 1.15rem; list-style: disc; }
+.fgx li { margin: 0.2rem 0; }
+.fgx [hidden] { display: none !important; }
+.fgx i { font-style: normal; }
+
+.fgx button[type="button"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: auto !important;
+  max-width: 100%;
+  min-height: 36px;
+  background: transparent !important;
+  color: var(--fgx-ink) !important;
+  border: none !important;
+  border-radius: 9px;
+  padding: 7px 10px !important;
+  font: inherit !important;
+  font-size: 0.92rem !important;
+  font-weight: 600 !important;
+  line-height: 1.35 !important;
+  cursor: pointer;
+  white-space: normal;
+  text-align: center;
+  touch-action: manipulation;
+}
+.fgx button[type="button"]:hover {
+  background: color-mix(in srgb, var(--fgx-accent) 12%, transparent) !important;
+  color: var(--fgx-ink) !important;
+}
+.fgx button[type="button"]:focus-visible,
+.fgx input:focus-visible,
+.fgx [data-part]:focus-visible {
+  outline: 2px solid var(--fgx-accent) !important;
+  outline-offset: 2px;
+}
+.fgx button[type="button"].is-on,
+.fgx button[type="button"].is-on:hover {
+  background: var(--fgx-accent) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+.fgx-views,
+.fgx-choice,
+.fgx-scenes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.fgx-views {
+  margin: 0 0 10px;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--fgx-elev);
+  border: 1px solid var(--fgx-line);
+}
+
+.fgx-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.fgx-col {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fgx-stage {
+  position: relative;
+  background: var(--fgx-card);
+  border: 1px solid var(--fgx-line);
+  border-radius: 16px;
+  overflow: hidden;
+  min-width: 0;
+}
+.fgx-svghost { min-width: 0; }
+.fgx-svg {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  shape-rendering: geometricPrecision;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+.fgx text { font-family: inherit; }
+
+.fgx-hint {
+  padding: 0 12px 10px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--fgx-mute) !important;
+}
+
+.fgx-tip {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  max-width: 70%;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: var(--fgx-card);
+  border: 1px solid var(--fgx-line);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+.fgx-tip-name { display: block; font-weight: 700; font-size: 0.86rem; }
+.fgx-tip-en { display: block; color: var(--fgx-mute); font-size: 0.75rem; }
+
+.fgx-readout {
+  white-space: pre-line;
+  background: var(--fgx-elev);
+  border: 1px solid var(--fgx-line);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--fgx-ink) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.fgx-controls,
+.fgx-transport {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.fgx-transport { flex: 0 0 auto; }
+.fgx button[type="button"].fgx-play {
+  min-width: 42px;
+  min-height: 36px;
+  border: 1px solid var(--fgx-line) !important;
+  background: var(--fgx-card) !important;
+}
+.fgx button[type="button"].fgx-play.is-on,
+.fgx button[type="button"].fgx-play.is-on:hover {
+  background: var(--fgx-accent) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+.fgx-clock {
+  color: var(--fgx-mute) !important;
+  font-size: 0.84rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.fgx-ctl {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  flex: 1 1 200px;
+  min-width: 0;
+  max-width: 100%;
+}
+.fgx-ctl-name {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--fgx-ink) !important;
+}
+.fgx-ctl-val {
+  margin-left: auto;
+  color: var(--fgx-mute) !important;
+  font-size: 0.84rem;
+  font-variant-numeric: tabular-nums;
+}
+.fgx .fgx-ctl input[type="range"] {
+  flex: 1 0 100%;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 32px !important;
+  min-height: 32px !important;
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  accent-color: var(--fgx-accent);
+  touch-action: pan-y;
+  cursor: pointer;
+}
+.fgx-choice { flex: 1 1 auto; }
+.fgx button[type="button"].fgx-toggle,
+.fgx button[type="button"].fgx-choice-btn {
+  border: 1px solid var(--fgx-line) !important;
+  background: var(--fgx-card) !important;
+  min-height: 36px;
+}
+.fgx button[type="button"].fgx-toggle.is-on,
+.fgx button[type="button"].fgx-toggle.is-on:hover,
+.fgx button[type="button"].fgx-choice-btn.is-on,
+.fgx button[type="button"].fgx-choice-btn.is-on:hover {
+  background: var(--fgx-accent) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+.fgx-panel {
+  min-width: 0;
+  background: var(--fgx-card);
+  border: 1px solid var(--fgx-line);
+  border-radius: 16px;
+  padding: 14px 14px 16px;
+}
+.fgx-panel-body { animation: fgx-fade 0.15s ease; }
+.fgx-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+.fgx h3.fgx-name {
+  margin: 0 !important;
+  font-size: 1.35rem !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+  color: var(--fgx-ink) !important;
+}
+.fgx .fgx-en {
+  flex-basis: 100%;
+  color: var(--fgx-mute) !important;
+  font-size: 0.88rem;
+}
+.fgx-badge {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.4;
+  vertical-align: middle;
+}
+.fgx .fgx-badge.is-core {
+  background: var(--fgx-accent);
+  color: #fff !important;
+}
+.fgx .fgx-badge.is-ref {
+  color: var(--fgx-mute) !important;
+  box-shadow: inset 0 0 0 1px var(--fgx-mute);
+}
+.fgx-sec { margin-top: 12px; }
+.fgx h4.fgx-sec-h {
+  margin: 0 0 4px !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  color: var(--fgx-dim) !important;
+}
+.fgx-etym {
+  background: color-mix(in srgb, var(--fgx-accent) 13%, var(--fgx-card));
+  border: 1px solid color-mix(in srgb, var(--fgx-accent) 32%, var(--fgx-line));
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+.fgx .fgx-etym-ko { font-weight: 700; line-height: 1.5; white-space: pre-line; }
+.fgx .fgx-etym-en {
+  margin-top: 4px;
+  color: var(--fgx-dim) !important;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+.fgx .fgx-memo {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed color-mix(in srgb, var(--fgx-accent) 40%, var(--fgx-line));
+  font-weight: 700;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+.fgx .fgx-memo b { color: var(--fgx-accent) !important; font-weight: 800; }
+.fgx ul.fgx-role {
+  margin: 0;
+  padding-left: 1.15rem;
+  list-style: disc !important;
+  color: var(--fgx-ink);
+}
+.fgx .fgx-role li { white-space: pre-line; }
+.fgx .fgx-where,
+.fgx .fgx-exam,
+.fgx .fgx-idle-note,
+.fgx .fgx-sub {
+  white-space: pre-line;
+}
+.fgx-exam {
+  background: color-mix(in srgb, #d97706 16%, var(--fgx-card));
+  border-left: 3px solid #d97706;
+  border-radius: 8px;
+  padding: 8px 10px;
+  line-height: 1.5;
+}
+.fgx-links { display: flex; flex-wrap: wrap; gap: 6px; }
+.fgx button[type="button"].fgx-link {
+  border: 1px solid var(--fgx-line) !important;
+  background: var(--fgx-elev) !important;
+  color: var(--fgx-ink) !important;
+  border-radius: 999px;
+  padding: 4px 10px !important;
+  font-size: 0.84rem !important;
+  font-weight: 600 !important;
+}
+.fgx button[type="button"].fgx-link:hover {
+  background: color-mix(in srgb, var(--fgx-accent) 12%, var(--fgx-elev)) !important;
+  color: var(--fgx-ink) !important;
+}
+
+.fgx-idle-lead { font-weight: 700; }
+.fgx .fgx-idle-note { margin-top: 8px; color: var(--fgx-dim) !important; }
+.fgx-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  color: var(--fgx-mute) !important;
+  font-size: 0.82rem;
+}
+.fgx-panel .fgx-legend { margin-top: 10px; }
+.fgx-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--fgx-mute);
+  display: inline-block;
+  flex: 0 0 auto;
+}
+.fgx-dot.is-core { background: var(--fgx-accent); border-color: var(--fgx-accent); }
+
+.fgx-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.fgx button[type="button"].fgx-chip {
+  border: 1px solid var(--fgx-line) !important;
+  background: var(--fgx-card) !important;
+  color: var(--fgx-ink) !important;
+  border-radius: 999px;
+  padding: 5px 10px !important;
+  font-size: 0.86rem !important;
+  font-weight: 600 !important;
+  white-space: nowrap;
+  min-height: 34px;
+}
+.fgx button[type="button"].fgx-chip.is-on,
+.fgx button[type="button"].fgx-chip.is-on:hover {
+  border-color: var(--fgx-accent) !important;
+  background: color-mix(in srgb, var(--fgx-accent) 14%, var(--fgx-card)) !important;
+  color: var(--fgx-ink) !important;
+}
+
+.fgx-scenes { margin-top: 12px; }
+.fgx button[type="button"].fgx-scene {
+  border: 1px solid var(--fgx-line) !important;
+  background: var(--fgx-card) !important;
+  color: var(--fgx-ink) !important;
+  border-radius: 999px;
+  text-align: left;
+}
+.fgx button[type="button"].fgx-scene.is-on,
+.fgx button[type="button"].fgx-scene.is-on:hover {
+  background: var(--fgx-accent) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+.fgx-player {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--fgx-accent) 8%, var(--fgx-card));
+  border: 1px solid var(--fgx-line);
+}
+.fgx-sub { line-height: 1.55; }
+.fgx-count { color: var(--fgx-mute) !important; font-size: 0.82rem; white-space: nowrap; }
+.fgx-pc { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; }
+.fgx button[type="button"].fgx-step {
+  min-width: 42px;
+  min-height: 36px;
+  border: 1px solid var(--fgx-line) !important;
+  background: var(--fgx-card) !important;
+  color: var(--fgx-ink) !important;
+}
+.fgx-dots { display: inline-flex; gap: 5px; align-items: center; margin-left: 4px; }
+.fgx-pdot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--fgx-mute) 35%, var(--fgx-line));
+  display: inline-block;
+}
+.fgx-pdot.is-done { background: color-mix(in srgb, var(--fgx-accent) 55%, var(--fgx-card)); }
+.fgx-pdot.is-on { background: var(--fgx-accent); transform: scale(1.25); }
+
+.fgx-error,
+.fgx .fgx-error {
+  margin: 0;
+  color: #b91c1c !important;
+}
+
+.fgx [data-part] {
+  cursor: pointer;
+  transition: opacity 0.15s ease, filter 0.15s ease;
+  touch-action: manipulation;
+}
+.fgx [data-part].is-dim { opacity: 0.34; }
+.fgx [data-part].is-hover,
+.fgx [data-part].is-pinned,
+.fgx [data-part].is-linked,
+.fgx [data-part].is-active { opacity: 1; }
+.fgx [data-part].is-hover,
+.fgx [data-part].is-pinned {
+  filter: drop-shadow(0 0 4px var(--fgx-accent));
+}
+.fgx [data-part].is-hover .fgx-vis,
+.fgx [data-part].is-pinned .fgx-vis {
+  stroke: var(--fgx-accent);
+  stroke-width: 3;
+}
+.fgx [data-part].is-linked {
+  filter: drop-shadow(0 0 3px var(--fgx-c1));
+  animation: fgx-pulse 1.6s ease-in-out infinite;
+}
+.fgx [data-part].is-active {
+  filter: drop-shadow(0 0 4px var(--fgx-c2));
+}
+
+@container fgx (min-width: 700px) {
+  .fgx-main { flex-direction: row; align-items: flex-start; gap: 16px; }
+  .fgx-col { flex: 1.15 1 0; }
+  .fgx-panel {
+    flex: 0.9 1 0;
+    max-height: min(72vh, 720px);
+    overflow: auto;
+    position: sticky;
+    top: 8px;
+  }
+}
+
+@keyframes fgx-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fgx-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.62; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fgx-panel-body,
+  .fgx [data-part],
+  .fgx [data-part].is-linked { animation: none !important; }
+  .fgx [data-part] { transition: none; }
+}
+.fgx.is-off [data-part],
+.fgx.is-off [data-part].is-linked { animation: none !important; }

@@ -30,7 +30,9 @@ function pageHtml({ src, title, h1, backs, base, unitsHere, list, linkNav, foote
   const rep = (s, a, b) => { if (!s.includes(a)) throw new Error("missing: " + a.slice(0, 50)); return s.replace(a, b); };
   head = rep(head, "<title>물리학Ⅰ 모션 노트</title>", `<title>${title}</title>`);
   head = rep(head, "물리학Ⅰ <span>모션 노트</span>", h1);
-  head = rep(head, `<p><a class="back" href="index.html">← 수능 물리학Ⅰ 노트</a> · <a class="back" href="practice.html">📝 기출 풀어보기</a> · 19개 핵심 개념을 움직이는 그림으로</p>`, `<p>${backs}</p>`);
+  const backRe = /<p><a class="back" href="index.html">← 수능 물리학Ⅰ 노트<\/a> · <a class="back" href="practice.html">📝 기출 풀어보기<\/a> · \d+개 핵심 개념을 움직이는 그림으로<\/p>/;
+  if (!backRe.test(head)) throw new Error("missing: physics back links");
+  head = head.replace(backRe, () => `<p>${backs}</p>`);
   head = rep(head, `<nav class="units" id="units" aria-label="단원"></nav>
   </header>`, `<nav class="units" id="units" aria-label="파트"></nav>
   </header>
@@ -44,10 +46,13 @@ function pageHtml({ src, title, h1, backs, base, unitsHere, list, linkNav, foote
   const player = `
 /* ───────── 플레이어 ───────── */
 buildScenes(SCENES);
+const Q=new URLSearchParams(location.search); // ?embed&only=5,6,7 — 장 노트 안에 그 장 장면만
+if(Q.has('embed')){document.documentElement.classList.add('embed');const only=(Q.get('only')||'').split(',').filter(Boolean).map(Number).filter(i=>Number.isInteger(i)&&S[i]);
+  if(only.length){const keep=only.map(i=>S[i]);S.length=0;S.push(...keep);}}
 const cv=document.getElementById('cv'),ctx=cv.getContext('2d'),$=id=>document.getElementById(id);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let idx=0,t=0,playing=!reduce,last=null;
-function resize(){const r=cv.getBoundingClientRect(),d=Math.min(2,devicePixelRatio||1);cv.width=Math.max(1,Math.round(r.width*d));cv.height=Math.max(1,Math.round(r.height*d));}
+function resize(){const d=Math.min(2,devicePixelRatio||1);cv.width=Math.max(1,Math.round(cv.clientWidth*d));cv.height=Math.max(1,Math.round(cv.clientHeight*d));}
 new ResizeObserver(resize).observe(cv);resize();
 const uc=s=>s.u<0?'#FF7A8A':UNITS[s.u].c;
 const cnt=UNITS.map(()=>0);S.forEach(s=>{if(s.u>=0)s.no=++cnt[s.u];});
@@ -75,7 +80,15 @@ function setPlay(p){playing=p;$('b-play').setAttribute('aria-label',p?'일시정
 $('b-play').onclick=()=>setPlay(!playing);$('b-prev').onclick=()=>go(idx-1);$('b-next').onclick=()=>go(idx+1);cv.onclick=()=>setPlay(!playing);
 document.addEventListener('keydown',e=>{if(e.target.closest('input,textarea'))return;
   if(e.key==='ArrowRight')go(idx+1);else if(e.key==='ArrowLeft')go(idx-1);
-  else if(e.key===' '&&!e.target.closest('button')){e.preventDefault();setPlay(!playing);}});
+  else if(e.key===' '&&!e.target.closest('button')){e.preventDefault();setPlay(!playing);}
+  else if(e.key==='l'||e.key==='L')setLoop(!loop);else if(e.key==='s'||e.key==='S')setSpeed(speed===1?.5:1);
+  else if(e.key==='f'||e.key==='F')setBig(!stage.classList.contains('big'));else if(e.key==='Escape')setBig(false);});
+let loop=false,speed=1;const stage=document.querySelector('.stage');
+function setLoop(v){loop=v;$('b-loop').setAttribute('aria-pressed',v);}
+function setSpeed(v){speed=v;$('b-speed').setAttribute('aria-pressed',v!==1);}
+function setBig(v){stage.classList.toggle('big',v);$('b-big').setAttribute('aria-pressed',v);document.body.style.overflow=v?'hidden':'';resize();}
+$('b-loop').onclick=()=>setLoop(!loop);$('b-speed').onclick=()=>setSpeed(speed===1?.5:1);$('b-big').onclick=()=>setBig(!stage.classList.contains('big'));
+$('g-prev').onclick=()=>go(idx-1);$('g-next').onclick=()=>go(idx+1);$('g-close').onclick=()=>setBig(false);
 HERE_UNITS.forEach(k=>{const u=UNITS[k],col=document.createElement('div');col.className='col';col.style.setProperty('--c',u.c);
   col.innerHTML=\`<h3>\${u.e} \${u.name}<small>\${cnt[k]} SCENES</small></h3>\`+S.map((s,i)=>s.u!==k?'':
     \`<div class="item"><button data-i="\${i}">\${s.title}<span>\${u.k}-\${s.no}</span></button><div class="fs">\${s.fx.slice(0,3).map(x=>\`<span class="word">\${x.f}</span>\`).join('')}</div></div>\`).join('');
@@ -84,7 +97,7 @@ $('sum').addEventListener('click',e=>{const b=e.target.closest('button[data-i]')
   document.querySelector('.player').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});});
 function frame(now){
   const dt=last==null?0:Math.min(.05,(now-last)/1000);last=now;
-  if(playing){t+=dt;if(t>=S[idx].dur)go(idx+1);}
+  if(playing){t+=dt*speed;if(t>=S[idx].dur){if(loop)t=0;else go(idx+1);}}
   ctx.setTransform(cv.width/W,0,0,cv.height/H,0,0);ctx.clearRect(0,0,W,H);
   try{S[idx].draw(ctx,t);}catch(err){console.error(err);}
   const b=tl.children[idx].querySelector('b');b.style.width=(clamp(t/S[idx].dur)*100)+'%';

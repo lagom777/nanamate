@@ -1,0 +1,88 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>재무관리: 기업의 돈을 가치 있게 굴리는 기술</title><link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="index.html">💼 표지 · 소개</a></li>
+<li><a href="chapters/01-basics.html">1. 재무관리란 무엇인가</a></li>
+<li><a href="chapters/02-time-value.html">2. 화폐의 시간가치</a></li>
+<li><a href="chapters/03-bonds-stocks.html">3. 채권과 주식 평가</a></li>
+<li><a href="chapters/04-risk-return.html">4. 위험과 수익률</a></li>
+<li><a href="chapters/05-capital-budgeting.html">5. 자본예산: 투자안 평가</a></li>
+<li><a href="chapters/06-capital-structure.html">6. 자본비용과 자본구조</a></li>
+<li><a href="chapters/07-dividend-policy.html">7. 배당정책</a></li>
+<li><a href="chapters/08-working-capital.html">8. 운전자본 관리</a></li>
+<li><a href="chapters/09-financial-analysis.html">9. 재무분석과 기업가치</a></li>
+</ol></aside>
+<main><header class="paper-header"><h1>재무관리,<br><em>기업의 돈</em>을 가치 있게<br>굴리는 기술</h1>
+<p class="authors">Financial Management — Value, Risk, and the Cost of Capital</p>
+<p class="affiliation">Vol. 47 · July 2026 · aboutFinance Editorial</p></header>
+<div class="scene-3d" id="intro-scene"></div>
+<span class="interact-hint">💼 재무관리의 3대 의사결정: 투자 · 자본조달 · 배당</span>
+<h2>재무관리란?</h2>
+<p>재무관리(Financial Management)는 기업이 <strong>돈을 어디에 쓰고(투자), 어디서 구하며(자본조달), 어떻게 나눌지(배당)</strong>를 결정해 <strong>기업가치를 극대화</strong>하는 경영 활동입니다. 화폐의 시간가치, 위험과 수익률의 trade-off, 자본비용이라는 세 가지 축 위에서 모든 판단이 이루어집니다.</p>
+<div class="info-card"><h4>개인 재테크와 뭐가 다를까?</h4><p>재테크가 '내 돈'을 불리는 일이라면, 재무관리는 <strong>회사의 돈</strong>을 다루는 일입니다. 공장을 지을지(자본예산), 빚으로 구할지 주식으로 구할지(자본구조), 이익을 나눠줄지(배당정책) — CFO의 하루하루가 바로 재무관리입니다.</p></div>
+</main></div>
+<script>
+(function() {
+  const container = document.getElementById('intro-scene');
+  if (!container || typeof THREE === 'undefined') return;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, container.clientWidth/container.clientHeight, 0.1, 1000);
+  camera.position.set(0, 2.4, 11); camera.lookAt(0, 0, 0);
+  let renderer; try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); } catch(e){ return; }
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  // 중앙: 기업가치 코어
+  const core = new THREE.Mesh(new THREE.IcosahedronGeometry(1.1, 1), new THREE.MeshBasicMaterial({ color: 0x0f766e, wireframe: true }));
+  scene.add(core);
+
+  // 3대 의사결정 노드(투자·자본조달·배당) — 원형 배치
+  const ringR = 4, nodes = [];
+  for (let i = 0; i < 3; i++) {
+    const a = (i/3)*Math.PI*2 - Math.PI/2;
+    const m = new THREE.Mesh(new THREE.SphereGeometry(0.5, 18, 18), new THREE.MeshBasicMaterial({ color: 0x14b8a6 }));
+    m.position.set(Math.cos(a)*ringR, Math.sin(a)*ringR*0.55, 0);
+    scene.add(m); nodes.push(m);
+  }
+  // 루프 연결선(원호 근사)
+  const loopPts = [];
+  for (let i = 0; i <= 60; i++) { const a = (i/60)*Math.PI*2 - Math.PI/2; loopPts.push(new THREE.Vector3(Math.cos(a)*ringR, Math.sin(a)*ringR*0.55, 0)); }
+  scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(loopPts), new THREE.LineBasicMaterial({ color: 0x14b8a6, transparent: true, opacity: 0.35 })));
+
+  // 위성: 시간가치/위험/자본비용/가치평가 (코어에 연결)
+  const sats = [];
+  const satColors = [0xf59e0b, 0xef4444, 0x0ea5e9, 0x22c55e];
+  for (let i = 0; i < 4; i++) {
+    const a = (i/4)*Math.PI*2;
+    const c = new THREE.Mesh(new THREE.BoxGeometry(0.45,0.45,0.45), new THREE.MeshBasicMaterial({ color: satColors[i] }));
+    c.position.set(Math.cos(a)*2.2, 0.2, Math.sin(a)*2.2);
+    scene.add(c); sats.push(c);
+    scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), c.position]), new THREE.LineBasicMaterial({ color: satColors[i], transparent: true, opacity: 0.25 })));
+  }
+
+  // 루프를 도는 펄스(현금흐름)
+  const pulse = new THREE.Mesh(new THREE.SphereGeometry(0.2, 12, 12), new THREE.MeshBasicMaterial({ color: 0xfde047 }));
+  scene.add(pulse);
+
+  let t = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    t += 0.006;
+    const a = (t % 1) * Math.PI * 2 - Math.PI/2;
+    pulse.position.set(Math.cos(a)*ringR, Math.sin(a)*ringR*0.55, 0);
+    core.rotation.x += 0.004; core.rotation.y += 0.006;
+    sats.forEach((s,i)=>{ const ang=(i/4)*Math.PI*2 + t*1.2; s.position.set(Math.cos(ang)*2.2, 0.2, Math.sin(ang)*2.2); });
+    scene.rotation.y = Math.sin(t*0.5)*0.15;
+    renderer.render(scene, camera);
+  }
+  animate();
+  window.addEventListener('resize', () => { camera.aspect = container.clientWidth/container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
+})();
+</script></body></html>

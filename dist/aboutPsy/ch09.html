@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이상심리·치료 | 심리학 기초</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+  <script defer src="../shared/quizgame3d.js"></script>
+  <script defer src="../shared/learngame3d.js"></script>
+</head>
+<body>
+
+<aside>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h1><a href="index.html">심리학 기초</a></h1>
+  <div class="sub">PSYCHOLOGY FROM ZERO</div>
+  <nav>
+    <ol>
+      <li><a href="index.html" class="chap">🏠 목차</a></li>
+      <li><a href="ch01.html" class="chap">1. 심리학이란?</a></li>
+      <li><a href="ch02.html" class="chap">2. 뇌와 신경계</a></li>
+      <li><a href="ch03.html" class="chap">3. 감각과 지각</a></li>
+      <li><a href="ch04.html" class="chap">4. 학습</a></li>
+      <li><a href="ch05.html" class="chap">5. 기억</a></li>
+      <li><a href="ch06.html" class="chap">6. 발달</a></li>
+      <li><a href="ch07.html" class="chap">7. 성격</a></li>
+      <li><a href="ch08.html" class="chap">8. 사회심리학</a></li>
+      <li><a href="ch09.html" class="chap">9. 이상심리·치료</a></li>
+      <li><a href="ch10.html" class="chap">10. 동기와 정서</a></li>
+      <li><a href="ch11.html" class="chap">11. 인지 — 사고·언어·지능</a></li>
+      <li><a href="ch12.html" class="chap">12. 의식 — 수면·꿈·각성</a></li>
+      <li><a href="ch13.html" class="chap">13. 스트레스와 건강심리</a></li>
+      <li><a href="ch14.html" class="chap">14. 심리검사의 세계</a></li>
+      <li><a href="ch15.html" class="chap">15. 긍정심리학</a></li>
+      <li><a href="quiz.html" class="chap">📝 확인 퀴즈</a></li>
+    </ol>
+  </nav>
+  <button id="theme-btn" onclick="toggleTheme()">다크 모드 전환</button>
+</aside>
+
+<main>
+  <div class="page-nav">
+    <a href="index.html">← 목차로</a>
+  </div>
+
+  <section class="chapter" id="ch9">
+    <div class="chap-num">CHAPTER 09</div>
+    <h2>이상심리와 치료 — "정상"의 경계는 어디인가</h2>
+<span class="interact-hint" style="display:inline-block;font-size:.8em;color:#7a6692;font-family:monospace;margin:6px 0;">⟳ 이상과 치료 — 균형에서 벗어났다가 되돌아오기</span>
+<div class="scene-3d" id="sim-scene" style="width:100%;height:380px;margin:14px 0 28px;border-radius:14px;border:1px solid rgba(0,0,0,.12);background:#0e1117;overflow:hidden;position:relative;"></div>
+<script>(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const COL=0xa855f7;const N=15;for(let i=0;i<N;i++){const x=(i-(N-1)/2)*0.42;const col=new THREE.Color().setHSL(0.33-0.33*(i/(N-1)),0.6,0.55);const b=new THREE.Mesh(new THREE.BoxGeometry(0.3,1,0.3),new THREE.MeshBasicMaterial({color:col}));b.position.x=x;s.add(b);}const mk=new THREE.Mesh(new THREE.ConeGeometry(0.24,0.55,12),new THREE.MeshBasicMaterial({color:0xffffff}));mk.position.y=1.4;s.add(mk);s.userData.mk=mk;s.userData.N=N;
+  [['정상(적응)','#86efac',-3.0,-1.2,0],['이상(부적응)','#fca5a5',3.0,-1.2,0],['지금 상태','#ffffff',0,2.05,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});const mlab=s.children[s.children.length-1];
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 정상과 이상은 칼로 자르듯 나뉘지 않는 연속선(스펙트럼)입니다.','이상의 4D 기준: 일탈(Deviance)·고통(Distress)·기능장애(Dysfunction)·위험(Danger).','D 하나만으로는 부족 — 여러 D가 문화 안에서 부적응적일 때 진단을 고려합니다.','치료(CBT·약물·정신분석)는 균형에서 벗어난 마음을 적응 쪽으로 되돌립니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const N=s.userData.N;const drift=Math.sin(T*0.5);s.userData.mk.position.x=drift*(N-1)/2*0.42*(0.4+0.6*Math.abs(Math.cos(T*0.25)));mlab.position.x=s.userData.mk.position.x;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();</script>
+
+    <div class="en">Abnormal Psychology and Therapy</div>
+
+    <p>"정상"과 "비정상"은 칼로 자르듯 나뉘지 않습니다. 누구나 슬픔을 느끼고, 가끔 불안해하며, 잠을 설치는 날도 있습니다. 그렇다면 어디서부터 '심리 장애'라고 부를 수 있을까요? 이 장에서는 (1) 심리학자들이 '이상(abnormal)'을 어떻게 정의하는지, (2) 주요 정신장애 범주에는 무엇이 있는지, 그리고 (3) 어떤 치료적 접근들이 사용되는지를 차례로 살펴봅니다.</p>
+
+    <h3>9.1 이상의 기준 — 4D</h3>
+    <p>심리학 교과서에서는 보통 네 가지 기준, 흔히 <strong>4D</strong>라 부르는 잣대로 '이상' 여부를 판단합니다. 모두 영어 머리글자가 D로 시작하기 때문이죠.</p>
+    <ul>
+      <li><strong>Deviance (일탈)</strong> — 그 사회·문화의 평균 또는 규범에서 통계적으로 또는 사회적으로 크게 벗어난 행동인가? 예: 한겨울에 알몸으로 길거리를 돌아다님.</li>
+      <li><strong>Distress (고통)</strong> — 본인이 그 상태로 인해 괴로워하는가? 우울, 불안, 죄책감, 무기력 등 주관적 고통이 분명히 있는가?</li>
+      <li><strong>Dysfunction (기능장애)</strong> — 일상생활(학교·직장·관계 등)을 정상적으로 해내기 어려울 정도로 기능이 떨어졌는가? 출근을 못 한다, 사람을 만날 수 없다 등.</li>
+      <li><strong>Danger (위험)</strong> — 자신이나 타인에게 신체적·심리적 위험을 끼치는가? 자해·자살 시도, 폭력 충동 등.</li>
+    </ul>
+
+    <div class="warn">
+      <span class="label">D 하나만으로는 부족합니다</span>
+      예술가의 기이한 옷차림은 '일탈(Deviance)'이지만 '고통'도 '기능장애'도 없을 수 있습니다. 반대로 누군가는 무척 괴로워해도(Distress) 일과 관계는 잘 해낼 수 있죠. <b>여러 D가 함께 나타날 때</b>, 그리고 <b>그것이 그 사람의 문화 안에서도 부적응적일 때</b> 비로소 임상적 진단을 고려합니다. 같은 행동도 문화에 따라 의미가 전혀 다를 수 있다는 점을 잊지 마세요.
+    </div>
+
+    <h3>9.2 주요 정신장애 개관</h3>
+    <p>여기서는 임상에서 가장 자주 다뤄지는 큰 범주들을 짧게 훑습니다. 진단명은 외우는 것이 목적이 아니라, '어떤 모양의 어려움이 있는가'를 그림으로 갖는 데 의미가 있습니다.</p>
+
+    <h4>불안장애 (Anxiety Disorders)</h4>
+    <p>위협이 없거나 작은 상황에서도 과도한 불안이 지속되는 장애군입니다. <b>범불안장애(GAD)</b>는 특정 대상 없이 거의 모든 일에 만성적으로 걱정합니다. <b>공황장애</b>는 갑작스럽고 강렬한 공황 발작(심장이 터질 듯한 두근거림, 질식감, 죽을 것 같은 공포)이 반복됩니다. <b>특정 공포증</b>은 고소·동물·주사 같은 특정 자극에, <b>사회불안장애</b>는 남의 평가를 받는 사회적 상황에 강한 두려움을 보입니다.</p>
+
+    <h4>기분장애 (Mood Disorders)</h4>
+    <p><b>주요우울장애(MDD)</b>는 2주 이상 지속되는 우울한 기분, 흥미 상실, 수면·식욕·에너지·집중력의 변화가 핵심입니다. 단순한 '슬픔'이 아니라, 좋아하던 일에서도 즐거움을 못 느끼는 '무쾌감(anhedonia)'이 특징적이죠. <b>양극성장애</b>는 우울 시기와 비정상적으로 들뜨고 활동적이며 잠을 안 자도 괜찮은 <b>조증(또는 경조증)</b> 시기가 번갈아 나타납니다. 단순한 '기분 변덕'과는 강도와 지속 기간이 다릅니다.</p>
+
+    <h4>조현병 (Schizophrenia)</h4>
+    <p>현실 검증력에 심각한 손상이 생기는 장애로, 증상은 크게 두 묶음으로 나뉩니다.</p>
+    <ul>
+      <li><strong>양성 증상</strong> — 정상에는 없는 무언가가 '더해지는' 증상. <b>환각</b>(주로 환청), <b>망상</b>(누가 나를 감시한다는 피해망상 등), <b>와해된 사고와 언어</b>가 대표적입니다.</li>
+      <li><strong>음성 증상</strong> — 정상에 있어야 할 무언가가 '빠지는' 증상. <b>정서 둔마</b>(표정·억양이 평평해짐), <b>무의욕</b>, <b>사회적 위축</b>, <b>말수 감소</b> 등.</li>
+    </ul>
+
+    <h4>성격장애 (Personality Disorders)</h4>
+    <p>일시적인 상태가 아니라, 청소년기·성인 초기부터 지속되는 <b>경직되고 부적응적인 성격 패턴</b>입니다. DSM-5는 10가지 성격장애를 세 군집으로 묶습니다.</p>
+    <ul>
+      <li><strong>A군 (괴이·고립)</strong> — 편집성, 분열성, 분열형. 의심 많거나 사회적으로 동떨어진 인상.</li>
+      <li><strong>B군 (극적·정서적)</strong> — 반사회성, 경계성, 연극성, 자기애성. 감정과 행동이 극단적·불안정.</li>
+      <li><strong>C군 (불안·두려움)</strong> — 회피성, 의존성, 강박성. 두려움과 통제 욕구가 핵심.</li>
+    </ul>
+
+    <h4>강박 및 외상 관련 장애</h4>
+    <p><b>강박장애(OCD)</b>는 원치 않는 침투적 생각(<b>강박사고</b>)과 그 불안을 줄이려는 반복 행동(<b>강박행동</b>, 예: 손 씻기·확인하기)이 핵심입니다. 본인도 비합리적임을 알면서 멈추기 힘들죠. <b>외상후스트레스장애(PTSD)</b>는 생명을 위협하는 사건(전쟁·사고·폭력) 이후 침습적 회상(플래시백), 회피, 과각성, 부정적 기분 변화가 한 달 이상 지속될 때 진단됩니다.</p>
+
+    <div class="term">
+      <span class="word">DSM-5</span>
+      <b>Diagnostic and Statistical Manual of Mental Disorders, 5th edition</b>의 약자. 미국정신의학회(APA)가 펴내는 정신장애 진단의 표준 매뉴얼입니다. 각 장애의 진단 기준(어떤 증상이 몇 개, 얼마 동안 있어야 하는지)을 정의해 임상가·연구자들이 공통의 언어로 이야기할 수 있게 해줍니다. 세계보건기구(WHO)의 ICD-11도 비슷한 역할을 하죠.
+    </div>
+
+    <h3>9.3 주요 치료 접근</h3>
+    <p>같은 우울증에도 '왜 생겼는가'를 보는 관점에 따라 치료법이 달라집니다. 대표적인 네 가지 심리치료 접근을 비교해봅시다.</p>
+
+    <table class="compare">
+      <tr><th>접근</th><th>초점</th><th>대표 기법</th><th>대표 학자</th></tr>
+      <tr>
+        <td><b>정신분석</b></td>
+        <td>무의식의 갈등과 어린 시절 경험을 의식화</td>
+        <td>자유연상, 꿈 분석, 전이 해석</td>
+        <td>프로이트</td>
+      </tr>
+      <tr>
+        <td><b>인지행동치료(CBT)</b></td>
+        <td>왜곡된 생각과 부적응 행동의 수정</td>
+        <td>인지 재구성, 행동 실험, 노출</td>
+        <td>벡, 엘리스</td>
+      </tr>
+      <tr>
+        <td><b>인본주의</b></td>
+        <td>자기수용과 성장 잠재력의 실현</td>
+        <td>무조건적 긍정적 존중, 공감적 경청</td>
+        <td>로저스, 매슬로우</td>
+      </tr>
+      <tr>
+        <td><b>행동치료</b></td>
+        <td>학습된 부적응 행동 자체를 변화</td>
+        <td>체계적 둔감화, 노출, 토큰 경제</td>
+        <td>왓슨, 울페, 스키너</td>
+      </tr>
+    </table>
+
+    <p>심리치료와 함께 또는 단독으로 <b>약물치료</b>가 사용되기도 합니다. 우울·불안에는 세로토닌 재흡수를 막아 시냅스의 세로토닌 농도를 높이는 <b>SSRI</b>(예: 플루옥세틴), 급성 불안에는 <b>항불안제</b>(벤조디아제핀계), 조현병의 양성 증상에는 도파민 수용체에 작용하는 <b>항정신병제</b>가 흔히 쓰입니다. 약물은 증상을 빠르게 가라앉히는 데 강점이 있지만, 생각·행동 패턴 자체를 바꾸지는 못하므로 <b>심리치료와 병행</b>할 때 효과가 가장 큽니다.</p>
+
+    <h3>9.4 인지행동치료의 ABC 모델</h3>
+    <p>현대 임상에서 가장 널리 쓰이는 접근인 <strong>인지행동치료(CBT)</strong>의 핵심 통찰은 단순합니다. <b>"고통은 사건 자체가 아니라, 그 사건에 대한 우리의 해석에서 온다."</b> 이를 알기 쉽게 정리한 것이 앨버트 엘리스의 <strong>ABC 모델</strong>입니다.</p>
+    <ul>
+      <li><strong>A — Activating event</strong>: 실제로 일어난 사건</li>
+      <li><strong>B — Belief</strong>: 그 사건에 대한 나의 해석·신념</li>
+      <li><strong>C — Consequence</strong>: 그 신념이 만들어낸 정서·행동의 결과</li>
+    </ul>
+    <p>대부분의 사람들은 "A 때문에 C가 됐다"고 생각합니다. 하지만 CBT는 실제로 C를 만드는 건 가운데 끼어 있는 B라고 봅니다. 그래서 치료의 표적은 A를 없애는 것이 아니라(보통 그건 불가능하니까), <b>B를 알아차리고 더 현실적인 신념으로 바꾸는 것</b>입니다.</p>
+
+    <figure class="figure">
+      <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg">
+        <text x="300" y="22" text-anchor="middle" font-size="14" font-weight="bold" fill="#5b4b8a">인지행동치료 ABC 모델</text>
+        <rect x="30" y="50" width="150" height="120" rx="10" fill="#dce9f5" stroke="#4a7ba6" stroke-width="2.5"/>
+        <text x="105" y="80" text-anchor="middle" font-size="24" font-weight="bold" fill="#4a7ba6">A</text>
+        <text x="105" y="105" text-anchor="middle" font-size="11" fill="#5b4b8a" font-weight="bold">Activating event</text>
+        <text x="105" y="120" text-anchor="middle" font-size="11" fill="#5b4b8a" font-weight="bold">(사건)</text>
+        <text x="105" y="145" text-anchor="middle" font-size="10" fill="#6b6b6b">친구가 인사를</text>
+        <text x="105" y="158" text-anchor="middle" font-size="10" fill="#6b6b6b">받지 않았다</text>
+        <path d="M 185 110 L 220 110" stroke="#5b4b8a" stroke-width="2" marker-end="url(#abcArr)"/>
+        <rect x="225" y="50" width="150" height="120" rx="10" fill="#fff0cc" stroke="#c9a227" stroke-width="2.5"/>
+        <text x="300" y="80" text-anchor="middle" font-size="24" font-weight="bold" fill="#c9a227">B</text>
+        <text x="300" y="105" text-anchor="middle" font-size="11" fill="#5b4b8a" font-weight="bold">Belief</text>
+        <text x="300" y="120" text-anchor="middle" font-size="11" fill="#5b4b8a" font-weight="bold">(신념·해석)</text>
+        <text x="300" y="145" text-anchor="middle" font-size="10" fill="#6b6b6b">"날 싫어하나봐.</text>
+        <text x="300" y="158" text-anchor="middle" font-size="10" fill="#6b6b6b">난 가치없어."</text>
+        <path d="M 380 110 L 415 110" stroke="#5b4b8a" stroke-width="2" marker-end="url(#abcArr)"/>
+        <rect x="420" y="50" width="150" height="120" rx="10" fill="#fde8dc" stroke="#d97757" stroke-width="2.5"/>
+        <text x="495" y="80" text-anchor="middle" font-size="24" font-weight="bold" fill="#d97757">C</text>
+        <text x="495" y="105" text-anchor="middle" font-size="11" fill="#5b4b8a" font-weight="bold">Consequence</text>
+        <text x="495" y="120" text-anchor="middle" font-size="11" fill="#5b4b8a" font-weight="bold">(결과·정서)</text>
+        <text x="495" y="145" text-anchor="middle" font-size="10" fill="#6b6b6b">우울, 회피,</text>
+        <text x="495" y="158" text-anchor="middle" font-size="10" fill="#6b6b6b">수치심</text>
+        <text x="300" y="200" text-anchor="middle" font-size="11" fill="#5b4b8a" font-weight="bold">핵심: 문제는 A(사건)가 아니라 B(신념)에서 생긴다</text>
+        <text x="300" y="218" text-anchor="middle" font-size="10" fill="#6b6b6b">→ 치료는 B를 찾아내 더 현실적인 생각으로 바꾸는 것</text>
+        <defs>
+          <marker id="abcArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#5b4b8a"/>
+          </marker>
+        </defs>
+      </svg>
+      <figcaption>ABC 모델 — 같은 사건(A)이라도 믿음(B)에 따라 전혀 다른 결과(C)가 나옵니다.</figcaption>
+    </figure>
+
+    <div class="example">
+      <span class="label">같은 사건, 다른 B → 다른 C</span>
+      <b>A (사건)</b>: 중요한 시험에서 평균보다 낮은 점수를 받았다.<br><br>
+      <b>해석 1 — B</b>: "난 역시 머리가 나빠. 뭘 해도 안 돼. 졸업도 못 할 거야."<br>
+      <b>→ C</b>: 깊은 무력감, 다음 시험 공부를 포기, 친구도 안 만남.<br><br>
+      <b>해석 2 — B</b>: "이번 단원 공부 방법이 잘 안 맞았네. 어디서 막혔는지 다시 보고, 다음엔 모의시험을 더 일찍 풀어봐야겠다."<br>
+      <b>→ C</b>: 가벼운 실망, 그러나 학습 전략을 점검하고 다음 시험을 준비.<br><br>
+      사건은 같은데 결과는 정반대입니다. CBT 치료자는 내담자가 자기 안의 B를 알아차리고 "이 생각은 사실인가? 다른 가능성은 없나?"를 함께 검토하도록 돕습니다.
+    </div>
+
+    <div class="tip">
+      <span class="label">스스로 해보기</span>
+      오늘 기분이 갑자기 나빠졌던 순간을 떠올려, A·B·C로 적어보세요. B 자리에 어떤 자동적 사고가 있었는지 발견하는 것만으로도 작은 변화가 시작됩니다.
+    </div>
+  </section>
+
+  <div class="page-nav-bottom">
+    <a href="ch08.html">← 이전</a>
+    <div class="spacer"></div>
+    <a href="ch10.html">다음 →</a>
+  </div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한마디로 하면?</h3>
+  <p>이상심리학은 <b>마음이 아플 때 무슨 일이 벌어지는지</b>를 이해하고 돕는 분야예요. 몸이 아프면 병원에 가듯, <b>마음도 돌볼 수 있어요!</b> 💚</p>
+
+  <h3>🤔 이게 왜 재밌냐면</h3>
+  <p>정신건강 이야기는 점점 우리 가까이에 있어요.</p>
+  <ul>
+    <li>😰 시험 기간에 손이 떨리고 가슴이 두근거리는 불안, 겪어본 적 있죠?</li>
+    <li>😔 요즘 우울감이나 외로움을 느끼는 사람이 많아졌다는 조사가 있어요.</li>
+    <li>🎬 무서운 일을 겪은 뒤 그 장면이 자꾸 떠오르는 것도 마음의 상처예요. (PTSD)</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 이 단어만 알면 돼!</h4>
+    <ul>
+      <li><strong>증상(Symptom)</strong>: 본인이 느끼는 힘든 경험</li>
+      <li><strong>장애(Disorder)</strong>: 일정 기준을 넘는 증상들의 묶음</li>
+      <li><strong>DSM-5</strong>: 마음의 병을 진단하는 표준 설명서</li>
+      <li><strong>심리치료(Psychotherapy)</strong>: 대화로 마음을 돌보는 치료</li>
+      <li><strong>약물치료(Pharmacotherapy)</strong>: 뇌의 신호 물질을 조절하는 치료</li>
+    </ul>
+  </div>
+
+  <h3>📖 쉽게 풀어볼게!</h3>
+  <p>"정상"과 "이상"을 딱 자르는 선은 사실 흐릿해요. 슬픔이나 불안은 <b>누구나 느끼는 정상 감정</b>이에요. 하지만 그게 <b>너무 오래, 너무 세게, 일상을 방해할 정도로</b> 계속되면 도움이 필요한 신호예요. 감기는 누구나 걸리지만, 한 달 넘게 안 나으면 병원에 가는 것과 비슷해요. 🤒</p>
+  <p>치료법은 크게 두 가지예요. <b>대화로 생각을 바꾸는 심리치료</b>(예: CBT)와 <b>약으로 뇌를 돕는 약물치료</b>죠. 특히 CBT는 "힘든 건 <b>사건 자체가 아니라 그걸 어떻게 해석하느냐</b>에서 온다"고 봐요. 같은 시험 점수라도 "난 안 돼"라고 생각하면 우울해지고, "다음엔 이렇게 해보자"라고 생각하면 힘이 나죠. 그리고 꼭 기억해요. 마음의 병은 <b>의지가 약해서 생기는 게 아니에요.</b> 당뇨가 의지로 안 생기듯이요. 도움을 청하는 건 약점이 아니라 <b>나를 아끼는 용기</b>랍니다! 💪</p>
+
+  <div class="study-tip">
+    <strong>💡 이렇게 해봐:</strong> 친구가 힘든 얘기를 꺼내면 "이렇게 해!"라고 조언하기보다 "지금 기분이 어때?"라고 물어봐요. 잘 들어주는 게 가장 좋은 첫 도움이에요.
+  </div>
+
+  <h3>✅ 오늘의 정리</h3>
+  <ul>
+    <li>이상심리학은 마음의 어려움을 이해하는 분야! 💚</li>
+    <li>정상과 이상은 강도·지속·생활 방해로 구분해요.</li>
+    <li>우울·불안·강박·PTSD·조현병 등이 있어요.</li>
+    <li>치료는 심리치료와 약물치료, 함께하면 더 좋아요.</li>
+    <li>도움을 청하는 건 약점이 아니라 용기예요!</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>정신병리의 원인은 생물-심리-사회 모형으로 통합됩니다. 우울증은 세로토닌·노르에피네프린·도파민 시스템 이상, HPA 축 과활성, 부정 인지 도식, 만성 스트레스의 상호작용으로 설명되며, 불안장애는 편도체 과활성과 전전두엽의 통제 부족, 회피 학습이 핵심입니다. PTSD는 외상 기억의 응고화 이상과 재공고화 실패로 이해되며, 강박장애는 안와전두-선조체 회로의 과활성과 관련됩니다. 조현병은 도파민 가설(D2 과활성)과 글루타메이트 가설을 결합하며, 양극성장애는 칼슘 신호 이상과 일주기 리듬 장애가 관련됩니다. 치료적으로 인지행동치료(CBT)는 사고-감정-행동의 삼각관계를 다루며, 노출치료는 두려움 학습의 소거를 임상에 응용합니다. 정신역동치료는 무의식 갈등을 다루고, 인간중심치료는 무조건적 긍정적 관심을, DBT는 정서조절 기술을 가르칩니다. 약물치료는 SSRI/SNRI(우울·불안), 벤조디아제핀(단기 불안), 항정신병약물(조현병), 기분안정제(양극성), 자극제(ADHD)로 구분됩니다.</p>
+
+  <h3>고전 실험과 사례</h3>
+  <div class="info-card">
+    <h4>🧠 실험 1 — 셀리그만의 학습된 무력감</h4>
+    <p>피할 수 없는 전기충격을 반복적으로 받은 개는 이후 회피 가능한 상황에서도 시도조차 하지 않았습니다. 이 모형은 우울증의 인지적 측면을 설명하는 이론으로 발전했고, 이후 셀리그만은 긍정심리학과 회복탄력성 연구로 방향을 전환했습니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>🧠 실험 2 — 로젠한의 가짜 환자 연구(1973)</h4>
+    <p>정상인 8명이 정신과 병원에 입원해 환청 증상을 호소한 뒤 곧 정상 행동으로 돌아갔지만, 모두 조현병으로 진단받아 평균 19일간 입원했습니다. 진단 라벨이 이후의 모든 행동 해석을 어떻게 왜곡시키는지를 보여 준 충격적 연구로, 진단 신뢰도 개선을 촉발했습니다.</p>
+  </div>
+
+  <h3>임상/실생활 응용</h3>
+  <p>학교와 직장은 EAP(직원지원프로그램), 정신건강 1차 진료(stepped care)로 조기 개입을 시도합니다. 디지털 치료(앱 기반 CBT)는 접근성을 크게 높였고, 자살 예방에서는 1393(한국 자살예방상담전화)을 비롯한 핫라인과 안전 계획(safety planning)이 핵심입니다. 가족치료는 환자뿐 아니라 가족 시스템을 함께 다루어 재발률을 낮춥니다.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ 자주 하는 오해:</strong> "약을 먹기 시작하면 끊을 수 없다"는 말은 일부 약물(벤조디아제핀)에는 해당되지만, SSRI는 의사의 지도 아래 점진적 감량이 가능합니다. 자가판단으로 약을 끊는 것이 오히려 재발 위험을 높입니다.
+  </div>
+
+<h3>전문가 레벨</h3>
+  <p>현대 임상심리는 DSM의 범주적 진단을 넘어 차원적 모형으로 진화하고 있습니다. NIMH의 RDoC는 부정 정서가, 긍정 정서가, 인지 시스템, 사회과정, 각성·조절 시스템 등 신경회로 기반 차원으로 정신병리를 재구성하려 하며, HiTOP은 통계적으로 유도된 위계적 차원 모형을 제안합니다. 정신증 스펙트럼, 내재화-외재화 차원이 대표적입니다. 치료 측면에서 비판적 메타분석(Cuijpers, Wampold)은 다양한 심리치료의 효과크기가 비슷하다는 도도새 가설(Dodo Bird Verdict)을 지지하며, 공통요인(치료 동맹, 기대, 일치)이 특정 기법보다 큰 비중을 가질 가능성을 제기합니다. 최근에는 케타민, 실로시빈 같은 사이키델릭 보조 치료가 우울증·PTSD에서 빠른 효과를 보이고 있고, TMS·tDCS 같은 비침습적 뇌 자극, DBS(심부뇌자극)가 난치성 환자의 새로운 옵션으로 등장했습니다. 한편 정밀정신의학(precision psychiatry)은 유전·뇌영상·디지털 표현형을 결합해 개인 맞춤 치료를 시도합니다.</p>
+
+  <h3>측정과 통계</h3>
+  <p>임상 평가는 구조화 면담(SCID), 자기보고(PHQ-9, GAD-7, BDI), 행동 관찰을 결합합니다. 무선통제시험(RCT)에서는 의도치 분석(ITT), 활성 비교군, 사전등록이 표준이며, 효과크기는 NNT(Number Needed to Treat)로 임상적 유용성을 평가합니다. 네트워크 분석은 증상을 노드로 보고 증상 간 인과 관계를 모형화하며, 머신러닝은 치료 반응 예측에 시도되고 있습니다.</p>
+
+  <h3>최신 연구</h3>
+  <p>첫째, 디지털 정신건강: 스마트폰 센서로 우울·자살 위험을 조기 탐지하는 디지털 표현형 연구. 둘째, 사이키델릭 르네상스: 실로시빈은 phase 3 임상 진행 중이며 MDMA-PTSD 보조 치료는 2024년 FDA 승인이 보류되었고, 신경가소성 기제 연구가 활발합니다. 셋째, AI 챗봇 치료: Woebot, Wysa 같은 앱이 경증 우울·불안에 효과를 보인다는 RCT 결과와 임상 윤리 논쟁.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li><strong>임상신경과학</strong>: 정신병리의 회로 기제</li>
+    <li><strong>약리유전학</strong>: 약물 반응의 유전적 예측</li>
+    <li><strong>공중정신보건</strong>: 인구 단위 개입과 정책</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>책: 『Abnormal Psychology』(Kring et al.)</li>
+    <li>책: 『The Body Keeps the Score』(van der Kolk)</li>
+    <li>저널: JAMA Psychiatry, Lancet Psychiatry</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>🎓 사고 실험:</strong> 만약 정신건강 진단이 신경회로 기반 차원으로 완전히 재편된다면, 사회적 낙인은 어떻게 변할까요? "우울증 환자"가 아니라 "부정정서가 차원에서 상위 5%"라고 표현하는 것이 더 나을까요, 아니면 또 다른 문제를 만들까요?
+  </div>
+</div>
+
+  <footer>© Psychology from Zero · 심리학 입문 학습 사이트</footer>
+
+<h2>🕹️ 직접 해보기 — 치료 접근 상황 판단</h2>
+<p>각 심리치료 접근을 대표 기법과 연결해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#d97757","prompt":"치료 접근과 대표 기법을 짝지으세요","pairs":[{"term":"정신분석","def":"자유연상·꿈 분석"},{"term":"인지행동치료(CBT)","def":"인지 재구성·노출"},{"term":"인본주의","def":"무조건적 긍정적 존중"},{"term":"행동치료","def":"체계적 둔감화·토큰 경제"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#d97757","questions":[{"q":"정신장애 진단 표준 매뉴얼은?","choices":["OCEAN","DSM-5","GAS","ABC"],"answer":1},{"q":"조현병의 환각·망상은 어떤 증상?","choices":["양성 증상","음성 증상","정서 둔마","무의욕"],"answer":0},{"q":"ABC 모델에서 B가 뜻하는 것은?","choices":["사건","결과","신념","행동"],"answer":2},{"q":"세로토닌 농도를 높이는 우울증 약은?","choices":["항정신병제","벤조디아제핀","항히스타민","SSRI"],"answer":3},{"q":"자유연상·꿈 분석을 쓰는 치료는?","choices":["정신분석","인지행동치료","행동치료","인본주의"],"answer":0}]};</script>
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>

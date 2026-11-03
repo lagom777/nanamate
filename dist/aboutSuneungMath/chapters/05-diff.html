@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미분 — 수능 수학</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<link rel="stylesheet" href="../../shared/practice-simple.css">
+<script defer src="../../shared/practice-simple.js"></script>
+<link rel="stylesheet" href="../../shared/sections.css">
+<script defer src="../../shared/sections.js"></script>
+<link rel="stylesheet" href="../../shared/study-style.css">
+<script defer src="../../shared/study-style.js"></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><a href="../../my-style.html" class="hub-back-link my-style-link">🙋 내 성향</a><h3>수학 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li class="grp">수학Ⅰ</li>
+<li><a href="01-exp-log.html">1. 지수와 로그</a></li>
+<li><a href="02-trig.html">2. 삼각함수</a></li>
+<li><a href="03-sequence.html">3. 수열</a></li>
+<li class="grp">수학Ⅱ</li>
+<li><a href="04-limit.html">4. 함수의 극한과 연속</a></li>
+<li><a href="05-diff.html" style="color:var(--accent);font-weight:600;">5. 미분</a></li>
+<li><a href="06-integral.html">6. 적분</a></li>
+<li class="grp">미적분</li>
+<li><a href="07-seq-limit.html">7. 수열의 극한</a></li>
+<li><a href="08-diff-methods.html">8. 여러 가지 미분법</a></li>
+<li><a href="09-int-methods.html">9. 여러 가지 적분법</a></li>
+<li class="grp">전략</li>
+<li><a href="10-strategy.html">10. 수능 수학 실전 전략</a></li>
+<li><a href="../summary.html">📌 한눈에 요약</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+<li><a href="../study-style.html">🧭 논리형 공부법</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>미분</h1><p class="authors">Part 5 · 수학Ⅱ</p><p class="affiliation">미분계수·도함수·접선·증감과 극값·그래프·방정식과 부등식·속도와 가속도</p></header>
+<div class="stat-row"><div class="stat"><b>4.9</b><span>회당 문항 수</span></div><div class="stat"><b>15.4점</b><span>회당 배점</span></div><div class="stat"><b>4~6</b><span>회차별 범위</span></div><div class="stat"><b>83</b><span>최근 17회 누적</span></div></div>
+<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 17회(2018~2020학년도는 2009 개정 교육과정)(510문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>미분은 한 점에서의 변화율입니다. 수능은 <strong>접선의 방정식</strong>, <strong>극값 조건으로 계수를 정하는 문제</strong>, <strong>절댓값이 붙은 식이 미분가능한 점</strong>, 그리고 <strong>삼차함수의 대칭</strong>을 반복해서 묻습니다. 도함수의 부호가 증가·감소를 정하고, 부호가 바뀌는 곳이 극값입니다. 속도는 위치의 도함수, 가속도는 속도의 도함수입니다.</p>
+<div class="nms-stepband"><b>① 틀 잡기</b><span>5분 — ‘하나만 고른다면’과 왜 사슬, 요약 맵으로 큰 그림부터</span></div>
+<section class="nms" data-nms>
+<div class="nms-top"><b>🧭 논리형으로 이 파트 공부하기</b><span class="nms-top-r"><button type="button" class="nms-timer-btn" data-timer>⏱ 50분 집중</button><a href="../study-style.html">논리형 공부법 전체 →</a></span></div>
+<div class="nms-logic"><div class="nms-cols"><div class="nms-col-a"><p class="nms-one"><b>하나만 고른다면</b><strong>도함수의 부호가 그래프의 모양을 정한다</strong> — f′ &gt; 0이면 증가, f′ &lt; 0이면 감소, 부호가 바뀌는 점이 극값이다.</p>
+<div class="nms-chain-h"><span>왜 사슬</span><button type="button" class="nms-recall" data-recall aria-pressed="false">🙈 가리고 떠올리기</button></div>
+<p class="nms-recall-hint">다음 단계를 먼저 머릿속으로 떠올린 뒤, 가려진 단계를 눌러 맞았는지 확인하세요.</p>
+<ol class="nms-chain"><li><span class="nms-step">두 점을 잇는 할선의 기울기(평균변화율)에서 두 점을 한없이 붙이면 접선의 기울기 → <b>f′(a) = lim<sub>h→0</sub> (f(a + h) − f(a))/h</b></span></li><li><span class="nms-step">미분가능하면 연속(f(a + h) − f(a) = h × 평균변화율 → 0 × f′(a) = 0), 역은 거짓 → y = |x|는 x = 0에서 <b>좌미분계수 −1 ≠ 우미분계수 1</b></span></li><li><span class="nms-step">f′ &gt; 0이면 접선이 오른쪽 위를 향해 증가 → 극값은 f′ = 0인 점이 아니라 <b>f′의 부호가 바뀌는 점</b>(y = x<sup>3</sup>의 x = 0은 극값이 아니다)</span></li><li><span class="nms-step">삼차함수는 f′이 이차식이라 판별식의 부호로 개형이 셋으로 갈리고, <b>x = −b/(3a)인 점에 대해 점대칭</b> → 극점의 중점과 극값의 평균이 모두 이 점</span></li><li><span class="nms-step">방정식 f(x) = k의 실근 수는 <b>y = k와 그래프의 교점 수</b>, 속도는 위치의 도함수 → 수능은 접선·극값 조건·미분가능성·실근 개수로 묻는다</span></li></ol></div>
+<details class="nms-full"><summary><span class="nms-full-t">📖 논리형 전체 해설 — 7절 · 약 7분</span><span class="nms-full-toc">미분계수 · 도함수 공식 · 접선의 방정식과 미분가능성 · 증가·감소와 극값 · 삼차함수의 개형과 대칭 · 방정식과 부등식 · 속도와 가속도</span></summary>
+<div class="nms-full-body"><div class="nms-full-sec"><p class="nms-full-h">미분계수 — 할선이 접선이 되는 극한</p><p>x가 a에서 a + h로 변할 때 (f(a + h) − f(a))/h는 두 점을 잇는 할선의 기울기, 곧 평균변화율입니다. h를 0으로 보내면 두 점이 붙으며 할선이 접선이 되고, 이 극한이 <b>미분계수 f′(a) = lim<sub>h→0</sub> (f(a + h) − f(a))/h</b>입니다. h = 0을 바로 넣으면 0/0이라, 앞 단원의 극한이 바로 이 계산을 위해 필요했습니다. f(x) = x²이면 ((a + h)² − a²)/h = 2a + h이므로 f′(a) = 2a입니다.</p><p>미분계수는 좌·우미분계수가 모두 실수로 존재하고 같을 때만 있습니다. y = |x|는 x = 0에서 오른쪽 기울기 1, 왼쪽 기울기 −1이라 미분가능하지 않지만 끊기지는 않으므로, <b>꺾인 점은 연속이지만 미분가능하지 않은</b> 대표 예입니다. 거꾸로 미분가능하면 항상 연속입니다. f(a + h) − f(a) = h · (f(a + h) − f(a))/h에서 h → 0이면 오른쪽이 0 · f′(a) = 0으로 가기 때문이고, 그래서 조각함수는 경계에서 연속부터 확인합니다.</p></div>
+<div class="nms-full-sec"><p class="nms-full-h">도함수 공식 — 전개하면 한 항만 남는다</p><p>(x + h)³ − x³ = 3x²h + 3xh² + h³을 h로 나누면 3x² + 3xh + h²이고, h → 0이면 3x²만 남습니다. 일반적으로 (x + h)<sup>n</sup>을 전개하면 h가 한 번만 곱해진 항은 nx<sup>n−1</sup>h이고 나머지는 h²을 포함해 사라지므로 <b>(x<sup>n</sup>)′ = nx<sup>n−1</sup></b>입니다. 상수의 도함수는 0이고, 합과 실수배는 항별로 미분합니다.</p><p>곱의 미분은 변화를 둘로 나눠 봅니다. f(x + h)g(x + h) − f(x)g(x) = {f(x + h) − f(x)}g(x + h) + f(x){g(x + h) − g(x)}를 h로 나누고 h → 0으로 보내면 <b>(fg)′ = f′g + fg′</b>입니다. (x² + 1)(x − 2)는 전개해 미분해도, 2x(x − 2) + (x² + 1)로 계산해도 3x² − 4x + 1이고, f′g′으로 쓰면 틀립니다.</p></div>
+<div class="nms-full-sec"><p class="nms-full-h">접선의 방정식과 미분가능성</p><p>점 (a, f(a))에서의 접선은 기울기가 f′(a)이므로 y − f(a) = f′(a)(x − a)입니다. 곡선 밖의 점을 지나는 접선은 <b>접점의 x좌표를 t로 두고</b> 그 점을 접선 식에 넣어 t의 방정식을 풉니다. y = x³에 (2, 0)에서 그은 접선은 접점 (t, t³)에서의 접선 y = 3t²x − 2t³에 (2, 0)을 대입한 2t²(3 − t) = 0에서 t = 0, 3이라 y = 0과 y = 27x − 54입니다.</p><p>검산은 곡선에서 접선을 뺀 식의 인수분해입니다. x³ − 27x + 54 = (x − 3)²(x + 6)으로 접점 x = 3이 중근이고 x = −6에서 한 번 더 만나므로, 접한다는 것은 <b>차가 중근을 가진다</b>는 뜻이지 다른 교점이 없다는 뜻이 아닙니다.</p><p>g(x)|x − c|는 x = c에서 오른쪽 기울기가 g(c), 왼쪽 기울기가 −g(c)이므로 <b>g(c) = 0일 때만 미분가능</b>하고 그때 미분계수는 0입니다. 그래서 |x² − 1|은 x = ±1에서 미분가능하지 않지만, (x² − 4)|x − 2|는 x = 2에서 미분가능합니다. 조각함수가 경계에서 미분가능하려면 연속 조건과 양쪽 도함수가 같다는 조건, 두 식을 세웁니다.</p></div>
+<div class="nms-full-sec"><p class="nms-full-h">증가·감소와 극값 — 도함수의 부호가 바뀌는 곳</p><p>f′(x) &gt; 0인 구간에서는 접선이 오른쪽 위를 향하므로 f가 증가하고, f′(x) &lt; 0이면 감소합니다. 극대는 증가하다 감소하는 점, 극소는 감소하다 증가하는 점이므로 <b>극값의 조건은 f′의 부호 변화</b>입니다. f′(c) = 0은 후보일 뿐이라 x³은 f′(0) = 0이지만 f′ = 3x² ≥ 0으로 부호가 바뀌지 않아 극값이 없습니다.</p><p>수능은 ‘x = 1에서 극댓값 4’처럼 조건을 주는데, 이 말에는 f′(1) = 0, f(1) = 4, 그리고 f′의 부호가 양에서 음으로 바뀐다는 세 가지가 들어 있습니다. f(x) = x³ + ax² + bx이면 3 + 2a + b = 0, 1 + a + b = 4에서 a = −6, b = 9이고, <b>f′ = 3(x − 1)(x − 3)의 부호표로 극대를 확인</b>한 뒤 극솟값 f(3) = 0을 얻습니다. 닫힌 구간의 최댓값·최솟값은 극값과 끝점의 값을 비교해 정하므로, [0, 3]에서 g(x) = x³ − 3x의 최댓값은 극값이 아니라 끝값 g(3) = 18입니다.</p></div>
+<div class="nms-full-sec"><p class="nms-full-h">삼차함수의 개형과 대칭</p><p>f(x) = ax³ + bx² + cx + d의 도함수는 이차식이라 판별식 b² − 3ac(D/4)의 부호가 개형을 정합니다. a &gt; 0일 때 <b>양수이면 극대와 극소가 하나씩</b>, 0 이하이면 f′ ≥ 0이라 극값 없이 증가합니다. x³ − 3x는 f′ = 3(x − 1)(x + 1)이라 x = −1에서 극댓값 2, x = 1에서 극솟값 −2입니다.</p><p>f′ = 0의 두 근의 합이 −2b/(3a)이므로 두 극점의 중점은 m = −b/(3a)입니다. x = m + t로 옮기면 t²의 계수 3am + b가 0이 되어 f(m + t) + f(m − t) = 2f(m)이므로 모든 삼차함수는 <b>(m, f(m))에 대해 점대칭</b>입니다. x³ − 3x² + 5는 m = 1이고, 극댓값 f(0) = 5와 극솟값 f(2) = 1의 평균이 f(1) = 3입니다. 중심을 원점으로 옮기면 x³ + px 꼴만 남아 계산이 짧아지므로, 수능에서는 극점의 중점·극값의 평균·−b/(3a)가 서로 맞는지로 검산합니다.</p><p>사차함수 ax⁴ + …(a &gt; 0)는 양 끝이 모두 +∞로 올라가므로, 삼차식인 도함수가 음에서 양으로 적어도 한 번은 부호를 바꿔 <b>극값이 하나도 없는 사차함수는 없습니다</b>. x⁴ − 2x²은 f′ = 4x(x − 1)(x + 1)이라 x = ±1에서 극솟값 −1, x = 0에서 극댓값 0입니다. 양 끝이 이 값보다 높이 올라가므로 극댓값 0은 최댓값이 아니고, 이것이 극값과 최댓값을 따로 말하는 이유입니다.</p></div>
+<div class="nms-full-sec"><p class="nms-full-h">방정식과 부등식 — 그래프와 수평선의 교점</p><p>방정식 f(x) = k의 실근 개수는 y = f(x)와 수평선 y = k의 교점 개수입니다. x³ − 3x = k는 −2 &lt; k &lt; 2이면 3개, k = ±2이면 2개, 그 밖이면 1개이고, k = 2이면 x³ − 3x − 2 = (x + 1)²(x − 2)라 <b>극점에서 접하는 중근</b>과 다른 한 근입니다. ‘서로 다른 실근’인지 ‘중근을 포함한 개수’인지는 문장 그대로 따릅니다.</p><p>부등식 f(x) ≥ 0은 그래프가 x축 위에 있는 구간입니다. x³ − 3x + 2는 극솟값 f(1) = 0이고 (x − 1)²(x + 2)로 인수분해되므로 f(x) ≥ 0은 x ≥ −2입니다. 삼차함수는 한쪽 끝에서 −∞로 가므로 <b>극솟값이 양수여도 항상 양수는 아니며</b>, ‘모든 x에 대해’를 말하려면 최고차항의 부호와 양 끝까지 확인합니다.</p></div>
+<div class="nms-full-sec"><p class="nms-full-h">속도와 가속도 — 위치를 미분한다</p><p>수직선 위 점의 위치가 x(t)이면 속도 v = x′(t), 가속도 a = v′(t)입니다. 속도의 부호가 운동 방향이므로 <b>방향이 바뀌는 것은 v의 부호가 바뀔 때</b>이고, v = t²처럼 0이 되었다가 같은 부호로 돌아가면 방향은 그대로입니다. 속력 |v|는 v와 a의 부호가 같을 때 늘고, 다를 때 줄어듭니다.</p><p>x(t) = t³ − 6t² + 9t이면 v = 3(t − 1)(t − 3)이라 t = 1, 3에서 방향이 바뀌고, x(0) = 0, x(1) = 4, x(3) = 0, x(4) = 4입니다. t = 0부터 4까지 위치 변화는 4이지만 <b>움직인 거리는 4 + 4 + 4 = 12</b>로, 되돌아온 길까지 더합니다. t = 2에서는 가속도가 0이고 v(2) = −3이라 방향은 그대로이며, 음의 방향으로 가장 빠른 순간입니다.</p></div></div></details>
+<div class="nms-col-b"><p class="nms-kv"><b>외울 것은 이것뿐</b>미분계수의 정의, (x<sup>n</sup>)′ = nx<sup>n−1</sup>과 곱의 미분, 접선 y − f(a) = f′(a)(x − a), ‘극값은 f′의 부호가 바뀌는 점’</p>
+<p class="nms-kv"><b>나머지는 유도</b>미분가능하면 연속, 삼차함수의 개형과 대칭의 중심 x = −b/(3a), |p(x)|가 미분가능하지 않은 점, 실근 개수 표, 속도·가속도와 움직인 거리</p>
+<p class="nms-trap"><b>논리형 함정</b>‘x = α에서 극대’를 f′(α) = 0 한 식으로만 번역하기 쉽습니다. 극대는 <b>f′(α) = 0과 부호 변화(양 → 음)</b> 두 조건이므로, 계수를 구한 뒤 부호표를 다시 그려 극대와 극소가 뒤바뀌지 않았는지 확인하세요.</p>
+
+<p class="nms-first">문제부터 부딪치고 싶다면 <a href="#examples">대표 예제</a>를 먼저 풀고, 막힌 고리만 사슬에서 찾아 채우세요.</p></div></div>
+</div>
+</section>
+<details class="mg-wrap" open><summary>📌 이 파트 한눈에 요약 맵</summary><div class="mg">
+<div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">f′의 부호 변화가 극값 — 연속이라고 미분가능하지 않다</span><span class="mg-stat">회당 평균 4.9문항 · 15.4점</span></div>
+<div class="mg-grid"><section class="mg-card c1 wide"><h3><i>📉</i>미분계수와 접선</h3><div class="mg-f">f′(a) = lim (f(a+h) − f(a)) / h<br>접선: y − f(a) = f′(a)(x − a)<br>(xⁿ)′ = nxⁿ⁻¹    (fg)′ = f′g + fg′</div><dl class="mg-kv"><div><dt>미분가능 ⇒ 연속</dt><dd>역은 거짓 — y = |x|는 x = 0에서 연속이지만 미분계수 없음</dd></div><div><dt>조각 함수</dt><dd>경계에서 먼저 연속, 그다음 좌·우 도함수 비교</dd></div><div><dt>|g(x)|</dt><dd>g(c) = 0이어도 곱해진 다항식이 0이면 미분가능</dd></div></dl></section>
+<section class="mg-card c2 wide"><h3><i>⛰️</i>삼차함수의 개형</h3><figure class="mg-fig"><svg viewBox="0 0 300 142" role="img" aria-label="삼차함수의 극값과 변곡점" preserveAspectRatio="xMidYMid meet"><line class="ln" x1="30" y1="75" x2="290" y2="75"/><line class="ln" x1="150" y1="6" x2="150" y2="138"/><polygon class="ah" points="290,75 284,72 284,78"/><polygon class="ah" points="150,6 147,12 153,12"/><text x="290" y="89" text-anchor="end" class="t-m">x</text><text x="156" y="10" class="t-m">y</text><line class="dash" x1="85" y1="39" x2="125" y2="39"/><line class="dash" x1="175" y1="111" x2="215" y2="111"/><path class="a" d="M60 111 L64.5 95.9 L69 82.8 L73.5 71.6 L82.5 54.8 L105 39 L127.5 50.3 L150 75 L172.5 99.8 L195 111 L217.5 95.3 L226.5 78.4 L231 67.2 L235.5 54.1 L240 39"/><circle class="ptb" cx="105" cy="39" r="3.5"/><circle class="ptb" cx="195" cy="111" r="3.5"/><circle class="pt" cx="150" cy="75" r="3.5"/><text x="105" y="27" text-anchor="middle" class="t-b">극대  f′: + → −</text><text x="195" y="128" text-anchor="middle" class="t-b">극소  f′: − → +</text><text x="160" y="66" class="t-m">변곡점</text></svg><figcaption>f′(x) = 0에서 부호가 바뀌어야 극값 · 변곡점에서 대칭</figcaption></figure><div class="mg-tbl"><table><thead><tr><th>f′의 부호</th><th>모양</th><th>이름</th></tr></thead><tbody><tr><th scope="row">+ → −</th><td data-l="모양">증가 후 감소</td><td data-l="이름">극대</td></tr><tr><th scope="row">− → +</th><td data-l="모양">감소 후 증가</td><td data-l="이름">극소</td></tr><tr><th scope="row">안 바뀜</th><td data-l="모양">계속 증가/감소</td><td data-l="이름">극값 아님 (y = x³의 x = 0)</td></tr></tbody></table></div><div class="mg-tbl"><table><thead><tr><th>D = b² − 3ac</th><th>f′ = 0</th><th>그래프 (a > 0)</th></tr></thead><tbody><tr><th scope="row">D > 0</th><td data-l="f′ = 0">서로 다른 두 실근</td><td data-l="그래프 (a > 0)">증가 → 감소 → 증가 (극대·극소)</td></tr><tr><th scope="row">D = 0</th><td data-l="f′ = 0">중근</td><td data-l="그래프 (a > 0)">극값 없이 증가</td></tr><tr><th scope="row">D < 0</th><td data-l="f′ = 0">실근 없음</td><td data-l="그래프 (a > 0)">극값 없이 증가</td></tr></tbody></table></div><p class="mg-note tip"><span>💡</span>삼차함수의 변곡점의 x좌표는 m = −b/(3a), 그 점에 대해 대칭.</p></section>
+<section class="mg-card c3"><h3><i>🔀</i>방정식·부등식</h3><dl class="mg-kv"><div><dt>근의 개수</dt><dd>y = f(x)와 y = k의 교점 개수 — 극댓값·극솟값 사이의 k</dd></div><div><dt>부등식</dt><dd>극솟값이 양수여도 한쪽 끝은 −∞ → ‘항상’은 양 끝의 부호까지 확인</dd></div><div><dt>극대 ≠ 최대</dt><dd>끝점에서 최대가 나올 수 있고, 끝점은 극값이 아님</dd></div></dl></section>
+<section class="mg-card c4"><h3><i>🚗</i>속도와 가속도</h3><div class="mg-f">v(t) = x′(t),  a(t) = v′(t) = x″(t)</div><div class="mg-tbl"><table><thead><tr><th>v</th><th>a</th><th>움직임</th></tr></thead><tbody><tr><th scope="row">+</th><td data-l="a">+</td><td data-l="움직임">양의 방향, 속력 증가</td></tr><tr><th scope="row">+</th><td data-l="a">−</td><td data-l="움직임">양의 방향, 속력 감소</td></tr><tr><th scope="row">−</th><td data-l="a">−</td><td data-l="움직임">음의 방향, 속력 증가</td></tr><tr><th scope="row">−</th><td data-l="a">+</td><td data-l="움직임">음의 방향, 속력 감소</td></tr></tbody></table></div></section></div>
+<div class="mg-traps"><h3>⚠ 이 파트 함정 — 이렇게 속입니다</h3><ul><li><s>연속이면 미분가능</s><b>→</b><em>미분가능하면 연속, y = |x|가 반례</em></li><li><s>(fg)′ = f′g′</s><b>→</b><em>f′g + fg′</em></li><li><s>f′(c) = 0이면 극값</s><b>→</b><em>부호가 바뀌어야 (y = x³)</em></li><li><s>극댓값 = 구간의 최댓값</s><b>→</b><em>끝점에서 최대가 나올 수 있음</em></li><li><s>절댓값은 꺾인 점에서 항상 미분 불가</s><b>→</b><em>곱해진 다항식이 0이면 미분가능, 계수 0</em></li><li><s>접선은 곡선과 한 점에서만 만난다</s><b>→</b><em>삼차곡선은 접점 외 교점이 생길 수 있음</em></li><li><s>속도가 0이면 방향이 바뀐다</s><b>→</b><em>부호가 바뀔 때만</em></li><li><s>가속도가 양수이면 속력 증가</s><b>→</b><em>v와 a의 부호가 같을 때</em></li></ul></div>
+<p class="mg-ask"><b>수능은 이렇게 묻는다</b>접선 조건·극값 조건으로 계수 결정 → 절댓값·조각 함수의 미분가능성 → 삼차함수의 근의 개수와 부등식('항상'은 양 끝까지)</p>
+</div></details>
+<p><a class="cta sm" href="../summary.html#p5">📌 이 파트 한눈에 요약 →</a></p>
+<div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="sec-bar"><span>본문 6절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
+<details class="sec"><summary><h2>1. 평균변화율과 미분계수</h2></summary>
+<p>x가 a에서 b까지 바뀔 때 함숫값의 변화를 x의 변화로 나눈 것이 평균변화율입니다. 두 점 (a, f(a)), (b, f(b))를 잇는 직선의 기울기입니다.</p>
+<div class="formula">평균변화율 = (f(b) − f(a)) / (b − a)</div>
+<p>b를 a에 한없이 가깝게 보내면, 할선이 접선으로 붙습니다. 그 극한이 존재할 때 그 값을 x=a에서의 <strong>미분계수</strong> f′(a)라 합니다. 순간변화율이고, 곡선 y=f(x) 위의 점 (a, f(a))에서 그은 접선의 기울기입니다.</p>
+<div class="formula">f′(a) = lim<sub>h→0</sub> (f(a+h) − f(a)) / h</div>
+<p>h→0<sup>−</sup>만 취한 값을 좌미분계수, h→0<sup>+</sup>만 취한 값을 우미분계수라 합니다. 둘이 실수로 존재하고 같을 때만 미분계수가 있습니다. 이때 f는 x=a에서 <strong>미분가능</strong>합니다.</p>
+<h3>y=|x|는 x=0에서 미분가능하지 않습니다</h3>
+<p>x&gt;0이면 |x|=x이므로 우미분계수는 1입니다. x&lt;0이면 |x|=−x이므로 좌미분계수는 −1입니다. 1≠−1이므로 미분계수가 없습니다. 다만 lim<sub>x→0</sub> |x|=0=|0|이므로 x=0에서 <strong>연속</strong>입니다. 꺾이기만 하고 끊어지지는 않습니다.</p>
+<h3>미분가능하면 연속입니다</h3>
+<p>f′(a)가 존재하면 f는 x=a에서 연속입니다. 이유는 다음과 같습니다.</p>
+<div class="formula">f(a+h) − f(a) = h · (f(a+h) − f(a)) / h</div>
+<p>h→0일 때 오른쪽은 (0)·f′(a)=0으로 갑니다. 따라서 lim<sub>h→0</sub> f(a+h)=f(a)입니다.</p>
+<p>역은 참이 아닙니다. 연속이어도 미분계수가 없을 수 있고, y=|x|의 x=0이 그 예입니다. 극값이 있어도 미분가능하지 않으면 ‘미분계수가 0’이라는 말을 쓸 수 없습니다. y=|x|는 x=0에서 극솟값 0을 가지지만 미분계수는 없습니다.</p>
+<div class="study-tip"><strong>TIP:</strong> 이차함수 f(x)=ax²+bx+c에서는 두 점의 x좌표가 p, q일 때 평균변화율이 a(p+q)+b이고, 중점 (p+q)/2에서의 미분계수도 같은 값입니다. 삼차 이상은 그렇지 않습니다. x³을 0에서 2까지 보면 평균변화율은 4이고, 중점 x=1에서 도함수 3x²의 값은 3입니다.</div>
+
+</details><details class="sec"><summary><h2>2. 도함수와 접선의 방정식</h2></summary>
+<p>함수 y=f(x)의 도함수 f′(x)는 각 x에서의 미분계수입니다. 수학Ⅱ에서 직접 미분하는 대상은 다항함수입니다.</p>
+<div class="formula">(x<sup>n</sup>)′ = n x<sup>n−1</sup> &nbsp; (n은 양의 정수)<br>(cf)′ = c f′<br>(f+g)′ = f′ + g′<br>(f−g)′ = f′ − g′<br>(fg)′ = f′g + fg′</div>
+<p>예를 들어 (x³)′=3x², (5x²)′=10x, 상수의 도함수는 0입니다. 곱의 미분은 두 함수를 각각 미분해 상대 함수를 곱한 뒤 더합니다. (fg)′을 f′g′으로 쓰면 틀립니다.</p>
+<p>검산: (x²+1)(x−2)=x³−2x²+x−2의 도함수는 3x²−4x+1입니다. 곱의 미분으로 하면 2x(x−2)+(x²+1)·1=2x²−4x+x²+1=3x²−4x+1로 같습니다.</p>
+<p>제곱은 자기 자신과의 곱입니다. (x²+1)²의 도함수는 2(x²+1)·(2x)=4x(x²+1)입니다. 더 높은 거듭제곱은 전개하거나 곱의 미분을 반복합니다. 유리식은 약분해 다항식이 된 뒤에 미분합니다.</p>
+<h3>접선의 방정식</h3>
+<p>곡선 y=f(x) 위의 점 (a, f(a))에서 접선의 기울기는 f′(a)입니다.</p>
+<div class="formula">y − f(a) = f′(a) (x − a)</div>
+<p>기울기가 0이면 접선은 수평입니다. f′(a)=0인 점에서만 수평 접선이 나옵니다.</p>
+<p>곡선 밖의 한 점을 지나는 접선을 구할 때는, 접점의 x좌표를 t로 두고 접선 식을 쓴 다음 그 점이 직선 위에 있도록 t의 방정식을 풉니다. 삼차곡선에서는 접선이 접점 말고 다른 점에서도 곡선과 만날 수 있습니다. 접한다는 것은 그 점에서 곡선과 직선의 차가 중근을 가진다는 뜻이지, 다른 교점이 없다는 뜻이 아닙니다.</p>
+<h3>절댓값이 붙은 함수의 미분가능성</h3>
+<p>g가 미분가능한 다항함수일 때 h(x)=g(x)|x−c|를 보겠습니다. |x−c|는 x=c에서만 꺾입니다. 그 점의 한쪽 미분계수를 계산하면 다음이 나옵니다.</p>
+<div class="formula">우미분계수 = g(c), &nbsp; 좌미분계수 = −g(c)</div>
+<p>둘이 같으려면 g(c)=0이고, 그때 미분계수는 0입니다. g(c)≠0이면 기울기의 부호가 반대라 미분가능하지 않습니다.</p>
+<p>다항함수 p에 대해 |p(x)|가 미분가능하지 않은 점은, p(r)=0이면서 p′(r)≠0인 점뿐입니다. 그 점은 p의 단일근입니다. 중근처럼 p(r)=p′(r)=0이면 그 점에서는 미분가능하고 미분계수는 0입니다. |(x−1)²|=(x−1)²은 모든 점에서 미분가능합니다. |x²−1|은 x=±1에서 안쪽 식의 도함수 ±2x가 0이 아니므로 미분가능하지 않습니다.</p>
+<div class="info-card"><h4>조각으로 정의된 함수</h4><p>경계 x=c에서 연속이 먼저입니다. 좌극한과 우극한, 함숫값이 같아야 합니다. 그다음 왼쪽 식의 도함수와 오른쪽 식의 도함수가 x=c에서 같은지 봅니다. 연속이 아니면 미분은 자동으로 불가입니다.</p></div>
+
+</details><details class="sec"><summary><h2>3. 증가·감소, 극값, 그래프</h2></summary>
+<p>어떤 구간에서 f′(x)&gt;0이면 그 구간에서 f는 증가합니다. f′(x)&lt;0이면 감소합니다. 도함수가 양수라는 것은 접선이 오른쪽 위를 향한다는 뜻입니다.</p>
+<p>f′(c)=0이어도 극값이 아닐 수 있습니다. 극값이 되려면 도함수의 <strong>부호가 바뀌어야</strong> 합니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>f′의 부호</th><th>x=c 근처의 모양</th><th>이름</th></tr></thead><tbody><tr><td data-l="f′의 부호">양수에서 음수로</td><td data-l="x=c 근처의 모양">증가하다 감소</td><td data-l="이름">극대</td></tr><tr><td data-l="f′의 부호">음수에서 양수로</td><td data-l="x=c 근처의 모양">감소하다 증가</td><td data-l="이름">극소</td></tr><tr><td data-l="f′의 부호">부호가 안 바뀜</td><td data-l="x=c 근처의 모양">계속 증가 또는 계속 감소</td><td data-l="이름">극값 아님</td></tr></tbody></table></div>
+<p>f(x)=x³이면 f′(x)=3x²≥0이고 f′(0)=0이지만 부호가 음으로 바뀌지 않습니다. x1&lt;x2이면 x1³&lt;x2³이므로 실수 전체에서 증가하고, 극값은 없습니다. 접선만 수평입니다.</p>
+<p>극값은 그 점 양쪽 근방에서 가장 큰 값 또는 가장 작은 값입니다. 닫힌 구간의 <strong>최댓값·최솟값</strong>은 극값일 수도 있고 끝점의 함숫값일 수도 있습니다. 끝점은 양쪽 근방이 구간에 있지 않으므로 극값이라고 부르지 않습니다. f(x)=x를 [0, 1]에서 보면 최솟값 0, 최댓값 1은 모두 끝점이고 극값은 없습니다.</p>
+<p>미분가능한 함수가 구간의 안쪽에서 극값을 가지면 그 점에서 도함수는 0입니다. 후보는 f′(x)=0인 점과, 닫힌 구간이면 두 끝점입니다.</p>
+<h3>삼차함수의 개형</h3>
+<p>f(x)=ax³+bx²+cx+d (a≠0)의 도함수는 f′(x)=3ax²+2bx+c입니다. 이 이차식의 판별식은 D=(2b)²−4·3a·c=4(b²−3ac)이므로, 부호가 같은 D/4=b²−3ac로 판정하겠습니다. a&gt;0이면 도함수 그래프는 아래로 볼록한 포물선입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>D/4=b²−3ac</th><th>도함수</th><th>그래프 (a&gt;0)</th></tr></thead><tbody><tr><td data-l="D/4=b²−3ac">D/4&gt;0</td><td data-l="도함수">서로 다른 두 실근 α&lt;β</td><td data-l="그래프 (a&gt;0)">증가 → 감소 → 증가. x=α에서 극대, x=β에서 극소</td></tr><tr><td data-l="D/4=b²−3ac">D/4=0</td><td data-l="도함수">중근 하나, 그 점에서만 0</td><td data-l="그래프 (a&gt;0)">수평 접선은 있으나 부호가 안 바뀌어 극값 없이 증가</td></tr><tr><td data-l="D/4=b²−3ac">D/4&lt;0</td><td data-l="도함수">항상 양수</td><td data-l="그래프 (a&gt;0)">극값 없이 증가</td></tr></tbody></table></div>
+<p>a&lt;0이면 증감이 반대입니다. 극대가 오른쪽, 극소가 왼쪽에 옵니다.</p>
+<p>예시 f(x)=x³−3x는 a=1, b=0, c=−3, D/4=0−3(1)(−3)=9&gt;0입니다. f′(x)=3x²−3=3(x−1)(x+1)이므로 극대는 x=−1, f(−1)=2, 극소는 x=1, f(1)=−2입니다.</p>
+<h3>삼차함수의 대칭</h3>
+<p>모든 삼차함수는 한 점에 대해 점대칭입니다. 대칭의 중심의 x좌표는 다음과 같습니다.</p>
+<div class="formula">m = −b / (3a)</div>
+<p>이 점은 도함수 3ax²+2bx+c의 축과 같습니다. 극점이 둘이면 두 극점의 x좌표의 중점이 m입니다. y좌표는 f(m)이고, 극댓값과 극솟값의 평균과 같습니다.</p>
+<p>이유만 짧게 보면 이렇습니다. t=x−m이라 두고 f(m+t)를 t의 식으로 전개하면 t²의 계수는 3am+b입니다. m=−b/(3a)이면 이 계수가 0이 되어, f(m+t)+f(m−t)=2f(m)이 됩니다. 중심에서 양쪽으로 같은 거리의 함숫값을 더하면 중심 높이의 두 배입니다. 이것이 점대칭입니다. 이 대칭의 중심을 변곡점이라고 부릅니다. 극점이 없어도, 예를 들어 y=x³은 원점에 대해 점대칭입니다.</p>
+<p>예시 f(x)=x³−3x²+5는 극점이 x=0, x=2입니다. m=1, f(1)=3입니다. 극댓값 f(0)=5, 극솟값 f(2)=1이고 (5+1)/2=3=f(1)입니다.</p>
+<h3>사차함수의 개형</h3>
+<p>f(x)=ax⁴+bx³+cx²+dx+e에서 a&gt;0이면 x→±∞일 때 f(x)→+∞이고, a&lt;0이면 양쪽 끝에서 −∞로 갑니다. 도함수는 삼차식이므로 극점은 최대 3개입니다. f′(x)=0이어도 부호가 바뀌지 않으면 극점이 아닙니다. 다만 양 끝이 같은 방향으로 발산하므로, 극값이 하나도 없는 사차함수는 없습니다.</p>
+<p>홀수 차항이 없는 f(x)=ax⁴+bx²+c는 f(−x)=f(x)인 우함수라 y축에 대칭입니다. f(x)=x⁴−2x²이면 f′(x)=4x³−4x=4x(x−1)(x+1)입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>구간</th><th>f′ 부호</th><th>f</th></tr></thead><tbody><tr><td data-l="구간">x &lt; −1</td><td data-l="f′ 부호">음</td><td data-l="f">감소</td></tr><tr><td data-l="구간">−1 &lt; x &lt; 0</td><td data-l="f′ 부호">양</td><td data-l="f">증가</td></tr><tr><td data-l="구간">0 &lt; x &lt; 1</td><td data-l="f′ 부호">음</td><td data-l="f">감소</td></tr><tr><td data-l="구간">x &gt; 1</td><td data-l="f′ 부호">양</td><td data-l="f">증가</td></tr></tbody></table></div>
+<p>극솟값 f(−1)=f(1)=−1, 극댓값 f(0)=0입니다. a&gt;0이라 양 끝은 위로 올라가고, 극댓값 0은 구간 전체의 최댓값이 아닙니다. x가 커지면 함숫값이 0을 넘습니다.</p>
+
+</details><details class="sec"><summary><h2>4. 방정식과 부등식</h2></summary>
+<p>방정식 f(x)=k의 실근 개수는 곡선 y=f(x)와 직선 y=k의 교점 개수입니다. 삼차함수에서는 극댓값과 극솟값 사이에 k가 있는지 보면 됩니다.</p>
+<p>f(x)=x³−3x의 극댓값은 2, 극솟값은 −2입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>k</th><th>서로 다른 실근</th></tr></thead><tbody><tr><td data-l="k">k &gt; 2 또는 k &lt; −2</td><td data-l="서로 다른 실근">1개</td></tr><tr><td data-l="k">k = 2</td><td data-l="서로 다른 실근">2개 (x=−1에서 접하고 x=2에서 만남)</td></tr><tr><td data-l="k">k = −2</td><td data-l="서로 다른 실근">2개 (x=1에서 접하고 x=−2에서 만남)</td></tr><tr><td data-l="k">−2 &lt; k &lt; 2</td><td data-l="서로 다른 실근">3개</td></tr></tbody></table></div>
+<p>k=2일 때 x³−3x−2=(x+1)²(x−2)입니다. x=−1은 중근(접점), x=2는 단일근입니다. ‘서로 다른 실근 2개’와 ‘중근을 포함해 센 3개’를 문제의 말 그대로 구별합니다.</p>
+<h3>부등식</h3>
+<p>f(x)≥0은 그래프가 x축 위에 있는 구간입니다. 도함수로 극값을 구한 뒤, 가장 낮은 극솟값이 0 이상이면 그 근처에서는 식이 음수가 되지 않습니다. 양 끝의 부호도 함께 봅니다.</p>
+<p>f(x)=x³−3x+2를 보면 f′(x)=3(x−1)(x+1)이고, 극솟값 f(1)=0, 극댓값 f(−1)=4입니다. 인수분해하면 f(x)=(x−1)²(x+2)입니다. (x−1)²은 항상 0 이상이므로 f(x)≥0은 x+2≥0, 즉 <strong>x≥−2</strong>와 같습니다. x=−3이면 f(−3)=−16&lt;0으로 맞습니다.</p>
+<div class="warning-box"><strong>함정:</strong> 극솟값이 0보다 크다고 해서 실수 전체에서 항상 양수인 것은 아닙니다. 삼차함수는 한쪽으로 가면 −∞가 되므로, 극솟값이 양수여도 반대쪽 끝에서는 음수가 됩니다. ‘항상’을 말하려면 최고차항의 부호와 양 끝을 확인합니다.</div>
+
+</details><details class="sec"><summary><h2>5. 속도와 가속도</h2></summary>
+<p>수직선 위를 움직이는 점의 위치를 x(t), 시각을 t라 하면 속도는 위치의 도함수, 가속도는 속도의 도함수입니다.</p>
+<div class="formula">v(t) = x′(t), &nbsp; a(t) = v′(t) = x″(t)</div>
+<p>속도의 부호가 운동 방향입니다. v&gt;0이면 위치의 양의 방향, v&lt;0이면 음의 방향입니다. 속력은 |v(t)|입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>속도 v</th><th>가속도 a</th><th>움직임</th></tr></thead><tbody><tr><td data-l="속도 v">+</td><td data-l="가속도 a">+</td><td data-l="움직임">양의 방향으로 속력이 증가</td></tr><tr><td data-l="속도 v">+</td><td data-l="가속도 a">−</td><td data-l="움직임">양의 방향으로 가다가 속력이 감소</td></tr><tr><td data-l="속도 v">−</td><td data-l="가속도 a">−</td><td data-l="움직임">음의 방향으로 속력이 증가</td></tr><tr><td data-l="속도 v">−</td><td data-l="가속도 a">+</td><td data-l="움직임">음의 방향으로 가다가 속력이 감소</td></tr></tbody></table></div>
+<p>속력이 늘어나는 것은 v와 a의 부호가 같을 때입니다. 운동 방향이 바뀌는 것은 v의 부호가 바뀔 때입니다. v(t)=0만으로는 부족합니다. v(t)=t²은 t=0에서 속도가 0이지만 그 전후에도 속도가 음수가 되지 않아 방향이 바뀌지 않습니다. 그 순간 멈췄다가 같은 방향으로 다시 갑니다.</p>
+<p>예시입니다. x(t)=t³−6t²+9t이면 v(t)=3t²−12t+9=3(t−1)(t−3), a(t)=6t−12=6(t−2)입니다.</p>
+<ul>
+<li>0≤t&lt;1에서 v≥0, 1&lt;t&lt;3에서 v≤0, t&gt;3에서 v≥0. 방향은 t=1과 t=3에서 바뀝니다.</li>
+<li>x(0)=0, x(1)=4, x(3)=0, x(4)=4입니다.</li>
+<li>0부터 4까지 위치의 변화는 x(4)−x(0)=4입니다.</li>
+<li>실제로 움직인 거리는 0→4, 4→0, 0→4이므로 4+4+4=<strong>12</strong>입니다. 되돌아온 구간도 거리에 넣습니다.</li>
+</ul>
+<p>시각 t=2에서 가속도는 0이고, 그 전후로 가속도의 부호가 음에서 양으로 바뀝니다. 속도는 v(2)=3(1)(−1)=−3≠0이므로 방향은 바뀌지 않습니다. t=2 직전에는 속도와 가속도가 모두 음수라 속력이 늘고, 직후에는 가속도만 양수라 속력이 줍니다. 그래서 t=2는 음의 방향으로 가던 속력이 가장 큰 순간입니다.</p>
+
+</details><details class="sec"><summary><h2>6. 수능에서 조건이 나오는 방식</h2></summary>
+<h3>접선 조건</h3>
+<p>접점 t를 미지수로 둡니다. 기울기 f′(t), 점 (t, f(t))으로 직선을 쓰고, 주어진 점의 좌표를 대입해 t의 방정식을 풉니다. 나온 t마다 접선이 하나씩입니다. 중근 t는 접선이 하나라는 뜻인 경우가 많습니다. 구한 뒤에는 f(x)−(접선)을 인수분해해 접점에서 중근인지 확인합니다.</p>
+<h3>극값 조건으로 계수 정하기</h3>
+<p>‘x=α에서 극대’는 두 가지를 동시에 요구합니다. f′(α)=0, 그리고 f′의 부호가 양에서 음으로 바뀜. 극댓값까지 주어지면 f(α)를 그 값으로 놓아 계수가 하나 더 정해집니다. 도함수가 이차식이면 두 근이 두 극점의 x좌표입니다. 부호 변화를 표로 남겨 극대와 극소를 바꾸지 않습니다.</p>
+<p>예시: f(x)=x³+ax²+bx+c가 x=0, x=2에서 f′=0이고 극댓값이 5이면, f′(x)=3x(x−2)=3x²−6x이므로 a=−3, b=0입니다. 극대는 작은 근 x=0에서 생기므로 f(0)=c=5, f(x)=x³−3x²+5입니다.</p>
+<h3>절댓값과 조각함수</h3>
+<p>경계에서 연속 조건을 먼저 쓰고, 그다음 좌미분계수와 우미분계수를 같게 놓습니다. 절댓값 |x−c|가 곱해져 있으면 그 자리에 곱해진 함수의 함숫값이 0인지만 보면 됩니다. 0이면 미분가능하고 미분계수는 0, 0이 아니면 미분가능하지 않습니다.</p>
+<p>조각 예시: x&lt;1에서 f(x)=x²+ax+b, x≥1에서 f(x)=3x−1이고 x=1에서 미분가능하려면, 연속으로 1+a+b=2, 즉 a+b=1이고, 도함수 2+a=3이므로 a=1, b=0입니다. 왼쪽 도함수 2x+a는 x=1에서 3, 오른쪽 도함수는 3입니다.</p>
+<h3>삼차 대칭을 조건으로 쓰기</h3>
+<p>극점 두 개의 중점, 또는 x=−b/(3a)가 대칭의 중심입니다. ‘극댓값과 극솟값의 평균이 중심의 함숫값’이라는 관계로 계수를 확인할 수 있습니다. 중심을 원점으로 평행이동하면 홀수 차항만 남은 꼴 x³+px가 되어 계산이 짧아집니다.</p></details>
+
+<div class="nms-stepband"><b>③ 확인하기</b><span>조건이 바뀐 문제로 확인 — 막히면 가장 쉬운 문제부터</span></div>
+<h2>자주 나오는 함정</h2><div class="trap-list"><ul>
+<li><strong>연속이면 미분가능하다고 생각하기.</strong> 미분가능하면 연속입니다. y=|x|는 x=0에서 연속이지만 미분계수가 없습니다.</li>
+<li><strong>(fg)′=f′g′으로 쓰기.</strong> 곱의 미분은 f′g+fg′입니다.</li>
+<li><strong>f′(c)=0이면 극값이라고 단정하기.</strong> 부호가 바뀌지 않으면 극값이 아닙니다. y=x³의 x=0이 그렇습니다.</li>
+<li><strong>극댓값과 구간의 최댓값을 같은 말로 쓰기.</strong> 최댓값은 끝점에서 나올 수 있고, 끝점은 극값이 아닙니다. 사차함수의 극댓값은 양 끝이 더 높이 올라가면 최댓값이 아닙니다.</li>
+<li><strong>절댓값은 꺾인 점에서 항상 미분불능이라고 생각하기.</strong> 곱해진 다항함수가 그 점에서 0이면 미분가능하고 미분계수는 0입니다.</li>
+<li><strong>접선은 곡선과 한 점에서만 만난다고 생각하기.</strong> 삼차곡선에서는 접점 외에 다른 교점이 있을 수 있습니다.</li>
+<li><strong>속도가 0이면 방향이 바뀐다고 생각하기.</strong> 속도의 부호가 바뀔 때만 방향이 바뀝니다.</li>
+<li><strong>속력 증가를 가속도가 양수인 것으로만 판단하기.</strong> 속도가 음수일 때는 가속도도 음수여야 속력이 늘어납니다.</li>
+</ul></div>
+<h2 id="examples">대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>곡선 y=x³에 접하고 점 (2, 0)을 지나는 직선을 모두 구하시오.</summary><div class="example-sol"><p>접점의 x좌표를 t라 하면 접점 (t, t³), 기울기 3t²입니다.</p>
+<p>접선: y − t³ = 3t²(x − t), 즉 y = 3t²x − 2t³.</p>
+<p>점 (2, 0)이 위에 있으므로 0 = 3t²·2 − 2t³ = 6t² − 2t³ = 2t²(3−t).</p>
+<p>t=0 또는 t=3.</p>
+<p>t=0이면 접선은 <strong>y=0</strong>. t=3이면 y=27x−54, 즉 <strong>y=27x−54</strong>.</p>
+<p>검산: x³−(27x−54)=x³−27x+54=(x−3)²(x+6). x=3에서 중근이므로 접선이 맞습니다. y=0은 x³=0과 x=0에서 만나며 기울기도 0입니다.</p></div></details><details class="example"><summary>f(x)=x³+ax²+bx가 x=1에서 극댓값 4를 가질 때 a, b와 극솟값을 구하시오.</summary><div class="example-sol"><p>f′(x)=3x²+2ax+b이고 f′(1)=3+2a+b=0입니다.</p>
+<p>f(1)=1+a+b=4이므로 a+b=3입니다.</p>
+<p>(2a+b)−(a+b)=−3−3에서 a=−6, b=9입니다.</p>
+<p>f′(x)=3x²−12x+9=3(x−1)(x−3).</p>
+<p>부호는 x&lt;1에서 양, 1&lt;x&lt;3에서 음, x&gt;3에서 양입니다. x=1에서 극대, x=3에서 극소가 맞습니다.</p>
+<p>극솟값 f(3)=27+9·(−6)+9·3=27−54+27=<strong>0</strong>. a=<strong>−6</strong>, b=<strong>9</strong>.</p></div></details><details class="example"><summary>f(x)=|x²−4|, g(x)=(x²−4)|x−2|에 대하여 f가 미분가능하지 않은 점과 g′(2)를 구하시오.</summary><div class="example-sol"><p>x²−4=(x−2)(x+2)의 단일근은 x=±2이고, 그 점에서 도함수 2x는 ±4로 0이 아닙니다. 따라서 f는 <strong>x=−2, x=2</strong>에서 미분가능하지 않습니다.</p>
+<p>직접 확인하면, x=2의 오른쪽에서 f(x)=x²−4, 도함수 2x의 값은 4입니다. 왼쪽(−2&lt;x&lt;2)에서 f(x)=4−x², 도함수 −2x의 값은 −4입니다. 4≠−4입니다. x=−2에서도 좌미분계수 −4, 우미분계수 4로 다릅니다.</p>
+<p>g는 |x−2| 앞에 x²−4가 곱해져 있고, x=2에서 x²−4=0입니다. 따라서 x=2에서 미분가능하고 미분계수는 0입니다.</p>
+<p>전개로 검산합니다. x≥2이면 g(x)=(x−2)²(x+2)=x³−2x²−4x+8, 도함수 3x²−4x−4이고 x=2에서 12−8−4=0입니다. x&lt;2이면 g(x)=−(x−2)²(x+2), 도함수 −3x²+4x+4이고 x=2에서 −12+8+4=0입니다. 따라서 g′(2)=<strong>0</strong>.</p></div></details><details class="example"><summary>f(x)=x³−6x²+9x+1의 대칭의 중심을 구하고, 극댓값과 극솟값으로 확인하시오.</summary><div class="example-sol"><p>a=1, b=−6이므로 중심의 x좌표 m=−b/(3a)=6/3=<strong>2</strong>.</p>
+<p>f(2)=8−24+18+1=<strong>3</strong>. 중심은 (2, 3)입니다.</p>
+<p>f′(x)=3x²−12x+9=3(x−1)(x−3). 극대 x=1, 극소 x=3이고 중점은 2로 m과 같습니다.</p>
+<p>f(1)=1−6+9+1=5, f(3)=27−54+27+1=1. 평균 (5+1)/2=3=f(2)입니다.</p>
+<p>점대칭 확인: f(2+1)+f(2−1)=f(3)+f(1)=1+5=6=2f(2).</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3>
+<p>도함수는 접선의 기울기입니다. 양수면 올라가고 음수면 내려가며, 부호가 바뀌는 곳이 극값입니다.</p>
+<ul>
+<li>미분가능하면 연속입니다. 연속이라고 미분되는 것은 아닙니다.</li>
+<li>삼차함수는 x=−b/(3a)인 점에 대해 점대칭입니다.</li>
+<li>속도의 부호가 방향, 속도가 0을 지날 때 방향이 바뀌고, 움직인 거리는 되돌아온 길이까지 더합니다.</li>
+</ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>접선 조건은 접점 t의 방정식으로, 극값 조건은 f′(α)=0과 부호 변화로, 절댓값 조건은 꺾인 점에서 곱해진 함수가 0인지로 통일해서 풉니다. 계수가 정해진 뒤에는 반드시 도함수를 인수분해해 부호표를 다시 그립니다. ‘극대’라고 했더니 부호가 음에서 양으로 바뀌면 극소를 극대로 읽은 것입니다.</p>
+<p>삼차함수는 대칭의 중심을 원점으로 옮기면 x³+px 꼴이 됩니다. 극점의 중점, 극값의 평균, −b/(3a)가 서로 같은지 세 값이 맞물리는지로 검산합니다. 방정식의 실근 개수는 y=k가 극댓값과 극솟값 사이에 있는지를 표로 나누고, k가 극값과 같을 때는 중근(접함)과 다른 한 근으로 읽습니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>미분의 개념을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"미분의 개념을 짝지으세요.","pairs":[{"term":"평균변화율","def":"두 점을 잇는 기울기"},{"term":"미분계수","def":"그 점의 접선 기울기"},{"term":"극댓값","def":"양쪽 근방에서 가장 큼"},{"term":"최댓값","def":"구간 전체에서 가장 큼"},{"term":"미분가능","def":"좌우 미분계수가 같음"},{"term":"연속","def":"극한과 함숫값이 같음"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"미분가능과 연속의 관계로 옳은 것은?","choices":["미분가능하면 연속이다","연속이면 반드시 미분가능하다","둘은 같은 뜻이다","불연속이어도 미분계수가 있을 수 있다"],"answer":0},{"q":"f′(c)=0일 때 항상 옳은 것은?","choices":["x=c에서 극댓값이다","x=c에서 극솟값이다","x=c에서 극값이다","x=c에서 접선의 기울기가 0이다"],"answer":3},{"q":"어떤 구간에서 f′(x)가 양수이면 그 구간에서 함수는?","choices":["감소한다","극값을 가진다","증가한다","상수함수이다"],"answer":2},{"q":"y=|x|가 x=0에서 미분가능하지 않은 이유는?","choices":["함숫값이 없어서","좌미분계수와 우미분계수가 달라서","연속이 아니라서","극한값이 무한대라서"],"answer":1},{"q":"직선 위에서 속도가 음수이고 가속도도 음수이면?","choices":["속력이 늘어난다","속력이 줄어든다","양의 방향으로 움직인다","정지해 있다"],"answer":0}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 수학 전 시험지에서 이 파트로 분류된 <strong>83문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:b2">📝 미분 모아 풀기 →</a></p>
+<div class="nms-stepband"><b>④ 마무리</b><span>공부 끝 5분 — 말로 설명하고, 오답 한 줄을 남기고, 끝내기 체크</span></div>
+<section class="nms nms-end" data-nms>
+<div class="nms-top"><b>🗣 마무리 — 말로 설명하고 끝내기</b><span class="nms-top-r"><a href="../study-style.html#notes">내 오답 한 줄 모음 →</a></span></div>
+<div class="nms-explain"><b>🗣 말로 설명해 보기</b><ol><li>f′(c) = 0인데도 극값이 아닌 경우가 있는 이유를 y = x<sup>3</sup>으로 설명해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>극값은 그 점을 경계로 증가에서 감소로, 또는 감소에서 증가로 바뀌는 곳이라 도함수의 부호가 바뀌어야 합니다. y = x<sup>3</sup>은 y′ = 3x<sup>2</sup>이라 x = 0에서 도함수가 0이지만, 0의 양쪽에서 모두 3x<sup>2</sup> &gt; 0이라 부호가 바뀌지 않습니다. 실제로 x<sub>1</sub> &lt; x<sub>2</sub>이면 x<sub>1</sub><sup>3</sup> &lt; x<sub>2</sub><sup>3</sup>이라 함수는 계속 증가하고, x = 0에서는 접선이 잠깐 수평이 될 뿐입니다. 그래서 <b>f′(c) = 0은 극값의 후보일 뿐</b>이고, 부호 변화를 확인해야 극값이 됩니다.</p></details></li><li>g(x)가 다항함수일 때 g(x)|x − c|가 x = c에서 미분가능하려면 왜 g(c) = 0이어야 하는지 말해 보세요.<details class="nms-ans"><summary>내 설명과 비교하기</summary><p>h(x) = g(x)|x − c|라 하면 h(c) = 0이고, x &gt; c에서는 (h(x) − h(c))/(x − c) = g(x), x &lt; c에서는 −g(x)입니다. x → c로 보내면 우미분계수는 g(c), 좌미분계수는 −g(c)이고, 미분가능하려면 둘이 같아야 하므로 g(c) = −g(c), 곧 <b>g(c) = 0</b>입니다. 이때 미분계수는 0이고, g(c) ≠ 0이면 양쪽 기울기의 부호가 반대라 그래프가 그 점에서 꺾입니다.</p></details></li></ol><p>책을 덮고 모르는 사람에게 설명하듯 소리 내어 먼저 답해 본 뒤 비교하세요. 막히는 곳이 아직 내 것이 아닌 곳이니, 그 고리만 위 사슬에서 다시 보면 됩니다.</p></div>
+<div class="nms-note" data-note="aboutSuneungMath/05-diff.html"><b>✍️ 오답 한 줄</b><span class="nms-note-saved" aria-live="polite"></span>
+<p class="nms-note-hint">틀린 문제 하나를 골라 ‘내가 왜 그렇게 생각했나, 어느 단계에서 틀어졌나’를 한 줄로 적어 두세요. 이 기기에만 저장되고 논리형 공부법 페이지에 모입니다.</p>
+<textarea rows="2" data-note-input aria-label="오답 한 줄" placeholder="예: 조건 하나를 빼고 식을 세움 — 다음엔 조건에 번호부터 붙이기"></textarea></div>
+<div class="nms-done" data-done="aboutSuneungMath/05-diff.html"><b>✅ 이 파트 끝내기</b><span class="nms-done-n" aria-live="polite"></span>
+<label><input type="checkbox" data-chk="0"> 사슬을 안 보고 처음부터 끝까지 써 봤다</label>
+<label><input type="checkbox" data-chk="1"> ‘말로 설명해 보기’ 두 질문에 막힘없이 답했다</label>
+<label><input type="checkbox" data-chk="2"> 조건을 바꾼 문제(대표 예제·기출)를 풀었다</label></div>
+</section>
+<div class="pager"><a href="04-limit.html">← 함수의 극한과 연속</a><a href="06-integral.html">적분 →</a></div>
+</main></div>
+</body></html>

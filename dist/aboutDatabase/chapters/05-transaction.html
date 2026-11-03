@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5장. 트랜잭션과 동시성 제어</title>
+<link rel="stylesheet" href="../styles.css">
+<script defer src="../toggle.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📖 표지 · 초록</a></li>
+    <li><a href="01-relational.html">1. 관계형 DB 기초</a></li>
+    <li><a href="02-sql.html">2. SQL 핵심</a></li>
+    <li><a href="03-normalization.html">3. 정규화</a></li>
+    <li><a href="04-index.html">4. 인덱스와 최적화</a></li>
+    <li><a href="05-transaction.html">5. 트랜잭션과 동시성</a></li>
+    <li><a href="06-nosql.html">6. NoSQL</a></li>
+    <li><a href="07-distributed.html">7. 분산 DB</a></li>
+    <li><a href="08-modeling.html">8. 데이터 모델링</a></li>
+    <li><a href="09-patterns.html">9. 실전 설계 패턴</a></li>
+  </ol>
+</aside>
+<main>
+
+<h1>5장. 트랜잭션과 동시성 제어</h1>
+
+<section id="section-1">
+  <h2>1. 트랜잭션이란?</h2>
+
+  <div class="easy-version">
+    <h4>쉬운 설명</h4>
+    <p>은행에서 A 계좌에서 돈을 빼고 B 계좌에 넣는 송금 과정을 생각해봅시다.</p>
+    <ul>
+      <li>A에서 100만원 빼기</li>
+      <li>B에 100만원 더하기</li>
+    </ul>
+    <p>만약 첫 번째 작업은 완료되었는데 컴퓨터가 꺼진다면? 돈이 사라집니다!</p>
+    <p><strong>트랜잭션:</strong> 이 두 작업을 하나의 묶음으로 취급해서 "둘 다 성공" 또는 "둘 다 실패"만 가능하게 만듭니다.</p>
+  </div>
+
+  <div class="paper-version">
+    <h4>논문 수준 설명</h4>
+    <p><strong>정의:</strong> 트랜잭션(Transaction)은 데이터베이스의 논리적 단위로, 여러 개의 SQL 문들이 모두 성공하거나 모두 실패해야 하는 작업의 집합입니다.</p>
+    <p><strong>명령어:</strong></p>
+    <ul>
+      <li><code>BEGIN</code> 또는 <code>START TRANSACTION</code>: 트랜잭션 시작</li>
+      <li><code>COMMIT</code>: 모든 변경 사항을 영구 저장</li>
+      <li><code>ROLLBACK</code>: 트랜잭션 시작 전으로 되돌리기</li>
+    </ul>
+    <p><strong>Atomicity Guarantee:</strong> 트랜잭션 내의 모든 작업이 원자적(atomic)으로 처리되어야 함</p>
+  </div>
+</section>
+
+<!-- 3D 학습 시각화: 트랜잭션 — 원자성과 잠금 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 트랜잭션: 이체로 보는 ACID</div>
+  <div id="db3d-05" style="width:100%;height:430px;"></div>
+  <div id="db3d-05-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">계좌 이체가 실패·성공·경합하는 세 가지 시나리오.</div>
+</div>
+
+
+<section id="section-2">
+  <h2>2. ACID 속성</h2>
+
+  <div class="easy-version">
+    <h4>쉬운 설명</h4>
+    <p>트랜잭션이 안전하려면 4가지 속성을 가져야 합니다:</p>
+    <ul>
+      <li><strong>원자성(Atomicity):</strong> 다 되거나 다 안 되거나. 반쪽짜리는 없음.</li>
+      <li><strong>일관성(Consistency):</strong> 데이터 규칙을 위반할 수 없음. (예: 나이는 음수 불가)</li>
+      <li><strong>격리성(Isolation):</strong> 여러 트랜잭션이 동시에 실행되어도 서로 방해하지 않음.</li>
+      <li><strong>지속성(Durability):</strong> 한번 저장되면 영구적. 전기가 나가도 복구됨.</li>
+    </ul>
+  </div>
+
+  <div class="paper-version">
+    <h4>논문 수준 설명</h4>
+    <p><strong>원자성:</strong> All or Nothing. 트랜잭션의 모든 연산이 수행되거나 하나도 수행되지 않음.</p>
+    <p><strong>일관성:</strong> 트랜잭션 시작 전과 후의 무결성 제약 조건이 모두 만족되어야 함.</p>
+    <p><strong>격리성:</strong> 동시 실행 중인 트랜잭션들 간의 상호 간섭이 없어야 함. Serializability 보장.</p>
+    <p><strong>지속성:</strong> 커밋된 트랜잭션의 데이터는 시스템 장애 후에도 복구 가능해야 함.</p>
+    <p><strong>WAL (Write-Ahead Logging):</strong> 디스크에 쓰기 전에 로그에 먼저 기록. ARIES 복구 알고리즘 사용.</p>
+  </div>
+</section>
+
+<section id="section-3">
+  <h2>3. 격리 수준</h2>
+
+  <div class="easy-version">
+    <h4>쉬운 설명</h4>
+    <p>도서관에서 같은 책을 여러 명이 동시에 볼 때의 규칙처럼, DB도 격리 수준을 정합니다:</p>
+    <ul>
+      <li><strong>READ UNCOMMITTED:</strong> 누구나 마음대로 접근 (가장 빠름, 가장 위험)</li>
+      <li><strong>READ COMMITTED:</strong> 완료된 책만 봄 (적당함)</li>
+      <li><strong>REPEATABLE READ:</strong> 같은 책은 같은 사람과만 공유 (엄격함)</li>
+      <li><strong>SERIALIZABLE:</strong> 한 명씩 순서대로 (가장 안전, 가장 느림)</li>
+    </ul>
+  </div>
+
+  <div class="paper-version">
+    <h4>논문 수준 설명</h4>
+    <p><strong>READ UNCOMMITTED:</strong> 커밋되지 않은 데이터 읽기 가능. Dirty Read 허용.</p>
+    <p><strong>READ COMMITTED:</strong> 커밋된 데이터만 읽기. Non-repeatable Read 발생 가능.</p>
+    <p><strong>REPEATABLE READ:</strong> 트랜잭션 중에 읽은 데이터는 항상 같음. Phantom Read 발생 가능.</p>
+    <p><strong>SERIALIZABLE:</strong> 모든 격리 수준의 이상현상(Dirty Read, Non-repeatable Read, Phantom Read) 방지.</p>
+    <p><strong>이상 현상:</strong></p>
+    <ul>
+      <li>Dirty Read: 커밋되지 않은 데이터를 다른 트랜잭션이 읽음</li>
+      <li>Non-repeatable Read: 같은 데이터를 읽을 때마다 값이 달라짐</li>
+      <li>Phantom Read: 범위 검색 중 새 행이 추가됨</li>
+    </ul>
+  </div>
+</section>
+
+<section id="section-4">
+  <h2>4. 잠금과 동시성</h2>
+
+  <div class="easy-version">
+    <h4>쉬운 설명</h4>
+    <p>화장실 문에 잠금장치가 있는 이유와 같습니다:</p>
+    <ul>
+      <li><strong>공유 잠금(Shared Lock):</strong> 여러 명이 함께 책을 읽을 수 있음 (쓰기는 불가)</li>
+      <li><strong>배타 잠금(Exclusive Lock):</strong> 한 명만 독점해서 쓸 수 있음</li>
+    </ul>
+    <p>잠금을 잘못 관리하면 <strong>데드락</strong>이 발생합니다. (A가 B를 기다리고, B가 A를 기다리는 상황)</p>
+  </div>
+
+  <div class="paper-version">
+    <h4>논문 수준 설명</h4>
+    <p><strong>2PL (Two-Phase Locking):</strong> 확장 단계(Growing Phase)에서만 잠금 획득, 축소 단계(Shrinking Phase)에서만 해제.</p>
+    <p><strong>데드락 탐지 및 예방:</strong></p>
+    <ul>
+      <li>Wait-for Graph를 이용한 사이클 탐지</li>
+      <li>Timeout 기반 해제</li>
+      <li>타임스탬프 기반 우선순위 지정</li>
+    </ul>
+    <p><strong>MVCC (Multi-Version Concurrency Control):</strong> 데이터의 여러 버전을 유지하여 읽기와 쓰기를 동시에 진행. PostgreSQL, MySQL InnoDB에서 사용.</p>
+  </div>
+</section>
+
+<div class="interactive-demo" style="margin:40px 0;padding:20px;background:#f0f4ff;border-radius:8px;border-left:4px solid #7b5cff;">
+  <h3>🏦 ACID 속성 시뮬레이터</h3>
+  <p style="margin-bottom:15px;font-size:14px;">송금 시뮬레이션: 김철수 계좌 → 이영희 계좌</p>
+
+  <div style="display:flex;gap:30px;margin:20px 0;">
+    <div style="flex:1;padding:15px;background:#fff;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+      <h4 style="margin:0 0 10px 0;">김철수 계좌</h4>
+      <p style="font-size:24px;font-weight:bold;color:#7b5cff;" id="account1">1,000,000원</p>
+    </div>
+    <div style="flex:1;padding:15px;background:#fff;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+      <h4 style="margin:0 0 10px 0;">이영희 계좌</h4>
+      <p style="font-size:24px;font-weight:bold;color:#00d4ff;" id="account2">500,000원</p>
+    </div>
+  </div>
+
+  <div style="margin:20px 0;">
+    <label style="display:block;margin-bottom:10px;">
+      <input type="checkbox" id="failureToggle"> 송금 중 장애 발생 시뮬레이션
+    </label>
+    <button onclick="simulateTransfer()" style="padding:10px 20px;background:#7b5cff;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:bold;">100,000원 송금 시작</button>
+    <button onclick="resetTransaction()" style="margin-left:10px;padding:10px 20px;background:#999;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:bold;">초기화</button>
+  </div>
+
+  <div id="transaction-log" style="margin-top:15px;padding:10px;background:#fff;border-radius:6px;min-height:60px;font-size:13px;font-family:monospace;line-height:1.6;color:#666;overflow-y:auto;max-height:120px;"></div>
+</div>
+
+<script>
+let account1 = 1000000;
+let account2 = 500000;
+const transferAmount = 100000;
+
+function updateDisplay() {
+  document.getElementById('account1').textContent = account1.toLocaleString() + '원';
+  document.getElementById('account2').textContent = account2.toLocaleString() + '원';
+}
+
+function logTransaction(msg) {
+  const log = document.getElementById('transaction-log');
+  const time = new Date().toLocaleTimeString();
+  log.innerHTML += `[${time}] ${msg}\n`;
+  log.scrollTop = log.scrollHeight;
+}
+
+function simulateTransfer() {
+  const log = document.getElementById('transaction-log');
+  log.innerHTML = '';
+  const hasFailure = document.getElementById('failureToggle').checked;
+
+  logTransaction('트랜잭션 시작 (BEGIN)');
+
+  setTimeout(() => {
+    logTransaction('Step 1: 김철수 계좌에서 ' + transferAmount.toLocaleString() + '원 출금');
+    account1 -= transferAmount;
+    updateDisplay();
+  }, 500);
+
+  setTimeout(() => {
+    if (hasFailure) {
+      logTransaction('⚠️ 장애 발생! (네트워크 끊김)');
+      logTransaction('ROLLBACK 실행 - 모든 변경 취소');
+      account1 += transferAmount;
+      updateDisplay();
+    } else {
+      logTransaction('Step 2: 이영희 계좌에 ' + transferAmount.toLocaleString() + '원 입금');
+      account2 += transferAmount;
+      updateDisplay();
+    }
+  }, 1500);
+
+  setTimeout(() => {
+    if (!hasFailure) {
+      logTransaction('✅ COMMIT - 트랜잭션 완료 (데이터 영구 저장)');
+    }
+    logTransaction('ACID 속성 확보: ' + (hasFailure ? '원자성(Rollback)' : '원자성, 일관성, 지속성'));
+  }, 2500);
+}
+
+function resetTransaction() {
+  account1 = 1000000;
+  account2 = 500000;
+  updateDisplay();
+  document.getElementById('transaction-log').innerHTML = '';
+}
+
+updateDisplay();
+</script>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--rule);">
+  <a href="04-index.html" style="text-decoration:none;">← 인덱스와 최적화</a>
+  <a href="06-nosql.html" style="text-decoration:none;">NoSQL →</a>
+</div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎮 한 줄로 말하면?</h3>
+  <p>트랜잭션은 <strong>"다 같이 성공! 아니면 다 같이 취소!"</strong> 하는 데이터 변경 묶음이에요. 봉투에 담는다고 생각해요! ✉️</p>
+
+  <h3>🤔 이게 왜 중요할까?</h3>
+  <p>트랜잭션이 없으면 돈이 공중으로 사라질 수도 있어요! 💸</p>
+  <ul>
+    <li>😱 송금 중에 인터넷이 끊겨 출금만 되고 입금은 안 되면 큰일!</li>
+    <li>🎫 같은 좌석을 두 명이 동시에 예매하면 한 명만 성공해야 해요.</li>
+    <li>🛒 결제랑 재고 줄이기는 한 묶음! 하나라도 실패하면 처음으로 되돌려요.</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 꼭 기억할 낱말</h4>
+    <ul>
+      <li><strong>트랜잭션(Transaction)</strong>: 여러 명령을 하나처럼 묶는 단위. 📦</li>
+      <li><strong>COMMIT</strong>: "성공 확정!" 봉투 봉인하기. ✅</li>
+      <li><strong>ROLLBACK</strong>: "취소!" 통째로 되돌리기. ↩️</li>
+      <li><strong>ACID</strong>: 원자성·일관성·고립성·지속성 네 가지 약속. 🤝</li>
+      <li><strong>락(Lock)</strong>: 동시에 못 만지게 잠그는 자물쇠. 🔒</li>
+    </ul>
+  </div>
+
+  <h3>💰 은행 송금으로 쉽게!</h3>
+  <p>친구에게 5만 원을 보낸다고 해봐요. 내 계좌에서 5만 원이 빠지고(작업 1), 친구 계좌에 5만 원이 들어가요(작업 2).</p>
+  <p>만약 작업 1만 성공하고 작업 2가 실패하면? 😨 5만 원이 사라진 거예요! 그래서 두 작업을 <strong>한 봉투에 묶어요</strong>. 봉투를 봉인(<strong>COMMIT</strong>)하면 둘 다 반영, 도중에 문제가 생기면 봉투를 뜯고 처음으로(<strong>ROLLBACK</strong>)!</p>
+  <p>이 묶음엔 네 가지 약속 <strong>ACID</strong>가 있어요. 원자성=전부 아니면 전무, 일관성=규칙이 안 깨짐, 고립성=다른 봉투랑 안 섞임, 지속성=한 번 봉인하면 정전이 와도 안 사라짐! 🔋</p>
+  <p>이 약속을 지키려고 DB는 <strong>락(자물쇠)</strong>과 <strong>로그(기록장)</strong>를 써요. 락은 다른 봉투가 같은 데이터를 못 건드리게 잠그고, 로그는 미리 적어둬서 정전 후에도 복구하게 해줘요. 똑똑하죠? 😎</p>
+
+  <div class="study-tip">
+    <strong>💡 학습 TIP:</strong> BEGIN / COMMIT / ROLLBACK을 직접 쳐 보고, 일부러 ROLLBACK을 해서 데이터가 원래대로 돌아가는 걸 눈으로 확인해 보세요! 👀
+  </div>
+
+  <h3>✅ 오늘의 정리</h3>
+  <ul>
+    <li>📦 트랜잭션은 작업의 묶음이에요.</li>
+    <li>✅ COMMIT으로 확정, ↩️ ROLLBACK으로 되돌리기.</li>
+    <li>🤝 ACID 네 가지를 보장해요.</li>
+    <li>🔒 락과 로그로 동시성과 복구를 처리해요.</li>
+    <li>🏦 은행·예매·재고 시스템의 필수 기능!</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>SQL 표준은 4단계 격리 수준을 정의합니다. READ UNCOMMITTED는 더티 리드를 허용하며, READ COMMITTED는 커밋된 값만 읽지만 같은 트랜잭션 내 두 번 읽었을 때 값이 바뀌는 Non-Repeatable Read가 발생할 수 있습니다. REPEATABLE READ는 같은 행을 다시 읽어도 같은 값이지만 팬텀 리드(범위 조건의 결과 행 수가 바뀜)가 가능하며, SERIALIZABLE은 모든 이상을 막지만 성능 비용이 큽니다. PostgreSQL의 기본은 READ COMMITTED, MySQL InnoDB는 REPEATABLE READ가 기본입니다. 동시성 제어는 비관적 락(2PL: Two-Phase Locking)과 낙관적 락(MVCC) 두 갈래로 나뉘며, MVCC는 읽기와 쓰기가 서로를 막지 않는 것이 핵심 장점입니다. 데드락은 두 트랜잭션이 서로의 락을 기다리는 상황으로, RDBMS는 그래프 기반 데드락 디텍터로 한쪽을 자동 롤백시킵니다. 분산 트랜잭션은 2PC(Two-Phase Commit)로 구현하지만, 코디네이터 단일 장애점과 블로킹 문제로 실무에서는 사가(Saga) 패턴이 더 자주 채택됩니다.</p>
+
+  <h3>실전 SQL/쿼리</h3>
+  <pre><code>-- 송금 트랜잭션
+BEGIN;
+UPDATE account SET balance = balance - 50000
+  WHERE account_id = 'A' AND balance >= 50000;
+-- 행이 갱신되지 않으면 잔고 부족
+UPDATE account SET balance = balance + 50000
+  WHERE account_id = 'B';
+COMMIT;
+-- 어디서든 오류 발생 시 ROLLBACK;
+
+-- 격리 수준 변경
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+
+-- SELECT FOR UPDATE: 예매 좌석 잠금
+BEGIN;
+SELECT * FROM seat
+  WHERE event_id = 99 AND seat_no = 'A12'
+  FOR UPDATE;
+-- 잠금 후 예매 처리
+UPDATE seat SET status = 'BOOKED', booker_id = 1001
+  WHERE event_id = 99 AND seat_no = 'A12';
+COMMIT;</code></pre>
+
+  <h3>예제</h3>
+  <div class="info-card">
+    <h4>💻 예제 1: 재고 차감 패턴</h4>
+    <p>UPDATE stock SET qty = qty - 1 WHERE product_id = ? AND qty > 0; 처럼 조건을 함께 두면 재고가 음수로 떨어지는 것을 막습니다. 영향 받은 행이 0이면 매진으로 처리합니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>💻 예제 2: 낙관적 락(버전 컬럼)</h4>
+    <p>row에 version 컬럼을 두고 UPDATE ... SET version = version + 1 WHERE id = ? AND version = ? 형식으로 변경합니다. 다른 사용자가 먼저 수정했다면 영향 행이 0이고, 애플리케이션은 재시도하거나 충돌을 알립니다.</p>
+  </div>
+
+  <h3>실무 응용</h3>
+  <p>이커머스 결제는 결제 PG 호출과 주문 상태 변경을 단일 트랜잭션으로 묶을 수 없으므로, 메시지 큐와 사가 패턴으로 보상 트랜잭션을 설계합니다. 또한 게임 인벤토리 거래는 두 플레이어의 인벤토리를 같은 트랜잭션에서 잠가 동시 거래 충돌을 막습니다. 항공권 예매는 좌석 단위 락과 짧은 트랜잭션으로 실시간 점유율을 관리합니다.</p>
+
+  <div class="warning-box">
+    <strong>⚠️ 자주 하는 실수:</strong> 트랜잭션을 너무 길게 끌면 락이 오래 잡혀 시스템 전체가 느려집니다. 외부 API 호출은 트랜잭션 밖에서 처리하는 게 원칙입니다. 또 격리 수준을 무작정 올리는 것은 데드락을 늘립니다.
+  </div>
+
+<h3>전문가 레벨</h3>
+  <p>MVCC(Multi-Version Concurrency Control)는 각 트랜잭션에 스냅샷을 부여하고, 행마다 xmin/xmax 같은 버전 메타데이터로 가시성을 판단합니다. PostgreSQL은 dead tuple을 VACUUM이 정리하고, MySQL InnoDB는 언두 로그를 통해 과거 버전을 복원합니다. SSI(Serializable Snapshot Isolation)는 PostgreSQL 9.1부터 도입된 직렬화 보장 알고리즘으로, 위험한 종속성 사이클을 감지해 한쪽을 abort합니다. WAL(Write-Ahead Logging)은 변경을 먼저 로그에 적고 데이터 페이지에 반영하기 전에 동기화해 충돌 복구의 정확성을 보장하며, 체크포인트와 함께 동작합니다. 분산 트랜잭션의 2PC는 블로킹과 코디네이터 단일 장애점 문제가 있어 Spanner는 TrueTime API를, CockroachDB는 HLC(Hybrid Logical Clock)를 활용해 외부 일관성을 구현합니다. 사가는 보상 트랜잭션 시퀀스로 분산 일관성을 달성하지만, 보상의 멱등성과 순서 보장이 필수입니다. 결정성 데이터베이스(Calvin, FaunaDB)는 트랜잭션 순서를 사전에 결정해 락 경쟁을 줄이며, HTAP는 OLTP와 OLAP을 한 시스템에서 처리하기 위한 격리·복제 기술이 핵심입니다.</p>
+
+  <h3>고급 패턴</h3>
+  <pre><code>-- 직렬화 가능 격리 수준에서 사이클 감지
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+BEGIN;
+SELECT SUM(amount) FROM ledger WHERE account_id = 'A';
+INSERT INTO ledger (account_id, amount) VALUES ('A', -100);
+-- 다른 SERIALIZABLE 트랜잭션과 충돌하면 SQLSTATE 40001로 abort
+-- 애플리케이션은 재시도 루프 필요
+COMMIT;
+
+-- Outbox 패턴: 비즈니스 변경과 이벤트 발행을 한 트랜잭션
+BEGIN;
+INSERT INTO orders (...) VALUES (...);
+INSERT INTO outbox (event_type, payload, created_at)
+  VALUES ('OrderCreated', '{...}', NOW());
+COMMIT;
+-- 별도 워커가 outbox를 폴링해 메시지 큐로 발행
+
+-- Advisory Lock으로 분산 잡 단일 실행
+SELECT pg_try_advisory_lock(hashtext('daily_settlement'));
+-- 락 획득 시에만 작업 수행, 완료 후 pg_advisory_unlock</code></pre>
+
+  <h3>최신 동향</h3>
+  <p>Google Spanner는 TrueTime을 활용한 외부 일관성 분산 트랜잭션으로 글로벌 ACID를 실현했습니다. 또한 CockroachDB와 YugabyteDB는 오픈소스 NewSQL 영역에서 동일한 모델을 발전시키고 있습니다. FoundationDB는 결정성 시뮬레이션 테스팅으로 분산 트랜잭션의 정확성을 검증하는 패러다임을 보여 주었으며, 서버리스 데이터베이스(Neon, Aurora Serverless v2)는 트랜잭션 격리와 자동 스케일링의 결합을 새로 정의하고 있습니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li>분산 합의 알고리즘(Paxos, Raft)과 일관성 모델.</li>
+    <li>이벤트 소싱과 사가 오케스트레이션.</li>
+    <li>WAL 기반 복제와 PITR(Point-In-Time Recovery).</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>"Designing Data-Intensive Applications" — Martin Kleppmann (트랜잭션 챕터).</li>
+    <li>"A Critique of ANSI SQL Isolation Levels" — Hal Berenson 외.</li>
+    <li>Jepsen 분석 보고서들.</li>
+  </ul>
+
+  <div class="success-box">
+    <strong>🎓 도전 과제:</strong> 두 마이크로서비스(주문, 결제) 간 사가 패턴을 설계하되, Outbox 패턴과 멱등키를 결합해 메시지 중복 발행에도 비즈니스 결과가 1회만 일어나도록 보장하는 시퀀스를 그려 보세요.
+  </div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 다른 하나 찾기</h2>
+<p>같은 묶음에 어울리지 않는 하나를 골라보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"oddone","color":"#0d6efd","prompt":"성격이 다른 하나를 고르세요","rounds":[{"items":["원자성","일관성","지속성","SERIALIZABLE"],"odd":3,"why":"나머지는 ACID 속성, SERIALIZABLE은 격리 수준"},{"items":["READ COMMITTED","REPEATABLE READ","SERIALIZABLE","원자성"],"odd":3,"why":"나머지는 격리 수준, 원자성은 ACID 속성"},{"items":["공유 잠금","배타 잠금","데드락","COMMIT"],"odd":3,"why":"나머지는 동시성·잠금 개념, COMMIT은 트랜잭션 확정 명령"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0d6efd","questions":[{"q":"트랜잭션을 영구 저장하는 명령은?","choices":["BEGIN","ROLLBACK","COMMIT","SAVE"],"answer":2},{"q":"트랜잭션을 시작 전으로 되돌리는 명령은?","choices":["ROLLBACK","COMMIT","DELETE","DROP"],"answer":0},{"q":"다 되거나 다 안 되거나를 뜻하는 속성은?","choices":["일관성","격리성","지속성","원자성"],"answer":3},{"q":"Dirty Read를 허용하는 격리 수준은?","choices":["SERIALIZABLE","READ UNCOMMITTED","REPEATABLE READ","READ COMMITTED"],"answer":1},{"q":"서로의 락을 기다리며 멈추는 상황은?","choices":["핫스팟","팬텀 리드","데드락","더티 리드"],"answer":2}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('db3d-05');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('db3d-05-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,2.0,13);camera.lookAt(0,0.4,0);
+  function makeAcct(x,name){
+    var base=box(2.4,0.3,1.6,0x9aa6c0,0.9);base.position.set(x,-1.2,0);scene.add(base);
+    var L=lbl(name,25,'#39415a',0.95);L.position.set(x,-2.0,0);scene.add(L);
+    var coins=[];
+    for(var i=0;i<10;i++){
+      var c=cyl(0.55,0.55,0.18,0xffc83c,1);c.position.set(x,-0.95+i*0.22,0);scene.add(c);coins.push(c);
+    }
+    return {x:x,coins:coins};
+  }
+  var A=makeAcct(-4.4,'계좌 A: 100만');
+  var B=makeAcct(2.6,'계좌 B: 50만');
+  function setCoins(acct,n){acct.coins.forEach(function(c,i){c.visible=i<n;});}
+  setCoins(A,10);setCoins(B,5);
+  var st=lbl('BEGIN TRANSACTION',26,'#5b6bd6',1);st.position.set(-1,3.8,0);scene.add(st);
+  function setSt(t,c){scene.remove(st);if(st.material.map)st.material.map.dispose();st.material.dispose();st=lbl(t,26,c,1);st.position.set(-1,3.8,0);scene.add(st);}
+  var moving=[];
+  for(var i=0;i<3;i++){var c=cyl(0.55,0.55,0.18,0xffc83c,1);c.visible=false;scene.add(c);moving.push(c);}
+  var boom=lbl('⚡ 장애 발생!',30,'#d6455b',1.2);boom.material.opacity=0;boom.position.set(-1,1.8,0);scene.add(boom);
+  var lock=lbl('🔒 잠금(Lock)',26,'#d6455b',1);lock.material.opacity=0;lock.position.set(-4.4,1.4,0);scene.add(lock);
+  var t2tok=sph(0.4,0x9b59b6,0.95);t2tok.visible=false;scene.add(t2tok);
+  var t2L=lbl('트랜잭션 T2 (대기)',23,'#9b59b6',0.9);t2L.material.opacity=0;scene.add(t2L);
+  var logSlab=box(2.0,0.4,0.8,0x2f9e63,0);logSlab.position.set(6.4,-1.2,0);scene.add(logSlab);
+  var logL=lbl('WAL 로그 기록',21,'#2f9e63',0);logL.position.set(6.4,-0.4,0);scene.add(logL);
+  function fly(u,n0){
+    moving.forEach(function(c,i){
+      var f=clamp01(u*1.4-i*0.15);
+      c.visible=f>0&&f<1;
+      var fromY=-0.95+(n0-i)*0.22,toY=-0.95+(5+i)*0.22;
+      c.position.set(-4.4+ez(f)*7.0,Math.max(fromY,1.6*Math.sin(ez(f)*Math.PI))+ (fromY+(toY-fromY)*ez(f))*0,0);
+      c.position.y=fromY+(toY-fromY)*ez(f)+Math.sin(ez(f)*Math.PI)*1.8;
+    });
+  }
+  var phases=[
+    {dur:3.2,cap:'시나리오: A→B로 30만 원 이체. ① A에서 차감 — 동전 3개가 떠오릅니다. 아직 B에는 도착 전.',
+     enter:function(){setCoins(A,10);setCoins(B,5);setSt('BEGIN → UPDATE A (-30)','#5b6bd6');boom.material.opacity=0;lock.material.opacity=0;t2tok.visible=false;t2L.material.opacity=0;logSlab.material.opacity=0;logL.material.opacity=0;},
+     update:function(u){
+       var n=10-Math.floor(ez(u)*3.2);setCoins(A,Math.max(7,n));
+       fly(u*0.45,9);
+     }},
+    {dur:2.6,cap:'② 그 순간 서버 다운! 돈이 A에서는 빠졌는데 B에는 안 들어간 "반쪽 상태" — 이대로 두면 30만 원이 증발합니다.',
+     enter:function(){setSt('UPDATE B … ⚡ CRASH','#d6455b');},
+     update:function(u){boom.material.opacity=Math.sin(u*14)>0?1:0.4;moving.forEach(function(c){c.visible=u<0.4;});}},
+    {dur:3.2,cap:'③ ROLLBACK(원자성): DB는 트랜잭션 전체를 취소 — 동전이 A로 복귀. All or Nothing, "반쪽 실행"은 존재할 수 없습니다.',
+     enter:function(){setSt('ROLLBACK','#e07a3f');boom.material.opacity=0;},
+     update:function(u){
+       moving.forEach(function(c,i){var f=1-ez(u);c.visible=f>0.05&&f<0.5;});
+       if(u>0.6)setCoins(A,10);
+     }},
+    {dur:4,cap:'④ 재시도 — 이번엔 성공: A-30 → B+30 → COMMIT. 커밋 직전 WAL 로그가 디스크에 — 전원이 나가도 복구 가능(영속성).',
+     enter:function(){setSt('BEGIN → A-30 → B+30 → COMMIT ✓','#2f9e63');},
+     update:function(u){
+       fly(u,9);
+       if(u>0.5){setCoins(A,7);}
+       if(u>0.75){setCoins(B,5+Math.min(3,Math.floor((u-0.75)*16)));}
+       logSlab.material.opacity=Math.min(0.95,u*1.5);logL.material.opacity=Math.min(1,u*1.5);
+     }},
+    {dur:4.5,cap:'⑤ 동시성: T1이 A를 수정하는 동안 T2(보라)가 같은 계좌에 접근 → 잠금에 막혀 대기. 잠금·격리수준이 "동시에 정확하게"를 보장합니다(격리성).',
+     enter:function(){setSt('T1: UPDATE A … (잠금 보유)','#5b6bd6');lock.material.opacity=1;t2tok.visible=true;t2L.material.opacity=1;},
+     update:function(u){
+       var x=Math.min(-6.6+ez(Math.min(1,u*1.6))*1.4,-6.6+1.4);
+       t2tok.position.set(x,0.2,1.2);t2L.position.set(x+0.4,1.0,1.2);
+       t2tok.material.opacity=0.6+0.35*Math.sin(u*10);
+       if(u>0.75){lock.material.opacity=0;setSt('T1 COMMIT → T2 진행','#2f9e63');t2tok.position.x=-6.6+1.4+(u-0.75)*4;}
+     }}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

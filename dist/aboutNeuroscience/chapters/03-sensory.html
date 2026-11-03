@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 감각과 지각 — aboutNeuroscience</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">🧠 표지</a></li><li><a href="01-neurons.html">1. 뉴런과 시냅스</a></li><li><a href="02-brain-anatomy.html">2. 뇌 해부학</a></li><li><a href="03-sensory.html">3. 감각과 지각</a></li><li><a href="04-memory.html">4. 기억과 학습</a></li><li><a href="05-emotion.html">5. 정서와 동기</a></li><li><a href="06-consciousness.html">6. 의식과 수면</a></li><li><a href="07-neuroplasticity.html">7. 신경가소성</a></li><li><a href="08-disorders.html">8. 뇌질환과 장애</a></li><li><a href="09-neurotech.html">9. 뇌공학과 AI</a></li></ol></aside>
+<main><header class="paper-header"><h1><em>감각과 지각</em></h1><p class="authors">Chapter 3 — Sensory Processing & Perception</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 다섯 감각 입력이 시상으로 모였다가 대뇌피질로 올라가는 흐름입니다</span>
+<h2>감각과 지각 개요</h2><p>Sensory Processing & Perception의 핵심 메커니즘을 3D 시뮬레이션과 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>시각·청각·후각·미각·체성감각 수용기가 외부 자극을 신경 신호로 변환하고 뇌가 이를 통합 인지하는 과정을 탐구합니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🧠 한 줄로 이해하기</h3><p>감각은 바깥세상 신호를 <strong>뇌가 알아듣는 언어로 번역</strong>하는 거예요. 지각은 그 번역본을 "아, 이거구나!" 하고 이해하는 거고요. 🌍➡️🧠</p>
+  <h3>😲 왜 재밌을까?</h3><p>방금 본 빨간 사과 🍎, 사실은 그냥 '빛의 파장'일 뿐이에요. 그런데 우리는 "빨갛고 동그랗고 맛있겠다!"라고 느끼죠. 친구 목소리만 듣고 누군지 딱 맞히고, 깜깜한 방에서도 발끝으로 가구를 피해 걷는 것도 감각의 힘! 시끄러운 카페에서도 누가 내 이름을 부르면 바로 알아채요. 이걸 <strong>칵테일파티 효과</strong>라고 해요. 뇌가 정보를 똑똑하게 골라 듣는 거죠! 👂</p>
+  <div class="info-card"><h4>🌱 꼭 알아둘 말</h4><ul><li><strong>수용기(Receptor)</strong>: 자극을 전기 신호로 바꾸는 세포 🔌</li><li><strong>지각(Perception)</strong>: 감각을 의미있게 해석하는 것 💡</li><li><strong>역치(Threshold)</strong>: 느낌이 시작되는 최소 세기 📏</li><li><strong>주의(Attention)</strong>: 중요한 것에 집중하는 능력 🎯</li><li><strong>착시(Illusion)</strong>: 실제와 다르게 보이는 현상 🌀</li></ul></div>
+  <h3>💬 쉽게 풀어보기</h3><p>감각을 <strong>우편 시스템</strong>이라고 생각해봐요! 📮 빛, 소리, 냄새 같은 자극은 편지가 되어 우리 몸의 우체국(눈·귀·코·피부·혀)에 도착해요. 우체국은 편지를 표준 봉투(전기 신호)에 담아 본부(뇌)로 보내요. ✉️ 본부는 그냥 분류만 하는 게 아니라, <strong>옛 기억과 비교해서 해석</strong>해요. 그래서 똑같은 냄새라도 누군가에겐 그리움, 누군가에겐 싫은 기억이 돼요. 더 놀라운 사실! 우리가 '본다'고 믿는 것의 상당수는 사실 <strong>뇌가 채워 넣은 것</strong>이에요. 우리 눈(망막)에는 시신경이 빠져나가는 '맹점'이라는 구멍이 있는데, 우리는 못 느껴요. 뇌가 주변 정보로 슬쩍 메워버리거든요! 😮 그러니까 지각은 가만히 받는 게 아니라 뇌가 열심히 만드는 작품이에요. 🎨</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 유명한 착시 그림을 직접 그려서 가족에게 보여줘요! 같은 그림을 서로 다르게 보는 경험이 지각의 비밀을 알려줘요. 👀</div>
+  <h3>📌 요약</h3><ul><li>감각은 번역, 지각은 해석이에요.</li><li>감각마다 전용 수용기가 있어요.</li><li>주의는 정보를 고르는 도구예요.</li><li>지각은 기억과 상황에 영향을 받아요.</li><li>뇌는 빠진 정보를 스스로 채워요.</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>메커니즘 깊이</h3><p>망막의 광수용체인 막대세포와 원뿔세포는 빛 광자를 흡수해 옵신 단백질의 형태 변화를 일으키고, 이는 cGMP 농도를 낮춰 막을 과분극시킵니다. 신호는 양극세포와 신경절세포를 거쳐 시신경으로 전달되며, 외측슬상핵을 거쳐 일차 시각피질(V1)에 도달합니다. V1에서는 방향 선택성, V4에서는 색채, MT에서는 운동이 처리됩니다. 청각은 달팽이관의 기저막 위치에 따라 주파수가 분리되는 토노토피 조직을 따르고, 일차 청각피질에서 음높이와 음색이 처리됩니다. 체성감각은 마이스너소체, 파치니소체 등 다양한 수용기로 시작해 척수를 거쳐 일차 체성감각피질(S1)의 호문쿨루스로 매핑됩니다. 후각은 유일하게 시상을 거치지 않고 변연계로 직접 연결되어 정서와 강하게 결합합니다.</p>
+  <h3>대표 실험/사례</h3>
+  <div class="info-card"><h4>🧠 사례 1</h4><p>휴벨과 비셀의 고양이 V1 단일세포 기록은 방향 선택적 뉴런을 발견했고, 시각 처리의 위계 구조 모델을 정립했습니다.</p></div>
+  <div class="info-card"><h4>🧠 사례 2</h4><p>맥거크 효과는 시각과 청각이 충돌할 때 들리는 음절이 바뀌는 현상으로, 다중감각 통합의 강력한 증거입니다.</p></div>
+  <h3>실험 방법</h3><p>정신물리학에서는 자극 강도를 조절해 역치와 식별력을 측정합니다. 시각유발전위(VEP)는 시각 자극에 대한 피질 반응을 EEG로 기록하고, 안구추적기는 시선의 위치와 머무름을 정량화합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "혀의 부위마다 맛이 다르다"는 미각 지도는 잘못된 도식입니다. 모든 미뢰는 다섯 가지 기본 맛을 모두 감지할 수 있습니다.</div>
+
+<h3>전문가 레벨</h3><p>지각은 베이지안 추론의 틀로 이해되며, 사전 확률(prior), 우도(likelihood), 사후 확률(posterior)이 결합해 가장 그럴듯한 외부 원인을 추정합니다. 예측 부호화 이론은 피질의 위계가 하향식 예측과 상향식 예측 오차를 교환한다고 봅니다. V1의 뉴런은 단순한 윤곽 검출기가 아니라 확률적 추론의 노드로 작동하고, 주의는 정밀도(precision) 가중치 조정으로 모형화됩니다. 다중감각 통합은 최대 우도 추정 모델로 정량화되며, 각 감각의 신뢰도에 따라 가중 평균이 결정됩니다. 공감각은 비전형적 교차연결의 결과로, 그래핌-색채 공감각자에서 V4와 방추형 회의 활성이 일반인과 다릅니다. 의식적 지각의 신경 상관물(NCC) 연구는 양안 경쟁, 시각 차폐, 주의 깜박임 등의 패러다임을 활용합니다. 최근에는 능동 추론(active inference) 프레임워크가 지각, 학습, 행동을 통합 설명합니다.</p>
+  <h3>핵심 모델</h3><div class="formula">베이지안 지각 모델: P(원인|감각) ∝ P(감각|원인) · P(원인) — 자유에너지 원리의 인지 응용</div>
+  <h3>최신 연구</h3><p>가상현실을 활용한 신체 소유감 실험은 고무손 착각을 확장해 자기감의 신경 기반을 탐구합니다. 뇌-기계 인터페이스는 시각피질 직접 자극으로 시각장애인에게 형태 지각을 복원하려는 시도를 진행 중입니다. 인공지능 모델과 V1 활동의 비교 연구는 지각 표상의 보편성을 검증합니다.</p>
+  <h3>관련 분야</h3><ul><li>정신물리학과 인지심리학</li><li>계산 시각과 컴퓨터 비전</li><li>신경공학과 감각 보철</li></ul>
+  <h3>추가 자료</h3><ul><li>Goldstein, <em>Sensation and Perception</em></li><li>Wandell, <em>Foundations of Vision</em></li><li>Friston의 자유에너지 논문</li></ul>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 색을 한 번도 본 적 없는 사람이 색에 관한 모든 과학을 안다면, 처음으로 빨강을 보았을 때 새로운 지식을 얻는 것일까요? '메리의 방' 사고 실험을 깊이 들여다봅시다.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 감각별 수용기 분류</h2>
+<p>각 수용기·구조가 어느 감각에 속하는지 알맞은 그룹으로 옮겨 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"grouping","color":"#818cf8","prompt":"각 수용기·구조를 알맞은 감각으로 분류하세요","groups":[{"name":"시각","items":["막대세포","원뿔세포"]},{"name":"청각","items":["달팽이관","기저막"]},{"name":"체성감각","items":["마이스너소체","파치니소체"]}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#818cf8","questions":[{"q":"감각을 의미 있게 해석하는 과정은?","choices":["감각","역치","주의","지각"],"answer":3},{"q":"자극을 전기 신호로 바꾸는 세포는?","choices":["뉴런","시냅스","수용기","축삭"],"answer":2},{"q":"자극과 다르게 지각되는 현상은?","choices":["역치","착시","지각","주의"],"answer":1},{"q":"시상을 거치지 않는 감각은?","choices":["후각","시각","청각","촉각"],"answer":0},{"q":"시각과 청각이 충돌하는 현상은?","choices":["칵테일파티","착시","공감각","맥거크 효과"],"answer":3}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const thal=new THREE.Mesh(new THREE.OctahedronGeometry(0.7,0),new THREE.MeshBasicMaterial({color:0x8b5cf6}));thal.position.set(0,-0.5,0);s.add(thal);
+  const cortex=new THREE.Mesh(new THREE.PlaneGeometry(5,1.4),new THREE.MeshBasicMaterial({color:0x6366f1,transparent:true,opacity:0.55,side:THREE.DoubleSide}));cortex.position.set(0,2.6,0);s.add(cortex);
+  const cols=[0xef4444,0xf59e0b,0x10b981,0x06b6d4,0xec4899];const travelers=[];
+  for(let k=0;k<5;k++){const ang=(k/5)*Math.PI*2;const sx=Math.cos(ang)*3.4,sy=-0.5+Math.sin(ang)*2.6;
+    const cone=new THREE.Mesh(new THREE.ConeGeometry(0.35,0.7,10),new THREE.MeshBasicMaterial({color:cols[k]}));cone.position.set(sx,sy,0);cone.lookAt(0,-0.5,0);cone.rotateX(Math.PI/2);s.add(cone);
+    const g=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(sx,sy,0),new THREE.Vector3(0,-0.5,0)]);s.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:cols[k],transparent:true,opacity:0.4})));
+    const dot=new THREE.Mesh(new THREE.SphereGeometry(0.12,8,8),new THREE.MeshBasicMaterial({color:cols[k]}));s.add(dot);travelers.push({dot:dot,sx:sx,sy:sy,off:k*0.2});}
+  s.userData.tr=travelers;
+  const g2=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,-0.5,0),new THREE.Vector3(0,2.0,0)]);s.add(new THREE.Line(g2,new THREE.LineBasicMaterial({color:0xa78bfa,transparent:true,opacity:0.6})));
+  // 감각 처리 경로 라벨 — 수용기→시상→피질 흐름을 가르치기 위함
+  [['시상(중계)','#6d28d9',0,-1.45,0],['대뇌피질(해석)','#4338ca',0,3.5,0],['시각 수용기','#b91c1c',3.6,2.3,0],['청각 수용기','#b45309',3.8,-0.2,0],['후각 수용기','#047857',-2.0,-2.6,0],['촉각 수용기','#0e7490',-3.9,-0.5,0],['미각 수용기','#be185d',-2.4,2.6,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 다섯 감각 입력이 시상으로 모였다가 피질로 올라갑니다.','수용기가 빛·소리·냄새 같은 자극을 전기 신호로 바꿉니다.','시상은 거의 모든 감각의 중계국이지만, 후각만 시상을 거치지 않습니다.','대뇌피질이 신호를 기억·맥락과 비교해 의미 있게 해석(지각)합니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.tr.forEach(t=>{const ph=((T*0.4)+t.off)%1;t.dot.position.set(t.sx*(1-ph),-0.5+t.sy*(1-ph)+0.5*(1-ph)-0.5*(1-ph),0);t.dot.position.x=t.sx*(1-ph);t.dot.position.y=t.sy+(-0.5-t.sy)*ph;});thal.rotation.y+=0.02;s.rotation.y+=0.003; r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

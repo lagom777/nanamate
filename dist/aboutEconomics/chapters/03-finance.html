@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 금융과 투자 — aboutEconomics</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">📊 표지</a></li><li><a href="01-micro.html">1. 미시경제학</a></li><li><a href="02-macro.html">2. 거시경제학</a></li><li><a href="03-finance.html">3. 금융과 투자</a></li><li><a href="04-trade.html">4. 국제무역</a></li><li><a href="05-behavioral.html">5. 행동경제학</a></li><li><a href="06-development.html">6. 경제발전</a></li><li><a href="07-labor.html">7. 노동경제학</a></li><li><a href="08-public-finance.html">8. 재정학</a></li><li><a href="09-crypto-fintech.html">9. 크립토/핀테크</a></li></ol></aside>
+<main><header class="paper-header"><h1><em>금융과 투자</em></h1><p class="authors">Chapter 3 — Financial Markets & Investment</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 중심 포트폴리오를 둘러싼 자산들 — 분산투자로 위험과 수익을 배분합니다</span>
+<h2>금융과 투자 개요</h2><p>Financial Markets & Investment의 핵심 원리를 3D 시각화와 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>주식·채권·파생상품 시장의 작동 원리와 포트폴리오 분산투자, 리스크-수익률 트레이드오프를 탐구합니다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한마디로!</h3>
+  <p>금융과 투자는 "지금의 돈"과 "미래의 돈"을 바꾸는 시간 여행이에요. ⏳</p>
+  <h3>🤔 왜 중요할까?</h3>
+  <p>용돈을 저금통에 모으고, 은행에 예금하고, 어른이 되면 주식이나 ETF로 노후를 준비하는 거 전부 금융이에요. 💰 예금은 안전하지만 조금 벌고, 주식은 오르락내리락하지만 오래 두면 많이 벌 수 있어요. 같은 돈이라도 어떻게 굴리느냐에 따라 10년 뒤 크기가 완전 달라진답니다!</p>
+  <div class="info-card">
+    <h4>🌱 이 낱말만 알면 끝!</h4>
+    <ul>
+      <li><strong>수익률:</strong> 넣은 돈에 비해 얼마 벌었나 📈</li>
+      <li><strong>리스크:</strong> 벌지 못하거나 잃을 수 있는 위험 🎢</li>
+      <li><strong>분산투자:</strong> 여기저기 나눠 담아 위험 줄이기 🧺</li>
+      <li><strong>복리:</strong> 이자가 또 이자를 낳는 눈덩이 효과 ⛄</li>
+      <li><strong>유동성:</strong> 필요할 때 얼마나 빨리 현금으로 바꾸나 💵</li>
+    </ul>
+  </div>
+  <h3>📖 눈덩이로 생각해봐요</h3>
+  <p>복리는 언덕에서 굴리는 눈덩이 같아요. ⛄ 처음엔 작지만 구를수록 눈이 붙어 점점 커지죠. 매년 7%씩 불어나면 10년 뒤엔 두 배, 20년 뒤엔 네 배가 돼요! 그래서 투자의 달인 워렌 버핏은 "복리는 세계 8대 불가사의"라고 했대요. 😲 대신 딱 한 가지 기억하세요. "절대 안 잃고 엄청 많이 버는 방법"이라는 말은 거의 다 사기예요. 🚫 그리고 계란을 한 바구니에 다 담으면 떨어뜨렸을 때 몽땅 깨지죠? 그래서 여러 바구니에 나눠 담는 게 분산투자랍니다! 🥚</p>
+  <div class="study-tip"><strong>💡 이렇게 해봐요:</strong> 투자는 "작게, 길게, 나눠서"가 정답이에요. 조금씩 오래오래 모으는 게 초보자에게 가장 안전한 출발이에요. 🐢</div>
+  <h3>✨ 한눈에 정리!</h3>
+  <ul>
+    <li>금융은 시간을 사고파는 활동이에요. ⏳</li>
+    <li>수익과 위험은 동전의 앞뒤예요. 🪙</li>
+    <li>나눠 담으면 위험이 줄어요. 🧺</li>
+    <li>복리는 시간이 지날수록 폭발해요. ⛄</li>
+    <li>"안전한 대박"은 세상에 없어요! 🚫</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>현대 투자이론의 출발점은 마코위츠(Markowitz)의 평균-분산 최적화 모형입니다. 위험과 수익을 분산-기댓값으로 정량화하고 효율적 프론티어 위의 포트폴리오를 선택하면 동일 위험에서 최고 수익을 얻을 수 있습니다. 여기에 무위험자산을 추가하면 토빈의 분리정리에 따라 모든 투자자는 시장포트폴리오와 무위험자산의 조합으로 표현됩니다. 이로부터 자본자산가격결정모형(CAPM)이 도출되며, 개별자산의 기대수익률은 무위험금리에 시장위험프리미엄에 베타를 곱한 값이 더해진 형태로 결정됩니다. 효율적 시장가설(EMH)은 가격이 모든 공개정보를 반영한다고 주장하며, 약형·준강형·강형으로 구분됩니다. 채권가격은 만기·쿠폰·수익률곡선에 따라 결정되며 듀레이션은 금리변동에 대한 가격 민감도를 측정합니다. 옵션가격은 블랙-숄즈 모형으로 평가합니다.</p>
+  <h3>핵심 모델/공식</h3>
+  <div class="formula">CAPM: E(Ri) = Rf + βi(E(Rm) − Rf)<br>샤프비율: SR = (E(Rp) − Rf)/σp<br>채권 듀레이션: D = Σ t·CFt/(1+y)^t / P<br>현재가치: PV = Σ CFt/(1+r)^t</div>
+  <h3>대표 사례</h3>
+  <div class="info-card">
+    <h4>📊 사례 1 — 인덱스펀드의 승리</h4>
+    <p>2008년 워렌 버핏이 헤지펀드 매니저와 100만 달러 내기를 했고, 10년간 S&P 500 인덱스펀드가 5개 헤지펀드 평균을 큰 폭으로 이겼습니다(연 7.1% vs 2.2%). 패시브 투자의 우월성을 보여준 사례입니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>📊 사례 2 — 2020 동학개미와 서학개미</h4>
+    <p>코로나 유동성으로 한국 개인투자자가 코스피·미국 주식에 대거 유입되며 KRX 개인 순매수가 사상최대를 기록했습니다. 그러나 2022년 금리 인상기에 큰 손실을 본 투자자도 많아, 시장 사이클 이해의 중요성을 보였습니다.</p>
+  </div>
+  <h3>현실 응용</h3>
+  <p>퇴직연금 DC형 계좌에서는 TDF(Target Date Fund)를 활용해 연령에 맞춰 주식·채권 비중을 자동 조정할 수 있습니다. 미국 증시 투자 시 환헷지 ETF와 비헷지 ETF의 선택은 환율 전망에 따라 달라지며, 채권 듀레이션은 금리 사이클 후반에 길게 가져가는 전략이 유효합니다. 부동산은 레버리지로 베타를 키운 자산이라 금리에 민감합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 과거 수익률을 미래 기대수익률로 단순 외삽. 평균회귀와 밸류에이션 부담을 함께 보아야 합니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>CAPM의 한계가 드러나면서 Fama-French 3요인(시장·SMB·HML), 5요인(수익성·투자), Carhart의 모멘텀 요인을 더한 다요인 모형이 표준이 되었습니다. 차익거래가격결정모형(APT)은 다수의 거시요인이 자산가격을 설명한다는 일반화된 틀을 제공합니다. 옵션가격결정에서 블랙-숄즈는 로그정규 가정 하에 도출되지만, 실제 시장에는 변동성 미소(volatility smile)와 텀구조가 존재해 Heston, SABR 같은 확률변동성 모형이 사용됩니다. 신용리스크는 Merton 모형을 출발점으로 KMV, CreditMetrics, 코퓰라 모형으로 발전했고, 2008년 위기에서 가우시안 코퓰라의 한계가 드러나 모델리스크 관리가 강화되었습니다. 행동재무는 효율적 시장가설의 한계를 지적하며, 군집행동·과신·전망이론 기반의 가격 이상현상을 설명합니다. 시장미시구조는 호가창 동학, 정보거래자, 시장조성자의 역할을 분석하며 고빈도매매(HFT)의 영향을 다룹니다.</p>
+  <h3>수리 모델</h3>
+  <div class="formula">블랙-숄즈: ∂V/∂t + ½σ²S²∂²V/∂S² + rS∂V/∂S − rV = 0<br>이토 보조정리: dF = (∂F/∂t + μ∂F/∂S + ½σ²∂²F/∂S²)dt + σ∂F/∂S dW<br>VaR: Pr(Lp > VaRα) = 1 − α<br>Fama-French: Ri − Rf = αi + βi(Rm−Rf) + si SMB + hi HML + εi</div>
+  <h3>최신 연구</h3>
+  <p>머신러닝 기반 자산가격 예측(Gu, Kelly, Xiu 2020)은 신경망과 부스팅이 전통적 요인 모델을 능가함을 보였고, 대안데이터(위성영상, 신용카드결제, 소셜미디어 텍스트)가 알파의 새로운 원천이 되고 있습니다. ESG 투자와 기후금융 리스크 가격책정, 디파이(DeFi)의 자동시장조성자(AMM)와 임퍼머넌트 로스 분석, 그리고 중앙은행 디지털화폐(CBDC) 발행이 금융중개에 미치는 영향이 활발히 연구됩니다.</p>
+  <h3>관련 분야</h3>
+  <ul>
+    <li>퀀트 트레이딩 — 알고리즘과 통계차익거래</li>
+    <li>리스크 관리 — VaR·ES·스트레스 테스트</li>
+    <li>구조설계 — 파생결합증권과 헤지전략</li>
+  </ul>
+  <h3>추가 자료</h3>
+  <ul>
+    <li>Cochrane, <em>Asset Pricing</em></li>
+    <li>Hull, <em>Options, Futures, and Other Derivatives</em></li>
+    <li>SSRN Financial Economics Network 논문</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> KOSPI 200 종목으로 Fama-French 5요인 회귀를 직접 추정하고 한국 시장 특유의 요인(대주주 프리미엄 등)을 추가해 설명력을 비교해 보세요.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 금융 용어 상황 판단</h2>
+<p>투자의 핵심 용어와 설명을 알맞게을 보고 알맞은 답을 고르세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#0891b2","prompt":"용어와 설명을 짝지으세요","pairs":[{"term":"분산투자","def":"여러 자산에 나눠 위험을 줄이는 전략"},{"term":"복리","def":"이자가 원금이 되어 이자를 낳는 효과"},{"term":"유동성","def":"자산을 현금으로 빠르게 바꾸는 정도"},{"term":"듀레이션","def":"금리변동에 대한 채권가격 민감도"},{"term":"리스크","def":"미래 수익이 변동할 가능성"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#0891b2","questions":[{"q":"여러 자산에 나눠 위험을 줄이는 전략은?","choices":["복리","분산투자","유동성","수익률"],"answer":1},{"q":"이자가 원금이 되어 이자를 낳는 효과는?","choices":["단리","환율","복리","듀레이션"],"answer":2},{"q":"복리를 8대 불가사의라 한 인물은?","choices":["케인즈","마코위츠","카너먼","워렌 버핏"],"answer":3},{"q":"금리변동에 대한 채권가격 민감도는?","choices":["듀레이션","베타","샤프비율","쿠폰"],"answer":0},{"q":"버핏 내기에서 인덱스펀드 연 수익률은?","choices":["2.2%","7.1%","10.5%","15.0%"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,3,9);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const core=new THREE.Mesh(new THREE.SphereGeometry(0.8,24,24),new THREE.MeshBasicMaterial({color:0x10b981,wireframe:true}));s.add(core);s.userData.core=core;
+  const coreL=lbl('포트폴리오','#047857');coreL.position.set(0,1.4,0);s.add(coreL);
+  const assetNames=['주식','채권','부동산','현금','원자재','금','해외자산'];
+  const assets=[];const N=7;for(let i=0;i<N;i++){const rad=2+i*0.45;const sz=0.18+0.04*i;const col=new THREE.Color().setHSL(0.05+i*0.04,0.7,0.55);const m=new THREE.Mesh(new THREE.OctahedronGeometry(sz,0),new THREE.MeshBasicMaterial({color:col}));s.add(m);const aL=lbl(assetNames[i],'#7c2d12');s.add(aL);const orbit=new THREE.Line(new THREE.BufferGeometry().setFromPoints((function(){const p=[];for(let k=0;k<=48;k++){const t=k/48*Math.PI*2;p.push(new THREE.Vector3(Math.cos(t)*rad,0,Math.sin(t)*rad));}return p;})()),new THREE.LineBasicMaterial({color:0x334155}));s.add(orbit);assets.push({m,rad,sp:0.6-i*0.06,ph:i*0.9,tilt:i*0.15,L:aL,sz});}
+  s.userData.assets=assets;
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 중심 포트폴리오를 둘러싼 자산들 — 분산투자로 위험과 수익을 배분합니다.','분산투자: 주식·채권·부동산 등 여러 자산에 나눠 담아 리스크를 줄입니다.','CAPM: E(Ri) = Rf + βi(E(Rm) − Rf) — 위험을 더 질수록 기대수익이 커집니다.','복리·유동성·샤프비율 — 수익률과 위험의 균형이 투자의 핵심입니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}s.userData.core.rotation.y+=0.01;s.userData.assets.forEach(o=>{const ang=T*o.sp+o.ph;o.m.position.set(Math.cos(ang)*o.rad,Math.sin(ang*0.7)*o.tilt,Math.sin(ang)*o.rad);o.m.rotation.x+=0.02;o.m.rotation.y+=0.03;o.L.position.set(o.m.position.x,o.m.position.y+o.sz+0.4,o.m.position.z);});s.rotation.y+=0.003;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

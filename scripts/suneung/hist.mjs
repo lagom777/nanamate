@@ -27,7 +27,7 @@ export const spec = {
   affiliation: "고대 · 중세·근세 · 근대·현대 · 9파트 · 암기법 · 전략 · 한눈에 요약",
   summary: true, summaryBlurb: "파트별 연표·표·함정을 카드 한 장씩에 — 시험 직전 훑어보기용",
   motion: true, motionBlurb: "연표·지도·인과 사슬·퀴즈로 움직이며 외우기 — 전체 합본과 파트별 재생", extra: { ...motionPages(), "map.html": mapPage() },
-  extraLinks: [{ href: "map.html", label: "🗺️ 영토 변화 지도", num: "MAP", blurb: "기원전 2세기부터 1953년까지, 연도 슬라이더로 넘겨 보는 지도 인포그래픽" }],
+  extraLinks: [{ href: "map.html", label: "🗺️ 영토 변화 지도", num: "MAP", blurb: "기원전 4세기부터 1953년까지, 연도 슬라이더로 넘겨 보는 지도 인포그래픽" }],
   kind: "items", qn: 20, minutes: 30,
   chapters,
   intro: `<h2>이 노트가 다루는 것</h2>

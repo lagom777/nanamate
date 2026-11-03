@@ -226,3 +226,48 @@
 @media (prefers-reduced-motion: reduce) {
   .ph-tile, .ph-syl, .ph-syls, .ph-bar, .ph-card, .df-step, .df-why { transition-duration: .01s; }
 }
+
+/* ── 작품·지문 내용 재생기(players/lit.js) ── 위: 인물 칩, 가운데: 정서·인용(문학) / 문단·개념어(독서), 그 아래: 흐름 줄 */
+.lt { position: absolute; inset: 0; }
+.lt-who { position: absolute; top: 2.2cqw; right: 2.6cqw; max-width: 36%; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .6cqw; }
+.lt-chip { padding: .25cqw .9cqw; border-radius: 99px; font-size: max(11px, 1.2cqw); border: 1px solid rgba(255, 255, 255, .14); color: rgba(238, 244, 255, .38); transition: color .4s, background .4s, border-color .4s; }
+.lt-chip.on { color: #ccfbf1; background: rgba(94, 234, 212, .14); border-color: rgba(94, 234, 212, .55); }
+.lt-mid { position: absolute; left: 6%; right: 6%; top: 25%; height: 33%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .8cqw; text-align: center; }
+.lt-small { font-size: max(11px, 1.3cqw); letter-spacing: .12em; color: rgba(238, 244, 255, .55); }
+.lt-big { font-size: max(22px, 4.4cqw); font-weight: 800; line-height: 1.1; color: #fde68a; text-shadow: 0 0 22px rgba(251, 191, 36, .35); }
+.lt-big:empty { display: none; }
+.lt-q { max-width: 90%; font-family: 'Noto Serif KR', 'Nanum Myeongjo', serif; font-size: max(13px, 1.9cqw); line-height: 1.5; color: #f1f5f9; }
+.lt-keys { display: flex; flex-wrap: wrap; justify-content: center; gap: .9cqw; }
+.lt-k { padding: .4cqw 1.3cqw; border-radius: 1cqw; font-size: max(13px, 1.9cqw); font-weight: 700; color: #bae6fd; background: rgba(56, 189, 248, .12); border: 1px solid rgba(56, 189, 248, .4); opacity: 0; transform: translateY(6px); transition: opacity .5s, transform .5s; }
+.lt-k.on { opacity: 1; transform: none; }
+.lt-track { position: absolute; left: 3%; right: 3%; top: 62%; display: flex; align-items: center; justify-content: center; gap: .5cqw; }
+.lt-mark { display: flex; flex-direction: column; align-items: center; min-width: 0; max-width: 16%; padding: .35cqw .8cqw; border-radius: .9cqw; border: 1px solid rgba(255, 255, 255, .1); color: rgba(238, 244, 255, .35); transition: all .45s; }
+.lt-mark b { font-size: max(11px, 1.3cqw); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.lt-mark small { font-size: max(9px, .95cqw); opacity: .8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.lt-mark.done { color: rgba(238, 244, 255, .7); border-color: rgba(255, 255, 255, .22); }
+.lt-mark.now { color: #1e1b0f; background: #fbbf24; border-color: #fbbf24; box-shadow: 0 0 18px rgba(251, 191, 36, .45); }
+.lt-arrow { font-size: max(10px, 1.1cqw); color: rgba(238, 244, 255, .3); }
+.lt-intro, .lt-pts { position: absolute; left: 6%; right: 6%; top: 22%; display: none; }
+.lt.is-intro .lt-intro, .lt.is-pt .lt-pts { display: block; }
+.lt.is-intro .lt-mid, .lt.is-intro .lt-track, .lt.is-pt .lt-mid { display: none; }
+.lt.is-pt .lt-track { top: auto; bottom: 30%; }
+.lt-key { font-size: max(14px, 2.1cqw); font-weight: 700; line-height: 1.45; color: #fde68a; margin-bottom: 1.4cqw !important; }
+.lt-cast, .lt-outline { list-style: none; padding: 0; margin: 0; display: grid; gap: .55cqw; }
+.lt-cast li { display: flex; gap: 1cqw; align-items: baseline; font-size: max(12px, 1.45cqw); }
+.lt-cast b { flex: none; color: #99f6e4; }
+.lt-cast span { color: rgba(238, 244, 255, .82); }
+.lt-outline { counter-reset: o; grid-template-columns: repeat(auto-fill, minmax(18%, 1fr)); }
+.lt-outline li { font-size: max(12px, 1.4cqw); color: rgba(238, 244, 255, .8); padding: .3cqw .8cqw; border-radius: .7cqw; background: rgba(255, 255, 255, .05); }
+.lt-pts { counter-reset: p; list-style: none; padding: 0; margin: 0; display: grid; gap: 1cqw; }
+.lt-pts li { position: relative; padding: .8cqw 1.4cqw .8cqw 3.6cqw; border-radius: 1cqw; background: rgba(255, 255, 255, .05); border: 1px solid rgba(255, 255, 255, .1); font-size: max(13px, 1.75cqw); line-height: 1.45; color: #f1f5f9; opacity: 0; transform: translateX(-10px); transition: opacity .5s, transform .5s; }
+.lt-pts li::before { counter-increment: p; content: counter(p); position: absolute; left: 1.2cqw; top: .8cqw; color: #fbbf24; font-weight: 800; }
+.lt-pts li.on { opacity: 1; transform: none; }
+@container (max-width: 560px) {
+  .lt-who { top: auto; bottom: 3%; left: 4%; right: 4%; max-width: none; justify-content: center; }
+  .lt-mid { top: 22%; height: 40%; }
+  .lt-track { top: auto; bottom: 15%; flex-wrap: wrap; row-gap: 4px; }
+  .lt-mark { max-width: none; padding: 2px 6px; }
+  .lt-mark small { display: none; }   /* 좁으면 단계 이름은 빼고 정서만, 길면 두 줄로 */
+  .lt-intro, .lt-pts { top: 24%; }
+  .lt.is-pt .lt-track { display: none; }
+}

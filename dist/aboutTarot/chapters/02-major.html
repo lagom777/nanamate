@@ -1,0 +1,404 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2. 메이저 아르카나 22장 — aboutTarot</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🃏 표지</a></li>
+    <li><a href="01-what-is.html">1. 타로란 무엇인가</a></li>
+    <li><a href="02-major.html">2. 메이저 아르카나 22장</a></li>
+    <li><a href="03-minor.html">3. 마이너 아르카나 56장</a></li>
+    <li><a href="04-court.html">4. 코트 카드</a></li>
+    <li><a href="05-reversed.html">5. 정방향과 역방향</a></li>
+    <li><a href="06-spreads.html">6. 대표 스프레드</a></li>
+    <li><a href="07-reading.html">7. 카드 읽는 법</a></li>
+    <li><a href="08-symbolism.html">8. 상징과 융 심리학</a></li>
+    <li><a href="09-ethics.html">9. 타로의 과학·비판·윤리</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>메이저 아르카나 22장</em></h1>
+  <p class="authors">Chapter 2 — The Major Arcana</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 바보의 여정 — 0번에서 21번까지 순환하는 22장의 원</span>
+
+<h2>메이저 아르카나 22장 개요</h2>
+<p>메이저 아르카나는 타로 78장 중 0번 바보부터 21번 세계까지 이어지는 22장의 카드로, '큰 비밀(Major Arcana)'이라 불린다. 이 22장은 흔히 '바보의 여정'이라는 이야기 구조로 해석되어, 한 인간이 순수한 출발점에서 시작해 다양한 시련과 깨달음을 거쳐 완성에 이르는 인생의 큰 단계를 상징한다. 마이너 아르카나가 일상의 구체적 사건을 다룬다면, 메이저 아르카나는 삶을 관통하는 보편적이고 원형적인 주제를 다룬다고 본다.</p>
+
+<h3>🃏 메이저 아르카나 22장 전체 카드 도감 (0~21)</h3>
+<p>아래 카드를 하나씩 살펴보며 0번 바보의 순수한 시작부터 21번 세계의 완성까지 이어지는 상징과 의미를 확인해보세요.</p>
+
+<div class="tarot-grid">
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj00.jpg" alt="0. 바보" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">0 · THE FOOL</div>
+      <div class="tarot-card-title">0. 바보</div>
+      <div class="tarot-card-keywords">순수 · 모험 · 무한한 가능성</div>
+      <div class="tarot-card-meaning">벼랑 끝에서도 두려움 없이 발걸음을 떼는 순수한 영혼. 새로운 여정의 시작입니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj01.jpg" alt="1. 마법사" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">I · THE MAGICIAN</div>
+      <div class="tarot-card-title">1. 마법사</div>
+      <div class="tarot-card-keywords">창조 · 의지 · 실행력 · 다재다능</div>
+      <div class="tarot-card-meaning">하늘의 에너지를 땅으로 이끌어 현실을 창조하는 집중력과 주도권을 상징합니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj02.jpg" alt="2. 여사제" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">II · THE HIGH PRIESTESS</div>
+      <div class="tarot-card-title">2. 여사제</div>
+      <div class="tarot-card-keywords">직관 · 비밀 · 내면의 지혜 · 침묵</div>
+      <div class="tarot-card-meaning">흑백 기둥 사이에 앉아 율법 토라를 품은 직관의 수호자. 무의식의 진실을 뜻합니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj03.jpg" alt="3. 여황제" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">III · THE EMPRESS</div>
+      <div class="tarot-card-title">3. 여황제</div>
+      <div class="tarot-card-keywords">풍요 · 모성 · 자연 · 감각적 결실</div>
+      <div class="tarot-card-meaning">밀밭과 숲에 둘러싸인 풍요의 어머니. 생명력과 따뜻한 돌봄, 창조적 번영을 나타냅니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj04.jpg" alt="4. 황제" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">IV · THE EMPEROR</div>
+      <div class="tarot-card-title">4. 황제</div>
+      <div class="tarot-card-keywords">권위 · 질서 · 구조 · 통제력</div>
+      <div class="tarot-card-meaning">단단한 돌 옥좌에 앉은 지도자. 현실적 규율과 책임감, 안정된 기반을 세우는 힘입니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj05.jpg" alt="5. 교황" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">V · THE HIEROPHANT</div>
+      <div class="tarot-card-title">5. 교황</div>
+      <div class="tarot-card-keywords">전통 · 가르침 · 제도 · 영적 안내</div>
+      <div class="tarot-card-meaning">두 제자에게 가르침을 내리는 영적 스승. 공인된 규범, 학습, 멘토십을 상징합니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj06.jpg" alt="6. 연인" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">VI · THE LOVERS</div>
+      <div class="tarot-card-title">6. 연인</div>
+      <div class="tarot-card-keywords">사랑 · 조화 · 가치관의 선택 · 결합</div>
+      <div class="tarot-card-meaning">천사 라파엘의 축복 아래 선 두 사람. 진정한 유대와 올바른 도덕적 결단을 뜻합니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj07.jpg" alt="7. 전차" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">VII · THE CHARIOT</div>
+      <div class="tarot-card-title">7. 전차</div>
+      <div class="tarot-card-keywords">극복 · 전진 · 승리 · 강한 통제력</div>
+      <div class="tarot-card-meaning">서로 다른 두 스핑크스를 이끄는 전사. 내적 갈등을 이겨내고 목표를 향해 질주합니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj08.jpg" alt="8. 힘" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">VIII · STRENGTH</div>
+      <div class="tarot-card-title">8. 힘</div>
+      <div class="tarot-card-keywords">내적 용기 · 인내 · 온유함 · 본능 제어</div>
+      <div class="tarot-card-meaning">사자를 부드럽게 쓰다듬는 여인. 폭력이 아닌 부드러운 인내와 내면의 신념으로 승리합니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj09.jpg" alt="9. 은둔자" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">IX · THE HERMIT</div>
+      <div class="tarot-card-title">9. 은둔자</div>
+      <div class="tarot-card-keywords">자기성찰 · 고독 · 진리 탐구 · 인도자</div>
+      <div class="tarot-card-meaning">어둠 속에서 등불을 밝혀 든 현자. 세속의 소음을 벗어나 내면의 길을 찾는 성찰입니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj10.jpg" alt="10. 운명의 수레바퀴" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">X · WHEEL OF FORTUNE</div>
+      <div class="tarot-card-title">10. 운명의 수레바퀴</div>
+      <div class="tarot-card-keywords">전환점 · 변화의 주기 · 기회 · 숙명</div>
+      <div class="tarot-card-meaning">끊임없이 회전하는 운명의 바퀴. 삶의 오르막과 내리막 속에서 다가오는 결정적 기회입니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj11.jpg" alt="11. 정의" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">XI · JUSTICE</div>
+      <div class="tarot-card-title">11. 정의</div>
+      <div class="tarot-card-keywords">공정 · 균형 · 인과응보 · 명확한 판단</div>
+      <div class="tarot-card-meaning">천칭과 양날의 검을 든 정의의 여신. 행동에 대한 책임과 왜곡 없는 진실을 상징합니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj12.jpg" alt="12. 매달린 사람" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">XII · THE HANGED MAN</div>
+      <div class="tarot-card-title">12. 매달린 사람</div>
+      <div class="tarot-card-keywords">관점 전환 · 자발적 멈춤 · 희생 · 깨달음</div>
+      <div class="tarot-card-meaning">나무에 거꾸로 매달려 머리에 후광을 띤 인물. 세상을 반대로 보며 얻는 깊은 통찰입니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj13.jpg" alt="13. 죽음" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">XIII · DEATH</div>
+      <div class="tarot-card-title">13. 죽음</div>
+      <div class="tarot-card-keywords">종결 · 대전환 · 탈피 · 새로운 탄생</div>
+      <div class="tarot-card-meaning">낡은 것을 완전히 정리하고 새 시대를 맞이하는 불가피한 변혁. 진정한 갱신을 뜻합니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj14.jpg" alt="14. 절제" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">XIV · TEMPERANCE</div>
+      <div class="tarot-card-title">14. 절제</div>
+      <div class="tarot-card-keywords">조화 · 중용 · 융합 · 치유와 균형</div>
+      <div class="tarot-card-meaning">두 컵 사이로 물을 붓는 천사. 상반된 두 요소를 조화롭게 섞는 연금술적 균형입니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj15.jpg" alt="15. 악마" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">XV · THE DEVIL</div>
+      <div class="tarot-card-title">15. 악마</div>
+      <div class="tarot-card-keywords">집착 · 속박 · 물질주의 · 그림자 자아</div>
+      <div class="tarot-card-meaning">사슬에 묶인 인간 남녀. 스스로 만든 중독과 헛된 욕망의 굴레를 직시할 것을 경고합니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj16.jpg" alt="16. 탑" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">XVI · THE TOWER</div>
+      <div class="tarot-card-title">16. 탑</div>
+      <div class="tarot-card-keywords">급변 · 거짓된 토대의 붕괴 · 진실의 계시</div>
+      <div class="tarot-card-meaning">번개에 맞아 무너지는 오만의 탑. 불안정한 환상이 깨지고 비로소 진실이 드러납니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj17.jpg" alt="17. 별" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">XVII · THE STAR</div>
+      <div class="tarot-card-title">17. 별</div>
+      <div class="tarot-card-keywords">희망 · 치유 · 영감 · 평화로운 확신</div>
+      <div class="tarot-card-meaning">밤하늘 빛나는 큰 별과 샘물. 절망의 밤을 지나 찾아오는 순수한 위로와 영적 치유입니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj18.jpg" alt="18. 달" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">XVIII · THE MOON</div>
+      <div class="tarot-card-title">18. 달</div>
+      <div class="tarot-card-keywords">불안 · 환상 · 무의식의 공포 · 직관 시험</div>
+      <div class="tarot-card-meaning">가재와 개·늑대가 울부짖는 밤길. 모호한 안개 속에서 내면의 불안과 환상을 다스려야 합니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj19.jpg" alt="19. 태양" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">XIX · THE SUN</div>
+      <div class="tarot-card-title">19. 태양</div>
+      <div class="tarot-card-keywords">기쁨 · 활력 · 성공 · 명료한 성공</div>
+      <div class="tarot-card-meaning">백마를 타고 환하게 웃는 아이. 모든 어둠이 걷히고 찾아오는 완전한 축복과 생명력입니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj20.jpg" alt="20. 심판" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">XX · JUDGEMENT</div>
+      <div class="tarot-card-title">20. 심판</div>
+      <div class="tarot-card-keywords">각성 · 부름 · 부활 · 새 삶의 결단</div>
+      <div class="tarot-card-meaning">천사의 나팔 소리에 무덤에서 일어나는 사람들. 지난 과거를 청산하고 새롭게 거듭납니다.</div>
+    </div>
+  </div>
+
+  <div class="tarot-card-item">
+    <div class="tarot-card-img-wrap">
+      <img src="../images/maj21.jpg" alt="21. 세계" class="tarot-card-img" loading="lazy">
+    </div>
+    <div class="tarot-card-info">
+      <div class="tarot-card-num">XXI · THE WORLD</div>
+      <div class="tarot-card-title">21. 세계</div>
+      <div class="tarot-card-keywords">완성 · 통합 · 성취 · 온전한 전체성</div>
+      <div class="tarot-card-meaning">월계수 고리 안에서 춤추는 여인. 모든 배움과 시련을 마치고 대단원의 완성을 이룹니다.</div>
+    </div>
+  </div>
+</div>
+
+<div class="info-card"><h4>핵심 한눈에</h4><p>0 바보(시작·순수)에서 21 세계(완성)까지 22장이 인생의 큰 흐름을 상징한다. 13 죽음, 15 악마, 16 탑처럼 무섭게 들리는 카드도 문자 그대로의 죽음이나 재앙이 아니라 '변화·집착·급변'이라는 상징적 의미로 읽는다는 점이 가장 중요하다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+<h3>🃏 한 줄로 이해하기</h3>
+<p>메이저 아르카나 22장은 0번 '바보'가 길을 떠나 21번 '세계'에서 여행을 마치는, 한 편의 인생 모험 이야기가 담긴 카드 묶음이야!</p>
+<h3>🤔 왜 중요할까?</h3>
+<p>타로를 배울 때 제일 먼저 친해지면 좋은 카드가 바로 메이저 아르카나야. 78장 중에 22장뿐이지만, 이 카드가 나오면 "아주 크고 중요한 이야기"라는 뜻으로 보거든. 게다가 22장을 '바보의 여정'이라는 하나의 이야기로 묶어서 외우면, 카드마다 따로 암기 안 해도 술술 이어져서 훨씬 쉬워! 특히 죽음·악마·탑처럼 이름이 무서운 카드도, 진짜 뜻을 알면 하나도 안 무섭단다.😉 메이저 아르카나는 타로 전체의 뼈대이자 출발점이야.</p>
+<div class="info-card"><h4>🌱 꼭 알아둘 말</h4><ul>
+<li><strong>메이저 아르카나</strong>: '큰 비밀'이라는 뜻. 0번부터 21번까지 22장이야.</li>
+<li><strong>바보의 여정</strong>: 0번 바보가 여러 카드를 만나며 자라는 이야기로 22장을 엮어 보는 방법.</li>
+<li><strong>아르카나</strong>: 라틴어로 '비밀·신비'라는 뜻. 카드 묶음을 부르는 이름이야.</li>
+<li><strong>상징(symbol)</strong>: 그림이 글자 그대로가 아니라 '빗대어' 뜻을 전하는 방식.</li>
+<li><strong>원형(archetype)</strong>: 마법사·여사제처럼 누구나 떠올릴 수 있는 대표 인물 이미지.</li>
+</ul></div>
+<h3>📖 쉽게 풀어보기</h3>
+<p>메이저 아르카나를 한 권의 그림책이라고 상상해 봐! 첫 장에는 아무것도 모른 채 신나게 길을 나서는 0번 바보가 있어. 넘기면 뭐든 해내는 1번 마법사, 조용히 마음의 소리를 듣는 2번 여사제, 따뜻하게 품어주는 3번 여황제가 차례로 나와. 중간쯤엔 13번 죽음처럼 '옛날의 나를 끝내고 새로 태어나는' 장면이, 마지막엔 모든 걸 이룬 21번 세계가 있지. 카드 한 장은 인생의 한 장면일 뿐이라, 무서워 보이는 그림도 '끝과 새 시작'을 그린 페이지로 읽으면 돼!</p>
+<div class="study-tip"><strong>💡 이렇게 해봐:</strong> 22장을 한 번에 외우려 하지 말고 '0 바보 → 1 마법사 → 2 여사제 …' 순서로 이야기를 만들어 입으로 말해 봐. 이야기로 이으면 번호랑 뜻이 훨씬 오래 기억에 남아!</div>
+<h3>⭐ 한 장 요약</h3>
+<ul>
+<li>메이저 아르카나는 0번 바보부터 21번 세계까지 22장이야.</li>
+<li>이 22장은 '바보의 여정'으로 인생의 큰 단계를 상징해.</li>
+<li>대표 카드: 0 바보(시작), 1 마법사(의지), 2 여사제(직관), 3 여황제(풍요).</li>
+<li>죽음·악마·탑은 무섭게 들려도 사실은 변화·집착·급변의 상징이야.</li>
+<li>메이저 카드가 나오면 그만큼 크고 중요한 이야기라고 봐!</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
+<p>메이저 아르카나의 순서를 단순한 번호 나열이 아니라 의미의 흐름으로 읽으면 카드 해석의 깊이가 달라진다. 0번 바보는 아무 조건도 없이 길을 나서는 순수와 가능성의 상태를 나타낸다. 이어 1번 마법사는 그 가능성을 현실로 끌어오는 의지와 집중을, 2번 여사제는 말로 드러나지 않는 직관과 내면의 지혜를 상징한다. 3번 여황제는 풍요와 돌봄, 생명을 키워내는 힘을 의미하는 것으로 본다. 여정의 중반부에는 8번 힘처럼 부드러움으로 본능을 다스리는 내적 용기, 12번 매달린 사람처럼 멈추어 관점을 뒤집는 인내와 전환의 카드가 놓인다. 13번 죽음은 타로에서 가장 오해받는 카드로, 문자 그대로의 죽음이 아니라 한 단계의 끝과 새로운 단계의 시작, 즉 변화를 의미한다고 해석한다. 후반부의 15번 악마는 집착과 속박을, 16번 탑은 갑작스러운 붕괴와 급변을 그리지만 이 또한 낡은 구조가 무너지고 진실이 드러나는 과정으로 읽는 경우가 많다. 17번 별(희망), 18번 달(불안·혼란), 19번 태양(성취·기쁨)을 지나 21번 세계에서 모든 경험이 통합되며 여정이 완성된다고 본다.</p>
+<h3>핵심 메커니즘</h3>
+<div class="info-card"><h4>📐 바보의 여정이라는 해석 틀</h4><p>0번 바보를 주인공으로 삼아 1번부터 21번까지를 그가 만나는 인물과 사건으로 읽는 방식이다. 이 틀에서는 카드가 따로 떨어진 의미가 아니라 '출발 → 시련과 배움 → 전환 → 완성'으로 이어지는 성장 서사의 한 장면이 된다. 이렇게 보면 죽음·탑처럼 충격적인 카드도 여정 전체에서 꼭 필요한 변화의 마디로 자리매김된다.</p></div>
+<h3>대표 사례</h3>
+<div class="info-card"><h4>📐 사례 1 — 13번 죽음</h4><p>상담 자리에서 13번 죽음 카드가 나오면 많은 사람이 놀라지만, 타로 해석에서는 이를 실제 죽음으로 읽지 않는 것이 원칙이다. 대신 오래된 관계나 습관, 일이 끝나고 그 자리에 새로운 국면이 열린다는 '끝과 시작'의 변화로 본다. 두려움보다 정리와 전환의 신호로 읽는 것이 일반적인 접근이다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 16번 탑</h4><p>16번 탑은 번개에 맞아 무너지는 탑을 그려 급변과 충격을 상징한다. 하지만 이 카드 역시 단순한 재앙이 아니라, 거짓되거나 불안정하게 쌓아 올린 토대가 무너지며 비로소 진실이 드러나는 계기로 해석하는 경우가 많다. 변화가 갑작스러울 뿐, 그 뒤에는 더 단단한 재건이 따른다고 보는 관점이다.</p></div>
+<h3>현대적 전개</h3>
+<p>오늘날 메이저 아르카나는 점술의 도구를 넘어 자기 성찰과 심리 탐구의 매개로도 폭넓게 쓰인다. 특히 칼 융의 원형 이론과 연결해, 각 카드를 누구나 마음속에 지닌 보편적 이미지로 읽으려는 시도가 활발하다. 다만 이런 해석은 과학적으로 검증된 예언이 아니라, 자기 생각을 비추어 보는 거울이자 참고 자료로 받아들이는 것이 바람직하다.</p>
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 죽음·악마·탑 카드가 나오면 실제로 나쁜 일이 일어난다고 믿는 사람이 많다. 그러나 타로 해석에서 이 카드들은 문자 그대로의 사건이 아니라 변화·집착·급변이라는 상징을 가리킨다. 카드의 이름만 보고 길흉을 단정하지 않는 것이 기본이다.</div>
+
+<h3>전문가 레벨 이해</h3>
+<p>메이저 아르카나의 구조를 깊이 다루려면 카드 순서가 고정불변이 아니라 역사적으로 다양하게 변주되어 왔다는 점을 알아야 한다. 8번 힘과 11번 정의의 번호는 덱 전통에 따라 서로 자리를 바꾼 경우가 있으며, 이는 카드 배열이 하나의 절대적 정답이 아님을 보여준다. 또한 22장을 단순한 일렬 서사로만 보지 않고, 7장씩 세 묶음으로 나누어 의식·잠재의식·초월의 단계로 읽는 구조적 해석도 전해진다. '바보의 여정'이라는 틀 자체도 비교적 근대에 정교화된 해석 모델로, 카드가 처음 만들어진 의도와는 구분해서 이해하는 신중함이 필요하다. 죽음·악마·탑처럼 강렬한 카드일수록 상징의 폭이 넓어, 해석자가 자신의 선입견을 카드에 투사하기 쉽다는 점도 전문가가 경계하는 부분이다. 결국 메이저 아르카나의 깊이는 정해진 의미를 외우는 데 있지 않고, 맥락과 다른 카드와의 관계 속에서 의미를 조율하는 능력에 달려 있다고 본다.</p>
+<h3>최신 연구·쟁점</h3>
+<p>심리학과 문화 연구 분야에서 타로는 미래를 맞히는 도구가 아니라 자기 서사를 구성하고 성찰을 돕는 매개로 다루어지는 경향이 있다. 카드가 주는 모호하고 보편적인 진술이 누구에게나 들어맞는 것처럼 느껴지는 현상은 '바넘 효과'로 설명되며, 이는 타로의 적중감이 통계적 검증과는 다른 차원임을 시사한다. 따라서 메이저 아르카나의 가치를 예언의 정확성에서 찾기보다, 대화와 성찰을 여는 상징적 도구로 보는 입장이 학술적으로 더 받아들여진다. 단정적 예측이나 의학·법률 같은 중대한 결정을 카드에 맡기는 태도는 분명한 한계가 있으며 권장되지 않는다.</p>
+<h3>관련 분야</h3>
+<ul>
+<li><strong>분석심리학</strong>: 융의 원형·집단 무의식 개념이 카드의 상징 해석에 활용된다</li>
+<li><strong>미술사·도상학</strong>: 르네상스 시기 카드 그림의 상징과 도상을 추적하는 분야</li>
+<li><strong>인지심리학</strong>: 바넘 효과·확증 편향 등 적중감을 설명하는 심리 기제 연구</li>
+</ul>
+<h3>더 읽을거리</h3>
+<ul>
+<li>"The Pictorial Key to the Tarot" — Arthur Edward Waite</li>
+<li>"Seventy-Eight Degrees of Wisdom" — Rachel Pollack</li>
+<li>"Tarot and the Journey of the Hero" — Hajo Banzhaf</li>
+</ul>
+<div class="success-box"><strong>🎓 도전 과제:</strong> 0번 바보부터 21번 세계까지를 직접 한 편의 짧은 이야기로 써 보자. 각 카드를 '주인공이 만나는 인물이나 사건'으로 등장시키되, 죽음·악마·탑은 문자적 재앙이 아니라 변화·집착·급변의 상징으로 풀어 써 보는 것이 핵심이다.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 바보의 여정 순서</h2>
+<p>0번 바보부터 21번 세계까지, 메이저 아르카나의 번호 순서대로 클릭하세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#b18cf0","prompt":"바보의 여정을 번호 순서대로 클릭하세요","steps":["0 바보","1 마법사","2 여사제","3 여황제","13 죽음","21 세계"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b18cf0","questions":[{"q":"메이저 아르카나 0번 카드는?","choices":["마법사","바보","여사제","세계"],"answer":1},{"q":"21번 세계 카드가 상징하는 것은?","choices":["완성","시작","갈등","불안"],"answer":0},{"q":"13번 죽음 카드의 일반적 해석은?","choices":["실제 죽음","재물 손실","변화","질병"],"answer":2},{"q":"16번 탑 카드에 그려진 장면은?","choices":["별이 빛나는 밤","사자 길들이기","풍성한 잔치","번개 맞은 탑"],"answer":3},{"q":"22장을 하나로 잇는 해석 틀은?","choices":["왕의 길","바보의 여정","별의 순환","달의 항해"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const RAD=3.4;const arc=[];for(let i=0;i<22;i++){const ang=(i/22)*Math.PI*2;const col=new THREE.Color().setHSL(i/22,0.65,0.58);const m=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.78,0.05),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.9}));m.position.set(Math.cos(ang)*RAD,Math.sin(ang)*RAD,0);m.rotation.z=ang+Math.PI/2;m.userData={ang:ang};arc.push(m);s.add(m);}
+  const ringGeo=new THREE.RingGeometry(RAD-0.06,RAD+0.06,80);const ring=new THREE.Mesh(ringGeo,new THREE.MeshBasicMaterial({color:0xf0c850,transparent:true,opacity:0.25,side:THREE.DoubleSide}));s.add(ring);
+  const fool=new THREE.Mesh(new THREE.ConeGeometry(0.32,0.8,4),new THREE.MeshBasicMaterial({color:0xffffff}));s.add(fool);
+  const arcL=[[0,'0 바보 · 시작'],[13,'13 죽음 · 변화'],[16,'16 탑 · 급변'],[21,'21 세계 · 완성']];arcL.forEach(p=>{const ang=(p[0]/22)*Math.PI*2;const L=lbl(p[1],'#f0d58a');L.position.set(Math.cos(ang)*4.3,Math.sin(ang)*3.9,0);s.add(L);});
+  const FL=lbl('바보의 여정','#ffffff');FL.position.set(0,0,0.8);fool.add(FL);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 원을 도는 흰 원뿔이 0번 바보 — 21번 세계까지 22장을 차례로 지나는 "바보의 여정"입니다.','0 바보는 순수한 출발, 1 마법사는 의지, 2 여사제는 직관, 3 여황제는 풍요 — 이야기로 이으면 외우기 쉽습니다.','13 죽음은 실제 죽음이 아니라 한 단계의 끝과 새로운 시작, 곧 변화의 상징으로 읽습니다.','16 탑은 급변, 15 악마는 집착 — 이름이 무서운 카드도 문자 그대로가 아닌 상징으로 읽는 것이 기본입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const pa=(T*0.4)%(Math.PI*2);fool.position.set(Math.cos(pa)*RAD,Math.sin(pa)*RAD,0.3);fool.rotation.z=pa;arc.forEach(m=>{const d=Math.abs(((m.userData.ang-pa+Math.PI*3)%(Math.PI*2))-Math.PI);m.scale.setScalar(1+Math.max(0,1-d*1.2)*0.6);});s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

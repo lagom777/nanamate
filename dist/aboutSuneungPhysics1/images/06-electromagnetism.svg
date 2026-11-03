@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%" style="background:#0a0e1a; font-family:'IBM Plex Sans KR', -apple-system, sans-serif;">
+  <defs>
+    <!-- Background Gradients -->
+    <radialGradient id="bg-glow" cx="20%" cy="15%" r="60%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.18"/>
+      <stop offset="60%" stop-color="#0a0e1a" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#05070d"/>
+    </radialGradient>
+    
+    <linearGradient id="card-grad-0" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="card-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="card-grad-2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.05"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="card-shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(56, 189, 248, 0.4)" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="675" fill="url(#bg-glow)"/>
+  
+  <!-- Subtle Grid Pattern Lines -->
+  <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
+    <line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="545" x2="1200" y2="545"/>
+    <line x1="400" y1="0" x2="400" y2="675"/>
+    <line x1="800" y1="0" x2="800" y2="675"/>
+  </g>
+
+  <!-- Top Header Bar -->
+  <g transform="translate(40, 32)">
+    <!-- Brand / Topic Badge -->
+    <rect x="0" y="0" width="180" height="30" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+    <circle cx="15" cy="15" r="4" fill="#38bdf8"/>
+    <text x="28" y="20" fill="#f1f5f9" font-size="12" font-weight="700" letter-spacing="1.5">수능 물리학 핵심요약</text>
+    <text x="145" y="20" fill="#38bdf8" font-size="12" font-weight="800">PART 06</text>
+    
+    <!-- Main Titles -->
+    <text x="0" y="68" fill="#ffffff" font-size="34" font-weight="800" letter-spacing="-0.5">전자기장 — 전류와 유도기전력</text>
+    <text x="0" y="94" fill="#94a3b8" font-size="14" font-weight="500">Magnetic Fields, Lorentz Force &amp; Faraday's Law</text>
+
+    <!-- Right Side Indicator -->
+    <g transform="translate(940, 10)">
+      <rect x="0" y="0" width="180" height="60" rx="10" fill="#111827" stroke="#334155" stroke-width="1"/>
+      <text x="90" y="26" fill="#64748b" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">NANAMATE EDUTECH</text>
+      <text x="90" y="47" fill="#38bdf8" font-size="13" font-weight="800" text-anchor="middle">한눈에 보는 핵심 맵</text>
+    </g>
+  </g>
+
+  <!-- 3 Summary Cards -->
+  
+        <!-- Card 1 -->
+        <g transform="translate(40, 160)">
+          <!-- Card Background &amp; Glow -->
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="#111827" fill-opacity="0.9" stroke="#38bdf8" stroke-width="1.2" filter="url(#card-shadow)"/>
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="url(#card-grad-0)" fill-opacity="0.3"/>
+          
+          <!-- Card Header Badge -->
+          <rect x="18" y="18" width="130" height="24" rx="12" fill="#38bdf8" fill-opacity="0.2" stroke="#38bdf8" stroke-width="1"/>
+          <text x="83" y="34" fill="#bae6fd" font-size="11" font-weight="700" text-anchor="middle">전류가 만드는 자기장</text>
+          
+          <!-- Card Title -->
+          <text x="18" y="62" fill="#f8fafc" font-size="16" font-weight="700">앙페르 오른손 법칙</text>
+          <line x1="18" y1="74" x2="342" y2="74" stroke="#334155" stroke-width="1"/>
+          
+          <!-- Card Content Body -->
+          <g transform="translate(0, 30)">
+            
+                <g transform="translate(18, 50)">
+                  <rect x="0" y="0" width="280" height="90" rx="8" fill="#0f172a" stroke="#0284c7" stroke-width="1.5"/>
+                  <text x="12" y="24" fill="#38bdf8" font-size="12" font-weight="700">도선 주변 자기장 세기 B</text>
+                  <text x="12" y="47" fill="#ffffff" font-size="12" font-family="monospace">직선 도선: B = k · I / r</text>
+                  <text x="12" y="67" fill="#ffffff" font-size="12" font-family="monospace">원형 도선: B = k' · I / r (원형 중심)</text>
+                  <text x="12" y="85" fill="#ffffff" font-size="12" font-family="monospace">솔레노이드: B = k'' · n · I (n: 단위길이당 감은수)</text>
+
+                  <rect x="0" y="100" width="280" height="92" rx="8" fill="#0f172a" stroke="#334155"/>
+                  <text x="12" y="124" fill="#fcd34d" font-size="12" font-weight="700">오른손 나사 법칙 (방향 판정)</text>
+                  <text x="12" y="146" fill="#cbd5e1" font-size="11.5">엄지손가락: <tspan fill="#f59e0b" font-weight="700">전류(I) 방향</tspan></text>
+                  <text x="12" y="166" fill="#cbd5e1" font-size="11.5">네 손가락 감아쥐는 방향: <tspan fill="#38bdf8" font-weight="700">자기장(B) 동심원 방향</tspan></text>
+                </g>
+                
+          </g>
+        </g>
+        
+        <!-- Card 2 -->
+        <g transform="translate(420, 160)">
+          <!-- Card Background &amp; Glow -->
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="#111827" fill-opacity="0.9" stroke="#38bdf8" stroke-width="1.2" filter="url(#card-shadow)"/>
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="url(#card-grad-1)" fill-opacity="0.3"/>
+          
+          <!-- Card Header Badge -->
+          <rect x="18" y="18" width="130" height="24" rx="12" fill="#38bdf8" fill-opacity="0.2" stroke="#38bdf8" stroke-width="1"/>
+          <text x="83" y="34" fill="#bae6fd" font-size="11" font-weight="700" text-anchor="middle">자기력 (로렌츠 힘)</text>
+          
+          <!-- Card Title -->
+          <text x="18" y="62" fill="#f8fafc" font-size="16" font-weight="700">도선과 전하가 받는 자기력</text>
+          <line x1="18" y1="74" x2="342" y2="74" stroke="#334155" stroke-width="1"/>
+          
+          <!-- Card Content Body -->
+          <g transform="translate(0, 30)">
+            
+                <g transform="translate(18, 50)">
+                  <rect x="0" y="0" width="280" height="90" rx="8" fill="#1e293b" stroke="#334155"/>
+                  <text x="12" y="24" fill="#34d399" font-size="12" font-weight="700">전류가 흐르는 도선이 받는 힘 F</text>
+                  <text x="12" y="48" fill="#ffffff" font-size="13" font-family="monospace" font-weight="700">F = B · I · L · sinθ</text>
+                  <text x="12" y="70" fill="#cbd5e1" font-size="11">θ = 90° (B⊥I) 일 때 힘 최댓값 (F = BIL)</text>
+                  <text x="12" y="85" fill="#94a3b8" font-size="10.5">평행 도선: 같은 방향 전류 ⟶ 인력 / 반대 방향 ⟶ 척력</text>
+
+                  <rect x="0" y="100" width="280" height="92" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.2"/>
+                  <text x="12" y="124" fill="#7dd3fc" font-size="12" font-weight="700">움직이는 전하의 자기력: F = q v B</text>
+                  <text x="12" y="146" fill="#cbd5e1" font-size="11">전하가 자기장에 수직 진입 ⟶ <tspan fill="#38bdf8" font-weight="700">등속 원운동</tspan></text>
+                  <text x="12" y="168" fill="#ffffff" font-size="11.5" font-family="monospace">qvB = mv²/r  ⟹  궤도 반지름 r = mv / (qB)</text>
+                </g>
+                
+          </g>
+        </g>
+        
+        <!-- Card 3 -->
+        <g transform="translate(800, 160)">
+          <!-- Card Background &amp; Glow -->
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="#111827" fill-opacity="0.9" stroke="#38bdf8" stroke-width="1.2" filter="url(#card-shadow)"/>
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="url(#card-grad-2)" fill-opacity="0.3"/>
+          
+          <!-- Card Header Badge -->
+          <rect x="18" y="18" width="130" height="24" rx="12" fill="#38bdf8" fill-opacity="0.2" stroke="#38bdf8" stroke-width="1"/>
+          <text x="83" y="34" fill="#bae6fd" font-size="11" font-weight="700" text-anchor="middle">수능 킬러 전자기 유도</text>
+          
+          <!-- Card Title -->
+          <text x="18" y="62" fill="#f8fafc" font-size="16" font-weight="700">패러데이 법칙과 렌츠 법칙</text>
+          <line x1="18" y1="74" x2="342" y2="74" stroke="#334155" stroke-width="1"/>
+          
+          <!-- Card Content Body -->
+          <g transform="translate(0, 30)">
+            
+                <g transform="translate(18, 50)">
+                  <rect x="0" y="0" width="280" height="95" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+                  <text x="12" y="24" fill="#bae6fd" font-size="12" font-weight="700">⚡ 패러데이 전자기 유도 법칙</text>
+                  <text x="12" y="48" fill="#ffffff" font-size="13" font-family="monospace" font-weight="800">V = - N · (ΔΦ / Δt) = - N · Δ(BA) / Δt</text>
+                  <text x="12" y="70" fill="#fca5a5" font-size="11">(-)부호: 렌츠 법칙 (자속 변화를 <tspan font-weight="700">방해하는 방향</tspan>)</text>
+                  <text x="12" y="87" fill="#fef08a" font-size="11">유도전류 I = V / R (도선 저항 R)</text>
+
+                  <rect x="0" y="105" width="280" height="87" rx="8" fill="#1e293b" stroke="#334155"/>
+                  <text x="12" y="128" fill="#fcd34d" font-size="12" font-weight="700">운동 기전력 (도선 막대 이동)</text>
+                  <text x="12" y="150" fill="#ffffff" font-size="12" font-family="monospace" font-weight="700">V = B · L · v</text>
+                  <text x="12" y="170" fill="#cbd5e1" font-size="11">막대 속도 v 빠를수록 유도기전력 커짐 (발전기 원리)</text>
+                </g>
+                
+          </g>
+        </g>
+        
+
+  <!-- Bottom Tag Bar -->
+  <g transform="translate(0, 45)">
+    
+        <rect x="40" y="565" width="145" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="112.5" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#앙페르법칙B=kI/r</text>
+        
+        <rect x="197" y="565" width="101" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="247.5" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#오른손나사법칙</text>
+        
+        <rect x="310" y="565" width="112" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="366.0" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#자기력F=BIL</text>
+        
+        <rect x="434" y="565" width="189" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="528.5" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#등속원운동반지름r=mv/qB</text>
+        
+        <rect x="635" y="565" width="189" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="729.5" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#패러데이법칙V=-NΔΦ/Δt</text>
+        
+        <rect x="836" y="565" width="68" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="870.0" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#렌츠법칙</text>
+        
+  </g>
+
+  <!-- Footer Watermark -->
+  <text x="1160" y="650" fill="#475569" font-size="11" font-weight="500" text-anchor="end">nanamate.study · High School Physics Core Summary</text>
+</svg>

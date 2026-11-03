@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%" style="background:#0a0e1a; font-family:'IBM Plex Sans KR', -apple-system, sans-serif;">
+  <defs>
+    <!-- Background Gradients -->
+    <radialGradient id="bg-glow" cx="20%" cy="15%" r="60%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.18"/>
+      <stop offset="60%" stop-color="#0a0e1a" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#05070d"/>
+    </radialGradient>
+    
+    <linearGradient id="card-grad-0" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="card-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.05"/>
+    </linearGradient>
+    <linearGradient id="card-grad-2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0.05"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="card-shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(139, 92, 246, 0.4)" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="1200" height="675" fill="url(#bg-glow)"/>
+  
+  <!-- Subtle Grid Pattern Lines -->
+  <g stroke="#ffffff" stroke-opacity="0.03" stroke-width="1">
+    <line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="545" x2="1200" y2="545"/>
+    <line x1="400" y1="0" x2="400" y2="675"/>
+    <line x1="800" y1="0" x2="800" y2="675"/>
+  </g>
+
+  <!-- Top Header Bar -->
+  <g transform="translate(40, 32)">
+    <!-- Brand / Topic Badge -->
+    <rect x="0" y="0" width="170" height="30" rx="6" fill="#1e293b" stroke="#8b5cf6" stroke-width="1.2"/>
+    <circle cx="15" cy="15" r="4" fill="#8b5cf6"/>
+    <text x="28" y="20" fill="#f1f5f9" font-size="12" font-weight="700" letter-spacing="1.5">수능 수학 핵심요약</text>
+    <text x="135" y="20" fill="#8b5cf6" font-size="12" font-weight="800">PART 03</text>
+    
+    <!-- Main Titles -->
+    <text x="0" y="68" fill="#ffffff" font-size="34" font-weight="800" letter-spacing="-0.5">함수와 그래프</text>
+    <text x="0" y="94" fill="#94a3b8" font-size="14" font-weight="500">Functions, Inverse &amp; Graph Transformations</text>
+
+    <!-- Right Side Indicator -->
+    <g transform="translate(940, 10)">
+      <rect x="0" y="0" width="180" height="60" rx="10" fill="#111827" stroke="#334155" stroke-width="1"/>
+      <text x="90" y="26" fill="#64748b" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">NANAMATE EDUTECH</text>
+      <text x="90" y="47" fill="#8b5cf6" font-size="13" font-weight="800" text-anchor="middle">한눈에 보는 핵심 맵</text>
+    </g>
+  </g>
+
+  <!-- 3 Summary Cards -->
+  
+        <!-- Card 1 -->
+        <g transform="translate(40, 160)">
+          <!-- Card Background &amp; Glow -->
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="#111827" fill-opacity="0.9" stroke="#8b5cf6" stroke-width="1.2" filter="url(#card-shadow)"/>
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="url(#card-grad-0)" fill-opacity="0.3"/>
+          
+          <!-- Card Header Badge -->
+          <rect x="18" y="18" width="130" height="24" rx="12" fill="#8b5cf6" fill-opacity="0.2" stroke="#8b5cf6" stroke-width="1"/>
+          <text x="83" y="34" fill="#c4b5fd" font-size="11" font-weight="700" text-anchor="middle">함수의 종류</text>
+          
+          <!-- Card Title -->
+          <text x="18" y="62" fill="#f8fafc" font-size="16" font-weight="700">일대일대응, 합성, 역함수</text>
+          <line x1="18" y1="74" x2="342" y2="74" stroke="#334155" stroke-width="1"/>
+          
+          <!-- Card Content Body -->
+          <g transform="translate(0, 30)">
+            
+                <g transform="translate(18, 50)">
+                  <rect x="0" y="0" width="280" height="85" rx="8" fill="#0f172a" stroke="#7c3aed" stroke-width="1.5"/>
+                  <text x="12" y="24" fill="#a78bfa" font-size="12" font-weight="700">일대일대응 (역함수 존재 조건)</text>
+                  <text x="12" y="46" fill="#cbd5e1" font-size="11.5">x₁ ≠ x₂ ⟹ f(x₁) ≠ f(x₂) (일대일함수)</text>
+                  <text x="12" y="66" fill="#cbd5e1" font-size="11.5">치역 = 공역 (단조증가 또는 단조감소)</text>
+
+                  <rect x="0" y="96" width="280" height="94" rx="8" fill="#0f172a" stroke="#334155"/>
+                  <text x="12" y="120" fill="#38bdf8" font-size="12" font-weight="700">합성함수 &amp; 역함수 성질</text>
+                  <text x="12" y="142" fill="#e2e8f0" font-size="11.5" font-family="monospace">(g ∘ f)(x) = g(f(x))</text>
+                  <text x="12" y="162" fill="#e2e8f0" font-size="11.5" font-family="monospace">(f ∘ g)⁻¹ = g⁻¹ ∘ f⁻¹ (순서 바뀜!)</text>
+                  <text x="12" y="181" fill="#fcd34d" font-size="11.5" font-weight="700">y = f(x) 와 y = f⁻¹(x) 는 y = x 에 대칭</text>
+                </g>
+                
+          </g>
+        </g>
+        
+        <!-- Card 2 -->
+        <g transform="translate(420, 160)">
+          <!-- Card Background &amp; Glow -->
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="#111827" fill-opacity="0.9" stroke="#8b5cf6" stroke-width="1.2" filter="url(#card-shadow)"/>
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="url(#card-grad-1)" fill-opacity="0.3"/>
+          
+          <!-- Card Header Badge -->
+          <rect x="18" y="18" width="130" height="24" rx="12" fill="#8b5cf6" fill-opacity="0.2" stroke="#8b5cf6" stroke-width="1"/>
+          <text x="83" y="34" fill="#c4b5fd" font-size="11" font-weight="700" text-anchor="middle">그래프 이동 원리</text>
+          
+          <!-- Card Title -->
+          <text x="18" y="62" fill="#f8fafc" font-size="16" font-weight="700">평행이동과 대칭이동 공식</text>
+          <line x1="18" y1="74" x2="342" y2="74" stroke="#334155" stroke-width="1"/>
+          
+          <!-- Card Content Body -->
+          <g transform="translate(0, 30)">
+            
+                <g transform="translate(18, 50)">
+                  <rect x="0" y="0" width="280" height="88" rx="8" fill="#1e293b" stroke="#334155"/>
+                  <text x="12" y="24" fill="#38bdf8" font-size="12" font-weight="700">📐 평행이동: (x, y) ⟶ (x+p, y+q)</text>
+                  <text x="12" y="47" fill="#cbd5e1" font-size="11.5">도형의 방정식 대입 규칙: x 대신 <tspan fill="#f59e0b" font-weight="700">x - p</tspan>, y 대신 <tspan fill="#f59e0b" font-weight="700">y - q</tspan></text>
+                  <text x="12" y="70" fill="#a5b4fc" font-size="12" font-family="monospace">y = f(x)  ⟹  y - q = f(x - p)</text>
+
+                  <rect x="0" y="98" width="280" height="92" rx="8" fill="#1e293b" stroke="#334155"/>
+                  <text x="12" y="120" fill="#f43f5e" font-size="12" font-weight="700">🪞 대칭이동 공식</text>
+                  <text x="12" y="140" fill="#e2e8f0" font-size="11.5">x축 대칭: y ⟶ -y  ⟹  y = -f(x)</text>
+                  <text x="12" y="158" fill="#e2e8f0" font-size="11.5">y축 대칭: x ⟶ -x  ⟹  y = f(-x) (우함수)</text>
+                  <text x="12" y="176" fill="#e2e8f0" font-size="11.5">원점 대칭: y = -f(-x) (기함수)</text>
+                </g>
+                
+          </g>
+        </g>
+        
+        <!-- Card 3 -->
+        <g transform="translate(800, 160)">
+          <!-- Card Background &amp; Glow -->
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="#111827" fill-opacity="0.9" stroke="#8b5cf6" stroke-width="1.2" filter="url(#card-shadow)"/>
+          <rect x="0" y="0" width="360" height="375" rx="16" fill="url(#card-grad-2)" fill-opacity="0.3"/>
+          
+          <!-- Card Header Badge -->
+          <rect x="18" y="18" width="130" height="24" rx="12" fill="#8b5cf6" fill-opacity="0.2" stroke="#8b5cf6" stroke-width="1"/>
+          <text x="83" y="34" fill="#c4b5fd" font-size="11" font-weight="700" text-anchor="middle">유리·무리함수</text>
+          
+          <!-- Card Title -->
+          <text x="18" y="62" fill="#f8fafc" font-size="16" font-weight="700">점근선과 시작점 개형</text>
+          <line x1="18" y1="74" x2="342" y2="74" stroke="#334155" stroke-width="1"/>
+          
+          <!-- Card Content Body -->
+          <g transform="translate(0, 30)">
+            
+                <g transform="translate(18, 50)">
+                  <rect x="0" y="0" width="280" height="92" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="1.2"/>
+                  <text x="12" y="24" fill="#c4b5fd" font-size="12" font-weight="700">유리함수: y = k / (x - p) + q</text>
+                  <text x="12" y="45" fill="#cbd5e1" font-size="11">점근선: <tspan fill="#f59e0b" font-weight="700">x = p, y = q</tspan> (점근선 교점 (p, q) 대칭)</text>
+                  <text x="12" y="65" fill="#cbd5e1" font-size="11">k &gt; 0 이면 1, 3사분면 / k &lt; 0 이면 2, 4사분면</text>
+                  <text x="12" y="83" fill="#94a3b8" font-size="10.5">역함수 공식: (ax+b)/(cx+d) ⟶ (-dx+b)/(cx-a)</text>
+
+                  <rect x="0" y="102" width="280" height="88" rx="8" fill="#1e293b" stroke="#334155"/>
+                  <text x="12" y="126" fill="#34d399" font-size="12" font-weight="700">무리함수: y = √(a(x - p)) + q</text>
+                  <text x="12" y="148" fill="#cbd5e1" font-size="11">시작점: <tspan fill="#34d399" font-weight="700">(p, q)</tspan> 에서 출발하는 곡선</text>
+                  <text x="12" y="168" fill="#cbd5e1" font-size="11">근호 안 ≥ 0 이 정의역 / 치역 방향 a 부호 결정</text>
+                </g>
+                
+          </g>
+        </g>
+        
+
+  <!-- Bottom Tag Bar -->
+  <g transform="translate(0, 45)">
+    
+        <rect x="40" y="565" width="79" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="79.5" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#일대일대응</text>
+        
+        <rect x="131" y="565" width="101" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="181.5" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#역함수존재조건</text>
+        
+        <rect x="244" y="565" width="79" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="283.5" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#y=x대칭</text>
+        
+        <rect x="335" y="565" width="101" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="385.5" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#평행·대칭이동</text>
+        
+        <rect x="448" y="565" width="101" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="498.5" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#유리함수점근선</text>
+        
+        <rect x="561" y="565" width="90" height="28" rx="14" fill="#1e293b" stroke="#334155"/>
+        <text x="606.0" y="583" fill="#cbd5e1" font-size="11.5" font-weight="500" text-anchor="middle">#우함수기함수</text>
+        
+  </g>
+
+  <!-- Footer Watermark -->
+  <text x="1160" y="650" fill="#475569" font-size="11" font-weight="500" text-anchor="end">nanamate.study · High School Math Core Summary</text>
+</svg>

@@ -69,6 +69,19 @@ body { margin: 0; }
 .ms-due-list a:hover { text-decoration: underline; }
 .ms-due-none { margin: 0; font-weight: 700; color: #16a34a; }
 .ms-due-next { margin: 10px 0 0; font-size: .86em; color: #6b7280; }
+/* 🔑 AI 해설 키 */
+.ms-key { margin: 0 0 20px; padding: 14px 18px; border-radius: 14px; border: 1px solid rgba(0,0,0,.1); border-top: 3px solid #6366f1; background: #fff; }
+.ms-key h2 { margin: 0 0 4px; font-size: 1.1em; }
+.ms-key-sub { margin: 0 0 10px; font-size: .88em; color: #4a5468; }
+.ms-key-status { margin: 0 0 8px; font-weight: 700; color: #6b7280 !important; }
+.ms-key-status.on { color: #16a34a !important; }
+.ms-key-row { display: flex; gap: 8px; }
+.ms-key-in { flex: 1; min-width: 0; padding: 9px 12px; border-radius: 10px; border: 1px solid rgba(0,0,0,.18); font: inherit; }
+.ms .ms-key-save { flex: none; padding: 9px 16px !important; border-radius: 10px !important; border: 0 !important; background: #6366f1 !important; color: #fff !important; font-weight: 700 !important; }
+.ms .ms-key-del, .ms .ms-key-move { margin: 8px 8px 0 0; padding: 6px 12px !important; border-radius: 999px !important; border: 1px solid rgba(0,0,0,.15) !important; background: #fff !important; color: #4a5468 !important; font-size: .86em !important; }
+.ms-key-say { margin: 8px 0 0; min-height: 1.2em; font-size: .88em; font-weight: 600; color: #b45309 !important; }
+.ms-key-help { margin: 6px 0 0; font-size: .82em; color: #6b7280; }
+.ms-key-help a { color: #6366f1; }
 @media (min-width: 900px) {
   .ms { padding: 36px 40px 96px; }
   .ms-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

@@ -1,0 +1,78 @@
+/* 내 정보 페이지 — 로그인한 본인의 공부 성향을 보고 직접 고친다. 넓은 화면에서는 카드를 두 칸으로 넉넉하게 펼친다.
+ * 사이트 전역 button 규칙(!important)을 이기려고 .ms 아래 버튼은 !important 를 쓴다. */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap');
+* { box-sizing: border-box; }
+body { margin: 0; }
+.ms { --ac: #4f46e5; max-width: 1180px; margin: 0 auto; padding: 24px 16px 80px; font-family: 'IBM Plex Sans KR', -apple-system, sans-serif; font-size: 16px; line-height: 1.75; color: #1a1f2e; }
+.ms-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 28px; }
+.ms-back { padding: 8px 14px; border-radius: 10px; border: 1px solid rgba(0,0,0,.08); background: rgba(0,0,0,.03); color: #4a5468; text-decoration: none; font-size: 13px; font-weight: 600; }
+.ms-back:hover { background: rgba(0,0,0,.06); color: #1a1f2e; }
+.ms-auth { display: flex; align-items: center; gap: 10px; font-size: .88em; color: #4a5468; }
+.ms button { cursor: pointer; font: inherit !important; }
+.ms .ms-out { padding: 0 !important; background: transparent !important; color: #4a5468 !important; border: 0 !important; text-decoration: underline; }
+.ms .ms-kakao { margin-top: 8px; padding: 9px 16px !important; border-radius: 10px !important; background: #FEE500 !important; color: #191919 !important; border: 0 !important; font-weight: 700 !important; }
+.ms-kicker { margin: 0 0 4px; font-size: .9em; font-weight: 700; color: var(--ac); }
+.ms-head h1 { margin: 0 0 6px; font-size: 2em; line-height: 1.25; }
+.ms-lead { margin: 0 0 22px; color: #4a5468; }
+.ms-msg { margin: 0; padding: 14px 16px; border-radius: 12px; border: 1px solid rgba(0,0,0,.08); background: #fff; color: #4a5468; }
+.ms-lock { padding: 18px 20px; border-radius: 14px; border: 1px solid color-mix(in srgb, var(--ac) 30%, transparent); background: color-mix(in srgb, var(--ac) 5%, #fff); }
+.ms-lock p { margin: 0 0 4px; color: #4a5468; }
+.ms-lock .ms-lock-t { font-weight: 700; color: #1a1f2e; }
+.ms-type { display: inline-block; margin: 0 0 10px; padding: 4px 12px; border-radius: 999px; background: color-mix(in srgb, var(--ac) 12%, #fff); color: var(--ac); font-weight: 700; }
+.ms-summary { margin: 0 0 18px; font-size: 1.06em; }
+.ms-summary b, .ms-card b { font-weight: 700; background: linear-gradient(transparent 62%, color-mix(in srgb, var(--ac) 18%, transparent) 62%); }
+.ms-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; align-items: start; }
+.ms-card { padding: 14px 18px 10px; border-radius: 14px; border: 1px solid rgba(0,0,0,.08); border-top: 3px solid var(--ac); background: #fff; }
+.ms-card h2 { margin: 0 0 6px; font-size: 1.06em; }
+.ms-card ul { margin: 0; padding-left: 1.2em; }
+.ms-card li { margin: 0 0 6px; }
+.ms-source { margin: 12px 0 0; font-size: .82em; color: #6b7280; }
+.ms-site { margin-top: 36px; padding-top: 22px; border-top: 1px solid rgba(0,0,0,.08); }
+.ms-site h2 { margin: 0 0 12px; font-size: 1.15em; }
+.ms-flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.ms-flow li { padding: 10px 14px; border-radius: 12px; background: #fff; border: 1px solid rgba(0,0,0,.08); }
+.ms-flow b { display: block; color: var(--ac); }
+.ms-flow span { font-size: .92em; color: #4a5468; }
+.ms-links-h { margin: 18px 0 8px; font-weight: 700; }
+.ms-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.ms-links a { display: inline-block; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(0,0,0,.1); background: #fff; color: #1a1f2e; text-decoration: none; font-size: .92em; }
+.ms-links a:hover { border-color: var(--ac); color: var(--ac); }
+.ms-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; margin: 0 0 8px; }
+.ms .ms-edit-btn { padding: 7px 14px !important; border-radius: 10px !important; border: 1px solid color-mix(in srgb, var(--ac) 40%, transparent) !important; background: #fff !important; color: var(--ac) !important; font-weight: 700 !important; }
+.ms .ms-edit-btn:hover { background: color-mix(in srgb, var(--ac) 8%, #fff) !important; }
+.ms-saved { font-size: .88em; font-weight: 700; color: #16a34a; }
+.ms-edit { display: grid; gap: 12px; padding: 16px 18px; border-radius: 14px; border: 1px solid color-mix(in srgb, var(--ac) 30%, transparent); background: #fff; }
+.ms-edit-hint { margin: 0; font-size: .88em; color: #4a5468; }
+.ms-field { display: grid; gap: 4px; }
+.ms-field-t { font-size: .86em; font-weight: 700; color: #1a1f2e; }
+.ms-edit input, .ms-edit textarea { width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(0,0,0,.15); background: #fff; color: #1a1f2e; font: inherit; font-size: .95em; line-height: 1.6; }
+.ms-edit textarea { resize: vertical; }
+.ms-edit input:focus, .ms-edit textarea:focus { outline: 2px solid color-mix(in srgb, var(--ac) 45%, transparent); outline-offset: 1px; }
+.ms-edit-cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.ms-edit-card { display: grid; gap: 8px; padding: 12px 14px; border-radius: 12px; border: 1px dashed rgba(0,0,0,.15); background: #fafbfc; }
+.ms .ms-edit-del { justify-self: end; padding: 0 !important; background: transparent !important; border: 0 !important; color: #6b7280 !important; font-size: .85em !important; text-decoration: underline; }
+.ms .ms-edit-add { justify-self: start; padding: 7px 14px !important; border-radius: 10px !important; border: 1px dashed color-mix(in srgb, var(--ac) 45%, transparent) !important; background: #fff !important; color: var(--ac) !important; font-weight: 600 !important; }
+.ms-edit-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.ms .ms-save { padding: 9px 22px !important; border-radius: 10px !important; border: 0 !important; background: var(--ac) !important; color: #fff !important; font-weight: 700 !important; }
+.ms .ms-save:disabled { opacity: .6; cursor: default; }
+.ms .ms-cancel { padding: 9px 16px !important; border-radius: 10px !important; border: 1px solid rgba(0,0,0,.15) !important; background: #fff !important; color: #4a5468 !important; }
+.ms-edit-status { margin: 0; font-size: .88em; font-weight: 600; color: #b45309; }
+/* 📅 오늘 다시 풀 오답 */
+.ms-due { margin: 0 0 20px; padding: 14px 18px; border-radius: 14px; border: 1px solid color-mix(in srgb, #d97706 35%, transparent); border-top: 3px solid #d97706; background: #fff; }
+.ms-due h2 { margin: 0 0 4px; font-size: 1.1em; }
+.ms-due-sub { margin: 0 0 10px; font-size: .88em; color: #4a5468; }
+.ms-due-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
+.ms-due-list li { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 10px; background: color-mix(in srgb, #d97706 7%, #fff); }
+.ms-due-list b { min-width: 5.5em; }
+.ms-due-list span { color: #b45309; font-weight: 700; }
+.ms-due-list a { margin-left: auto; color: #b45309; font-weight: 700; text-decoration: none; }
+.ms-due-list a:hover { text-decoration: underline; }
+.ms-due-none { margin: 0; font-weight: 700; color: #16a34a; }
+.ms-due-next { margin: 10px 0 0; font-size: .86em; color: #6b7280; }
+@media (min-width: 900px) {
+  .ms { padding: 36px 40px 96px; }
+  .ms-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ms-flow { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .ms-edit-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ms-due-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

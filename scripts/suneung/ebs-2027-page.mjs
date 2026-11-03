@@ -1,7 +1,17 @@
 // 2027 수능 EBS 연계(수능특강·수능완성) 정리 페이지 — 국어 노트 생성 때 함께 쓴다(korean.mjs 의 extraPages)
 // 데이터: content/ebs-2027.mjs · 반복 복습용: 회독 체크는 브라우저(localStorage)에만 저장
+import fs from "fs";
+import path from "path";
+import { fileURLToPath, pathToFileURL } from "url";
 import { head, aside } from "./lib.mjs";
 import { WORKS, MOCKS, READING, SOURCES } from "./content/ebs-2027.mjs";
+
+// 내용 재생기 데이터(content/lit/*.mjs) — 있는 파일만. 작품은 제목·작가, 독서는 이름으로 짝짓는다(규격: lit-play.test.mjs)
+const LIT_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), "content", "lit");
+const PLAYS = [];
+for (const f of fs.existsSync(LIT_DIR) ? fs.readdirSync(LIT_DIR).filter((f) => f.endsWith(".mjs")).sort() : []) {
+  PLAYS.push(...(await import(pathToFileURL(path.join(LIT_DIR, f)).href)).PLAYS);
+}
 
 const GENRES = ["현대시", "현대소설", "고전시가", "고전산문", "극·수필"];
 const GID = { "현대시": "mp", "현대소설": "mn", "고전시가": "cp", "고전산문": "cn", "극·수필": "de" };
@@ -15,6 +25,19 @@ const grade = (w) => (w.m ? "C" : w.s.startsWith("수특 1부") || w.g === "극�
 
 const works = WORKS.map((w, i) => ({ ...w, id: "w" + String(i + 1).padStart(3, "0"), gr: grade(w), book: w.s.startsWith("수특") ? "수특" : "수완" }));
 
+const playOf = (w) => PLAYS.find((p) => p.who && p.t === w.t && p.a === w.a && w.s.startsWith("수특"));
+const READS = READING.suteuk.flatMap(([cat, names]) => names.split(" / ").map((n) => ({ cat, t: n.replace(/★/g, "").trim(), star: n.includes("★") })))
+  .map((r, i) => ({ ...r, id: "r" + String(i + 1).padStart(2, "0"), play: PLAYS.find((p) => !p.who && p.t === r.t && p.cat === r.cat) }));
+const playBtn = (id, label = "▶ 내용 재생") => `<button type="button" class="ebs-play" data-play="${id}">${label}</button>`;
+
+/** 재생기 데이터 파일(lit-play-data.js): window.NM_LIT[id] = 재생 한 편 + 카드의 갈래·수록·주제 */
+export function litData() {
+  const out = {};
+  for (const w of works) { const p = playOf(w); if (p) out[w.id] = { ...p, g: w.g, s: w.s, th: w.th }; }
+  for (const r of READS) if (r.play) out[r.id] = { ...r.play, s: "수특 독서 · " + r.cat };
+  return `/* 국어 EBS 연계 내용 재생기 데이터 — scripts/suneung/ebs-2027-page.mjs 가 content/lit/*.mjs 로 만든다(직접 고치지 말 것) */\nwindow.NM_LIT = ${JSON.stringify(out)};\n`;
+}
+
 const searchText = (w) => [w.t, w.a, w.s, w.g, w.th, w.fx, w.pt, w.pr, w.m || "", w.n || "", "등급" + w.gr].join(" ").toLowerCase();
 
 const chk = (id) => `<span class="ebs-rd" data-id="${id}"><label title="1회독"><input type="checkbox" data-r="1">1</label><label title="2회독"><input type="checkbox" data-r="2">2</label><label title="3회독"><input type="checkbox" data-r="3">3</label></span>`;
@@ -25,7 +48,7 @@ function card(w) {
   const row = (k, v) => (v ? `<div><dt>${k}</dt><dd>${v}</dd></div>` : "");
   const todo = `<span class="ebs-todo">교재 해설로 확인</span>`;
   return `<article class="ebs-card" id="${w.id}" data-g="${w.g}" data-gr="${w.gr}" data-book="${w.book}" data-mock="${w.m ? 1 : 0}" data-q="${esc(searchText(w))}">
-<header><h4>「${w.t}」 <small>${w.a}</small></h4><div class="ebs-meta">${badge(w)}<span class="ebs-src">${w.s}</span>${chk(w.id)}</div></header>
+<header><h4>「${w.t}」 <small>${w.a}</small></h4><div class="ebs-meta">${badge(w)}<span class="ebs-src">${w.s}</span>${chk(w.id)}${playOf(w) ? playBtn(w.id) : ""}</div></header>
 <dl>
 ${row("주제·정서", w.th || todo)}
 ${row("표현", w.fx || todo)}
@@ -95,11 +118,43 @@ const css = `
 .ebs-prog i span { display:block; height:100%; background:var(--accent); }
 .ebs-hide { display:none !important; }
 .ebs-read td:first-child { white-space:nowrap; font-weight:600; }
+.ebs-play { padding:1px 9px; border:1px solid var(--accent); border-radius:999px; background:transparent; color:var(--accent); font-weight:600; cursor:pointer; font-family:var(--font-body); font-size:1em; }
+.ebs-rp { margin:2px 0; padding:1px 8px; border:1px solid var(--accent); border-radius:999px; background:transparent; color:var(--text); cursor:pointer; font-family:var(--font-body); font-size:.95em; line-height:1.7; }
+.ebs-rp::after { content:' ▶'; color:var(--accent); font-size:.8em; }
+.lp-modal { position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center; padding:16px; background:rgba(5,8,16,.8); }
+.lp-modal[hidden] { display:none; }
+.lp-panel { width:min(980px,100%); max-height:100%; overflow:auto; padding:10px 12px 12px; border-radius:16px; background:#0b1222; }
+.lp-x { display:block; margin:0 0 8px auto; padding:5px 12px; border:1px solid rgba(255,255,255,.3); border-radius:10px; background:rgba(255,255,255,.08); color:#fff; cursor:pointer; font-family:var(--font-body); }
 @media (max-width:640px) { .ebs-toc { columns:1; } .ebs-card dl > div { grid-template-columns:1fr; gap:0; } .ebs-card dt { margin-top:4px; } }
 @media print { .ebs-bar, .ebs-rd { display:none !important; } .ebs-card { break-inside:avoid; } }
 `;
 
 const js = `
+(() => {
+  // ▶ 내용 재생: 누른 작품·지문의 재생기를 창 안에 띄우고, 닫으면 떼어 낸다(shared/player.js · players/lit.js)
+  const modal = document.getElementById('lpModal');
+  if (!modal) return;
+  const host = modal.querySelector('.lp-host');
+  function open(id) {
+    const e = window.NM_LIT && window.NM_LIT[id];
+    if (!e || !window.NM_LIT_DEF || !window.NM_PLAYER_INIT) return;
+    const key = 'lit-' + id;
+    window.NM_PLAYERS = window.NM_PLAYERS || {};
+    if (!window.NM_PLAYERS[key]) window.NM_PLAYERS[key] = window.NM_LIT_DEF(e);
+    host.innerHTML = '<div data-player="' + key + '"></div>';
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    window.NM_PLAYER_INIT();
+    modal.querySelector('.lp-x').focus();
+  }
+  function close() { modal.hidden = true; host.innerHTML = ''; document.body.style.overflow = ''; }
+  document.addEventListener('click', (ev) => {
+    const b = ev.target.closest('[data-play]');
+    if (b) { ev.preventDefault(); open(b.dataset.play); return; }
+    if (ev.target === modal || ev.target.closest('.lp-x')) close();
+  });
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && !modal.hidden) close(); });
+})();
 (() => {
   const KEY = 'nm-ebs2027-read-v1';
   let st = {};
@@ -171,14 +226,18 @@ export function ebsPage(spec) {
 <div class="ebs-grid">
 ${works.filter((w) => w.g === g).map(card).join("\n")}
 </div></section>`).join("\n");
+  const readPlay = (rows) => `<div class="tbl-wrap ebs-read"><table><thead><tr><th>구분</th><th>지문 주제 <small>(▶ 누르면 문단 흐름 재생)</small></th></tr></thead><tbody>${rows.map(([cat, names]) => `<tr><td>${cat}</td><td>${names.split(" / ").map((n) => {
+    const r = READS.find((x) => x.cat === cat && x.t === n.replace(/★/g, "").trim());
+    return r && r.play ? `<button type="button" class="ebs-rp" data-play="${r.id}">${n}</button>` : n;
+  }).join(" · ")}</td></tr>`).join("")}</tbody></table></div>`;
   const read = (rows) => `<div class="tbl-wrap ebs-read"><table><thead><tr><th>구분</th><th>지문 주제</th></tr></thead><tbody>${rows.map((r) => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table></div>`;
-  return `${head("2027 수능 EBS 연계 정리 — 수능특강·수능완성", 0, spec, { extra: `<style>${css}</style>` })}
+  return `${head("2027 수능 EBS 연계 정리 — 수능특강·수능완성", 0, spec, { extra: `<style>${css}</style>\n<link rel="stylesheet" href="../shared/player.css">\n<script defer src="../shared/player.js"></script>\n<script defer src="../shared/players/lit.js"></script>\n<script defer src="lit-play-data.js"></script>` })}
 <body><div class="layout">
 ${aside(spec, "ebs", 0)}
 <main>
 <header class="paper-header">
   <h1>2027 수능 EBS 연계,<br><em>수특·수완 문학</em> 정리</h1>
-  <p class="authors">수능특강 문학 · 수능완성 문학 수록 작품 ${works.length}편 + 독서 수록 지문 주제</p>
+  <p class="authors">수능특강 문학 · 수능완성 문학 수록 작품 ${works.length}편 + 독서 수록 지문 주제${PLAYS.length ? ` · ▶ 내용 재생기 ${works.filter(playOf).length + READS.filter((r) => r.play).length}편` : ""}</p>
   <p class="affiliation">2026-10-27 기준 · 6·9월 모평 반영 · 1회독 요약 카드 → 2·3회독 체크로 반복 복습</p>
 </header>
 
@@ -193,6 +252,7 @@ ${aside(spec, "ebs", 0)}
 
 <h2 id="ebs-how">이렇게 쓰세요</h2>
 <ul>
+<li><strong>▶ 내용 재생</strong>: 수능특강 작품 카드와 독서 지문 이름의 ▶를 누르면 줄거리·시상 흐름(독서는 문단 흐름)을 단계별로 보여 주고, 마지막에 출제 포인트를 짚습니다. 수능특강 정답과 해설·본책만 근거로 우리 말로 요약했습니다.</li>
 <li><strong>1회독</strong>: 갈래별 카드를 위에서부터 한 번 훑습니다. 카드 하나에 주제·표현·출제 포인트만 있습니다. 다 읽으면 카드 오른쪽 <b>1</b>에 체크.</li>
 <li><strong>2·3회독</strong>: 위 필터에서 <b>우선 A</b> + <b>3회독 미완</b>을 켜고 남은 카드만 다시 봅니다. 체크는 이 브라우저에 저장됩니다.</li>
 <li><strong>시험 직전</strong>: ‘한눈에 보는 전체 표’만 훑고, 제목만 보고 주제가 바로 안 떠오르는 작품의 카드를 엽니다.</li>
@@ -214,7 +274,7 @@ ${sections}
 <section id="ebs-read"><h2>독서 · 수록 지문 주제</h2>
 <p>독서는 지문 주제와 핵심 개념만 정리했습니다. ★는 6월 모평 독서에 연계된 것으로 보도된 제재입니다(6월 모평 독서 4지문 모두 EBS 연계, 신분제·형평 운동 / 정보 비대칭 / 액체의 표면 장력). 표면 장력 지문은 수특의 ‘폐포의 표면 장력’과 ‘찻주전자 효과와 젖음성’ 중 어느 쪽인지 확인하지 못했습니다. 9월 모평 독서 연계 제재는 확인하지 못했습니다.</p>
 <h3>수능특강 독서 (72지문)</h3>
-${read(READING.suteuk)}
+${readPlay(READING.suteuk)}
 <h3>수능완성 독서 (22지문)</h3>
 ${read(READING.suwan)}
 </section>
@@ -225,10 +285,11 @@ ${read(READING.suwan)}
 <li>수능완성 문학·독서 목록은 EBS 공식 목차가 아니라 해설 사이트(모두의 국어) 기준입니다. 교재와 한 번 대조하세요.</li>
 <li>카드의 표현·출제 포인트는 해설 사이트(모두의 국어)의 작품별 해설을 원문 인용과 맞춰 보고 확인된 것만 적었습니다. 6·9월 모평에 나온 「그 나무」·「나룻배 이야기」·「잘 익은 사과」·「금환기봉」은 실제 모평 지문과 문항 기준입니다.</li>
 <li>강사·카페의 ‘연계 예상’ 자료(작품별 별표)는 첨부 PDF라 열어 보지 못했습니다. 위 등급은 제가 정한 규칙입니다.</li>
-<li>수특 목차 자료끼리 표기가 다른 것: 「정처관군동/정처관둔동」, 「응계설/옹계설」, 「내 영혼 술에 섞여/섞어」.</li>
+<li>수특 목차 자료끼리 표기가 다른 것: 「응계설/옹계설」, 「내 영혼 술에 섞여/섞어」. 「정처관군동」은 본책 표기로 확인했습니다.</li>
 </ul>
 </section>
 </main></div>
+<div class="lp-modal" id="lpModal" hidden role="dialog" aria-modal="true" aria-label="내용 재생기"><div class="lp-panel"><button type="button" class="lp-x">✕ 닫기 (Esc)</button><div class="lp-host"></div></div></div>
 <script>${js}</script>
 </body></html>`;
 }

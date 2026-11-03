@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5장. 신경망과 딥러닝</title>
+<link rel="stylesheet" href="../styles.css">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script defer src="../toggle.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:left;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📖 표지 · 초록</a></li>
+    <li><a href="01-history.html">1–2. 서론 · 역사</a></li>
+    <li><a href="02-foundations.html">3–4. 수학 · ML 이론</a></li>
+    <li><a href="03-neural.html">5. 신경망과 딥러닝</a></li>
+    <li><a href="04-transformer.html">6. Attention · Transformer</a></li>
+    <li><a href="05-llm.html">7. 대규모 언어모델</a></li>
+    <li><a href="06-generative.html">8. 생성모델</a></li>
+    <li><a href="07-rl-multimodal.html">9–10. 강화학습 · 멀티모달</a></li>
+    <li><a href="08-safety-frontiers.html">11–13. 안전성 · 프런티어 · 결론</a></li>
+    <li><a href="09-references.html">참고문헌</a></li>
+  </ol>
+</aside>
+<main>
+<section id="sec5">
+<h2>5. 신경망과 딥러닝</h2>
+<div class="easy-version"><div class="easy-box">
+<h4>🧒 신경망이란?</h4>
+<p><strong>뉴런 = 스위치 하나.</strong> 입력 몇 개 받아서 그게 충분히 크면 "on", 작으면 "off". 이걸 수천만 개 쌓으면 고양이 사진도 알아본다.</p>
+<div class="analogy">뉴런 = 소문 퍼뜨리는 사람. 친구 3명 말을 종합해서 판단 후 다음 사람에게 전달. 이 체인이 수백 층.</div>
+<div class="example"><strong>역전파</strong> = 게임에서 졌을 때 "어느 단계부터 잘못됐지?" 거꾸로 추적하며 고치기. AI가 학습하는 방법.</div>
+<div class="analogy"><strong>ReLU 활성함수</strong> = "음수는 그냥 0으로 해버리자" (양수만 살림). 단순한데 엄청 잘 먹힌다.</div>
+<p>💡 <strong>CNN</strong>은 이미지용 (작은 윈도우로 스캔하며 패턴 찾기 = 돋보기). <strong>LSTM</strong>은 시퀀스용 (기억 게이트로 중요한 것만 간직).</p>
+</div></div>
+<div class="paper-version">
+
+
+<div class="nn-stack">
+  <div class="nn-layers">
+    <div class="nn-layer l1">입력층<br>Input<br>x ∈ ℝᵈ</div>
+    <div class="nn-layer l2">은닉 1<br>Hidden<br>ReLU</div>
+    <div class="nn-layer l3">은닉 2<br>Hidden<br>ReLU</div>
+    <div class="nn-layer l4">은닉 3<br>Hidden<br>ReLU</div>
+    <div class="nn-layer l5">출력층<br>Softmax</div>
+  </div>
+</div>
+<p class="fig-title">그림 2. 다층 퍼셉트론(MLP)의 3D 구조. 각 층은 선형 변환 Wx+b 후 비선형 활성화를 적용한다.</p>
+
+<section id="sec5-1">
+<h3>5.1 다층 퍼셉트론 (MLP)</h3>
+<p>
+$L$층 MLP는 다음 합성으로 정의된다:
+\[
+\mathbf{h}^{(l)} = \sigma(\mathbf{W}^{(l)}\mathbf{h}^{(l-1)} + \mathbf{b}^{(l)}), \quad l=1,\dots,L
+\]
+여기서 $\sigma$는 비선형 활성함수이다. 주요 활성함수:
+</p>
+
+<svg class="svg-figure" viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="neuronGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a4b8f"/>
+      <stop offset="100%" stop-color="#6428a0"/>
+    </linearGradient>
+  </defs>
+  <!-- inputs -->
+  <circle cx="60" cy="50"  r="22" fill="#fff" stroke="#1a4b8f" stroke-width="2"/>
+  <text x="60" y="55" text-anchor="middle" font-family="serif" font-size="14">x₁</text>
+  <circle cx="60" cy="130" r="22" fill="#fff" stroke="#1a4b8f" stroke-width="2"/>
+  <text x="60" y="135" text-anchor="middle" font-family="serif" font-size="14">x₂</text>
+  <circle cx="60" cy="210" r="22" fill="#fff" stroke="#1a4b8f" stroke-width="2"/>
+  <text x="60" y="215" text-anchor="middle" font-family="serif" font-size="14">x₃</text>
+  <!-- edges with weights -->
+  <line x1="82" y1="50"  x2="278" y2="130" stroke="#888" stroke-width="1.5"/>
+  <line x1="82" y1="130" x2="278" y2="130" stroke="#888" stroke-width="1.5"/>
+  <line x1="82" y1="210" x2="278" y2="130" stroke="#888" stroke-width="1.5"/>
+  <text x="160" y="80"  font-size="12" fill="#a02864" font-family="serif">w₁</text>
+  <text x="160" y="125" font-size="12" fill="#a02864" font-family="serif">w₂</text>
+  <text x="160" y="185" font-size="12" fill="#a02864" font-family="serif">w₃</text>
+  <!-- sum node -->
+  <circle cx="300" cy="130" r="32" fill="url(#neuronGrad)"/>
+  <text x="300" y="137" text-anchor="middle" fill="#fff" font-size="20" font-family="serif">Σ</text>
+  <!-- activation -->
+  <rect x="370" y="100" width="90" height="60" fill="#fff" stroke="#a02864" stroke-width="2" rx="6"/>
+  <text x="415" y="125" text-anchor="middle" font-size="13" font-family="serif">활성함수</text>
+  <text x="415" y="148" text-anchor="middle" font-size="15" font-family="serif" fill="#a02864">σ(·)</text>
+  <!-- output -->
+  <circle cx="530" cy="130" r="22" fill="#c85028"/>
+  <text x="530" y="135" text-anchor="middle" fill="#fff" font-size="14" font-family="serif">y</text>
+  <!-- arrows -->
+  <line x1="332" y1="130" x2="368" y2="130" stroke="#333" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="462" y1="130" x2="506" y2="130" stroke="#333" stroke-width="2" marker-end="url(#arr)"/>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+  <!-- formula -->
+  <text x="300" y="245" text-anchor="middle" font-family="serif" font-size="14" font-style="italic">y = σ(w₁x₁ + w₂x₂ + w₃x₃ + b)</text>
+</svg>
+<p class="fig-title">그림 3. 단일 인공 뉴런의 구조. 입력의 가중합을 계산한 뒤 비선형 활성함수를 통과시킨다.</p>
+
+<svg class="svg-figure" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+  <!-- activation functions -->
+  <g transform="translate(0,0)">
+    <text x="75" y="20" text-anchor="middle" font-family="serif" font-size="13" font-weight="bold">Sigmoid</text>
+    <line x1="10" y1="120" x2="140" y2="120" stroke="#aaa"/>
+    <line x1="75" y1="50" x2="75" y2="190" stroke="#aaa"/>
+    <path d="M10,180 Q 60,180 75,120 Q 90,60 140,60" stroke="#1a4b8f" fill="none" stroke-width="2.5"/>
+  </g>
+  <g transform="translate(150,0)">
+    <text x="75" y="20" text-anchor="middle" font-family="serif" font-size="13" font-weight="bold">Tanh</text>
+    <line x1="10" y1="120" x2="140" y2="120" stroke="#aaa"/>
+    <line x1="75" y1="50" x2="75" y2="190" stroke="#aaa"/>
+    <path d="M10,185 Q 60,185 75,120 Q 90,55 140,55" stroke="#6428a0" fill="none" stroke-width="2.5"/>
+  </g>
+  <g transform="translate(300,0)">
+    <text x="75" y="20" text-anchor="middle" font-family="serif" font-size="13" font-weight="bold">ReLU</text>
+    <line x1="10" y1="120" x2="140" y2="120" stroke="#aaa"/>
+    <line x1="75" y1="50" x2="75" y2="190" stroke="#aaa"/>
+    <path d="M10,120 L 75,120 L 140,55" stroke="#a02864" fill="none" stroke-width="2.5"/>
+  </g>
+  <g transform="translate(450,0)">
+    <text x="75" y="20" text-anchor="middle" font-family="serif" font-size="13" font-weight="bold">GELU</text>
+    <line x1="10" y1="120" x2="140" y2="120" stroke="#aaa"/>
+    <line x1="75" y1="50" x2="75" y2="190" stroke="#aaa"/>
+    <path d="M10,122 Q 50,125 70,125 Q 85,115 140,55" stroke="#c85028" fill="none" stroke-width="2.5"/>
+  </g>
+</svg>
+<p class="fig-title">그림 4. 주요 활성함수의 모양. Sigmoid·Tanh는 양 끝에서 포화(기울기 소실), ReLU는 음수 영역 0, GELU는 ReLU의 부드러운 변형.</p>
+
+<div class="landscape">
+  <span class="landscape-label" style="top:20px; left:20px;">손실 지형 (Loss Landscape)</span>
+  <span class="landscape-label" style="bottom:20px; right:20px;">∇θ ℒ(θ)</span>
+  <span class="landscape-label" style="top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(200,80,40,0.8);">극소점 찾기</span>
+</div>
+<p class="fig-title">그림 5. 신경망의 비볼록 손실 지형. SGD는 고차원 공간에서 평평한 극소점을 찾아간다.</p>
+<ul>
+  <li><strong>Sigmoid</strong>: $\sigma(x) = 1/(1+e^{-x})$. 포화로 인한 기울기 소실(vanishing gradient) 문제.</li>
+  <li><strong>Tanh</strong>: $\tanh(x)$. 0-중심이나 여전히 포화함.</li>
+  <li><strong>ReLU</strong>(Nair & Hinton, 2010): $\max(0, x)$. 희소 활성화와 비포화로 표준이 됨.</li>
+  <li><strong>GELU</strong>(Hendrycks & Gimpel, 2016): $x\Phi(x)$, 여기서 $\Phi$는 표준정규 CDF. Transformer에서 주로 사용.</li>
+  <li><strong>SwiGLU</strong>(Shazeer, 2020): $\text{Swish}(xW) \odot (xV)$. 현재 최신 LLM의 기본 활성함수.</li>
+</ul>
+
+<div class="theorem">
+  <strong>정리 5.1 (보편근사정리, Cybenko 1989; Hornik 1991).</strong>
+  단일 은닉층 MLP는 유한한 뉴런 수로 $\mathbb{R}^n$의 임의의 컴팩트 부분집합 위에서 연속함수를 임의의 정밀도로 근사할 수 있다.
+</div>
+<p>
+그러나 이 정리는 <em>존재성</em>만을 보장할 뿐, 학습 가능성이나 효율적 표현 크기를 보장하지 않는다.
+깊이(depth)는 폭(width)보다 지수적으로 효율적일 수 있음이 알려져 있다(Telgarsky, 2016).
+</p>
+</section>
+
+<section id="sec5-2">
+<h3>5.2 역전파 (Backpropagation)</h3>
+<p>
+손실 $\mathcal{L}$의 파라미터 $\mathbf{W}^{(l)}$에 대한 그래디언트는 연쇄법칙으로 계산된다:
+\[
+\frac{\partial \mathcal{L}}{\partial \mathbf{W}^{(l)}} = \frac{\partial \mathcal{L}}{\partial \mathbf{h}^{(l)}} \cdot \frac{\partial \mathbf{h}^{(l)}}{\partial \mathbf{W}^{(l)}}
+\]
+여기서 $\delta^{(l)} = \partial \mathcal{L}/\partial \mathbf{h}^{(l)}$을 <strong>오차 신호</strong>라 부르며,
+다음 점화식을 따른다:
+\[
+\delta^{(l)} = (\mathbf{W}^{(l+1)})^\top \delta^{(l+1)} \odot \sigma'(\mathbf{z}^{(l)})
+\]
+역전파는 자동 미분(automatic differentiation)의 역방향 모드(reverse-mode)에 해당하며,
+현대 프레임워크(PyTorch, JAX)는 이를 계산 그래프(computational graph) 위에서 자동화한다.
+</p>
+</section>
+
+<section id="sec5-3">
+<h3>5.3 합성곱 신경망 (CNN)</h3>
+<p>
+CNN(LeCun et al., 1989; 1998)은 이미지의 공간 구조에 맞춘 귀납 편향을 내장한다. 핵심 연산은 이산 합성곱:
+\[
+(\mathbf{I} * \mathbf{K})(i, j) = \sum_{m}\sum_{n}\mathbf{I}(i+m, j+n)\mathbf{K}(m, n)
+\]
+CNN의 세 가지 특성:
+</p>
+<ol>
+  <li><strong>지역 연결성</strong>: 각 뉴런은 입력의 지역적 패치만 본다(수용장, receptive field).</li>
+  <li><strong>파라미터 공유</strong>: 동일한 커널이 공간 전체에서 재사용됨 → 이동 등변성.</li>
+  <li><strong>풀링</strong>: 공간 해상도 축소와 이동 불변성 강화.</li>
+</ol>
+<p>
+주요 아키텍처: LeNet-5(1998), AlexNet(2012), VGG(2014), GoogLeNet/Inception(2014),
+<strong>ResNet</strong>(2015)은 $\mathbf{h}_{l+1} = \mathbf{h}_l + F(\mathbf{h}_l)$의 항등 지름길을 통해 매우 깊은 네트워크의 훈련을 가능하게 했다.
+ConvNeXt(2022)는 Transformer의 설계 원칙을 CNN에 적용하여 경쟁력을 회복시켰다.
+</p>
+</section>
+
+<section id="sec5-4">
+<h3>5.4 순환 신경망 (RNN, LSTM, GRU)</h3>
+<p>
+RNN은 시퀀스 $\mathbf{x}_1, \dots, \mathbf{x}_T$를 은닉상태 $\mathbf{h}_t$로 처리한다:
+\[
+\mathbf{h}_t = \sigma(\mathbf{W}_{hh}\mathbf{h}_{t-1} + \mathbf{W}_{xh}\mathbf{x}_t + \mathbf{b})
+\]
+그러나 단순 RNN은 시간을 통한 역전파(BPTT)에서 기울기 소실/폭발 문제를 겪는다.
+<strong>LSTM</strong>(Hochreiter & Schmidhuber, 1997)은 게이팅 메커니즘으로 이를 완화한다:
+\[
+\begin{aligned}
+\mathbf{f}_t &= \sigma(\mathbf{W}_f[\mathbf{h}_{t-1}, \mathbf{x}_t]) \quad (\text{망각 게이트})\\
+\mathbf{i}_t &= \sigma(\mathbf{W}_i[\mathbf{h}_{t-1}, \mathbf{x}_t]) \quad (\text{입력 게이트})\\
+\mathbf{o}_t &= \sigma(\mathbf{W}_o[\mathbf{h}_{t-1}, \mathbf{x}_t]) \quad (\text{출력 게이트})\\
+\mathbf{c}_t &= \mathbf{f}_t \odot \mathbf{c}_{t-1} + \mathbf{i}_t \odot \tanh(\mathbf{W}_c[\mathbf{h}_{t-1}, \mathbf{x}_t])\\
+\mathbf{h}_t &= \mathbf{o}_t \odot \tanh(\mathbf{c}_t)
+\end{aligned}
+\]
+그러나 RNN 계열은 본질적으로 순차적이므로 병렬화가 제한되며, 긴 의존성에 약하다. 이 한계는 Transformer의 등장 동기가 되었다.
+</p>
+</section>
+
+<section id="sec5-5">
+<h3>5.5 표현학습 (Representation Learning)</h3>
+<p>
+딥러닝의 가치는 수작업 특징 공학을 자동화된 <em>특징 학습</em>으로 대체한 것에 있다.
+Bengio et al.(2013)의 "Representation Learning" 리뷰는 좋은 표현의 조건으로
+매니폴드 가설, 분산 표현, 위계적 추상화를 제시하였다.
+자기지도학습(SimCLR, MoCo, DINO, MAE)은 레이블 없이 강력한 표현을 학습하여,
+파운데이션 모델 패러다임의 토대를 제공했다.
+</p>
+</section>
+
+</div>
+</section>
+
+<!-- 3D 학습 시각화: 신경망 — 순전파와 역전파 -->
+<div style="margin:36px 0;border:1px solid #d9dee8;border-radius:12px;overflow:hidden;background:#ffffff;box-shadow:0 4px 14px rgba(30,40,70,0.06);">
+  <div style="padding:10px 16px;font-family:ui-monospace,monospace;font-size:0.78em;letter-spacing:0.16em;font-weight:700;color:#5b6bd6;border-bottom:1px solid #edf0f5;background:#f8f9fc;">3D · 신경망: 순전파 → 오차 → 역전파 → 갱신</div>
+  <div id="ai3d-03" style="width:100%;height:430px;"></div>
+  <div id="ai3d-03-cap" style="padding:12px 16px;font-size:0.92em;line-height:1.55;color:#2b3242;border-top:1px solid #edf0f5;background:#fafbfd;min-height:1.5em;">신호가 층을 타고 전파되고, 오차가 거꾸로 흘러 가중치를 고칩니다.</div>
+</div>
+
+<div style="display:flex; justify-content:space-between; margin:60px 0 20px 0; padding:20px 0; border-top:1px solid var(--border);"><a href="02-foundations.html" style="text-decoration:none;">← 수학·ML 이론</a><a href="04-transformer.html" style="text-decoration:none;">Transformer →</a></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 왼쪽 사이드바의 언어 선택으로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🧠 한마디로 말하면?</h3>
+  <p>신경망은 <strong>사람 뇌의 뉴런을 흉내 낸 수학 모델</strong>이에요! 작은 계산 단위(뉴런)에 숫자를 넣고, 곱하고 더한 다음 살짝 비틀어서 다음 뉴런에 넘겨요. 이 뉴런을 <strong>여러 층으로 쌓으면</strong> 복잡한 패턴도 척척 배워요. "딥러닝"의 "딥(deep)"이 바로 <strong>층이 많다</strong>는 뜻이에요! 🏢</p>
+  <div class="analogy">🏢 회사 조직 비유! 입력층은 정보를 받는 신입사원, 은닉층은 정보를 정리하는 중간 관리자, 출력층은 최종 결정하는 임원이에요. 임원이 틀리면 "누구 잘못이지?"를 거꾸로 추적해서 고치는데, 이게 바로 역전파예요.</div>
+  <h3>🌟 우리 생활 어디에 있을까?</h3>
+  <ul>
+    <li>📱 얼굴로 폰 잠금 풀기 → CNN(사진 패턴 학습)</li>
+    <li>🗣️ 시리·빅스비가 말을 알아들어요 → 순서 데이터 신경망</li>
+    <li>💳 카드 이상거래 자동 탐지 → 신경망의 분류 능력</li>
+  </ul>
+  <div class="info-card"><h4>🌱 이 말만 알면 돼!</h4><ul>
+    <li><strong>뉴런(노드)</strong>: 숫자를 곱해 더하고 살짝 비트는 작은 계산기</li>
+    <li><strong>층(layer)</strong>: 같은 일을 하는 뉴런들이 한 줄로 모인 것</li>
+    <li><strong>활성화 함수</strong>: ReLU, Sigmoid처럼 신경망에 "비선형" 마법을 더하는 함수</li>
+    <li><strong>역전파</strong>: 실수를 거꾸로 되짚어 가중치를 조금씩 고치는 방법 (1986년!)</li>
+    <li><strong>CNN</strong>: 이미지 전문 신경망 / <strong>RNN·LSTM</strong>: 문장·순서 전문 신경망</li>
+  </ul></div>
+  <div class="study-tip">💡 <strong>공부 팁:</strong> 종이에 작은 신경망(예: 2-3-1)을 직접 그려보고 손으로 한 번 계산해보세요! ✏️ 그러면 PyTorch 같은 어려운 도구도 갑자기 이해돼요.</div>
+  <h3>✨ 세 줄 정리</h3>
+  <ul>
+    <li>신경망 = 뉴런(곱·합·비틀기)을 층층이 쌓은 것</li>
+    <li>핵심 학습법은 1986년의 역전파예요.</li>
+    <li>CNN(이미지) · RNN/LSTM(순서) · Transformer(어텐션) 3대 가족!</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
+  <p>다층 퍼셉트론(MLP)은 universal approximation theorem(Cybenko 1989; Hornik 1991)에 의해 임의의 연속 함수를 임의 정밀도로 근사할 수 있습니다. 다만 폭과 깊이가 충분해야 하죠. 활성화 함수는 비선형성을 부여해 단순한 선형결합 이상의 표현력을 만듭니다. ReLU(x) = max(0, x)는 sigmoid의 vanishing gradient 문제를 해결해 깊은 네트워크 훈련을 가능케 했습니다. 학습 알고리즘은 SGD가 표준이지만 실전에서는 Adam, AdamW가 압도적으로 쓰입니다. 이는 1차 모멘트와 2차 모멘트의 추정으로 적응적 학습률을 제공해 수렴 속도를 높입니다. 합성곱 신경망(CNN)의 핵심은 매개변수 공유(parameter sharing)와 평행이동 등변성(translation equivariance)입니다. 동일 필터를 이미지 전체에 적용하므로 위치에 무관한 패턴을 학습합니다. 풀링은 공간 해상도를 줄이며 작은 변형에 강건성을 줍니다. RNN은 hidden state h_t = f(h_(t−1), x_t)로 시간 의존성을 모델링하지만 vanishing gradient에 취약합니다. LSTM(1997)과 GRU(2014)는 gating으로 이를 해결합니다.</p>
+  <h3>핵심 개념과 코드</h3>
+  <pre><code>import torch
+import torch.nn as nn
+
+class MLP(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(784, 256), nn.ReLU(),
+            nn.Linear(256, 128), nn.ReLU(),
+            nn.Linear(128, 10)
+        )
+    def forward(self, x):
+        return self.net(x)
+
+model = MLP()
+opt = torch.optim.AdamW(model.parameters(), lr=1e-3)
+loss_fn = nn.CrossEntropyLoss()
+# x: (B, 784), y: (B,)
+logits = model(x)
+loss = loss_fn(logits, y)
+loss.backward()
+opt.step(); opt.zero_grad()</code></pre>
+  <h3>대표 예제</h3>
+  <div class="info-card"><h4>💻 예제 1 — ResNet의 잔차 연결</h4><p>ResNet은 h(x) = F(x) + x 형태로 입력을 출력에 더해줍니다. 이는 그래디언트가 항등 경로(identity path)를 통해 직접 흘러서 vanishing gradient를 완화하고, 1000층 이상의 네트워크 훈련을 가능하게 했습니다. ImageNet 2015 우승, 이후 모든 비전 모델의 표준이 되었습니다.</p></div>
+  <div class="info-card"><h4>💻 예제 2 — Batch Normalization</h4><p>BN(2015)은 미니배치의 평균·분산으로 활성화를 정규화한 뒤 학습 가능한 γ, β로 재스케일합니다. 내부 공변량 변화(internal covariate shift)를 줄여 학습률을 크게 잡을 수 있고, 정칙화 효과도 있습니다. Layer Norm, Group Norm으로 변종이 발전했습니다.</p></div>
+  <h3>응용 사례</h3>
+  <p>① 자율주행의 인식 모듈은 EfficientNet, YOLO, Detectron2 같은 CNN 계열로 차량/보행자/표지판을 검출합니다. ② 의료 영상의 폐결절·당뇨망막증 자동 진단은 ResNet, U-Net으로 픽셀 단위 분할까지 수행합니다. ③ 추천 시스템은 user-item 임베딩 + MLP로 클릭률을 예측하며, YouTube의 candidate generation도 이 구조입니다. ④ 음성 인식은 Conformer(CNN+Transformer 하이브리드)가 SOTA를 차지합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 학습률을 너무 크게 잡으면 발산하고, 너무 작으면 수렴이 느립니다. lr finder나 cosine schedule을 활용하세요. 또 Batch Norm을 사용할 땐 batch size가 너무 작으면 통계가 부정확해지므로 GroupNorm/LayerNorm을 고려해야 합니다.</div>
+
+<h3>전문가 레벨 이해</h3>
+  <p>딥러닝의 일반화 미스터리는 고전적 PAC 이론으로 설명되지 않습니다. 매개변수 수가 학습 데이터 수를 훨씬 초과해도 잘 일반화되는 현상은 implicit regularization, neural tangent kernel(NTK, Jacot 2018), feature learning theory(Yang & Hu 2021) 등으로 부분 설명됩니다. NTK 영역에서는 무한 폭 신경망이 가우시안 프로세스로 수렴하며, 학습 동역학이 선형화됩니다. 그러나 실제 유한 폭 네트워크는 NTK를 넘어 feature learning이 일어나며, 이것이 표현 학습의 본질입니다. 최적화 측면에서 SGD의 노이즈가 평탄한 최소점을 선호한다는 것은 Keskar et al.(2017)와 후속 연구가 보였고, 최근에는 sharpness-aware minimization(SAM, Foret 2021)이 명시적으로 sharpness를 페널티로 부과합니다. CNN의 인덕티브 바이어스는 locality, translation equivariance, hierarchy인데, ViT(Vision Transformer, 2020)는 이런 바이어스 없이도 충분한 데이터(JFT-300M)에서는 CNN을 능가했습니다. 이는 "데이터가 많으면 인덕티브 바이어스가 약한 모델이 유리하다"는 bitter lesson(Sutton)의 직접적 사례입니다. RNN의 한계는 long-range 의존성 학습 시 그래디언트 폭발/소실에서 옵니다. LSTM의 gating은 부분 해법이며, 더 근본적 해결책이 self-attention입니다.</p>
+  <h3>수학적 기초</h3>
+  <div class="formula">$$\text{ReLU 그래디언트: } \frac{\partial \text{ReLU}(z)}{\partial z} = \mathbb{1}[z > 0]$$
+  $$\text{역전파 (chain rule): } \frac{\partial L}{\partial W^{(l)}} = \delta^{(l)} (a^{(l-1)})^T,\quad \delta^{(l)} = (W^{(l+1)})^T \delta^{(l+1)} \odot \sigma'(z^{(l)})$$
+  $$\text{Convolution: } (f * g)(t) = \sum_{\tau} f(\tau) g(t - \tau)$$
+  $$\text{LSTM gates: } f_t = \sigma(W_f [h_{t-1}, x_t] + b_f),\; i_t, o_t \text{ 동형}$$</div>
+  <h3>최신 연구와 frontier</h3>
+  <p>① <strong>State Space Models</strong>: Mamba(Gu & Dao, 2023), S4 등은 선형 시간 복잡도로 long-context 모델링을 시도하며 Transformer의 대안으로 부상 중입니다. ② <strong>Mixture of Depths/Experts</strong>: 토큰별로 다른 깊이/전문가를 활용하는 동적 계산 그래프 연구. ③ <strong>μP (Maximal Update Parametrization)</strong>: Yang et al.은 모델 폭을 키워도 하이퍼파라미터가 전이되는 정규화를 제안, 대규모 학습의 안정성을 높였습니다.</p>
+  <h3>관련 분야 연결</h3>
+  <ul>
+    <li><strong>신경과학</strong>: predictive coding, free energy principle (Friston)과의 비교</li>
+    <li><strong>위상수학</strong>: persistent homology로 신경망 표현 분석</li>
+    <li><strong>군론</strong>: equivariant neural networks (E(n)-GNN, SE(3)-Transformer)</li>
+    <li><strong>제어이론</strong>: RNN을 동적 시스템으로 보고 안정성·관측가능성 분석</li>
+    <li><strong>그래프 이론</strong>: GNN, message passing, expressive power (1-WL test)</li>
+  </ul>
+  <h3>추가 학습 자료</h3>
+  <ul>
+    <li>📖 Goodfellow, Bengio, Courville, <em>Deep Learning</em></li>
+    <li>📖 Prince, <em>Understanding Deep Learning</em> (2024, 무료 PDF)</li>
+    <li>📖 Roberts, Yaida, Hanin, <em>Principles of Deep Learning Theory</em></li>
+    <li>📺 Stanford CS231N (CNN), CS224N (NLP), Karpathy의 micrograd / nanoGPT 시리즈</li>
+    <li>🔬 키워드: NTK, double descent, lottery ticket hypothesis, grokking, scaling laws</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> Karpathy의 micrograd를 끝까지 따라 구현한 뒤, 자동 미분을 직접 만든 다음 CIFAR-10에 작은 ResNet을 적용해보세요. 이 과정에서 PyTorch의 autograd가 어떻게 계산 그래프를 만들고 backward를 호출하는지 완전히 이해할 수 있습니다.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 다른 하나 찾기 — 신경망</h2>
+<p>넷 중 성격이 다른 하나를 골라보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"trace","color":"#b8441c","prompt":"신경망이 한 번 배우고 고치는  루프 — 순전파 → 역전파 순서를 따라가세요","stages":[{"name":"입력층에 특징 넣기","why":"숫자 벡터 x가 네트워크로 들어갑니다."},{"name":"은닉층 가중합 + 활성화","why":"Wx+b 후 ReLU 등으로 비선형을 넣어요."},{"name":"출력·예측 계산","why":"마지막 층이 ŷ(확률/점수)를 냅니다."},{"name":"손실 계산","why":"정답 y와 비교해 오차 L을 구해요."},{"name":"역전파로 기울기 전파","why":"연쇄법칙으로 각 가중치의 ∂L/∂θ를 계산."},{"name":"가중치 업데이트","why":"경사하강법: θ ← θ − η∇θ."}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#b8441c","questions":[{"q":"ReLU 함수의 정의는?","choices":["max(0, x)","min(0, x)","x의 제곱","1/(1+e^-x)"],"answer":0},{"q":"이미지에 특화된 신경망은?","choices":["RNN","LSTM","CNN","GAN"],"answer":2},{"q":"LSTM이 완화하려는 RNN의 문제는?","choices":["과적합","기울기 소실","데이터 부족","느린 추론"],"answer":1},{"q":"1989년 보편근사정리를 증명한 사람은?","choices":["LeCun","Hinton","Telgarsky","Cybenko"],"answer":3},{"q":"LSTM의 게이트가 아닌 것은?","choices":["망각 게이트","입력 게이트","회전 게이트","출력 게이트"],"answer":2}]};</script>
+</main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+function start(){
+  var host=document.getElementById('ai3d-03');
+  if(!host||typeof THREE==='undefined')return;
+  var W=host.clientWidth||860,H=host.clientHeight||430;
+  var scene=new THREE.Scene();scene.background=new THREE.Color(0xf4f6fb);
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,2000);
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){return;}
+  renderer.setSize(W,H);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  host.appendChild(renderer.domElement);
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  var dl=new THREE.DirectionalLight(0xffffff,0.6);dl.position.set(6,12,8);scene.add(dl);
+  var capEl=document.getElementById('ai3d-03-cap');
+  function cap(t){if(capEl)capEl.textContent=t;}
+  function V(x,y,z){return new THREE.Vector3(x,y,z);}
+  function mat(c,o){return new THREE.MeshLambertMaterial({color:c,transparent:true,opacity:o===undefined?1:o});}
+  function box(w,h,d,c,o){return new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));}
+  function sph(r,c,o){return new THREE.Mesh(new THREE.SphereGeometry(r,18,14),mat(c,o));}
+  function cyl(r1,r2,h,c,o){return new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,20),mat(c,o));}
+  function line(a,b,c,o){return new THREE.Line(new THREE.BufferGeometry().setFromPoints([a,b]),new THREE.LineBasicMaterial({color:c,transparent:true,opacity:o===undefined?0.7:o}));}
+  function lbl(txt,fs,color,scl){
+    fs=fs||34;var cv=document.createElement('canvas'),ctx=cv.getContext('2d');
+    var font='600 '+fs+'px "Noto Sans KR","Apple SD Gothic Neo",sans-serif';
+    ctx.font=font;
+    cv.width=Math.ceil(ctx.measureText(txt).width)+26;cv.height=fs+22;
+    ctx=cv.getContext('2d');ctx.font=font;
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=color||'#252c3d';
+    ctx.fillText(txt,cv.width/2,cv.height/2);
+    var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+    var k=(scl||1)*0.011;sp.scale.set(cv.width*k,cv.height*k,1);return sp;
+  }
+  function ez(u){u=Math.max(0,Math.min(1,u));return u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+  function clamp01(u){return Math.max(0,Math.min(1,u));}
+
+
+  camera.position.set(0,0.4,13.5);camera.lookAt(0,0.4,0);
+  var layers=[4,5,5,3],lx=[-6,-2,2,6],nodes=[],edges=[];
+  layers.forEach(function(n,li){
+    var col=[];
+    for(var i=0;i<n;i++){
+      var y=(i-(n-1)/2)*1.7;
+      var c=li===0?0x2f9e63:(li===layers.length-1?0xe07a3f:0x5b6bd6);
+      var s=sph(0.34,c,0.95);s.position.set(lx[li],y,0);scene.add(s);col.push(s);
+    }
+    nodes.push(col);
+  });
+  ['입력층','은닉층 1','은닉층 2','출력층'].forEach(function(t,i){var L=lbl(t,27,'#39415a',1);L.position.set(lx[i],4.6,0);scene.add(L);});
+  for(var li=0;li<3;li++){
+    nodes[li].forEach(function(a){nodes[li+1].forEach(function(b){
+      var w=Math.random()*0.9+0.1;
+      var ln=line(a.position,b.position,0x9aa6c0,0.08+w*0.3);
+      scene.add(ln);edges.push({l:ln,li:li,w:w});
+    });});
+  }
+  var pulses=[];for(var i=0;i<6;i++){var p=sph(0.13,0xffc83c);p.visible=false;scene.add(p);pulses.push(p);}
+  var errBar=box(0.55,1,0.55,0xd6455b,0.9);errBar.position.set(8,0,0);scene.add(errBar);
+  var errLbl=lbl('오차',25,'#d6455b',0.9);errLbl.position.set(8,-1.0,0);scene.add(errLbl);
+  var round=0;
+  function setErr(h){errBar.scale.y=Math.max(0.02,h);errBar.position.y=h/2;}
+  setErr(0.02);
+  function glow(li,on){nodes[li].forEach(function(s){var k=on?1.45:1;s.scale.set(k,k,k);s.material.opacity=on?1:0.95;});}
+  function resetGlow(){for(var i=0;i<4;i++)glow(i,false);}
+  function travel(u,rev,color){
+    var seg=Math.min(2,Math.floor(u*3)),f=u*3-seg;
+    var a=rev?3-seg:seg,b=rev?2-seg:seg+1;
+    pulses.forEach(function(p,k){
+      p.visible=true;p.material.color.set(color);
+      var n0=nodes[a][k%nodes[a].length],n1=nodes[b][(k*2+seg)%nodes[b].length];
+      p.position.lerpVectors(n0.position,n1.position,f);
+    });
+    resetGlow();glow(a,f<0.5);glow(b,f>=0.5);
+    edges.forEach(function(e){e.l.material.color.set(e.li===(rev?2-seg:seg)?color:0x9aa6c0);});
+  }
+  function hidePulses(){pulses.forEach(function(p){p.visible=false;});edges.forEach(function(e){e.l.material.color.set(0x9aa6c0);});}
+  var phases=[
+    {dur:4,cap:'① 순전파: 입력 신호가 가중치 연결(선의 진하기 = 가중치 크기)을 따라 층층이 전달됩니다.',enter:hidePulses,update:function(u){travel(u,false,0xffc83c);}},
+    {dur:2.5,cap:'② 출력과 정답을 비교해 오차를 계산합니다. 오른쪽 막대 = 현재 오차 크기.',enter:function(){hidePulses();resetGlow();glow(3,true);},update:function(u){setErr(ez(u)*2.4*Math.pow(0.55,round));}},
+    {dur:4,cap:'③ 역전파: 오차의 책임을 출력→입력 방향으로 연쇄법칙에 따라 거꾸로 배분합니다.',update:function(u){travel(u,true,0xd6455b);}},
+    {dur:2.5,cap:'④ 가중치 갱신: 책임이 큰 연결일수록 크게 수정(선 진하기 변화). 반복할수록 오차 막대가 줄어듭니다.',
+     enter:function(){hidePulses();resetGlow();edges.forEach(function(e){e.w=Math.max(0.05,Math.min(1,e.w+(Math.random()-0.5)*0.35));});round=(round+1)%4;},
+     update:function(u){edges.forEach(function(e){e.l.material.opacity=0.08+e.w*0.3;});}}
+  ];
+
+
+  var pi=0,pt=0,last=0;
+  if(phases[0].enter)phases[0].enter();
+  cap(phases[0].cap);
+  function loop(now){
+    requestAnimationFrame(loop);
+    var dt=Math.min(0.05,(now-last)/1000||0.016);last=now;
+    pt+=dt;
+    var ph=phases[pi];
+    if(pt>=ph.dur){pt=0;pi=(pi+1)%phases.length;ph=phases[pi];if(ph.enter)ph.enter();cap(ph.cap);}
+    if(ph.update)ph.update(pt/ph.dur,dt);
+    if(typeof always==='function')always(now/1000,dt);
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(loop);
+  window.addEventListener('resize',function(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',start);}else{start();}
+})();
+</script>
+</body>
+</html>

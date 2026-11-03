@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9. 그로스 해킹 — aboutMarketing</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">📈 표지 · 소개</a></li>
+    <li><a href="01-fundamentals.html">1. 마케팅 기초</a></li>
+    <li><a href="02-consumer-psychology.html">2. 소비자 심리</a></li>
+    <li><a href="03-branding.html">3. 브랜딩 전략</a></li>
+    <li><a href="04-digital-marketing.html">4. 디지털 마케팅</a></li>
+    <li><a href="05-social-media.html">5. 소셜 미디어</a></li>
+    <li><a href="06-content-marketing.html">6. 콘텐츠 마케팅</a></li>
+    <li><a href="07-advertising.html">7. 광고와 캠페인</a></li>
+    <li><a href="08-analytics.html">8. 데이터 분석</a></li>
+    <li><a href="09-growth-hacking.html">9. 그로스 해킹</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>그로스 해킹</em></h1>
+  <p class="authors">Chapter 9 — Growth Hacking & Conversion</p>
+</header>
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 나선을 그리며 위로 솟구치는 복리형 성장 곡선</span>
+<h2>그로스 해킹 개요</h2>
+<p>이 챕터에서는 그로스 해킹의 핵심 전략과 프레임워크를 3D 시각화와 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>AARRR(획득·활성화·유지·추천·매출) 프레임워크를 기반으로 빠른 가설 검증과 A/B 테스트를 실행해 제품 주도 성장을 달성합니다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 한 줄로 이해하기</h3>
+  <p>그로스 해킹은 <strong>적은 돈으로 빠르게 실험</strong>하면서, 제품과 마케팅을 동시에 고쳐 쑥쑥 크는 방법이에요. 🚀 큰 광고비 대신 '데이터로 빠르게 반복하는 실험'이 가장 큰 무기랍니다!</p>
+
+  <h3>🤔 왜 중요할까?</h3>
+  <ul>
+    <li>📦 <strong>드롭박스</strong>는 "친구 추천하면 저장 공간 더 줄게!" 딱 하나로 광고 없이 사용자가 폭발했어요.</li>
+    <li>🏠 <strong>에어비앤비</strong>는 다른 사이트(크레이그리스트)와 연결하는 재치로 초기 손님을 모았어요.</li>
+    <li>💙 <strong>토스</strong>는 '친구 송금'과 '출석 체크 보상'으로 자연스럽게 사용자를 늘렸어요.</li>
+  </ul>
+
+  <div class="info-card">
+    <h4>🌱 꼭 알아둘 말</h4>
+    <ul>
+      <li><strong>AARRR</strong>: 획득 → 활성화 → 유지 → 매출 → 추천, 성장의 5단계 퍼널. 🫗</li>
+      <li><strong>활성화 모먼트(Aha Moment)</strong>: 사용자가 "오, 이거 좋은데!"를 처음 느끼는 순간. 💡</li>
+      <li><strong>바이럴 계수(K-factor)</strong>: 한 명이 친구를 몇 명 데려오는지 나타내는 숫자. 👯</li>
+      <li><strong>리텐션 곡선</strong>: 시간이 지나도 얼마나 남아 있는지 보여주는 그래프. 📉</li>
+      <li><strong>그로스 실험</strong>: 가설 → 실험 → 학습으로 이어지는 짧은 반복. 🔁</li>
+    </ul>
+  </div>
+
+  <h3>🧪 마케팅보다 '제품 운영'!</h3>
+  <p>그로스 해킹은 광고를 크게 트는 것보다, 제품 안의 흐름을 <strong>살짝 바꾸는 것</strong>에 가까워요. 예를 들어 사용자가 친구를 데려오게 하거나, 첫 1분 안에 핵심 재미를 느끼게 만드는 거죠. 🎮</p>
+  <p>그래서 그로스팀은 보통 마케터·기획자·개발자가 <strong>한 팀</strong>에 모여, 매주 가설을 적고 실험하고 배운 걸 정리해요. 진짜 자산은 '숫자'가 아니라 <strong>틀린 생각을 얼마나 빨리 버리느냐</strong>예요! 실패를 부끄러워하지 않고 빠르게 인정하고, 그 위에 다음 실험을 쌓는 팀이 결국 이겨요. 💪</p>
+
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 자주 쓰는 앱을 하나 골라, '활성화 모먼트'가 어디서 일어나는지, 어떤 행동 뒤에 다시 돌아오는지 관찰해 보세요. 좋은 제품의 성장 설계가 보여요! 🔍</div>
+
+  <h3>✅ 기억해요</h3>
+  <ul>
+    <li>그로스 해킹은 광고비가 아니라 '실험 속도'! ⚡</li>
+    <li>활성화 모먼트가 빠를수록 오래 남아요.</li>
+    <li>바이럴 루프는 가장 효율 좋은 채널! 🔄</li>
+    <li>마케팅·제품·개발의 협업이 핵심.</li>
+    <li>실패를 빨리 버리는 능력이 진짜 재산이에요. 💎</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>전략 깊이</h3>
+  <p>중급 단계에서는 그로스 해킹을 ‘성장 회계(growth accounting)’와 ‘성장 루프(growth loop)’의 두 축으로 이해합니다. 성장 회계는 신규(new), 부활(resurrected), 이탈(churned), 잔존(retained) 사용자 수의 흐름을 정량화해 ‘성장의 진짜 동력’을 분리하며, 성장 루프는 한 사용자의 행동이 다음 사용자를 데려오는 자기강화 구조를 의미합니다. 핀터레스트의 ‘콘텐츠 → SEO → 신규 사용자 → 콘텐츠’ 루프, 링크드인의 ‘프로필 → 검색 노출 → 가입 → 프로필’ 루프가 대표적입니다. 또한 활성화 모먼트(예: ‘7일 안에 친구 7명 추가’)는 단순 슬로건이 아니라 코호트 분석을 통해 정량적으로 발견되어야 하며, 이 ‘마법의 숫자’가 발견되면 모든 운영이 그 숫자에 도달하도록 정렬되어야 합니다. 한편 실험 운영의 품질을 위해 ‘ICE 점수(Impact, Confidence, Ease)’ 같은 우선순위 매트릭스가 활용되며, 매주 10~15개의 실험을 동시에 돌리는 운영 능력이 그로스팀의 차별화가 됩니다.</p>
+
+  <h3>대표 사례 분석</h3>
+  <div class="info-card">
+    <h4>📈 사례 1 — 슬랙의 ‘활성화 모먼트’ 발견</h4>
+    <p>슬랙은 코호트 분석을 통해 ‘팀 단위로 2,000개의 메시지를 주고받은 팀은 90% 이상이 유료로 전환된다’는 ‘마법의 숫자’를 발견했고, 이후 모든 온보딩 흐름을 그 숫자에 도달하는 데 집중하도록 재설계했습니다.</p>
+  </div>
+  <div class="info-card">
+    <h4>📈 사례 2 — 카카오톡 송금하기의 행동 루프</h4>
+    <p>카카오톡 송금하기는 송금 행위 자체가 친구 초대로 작동하는 자연스러운 그로스 루프를 만들어, 별도 광고 없이 거대한 결제 사용자 기반을 확보한 사례로 자주 인용됩니다.</p>
+  </div>
+
+  <h3>실무 응용</h3>
+  <p>실무에서 그로스 운영은 첫째, ‘노스 스타 지표 1개 + 활성화 모먼트 1개’를 정의하는 데서 시작합니다. 둘째, 매주 10~15개의 실험 가설을 ICE 점수로 우선순위화하고, 한 주에 3~5개씩 실행합니다. 셋째, 실험 결과를 표준 보고서로 작성해 ‘실험 라이브러리’에 누적하며, 분기마다 학습 패턴을 회고합니다. 또한 그로스팀은 마케팅뿐 아니라 제품 변경 권한이 있어야 진짜 효과를 만들 수 있으며, 이 점에서 ‘제품 마케팅 매니저’와 ‘그로스 PM’의 역할이 통합되는 흐름이 강해지고 있습니다.</p>
+
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 단기 ‘트릭’에만 집중하면 LTV가 낮아져 결국 광고비 효율이 무너집니다. 그로스 해킹의 본질은 트릭이 아니라 ‘반복 가능한 시스템’의 구축이어야 합니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>심화 단계의 그로스 해킹은 ‘제품-마케팅-데이터 인프라’의 통합 시스템 설계 영역으로 들어갑니다. 성장 루프의 강도를 정량화하는 ‘루프 효율 지표(예: time-to-loop, loop k-factor)’를 정의하고, 각 루프를 강화하기 위한 인풋 변수들을 머신러닝 모델로 추정합니다. 또한 ‘리텐션 곡선의 평탄화 시점(asymptote)’이 곧 LTV 한계를 결정한다는 통찰은 제품 차원의 의사결정을 그로스 분석과 직접 연결시킵니다. 한편 LLM과 자동화 도구의 발전으로 그로스팀의 운영 비용이 빠르게 낮아지면서, 매주 100개 단위의 미세 실험을 자동화하는 ‘퀀트 그로스(quant growth)’ 모델이 등장하고 있습니다. 또 PLG(Product-Led Growth) 모델은 영업 인력이 아닌 제품이 직접 매출을 만드는 구조로, 핵심 사용 행동의 발견과 자동화된 결제 흐름이 결합된 ‘제품화된 그로스’의 정점입니다. 결국 전문가 레벨의 그로스 해커는 데이터 사이언티스트, 제품 매니저, 마케팅 운영자의 역할을 동시에 갖춘 메타 운영자가 됩니다.</p>
+
+  <h3>측정과 분석 모델</h3>
+  <p>심화 측정에서는 ‘리텐션 커브 모델링(예: shifted Beta Geometric)’으로 코호트의 장기 잔존을 예측하고, ‘지오 기반 인과 실험’으로 그로스 액션의 진짜 인과 효과를 추정합니다. 또한 베이지안 멀티 암드 밴딧 알고리즘이 단순 A/B 테스트를 대체해, 학습과 노출을 동시에 최적화합니다. 인과 포레스트와 ‘업리프트 모델링(uplift modeling)’은 ‘누구에게 이 인터벤션을 했을 때 가장 큰 추가 효과가 나는가’를 추정해, 인터벤션을 정밀 타깃팅하는 데 활용됩니다. 한편 ‘성장 회계 시뮬레이터’는 신규·부활·이탈·잔존 흐름을 시나리오별로 시뮬레이션해 12개월 매출 곡선을 예측합니다.</p>
+
+  <h3>최신 트렌드</h3>
+  <p>첫째, LLM 기반의 ‘자동 실험 가설 생성’과 ‘자동 카피 생성’이 그로스팀의 실험 속도를 극적으로 끌어올리고 있습니다. 둘째, PLG·커뮤니티 주도 성장(CLG)·콘텐츠 주도 성장(Content-Led Growth)이 결합된 하이브리드 모델이 SaaS와 D2C 모두에서 표준이 되고 있습니다. 셋째, ‘AI 에이전트가 사용자를 대신해 비교·구매하는 시대’가 다가오면서, 알고리즘이 이해하기 쉬운 제품 설명과 메타데이터, API 우선 그로스 설계의 중요성이 커지고 있습니다.</p>
+
+  <h3>관련 분야</h3>
+  <ul>
+    <li>제품 매니지먼트와 PLG 전략</li>
+    <li>인과 머신러닝과 업리프트 모델링</li>
+    <li>커뮤니티 운영과 크리에이터 이코노미</li>
+  </ul>
+
+  <h3>추가 자료</h3>
+  <ul>
+    <li>Sean Ellis & Morgan Brown, <em>Hacking Growth</em></li>
+    <li>Andrew Chen, <em>The Cold Start Problem</em></li>
+    <li>Reforge, GrowthHackers의 그로스 운영 케이스 스터디</li>
+  </ul>
+
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 가상의 SaaS 제품을 위해 노스 스타 1개·활성화 모먼트·성장 루프 3개를 정의하고, 12주 동안의 실험 백로그(40개)와 우선순위·예상 효과까지 정량화한 그로스 플랜을 설계해 보세요.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — AARRR 퍼널 순서</h2>
+<p>그로스 퍼널 AARRR의 다섯 단계를 순서대로 배열해 보세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#e040fb","prompt":"AARRR 퍼널을 올바른 순서로 배열하세요","steps":["획득","활성화","유지","매출","추천"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#e040fb","questions":[{"q":"AARRR 퍼널의 단계 수는?","choices":["3단계","4단계","5단계","6단계"],"answer":2},{"q":"제품 가치를 처음 깨닫는 순간은?","choices":["활성화 모먼트","바이럴 계수","리텐션","K-factor"],"answer":0},{"q":"추천 시 저장 공간을 준 서비스는?","choices":["슬랙","에어비앤비","핀터레스트","드롭박스"],"answer":3},{"q":"슬랙이 발견한 마법의 숫자는?","choices":["친구 7명","메시지 2천 개","로그인 30회","파일 100개"],"answer":1},{"q":"ICE 점수에서 E의 의미는?","choices":["Effort","Energy","Ease","Effect"],"answer":2}]};</script>
+</main>
+</div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const curvePts=[];const SEG=80;for(let i=0;i<SEG;i++){const t=i/(SEG-1);const ang=t*Math.PI*5;const rad=0.3+t*t*2.6;curvePts.push(Math.cos(ang)*rad,-2.6+t*5.2,Math.sin(ang)*rad);}const cg=new THREE.BufferGeometry();cg.setAttribute('position',new THREE.BufferAttribute(new Float32Array(curvePts),3));s.add(new THREE.Line(cg,new THREE.LineBasicMaterial({color:0x3cff8a,transparent:true,opacity:0.6})));const climbers=[];for(let i=0;i<14;i++){const cm=new THREE.Mesh(new THREE.OctahedronGeometry(0.16,0),new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0.35,0.8,0.6)}));cm.userData={t:i/14};s.add(cm);climbers.push(cm);}
+  [['획득',0.1],['활성화',0.3],['유지',0.5],['매출',0.7],['추천',0.9]].forEach(function(d){var t=d[1],ang=t*Math.PI*5,rad=0.3+t*t*2.6;var L=lbl(d[0],0x1f9e5a);L.position.set(Math.cos(ang)*rad+0.45,-2.6+t*5.2,Math.sin(ang)*rad);s.add(L);});
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ AARRR는 획득·활성화·유지·매출·추천의 5단계 그로스 퍼널입니다.','활성화 모먼트(Aha Moment)는 사용자가 제품 가치를 처음 깨닫는 순간입니다.','바이럴 계수(K-factor)가 1을 넘으면 복리형 성장이 시작됩니다(나선이 솟구칩니다).','리텐션 곡선과 짧은 그로스 실험 사이클로 성장을 다집니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}climbers.forEach(cm=>{cm.userData.t+=0.0035;if(cm.userData.t>1)cm.userData.t-=1;const t=cm.userData.t;const ang=t*Math.PI*5;const rad=0.3+t*t*2.6;cm.position.set(Math.cos(ang)*rad,-2.6+t*5.2,Math.sin(ang)*rad);cm.scale.setScalar(0.6+t*1.2);cm.rotation.x+=0.05;cm.rotation.y+=0.05;});s.rotation.y+=0.006;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body>
+</html>

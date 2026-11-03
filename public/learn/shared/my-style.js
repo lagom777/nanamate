@@ -195,16 +195,72 @@
     box.hidden = false;
   }
 
+  /* 🔑 AI 해설 키: 계정에 암호화해 저장(원문은 다시 안 내려옴) — 어느 기기에서 로그인해도 기출 풀어보기의 AI 해설이 이 키로 된다 */
+  var LOCAL_KEY = 'sn:ai:key';
+  function localKey() { try { var r = localStorage.getItem(LOCAL_KEY); return r ? JSON.parse(r) : ''; } catch (e) { return ''; } }
+  function keyError(e) {
+    return e.code === 'bad key' ? '키 모양이 맞지 않아요. sk-ant- 로 시작하는 키를 그대로 붙여 넣어 주세요.'
+      : e.code === 'key rejected' ? 'Anthropic이 이 키를 받지 않았어요. 콘솔에서 키가 살아 있는지 확인해 주세요.'
+      : e.code === 'login' ? '로그인이 풀렸어요. 새로 고침해서 다시 로그인해 주세요.' : '저장하지 못했어요. 잠시 뒤 다시 해 주세요.';
+  }
+  function paintKey(box, j) {
+    box.textContent = '';
+    box.appendChild(el('h2', null, '🔑 AI 해설 키'));
+    box.appendChild(el('p', 'ms-key-sub', '기출 풀어보기의 🤖 AI 해설·실수 분석은 내 Anthropic API 키로 요청합니다. 여기 한 번 넣으면 이 계정으로 로그인한 모든 기기에서 쓰여요. 키는 서버에 암호화해 두고, 원문은 다시 화면으로 내려오지 않습니다.'));
+    var status = el('p', 'ms-key-status');
+    var say = el('p', 'ms-key-say');
+    say.setAttribute('aria-live', 'polite');
+    function show(k) {
+      status.textContent = k.has ? '✓ 저장된 키: ' + k.hint : '아직 저장된 키가 없어요.';
+      status.className = 'ms-key-status' + (k.has ? ' on' : '');
+      del.hidden = !k.has;
+      move.hidden = k.has || !localKey();
+    }
+    function save(v) {
+      say.textContent = '키를 확인하는 중…';
+      return SnAuth.saveAiKey(v).then(function (k) { say.textContent = v ? '저장했어요.' : '지웠어요.'; input.value = ''; show(k); }).catch(function (e) { say.textContent = keyError(e); });
+    }
+    var input = el('input', 'ms-key-in');
+    input.type = 'password';
+    input.placeholder = 'sk-ant-…';
+    input.autocomplete = 'off';
+    input.setAttribute('aria-label', 'Anthropic API 키');
+    input.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' && input.value.trim()) { ev.preventDefault(); save(input.value.trim()); } });
+    var row = el('div', 'ms-key-row');
+    row.appendChild(input);
+    row.appendChild(btn('ms-key-save', '계정에 저장', function () { if (input.value.trim()) save(input.value.trim()); }));
+    var del = btn('ms-key-del', '계정에서 지우기', function () { save(null); });
+    var move = btn('ms-key-move', '이 기기에 넣어 둔 키를 계정으로 옮기기', function () { var v = localKey(); if (v) save(v); });
+    box.appendChild(status);
+    box.appendChild(row);
+    box.appendChild(del);
+    box.appendChild(move);
+    box.appendChild(say);
+    var help = el('p', 'ms-key-help');
+    help.appendChild(document.createTextNode('키 발급: '));
+    var a = el('a', null, 'console.anthropic.com');
+    a.href = 'https://console.anthropic.com/settings/keys';
+    a.target = '_blank';
+    a.rel = 'noopener';
+    help.appendChild(a);
+    help.appendChild(document.createTextNode(' · Claude 구독(Pro·Max)과는 별개로 쓴 만큼 과금(문항 해설 1회 약 $0.05~0.2)'));
+    box.appendChild(help);
+    show(j);
+    box.hidden = false;
+  }
+
   function init() {
     var body = document.querySelector('[data-ms-body]');
     var auth = document.querySelector('[data-ms-auth]');
     var dueBox = document.querySelector('[data-ms-due]');
+    var keyBox = document.querySelector('[data-ms-key]');
     if (!body) return;
     if (!window.SnAuth) { msg(body, '로그인 기능을 불러오지 못했어요. 새로 고침해 주세요.'); return; }
     SnAuth.me().then(function (me) {
       if (auth) paintAuth(auth, me);
       if (!me.id) { loginCard(body); return; }
       if (dueBox && SnAuth.due) SnAuth.due().then(function (j) { paintDue(dueBox, j); }).catch(function () {});
+      if (keyBox && SnAuth.aiKey) SnAuth.aiKey().then(function (j) { paintKey(keyBox, j); }).catch(function () {});
       return fetch('/api/style', { credentials: 'same-origin', cache: 'no-store' }).then(function (r) {
         if (r.status === 401) { loginCard(body); return; }
         if (!r.ok) throw new Error('style');

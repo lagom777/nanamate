@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 화성학 — aboutMusic</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+  <script defer src="../../shared/game-kernel.js"></script>
+  <script src="../../shared/premium3d.js"></script>
+  <script defer src="../../shared/flagship-chord.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">🎵 표지</a></li><li><a href="01-basics.html">1. 음악 기초</a></li><li><a href="02-rhythm.html">2. 리듬과 박자</a></li><li><a href="03-harmony.html">3. 화성학</a></li><li><a href="04-melody.html">4. 멜로디와 작곡</a></li><li><a href="05-form.html">5. 음악 형식</a></li><li><a href="06-genres.html">6. 장르의 이해</a></li><li><a href="07-production.html">7. 음악 제작</a></li><li><a href="08-ear-training.html">8. 청음 훈련</a></li><li><a href="09-modern.html">9. 현대 음악이론</a></li></ol></aside>
+<main><header class="paper-header"><h1><em>화성학</em></h1><p class="authors">Chapter 3 — Harmony, Chords & Progressions</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 코드 진행 — 3음을 쌓은 4개의 화음 기둥이 차례로 울리는 I-V-vi-IV</span>
+<h2>화성학</h2><p>Harmony, Chords & Progressions의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>3화음(트라이어드)과 7화음, 다이아토닉 코드, 케이던스(종지법)와 대중음악의 핵심 코드 진행 패턴을 다룹니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎹 한 줄로 이해하기</h3><p>화성학은 두 음 이상을 같이 울려 만드는 어울림(코드)과, 그 코드들이 이어지는 흐름(진행)을 배우는 거예요!</p>
+  <h3>😲 왜 재밌을까?</h3><p>똑같은 멜로디라도 코드가 바뀌면 분위기가 완전히 달라져요. 카펜터스의 〈Top of the World〉, 비틀즈의 〈Let It Be〉, 그리고 수많은 K-팝 발라드가 쓰는 「I-V-vi-IV」 진행은 한 번 들으면 마음이 편안해지는 마법 코드 묶음이에요. 네 코드로 수많은 곡을 만들어 「포 코드(four-chord)·머니 코드」 또는 「Axis 진행」이라 불러요. (파헬벨의 「캐논」은 이와 닮았지만 더 긴 I-V-vi-iii-IV-I-IV-V 진행이에요.) ✨</p>
+  <div class="info-card"><h4>🌱 꼭 알아둘 말</h4><ul>
+    <li><strong>코드(Chord)</strong>: 두 음 이상이 동시에 울리는 화음이에요.</li>
+    <li><strong>3화음(Triad)</strong>: 근음·3음·5음 세 음으로 된 기본 코드예요.</li>
+    <li><strong>장조(Major)/단조(Minor)</strong>: 밝거나 어두운 느낌을 정해요.</li>
+    <li><strong>코드 진행(Progression)</strong>: 코드들이 차례로 이어지는 흐름이에요.</li>
+    <li><strong>으뜸음(Tonic)</strong>: 곡의 중심이 되는 음과 코드예요.</li>
+  </ul></div>
+  <h3>🔍 쉽게 풀어보기</h3><p>피아노에서 도를 누르고, 한 칸 건너 미, 또 한 칸 건너 솔을 같이 누르면 도(C) 메이저 코드가 돼요. 같은 방법으로 라(A)·도(C)·미(E)를 누르면 가(A) 마이너 코드! 코드 안 음 사이 거리만 살짝 바뀌었을 뿐인데 메이저는 밝고 😄 마이너는 어둡게 😢 들려요. 신기하죠? 곡은 이런 코드들이 순서대로 흐르며 이야기를 만들어요. 가장 친숙한 「I-IV-V-I」 진행은 집에서 출발해 멀리 갔다가 다시 집으로 돌아오는 여행 같아요. 🏠 사람이 편안함을 느끼는 건 으뜸코드(I)가 「집」 역할을 하기 때문이에요. 코드는 멜로디에 입히는 옷! 같은 옷도 색을 바꾸면 다른 느낌이듯, 같은 멜로디도 코드가 바뀌면 새로운 표정을 지어요. 👕</p>
+  <div class="study-tip"><strong>💡 이렇게 해봐요:</strong> 우쿨렐레나 기타로 C·G·Am·F 네 코드만 익혀 봐요. 세상 팝송 절반은 따라 칠 수 있어요!</div>
+  <h3>✅ 요약</h3><ul>
+    <li>코드는 음이 모인 화음, 진행은 코드의 흐름이에요.</li>
+    <li>메이저는 밝고 😄 마이너는 어두워요 😢.</li>
+    <li>으뜸코드는 곡의 「집」 같아요.</li>
+    <li>I-V-vi-IV 같은 단순 진행이 수많은 명곡을 만들어요.</li>
+    <li>같은 멜로디도 코드가 바뀌면 인상이 달라져요.</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3><p>장조 음계의 일곱 음에 3화음을 쌓으면 I, ii, iii, IV, V, vi, vii°가 만들어지며, 이 다이아토닉 화음 체계가 기능 화성(functional harmony)의 토대가 된다. I과 vi는 토닉(안정), IV와 ii는 서브도미넌트(전개), V와 vii°는 도미넌트(긴장)로 작동하며, 이 세 기능이 순환하며 조성감을 형성한다. 7화음(seventh chord)은 3화음 위에 7도를 더해 색채감을 풍부하게 하며, 재즈와 팝의 정체성을 결정한다. 전조(modulation)는 곡의 중심 조성을 다른 조로 옮기는 기법으로, 5도권을 따라 가까운 조로 자연스럽게 이동하면 매끄럽고, 먼 조로 갑자기 옮기면 극적인 효과가 난다. 차용 화음(borrowed chord)은 동주음 단조에서 빌려와 색채를 더하는 기법으로, K-팝 발라드의 「♭VII-IV-I」 같은 진행이 대표적이다.</p>
+  <h3>대표 작품 분석</h3>
+  <div class="info-card"><h4>🎵 작품 1 — 파헬벨 「캐논 D」</h4><p>D-A-Bm-F#m-G-D-G-A의 8마디 진행을 변주하며, 모든 팝 발라드 진행의 원형이 된 곡이다.</p></div>
+  <div class="info-card"><h4>🎵 작품 2 — 비틀즈 「Yesterday」</h4><p>F장조에서 시작하지만 도리안 차용과 단조 차용이 섞여, 단순한 멜로디에 깊은 슬픔을 부여한다.</p></div>
+  <h3>실연/제작 응용</h3><p>작곡가는 ii-V-I 진행으로 재즈 표준의 흐름을 만들고, 팝 프로듀서는 vi-IV-I-V 진행으로 후렴의 기억성을 극대화한다. 영화음악 작곡가는 차용 화음과 모달 인터체인지로 이질적 분위기를 한 곡에 녹인다. 또한 보이싱(코드 음의 배치)을 바꾸는 것만으로도 전혀 다른 분위기를 만들 수 있어, 편곡의 핵심 도구가 된다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 실수:</strong> 같은 코드 기호라도 조성 안에서의 기능이 다를 수 있다. C 메이저 안의 G와 G 메이저 안의 G는 모두 「G」지만, 전자는 도미넌트, 후자는 토닉이다.</div>
+
+<h3>전문가 레벨</h3><p>현대 화성학은 기능 화성 이외에 모달 화성, 비기능적 진행, 그리고 노이리만 변환 같은 변환적 화성학(transformational harmony)을 동시에 다룬다. 노이리만 변환의 P(평행), L(인접 단3도), R(인접 장3도)는 메이저·마이너 삼화음을 매끄럽게 연결해 19세기 후기 낭만(바그너, 슈베르트)과 영화음악(존 윌리엄스)에서 광범위하게 활용된다. 재즈 화성은 텐션 노트(9, 11, 13)와 어웃사이드 진행을 통해 기능 화성을 확장하며, 콜트레인 변화(coltrane changes)는 한 옥타브를 장3도로 등분해 비전통적 진행을 만든다. 한편 스펙트럴 화성은 푸리에 분석으로 얻은 배음렬을 직접 화성으로 사용해, 코드와 음색의 경계를 허문다. 메시앙의 「제한된 전위 모드」, 라벨의 평행 9화음, 베르크의 12음 화성도 화성학의 영역을 확장한 사례다.</p>
+  <h3>분석과 이론</h3><p>쉔커 분석은 표면적 화성을 환원해 우어자츠(I-V-I)라는 근본 구조를 드러내며, 모든 토널 음악의 깊이 구조를 설명한다. 신리만 이론(neo-Riemannian)은 음정 거리와 변환을 기하학적으로 시각화한 토네츠(Tonnetz)를 통해 화성 공간을 다루며, 디미트리 티모츠코의 『A Geometry of Music』은 화성 진행을 고차원 다양체 위의 궤적으로 모델링한다.</p>
+  <h3>최신 트렌드</h3><p>AI 화성 분석 도구(Music21, Chordify)는 오디오에서 코드를 자동 추출하며, 머신러닝 기반 작곡 모델은 사용자가 입력한 코드 진행에 즉시 멜로디와 편곡을 생성한다. 또한 마이크로톤 화성, 스펙트럴 합성 기반 화성은 현대 영화 사운드트랙과 사운드 디자인에서 새로운 영역을 개척하고 있다.</p>
+  <h3>관련 분야</h3><ul>
+    <li>음악 인지 — 화성 기대와 보상</li>
+    <li>음악 정보 검색(MIR) — 자동 코드 인식</li>
+    <li>수학적 음악 이론 — 변환 화성과 군론</li>
+  </ul>
+  <h3>추가 자료</h3><ul>
+    <li>Walter Piston, 『Harmony』</li>
+    <li>Dmitri Tymoczko, 『A Geometry of Music』</li>
+    <li>Richard Cohn, 『Audacious Euphony』</li>
+  </ul>
+  <div class="success-box"><strong>🎓 도전 과제:</strong> 좋아하는 K-팝 곡 한 곡의 코드 진행을 채보한 뒤, 모든 메이저 코드를 마이너로, 마이너를 메이저로 바꿔 연주해 보고 정서가 어떻게 변하는지 분석해 보라.</div>
+</div>
+
+<h2>🚀 초고급 3D 게임 — 화음 쌓기</h2>
+<p>3D 건반에서 근음과 목표 화음(장3·단3·감3·증3·속7화음)이 주어지면, 정확한 반음 간격의 건반을 클릭해 화음을 완성하세요. 음이 실제로 울리고, 화음이 맞으면 동시에 화음이 연주됩니다.</p>
+<div id="nm-chord"></div>
+<h2>🕹️ 직접 해보기 — 화성 용어 상황 판단</h2>
+<p>화성학의 핵심 용어와 설명을 보고 알맞은 답을 고르세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#ec4899","prompt":"용어와 설명을 짝지으세요","pairs":[{"term":"코드","def":"두 음 이상이 동시에 울리는 화음"},{"term":"3화음","def":"근음·3음·5음으로 된 기본 코드"},{"term":"으뜸음","def":"곡의 중심이 되는 음과 코드"},{"term":"코드 진행","def":"코드들이 차례로 이어지는 흐름"},{"term":"전조","def":"곡의 중심 조성을 다른 조로 옮김"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#ec4899","questions":[{"q":"근음·3음·5음으로 된 기본 코드는?","choices":["7화음","3화음","9화음","텐션"],"answer":1},{"q":"곡의 중심이 되는 음과 코드는?","choices":["딸림음","버금음","으뜸음","이끔음"],"answer":2},{"q":"도·미·솔을 동시에 누르면 무슨 코드?","choices":["A 마이너","G 메이저","D 마이너","C 메이저"],"answer":3},{"q":"V와 vii° 화음의 기능은?","choices":["도미넌트","토닉","서브도미넌트","모달"],"answer":0},{"q":"「포 코드(머니 코드)·Axis」라 불리는 팝 필수 진행은?","choices":["ii-V-I","I-V-vi-IV","I-IV-I-IV","vi-ii-V-I"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,9);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const chords=[];const roots=[0,4,5,3];for(let ci=0;ci<4;ci++){const grp=new THREE.Group();grp.position.x=(ci-1.5)*1.9;const hue=(roots[ci]%7)/7;const col=new THREE.Color().setHSL(hue,0.65,0.55);for(let n=0;n<3;n++){const sph=new THREE.Mesh(new THREE.SphereGeometry(0.32,18,18),new THREE.MeshBasicMaterial({color:col}));sph.position.y=(n-1)*0.95;grp.add(sph);const ring=new THREE.Mesh(new THREE.TorusGeometry(0.45,0.04,8,24),new THREE.MeshBasicMaterial({color:col}));ring.position.y=(n-1)*0.95;ring.rotation.x=Math.PI/2;grp.add(ring);}s.add(grp);chords.push(grp);}
+  s.userData.chords=chords;
+  const L1=lbl('I 토닉','#ff9a9a');L1.position.set(-2.85,-1.9,0);s.add(L1);const L2=lbl('V 도미넌트','#9ad0ff');L2.position.set(-0.95,-1.9,0);s.add(L2);const L3=lbl('vi','#c6a8ff');L3.position.set(0.95,-1.9,0);s.add(L3);const L4=lbl('IV 서브도미넌트','#9affc6');L4.position.set(2.85,-1.9,0);s.add(L4);const L5=lbl('3화음','#e6dca8');L5.position.set(-2.85,1.7,0);s.add(L5);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 공 3개를 쌓은 기둥이 3화음(Triad) — 뿌리음 위에 3도씩 쌓은 코드(Chord)입니다.','장조 음계에 화음을 쌓으면 I·ii·iii·IV·V·vi·vii° — I은 토닉(안정), IV는 서브도미넌트(전개), V는 도미넌트(긴장)입니다.','커지는 기둥을 따라가면 코드 진행(Progression) — vi-IV-I-V는 팝 후렴, ii-V-I은 재즈의 대표 진행입니다.','7화음은 3화음에 7도를 더해 색채를 더하고, 전조(modulation)는 곡의 중심 조성을 다른 조로 옮깁니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const cur=Math.floor(T*1.2)%4;s.userData.chords.forEach((g,i)=>{const on=(i===cur);g.scale.setScalar(on?1.25:0.9);g.rotation.y+=on?0.05:0.005;});s.rotation.y+=0.002;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1. 풍수란 무엇인가 — aboutFengshui</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout">
+<aside>
+  <a href="../../index.html" class="hub-back-link">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="../index.html">🧭 표지</a></li>
+    <li><a href="01-what-is.html">1. 풍수란 무엇인가</a></li>
+    <li><a href="02-yinyang-five.html">2. 음양오행과 기</a></li>
+    <li><a href="03-form-school.html">3. 형세론 — 산과 물</a></li>
+    <li><a href="04-compass-school.html">4. 이기론 — 나경과 좌향</a></li>
+    <li><a href="05-yangtaek.html">5. 양택 — 집과 공간</a></li>
+    <li><a href="06-eumtaek.html">6. 음택 — 묘지와 명당</a></li>
+    <li><a href="07-interior.html">7. 인테리어·현대 풍수</a></li>
+    <li><a href="08-korea.html">8. 비보풍수와 한국 풍수</a></li>
+    <li><a href="09-science.html">9. 풍수의 과학·비판</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1><em>풍수란 무엇인가</em></h1>
+  <p class="authors">Chapter 1 — What Is Feng Shui</p>
+</header>
+
+<div class="scene-3d" id="sim-scene"></div>
+<span class="interact-hint">⟳ 장풍득수 — 산이 바람을 갈무리하고 물이 기를 멈춘다</span>
+
+<h2>풍수란 무엇인가 개요</h2>
+<p>풍수(風水)는 자연에 흐르는 기(氣)를 읽어 사람이 살기 좋은 길지(吉地)를 찾으려는 동아시아의 오랜 지리·환경 사상이다. 그 이름은 장풍득수(藏風得水), 곧 '바람을 갈무리하고 물을 얻는다'는 말의 준말이다. 이 챕터에서는 풍수가 어떤 물음에서 출발했는지, 어떤 역사를 거쳐 왔는지, 그리고 형세파와 이기파라는 두 큰 갈래가 무엇인지 큰 틀에서 살펴본다.</p>
+<div class="info-card"><h4>핵심 한눈에</h4><p>풍수는 산과 물과 바람이 만드는 자연의 조건을 읽어 사람과 죽은 이가 머물 자리를 정하는 학문이자 신앙이다. 핵심은 '기는 바람을 타면 흩어지고 물을 만나면 멈춘다'는 명제이며, 그래서 바람을 막고 물을 가까이 둔 자리를 명당으로 본다. 산수의 형상을 보는 형세파(형기론)와 방위·나경을 따지는 이기파(이기론)의 두 흐름이 있고, 산 자의 집을 다루는 양택과 죽은 이의 묘를 다루는 음택으로 나뉜다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인의 수준에 맞춰 탭을 선택하세요. 우측 상단 언어 토글로 영어/일본어/중국어로도 학습할 수 있습니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+<h3>🌟 한 줄로 말하면?</h3>
+<p>풍수(風水)는 "바람을 막고 물을 얻는" 살기 좋은 땅을 찾으려 했던 동아시아의 아주 오래된 생각이야. 이름 그대로 바람(風)과 물(水)이 주인공이지! 🌬️💧</p>
+
+<h3>🤔 왜 알아두면 좋을까?</h3>
+<p>추운 날 넓은 운동장 한가운데 서 있으면 어때? 바람이 쌩쌩 불어서 금방 추워져. 🥶 그런데 담벼락 뒤 햇살 드는 구석에 있으면 따뜻함이 오래 남지. 옛날 사람들도 똑같이 느꼈어. "산이 바람을 막아 주고 물이 가까운 곳이 살기 좋더라!" 이 경험을 정리한 게 바로 풍수야. 그래서 경주·서울·개성 같은 옛 도읍도 산에 둘러싸이고 물이 흐르는 자리에 세워졌어. 풍수를 알면 옛 마을과 궁궐이 왜 그 자리에 있는지 척 보인단다. 🏯</p>
+
+<div class="info-card"><h4>🌱 꼭 알아둘 낱말</h4><ul>
+<li><strong>풍수(風水)</strong>: 바람과 물, 두 글자로 좋은 땅을 찾는 오랜 사상.</li>
+<li><strong>장풍득수(藏風得水)</strong>: "바람은 가두고 물은 얻는다"는 뜻. '풍수'라는 말의 원래 모습!</li>
+<li><strong>기(氣)</strong>: 자연 곳곳에 흐른다고 여긴, 눈에 안 보이는 기운.</li>
+<li><strong>명당(明堂)·길지(吉地)</strong>: 기가 잘 모이는, 사람에게 좋다는 땅.</li>
+<li><strong>양택·음택</strong>: 산 사람이 사는 집은 양택(陽宅), 조상의 무덤은 음택(陰宅).</li>
+</ul></div>
+
+<h3>🎈 쉽게 풀어보기</h3>
+<p>'기'를 따뜻한 공기라고 생각해 봐. 🔥 산은 바람을 막아 주는 든든한 담벼락이고, 물은 그 따뜻함이 도망가지 못하게 붙잡는 울타리야. 그래서 뒤에 산이 있고 앞에 물이 흐르는 자리를 최고로 쳤어. 딱 이불 속처럼 아늑한 땅을 찾는 놀이라고 보면 돼! 🛏️</p>
+
+<div class="study-tip"><strong>💡 기억 꿀팁:</strong> "기는 바람 타면 흩어지고, 물 만나면 멈춘다" 이 한 문장만 외워 둬! 풍수의 거의 모든 원리가 여기서 술술 풀려 나와. 🗝️</div>
+
+<h3>📌 한 장 정리</h3><ul>
+<li>풍수 = 장풍득수, 바람 막고 물 얻는 좋은 땅 찾기.</li>
+<li>핵심은 자연에 흐르는 '기'를 읽어 명당(길지)을 고르는 것.</li>
+<li>기는 바람에 흩어지고 물에 멈춰서, 산이 막고 물이 가까운 곳이 좋대.</li>
+<li>산과 물의 '모양'을 보는 형세파, '방향'을 따지는 이기파로 나뉘어.</li>
+<li>산 사람 집은 양택, 조상 무덤은 음택! 📝</li>
+</ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이 들어가기</h3>
+<p>풍수의 사상적 뿌리는 자연을 살아 있는 유기체로 보는 동아시아의 기(氣) 사상에 닿아 있다. 땅속과 땅 위로 기가 흐르며, 그 흐름이 모이고 흩어지는 양상에 따라 어떤 자리는 사람에게 복을 주고 어떤 자리는 해를 끼친다고 보았다. 문헌상으로는 중국 한대(漢代)에 이루어진 것으로 전해지는 청오경(靑烏經)이 풍수의 이른 고전으로 꼽힌다. 이후 동진의 곽박(郭璞)이 지었다고 전하는 장서(葬書)가 풍수 이론을 체계적으로 정리한 대표적 고전으로 자리 잡았다. 장서에는 '기는 바람을 타면 흩어지고, 물을 만나면 멈춘다(氣乘風則散 界水則止)'는 유명한 구절이 실려 있는데, 이것이 곧 장풍득수라는 이름의 근거가 되었다. 한국에서는 신라 말과 고려 초에 활동한 도선국사(道詵國師)가 풍수를 널리 펴고 비보(裨補)의 관념을 더한 인물로 전해지며, 이후 고려와 조선의 도읍 선정과 묘제(墓制)에 깊은 영향을 주었다. 이렇게 풍수는 중국에서 발원해 한국·일본 등으로 퍼지면서 각 지역의 자연과 신앙에 맞게 변형되어 왔다.</p>
+
+<h3>핵심 메커니즘/교리</h3>
+<div class="info-card"><h4>📐 장풍득수와 기의 운행</h4><p>풍수의 근본 원리는 기를 흩어지지 않게 갈무리하고(藏風) 멈추게 하는(得水) 자리를 찾는 데 있다. 산줄기를 따라 흐르는 땅의 기운을 용맥(龍脈)이라 부르고, 그 기운이 모이는 혈(穴) 자리를 명당으로 본다. 좌청룡·우백호처럼 좌우의 산이 자리를 감싸고 앞쪽에 물이 흐르면 기가 흩어지지 않고 모인다고 여긴다.</p></div>
+
+<h3>대표 사례·경전</h3>
+<div class="info-card"><h4>📐 사례 1 — 형세파(형기론)</h4><p>형세파는 산과 물의 실제 형상을 눈으로 살펴 길흉을 판단하는 흐름이다. 산세가 어떻게 뻗어 내려오고 물이 어디서 모이며 빠지는지를 보아 혈을 잡는다. 자연 지형을 직접 읽는 만큼 직관적이고 경험적인 성격이 강하다.</p></div>
+<div class="info-card"><h4>📐 사례 2 — 이기파(이기론)</h4><p>이기파는 방위와 시간, 음양오행의 이치를 따져 좌향(坐向)을 정하는 흐름이다. 나경(羅經, 풍수용 나침반)을 써서 방위를 측정하고, 어느 방향이 그 자리와 사람에게 맞는지를 계산한다. 형세가 같아도 방위에 따라 길흉이 달라진다고 본다.</p></div>
+
+<h3>현대적 전개</h3>
+<p>오늘날 풍수는 전통 신앙으로서만이 아니라 건축·조경·인테리어의 영역에서 다시 주목받고 있다. 양택 풍수는 집과 사무실의 채광·통풍·동선을 좋게 하는 환경 설계의 언어로 재해석되기도 하며, 서구에서는 'Feng Shui'라는 이름으로 공간 배치 기법처럼 받아들여지기도 한다. 동시에 학계에서는 풍수를 동아시아 문화사·환경사의 연구 대상으로 다루며 그 합리적 핵심과 신앙적 요소를 구분하려는 시도가 이어지고 있다.</p>
+
+<div class="warning-box"><strong>⚠️ 흔한 오해:</strong> 풍수를 무조건 '미신'으로만 보거나, 반대로 '땅이 부를 보장하는 비법'으로 보는 것은 모두 한쪽으로 치우친 이해다. 풍수는 자연 조건과 인간 거주의 관계를 다룬 전통 지식 체계로서, 합리적 측면과 신앙적 측면이 함께 섞여 있다고 보는 것이 균형 잡힌 시각이다.</div>
+
+<h3>전문가 레벨 이해</h3>
+<p>풍수를 학문적으로 다루려면 먼저 그것을 단일한 '미신'이나 단일한 '과학'으로 환원하지 않는 태도가 필요하다. 풍수는 기 우주론, 음양오행 도식, 지형 관찰의 경험적 전통, 그리고 조상 숭배와 효(孝)의 윤리가 한데 얽힌 복합 체계로 이해하는 편이 정확하다. 특히 음택 풍수는 조상의 유해가 놓인 자리의 기운이 후손에게 이어진다는 동기감응(同氣感應) 관념과 결합해 있어, 이는 효 사상과 가문의 연속성이라는 유교적 가치와 분리하기 어렵다. 문헌사적으로는 청오경과 장서의 성립 연대와 저자 문제가 후대의 가탁(假託) 가능성과 함께 논의되며, 텍스트가 오랜 시간에 걸쳐 증보·재편되었다고 보는 견해가 일반적이다. 형세파와 이기파의 구분 역시 절대적이라기보다 강조점의 차이이며, 실제 술사들은 두 방법을 함께 운용해 왔다고 본다. 도선국사로 대표되는 한국 풍수의 비보(裨補) 전통은 자연이 부족한 곳을 인공 구조물로 보완한다는 사상으로, 이는 풍수가 단지 좋은 땅을 '고르는' 것을 넘어 땅을 '가꾸고 고치는' 능동적 환경 사상으로 확장되었음을 보여 준다. 이러한 다층성 때문에 풍수 연구는 종교학·역사지리학·환경학·민속학이 교차하는 영역이 된다.</p>
+
+<h3>최신 연구·쟁점</h3>
+<p>현대 학계에서 풍수를 둘러싼 가장 큰 쟁점은 그 명제들을 어떻게 평가할 것인가이다. 한편에서는 풍수의 경험적 부분—바람을 막고 물을 가까이 둔 자리가 거주에 유리하다는 점—을 환경 적응의 전통 지식으로 보고, 미시기후·수문·지형학의 관점에서 합리성을 재조명한다. 다른 한편에서는 묘 자리가 후손의 운명을 좌우한다는 식의 인과 주장은 통제된 검증이 어렵고 반증 가능성이 낮다는 점에서 과학으로 보기 어렵다고 본다. 그래서 풍수의 '환경학적 합리성'과 '운명론적 신앙'을 구분해 다루어야 한다는 논의가 활발하며, 이는 다음 챕터들에서 더 깊이 살필 주제다. 또한 도시화 시대에 풍수가 부동산·웰빙 산업의 마케팅 언어로 변형되는 현상에 대한 비판적 문화 연구도 늘고 있다.</p>
+
+<h3>관련 분야</h3><ul>
+<li><strong>역사지리학</strong>: 옛 도읍과 취락의 입지를 풍수와 지형 조건으로 분석한다.</li>
+<li><strong>종교학·민속학</strong>: 풍수를 조상 숭배·기 우주론과 얽힌 신앙 체계로 연구한다.</li>
+<li><strong>건축·환경공학</strong>: 채광·통풍 등 양택 풍수의 합리적 요소를 거주 환경 설계로 재해석한다.</li>
+</ul>
+
+<h3>더 읽을거리</h3><ul>
+<li>"장서(葬書)" — 곽박(전)</li>
+<li>"청오경(靑烏經)" — 전 한대 작자 미상</li>
+<li>"한국의 풍수사상" — 최창조</li>
+</ul>
+
+<div class="success-box"><strong>🎓 도전 과제:</strong> 자신이 사는 동네나 옛 도읍 한 곳을 골라, 산과 물과 바람의 배치를 지도로 살펴보고 '장풍득수'의 관점에서 그 입지를 한 문단으로 분석해 보라. 그 분석에서 어디까지가 환경학적 합리성이고 어디부터가 신앙적 해석인지 스스로 선을 그어 보면 좋다.</div>
+</div>
+
+
+<h2>🕹️ 직접 해보기 — 풍수 기본 용어 상황 판단</h2>
+<p>풍수의 핵심 용어와 뜻을 끌어다을 보고 알맞은 답을 고르세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#14b8a6","prompt":"용어와 뜻을 짝지으세요","pairs":[{"term":"장풍득수","def":"바람을 갈무리하고 물을 얻음"},{"term":"기(氣)","def":"만물에 흐르는 생명의 기운"},{"term":"명당","def":"기가 잘 모이는 좋은 땅"},{"term":"양택","def":"산 사람이 사는 집의 풍수"},{"term":"음택","def":"죽은 이의 묘를 다루는 풍수"}]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#14b8a6","questions":[{"q":"풍수라는 말의 본래 줄임 형태는?","choices":["장풍득수","배산임수","음양오행","동기감응"],"answer":0},{"q":"산 사람의 집을 다루는 풍수는?","choices":["음택","명당","양택","혈"],"answer":2},{"q":"기는 무엇을 만나면 멈추는가?","choices":["바람","산","흙","물"],"answer":3},{"q":"풍수의 이른 고전으로 꼽히는 경전은?","choices":["주역","청오경","황제내경","정몽"],"answer":1},{"q":"산수의 형상을 보고 판단하는 갈래는?","choices":["이기파","팔택파","형세파","현공파"],"answer":2}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,2,9);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,col){var cv=document.createElement('canvas'),x=cv.getContext('2d'),f='600 30px sans-serif';x.font=f;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=42;x=cv.getContext('2d');x.font=f;x.textAlign='center';x.textBaseline='middle';x.fillStyle=col||'#39415a';x.fillText(txt,cv.width/2,cv.height/2);var tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.011,cv.height*0.011,1);return sp;}
+  const COL=0x14b8a6;for(let i=0;i<3;i++){const h=2.4+i*0.0+(i===1?0.8:0);const mtn=new THREE.Mesh(new THREE.ConeGeometry(1.1,2.4+(i===1?1:0),20,1,true),new THREE.MeshBasicMaterial({color:COL,wireframe:true,transparent:true,opacity:0.5}));mtn.position.set((i-1)*1.8,0.2,-2.2);s.add(mtn);}const myeong=new THREE.Mesh(new THREE.SphereGeometry(0.4,18,18),new THREE.MeshBasicMaterial({color:0xffe08a}));myeong.position.set(0,-0.4,0);s.add(myeong);const halo=new THREE.Mesh(new THREE.TorusGeometry(0.7,0.04,10,40),new THREE.MeshBasicMaterial({color:0xffe08a,transparent:true,opacity:0.6}));halo.position.copy(myeong.position);halo.rotation.x=Math.PI/2;s.add(halo);const water=new THREE.Mesh(new THREE.BoxGeometry(6,0.08,1.4),new THREE.MeshBasicMaterial({color:0x3b82f6,transparent:true,opacity:0.45}));water.position.set(0,-1.0,1.8);s.add(water);
+  const L1=lbl('장풍(藏風) — 산','#8ef0e2');L1.position.set(0,2.4,-2.2);s.add(L1);const L2=lbl('득수(得水) — 물','#9cc4ff');L2.position.set(0,-0.6,1.8);s.add(L2);const L3=lbl('명당(혈)','#ffe9a8');L3.position.set(0,0.5,0);s.add(L3);const L4=lbl('기(氣)','#c9f7ef');L4.position.set(1.35,-0.1,0);s.add(L4);
+  const hintEl=document.querySelector('.interact-hint');const caps=['⟳ 뒤의 산이 바람을 갈무리하고(장풍) 앞의 물이 기를 멈춥니다(득수) — 풍수(風水)는 장풍득수의 준말입니다.','기는 바람을 타면 흩어지고 물을 만나면 멈춘다 — 그래서 바람을 막고 물을 가까이 둔 자리를 명당(길지)으로 봅니다.','산수의 형상을 눈으로 읽는 형세파(형기론)와 나경으로 방위를 따지는 이기파(이기론)의 두 갈래가 있습니다.','산 사람의 집을 다루면 양택(陽宅), 조상의 무덤을 다루면 음택(陰宅)입니다.'];let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}myeong.scale.setScalar(0.9+0.15*Math.sin(T*2));halo.rotation.z+=0.01;s.rotation.y+=0.0018;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

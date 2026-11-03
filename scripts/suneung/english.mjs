@@ -3,9 +3,13 @@ import { note, tip, tbl, examsOf } from "./lib.mjs";
 import { maps } from "./maps-english.mjs";
 import { styles } from "./content/style-english.mjs";
 import { quick } from "./content/quick-english.mjs";
+import { motionLinks } from "./build-motion.mjs";
 
 const load = async (n) => { try { return (await import(`./content/${n}.mjs`)).chapters; } catch { return []; } };
 const chapters = [...(await load("en-1")), ...(await load("en-2")), ...(await load("st-en"))];
+// 모션 노트 장면 중 이 장 file 이 붙은 것을 장 노트의 '🎬 모션으로 보기' 링크로
+const ml = motionLinks("english");
+for (const c of chapters) if (ml[c.file]) c.motion = ml[c.file];
 const N = examsOf("english").length;
 
 export const spec = {
@@ -17,7 +21,7 @@ export const spec = {
   affiliation: "듣기 · 독해 유형 6파트 · 전략 · 수능 풀어보기(채점·듣기 대본)",
   summary: true, summaryBlurb: "파트별 유형 지도·표·함정을 카드 한 장씩에 — 시험 직전 훑어보기용", maps,
   extraLinks: [{ href: "../aboutMyVocab/index.html", label: "🔊 나만의 영단어장", num: "VOCAB", blurb: "단어·어원 · 뜻 가리기 · ★ 표시 · 발음 듣기" }],
-  motion: false, kind: "paper", qn: 45, minutes: 70,
+  motion: true, motionBlurb: "유형별 풀이를 움직이는 그림으로 — 신호어·흐름 화살표·빈자리·대명사 추적", kind: "paper", qn: 45, minutes: 70,
   practiceBlurb: `실제 시험지 ${N}회 · 45문항 · 답안지 채점 · 채점 후 듣기 대본`,
   chapters,
   intro: `<h2>이 노트가 다루는 것</h2>

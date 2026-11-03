@@ -1,0 +1,710 @@
+/* 국어 모션 노트 장면들 — build-motion.mjs 가 물리학Ⅰ 모션 노트의 플레이어 엔진 뒤에 붙인다.
+   전제: C, UNITS, S, TAU, clamp, lerp, ease, seg, T, arrow, poly, dot, box, wavy, label 이 이미 정의되어 있다.
+   그림 속 시구·문장은 노트(content/ko-*.mjs · quick-korean.mjs)의 학습용 예이거나 설명용으로 새로 지은 것이다.
+   현대 작품은 인용하지 않고 이름과 특징만 쓴다. 캔버스에는 옛한글 자모(아래아 등)를 쓰지 않는다 — 글꼴에 없을 수 있다. */
+const KC=['#F4B544','#FF7A8A','#7BE07F','#B69CFF','#4FD1E8'];
+const ra=(h,a)=>`rgba(${parseInt(h.slice(1,3),16)},${parseInt(h.slice(3,5),16)},${parseInt(h.slice(5,7),16)},${a})`;
+const fin=(t,a,d=.5)=>ease(seg(t,a,a+d));                    // a초부터 d초 동안 나타남
+const win=(t,a,b,f=.35)=>clamp(Math.min((t-a)/f,(b-t)/f));    // a~b 동안 켜졌다 꺼짐 (앞뒤 f초 페이드)
+function rr(c,x,y,w,h,r,fill,stroke,lw,a){box(c,x,y,w,h,r,fill,stroke,lw||2,a==null?{}:{alpha:a});}
+function K(c,s,x,y,o={}){T(c,s,x,y,Object.assign({size:17,align:'center'},o));}       // 가운데 정렬 한글
+function kw(c,s,size,w=500,font=SANS){c.save();c.font=`${w} ${size}px ${font}`;const v=c.measureText(s).width;c.restore();return v;}
+function mark(c,x,y,w,h,col,a=1){if(a>0)box(c,x-4,y-h/2,w+8,h,6,col,null,0,{alpha:a});} // 글자 뒤 형광펜
+function hiText(c,s,x,y,o,parts,hcol,ha=1){ // 문장 s를 쓰고 그 안의 parts 뒤에 형광펜(ha = 형광펜 불투명도) → 문장 왼쪽 x
+  const size=o.size||18,w=o.w||500,W0=kw(c,s,size,w),x0=o.align==='center'?x-W0/2:o.align==='right'?x-W0:x;
+  (parts||[]).forEach(p=>{const i=s.indexOf(p);if(i>=0)mark(c,x0+kw(c,s.slice(0,i),size,w),y,kw(c,p,size,w),size+12,hcol,ha);});
+  T(c,s,x0,y,Object.assign({},o,{align:'left'}));return x0;}
+function arw(c,x1,y1,x2,y2,col,w=2.5,hd=10,a=1){if(a<=0)return;c.save();c.globalAlpha*=a;arrow(c,x1,y1,x2,y2,col,w,hd);c.restore();}
+function chk(c,x,y,s,col,a=1){if(a<=0)return;c.save();c.globalAlpha*=a;poly(c,[[x-s,y],[x-s*.3,y+s*.7],[x+s,y-s*.8]],col,3.5);c.restore();}
+function crs(c,x,y,s,col,a=1){if(a<=0)return;c.save();c.globalAlpha*=a;poly(c,[[x-s,y-s],[x+s,y+s]],col,3.5);poly(c,[[x+s,y-s],[x-s,y+s]],col,3.5);c.restore();}
+function smooth(P,n=14){const o=[];for(let i=0;i<P.length-1;i++){const p0=P[Math.max(0,i-1)],p1=P[i],p2=P[i+1],p3=P[Math.min(P.length-1,i+2)];
+  for(let k=0;k<n;k++){const u=k/n,u2=u*u,u3=u2*u,f=j=>.5*(2*p1[j]+(p2[j]-p0[j])*u+(2*p0[j]-5*p1[j]+4*p2[j]-p3[j])*u2+(3*p1[j]-p0[j]-3*p2[j]+p3[j])*u3);o.push([f(0),f(1)]);}}
+  o.push(P[P.length-1]);return o;}
+function upto(P,k){return P.slice(0,Math.max(2,Math.round(clamp(k)*(P.length-1))+1));}
+function along(P,k){const d=[];let L=0;for(let i=1;i<P.length;i++){const s=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);d.push(s);L+=s;}
+  let q=clamp(k)*L,i=0;while(i<d.length-1&&q>d[i]){q-=d[i];i++;}const u=d[i]?clamp(q/d[i]):0;return [lerp(P[i][0],P[i+1][0],u),lerp(P[i][1],P[i+1][1],u)];}
+function fig(c,x,y,col,s=1){dot(c,x,y-118*s,17*s,col);box(c,x-23*s,y-96*s,46*s,96*s,16*s,col);} // 사람(발끝 y)
+function thought(c,x,y,on,col,a=1){c.save();c.globalAlpha*=a; // 생각 풍선: on이면 속마음이 보임
+  [[-15,6,12],[15,6,12],[0,10,13],[0,0,17]].forEach(([dx,dy,r])=>dot(c,x+dx,y+dy,r,on?ra(col,.35):'rgba(255,255,255,.02)',{stroke:on?col:C.dim,lw:1.5,dash:on?null:[3,4]}));
+  dot(c,x-8,y+26,4,on?ra(col,.35):null,{stroke:on?col:C.dim,lw:1.2});
+  if(on)for(let j=-1;j<=1;j++)dot(c,x+j*9,y+4,2.6,C.text);c.restore();}
+
+/* ───────── 0. 인트로 ───────── */
+S.push({u:-1,ch:'시작',title:'수능 국어, 움직이며 정리하기',
+  sub:'다섯 단원, 열여덟 개 개념을 ‘무엇이 답을 가르는지’가 보이도록 움직이는 그림으로 보여 줍니다.',
+  fx:[{w:1,f:'Ⅰ 현대시',n:'시상 전개 · 비유 · 상징 · 헷갈리는 표현 · 심상'},{w:1,f:'Ⅱ 현대 소설',n:'시점 · 구성과 갈등 · 서술 방식'},
+      {w:1,f:'Ⅲ 고전 시가',n:'갈래의 흐름 · 시조 형식 · 가사와 주제 · 고전 어휘'},{w:1,f:'Ⅳ 고전 산문·극·수필',n:'영웅의 일대기 · 판소리계 소설 · 희곡과 시나리오 · 수필'},
+      {w:1,f:'Ⅴ 독서·문법',n:'선지 대조 · 음운 변동'}],
+  pts:['장면마다 <em>무엇이 무엇을 정하는지</em> 보세요. 처지가 마음을, 서술자의 자리가 아는 범위를, 표지가 표현의 이름을 정합니다.',
+       '재생 중에는 약 15초마다 다음 개념으로 넘어갑니다. 아래 막대를 눌러 원하는 개념으로 바로 이동할 수 있어요.',
+       '그림 속 시구와 문장은 설명용으로 새로 지은 예입니다. 작품 이름은 특징만 연결합니다.'],
+  dur:14,still:4,
+  draw(c,t){
+    label(c,'5 UNITS · 18 CONCEPTS',480,52,C.dim,{size:14});
+    const cx=[110,295,480,665,850],cy=232,R=68;
+    UNITS.forEach((u,i)=>{const k=ease(seg(t,.1+i*.18,.9+i*.18)),x0=cx[i],col=u.c;
+      c.save();c.globalAlpha=k;
+      dot(c,x0,cy,R,'rgba(255,255,255,.03)',{stroke:col+'88',lw:1.6});
+      if(i===0){ // 정서 곡선: 내려갔다가 꺾여 오른다
+        const P=smooth([[x0-50,cy-12],[x0-18,cy+22],[x0+8,cy+18],[x0+48,cy-30]],10);poly(c,P,col,3);
+        dot(c,x0-10,cy+22,5,null,{stroke:C.text,lw:1.5});const q=along(P,(t*.35)%1);dot(c,q[0],q[1],6,col,{glow:12});
+      }else if(i===1){ // 이야기 산: 발단 → 결말
+        const P=smooth([[x0-50,cy+30],[x0-24,cy+14],[x0,cy-6],[x0+16,cy-30],[x0+48,cy+20]],10);poly(c,P,col,3);
+        const q=along(P,(t*.3)%1);dot(c,q[0],q[1],6,col,{glow:12});
+      }else if(i===2){ // 시조 3장 × 4음보 칸이 채워짐 (종장 첫 칸은 짧다)
+        const n=Math.floor((t*3)%15);
+        for(let r=0;r<3;r++)for(let j=0;j<4;j++){const sh=r===2&&j===0,w=sh?13:20,x=x0-46+j*24+(sh?7:0),y=cy-24+r*22,on=r*4+j<n;
+          box(c,x,y-7,w,14,3,on?(sh?C.text:col+'cc'):'rgba(255,255,255,.07)',null,0);}
+      }else if(i===3){ // 무대 막이 열리고 닫힘
+        const o=(Math.sin(t*1.3)+1)/2,cw=44*(1-o*.8);box(c,x0-44,cy-34,88,62,4,'rgba(255,255,255,.04)',col+'99',1.5);
+        dot(c,x0,cy-8,7,C.text);box(c,x0-6,cy,12,20,4,C.text);
+        box(c,x0-44,cy-34,cw,62,3,col+'aa');box(c,x0+44-cw,cy-34,cw,62,3,col+'aa');poly(c,[[x0-52,cy+28],[x0+52,cy+28]],col,2);
+      }else{ // 음운 칸 하나가 뒤집혀 바뀜
+        const f=Math.cos(t*1.6);for(let j=0;j<4;j++){const x=x0-46+j*24;
+          if(j===2){c.save();c.translate(x+10,cy);c.scale(Math.max(.05,Math.abs(f)),1);box(c,-10,-10,20,20,4,f>0?col:C.text);c.restore();}
+          else box(c,x,cy-10,20,20,4,'rgba(255,255,255,.12)',col+'88',1.2);}
+      }
+      c.restore();
+      c.save();c.globalAlpha=k;T(c,u.k,x0,cy+108,{font:DISP,size:32,color:col,align:'center',w:400});
+      T(c,u.name,x0,cy+146,{size:16,align:'center',w:600});c.restore();});
+  }});
+
+/* ───────── Ⅰ-1 정서 변화와 시상 전개 ───────── */
+S.push({u:0,ch:'시상 전개',title:'정서 변화와 시상 전개',file:'06-poetry.html',
+  sub:'연마다 마음을 한 줄씩 적어 이으면 ‘그래도·그러나’ 뒤에서 정서가 꺾이고, 작품의 정서는 그 화살표가 도착한 자리입니다.',
+  fx:[{w:1,f:'상황 → 정서 → 태도',n:'느끼는 마음(정서)과 그 마음을 다루는 자세(태도)는 다르다'},
+      {w:1,f:'전환 표지: 그러나 · 그래도 · 문득 · 이제는',n:'명령·청유·다짐 어미로 바뀌는 자리도 전환'},
+      {w:1,f:'수미상관: 처음 = 끝',n:'첫 연과 끝 연(또는 첫 줄과 끝 줄)이 같거나 뚜렷이 호응 — 통일 · 순환 · 주제의 되새김'}],
+  pts:['정서가 바뀐 이유는 <em>시 안의 사건</em>으로 설명합니다. 이유가 시 밖에 있으면 과잉 추론입니다.',
+       '첫 연의 마음으로 작품을 닫지 않습니다. 앞의 슬픔이 끝에서 다짐으로 바뀌었는데 ‘체념’으로 요약하면 오답입니다.',
+       '그림의 네 줄(학습용): 발자국이 지워질 것을 알면서도 <em>그래도</em> 건넙니다. ‘눈을 이겼다’까지는 시에 없습니다.',
+       '정도의 말(아직·잠시·차마)을 지킵니다. ‘아직 건너지 않는다’는 망설임이지 포기가 아닙니다.'],
+  dur:15,still:7,
+  draw(c,t){
+    const col=KC[0],L=['눈이 온다','발자국은 곧 지워진다','우리는 그래도 마당을 건넌다','눈이 온다'],X=72,Y=[140,205,270,335],FS=22;
+    const gx=500,gy=390,PX=[.5,.14,.86,.72].map((v,i)=>[gx+50+i*110,gy-28-v*200]),CV=smooth(PX,16);
+    const run=t>5?((t-5)%4)/4:-1,cur=run<0?-1:Math.round(run*3);
+    // 시 네 줄
+    L.forEach((s,i)=>{const a=fin(t,.4+i*.85),x=X+(1-a)*14,y=Y[i];if(a<=0)return;
+      if(i===2)mark(c,x+kw(c,'우리는 ',FS),y,kw(c,'그래도',FS),FS+12,ra(col,.32),a*fin(t,2.6));
+      if(i===0||i===3){c.save();c.globalAlpha*=a*fin(t,4.2);poly(c,[[x,y+18],[x+kw(c,s,FS),y+18]],col,2.5);c.restore();}
+      T(c,s,x,y,{size:FS,color:i===cur?C.text:'#BFCDDC',alpha:a});});
+    const sa=fin(t,4.2);
+    c.save();c.globalAlpha*=sa;poly(c,[[X-12,Y[0]],[X-30,Y[0]],[X-30,Y[3]],[X-12,Y[3]]],col,2,{dash:[5,4]});c.restore();
+    T(c,'= 1행 (수미상관)',X+kw(c,L[3],FS)+22,Y[3],{size:16,color:col,w:600,alpha:sa});
+    // 정서 곡선
+    poly(c,[[gx,gy],[gx+420,gy]],C.dim,1.5);poly(c,[[gx,gy],[gx,gy-250]],C.dim,1.5);
+    PX.forEach((p,i)=>K(c,(i+1)+'행',p[0],gy+20,{size:14,color:C.dim,alpha:fin(t,.4+i*.85)}));
+    const ta=fin(t,2.6),tx=(PX[1][0]+PX[2][0])/2;
+    c.save();c.globalAlpha*=ta;poly(c,[[tx,gy-4],[tx,gy-244]],col,1.5,{dash:[5,5]});c.restore();
+    K(c,'전환 — 그래도',tx,gy-262,{size:16,w:700,color:col,alpha:ta});
+    const kk=clamp((t-.5)/3.4);if(kk>0)poly(c,upto(CV,kk),col,3.5);
+    PX.forEach((p,i)=>{const a=fin(t,.4+i*.85);if(a>0)dot(c,p[0],p[1],i===cur?9:7,i===2?col:'#0E1B2A',{stroke:col,lw:2,alpha:a});});
+    K(c,'지워질 것을 앎',PX[1][0],PX[1][1]+28,{size:15,color:C.muted,alpha:fin(t,1.4)});
+    K(c,'마당을 건넘',PX[2][0],PX[2][1]-28,{size:15,w:600,color:col,alpha:ta});
+    if(run>=0){const q=along(CV,run);dot(c,q[0],q[1],6,C.text,{glow:14,gc:col});}
+    K(c,'작품의 정서 = 화살표가 도착한 자리 · 첫 연의 감정으로 닫지 않기',480,480,{size:17,alpha:fin(t,5)});
+  }});
+
+/* ───────── Ⅰ-2 비유 ───────── */
+S.push({u:0,ch:'비유',title:'비유 — 원관념과 보조관념',file:'06-poetry.html',
+  sub:'나타내려는 것(원관념)을 비슷한 것(보조관념)으로 말하는 것이 비유이고, 이름은 비교 표지와 사람다움의 정도로 가립니다.',
+  fx:[{w:1,f:'직유 直 · 은유 隱',n:'직접 밝히면 직유(처럼·같이·듯이·양), 은밀히 숨기면 은유(A는 B이다)'},
+      {w:1,f:'활유 活 · 의인 擬人',n:'생명의 움직임만 주면 활유, 말·감정·인격까지 주면 의인'},
+      {w:1,f:'대유 代',n:'일부·특징으로 대신 — 흰머리 = 노인, 깃펜 = 글'}],
+  pts:['소재가 같아도 <em>표지</em>가 이름을 정합니다. ‘처럼’이 있으면 직유, 없이 A를 B라 하면 은유입니다.',
+       '‘돌은 천 년을 걸어왔다’는 걸음뿐이라 활유, ‘돌은 <em>입을 다문 채</em> 걸어왔다’는 입과 침묵이 인격이라 의인입니다.',
+       '이름을 맞힌 뒤 <em>효과</em>까지 봅니다. 이름만 맞고 효과가 다른 방향이면 그 선지는 틀립니다.'],
+  dur:14,still:2.4,
+  draw(c,t){
+    const col=KC[0],tm=t%7,A=tm<3.5,pa=A?win(tm,0,3.5):win(tm,3.5,7),r1=fin(t,.1,.6),r2=fin(t,.8,.6),ON=C.green,PN=KC[1];
+    // 직유 · 은유: 원관념 → 보조관념
+    c.save();c.globalAlpha*=r1;
+    K(c,'원관념',250,62,{size:15,color:C.muted});K(c,'보조관념',670,62,{size:15,color:C.muted});
+    rr(c,160,82,180,58,12,'#0E1B2A',col,2.5);K(c,'그리움',250,111,{size:26,font:DISP,w:400,color:col});
+    rr(c,560,82,220,58,12,'#0E1B2A',C.muted,2);K(c,'저무는 강물',670,111,{size:23,w:600});
+    poly(c,[[340,111],[560,111]],C.line,2,{dash:[4,5]});
+    if(A){rr(c,410,93,80,36,18,'#2E2412',col,2,pa);K(c,'처럼',450,111,{size:19,w:700,color:col,alpha:pa});}
+    else{c.save();c.globalAlpha*=pa;rr(c,422,93,56,36,18,'#0E1B2A',C.muted,1.5);poly(c,[[438,105],[462,105]],C.text,3);poly(c,[[438,117],[462,117]],C.text,3);c.restore();}
+    hiText(c,A?'그리움은 저무는 강물처럼 느리다':'그리움은 저무는 강물이다',480,178,{size:21,align:'center',alpha:pa},[A?'처럼':'이다'],ra(col,.3),pa);
+    K(c,A?'직유 直 — 표지(처럼·같이·듯이)가 보인다':'은유 隱 — 표지 없이 ‘A는 B이다’',480,222,{size:18,w:700,color:col,alpha:pa});
+    c.restore();
+    poly(c,[[60,262],[900,262]],C.line,1);
+    // 활유 · 의인: 사람다움의 정도
+    c.save();c.globalAlpha*=r2;
+    hiText(c,A?'돌은 천 년을 걸어왔다':'돌은 입을 다문 채 걸어왔다',480,312,{size:21,align:'center',alpha:pa},[A?'걸어왔다':'입을 다문 채'],ra(A?ON:PN,.3),pa);
+    arrow(c,190,395,800,395,C.dim,2,9);
+    [[200,'무생물',C.dim],[470,'활유 活',ON],[740,'의인 擬人',PN]].forEach(([x,n,cc],i)=>{dot(c,x,395,6,i?cc:C.dim);
+      const on=(i===1&&A)||(i===2&&!A);K(c,n,x,i?433:425,{size:i?21:15,w:i?700:500,color:i&&on?cc:C.muted});});
+    K(c,'살아 움직이게만',470,466,{size:15,color:A?C.text:C.dim});K(c,'말·감정·인격 — 사람만의 속성',740,466,{size:15,color:A?C.dim:C.text});
+    const go=A?ease(tm/.6):ease((tm-3.5)/.6),px=A?lerp(740,470,go):lerp(470,740,go);
+    poly(c,[[px-10,367],[px+10,367],[px,383]],null,0,{fill:A?ON:PN,close:true});
+    c.restore();
+  }});
+
+/* ───────── Ⅰ-3 상징 ───────── */
+S.push({u:0,ch:'상징',title:'상징 — 문맥이 뜻을 정한다',file:'06-poetry.html',
+  sub:'상징은 구체적인 사물이 문맥과 반복 속에서 추상적인 마음을 짊어지는 것이라, 같은 ‘등불’도 화자의 반응에 따라 뜻이 갈립니다.',
+  fx:[{w:1,f:'사전 뜻 → 문맥 뜻 → 상징',n:'문항은 거의 문맥 뜻과 상징을 묻는다'},
+      {w:1,f:'뜻 = 화자가 그 대상에 보인 반응',n:'앞뒤 시구에서 찾는다'},
+      {w:1,f:'비유는 그 구절 안, 상징은 문맥과 반복 속',n:'상징은 원관념이 겉에 없어도 된다'}],
+  pts:['절차: ① 가리키는 대상 ② 화자가 보인 반응 ③ 다른 연에서도 같은 뜻인지 ④ 주제와 맞는 뜻만 남기기.',
+       '계절·색깔의 관용 뜻은 <em>후보</em>일 뿐입니다. 가을이 항상 쇠락은 아니고, 흰색이 항상 순수는 아닙니다.',
+       '중의는 두 뜻이 <em>주제와 동시에</em> 맞물릴 때만 인정합니다.'],
+  dur:15,still:9,
+  draw(c,t){
+    const col=KC[0],lx=480,ly=96,a0=fin(t,.1,.7),fl=.85+.15*Math.sin(t*7)*Math.sin(t*3.1);
+    c.save();c.globalAlpha*=a0;
+    poly(c,[[lx,24],[lx,62]],C.muted,2);dot(c,lx,ly,40*fl,ra(col,.14),{glow:30,gc:col});
+    rr(c,lx-20,62,40,64,10,'rgba(244,181,68,.2)',col,2);dot(c,lx,ly,8*fl,'#FFE3A0',{glow:16,gc:col});
+    poly(c,[[lx-26,62],[lx+26,62]],col,3);poly(c,[[lx-26,126],[lx+26,126]],col,3);
+    c.restore();
+    K(c,'등불 = ?',lx,154,{size:22,w:700,color:col,alpha:a0});
+    [{x:235,c:col,L:['창가에 등불을 켜 두었다','너는 아직 오지 않았다'],h:'아직 오지 않았다',r:'기다림',t0:1},
+     {x:725,c:KC[1],L:['골목마다 등불이 켜지면','우리는 숨을 죽였다'],h:'숨을 죽였다',r:'감시',t0:4.2}].forEach((p,i)=>{
+      const a1=fin(t,p.t0,.6),a2=fin(t,p.t0+.9,.6),a3=fin(t,p.t0+1.8,.6),gl=t>7.5?.5+.5*Math.sin(t*2.2+i*Math.PI):1;
+      c.save();c.globalAlpha*=a1;
+      poly(c,[[lx+(i?30:-30),104],[p.x+(i?-90:90),204]],C.line,1.5,{dash:[4,5]});
+      rr(c,p.x-185,208,370,118,14,'#0E1B2A',ra(p.c,.55),1.5);
+      K(c,p.L[0],p.x,245,{size:20});
+      c.restore();
+      hiText(c,p.L[1],p.x,290,{size:20,align:'center',alpha:a1},[p.h],ra(p.c,.32),a1*a2);
+      arw(c,p.x,334,p.x,398,p.c,2.5,10,a3);
+      T(c,'화자의 반응',p.x+14,364,{size:14,color:C.muted,alpha:a3});
+      rr(c,p.x-74,406,148,52,14,ra(p.c,.1+.12*gl),p.c,2,a3);
+      K(c,p.r,p.x,432,{size:26,font:DISP,w:400,color:p.c,alpha:a3});});
+    K(c,'뜻을 정하는 것 = 화자가 그 대상에 보인 반응 · 외운 상징 목록 ✕',480,500,{size:16,alpha:fin(t,7.2)});
+  }});
+
+/* ───────── Ⅰ-4 헷갈리는 표현 ───────── */
+const NB=[
+ {tab:'반어 ↔ 역설',test:'기준 — 뒤집으면 뜻이 사는가?',
+  L:['폐허 앞에서 “참 잘 가꾸셨다”','뒤집기 → “전혀 가꾸지 않았다”','뒤집어야 뜻이 산다 → 반어'],
+  R:['버려야 비로소 지킨다','‘버려야’를 지우면 → 주장이 사라짐','모순을 둬야 뜻이 산다 → 역설']},
+ {tab:'설의 ↔ 영탄',test:'기준 — 물음 꼴인가, 감탄 꼴인가?',
+  L:['이 밤을 어찌 짧다 하리','평서로 고치면 → “이 밤은 짧지 않다”','답이 정해진 물음 → 설의'],
+  R:['아아, 빈 가지구나','아아 · -구나 → 마음을 바로 터뜨림','감탄 꼴 → 영탄']},
+ {tab:'대구 ↔ 대조',test:'기준 — 모양이 짝인가, 뜻이 맞서는가?',
+  L:['산은 높고 / 물은 깊다','○은 ○고 / ○은 ○다 — 모양이 짝','모양이 짝 → 대구'],
+  R:['이쪽은 시장 소음 / 저쪽은 꺼진 창','소음 ↔ 꺼진 창 — 뜻이 맞섬','모양도 짝이면 → 대구이자 대조']},
+ {tab:'수미상관 ↔ 반복',test:'기준 — 같은 구절이 어디에 있는가?',
+  L:[[1,0,0,0,0,1],null,'처음과 끝에만 → 수미상관'],
+  R:[[0,1,0,1,1,0],null,'곳곳에 → 반복']}];
+S.push({u:0,ch:'표현법',title:'헷갈리는 표현 — 기준 하나씩',file:'06-poetry.html',
+  sub:'이름이 비슷한 표현은 기준 하나로 가르는데, 반어와 역설은 ‘뒤집으면 뜻이 사는가’, 설의와 영탄은 ‘물음 꼴인가 감탄 꼴인가’가 기준입니다.',
+  fx:[{w:1,f:'반어 ↔ 역설',n:'뒤집어야 뜻이 삶 ↔ 그대로 둬야 뜻이 삶'},{w:1,f:'설의 ↔ 영탄',n:'물음 꼴(어찌 잊으랴) ↔ 감탄 꼴(아아, ~구나)'},
+      {w:1,f:'대구 ↔ 대조',n:'모양이 짝 ↔ 뜻이 맞섬 — 둘 다일 수도'},{w:1,f:'수미상관 ↔ 반복',n:'처음과 끝에만 ↔ 곳곳에'}],
+  pts:['반어가 있다고 항상 풍자는 아닙니다. 자신을 낮추는 <em>자조</em>일 수 있습니다.',
+       '선지가 ‘대구를 통해 대조한다’이면 모양의 닮음과 뜻의 반대가 <em>둘 다</em> 있어야 합니다.',
+       '같은 구절이 처음과 끝에만 호응하면 수미상관, 곳곳에 흩어져 있으면 반복입니다.',
+       '표현 이름이 보이면 정의에 맞는 시구를 먼저 짚고, 그다음 <em>효과</em>를 확인합니다.'],
+  dur:18,still:3.3,
+  draw(c,t){
+    const D=4.5,k=Math.floor(t/D)%4,tm=t%D,pa=win(tm,0,D,.3),p=NB[k];
+    NB.forEach((q,i)=>{const x=170+i*210,on=i===k;rr(c,x-92,32,184,36,18,on?ra(KC[0],.18):'rgba(255,255,255,.03)',on?KC[0]:C.line,on?2:1.2);
+      K(c,q.tab,x,50,{size:15,w:on?700:500,color:on?C.text:C.muted});});
+    K(c,p.test,480,106,{size:19,w:600,color:KC[0],alpha:pa});
+    [p.L,p.R].forEach((q,j)=>{const x=j?710:250,col=j?KC[4]:KC[0],a1=pa*fin(tm,.3,.4),a2=pa*fin(tm,1.2,.4),a3=pa*fin(tm,2.1,.4);
+      rr(c,x-205,138,410,300,16,'#0E1B2A',C.line,1.5);
+      if(Array.isArray(q[0])){c.save();c.globalAlpha*=pa;
+        q[0].forEach((m,r)=>{const y=176+r*30;poly(c,[[x-130,y],[x+130,y]],'rgba(150,175,205,.25)',6);if(m)poly(c,[[x-130,y],[x-40,y]],col,8,{alpha:fin(tm,.4+r*.2,.3)});});
+        c.restore();}
+      else{K(c,q[0],x,198,{size:21,w:600,alpha:a1});arw(c,x,224,x,262,C.dim,2,8,a2);K(c,q[1],x,290,{size:17,color:C.muted,alpha:a2});arw(c,x,318,x,362,col,2,8,a3);}
+      K(c,q[2],x,396,{size:21,w:700,color:col,alpha:a3});});
+  }});
+
+/* ───────── Ⅰ-5 심상과 공감각 ───────── */
+const SENSE=[['시각','잿빛 처마, 먼 불빛','#4FD1E8'],['청각','멀어지는 발소리','#F4B544'],['후각','식은 국 냄새','#B69CFF'],['미각','쓴 우물물','#FF7A8A'],['촉각','갈라진 손바닥','#7BE07F']];
+function sense(c,i,x,y,col){c.save();c.strokeStyle=col;c.lineWidth=2.5;c.lineCap='round';c.lineJoin='round';c.beginPath();
+  if(i===0){c.ellipse(x,y,30,16,0,0,TAU);c.stroke();dot(c,x,y,9,col);dot(c,x,y,4,'#09131F');}
+  else if(i===1){c.arc(x+2,y,20,-Math.PI*.95,Math.PI*.55);c.stroke();c.beginPath();c.arc(x+4,y-1,8,-Math.PI*.9,Math.PI*.35);c.stroke();}
+  else if(i===2){c.moveTo(x+2,y-26);c.lineTo(x-12,y+6);c.quadraticCurveTo(x-8,y+16,x+2,y+14);c.quadraticCurveTo(x+12,y+16,x+14,y+6);c.stroke();}
+  else if(i===3){c.ellipse(x,y-2,28,13,0,0,TAU);c.stroke();c.beginPath();c.ellipse(x,y+4,12,10,0,0,Math.PI);c.fillStyle=col;c.fill();}
+  else{box(c,x-14,y-2,28,26,8,null,col,2.5);[-10,-3,4,11].forEach((dx,j)=>poly(c,[[x+dx,y-2],[x+dx,y-22+Math.abs(j-1.5)*3]],col,2.5));poly(c,[[x-14,y+8],[x-25,y-4]],col,2.5);}
+  c.restore();}
+S.push({u:0,ch:'심상',title:'심상과 공감각',file:'06-poetry.html',
+  sub:'감각적 이미지는 이름에서 멈추지 않고 그 이미지가 화자의 마음에 하는 일까지 보며, 공감각은 한 감각을 다른 감각의 말로 옮긴 것입니다.',
+  fx:[{w:1,f:'시각 · 청각 · 후각 · 미각 · 촉각',n:'무엇이 보이고 들리는지 → 그 장면의 정서'},
+      {w:1,f:'공감각: 감각 A를 감각 B의 말로',n:'차가운 파란 종소리 — 소리(청각)를 색(시각)과 온도(촉각)로'},
+      {w:1,f:'의성어 · 의태어',n:'소리를 흉내 · 모양이나 동작을 흉내'}],
+  pts:['‘시각적 이미지다’만으로는 선지가 맞지 않습니다. 그 이미지가 <em>고립</em>을 보여 주는지, <em>예찬</em>하는지, 지난 일과 지금을 <em>겹치는지</em>까지 적습니다.',
+       '공감각인지 확인: 원래 감각(종소리 = 청각)이 <em>다른 감각의 말</em>(파란 = 시각)로 옮겨 갔는가.',
+       '계절·색깔의 관용 뜻은 후보일 뿐입니다. 화자가 그 소재에 보인 반응만 뜻으로 인정합니다.'],
+  dur:16,still:12.5,
+  draw(c,t){
+    const SX=[140,310,480,650,820],IY=104,P2=t>=8,a2=fin(t,8.2,.6),act=P2?-1:Math.floor(t/1.6)%5,used=[1,1,0,0,1];
+    SENSE.forEach(([n,ex,col],i)=>{const a=fin(t,.1+i*.12),lit=i===act||(P2&&used[i]),dim=P2&&!used[i]?lerp(1,.3,a2):1;
+      c.save();c.globalAlpha*=a*dim;
+      if(lit)dot(c,SX[i],IY,40,ra(col,.12),{stroke:ra(col,.6),lw:1.5});
+      sense(c,i,SX[i],IY,lit?col:C.muted);
+      K(c,n,SX[i],IY+60,{size:18,w:700,color:lit?col:C.text});c.restore();
+      if(i===act){const ea=win(t%1.6,0,1.6,.25);poly(c,[[SX[i],IY+76],[480,268]],ra(col,.5),1.5,{dash:[3,4],alpha:ea});K(c,ex,480,306,{size:32,w:700,color:col,alpha:ea});}});
+    K(c,'감각의 이름 다음엔 그 이미지가 하는 일까지 — 고립 · 예찬 · 겹침',480,452,{size:17,alpha:fin(t,.6)*(1-fin(t,7.5,.4))});
+    if(!P2)return;
+    const WD=['차가운','파란','종소리'],WC=[SENSE[4][2],SENSE[0][2],SENSE[1][2]],TG=['촉각의 말','시각의 말','원래 감각: 청각'],FS=36,G=44;
+    const ws=WD.map(s=>kw(c,s,FS,700)),tot=ws.reduce((x,y)=>x+y,0)+G*2,cx=[];let x=480-tot/2;
+    WD.forEach((s,i)=>{cx.push(x+ws[i]/2);x+=ws[i]+G;});
+    WD.forEach((s,i)=>{K(c,s,cx[i],318,{size:FS,w:700,color:WC[i],alpha:a2});K(c,TG[i],cx[i],368,{size:15,color:i===2?C.text:C.muted,alpha:fin(t,9.2)});});
+    const a3=fin(t,9.8);
+    [[2,1,62],[2,0,96]].forEach(([f,to,h],j)=>{const pts=[];for(let q=0;q<=20;q++){const u=q/20;pts.push([lerp(cx[f],cx[to],u),286-Math.sin(u*Math.PI)*h]);}
+      c.save();c.globalAlpha*=a3;poly(c,pts.slice(0,-2),WC[to],2.5);arrow(c,pts[18][0],pts[18][1],cx[to],286,WC[to],2.5,10);c.restore();
+      if(a3>0){const s=(t*.45+j*.5)%1,q=along(pts,s);dot(c,q[0],q[1],5,s<.5?WC[2]:WC[to],{glow:10,alpha:a3});}});
+    K(c,'한 감각(청각)을 다른 감각의 말(시각·촉각)로 옮김 → 공감각',480,452,{size:18,w:600,color:KC[0],alpha:fin(t,10.4)});
+  }});
+
+/* ───────── Ⅱ-1 시점 ───────── */
+const POV=[['1인칭 주인공','나의 속마음 ○ · 남의 속마음 ✕'],['1인칭 관찰자','본 것·나의 추측 ○ · 주인공 마음 단정 ✕'],
+           ['전지적 작가','여러 인물의 속마음 ○ · 평가도 끼워 넣음'],['3인칭 관찰자','대사·행동·겉모습 ○ · 속마음 선언 ✕']];
+S.push({u:1,ch:'시점',title:'시점 — 서술자가 선 자리',file:'07-novel.html',
+  sub:'서술자가 이야기 안에 있는지, 주인공의 속마음까지 아는지 두 질문으로 시점이 갈리고, 선 자리가 알 수 있는 범위를 정합니다.',
+  fx:[{w:1,f:'1인칭 주인공 · 1인칭 관찰자',n:'‘나’가 이야기 안 — 당사자인가, 목격자인가'},
+      {w:1,f:'전지적 작가 · 3인칭 관찰자',n:'서술자가 이야기 밖 — 속마음까지인가, 겉만인가'},
+      {w:1,f:'‘나는 그가 화난 줄 알았다’ ≠ ‘그는 화가 났다’',n:'관찰하는 ‘나’의 짐작일 뿐'}],
+  pts:['1인칭이라고 모두 주인공 시점은 아닙니다. ‘나’가 중심 사건을 겪으면 주인공, 옆에서 전하면 <em>관찰자</em>입니다.',
+       '3인칭 관찰자 시점은 카메라입니다. 표정은 보여도 ‘그는 후회했다’처럼 <em>속마음을 선언</em>하면 전지적 서술에 가깝습니다.',
+       '전지적 서술자의 평가도 작품의 일부입니다. 정보가 넓다는 것과 평가가 공정하다는 것은 다릅니다.',
+       '선지 검사: 이 시점에서 <em>그 정보를 얻을 수 있는가</em>?'],
+  dur:15,still:2,
+  draw(c,t){
+    const col=KC[1],D=3.6,k=Math.floor(t/D)%4,tm=t%D,pa=win(tm,0,D,.3);
+    rr(c,40,80,430,316,18,'rgba(255,122,138,.035)',C.line,1.5);
+    const A=[180,284],B=[352,312],kn=[[1,0],[0,1],[1,1],[0,0]][k],BA=[A[0]+28,A[1]-84],BB=[B[0]+24,B[1]-74];
+    thought(c,BA[0],BA[1],kn[0],col);thought(c,BB[0],BB[1],kn[1],col);
+    dot(c,A[0],A[1],34,'#1B2A3D',{stroke:k===0?col:C.muted,lw:k===0?3:1.8});
+    dot(c,B[0],B[1],26,'#1B2A3D',{stroke:k===1?col:C.muted,lw:k===1?3:1.8});
+    K(c,'주인공',A[0],A[1]+52,{size:15,color:C.muted});K(c,'주변 인물',B[0],B[1]+44,{size:15,color:C.muted});
+    if(k<2){const P=k?B:A;dot(c,P[0],P[1],(k?26:34)+7,null,{stroke:ra(col,.5),lw:5,alpha:pa});K(c,'나',P[0],P[1]+1,{size:k?22:26,font:DISP,w:400,color:col,alpha:pa});}
+    c.save();c.globalAlpha*=pa;
+    if(k===1)poly(c,[[B[0]-26,B[1]-10],[A[0]+38,A[1]+6]],col,2,{dash:[4,5]});
+    if(k===2){c.beginPath();c.ellipse(255,50,26,14,0,0,TAU);c.strokeStyle=col;c.lineWidth=2.5;c.stroke();dot(c,255,50,7,col);
+      [BA,BB].forEach(p=>poly(c,[[255,64],[p[0],p[1]-20]],col,1.5,{dash:[3,4]}));}
+    if(k===3){poly(c,[[255,64],[110,350],[420,350]],null,0,{fill:'rgba(230,237,245,.06)',close:true});
+      poly(c,[[255,64],[110,350]],C.dim,1,{dash:[3,4]});poly(c,[[255,64],[420,350]],C.dim,1,{dash:[3,4]});
+      rr(c,233,36,44,28,6,'#1B2A3D',C.muted,2);dot(c,255,50,8,null,{stroke:C.text,lw:2});box(c,266,30,10,8,2,C.muted);}
+    c.restore();
+    K(c,POV[k][1],255,432,{size:17,alpha:pa});
+    // 표: 서술자 위치 × 주인공 속마음
+    const RX=540,X0=651,X1=833,Y0=218,Y1=330;
+    label(c,'서술자',RX,142,C.dim,{size:13,font:SANS});
+    K(c,'주인공 속마음 ○',X0,142,{size:15,color:C.muted});K(c,'주인공 속마음 ✕',X1,142,{size:15,color:C.muted});
+    K(c,'안',RX,Y0,{size:24,font:DISP,w:400});K(c,'밖',RX,Y1,{size:24,font:DISP,w:400});
+    POV.forEach((p,i)=>{const x=i&1?X1:X0,y=i>>1?Y1:Y0,on=i===k;
+      rr(c,x-87,y-50,174,100,14,on?ra(col,.16):'#0E1B2A',on?col:C.line,on?2.5:1.2);
+      K(c,p[0],x,y,{size:18,w:700,color:on?C.text:C.muted});});
+  }});
+
+/* ───────── Ⅱ-2 구성 단계와 갈등 ───────── */
+const STG=[['발단','등산로 입구 — 인물·상황 소개'],['전개','오르막 — 갈등이 커짐'],['위기','가파른 고비 — 선택이 어려움'],['절정','꼭대기 — 긴장 최고, 방향이 갈림'],['결말','내려옴 — 정리되거나 여운']];
+const CF=[['나 vs 나 · 내적','떠나고 싶으나 가족을 두고 못 감'],['나 vs 너','형제 · 연인 · 상사와 부하'],['나 vs 세상','신분 · 가난 · 차별 · 조직의 규칙'],['나 vs 자연','재해 · 질병 · 혹한']];
+S.push({u:1,ch:'구성과 갈등',title:'구성 단계와 갈등',file:'07-novel.html',
+  sub:'갈등이 커지면 긴장이 오르고 절정에서 방향이 갈린 뒤 결말에서 정리되거나 여운으로 남으며, 갈등은 ‘누구와 부딪히나’로 나눕니다.',
+  fx:[{w:1,f:'발단 → 전개 → 위기 → 절정 → 결말',n:'발전위절결 — 오르고, 꼭대기, 내려오기'},
+      {w:1,f:'내적 갈등: 나 vs 나',n:'한 인물 안에서 욕구·가치·의무가 부딪힘'},
+      {w:1,f:'외적 갈등: 나 vs 너 · 세상 · 자연',n:'인물 대 인물 · 사회 · 자연·환경'}],
+  pts:['단편은 위기와 절정이 붙어 있을 수 있습니다. 이름을 끼우기보다 <em>갈등이 커지는지 풀리는지</em>를 봅니다.',
+       '결말에 화해가 없어도 미완이 아닐 수 있습니다. 갈등을 풀지 않은 채 끝나 <em>주제를 남기는</em> 단편이 많습니다.',
+       '한 장면에 내적·외적 갈등이 같이 있는 경우가 많습니다. ‘외적 갈등만’이라는 선지는 인물이 스스로 망설이는 대목부터 찾습니다.',
+       '갈등 정리: 누가 / 무엇과 / 무엇을 두고 / 어느 쪽으로 기우는가.'],
+  dur:16,still:5.5,
+  draw(c,t){
+    const col=KC[1],base=352,SX=[100,205,310,415,520],TV=[.12,.38,.68,1,.3],h=220;
+    const CV=smooth([[56,base-12]].concat(SX.map((x,i)=>[x,base-TV[i]*h])).concat([[556,base-50]]),14),kk=clamp((t-.2)/2.2);
+    poly(c,[[50,base],[566,base]],C.dim,1.5);
+    if(kk>0){const Q=upto(CV,kk);poly(c,Q.concat([[Q[Q.length-1][0],base],[Q[0][0],base]]),null,0,{fill:ra(col,.08),close:true});poly(c,Q,col,3.5);}
+    const run=t>2.6?((t-2.6)%7)/7:-1,q=run<0?null:along(CV,run);
+    let act=-1;if(q){let b=1e9;SX.forEach((x,i)=>{const d=Math.abs(x-q[0]);if(d<b){b=d;act=i;}});}
+    STG.forEach(([n],i)=>{const a=fin(t,.2+i*.4),on=i===act;
+      if(a>0)dot(c,SX[i],base-TV[i]*h,on?8:6,on?col:'#0E1B2A',{stroke:col,lw:2,alpha:a});
+      poly(c,[[SX[i]-17,base+35],[SX[i]-1,base+35]],col,3,{alpha:a}); // 앞글자 밑줄: 발·전·위·절·결
+      K(c,n,SX[i],base+20,{size:18,w:600,color:on?col:C.text,alpha:a});});
+    if(q)dot(c,q[0],q[1],7,C.text,{glow:16,gc:col});
+    if(act>=0)K(c,STG[act][0]+' · '+STG[act][1],310,base+80,{size:17});
+    // 갈등: 누구와 부딪히나
+    const ca=t>3?Math.floor((t-3)/2)%4:-1;
+    CF.forEach(([n],i)=>{const y=150+i*68,a=fin(t,1.4+i*.3),on=i===ca;
+      rr(c,660,y-24,260,48,24,on?ra(col,.18):'#0E1B2A',on?col:C.line,on?2.5:1.3,a);
+      K(c,n,790,y,{size:18,w:600,color:on?C.text:C.muted,alpha:a});});
+    const ba=fin(t,2.6);c.save();c.globalAlpha*=ba;poly(c,[[650,194],[638,194],[638,378],[650,378]],C.muted,1.8);c.restore();
+    T(c,'외적',628,286,{size:16,w:700,color:C.muted,align:'right',alpha:ba});
+    if(ca>=0)K(c,CF[ca][1],790,432,{size:15,color:col,alpha:win((t-3)%2,0,2,.25)});
+  }});
+
+/* ───────── Ⅱ-3 서술 방식 ───────── */
+const NAR=[{n:'장면 제시 = 재생',s:'그날 저녁, 할머니는 숟가락을 내려놓으며 말했다. “밥이 차다.”',sp:[.8,.84],bar:'이 문장이 덮는 이야기 시간: 그날 저녁 한순간',rule:'그 순간의 말·동작을 그대로 → 장면 제시'},
+ {n:'요약적 제시 = 빨리 감기',s:'삼 년은 금방 갔다. 마을에는 공장이 들어섰고, 개울은 덮였다.',sp:[.06,.78],bar:'이 문장이 덮는 이야기 시간: 삼 년',rule:'긴 시간을 한두 문장으로 → 요약적 제시'},
+ {n:'내적 독백 = 속말',s:'그는 문을 열까 말까 하며, 열어 봤자 소용없다고 중얼거렸다.',h:'열어 봤자 소용없다',sp:[.86,.87],bar:'이야기 시간: 생각하는 그 순간',rule:'따옴표 없이 드러난 인물의 생각 → 내적 독백'},
+ {n:'서술자 개입 = 해설',s:'참으로 어리석은 망설임이었다.',bar:'이야기 시간 멈춤 — 서술자의 목소리',rule:'평가의 주인이 서술자 → 서술자 개입'}];
+function navIcon(c,i,x,y,col){
+  if(i===0)poly(c,[[x-7,y-10],[x-7,y+10],[x+10,y]],null,0,{fill:col,close:true});
+  else if(i===1){poly(c,[[x-12,y-9],[x-12,y+9],[x,y]],null,0,{fill:col,close:true});poly(c,[[x,y-9],[x,y+9],[x+12,y]],null,0,{fill:col,close:true});}
+  else if(i===2){[[-6,1,7],[6,1,7],[0,-4,8]].forEach(([dx,dy,r])=>dot(c,x+dx,y+dy,r,col));dot(c,x-9,y+11,2.5,col);}
+  else{box(c,x-12,y-10,24,17,5,null,col,2);poly(c,[[x-6,y+7],[x-9,y+13],[x,y+7]],col,2);}}
+function navScene(c,k,tm,X,Y,Wd,col){ // 서술 방식 화면 속 그림 (X,Y: 화면 왼쪽 위)
+  const gy=Y+214;
+  if(k===1){ // 요약: 계절이 빨리 바뀌고 공장이 들어서고 개울이 덮인다
+    const SEA=['rgba(123,224,127,.12)','rgba(244,181,68,.12)','rgba(255,154,77,.12)','rgba(79,209,232,.12)'],q=ease(seg(tm,.4,2.6));
+    box(c,X,Y,Wd,gy-Y,0,SEA[Math.floor(tm*3.2)%4]);poly(c,[[X,gy],[X+Wd,gy]],C.dim,2);
+    box(c,X+40,gy+6,Wd-80,12,6,'#3B8FD9');box(c,X+40,gy+6,(Wd-80)*q,12,6,'#5E738B');
+    [X+70,X+150].forEach(x=>{box(c,x,gy-40,50,40,3,'#6B5A45');poly(c,[[x-6,gy-40],[x+25,gy-62],[x+56,gy-40]],null,0,{fill:'#8A6A4A',close:true});});
+    const fh=110*q;box(c,X+320,gy-fh,150,fh,4,'#3A4A5E','#5E738B',1.5);box(c,X+430,gy-fh-50*q,18,50*q,2,'#3A4A5E');
+    if(q>.6)for(let j=0;j<3;j++){const s=(tm*.8+j/3)%1;dot(c,X+439+s*20,gy-fh-50*q-s*40,6+s*6,'rgba(200,210,220,.25)');}
+  }else if(k===0){ // 장면: 저녁 밥상
+    poly(c,[[X,gy],[X+Wd,gy]],C.dim,2);box(c,X+200,gy-62,300,10,4,'#6B5A45');box(c,X+250,gy-52,10,52,2,'#5A4A38');box(c,X+440,gy-52,10,52,2,'#5A4A38');
+    c.beginPath();c.ellipse(X+400,gy-64,26,12,0,0,Math.PI);c.fillStyle='#C9D6E3';c.fill();
+    fig(c,X+130,gy,'#C9B79C');const sp=ease(seg(tm,.5,2.6));poly(c,[[X+156,gy-104+sp*24],[X+214,gy-116+sp*42]],'#E6EDF5',3);
+  }else{ // 속말·해설: 문 앞에서 망설이는 사람
+    c.save();if(k===3)c.globalAlpha*=.28;
+    poly(c,[[X,gy],[X+Wd,gy]],C.dim,2);rr(c,X+380,gy-170,80,170,6,'#3A2E22','#8A6A4A',2);dot(c,X+446,gy-85,5,'#C99A6B');
+    fig(c,X+300,gy,'#9FB3C8');thought(c,X+226,gy-176,true,col);c.restore();
+    if(k===3){box(c,X+505,Y+70,12,46,3,C.text);box(c,X+529,Y+70,12,46,3,C.text);} // 일시정지: 이야기 시간이 멈춘다
+  }}
+S.push({u:1,ch:'서술 방식',title:'서술 방식 — 재생·빨리 감기·속말·해설',file:'07-novel.html',
+  sub:'한 문장이 이야기 속 시간을 얼마나 덮는지 보면, 그 순간을 그대로 보여 주는 장면 제시와 긴 시간을 줄이는 요약적 제시가 갈립니다.',
+  fx:[{w:1,f:'장면 제시 = 재생',n:'그 순간의 대사·동작·감각을 그대로'},{w:1,f:'요약적 제시 = 빨리 감기',n:'‘삼 년은 금방 갔다’ — 긴 시간을 압축'},
+      {w:1,f:'내적 독백 = 속말',n:'따옴표 없는 생각, 자신에게 하는 말'},{w:1,f:'서술자 개입 = 해설',n:'‘안타까운 일이었다’ — 평가·감탄·일반화'}],
+  pts:['가르는 질문: <em>지금 몇 분의 일을 보는가, 몇 달의 일을 한 문장으로 받았는가</em>.',
+       '같은 단편 안에 요약과 장면이 섞입니다. 선지가 지목한 <em>그 문장</em>만 읽고 이름을 붙입니다.',
+       '‘참으로 어리석은 망설임이었다’가 인물의 말이 아니라 서술자의 평가면 <em>개입</em>입니다. 평가의 주인을 먼저 가립니다.'],
+  dur:16,still:2.6,
+  draw(c,t){
+    const col=KC[1],D=4,k=Math.floor(t/D)%4,tm=t%D,pa=win(tm,0,D,.3),m=NAR[k];
+    NAR.forEach((q,i)=>{const y=120+i*80,on=i===k;rr(c,30,y-28,272,56,14,on?ra(col,.16):'#0E1B2A',on?col:C.line,on?2.5:1.2);
+      navIcon(c,i,62,y,on?col:C.muted);T(c,q.n,90,y,{size:17,w:on?700:500,color:on?C.text:C.muted});});
+    const sx=330,sy=64,sw=590,sh=292;rr(c,sx,sy,sw,sh,14,'#060D16',C.line,1.5);
+    c.save();c.beginPath();c.roundRect(sx+2,sy+2,sw-4,sh-4,12);c.clip();c.globalAlpha*=pa;navScene(c,k,tm,sx,sy,sw,col);c.restore();
+    if(k===3){rr(c,sx+16,sy+16,84,32,16,ra(col,.2),col,1.5,pa);K(c,'서술자',sx+58,sy+32,{size:15,w:700,color:col,alpha:pa});}
+    hiText(c,m.s,sx+sw/2,sy+sh-30,{size:17,align:'center',color:k===3?col:C.text,alpha:pa},m.h?[m.h]:[],ra(col,.35),pa);
+    const by=402;box(c,sx,by-5,sw,10,5,'rgba(255,255,255,.07)');
+    if(m.sp){const x1=sx+m.sp[0]*sw,x2=Math.max(sx+m.sp[1]*sw,x1+4);box(c,x1,by-5,x2-x1,10,5,col,null,0,{alpha:pa});
+      const ph=k===1?ease(seg(tm,.3,1.8)):seg(tm,.3,3.6);dot(c,lerp(x1,x2,ph),by,8,C.text,{glow:10,gc:col,alpha:pa});}
+    else{const px=sx+.88*sw;c.save();c.globalAlpha*=pa;box(c,px-8,by-11,5,22,2,C.text);box(c,px+3,by-11,5,22,2,C.text);c.restore();}
+    K(c,m.bar,sx+sw/2,by+26,{size:15,color:C.muted,alpha:pa});
+    K(c,m.rule,480,488,{size:18,w:700,color:col,alpha:pa});
+  }});
+
+/* ───────── Ⅲ-1 고전시가 갈래의 흐름 ───────── */
+const GEN=[['고대가요',52,168,0,'삼국 이전 · 짧은 4구, 주술·집단의 노래','대표: 구지가 · 공무도하가 · 황조가'],
+ ['향가',176,254,0,'신라 · 향찰로 적음 · 4·8·10구체, 10구체는 낙구에서 감탄','대표: 제망매가 · 찬기파랑가 · 처용가'],
+ ['고려 속요 · 경기체가',268,472,0,'속요: 사랑·이별, 후렴 · 경기체가: 경치 나열 + 자랑하는 후렴','대표: 가시리 · 청산별곡 / 한림별곡(경기체가)'],
+ ['시조',440,916,1,'고려 말~조선 · 3장 6구, 종장 첫 음보는 세 음절 안팎','대표: 단심가 · 도산십이곡 · 오우가'],
+ ['가사',488,916,3,'조선 전기~ · 4음보가 길이 제한 없이 이어짐','대표: 상춘곡 · 관동별곡 · 사미인곡'],
+ ['사설시조',728,916,2,'조선 후기 · 중장 등이 크게 길어짐 · 일상어·해학·풍자','작자층이 넓어지며 작자 미상 작품이 많음']];
+S.push({u:2,ch:'갈래',title:'고전시가 갈래의 흐름',file:'08-classic-poetry.html',
+  sub:'시대마다 노래의 모양이 바뀌므로, 갈래는 시대와 형식 표지(향찰·후렴·3장·4음보)로 알아봅니다.',
+  fx:[{w:1,f:'고대가요 → 향가 → 고려 속요·경기체가',n:'삼국 이전 → 신라 → 고려'},
+      {w:1,f:'시조 · 가사 → 사설시조',n:'고려 말~조선 → 조선 후기'},
+      {w:1,f:'표지: 향찰 · 후렴 · 3장 · 4음보',n:'형식 표지가 갈래를 알려 준다'}],
+  pts:['향가는 신라의 노래로 <em>향찰</em>로 적었고, 10구체는 끝 2구(낙구)에서 감탄으로 맺습니다.',
+       '고려의 노래는 둘입니다. <em>속요</em>는 사랑·이별과 후렴(여음), <em>경기체가</em>는 사대부가 경치·생활을 늘어놓고 ‘위 ○○경 긔 엇더하니잇고’로 자랑합니다.',
+       '<em>사설시조</em>는 중장 등이 크게 길어지고 일상어·해학·풍자가 두드러집니다. 조선 후기에 작자층이 넓어지며 작자 미상 작품이 많습니다.',
+       '조선 초기 궁중의 송축 노래는 <em>악장</em>(용비어천가)입니다. 가사와 이름이 비슷해도 기능이 다릅니다.'],
+  dur:16,still:15.3,
+  draw(c,t){
+    const col=KC[2],RY=[400,352,304,256],AX=444,k=Math.min(5,Math.floor(t/2.5)),tm=t-k*2.5,ca=k<5?win(tm,0,2.5,.3):fin(tm,0,.3);
+    poly(c,[[40,AX],[920,AX]],C.dim,1.5);[260,480,720].forEach(x=>poly(c,[[x,AX-6],[x,AX+6]],C.dim,1.5));
+    [['삼국 이전 · 신라',150],['고려',370],['조선 전기',600],['조선 후기',820]].forEach(([n,x])=>K(c,n,x,AX+24,{size:15,color:C.muted}));
+    GEN.forEach((g,i)=>{const a=fin(t,i*2.5),on=i===k,y=RY[g[3]],full=g[2]-g[1],w=full*ease(seg(t,i*2.5,i*2.5+.8));if(a<=0)return;
+      rr(c,g[1],y-17,Math.max(8,w),34,10,on?ra(col,.34):ra(col,.12),on?col:ra(col,.5),on?2.5:1.2,a);
+      const ta=a*fin(t,i*2.5+.4,.4);if(full>210)T(c,g[0],g[1]+14,y,{size:17,w:600,color:on?C.text:'#BFD9C0',alpha:ta});
+      else K(c,g[0],g[1]+full/2,y,{size:17,w:600,color:on?C.text:'#BFD9C0',alpha:ta});});
+    arw(c,706,RY[1]-18,724,RY[2]+8,col,2,8,fin(t,12.8)); // 시조에서 사설시조로
+    rr(c,60,48,840,112,16,'#0E1B2A',C.line,1.2);
+    const g=GEN[k];K(c,g[4],480,86,{size:18,w:600,alpha:ca});K(c,g[5],480,126,{size:16,color:C.muted,alpha:ca});
+  }});
+
+/* ───────── Ⅲ-2 시조의 형식 ───────── */
+const SJ=[['초장',['창밖에','비가 오니','마당에','꽃이 진다'],[3,4,3,4]],
+          ['중장',['어제 핀','그 꽃잎이','오늘도','성급하다'],[3,4,3,4]],
+          ['종장',['아이야','떨어진 꽃은','쓸지 말고','두어라'],[3,5,4,3]]];
+S.push({u:2,ch:'형식',title:'시조의 형식 — 3장 6구 4음보',file:'08-classic-poetry.html',
+  sub:'평시조는 초장·중장·종장 세 장으로 끝나고 장마다 네 덩어리(음보)로 읽으며, 종장 첫 음보가 세 음절로 짧아지는 자리에서 뜻이 꺾입니다.',
+  fx:[{w:1,f:'초장 3·4·3·4 · 중장 3·4·3·4',n:'교과서의 기본 음수 — 실제 작품은 한두 음절 늘거나 줄 수 있음'},
+      {w:1,f:'종장 3·5·4·3',n:'첫 음보가 세 음절 안팎 → 전환·집중'},
+      {w:1,f:'종장 첫머리: 아희야 · 두어라 · 아마도',n:'초·중장에서 펼치고 종장에서 당부·달관·판단'}],
+  pts:['판별의 첫 표지는 <em>세 장으로 나뉘는지</em>, 그리고 <em>종장이 세 음절 안팎으로 열리는지</em>입니다.',
+       '음보는 띄어쓰기와 같지 않고 숨과 의미 단위로 끊습니다.',
+       '주제는 종장에서 닫습니다. 그림의 시조(학습용)는 지는 꽃을 치우려 하지 않는 <em>수용</em>으로 끝납니다.',
+       '중장이나 종장이 크게 길어지면 <em>사설시조</em>입니다. 해학이 있다고 모두 사설시조는 아니고, 형식이 먼저입니다.'],
+  dur:15,still:9.5,
+  draw(c,t){
+    const col=KC[2],FS=25,X0=160,RY=[140,262,384],sep='  /  ',rd=t>8?Math.floor((t-8)/.5)%12:-1;
+    SJ.forEach(([name,ch,n],r)=>{const t0=.4+r*2.2,y=RY[r],a=fin(t,t0-.2,.4),nS=Math.min(4,Math.floor((t-t0)/.45)+1);
+      K(c,name,95,y,{size:21,w:700,color:r===2?col:C.text,alpha:a});
+      if(nS<=0)return;
+      let acc=0;const cx=[],cw=[];ch.forEach(s=>{const w=kw(c,s,FS);cx.push(X0+acc+w/2);cw.push(w);acc+=w+kw(c,sep,FS);});
+      if(rd>=0&&(rd>>2)===r)mark(c,cx[rd&3]-cw[rd&3]/2,y,cw[rd&3],FS+14,'rgba(255,255,255,.08)');
+      if(r===2)mark(c,X0,y,cw[0],FS+14,ra(col,.3),fin(t,7.2));
+      T(c,ch.slice(0,nS).join(sep),X0,y,{size:FS});
+      ch.forEach((s,j)=>{if(j>=nS)return;const m=n[j],bw=13,g=4,Wb=m*bw+(m-1)*g,ap=fin(t,t0+j*.45,.3);
+        for(let q=0;q<m;q++)box(c,cx[j]-Wb/2+q*(bw+g),y+24,bw,bw,3,r===2&&j===0?col:ra(col,.45),null,0,{alpha:ap});});
+      label(c,n.join(' · '),900,y,r===2?col:C.muted,{size:20,align:'right',alpha:fin(t,t0+1.9,.4)});});
+    K(c,'종장 첫 음보가 세 음절로 짧아지는 자리 → 여기서 뜻이 꺾인다',480,478,{size:18,w:600,color:col,alpha:fin(t,7.4)});
+  }});
+
+/* ───────── Ⅲ-3 가사와 주제 ───────── */
+const GASA=[['귀양 · 임금 곁을 떠남','연군 戀君','사미인곡(정철) — 여성 화자의 목소리로 임금을 그리워함'],
+ ['벼슬을 떠나 자연에','강호한정 江湖閑情','상춘곡(정극인) — 자연 속 삶을 넉넉히 여김'],
+ ['나라의 위기','우국 憂國','선상탄(박인로) — 배 위에서 나라 일을 근심'],
+ ['관동 지방을 여행','자연 예찬 · 연군','관동별곡(정철) — 기행 속 자연 예찬과 연군·관리의 자세']];
+S.push({u:2,ch:'주제',title:'가사와 주제 — 처지가 마음을 정한다',file:'08-classic-poetry.html',
+  sub:'가사는 4음보를 길이 제한 없이 이어 가며 처지를 길게 진술하므로, 화자의 처지를 먼저 찾으면 주제가 따라 나옵니다.',
+  fx:[{w:1,f:'연군 戀君',n:'임금(君)을 그리워함(戀) — 귀양·멀리 떨어진 처지'},{w:1,f:'강호한정 江湖閑情',n:'강과 호수(자연)에서 한가로운 마음 — 벼슬을 떠난 처지'},
+      {w:1,f:'우국 憂國',n:'나라(國)를 근심함(憂) — 나라가 위기인 처지'}],
+  pts:['가사는 <em>4음보가 끝없이</em> 이어지고, 시조는 3장에서 끝납니다. 길이가 갈래를 가릅니다.',
+       '‘님’은 문맥이 정합니다. 유배·조정·벼슬이 있으면 임금, 규방·이별이면 연인 쪽입니다.',
+       '강호한정은 도피가 아니라 세속의 명리를 멀리하는 <em>가치 선택</em>입니다. 현대의 기준으로 낮추어 보면 태도가 어긋납니다.'],
+  dur:15,still:4.2,
+  draw(c,t){
+    const col=KC[2],a0=fin(t,.1,.6),act=t>3?Math.floor((t-3)/3)%4:-1;
+    T(c,'가사',60,72,{size:24,font:DISP,w:400,color:col,alpha:a0});
+    T(c,'밭을 갈아 / 밥을 짓고 / 돌을 베개 / 삼는다 …',126,72,{size:18,alpha:a0});
+    T(c,'↔ 시조는 3장에서 끝',900,72,{size:15,color:C.dim,align:'right',alpha:a0});
+    c.save();c.globalAlpha*=a0;c.beginPath();c.rect(56,100,848,30);c.clip();
+    const off=(t*60)%170;for(let g=-1;g<7;g++)for(let j=0;j<4;j++)box(c,56+g*170+j*38-off,106,32,18,5,j===0?ra(col,.75):ra(col,.35));
+    c.restore();
+    GASA.forEach(([a,b],i)=>{const y=200+i*68,al=fin(t,.6+i*.45),on=i===act;
+      rr(c,60,y-25,310,50,25,on?ra(col,.14):'#0E1B2A',on?col:C.line,on?2.2:1.2,al);
+      K(c,a,215,y,{size:18,color:on?C.text:C.muted,alpha:al});
+      arw(c,380,y,538,y,on?col:C.line,2,9,al);
+      if(on)for(let j=0;j<3;j++)dot(c,lerp(386,530,(t*.8+j/3)%1),y,4,col,{glow:8});
+      rr(c,548,y-25,352,50,25,on?ra(col,.22):'#0E1B2A',on?col:ra(col,.4),on?2.5:1.2,al);
+      K(c,b,724,y,{size:20,w:700,color:on?col:'#BFD9C0',alpha:al});});
+    if(act>=0)K(c,GASA[act][2],480,488,{size:16,alpha:win((t-3)%3,0,3,.3)});
+  }});
+
+/* ───────── Ⅲ-4 고전 어휘 ───────── */
+const VOC=[['어리다','나이 적다','어리석다'],['하다','하다(do)','많다 · 크다'],['어엿브다','예쁘다','불쌍하다'],['괴다','괴롭다','사랑하다'],['즈믄','?','천 (1000)']];
+S.push({u:2,ch:'고전 어휘',title:'고전 어휘 — 지금 뜻으로 읽으면 뒤집힌다',file:'08-classic-vocab.html',
+  sub:'옛말은 사라진 말과 뜻이 바뀐 말 두 종류여서, 사라진 말은 그냥 외우고 뜻이 바뀐 말은 바뀐 방향까지 외웁니다.',
+  fx:[{w:1,f:'어리다 = 어리석다',n:'‘어린 백성’ = 어리석은 백성 (나이 어린 ✕)'},{w:1,f:'어엿브다 = 불쌍하다 · 하다 = 많다',n:'지금은 ‘예쁘다’ · ‘노미 하니라’ = 사람이 많으니라'},
+      {w:1,f:'즈믄 = 천 · 뫼 = 산 · 괴다 = 사랑하다',n:'사라진 말 — 그냥 외우기'}],
+  pts:['지금 뜻으로 읽어도 말이 되는 문장이 함정입니다. 아는 옛말이면 <em>옛 뜻부터</em> 넣어 봅니다.',
+       '새 셋: <em>울면</em> 한(두견·접동새·소쩍새), <em>전하면</em> 소식(기러기·파랑새), <em>희면</em> 무심(백구).',
+       '구름은 두 얼굴입니다. 덧없는 부귀공명, 또는 임금의 눈을 가리는 간신 — 문맥으로 정합니다.',
+       '현대어 풀이가 주어지면 <em>풀이의 뜻</em>이 우선입니다.'],
+  dur:14,still:8,
+  draw(c,t){
+    const col=KC[2],C2=KC[4];
+    [['뜻이 바뀐 말 — 바뀐 방향까지',40,560,col],['사라진 말 — 그냥 외우기',580,920,C2]].forEach(([n,x1,x2,cc])=>{const a=fin(t,.1);
+      K(c,n,(x1+x2)/2,62,{size:16,w:700,color:cc,alpha:a});poly(c,[[x1+6,90],[x1+6,82],[x2-6,82],[x2-6,90]],ra(cc,.6),1.5,{alpha:a});});
+    VOC.forEach(([w,d,m],i)=>{const x=40+i*180,cx=x+80,cc=i<3?col:C2,a=fin(t,.2+i*.15),f0=1.6+i*.8,p=seg(t,f0,f0+.6),back=p>=.5,sx=Math.max(.02,Math.abs(Math.cos(p*Math.PI)));
+      rr(c,x,104,160,226,16,'#0E1B2A',ra(cc,back?.8:.35),back?2:1.5,a);
+      K(c,w,cx,160,{size:30,font:DISP,w:400,alpha:a});poly(c,[[x+18,206],[x+142,206]],C.line,1.5,{alpha:a});
+      c.save();c.translate(cx,266);c.scale(sx,1);
+      if(!back){T(c,d,0,0,{size:20,color:C.muted,align:'center',alpha:a});const hw=kw(c,d,20)/2+5;poly(c,[[-hw,0],[hw,0]],KC[1],2.5,{alpha:a*seg(t,f0-.6,f0-.1)});}
+      else T(c,m,0,0,{size:23,w:700,color:cc,align:'center'});
+      c.restore();
+      chk(c,cx,306,7,cc,fin(t,f0+.6,.3));});
+    const ca=fin(t,6,.6),s='훈민정음 서문: 어린 백성 … 노미 하니라 … 어엿비 너겨';
+    const x0=hiText(c,s,480,428,{size:19,align:'center',alpha:ca},['어린','하니라','어엿비'],ra(col,.3),ca);
+    [['어린',0],['하니라',1],['어엿비',2]].forEach(([p,i])=>{const xa=x0+kw(c,s.slice(0,s.indexOf(p)),19)+kw(c,p,19)/2;
+      poly(c,[[xa,412],[40+i*180+80,338]],col,1.2,{dash:[3,4],alpha:ca*.7});});
+  }});
+
+/* ───────── Ⅳ-1 영웅의 일대기 ───────── */
+const HERO=[['귀한 핏줄',110,196,-1],['특별한 탄생',258,156,-1],['버려짐',405,368,1],['구출',548,252,-1],['위기',690,386,1],['승리',852,118,-1]];
+S.push({u:3,ch:'고전소설',title:'영웅의 일대기 — 내려갔다 올라가는 길',file:'09-classic-prose.html',
+  sub:'영웅 이야기는 귀한 핏줄과 특별한 탄생 뒤에 버려짐과 위기로 내려갔다가 구출과 승리로 올라가는 틀이어서, 틀에 넣으면 다음 장면이 보입니다.',
+  fx:[{w:1,f:'귀한 핏줄 → 특별한 탄생 → 버려짐 → 구출 → 위기 → 승리',n:'영웅 틀'},
+      {w:1,f:'고난과 극복 · 권선징악 · 행복한 대단원',n:'여러 고전소설이 공유하는 서사'},
+      {w:1,f:'도술 · 꿈 · 조력자 = 누구를 돕는 장치인가',n:'우연·비현실은 흠이 아니라 기능'}],
+  pts:['홍길동전의 도술은 <em>적서 차별의 벽</em>을 넘는 능력으로 작동합니다. 기능을 묻는데 ‘비현실이라 주제가 없다’고 하면 오답입니다.',
+       '박씨전은 외모를 숨긴 여성이 능력을 드러내는 <em>여성 영웅</em> 이야기로, 병자호란을 배경으로 한 군담적 성격이 있습니다.',
+       '풍자소설(허생전·양반전·호질)은 포상으로 끝내지 않고 모순을 드러낸 채 맺기도 합니다. 영웅 틀을 억지로 씌우지 않습니다.'],
+  dur:16,still:9,
+  draw(c,t){
+    const P=HERO.map(h=>[h[1],h[2]]),CV=smooth(P,18),up=KC[2],dn=KC[1],n=Math.round(clamp((t-.3)/2.8)*(CV.length-1))+1;
+    T(c,'↓ 고난',50,62,{size:16,w:700,color:dn,alpha:fin(t,.2)});T(c,'↑ 극복',140,62,{size:16,w:700,color:up,alpha:fin(t,.2)});
+    for(let i=1;i<n;i++){const si=Math.min(P.length-2,Math.floor((i-1)/18));poly(c,[CV[i-1],CV[i]],P[si+1][1]<P[si][1]?up:dn,4);} // 구간마다: 오르면 극복, 내리면 고난
+    const run=t>3.2?((t-3.2)%8)/8:-1,q=run<0?null:along(CV,run);
+    let act=-1;if(q){let b=1e9;P.forEach((p,i)=>{const d=Math.hypot(p[0]-q[0],p[1]-q[1]);if(d<b){b=d;act=i;}});}
+    HERO.forEach(([nm,x,y,dir],i)=>{const a=fin(t,.3+i*.45),cc=dir>0?dn:up,on=i===act&&Math.hypot(x-q[0],y-q[1])<60;
+      dot(c,x,y,on?11:8,on?cc:'#0E1B2A',{stroke:cc,lw:2.5,alpha:a,glow:on?16:0});
+      K(c,nm,x,y+dir*36,{size:18,w:700,color:on?cc:C.text,alpha:a});});
+    K(c,'조력자 · 도술',548,189,{size:15,color:C.muted,alpha:fin(t,2.4)});
+    if(q){dot(c,q[0],q[1],7,C.text,{glow:14});poly(c,[[q[0],q[1]-6],[q[0],q[1]-26]],C.text,2);poly(c,[[q[0],q[1]-26],[q[0]+14,q[1]-21],[q[0],q[1]-16]],null,0,{fill:KC[3],close:true});}
+    K(c,'홍길동전: 서자라 차별 → 집을 떠남 → 도술로 활빈당 → 율도국의 왕',480,486,{size:17,alpha:fin(t,3.4)});
+  }});
+
+/* ───────── Ⅳ-2 판소리계 소설 ───────── */
+S.push({u:3,ch:'판소리계',title:'판소리계 소설 — 소리판에서 책으로',file:'09-classic-prose.html',
+  sub:'판소리 사설이 소설로 정착했기 때문에 소설 안에 운율 있는 말, 삽입 노래, 재담, 청중에게 말을 거는 서술자가 남아 있습니다.',
+  fx:[{w:1,f:'춘향전 · 심청전 · 흥부전 · 토끼전',n:'춘향이 심심해 흥얼대다 토끼를 봤다'},
+      {w:1,f:'운율 · 삽입 노래 · 재담 · 청중 의식',n:'판소리 사설에서 남은 문체'},
+      {w:1,f:'편집자적 논평',n:'서술자가 끼어들어 평가함 — 인물의 대사가 아님'}],
+  pts:['춘향전은 신분을 넘는 사랑, 심청전은 효와 인당수, 흥부전은 착함과 욕심의 대비, 토끼전(별주부전)은 꾀로 위기를 모면하는 이야기입니다.',
+       '‘운율이 있으니 시조다’ ✕ — 서사 전체는 <em>소설</em>이고, 그 안의 노래는 문체의 특징입니다.',
+       '한 작품이 여러 유형을 겸합니다. 춘향전은 애정소설이면서 판소리계 소설이고 신분 갈등을 품습니다.',
+       '서술자의 감탄(‘아, 어찌 …알리오’)을 인물의 말로 옮기면 <em>말의 주인</em>이 바뀝니다.'],
+  dur:15,still:8,
+  draw(c,t){
+    const col=KC[3],a0=fin(t,.1,.6),fan=.5+.5*Math.sin(t*2.2);
+    K(c,'판소리 사설 (공연)',200,64,{size:18,w:700,alpha:a0});
+    c.save();c.globalAlpha*=a0;
+    c.beginPath();c.ellipse(200,268,150,38,0,0,TAU);c.fillStyle='rgba(182,156,255,.08)';c.fill();c.strokeStyle=ra(col,.5);c.lineWidth=1.5;c.stroke();
+    for(let i=0;i<9;i++){const a=Math.PI*(.15+.7*i/8);dot(c,200-Math.cos(a)*170,330+Math.sin(a)*22,7,'#2A3B52',{stroke:C.dim,lw:1});}
+    dot(c,168,170,15,'#D9C9A8');poly(c,[[146,252],[190,252],[180,188],[156,188]],null,0,{fill:'#E9E2D4',close:true});
+    c.save();c.translate(192,204);c.rotate(-.6+fan*.5);c.beginPath();c.moveTo(0,0);c.arc(0,0,30,-1.2,-.1);c.closePath();c.fillStyle=ra(col,.85);c.fill();c.restore();
+    dot(c,262,198,12,'#D9C9A8');box(c,250,210,24,40,8,'#5E738B');c.beginPath();c.ellipse(290,238,16,20,0,0,TAU);c.fillStyle='#8A5A3C';c.fill();c.strokeStyle='#C99A6B';c.lineWidth=2;c.stroke();
+    for(let j=0;j<3;j++)wavy(c,330,166+j*34,520,172+j*30,ra(col,.6),18,5,t*4+j,2);
+    c.restore();
+    K(c,'소설로 정착',425,128,{size:16,w:600,color:col,alpha:fin(t,.8)});
+    K(c,'판소리계 소설 (기록)',730,64,{size:18,w:700,alpha:fin(t,1)});
+    const ba=fin(t,1,.6);c.save();c.globalAlpha*=ba;
+    poly(c,[[540,96],[724,106],[724,350],[540,340]],ra(col,.6),1.5,{fill:'#111D2C',close:true});
+    poly(c,[[736,106],[920,96],[920,340],[736,350]],ra(col,.6),1.5,{fill:'#111D2C',close:true});poly(c,[[730,104],[730,352]],ra(col,.8),2);
+    for(let r=0;r<9;r++){const y=126+r*24;poly(c,[[558,y],[706,y+4]],'rgba(150,175,205,.18)',3);poly(c,[[754,y+4],[902,y]],'rgba(150,175,205,.18)',3);}
+    c.restore();
+    [['운율 있는 말',632,150],['삽입 노래',632,270],['재담',828,162],['청중에게 말 걸기',828,282]].forEach(([n,x,y],i)=>{const t0=2.2+i*1.1,a=fin(t,t0,.5),w=kw(c,n,16,600);
+      if(t>t0-.9&&t<t0+.1){const s=clamp((t-t0+.9)/.9);dot(c,lerp(330,x,s),lerp(200,y,s)-Math.sin(s*Math.PI)*40,6,col,{glow:12});}
+      rr(c,x-w/2-12,y-18,w+24,36,18,ra(col,.25),col,1.8,a);K(c,n,x,y,{size:16,w:600,alpha:a});});
+    const ma=fin(t,6.4,.6);
+    hiText(c,'춘향이 심심해 흥얼대다 토끼를 봤다',480,412,{size:24,w:700,align:'center',alpha:ma},['춘','심','흥','토'],ra(col,.4),ma);
+    K(c,'춘향전 · 심청전 · 흥부전 · 토끼전(별주부전)',480,456,{size:17,color:C.muted,alpha:fin(t,6.9)});
+  }});
+
+/* ───────── Ⅳ-3 희곡과 시나리오 ───────── */
+const SFX=[['F.I. (Fade In)','화면이 점점 밝아짐'],['F.O. (Fade Out)','화면이 점점 어두워짐'],['O.L. (OverLap)','앞 장면과 겹치며 바뀜'],['E. (Effect)','효과음 — 화면 밖 소리'],['NAR. (Narration)','해설 목소리 — 그 자리에 있다는 뜻 ✕']];
+S.push({u:3,ch:'극',title:'희곡과 시나리오 — 무대와 화면',file:'10-drama-essay.html',
+  sub:'극은 서술자 없이 대사와 지시문으로 보여 주는 갈래로, 희곡은 무대에서 막과 장으로, 시나리오는 화면에서 장면 번호(S#)로 나뉩니다.',
+  fx:[{w:1,f:'대사 ↔ 지시문(지문)',n:'말로 주장한 것 ↔ 보여 주라고 지시한 것'},{w:1,f:'독백 獨 · 방백 傍',n:'혼자 하는 말 · 관객에게만 — 같은 무대 인물은 못 듣는 약속'},
+      {w:1,f:'S# · F.I. / F.O. · O.L. · E. · NAR.',n:'장면 번호 · 밝아짐/어두워짐 · 겹치며 바뀜 · 효과음 · 내레이션'}],
+  pts:['말과 동작이 어긋나면 그 어긋남이 <em>태도</em>입니다. (한숨을 쉬며) “괜찮아.” — 말은 괜찮다지만 지시문은 속상함을 보여 줍니다.',
+       '방백으로 드러난 속셈을 상대 인물이 이미 아는 정보로 쓰면 약속을 어긴 오답입니다.',
+       '‘N. 영희’는 영희의 목소리가 들린다는 뜻이지, 영희가 그 장소에 있다는 뜻이 아닙니다.',
+       '시나리오 약어는 이유 없는 약속 — 영어로 풀어 외웁니다.'],
+  dur:15,still:2.2,
+  draw(c,t){
+    const col=KC[3],D=2.6,k=Math.floor(t/D)%5,tm=t%D,pa=win(tm,0,D,.3);
+    // 희곡: 무대
+    K(c,'희곡 — 무대 · 막과 장',245,52,{size:18,w:700});
+    rr(c,50,80,390,280,10,'#0B1420',C.line,1.5);box(c,50,80,390,22,4,'#5B2B3A');box(c,50,80,58,280,4,'#6B2D40');box(c,382,80,58,280,4,'#6B2D40');
+    poly(c,[[108,330],[382,330]],'#8A6A4A',4);
+    fig(c,175,326,'#E6EDF5',.82);fig(c,320,326,'#AAB6C4',.82);
+    const a1=fin(t,.3),a2=fin(t,.8),a3=fin(t,1.3);
+    T(c,'(한숨을 쉬며)',175,140,{size:16,it:true,color:C.muted,align:'center',alpha:a1});T(c,'지시문',248,140,{size:13,color:C.dim,alpha:a1});
+    rr(c,118,166,114,40,14,'rgba(230,237,245,.08)',C.text,1.5,a2);poly(c,[[160,206],[168,218],[176,206]],C.text,1.5,{alpha:a2});
+    K(c,'“괜찮아.”',175,186,{size:19,w:600,alpha:a2});T(c,'대사',240,186,{size:13,color:C.dim,alpha:a2});
+    c.save();c.globalAlpha*=a3;for(let i=0;i<8;i++)dot(c,100+i*42,400,7,'#2A3B52',{stroke:C.dim,lw:1});
+    arrow(c,190,336,206,384,col,2.5,9);crs(c,342,214,7,KC[1]);c.restore();
+    K(c,'방백 — 관객만 듣고 상대는 못 들음',245,436,{size:15,color:col,alpha:a3});
+    // 시나리오: 화면
+    K(c,'시나리오 — 화면 · S#',715,52,{size:18,w:700});
+    const fx=520,fy=86,fw=390,fh=230,hy=fy+150;
+    rr(c,fx,fy,fw,fh,8,'#05090F',C.muted,2);
+    c.save();c.beginPath();c.rect(fx+2,fy+2,fw-4,fh-4);c.clip();
+    const roof=al=>{c.save();c.globalAlpha*=al;box(c,fx,fy,fw,fh,0,'#14304A');poly(c,[[fx,hy],[fx+fw,hy]],'#5E738B',3);
+        for(let i=0;i<9;i++)poly(c,[[fx+30+i*42,hy],[fx+30+i*42,hy-36]],'#5E738B',2);poly(c,[[fx+20,hy-36],[fx+fw-20,hy-36]],'#5E738B',2);
+        fig(c,fx+200-(k===0?18*ease(seg(tm,.4,1.8)):0),hy+60,'#C9D6E3',.7);c.restore();};
+    const room=al=>{c.save();c.globalAlpha*=al;box(c,fx,fy,fw,fh,0,'#2A2233');rr(c,fx+60,fy+40,110,90,4,'#3F5B7A','#8A6A4A',3);
+        poly(c,[[fx+115,fy+40],[fx+115,fy+130]],'#8A6A4A',2);box(c,fx+220,fy+150,130,10,3,'#6B5A45');c.restore();};
+    if(k===2){roof(1-ease(seg(tm,.3,2)));room(ease(seg(tm,.3,2)));}else roof(1);
+    if(k===0)box(c,fx,fy,fw,fh,0,'rgba(0,0,0,'+(1-ease(seg(tm,.1,1.6))).toFixed(3)+')');
+    if(k===1)box(c,fx,fy,fw,fh,0,'rgba(0,0,0,'+ease(seg(tm,.2,1.8)).toFixed(3)+')');
+    c.restore();
+    rr(c,fx+10,fy+10,128,28,8,'rgba(5,9,15,.85)',null,0);T(c,'S# 3. 옥상. 낮.',fx+20,fy+24,{size:15,w:600});
+    if(k===3||k===4){c.save();c.globalAlpha*=pa;const ix=486,iy=k===3?150:250;
+      if(k===3){box(c,ix-12,iy-8,10,16,2,col);poly(c,[[ix-2,iy-8],[ix+8,iy-16],[ix+8,iy+16],[ix-2,iy+8]],null,0,{fill:col,close:true});}
+      else{box(c,ix-6,iy-16,12,22,6,col);poly(c,[[ix-10,iy+2],[ix-10,iy+6],[ix+10,iy+6],[ix+10,iy+2]],col,2);poly(c,[[ix,iy+6],[ix,iy+14]],col,2);}
+      for(let j=0;j<3;j++){const s=((tm*1.2)+j/3)%1;c.save();c.globalAlpha*=1-s;c.beginPath();c.arc(ix+8,iy,12+s*40,-.6,.6);c.strokeStyle=col;c.lineWidth=2;c.stroke();c.restore();}
+      c.restore();}
+    for(let i=0;i<5;i++)dot(c,679+i*18,336,i===k?6:4,i===k?col:'rgba(255,255,255,.18)');
+    K(c,SFX[k][0],715,368,{size:20,w:700,color:col,alpha:pa});K(c,SFX[k][1],715,400,{size:16,alpha:pa});
+  }});
+
+/* ───────── Ⅳ-4 수필 ───────── */
+S.push({u:3,ch:'수필',title:'수필 — 겪은 일에서 깨달음으로',file:'10-drama-essay.html',
+  sub:'수필은 글쓴이의 체험과 그에 대한 생각이 중심이어서, 앞의 믿음 → 새 정보 → 고친 생각으로 나누고 고친 생각의 세기를 지킵니다.',
+  fx:[{w:1,f:'경수필 輕 · 중수필 重',n:'가볍게 일상의 체험·정서 · 무겁게 의견·사회에 대한 생각'},
+      {w:1,f:'예전에는 ~라고 믿었다 → 그러나 → ~인지도 모른다',n:'태도가 바뀌는 자리'},
+      {w:1,f:'‘는지도 모른다’ = 추측',n:'단정이나 정반대 감정으로 키우지 않기'}],
+  pts:['경수필은 개성·유머·관조·부드러운 성찰, 중수필은 논리·비판·제언의 어조입니다. 일상에서 시작해 사회적 판단으로 끝나면 둘을 겹칩니다.',
+       '경험 문장은 일어난 일, 뒤의 문장은 그 일에 대한 평가입니다. ‘냄새가 났다’는 경험, ‘그 시각이었는지도 모른다’는 평가입니다.',
+       '그림의 글(학습용): 아버지를 미워한다는 방향은 글에 없습니다. 태도는 자기 호감을 <em>다시 해석하는 성찰</em>입니다.'],
+  dur:15,still:7.5,
+  draw(c,t){
+    const col=KC[3],BX=[40,350,660],HD=['① 앞의 믿음','② 새 정보','③ 고친 생각'],TX=[['빵 냄새를','좋아한다고 믿었다'],['그 냄새가 아버지의','퇴근 시간과 겹친다'],['좋아한 것은 그 시각','이었는지도 모른다']];
+    BX.forEach((x,i)=>{const a=fin(t,.3+i*1.2,.6),on=i===2;
+      rr(c,x,104,260,150,16,on?ra(col,.12):'#0E1B2A',on?col:C.line,on?2.2:1.4,a);
+      K(c,HD[i],x+130,130,{size:15,w:700,color:on?col:C.muted,alpha:a});
+      K(c,TX[i][0],x+130,178,{size:19,alpha:a});
+      if(on)hiText(c,TX[i][1],x+130,212,{size:19,align:'center',alpha:a},['는지도 모른다'],ra(col,.35),a*fin(t,3.6));
+      else K(c,TX[i][1],x+130,212,{size:19,alpha:a});
+      if(i<2)arw(c,x+266,179,x+304,179,C.dim,2.5,10,fin(t,.9+i*1.2));});
+    K(c,'추측 ○ · 단정 ✕',790,284,{size:16,w:700,color:col,alpha:fin(t,3.9)});
+    // 시소: 가벼운 경수필, 무거운 중수필
+    const sa=fin(t,4.8,.6),th=.09+.025*Math.sin(t*1.6),L=250,px=480,py=470,ct=Math.cos(th),st=Math.sin(th);
+    c.save();c.globalAlpha*=sa;
+    poly(c,[[px,py],[px-22,py+32],[px+22,py+32]],null,0,{fill:'#3A4A5E',close:true});
+    c.translate(px,py);c.rotate(th);box(c,-L,-6,2*L,10,4,'#5E738B');box(c,-L+8,-40,56,34,8,ra(col,.35),col,1.5);box(c,L-98,-70,90,64,10,ra(col,.6),col,2);
+    c.restore();
+    T(c,'輕 경수필 — 일상의 체험·정서',px-ct*(L-36),py-st*(L-36)-68,{size:16,w:600,align:'center',alpha:sa});
+    T(c,'重 중수필 — 의견·사회에 대한 생각',px+ct*(L-53),py+st*(L-53)-100,{size:16,w:600,align:'center',alpha:sa});
+  }});
+
+/* ───────── Ⅴ-1 독서: 선지가 바꾸는 네 곳 ───────── */
+const SWP=[['주어','칸트는 근거를 이성에서 찾았다','흄은 근거를 이성에서 찾았다',['흄은']],
+ ['방향','금리가 오르면 투자가 준다','금리가 오르면 투자가 는다',['는다']],
+ ['인과','A 때문에 B가 된다','B 때문에 A가 된다',['B','A']],
+ ['정도','일부 지역에서 효과가 있다','모든 지역에서 효과가 있다',['모든']]];
+S.push({u:4,ch:'독서',title:'선지가 바꾸는 네 곳 — 주방인정',file:'01-reading-strategy.html',
+  sub:'선지는 지문 문장을 살짝 바꾼 것이어서, 주어·방향·인과·정도 가운데 바뀐 곳 하나를 찾으면 됩니다.',
+  fx:[{w:1,f:'주 · 방 · 인 · 정',n:'주방에서 인정받기 — 주어 · 방향 · 인과 · 정도'},
+      {w:1,f:'한 절이라도 어긋나면 그 선지는 거짓',n:'선지를 절로 나눠 하나씩 대조'},
+      {w:1,f:'상식으로 맞아도 지문에 없으면 ✕',n:'근거 문장을 문단 번호로 짚을 수 있어야'}],
+  pts:['<em>인과</em>: ‘A일 때 B가 함께 나타났다’를 ‘A 때문에 B’로 바꾸는 것도 과잉 추론입니다.',
+       '<em>정도</em>: 글의 ‘대체로·~할 수 있다’를 선지가 ‘항상·반드시’로 올리면 범위 확대입니다.',
+       '하나 더: 조건 하나를 슬쩍 지우기 — ‘날짜와 작성자 모두’ → ‘날짜만’.',
+       '불일치 발문(‘적절하지 않은 것’)에서는 참·거짓을 적은 뒤 발문을 한 번 더 봅니다.'],
+  dur:14,still:6,
+  draw(c,t){
+    const col=KC[4],bad=KC[1],scan=t>5?Math.floor((t-5)/1.5)%4:-1;
+    K(c,'지문 문장 → 바꿔 쓴 선지 — 바뀐 한 곳이 뜻을 바꾸면 ✕',480,50,{size:16,color:C.muted,alpha:fin(t,.1)});
+    SWP.forEach(([b,s1,s2,parts],i)=>{const y=134+i*100,t0=.4+i*.9,a1=fin(t,t0),a2=fin(t,t0+.35),a3=fin(t,t0+.7),on=i===scan;
+      rr(c,40,y-26,92,52,14,on?ra(col,.3):ra(col,.12),col,on?2.5:1.5,a1);
+      K(c,b,86,y,{size:20,w:700,color:col,alpha:a1});
+      T(c,s1,150,y,{size:19,color:C.muted,alpha:a1});
+      arw(c,462,y,520,y,C.dim,2,9,a2);
+      hiText(c,s2,535,y,{size:19,alpha:a2},parts,ra(bad,.38),a3);
+      crs(c,904,y,10,bad,a3);});
+  }});
+
+/* ───────── Ⅴ-2 문법: 음운 변동 ───────── */
+const PHO=[{k:'교체 — 개수 그대로',w:'국물',p:'[궁물]',B:[['ㄱ','ㅜ','ㄱ'],['ㅁ','ㅜ','ㄹ']],A:[['ㄱ','ㅜ','ㅇ'],['ㅁ','ㅜ','ㄹ']],m:[[0,0],[1,1],[2,2],[3,3],[4,4],[5,5]],hot:[2],env:[3],
+   c:'6개 → 6개 · ㅁ 앞에서 ㄱ이 ㅇ으로 (비음화)'},
+ {k:'탈락 — 하나 빠짐 (−1)',w:'닭',p:'[닥]',B:[['ㄷ','ㅏ','ㄹ','ㄱ']],A:[['ㄷ','ㅏ','ㄱ']],m:[[0,0],[1,1],[2,-1],[3,2]],hot:[2],env:[3],
+   c:'4개 → 3개 · 겹받침 ㄺ에서 ㄹ이 빠짐 (자음군 단순화)'},
+ {k:'첨가 — 하나 덧남 (+1)',w:'솜이불',p:'[솜니불]',B:[['ㅅ','ㅗ','ㅁ'],['ㅣ'],['ㅂ','ㅜ','ㄹ']],A:[['ㅅ','ㅗ','ㅁ'],['ㄴ','ㅣ'],['ㅂ','ㅜ','ㄹ']],m:[[0,0],[1,1],[2,2],[-1,3],[3,4],[4,5],[5,6],[6,7]],hot:[],env:[2,3],
+   c:'7개 → 8개 · ㅣ 앞에 ㄴ이 덧남 (ㄴ 첨가)'},
+ {k:'축약 — 둘이 하나로',w:'좋고',p:'[조코]',B:[['ㅈ','ㅗ','ㅎ'],['ㄱ','ㅗ']],A:[['ㅈ','ㅗ'],['ㅋ','ㅗ']],m:[[0,0],[1,1],[2,2],[3,2],[4,3]],hot:[2,3],env:[],
+   c:'5개 → 4개 · ㅎ + ㄱ → ㅋ (거센소리되기)'}];
+function phoX(G,cx,sz=56,g=8,sg=22){const xs=[];let x=0; // 음운 칸의 가운데 x (음절 사이는 sg만큼 더 띄움)
+  G.forEach((s,i)=>{if(i)x+=sg;s.forEach((_,j)=>{if(j)x+=g;xs.push(x+sz/2);x+=sz;});});const off=cx-x/2;return xs.map(v=>v+off);}
+S.push({u:4,ch:'문법',title:'음운 변동 — 이름은 개수로',file:'12-language-media.html',
+  sub:'단어를 소리 하나하나(음운)로 쪼개 개수를 세면, 그대로면 교체·하나 빠지면 탈락·하나 덧나면 첨가·둘이 하나가 되면 축약입니다.',
+  fx:[{w:1,f:'교체 — 개수 그대로',n:'국물 → [궁물]: ㅁ 앞에서 ㄱ이 ㅇ으로 (비음화)'},{w:1,f:'탈락 — 하나 빠짐 (−1)',n:'닭 → [닥]'},
+      {w:1,f:'첨가 — 하나 덧남 (+1)',n:'솜이불 → [솜니불]'},{w:1,f:'축약 — 둘이 합쳐 하나 (−1)',n:'좋고 → [조코]: ㅎ + ㄱ → ㅋ'}],
+  pts:['조건이 맞을 때만 적용합니다. ‘국이 → [구기]’는 ㅁ이 없으니 비음화 ✕.',
+       '비음화: <em>ㄱ ㄷ ㅂ</em>이 ㄴ·ㅁ 앞에서 <em>ㅇ ㄴ ㅁ</em> — 국물[궁물], 닫는[단는], 밥물[밤물].',
+       '표기와 발음을 나눕니다. ‘국물’은 [궁물]로 소리 나지만 표기는 그대로입니다.',
+       '첫소리 ㅇ은 소리가 없어 음운으로 세지 않습니다. 받침 소리는 7개뿐: ㄱ ㄴ ㄷ ㄹ ㅁ ㅂ ㅇ.'],
+  dur:16,still:3.2,
+  draw(c,t){
+    const col=KC[4],D=4,k=Math.floor(t/D)%4,tm=t%D,pa=win(tm,0,D,.3),e=PHO[k],SX=620,TY=240;
+    PHO.forEach((q,i)=>{const y=150+i*84,on=i===k;rr(c,40,y-30,250,60,14,on?ra(col,.16):'#0E1B2A',on?col:C.line,on?2.5:1.2);
+      K(c,q.k,165,y,{size:17,w:on?700:500,color:on?C.text:C.muted});});
+    K(c,e.w,SX,134,{size:34,w:700,alpha:pa});
+    const xb=phoX(e.B,SX),xa=phoX(e.A,SX),Bf=e.B.flat(),Af=e.A.flat(),mv=ease(seg(tm,1,2)),hl=fin(tm,.6,.4);
+    e.m.forEach(([bi,ai],j)=>{let x,ch,al=pa,sc=1,dy=0;
+      const hot=bi>=0&&e.hot.includes(bi),env=bi>=0&&e.env.includes(bi);
+      if(bi>=0&&ai>=0){x=lerp(xb[bi],xa[ai],mv);const b=Bf[bi],a=Af[ai],merge=k===3&&bi===3;
+        if(merge){ch=b;al*=1-mv;}else if(b!==a){ch=mv<.5?b:a;sc=Math.max(.04,Math.abs(Math.cos(mv*Math.PI)));}else ch=b;}
+      else if(ai<0){x=xb[bi];ch=Bf[bi];dy=46*mv;al*=1-mv;}
+      else{x=xa[ai];ch=Af[ai];al*=mv;sc=Math.max(.04,mv);}
+      const isNew=bi<0||(bi>=0&&ai>=0&&Bf[bi]!==Af[ai]&&mv>=.5),em=isNew?1:hot||env?hl:0,st=isNew?col:hot?KC[1]:KC[0];
+      c.save();c.translate(x,TY+dy);c.scale(sc,1);
+      rr(c,-28,-28,56,56,10,isNew?ra(col,.25):'#0E1B2A',em>0?st:C.line,1.5+em,al);
+      K(c,ch,0,1,{size:28,w:600,alpha:al});c.restore();});
+    K(c,e.p,SX,330,{size:34,w:700,color:col,alpha:pa*fin(tm,2.1)});
+    K(c,e.c,SX,394,{size:17,color:C.muted,alpha:pa*fin(tm,2.3)});
+  }});

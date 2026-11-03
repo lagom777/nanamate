@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프론트엔드 개발: 실전과 원리에 관하여</title>
+<link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../shared/light-theme.css">
+  <script defer src="../shared/i18n.js"></script>
+  <script defer src="../shared/support.js"></script>
+  <script defer src="../shared/search.js"></script>
+  <script defer src="../shared/difficulty.js"></script>
+</head>
+<body>
+<div class="layout">
+<aside>
+  <a href="../index.html" class="hub-back-link" style="display:block;padding:10px 14px;margin-bottom:18px;background:linear-gradient(120deg,#7b5cff,#00d4ff);color:#fff;text-decoration:none;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:0.04em;text-align:center;box-shadow:0 6px 18px -6px rgba(123,92,255,0.5);transition:transform .2s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">↑ 통합 허브</a>
+  <h3>전체 목차</h3>
+  <ol>
+    <li><a href="index.html">📖 표지 · 소개</a></li>
+    <li><a href="design-structure.html" style="color:var(--accent);font-weight:600;">🏛️ 디자인 구조</a></li>
+    <li><a href="chapters/01-html-basics.html">1. HTML 기초</a></li>
+    <li><a href="chapters/02-css-layout.html">2. CSS와 레이아웃</a></li>
+    <li><a href="chapters/03-javascript-core.html">3. JavaScript 핵심</a></li>
+    <li><a href="chapters/04-dom-manipulation.html">4. DOM 조작</a></li>
+    <li><a href="chapters/05-react-components.html">5. React와 컴포넌트</a></li>
+    <li><a href="chapters/06-state-management.html">6. 상태관리</a></li>
+    <li><a href="chapters/07-responsive-design.html">7. 반응형 디자인</a></li>
+    <li><a href="chapters/08-performance.html">8. 성능 최적화</a></li>
+    <li><a href="chapters/09-build-deploy.html">9. 빌드도구와 배포</a></li>
+  </ol>
+</aside>
+<main>
+<header class="paper-header">
+  <h1>프론트엔드 개발,<br>그 <em>실전과 원리</em>에<br>관하여</h1>
+  <p class="authors">An Interactive Guide to Frontend Development — From HTML to Deployment</p>
+  <p class="affiliation">Vol. 03  ·  May 2026  ·  aboutFrontend Interactive</p>
+</header>
+
+<div id="hero-3d" class="scene-3d"></div>
+<p class="fig-title">그림 0. 프론트엔드 기술의 핵심 3대 축. HTML(구조), CSS(스타일), JavaScript(상호작용)가 상호작용하며 현대 웹을 구성한다.</p>
+
+<div style="margin: 40px 0;">
+<p>
+  <strong>프론트엔드 개발은 웹의 가장 눈에 띄는 부분입니다.</strong> 사용자가 보고, 클릭하고, 상호작용하는 모든 것이 프론트엔드의 영역입니다.
+  이 가이드는 HTML의 기초부터 최신 React, 상태관리, 성능 최적화, 빌드 도구까지
+  웹 개발의 전체 스펙트럼을 정리하고 있습니다.
+  각 장을 통해 이론과 실전을 동시에 이해할 수 있습니다.
+</p>
+</div>
+
+<h2 style="margin-top:50px;">🏛️ 시작하기 전에</h2>
+<a href="design-structure.html" style="text-decoration:none;color:inherit;display:block;margin:24px 0 40px 0;">
+  <div style="background:linear-gradient(135deg,rgba(14,165,233,0.1),rgba(139,92,246,0.1));border:1px solid var(--rule);border-radius:14px;padding:28px 32px;transition:all .25s ease;cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 32px rgba(14,165,233,0.15)';this.style.borderColor='var(--accent)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none';this.style.borderColor='var(--rule)';">
+    <div style="font-family:var(--font-mono);font-size:0.72em;letter-spacing:0.25em;color:var(--accent);font-weight:600;">SPECIAL · PREFACE</div>
+    <h3 style="margin:8px 0;font-size:1.4em;color:var(--ink);">디자인 구조 — 프론트엔드 웹 설계의 원리</h3>
+    <p style="margin:6px 0 0 0;color:var(--ink-mute);font-size:0.95em;line-height:1.6;">
+      코드를 짜기 전에 알아야 할 것들. 정보 아키텍처, 레이아웃 패턴 6선, 12컬럼 그리드 시스템,
+      F·Z 시선 흐름, 시각적 위계, 모던 디자인 트렌드, UX 10원칙까지 — 인터랙티브 그리드 시각화 포함.
+    </p>
+    <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
+      <span class="tag tag-blue">IA</span>
+      <span class="tag tag-violet">Layout</span>
+      <span class="tag tag-emerald">Hierarchy</span>
+      <span class="tag tag-amber">Grid</span>
+      <span class="tag tag-rose">UX</span>
+    </div>
+  </div>
+</a>
+
+<h2 style="margin-top:50px;">📚 장별 구성</h2>
+<div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:18px; margin:25px 0;">
+  <a href="chapters/01-html-basics.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">1장</strong><br>HTML 기초<br>
+      <span style="font-size:0.85em; color:#555;">웹의 뼈대: 시맨틱 마크업</span>
+    </div>
+  </a>
+  <a href="chapters/02-css-layout.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">2장</strong><br>CSS와 레이아웃<br>
+      <span style="font-size:0.85em; color:#555;">Flexbox · Grid · 애니메이션</span>
+    </div>
+  </a>
+  <a href="chapters/03-javascript-core.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">3장</strong><br>JavaScript 핵심<br>
+      <span style="font-size:0.85em; color:#555;">ES6+ · 비동기 · 클로저</span>
+    </div>
+  </a>
+  <a href="chapters/04-dom-manipulation.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">4장</strong><br>DOM 조작<br>
+      <span style="font-size:0.85em; color:#555;">이벤트 · 렌더링 · 가상 DOM</span>
+    </div>
+  </a>
+  <a href="chapters/05-react-components.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">5장</strong><br>React와 컴포넌트<br>
+      <span style="font-size:0.85em; color:#555;">JSX · Hook · 생명주기</span>
+    </div>
+  </a>
+  <a href="chapters/06-state-management.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">6장</strong><br>상태관리<br>
+      <span style="font-size:0.85em; color:#555;">Context · Redux · Zustand</span>
+    </div>
+  </a>
+  <a href="chapters/07-responsive-design.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">7장</strong><br>반응형 디자인<br>
+      <span style="font-size:0.85em; color:#555;">미디어쿼리 · 모바일 퍼스트</span>
+    </div>
+  </a>
+  <a href="chapters/08-performance.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">8장</strong><br>성능 최적화<br>
+      <span style="font-size:0.85em; color:#555;">번들 · 레이지로딩 · Core Web Vitals</span>
+    </div>
+  </a>
+  <a href="chapters/09-build-deploy.html" style="text-decoration:none; color:inherit;">
+    <div class="concept-box" style="margin:0; cursor:pointer;">
+      <strong style="color:#1a4b8f;">9장</strong><br>빌드도구와 배포<br>
+      <span style="font-size:0.85em; color:#555;">Vite · Webpack · CI/CD</span>
+    </div>
+  </a>
+</div>
+
+<h2 style="margin-top:50px;">📂 파일 구조</h2>
+<pre><code>aboutFrontend/
+├── index.html              ← 이 페이지 (표지)
+├── styles.css              ← 모든 스타일 (수정 시 전체 페이지에 반영)
+└── chapters/
+    ├── 01-html-basics.html     (HTML 기초)
+    ├── 02-css-layout.html      (CSS와 레이아웃)
+    ├── 03-javascript-core.html (JavaScript 핵심)
+    ├── 04-dom-manipulation.html (DOM 조작)
+    ├── 05-react-components.html (React와 컴포넌트)
+    ├── 06-state-management.html (상태관리)
+    ├── 07-responsive-design.html (반응형 디자인)
+    ├── 08-performance.html     (성능 최적화)
+    └── 09-build-deploy.html    (빌드도구와 배포)
+</code></pre>
+
+<p style="margin-top:30px; color:#555; font-style:italic;">
+💡 수정 팁: 디자인은 <code>styles.css</code>만 편집하면 모든 페이지에 반영됩니다.
+개별 장의 내용은 해당 <code>chapters/*.html</code>만 수정하면 됩니다.
+</p>
+
+</main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// Three.js 3D Scene for Frontend Technologies
+(function() {
+  const container = document.getElementById('hero-3d');
+  if (!container) return;
+
+  let scene, camera, renderer;
+  let boxes = [];
+  let particles = [];
+  let mouseX = 0, mouseY = 0;
+
+  function init() {
+    // Scene setup
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xede2c9);
+
+    // Camera
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+    camera.position.z = 400;
+
+    // Renderer
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    container.appendChild(renderer.domElement);
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambientLight);
+
+    const pointLight = new THREE.PointLight(0xffffff, 0.8);
+    pointLight.position.set(200, 200, 200);
+    scene.add(pointLight);
+
+    // Create rotating boxes (HTML, CSS, JS)
+    createTechBoxes();
+
+    // Create particles background
+    createParticles();
+
+    // Mouse tracking
+    document.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('resize', onWindowResize);
+
+    // Animation loop
+    animate();
+  }
+
+  function createTechBoxes() {
+    const techs = [
+      { label: 'HTML', color: 0xe8b4a8, x: -100, angle: 0 },
+      { label: 'CSS', color: 0xa8d4e8, x: 0, angle: 2.094 },
+      { label: 'JS', color: 0xf4d4a8, x: 100, angle: 4.189 }
+    ];
+
+    techs.forEach((tech, idx) => {
+      const geometry = new THREE.BoxGeometry(80, 80, 80);
+      const material = new THREE.MeshPhongMaterial({
+        color: tech.color,
+        shininess: 100
+      });
+      const box = new THREE.Mesh(geometry, material);
+
+      box.position.x = tech.x;
+      box.userData.orbitAngle = tech.angle;
+      box.userData.orbitRadius = 120;
+      box.userData.label = tech.label;
+
+      scene.add(box);
+      boxes.push(box);
+    });
+  }
+
+  function createParticles() {
+    const geometry = new THREE.BufferGeometry();
+    const particleCount = 60;
+    const positions = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount * 3; i += 3) {
+      positions[i] = (Math.random() - 0.5) * 600;
+      positions[i + 1] = (Math.random() - 0.5) * 600;
+      positions[i + 2] = (Math.random() - 0.5) * 600;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    const material = new THREE.PointsMaterial({
+      color: 0xb8441c,
+      size: 2,
+      opacity: 0.4,
+      sizeAttenuation: true
+    });
+
+    const particleSystem = new THREE.Points(geometry, material);
+    scene.add(particleSystem);
+    particles.push(particleSystem);
+  }
+
+  function onMouseMove(event) {
+    mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+    mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+  }
+
+  function onWindowResize() {
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height);
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Rotate boxes in orbit and spin
+    boxes.forEach((box, idx) => {
+      const time = Date.now() * 0.0005;
+
+      // Orbital motion
+      box.userData.orbitAngle += 0.003;
+      box.position.x = Math.cos(box.userData.orbitAngle) * box.userData.orbitRadius;
+      box.position.z = Math.sin(box.userData.orbitAngle) * box.userData.orbitRadius * 0.6;
+
+      // Self rotation
+      box.rotation.x += 0.005;
+      box.rotation.y += 0.008;
+      box.rotation.z += 0.003;
+
+      // Subtle vertical bobbing
+      box.position.y = Math.sin(time + idx) * 30;
+    });
+
+    // Rotate particles slowly
+    particles.forEach(particle => {
+      particle.rotation.x += 0.0002;
+      particle.rotation.y += 0.0003;
+    });
+
+    // Camera tracking based on mouse
+    camera.position.x += (mouseX * 100 - camera.position.x) * 0.05;
+    camera.position.y += (mouseY * 100 - camera.position.y) * 0.05;
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
+  }
+
+  // Initialize when page loads
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

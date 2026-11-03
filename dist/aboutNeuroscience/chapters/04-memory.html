@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4. 기억과 학습 — aboutNeuroscience</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol>
+<li><a href="../index.html">🧠 표지</a></li><li><a href="01-neurons.html">1. 뉴런과 시냅스</a></li><li><a href="02-brain-anatomy.html">2. 뇌 해부학</a></li><li><a href="03-sensory.html">3. 감각과 지각</a></li><li><a href="04-memory.html">4. 기억과 학습</a></li><li><a href="05-emotion.html">5. 정서와 동기</a></li><li><a href="06-consciousness.html">6. 의식과 수면</a></li><li><a href="07-neuroplasticity.html">7. 신경가소성</a></li><li><a href="08-disorders.html">8. 뇌질환과 장애</a></li><li><a href="09-neurotech.html">9. 뇌공학과 AI</a></li></ol></aside>
+<main><header class="paper-header"><h1><em>기억과 학습</em></h1><p class="authors">Chapter 4 — Memory Systems & Learning Mechanisms</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 해마의 원형 회로에서 반복 자극으로 연결이 강화되는 장기강화(LTP)입니다</span>
+<h2>기억과 학습 개요</h2><p>Memory Systems & Learning Mechanisms의 핵심 메커니즘을 3D 시뮬레이션과 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>단기기억과 장기기억, 해마의 기억 공고화, 장기강화(LTP) 현상을 통한 시냅스 가소성과 학습의 원리를 다룹니다.</p></div>
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭을 선택하세요. 언어 토글로 영어/일본어/중국어 학습이 가능합니다.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🧠 한 줄로 이해하기</h3><p>기억은 우리 뇌의 <strong>살아있는 도서관</strong>이에요! 📚 지나간 경험을 보관했다가 필요할 때 꺼내 쓸 수 있게 해줘요.</p>
+  <h3>😲 왜 재밌을까?</h3><p>어릴 때 배운 자전거는 수십 년이 지나도 몸이 기억해요. 🚲 옛날 동네 골목 풍경, 할머니 음식 냄새는 단어 하나에 갑자기 확 떠오르기도 하죠. 그런데 어제 본 영화 줄거리는 말할 수 있으면서, 5분 전에 둔 휴대폰은 어디 갔는지 못 찾아요! 📱❓ 기억은 '나를 나답게' 만드는 소중한 보물이에요. 💎</p>
+  <div class="info-card"><h4>🌱 꼭 알아둘 말</h4><ul><li><strong>해마(Hippocampus)</strong>: 새 기억을 만드는 본부 🏛️</li><li><strong>작업기억(Working Memory)</strong>: 잠깐 붙잡아두는 메모지 📝</li><li><strong>장기기억(Long-term Memory)</strong>: 오래 보관하는 기억 🗄️</li><li><strong>응고화(Consolidation)</strong>: 기억이 단단해지는 과정 🧱</li><li><strong>인출(Retrieval)</strong>: 저장한 기억을 꺼내는 것 🔍</li></ul></div>
+  <h3>💬 쉽게 풀어보기</h3><p>기억을 <strong>도서관</strong>이라고 생각해봐요! 📖 새로 들어온 책(경험)은 먼저 임시 카운터(작업기억)에 잠깐 놓여요. 그러면 사서(해마)가 중요해 보이는 걸 골라 깊은 서고(대뇌피질)로 옮겨 정리해요. 이 옮기는 일이 <strong>응고화</strong>인데, 주로 <strong>잠자는 동안</strong> 열심히 일어나요! 😴 나중에 책을 다시 찾을 때(인출)는 색인을 따라가는데, 색인이 흐릿하면 책이 있어도 못 찾아요. 이게 바로 "어, 말이 입가에서만 맴도는" 현상이죠! 😅 재밌는 건, 책을 꺼낼 때마다 우리가 조금씩 다시 쓴다는 거예요. 그래서 같은 추억도 시간이 지나면 살짝 바뀌어요. 그리고 자전거처럼 몸이 아는 '절차 기억'은 다른 서가에 있어서, 생각 안 해도 자동으로 척척 작동해요! 🚴</p>
+  <div class="study-tip"><strong>💡 학습 TIP:</strong> 외운 직후 말고, 살짝 잊었을 때 다시 떠올려봐요! 이 '꺼내기 연습'이 시험에서 진짜 쓰는 힘을 가장 빨리 키워줘요. 🎯</div>
+  <h3>📌 요약</h3><ul><li>기억은 하나가 아니라 여러 시스템의 합이에요.</li><li>해마가 새 기억을 만들어 피질로 보내요.</li><li>응고화는 잠과 깊은 관계가 있어요.</li><li>인출은 매번 다시 만드는 과정이에요.</li><li>몸이 기억하는 절차 기억은 따로 작동해요.</li></ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>메커니즘 깊이</h3><p>기억은 부호화, 응고화, 저장, 인출의 단계를 거칩니다. 부호화는 해마의 치아이랑과 CA3-CA1 회로에서 일화 정보를 패턴 분리·완성으로 처리하며 시작됩니다. 시냅스 수준의 응고화는 NMDA 수용체 활성화와 단백질 합성에 의해 LTP가 안정화되는 과정이고, 시스템 수준의 응고화는 수개월에서 수년에 걸쳐 기억이 점차 신피질에 분산 저장되는 과정입니다. 작업기억은 전전두엽의 지속 발화로 유지되며, 도파민이 신호 대 잡음비를 조절합니다. 절차 기억은 기저핵과 소뇌가 주도하고, 정서 기억은 편도체가 강화합니다. 수면 중 서파수면은 시스템 응고화에, 렘수면은 정서 기억과 통합에 중요합니다.</p>
+  <h3>대표 실험/사례</h3>
+  <div class="info-card"><h4>🧠 사례 1</h4><p>환자 H.M.은 양측 해마 절제 후 일화기억 형성 능력을 잃었지만 거울보고 그리기 같은 절차 학습은 정상이었습니다.</p></div>
+  <div class="info-card"><h4>🧠 사례 2</h4><p>로프투스의 오기억 실험은 사후 정보가 원래 기억을 덮어쓸 수 있음을 입증해 목격자 진술의 신뢰성 논쟁을 이끌었습니다.</p></div>
+  <h3>실험 방법</h3><p>모리스 수중미로는 공간기억을, 방사형 미로는 작업/참조 기억을 구분합니다. 광유전학 인그램 태깅은 특정 기억 흔적 세포를 식별하고, fMRI의 표상 유사성 분석(RSA)은 인간 기억 표상을 정량화합니다.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> "기억은 비디오테이프처럼 그대로 저장된다"는 생각은 잘못되었습니다. 기억은 매번 인출 시 재구성되며 변형 가능합니다.</div>
+
+<h3>전문가 레벨</h3><p>인그램 이론에 따르면 특정 기억은 특정 뉴런 집단(engram cells)의 분포 활성 패턴으로 표상됩니다. 토네가와 그룹의 광유전학 연구는 인그램 세포를 직접 자극해 인공적으로 기억을 떠올리게 하거나 새 기억을 이식할 수 있음을 보였습니다. 보완 학습 시스템(CLS) 모델은 해마(빠른 학습)와 신피질(느린 학습)의 상보성을 설명하며, 이는 인공신경망의 재해석에도 영향을 줍니다. 재응고화 이론은 인출 시 기억이 일시적으로 불안정해지며 단백질 합성이 다시 필요하다는 점에서, PTSD 치료에 단초를 제공합니다. 메모리의 시간 차원에는 이론적으로 격자 세포, 시간 세포, 위치 세포가 협력해 인지 지도를 형성합니다. 신피질-해마 리플레이 동조는 수면 중 시스템 응고화의 신경 기반이며, 슈피글 그룹 등은 이를 폐회로 자극으로 강화하는 시도를 진행 중입니다. 메모리의 분자 수준 표지로 CREB, Arc, BDNF가 핵심 후보입니다.</p>
+  <h3>핵심 모델</h3><div class="formula">보완 학습 시스템(CLS): 해마 빠른 부호화 → 수면 리플레이 → 신피질 느린 통합 (오프라인 재현)</div>
+  <h3>최신 연구</h3><p>인공지능의 기억 보강 신경망(MANN)은 외부 메모리 모듈을 사용해 학습 효율을 높이고, 인간 기억 모델 검증에 활용됩니다. 광유전학 인그램 조작 연구는 우울증과 공포 기억의 표적 치료 가능성을 탐구합니다. 비침습적 폐회로 신경 자극은 시간 인지를 향상시키는 임상 시험에 진입했습니다.</p>
+  <h3>관련 분야</h3><ul><li>인지심리학과 기억 모델</li><li>인공지능과 메타학습</li><li>임상 신경학과 PTSD 치료</li></ul>
+  <h3>추가 자료</h3><ul><li>Squire, <em>Memory: From Mind to Molecules</em></li><li>Kandel, <em>In Search of Memory</em></li><li>Eichenbaum, <em>The Cognitive Neuroscience of Memory</em></li></ul>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 만약 외상 기억을 선택적으로 지울 수 있는 약이 개발된다면, 윤리적·법적 경계는 어디일까요? 재응고화 차단 연구의 함의를 토론해 봅시다.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 기억이 만들어지는 순서</h2>
+<p>경험이 장기기억으로 자리 잡기까지의 단계를 순서대로 클릭하세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#818cf8","prompt":"기억이 형성·저장·인출되는 단계를 순서대로 클릭하세요","steps":["부호화","작업기억","응고화","저장","인출"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#818cf8","questions":[{"q":"새 기억을 만드는 본부는?","choices":["해마","편도체","소뇌","시상"],"answer":0},{"q":"잠시 정보를 붙잡는 임시 기억은?","choices":["장기기억","작업기억","절차기억","감각기억"],"answer":1},{"q":"저장된 기억을 꺼내는 일은?","choices":["부호화","응고화","인출","저장"],"answer":2},{"q":"기억이 단단해지는 과정은?","choices":["인출","부호화","저장","응고화"],"answer":3},{"q":"응고화가 활발히 일어나는 때는?","choices":["운동 중","수면 중","식사 중","각성 중"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,0,8);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const N=12,R=2.8,nodes=[];
+  for(let k=0;k<N;k++){const ang=(k/N)*Math.PI*2;const node=new THREE.Mesh(new THREE.SphereGeometry(0.28,14,14),new THREE.MeshBasicMaterial({color:0x10b981}));node.position.set(Math.cos(ang)*R,Math.sin(ang)*R,0);s.add(node);nodes.push(node);}
+  const links=[];
+  for(let k=0;k<N;k++){const p1=nodes[k].position,p2=nodes[(k+1)%N].position;const g=new THREE.BufferGeometry().setFromPoints([p1,p2]);const ln=new THREE.Line(g,new THREE.LineBasicMaterial({color:0x6ee7b7,transparent:true,opacity:0.25}));s.add(ln);links.push(ln);}
+  const hub=new THREE.Mesh(new THREE.IcosahedronGeometry(0.55,0),new THREE.MeshBasicMaterial({color:0x059669}));s.add(hub);
+  const spark=new THREE.Mesh(new THREE.SphereGeometry(0.18,10,10),new THREE.MeshBasicMaterial({color:0xfde047}));s.add(spark);
+  s.userData.nodes=nodes;s.userData.links=links;s.userData.spark=spark;s.userData.N=N;s.userData.R=R;
+  // 기억 회로 라벨 — 해마의 반복 자극과 LTP를 가르치기 위함
+  [['해마(기억 형성)','#047857',0,0.9,0],['신경 회로','#059669',0,R+0.6,0],['반복 자극 → 시냅스 강화(LTP)','#b45309',0,-R-0.6,0]].forEach(d=>{const t=lbl(d[0],d[1]);t.position.set(d[2],d[3],d[4]);s.add(t);});
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 해마의 회로에서 반복 자극이 연결을 강화합니다.','함께 자주 발화한 시냅스는 점점 강해집니다 — 장기강화(LTP).','강화된 회로가 안정되면 작업기억이 장기기억으로 응고화됩니다.','잠자는 동안 회로가 재현(replay)되며 기억이 피질로 옮겨집니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const N2=s.userData.N;const head=(T*1.5)%N2;s.userData.links.forEach((ln,i)=>{const d=Math.min(Math.abs(i-head),N2-Math.abs(i-head));const lit=Math.max(0,1-d*0.6);ln.material.opacity=0.2+lit*0.7;ln.material.color.setHSL(0.4-lit*0.27,0.8,0.5);});const hi=Math.floor(head)%N2;const ang=(hi/N2)*Math.PI*2;s.userData.spark.position.set(Math.cos(ang)*s.userData.R,Math.sin(ang)*s.userData.R,0);s.userData.nodes.forEach((nd,i)=>{nd.scale.setScalar(1+0.4*Math.max(0,1-Math.min(Math.abs(i-head),N2-Math.abs(i-head))));});s.rotation.y+=0.003; r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script></body></html>

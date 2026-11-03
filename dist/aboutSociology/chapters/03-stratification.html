@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3. 사회 계층 — aboutSociology</title><link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  <link rel="stylesheet" href="../../shared/light-theme.css">
+  <script defer src="../../shared/i18n.js"></script>
+  <script defer src="../../shared/support.js"></script>
+  <script defer src="../../shared/search.js"></script>
+  <script defer src="../../shared/difficulty.js"></script>
+  <script defer src="../../shared/quizgame3d.js"></script>
+  <script defer src="../../shared/learngame3d.js"></script>
+</head>
+<body><div class="layout"><aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><h3>전체 목차</h3><ol><li><a href="../index.html">👥 표지</a></li><li><a href="01-intro.html">1. 사회학 개론</a></li><li><a href="02-culture.html">2. 문화와 사회화</a></li><li><a href="03-stratification.html">3. 사회 계층</a></li><li><a href="04-institutions.html">4. 사회 제도</a></li><li><a href="05-deviance.html">5. 일탈과 범죄</a></li><li><a href="06-gender.html">6. 젠더와 가족</a></li><li><a href="07-race.html">7. 인종과 민족</a></li><li><a href="08-urban.html">8. 도시와 환경</a></li><li><a href="09-digital.html">9. 디지털 사회</a></li></ol></aside>
+<main><header class="paper-header"><h1><em>사회 계층</em></h1><p class="authors">Chapter 3 — Social Stratification & Inequality</p></header>
+<div class="scene-3d" id="sim-scene"></div><span class="interact-hint">⟳ 넓은 하층 위로 좁아지는 계층 피라미드 — 불평등의 구조 — 회전</span>
+<h2>사회 계층</h2><p>Social Stratification & Inequality의 핵심 개념을 3D 시각화와 함께 학습합니다.</p>
+<div class="info-card"><h4>핵심 개념</h4><p>계급과 계층 이론, 사회 이동(Social Mobility)의 기제, 부와 권력의 불평등 구조를 탐구합니다.</p></div>
+
+<h2>📚 난이도별 학습</h2>
+<p>본인 수준에 맞춰 탭 선택. 언어 토글로 영어/일본어/중국어 학습 가능.</p>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">🟢 쉬움</button>
+  <button class="difficulty-tab" data-target="hard">🔴 고급</button>
+</div>
+
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">🟢 쉬움</span>
+  <h3>🎯 딱 한 문장!</h3>
+  <p>사회 계층은 사람마다 가진 게 달라서 생기는 <strong>'보이지 않는 층층 구조'</strong>예요. 🏢</p>
+  <h3>🤔 우리 주변에서 찾아볼까?</h3>
+  <p>가만 보면 곳곳에 층이 있어요.</p>
+  <ul>
+    <li>🏠 같은 동네인데 어떤 집은 비싸고 어떤 집은 저렴해요.</li>
+    <li>✈️ 어떤 친구는 방학마다 여행 가고, 어떤 친구는 학원도 못 다녀요.</li>
+    <li>🎓 같은 학교여도 집안 형편에 따라 꿈의 크기가 달라지기도 해요.</li>
+  </ul>
+  <div class="info-card">
+    <h4>🌱 이 낱말만 알면 끝!</h4>
+    <ul>
+      <li><strong>계층</strong> 👉 가진 것에 따라 나뉘는 사회의 층층 구조</li>
+      <li><strong>계급</strong> 👉 주로 '돈' 기준으로 나뉜 무리</li>
+      <li><strong>사회 이동</strong> 👉 아래층에서 위층으로 (또는 반대로) 옮겨가는 것</li>
+      <li><strong>불평등</strong> 👉 기회와 결과가 고르게 나눠지지 않은 상태</li>
+    </ul>
+  </div>
+  <h3>📖 이야기로 쉽게!</h3>
+  <p><strong>100m 달리기</strong>를 상상해봐요. 🏃</p>
+  <p>그런데 출발선이 다 달라요! 어떤 친구는 50m 앞에서, 어떤 친구는 50m 뒤에서 시작해요. 똑같이 열심히 뛰어도 결과가 다를 수밖에 없죠?</p>
+  <p>사회도 비슷해요. "노력하면 성공한다"고 하지만, 사실 출발선이 사람마다 달라요. 부모님 재산, 사는 동네, 다닐 수 있는 학원이 다르니까요. 이걸 <strong>'구조적 불평등'</strong>이라고 불러요.</p>
+  <p>옛날엔 "개천에서 용 난다"는 말처럼 위층으로 올라가기가 쉬웠대요. 엘리베이터 🛗 가 쌩쌩 움직인 거죠. 그런데 요즘은 그 엘리베이터가 좀 느려졌다고 해요. 이건 누구 한 사람 잘못이 아니라, 사회 구조 때문이에요. 그래서 사회학자들은 "어떻게 하면 더 공정할까?"를 고민한답니다!</p>
+  <div class="study-tip"><strong>💡 이렇게 해볼까?</strong> 친구들의 집안 환경이 학교생활에 어떤 영향을 주는지 살짝 관찰해봐요. 안 보이던 '층'이 보이기 시작할 거예요! 👀</div>
+  <h3>⭐ 한 줄 정리</h3>
+  <ul>
+    <li>계층은 가진 것에 따른 층층 구조</li>
+    <li>출발선의 차이가 결과의 차이를 만들어요</li>
+    <li>불평등은 개인이 아니라 '구조'의 문제</li>
+    <li>사회 이동 = 층 사이를 옮겨가는 것</li>
+  </ul>
+</div>
+
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">🔴 고급</span>
+<h3>이론 깊이</h3>
+  <p>계층을 보는 시각도 패러다임마다 달라요. 구조-기능주의는 데이비스-무어 명제로 유명해요. 이들은 '중요하고 어려운 일을 하는 사람에게 더 많은 보상을 줘야 사회가 효율적으로 작동한다'고 봤어요. 즉 불평등은 사회 기능을 위해 필연적이라는 거죠. 갈등 이론은 마르크스의 계급 분석에서 출발해요. 마르크스는 자본가(생산수단 소유)와 노동자(노동력만 소유)의 계급 갈등이 자본주의의 핵심 동력이라고 봤어요. 베버는 여기에 권력(정치적 영향력), 신분(사회적 명예), 계급(경제적 지위)이라는 세 차원을 더했죠. 같은 부자라도 신흥 부자와 전통 귀족은 신분이 다르다는 거예요. 상징적 상호작용주의는 미시적으로 계층이 일상 속에서 어떻게 표현되는지에 주목해요. 베블런의 '과시적 소비' 개념은 부자들이 자신의 지위를 드러내기 위해 사치품을 소비한다는 분석이죠. 한편 구조주의 마르크스주의자 알튀세르는 이데올로기적 국가 장치(학교, 미디어, 종교)가 계급 구조를 재생산한다고 봤어요. 부르디외는 더 나아가 문화자본·사회자본·경제자본의 세 형태가 결합해 계급이 세대 간 전수된다고 분석했답니다.</p>
+  <h3>주요 사상가/연구</h3>
+  <div class="info-card">
+    <h4>👥 연구 1 — 카를 마르크스</h4>
+    <p>'자본론'에서 자본가 계급이 노동자의 잉여가치를 착취한다고 주장했어요. 그는 계급 의식이 형성되면 혁명을 통해 자본주의가 극복된다고 봤지만, 현대 자본주의는 그의 예측과 다른 경로를 걸어왔어요.</p>
+  </div>
+  <div class="info-card">
+    <h4>👥 연구 2 — 토마 피케티</h4>
+    <p>'21세기 자본'에서 300년에 걸친 부의 분배 데이터를 분석해 자본수익률(r)이 경제성장률(g)보다 높을 때 불평등이 심화된다는 'r>g' 명제를 제시했어요. 글로벌 자본세를 해법으로 제안했죠.</p>
+  </div>
+  <h3>현실 사회 분석</h3>
+  <p>한국의 부동산 격차는 계층 사회학의 전형적 사례예요. 단순한 재산 차이를 넘어, 자녀 교육 환경, 학군, 인맥 네트워크가 모두 함께 움직이며 세대 간 계급 재생산이 이루어져요. 또 미국의 학자금 대출 위기도 흥미로워요. 교육이 계층 상승의 사다리라고 믿고 빚을 내 대학에 갔지만, 졸업 후 갚을 능력이 없는 사람들이 늘어나 오히려 빈곤이 확산되는 역설이 발생하고 있죠.</p>
+  <div class="warning-box"><strong>⚠️ 자주 하는 오해:</strong> '자수성가' 신화는 통계적으로는 매우 드문 예외예요. 대부분의 부와 가난은 세대를 거쳐 전수되며, 사회 이동성은 점점 둔화되고 있답니다.</div>
+
+<h3>전문가 레벨</h3>
+  <p>현대 계층 연구는 단일 차원을 넘어 교차성(intersectionality)과 다차원성으로 확장되었어요. 부르디외의 다중 자본 이론은 경제자본, 문화자본(체화·객체화·제도화), 사회자본을 결합한 '장(field)' 분석을 제공해요. 그의 '아비투스' 개념은 계급이 신체와 무의식에 각인되어 자연화되는 메커니즘을 포착했죠. 에릭 올린 라이트의 신마르크스주의 계급 분석은 자본 소유, 조직 자산, 기술 자산이라는 세 축으로 현대 자본주의의 모순적 계급 위치를 분석했어요. 골드소프의 EGP 계급 분류는 직업 구조 기반의 비교 연구에 표준이 되었고, 최근에는 사베이지의 영국 계급 조사(GBCS)가 7개 계급을 도출해 계층 지형을 새롭게 그렸답니다. 교차성 이론(킴벌리 크렌쇼)은 계급, 인종, 젠더가 독립적으로 작동하는 게 아니라 결합해 고유한 억압 구조를 만든다는 것을 보여줬어요. 흑인 여성 노동자의 경험은 흑인 남성 노동자나 백인 여성 노동자의 경험으로 환원될 수 없다는 거죠. 또 글로벌 자본주의 분석에서는 새스킨 사센의 '글로벌 도시' 이론이 초국적 자본 흐름과 노동 분업의 새로운 지형을 분석하고 있어요. 가이 스탠딩의 '프레카리아트' 개념은 신자유주의 노동 시장에서 등장한 새로운 불안정 노동 계급을 포착했답니다.</p>
+  <h3>방법론</h3>
+  <p>계층 연구 방법론은 매우 정교해요. 양적 연구로는 EGP·ESeC 같은 직업 기반 계급 분류, 지니 계수·팔마 비율 같은 불평등 지표, 세대 간 이동을 측정하는 회귀 분석과 경로 모형이 핵심이에요. 패널 데이터(KLIPS, PSID)를 활용한 종단 연구로 생애 과정의 계급 변화를 추적해요. 질적 연구는 민족지를 통해 일상 속 계급 구별짓기를 포착하고, 생애사 인터뷰로 계급 경험의 주관적 의미를 분석해요. 최근에는 행정 데이터(세무, 사회보험)와 빅데이터를 결합해 자산 불평등의 실시간 양상을 추적하는 연구가 활발해요.</p>
+  <h3>최신 연구</h3>
+  <p>첫째, 자산 불평등 연구가 부의 양극화 시대에 중심으로 부상했어요. 사에즈와 주크먼은 미국 상위 0.1%가 보유한 부의 비중이 1929년 수준으로 회귀했음을 보여줬죠. 둘째, 알고리즘 불평등 연구는 채용·신용·치안 알고리즘이 계급·인종 격차를 재생산하는 양상을 분석해요. 셋째, 기후 불평등 연구는 환경 위기의 비용이 가난한 사람들과 글로벌 사우스에 집중되는 양상을 다루고 있답니다.</p>
+  <h3>관련 분야</h3>
+  <ul>
+    <li>경제학 — 소득·자산 분배 분석</li>
+    <li>정치학 — 권력 분배와 정치적 대표성</li>
+    <li>인구학 — 세대 간 이동과 인구 구조</li>
+  </ul>
+  <h3>추가 자료</h3>
+  <ul>
+    <li>피케티, 『21세기 자본』</li>
+    <li>부르디외, 『구별짓기』</li>
+    <li>윌킨슨·피킷, 『평등이 답이다』</li>
+    <li>스탠딩, 『프레카리아트』</li>
+  </ul>
+  <div class="success-box"><strong>🎓 사고 실험:</strong> 롤스의 '무지의 베일'을 떠올려보세요. 만약 당신이 어떤 계급, 인종, 성별로 태어날지 모른다면, 어떤 사회 제도를 설계하시겠어요? 이 사고 실험은 정의와 공정성의 본질을 탐구하게 해줍니다.</div>
+</div>
+
+<h2>🕹️ 직접 해보기 — 마르크스의 계급 갈등 과정</h2>
+<p>마르크스가 본 자본주의 계급 동학의 순서대로 배열하세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"sequence","color":"#7c3aed","prompt":"계급 갈등의 전개 순서","steps":["계급 분화","잉여가치 착취","계급 의식 형성","혁명","자본주의 극복"]};</script>
+<h2>🎮 3D 미니게임</h2>
+<p>이 챕터에서 배운 내용을 게임으로 확인해보세요. 떠 있는 보기 중 정답을 클릭!</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"계층 간 이동을 뜻하는 말은?","choices":["사회 통제","사회 이동","사회화","아노미"],"answer":1},{"q":"본문 속 계층의 비유는?","choices":["같은 출발선","둥근 탁자","평평한 운동장","높이 다른 출발선"],"answer":3},{"q":"계급을 나누는 주된 기준은?","choices":["외모","나이","경제적 위치","취미"],"answer":2},{"q":"'r>g' 명제를 제시한 학자는?","choices":["피케티","베버","뒤르켐","마르크스"],"answer":0},{"q":"'과시적 소비' 개념의 학자는?","choices":["알튀세르","베블런","부르디외","라이트"],"answer":1}]};</script>
+</main></div>
+<script>
+(function(){
+  const c=document.getElementById('sim-scene');if(!c||typeof THREE==='undefined')return;const s=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(50,c.clientWidth/c.clientHeight,0.1,1000);cam.position.set(0,1,10);cam.lookAt(0,0,0);
+  let r;try{r=new THREE.WebGLRenderer({antialias:true,alpha:true});}catch(e){return;}
+  r.setSize(c.clientWidth,c.clientHeight);r.setPixelRatio(Math.min(window.devicePixelRatio,2));c.appendChild(r.domElement);
+  function lbl(txt,color){const fs=25,cv=document.createElement('canvas');let x=cv.getContext('2d');const font='700 '+fs+'px "Noto Sans KR",sans-serif';x.font=font;cv.width=Math.ceil(x.measureText(txt).width)+18;cv.height=fs+12;x=cv.getContext('2d');x.font=font;x.textAlign='center';x.textBaseline='middle';x.fillStyle=color||'#1f2430';x.fillText(txt,cv.width/2,cv.height/2);const tx=new THREE.CanvasTexture(cv);tx.minFilter=THREE.LinearFilter;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.scale.set(cv.width*0.0062,cv.height*0.0062,1);return sp;}
+  const layers=5,tiers=[];const tierNames=['하층(노동자)','중하층','중간 계급','중상층','상층(자본가)'];const tierCols=['#b91c1c','#c2410c','#a16207','#15803d','#1d4ed8'];
+  for(let i=0;i<layers;i++){const w=4.4-i*0.85;const y=-2.5+i*1.05;const col=new THREE.Color().setHSL(0.0+i*0.09,0.6,0.4+i*0.09);const box=new THREE.Mesh(new THREE.BoxGeometry(w,0.85,w),new THREE.MeshBasicMaterial({color:col}));box.position.y=y;s.add(box);const edge=new THREE.Mesh(new THREE.BoxGeometry(w*1.005,0.86,w*1.005),new THREE.MeshBasicMaterial({color:0x222233,wireframe:true}));edge.position.y=y;s.add(edge);tiers.push(box);
+  const L=lbl(tierNames[i],tierCols[i]);L.position.set(w/2+1.0,y,0);s.add(L);}
+  const climber=new THREE.Mesh(new THREE.SphereGeometry(0.28,14,14),new THREE.MeshBasicMaterial({color:0xffffff}));s.add(climber);s.userData.climber=climber;
+  const climberL=lbl('사회 이동','#111827');climberL.position.set(0,3.4,0);s.add(climberL);
+  const hintEl=document.querySelector('.interact-hint');
+  const caps=['⟳ 넓은 하층 위로 좁아지는 계층 피라미드 — 불평등의 구조.','마르크스: 생산수단을 가진 자본가와 노동력만 가진 노동자의 계급 갈등.','베버: 계급(경제)·신분(명예)·권력(정치)의 세 차원으로 계층을 봅니다.','피케티의 \'r>g\' — 자본수익률이 성장률보다 높으면 불평등이 심화됩니다.'];
+  let ci=0,ct=0;if(hintEl)hintEl.textContent=caps[0];
+  let md=false,px=0,py=0;c.addEventListener('mousedown',e=>{md=true;px=e.clientX;py=e.clientY;});window.addEventListener('mouseup',()=>md=false);c.addEventListener('mousemove',e=>{if(md){s.rotation.y+=(e.clientX-px)*0.005;s.rotation.x+=(e.clientY-py)*0.005;px=e.clientX;py=e.clientY;}});
+  let T=0;function a(){requestAnimationFrame(a);T+=0.016;ct+=0.016;if(ct>4.5){ct=0;ci=(ci+1)%caps.length;if(hintEl)hintEl.textContent=caps[ci];}const ph=(Math.sin(T*0.4)*0.5+0.5)*4;s.userData.climber.position.set(2.1-ph*0.42,-2.0+ph*1.05,2.1-ph*0.42);s.rotation.y+=0.004;r.render(s,cam);}a();
+  window.addEventListener('resize',()=>{cam.aspect=c.clientWidth/c.clientHeight;cam.updateProjectionMatrix();r.setSize(c.clientWidth,c.clientHeight);});
+})();
+</script>
+</body></html>

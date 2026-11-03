@@ -1,0 +1,432 @@
+/* ============================================================
+   nanamate · Universal Light Theme Override
+   모든 분야 페이지에 적용되는 밝고 심플한 라이트 테마
+   기존 다크 테마를 라이트로 강제 전환합니다.
+   ============================================================ */
+
+:root {
+  /* === 라이트 베이스 === */
+  --bg:          #fafbfc !important;
+  --bg-panel:    #ffffff !important;
+  --bg-card:     #ffffff !important;
+  --bg-elevated: #f5f7fa !important;
+
+  /* === 텍스트 === */
+  --text:        #1a1f2e !important;
+  --text-dim:    #4a5468 !important;
+  --text-mute:   #6b7280 !important;
+  --text-strong: #0a0e1a !important;
+
+  /* === 보더/그리드 (연하게) === */
+  --border:      rgba(0, 0, 0, 0.08) !important;
+  --border-soft: rgba(0, 0, 0, 0.05) !important;
+  --grid:        rgba(0, 0, 0, 0.03) !important;
+
+  /* === 링크/포커스 === */
+  --link:        #0066cc;
+  --link-hover:  #003d7a;
+}
+
+/* === 바디 강제 라이트 === */
+body {
+  background: #fafbfc !important;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.025) 1px, transparent 1px) !important;
+  background-size: 40px 40px !important;
+  color: #1a1f2e !important;
+}
+
+/* === 사이드바 === */
+aside {
+  background: #ffffff !important;
+  border-right: 1px solid rgba(0,0,0,0.08) !important;
+  color: #1a1f2e !important;
+}
+aside h3 {
+  color: #1a1f2e !important;
+}
+aside ol li a, aside ul li a {
+  color: #4a5468 !important;
+}
+aside ol li a:hover, aside ul li a:hover {
+  color: #0066cc !important;
+}
+.hub-back-link {
+  color: #6b7280 !important;
+  background: rgba(0,0,0,0.03) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+.hub-back-link:hover {
+  background: rgba(0,0,0,0.06) !important;
+  color: #1a1f2e !important;
+}
+
+/* === 메인 콘텐츠 === */
+main {
+  background: transparent !important;
+  color: #1a1f2e !important;
+}
+
+/* === 헤더/타이틀 === */
+h1, h2, h3, h4, h5, h6 {
+  color: #0a0e1a !important;
+}
+.paper-header h1, header h1 {
+  color: #0a0e1a !important;
+}
+em {
+  background: linear-gradient(180deg, transparent 60%, rgba(255, 220, 100, 0.4) 60%) !important;
+  font-style: normal !important;
+  padding: 0 4px !important;
+}
+
+/* === 단락 === */
+p, li {
+  color: #1a1f2e !important;
+}
+.authors, .affiliation {
+  color: #6b7280 !important;
+}
+
+/* === 카드/박스 (라이트로) === */
+.info-card, .concept-card, .card, .lesson-box {
+  background: #ffffff !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03) !important;
+  color: #1a1f2e !important;
+}
+.info-card h4, .concept-card h4, .card h4 {
+  color: #0a0e1a !important;
+}
+.info-card p, .concept-card p, .card p {
+  color: #1a1f2e !important;
+}
+
+/* === 공식/수식 박스 === */
+.formula, .equation, .math-box {
+  background: #f5f7fa !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  color: #0a0e1a !important;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  padding: 16px 20px !important;
+  border-radius: 8px !important;
+}
+
+/* === 코드 블록 === */
+pre, code {
+  background: #f5f7fa !important;
+  color: #0a0e1a !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+}
+code {
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+}
+
+/* === 3D 씬 컨테이너는 어두운 배경 유지 (시각화에 유리) === */
+.scene-3d, .threejs-container, canvas {
+  background: #0a0e1a !important;
+  border-radius: 12px !important;
+}
+.interact-hint {
+  color: #6b7280 !important;
+}
+.scene-controls {
+  background: rgba(255,255,255,0.95) !important;
+  color: #1a1f2e !important;
+}
+.scene-controls label {
+  color: #1a1f2e !important;
+}
+
+/* === 인풋/버튼 === */
+input[type="range"] {
+  background: rgba(0,0,0,0.06) !important;
+}
+button {
+  background: #0066cc !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+button:hover {
+  background: #003d7a !important;
+}
+
+/* === 스크롤바 === */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f5f7fa; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.4); }
+
+/* === 인쇄/모바일 가독성 === */
+@media (max-width: 768px) {
+  body { font-size: 15px !important; }
+  .layout { grid-template-columns: 1fr !important; }
+  aside {
+    position: relative !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+  }
+}
+
+/* === 강조 (각 분야 accent 색상은 그대로 사용) === */
+strong { color: #0a0e1a !important; font-weight: 600; }
+
+/* === 인용 === */
+blockquote {
+  background: #f5f7fa !important;
+  border-left: 4px solid #0066cc !important;
+  color: #4a5468 !important;
+}
+
+/* === 테이블 === */
+table {
+  background: #ffffff !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+}
+th {
+  background: #f5f7fa !important;
+  color: #0a0e1a !important;
+}
+td {
+  color: #1a1f2e !important;
+  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
+}
+
+/* === 난이도 탭 === */
+.difficulty-tabs {
+  position: static;
+  display: flex;
+  gap: 4px;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 999px;
+  padding: 4px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.difficulty-tab {
+  background: transparent !important;
+  border: none !important;
+  padding: 8px 16px !important;
+  cursor: pointer;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #6b7280 !important;
+  border-radius: 999px !important;
+  transition: all 0.2s;
+  min-width: auto !important;
+  white-space: nowrap;
+}
+.difficulty-tab:hover:not(.active) {
+  color: #0a0e1a !important;
+  background: rgba(0,0,0,0.04) !important;
+}
+.difficulty-tab.active[data-target="easy"] {
+  background: #10b981 !important;
+  color: #ffffff !important;
+}
+.difficulty-tab.active[data-target="medium"] {
+  background: #f59e0b !important;
+  color: #ffffff !important;
+}
+.difficulty-tab.active[data-target="hard"] {
+  background: #e11d48 !important;
+  color: #ffffff !important;
+}
+
+/* === 난이도 콘텐츠 — 좌측 정렬 (기본 흐름) === */
+.difficulty-content {
+  display: none;
+  padding: 24px 0;
+  animation: fadeIn 0.3s;
+  text-align: left;
+}
+.difficulty-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.difficulty-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.difficulty-badge.easy { background: #d1fae5; color: #065f46; }
+.difficulty-badge.medium { background: #fef3c7; color: #92400e; }
+.difficulty-badge.hard { background: #ffe4e6; color: #9f1239; }
+
+/* 모바일에서 난이도 탭 위치 조정 */
+@media (max-width: 768px) {
+  .difficulty-tabs {
+    position: static;
+    transform: none;
+    font-size: 12px;
+  }
+  .difficulty-tab {
+    padding: 6px 12px !important;
+    font-size: 11px !important;
+  }
+}
+
+/* === 다국어 토글 === */
+.lang-toggle {
+  position: static;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 999px;
+  padding: 4px;
+  display: flex;
+  gap: 2px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.lang-toggle button {
+  background: transparent !important;
+  color: #6b7280 !important;
+  border: none !important;
+  padding: 6px 12px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  border-radius: 999px !important;
+  cursor: pointer;
+  transition: all 0.15s;
+  min-width: auto !important;
+}
+.lang-toggle button.active {
+  background: #0a0e1a !important;
+  color: #ffffff !important;
+}
+.lang-toggle button:hover:not(.active) {
+  background: rgba(0,0,0,0.05) !important;
+  color: #0a0e1a !important;
+}
+
+/* === 사이드바 안에 들어간 토글들 (난이도 / 언어) === */
+.study-controls-sidebar {
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 220px !important;
+  z-index: 9997 !important;
+  overflow-y: auto !important;
+  padding: 18px 14px !important;
+  background: rgba(255,255,255,0.96) !important;
+  border-right: 1px solid rgba(0,0,0,0.08) !important;
+  box-shadow: 12px 0 32px rgba(15,23,42,0.06) !important;
+  box-sizing: border-box !important;
+}
+.has-study-controls-sidebar {
+  padding-left: 220px !important;
+}
+.study-controls-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0a0e1a;
+  margin: 0 0 14px;
+  letter-spacing: 0.02em;
+}
+.lang-toggle.in-sidebar,
+.sidebar-difficulty {
+  position: static !important;
+  top: auto !important; right: auto !important; bottom: auto !important; left: auto !important;
+  transform: none !important;
+  display: block !important;
+  margin: 14px 0 !important;
+  padding: 10px 12px !important;
+  background: #f8fafc !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+.toggle-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #6b7280;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.lang-toggle.in-sidebar { display: grid !important; grid-template-columns: repeat(4, 1fr); gap: 4px !important; padding: 10px 10px 8px !important; }
+.lang-toggle.in-sidebar .toggle-label { grid-column: 1 / -1; }
+.lang-toggle.in-sidebar button {
+  padding: 6px 0 !important;
+  font-size: 12px !important;
+  text-align: center;
+}
+.sidebar-difficulty .difficulty-tabs.in-sidebar {
+  position: static !important;
+  top: auto !important; right: auto !important; bottom: auto !important;
+  transform: none !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+.sidebar-difficulty .difficulty-tab {
+  padding: 6px 4px !important;
+  font-size: 11px !important;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* 모바일: 사이드바가 접히면 토글들은 sticky 카드처럼 보이게 */
+@media (max-width: 768px) {
+  .study-controls-sidebar {
+    position: sticky !important;
+    top: 0 !important;
+    bottom: auto !important;
+    width: 100% !important;
+    padding: 10px 12px !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+    box-shadow: 0 8px 22px rgba(15,23,42,0.06) !important;
+  }
+  .has-study-controls-sidebar {
+    padding-left: 0 !important;
+  }
+  .study-controls-title {
+    margin-bottom: 8px;
+  }
+  .lang-toggle.in-sidebar,
+  .sidebar-difficulty { margin: 10px 0 !important; }
+}
+
+/* === 학습 가이드 박스 === */
+.study-tip {
+  background: #eff6ff !important;
+  border-left: 4px solid #0066cc !important;
+  padding: 16px 20px !important;
+  margin: 20px 0 !important;
+  border-radius: 0 8px 8px 0 !important;
+  color: #1a1f2e !important;
+}
+.study-tip strong { color: #0066cc !important; }
+
+.warning-box {
+  background: #fef3c7 !important;
+  border-left: 4px solid #f59e0b !important;
+  padding: 16px 20px !important;
+  margin: 20px 0 !important;
+  border-radius: 0 8px 8px 0 !important;
+  color: #92400e !important;
+}
+
+.success-box {
+  background: #d1fae5 !important;
+  border-left: 4px solid #10b981 !important;
+  padding: 16px 20px !important;
+  margin: 20px 0 !important;
+  border-radius: 0 8px 8px 0 !important;
+  color: #065f46 !important;
+}
