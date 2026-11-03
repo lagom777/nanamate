@@ -173,7 +173,7 @@ function badge(c,x,y,r,col,o={}){c.save();if(o.alpha!=null)c.globalAlpha*=o.alph
 /* ── 인트로 ── */
 TPL.intro=function(c,t,d){
   label(c,'HISTORY MOTION NOTE',480,44,C.dim,{size:14});
-  T(c,'한국사, 움직이며 외우기',480,92,{font:DISP,size:34,align:'center',color:C.text});
+  T(c,'한국사, 움직이며 이해하기',480,92,{font:DISP,size:34,align:'center',color:C.text});
   const us=UNITS,n=us.length,per=5;
   us.forEach((u,i)=>{const r=Math.floor(i/per),cc=i%per,x=48+cc*176,y=150+r*170,k=ease(seg(t,.2+i*.18,.8+i*.18));if(k<=0)return;
     const cnt=S.filter(s=>s.u===i).length;
@@ -363,25 +363,57 @@ TPL.compare=function(c,t,d){
   const vk=ease(seg(lt,.3,.8));c.save();c.globalAlpha=vk;dot(c,480,304,30,'#09131F',{stroke:C.dim,lw:2});T(c,'VS',480,305,{font:DISP,size:22,align:'center',color:C.text});c.restore();
 };
 
-/* ── 문화유산 진열장: 그림 카드가 하나씩 켜지고, 다 나오면 차례로 비춘다 (이름·시대·한 줄은 IMAGES) ── */
+/* ── 유물 따져 보기: 모두 훑어본 뒤 하나씩 크게 비추며 "사실 → 그러니까 → 결론"을 잇고, 끝에 결론만 모아 다시 본다.
+   이름·시대·이유 세 단계(why)는 IMAGES. 유물 하나에 (dur-G_IN-G_OUT)/n 초, 멈춤 화면(still)은 마지막 정리 ── */
+const G_IN=2.6,G_OUT=5,G_STEP=['사실','그러니까','결론'];
+function fitLines(c,s,maxW,size,lines,w=600){let z=size;while(z>9&&wrap(c,s,maxW,`${w} ${z}px ${SANS}`).length>lines)z-=.5;return z;}
+function galleryGrid(c,t,its,col,recap,t0){
+  const n=its.length,cols=n<=4?n:n<=6?3:4,rows=Math.ceil(n/cols),gap=12,cw=(880-(cols-1)*gap)/cols,one=rows===1;
+  const ih=one?Math.min(cw-24,200):recap?100:124,ch=ih+(recap?(one?124:100):(one?58:52)),top=84+(420-(rows*ch+(rows-1)*gap))/2;
+  its.forEach((it,i)=>{const r=Math.floor(i/cols),cc=i%cols,inRow=r===rows-1?n-(rows-1)*cols:cols,   // 덜 찬 마지막 줄은 가운데로
+    x=40+(880-(inRow*cw+(inRow-1)*gap))/2+cc*(cw+gap),y=top+r*(ch+gap),k=ease(seg(t,t0+i*.12,t0+i*.12+.45));if(k<=0)return;
+    const ec=UNITS[it.u]?UNITS[it.u].c:col,iw=one?Math.min(cw-20,220):cw-20;
+    c.save();c.globalAlpha*=k;c.translate(x+cw/2,y+ch/2);c.scale(.94+.06*k,.94+.06*k);c.translate(-cw/2,-ch/2);
+    box(c,0,0,cw,ch,14,'#0E1B2A',recap?ec+'88':C.line,1.4);
+    plate(c,it.img,(cw-iw)/2,10,iw,ih,{r:10});
+    const ty=10+ih;
+    T(c,it.n,cw/2,ty+(recap?16:18),{size:fit(c,it.n,cw-16,one?18:15,700),w:700,align:'center'});
+    if(recap){pill(c,it.era,cw/2,ty+41,ec,{size:11.5});
+      const s=(it.why||[])[2]||'',z=fitLines(c,s,cw-20,12.5,2,500);WT(c,s,cw/2,ty+64,cw-20,z+3,{size:z,color:C.text,align:'center'});}
+    c.restore();});
+}
+function gallerySpot(c,lt,it,col,sl){
+  const ec=UNITS[it.u]?UNITS[it.u].c:col,why=it.why||[],a=ease(seg(lt,0,.45))*(1-seg(lt,sl-.32,sl));
+  c.save();c.globalAlpha*=a;
+  plate(c,it.img,48,84,320,320,{r:18,stroke:ec+'88',lw:2,pad:.96,zoom:1.04-.04*ease(seg(lt,0,1.8))});
+  T(c,it.n,208,432,{size:fit(c,it.n,320,22,700),w:700,align:'center'});
+  const ek=ease(seg(lt,4.5,4.9));if(ek>0)pill(c,it.era,208,468,ec,{size:13.5,alpha:ek});   // 시대는 이유를 다 본 뒤에
+  const sx=400,sw=512,bh=92,gap=24;
+  label(c,'왜 그럴까? 세 단계로 따져 보기',sx,100,C.dim,{size:12.5,align:'left'});
+  why.forEach((s,j)=>{const y=118+j*(bh+gap),t0=.5+j*1.6,k=ease(seg(lt,t0,t0+.45)),last=j===why.length-1;
+    if(j>0){const ka=ease(seg(lt,t0-.3,t0+.1));if(ka>0)arrow(c,sx+sw/2,y-gap+3,sx+sw/2,y-gap+3+(gap-6)*ka,ec,2.6,9);}
+    if(k<=0){box(c,sx,y,sw,bh,14,'#0B1622',C.line,1.2,{alpha:.6});T(c,'?',sx+sw/2,y+bh/2+1,{size:26,w:700,align:'center',color:C.dim,alpha:.6});return;}
+    c.save();c.globalAlpha*=k;c.translate((1-k)*24,0);
+    box(c,sx,y,sw,bh,14,last?ec+'26':'#0E1B2A',last?ec:ec+'66',last?2.6:1.5,{glow:last?18:0,gc:ec});
+    label(c,`${j+1} · ${G_STEP[j]||''}`,sx+18,y+20,ec,{size:12.5,align:'left',w:600});
+    const fw=last?700:600,z=fitLines(c,s,sw-36,19,2,fw),ls=wrap(c,s,sw-36,`${fw} ${z}px ${SANS}`),lh=z+6,y0=y+58-(ls.length-1)*lh/2;
+    ls.forEach((l,m)=>T(c,l,sx+18,y0+m*lh,{size:z,w:fw}));
+    c.restore();});
+  c.restore();
+}
+function galleryStrip(c,its,cur,col,alpha){const n=its.length,sp=38,x0=480-(n-1)*sp/2;   // 지금 몇 번째 유물인지
+  its.forEach((it,j)=>{const on=j===cur,ec=UNITS[it.u]?UNITS[it.u].c:col;
+    badge(c,x0+j*sp,508,on?16:12,on?ec:C.line,{img:it.img,lw:on?2.4:1.4,glow:on?14:0,alpha:(on?1:j<cur?.75:.45)*alpha});});}
 TPL.gallery=function(c,t,d){
   const its=d.items.map(x=>Object.assign({},IMAGES[x.img],x)),n=its.length,col=colOf(d);kicker(c,d,col);
-  const cols=n<=4?n:n<=6?3:4,rows=Math.ceil(n/cols),gap=14,cw=(880-(cols-1)*gap)/cols;
-  const one=rows===1,iw=one?cw-24:Math.min(cw-24,156),ih=one?Math.min(iw,228):112,ch=one?ih+132:208,top=one?78+(440-ch)/2:84;
-  const per=Math.min(.8,d.dur*.42/n),endT=.4+n*per+.6,cyc=t>endT?Math.floor((t-endT)/2.2)%n:-1;
-  its.forEach((it,i)=>{const r=Math.floor(i/cols),cc=i%cols,inRow=r===rows-1?n-(rows-1)*cols:cols,   // 덜 찬 마지막 줄은 가운데로
-    x=40+(880-(inRow*cw+(inRow-1)*gap))/2+cc*(cw+gap),y=top+r*(ch+gap),t0=.4+i*per,k=ease(seg(t,t0,t0+.55));if(k<=0)return;
-    const on=i===cyc,ec=UNITS[it.u]?UNITS[it.u].c:col;
-    c.save();c.globalAlpha=k;c.translate(x+cw/2,y+ch/2);c.scale(.92+.08*k,.92+.08*k);c.translate(-cw/2,-ch/2);
-    box(c,0,0,cw,ch,16,on?ec+'1c':'#0E1B2A',on?ec:C.line,on?2.6:1.4,{glow:on?18:0,gc:ec});
-    plate(c,it.img,(cw-iw)/2,12,iw,ih,{r:12,zoom:1.06-.06*ease(seg(t,t0,t0+1.6))+(on?.04:0)});
-    const ty=12+ih;
-    T(c,it.n,cw/2,ty+20,{size:fit(c,it.n,cw-20,one?19:16,700),w:700,align:'center'});
-    pill(c,it.era,cw/2,ty+44,ec,{size:12});
-    if(one)WT(c,it.k,cw/2,ty+70,cw-24,17,{size:13.5,color:C.muted,align:'center'});
-    else T(c,it.k,cw/2,ty+70,{size:fit(c,it.k,cw-18,12.5,500),color:C.muted,align:'center'});
-    c.restore();});
-  if(d.foot)label(c,d.foot,480,524,C.muted,{size:13,alpha:seg(t,endT-.4,endT+.2)});
+  const sl=Math.max(5,(d.dur-G_IN-G_OUT)/n),T1=G_IN+n*sl;
+  if(t<G_IN){const a=1-seg(t,G_IN-.45,G_IN);c.save();c.globalAlpha*=a;galleryGrid(c,t,its,col,false,.15);c.restore();
+    label(c,`유물 ${n}점 · 하나씩 크게 보며 ‘왜 그럴까’를 따져 봅니다`,480,520,C.muted,{size:13,alpha:seg(t,.6,1.1)*a});return;}
+  if(t<T1){const i=Math.min(n-1,Math.floor((t-G_IN)/sl)),lt=t-G_IN-i*sl;
+    label(c,`${i+1} / ${n}`,912,30,col,{size:13,align:'right'});
+    gallerySpot(c,lt,its[i],col,sl);galleryStrip(c,its,i,col,ease(seg(t,G_IN,G_IN+.5)));return;}
+  galleryGrid(c,t,its,col,true,T1);
+  label(c,'정리 · 그림을 보면 이유가, 이유를 따라가면 시대가 보입니다',480,520,C.muted,{size:13,alpha:seg(t,T1+.8,T1+1.3)});
 };
 
 /* ── 플레이어용: 데이터 → 장면 ── */
