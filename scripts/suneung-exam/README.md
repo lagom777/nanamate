@@ -31,6 +31,16 @@ python3 finalize2.py     # exams.json 병합 + public/learn/suneung-exam 복사
 - **국어·영어**: 문항 단위로 자르면 지문이 쪼개지므로 시험지를 좌/우 **단 조각**(`c00.webp`…, 16단계 회색 무손실 webp)으로 자르고, 문항 번호가 왼쪽 여백에 나타나는 위치를 앵커(`meta.json`)로 저장한다. 국어는 `c`(공통) / `a`(화법과 작문) / `b`(언어와 매체) 구역으로 나눈다.
 - 해설: `merge_explain.py` 는 Grok이 쓴 해설 중 **공식 정답과 답이 일치하고 HTML 검증을 통과한 것만** `explain/` 에 합친다.
 
+## 영어 듣기 음성 (`eng_audio.py`)
+`kse_dl.py`·`old_dl.py` 는 음원 zip 을 건너뛰므로 따로 받는다. 작업 디렉터리에서:
+```bash
+python3 eng_audio.py --check   # 트랙이 나뉜 회차로 '무음으로 문항 찾기' 규칙 확인(28회 모두 트랙 경계와 2초 안)
+python3 eng_audio.py           # → r2/<회차>/english/listen-<md5 8자>.mp3 (모노 64kbps CBR) + meta.json 의 audio {file, dur, q}
+cd r2 && for f in */english/listen-*.mp3; do ROOT=$PWD WR="npx --yes wrangler" ../r2up.sh $f; done
+```
+- 음원 zip 은 안내멘트·문제 01~15·문제 16~17 트랙(폴더·zip 안 zip·macOS `._` 파일이 섞인 회차도 있다)이라 이어 붙이고 트랙 경계를 `q`(문항 시작 초, 16 = 16~17번)로 쓴다. 2018학년도 수능만 한 파일이라 답 쓰는 무음(9초 넘게) 끝을 문항 시작으로 잡는다.
+- 파일 이름에 내용 해시를 붙여 R2 의 1년 immutable 캐시와 충돌하지 않게 했다. 플레이어는 `preload=none` 이라 누를 때만 받는다(R2 는 Range 지원).
+
 ## 2018~2021학년도(구 교육과정) · R2 업로드
 `old_dl.py`(다운로드·분류) → `old_ans.py`(정답표, 수학은 가형 홀수형) → `old_crop.py`(국어=통합 45문항 단일 구역, 수학=가형 30문항) → `old_script.py` → `finalize_old.py`(과탐은 `BOARDS=boards_all.json YMIN=2018 YMAX=2021 python batch.py …` 결과 `manifest_old_all.json` 사용). 2018 9월 지구과학Ⅰ 17번은 복수정답(①,⑤)이라 `finalize_old.py`에서 배열로 넣는다.
 문항·시험지 이미지는 저장소에 두지 않는다. `r2up.sh <경로>`(wrangler `r2 object put`)로 Cloudflare R2 버킷 `nanamate-suneung`에 올리고, 플레이어의 `imgBase`(`scripts/suneung/lib.mjs` `IMG_BASE`)가 그 공개 주소를 가리킨다. 병렬은 3 이하로(429 제한), 올린 뒤 HTTP 200을 확인하고 로컬 webp를 지운다.

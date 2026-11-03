@@ -344,3 +344,47 @@ body.pr-big-page main.wide { max-width: none; padding-left: 24px; padding-right:
   .pr-big .pr-card { padding: 10px 6px 12px; }
   .pr-big .pr-paper, .pr-big .pr-strip { padding: 2px; }
 }
+
+/* 🎧 영어 듣기 음성 막대: 듣기 단(1~17번)과 한 묶음(.pr-listen) — 그 단을 지나는 동안 위에 붙어 따라온다 */
+.pr-listen { display: flex; flex-direction: column; gap: 10px; }
+.pr-listen-bar { position: sticky; top: 0; z-index: 4; max-width: 760px; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--pr-line); border-radius: 10px; background: var(--pr-card); box-shadow: 0 4px 14px rgba(0,0,0,.12); }
+@media (min-width: 901px) { .pr-listen-bar { top: calc(var(--pr-bar-h, 108px) + 8px); } }
+.pr-big .pr-listen-bar { max-width: none; }
+.pr-lb-row { display: flex; align-items: center; gap: 8px; }
+.pr-lb-play { flex: none; width: 36px; height: 36px; padding: 0; border-radius: 50%; font-size: 13px; cursor: pointer; }
+#practice-root .pr-lb-play { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
+.pr-lb-now { flex: none; font-size: 13px; white-space: nowrap; color: var(--text); }
+.pr-lb-time { flex: none; font: 12px var(--font-mono, monospace); color: var(--text-dim); }
+.pr-lb-seek { flex: 1 1 auto; min-width: 60px; margin: 0; accent-color: var(--accent); }
+.pr-lb-rate { flex: none; min-width: 50px; height: 30px; padding: 0 6px; border-radius: 8px; font: 600 12px var(--font-mono, monospace); cursor: pointer; }
+.pr-lb-qs { position: relative; display: flex; gap: 4px; margin-top: 6px; overflow-x: auto; scrollbar-width: none; }
+.pr-lb-qs::-webkit-scrollbar { display: none; }
+.pr-lb-q { flex: none; min-width: 30px; height: 26px; padding: 0 7px; border-radius: 13px; font: 12px var(--font-mono, monospace); cursor: pointer; }
+#practice-root .pr-lb-q { color: var(--text-dim) !important; }
+#practice-root .pr-lb-q.on { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
+@media (max-width: 520px) { .pr-lb-time { font-size: 11px; } .pr-lb-row { gap: 6px; } }
+/* 답안지 번호로 듣기 문항에 가면 붙어 있는 막대 아래로 */
+.pr-listen .pr-anchor { scroll-margin-top: calc(var(--pr-bar-h, 108px) + 110px); }
+@media (max-width: 900px) { .pr-listen .pr-anchor { scroll-margin-top: 100px; } }
+
+/* ✏️ 펜: 그림마다 SVG 잉크 층(곱하기로 섞어 글자는 그대로 보인다). 펜을 켜면(.pr-pen) 목록의 층이 손가락·마우스를 받는다 */
+.pr-ink-box { position: relative; display: block; }
+.pr-paper .pr-ink-box { width: fit-content; max-width: 100%; margin: 0 auto; }
+.pr-big .pr-paper .pr-ink-box { width: auto; }
+.pr-ink { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.pr-ink:not(:empty) { mix-blend-mode: multiply; }
+.pr-ink path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.pr-ink .pr-ink-pen { stroke: #e11d48; }
+.pr-ink .pr-ink-hl { stroke: #fde047; }
+.pr-zoom-node > img { display: block; width: 100%; height: auto; }
+#practice-root.pr-pen .pr-ink.rw { pointer-events: auto; touch-action: none; cursor: crosshair; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+#practice-root.pr-pen.pr-pen-er .pr-ink.rw { cursor: cell; }
+.pr-ink-pal { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 22; display: flex; gap: 4px; padding: 5px; border: 1px solid var(--pr-line); border-radius: 14px; background: var(--pr-card); box-shadow: 0 8px 26px rgba(0,0,0,.28); }
+.pr-ink-pal[hidden] { display: none; }
+#practice-root .pr-ink-t { display: inline-flex; align-items: center; gap: 5px; height: 38px; padding: 0 11px; border: 0 !important; border-radius: 10px; font: 600 13px var(--font-body, sans-serif); white-space: nowrap; cursor: pointer; }
+#practice-root .pr-ink-t[aria-pressed="true"] { background: var(--accent) !important; color: #fff !important; }
+@media (max-width: 640px) {
+  .pr-ink-pal { left: 8px; bottom: 12px; transform: none; }
+  .pr-ink-l { display: none; }
+  #practice-root .pr-ink-t { padding: 0 9px; font-size: 15px; }
+}

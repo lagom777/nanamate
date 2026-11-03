@@ -195,10 +195,11 @@
     } else row1.push(countWrap);
     timerEl = el('button', { type: 'button', class: 'pr-timer', onclick: toggleTimer, 'aria-label': '타이머 켜기/끄기' });
     bigBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-big-btn', title: '문항 그림을 칸 가득 크게 보여요. 그림을 누르면 화면 가득 따로 확대돼요.', onclick: toggleBig });
+    inkBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-ink-btn', title: '시험지·문항 그림 위에 펜·형광펜으로 표시해요(이 기기에 저장). 켜 두는 동안 그림을 누르면 확대 대신 그려지고, 두 손가락으로 끌면 화면이 움직여요.', onclick: function () { toggleInk(); } });
     progEl = el('span', { class: 'pr-prog' });
     bar = el('div', { class: 'pr-bar' }, [
       el('div', { class: 'pr-bar-row' }, row1),
-      el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), timerEl, bigBtn, weakBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn', onclick: function () { openWeak(); } }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-nb-btn', text: '📋 오답 노트', onclick: openNotebook }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn', text: '📊 오답 원인', onclick: openCauses }), dueBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-due-btn', text: '📅 오늘 다시 풀', onclick: openDue }), progEl])
+      el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), timerEl, bigBtn, inkBtn, weakBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn', onclick: function () { openWeak(); } }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-nb-btn', text: '📋 오답 노트', onclick: openNotebook }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn', text: '📊 오답 원인', onclick: openCauses }), dueBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-due-btn', text: '📅 오늘 다시 풀', onclick: openDue }), progEl])
     ]);
     authBox = el('div', { class: 'pr-auth' });
     bar.appendChild(authBox);
@@ -211,13 +212,15 @@
       fab = el('button', { type: 'button', class: 'pr-fab', text: '📝 답안지', onclick: function () { toggleOmr(); } });
       root.appendChild(fab);
     }
+    root.appendChild(inkPal = inkPalette());
+    paintInk();
     /* 위 막대가 로그인 단추 줄로 높아져도 답안지·문항이 그 아래에 붙게 높이를 --pr-bar-h 로 알린다 */
     fitBar = function () { root.style.setProperty('--pr-bar-h', bar.offsetHeight + 'px'); };
     if (window.ResizeObserver) new ResizeObserver(fitBar).observe(bar);
     S.big = !!store('sn:pr:big');
     applyBig();
     fitBar();
-    root.appendChild(el('p', { class: 'pr-src', html: '문항 출처: 한국교육과정평가원(KICE) 대학수학능력시험·6월/9월 모의평가 공개 문제지. 문제지에 관한 저작권은 한국교육과정평가원에 있으며, 이 페이지는 학습용으로 문항 이미지를 그대로 보여 주고 정답표로 채점합니다.' + (HAS_PARTS ? ' 파트 분류는 문항 내용 기반 자동 분류라 일부 오차가 있을 수 있습니다.' : '') + (PAPER && SUB === 'english' ? ' 듣기 음성은 제공하지 않으며, 채점 후 듣기평가 대본을 볼 수 있습니다.' : '') + (ABS_CUT[SUB] ? '' : ' 채점 후 등급은 <a href="https://www.ebsi.co.kr/ebs/xip/xipa/retrievePastGrdCutWrongAnswerRate.ebs?tab=1" target="_blank" rel="noopener">EBSi 역대 등급컷</a>(원점수는 EBSi 자체분석, 표준점수는 평가원) 기준 예상입니다.' + (SUB === 'korean' || SUB === 'math' ? ' 2022학년도부터 국어·수학은 선택과목별 원점수 컷이 공개되지 않아, 시험 직후 입시업체가 발표한 가채점 예상컷(위 몇 등급)으로 보여 줍니다.' : '')) }));
+    root.appendChild(el('p', { class: 'pr-src', html: '문항 출처: 한국교육과정평가원(KICE) 대학수학능력시험·6월/9월 모의평가 공개 문제지. 문제지에 관한 저작권은 한국교육과정평가원에 있으며, 이 페이지는 학습용으로 문항 이미지를 그대로 보여 주고 정답표로 채점합니다.' + (HAS_PARTS ? ' 파트 분류는 문항 내용 기반 자동 분류라 일부 오차가 있을 수 있습니다.' : '') + (PAPER && SUB === 'english' ? ' 듣기 음성은 평가원이 공개한 듣기평가 음원(저작권 한국교육과정평가원)을 회차마다 한 파일로 이은 것으로 시험지 위 🎧 막대에서 들을 수 있고, 채점 후 듣기평가 대본을 볼 수 있습니다.' : '') + (ABS_CUT[SUB] ? '' : ' 채점 후 등급은 <a href="https://www.ebsi.co.kr/ebs/xip/xipa/retrievePastGrdCutWrongAnswerRate.ebs?tab=1" target="_blank" rel="noopener">EBSi 역대 등급컷</a>(원점수는 EBSi 자체분석, 표준점수는 평가원) 기준 예상입니다.' + (SUB === 'korean' || SUB === 'math' ? ' 2022학년도부터 국어·수학은 선택과목별 원점수 컷이 공개되지 않아, 시험 직후 입시업체가 발표한 가채점 예상컷(위 몇 등급)으로 보여 줍니다.' : '')) }));
   }
 
   function setMode(m) {
@@ -448,7 +451,7 @@
       causeOf(it) ? el('span', { class: 'pr-cause-tag', text: CAUSE_NAME[causeOf(it)] }) : null
     ]);
     var img = el('img', { class: 'pr-img', src: it.img, alt: it.title + ' ' + it.n + '번 문항', loading: 'lazy', decoding: 'async' });
-    c.appendChild(head); c.appendChild(el('div', { class: 'pr-paper' }, [img]));
+    c.appendChild(head); c.appendChild(el('div', { class: 'pr-paper' }, [inkWrap(img, it.ex, 'q' + pad(it.n), 0, 0, true)]));
     if (it.num) {
       var inp = el('input', {
         type: 'text', inputmode: 'numeric', pattern: '[0-9]*', maxlength: '3', class: 'pr-num', 'aria-label': (i + 1) + '번 답 입력',
@@ -851,11 +854,16 @@
     zoomSc.addEventListener('touchend', function (e) { if (e.touches.length < 2) pinch = null; });
     root.appendChild(zoomDlg);
   }
-  /* host: 그림 하나(img) 또는 국어·영어 문항 조각 묶음(.pr-crops) — 복제해서 띄운다 */
+  /* host: 그림 하나(img) 또는 국어·영어 문항 조각 묶음(.pr-crops) — 복제해서 띄운다. 펜 표시가 있으면 그 층도 같이(그리기는 안 됨) */
   function openZoom(host, img) {
     if (!zoomDlg) zoomBuild();
     zoomSc.innerHTML = '';
-    zoomNode = host === img ? el('img', { src: img.currentSrc || img.src, alt: img.alt }) : host.cloneNode(true);
+    var ink = host === img && img.parentNode.classList.contains('pr-ink-box') && img.parentNode.querySelector('.pr-ink');
+    if (ink && ink.firstChild) {
+      var inkc = ink.cloneNode(true);
+      inkc.setAttribute('class', 'pr-ink');
+      zoomNode = el('div', { class: 'pr-ink-box' }, [el('img', { src: img.currentSrc || img.src, alt: img.alt }), inkc]);
+    } else zoomNode = host === img ? el('img', { src: img.currentSrc || img.src, alt: img.alt }) : host.cloneNode(true);
     zoomNode.classList.add('pr-zoom-node');
     zoomSc.appendChild(zoomNode);
     if (!zoomDlg.open) zoomDlg.showModal();
@@ -884,6 +892,144 @@
     store('sn:pr:big', S.big ? 1 : null);
     applyBig();
     if (fitBar) fitBar();
+  }
+
+  /* ───────── ✏️ 펜: 시험지 단·문항 그림 위에 펜·형광펜으로 쓰고 지우개로 획째 지운다.
+     그림마다 SVG 층 하나(가로 1000 기준 좌표)라 화면 폭·🔍 크게 보기·확대 창에서도 제자리에 남고, 이 기기에 sn:<과목>:ink:<회차>:<그림> 로 저장한다.
+     펜을 켜면 그림을 눌러도 확대 창 대신 그려지고, 손가락 두 개로 끌면 화면이 움직인다 ───────── */
+  var INK = { on: false, tool: 'pen', cur: null }, inkBtn = null, inkPal = null, inkTouch = {}, inkPan = false;
+  var INK_TOOL = { pen: { px: 2.4, lo: 2, hi: 9 }, hl: { px: 14, lo: 10, hi: 30 } };   // 굵기: 그릴 때 화면 px 를 그림 좌표로 바꿔 둔다(그림과 같이 커지고 작아진다)
+  function inkKey(exam, file) { return 'sn:' + SUB + ':ink:' + exam + ':' + String(file).replace(/\.\w+$/, ''); }
+  function svgEl(tag, attrs) {
+    var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  function inkD(p) {
+    var d = 'M' + p[0] + ' ' + p[1];
+    for (var i = 2; i < p.length; i += 2) d += 'L' + p[i] + ' ' + p[i + 1];
+    return p.length === 2 ? d + 'l0 .1' : d;   // 한 번 콕 → 점
+  }
+  function inkPath(s) { return svgEl('path', { d: inkD(s.p), class: 'pr-ink-' + s.t, 'stroke-width': s.w }); }
+  /* w·h = 그림 원래 크기(비율). 저장된 획을 그려 둔 층 */
+  function inkSvg(key, w, h, cls) {
+    var svg = svgEl('svg', { class: cls, viewBox: '0 0 1000 ' + (w && h ? Math.round(1000 * h / w) : 1000), preserveAspectRatio: 'none', 'aria-hidden': 'true' });
+    svg._k = key;
+    svg._s = store(key) || [];
+    svg._s.forEach(function (s) { svg.appendChild(inkPath(s)); });
+    return svg;
+  }
+  /* 그림을 잉크 층과 함께 감싼다. w·h 를 모르면(문항 그림) 불러온 뒤 맞춘다. rw = 그릴 수 있는 층(풀이 목록) */
+  function inkWrap(img, exam, file, w, h, rw) {
+    var svg = inkSvg(inkKey(exam, file), w, h, 'pr-ink' + (rw ? ' rw' : ''));
+    if (!w) img.addEventListener('load', function () { svg.setAttribute('viewBox', '0 0 1000 ' + Math.round(1000 * img.naturalHeight / img.naturalWidth)); });
+    if (rw) ['pointerdown', 'pointermove'].forEach(function (ev) { svg.addEventListener(ev, inkEv); });
+    return el('div', { class: 'pr-ink-box' }, [img, svg]);
+  }
+  /* 오답 한 장·비슷한 기출처럼 보기만 하는 곳: 표시가 있을 때만 층을 얹는다 */
+  function inkShow(img, exam, file) { return store(inkKey(exam, file)) ? inkWrap(img, exam, file, 0, 0, false) : img; }
+  function inkPt(svg, e) {
+    var r = svg.getBoundingClientRect();
+    return [Math.round((e.clientX - r.left) * 1000 / r.width), Math.round((e.clientY - r.top) * svg.viewBox.baseVal.height / r.height)];
+  }
+  function inkHit(s, q, r) {
+    var p = s.p;
+    for (var i = 0; i < p.length; i += 2) {
+      var x = p[i], y = p[i + 1], dx = i + 2 < p.length ? p[i + 2] - x : 0, dy = i + 2 < p.length ? p[i + 3] - y : 0, L = dx * dx + dy * dy;
+      var t = L ? Math.max(0, Math.min(1, ((q[0] - x) * dx + (q[1] - y) * dy) / L)) : 0;
+      if (Math.hypot(q[0] - x - t * dx, q[1] - y - t * dy) <= r) return true;
+    }
+    return false;
+  }
+  function inkErase(c, q) {
+    var svg = c.svg, r = 12 * 1000 / svg.getBoundingClientRect().width;   // 지우개 반경 12px
+    for (var i = svg._s.length - 1; i >= 0; i--) {
+      if (!inkHit(svg._s[i], q, r + svg._s[i].w / 2)) continue;
+      svg._s.splice(i, 1);
+      svg.removeChild(svg.childNodes[i]);
+      c.gone++;
+    }
+  }
+  function inkSave(svg) { store(svg._k, svg._s.length ? svg._s : null); }
+  function inkEv(e) {
+    var svg = e.currentTarget, c = INK.cur, tp = inkTouch[e.pointerId];
+    if (e.type === 'pointerdown') {
+      if (!INK.on || (e.pointerType === 'mouse' && e.button !== 0)) return;
+      e.preventDefault();
+      if (e.pointerType === 'touch') {
+        inkTouch[e.pointerId] = { x: e.clientX, y: e.clientY };
+        if (Object.keys(inkTouch).length > 1) {   // 손가락 둘 = 화면 끌기(막 시작한 획은 버린다)
+          if (c && c.touch && Date.now() - c.t0 < 500) { if (c.path) c.svg.removeChild(c.path); INK.cur = c = null; }
+          if (!c) inkPan = true;
+          return;
+        }
+      }
+      if (c || inkPan) return;
+      try { svg.setPointerCapture(e.pointerId); } catch (x) {}
+      c = INK.cur = { svg: svg, id: e.pointerId, touch: e.pointerType === 'touch', t0: Date.now(), gone: 0 };
+      if (INK.tool === 'er') return inkErase(c, inkPt(svg, e));
+      var tl = INK_TOOL[INK.tool], w = tl.px * 1000 / svg.getBoundingClientRect().width;
+      c.s = { t: INK.tool, w: Math.round(Math.max(tl.lo, Math.min(tl.hi, w)) * 10) / 10, p: inkPt(svg, e) };
+      svg.appendChild(c.path = inkPath(c.s));
+      return;
+    }
+    if (e.type === 'pointermove') {   // 그리는 중 · 두 손가락 끌기
+      if (tp) {
+        if (inkPan) window.scrollBy({ left: (tp.x - e.clientX) / Object.keys(inkTouch).length, top: (tp.y - e.clientY) / Object.keys(inkTouch).length, behavior: 'instant' });   // 페이지의 scroll-behavior: smooth 를 건너뛴다
+        tp.x = e.clientX; tp.y = e.clientY;
+        if (inkPan) return;
+      }
+      if (!c || c.id !== e.pointerId) return;
+      var evs = (e.getCoalescedEvents && e.getCoalescedEvents()) || [];
+      (evs.length ? evs : [e]).forEach(function (ev) {
+        var q = inkPt(c.svg, ev), p = c.s && c.s.p;
+        if (!p) inkErase(c, q);
+        else if (Math.abs(q[0] - p[p.length - 2]) + Math.abs(q[1] - p[p.length - 1]) >= 2) p.push(q[0], q[1]);
+      });
+      if (c.s) c.path.setAttribute('d', inkD(c.s.p));
+    }
+  }
+  /* 손을 떼면 획을 저장한다 — 창에서 받아 그리던 층이 다시 그려져 사라졌어도 손가락 기록이 남지 않는다 */
+  function inkUp(e) {
+    var c = INK.cur;
+    if (inkTouch[e.pointerId]) { delete inkTouch[e.pointerId]; if (!Object.keys(inkTouch).length) inkPan = false; }
+    if (!c || c.id !== e.pointerId) return;
+    INK.cur = null;
+    if (!c.svg.isConnected) return;   // 그사이 시험지를 다시 그렸으면 그 획은 버린다(새 층이 이미 저장본을 읽었다)
+    if (c.s) {
+      if (e.type === 'pointercancel') { c.svg.removeChild(c.path); return; }
+      c.svg._s.push(c.s);
+    } else if (!c.gone) return;
+    inkSave(c.svg);
+  }
+  window.addEventListener('pointerup', inkUp);
+  window.addEventListener('pointercancel', inkUp);
+  function inkClear() {
+    var svgs = Array.prototype.slice.call(list.querySelectorAll('.pr-ink.rw')).filter(function (s) { return s._s.length; });
+    if (!svgs.length || !confirm('지금 화면의 시험지·문항에 그린 표시를 모두 지울까요?')) return;
+    svgs.forEach(function (s) { s._s = []; s.textContent = ''; inkSave(s); });
+  }
+  function toggleInk(on) {
+    INK.on = typeof on === 'boolean' ? on : !INK.on;
+    paintInk();
+  }
+  function paintInk() {
+    root.classList.toggle('pr-pen', INK.on);
+    root.classList.toggle('pr-pen-er', INK.tool === 'er');
+    inkBtn.setAttribute('aria-pressed', INK.on ? 'true' : 'false');
+    inkBtn.classList.toggle('on', INK.on);
+    inkBtn.textContent = INK.on ? '✏️ 펜 켬' : '✏️ 펜';
+    inkPal.hidden = !INK.on;
+    Array.prototype.forEach.call(inkPal.querySelectorAll('[data-t]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-t') === INK.tool ? 'true' : 'false'); });
+  }
+  function inkPalette() {
+    var b = function (t, icon, label, f) {
+      return el('button', { type: 'button', class: 'pr-ink-t', 'data-t': t || false, title: label, 'aria-label': label, onclick: f || function () { INK.tool = t; paintInk(); } },
+        [el('span', { text: icon, 'aria-hidden': 'true' }), el('span', { class: 'pr-ink-l', text: label })]);
+    };
+    return el('div', { class: 'pr-ink-pal', role: 'toolbar', 'aria-label': '펜 도구', hidden: 'hidden' }, [
+      b('pen', '✏️', '펜'), b('hl', '🖍️', '형광펜'), b('er', '🧽', '지우개'), b('', '🗑', '모두 지우기', inkClear), b('', '✕', '끄기', function () { toggleInk(false); })
+    ]);
   }
 
   /* ───────── 파트별 약점 노트: AI 해설이 짚은 '몰랐던 것'을 과목별로 이 브라우저에 모은다 ───────── */
@@ -1696,11 +1842,18 @@
     var parts = [[a[0], Math.max(0, a[1] - 8), nx && nx[0] === a[0] ? nx[1] : m.strips[sec][a[0]].h]];
     if (nx && nx[0] === a[0] + 1 && nx[1] > 40) parts.push([nx[0], 0, nx[1]]);
     return el('div', { class: 'pr-crops' }, parts.map(function (p) {
-      var st = m.strips[sec][p[0]], h = Math.max(60, p[2] - p[1]);
-      return el('div', { class: 'pr-crop', style: 'aspect-ratio:' + st.w + '/' + h }, [el('img', {
+      var st = m.strips[sec][p[0]], h = Math.max(60, p[2] - p[1]), shift = 'transform:translateY(' + (-p[1] / st.h * 100).toFixed(3) + '%)';
+      var box = el('div', { class: 'pr-crop', style: 'aspect-ratio:' + st.w + '/' + h }, [el('img', {
         src: (cfg.imgBase || cfg.base) + exam + '/' + SUB + '/' + st.file, alt: refLabel({ exam: exam, sec: sec, n: n }) + ' 문항', loading: 'lazy', decoding: 'async',
-        style: 'transform:translateY(' + (-p[1] / st.h * 100).toFixed(3) + '%)'
+        style: shift
       })]);
+      /* 시험지 단에 펜으로 쓴 표시도 같은 자리만큼 옮겨 보인다 */
+      if (store(inkKey(exam, st.file))) {
+        var ink = inkSvg(inkKey(exam, st.file), st.w, st.h, 'pr-ink');
+        ink.setAttribute('style', 'height:auto;aspect-ratio:' + st.w + '/' + st.h + ';' + shift);
+        box.appendChild(ink);
+      }
+      return box;
     }));
   }
   /* 원인·헷갈림·메모: 문항 카드의 메모 칸과 같은 노트에 쓴다 */
@@ -1746,7 +1899,7 @@
       if (!it) { body.appendChild(el('p', { class: 'pr-ai-note', text: '이 문항의 자료를 찾지 못했습니다.' })); return; }
       var a = row.picked || 0, lost = !a && row.why.wrong;
       /* ① 문제 */
-      body.appendChild(el('div', { class: 'pr-sheet-q' }, [PAPER ? cropOf(info.m, r.exam, r.sec, r.n) : el('div', { class: 'pr-paper' }, [el('img', { class: 'pr-img', src: it.img, alt: refLabel(r) + ' 문항', decoding: 'async' })])]));
+      body.appendChild(el('div', { class: 'pr-sheet-q' }, [PAPER ? cropOf(info.m, r.exam, r.sec, r.n) : el('div', { class: 'pr-paper' }, [inkShow(el('img', { class: 'pr-img', src: it.img, alt: refLabel(r) + ' 문항', decoding: 'async' }), r.exam, 'q' + pad(r.n))])]));
       /* ② 내 답 · 정답 */
       var verdict = el('p', { class: 'pr-verdict pr-sheet-ans' }, [
         a ? el('span', { class: isRight(it, a) ? 'pr-sheet-ok' : 'pr-sheet-bad', text: '내 답 ' + ansText(it, a) }) : el('span', { class: 'pr-sheet-mute', text: lost ? '내 답 기록 없음' : '헷갈림 표시' }),
@@ -1830,7 +1983,7 @@
       box.innerHTML = '';
       if (!it) { box.appendChild(el('p', { class: 'pr-mini-h', text: refLabel(q) + ' — 자료 없음' })); return; }
       box.appendChild(el('p', { class: 'pr-mini-h' }, [el('b', { text: refLabel(q) }), ' · ' + it.pts + '점']));
-      box.appendChild(PAPER ? cropOf(info.m, q.exam, q.sec, q.n) : el('div', { class: 'pr-paper' }, [el('img', { class: 'pr-img', src: it.img, alt: refLabel(q) + ' 문항', loading: 'lazy', decoding: 'async' })]));
+      box.appendChild(PAPER ? cropOf(info.m, q.exam, q.sec, q.n) : el('div', { class: 'pr-paper' }, [inkShow(el('img', { class: 'pr-img', src: it.img, alt: refLabel(q) + ' 문항', loading: 'lazy', decoding: 'async' }), q.exam, 'q' + pad(q.n))]));
       var res = el('p', { class: 'pr-mini-res', 'aria-live': 'polite' });
       var ctl = el('div', { class: it.num ? 'pr-numrow' : 'pr-choices pr-mini-ch' });
       var done = function (a) {
@@ -1866,23 +2019,96 @@
 
   /* ───────── paper 렌더 ───────── */
   function renderPaper() {
-    var m = S.meta;
+    var m = S.meta, key = S.set.slice(5);
     if (SUB === 'english' && m.script) list.appendChild(scriptBox());
     paperSecs().forEach(function (sec) {
       list.appendChild(el('h3', { class: 'pr-sec', text: SEC_NAME[sec] + ' (' + SEC_LO[sec] + '~' + (SEC_LO[sec] + m.answers[sec].length - 1) + '번)' }));
       var wrap = el('div', { class: 'pr-strips' });
       var strips = m.strips[sec], anchors = m.anchors[sec];
+      /* 영어 듣기(1~17번) 단은 음성 막대와 한 묶음 — 막대가 그 단을 지나는 동안만 위에 붙어 따라온다 */
+      var a18 = SUB === 'english' && sec === 'c' && m.audio && anchors['18'], listen = null;
+      if (a18) wrap.appendChild(listen = el('div', { class: 'pr-listen' }, [listenBar(key, m.audio)]));
       strips.forEach(function (s, idx) {
-        var box = el('div', { class: 'pr-strip' }, [
-          el('img', { src: (cfg.imgBase || cfg.base) + S.set.slice(5) + '/' + SUB + '/' + s.file, width: s.w, height: s.h, alt: SEC_NAME[sec] + ' 시험지 ' + (idx + 1) + '단', loading: 'lazy', decoding: 'async' })
-        ]);
+        var img = el('img', { src: (cfg.imgBase || cfg.base) + key + '/' + SUB + '/' + s.file, width: s.w, height: s.h, alt: SEC_NAME[sec] + ' 시험지 ' + (idx + 1) + '단', loading: 'lazy', decoding: 'async' });
+        var box = el('div', { class: 'pr-strip' }, [inkWrap(img, key, s.file, s.w, s.h, true)]);
         for (var n in anchors) {
           var a = anchors[n];
           if (a[0] === idx) box.appendChild(el('span', { class: 'pr-anchor', id: 'pq-' + sec + n, style: 'top:' + (a[1] / s.h * 100).toFixed(2) + '%', 'aria-hidden': 'true' }));
         }
-        wrap.appendChild(box);
+        (listen && (idx < a18[0] || (idx === a18[0] && a18[1] > 40)) ? listen : wrap).appendChild(box);
       });
       list.appendChild(wrap);
+    });
+  }
+  /* ───────── 영어 듣기 음성: 평가원 듣기평가 음원을 회차마다 한 파일로 이은 것(meta.audio = { file, dur, q: 문항 시작 초 · 16 = 16~17번 }).
+     소리(LS.a)는 막대와 따로 두어 채점·모드 전환으로 시험지를 다시 그려도 이어진다 ───────── */
+  var LS = { a: null, key: '', q: null, dur: 0, bar: null, drag: false, pend: null, err: false };
+  var RATES = [1, 1.25, 1.5, 0.75];
+  function listenAt(t) {
+    var cur = 0;
+    for (var n in LS.q) if (LS.q[n] <= t + 0.5 && +n > cur) cur = +n;
+    return cur;
+  }
+  /* 아직 안 불러온 소리는 위치를 기억해 두었다가 길이를 알면 옮긴다(iOS 는 그 전에 currentTime 을 무시한다) */
+  function listenSeek(t) {
+    if (LS.a.readyState >= 1) LS.a.currentTime = t;
+    else LS.pend = t;
+  }
+  function listenPlay(t) {
+    if (t != null) listenSeek(t);
+    var p = LS.a.play();
+    if (p && p.catch) p.catch(function () { LS.err = true; paintListen(); });
+  }
+  function listenBar(key, au) {
+    if (LS.key !== key) {
+      if (LS.a) LS.a.pause();
+      var a = LS.a = new Audio(), r = +store('sn:' + SUB + ':rate') || 1;
+      a.preload = 'none';
+      a.defaultPlaybackRate = a.playbackRate = r;
+      a.src = (cfg.imgBase || cfg.base) + key + '/' + SUB + '/' + au.file;
+      a.addEventListener('loadedmetadata', function () { if (LS.pend != null) { a.currentTime = LS.pend; LS.pend = null; } });
+      ['play', 'pause', 'ended', 'timeupdate', 'ratechange', 'playing', 'error'].forEach(function (ev) {
+        a.addEventListener(ev, function () { if (a !== LS.a) return; if (ev === 'playing') LS.err = false; if (ev === 'error') LS.err = true; paintListen(); });
+      });
+      LS.key = key; LS.q = au.q; LS.dur = au.dur; LS.pend = null; LS.err = false;
+    }
+    var b = LS.bar = { cur: -1 };
+    b.play = el('button', { type: 'button', class: 'pr-lb-play', onclick: function () { if (LS.a.paused) listenPlay(); else LS.a.pause(); } });
+    b.now = el('b', { class: 'pr-lb-now' });
+    b.time = el('span', { class: 'pr-lb-time' });
+    b.seek = el('input', { type: 'range', class: 'pr-lb-seek', min: '0', max: String(Math.ceil(au.dur)), step: '1', value: '0', 'aria-label': '듣기 위치' });
+    b.seek.addEventListener('input', function () { LS.drag = true; paintListen(); });
+    b.seek.addEventListener('change', function () { LS.drag = false; listenSeek(+b.seek.value); paintListen(); });
+    b.rate = el('button', { type: 'button', class: 'pr-lb-rate', title: '재생 속도', onclick: function () {
+      var r = RATES[(RATES.indexOf(LS.a.playbackRate) + 1) % RATES.length];
+      LS.a.defaultPlaybackRate = LS.a.playbackRate = r;
+      store('sn:' + SUB + ':rate', r === 1 ? null : r);
+    } });
+    b.qs = el('div', { class: 'pr-lb-qs', role: 'group', 'aria-label': '이 문항부터 듣기' });
+    Object.keys(au.q).sort(function (x, y) { return x - y; }).forEach(function (n) {
+      b.qs.appendChild(el('button', { type: 'button', class: 'pr-lb-q', 'data-n': n, text: n === '16' ? '16~17' : n, 'aria-label': n + '번부터 듣기', onclick: function () { listenPlay(au.q[n]); } }));
+    });
+    b.root = el('div', { class: 'pr-listen-bar', role: 'region', 'aria-label': '영어 듣기 음성' }, [el('div', { class: 'pr-lb-row' }, [b.play, b.now, b.time, b.seek, b.rate]), b.qs]);
+    paintListen();
+    return b.root;
+  }
+  function paintListen() {
+    var b = LS.bar, a = LS.a;
+    if (!b || !a) return;
+    var t = LS.drag ? +b.seek.value : LS.pend != null ? LS.pend : (a.currentTime || 0), cur = listenAt(t);
+    b.play.textContent = a.paused ? '▶' : '❚❚';
+    b.play.setAttribute('aria-label', a.paused ? '듣기 재생' : '일시 정지');
+    b.now.textContent = LS.err ? '음성을 못 불러왔어요' : a.paused && t < 1 ? '🎧 듣기' : cur === 16 ? '16~17번' : cur ? cur + '번' : '안내';
+    b.time.textContent = fmtTime(Math.floor(t)) + ' / ' + fmtTime(Math.round(LS.dur));
+    if (!LS.drag) b.seek.value = String(Math.floor(t));
+    b.seek.setAttribute('aria-valuetext', b.time.textContent);
+    b.rate.textContent = a.playbackRate + '×';
+    if (cur === b.cur) return;
+    b.cur = cur;
+    Array.prototype.forEach.call(b.qs.children, function (c) {
+      var on = +c.getAttribute('data-n') === cur;
+      c.classList.toggle('on', on);
+      if (on) b.qs.scrollLeft = c.offsetLeft - (b.qs.clientWidth - c.offsetWidth) / 2;   // 지금 문항 칩을 가운데로(창은 안 굴린다)
     });
   }
   function scriptBox() {
