@@ -217,7 +217,7 @@
     S.big = !!store('sn:pr:big');
     applyBig();
     fitBar();
-    root.appendChild(el('p', { class: 'pr-src', html: '문항 출처: 한국교육과정평가원(KICE) 대학수학능력시험·6월/9월 모의평가 공개 문제지. 문제지에 관한 저작권은 한국교육과정평가원에 있으며, 이 페이지는 학습용으로 문항 이미지를 그대로 보여 주고 정답표로 채점합니다.' + (HAS_PARTS ? ' 파트 분류는 문항 내용 기반 자동 분류라 일부 오차가 있을 수 있습니다.' : '') + (PAPER && SUB === 'english' ? ' 듣기 음성은 제공하지 않으며, 채점 후 듣기평가 대본을 볼 수 있습니다.' : '') + (ABS_CUT[SUB] ? '' : ' 채점 후 등급은 <a href="https://www.ebsi.co.kr/ebs/xip/xipa/retrievePastGrdCutWrongAnswerRate.ebs?tab=1" target="_blank" rel="noopener">EBSi 역대 등급컷</a>(원점수는 EBSi 자체분석, 표준점수는 평가원) 기준 예상입니다.') }));
+    root.appendChild(el('p', { class: 'pr-src', html: '문항 출처: 한국교육과정평가원(KICE) 대학수학능력시험·6월/9월 모의평가 공개 문제지. 문제지에 관한 저작권은 한국교육과정평가원에 있으며, 이 페이지는 학습용으로 문항 이미지를 그대로 보여 주고 정답표로 채점합니다.' + (HAS_PARTS ? ' 파트 분류는 문항 내용 기반 자동 분류라 일부 오차가 있을 수 있습니다.' : '') + (PAPER && SUB === 'english' ? ' 듣기 음성은 제공하지 않으며, 채점 후 듣기평가 대본을 볼 수 있습니다.' : '') + (ABS_CUT[SUB] ? '' : ' 채점 후 등급은 <a href="https://www.ebsi.co.kr/ebs/xip/xipa/retrievePastGrdCutWrongAnswerRate.ebs?tab=1" target="_blank" rel="noopener">EBSi 역대 등급컷</a>(원점수는 EBSi 자체분석, 표준점수는 평가원) 기준 예상입니다.' + (SUB === 'korean' || SUB === 'math' ? ' 2022학년도부터 국어·수학은 선택과목별 원점수 컷이 공개되지 않아, 시험 직후 입시업체가 발표한 가채점 예상컷(위 몇 등급)으로 보여 줍니다.' : '')) }));
   }
 
   function setMode(m) {
@@ -1058,7 +1058,7 @@
       }
     });
     var gc = gradeCuts();
-    var head = setLabel() + ' · ' + r.sc + '/' + r.tot + '점' + (gc ? ' (예상 ' + gradeOf(r.sc, gc) + '등급)' : '') + ' · ' + r.right + '/' + r.n + '문항 정답' + (r.unanswered ? ' · 미풀이 ' + r.unanswered : '') + (S.usedTimer && r.used > 0 ? ' · 소요 ' + fmtTime(r.used) : '') + ' · ' + (S.mode === 'exam' ? '시험 모드' : '연습 모드');
+    var head = setLabel() + ' · ' + r.sc + '/' + r.tot + '점' + (gc ? ' (예상 ' + gradeText(r.sc, gc) + ')' : '') + ' · ' + r.right + '/' + r.n + '문항 정답' + (r.unanswered ? ' · 미풀이 ' + r.unanswered : '') + (S.usedTimer && r.used > 0 ? ' · 소요 ' + fmtTime(r.used) : '') + ' · ' + (S.mode === 'exam' ? '시험 모드' : '연습 모드');
     var content = imgs.map(imgBlock);
     var chips = [['약점 복습 계획', '이번 결과의 약점 단원 위주로 3일짜리 복습 계획을 하루 단위로 짜 주세요.'], ['다음 시험 전략', '다음 시험에서 시간 배분과 문항 순서를 어떻게 바꾸면 좋을지 구체적으로 알려 주세요.']];
     content.push({ type: 'text', text: '이번에 푼 세트의 내 기록입니다.\n' + head + '\n\n' + rows.join('\n') +
@@ -1971,7 +1971,7 @@
     if (hist.length) {
       var h = el('details', { class: 'pr-hist' }, [el('summary', { text: '내 기록 (최근 ' + Math.min(hist.length, 8) + '회)' })]);
       hist.slice(-8).reverse().forEach(function (r) {
-        h.appendChild(el('div', { class: 'pr-hrow', text: r.d + ' · ' + r.s + ' · ' + r.sc + ' / ' + r.t + '점' + (r.g ? ' · ' + r.g + '등급' : '') }));
+        h.appendChild(el('div', { class: 'pr-hrow', text: r.d + ' · ' + r.s + ' · ' + r.sc + ' / ' + r.t + '점' + (r.g ? ' · ' + r.g + (typeof r.g === 'number' ? '등급' : '') : '') }));
       });
       omr.appendChild(h);
     }
@@ -2008,7 +2008,7 @@
     S.result = { sc: sc, tot: tot, right: right, n: S.items.length, wrong: wrongIds, unanswered: S.ans.filter(function (a) { return !a; }).length, used: EXAM_SECONDS - S.left, bySec: bySec, listen: listen };
     var hist = store('sn:' + SUB + ':hist') || [];
     var d = new Date(), gc = gradeCuts();
-    hist.push({ d: (d.getMonth() + 1) + '/' + d.getDate(), s: setLabel(), sc: sc, t: tot, g: gc ? gradeOf(sc, gc) : undefined });
+    hist.push({ d: (d.getMonth() + 1) + '/' + d.getDate(), s: setLabel(), sc: sc, t: tot, g: gc ? gradeText(sc, gc) : undefined });
     store('sn:' + SUB + ':hist', hist.slice(-40));
     sendGraded();
     renderAll();
@@ -2017,18 +2017,29 @@
   }
 
   /* 등급: 영어·한국사는 절대평가 점수 기준, 탐구와 2021학년도까지의 국어·수학(가형)은 EBSi 역대 등급컷(원점수, cuts.json).
-     cuts 는 1~8등급 최저점 — null 은 그 시험에 없는 등급(위 등급 비율이 커서 비어 있음) */
+     cuts 는 1~8등급 최저점 — null 은 그 시험에 없는 등급(위 등급 비율이 커서 비어 있음).
+     2022학년도부터 국어·수학은 원점수 컷이 공개되지 않아, 시험 직후 입시업체가 낸 선택과목별 가채점 예상컷(est, 위 몇 등급만)을 쓴다 */
   var ABS_CUT = { english: [90, 80, 70, 60, 50, 40, 30, 20], hist: [40, 35, 30, 25, 20, 15, 10, 5] };
-  var CUTS = null;
+  var CUTS = null, EST = null;
+  var EST_KEY = { hwajak: '화작', eonmae: '언매', calc: '미적분' };
+  function estCut() {
+    var e = EST && (SUB === 'korean' || SUB === 'math') && S.set.indexOf('exam:') === 0 && EST[S.set.slice(5)];
+    return (e && e[SUB === 'math' ? 'calc' : S.sel === 'a' ? 'hwajak' : 'eonmae']) || null;
+  }
   function gradeCuts() {
     if (S.set.indexOf('exam:') !== 0) return null;
     if (ABS_CUT[SUB]) return ABS_CUT[SUB];
-    var c = CUTS && CUTS[S.set.slice(5)];
-    return (c && c[SUB]) || null;
+    var c = CUTS && CUTS[S.set.slice(5)], e = estCut();
+    return (c && c[SUB]) || (e && e.c) || null;
   }
   function gradeOf(sc, cuts) {
     for (var i = 0; i < cuts.length; i++) if (cuts[i] != null && sc >= cuts[i]) return i + 1;
-    return 9;
+    return cuts.length + 1;
+  }
+  /* 예상컷처럼 위 몇 등급만 있으면 그 아래는 'N등급 이하' */
+  function gradeText(sc, cuts) {
+    var g = gradeOf(sc, cuts);
+    return g + '등급' + (g > cuts.length && cuts.length < 8 ? ' 이하' : '');
   }
   function gradeBox(sc) {
     var cuts = gradeCuts();
@@ -2037,17 +2048,22 @@
         return el('p', { class: 'pr-sub', text: '등급: 2022학년도부터 국어·수학은 선택과목에 따라 같은 원점수도 등급이 달라서 원점수 등급컷이 공개되지 않아요(평가원·EBSi는 표준점수 컷만).' });
       return null;
     }
-    var g = gradeOf(sc, cuts), up = -1;
+    var g = gradeOf(sc, cuts), up = -1, est = estCut();
     for (var j = g - 2; j >= 0; j--) if (cuts[j] != null) { up = j; break; }
     var ol = el('ol', { class: 'pr-cuts', 'aria-label': '등급별 최저 원점수' });
     cuts.forEach(function (c, i) {
       ol.appendChild(el('li', { class: i + 1 === g ? 'on' : '', title: c == null ? '이 시험은 ' + (i + 1) + '등급이 비어 있어요(위 등급 비율이 커서)' : (i + 1) + '등급 ' + c + '점 이상' },
         [el('i', { text: (i + 1) + '등급' }), el('b', { text: c == null ? '–' : c })]));
     });
+    var src = [ABS_CUT[SUB] ? '절대평가 — 정해진 점수 기준' : 'EBSi 역대 등급컷(원점수) 기준 예상 · 실제 등급은 표준점수로 정해져요'];
+    if (est && est.c === cuts) {
+      var k = SUB === 'math' ? 'calc' : S.sel === 'a' ? 'hwajak' : 'eonmae';
+      src = [EST_KEY[k] + ' 가채점 예상컷 — ' + est.by + ', 시험 직후 집계(', el('a', { href: est.url, target: '_blank', rel: 'noopener', text: '출처' }), ') · 공식 컷이 아니고, 실제 등급은 표준점수로 정해져요'];
+    }
     return el('div', { class: 'pr-grade' }, [
-      el('p', { class: 'pr-grade-main' }, [el('b', { text: g + '등급' }), up >= 0 ? ' · ' + (up + 1) + '등급까지 ' + (cuts[up] - sc) + '점' : '']),
+      el('p', { class: 'pr-grade-main' }, [el('b', { text: gradeText(sc, cuts) }), up >= 0 ? ' · ' + (up + 1) + '등급까지 ' + (cuts[up] - sc) + '점' : '']),
       ol,
-      el('p', { class: 'pr-grade-src', text: ABS_CUT[SUB] ? '절대평가 — 정해진 점수 기준' : 'EBSi 역대 등급컷(원점수) 기준 예상 · 실제 등급은 표준점수로 정해져요' })
+      el('p', { class: 'pr-grade-src' }, src)
     ]);
   }
 
@@ -2098,6 +2114,7 @@
     EXAMS = pair[0].exams;
     meUser = pair[1] && pair[1].id ? pair[1] : { id: null };
     CUTS = pair[2] && pair[2].cuts;
+    EST = pair[2] && pair[2].est;
     var ex = examList();
     buildShell();
     refreshAuth();
