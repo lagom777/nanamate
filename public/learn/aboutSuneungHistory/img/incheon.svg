@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>인천 상륙 작전 (1950.9.15 · 국군과 유엔군이 서울을 되찾는 계기)</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a6b7c"/>
+      <stop offset="1" stop-color="#c7cfd6"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#47657e"/>
+      <stop offset="1" stop-color="#1f3346"/>
+    </linearGradient>
+    <linearGradient id="wall" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#9c9686"/>
+      <stop offset="1" stop-color="#6a6558"/>
+    </linearGradient>
+    <radialGradient id="smoke" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#3a3e44" stop-opacity=".8"/><stop offset="1" stop-color="#3a3e44" stop-opacity="0"/></radialGradient>
+    <radialGradient id="vg" cx=".5" cy=".5" r=".5"><stop offset=".62" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
+    <mask id="fade"><rect width="200" height="200" fill="url(#vg)"/></mask>
+    <g id="boat" fill="#2b3a2e" stroke="#141c16" stroke-width=".7">
+      <path d="M-18 0H18L14 8H-14Z"/>
+      <path d="M-18 0V-6H18V0Z" fill="#3e5242"/>
+      <g fill="#141c16"><circle cx="-10" cy="-8" r="1.6"/><circle cx="-5" cy="-8" r="1.6"/><circle cx="0" cy="-8" r="1.6"/><circle cx="5" cy="-8" r="1.6"/><circle cx="10" cy="-8" r="1.6"/></g>
+    </g>
+    <g id="ship" fill="#59626b"><path d="M-30 0H30L24 7H-26Z"/><path d="M-14 0V-8H6V0ZM-6-8V-16H0V-8ZM10 0V-5H18V0Z"/><path d="M-3-16V-24" stroke="#59626b" stroke-width="1.4"/></g>
+  </defs>
+  <g mask="url(#fade)">
+    <rect width="200" height="200" fill="url(#sky)"/>
+    <!-- 먼바다의 함대 -->
+    <use href="#ship" transform="translate(40 96) scale(.8)"/>
+    <use href="#ship" transform="translate(96 92) scale(.6)"/>
+    <use href="#ship" transform="translate(70 100) scale(.5)" opacity=".8"/>
+    <circle cx="150" cy="60" r="28" fill="url(#smoke)"/><circle cx="176" cy="40" r="22" fill="url(#smoke)"/><circle cx="130" cy="44" r="18" fill="url(#smoke)"/>
+    <!-- 바다 -->
+    <rect x="0" y="100" width="200" height="100" fill="url(#sea)"/>
+    <g stroke="#9bb8cc" stroke-width="1" opacity=".5" stroke-linecap="round"><path d="M10 120h18M50 132h22M20 150h26M90 140h20M60 170h24M100 162h18"/></g>
+    <!-- 방파제(돌 벽)와 사다리 -->
+    <path d="M128 200V118L200 104V200Z" fill="url(#wall)" stroke="#4a463c" stroke-width="1"/>
+    <g stroke="#4a463c" stroke-width=".6" opacity=".7"><path d="M128 132L200 118M128 148L200 134M128 164L200 150M128 180L200 166M144 116v84M162 112v88M180 108v92"/></g>
+    <g stroke="#2a2016" stroke-width="1.6"><path d="M136 176L132 118M144 176L140 116"/></g>
+    <g stroke="#2a2016" stroke-width="1"><path d="M135 164h8M134 152h8M133 140h8M132 128h8"/></g>
+    <!-- 오르는 병사 -->
+    <g fill="#141c16"><circle cx="138" cy="112" r="2.4"/><path d="M136 115h4l1 7h-6z"/></g>
+    <!-- 상륙정 -->
+    <use href="#boat" transform="translate(98 150)"/>
+    <use href="#boat" transform="translate(54 166) scale(1.1)"/>
+    <use href="#boat" transform="translate(30 136) scale(.85)"/>
+    <g fill="none" stroke="#d6e4ee" stroke-width="1.1" opacity=".8"><path d="M80 158c6 3 10 3 14 0M34 176c6 3 10 3 14 0M12 144c5 3 8 3 12 0"/></g>
+  </g>
+</svg>

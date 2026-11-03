@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { LEARN } from "./lib.mjs";
 import { UNITS, scenes, TERR, TERR_ORDER } from "./hist-scenes.mjs";
+import { IMAGES } from "./hist-images.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ENGINE = fs.readFileSync(path.join(HERE, "hist-engine.js"), "utf8");
@@ -38,17 +39,18 @@ function pageHtml({ src, title, h1, backs, base, unitsHere, list, linkNav, foote
   </header>
   <nav class="pl" aria-label="모션 노트 바로가기">${linkNav}</nav>`);
   head = rep(head, "<footer>2015 개정 교육과정 물리학Ⅰ 범위 기준 · 그림 속 수치는 개념 설명용 예시값</footer>", `<footer>${footer}</footer>`);
-  head = head.replace(/const UNITS=\[.*?\];/s, `const UNITS=${JSON.stringify(UNITS.map(({ k, e, name, c }) => ({ k, e, name, c })))};`);
+  head = head.replace(/const UNITS=\[.*?\];/s, `const UNITS=${JSON.stringify(UNITS.map(({ k, e, name, c, img }) => ({ k, e, name, c, img })))};`);
   if (!head.includes('"선사·고조선"')) throw new Error("UNITS not replaced");
   head = rep(head, "</style>\n<style>body{margin:0}</style>", `</style>\n<style>body{margin:0}${EXTRA_CSS}</style>`);
 
-  const data = `const HERE_UNITS=${JSON.stringify(unitsHere)};\nconst SCENES=${JSON.stringify(list)};\nconst TERR=${JSON.stringify(TERR)};\n`;
+  const data = `const HERE_UNITS=${JSON.stringify(unitsHere)};\nconst SCENES=${JSON.stringify(list)};\nconst TERR=${JSON.stringify(TERR)};\nconst IMAGES=${JSON.stringify(IMAGES)};\nconst IMG_BASE=${JSON.stringify(base)};\n`;
   const player = `
 /* ───────── 플레이어 ───────── */
 buildScenes(SCENES);
 const Q=new URLSearchParams(location.search); // ?embed&only=5,6,7 — 장 노트 안에 그 장 장면만
 if(Q.has('embed')){document.documentElement.classList.add('embed');const only=(Q.get('only')||'').split(',').filter(Boolean).map(Number).filter(i=>Number.isInteger(i)&&S[i]);
   if(only.length){const keep=only.map(i=>S[i]);S.length=0;S.push(...keep);}}
+setTimeout(()=>preloadPics(S),400);   // 이 쪽에서 쓰는 그림을 미리 받아 둔다
 const cv=document.getElementById('cv'),ctx=cv.getContext('2d'),$=id=>document.getElementById(id);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let idx=0,t=0,playing=!reduce,last=null;

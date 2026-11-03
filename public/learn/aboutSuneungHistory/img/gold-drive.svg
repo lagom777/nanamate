@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>금 모으기 운동 (1997~98 외환 위기 · IMF 구제 금융 극복)</title>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff0b0"/>
+      <stop offset=".45" stop-color="#e2b54c"/>
+      <stop offset="1" stop-color="#8f6a1f"/>
+    </linearGradient>
+    <linearGradient id="box" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b03a2e"/>
+      <stop offset="1" stop-color="#6e1d16"/>
+    </linearGradient>
+    <linearGradient id="boxTop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a1712"/>
+      <stop offset="1" stop-color="#3a0e0b"/>
+    </linearGradient>
+    <radialGradient id="glint" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+    <g id="ring"><ellipse rx="9" ry="4.6" fill="none" stroke="url(#gold)" stroke-width="3.2"/><ellipse rx="9" ry="4.6" fill="none" stroke="#7a5615" stroke-width=".5"/></g>
+  </defs>
+  <ellipse cx="100" cy="186" rx="80" ry="7" fill="#000" opacity=".45" filter="url(#soft)"/>
+  <!-- 모금 상자 -->
+  <path d="M36 112L56 98H164L144 112Z" fill="url(#boxTop)" stroke="#2a0806" stroke-width="1"/>
+  <path d="M36 112H144V180H36Z" fill="url(#box)" stroke="#2a0806" stroke-width="1"/>
+  <path d="M144 112L164 98V166L144 180Z" fill="#561510" stroke="#2a0806" stroke-width="1"/>
+  <g font-family="'Noto Sans CJK KR','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif" font-weight="900" text-anchor="middle" fill="#fff4cc">
+    <text x="90" y="140" font-size="16">금 모으기</text>
+    <text x="90" y="160" font-size="9" fill="#ffd9a8">나라 살리기 · IMF 극복</text>
+  </g>
+  <!-- 상자 위로 넘치는 금붙이 -->
+  <g>
+    <path d="M60 106C70 92 86 86 100 86C116 86 132 92 142 104Z" fill="url(#gold)" stroke="#7a5615" stroke-width=".8"/>
+    <g fill="#7a5615" opacity=".45"><circle cx="78" cy="98" r="1.4"/><circle cx="96" cy="92" r="1.4"/><circle cx="114" cy="94" r="1.4"/><circle cx="128" cy="100" r="1.4"/></g>
+    <use href="#ring" transform="translate(76 90) rotate(-12)"/>
+    <use href="#ring" transform="translate(98 82) rotate(8)"/>
+    <use href="#ring" transform="translate(122 88) rotate(-6)"/>
+    <!-- 금목걸이 -->
+    <path d="M62 96C70 70 90 64 104 70C118 76 128 70 138 82" fill="none" stroke="url(#gold)" stroke-width="2.4" stroke-dasharray="2.6 1.2"/>
+    <!-- 돌 반지와 열쇠 -->
+    <circle cx="140" cy="72" r="7" fill="none" stroke="url(#gold)" stroke-width="3"/>
+    <path d="M147 72H160M156 72v5M160 72v4" stroke="url(#gold)" stroke-width="3" stroke-linecap="round"/>
+    <!-- 금 막대 -->
+    <path d="M44 84L66 76L78 82L56 90Z" fill="url(#gold)" stroke="#7a5615" stroke-width=".8"/>
+    <path d="M56 90L78 82V88L56 96Z" fill="#a8801f" stroke="#7a5615" stroke-width=".8"/>
+    <path d="M44 84L56 90V96L44 90Z" fill="#8f6a1f" stroke="#7a5615" stroke-width=".8"/>
+  </g>
+  <circle cx="104" cy="70" r="6" fill="url(#glint)"/><circle cx="72" cy="88" r="4" fill="url(#glint)"/><circle cx="140" cy="66" r="4" fill="url(#glint)"/>
+</svg>

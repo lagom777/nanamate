@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>고인돌 (청동기, 탁자식 · 강화 부근리)</title>
+  <defs>
+    <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6f9a4e"/>
+      <stop offset="1" stop-color="#3d5f2e"/>
+    </linearGradient>
+    <linearGradient id="top" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c4c8c6"/>
+      <stop offset="1" stop-color="#8f9592"/>
+    </linearGradient>
+    <linearGradient id="front" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8b918e"/>
+      <stop offset="1" stop-color="#5d6360"/>
+    </linearGradient>
+    <linearGradient id="leg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#a3a8a5"/>
+      <stop offset="1" stop-color="#6b716e"/>
+    </linearGradient>
+    <linearGradient id="legside" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5a605d"/>
+      <stop offset="1" stop-color="#434846"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5"/></filter>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 .2  0 0 0 0 .2  0 0 0 0 .2  0 0 0 .55 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+  </defs>
+  <!-- 언덕과 풀밭 -->
+  <ellipse cx="100" cy="168" rx="98" ry="26" fill="url(#grass)"/>
+  <path d="M8 160C40 146 70 148 100 147C140 145 170 148 192 160" fill="none" stroke="#9cc46f" stroke-width="1.5" opacity=".6"/>
+  <ellipse cx="102" cy="168" rx="80" ry="10" fill="#000" opacity=".35" filter="url(#soft)"/>
+  <!-- 받침돌 두 개 -->
+  <g>
+    <polygon points="56,104 80,101 84,166 52,168" fill="url(#leg)"/>
+    <polygon points="80,101 89,104 92,163 84,166" fill="url(#legside)"/>
+    <polygon points="116,103 140,100 146,165 112,167" fill="url(#leg)"/>
+    <polygon points="140,100 150,104 153,161 146,165" fill="url(#legside)"/>
+    <g filter="url(#grain)"><polygon points="56,104 80,101 84,166 52,168" fill="#888"/><polygon points="116,103 140,100 146,165 112,167" fill="#888"/></g>
+    <path d="M66 112l3 20-2 14M128 116l-2 18 3 16" fill="none" stroke="#3e4341" stroke-width=".8" opacity=".6"/>
+  </g>
+  <!-- 덮개돌: 윗면 · 앞면 · 옆면 -->
+  <polygon points="40,74 158,66 178,86 24,96" fill="url(#top)"/>
+  <polygon points="24,96 178,86 182,104 22,114" fill="url(#front)"/>
+  <polygon points="178,86 158,66 162,66 184,84 182,104" fill="#545a57"/>
+  <g filter="url(#grain)">
+    <polygon points="40,74 158,66 178,86 24,96" fill="#999"/>
+    <polygon points="24,96 178,86 182,104 22,114" fill="#777"/>
+  </g>
+  <path d="M24 96L178 86" stroke="#e1e4e2" stroke-width="1.2" opacity=".55"/>
+  <path d="M70 80l18 6 14-2M120 74l10 8" fill="none" stroke="#5d6360" stroke-width=".8" opacity=".55"/>
+  <path d="M22 114L182 104" stroke="#2c302e" stroke-width="1" opacity=".5"/>
+  <!-- 크기 비교용 사람 -->
+  <g fill="#2a2f3a">
+    <circle cx="170" cy="126" r="4.2"/>
+    <path d="M166 131h8l2 16h-3l-1 14h-2.4l-.6-12h-.2l-.6 12H166l-1-14h-3z"/>
+  </g>
+  <!-- 풀잎 -->
+  <g stroke="#a8d27a" stroke-width="1.2" stroke-linecap="round" opacity=".8">
+    <path d="M30 170l2-8M34 172l-1-9M140 176l3-8M146 175l0-8M90 178l-2-7M96 178l1-8M60 182l2-7"/>
+  </g>
+</svg>

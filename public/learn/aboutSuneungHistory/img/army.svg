@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>만주의 독립군 (1920 봉오동 · 청산리 전투 · 홍범도 · 김좌진)</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3b5b78"/>
+      <stop offset="1" stop-color="#a9c2d4"/>
+    </linearGradient>
+    <linearGradient id="snow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eef3f6"/>
+      <stop offset="1" stop-color="#b9c6cf"/>
+    </linearGradient>
+    <radialGradient id="vg" cx=".5" cy=".55" r=".5"><stop offset=".6" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
+    <mask id="fade"><rect width="200" height="200" fill="url(#vg)"/></mask>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+    <g id="pine" fill="#1d3a2c"><path d="M0-40L10-22H5L14-8H6L16 6H-16L-6-8H-14L-5-22H-10Z"/><rect x="-2" y="6" width="4" height="8" fill="#3a2a1c"/></g>
+    <!-- 총을 멘 독립군 한 사람 -->
+    <g id="soldier" fill="#1a1f24">
+      <path d="M-5-38h10l1 3H-6z"/>
+      <circle cx="0" cy="-31" r="4.6"/>
+      <path d="M-8-26H8L10-4H6L5 20H1L0 2H0L-1 20H-5L-6-4H-10Z"/>
+      <path d="M8-24L18-46" stroke="#1a1f24" stroke-width="2" stroke-linecap="round"/>
+      <path d="M-8-22L-12-6" stroke="#1a1f24" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  </defs>
+  <g mask="url(#fade)">
+    <rect x="0" y="0" width="200" height="200" fill="url(#sky)"/>
+    <!-- 먼 산 -->
+    <path d="M0 120L30 86L52 104L80 72L110 100L136 78L168 104L200 84V200H0Z" fill="#6f8aa0"/>
+    <path d="M30 86L36 94L42 92M80 72L88 82L96 80M136 78L144 88L150 86" fill="none" stroke="#e8eef2" stroke-width="2"/>
+    <!-- 눈 덮인 땅 -->
+    <path d="M0 150C40 138 80 146 110 140C140 134 170 140 200 136V200H0Z" fill="url(#snow)"/>
+    <!-- 소나무 숲 -->
+    <use href="#pine" transform="translate(20 144)"/><use href="#pine" transform="translate(40 138) scale(.8)"/><use href="#pine" transform="translate(170 140) scale(1.1)"/><use href="#pine" transform="translate(150 136) scale(.75)"/><use href="#pine" transform="translate(188 134) scale(.7)"/>
+  </g>
+  <ellipse cx="100" cy="186" rx="70" ry="6" fill="#000" opacity=".35" filter="url(#soft)"/>
+  <!-- 독립군 셋과 깃발 -->
+  <use href="#soldier" transform="translate(76 164)"/>
+  <use href="#soldier" transform="translate(102 166) scale(1.08)"/>
+  <use href="#soldier" transform="translate(128 164)"/>
+  <path d="M96 128V70" stroke="#3a2a1c" stroke-width="2"/>
+  <path d="M96 70C108 66 118 74 130 70V92C118 96 108 88 96 92Z" fill="#fbfbf8" stroke="#8b8b86" stroke-width=".7"/>
+  <g transform="translate(113 81) rotate(-34)"><circle r="5.5" fill="#c8102e"/><path d="M-5.5 0a2.75 2.75 0 0 0 5.5 0a2.75 2.75 0 0 1 5.5 0a5.5 5.5 0 0 1-11 0z" fill="#0047a0"/></g>
+  <!-- 눈송이 -->
+  <g fill="#fff" opacity=".85"><circle cx="20" cy="30" r="1.2"/><circle cx="56" cy="20" r="1"/><circle cx="150" cy="26" r="1.3"/><circle cx="180" cy="50" r="1"/><circle cx="34" cy="60" r="1"/><circle cx="120" cy="46" r="1.1"/><circle cx="70" cy="44" r="1"/></g>
+</svg>

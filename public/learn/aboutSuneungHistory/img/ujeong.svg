@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>우정총국 (1884 · 근대 우편 업무 · 개국 축하연에서 갑신정변)</title>
+  <defs>
+    <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5d636b"/>
+      <stop offset="1" stop-color="#33373d"/>
+    </linearGradient>
+    <linearGradient id="col" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b3523e"/>
+      <stop offset="1" stop-color="#74291c"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4f8c7a"/>
+      <stop offset="1" stop-color="#2d5c4f"/>
+    </linearGradient>
+    <linearGradient id="stone" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d6cfbf"/>
+      <stop offset="1" stop-color="#958d79"/>
+    </linearGradient>
+    <radialGradient id="fire" cx=".5" cy=".7" r=".6">
+      <stop offset="0" stop-color="#ffd27a" stop-opacity=".9"/>
+      <stop offset=".5" stop-color="#ff7a2e" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#ff7a2e" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="lattice" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#e9dcc0"/><path d="M0 2.5h5M2.5 0v5" stroke="#8a6a4a" stroke-width=".8"/></pattern>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+  </defs>
+  <!-- 정변이 일어난 밤의 불빛 -->
+  <circle cx="160" cy="70" r="40" fill="url(#fire)"/>
+  <ellipse cx="100" cy="184" rx="88" ry="6" fill="#000" opacity=".45" filter="url(#soft)"/>
+  <path d="M22 168H178L184 180H16Z" fill="url(#stone)" stroke="#6b6450" stroke-width=".8"/>
+  <rect x="34" y="116" width="132" height="52" fill="#e3d5b6"/>
+  <g><rect x="52" y="122" width="22" height="42" fill="url(#lattice)"/><rect x="89" y="122" width="22" height="42" fill="url(#lattice)"/><rect x="126" y="122" width="22" height="42" fill="url(#lattice)"/></g>
+  <g fill="url(#col)" stroke="#4a1f15" stroke-width=".6"><path d="M36 116h6v52h-6zM76 116h6v52h-6zM118 116h6v52h-6zM158 116h6v52h-6z"/></g>
+  <rect x="30" y="108" width="140" height="8" fill="url(#green)" stroke="#1f3f36" stroke-width=".6"/>
+  <path d="M10 100C34 106 64 106 100 106C136 106 166 106 190 100L184 108C158 112 130 112 100 112C70 112 42 112 16 108Z" fill="url(#green)" stroke="#1f3f36" stroke-width=".7"/>
+  <path d="M10 100C34 104 64 104 100 104C136 104 166 104 190 100L160 70H40Z" fill="url(#roof)" stroke="#23262b" stroke-width=".9"/>
+  <path d="M40 70L60 52H140L160 70Z" fill="url(#roof)" stroke="#23262b" stroke-width=".9"/>
+  <g stroke="#23262b" stroke-width=".55" opacity=".7"><path d="M30 100l12-26M50 102l9-28M70 103l5-29M90 104l2-30M110 104l-2-30M130 103l-5-29M150 102l-9-28M170 100l-12-26"/></g>
+  <path d="M56 52H144V47H56Z" fill="#2e3238"/>
+  <path d="M10 100l-4-5M190 100l4-5" stroke="#23262b" stroke-width="2" stroke-linecap="round"/>
+  <!-- 현판 郵征總局 -->
+  <rect x="78" y="88" width="44" height="14" fill="#1d2433" stroke="#c9a54a" stroke-width="1"/>
+  <text x="100" y="99" fill="#f0d27a" font-size="9.5" font-weight="700" text-anchor="middle" font-family="'Noto Serif CJK KR','Noto Serif KR','Nanum Myeongjo','AppleMyungjo','Batang',serif" letter-spacing=".5">郵征總局</text>
+  <!-- 편지 봉투 -->
+  <g transform="translate(150 136) rotate(-8)">
+    <rect x="0" y="0" width="28" height="18" rx="1.5" fill="#f5efe1" stroke="#7a6a4a" stroke-width=".8"/>
+    <path d="M0 0L14 10L28 0" fill="none" stroke="#7a6a4a" stroke-width=".8"/>
+    <rect x="20" y="2.5" width="6" height="6" fill="#c43b2c"/>
+  </g>
+</svg>

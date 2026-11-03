@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>4·19 혁명 (1960 · 3·15 부정 선거에 맞선 학생과 시민 · 이승만 하야)</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7d93a8"/>
+      <stop offset="1" stop-color="#d9e0e6"/>
+    </linearGradient>
+    <linearGradient id="cloth" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbfaf5"/>
+      <stop offset="1" stop-color="#dcd8cc"/>
+    </linearGradient>
+    <radialGradient id="vg" cx=".5" cy=".5" r=".5"><stop offset=".64" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
+    <mask id="fade"><rect width="200" height="200" fill="url(#vg)"/></mask>
+    <!-- 교모를 쓴 학생 -->
+    <g id="st" fill="#1c2430">
+      <path d="M-5.5-27h11l1.5 2.6h-14z"/><rect x="-5" y="-30" width="10" height="3.4" rx="1"/>
+      <circle cx="0" cy="-21" r="4.6"/>
+      <path d="M-9-15H9L11 14H-11Z"/>
+    </g>
+    <g id="pp" fill="#2a3240"><circle cx="0" cy="-22" r="4.6"/><path d="M-9-16H9L11 14H-11Z"/></g>
+  </defs>
+  <g mask="url(#fade)">
+    <rect width="200" height="200" fill="url(#sky)"/>
+    <!-- 뒤 건물 -->
+    <g fill="#9aa7b4"><rect x="8" y="70" width="40" height="80"/><rect x="52" y="56" width="30" height="94"/><rect x="146" y="64" width="46" height="86"/><rect x="118" y="80" width="26" height="70"/></g>
+    <g fill="#b9c4ce"><rect x="14" y="78" width="6" height="8"/><rect x="26" y="78" width="6" height="8"/><rect x="58" y="64" width="6" height="8"/><rect x="70" y="64" width="6" height="8"/><rect x="152" y="72" width="6" height="8"/><rect x="166" y="72" width="6" height="8"/><rect x="178" y="72" width="6" height="8"/></g>
+    <!-- 뒷줄 사람들 -->
+    <g opacity=".75">
+      <use href="#pp" transform="translate(16 150) scale(.8)"/><use href="#pp" transform="translate(34 148) scale(.8)"/><use href="#pp" transform="translate(52 150) scale(.8)"/><use href="#pp" transform="translate(70 148) scale(.8)"/>
+      <use href="#pp" transform="translate(130 148) scale(.8)"/><use href="#pp" transform="translate(148 150) scale(.8)"/><use href="#pp" transform="translate(166 148) scale(.8)"/><use href="#pp" transform="translate(184 150) scale(.8)"/>
+    </g>
+  </g>
+  <!-- 현수막 -->
+  <path d="M40 112V70M160 112V70" stroke="#5a4a34" stroke-width="2"/>
+  <path d="M40 74C80 70 120 70 160 74V100C120 96 80 96 40 100Z" fill="url(#cloth)" stroke="#8b8b86" stroke-width=".8"/>
+  <text x="100" y="91" fill="#1d1d1b" font-size="11.5" font-weight="900" text-anchor="middle" font-family="'Noto Sans CJK KR','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif">부정 선거 다시 하라</text>
+  <!-- 앞줄 학생들 -->
+  <use href="#st" transform="translate(30 176)"/><use href="#st" transform="translate(52 172)"/><use href="#st" transform="translate(74 176)"/><use href="#st" transform="translate(96 170)"/>
+  <use href="#st" transform="translate(118 176)"/><use href="#st" transform="translate(140 172)"/><use href="#st" transform="translate(162 176)"/>
+  <!-- 치켜든 팔 -->
+  <g stroke="#1c2430" stroke-width="3" stroke-linecap="round"><path d="M101 156L108 136M57 158L62 140M145 158L150 140"/></g>
+  <ellipse cx="100" cy="194" rx="86" ry="5" fill="#000" opacity=".3"/>
+</svg>

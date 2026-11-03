@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>칠지도 (백제 · 왜에 보낸 일곱 가지 칼)</title>
+  <defs>
+    <linearGradient id="iron" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8b8178"/>
+      <stop offset=".5" stop-color="#5a524b"/>
+      <stop offset="1" stop-color="#2f2a26"/>
+    </linearGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.4"/></filter>
+    <filter id="rust"><feTurbulence type="fractalNoise" baseFrequency=".1" numOctaves="3" seed="9"/><feColorMatrix values="0 0 0 0 .55  0 0 0 0 .3  0 0 0 0 .16  0 0 0 2.6 -1.5"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.2"/></filter>
+  </defs>
+  <ellipse cx="100" cy="190" rx="26" ry="4" fill="#000" opacity=".45" filter="url(#soft)"/>
+  <g id="sword" stroke="#1d1a17" stroke-width="1.1" stroke-linejoin="round" fill="url(#iron)">
+    <!-- 곁가지: 좌우로 번갈아 세 개씩 -->
+    <path d="M104 62C114 58 121 48 124 32C126 40 123 52 117 60C113 65 108 68 104 69Z"/>
+    <path d="M96 82C86 78 79 68 76 52C74 60 77 72 83 80C87 85 92 88 96 89Z"/>
+    <path d="M104 102C114 98 121 88 124 72C126 80 123 92 117 100C113 105 108 108 104 109Z"/>
+    <path d="M96 122C86 118 79 108 76 92C74 100 77 112 83 120C87 125 92 128 96 129Z"/>
+    <path d="M104 142C114 138 121 128 124 112C126 120 123 132 117 140C113 145 108 148 104 149Z"/>
+    <path d="M96 160C86 156 79 146 76 130C74 138 77 150 83 158C87 163 92 166 96 167Z"/>
+    <!-- 몸날 -->
+    <path d="M100 12C103 24 105 40 105 56V172H95V56C95 40 97 24 100 12Z"/>
+  </g>
+  <g fill="#000" filter="url(#rust)" opacity=".85"><use href="#sword"/></g>
+  <!-- 슴베 -->
+  <rect x="96" y="172" width="8" height="16" fill="#2f2a26" stroke="#1d1a17"/>
+  <!-- 금으로 새긴 글자(명문) -->
+  <g stroke="#f3cd5f" stroke-width="1" stroke-linecap="round" opacity=".95">
+    <path d="M98.5 64h3M100 62v4M98.5 70h3v3h-3zM98.5 78h3M99 81l2 2M98.5 88h3M100 86v5M98.5 96h3v3M98.5 104h3M100 102v4M98.5 110h3M98.5 113h3M98.5 120h3v3h-3zM98.5 128h3M100 126v5M98.5 136h3M99 139l2 2M98.5 146h3v3M98.5 154h3M100 152v4M98.5 162h3"/>
+  </g>
+  <g stroke="#ffe69a" stroke-width="2.4" opacity=".25" filter="url(#glow)"><path d="M100 62V164"/></g>
+  <path d="M98 20V170" stroke="#c9beb2" stroke-width=".8" opacity=".5"/>
+</svg>

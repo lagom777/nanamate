@@ -147,6 +147,29 @@ function kicker(c,d,col){label(c,d.kick||UNITS[d.u].name,48,26,C.dim,{size:12,al
 function pill(c,s,x,y,col,o={}){c.save();c.font=`${o.w||600} ${o.size||13}px ${SANS}`;const w=c.measureText(s).width+(o.pad||16);c.restore();
   box(c,x-w/2,y-12,w,24,12,o.fill||col+'22',col,1.3,{alpha:o.alpha});T(c,s,x,y+1,{size:o.size||13,w:o.w||600,color:o.tc||C.text,align:'center',alpha:o.alpha});return w;}
 
+/* ── 그림(img/<id>.svg, 이름·시대는 IMAGES): 불러오는 동안에는 같은 자리에 빈 판만 그린다 ── */
+const PICS={};
+function pic(id){if(!id||typeof Image==='undefined')return null;let p=PICS[id];
+  if(!p){p=PICS[id]=new Image();p.src=IMG_BASE+'img/'+id+'.svg';}
+  return p.complete&&p.naturalWidth?p:null;}
+function preloadPics(list){(JSON.stringify(list).match(/"img":"[a-z0-9-]+"/g)||[]).forEach(m=>pic(m.slice(7,-1)));if(list.some(s=>s.type==='intro'))UNITS.forEach(u=>pic(u.img));}
+/* 진열장 판: 위에서 비추는 빛 + 그림(비율 유지) */
+function plate(c,id,x,y,w,h,o={}){c.save();if(o.alpha!=null)c.globalAlpha*=o.alpha;const r=o.r??12;
+  const g=c.createRadialGradient(x+w/2,y+h*.36,4,x+w/2,y+h*.46,Math.max(w,h)*.72);g.addColorStop(0,'#22425f');g.addColorStop(1,'#0A1624');
+  box(c,x,y,w,h,r,g,o.stroke||null,o.lw||1.4,{glow:o.glow||0,gc:o.gc});
+  const im=pic(id),s=Math.min(w,h)*(o.pad??.94)*(o.zoom||1);
+  if(im){c.save();c.beginPath();c.roundRect(x,y,w,h,r);c.clip();c.drawImage(im,x+(w-s)/2,y+(h-s)/2,s,s);c.restore();}
+  else if(!id&&o.e)T(c,o.e,x+w/2,y+h/2+2,{size:Math.min(w,h)*.46,align:'center'});
+  c.restore();}
+/* 동그란 배지: 그림이 있으면 그림, 없으면 이모지 */
+function badge(c,x,y,r,col,o={}){c.save();if(o.alpha!=null)c.globalAlpha*=o.alpha;
+  const g=c.createRadialGradient(x,y-r*.35,1,x,y,r);g.addColorStop(0,'#25486b');g.addColorStop(1,'#0A1624');
+  dot(c,x,y,r,g,{stroke:col,lw:o.lw||2.4,glow:o.glow||0,gc:col});
+  const im=pic(o.img);
+  if(im){c.save();c.beginPath();c.arc(x,y,r-1.4,0,TAU);c.clip();const s=r*2.05;c.drawImage(im,x-s/2,y-s/2,s,s);c.restore();}
+  else if(!o.img)T(c,o.e||'•',x,y+1,{size:o.es||r*.92,align:'center'});
+  c.restore();}
+
 /* ── 인트로 ── */
 TPL.intro=function(c,t,d){
   label(c,'HISTORY MOTION NOTE',480,44,C.dim,{size:14});
@@ -156,14 +179,15 @@ TPL.intro=function(c,t,d){
     const cnt=S.filter(s=>s.u===i).length;
     c.save();c.globalAlpha=k;c.translate(x+80,y+66);c.scale(.9+.1*k,.9+.1*k);c.translate(-80,-66);
     box(c,0,0,160,132,16,'#0E1B2A',u.c+'99',1.8,{glow:6,gc:u.c});box(c,0,0,160,6,3,u.c);
-    T(c,u.e,80,48,{size:38,align:'center'});T(c,u.name,80,86,{size:fit(c,u.name,140,17,700),w:700,align:'center'});
-    label(c,'장면 '+cnt+'개',80,112,C.dim,{size:12});c.restore();});
+    if(u.img){plate(c,u.img,44,12,72,66,{r:10,pad:1});T(c,u.name,80,92,{size:fit(c,u.name,140,16,700),w:700,align:'center'});label(c,'장면 '+cnt+'개',80,116,C.dim,{size:12});}
+    else{T(c,u.e,80,48,{size:38,align:'center'});T(c,u.name,80,86,{size:fit(c,u.name,140,17,700),w:700,align:'center'});label(c,'장면 '+cnt+'개',80,112,C.dim,{size:12});}
+    c.restore();});
   label(c,'아래 막대를 눌러 원하는 장면으로 이동 · ← → 키로 넘기기 · Space 재생/정지',480,516,C.muted,{size:13});
 };
 
 /* ── 연표: 사건이 차례로 떠오르는 가로 타임라인 ── */
 TPL.timeline=function(c,t,d){
-  const ev=d.events,n=ev.length,col=colOf(d);kicker(c,d,col);
+  const ev=d.events,n=ev.length,col=colOf(d),pics=ev.some(e=>e.img);kicker(c,d,col);
   const X0=n>1?120:480,X1=840,Y=d.cy||292,t0=.6,step=Math.max(1,(d.dur-3.2)/n),endT=t0+step*n;
   const newest=t<endT?Math.min(n-1,Math.floor((t-t0)/step)):-1,cyc=t>=endT?Math.floor((t-endT)/1.5)%n:-1,cur=newest>=0?newest:cyc;
   poly(c,[[50,Y],[910,Y]],C.line,4);
@@ -178,15 +202,15 @@ TPL.timeline=function(c,t,d){
     T(c,e.y,x,yy+22,{font:DISP,size:fit(c,e.y,cw-14,21,400,DISP),color:col,align:'center',w:400});
     const nl=WT(c,e.t,x,yy+50,cw-18,19,{size:16,w:700,align:'center'});
     if(e.n)WT(c,e.n,x,yy+50+nl*19+7,cw-20,16,{size:12.5,color:C.muted,align:'center'});
-    dot(c,x,Y,on?25:21,on?col:'#10202F',{stroke:col,lw:3,glow:on?22:0});
-    T(c,e.e||'•',x,Y+1,{size:on?24:20,align:'center'});
+    if(pics)badge(c,x,Y,on?32:28,col,{img:e.img,e:e.e,lw:3,glow:on?22:0});   // 그림이 하나라도 있으면 모든 점을 같은 크기 배지로
+    else{dot(c,x,Y,on?25:21,on?col:'#10202F',{stroke:col,lw:3,glow:on?22:0});T(c,e.e||'•',x,Y+1,{size:on?24:20,align:'center'});}
     c.restore();});
   if(d.foot&&t>endT-.5)label(c,d.foot,480,516,C.muted,{size:14,alpha:seg(t,endT-.5,endT+.3)});
 };
 
 /* ── 카드: 비교 카드들이 튀어나오고 핵심어가 하나씩 붙는다 ── */
 TPL.cards=function(c,t,d){
-  const cs=d.cards,n=cs.length,col=colOf(d);kicker(c,d,col);
+  const cs=d.cards,n=cs.length,col=colOf(d),pics=cs.some(x=>x.img);kicker(c,d,col);
   const cols=n<=5?n:3,rows=Math.ceil(n/cols),gap=14,cw=(880-(cols-1)*gap)/cols,ch=rows===1?352:196,top=rows===1?100:94;
   const per=.55,endT=.5+n*per+1.8,cyc=t>endT?Math.floor((t-endT)/1.6)%n:-1;
   cs.forEach((cd,i)=>{const r=Math.floor(i/cols),cc=i%cols,x=40+cc*(cw+gap),y=top+r*(ch+gap),t0=.5+i*per,k=ease(seg(t,t0,t0+.5));if(k<=0)return;
@@ -194,9 +218,11 @@ TPL.cards=function(c,t,d){
     c.save();c.translate(x+cw/2,y+ch/2);c.scale(.86+.14*k,.86+.14*k);c.globalAlpha=k;c.translate(-cw/2,-ch/2);
     box(c,0,0,cw,ch,16,on?cl+'22':'#0E1B2A',on?cl:cl+'66',on?3:1.8,{glow:on?22:0,gc:cl});box(c,0,0,cw,rows===1?8:6,3,cl);
     let ky;
-    if(rows===1){T(c,cd.e,cw/2,58,{size:44,align:'center'});T(c,cd.h,cw/2,112,{font:DISP,size:fit(c,cd.h,cw-20,28,400,DISP),align:'center',color:cl,w:400});
+    if(rows===1&&pics){plate(c,cd.img,14,16,cw-28,92,{r:10,e:cd.e});T(c,cd.h,cw/2,128,{font:DISP,size:fit(c,cd.h,cw-20,26,400,DISP),align:'center',color:cl,w:400});
+      ky=164;if(cd.s){WT(c,cd.s,cw/2,158,cw-20,15,{size:12.5,color:C.muted,align:'center'});ky=190;}}
+    else if(rows===1){T(c,cd.e,cw/2,58,{size:44,align:'center'});T(c,cd.h,cw/2,112,{font:DISP,size:fit(c,cd.h,cw-20,28,400,DISP),align:'center',color:cl,w:400});
       ky=150;if(cd.s){WT(c,cd.s,cw/2,146,cw-20,15,{size:12.5,color:C.muted,align:'center'});ky=180;}}
-    else{T(c,cd.e,34,42,{size:34,align:'center'});T(c,cd.h,64,40,{font:DISP,size:fit(c,cd.h,cw-80,25,400,DISP),color:cl,w:400});
+    else{if(pics)badge(c,34,42,22,cl,{img:cd.img,e:cd.e});else T(c,cd.e,34,42,{size:34,align:'center'});T(c,cd.h,64,40,{font:DISP,size:fit(c,cd.h,cw-80,25,400,DISP),color:cl,w:400});
       if(cd.s)T(c,cd.s,64,66,{size:12.5,color:C.muted});ky=cd.s?96:84;}
     (cd.k||[]).forEach((kk,j)=>{const kt=t0+.5+j*.32,k2=ease(seg(t,kt,kt+.35));if(k2<=0)return;const yy=ky+j*(rows===1?37:34);
       box(c,14,yy-15,cw-28,29,14,cl+'1f',cl+'88',1.3,{alpha:k2});T(c,kk,cw/2,yy,{size:fit(c,kk,cw-48,15,600),w:600,align:'center',alpha:k2});});
@@ -206,7 +232,7 @@ TPL.cards=function(c,t,d){
 
 /* ── 인과 사슬: 사건이 "그래서"로 이어진다 ── */
 TPL.chain=function(c,t,d){
-  const ns=d.nodes,n=ns.length,col=colOf(d);kicker(c,d,col);
+  const ns=d.nodes,n=ns.length,col=colOf(d),pics=ns.some(x=>x.img);kicker(c,d,col);
   const per=n<=4?n:Math.ceil(n/2),rows=Math.ceil(n/per),nw=Math.min(228,(880-(per-1)*56)/per),nh=n<=4?156:128;
   const t0=.6,step=Math.max(1.1,(d.dur-3.2)/n),endT=t0+step*n,newest=t<endT?Math.min(n-1,Math.floor((t-t0)/step)):-1,cyc=t>=endT?Math.floor((t-endT)/1.4)%n:-1,cur=newest>=0?newest:cyc;
   const gapX=per>1?(880-per*nw)/(per-1):0,topY=rows===1?170:100,rowGap=rows===1?0:(n<=6?106:96);
@@ -220,7 +246,8 @@ TPL.chain=function(c,t,d){
   ns.forEach((nd,i)=>{const p=pos(i),tt=t0+i*step,k=ease(seg(t,tt,tt+.5));if(k<=0)return;const on=i===cur;
     c.save();c.translate(p.x+nw/2,p.y+nh/2);c.scale(.88+.12*k,.88+.12*k);c.globalAlpha=k;c.translate(-nw/2,-nh/2);
     box(c,0,0,nw,nh,14,on?col+'22':'#0E1B2A',on?col:C.line,on?2.8:1.6,{glow:on?20:0,gc:col});
-    T(c,nd.e||'•',30,32,{size:28,align:'center'});T(c,nd.y,58,30,{font:DISP,size:fit(c,nd.y,nw-72,22,400,DISP),color:col,w:400});
+    if(pics)badge(c,30,32,21,col,{img:nd.img,e:nd.e});else T(c,nd.e||'•',30,32,{size:28,align:'center'});
+    T(c,nd.y,58,30,{font:DISP,size:fit(c,nd.y,nw-72,22,400,DISP),color:col,w:400});
     const nl=WT(c,nd.t,nw/2,nh<140?64:70,nw-22,20,{size:fit(c,nd.t,nw-22,17,700),w:700,align:'center'});
     if(nd.n)WT(c,nd.n,nw/2,(nh<140?64:70)+nl*20+8,nw-24,16,{size:12.5,color:C.muted,align:'center'});
     c.restore();});
@@ -271,11 +298,13 @@ TPL.map=function(c,t,d){
 TPL.quiz=function(c,t,d){
   const col=colOf(d),its=d.items,m=its.length,slot=d.dur/m,i=Math.min(m-1,Math.floor(t/slot)),lt=t-i*slot,q=its[i],rev=slot*.6;
   kicker(c,d,col);label(c,`Q${i+1} / ${m}`,912,30,col,{size:14,align:'right'});
+  // 그림 문제(q.img): 왼쪽에 큰 그림, 문제와 보기는 오른쪽으로
+  const im=!!q.img,L=im?284:48,QW=912-L,cw=(QW-16)/2,chh=70,gx=16,qm=QW-64,qs=im?20:22,lh=qs+6;
   const qk=ease(seg(lt,0,.5));c.save();c.globalAlpha=qk;
-  box(c,48,78,864,98,16,'#0E1B2A',col+'88',2);
-  WT(c,q.q,480,127-((wrap(c,q.q,800,`700 22px ${SANS}`).length-1)*14),800,28,{size:22,w:700,align:'center'});c.restore();
-  const cw=424,chh=70,gx=16;
-  q.ch.forEach((ct,j)=>{const x=48+(j%2)*(cw+gx),y=200+Math.floor(j/2)*(chh+14),k=ease(seg(lt,.5+j*.18,1+j*.18));if(k<=0)return;
+  if(im)plate(c,q.img,48,78,220,272,{r:16,stroke:col+'88',lw:2,pad:.98,zoom:1.05-.05*ease(seg(lt,0,1.4))});
+  box(c,L,78,QW,98,16,'#0E1B2A',col+'88',2);
+  WT(c,q.q,L+QW/2,127-((wrap(c,q.q,qm,`700 ${qs}px ${SANS}`).length-1)*lh/2),qm,lh,{size:qs,w:700,align:'center'});c.restore();
+  q.ch.forEach((ct,j)=>{const x=L+(j%2)*(cw+gx),y=200+Math.floor(j/2)*(chh+14),k=ease(seg(lt,.5+j*.18,1+j*.18));if(k<=0)return;
     const ok=j===q.a,isRev=lt>=rev,good=isRev&&ok,dim=isRev&&!ok;
     c.save();c.globalAlpha=k*(dim?.35:1);box(c,x,y+(1-k)*10,cw,chh,14,good?'rgba(123,224,127,.18)':'#0E1B2A',good?'#7BE07F':C.line,good?3:1.6,{glow:good?20:0,gc:'#7BE07F'});
     dot(c,x+30,y+chh/2+(1-k)*10,15,good?'#7BE07F':'#10202F',{stroke:good?'#7BE07F':col,lw:2});T(c,String('①②③④'[j]),x+30,y+chh/2+1+(1-k)*10,{size:16,w:700,align:'center',color:good?'#09131F':col});
@@ -326,11 +355,33 @@ TPL.compare=function(c,t,d){
   const ek=ease(seg(lt,0,.5));
   [[p.a,48,PAL[0]],[p.b,512,PAL[1]]].forEach(([s,x,cl],si)=>{c.save();c.globalAlpha=ek;c.translate(si?(1-ek)*40:-(1-ek)*40,0);
     box(c,x,118,400,372,18,'#0E1B2A',cl+'99',2);box(c,x,118,400,8,4,cl);
-    T(c,s.e,x+46,172,{size:40,align:'center'});T(c,s.h,x+86,170,{font:DISP,size:fit(c,s.h,290,30,400,DISP),color:cl,w:400});
+    if(p.a.img||p.b.img)badge(c,x+46,170,31,cl,{img:s.img,e:s.e});else T(c,s.e,x+46,172,{size:40,align:'center'});
+    T(c,s.h,x+86,170,{font:DISP,size:fit(c,s.h,290,30,400,DISP),color:cl,w:400});
     s.items.forEach((it,j)=>{const kt=.7+j*.55+si*.25,k=ease(seg(lt,kt,kt+.4));if(k<=0)return;const yy=232+j*62;
       c.save();c.globalAlpha=k;dot(c,x+30,yy+8,6,cl);WT(c,it,x+48,yy+8-(wrap(c,it,326,`600 17px ${SANS}`).length-1)*10,326,22,{size:17,w:600});c.restore();});
     c.restore();});
   const vk=ease(seg(lt,.3,.8));c.save();c.globalAlpha=vk;dot(c,480,304,30,'#09131F',{stroke:C.dim,lw:2});T(c,'VS',480,305,{font:DISP,size:22,align:'center',color:C.text});c.restore();
+};
+
+/* ── 문화유산 진열장: 그림 카드가 하나씩 켜지고, 다 나오면 차례로 비춘다 (이름·시대·한 줄은 IMAGES) ── */
+TPL.gallery=function(c,t,d){
+  const its=d.items.map(x=>Object.assign({},IMAGES[x.img],x)),n=its.length,col=colOf(d);kicker(c,d,col);
+  const cols=n<=4?n:n<=6?3:4,rows=Math.ceil(n/cols),gap=14,cw=(880-(cols-1)*gap)/cols;
+  const one=rows===1,iw=one?cw-24:Math.min(cw-24,156),ih=one?Math.min(iw,228):112,ch=one?ih+132:208,top=one?78+(440-ch)/2:84;
+  const per=Math.min(.8,d.dur*.42/n),endT=.4+n*per+.6,cyc=t>endT?Math.floor((t-endT)/2.2)%n:-1;
+  its.forEach((it,i)=>{const r=Math.floor(i/cols),cc=i%cols,inRow=r===rows-1?n-(rows-1)*cols:cols,   // 덜 찬 마지막 줄은 가운데로
+    x=40+(880-(inRow*cw+(inRow-1)*gap))/2+cc*(cw+gap),y=top+r*(ch+gap),t0=.4+i*per,k=ease(seg(t,t0,t0+.55));if(k<=0)return;
+    const on=i===cyc,ec=UNITS[it.u]?UNITS[it.u].c:col;
+    c.save();c.globalAlpha=k;c.translate(x+cw/2,y+ch/2);c.scale(.92+.08*k,.92+.08*k);c.translate(-cw/2,-ch/2);
+    box(c,0,0,cw,ch,16,on?ec+'1c':'#0E1B2A',on?ec:C.line,on?2.6:1.4,{glow:on?18:0,gc:ec});
+    plate(c,it.img,(cw-iw)/2,12,iw,ih,{r:12,zoom:1.06-.06*ease(seg(t,t0,t0+1.6))+(on?.04:0)});
+    const ty=12+ih;
+    T(c,it.n,cw/2,ty+20,{size:fit(c,it.n,cw-20,one?19:16,700),w:700,align:'center'});
+    pill(c,it.era,cw/2,ty+44,ec,{size:12});
+    if(one)WT(c,it.k,cw/2,ty+70,cw-24,17,{size:13.5,color:C.muted,align:'center'});
+    else T(c,it.k,cw/2,ty+70,{size:fit(c,it.k,cw-18,12.5,500),color:C.muted,align:'center'});
+    c.restore();});
+  if(d.foot)label(c,d.foot,480,524,C.muted,{size:13,alpha:seg(t,endT-.4,endT+.2)});
 };
 
 /* ── 플레이어용: 데이터 → 장면 ── */

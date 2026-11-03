@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>백제 금동 대향로 (부여 능산리 · 봉황·산·연꽃·용)</title>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f6df98"/>
+      <stop offset=".35" stop-color="#d9ad4f"/>
+      <stop offset=".75" stop-color="#9c7428"/>
+      <stop offset="1" stop-color="#5f4513"/>
+    </linearGradient>
+    <linearGradient id="goldV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3d888"/>
+      <stop offset="1" stop-color="#8a6420"/>
+    </linearGradient>
+    <radialGradient id="dome" cx=".38" cy=".3" r=".75">
+      <stop offset="0" stop-color="#fbe8ad"/>
+      <stop offset=".5" stop-color="#cf9f43"/>
+      <stop offset="1" stop-color="#6b4d17"/>
+    </radialGradient>
+    <clipPath id="lid"><path d="M62 102C62 76 80 50 100 46C120 50 138 76 138 102Z"/></clipPath>
+    <clipPath id="bowl"><path d="M60 106C62 128 80 142 100 144C120 142 138 128 140 106Z"/></clipPath>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+  </defs>
+  <ellipse cx="100" cy="190" rx="52" ry="6" fill="#000" opacity=".45" filter="url(#soft)"/>
+  <!-- 받침: 몸을 틀어 올린 용 -->
+  <g stroke="#4a3510" stroke-width="1.1" stroke-linejoin="round">
+    <path d="M58 182C52 170 62 160 76 162C88 164 92 176 104 176C118 176 126 164 140 166C152 168 152 182 140 186C124 190 76 190 58 182Z" fill="url(#gold)"/>
+    <path d="M74 170C82 160 96 160 100 152C104 160 118 160 126 170C116 168 108 172 100 172C92 172 84 168 74 170Z" fill="url(#goldV)"/>
+    <!-- 용 머리: 입으로 기둥을 문다 -->
+    <path d="M90 158C88 150 92 146 100 146C108 146 112 150 110 158C106 154 94 154 90 158Z" fill="url(#goldV)"/>
+    <path d="M84 176l-6 10M116 176l6 10M66 172l-8 6M134 172l8 6" fill="none" stroke-width="2.4" stroke="#7a5a1c"/>
+  </g>
+  <g fill="#5d4413" opacity=".55"><circle cx="70" cy="178" r="1.4"/><circle cx="80" cy="182" r="1.4"/><circle cx="92" cy="183" r="1.4"/><circle cx="108" cy="183" r="1.4"/><circle cx="120" cy="182" r="1.4"/><circle cx="130" cy="178" r="1.4"/><circle cx="96" cy="166" r="1.2"/><circle cx="104" cy="166" r="1.2"/></g>
+  <circle cx="95" cy="151" r="1.3" fill="#3a2a0c"/><circle cx="105" cy="151" r="1.3" fill="#3a2a0c"/>
+  <!-- 기둥 -->
+  <rect x="96" y="140" width="8" height="10" fill="url(#gold)"/>
+  <!-- 몸통: 연꽃 봉오리 -->
+  <path d="M60 106C62 128 80 142 100 144C120 142 138 128 140 106Z" fill="url(#gold)" stroke="#4a3510" stroke-width="1.1"/>
+  <g clip-path="url(#bowl)" fill="none" stroke="#5a4012" stroke-width="1">
+    <path d="M60 108C66 122 74 128 80 112M80 112C86 128 94 132 100 112M100 112C106 132 114 128 120 112M120 112C126 128 134 122 140 108"/>
+    <path d="M70 124C76 138 84 140 90 126M90 126C96 142 104 142 110 126M110 126C116 140 124 138 130 124"/>
+    <path d="M66 112c3 6 6 8 8 4M86 116c3 6 6 8 8 4M106 116c3 6 6 8 8 4M126 112c3 6 6 8 8 4" stroke="#fbe5a3" stroke-opacity=".6"/>
+  </g>
+  <!-- 뚜껑 띠 -->
+  <path d="M58 102H142V107H58Z" fill="url(#gold)" stroke="#4a3510" stroke-width="1"/>
+  <!-- 뚜껑: 겹겹이 솟은 산봉우리 -->
+  <path d="M62 102C62 76 80 50 100 46C120 50 138 76 138 102Z" fill="url(#dome)" stroke="#4a3510" stroke-width="1.1"/>
+  <g clip-path="url(#lid)" fill="none" stroke="#5a4012" stroke-width="1">
+    <path d="M60 100c4-10 10-10 13 0c3-10 9-10 12 0c3-10 9-10 12 0c3-10 9-10 12 0c3-10 9-10 12 0c3-10 9-10 12 0"/>
+    <path d="M64 88c4-10 10-10 13 0c3-10 9-10 12 0c3-10 9-10 12 0c3-10 9-10 12 0c3-10 9-10 12 0"/>
+    <path d="M70 76c4-10 10-10 13 0c3-10 9-10 12 0c3-10 9-10 12 0c3-10 9-10 12 0"/>
+    <path d="M78 64c4-10 10-10 13 0c3-10 9-10 12 0c3-10 9-10 12 0"/>
+    <path d="M88 54c3-8 8-8 12 0c3-8 8-8 12 0"/>
+  </g>
+  <g clip-path="url(#lid)" fill="#fff4cf" opacity=".55">
+    <path d="M66 98c3-6 6-6 8 0z M90 86c3-6 6-6 8 0z M78 74c3-6 6-6 8 0z M100 62c3-6 6-6 8 0z"/>
+  </g>
+  <g fill="#3a2a0c" opacity=".55"><circle cx="84" cy="92" r="1"/><circle cx="110" cy="80" r="1"/><circle cx="96" cy="70" r="1"/><circle cx="122" cy="94" r="1"/></g>
+  <!-- 꼭대기: 날개를 편 봉황 -->
+  <circle cx="100" cy="44" r="3.4" fill="url(#gold)" stroke="#4a3510" stroke-width=".8"/>
+  <g stroke="#4a3510" stroke-width="1" stroke-linejoin="round" fill="url(#goldV)">
+    <path d="M100 41C96 36 96 28 100 24C104 28 104 36 100 41Z"/>
+    <path d="M98 32C90 30 82 22 78 12C86 16 92 20 97 27Z"/>
+    <path d="M102 32C110 30 118 22 122 12C114 16 108 20 103 27Z"/>
+    <path d="M100 26C99 20 101 16 104 14C106 18 104 22 101 26Z"/>
+    <path d="M101 38C108 40 114 38 118 32C112 34 106 34 102 34Z"/>
+  </g>
+  <path d="M102 15l3-3 1 4" fill="none" stroke="#4a3510" stroke-width="1"/>
+</svg>

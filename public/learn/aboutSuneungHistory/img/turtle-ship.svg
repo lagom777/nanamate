@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>거북선 (조선 · 임진왜란 · 이순신 · 덮개에 쇠못, 용머리)</title>
+  <defs>
+    <linearGradient id="hull" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8a5a35"/>
+      <stop offset="1" stop-color="#4a2c17"/>
+    </linearGradient>
+    <linearGradient id="shell" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6a7a4a"/>
+      <stop offset="1" stop-color="#3a4628"/>
+    </linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3f8fc4"/>
+      <stop offset="1" stop-color="#174a73"/>
+    </linearGradient>
+    <linearGradient id="head" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d9b25a"/>
+      <stop offset="1" stop-color="#8a6420"/>
+    </linearGradient>
+    <clipPath id="sh"><path d="M44 118C50 92 76 76 110 74C144 74 168 88 176 118Z"/></clipPath>
+    <pattern id="hex" width="12" height="10.4" patternUnits="userSpaceOnUse">
+      <path d="M3 0h6l3 5.2-3 5.2H3L0 5.2Z" fill="none" stroke="#22291a" stroke-width=".9"/>
+    </pattern>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2"/></filter>
+    <radialGradient id="smoke" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#e8eef2" stop-opacity=".9"/><stop offset="1" stop-color="#e8eef2" stop-opacity="0"/></radialGradient>
+  <radialGradient id="vg" cx=".5" cy=".78" r=".5"><stop offset=".55" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
+    <mask id="fade"><rect width="200" height="200" fill="url(#vg)"/></mask>
+  </defs>
+  <!-- 용머리에서 뿜는 연기 -->
+  <circle cx="18" cy="90" r="12" fill="url(#smoke)"/><circle cx="8" cy="78" r="9" fill="url(#smoke)"/><circle cx="26" cy="76" r="8" fill="url(#smoke)"/>
+  <g mask="url(#fade)">
+  <!-- 바다 -->
+  <path d="M0 148C20 142 40 154 60 148C80 142 100 154 120 148C140 142 160 154 180 148C190 145 196 146 200 148V200H0Z" fill="url(#sea)"/>
+  </g>
+  <!-- 노 -->
+  <g stroke="#5a3a1f" stroke-width="2" stroke-linecap="round"><path d="M62 136l-8 22M78 138l-6 22M94 139l-4 22M110 139l-2 22M126 139l0 22M142 138l2 22M158 136l4 22"/></g>
+  <!-- 배 몸 -->
+  <path d="M30 118H180C182 128 176 138 164 142H52C40 138 32 130 30 118Z" fill="url(#hull)" stroke="#2a180b" stroke-width="1.1"/>
+  <path d="M36 126H176" stroke="#2a180b" stroke-width=".8" opacity=".7"/>
+  <!-- 포 구멍 -->
+  <g fill="#1a0f07"><rect x="58" y="128" width="6" height="5"/><rect x="76" y="128" width="6" height="5"/><rect x="94" y="128" width="6" height="5"/><rect x="112" y="128" width="6" height="5"/><rect x="130" y="128" width="6" height="5"/><rect x="148" y="128" width="6" height="5"/></g>
+  <!-- 거북 등 같은 덮개와 쇠못 -->
+  <path d="M44 118C50 92 76 76 110 74C144 74 168 88 176 118Z" fill="url(#shell)" stroke="#1e2514" stroke-width="1.1"/>
+  <g clip-path="url(#sh)">
+    <rect x="40" y="70" width="140" height="50" fill="url(#hex)"/>
+    <g stroke="#d9dde0" stroke-width="1.1" stroke-linecap="round">
+      <path d="M60 104l-2-4M72 96l-1-4M84 90l0-4M96 86l0-4M108 84v-4M120 84v-4M132 86l0-4M144 90l1-4M156 96l1-4M166 104l2-4"/>
+      <path d="M66 112l-1-4M80 106l0-4M94 102v-4M108 100v-4M122 100v-4M136 102v-4M150 106v-4M162 112l1-4"/>
+    </g>
+    <path d="M60 96C80 82 140 80 166 96" stroke="#a9b88a" stroke-width="1.2" fill="none" opacity=".6"/>
+  </g>
+  <!-- 돛대 자리와 깃발 -->
+  <path d="M150 74V52" stroke="#4a2c17" stroke-width="2"/>
+  <path d="M150 52L170 58L150 64Z" fill="#c43b2c"/>
+  <!-- 용머리 -->
+  <path d="M30 118C26 108 28 98 36 94C42 90 50 92 52 100L48 118Z" fill="url(#head)" stroke="#4a3010" stroke-width="1"/>
+  <path d="M36 94C32 88 30 84 34 80M42 92C42 86 44 82 48 80" fill="none" stroke="#4a3010" stroke-width="1.4" stroke-linecap="round"/>
+  <path d="M28 104L22 100L26 108Z" fill="#c43b2c"/>
+  <circle cx="40" cy="100" r="2" fill="#1a0f07"/>
+  <path d="M30 108H40" stroke="#4a3010" stroke-width="1"/>
+  <!-- 물결 -->
+  <g fill="none" stroke="#bfe3ff" stroke-width="1.2" stroke-linecap="round" opacity=".8">
+    <path d="M14 162c6-4 12-4 18 0M60 170c6-4 12-4 18 0M118 164c6-4 12-4 18 0M160 172c6-4 12-4 18 0M40 184c6-4 12-4 18 0M100 188c6-4 12-4 18 0"/>
+  </g>
+</svg>

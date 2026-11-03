@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>세형 동검과 거푸집 (철기 · 한반도에서 직접 만든 청동기)</title>
+  <defs>
+    <linearGradient id="stone" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#cdb99a"/>
+      <stop offset="1" stop-color="#8e7a5e"/>
+    </linearGradient>
+    <linearGradient id="bronze" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d9c27a"/>
+      <stop offset=".45" stop-color="#a9904a"/>
+      <stop offset=".55" stop-color="#8a7234"/>
+      <stop offset="1" stop-color="#5e4c22"/>
+    </linearGradient>
+    <linearGradient id="patina" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5d8f72" stop-opacity=".0"/>
+      <stop offset="1" stop-color="#4f8467" stop-opacity=".55"/>
+    </linearGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="11"/><feColorMatrix values="0 0 0 0 .3  0 0 0 0 .24  0 0 0 0 .16  0 0 0 .5 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+  </defs>
+  <ellipse cx="92" cy="182" rx="70" ry="7" fill="#000" opacity=".4" filter="url(#soft)"/>
+  <!-- 거푸집: 돌에 칼 모양을 판 틀 -->
+  <g transform="rotate(-8 74 104)">
+    <rect x="34" y="22" width="80" height="158" rx="6" fill="url(#stone)" stroke="#5f4e38" stroke-width="1.4"/>
+    <rect x="34" y="22" width="80" height="158" rx="6" fill="#999" filter="url(#grain)"/>
+    <rect x="34" y="22" width="80" height="6" rx="3" fill="#e9dcc6" opacity=".5"/>
+    <path d="M74 34C77 52 79 72 80 90L83 96L80 100C80 116 82 136 80 150H68C66 136 68 116 68 100L65 96L68 90C69 72 71 52 74 34Z" fill="#4a3b2a"/>
+    <path d="M74 38L74 148" stroke="#2e2419" stroke-width="1.2"/>
+    <rect x="70" y="150" width="8" height="18" fill="#4a3b2a"/>
+    <path d="M44 34v138M104 34v138" stroke="#5f4e38" stroke-width=".8" opacity=".5"/>
+  </g>
+  <!-- 세형 동검: 가늘고 곧은 날, 아래쪽에 마디 -->
+  <g transform="rotate(6 140 100)">
+    <path d="M140 14C143 34 146 56 147 78C148 90 150 100 153 108L156 112L152 115C152 130 153 146 151 158H129C127 146 128 130 128 115L124 112L127 108C130 100 132 90 133 78C134 56 137 34 140 14Z" fill="url(#bronze)" stroke="#3d3115" stroke-width="1.3" stroke-linejoin="round"/>
+    <path d="M140 14C143 34 146 56 147 78C148 90 150 100 153 108L156 112L152 115C152 130 153 146 151 158H129C127 146 128 130 128 115L124 112L127 108C130 100 132 90 133 78C134 56 137 34 140 14Z" fill="url(#patina)"/>
+    <path d="M140 18L141.5 156" stroke="#f5e6b0" stroke-width="1.4" opacity=".8"/>
+    <path d="M139 18L138.5 156" stroke="#5e4c22" stroke-width=".8" opacity=".6"/>
+    <path d="M134 50C133 70 132 90 130 104" fill="none" stroke="#fff3c4" stroke-width=".9" opacity=".6"/>
+    <rect x="136" y="158" width="9" height="20" fill="#5e4c22"/>
+  </g>
+</svg>

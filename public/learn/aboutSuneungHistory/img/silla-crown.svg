@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>신라 금관 (出자 모양 세움 장식 · 곡옥)</title>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff0b0"/>
+      <stop offset=".4" stop-color="#e2b54c"/>
+      <stop offset="1" stop-color="#8f6a1f"/>
+    </linearGradient>
+    <linearGradient id="band" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe8a0"/>
+      <stop offset=".5" stop-color="#d9a740"/>
+      <stop offset="1" stop-color="#8a6219"/>
+    </linearGradient>
+    <radialGradient id="jade" cx=".35" cy=".3" r=".8">
+      <stop offset="0" stop-color="#9ff0c6"/>
+      <stop offset=".55" stop-color="#2fa36f"/>
+      <stop offset="1" stop-color="#145a3c"/>
+    </radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+    <g id="spangle"><path d="M0-3v2" stroke="#b98a2c" stroke-width=".6"/><circle cy="1" r="2.2" fill="url(#gold)" stroke="#8a6219" stroke-width=".4"/></g>
+    <g id="gogok"><path d="M0-4v2" stroke="#b98a2c" stroke-width=".6"/><path d="M-2.6 1.2a3 3 0 1 1 5 2.2c-.6 2.4-2.6 4.4-5 4.8 1.2-1.4 1.8-3 1.4-4.6-1-.4-1.6-1.4-1.4-2.4z" fill="url(#jade)" stroke="#0e3d29" stroke-width=".4"/></g>
+    <!-- 出자 모양 세움 장식 하나 -->
+    <g id="chul">
+      <path d="M-2.6 0V-108H2.6V0Z"/>
+      <path d="M-2.6-30H-16V-44H-11V-35H-2.6ZM2.6-30H16V-44H11V-35H2.6Z"/>
+      <path d="M-2.6-60H-16V-74H-11V-65H-2.6ZM2.6-60H16V-74H11V-65H2.6Z"/>
+      <path d="M-2.6-88H-14V-100H-9V-93H-2.6ZM2.6-88H14V-100H9V-93H2.6Z"/>
+      <path d="M0-120C-6-114-5-108 0-106C5-108 6-114 0-120Z"/>
+    </g>
+  </defs>
+  <ellipse cx="100" cy="190" rx="66" ry="6" fill="#000" opacity=".4" filter="url(#soft)"/>
+  <!-- 뒤쪽 사슴뿔 모양 장식 두 개 -->
+  <g fill="url(#gold)" stroke="#7a5615" stroke-width=".8" stroke-linejoin="round">
+    <path d="M44 150V96C44 84 40 76 32 70L35 66C42 72 47 80 48 88V74C48 64 52 58 58 54L60 58C55 62 53 68 53 76V150Z"/>
+    <path d="M156 150V96C156 84 160 76 168 70L165 66C158 72 153 80 152 88V74C152 64 148 58 142 54L140 58C145 62 147 68 147 76V150Z"/>
+  </g>
+  <!-- 앞쪽 出자 세 개 -->
+  <g fill="url(#gold)" stroke="#7a5615" stroke-width=".8" stroke-linejoin="round">
+    <use href="#chul" transform="translate(100 149)"/>
+    <use href="#chul" transform="translate(68 146) scale(.94)"/>
+    <use href="#chul" transform="translate(132 146) scale(.94)"/>
+  </g>
+  <!-- 달개(영락)와 곡옥 -->
+  <g>
+    <use href="#spangle" x="84" y="122"/><use href="#spangle" x="116" y="122"/><use href="#spangle" x="84" y="92"/><use href="#spangle" x="116" y="92"/>
+    <use href="#spangle" x="86" y="64"/><use href="#spangle" x="114" y="64"/><use href="#spangle" x="100" y="110"/><use href="#spangle" x="100" y="80"/><use href="#spangle" x="100" y="52"/>
+    <use href="#spangle" x="53" y="124"/><use href="#spangle" x="53" y="95"/><use href="#spangle" x="82" y="68"/><use href="#spangle" x="147" y="124"/><use href="#spangle" x="147" y="95"/><use href="#spangle" x="118" y="68"/>
+    <use href="#spangle" x="68" y="112"/><use href="#spangle" x="68" y="84"/><use href="#spangle" x="132" y="112"/><use href="#spangle" x="132" y="84"/>
+    <use href="#spangle" x="40" y="104"/><use href="#spangle" x="160" y="104"/><use href="#spangle" x="34" y="80"/><use href="#spangle" x="166" y="80"/>
+    <use href="#gogok" x="84" y="108"/><use href="#gogok" x="116" y="108"/><use href="#gogok" x="56" y="110"/><use href="#gogok" x="144" y="110"/>
+    <use href="#gogok" x="86" y="80"/><use href="#gogok" x="114" y="80"/><use href="#gogok" x="80" y="140"/><use href="#gogok" x="120" y="140"/>
+  </g>
+  <!-- 관테 -->
+  <path d="M36 140Q100 160 164 140L164 154Q100 174 36 154Z" fill="url(#band)" stroke="#7a5615" stroke-width="1"/>
+  <path d="M38 143Q100 162 162 143" fill="none" stroke="#fff3c8" stroke-width=".8" opacity=".7"/>
+  <g fill="#8a6219"><circle cx="50" cy="149" r="1.1"/><circle cx="62" cy="152" r="1.1"/><circle cx="76" cy="155" r="1.1"/><circle cx="90" cy="157" r="1.1"/><circle cx="104" cy="157.5" r="1.1"/><circle cx="118" cy="156" r="1.1"/><circle cx="132" cy="153" r="1.1"/><circle cx="146" cy="150" r="1.1"/></g>
+  <!-- 늘어뜨린 드리개 -->
+  <g stroke="#b98a2c" stroke-width="1" fill="none"><path d="M42 154v26M158 154v26"/></g>
+  <use href="#spangle" x="42" y="162"/><use href="#spangle" x="158" y="162"/><use href="#spangle" x="42" y="172"/><use href="#spangle" x="158" y="172"/>
+  <path d="M42 180l-4 6 4 4 4-4z" fill="url(#gold)" stroke="#7a5615" stroke-width=".6"/>
+  <path d="M158 180l-4 6 4 4 4-4z" fill="url(#gold)" stroke="#7a5615" stroke-width=".6"/>
+</svg>

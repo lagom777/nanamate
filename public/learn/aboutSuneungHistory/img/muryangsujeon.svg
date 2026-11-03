@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>영주 부석사 무량수전 (고려 · 주심포 양식 · 배흘림기둥)</title>
+  <defs>
+    <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5d636b"/>
+      <stop offset="1" stop-color="#363a40"/>
+    </linearGradient>
+    <linearGradient id="col" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b0644a"/>
+      <stop offset="1" stop-color="#6e3324"/>
+    </linearGradient>
+    <linearGradient id="stone" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cfc6b3"/>
+      <stop offset="1" stop-color="#8c836f"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4f8c7a"/>
+      <stop offset="1" stop-color="#2d5c4f"/>
+    </linearGradient>
+    <pattern id="lattice" width="5" height="5" patternUnits="userSpaceOnUse">
+      <rect width="5" height="5" fill="#e9dcc0"/><path d="M0 2.5h5M2.5 0v5" stroke="#8a6a4a" stroke-width=".8"/>
+    </pattern>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+  </defs>
+  <ellipse cx="100" cy="186" rx="90" ry="6" fill="#000" opacity=".45" filter="url(#soft)"/>
+  <!-- 기단과 계단 -->
+  <path d="M24 176H176L180 186H20Z" fill="url(#stone)" stroke="#6b634f" stroke-width=".8"/>
+  <path d="M32 164H168V176H32Z" fill="url(#stone)" stroke="#6b634f" stroke-width=".8"/>
+  <path d="M88 164H112L116 186H84Z" fill="#b5ab95" stroke="#6b634f" stroke-width=".7"/>
+  <path d="M87 170H113M86 176H114M85 181H115" stroke="#6b634f" stroke-width=".6"/>
+  <!-- 문살과 벽 -->
+  <rect x="40" y="114" width="120" height="50" fill="#e4d6b8"/>
+  <rect x="73" y="118" width="16" height="44" fill="url(#lattice)"/><rect x="93" y="118" width="14" height="44" fill="url(#lattice)"/><rect x="111" y="118" width="16" height="44" fill="url(#lattice)"/>
+  <rect x="51" y="118" width="16" height="44" fill="url(#lattice)" opacity=".85"/><rect x="133" y="118" width="16" height="44" fill="url(#lattice)" opacity=".85"/>
+  <!-- 배흘림기둥: 아래 1/3쯤이 가장 굵다 -->
+  <g fill="url(#col)" stroke="#4a1f15" stroke-width=".7">
+    <path d="M44 114h6c1.4 16 1.8 34 1 50h-8c-.8-16-.4-34 1-50z"/>
+    <path d="M67 114h6c1.4 16 1.8 34 1 50h-8c-.8-16-.4-34 1-50z"/>
+    <path d="M89 114h6c1.4 16 1.8 34 1 50h-8c-.8-16-.4-34 1-50z"/>
+    <path d="M105 114h6c1.4 16 1.8 34 1 50h-8c-.8-16-.4-34 1-50z"/>
+    <path d="M127 114h6c1.4 16 1.8 34 1 50h-8c-.8-16-.4-34 1-50z"/>
+    <path d="M150 114h6c1.4 16 1.8 34 1 50h-8c-.8-16-.4-34 1-50z"/>
+  </g>
+  <!-- 창방과 주심포(기둥 위에만 놓인 공포) -->
+  <rect x="36" y="106" width="128" height="8" fill="url(#green)" stroke="#1f3f36" stroke-width=".7"/>
+  <g fill="url(#green)" stroke="#1f3f36" stroke-width=".7">
+    <path d="M42 96h10v10H42zM65 96h10v10H65zM87 96h10v10H87zM103 96h10v10h-10zM125 96h10v10h-10zM148 96h10v10h-10z"/>
+    <path d="M38 92h18v4H38zM61 92h18v4H61zM83 92h18v4H83zM99 92h18v4H99zM121 92h18v4h-18zM144 92h18v4h-18z"/>
+  </g>
+  <g fill="#d64b3a"><circle cx="47" cy="110" r="1.2"/><circle cx="70" cy="110" r="1.2"/><circle cx="92" cy="110" r="1.2"/><circle cx="108" cy="110" r="1.2"/><circle cx="130" cy="110" r="1.2"/><circle cx="153" cy="110" r="1.2"/></g>
+  <!-- 팔작지붕: 처마가 양끝에서 살짝 들린다 -->
+  <path d="M8 86C30 92 60 92 100 92C140 92 170 92 192 86L186 94C160 98 130 98 100 98C70 98 40 98 14 94Z" fill="url(#green)" stroke="#1f3f36" stroke-width=".8"/>
+  <path d="M8 86C30 90 60 90 100 90C140 90 170 90 192 86L160 60H40Z" fill="url(#roof)" stroke="#23262b" stroke-width="1"/>
+  <path d="M40 60L62 40H138L160 60Z" fill="url(#roof)" stroke="#23262b" stroke-width="1"/>
+  <path d="M62 40L72 54H128L138 40" fill="#6c7279" opacity=".6"/>
+  <g stroke="#23262b" stroke-width=".6" opacity=".7">
+    <path d="M30 86l14-24M46 88l10-26M62 89l7-27M78 90l4-28M94 90l1-28M106 90l-1-28M122 90l-4-28M138 89l-7-27M154 88l-10-26M170 86l-14-24"/>
+  </g>
+  <!-- 용마루와 치미 -->
+  <path d="M58 40H142V35H58Z" fill="#2e3238"/>
+  <path d="M58 35C54 30 54 24 60 22C60 28 62 32 64 35ZM142 35C146 30 146 24 140 22C140 28 138 32 136 35Z" fill="#2e3238"/>
+  <path d="M8 86L4 80M192 86L196 80" stroke="#23262b" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- 현판 -->
+  <rect x="90" y="98" width="20" height="8" fill="#2a2a2a" stroke="#c7a54c" stroke-width=".8"/>
+  <path d="M93 102h3M98 101v3M101 102h3M106 101v3" stroke="#e0c06a" stroke-width=".8"/>
+</svg>

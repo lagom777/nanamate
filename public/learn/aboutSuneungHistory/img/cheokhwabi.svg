@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>척화비 (흥선 대원군 · 1871 신미양요 뒤 전국에 세움)</title>
+  <defs>
+    <linearGradient id="face" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#cfcabe"/>
+      <stop offset="1" stop-color="#8f897c"/>
+    </linearGradient>
+    <linearGradient id="side" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6f6a5f"/>
+      <stop offset="1" stop-color="#4c4840"/>
+    </linearGradient>
+    <linearGradient id="base" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b9b3a5"/>
+      <stop offset="1" stop-color="#7d776a"/>
+    </linearGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="3" seed="51"/><feColorMatrix values="0 0 0 0 .22  0 0 0 0 .21  0 0 0 0 .18  0 0 0 .55 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+  </defs>
+  <ellipse cx="102" cy="188" rx="64" ry="6" fill="#000" opacity=".45" filter="url(#soft)"/>
+  <!-- 받침돌 -->
+  <path d="M52 172H152L158 188H46Z" fill="url(#base)" stroke="#5c574b" stroke-width=".9"/>
+  <!-- 비석: 앞면과 옆면 -->
+  <path d="M132 26L144 32V170L132 172Z" fill="url(#side)"/>
+  <path d="M68 28C68 22 72 20 78 20H124C130 20 132 22 132 28V172H68Z" fill="url(#face)" stroke="#5c574b" stroke-width="1"/>
+  <path d="M68 28C68 22 72 20 78 20H124C130 20 132 22 132 28V172H68Z" fill="#999" filter="url(#grain)"/>
+  <!-- 새긴 글(오른쪽 줄부터): 洋夷侵犯非戰 / 則和主和賣國 -->
+  <g fill="#2e2b25" font-family="'Noto Serif CJK KR','Noto Serif KR','Nanum Myeongjo','AppleMyungjo','Batang',serif" font-weight="700" text-anchor="middle">
+    <g font-size="15">
+      <text x="112" y="44">洋</text><text x="112" y="62">夷</text><text x="112" y="80">侵</text><text x="112" y="98">犯</text><text x="112" y="116">非</text><text x="112" y="134">戰</text>
+      <text x="90" y="44">則</text><text x="90" y="62">和</text><text x="90" y="80">主</text><text x="90" y="98">和</text><text x="90" y="116">賣</text><text x="90" y="134">國</text>
+    </g>
+    <g font-size="6.5" font-weight="500"><text x="76" y="40">戒</text><text x="76" y="48">我</text><text x="76" y="56">萬</text><text x="76" y="64">年</text><text x="76" y="72">子</text><text x="76" y="80">孫</text>
+      <text x="76" y="100">丙</text><text x="76" y="108">寅</text><text x="76" y="116">作</text><text x="76" y="132">辛</text><text x="76" y="140">未</text><text x="76" y="148">立</text></g>
+  </g>
+  <path d="M70 26L70 170" stroke="#efeae0" stroke-width="1" opacity=".5"/>
+  <path d="M100 40l3 16-2 10" fill="none" stroke="#4c4840" stroke-width=".8" opacity=".5"/>
+</svg>

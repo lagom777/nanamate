@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>광개토 대왕릉비 (고구려 · 장수왕이 세움, 높이 약 6.4m)</title>
+  <defs>
+    <linearGradient id="face" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#a3aa98"/>
+      <stop offset="1" stop-color="#737b6c"/>
+    </linearGradient>
+    <linearGradient id="side" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5b6257"/>
+      <stop offset="1" stop-color="#3d433b"/>
+    </linearGradient>
+    <linearGradient id="base" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b8b2a2"/>
+      <stop offset="1" stop-color="#7d7768"/>
+    </linearGradient>
+    <pattern id="glyph" width="7" height="8" patternUnits="userSpaceOnUse">
+      <path d="M1.2 1.3h4M3.2 1.3v4.6M1.4 3.6h3.8M1.6 6.1l1.3.9M4.9 6l-1 1" fill="none" stroke="#2c3129" stroke-width=".75" stroke-linecap="round"/>
+    </pattern>
+    <pattern id="glyph2" width="7" height="8" patternUnits="userSpaceOnUse" x="3" y="4">
+      <path d="M1.5 1.5v5M1.5 1.5h3.5v5h-3.5M1.5 4h3.5" fill="none" stroke="#2c3129" stroke-width=".7"/>
+    </pattern>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="3" seed="21"/><feColorMatrix values="0 0 0 0 .18  0 0 0 0 .2  0 0 0 0 .16  0 0 0 .6 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+    <clipPath id="front"><polygon points="70,24 122,19 128,170 64,172"/></clipPath>
+  </defs>
+  <ellipse cx="104" cy="186" rx="76" ry="7" fill="#000" opacity=".45" filter="url(#soft)"/>
+  <!-- 받침돌 -->
+  <polygon points="46,174 152,168 164,184 38,190" fill="url(#base)" stroke="#5c5749" stroke-width="1"/>
+  <path d="M46 174L152 168" stroke="#e2ddd0" stroke-width="1" opacity=".5"/>
+  <!-- 비석: 앞면 · 옆면 · 윗면 -->
+  <polygon points="122,19 138,26 142,166 128,170" fill="url(#side)"/>
+  <polygon points="70,24 122,19 128,170 64,172" fill="url(#face)"/>
+  <polygon points="70,24 84,15 132,12 138,26 122,19" fill="#c3c8b8"/>
+  <g filter="url(#grain)">
+    <polygon points="70,24 122,19 128,170 64,172" fill="#888"/>
+    <polygon points="122,19 138,26 142,166 128,170" fill="#666"/>
+  </g>
+  <g clip-path="url(#front)" opacity=".5">
+    <rect x="66" y="30" width="62" height="136" fill="url(#glyph)"/>
+    <rect x="66" y="30" width="62" height="136" fill="url(#glyph2)" opacity=".45"/>
+    <g stroke="#2c3129" stroke-width=".5" opacity=".6">
+      <path d="M73 28v140M80 28v140M87 28v140M94 28v140M101 28v140M108 28v140M115 28v140M122 28v140"/>
+    </g>
+  </g>
+  <path d="M70 24L64 172" stroke="#d6dccb" stroke-width="1" opacity=".55"/>
+  <path d="M96 60l4 14-3 10M110 120l-2 12 4 10" fill="none" stroke="#2f352c" stroke-width=".9" opacity=".6"/>
+  <!-- 크기 비교용 사람 (비석은 사람 키의 약 4배) -->
+  <g fill="#232833">
+    <circle cx="158" cy="148" r="4"/>
+    <path d="M154 153h8l2 14h-3l-1 12h-2.3l-.7-10h-.2l-.7 10H154l-1-12h-3z"/>
+  </g>
+</svg>

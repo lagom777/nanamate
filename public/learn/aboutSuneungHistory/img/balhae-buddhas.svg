@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>발해 이불병좌상 (두 부처가 나란히 앉음 · 고구려 양식 계승)</title>
+  <defs>
+    <linearGradient id="clay" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e2b48c"/>
+      <stop offset=".55" stop-color="#b9805a"/>
+      <stop offset="1" stop-color="#6e4329"/>
+    </linearGradient>
+    <radialGradient id="mand" cx=".5" cy=".6" r=".6">
+      <stop offset="0" stop-color="#d9a073"/>
+      <stop offset="1" stop-color="#8a5534"/>
+    </radialGradient>
+    <radialGradient id="face" cx=".4" cy=".4" r=".7">
+      <stop offset="0" stop-color="#f1cfae"/>
+      <stop offset="1" stop-color="#b47a52"/>
+    </radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+    <g id="buddha">
+      <!-- 머리 광배 -->
+      <circle cx="0" cy="-58" r="17" fill="none" stroke="#5c3a24" stroke-width="1" opacity=".7"/>
+      <!-- 앉은 다리 -->
+      <path d="M-26 0C-26-10-16-14 0-14C16-14 26-10 26 0C16 4-16 4-26 0Z" fill="url(#clay)" stroke="#4a2c19" stroke-width=".9"/>
+      <!-- 몸과 법의 -->
+      <path d="M-15-44C-8-48 8-48 15-44C19-34 18-22 16-12H-16C-18-22-19-34-15-44Z" fill="url(#clay)" stroke="#4a2c19" stroke-width=".9"/>
+      <path d="M-14-40C-6-34 -2-24 0-12M14-40C6-34 2-24 0-12M-12-28C-6-24-3-18-2-12M12-28C6-24 3-18 2-12" fill="none" stroke="#5c3a24" stroke-width=".8"/>
+      <!-- 배 앞에 모은 손 -->
+      <path d="M-8-16C-4-20 4-20 8-16C4-13-4-13-8-16Z" fill="url(#face)" stroke="#4a2c19" stroke-width=".7"/>
+      <!-- 머리와 육계 -->
+      <ellipse cx="0" cy="-56" rx="9" ry="11" fill="url(#face)" stroke="#4a2c19" stroke-width=".8"/>
+      <path d="M-9-58C-9-66-5-70 0-70C5-70 9-66 9-58C6-62 3-63 0-63C-3-63-6-62-9-58Z" fill="#5c3a24"/>
+      <ellipse cx="0" cy="-71" rx="4.5" ry="3.6" fill="#5c3a24"/>
+      <path d="M-5-56c1.4 1 2.6 1 4 0M1-56c1.4 1 2.6 1 4 0M-3-50c2 1 4 1 6 0" fill="none" stroke="#4a2c19" stroke-width=".7" stroke-linecap="round"/>
+    </g>
+  </defs>
+  <ellipse cx="100" cy="186" rx="66" ry="6" fill="#000" opacity=".45" filter="url(#soft)"/>
+  <!-- 하나로 이어진 큰 광배(배 모양) -->
+  <path d="M34 160C30 120 40 70 62 46C76 30 90 24 100 18C110 24 124 30 138 46C160 70 170 120 166 160Z" fill="url(#mand)" stroke="#5c3a24" stroke-width="1"/>
+  <g fill="none" stroke="#f0c9a2" stroke-width="1" opacity=".55">
+    <path d="M44 156C42 120 50 80 68 56C80 42 92 34 100 30C108 34 120 42 132 56C150 80 158 120 156 156"/>
+    <path d="M70 60c6 4 8 10 6 16M130 60c-6 4-8 10-6 16M58 96c6 2 10 8 10 14M142 96c-6 2-10 8-10 14M100 30c-4 8-4 16 0 22"/>
+  </g>
+  <!-- 두 부처 -->
+  <use href="#buddha" transform="translate(76 150)"/>
+  <use href="#buddha" transform="translate(124 150)"/>
+  <!-- 연꽃 대좌 -->
+  <path d="M44 150H156L160 164H40Z" fill="url(#clay)" stroke="#4a2c19" stroke-width=".9"/>
+  <path d="M46 150c4-6 9-6 11 0c3-6 9-6 11 0c3-6 9-6 11 0c3-6 9-6 11 0c3-6 9-6 11 0c3-6 9-6 11 0c3-6 9-6 11 0c3-6 9-6 11 0c3-6 9-6 11 0c3-6 9-6 11 0" fill="none" stroke="#4a2c19" stroke-width=".9"/>
+  <path d="M38 164H162L166 176H34Z" fill="url(#clay)" stroke="#4a2c19" stroke-width=".9"/>
+  <path d="M40 164H160" stroke="#f3d2b2" stroke-width=".8" opacity=".6"/>
+</svg>

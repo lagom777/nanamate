@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>청자 상감 운학문 매병 (고려 · 상감 기법)</title>
+  <defs>
+    <linearGradient id="glaze" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8fbfa6"/>
+      <stop offset=".3" stop-color="#a9d3bd"/>
+      <stop offset=".65" stop-color="#6fa38b"/>
+      <stop offset="1" stop-color="#2f5c4b"/>
+    </linearGradient>
+    <radialGradient id="shine" cx=".32" cy=".26" r=".42">
+      <stop offset="0" stop-color="#fff" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="body"><path d="M106 36C128 38 148 52 148 76C148 104 132 132 122 152C118 162 118 170 124 178H76C82 170 82 162 78 152C68 132 52 104 52 76C52 52 72 38 94 36Z"/></clipPath>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+    <!-- 학: 흰 흙과 검은 흙으로 새겨 넣은 모양 -->
+    <g id="crane">
+      <path d="M0-12C2-8 2-4 1 0" fill="none" stroke="#1f2a26" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M0-12C2-8 2-4 1 0" fill="none" stroke="#f7f4ea" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M-1-13l2-3 1 2z" fill="#1f2a26"/>
+      <ellipse cx="1" cy="3" rx="3.2" ry="5" fill="#f7f4ea" stroke="#1f2a26" stroke-width=".7"/>
+      <path d="M-2 1C-8-2-12-6-14-11C-9-8-5-6-1 -1Z" fill="#f7f4ea" stroke="#1f2a26" stroke-width=".7"/>
+      <path d="M4 1C10-2 14-6 16-11C11-8 7-6 3-1Z" fill="#f7f4ea" stroke="#1f2a26" stroke-width=".7"/>
+      <path d="M0 8l-2 7M2 8l2 7" stroke="#1f2a26" stroke-width=".8"/>
+    </g>
+    <g id="cloud" fill="none" stroke="#f7f4ea" stroke-width="1.3" stroke-linecap="round">
+      <path d="M-6 0c0-3 3-4 5-2c1-3 5-3 6 0c2-1 4 1 3 3"/>
+      <path d="M-6 0c0-3 3-4 5-2c1-3 5-3 6 0c2-1 4 1 3 3" stroke="#1f2a26" stroke-width=".5"/>
+    </g>
+  </defs>
+  <ellipse cx="100" cy="182" rx="40" ry="5" fill="#000" opacity=".5" filter="url(#soft)"/>
+  <!-- 몸통 -->
+  <path d="M106 36C128 38 148 52 148 76C148 104 132 132 122 152C118 162 118 170 124 178H76C82 170 82 162 78 152C68 132 52 104 52 76C52 52 72 38 94 36Z" fill="url(#glaze)" stroke="#24463a" stroke-width="1.1"/>
+  <g clip-path="url(#body)">
+    <!-- 어깨 띠 -->
+    <path d="M58 52Q100 60 142 52" fill="none" stroke="#1f2a26" stroke-width=".8"/>
+    <path d="M56 56Q100 64 144 56" fill="none" stroke="#f7f4ea" stroke-width=".8"/>
+    <g fill="none" stroke="#f7f4ea" stroke-width=".9"><path d="M66 50c2-3 5-3 6 0M80 52c2-3 5-3 6 0M94 53c2-3 5-3 6 0M108 53c2-3 5-3 6 0M122 52c2-3 5-3 6 0"/></g>
+    <!-- 겹동그라미 안에 날아오르는 학 -->
+    <g fill="none">
+      <circle cx="100" cy="94" r="19" stroke="#f7f4ea" stroke-width="1.6"/><circle cx="100" cy="94" r="16.5" stroke="#1f2a26" stroke-width=".8"/>
+      <circle cx="58" cy="100" r="17" stroke="#f7f4ea" stroke-width="1.6"/><circle cx="58" cy="100" r="14.5" stroke="#1f2a26" stroke-width=".8"/>
+      <circle cx="142" cy="100" r="17" stroke="#f7f4ea" stroke-width="1.6"/><circle cx="142" cy="100" r="14.5" stroke="#1f2a26" stroke-width=".8"/>
+    </g>
+    <use href="#crane" transform="translate(100 96) rotate(-12)"/>
+    <use href="#crane" transform="translate(58 102) rotate(-8) scale(.85)"/>
+    <use href="#crane" transform="translate(142 102) rotate(10) scale(.85)"/>
+    <!-- 동그라미 밖에서 내려오는 학과 구름 -->
+    <use href="#crane" transform="translate(80 128) rotate(160) scale(.7)"/>
+    <use href="#crane" transform="translate(122 130) rotate(200) scale(.7)"/>
+    <use href="#crane" transform="translate(100 66) rotate(170) scale(.6)"/>
+    <use href="#cloud" transform="translate(78 72)"/><use href="#cloud" transform="translate(124 70)"/><use href="#cloud" transform="translate(100 120)"/>
+    <use href="#cloud" transform="translate(66 128) scale(.8)"/><use href="#cloud" transform="translate(136 126) scale(.8)"/><use href="#cloud" transform="translate(76 112) scale(.7)"/><use href="#cloud" transform="translate(126 116) scale(.7)"/>
+    <!-- 굽 위 연꽃잎 띠 -->
+    <path d="M60 150Q100 156 140 150" fill="none" stroke="#f7f4ea" stroke-width=".9"/>
+    <g fill="none" stroke="#f7f4ea" stroke-width="1"><path d="M80 152c2 8 6 12 8 16M88 153c2 8 4 12 6 16M96 154c0 8 2 12 4 15M104 154c0 8-2 12-4 15M112 153c-2 8-4 12-6 16M120 152c-2 8-6 12-8 16"/></g>
+    <rect x="40" y="20" width="120" height="170" fill="url(#shine)"/>
+    <path d="M136 56C146 90 140 126 120 160" stroke="#000" stroke-opacity=".14" stroke-width="12" fill="none"/>
+  </g>
+  <!-- 아가리 -->
+  <path d="M94 36V30H106V36Z" fill="url(#glaze)" stroke="#24463a" stroke-width="1"/>
+  <ellipse cx="100" cy="29" rx="9.5" ry="2.8" fill="#9fcab4" stroke="#24463a" stroke-width="1"/>
+  <ellipse cx="100" cy="29" rx="5.5" ry="1.4" fill="#1f3a30"/>
+</svg>
