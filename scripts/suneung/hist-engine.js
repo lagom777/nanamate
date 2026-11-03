@@ -45,6 +45,17 @@ function badge(c,x,y,r,col,o={}){c.save();if(o.alpha!=null)c.globalAlpha*=o.alph
   else if(!o.img)T(c,o.e||'•',x,y+1,{size:o.es||r*.92,align:'center'});
   c.restore();}
 
+/* ── 이유 띠: 지금 비추는 것의 '왜?'를 화면 아래에 크게. WHY_NOW 는 플레이어가 옆 패널의 같은 줄을 밝히는 데 쓴다 ── */
+let WHY_NOW=-1;
+function whyBar(c,s,col,i,o={}){if(!s)return;WHY_NOW=i;const x=o.x??48,w=o.w??864,y=o.y??468,h=o.h??54;
+  c.save();c.globalAlpha*=o.k??1;
+  box(c,x,y,w,h,14,'#0B1A2A',col+'99',1.6,{glow:12,gc:col});
+  box(c,x+9,y+9,82,h-18,10,col+'26',col,1.2);T(c,'💡 왜?',x+50,y+h/2+1,{size:15,w:700,align:'center',color:col});
+  const tw=w-120,z=fitLines(c,s,tw,o.size||18,2,700),ls=wrap(c,s,tw,`700 ${z}px ${SANS}`),lh=z+5;
+  c.globalAlpha*=o.tk??1;ls.forEach((l,j)=>T(c,l,x+104,y+h/2-(ls.length-1)*lh/2+j*lh+1,{size:z,w:700}));
+  c.restore();}
+function fitLines(c,s,maxW,size,lines,w=600){let z=size;while(z>9&&wrap(c,s,maxW,`${w} ${z}px ${SANS}`).length>lines)z-=.5;return z;}
+
 /* ── 인트로 ── */
 TPL.intro=function(c,t,d){
   label(c,'HISTORY MOTION NOTE',480,44,C.dim,{size:14});
@@ -62,15 +73,15 @@ TPL.intro=function(c,t,d){
 
 /* ── 연표: 사건이 차례로 떠오르는 가로 타임라인 ── */
 TPL.timeline=function(c,t,d){
-  const ev=d.events,n=ev.length,col=colOf(d),pics=ev.some(e=>e.img);kicker(c,d,col);
-  const X0=n>1?120:480,X1=840,Y=d.cy||292,t0=.6,step=Math.max(1,(d.dur-3.2)/n),endT=t0+step*n;
-  const newest=t<endT?Math.min(n-1,Math.floor((t-t0)/step)):-1,cyc=t>=endT?Math.floor((t-endT)/1.5)%n:-1,cur=newest>=0?newest:cyc;
+  const ev=d.events,n=ev.length,col=colOf(d),pics=ev.some(e=>e.img),hw=ev.some(e=>e.why);kicker(c,d,col);   // hw: 이유 띠 자리만큼 위로
+  const X0=n>1?120:480,X1=840,Y=d.cy||(hw?268:292),t0=.6,step=Math.max(1,(d.dur-3.2)/n),endT=t0+step*n,iv=hw?3.4:1.5;
+  const newest=t<endT?Math.min(n-1,Math.floor((t-t0)/step)):-1,cyc=t>=endT?Math.floor((t-endT)/iv)%n:-1,cur=newest>=0?newest:cyc;
   poly(c,[[50,Y],[910,Y]],C.line,4);
   poly(c,[[50,Y],[50+860*(t>=endT?1:clamp((t-t0)/(step*n))),Y]],col,4,{alpha:.9});
   const sp=n>1?(X1-X0)/(n-1):0,cw=Math.min(212,Math.max(132,sp*2-18));
   (d.gaps||[]).forEach((g,i)=>{if(!g)return;const k=seg(t,t0+(i+1)*step,t0+(i+1)*step+.6);if(k<=0)return;pill(c,g,X0+(i+.5)*sp,Y,col,{alpha:k,size:13,fill:'#09131F'});});
   ev.forEach((e,i)=>{const x=X0+i*sp,tt=t0+i*step,k=ease(seg(t,tt,tt+.55));if(k<=0)return;
-    const up=i%2===0,on=i===cur,ch=d.cardH||132,yy=(up?Y-62-ch:Y+62)+(1-k)*(up?-14:14);
+    const up=i%2===0,on=i===cur,ch=d.cardH||(hw?124:132),yy=(up?Y-62-ch:Y+62)+(1-k)*(up?-14:14);
     c.save();c.globalAlpha=k;
     poly(c,[[x,Y],[x,up?Y-62:Y+62]],on?col:C.line,2);
     box(c,x-cw/2,yy,cw,ch,12,on?col+'22':'#0E1B2A',on?col:C.line,on?2.6:1.5,{glow:on?16:0,gc:col});
@@ -80,14 +91,16 @@ TPL.timeline=function(c,t,d){
     if(pics)badge(c,x,Y,on?32:28,col,{img:e.img,e:e.e,lw:3,glow:on?22:0});   // 그림이 하나라도 있으면 모든 점을 같은 크기 배지로
     else{dot(c,x,Y,on?25:21,on?col:'#10202F',{stroke:col,lw:3,glow:on?22:0});T(c,e.e||'•',x,Y+1,{size:on?24:20,align:'center'});}
     c.restore();});
-  if(d.foot&&t>endT-.5)label(c,d.foot,480,516,C.muted,{size:14,alpha:seg(t,endT-.5,endT+.3)});
+  if(hw&&cur>=0){const tc=newest>=0?t0+cur*step:endT+Math.floor((t-endT)/iv)*iv;
+    whyBar(c,ev[cur].why,col,cur,{k:ease(seg(t,t0,t0+.5)),tk:ease(seg(t,tc+.15,tc+.55))});}
+  else if(d.foot&&t>endT-.5)label(c,d.foot,480,516,C.muted,{size:14,alpha:seg(t,endT-.5,endT+.3)});
 };
 
 /* ── 카드: 비교 카드들이 튀어나오고 핵심어가 하나씩 붙는다 ── */
 TPL.cards=function(c,t,d){
-  const cs=d.cards,n=cs.length,col=colOf(d),pics=cs.some(x=>x.img);kicker(c,d,col);
-  const cols=n<=5?n:3,rows=Math.ceil(n/cols),gap=14,cw=(880-(cols-1)*gap)/cols,ch=rows===1?352:196,top=rows===1?100:94;
-  const per=.55,endT=.5+n*per+1.8,cyc=t>endT?Math.floor((t-endT)/1.6)%n:-1;
+  const cs=d.cards,n=cs.length,col=colOf(d),pics=cs.some(x=>x.img),hw=cs.some(x=>x.why);kicker(c,d,col);
+  const cols=n<=5?n:3,rows=Math.ceil(n/cols),gap=14,cw=(880-(cols-1)*gap)/cols,ch=rows===1?(hw?330:352):(hw?176:196),top=rows===1?100:94;
+  const per=.55,endT=.5+n*per+1.8,iv=hw?3.4:1.6,cyc=t>endT?Math.floor((t-endT)/iv)%n:-1,ks=rows===1?37:hw?32:34;
   cs.forEach((cd,i)=>{const r=Math.floor(i/cols),cc=i%cols,x=40+cc*(cw+gap),y=top+r*(ch+gap),t0=.5+i*per,k=ease(seg(t,t0,t0+.5));if(k<=0)return;
     const cl=cd.c||PAL[i%PAL.length],on=i===cyc;
     c.save();c.translate(x+cw/2,y+ch/2);c.scale(.86+.14*k,.86+.14*k);c.globalAlpha=k;c.translate(-cw/2,-ch/2);
@@ -99,17 +112,19 @@ TPL.cards=function(c,t,d){
       ky=150;if(cd.s){WT(c,cd.s,cw/2,146,cw-20,15,{size:12.5,color:C.muted,align:'center'});ky=180;}}
     else{if(pics)badge(c,34,42,22,cl,{img:cd.img,e:cd.e});else T(c,cd.e,34,42,{size:34,align:'center'});T(c,cd.h,64,40,{font:DISP,size:fit(c,cd.h,cw-80,25,400,DISP),color:cl,w:400});
       if(cd.s)T(c,cd.s,64,66,{size:12.5,color:C.muted});ky=cd.s?96:84;}
-    (cd.k||[]).forEach((kk,j)=>{const kt=t0+.5+j*.32,k2=ease(seg(t,kt,kt+.35));if(k2<=0)return;const yy=ky+j*(rows===1?37:34);
+    (cd.k||[]).forEach((kk,j)=>{const kt=t0+.5+j*.32,k2=ease(seg(t,kt,kt+.35));if(k2<=0)return;const yy=ky+j*ks;
       box(c,14,yy-15,cw-28,29,14,cl+'1f',cl+'88',1.3,{alpha:k2});T(c,kk,cw/2,yy,{size:fit(c,kk,cw-48,15,600),w:600,align:'center',alpha:k2});});
     c.restore();});
-  if(d.foot)label(c,d.foot,480,516,C.muted,{size:14,alpha:seg(t,endT-.6,endT)});
+  if(hw){if(d.foot&&rows===1)label(c,d.foot,480,449,C.muted,{size:14,alpha:seg(t,endT-.6,endT)});
+    if(cyc>=0){const tc=endT+Math.floor((t-endT)/iv)*iv;whyBar(c,cs[cyc].why,col,cyc,{k:ease(seg(t,endT,endT+.4)),tk:ease(seg(t,tc+.1,tc+.5))});}}
+  else if(d.foot)label(c,d.foot,480,516,C.muted,{size:14,alpha:seg(t,endT-.6,endT)});
 };
 
 /* ── 인과 사슬: 사건이 "그래서"로 이어진다 ── */
 TPL.chain=function(c,t,d){
-  const ns=d.nodes,n=ns.length,col=colOf(d),pics=ns.some(x=>x.img);kicker(c,d,col);
+  const ns=d.nodes,n=ns.length,col=colOf(d),pics=ns.some(x=>x.img),hw=ns.some(x=>x.why);kicker(c,d,col);
   const per=n<=4?n:Math.ceil(n/2),rows=Math.ceil(n/per),nw=Math.min(228,(880-(per-1)*56)/per),nh=n<=4?156:128;
-  const t0=.6,step=Math.max(1.1,(d.dur-3.2)/n),endT=t0+step*n,newest=t<endT?Math.min(n-1,Math.floor((t-t0)/step)):-1,cyc=t>=endT?Math.floor((t-endT)/1.4)%n:-1,cur=newest>=0?newest:cyc;
+  const t0=.6,step=Math.max(1.1,(d.dur-3.2)/n),endT=t0+step*n,iv=hw?3.4:1.4,newest=t<endT?Math.min(n-1,Math.floor((t-t0)/step)):-1,cyc=t>=endT?Math.floor((t-endT)/iv)%n:-1,cur=newest>=0?newest:cyc;
   const gapX=per>1?(880-per*nw)/(per-1):0,topY=rows===1?170:100,rowGap=rows===1?0:(n<=6?106:96);
   const pos=i=>{const r=Math.floor(i/per),ci=i%per,cp=r%2?per-1-ci:ci;return{x:40+cp*(nw+gapX),y:topY+r*(nh+rowGap),r,cp};};
   for(let i=1;i<n;i++){const a=pos(i-1),b=pos(i),ts=t0+i*step-.7,k=ease(seg(t,ts,ts+.6));if(k<=0)continue;
@@ -126,7 +141,9 @@ TPL.chain=function(c,t,d){
     const nl=WT(c,nd.t,nw/2,nh<140?64:70,nw-22,20,{size:fit(c,nd.t,nw-22,17,700),w:700,align:'center'});
     if(nd.n)WT(c,nd.n,nw/2,(nh<140?64:70)+nl*20+8,nw-24,16,{size:12.5,color:C.muted,align:'center'});
     c.restore();});
-  if(d.foot)label(c,d.foot,480,516,C.muted,{size:14,alpha:seg(t,endT-.5,endT+.2)});
+  if(hw&&cur>=0){const tc=newest>=0?t0+cur*step:endT+Math.floor((t-endT)/iv)*iv;
+    whyBar(c,ns[cur].why,col,cur,{k:ease(seg(t,t0,t0+.5)),tk:ease(seg(t,tc+.15,tc+.55))});}
+  else{if(cur>=0)WHY_NOW=cur;if(d.foot)label(c,d.foot,480,516,C.muted,{size:14,alpha:seg(t,endT-.5,endT+.2)});}   // '왜 그랬을까' 사슬은 패널의 마디를 밝힌다
 };
 
 /* ── 약도 지도: 한반도 외곽선 위에서 사건이 이동한다 ── */
@@ -159,9 +176,19 @@ TPL.map=function(c,t,d){
     dot(c,x,y,(asia?6:7)*pulse,o.c,{glow:isCur?18:6,stroke:'#fff',lw:1.5});
     if(o.e)T(c,o.e,x,y-(asia?18:20),{size:asia?18:21,align:'center'});
     const right=(o.l||pl[2])==='r';pill(c,nm,x+(right?14:-14)+(right?1:-1)*(nm.length*3.6),y+(o.e?6:0),o.c,{size:12.5,fill:'#09131F',alpha:.96});});
-  // 오른쪽 단계 목록
+  // 오른쪽 단계 목록 — 이유가 있으면 목록은 한 줄씩, 지금 단계의 설명과 '왜?'는 아래 카드에
   const lx=574;
-  st.forEach((s,i)=>{const on=i===cur&&started,done=i<cur&&started;const yy=72+i*(Math.min(88,400/m));
+  if(st.some(s=>s.why)){const rh=Math.min(36,240/m);
+    st.forEach((s,i)=>{const on=i===cur&&started,yy=76+i*rh;c.save();c.globalAlpha=started&&i<=cur?1:.3;
+      dot(c,lx+12,yy+12,11,on?col:'#10202F',{stroke:col,lw:2});T(c,String(i+1),lx+12,yy+13,{size:12.5,w:700,align:'center',color:on?'#09131F':col});
+      T(c,s.y,lx+32,yy+12,{font:DISP,size:fit(c,s.y,300,17,400,DISP),color:on?col:C.muted,w:400});c.restore();});
+    if(started){const s=st[cur],y0=76+m*rh+10,ts=t0+cur*sd,a=ease(seg(t,ts,ts+.45)),wk=ease(seg(t,ts+.7,ts+1.2));
+      c.save();c.globalAlpha*=a;box(c,lx-6,y0,346,512-y0,14,'#0E1B2A',col+'88',1.6);
+      const nl=WT(c,s.cap,lx+10,y0+24,314,21,{size:15,w:600}),wy=y0+24+nl*21+12;
+      if(s.why&&wk>0){WHY_NOW=cur;c.globalAlpha*=wk;pill(c,'💡 왜?',lx+42,wy+4,col,{size:13,w:700});
+        const z=fitLines(c,s.why,314,16,4,700);WT(c,s.why,lx+10,wy+32,314,z+6,{size:z,w:700});}
+      c.restore();}}
+  else st.forEach((s,i)=>{const on=i===cur&&started,done=i<cur&&started;const yy=72+i*(Math.min(88,400/m));
     c.save();c.globalAlpha=started&&i<=cur?1:.28;
     dot(c,lx+14,yy+14,14,on?col:'#10202F',{stroke:col,lw:2});T(c,String(i+1),lx+14,yy+15,{size:14,w:700,align:'center',color:on?'#09131F':col});
     T(c,s.y,lx+40,yy+14,{font:DISP,size:fit(c,s.y,300,19,400,DISP),color:on?col:C.muted,w:400});
@@ -201,17 +228,18 @@ TPL.acro=function(c,t,d){
     const ck=ease(seg(lt,tt+.5,tt+1));if(ck>0){c.save();c.globalAlpha=ck;c.translate(0,(1-ck)*14);
       box(c,x-sp/2+8,296,sp-16,168,14,'#0E1B2A',cl+'99',1.8);T(c,it[1],x,330,{size:fit(c,it[1],sp-34,19,700),w:700,align:'center'});
       WT(c,it[2],x,364,sp-34,18,{size:13.5,color:C.muted,align:'center'});c.restore();}});
-  const pk=seg(lt,slot*.72,slot*.8);if(pk>0){const pu=1+.04*Math.sin(t*7);c.save();c.globalAlpha=pk;c.translate(480,498);c.scale(pu,pu);
-    T(c,`소리 내어 세 번!  “${row.k}”`,0,0,{size:17,w:700,align:'center',color:col});c.restore();}
+  if(row.why){const tb=.3+n*.6+.6;if(lt>=tb)whyBar(c,row.why,col,ri,{k:ease(seg(lt,tb,tb+.4)),tk:ease(seg(lt,tb+.1,tb+.5))});}   // 외울 거리에도 이유를
+  else{const pk=seg(lt,slot*.72,slot*.8);if(pk>0){const pu=1+.04*Math.sin(t*7);c.save();c.globalAlpha=pk;c.translate(480,498);c.scale(pu,pu);
+    T(c,`소리 내어 세 번!  “${row.k}”`,0,0,{size:17,w:700,align:'center',color:col});c.restore();}}
 };
 
 /* ── SNS 프로필: 인물을 한 줄 게시물로 ── */
 TPL.profile=function(c,t,d){
-  const ps=d.people,n=ps.length,col=colOf(d);kicker(c,d,col);
-  const cw=Math.min(284,(880-(n-1)*18)/n),ch=392,x0=480-(n*cw+(n-1)*18)/2;
+  const ps=d.people,n=ps.length,col=colOf(d),hw=ps.some(p=>p.why);kicker(c,d,col);
+  const cw=Math.min(284,(880-(n-1)*18)/n),ch=hw?364:392,x0=480-(n*cw+(n-1)*18)/2,ts=.4+(n-1)*.7+2.8,cyc=hw&&t>=ts?Math.floor((t-ts)/3.4)%n:-1;   // 다 나온 뒤 한 사람씩 '왜?'
   ps.forEach((p,i)=>{const t0=.4+i*.7,k=ease(seg(t,t0,t0+.5));if(k<=0)return;const cl=PAL[(i+d.u)%PAL.length],x=x0+i*(cw+18),y=96;
     c.save();c.translate(x+cw/2,y+ch/2);c.scale(.9+.1*k,.9+.1*k);c.globalAlpha=k;c.translate(-cw/2,-ch/2);
-    box(c,0,0,cw,ch,18,'#0E1B2A',cl+'88',1.8);
+    box(c,0,0,cw,ch,18,i===cyc?cl+'1c':'#0E1B2A',i===cyc?cl:cl+'88',i===cyc?2.6:1.8,{glow:i===cyc?18:0,gc:cl});
     dot(c,40,44,26,cl+'33',{stroke:cl,lw:2});T(c,p.e,40,45,{size:28,align:'center'});
     T(c,p.n,76,34,{size:fit(c,p.n,cw-92,17,700),w:700});T(c,p.h,76,56,{size:12.5,color:C.dim,font:MONO});
     const nl=WT(c,p.t,18,102,cw-36,24,{size:16.5,w:500});
@@ -220,6 +248,7 @@ TPL.profile=function(c,t,d){
     const rk=ease(seg(t,t0+2.2,t0+2.8));if(rk>0){c.save();c.globalAlpha=rk;box(c,12,ch-90,cw-24,78,12,cl+'18',cl+'66',1.3);
       T(c,'💡 진짜 내용',24,ch-74,{size:12,color:cl,w:700});WT(c,p.real,24,ch-52,cw-48,17,{size:13,color:C.text});c.restore();}
     c.restore();});
+  if(cyc>=0){const tc=ts+Math.floor((t-ts)/3.4)*3.4;whyBar(c,ps[cyc].why,PAL[(cyc+d.u)%PAL.length],cyc,{k:ease(seg(t,ts,ts+.4)),tk:ease(seg(t,tc+.1,tc+.5))});}
 };
 
 /* ── 비교: 헷갈리는 두 개를 마주 세운다 ── */
@@ -227,21 +256,21 @@ TPL.compare=function(c,t,d){
   const ps=d.pairs,m=ps.length,slot=d.dur/m,i=Math.min(m-1,Math.floor(t/slot)),lt=t-i*slot,p=ps[i],col=colOf(d);kicker(c,d,col);
   if(m>1)label(c,`${i+1} / ${m}`,912,30,col,{size:13,align:'right'});
   T(c,p.cap,480,96,{size:18,w:700,align:'center',color:C.muted});
-  const ek=ease(seg(lt,0,.5));
+  const ek=ease(seg(lt,0,.5)),hw=ps.some(q=>q.why),bh=hw?336:372,iy=hw?226:232,isp=hw?56:62,vy=hw?286:304;   // hw: 이유 띠 자리만큼 줄인다
   [[p.a,48,PAL[0]],[p.b,512,PAL[1]]].forEach(([s,x,cl],si)=>{c.save();c.globalAlpha=ek;c.translate(si?(1-ek)*40:-(1-ek)*40,0);
-    box(c,x,118,400,372,18,'#0E1B2A',cl+'99',2);box(c,x,118,400,8,4,cl);
+    box(c,x,118,400,bh,18,'#0E1B2A',cl+'99',2);box(c,x,118,400,8,4,cl);
     if(p.a.img||p.b.img)badge(c,x+46,170,31,cl,{img:s.img,e:s.e});else T(c,s.e,x+46,172,{size:40,align:'center'});
     T(c,s.h,x+86,170,{font:DISP,size:fit(c,s.h,290,30,400,DISP),color:cl,w:400});
-    s.items.forEach((it,j)=>{const kt=.7+j*.55+si*.25,k=ease(seg(lt,kt,kt+.4));if(k<=0)return;const yy=232+j*62;
+    s.items.forEach((it,j)=>{const kt=.7+j*.55+si*.25,k=ease(seg(lt,kt,kt+.4));if(k<=0)return;const yy=iy+j*isp;
       c.save();c.globalAlpha=k;dot(c,x+30,yy+8,6,cl);WT(c,it,x+48,yy+8-(wrap(c,it,326,`600 17px ${SANS}`).length-1)*10,326,22,{size:17,w:600});c.restore();});
     c.restore();});
-  const vk=ease(seg(lt,.3,.8));c.save();c.globalAlpha=vk;dot(c,480,304,30,'#09131F',{stroke:C.dim,lw:2});T(c,'VS',480,305,{font:DISP,size:22,align:'center',color:C.text});c.restore();
+  const vk=ease(seg(lt,.3,.8));c.save();c.globalAlpha=vk;dot(c,480,vy,30,'#09131F',{stroke:C.dim,lw:2});T(c,'VS',480,vy+1,{font:DISP,size:22,align:'center',color:C.text});c.restore();
+  if(hw&&p.why)whyBar(c,p.why,col,i,{k:ease(seg(lt,2.6,3.1)),tk:ease(seg(lt,2.8,3.3))});
 };
 
 /* ── 유물 따져 보기: 모두 훑어본 뒤 하나씩 크게 비추며 "사실 → 그러니까 → 결론"을 잇고, 끝에 결론만 모아 다시 본다.
    이름·시대·이유 세 단계(why)는 IMAGES. 유물 하나에 (dur-G_IN-G_OUT)/n 초, 멈춤 화면(still)은 마지막 정리 ── */
 const G_IN=2.6,G_OUT=5,G_STEP=['사실','그러니까','결론'];
-function fitLines(c,s,maxW,size,lines,w=600){let z=size;while(z>9&&wrap(c,s,maxW,`${w} ${z}px ${SANS}`).length>lines)z-=.5;return z;}
 function galleryGrid(c,t,its,col,recap,t0){
   const n=its.length,cols=n<=4?n:n<=6?3:4,rows=Math.ceil(n/cols),gap=12,cw=(880-(cols-1)*gap)/cols,one=rows===1;
   const ih=one?Math.min(cw-24,200):recap?100:124,ch=ih+(recap?(one?124:100):(one?58:52)),top=84+(420-(rows*ch+(rows-1)*gap))/2;
@@ -384,11 +413,16 @@ TPL.territory=function(c,t,d){
   yearRoll(c,prev,cur,k,x,102,{font:DISP,size:fit(c,cur.y,350,40,400,DISP),color:col,w:400});c.restore();
   const a=ease(seg(lt,.5,1.3));c.save();c.globalAlpha=a;c.translate(0,(1-a)*10);
   T(c,cur.t,x,146,{size:fit(c,cur.t,350,22,800),w:800});
-  const nl=WT(c,cur.d,x,178,352,20,{size:13.5,color:C.muted});
-  const regs=cur.regs.filter(r=>r.n&&r.legend!==false);let ly=178+nl*20+16;
-  c.font='600 12px '+SANS;let lx=x,lrow=0;
-  regs.forEach(r=>{const w=c.measureText(r.n).width+26;if(lx+w>x+352){lx=x;lrow++;}const cy=ly+lrow*22;box(c,lx,cy-6,12,12,3,r.c,null,0,{alpha:r.hi?1:.85});T(c,r.n,lx+18,cy,{size:12,w:600});lx+=w+8;});
-  ly+=(lrow+1)*22+8;
+  let dy=178;
+  if(cur.why){const z=fitLines(c,cur.why,334,15,3,700),ls=wrap(c,cur.why,334,`700 ${z}px ${SANS}`),bh=34+ls.length*(z+5);WHY_NOW=i;   // 왜 지도가 이렇게 바뀌었나
+    box(c,x-6,162,364,bh,12,col+'1c',col+'aa',1.4);T(c,'💡 왜?',x+6,178,{size:12.5,w:700,color:col});
+    ls.forEach((l,j)=>T(c,l,x+6,199+j*(z+5),{size:z,w:700}));dy=162+bh+18;}
+  const nl=WT(c,cur.d,x,dy,352,20,{size:13.5,color:C.muted});
+  let ly=dy+nl*20+16;
+  if(!cur.why){const regs=cur.regs.filter(r=>r.n&&r.legend!==false);   // 이유가 있으면 범례 대신 이유(지도에 이름이 있다)
+    c.font='600 12px '+SANS;let lx=x,lrow=0;
+    regs.forEach(r=>{const w=c.measureText(r.n).width+26;if(lx+w>x+352){lx=x;lrow++;}const cy=ly+lrow*22;box(c,lx,cy-6,12,12,3,r.c,null,0,{alpha:r.hi?1:.85});T(c,r.n,lx+18,cy,{size:12,w:600});lx+=w+8;});
+    ly+=(lrow+1)*22+8;}
   if(cur.king){const kg=cur.king,kh=Math.min(470-ly,34+kg.k.length*19+8);
     if(kh>70){box(c,x-6,ly,364,kh,12,'rgba(255,255,255,.04)',col+'88',1.5);T(c,kg.e,x+16,ly+22,{size:22,align:'center'});
       T(c,kg.n,x+36,ly+16,{size:fit(c,kg.n,236,16,800),w:800,color:col});label(c,kg.r,x+36,ly+33,C.muted,{size:11,align:'left'});

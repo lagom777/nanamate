@@ -1,4 +1,5 @@
 // 수능 한국사 모션 노트 장면 데이터 — 그리는 일은 hist-engine.js 의 템플릿이 한다. 사실은 content/hi-*.mjs 와 같다.
+import { WHYS, TERR_WHY } from "./hist-why.mjs";
 export const UNITS = [
   { k: "1", e: "🪨", name: "선사·고조선", c: "#F4B544", file: "01-prehistory.html", img: "bitsal-pot" },
   { k: "2", e: "⚔️", name: "삼국·가야", c: "#4FD1E8", file: "02-three-kingdoms.html", img: "silla-crown" },
@@ -57,7 +58,7 @@ export const scenes = [
       { y: "427 장수왕", cap: "고구려 수도를 국내성에서 평양으로 옮기고 남진 정책", pins: [["국내성", "🏰"]], arrows: [["국내성", "평양", "평양 천도"]] },
       { y: "475 한성 함락", cap: "고구려가 한성을 함락, 개로왕 전사. 백제는 웅진으로 천도", pins: [["웅진", "🛡️"]], arrows: [["평양", "한성", "한성 함락", "#FF7A8A"], ["한성", "웅진", "웅진 천도", "#FF9A4D"]] },
       { y: "551 나·제 연합", cap: "백제(성왕)는 한강 하류 6군, 신라는 상류 10군을 고구려에게서 빼앗음", pins: [["사비"], ["경주", "🏛️"]], arrows: [["사비", "한성", "", "#FF9A4D"], ["경주", "충주", "", "#7BE07F"]] },
-      { y: "553~554", cap: "신라 진흥왕이 한강 하류를 독점. 성왕이 관산성에서 전사(554)", pins: [["관산성", "⚔️"]], arrows: [["경주", "한성", "진흥왕 독점", "#7BE07F"], ["사비", "관산성", "성왕 전사", "#FF7A8A"]] }] },
+      { y: "553~554", cap: "신라 진흥왕이 한강 하류를 독점. 성왕이 관산성에서 전사(554)", pins: [["관산성", "⚔️"]], arrows: [["경주", "한성", "진흥왕 독점", "#7BE07F"], ["사비", "관산성", "", "#FF7A8A"]] }] },
   { u: 1, type: "timeline", ch: "삼국 전성기", title: "삼국 전성기 순서: 백 → 고 → 신", head: "왕과 업적",
     sub: "왕 이름과 업적은 한 쌍으로 외웁니다. 같은 지역을 놓고 벌인 사건은 세기를 붙여 순서를 잡습니다.",
     fx: [w("근초고왕 · 칠지도", "4세기 백제"), w("광개토 대왕 · 영락 연호", "5세기 고구려"), w("진흥왕 · 순수비", "6세기 신라")],
@@ -212,7 +213,7 @@ export const scenes = [
     fx: [w("고부 → 전주 → 논산 → 우금치", ""), w("전주 화약 → 집강소", "폐정 개혁 12개조")],
     pts: ["청·일 군대가 들어오자 <em>전주 화약</em>으로 외국군 철수를 요구했습니다.", "일본이 경복궁을 점령하고 청일 전쟁을 일으키자 <em>2차 봉기</em>가 일어났습니다.", "<em>전봉준</em>은 체포되어 처형되었습니다(1895)."],
     dur: 20, foot: "※ 위치는 개념 설명용 약도입니다",
-    steps: [{ y: "1894.1", cap: "고부 군수 조병갑의 탐학에 항의해 전봉준이 봉기", pins: [["고부", "🔥"]] }, { y: "1894.4", cap: "황토현·황룡촌 승리, 전주성 점령", pins: [["전주", "⚔️"]], arrows: [["고부", "전주", "1차 봉기"]] }, { y: "1894.5", cap: "청·일 군대가 들어오자 전주 화약. 전라도에 집강소 설치", pins: [["전주", "🏛️"]] }, { y: "1894.9", cap: "일본의 경복궁 점령 후 반외세·항일 2차 봉기, 논산 집결", pins: [["논산", "✊"]], arrows: [["전주", "논산", "2차 봉기", "#FF9A4D"]] }, { y: "1894.11", cap: "공주 우금치에서 일본군·관군에 패배", pins: [["공주(우금치)", "💔", "#FF7A8A"]], arrows: [["논산", "공주(우금치)", "우금치 전투", "#FF7A8A"]] }] },
+    steps: [{ y: "1894.1", cap: "고부 군수 조병갑의 탐학에 항의해 전봉준이 봉기", pins: [["고부", "🔥"]] }, { y: "1894.4", cap: "황토현·황룡촌 승리, 전주성 점령", pins: [["전주", "⚔️"]], arrows: [["고부", "전주", "1차 봉기"]] }, { y: "1894.5", cap: "청·일 군대가 들어오자 전주 화약. 전라도에 집강소 설치", pins: [["전주", "🏛️"]] }, { y: "1894.9", cap: "일본의 경복궁 점령 후 반외세·항일 2차 봉기, 논산 집결", pins: [["논산", "✊"]], arrows: [["전주", "논산", "2차 봉기", "#FF9A4D"]] }, { y: "1894.11", cap: "공주 우금치에서 일본군·관군에 패배", pins: [["공주(우금치)", "💔", "#FF7A8A"]], arrows: [["논산", "공주(우금치)", "", "#FF7A8A"]] }] },
   { u: 6, type: "cards", ch: "개혁 비교", title: "근대 개혁·운동 한눈에 비교", head: "누가, 무엇을 바꾸려 했나",
     sub: "주체와 내용이 어긋난 선택지를 찾는 문항이 많습니다. 주체 한 줄을 카드로 정리합니다.",
     fx: [w("갑신정변", "급진 개화파·14개조"), w("동학", "폐정 개혁 12개조"), w("갑오개혁", "군국기무처·홍범 14조"), w("독립 협회", "만민 공동회"), w("광무개혁", "구본신참")],
@@ -605,7 +606,7 @@ TERR_SCENES.forEach((x) => {
     sub: "시대가 바뀌면 국경이 움직입니다. 같은 나라는 모양이 이어서 늘고 줄고, 새 나라는 번지듯 생기고, 사라지는 나라는 스러집니다. (경계는 단순화한 약도)",
     fx: sn.map((s) => w(`${s.y} · ${s.t}`, s.keys[0])),
     pts: (sn.length > 6 ? sn.filter((_, i) => i % Math.ceil(sn.length / 6) === 0) : sn).map((s) => `<em>${s.y}</em> ${s.king ? `<b>${s.king.n}</b> · ` : ""}${s.d}`),
-    dur: sn.length > 8 ? sn.length * 4.4 : sn.length > 4 ? sn.length * 5.4 : Math.max(10, sn.length * 6.5), still: 5.5, snaps: x.snaps,
+    dur: sn.length > 8 ? sn.length * 5.6 : Math.max(13, sn.length * 6.2), still: 5.5, snaps: x.snaps,   // 스냅숏마다 '왜?'를 읽을 시간
   });
 });
 
@@ -814,3 +815,27 @@ PIC_QUIZ.forEach(({ u, ...q }) => {
   s.items.push(q);
   s.dur += 8;
 });
+
+/* '왜?' 붙이기: 장면 요소마다 이유 한 문장(hist-why.mjs). 이유를 읽을 시간만큼 장면을 늘린다(hist-engine.js 의 whyBar). */
+const ELS = { timeline: "events", cards: "cards", compare: "pairs", map: "steps", chain: "nodes", profile: "people", acro: "rows" };
+const WHY_DUR = {   // 요소 n개일 때 최소 길이(초): 요소 하나에 3.4초 넘게
+  timeline: (n) => 3.4 + n * 3.4, chain: (n) => 3.4 + n * 3.4, cards: (n) => 2.7 + n * 3.95,
+  compare: (n) => n * 8.5, map: (n) => 1.8 + n * 4.8, profile: (n) => 2.9 + n * 4.1, acro: (n) => n * 11,
+};
+const seen = new Set();
+scenes.forEach((s) => { if (seen.has(s.title)) throw new Error("장면 제목이 겹침: " + s.title); seen.add(s.title); });
+Object.entries(WHYS).forEach(([title, ws]) => {
+  const s = scenes.find((x) => x.title === title);
+  if (!s) throw new Error("‘왜’를 붙일 장면이 없음: " + title);
+  const els = s[ELS[s.type]];
+  if (!els || els.length !== ws.length) throw new Error(`‘왜’ 개수가 다름: ${title} (${els?.length} ≠ ${ws.length})`);
+  els.forEach((e, i) => { e.why = ws[i]; });
+  s.dur = Math.max(s.dur, +WHY_DUR[s.type](els.length).toFixed(1));
+  if (s.type === "map") { const sd = (s.dur - 1.8) / els.length; s.still = +(0.5 + (els.length - 1) * sd + Math.min(2.4, sd - 0.4)).toFixed(1); }   // 멈춤 화면에 마지막 단계의 '왜?'가 보이게
+});
+scenes.forEach((s) => {   // 인과 사슬('왜 그랬을까') 장면 말고는 요소마다 이유가 있어야 한다
+  const els = s[ELS[s.type]];
+  if (els && s.ch !== "왜 그랬을까" && els.some((e) => !e.why)) throw new Error("‘왜’가 빠진 장면: " + s.title);
+});
+Object.entries(TERR_WHY).forEach(([id, w]) => { if (!TERR[id]) throw new Error("영토 스냅숏이 없음: " + id); TERR[id].why = w; });
+TERR_ORDER.forEach((id) => { if (!TERR[id].why) throw new Error("‘왜’가 빠진 영토 스냅숏: " + id); });
