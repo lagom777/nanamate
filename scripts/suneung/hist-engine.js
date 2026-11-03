@@ -146,6 +146,26 @@ TPL.chain=function(c,t,d){
   else{if(cur>=0)WHY_NOW=cur;if(d.foot)label(c,d.foot,480,516,C.muted,{size:14,alpha:seg(t,endT-.5,endT+.2)});}   // '왜 그랬을까' 사슬은 패널의 마디를 밝힌다
 };
 
+/* ── 구조도: 맨 위 기관 → 가지(branches) → 잎(kids). 선이 자라며 가지가 하나씩 나오고, 지금 가지의 '왜?'는 아래 띠에 ── */
+TPL.tree=function(c,t,d){
+  const br=d.branches,n=br.length,col=colOf(d),hw=br.some(b=>b.why);kicker(c,d,col);
+  const t0=.4,b0=t0+.8,step=Math.max(1.1,(d.dur-3.2)/n),endT=b0+step*n,iv=3.4,newest=t<endT?Math.min(n-1,Math.floor((t-b0)/step)):-1,cyc=t>=endT?Math.floor((t-endT)/iv)%n:-1,cur=newest>=0?newest:cyc;
+  const rw=320;c.save();c.globalAlpha=ease(seg(t,t0,t0+.7));box(c,480-rw/2,84,rw,54,14,col+'2A',col,2.4,{glow:12,gc:col});
+  T(c,(d.root.e||'')+' '+d.root.n,480,104,{size:20,w:800,align:'center'});if(d.root.s)T(c,d.root.s,480,125,{size:12.5,align:'center',color:C.muted});c.restore();
+  const bw=(864-(n-1)*16)/n;
+  br.forEach((b,i)=>{const x=48+i*(bw+16),cx=x+bw/2,ts=b0+i*step,k=ease(seg(t,ts,ts+.5));if(k<=0)return;const bc=b.c||PAL[i%PAL.length],on=hw&&i===cur;
+    poly(c,[[480,138],[480,154],[cx,154],[cx,154+14*k]],bc,2,{alpha:k});
+    c.save();c.globalAlpha=k;box(c,x,168,bw,58,12,on?bc+'22':'#0E1B2A',bc,on?2.8:2,{glow:on?16:0,gc:bc});
+    T(c,b.n,cx,188,{size:fit(c,b.n,bw-14,17,800),w:800,align:'center',color:bc});T(c,b.s||'',cx,211,{size:fit(c,b.s||'',bw-14,12,500),align:'center',color:C.muted});c.restore();
+    const kids=b.kids||[],gap=Math.min(62,250/(kids.length||1)),kh=Math.min(52,gap-8);
+    kids.forEach((kd,j)=>{const kk=ease(seg(t,ts+.15+j*.22,ts+.6+j*.22));if(kk<=0)return;const yy=244+j*gap;
+      poly(c,[[cx,j?yy-gap+kh:226],[cx,yy]],bc+'88',1.5,{alpha:kk});c.save();c.globalAlpha=kk;box(c,x+6,yy,bw-12,kh,10,'#101F2E',bc+'66',1.2);box(c,x+6,yy,bw-12,kh,10,bc+'1C',null);
+      T(c,kd[0],cx,yy+15,{size:fit(c,kd[0],bw-24,14.5,700),w:700,align:'center'});if(kd[1])T(c,kd[1],cx,yy+33,{size:fit(c,kd[1],bw-24,11.5,500),align:'center',color:C.muted});c.restore();});});
+  if(hw&&cur>=0){const tc=newest>=0?b0+cur*step:endT+Math.floor((t-endT)/iv)*iv;
+    whyBar(c,br[cur].why,br[cur].c||PAL[cur%PAL.length],cur,{k:ease(seg(t,b0,b0+.5)),tk:ease(seg(t,tc+.15,tc+.55))});}
+  else if(d.foot)label(c,d.foot,480,524,C.dim,{size:11.5});
+};
+
 /* ── 약도 지도: 한반도 외곽선 위에서 사건이 이동한다 ── */
 const KOR=[[124.35,39.8],[124.4,40.15],[125.3,40.4],[126.3,41.1],[126.9,41.8],[128.2,41.4],[128.1,42.0],[129.2,42.25],[129.75,42.45],[130.1,42.95],[130.68,42.3],[130.3,42.2],[129.75,41.8],[129.4,40.65],[128.9,40.4],[128.2,40.0],[127.65,39.85],[127.45,39.15],[128.2,38.7],[128.6,38.2],[128.95,37.75],[129.15,37.4],[129.4,37.0],[129.4,36.4],[129.45,36.05],[129.35,35.5],[129.1,35.1],[128.7,35.0],[128.7,34.7],[127.9,34.7],[127.7,34.75],[127.3,34.5],[126.5,34.3],[126.35,34.8],[126.4,35.4],[126.5,35.7],[126.6,35.95],[126.2,36.6],[126.3,36.95],[126.85,36.95],[126.6,37.45],[126.3,37.75],[126.2,37.95],[125.5,37.7],[124.85,38.2],[125.3,38.7],[125.1,39.2],[125.6,39.6],[124.9,39.9]];
 const CNCOAST=[[121.9,31.2],[121.2,32.1],[120.5,33.3],[119.2,34.7],[120.4,36.1],[122.5,37.4],[121.0,37.5],[119.3,37.2],[118.3,38.2],[117.7,39.0],[119.0,39.8],[120.7,40.4],[122.2,40.6],[121.6,39.6],[121.2,38.9],[122.3,39.5],[123.5,39.8],[124.35,39.8]];
@@ -154,6 +174,7 @@ const PLACES={'국내성':[126.19,41.13,'l'],'평양':[125.75,39.02,'l'],'한성
   '관산성':[127.6,36.3,'r'],'전주':[127.15,35.82,'l'],'송악':[126.55,37.97,'l'],'개경':[126.55,37.97,'l'],'철원':[127.31,38.15,'r'],'구미(일리천)':[128.35,36.1,'r'],'귀주':[125.25,39.95,'l'],'강화도':[126.4,37.72,'l'],'처인성':[127.25,37.23,'r'],
   '충주':[127.93,36.99,'r'],'진도':[126.25,34.45,'l'],'제주':[126.55,33.45,'r'],'부산':[129.04,35.1,'r'],'한산도':[128.45,34.77,'r'],'진주':[128.11,35.18,'l'],'행주':[126.8,37.6,'l'],'울돌목':[126.3,34.58,'l'],'노량':[127.85,34.93,'r'],
   '의주':[124.55,40.2,'l'],'고부':[126.85,35.57,'l'],'논산':[127.1,36.2,'l'],'공주(우금치)':[127.12,36.47,'r'],
+  '정주':[125.33,39.69,'l'],'대구':[128.6,35.87,'r'],'원산':[127.44,39.15,'r'],'인천':[126.63,37.46,'l'],'초산':[125.8,40.83,'r'],'판문점':[126.68,37.96,'l'],
   '상하이':[121.47,31.23,'r'],'충칭':[106.55,29.56,'r'],'도쿄':[139.7,35.68,'l'],'간도':[129.0,42.5,'r'],'하얼빈':[126.6,45.75,'r']};
 TPL.map=function(c,t,d){
   const col=colOf(d),asia=d.view==='asia';kicker(c,d,col);
@@ -356,7 +377,7 @@ function polyPart(pts,f){if(f>=1)return pts;let L=0;const seg2=[];for(let i=1;i<
   let rem=L*f;const out=[pts[0]];for(let i=1;i<pts.length;i++){if(rem>=seg2[i-1]){out.push(pts[i]);rem-=seg2[i-1];}else{const u=rem/seg2[i-1];out.push([lerp(pts[i-1][0],pts[i][0],u),lerp(pts[i-1][1],pts[i][1],u)]);break;}}return out;}
 /* A 스냅숏에서 B 스냅숏으로 k(0~1)만큼 옮겨 간 지도. 같은 key 의 영역은 모양·색·이름표가 이어 움직이고, 새 영역은 번지듯 생기고, 없어지는 영역은 스러진다. */
 function drawTerritory(c,A,B,k,bx){
-  A=A||EMPTY_T;B=B||EMPTY_T;const P=terrProj(bx),sz=Math.max(.75,Math.min(1.35,bx.h/450));
+  A=A||EMPTY_T;B=B||EMPTY_T;const P=terrProj(bx),sz=Math.max(.75,Math.min(1.35,bx.h/450))*(bx.fs||1); // fs: 좁은 화면에서 지도 글자 키우기
   const ra=prep(A),rb=prep(B),used=new Set(),items=[];
   rb.forEach(b=>{const a=ra.find(x=>x.key===b.key&&!used.has(x));if(a){used.add(a);items.push({a,b});}else items.push({b});});
   ra.forEach(a=>{if(!used.has(a))items.unshift({a});});
@@ -390,7 +411,7 @@ function drawTerritory(c,A,B,k,bx){
   ln({lines:(B.lines||[]).filter(l=>an.has(l.n))},1,1);ln({lines:(B.lines||[]).filter(l=>!an.has(l.n))},ease(clamp(k*1.4-.3)),1);
   // 이름표
   labels.forEach(L=>{if(L.x==null)return;const [x,y]=P(L.x,L.y);
-    const draw=(g,a,dy)=>{if(!g||a<=.02)return;TS(c,g.n,x,y+dy,{size:(g.fs||16)*sz,w:800,alpha:a});if(g.s)TS(c,g.s,x,y+dy+17*sz,{size:11.5*sz,w:600,color:'#DCE6F0',alpha:a*.95,lw:3});};
+    const draw=(g,a,dy)=>{if(!g||a<=.02)return;TS(c,g.n,x,y+dy,{size:(g.fs||16)*sz,w:800,alpha:a});if(g.s&&!bx.compact)TS(c,g.s,x,y+dy+17*sz,{size:11.5*sz,w:600,color:'#DCE6F0',alpha:a*.95,lw:3});};
     if(L.from&&L.to){if(L.from.n===L.to.n&&L.from.s===L.to.s)draw(L.to,1,0);else{draw(L.from,1-L.kr,-8*L.kr*sz);draw(L.to,L.kr,8*(1-L.kr)*sz);}}
     else if(L.to)draw(L.to,L.kr,6*(1-L.kr)*sz);else draw(L.from,1-L.kr,0);});
   // 핀: 같은 이름은 그대로, 새 핀은 톡 튀어나오고, 없어지는 핀은 흐려진다
