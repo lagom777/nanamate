@@ -24,17 +24,21 @@ const EXTRA_CSS = `
 .chip .em{margin-right:4px}
 .pics{display:none;gap:10px}   /* 넓은 화면은 재생기 그림이 충분히 커서 좁은 화면에서만 */
 .pics:empty{display:none}
-.pic{margin:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:radial-gradient(circle at 50% 36%,#22425f,#0A1624 74%);display:flex;flex-direction:column}
-.pic img{display:block;width:100%;aspect-ratio:1;object-fit:contain;padding:6px;box-sizing:border-box}
-.pic figcaption{padding:7px 10px 10px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;background:var(--bg2);flex:1}
+.pic{margin:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg2);display:grid;grid-template-columns:96px minmax(0,1fr)}
+.pic img{display:block;width:96px;height:96px;object-fit:contain;padding:6px;box-sizing:border-box;background:radial-gradient(circle at 50% 36%,#22425f,#0A1624 74%);border-right:1px solid var(--line)}
+.pic figcaption{padding:8px 11px 10px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0}
 .pic b{font-size:14px;line-height:1.3}
 .pic .era{font-family:var(--fm);font-size:11px;padding:1px 8px;border-radius:999px;border:1px solid var(--c,var(--acc));color:var(--c,var(--acc))}
-.pic small{font-size:12px;line-height:1.45;color:var(--muted)}
+.pic .why{margin:2px 0 0;padding:0;list-style:none;counter-reset:w;display:flex;flex-direction:column;gap:3px}
+.pic .why li{counter-increment:w;position:relative;padding-left:20px;font-size:12.5px;line-height:1.45;color:var(--muted)}
+.pic .why li::before{content:counter(w);position:absolute;left:0;top:.18em;width:15px;height:15px;border-radius:50%;border:1px solid var(--c,var(--acc));color:var(--c,var(--acc));font:600 10px/15px var(--fm);text-align:center}
+.pic .why li:last-child{color:var(--text);font-weight:600}
 .embed #b-big{display:grid}
 @media (max-width:900px){
   .player{grid-template-columns:minmax(0,1fr)}.panel,.panel-in{min-width:0}
   .stage{order:0}.bar{order:1}.panel{order:2}
-  .pics{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(148px,44%);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;margin:0 -18px;padding-left:18px;padding-right:18px;scroll-padding-left:18px}
+  .pics{display:grid;grid-auto-flow:column;grid-auto-columns:max(220px,86%);align-items:start;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;margin:0 -18px;padding-left:18px;padding-right:18px;scroll-padding-left:18px}
+  .pics:has(>:only-child){grid-auto-columns:100%}   /* 그림이 하나면 꽉 차게 */
   .pic{scroll-snap-align:start}
 }
 `;
@@ -80,7 +84,7 @@ const pp=document.createElement('div');pp.className='pics';pp.id='p-pics';$('p-s
 function picCards(s){if(s.type==='quiz')return '';const ids=[],add=x=>{if(x&&x.img&&!ids.includes(x.img))ids.push(x.img);};
   ['items','events','cards','nodes'].forEach(k=>(s[k]||[]).forEach(add));(s.pairs||[]).forEach(p=>{add(p.a);add(p.b);});
   return ids.map(id=>{const m=IMAGES[id]||{},c=UNITS[m.u]?UNITS[m.u].c:'';
-    return \`<figure class="pic"\${c?\` style="--c:\${c}"\`:''}><img src="\${IMG_BASE}img/\${id}.svg" alt="\${m.n||''}" loading="lazy" decoding="async"><figcaption><b>\${m.n||''}</b><span class="era">\${m.era||''}</span><small>\${m.k||''}</small></figcaption></figure>\`;}).join('');}
+    return \`<figure class="pic"\${c?\` style="--c:\${c}"\`:''}><img src="\${IMG_BASE}img/\${id}.svg" alt="\${m.n||''}" loading="lazy" decoding="async"><figcaption><b>\${m.n||''}</b><span class="era">\${m.era||''}</span><ol class="why">\${(m.why||[]).map(x=>\`<li>\${x}</li>\`).join('')}</ol></figcaption></figure>\`;}).join('');}
 S.forEach((s,i)=>{const b=document.createElement('button');b.className='seg';b.style.setProperty('--c',uc(s));b.title=\`\${i+1}. \${s.title}\`;
   b.setAttribute('aria-label',\`\${i+1}번째 장면: \${s.title}\`);b.innerHTML='<i><b></b></i>';b.onclick=()=>go(i);tl.appendChild(b);});
 HERE_UNITS.forEach(k=>{const u=UNITS[k];const b=document.createElement('button');b.className='chip';b.dataset.u=k;b.style.setProperty('--c',u.c);b.innerHTML=\`<span class="em">\${u.e}</span>\${u.name}\`;
