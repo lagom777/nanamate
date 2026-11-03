@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>훈민정음 해례본 (조선 세종 · 1446 · 발음 기관과 천지인을 본뜬 글자)</title>
+  <defs>
+    <linearGradient id="pageL" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0" stop-color="#cbb68c"/>
+      <stop offset=".15" stop-color="#ece0c2"/>
+      <stop offset="1" stop-color="#e3d2ab"/>
+    </linearGradient>
+    <linearGradient id="pageR" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c7b186"/>
+      <stop offset=".15" stop-color="#efe3c6"/>
+      <stop offset="1" stop-color="#e2d0a8"/>
+    </linearGradient>
+    <pattern id="glyph" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M2 1.6h4M4 1.6v4.6M2.2 3.8h3.6M2.2 6.6l1.3.8M5.8 6.6l-1 .8" fill="none" stroke="#2c2116" stroke-width=".8" stroke-linecap="round"/>
+    </pattern>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+  </defs>
+  <ellipse cx="100" cy="176" rx="82" ry="7" fill="#000" opacity=".45" filter="url(#soft)"/>
+  <!-- 펼친 책 -->
+  <path d="M100 30C84 24 52 22 24 28V156C52 150 84 152 100 160Z" fill="url(#pageL)" stroke="#8a7146" stroke-width="1"/>
+  <path d="M100 30C116 24 148 22 176 28V156C148 150 116 152 100 160Z" fill="url(#pageR)" stroke="#8a7146" stroke-width="1"/>
+  <g stroke="#6b5532" stroke-width=".7" fill="none" opacity=".8">
+    <rect x="32" y="36" width="60" height="112"/><rect x="108" y="36" width="60" height="112"/>
+    <path d="M44 36v112M56 36v112M68 36v112M80 36v112M120 36v112M132 36v112M144 36v112M156 36v112"/>
+  </g>
+  <!-- 왼쪽: 한자 풀이 글줄 -->
+  <rect x="33" y="38" width="58" height="108" fill="url(#glyph)" opacity=".75"/>
+  <!-- 오른쪽 맨 끝 줄: 책 이름 자리 -->
+  <rect x="157" y="38" width="10" height="108" fill="url(#glyph)" opacity=".75"/>
+  <!-- 판본체 자음: ㄱ ㄴ ㅁ ㅅ ㅇ -->
+  <g fill="none" stroke="#1b140c" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M139 44h10v10"/>
+    <path d="M139 62v10h10"/>
+    <path d="M139 80h10v10h-10z"/>
+    <path d="M144 98l-5 11M144 98l5 11"/>
+    <circle cx="144" cy="122" r="5"/>
+  </g>
+  <!-- 모음의 바탕: 하늘(·) · 땅(ㅡ) · 사람(ㅣ) -->
+  <g fill="#1b140c">
+    <circle cx="125" cy="50" r="3"/>
+    <rect x="117" y="70" width="16" height="3.4"/>
+    <rect x="123.3" y="88" width="3.4" height="18"/>
+  </g>
+  <g fill="#7a5a2e" opacity=".75" font-family="serif" font-size="6" text-anchor="middle">
+    <text x="125" y="62">天</text><text x="125" y="82">地</text><text x="125" y="114">人</text>
+  </g>
+  <!-- 장서인 -->
+  <rect x="111" y="128" width="9" height="9" fill="none" stroke="#b33a26" stroke-width="1.2"/>
+  <path d="M113 131h5M115.5 129v6M113 134h5" stroke="#b33a26" stroke-width=".9"/>
+  <path d="M100 30V160" stroke="#7a6038" stroke-width="1.4"/>
+  <path d="M24 156C52 150 84 152 100 160C116 152 148 150 176 156V162C148 156 116 158 100 166C84 158 52 156 24 162Z" fill="#b39a6c" stroke="#7a6038" stroke-width=".8"/>
+</svg>

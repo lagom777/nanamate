@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>대한민국 임시 정부 청사 (1919 수립 · 상하이 · 삼권 분립 민주 공화제)</title>
+  <defs>
+    <linearGradient id="brick" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#9a6a54"/>
+      <stop offset="1" stop-color="#5e3a2c"/>
+    </linearGradient>
+    <linearGradient id="trim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9d1c0"/>
+      <stop offset="1" stop-color="#9d9483"/>
+    </linearGradient>
+    <linearGradient id="pole" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c9c9c9"/>
+      <stop offset="1" stop-color="#6b6b6b"/>
+    </linearGradient>
+    <pattern id="bricks" width="8" height="4" patternUnits="userSpaceOnUse">
+      <path d="M0 3.8h8M2 0v3.8M6 0v0" stroke="#3e261c" stroke-width=".45"/>
+    </pattern>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+    <g id="tg"><rect x="-9" y="-6" width="18" height="12" fill="#fbfbf8" stroke="#8b8b86" stroke-width=".5"/><circle r="3.2" fill="#c8102e"/><path d="M-3.2 0a1.6 1.6 0 0 0 3.2 0a1.6 1.6 0 0 1 3.2 0a3.2 3.2 0 0 1-6.4 0z" fill="#0047a0"/><g fill="#1d1d1b"><rect x="-8" y="-5" width="3" height="2.4"/><rect x="5" y="-5" width="3" height="2.4"/><rect x="-8" y="2.6" width="3" height="2.4"/><rect x="5" y="2.6" width="3" height="2.4"/></g></g>
+  </defs>
+  <ellipse cx="100" cy="188" rx="84" ry="6" fill="#000" opacity=".45" filter="url(#soft)"/>
+  <!-- 줄지은 3층 벽돌집(석고문 양식) -->
+  <path d="M24 44H176V184H24Z" fill="url(#brick)" stroke="#3e261c" stroke-width="1"/>
+  <path d="M24 44H176V184H24Z" fill="url(#bricks)"/>
+  <path d="M20 38H180V46H20Z" fill="url(#trim)" stroke="#6b6352" stroke-width=".8"/>
+  <path d="M24 92H176V96H24ZM24 136H176V140H24Z" fill="url(#trim)"/>
+  <!-- 창 -->
+  <g fill="#cfdde6" stroke="#3b2a20" stroke-width="1">
+    <rect x="40" y="56" width="22" height="28"/><rect x="89" y="56" width="22" height="28"/><rect x="138" y="56" width="22" height="28"/>
+    <rect x="40" y="102" width="22" height="28"/><rect x="138" y="102" width="22" height="28"/>
+  </g>
+  <g stroke="#3b2a20" stroke-width=".8"><path d="M51 56v28M40 70h22M100 56v28M89 70h22M149 56v28M138 70h22M51 102v28M40 116h22M149 102v28M138 116h22"/></g>
+  <!-- 석고문: 돌 테두리 아치문 -->
+  <path d="M80 184V114C80 106 88 100 100 100C112 100 120 106 120 114V184Z" fill="url(#trim)" stroke="#6b6352" stroke-width="1"/>
+  <path d="M86 184V118C86 112 92 108 100 108C108 108 114 112 114 118V184Z" fill="#2a1b14"/>
+  <path d="M100 108V184" stroke="#5b3b2a" stroke-width="1.4"/>
+  <circle cx="96" cy="148" r="1.4" fill="#d9b25a"/><circle cx="104" cy="148" r="1.4" fill="#d9b25a"/>
+  <!-- 현판 -->
+  <rect x="58" y="144" width="18" height="34" fill="#f2ecdd" stroke="#6b6352" stroke-width=".8"/>
+  <g fill="#1f160d" font-size="3.7" font-weight="700" text-anchor="middle" font-family="'Noto Serif CJK KR','Noto Serif KR','Nanum Myeongjo','AppleMyungjo','Batang',serif"><text x="67" y="150.5">大</text><text x="67" y="154.4">韓</text><text x="67" y="158.3">民</text><text x="67" y="162.2">國</text><text x="67" y="166.1">臨</text><text x="67" y="170.0">時</text><text x="67" y="173.9">政</text><text x="67" y="177.8">府</text></g>
+  <!-- 태극기 -->
+  <path d="M140 150V176" stroke="url(#pole)" stroke-width="1.6"/>
+  <path d="M140 150l-1 0" stroke="#6b6b6b"/>
+  <use href="#tg" x="150" y="156"/>
+</svg>

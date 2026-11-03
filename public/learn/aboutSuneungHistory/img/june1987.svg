@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>6월 민주 항쟁 (1987 · 호헌 철폐 · 대통령 직선제 개헌을 이끌어 냄)</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a29a8e"/>
+      <stop offset="1" stop-color="#e6dfd2"/>
+    </linearGradient>
+    <linearGradient id="cloth" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbfaf5"/>
+      <stop offset="1" stop-color="#ded9cc"/>
+    </linearGradient>
+    <radialGradient id="gas" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#f4f1ea" stop-opacity=".85"/><stop offset="1" stop-color="#f4f1ea" stop-opacity="0"/></radialGradient>
+    <radialGradient id="vg" cx=".5" cy=".5" r=".5"><stop offset=".64" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
+    <mask id="fade"><rect width="200" height="200" fill="url(#vg)"/></mask>
+    <g id="pp" fill="#2b2622"><circle cx="0" cy="-22" r="4.8"/><path d="M-9-16H9L11 14H-11Z"/></g>
+    <g id="tg"><rect x="-10" y="-7" width="20" height="14" fill="#fbfbf8" stroke="#8b8b86" stroke-width=".5"/><circle r="3.6" fill="#c8102e"/><path d="M-3.6 0a1.8 1.8 0 0 0 3.6 0a1.8 1.8 0 0 1 3.6 0a3.6 3.6 0 0 1-7.2 0z" fill="#0047a0"/><g fill="#1d1d1b"><rect x="-9" y="-6" width="3.4" height="2.6"/><rect x="5.6" y="-6" width="3.4" height="2.6"/><rect x="-9" y="3.4" width="3.4" height="2.6"/><rect x="5.6" y="3.4" width="3.4" height="2.6"/></g></g>
+  </defs>
+  <g mask="url(#fade)">
+    <rect width="200" height="200" fill="url(#sky)"/>
+    <!-- 도심 빌딩 -->
+    <g fill="#8a8378"><rect x="4" y="54" width="34" height="96"/><rect x="40" y="70" width="26" height="80"/><rect x="134" y="62" width="28" height="88"/><rect x="164" y="48" width="34" height="102"/></g>
+    <circle cx="40" cy="120" r="30" fill="url(#gas)"/><circle cx="168" cy="118" r="34" fill="url(#gas)"/>
+    <!-- 군중 -->
+    <g opacity=".7"><use href="#pp" transform="translate(12 150) scale(.75)"/><use href="#pp" transform="translate(28 148) scale(.75)"/><use href="#pp" transform="translate(44 150) scale(.75)"/><use href="#pp" transform="translate(156 150) scale(.75)"/><use href="#pp" transform="translate(172 148) scale(.75)"/><use href="#pp" transform="translate(188 150) scale(.75)"/></g>
+  </g>
+  <!-- 큰 현수막 -->
+  <path d="M30 116V66M170 116V66" stroke="#5a4a34" stroke-width="2"/>
+  <path d="M30 70C76 66 124 66 170 70V98C124 94 76 94 30 98Z" fill="url(#cloth)" stroke="#8b8b86" stroke-width=".8"/>
+  <text x="100" y="89" fill="#b0261c" font-size="13" font-weight="900" text-anchor="middle" font-family="'Noto Sans CJK KR','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif">호헌 철폐 독재 타도</text>
+  <!-- 앞줄 시민들과 태극기 -->
+  <use href="#pp" transform="translate(28 178)"/><use href="#pp" transform="translate(50 174)"/><use href="#pp" transform="translate(72 178)"/><use href="#pp" transform="translate(94 172)"/>
+  <use href="#pp" transform="translate(116 178)"/><use href="#pp" transform="translate(138 174)"/><use href="#pp" transform="translate(160 178)"/><use href="#pp" transform="translate(180 176) scale(.9)"/>
+  <g stroke="#2b2622" stroke-width="3" stroke-linecap="round"><path d="M101 158L110 138M57 160L62 142M145 160L152 142"/></g>
+  <path d="M120 150V112" stroke="#5a4a34" stroke-width="1.4"/><use href="#tg" transform="translate(131 118)"/>
+  <path d="M74 152V118" stroke="#5a4a34" stroke-width="1.4"/><use href="#tg" transform="translate(85 124) scale(.85)"/>
+  <ellipse cx="100" cy="194" rx="86" ry="5" fill="#000" opacity=".3"/>
+</svg>

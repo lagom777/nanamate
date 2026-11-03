@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>발해 석등 (상경 용천부 · 현무암 · 높이 약 6.3m)</title>
+  <defs>
+    <linearGradient id="basalt" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8e9296"/>
+      <stop offset=".45" stop-color="#5f6367"/>
+      <stop offset="1" stop-color="#303336"/>
+    </linearGradient>
+    <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7a7e82"/>
+      <stop offset="1" stop-color="#3b3e41"/>
+    </linearGradient>
+    <radialGradient id="fire" cx=".5" cy=".55" r=".6">
+      <stop offset="0" stop-color="#fff2b8"/>
+      <stop offset=".45" stop-color="#ffb347"/>
+      <stop offset="1" stop-color="#a34a10"/>
+    </radialGradient>
+    <radialGradient id="halo" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#ffcf6b" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#ffcf6b" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+    <filter id="pores"><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="17"/><feColorMatrix values="0 0 0 0 .1  0 0 0 0 .1  0 0 0 0 .1  0 0 0 1.2 -.35"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+  </defs>
+  <circle cx="100" cy="70" r="42" fill="url(#halo)"/>
+  <ellipse cx="100" cy="188" rx="58" ry="6" fill="#000" opacity=".45" filter="url(#soft)"/>
+  <g id="lamp" stroke="#1f2224" stroke-width=".9" stroke-linejoin="round">
+    <!-- 바닥돌과 아래 연꽃(복련) -->
+    <path d="M58 176H142L148 186H52Z" fill="url(#roof)"/>
+    <path d="M64 166H136V176H64Z" fill="url(#basalt)"/>
+    <path d="M66 166C68 156 74 154 78 160C80 152 86 152 88 160C90 152 96 152 100 160C104 152 110 152 112 160C114 152 120 152 122 160C126 154 132 156 134 166Z" fill="url(#basalt)"/>
+    <!-- 배흘림 기둥(간주석) -->
+    <path d="M90 158C86 140 86 120 90 104H110C114 120 114 140 110 158Z" fill="url(#basalt)"/>
+    <path d="M88 132H112M89 118H111M89 146H111" stroke-width=".8" opacity=".7"/>
+    <!-- 위 연꽃(앙련) 받침 -->
+    <path d="M70 104C66 96 72 92 80 96C82 88 90 88 92 96C94 88 106 88 108 96C110 88 118 88 120 96C128 92 134 96 130 104Z" fill="url(#basalt)"/>
+    <!-- 불 밝히는 집(화사석)과 창 -->
+    <path d="M76 66H124V92H76Z" fill="url(#basalt)"/>
+    <path d="M80 70H90V88H80ZM95 70H105V88H95ZM110 70H120V88H110Z" fill="url(#fire)"/>
+    <path d="M76 92H124" stroke-width="1.2"/>
+    <!-- 지붕돌: 기와지붕처럼 휜 처마 -->
+    <path d="M62 66C70 60 82 52 100 46C118 52 130 60 138 66C132 66 124 64 118 62H82C76 64 68 66 62 66Z" fill="url(#roof)"/>
+    <path d="M58 68C62 66 66 66 70 66H130C134 66 138 66 142 68L136 70H64Z" fill="url(#roof)"/>
+    <path d="M84 52l-6 10M92 49l-4 12M100 47v14M108 49l4 12M116 52l6 10" stroke-width=".7" opacity=".7"/>
+    <!-- 상륜 -->
+    <path d="M94 46V40H106V46Z" fill="url(#basalt)"/>
+    <path d="M90 40C90 32 110 32 110 40Z" fill="url(#roof)"/>
+    <path d="M98 32V22H102V32Z" fill="url(#basalt)"/>
+    <circle cx="100" cy="20" r="3" fill="url(#roof)"/>
+  </g>
+  <g filter="url(#pores)" opacity=".7"><use href="#lamp"/></g>
+  <path d="M91 108C89 124 89 140 91 154" stroke="#c5c9cc" stroke-width="1" opacity=".5" fill="none"/>
+</svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>팔만대장경판 (고려 · 몽골 침입 때 · 해인사 장경판전)</title>
+  <defs>
+    <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7a5236"/>
+      <stop offset="1" stop-color="#4a2f1d"/>
+    </linearGradient>
+    <linearGradient id="face" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a87a52"/>
+      <stop offset=".6" stop-color="#835a39"/>
+      <stop offset="1" stop-color="#5c3c25"/>
+    </linearGradient>
+    <linearGradient id="rack" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a271a"/>
+      <stop offset="1" stop-color="#5b3d28"/>
+    </linearGradient>
+    <pattern id="glyph" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M2 1.6h4M4 1.6v4.4M2.2 3.8h3.6M2.2 6.4l1.2.8M5.8 6.4l-.8.8" fill="none" stroke="#3b2414" stroke-width=".7" stroke-linecap="round"/>
+    </pattern>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".02 .4" numOctaves="2" seed="8"/><feColorMatrix values="0 0 0 0 .2  0 0 0 0 .12  0 0 0 0 .06  0 0 0 .55 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+  </defs>
+  <!-- 뒤: 장경판전 서가에 꽂힌 경판들 -->
+  <rect x="16" y="22" width="168" height="74" fill="url(#rack)" stroke="#24170e"/>
+  <g stroke="#24170e" stroke-width="1"><path d="M16 58H184M16 96H184"/></g>
+  <g fill="#8a6141" stroke="#2a1b10" stroke-width=".6">
+    <path d="M20 26h6v31h-6zM28 26h6v31h-6zM36 26h6v31h-6zM44 26h6v31h-6zM52 26h6v31h-6zM60 26h6v31h-6zM68 26h6v31h-6zM76 26h6v31h-6zM84 26h6v31h-6zM92 26h6v31h-6zM100 26h6v31h-6zM108 26h6v31h-6zM116 26h6v31h-6zM124 26h6v31h-6zM132 26h6v31h-6zM140 26h6v31h-6zM148 26h6v31h-6zM156 26h6v31h-6zM164 26h6v31h-6zM172 26h6v31h-6z"/>
+    <path d="M20 62h6v32h-6zM28 62h6v32h-6zM36 62h6v32h-6zM44 62h6v32h-6zM52 62h6v32h-6zM60 62h6v32h-6zM68 62h6v32h-6zM76 62h6v32h-6zM84 62h6v32h-6zM92 62h6v32h-6zM100 62h6v32h-6zM108 62h6v32h-6zM116 62h6v32h-6zM124 62h6v32h-6zM132 62h6v32h-6zM140 62h6v32h-6zM148 62h6v32h-6zM156 62h6v32h-6zM164 62h6v32h-6zM172 62h6v32h-6z"/>
+  </g>
+  <g fill="#c49a6c" opacity=".55"><path d="M20 26h1.4v31H20zM36 26h1.4v31H36zM52 26h1.4v31H52zM68 26h1.4v31H68zM84 26h1.4v31H84zM100 26h1.4v31H100zM116 26h1.4v31H116zM132 26h1.4v31H132zM148 26h1.4v31H148zM164 26h1.4v31H164z"/></g>
+  <ellipse cx="100" cy="166" rx="88" ry="8" fill="#000" opacity=".5" filter="url(#soft)"/>
+  <!-- 앞: 경판 한 장 (글자를 뒤집어 새김) -->
+  <g transform="rotate(-3 100 128)">
+    <rect x="30" y="100" width="140" height="58" fill="url(#face)" stroke="#2e1d12" stroke-width="1"/>
+    <rect x="30" y="100" width="140" height="58" fill="#000" filter="url(#grain)" opacity=".3"/>
+    <rect x="38" y="106" width="124" height="46" fill="#d1a476"/>
+    <rect x="38" y="106" width="124" height="46" fill="url(#glyph)" opacity=".85"/>
+    <g stroke="#2e1d12" stroke-width=".6" opacity=".7"><path d="M38 106h124v46H38zM100 106v46M98 106v46"/></g>
+    <rect x="96" y="106" width="8" height="46" fill="#9b6f48"/>
+    <!-- 양 끝 마구리와 장식 쇠 -->
+    <rect x="20" y="96" width="12" height="66" fill="url(#wood)" stroke="#24170e"/>
+    <rect x="168" y="96" width="12" height="66" fill="url(#wood)" stroke="#24170e"/>
+    <g fill="#b58b4a" stroke="#5a3d15" stroke-width=".5"><path d="M20 96h12v5H20zM20 157h12v5H20zM168 96h12v5h-12zM168 157h12v5h-12z"/></g>
+    <path d="M32 101H168" stroke="#d6ad80" stroke-width=".9" opacity=".6"/>
+  </g>
+</svg>

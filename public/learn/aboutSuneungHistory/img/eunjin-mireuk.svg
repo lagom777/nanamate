@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>논산 관촉사 석조 미륵보살 입상 (고려 · 높이 약 18m · 은진미륵)</title>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c9c6bc"/>
+      <stop offset=".45" stop-color="#a5a197"/>
+      <stop offset="1" stop-color="#5f5c55"/>
+    </linearGradient>
+    <radialGradient id="face" cx=".42" cy=".4" r=".7">
+      <stop offset="0" stop-color="#dcd8cd"/>
+      <stop offset="1" stop-color="#8a867b"/>
+    </radialGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+    <filter id="lichen"><feTurbulence type="fractalNoise" baseFrequency=".18" numOctaves="3" seed="14"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .38  0 0 0 0 .25  0 0 0 2 -1.1"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+  </defs>
+  <ellipse cx="100" cy="188" rx="56" ry="6" fill="#000" opacity=".45" filter="url(#soft)"/>
+  <g id="statue" stroke="#3f3d38" stroke-width=".9" stroke-linejoin="round">
+    <!-- 받침 -->
+    <path d="M66 176H134L140 188H60Z" fill="url(#g)"/>
+    <!-- 몸: 기둥처럼 곧은 몸과 옷자락 -->
+    <path d="M78 96C74 120 74 150 76 176H124C126 150 126 120 122 96Z" fill="url(#g)"/>
+    <g fill="none" stroke="#6b6860" stroke-width=".8"><path d="M82 112C90 118 110 118 118 112M80 130C90 136 110 136 120 130M80 148C90 154 110 154 120 148M80 164C90 170 110 170 120 164"/></g>
+    <!-- 가슴 앞의 두 손과 연꽃 가지 -->
+    <path d="M84 104C90 100 98 102 100 108C96 112 88 112 84 104Z" fill="url(#face)"/>
+    <path d="M116 112C110 108 102 110 100 116C104 120 112 120 116 112Z" fill="url(#face)"/>
+    <path d="M100 108V64" stroke="#5c7a4a" stroke-width="1.6"/>
+    <path d="M100 64c-6-2-8-8-4-12c2 3 3 5 4 8c1-3 2-5 4-8c4 4 2 10-4 12z" fill="#c9a0a0" stroke="#6b4a4a" stroke-width=".7"/>
+    <!-- 큰 얼굴 -->
+    <path d="M76 52C76 40 86 34 100 34C114 34 124 40 124 52V84C124 92 114 98 100 98C86 98 76 92 76 84Z" fill="url(#face)"/>
+    <path d="M73 56c-3 6-3 18 1 26M127 56c3 6 3 18-1 26" fill="none" stroke-width="1.8" stroke="#6b6860"/>
+    <g fill="none" stroke="#3f3d38" stroke-width="1.1" stroke-linecap="round">
+      <path d="M84 58c3-2 8-2 11 0M105 58c3-2 8-2 11 0"/>
+      <path d="M85 64c3 1.6 7 1.6 10 0M105 64c3 1.6 7 1.6 10 0"/>
+      <path d="M100 62v14l-4 2M100 78l4-2"/>
+      <path d="M92 86c5 2 11 2 16 0"/>
+    </g>
+    <!-- 높은 원통 관과 네모 보개 두 겹 -->
+    <path d="M84 36V12H116V36Z" fill="url(#g)"/>
+    <path d="M84 20H116M84 28H116" stroke="#6b6860" stroke-width=".8"/>
+    <path d="M70 12H130L124 6H76Z" fill="url(#g)"/>
+    <path d="M76 6H124V2H76Z" fill="url(#g)"/>
+    <path d="M70 12l-3 3M130 12l3 3" stroke-width="1.4"/>
+  </g>
+  <g filter="url(#lichen)" opacity=".7"><use href="#statue"/></g>
+  <!-- 크기 비교용 사람 -->
+  <g fill="#232833"><circle cx="150" cy="176" r="2.4"/><path d="M148 179h4l1 7h-1.4l-.6 5h-1l-.4-4-.4 4h-1l-.6-5H147z"/></g>
+</svg>

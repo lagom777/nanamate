@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>정선 「인왕제색도」 (조선 후기 · 진경산수화 · 비 갠 뒤의 인왕산)</title>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ece0c4"/>
+      <stop offset="1" stop-color="#d4c098"/>
+    </linearGradient>
+    <linearGradient id="rock" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a2722"/>
+      <stop offset=".6" stop-color="#3b3730"/>
+      <stop offset="1" stop-color="#6a6356" stop-opacity=".2"/>
+    </linearGradient>
+    <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ece0c4" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#f3ead6"/>
+      <stop offset="1" stop-color="#ece0c4" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="wash" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1.6"/></filter>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+    <filter id="aged"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="3" seed="41"/><feColorMatrix values="0 0 0 0 .45  0 0 0 0 .34  0 0 0 0 .18  0 0 0 1.5 -.85"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+    <clipPath id="frame"><rect x="18" y="18" width="164" height="164"/></clipPath>
+  </defs>
+  <ellipse cx="100" cy="190" rx="86" ry="6" fill="#000" opacity=".45" filter="url(#soft)"/>
+  <rect x="12" y="12" width="176" height="176" fill="url(#paper)" stroke="#8a7146" stroke-width="1.2"/>
+  <g clip-path="url(#frame)">
+    <rect x="12" y="12" width="176" height="176" fill="#000" filter="url(#aged)" opacity=".25"/>
+    <!-- 뒤 산의 옅은 먹 -->
+    <path d="M18 108C40 90 56 74 70 70C84 66 94 82 110 78C126 74 140 60 160 66C172 70 178 80 182 90V140H18Z" fill="#8e8576" opacity=".45" filter="url(#wash)"/>
+    <!-- 큰 바위산: 짙은 먹을 쓸어내린 붓질 -->
+    <path d="M44 120C46 92 60 62 82 44C96 32 116 30 132 40C150 52 158 76 156 104C154 116 150 124 146 130H52C48 128 44 126 44 120Z" fill="url(#rock)" filter="url(#wash)"/>
+    <g fill="none" stroke="#1a1814" stroke-linecap="round" filter="url(#wash)" opacity=".85">
+      <path d="M70 60C68 80 66 100 68 122" stroke-width="5"/>
+      <path d="M88 44C84 70 84 96 86 124" stroke-width="6"/>
+      <path d="M108 36C104 64 104 92 106 124" stroke-width="6"/>
+      <path d="M126 42C124 66 124 92 126 120" stroke-width="5"/>
+      <path d="M144 62C142 80 142 98 144 116" stroke-width="4"/>
+    </g>
+    <g fill="none" stroke="#f0e6cf" stroke-width="1.2" opacity=".35"><path d="M78 56C76 74 76 90 78 104M98 42C96 62 96 82 98 98M118 42C116 60 116 78 118 94"/></g>
+    <!-- 비 갠 뒤 피어오르는 안개 -->
+    <rect x="18" y="116" width="164" height="26" fill="url(#mist)"/>
+    <path d="M18 132C50 124 80 138 110 128C140 120 160 132 182 126V144H18Z" fill="#f2e9d4" opacity=".85" filter="url(#wash)"/>
+    <!-- 아래 소나무 숲 -->
+    <g fill="#1f2a1c" filter="url(#wash)">
+      <path d="M24 182V156C30 150 34 152 38 158C42 150 48 150 52 158C56 152 62 152 66 160V182Z"/>
+      <path d="M120 182V154C126 146 132 148 136 156C140 148 146 148 150 156C156 150 162 152 166 160C172 154 178 156 182 162V182Z"/>
+      <path d="M64 182V160C70 154 76 156 80 162C86 156 92 158 96 164V182Z" opacity=".8"/>
+    </g>
+    <g stroke="#2a1d14" stroke-width="1.2"><path d="M34 182V164M46 182V160M58 182V164M132 182V160M146 182V158M160 182V162M174 182V166"/></g>
+    <!-- 기와집 한 채 -->
+    <path d="M88 166L100 158L112 166Z" fill="#3a3530"/><rect x="92" y="166" width="16" height="8" fill="#d8c9a6" stroke="#3a3530" stroke-width=".6"/>
+  </g>
+  <!-- 제목과 낙관 -->
+  <g fill="none" stroke="#2a2016" stroke-width=".9" stroke-linecap="round"><path d="M168 26v28M164 30h8M164 36h8M164 42h8M165 48l3 3 3-3"/></g>
+  <rect x="164" y="58" width="9" height="9" fill="#b33a26" opacity=".85"/>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 200 200">
+  <title>물산 장려 운동 (1920년대 · 조만식 · “내 살림 내 것으로”)</title>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f3e7c8"/>
+      <stop offset="1" stop-color="#d7c08f"/>
+    </linearGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.6"/></filter>
+    <filter id="aged"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="3" seed="91"/><feColorMatrix values="0 0 0 0 .45  0 0 0 0 .34  0 0 0 0 .18  0 0 0 1.5 -.85"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+  </defs>
+  <ellipse cx="100" cy="190" rx="80" ry="6" fill="#000" opacity=".45" filter="url(#soft)"/>
+  <g transform="rotate(-2 100 100)">
+    <rect x="28" y="12" width="144" height="174" fill="url(#paper)" stroke="#8a7146" stroke-width="1"/>
+    <rect x="28" y="12" width="144" height="174" fill="#000" filter="url(#aged)" opacity=".25"/>
+    <rect x="36" y="20" width="128" height="158" fill="none" stroke="#a3311f" stroke-width="2"/>
+    <rect x="40" y="24" width="120" height="150" fill="none" stroke="#a3311f" stroke-width=".7"/>
+    <!-- 표어 -->
+    <g font-family="'Noto Sans CJK KR','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif" font-weight="900" text-anchor="middle">
+      <text x="100" y="52" fill="#a3311f" font-size="20">내 살림</text>
+      <text x="100" y="78" fill="#1f160d" font-size="20">내 것으로</text>
+    </g>
+    <!-- 무명베 · 솥 · 고무신: 조선 물산 -->
+    <g transform="translate(100 118)">
+      <circle r="26" fill="#fff8e6" stroke="#1f160d" stroke-width="1.2"/>
+      <!-- 물레 -->
+      <circle cx="-8" cy="-2" r="12" fill="none" stroke="#1f160d" stroke-width="1.6"/>
+      <path d="M-8-14V10M-20-2H4M-16.5-10.5L.5 6.5M.5-10.5L-16.5 6.5" stroke="#1f160d" stroke-width="1"/>
+      <circle cx="-8" cy="-2" r="2" fill="#a3311f"/>
+      <path d="M4-2L16 6" stroke="#1f160d" stroke-width="1.2"/>
+      <path d="M14 4h8v8h-8z" fill="#f2f0ea" stroke="#1f160d" stroke-width=".9"/>
+      <path d="M-20 14h40" stroke="#1f160d" stroke-width="1.6"/>
+    </g>
+    <g font-family="'Noto Sans CJK KR','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif" font-weight="800" text-anchor="middle">
+      <text x="100" y="164" fill="#1f160d" font-size="11">조선 사람 조선 것</text>
+    </g>
+  </g>
+</svg>
