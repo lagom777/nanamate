@@ -33,6 +33,15 @@ const EXTRA_CSS = `
 .pic .why li{counter-increment:w;position:relative;padding-left:20px;font-size:12.5px;line-height:1.45;color:var(--muted)}
 .pic .why li::before{content:counter(w);position:absolute;left:0;top:.18em;width:15px;height:15px;border-radius:50%;border:1px solid var(--c,var(--acc));color:var(--c,var(--acc));font:600 10px/15px var(--fm);text-align:center}
 .pic .why li:last-child{color:var(--text);font-weight:600}
+.whys{border:1px solid color-mix(in srgb,var(--acc) 55%,transparent);border-radius:12px;padding:12px 12px 10px;background:color-mix(in srgb,var(--acc) 6%,transparent);display:flex;flex-direction:column;gap:6px}
+.whys:empty{display:none}
+.whys .wh{font-weight:700;font-size:14px;color:var(--acc);padding-left:2px}
+.whys ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px}
+.whys li{font-size:13.5px;line-height:1.55;padding:6px 8px 6px 10px;border-left:3px solid transparent;border-radius:6px;transition:background .3s,border-color .3s}
+.whys li b{display:block;font-size:12.5px;color:var(--acc);font-weight:700}
+.whys li.on{background:color-mix(in srgb,var(--acc) 15%,transparent);border-left-color:var(--acc)}
+.whys li.lk{padding:0 0 0 14px;font-size:12.5px;color:var(--muted);border:0}
+.whys .ans{margin:2px 0 0;padding:8px 2px 0;border-top:1px dashed var(--line);font-size:13.5px;font-weight:600}
 .embed #b-big{display:grid}
 @media (max-width:900px){
   .player{grid-template-columns:minmax(0,1fr)}.panel,.panel-in{min-width:0}
@@ -81,6 +90,17 @@ const cnt=UNITS.map(()=>0);S.forEach(s=>{if(s.u>=0)s.no=++cnt[s.u];});
 const fxHTML=x=>\`<span class="f word">\${x.f}</span>\`;
 const tl=$('tl');
 const pp=document.createElement('div');pp.className='pics';pp.id='p-pics';$('p-sub').after(pp);
+const pw=document.createElement('div');pw.className='whys';pw.id='p-why';$('p-sub').after(pw);   // 이 장면의 '왜?' — 캔버스가 지금 설명하는 줄을 밝힌다
+const LBL={timeline:e=>e.t+' · '+e.y,cards:e=>e.h,compare:e=>e.cap,map:e=>e.y,chain:e=>e.t,profile:e=>e.n,acro:e=>e.name};
+function whyHTML(s){if(s.type==='quiz'||s.type==='gallery'||s.type==='intro')return '';
+  const li=(i,b,x)=>\`<li data-i="\${i}"><b>\${b}</b>\${x}</li>\`,wb=(h,items,ans)=>\`<div class="wh">\${h}</div><ol>\${items}</ol>\${ans?\`<p class="ans">\${ans}</p>\`:''}\`;
+  if(s.type==='territory')return wb('💡 왜 지도가 바뀌었을까?',s.snaps.map((id,i)=>TERR[id].why?li(i,TERR[id].y+' · '+TERR[id].t,TERR[id].why):'').join(''));
+  const els=s.events||s.cards||s.pairs||s.steps||s.nodes||s.people||s.rows||[];
+  if(els.some(e=>e.why))return wb('💡 왜 그럴까?',els.map((e,i)=>li(i,LBL[s.type](e),e.why||'')).join(''));
+  if(s.type==='chain')return wb('💡 이유의 사슬',s.nodes.map((nd,i)=>(i?\`<li class="lk">↓ \${(s.links||[])[i-1]||'그래서'}</li>\`:'')+li(i,nd.t,nd.n||'')).join(''),s.foot);
+  return '';}
+let lastWhy=null;
+function syncWhy(){if(WHY_NOW===lastWhy)return;lastWhy=WHY_NOW;$('p-why').querySelectorAll('li[data-i]').forEach(li=>li.classList.toggle('on',+li.dataset.i===WHY_NOW));}
 function picCards(s){if(s.type==='quiz')return '';const ids=[],add=x=>{if(x&&x.img&&!ids.includes(x.img))ids.push(x.img);};
   ['items','events','cards','nodes'].forEach(k=>(s[k]||[]).forEach(add));(s.pairs||[]).forEach(p=>{add(p.a);add(p.b);});
   return ids.map(id=>{const m=IMAGES[id]||{},c=UNITS[m.u]?UNITS[m.u].c:'';
@@ -92,7 +112,7 @@ HERE_UNITS.forEach(k=>{const u=UNITS[k];const b=document.createElement('button')
 function render(){
   const s=S[idx];document.documentElement.style.setProperty('--acc',uc(s));
   $('p-eye').innerHTML=s.u<0?'<b>INTRO</b> 한국사 전체 지도':\`<b>\${UNITS[s.u].k}-\${s.no}</b> \${UNITS[s.u].name} · \${s.ch}\`;
-  $('p-title').textContent=s.title;$('p-sub').textContent=s.sub;$('p-pics').innerHTML=picCards(s);
+  $('p-title').textContent=s.title;$('p-sub').textContent=s.sub;$('p-pics').innerHTML=picCards(s);$('p-why').innerHTML=whyHTML(s);lastWhy=null;
   $('p-fx').innerHTML=s.fx.map(x=>\`<div class="fx">\${fxHTML(x)}<span class="n">\${x.n||''}</span></div>\`).join('');
   $('p-pts').innerHTML=s.pts.map(p=>\`<li>\${p}</li>\`).join('');
   const pn=$('panel');pn.classList.remove('enter');void pn.offsetWidth;pn.classList.add('enter');pn.scrollTop=0;
@@ -127,7 +147,7 @@ function frame(now){
   const dt=last==null?0:Math.min(.05,(now-last)/1000);last=now;
   if(playing){t+=dt*speed;if(t>=S[idx].dur){if(loop)t=0;else go(idx+1);}}
   ctx.setTransform(cv.width/W,0,0,cv.height/H,0,0);ctx.clearRect(0,0,W,H);
-  try{S[idx].draw(ctx,t);}catch(err){console.error(err);}
+  WHY_NOW=-1;try{S[idx].draw(ctx,t);}catch(err){console.error(err);}syncWhy();
   const b=tl.children[idx].querySelector('b');b.style.width=(clamp(t/S[idx].dur)*100)+'%';
   requestAnimationFrame(frame);
 }
@@ -199,6 +219,8 @@ h1 span{color:var(--acc);transition:color .4s}
 .yr{font-family:var(--fd);font-size:clamp(34px,4vw,52px);line-height:1;color:var(--acc);transition:color .4s}
 .ttl{font-size:22px;font-weight:700;margin:0}
 .desc{color:var(--muted);margin:0}
+.why{margin:0;padding:10px 12px;border:1px solid var(--acc);border-radius:12px;background:color-mix(in srgb,var(--acc) 8%,transparent);font-weight:600;font-size:14.5px;line-height:1.55}
+.why:empty{display:none}
 .keys{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
 .keys li{position:relative;padding-left:16px;font-size:14px}.keys li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:50%;border:1.5px solid var(--acc)}
 .king{border:1px solid var(--acc);border-radius:14px;padding:12px 14px;background:color-mix(in srgb,var(--acc) 7%,transparent)}
@@ -234,6 +256,7 @@ input[type=range]{flex:1;accent-color:var(--acc);height:28px;min-width:0}
     <div class="info" aria-live="polite">
       <div class="yr" id="yr"></div>
       <h2 class="ttl" id="ttl"></h2>
+      <p class="why" id="why"></p>
       <p class="desc" id="desc"></p>
       <div class="king" id="king" hidden></div>
       <ul class="keys" id="keys"></ul>
@@ -265,7 +288,7 @@ function resize(){const r=cv.getBoundingClientRect(),d=Math.min(2,devicePixelRat
 new ResizeObserver(resize).observe(cv);resize();
 function panel(i){if(i===shown)return;shown=i;const s=SN[i],col=CH[s.u].c;
   document.documentElement.style.setProperty('--acc',col);
-  $('yr').textContent=s.y;$('ttl').textContent=s.t;$('desc').textContent=s.d;
+  $('yr').textContent=s.y;$('ttl').textContent=s.t;$('why').textContent=s.why?'💡 왜? '+s.why:'';$('desc').textContent=s.d;
   const kg=s.king;$('king').hidden=!kg;if(kg)$('king').innerHTML='<h3><span>'+kg.e+'</span>'+kg.n+'<small>'+kg.r+'</small></h3><ul>'+kg.k.map(k=>'<li>'+k+'</li>').join('')+'</ul>';
   $('keys').innerHTML=s.keys.map(k=>'<li>'+k+'</li>').join('');
   $('legend').innerHTML=s.regs.filter(r=>r.legend!==false).map(r=>'<span><i style="background:'+r.c+'"></i>'+r.n+'</span>').join('');
