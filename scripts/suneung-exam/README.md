@@ -47,6 +47,9 @@ cd r2 && for f in */english/listen-*.mp3; do ROOT=$PWD WR="npx --yes wrangler" .
 - 문항 앵커부터 다음 앵커 전까지 읽는 순서로 처음 ①→⑤ 가 다 나오는 줄을 고른다. 그림 속 번호(영어 4·6번 그림 문항, 국어 일부 표·메모)는 글자가 아니라 빠진다(약 2%).
 - **단이 잘리던 버그(2026-11-04 수정)**: 예전 `footer_top` 이 쪽 아래 12% 안의 밑줄까지 쪽 번호 상자로 보고 그 높이에서 잘라, 국·영 58회 중 200여 단에서 마지막 줄(선지 ⑤·지문 끝 줄)이 빠졌다. 상자는 '가운데 아래의 높이 있는 작은 네모'로 고쳤고(kse_crop.py·old_crop.py 도), `choices.py` 가 더 길어진 단을 `r2/<회차>/<과목>/<이름>.<md5 6자>.webp` 로 다시 만들어 meta 를 바꾼다 → `cd r2 && for f in */*/*.webp; do ROOT=$PWD WR="npx --yes wrangler" ../r2up.sh $f; done`. 위쪽은 예전 그림과 픽셀까지 같아서 앵커·펜 표시(키는 점 앞 이름)는 그대로다.
 
+## 문항 그림(수학·과탐 8과목·한국사) 위 ①~⑤ (`choices_items.py`)
+`python3 choices_items.py [과목 …]` → `public/learn/suneung-exam/hot/<과목>.json = {회차: {번호: [그림 폭, 높이, [[x,y,w,h]×5]]}}`(풀어보기가 과목 페이지에서만 불러온다). crop.py·kse_crop.py·old_crop.py 의 crop_one(가장자리 trim 포함)을 다시 계산하고, R2 그림 크기(webp 머리 64바이트)와 맞는 DPI(수학 140·과탐Ⅰ 물·생 180·나머지 150·한국사 160)를 찾는다. 수학 구 교육과정은 이름·첫 쪽에 '가형'인 홀수형. 약 5,860문항 중 2017 9월 한국사(글자 층에 ①~⑤ 없음) 등 몇십 개만 빠진다.
+
 ## 2018~2021학년도(구 교육과정) · R2 업로드
 `old_dl.py`(다운로드·분류) → `old_ans.py`(정답표, 수학은 가형 홀수형) → `old_crop.py`(국어=통합 45문항 단일 구역, 수학=가형 30문항) → `old_script.py` → `finalize_old.py`(과탐은 `BOARDS=boards_all.json YMIN=2018 YMAX=2021 python batch.py …` 결과 `manifest_old_all.json` 사용). 2018 9월 지구과학Ⅰ 17번은 복수정답(①,⑤)이라 `finalize_old.py`에서 배열로 넣는다.
 문항·시험지 이미지는 저장소에 두지 않는다. `r2up.sh <경로>`(wrangler `r2 object put`)로 Cloudflare R2 버킷 `nanamate-suneung`에 올리고, 플레이어의 `imgBase`(`scripts/suneung/lib.mjs` `IMG_BASE`)가 그 공개 주소를 가리킨다. 병렬은 3 이하로(429 제한), 올린 뒤 HTTP 200을 확인하고 로컬 webp를 지운다.

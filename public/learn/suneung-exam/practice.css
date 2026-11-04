@@ -312,44 +312,24 @@
 .pr-cuts li.on b { color: #fff; }
 .pr-grade-src { margin: 4px 0 0; font-size: 11px; line-height: 1.5; color: var(--text-mute, var(--text-dim)); }
 
-/* 사진 크게 보기 창(그림을 누르면) — 늘 어두운 바탕 */
-.pr-paper img, .pr-strip img, .pr-crop img { cursor: zoom-in; }
-.pr-zoom { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(8, 12, 20, .96); color: #e5e7eb; }
-.pr-zoom[open] { display: flex; flex-direction: column; }
-.pr-zoom::backdrop { background: rgba(0, 0, 0, .6); }
-.pr-zoom-bar { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-bottom: 1px solid rgba(255, 255, 255, .12); }
-.pr-zoom-b { min-width: 40px; height: 36px; padding: 0 12px; border: 1px solid rgba(255, 255, 255, .25); border-radius: 8px; background: rgba(255, 255, 255, .08); color: #fff; font: 600 15px var(--font-body, sans-serif); cursor: pointer; }
-#practice-root .pr-zoom-b { background: rgba(255, 255, 255, .08) !important; color: #fff !important; border: 1px solid rgba(255, 255, 255, .25) !important; }
-#practice-root .pr-zoom-b:hover { background: rgba(255, 255, 255, .18) !important; }
-.pr-zoom-b:last-child { margin-left: auto; }
-.pr-zoom-pct { min-width: 46px; text-align: center; font: 13px var(--font-mono, monospace); }
-.pr-zoom-tip { font-size: 12px; color: rgba(255, 255, 255, .6); }
-.pr-zoom-sc { flex: 1 1 auto; overflow: auto; padding: 12px; touch-action: pan-x pan-y; overscroll-behavior: contain; cursor: grab; }
-.pr-zoom-sc.drag { cursor: grabbing; }
-.pr-zoom-node { display: block; max-width: none; height: auto; margin: 0 auto; background: #fff; border-radius: 6px; user-select: none; -webkit-user-select: none; }
-.pr-zoom-node img, img.pr-zoom-node { cursor: inherit; }
-.pr-zoom-node .pr-crop { max-width: none; }
-@media (max-width: 640px) { .pr-zoom-tip { display: none; } }
-
-/* 🔍 크게 보기: 목차를 접고 본문 폭 제한을 풀어 문항 그림을 칸 가득(작은 그림도 키워서) 보인다 */
-body.pr-big-page .layout { grid-template-columns: minmax(0, 1fr); }
-body.pr-big-page .layout > aside { display: none; }
-body.pr-big-page main.wide { max-width: none; padding-left: 24px; padding-right: 24px; }
-.pr-big .pr-img { width: 100%; }
-.pr-big .pr-paper { padding: 6px; }
-.pr-big .pr-strip { max-width: none; padding: 6px; }
-.pr-big .pr-crop { max-width: none; }
+/* 넓은 화면: 목차를 접고 본문을 칸 가득 쓰되 그림은 키우지 않는다(원래 크기까지) — 시험지 단·문항 카드를 옆으로 나란히 놓아 한 줄씩 읽게 */
+body.pr-wide-page .layout { grid-template-columns: minmax(0, 1fr); }
+body.pr-wide-page .layout > aside { display: none; }
+body.pr-wide-page main.wide { max-width: none; padding-left: 24px; padding-right: 24px; }
+.pr-strips { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 600px), 1fr)); gap: 10px 14px; align-items: start; }
+.pr-strips .pr-strip { width: 100%; max-width: 686px; box-sizing: border-box; justify-self: center; }
+.pr-list:not(.paper) { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 600px), 1fr)); align-items: start; }
+.pr-list:not(.paper) > :not(.pr-card) { grid-column: 1 / -1; }
 @media (max-width: 900px) {
-  body.pr-big-page main.wide { padding-left: 8px; padding-right: 8px; }
-  .pr-big .pr-card { padding: 10px 6px 12px; }
-  .pr-big .pr-paper, .pr-big .pr-strip { padding: 2px; }
+  body.pr-wide-page main.wide { padding-left: 8px; padding-right: 8px; }
+  .pr-card { padding: 10px 6px 12px; }
+  .pr-paper, .pr-strip { padding: 2px; }
 }
 
 /* 🎧 영어 듣기 음성 막대: 듣기 단(1~17번)과 한 묶음(.pr-listen) — 그 단을 지나는 동안 위에 붙어 따라온다 */
-.pr-listen { display: flex; flex-direction: column; gap: 10px; }
-.pr-listen-bar { position: sticky; top: 0; z-index: 4; max-width: 760px; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--pr-line); border-radius: 10px; background: var(--pr-card); box-shadow: 0 4px 14px rgba(0,0,0,.12); }
+.pr-listen { grid-column: 1 / -1; display: grid; grid-template-columns: inherit; gap: inherit; align-items: start; }   /* 시험지 단 격자와 같은 칸 */
+.pr-listen-bar { grid-column: 1 / -1; position: sticky; top: 0; z-index: 4; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--pr-line); border-radius: 10px; background: var(--pr-card); box-shadow: 0 4px 14px rgba(0,0,0,.12); }
 @media (min-width: 901px) { .pr-listen-bar { top: calc(var(--pr-bar-h, 108px) + 8px); } }
-.pr-big .pr-listen-bar { max-width: none; }
 .pr-lb-row { display: flex; align-items: center; gap: 8px; }
 .pr-lb-play { flex: none; width: 36px; height: 36px; padding: 0; border-radius: 50%; font-size: 13px; cursor: pointer; }
 #practice-root .pr-lb-play { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
@@ -370,13 +350,11 @@ body.pr-big-page main.wide { max-width: none; padding-left: 24px; padding-right:
 /* ✏️ 펜: 그림마다 SVG 잉크 층(곱하기로 섞어 글자는 그대로 보인다). 펜을 켜면(.pr-pen) 목록의 층이 손가락·마우스를 받는다 */
 .pr-ink-box { position: relative; display: block; }
 .pr-paper .pr-ink-box { width: fit-content; max-width: 100%; margin: 0 auto; }
-.pr-big .pr-paper .pr-ink-box { width: auto; }
 .pr-ink { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .pr-ink:not(:empty) { mix-blend-mode: multiply; }
 .pr-ink path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
 .pr-ink .pr-ink-pen { stroke: #e11d48; }
 .pr-ink .pr-ink-hl { stroke: #fde047; }
-.pr-zoom-node > img { display: block; width: 100%; height: auto; }
 #practice-root.pr-pen .pr-ink.rw { pointer-events: auto; touch-action: none; cursor: crosshair; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 #practice-root.pr-pen.pr-pen-er .pr-ink.rw { cursor: cell; }
 .pr-ink-pal { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 22; display: flex; gap: 4px; padding: 5px; border: 1px solid var(--pr-line); border-radius: 14px; background: var(--pr-card); box-shadow: 0 8px 26px rgba(0,0,0,.28); }
@@ -388,19 +366,11 @@ body.pr-big-page main.wide { max-width: none; padding-left: 24px; padding-right:
   .pr-ink-l { display: none; }
   #practice-root .pr-ink-t { padding: 0 9px; font-size: 15px; }
 }
-/* 확대 창 안 펜 도구 · 휴대폰 ✏️ 단추(위 막대가 스크롤로 사라져도 켤 수 있게) */
-.pr-zoom-ink { display: inline-flex; gap: 4px; margin-left: 4px; }
-.pr-zoom-ink[hidden] { display: none; }
-#practice-root .pr-zoom-t[aria-pressed="true"] { background: var(--accent) !important; border-color: var(--accent) !important; }
+/* 휴대폰 ✏️ 단추(위 막대가 스크롤로 사라져도 켤 수 있게) */
 .pr-ink-fab { display: none; }
 @media (max-width: 900px) {
   #practice-root .pr-ink-fab { display: grid; place-items: center; position: fixed; left: 12px; bottom: 12px; z-index: 21; width: 48px; height: 48px; padding: 0; border-radius: 50%; background: var(--pr-card) !important; border: 1px solid var(--pr-line) !important; font-size: 20px; box-shadow: 0 6px 20px rgba(0,0,0,.25); cursor: pointer; }
   #practice-root.pr-pen .pr-ink-fab { display: none; }
-}
-@media (max-width: 520px) {
-  .pr-zoom-bar { gap: 4px; padding: 6px 8px; }
-  #practice-root .pr-zoom-b { min-width: 34px; padding: 0 7px; font-size: 14px; }
-  .pr-zoom-pct { min-width: 38px; font-size: 12px; }
 }
 .pr-ink-tip { margin: 0 0 4px; padding: 8px 12px; border: 1px dashed var(--accent); border-radius: 10px; background: var(--accent-glow, transparent); font-size: 13px; line-height: 1.6; color: var(--text); }
 /* 시험지 위 ①~⑤: 누르면 그 답을 고른다(답안지와 같은 답). 고른 답은 파란 동그라미, 채점하면 정답 초록·오답 빨강, ○△✕ 표시는 오른쪽 위 */
