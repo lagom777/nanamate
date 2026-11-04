@@ -155,7 +155,7 @@
   }
 
   /* ───────── UI shell ───────── */
-  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, authBox, exportMsg, exportTimer, exporting = false, fitBar = null, dueBtn = null, dueOpt = null;
+  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, authBox, exportMsg, exportTimer, exporting = false, dueBtn = null, dueOpt = null, omrClock = null;
 
   function buildShell() {
     root.innerHTML = '';
@@ -214,11 +214,7 @@
     root.appendChild(inkPal = inkPalette());
     root.appendChild(el('button', { type: 'button', class: 'pr-ink-fab', title: '손가락으로 낙서하려면 ✏️ 낙서를 켜요', 'aria-label': '✏️ 낙서 켜기', text: '✏️', onclick: function () { toggleInk(true); } }));   // 휴대폰: 위 막대가 스크롤로 사라져도 켤 수 있게
     paintInk();
-    /* 위 막대가 로그인 단추 줄로 높아져도 답안지·문항이 그 아래에 붙게 높이를 --pr-bar-h 로 알린다 */
-    fitBar = function () { root.style.setProperty('--pr-bar-h', bar.offsetHeight + 'px'); };
-    if (window.ResizeObserver) new ResizeObserver(fitBar).observe(bar);
     document.body.classList.add('pr-wide-page');   // 목차를 접고 본문 칸 가득 — 그림은 키우지 않고 넓으면 옆으로 나란히(practice.css)
-    fitBar();
     root.appendChild(el('p', { class: 'pr-src', html: '문항 출처: 한국교육과정평가원(KICE) 대학수학능력시험·6월/9월 모의평가 공개 문제지. 문제지에 관한 저작권은 한국교육과정평가원에 있으며, 이 페이지는 학습용으로 문항 이미지를 그대로 보여 주고 정답표로 채점합니다.' + (HAS_PARTS ? ' 파트 분류는 문항 내용 기반 자동 분류라 일부 오차가 있을 수 있습니다.' : '') + (PAPER && SUB === 'english' ? ' 듣기 음성은 평가원이 공개한 듣기평가 음원(저작권 한국교육과정평가원)을 회차마다 한 파일로 이은 것으로 시험지 위 🎧 막대에서 들을 수 있고, 채점 후 듣기평가 대본을 볼 수 있습니다.' : '') + (ABS_CUT[SUB] ? '' : ' 채점 후 등급은 <a href="https://www.ebsi.co.kr/ebs/xip/xipa/retrievePastGrdCutWrongAnswerRate.ebs?tab=1" target="_blank" rel="noopener">EBSi 역대 등급컷</a>(원점수는 EBSi 자체분석, 표준점수는 평가원) 기준 예상입니다.' + (SUB === 'korean' || SUB === 'math' ? ' 2022학년도부터 국어·수학은 선택과목별 원점수 컷이 공개되지 않아, 시험 직후 입시업체가 발표한 가채점 예상컷(위 몇 등급)으로 보여 줍니다.' : '')) }));
   }
 
@@ -405,8 +401,10 @@
       timerEl.textContent = (S.tick ? '⏱ ' : '⏱ 타이머 시작 ') + fmtTime(S.left);
       timerEl.classList.toggle('on', !!S.tick);
     } else timerEl.style.display = 'none';
+    paintClock();
   }
 
+  function paintClock() { if (omrClock) omrClock.textContent = S.tick && !S.graded ? '⏱ ' + fmtTime(S.left) : ''; }
   function renderAll() {
     renderBar();
     list.innerHTML = '';
@@ -2129,7 +2127,6 @@
   }
   function jump(i) {
     if (PAPER && isNarrow()) toggleOmr(false);
-    if (fitBar) fitBar();
     var it = S.items[i], t;
     if (PAPER) t = document.getElementById('pq-' + it.sec + it.n);
     else t = document.getElementById('q-' + i);
@@ -2139,7 +2136,8 @@
   /* ───────── 답안지 ───────── */
   function renderOmr() {
     omr.innerHTML = '';
-    omr.appendChild(el('h3', { text: '답안지' }));
+    omr.appendChild(el('h3', {}, ['답안지', omrClock = el('span', { class: 'pr-omr-clock' })]));   // 위 막대가 스크롤로 사라져도 남은 시간이 보이게
+    paintClock();
     /* 국어·영어: 선지마다 ○△✕ 를 표시하는 모드(답과 따로 저장) */
     if (PAPER) {
       var modeSw = function (on, text) {

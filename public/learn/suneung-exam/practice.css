@@ -1,6 +1,6 @@
 /* 수능 풀어보기 플레이어 — 과목 폴더의 styles.css 변수(--bg-card, --text, --accent …)를 그대로 쓴다 */
 #practice-root { --pr-line: var(--border, rgba(128,140,170,.25)); --pr-card: var(--bg-card, #101828); --pr-el: var(--bg-elevated, #182038); --pr-ok: #16a34a; --pr-bad: #dc2626; }
-.pr-bar { position: sticky; top: 0; z-index: 5; display: flex; flex-direction: column; gap: 10px; padding: 12px 14px; margin: 0 0 18px; background: var(--pr-card); border: 1px solid var(--pr-line); border-radius: 12px; }
+.pr-bar { display: flex; flex-direction: column; gap: 10px; padding: 12px 14px; margin: 0 0 18px; background: var(--pr-card); border: 1px solid var(--pr-line); border-radius: 12px; }
 .pr-bar-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .pr-bar select { font: inherit; font-size: 14px; color: var(--text); background: var(--pr-el); border: 1px solid var(--pr-line); border-radius: 8px; padding: 8px 10px; max-width: 100%; min-width: 0; flex: 1 1 260px; }
 .pr-count { font-size: 13px; color: var(--text-dim); display: flex; align-items: center; gap: 6px; }
@@ -221,12 +221,13 @@
 .pr-memo-saved { font-size: 11.5px; font-weight: 700; color: var(--pr-ok); }
 .pr-memo-in { display: block; width: 100%; min-height: 44px; resize: vertical; box-sizing: border-box; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--pr-line); background: var(--pr-card); color: var(--text); font: 13.5px/1.6 var(--font-body, sans-serif); }
 .pr-memo-in:focus { outline: 2px solid color-mix(in srgb, #d97706 45%, transparent); outline-offset: 1px; }
-/* 위 막대 높이(--pr-bar-h, practice.js 가 잰다)만큼 답안지·문항 이동 위치를 내린다 — 로그인하면 막대가 한 줄 높아진다 */
+/* 위 막대는 붙어 따라오지 않는다(문제 풀 때는 문제만 — 2026-11-04). 답안지·문항 이동 위치는 화면 맨 위 기준 */
 @media (min-width: 901px) {
-  .pr-omr { top: calc(var(--pr-bar-h, 118px) + 12px); max-height: calc(100vh - var(--pr-bar-h, 118px) - 32px); }
-  .pr-card { scroll-margin-top: calc(var(--pr-bar-h, 118px) + 12px); }
-  .pr-anchor { scroll-margin-top: calc(var(--pr-bar-h, 108px) + 12px); }
+  .pr-omr { top: 12px; max-height: calc(100vh - 24px); }
+  .pr-card { scroll-margin-top: 12px; }
+  .pr-anchor { scroll-margin-top: 12px; }
 }
+.pr-omr-clock { margin-left: 8px; font: 600 13px var(--font-mono, monospace); color: var(--accent); }
 /* ───────── 헷갈림 · 틀린 이유 ───────── */
 #practice-root .pr-unsure-btn[aria-pressed="true"] { background: color-mix(in srgb, #d97706 16%, var(--pr-el)) !important; border-color: #d97706 !important; color: #b45309 !important; }
 .pr-card.unsure { box-shadow: 0 0 0 1px color-mix(in srgb, #d97706 45%, transparent); }
@@ -329,7 +330,6 @@ body.pr-wide-page main.wide { max-width: none; padding-left: 24px; padding-right
 /* 🎧 영어 듣기 음성 막대: 듣기 단(1~17번)과 한 묶음(.pr-listen) — 그 단을 지나는 동안 위에 붙어 따라온다 */
 .pr-listen { grid-column: 1 / -1; display: grid; grid-template-columns: inherit; gap: inherit; align-items: start; }   /* 시험지 단 격자와 같은 칸 */
 .pr-listen-bar { grid-column: 1 / -1; position: sticky; top: 0; z-index: 4; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--pr-line); border-radius: 10px; background: var(--pr-card); box-shadow: 0 4px 14px rgba(0,0,0,.12); }
-@media (min-width: 901px) { .pr-listen-bar { top: calc(var(--pr-bar-h, 108px) + 8px); } }
 .pr-lb-row { display: flex; align-items: center; gap: 8px; }
 .pr-lb-play { flex: none; width: 36px; height: 36px; padding: 0; border-radius: 50%; font-size: 13px; cursor: pointer; }
 #practice-root .pr-lb-play { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
@@ -344,8 +344,7 @@ body.pr-wide-page main.wide { max-width: none; padding-left: 24px; padding-right
 #practice-root .pr-lb-q.on { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
 @media (max-width: 520px) { .pr-lb-time { font-size: 11px; } .pr-lb-row { gap: 6px; } }
 /* 답안지 번호로 듣기 문항에 가면 붙어 있는 막대 아래로 */
-.pr-listen .pr-anchor { scroll-margin-top: calc(var(--pr-bar-h, 108px) + 110px); }
-@media (max-width: 900px) { .pr-listen .pr-anchor { scroll-margin-top: 100px; } }
+.pr-listen .pr-anchor { scroll-margin-top: 100px; }
 
 /* ✏️ 펜: 그림마다 SVG 잉크 층(곱하기로 섞어 글자는 그대로 보인다). 펜을 켜면(.pr-pen) 목록의 층이 손가락·마우스를 받는다 */
 .pr-ink-box { position: relative; display: block; }
@@ -366,9 +365,9 @@ body.pr-wide-page main.wide { max-width: none; padding-left: 24px; padding-right
   .pr-ink-l { display: none; }
   #practice-root .pr-ink-t { padding: 0 9px; font-size: 15px; }
 }
-/* 휴대폰 ✏️ 단추(위 막대가 스크롤로 사라져도 켤 수 있게) */
+/* 휴대폰·태블릿 ✏️ 단추(위 막대가 스크롤로 사라져도 손가락 낙서를 켤 수 있게) */
 .pr-ink-fab { display: none; }
-@media (max-width: 900px) {
+@media (max-width: 900px), (pointer: coarse) {
   #practice-root .pr-ink-fab { display: grid; place-items: center; position: fixed; left: 12px; bottom: 12px; z-index: 21; width: 48px; height: 48px; padding: 0; border-radius: 50%; background: var(--pr-card) !important; border: 1px solid var(--pr-line) !important; font-size: 20px; box-shadow: 0 6px 20px rgba(0,0,0,.25); cursor: pointer; }
   #practice-root.pr-pen .pr-ink-fab { display: none; }
 }
