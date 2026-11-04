@@ -41,6 +41,12 @@ cd r2 && for f in */english/listen-*.mp3; do ROOT=$PWD WR="npx --yes wrangler" .
 - 음원 zip 은 안내멘트·문제 01~15·문제 16~17 트랙(폴더·zip 안 zip·macOS `._` 파일이 섞인 회차도 있다)이라 이어 붙이고 트랙 경계를 `q`(문항 시작 초, 16 = 16~17번)로 쓴다. 2018학년도 수능만 한 파일이라 답 쓰는 무음(9초 넘게) 끝을 문항 시작으로 잡는다.
 - 파일 이름에 내용 해시를 붙여 R2 의 1년 immutable 캐시와 충돌하지 않게 했다. 플레이어는 `preload=none` 이라 누를 때만 받는다(R2 는 Range 지원).
 
+## 국어·영어 시험지 위 ①~⑤ 누르기 (`choices.py`)
+문제지 PDF 의 ①~⑤ 글자 자리를 단 이미지 픽셀로 바꿔 `meta.json` 의 `choices = {구역: {번호: [[단, x, y, w, h] ×5]}}` 에 넣는다(플레이어가 그 자리에 투명 단추를 얹는다). 작업 디렉터리에서 `python3 choices.py [회차 …]`(venv 에 pymupdf·pillow, CROP_DPI 140).
+- 글자 자리는 `rawdict` 로 한 글자씩 읽는다 — `page.search_for('①')` 는 국어 PDF 에서 한 줄 아래 자리를 돌려주는 일이 있다.
+- 문항 앵커부터 다음 앵커 전까지 읽는 순서로 처음 ①→⑤ 가 다 나오는 줄을 고른다. 그림 속 번호(영어 4·6번 그림 문항, 국어 일부 표·메모)는 글자가 아니라 빠진다(약 2%).
+- **단이 잘리던 버그(2026-11-04 수정)**: 예전 `footer_top` 이 쪽 아래 12% 안의 밑줄까지 쪽 번호 상자로 보고 그 높이에서 잘라, 국·영 58회 중 200여 단에서 마지막 줄(선지 ⑤·지문 끝 줄)이 빠졌다. 상자는 '가운데 아래의 높이 있는 작은 네모'로 고쳤고(kse_crop.py·old_crop.py 도), `choices.py` 가 더 길어진 단을 `r2/<회차>/<과목>/<이름>.<md5 6자>.webp` 로 다시 만들어 meta 를 바꾼다 → `cd r2 && for f in */*/*.webp; do ROOT=$PWD WR="npx --yes wrangler" ../r2up.sh $f; done`. 위쪽은 예전 그림과 픽셀까지 같아서 앵커·펜 표시(키는 점 앞 이름)는 그대로다.
+
 ## 2018~2021학년도(구 교육과정) · R2 업로드
 `old_dl.py`(다운로드·분류) → `old_ans.py`(정답표, 수학은 가형 홀수형) → `old_crop.py`(국어=통합 45문항 단일 구역, 수학=가형 30문항) → `old_script.py` → `finalize_old.py`(과탐은 `BOARDS=boards_all.json YMIN=2018 YMAX=2021 python batch.py …` 결과 `manifest_old_all.json` 사용). 2018 9월 지구과학Ⅰ 17번은 복수정답(①,⑤)이라 `finalize_old.py`에서 배열로 넣는다.
 문항·시험지 이미지는 저장소에 두지 않는다. `r2up.sh <경로>`(wrangler `r2 object put`)로 Cloudflare R2 버킷 `nanamate-suneung`에 올리고, 플레이어의 `imgBase`(`scripts/suneung/lib.mjs` `IMG_BASE`)가 그 공개 주소를 가리킨다. 병렬은 3 이하로(429 제한), 올린 뒤 HTTP 200을 확인하고 로컬 webp를 지운다.

@@ -842,7 +842,7 @@
     zoomSc.addEventListener('dragstart', function (e) { e.preventDefault(); });
     var drag = null;   // 마우스로 끌어 옮기기(손가락은 브라우저 스크롤 그대로)
     zoomSc.addEventListener('pointerdown', function (e) {
-      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      if (e.pointerType !== 'mouse' || e.button !== 0 || e.target.closest('.pr-hot')) return;   // 번호 단추는 눌러 고르기
       drag = { x: e.clientX, y: e.clientY, l: zoomSc.scrollLeft, t: zoomSc.scrollTop };
       zoomSc.setPointerCapture(e.pointerId);
       zoomSc.classList.add('drag');
@@ -876,10 +876,13 @@
     if (ink) {
       zoomNode = inkWrap(el('img', { src: img.currentSrc || img.src, alt: img.alt }), ink._k, img.naturalWidth, img.naturalHeight, true);
       zoomNode._sc = zoomSc;
+      var hot = img.parentNode._hot;
+      if (hot) hotAdd(zoomNode, hot.sec, hot.list, hot.w, hot.h);   // 확대한 채로 ①~⑤ 고르기
     } else zoomNode = host === img ? el('img', { src: img.currentSrc || img.src, alt: img.alt }) : host.cloneNode(true);
     zoomInk.hidden = !ink;
     zoomNode.classList.add('pr-zoom-node');
     zoomSc.appendChild(zoomNode);
+    paintHot();
     if (!zoomDlg.open) zoomDlg.showModal();
     zoomBase = Math.max(240, zoomSc.clientWidth - 24);
     zoomZ = 1;
@@ -913,7 +916,7 @@
      펜슬(애플 펜슬·S펜)은 언제나 바로 써지고, 마우스는 끌면 써진다(그냥 누르면 확대 창). 손가락은 ✏️ 펜을 켜야 써지고 그동안 두 손가락으로 화면을 움직인다 ───────── */
   var INK = { on: false, tool: 'pen', cur: null }, inkBtn = null, inkPal = null, inkTouch = {}, inkPan = false, inkDrew = 0;
   var INK_TOOL = { pen: { px: 2.4, lo: 2, hi: 9 }, hl: { px: 14, lo: 10, hi: 30 } };   // 굵기: 그릴 때 화면 px 를 그림 좌표로 바꿔 둔다(그림과 같이 커지고 작아진다)
-  function inkKey(exam, file) { return 'sn:' + SUB + ':ink:' + exam + ':' + String(file).replace(/\.\w+$/, ''); }
+  function inkKey(exam, file) { return 'sn:' + SUB + ':ink:' + exam + ':' + String(file).replace(/\..*$/, ''); }   // c10.66ebca.webp(다시 자른 단)도 c10
   function svgEl(tag, attrs) {
     var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
     for (var k in attrs) e.setAttribute(k, attrs[k]);
@@ -1000,7 +1003,7 @@
     if (c || inkPan || (drag && box._sc)) return;
     e.preventDefault();
     e.stopPropagation();   // 확대 창의 끌어 옮기기와 겹치지 않게
-    c = INK.cur = { box: box, svg: box.lastChild, id: e.pointerId, kind: kind, t0: Date.now(), gone: 0, x0: e.clientX, y0: e.clientY, wait: drag };
+    c = INK.cur = { box: box, svg: box.querySelector('.pr-ink'), id: e.pointerId, kind: kind, t0: Date.now(), gone: 0, x0: e.clientX, y0: e.clientY, far: 0, wait: drag, hot: e.target.closest('.pr-hot') };
     if (!drag) inkStart(c, e);
   }
   function inkStart(c, e) {
@@ -1019,8 +1022,9 @@
       if (inkPan) return;
     }
     if (!c || c.id !== e.pointerId) return;
+    c.far = Math.max(c.far, Math.abs(e.clientX - c.x0) + Math.abs(e.clientY - c.y0));
     if (c.wait) {
-      if (Math.abs(e.clientX - c.x0) + Math.abs(e.clientY - c.y0) < 5) return;
+      if (c.far < 5) return;
       inkStart(c, { clientX: c.x0, clientY: c.y0 });
     }
     var evs = (e.getCoalescedEvents && e.getCoalescedEvents()) || [];
@@ -1037,7 +1041,12 @@
     if (inkTouch[e.pointerId]) { delete inkTouch[e.pointerId]; if (!Object.keys(inkTouch).length) inkPan = false; }
     if (!c || c.id !== e.pointerId) return;
     INK.cur = null;
-    if (c.wait) return;   // 끌지 않고 뗀 마우스 → 그대로 클릭(확대 창)
+    if (c.wait) return;   // 끌지 않고 뗀 마우스 → 그대로 클릭(확대 창·번호 고르기)
+    if (c.s && c.hot && c.far < 8 && Date.now() - c.t0 < 450) {   // 번호를 톡 → 점 대신 그 답 고르기(마우스는 원래 클릭이 따라온다)
+      c.svg.removeChild(c.path);
+      if (c.kind !== 'mouse') c.hot.click();
+      return;
+    }
     inkDrew = Date.now();
     if (!c.svg.isConnected) return;   // 그사이 시험지를 다시 그렸으면 그 획은 버린다(새 층이 이미 저장본을 읽었다)
     if (c.s) {
@@ -2083,13 +2092,15 @@
     paperSecs().forEach(function (sec) {
       list.appendChild(el('h3', { class: 'pr-sec', text: SEC_NAME[sec] + ' (' + SEC_LO[sec] + '~' + (SEC_LO[sec] + m.answers[sec].length - 1) + '번)' }));
       var wrap = el('div', { class: 'pr-strips' });
-      var strips = m.strips[sec], anchors = m.anchors[sec];
+      var strips = m.strips[sec], anchors = m.anchors[sec], hots = hotByStrip(m, sec);
       /* 영어 듣기(1~17번) 단은 음성 막대와 한 묶음 — 막대가 그 단을 지나는 동안만 위에 붙어 따라온다 */
       var a18 = SUB === 'english' && sec === 'c' && m.audio && anchors['18'], listen = null;
       if (a18) wrap.appendChild(listen = el('div', { class: 'pr-listen' }, [listenBar(key, m.audio)]));
       strips.forEach(function (s, idx) {
         var img = el('img', { src: (cfg.imgBase || cfg.base) + key + '/' + SUB + '/' + s.file, width: s.w, height: s.h, alt: SEC_NAME[sec] + ' 시험지 ' + (idx + 1) + '단', loading: 'lazy', decoding: 'async' });
-        var box = el('div', { class: 'pr-strip' }, [inkWrap(img, inkKey(key, s.file), s.w, s.h, true)]);
+        var ib = inkWrap(img, inkKey(key, s.file), s.w, s.h, true);
+        hotAdd(ib, sec, hots[idx], s.w, s.h);
+        var box = el('div', { class: 'pr-strip' }, [ib]);
         for (var n in anchors) {
           var a = anchors[n];
           if (a[0] === idx) box.appendChild(el('span', { class: 'pr-anchor', id: 'pq-' + sec + n, style: 'top:' + (a[1] / s.h * 100).toFixed(2) + '%', 'aria-hidden': 'true' }));
@@ -2097,6 +2108,41 @@
         (listen && (idx < a18[0] || (idx === a18[0] && a18[1] > 40)) ? listen : wrap).appendChild(box);
       });
       list.appendChild(wrap);
+    });
+  }
+  /* ───────── 시험지 위 ①~⑤ 누르기: meta.choices(PDF 글자 자리, 단 이미지 픽셀)에 투명 단추를 얹어 답안지와 같은 답을 고른다.
+     ○△✕ 표시 모드면 표시를 바꾸고, 고른 답·정답·오답은 번호에 테두리로 보인다 ───────── */
+  function hotByStrip(m, sec) {
+    var by = {}, ch = (m.choices || {})[sec] || {};
+    for (var n in ch) ch[n].forEach(function (b, k) { (by[b[0]] = by[b[0]] || []).push([+n, k + 1, b[1], b[2], b[3], b[4]]); });
+    return by;
+  }
+  function hotAdd(box, sec, list, w, h) {
+    if (!list) return;
+    box._hot = { sec: sec, list: list, w: w, h: h };
+    list.forEach(function (c) {
+      var n = c[0], k = c[1], p = 5;   // 누르기 쉽게 글자보다 조금 넓게
+      box.appendChild(el('button', { type: 'button', class: 'pr-hot', 'data-q': sec + n, 'data-k': k, 'aria-label': n + '번 ' + k + '번 고르기',
+        style: 'left:' + ((c[2] - p) / w * 100).toFixed(3) + '%;top:' + ((c[3] - p) / h * 100).toFixed(3) + '%;width:' + ((c[4] + 2 * p) / w * 100).toFixed(3) + '%;height:' + ((c[5] + 2 * p) / h * 100).toFixed(3) + '%',
+        onclick: function () { hotPick(sec, n, k); } }));
+    });
+  }
+  function hotPick(sec, n, k) {
+    if (Date.now() - inkDrew < 400) return;   // 번호에서 시작해 끌어 쓴 경우
+    for (var i = 0; i < S.items.length; i++) if (S.items[i].sec === sec && S.items[i].n === n) return S.markMode ? cycleMark(i, k) : choose(i, k);
+  }
+  function paintHot() {
+    var at = {};
+    S.items.forEach(function (it, i) { at[(it.sec || '') + it.n] = i; });
+    Array.prototype.forEach.call(root.querySelectorAll('.pr-hot'), function (b) {
+      var i = at[b.getAttribute('data-q')], it = S.items[i], k = +b.getAttribute('data-k');
+      if (!it) return;
+      var shown = isShown(i), mark = MARK_SYM[markOf(it, k)];
+      b.classList.toggle('sel', S.ans[i] === k);
+      b.classList.toggle('right', !!(shown && it.ans !== 0 && isRight(it, k)));
+      b.classList.toggle('wrong', !!(shown && S.ans[i] === k && !isRight(it, k)));
+      b.setAttribute('aria-pressed', S.ans[i] === k ? 'true' : 'false');
+      if (mark) b.setAttribute('data-mark', mark); else b.removeAttribute('data-mark');
     });
   }
   /* ───────── 영어 듣기 음성: 평가원 듣기평가 음원을 회차마다 한 파일로 이은 것(meta.audio = { file, dur, q: 문항 시작 초 · 16 = 16~17번 }).
@@ -2260,6 +2306,7 @@
       });
       omr.appendChild(h);
     }
+    paintHot();
   }
 
   function setLabel() {

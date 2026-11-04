@@ -403,3 +403,15 @@ body.pr-big-page main.wide { max-width: none; padding-left: 24px; padding-right:
   .pr-zoom-pct { min-width: 38px; font-size: 12px; }
 }
 .pr-ink-tip { margin: 0 0 4px; padding: 8px 12px; border: 1px dashed var(--accent); border-radius: 10px; background: var(--accent-glow, transparent); font-size: 13px; line-height: 1.6; color: var(--text); }
+/* 시험지 위 ①~⑤: 누르면 그 답을 고른다(답안지와 같은 답). 고른 답은 파란 동그라미, 채점하면 정답 초록·오답 빨강, ○△✕ 표시는 오른쪽 위 */
+#practice-root .pr-hot { position: absolute; z-index: 1; margin: 0; padding: 0; border: 0 !important; border-radius: 50%; background: transparent !important; cursor: pointer; }
+#practice-root .pr-hot:hover { box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent); }
+#practice-root .pr-hot:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+#practice-root .pr-hot.sel { background: color-mix(in srgb, var(--accent) 22%, transparent) !important; box-shadow: 0 0 0 3px var(--accent); }
+#practice-root .pr-hot.right { box-shadow: 0 0 0 3px var(--pr-ok); }
+#practice-root .pr-hot.wrong { background: color-mix(in srgb, var(--pr-bad) 18%, transparent) !important; box-shadow: 0 0 0 3px var(--pr-bad); }
+#practice-root.pr-pen .pr-hot { touch-action: none; cursor: crosshair; }
+.pr-hot[data-mark]::after { content: attr(data-mark); position: absolute; top: -9px; right: -9px; font: 800 14px/1 var(--font-body, sans-serif); pointer-events: none; }
+.pr-hot[data-mark="○"]::after { color: #16a34a; }
+.pr-hot[data-mark="△"]::after { color: #d97706; }
+.pr-hot[data-mark="✕"]::after { color: #dc2626; }
