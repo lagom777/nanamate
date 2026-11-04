@@ -183,7 +183,7 @@
 .pr-ai-fold { margin: 6px 0 4px; }
 .pr-ai-fold summary { cursor: pointer; color: var(--accent); font-weight: 600; }
 .pr-hint .pr-ai { margin-top: 0; padding-top: 0; border-top: 0; }
-#practice-root .pr-hint-btn { flex: 0 0 auto; padding: 10px 14px; }
+#practice-root .pr-hint-btn { flex: 0 0 auto; width: auto; padding: 10px 14px; }
 .pr-weak-chip { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 10px 0 2px; padding: 8px 12px; border: 1px dashed var(--pr-line); border-radius: 10px; font-size: 13px; color: var(--text-dim); }
 .pr-weak-chip.on { border-style: solid; border-color: var(--accent); color: var(--text); }
 .pr-weak-grp { padding: 12px 0; border-bottom: 1px solid var(--pr-line); }
@@ -388,3 +388,18 @@ body.pr-big-page main.wide { max-width: none; padding-left: 24px; padding-right:
   .pr-ink-l { display: none; }
   #practice-root .pr-ink-t { padding: 0 9px; font-size: 15px; }
 }
+/* 확대 창 안 펜 도구 · 휴대폰 ✏️ 단추(위 막대가 스크롤로 사라져도 켤 수 있게) */
+.pr-zoom-ink { display: inline-flex; gap: 4px; margin-left: 4px; }
+.pr-zoom-ink[hidden] { display: none; }
+#practice-root .pr-zoom-t[aria-pressed="true"] { background: var(--accent) !important; border-color: var(--accent) !important; }
+.pr-ink-fab { display: none; }
+@media (max-width: 900px) {
+  #practice-root .pr-ink-fab { display: grid; place-items: center; position: fixed; left: 12px; bottom: 12px; z-index: 21; width: 48px; height: 48px; padding: 0; border-radius: 50%; background: var(--pr-card) !important; border: 1px solid var(--pr-line) !important; font-size: 20px; box-shadow: 0 6px 20px rgba(0,0,0,.25); cursor: pointer; }
+  #practice-root.pr-pen .pr-ink-fab { display: none; }
+}
+@media (max-width: 520px) {
+  .pr-zoom-bar { gap: 4px; padding: 6px 8px; }
+  #practice-root .pr-zoom-b { min-width: 34px; padding: 0 7px; font-size: 14px; }
+  .pr-zoom-pct { min-width: 38px; font-size: 12px; }
+}
+.pr-ink-tip { margin: 0 0 4px; padding: 8px 12px; border: 1px dashed var(--accent); border-radius: 10px; background: var(--accent-glow, transparent); font-size: 13px; line-height: 1.6; color: var(--text); }

@@ -195,7 +195,7 @@
     } else row1.push(countWrap);
     timerEl = el('button', { type: 'button', class: 'pr-timer', onclick: toggleTimer, 'aria-label': '타이머 켜기/끄기' });
     bigBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-big-btn', title: '문항 그림을 칸 가득 크게 보여요. 그림을 누르면 화면 가득 따로 확대돼요.', onclick: toggleBig });
-    inkBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-ink-btn', title: '시험지·문항 그림 위에 펜·형광펜으로 표시해요(이 기기에 저장). 켜 두는 동안 그림을 누르면 확대 대신 그려지고, 두 손가락으로 끌면 화면이 움직여요.', onclick: function () { toggleInk(); } });
+    inkBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-ink-btn', title: '시험지·문항 그림에 낙서해요(이 기기에 저장). 펜슬은 그냥 쓰고 마우스는 끌면 써져요. 손가락은 이 단추를 켜야 써지고, 켜 둔 동안 두 손가락으로 화면을 움직여요. 형광펜·지우개도 여기서.', onclick: function () { toggleInk(); } });
     progEl = el('span', { class: 'pr-prog' });
     bar = el('div', { class: 'pr-bar' }, [
       el('div', { class: 'pr-bar-row' }, row1),
@@ -213,11 +213,12 @@
       root.appendChild(fab);
     }
     root.appendChild(inkPal = inkPalette());
+    root.appendChild(el('button', { type: 'button', class: 'pr-ink-fab', title: '손가락으로 낙서하려면 ✏️ 낙서를 켜요', 'aria-label': '✏️ 낙서 켜기', text: '✏️', onclick: function () { toggleInk(true); } }));   // 휴대폰: 위 막대가 스크롤로 사라져도 켤 수 있게
     paintInk();
     /* 위 막대가 로그인 단추 줄로 높아져도 답안지·문항이 그 아래에 붙게 높이를 --pr-bar-h 로 알린다 */
     fitBar = function () { root.style.setProperty('--pr-bar-h', bar.offsetHeight + 'px'); };
     if (window.ResizeObserver) new ResizeObserver(fitBar).observe(bar);
-    S.big = !!store('sn:pr:big');
+    S.big = store('sn:pr:big') !== 0;   // 기본은 칸 가득(넓은 화면에서 시험지가 화면을 채우게), 끄면 0 으로 기억
     applyBig();
     fitBar();
     root.appendChild(el('p', { class: 'pr-src', html: '문항 출처: 한국교육과정평가원(KICE) 대학수학능력시험·6월/9월 모의평가 공개 문제지. 문제지에 관한 저작권은 한국교육과정평가원에 있으며, 이 페이지는 학습용으로 문항 이미지를 그대로 보여 주고 정답표로 채점합니다.' + (HAS_PARTS ? ' 파트 분류는 문항 내용 기반 자동 분류라 일부 오차가 있을 수 있습니다.' : '') + (PAPER && SUB === 'english' ? ' 듣기 음성은 평가원이 공개한 듣기평가 음원(저작권 한국교육과정평가원)을 회차마다 한 파일로 이은 것으로 시험지 위 🎧 막대에서 들을 수 있고, 채점 후 듣기평가 대본을 볼 수 있습니다.' : '') + (ABS_CUT[SUB] ? '' : ' 채점 후 등급은 <a href="https://www.ebsi.co.kr/ebs/xip/xipa/retrievePastGrdCutWrongAnswerRate.ebs?tab=1" target="_blank" rel="noopener">EBSi 역대 등급컷</a>(원점수는 EBSi 자체분석, 표준점수는 평가원) 기준 예상입니다.' + (SUB === 'korean' || SUB === 'math' ? ' 2022학년도부터 국어·수학은 선택과목별 원점수 컷이 공개되지 않아, 시험 직후 입시업체가 발표한 가채점 예상컷(위 몇 등급)으로 보여 줍니다.' : '')) }));
@@ -411,6 +412,8 @@
   function renderAll() {
     renderBar();
     list.innerHTML = '';
+    var tip = inkTip();
+    if (tip) list.appendChild(tip);
     if (PAPER) renderPaper();
     else {
       if (!S.items.length) {
@@ -451,7 +454,7 @@
       causeOf(it) ? el('span', { class: 'pr-cause-tag', text: CAUSE_NAME[causeOf(it)] }) : null
     ]);
     var img = el('img', { class: 'pr-img', src: it.img, alt: it.title + ' ' + it.n + '번 문항', loading: 'lazy', decoding: 'async' });
-    c.appendChild(head); c.appendChild(el('div', { class: 'pr-paper' }, [inkWrap(img, it.ex, 'q' + pad(it.n), 0, 0, true)]));
+    c.appendChild(head); c.appendChild(el('div', { class: 'pr-paper' }, [inkWrap(img, inkKey(it.ex, 'q' + pad(it.n)), 0, 0, true)]));
     if (it.num) {
       var inp = el('input', {
         type: 'text', inputmode: 'numeric', pattern: '[0-9]*', maxlength: '3', class: 'pr-num', 'aria-label': (i + 1) + '번 답 입력',
@@ -785,8 +788,8 @@
   }
 
   /* ───────── 사진 크게 보기: 문항·시험지 그림을 누르면 화면 가득 띄운다(＋ − · Ctrl+휠·트랙패드 · 두 손가락으로 확대, 끌어서 이동).
-     🔍 크게 보기 단추는 목록의 그림 자체를 칸 가득 키운다(목차를 접고 본문 폭을 넓힘) ───────── */
-  var zoomDlg = null, zoomSc = null, zoomNode = null, zoomPct = null, zoomZ = 1, zoomBase = 0;
+     🔍 크게 보기 단추는 목록의 그림 자체를 칸 가득 키운다(목차를 접고 본문 폭을 넓힘 — 기본으로 켜 둔다) ───────── */
+  var zoomDlg = null, zoomSc = null, zoomNode = null, zoomPct = null, zoomInk = null, zoomZ = 1, zoomBase = 0;
   function zoomSet(z, cx, cy) {
     z = Math.max(0.5, Math.min(5, z));
     var r = zoomSc.getBoundingClientRect();
@@ -802,13 +805,22 @@
   }
   function zoomBuild() {
     var btn = function (text, label, f) { return el('button', { type: 'button', class: 'pr-zoom-b', 'aria-label': label, text: text, onclick: f }); };
+    /* 확대 창 안에서도 쓰기: 도구를 누르면 ✏️ 펜이 켜지고, 켜진 도구를 다시 누르면 꺼진다 */
+    var tool = function (t, icon, label) {
+      return el('button', { type: 'button', class: 'pr-zoom-b pr-zoom-t', 'data-zt': t, 'aria-label': label, title: label, text: icon, onclick: function () {
+        if (INK.on && INK.tool === t) toggleInk(false);
+        else { INK.tool = t; toggleInk(true); }
+      } });
+    };
     zoomPct = el('span', { class: 'pr-zoom-pct' });
     zoomSc = el('div', { class: 'pr-zoom-sc' });
+    zoomInk = el('span', { class: 'pr-zoom-ink', role: 'group', 'aria-label': '펜 도구' }, [tool('pen', '✏️', '펜'), tool('hl', '🖍️', '형광펜'), tool('er', '🧽', '지우개')]);
     zoomDlg = el('dialog', { class: 'pr-zoom', 'aria-label': '사진 크게 보기' }, [
       el('div', { class: 'pr-zoom-bar' }, [
         btn('−', '작게', function () { zoomSet(zoomZ / 1.25); }), zoomPct, btn('+', '크게', function () { zoomSet(zoomZ * 1.25); }),
         btn('맞춤', '화면 너비에 맞추기', function () { zoomSet(1); }),
-        el('span', { class: 'pr-zoom-tip', text: '두 손가락·Ctrl+휠로 확대 · 끌어서 이동 · 두 번 누르면 2배' }),
+        zoomInk,
+        el('span', { class: 'pr-zoom-tip', text: '두 손가락·Ctrl+휠로 확대 · 끌어서 이동 · 펜슬은 바로 쓰기' }),
         btn('✕', '닫기', function () { zoomDlg.close(); })
       ]),
       zoomSc
@@ -821,7 +833,7 @@
       else return;
       e.preventDefault();
     });
-    zoomSc.addEventListener('dblclick', function (e) { zoomSet(zoomZ > 1.05 ? 1 : 2, e.clientX, e.clientY); });
+    zoomSc.addEventListener('dblclick', function (e) { if (!INK.on) zoomSet(zoomZ > 1.05 ? 1 : 2, e.clientX, e.clientY); });
     zoomSc.addEventListener('wheel', function (e) {
       if (!e.ctrlKey && !e.metaKey) return;
       e.preventDefault();
@@ -853,21 +865,23 @@
     }, { passive: false });
     zoomSc.addEventListener('touchend', function (e) { if (e.touches.length < 2) pinch = null; });
     root.appendChild(zoomDlg);
+    paintInk();
   }
-  /* host: 그림 하나(img) 또는 국어·영어 문항 조각 묶음(.pr-crops) — 복제해서 띄운다. 펜 표시가 있으면 그 층도 같이(그리기는 안 됨) */
+  /* host: 그림 하나(img) 또는 국어·영어 문항 조각 묶음(.pr-crops) — 복제해서 띄운다.
+     잉크 층이 있는 그림(시험지 단·문항)은 같은 저장본을 쓰는 층을 얹어 확대한 채로 쓸 수 있다. 처음 크기는 창 너비에 맞춘다 */
   function openZoom(host, img) {
     if (!zoomDlg) zoomBuild();
     zoomSc.innerHTML = '';
     var ink = host === img && img.parentNode.classList.contains('pr-ink-box') && img.parentNode.querySelector('.pr-ink');
-    if (ink && ink.firstChild) {
-      var inkc = ink.cloneNode(true);
-      inkc.setAttribute('class', 'pr-ink');
-      zoomNode = el('div', { class: 'pr-ink-box' }, [el('img', { src: img.currentSrc || img.src, alt: img.alt }), inkc]);
+    if (ink) {
+      zoomNode = inkWrap(el('img', { src: img.currentSrc || img.src, alt: img.alt }), ink._k, img.naturalWidth, img.naturalHeight, true);
+      zoomNode._sc = zoomSc;
     } else zoomNode = host === img ? el('img', { src: img.currentSrc || img.src, alt: img.alt }) : host.cloneNode(true);
+    zoomInk.hidden = !ink;
     zoomNode.classList.add('pr-zoom-node');
     zoomSc.appendChild(zoomNode);
     if (!zoomDlg.open) zoomDlg.showModal();
-    zoomBase = Math.max(240, Math.min(zoomSc.clientWidth - 24, (img.naturalWidth || 800) * 2));
+    zoomBase = Math.max(240, zoomSc.clientWidth - 24);
     zoomZ = 1;
     zoomNode.style.width = zoomBase + 'px';
     zoomPct.textContent = '100%';
@@ -875,7 +889,7 @@
   }
   root.addEventListener('click', function (e) {
     var t = e.target;
-    if (!t || t.tagName !== 'IMG' || (zoomDlg && zoomDlg.contains(t))) return;
+    if (!t || t.tagName !== 'IMG' || (zoomDlg && zoomDlg.contains(t)) || Date.now() - inkDrew < 400) return;   // 방금 끌어서 그렸으면 확대 창을 띄우지 않는다
     var host = t.closest('.pr-crops') || (t.closest('.pr-paper, .pr-strip') ? t : null);
     if (host) openZoom(host, t);
   });
@@ -889,15 +903,15 @@
   }
   function toggleBig() {
     S.big = !S.big;
-    store('sn:pr:big', S.big ? 1 : null);
+    store('sn:pr:big', S.big ? 1 : 0);
     applyBig();
     if (fitBar) fitBar();
   }
 
-  /* ───────── ✏️ 펜: 시험지 단·문항 그림 위에 펜·형광펜으로 쓰고 지우개로 획째 지운다.
+  /* ───────── ✏️ 펜(낙서): 시험지 단·문항 그림 위에 펜·형광펜으로 쓰고 지우개로 획째 지운다.
      그림마다 SVG 층 하나(가로 1000 기준 좌표)라 화면 폭·🔍 크게 보기·확대 창에서도 제자리에 남고, 이 기기에 sn:<과목>:ink:<회차>:<그림> 로 저장한다.
-     펜을 켜면 그림을 눌러도 확대 창 대신 그려지고, 손가락 두 개로 끌면 화면이 움직인다 ───────── */
-  var INK = { on: false, tool: 'pen', cur: null }, inkBtn = null, inkPal = null, inkTouch = {}, inkPan = false;
+     펜슬(애플 펜슬·S펜)은 언제나 바로 써지고, 마우스는 끌면 써진다(그냥 누르면 확대 창). 손가락은 ✏️ 펜을 켜야 써지고 그동안 두 손가락으로 화면을 움직인다 ───────── */
+  var INK = { on: false, tool: 'pen', cur: null }, inkBtn = null, inkPal = null, inkTouch = {}, inkPan = false, inkDrew = 0;
   var INK_TOOL = { pen: { px: 2.4, lo: 2, hi: 9 }, hl: { px: 14, lo: 10, hi: 30 } };   // 굵기: 그릴 때 화면 px 를 그림 좌표로 바꿔 둔다(그림과 같이 커지고 작아진다)
   function inkKey(exam, file) { return 'sn:' + SUB + ':ink:' + exam + ':' + String(file).replace(/\.\w+$/, ''); }
   function svgEl(tag, attrs) {
@@ -911,23 +925,33 @@
     return p.length === 2 ? d + 'l0 .1' : d;   // 한 번 콕 → 점
   }
   function inkPath(s) { return svgEl('path', { d: inkD(s.p), class: 'pr-ink-' + s.t, 'stroke-width': s.w }); }
+  function inkLoad(svg) {
+    svg.textContent = '';
+    svg._s = store(svg._k) || [];
+    svg._s.forEach(function (s) { svg.appendChild(inkPath(s)); });
+  }
   /* w·h = 그림 원래 크기(비율). 저장된 획을 그려 둔 층 */
   function inkSvg(key, w, h, cls) {
     var svg = svgEl('svg', { class: cls, viewBox: '0 0 1000 ' + (w && h ? Math.round(1000 * h / w) : 1000), preserveAspectRatio: 'none', 'aria-hidden': 'true' });
     svg._k = key;
-    svg._s = store(key) || [];
-    svg._s.forEach(function (s) { svg.appendChild(inkPath(s)); });
+    inkLoad(svg);
     return svg;
   }
-  /* 그림을 잉크 층과 함께 감싼다. w·h 를 모르면(문항 그림) 불러온 뒤 맞춘다. rw = 그릴 수 있는 층(풀이 목록) */
-  function inkWrap(img, exam, file, w, h, rw) {
-    var svg = inkSvg(inkKey(exam, file), w, h, 'pr-ink' + (rw ? ' rw' : ''));
+  /* 그림을 잉크 층과 함께 감싼다. w·h 를 모르면(문항 그림) 불러온 뒤 맞춘다. rw = 쓸 수 있는 층(풀이 목록·확대 창) — 손가락·펜슬·마우스를 감싼 상자에서 받는다 */
+  function inkWrap(img, key, w, h, rw) {
+    var svg = inkSvg(key, w, h, 'pr-ink' + (rw ? ' rw' : ''));
     if (!w) img.addEventListener('load', function () { svg.setAttribute('viewBox', '0 0 1000 ' + Math.round(1000 * img.naturalHeight / img.naturalWidth)); });
-    if (rw) ['pointerdown', 'pointermove'].forEach(function (ev) { svg.addEventListener(ev, inkEv); });
-    return el('div', { class: 'pr-ink-box' }, [img, svg]);
+    var box = el('div', { class: 'pr-ink-box' }, [img, svg]);
+    if (rw) {
+      box.addEventListener('pointerdown', inkDown);
+      box.addEventListener('pointermove', inkMove);
+      box.addEventListener('touchstart', inkHold, { passive: false });
+      box.addEventListener('touchmove', inkHold, { passive: false });
+    }
+    return box;
   }
   /* 오답 한 장·비슷한 기출처럼 보기만 하는 곳: 표시가 있을 때만 층을 얹는다 */
-  function inkShow(img, exam, file) { return store(inkKey(exam, file)) ? inkWrap(img, exam, file, 0, 0, false) : img; }
+  function inkShow(img, key) { return store(key) ? inkWrap(img, key, 0, 0, false) : img; }
   function inkPt(svg, e) {
     var r = svg.getBoundingClientRect();
     return [Math.round((e.clientX - r.left) * 1000 / r.width), Math.round((e.clientY - r.top) * svg.viewBox.baseVal.height / r.height)];
@@ -950,44 +974,62 @@
       c.gone++;
     }
   }
-  function inkSave(svg) { store(svg._k, svg._s.length ? svg._s : null); }
-  function inkEv(e) {
-    var svg = e.currentTarget, c = INK.cur, tp = inkTouch[e.pointerId];
-    if (e.type === 'pointerdown') {
-      if (!INK.on || (e.pointerType === 'mouse' && e.button !== 0)) return;
-      e.preventDefault();
-      if (e.pointerType === 'touch') {
-        inkTouch[e.pointerId] = { x: e.clientX, y: e.clientY };
-        if (Object.keys(inkTouch).length > 1) {   // 손가락 둘 = 화면 끌기(막 시작한 획은 버린다)
-          if (c && c.touch && Date.now() - c.t0 < 500) { if (c.path) c.svg.removeChild(c.path); INK.cur = c = null; }
-          if (!c) inkPan = true;
-          return;
-        }
+  /* 저장하고, 같은 그림의 다른 층(확대 창 ↔ 시험지, 오답 한 장 조각)도 다시 그린다 */
+  function inkSave(svg) {
+    store(svg._k, svg._s.length ? svg._s : null);
+    Array.prototype.forEach.call(root.querySelectorAll('.pr-ink'), function (o) { if (o !== svg && o._k === svg._k) inkLoad(o); });
+  }
+  /* 펜슬로 쓰는 중이거나 ✏️ 펜이 켜져 있으면 화면이 끌려 가지 않게(iOS 는 펜슬도 터치 스크롤이다) */
+  function inkHold(e) {
+    var t = e.changedTouches[0];
+    if (INK.on || (t && t.touchType === 'stylus') || (INK.cur && INK.cur.kind === 'pen')) e.preventDefault();
+  }
+  function inkDown(e) {
+    var box = e.currentTarget, c = INK.cur, kind = e.pointerType;
+    if (kind === 'mouse' && e.button !== 0) return;
+    if (kind === 'touch') {
+      inkTouch[e.pointerId] = { x: e.clientX, y: e.clientY, sc: box._sc };
+      if (!INK.on) return;   // 손가락은 ✏️ 펜을 켰을 때만 — 아니면 스크롤, 누르면 확대 창
+      if (Object.keys(inkTouch).length > 1) {   // 손가락 둘 = 화면 끌기(막 시작한 획은 버린다)
+        if (c && c.kind === 'touch' && Date.now() - c.t0 < 500) { if (c.path) c.svg.removeChild(c.path); INK.cur = c = null; }
+        if (!c) inkPan = true;
+        return;
       }
-      if (c || inkPan) return;
-      try { svg.setPointerCapture(e.pointerId); } catch (x) {}
-      c = INK.cur = { svg: svg, id: e.pointerId, touch: e.pointerType === 'touch', t0: Date.now(), gone: 0 };
-      if (INK.tool === 'er') return inkErase(c, inkPt(svg, e));
-      var tl = INK_TOOL[INK.tool], w = tl.px * 1000 / svg.getBoundingClientRect().width;
-      c.s = { t: INK.tool, w: Math.round(Math.max(tl.lo, Math.min(tl.hi, w)) * 10) / 10, p: inkPt(svg, e) };
-      svg.appendChild(c.path = inkPath(c.s));
-      return;
     }
-    if (e.type === 'pointermove') {   // 그리는 중 · 두 손가락 끌기
-      if (tp) {
-        if (inkPan) window.scrollBy({ left: (tp.x - e.clientX) / Object.keys(inkTouch).length, top: (tp.y - e.clientY) / Object.keys(inkTouch).length, behavior: 'instant' });   // 페이지의 scroll-behavior: smooth 를 건너뛴다
-        tp.x = e.clientX; tp.y = e.clientY;
-        if (inkPan) return;
-      }
-      if (!c || c.id !== e.pointerId) return;
-      var evs = (e.getCoalescedEvents && e.getCoalescedEvents()) || [];
-      (evs.length ? evs : [e]).forEach(function (ev) {
-        var q = inkPt(c.svg, ev), p = c.s && c.s.p;
-        if (!p) inkErase(c, q);
-        else if (Math.abs(q[0] - p[p.length - 2]) + Math.abs(q[1] - p[p.length - 1]) >= 2) p.push(q[0], q[1]);
-      });
-      if (c.s) c.path.setAttribute('d', inkD(c.s.p));
+    var drag = kind === 'mouse' && !INK.on;   // 펜을 안 켠 마우스: 끌면 쓰고 그냥 누르면 확대 창(확대 창 안에서는 끌기 = 화면 이동)
+    if (c || inkPan || (drag && box._sc)) return;
+    e.preventDefault();
+    e.stopPropagation();   // 확대 창의 끌어 옮기기와 겹치지 않게
+    c = INK.cur = { box: box, svg: box.lastChild, id: e.pointerId, kind: kind, t0: Date.now(), gone: 0, x0: e.clientX, y0: e.clientY, wait: drag };
+    if (!drag) inkStart(c, e);
+  }
+  function inkStart(c, e) {
+    c.wait = false;
+    try { c.box.setPointerCapture(c.id); } catch (x) {}
+    if (INK.tool === 'er') return inkErase(c, inkPt(c.svg, e));
+    var tl = INK_TOOL[INK.tool], w = tl.px * 1000 / c.svg.getBoundingClientRect().width;
+    c.s = { t: INK.tool, w: Math.round(Math.max(tl.lo, Math.min(tl.hi, w)) * 10) / 10, p: inkPt(c.svg, e) };
+    c.svg.appendChild(c.path = inkPath(c.s));
+  }
+  function inkMove(e) {   // 쓰는 중 · 두 손가락 끌기
+    var c = INK.cur, tp = inkTouch[e.pointerId];
+    if (tp) {
+      if (inkPan) (tp.sc || window).scrollBy({ left: (tp.x - e.clientX) / Object.keys(inkTouch).length, top: (tp.y - e.clientY) / Object.keys(inkTouch).length, behavior: 'instant' });   // 페이지의 scroll-behavior: smooth 를 건너뛴다
+      tp.x = e.clientX; tp.y = e.clientY;
+      if (inkPan) return;
     }
+    if (!c || c.id !== e.pointerId) return;
+    if (c.wait) {
+      if (Math.abs(e.clientX - c.x0) + Math.abs(e.clientY - c.y0) < 5) return;
+      inkStart(c, { clientX: c.x0, clientY: c.y0 });
+    }
+    var evs = (e.getCoalescedEvents && e.getCoalescedEvents()) || [];
+    (evs.length ? evs : [e]).forEach(function (ev) {
+      var q = inkPt(c.svg, ev), p = c.s && c.s.p;
+      if (!p) inkErase(c, q);
+      else if (Math.abs(q[0] - p[p.length - 2]) + Math.abs(q[1] - p[p.length - 1]) >= 2) p.push(q[0], q[1]);
+    });
+    if (c.s) c.path.setAttribute('d', inkD(c.s.p));
   }
   /* 손을 떼면 획을 저장한다 — 창에서 받아 그리던 층이 다시 그려져 사라졌어도 손가락 기록이 남지 않는다 */
   function inkUp(e) {
@@ -995,15 +1037,29 @@
     if (inkTouch[e.pointerId]) { delete inkTouch[e.pointerId]; if (!Object.keys(inkTouch).length) inkPan = false; }
     if (!c || c.id !== e.pointerId) return;
     INK.cur = null;
+    if (c.wait) return;   // 끌지 않고 뗀 마우스 → 그대로 클릭(확대 창)
+    inkDrew = Date.now();
     if (!c.svg.isConnected) return;   // 그사이 시험지를 다시 그렸으면 그 획은 버린다(새 층이 이미 저장본을 읽었다)
     if (c.s) {
       if (e.type === 'pointercancel') { c.svg.removeChild(c.path); return; }
       c.svg._s.push(c.s);
     } else if (!c.gone) return;
     inkSave(c.svg);
+    inkTipDone();
   }
   window.addEventListener('pointerup', inkUp);
   window.addEventListener('pointercancel', inkUp);
+  /* 처음 한 번만 쓰는 법 한 줄(써 보거나 '알겠어요'를 누르면 다시 안 나온다) */
+  function inkTip() {
+    if (store('sn:pr:inktip')) return null;
+    return el('p', { class: 'pr-ink-tip' }, ['✏️ 시험지·문항 그림에 바로 낙서할 수 있어요 — 마우스는 끌기, 펜슬은 그냥 쓰기, 손가락은 ✏️ 낙서를 켜고. ', el('button', { type: 'button', class: 'pr-ai-link', text: '알겠어요', onclick: inkTipDone })]);
+  }
+  function inkTipDone() {
+    if (store('sn:pr:inktip')) return;
+    store('sn:pr:inktip', 1);
+    var t = list.querySelector('.pr-ink-tip');
+    if (t) t.parentNode.removeChild(t);
+  }
   function inkClear() {
     var svgs = Array.prototype.slice.call(list.querySelectorAll('.pr-ink.rw')).filter(function (s) { return s._s.length; });
     if (!svgs.length || !confirm('지금 화면의 시험지·문항에 그린 표시를 모두 지울까요?')) return;
@@ -1018,9 +1074,12 @@
     root.classList.toggle('pr-pen-er', INK.tool === 'er');
     inkBtn.setAttribute('aria-pressed', INK.on ? 'true' : 'false');
     inkBtn.classList.toggle('on', INK.on);
-    inkBtn.textContent = INK.on ? '✏️ 펜 켬' : '✏️ 펜';
+    inkBtn.textContent = INK.on ? '✏️ 낙서 켬' : '✏️ 낙서';
     inkPal.hidden = !INK.on;
-    Array.prototype.forEach.call(inkPal.querySelectorAll('[data-t]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-t') === INK.tool ? 'true' : 'false'); });
+    Array.prototype.forEach.call(root.querySelectorAll('[data-t], [data-zt]'), function (b) {
+      var t = b.getAttribute('data-t') || b.getAttribute('data-zt');
+      b.setAttribute('aria-pressed', t === INK.tool && (INK.on || b.hasAttribute('data-t')) ? 'true' : 'false');
+    });
   }
   function inkPalette() {
     var b = function (t, icon, label, f) {
@@ -1899,7 +1958,7 @@
       if (!it) { body.appendChild(el('p', { class: 'pr-ai-note', text: '이 문항의 자료를 찾지 못했습니다.' })); return; }
       var a = row.picked || 0, lost = !a && row.why.wrong;
       /* ① 문제 */
-      body.appendChild(el('div', { class: 'pr-sheet-q' }, [PAPER ? cropOf(info.m, r.exam, r.sec, r.n) : el('div', { class: 'pr-paper' }, [inkShow(el('img', { class: 'pr-img', src: it.img, alt: refLabel(r) + ' 문항', decoding: 'async' }), r.exam, 'q' + pad(r.n))])]));
+      body.appendChild(el('div', { class: 'pr-sheet-q' }, [PAPER ? cropOf(info.m, r.exam, r.sec, r.n) : el('div', { class: 'pr-paper' }, [inkShow(el('img', { class: 'pr-img', src: it.img, alt: refLabel(r) + ' 문항', decoding: 'async' }), inkKey(r.exam, 'q' + pad(r.n)))])]));
       /* ② 내 답 · 정답 */
       var verdict = el('p', { class: 'pr-verdict pr-sheet-ans' }, [
         a ? el('span', { class: isRight(it, a) ? 'pr-sheet-ok' : 'pr-sheet-bad', text: '내 답 ' + ansText(it, a) }) : el('span', { class: 'pr-sheet-mute', text: lost ? '내 답 기록 없음' : '헷갈림 표시' }),
@@ -1983,7 +2042,7 @@
       box.innerHTML = '';
       if (!it) { box.appendChild(el('p', { class: 'pr-mini-h', text: refLabel(q) + ' — 자료 없음' })); return; }
       box.appendChild(el('p', { class: 'pr-mini-h' }, [el('b', { text: refLabel(q) }), ' · ' + it.pts + '점']));
-      box.appendChild(PAPER ? cropOf(info.m, q.exam, q.sec, q.n) : el('div', { class: 'pr-paper' }, [inkShow(el('img', { class: 'pr-img', src: it.img, alt: refLabel(q) + ' 문항', loading: 'lazy', decoding: 'async' }), q.exam, 'q' + pad(q.n))]));
+      box.appendChild(PAPER ? cropOf(info.m, q.exam, q.sec, q.n) : el('div', { class: 'pr-paper' }, [inkShow(el('img', { class: 'pr-img', src: it.img, alt: refLabel(q) + ' 문항', loading: 'lazy', decoding: 'async' }), inkKey(q.exam, 'q' + pad(q.n)))]));
       var res = el('p', { class: 'pr-mini-res', 'aria-live': 'polite' });
       var ctl = el('div', { class: it.num ? 'pr-numrow' : 'pr-choices pr-mini-ch' });
       var done = function (a) {
@@ -2030,7 +2089,7 @@
       if (a18) wrap.appendChild(listen = el('div', { class: 'pr-listen' }, [listenBar(key, m.audio)]));
       strips.forEach(function (s, idx) {
         var img = el('img', { src: (cfg.imgBase || cfg.base) + key + '/' + SUB + '/' + s.file, width: s.w, height: s.h, alt: SEC_NAME[sec] + ' 시험지 ' + (idx + 1) + '단', loading: 'lazy', decoding: 'async' });
-        var box = el('div', { class: 'pr-strip' }, [inkWrap(img, key, s.file, s.w, s.h, true)]);
+        var box = el('div', { class: 'pr-strip' }, [inkWrap(img, inkKey(key, s.file), s.w, s.h, true)]);
         for (var n in anchors) {
           var a = anchors[n];
           if (a[0] === idx) box.appendChild(el('span', { class: 'pr-anchor', id: 'pq-' + sec + n, style: 'top:' + (a[1] / s.h * 100).toFixed(2) + '%', 'aria-hidden': 'true' }));
