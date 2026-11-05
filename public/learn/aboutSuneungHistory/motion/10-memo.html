@@ -146,6 +146,7 @@ footer{color:var(--dim);font-size:12px;font-family:var(--fm)}
 .pic .why li:last-child{color:var(--text);font-weight:600}
 .whys{border:1px solid color-mix(in srgb,var(--acc) 55%,transparent);border-radius:12px;padding:12px 12px 10px;background:color-mix(in srgb,var(--acc) 6%,transparent);display:flex;flex-direction:column;gap:6px}
 .whys:empty{display:none}
+.pts a{color:var(--acc);text-underline-offset:2px}
 .whys .wh{font-weight:700;font-size:14px;color:var(--acc);padding-left:2px}
 .whys ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px}
 .whys li{font-size:13.5px;line-height:1.55;padding:6px 8px 6px 10px;border-left:3px solid transparent;border-radius:6px;transition:background .3s,border-color .3s}
@@ -761,7 +762,7 @@ HERE_UNITS.forEach(k=>{const u=UNITS[k];const b=document.createElement('button')
   b.onclick=()=>go(S.findIndex(s=>s.u===k));$('units').appendChild(b);});
 function render(){
   const s=S[idx];document.documentElement.style.setProperty('--acc',uc(s));
-  $('p-eye').innerHTML=s.u<0?'<b>INTRO</b> 한국사 전체 지도':`<b>${UNITS[s.u].k}-${s.no}</b> ${UNITS[s.u].name} · ${s.ch}`;
+  $('p-eye').innerHTML=s.u<0?(s.type==='intro'?'<b>INTRO</b> 한국사 전체 지도':`<b>TIP</b> ${s.ch}`):`<b>${UNITS[s.u].k}-${s.no}</b> ${UNITS[s.u].name} · ${s.ch}`;
   $('p-title').textContent=s.title;$('p-sub').textContent=s.sub;$('p-pics').innerHTML=picCards(s);$('p-why').innerHTML=whyHTML(s);lastWhy=null;
   $('p-fx').innerHTML=s.fx.map(x=>`<div class="fx">${fxHTML(x)}<span class="n">${x.n||''}</span></div>`).join('');
   $('p-pts').innerHTML=s.pts.map(p=>`<li>${p}</li>`).join('');
