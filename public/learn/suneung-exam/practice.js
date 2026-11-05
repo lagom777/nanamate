@@ -567,7 +567,8 @@
   var aiRuns = {}, sdkP = null, aiDlg = null, SDK = null;
   var AI_SYS = '너는 대한민국 수능 ' + String(cfg.label || SUB).replace(/^수능\s+/, '') + ' 전문 강사다. 학생의 풀이 기록과 기출 문항 이미지를 받아 해설하고 분석한다. ' +
     '공식 정답은 주어진 것을 기준으로 하고, 네 풀이가 공식 정답과 다르면 다시 검토한다. 고등학생이 따라올 수 있게 한국어 존댓말로 쓴다. ' +
-    '형식: 마크다운 제목(#)·표·LaTeX는 쓰지 않는다. 소제목은 한 줄짜리 **굵은 글씨**로, 목록은 "- "로, 수식은 유니코드(x², √3, ≤, ∫, →)로 쓴다.';
+    '형식: 마크다운 제목(#)·표·LaTeX는 쓰지 않는다. 소제목은 한 줄짜리 **굵은 글씨**로, 목록은 "- "로, 수식은 유니코드(x², √3, ≤, ∫, →)로 쓴다. ' +
+    '읽기 쉽게: 문단은 2~3문장으로 짧게 끊고, 꼭 기억할 낱말과 결론은 **굵게** 쓴다. 해설·분석은 맨 앞에 "핵심: …" 한 줄로 결론부터 쓴다(힌트만 줄 때는 쓰지 않는다).';
 
   function loadSdk() {
     if (!sdkP) {
@@ -576,16 +577,50 @@
     }
     return sdkP;
   }
-  function textOf(html) { var d = document.createElement('div'); d.innerHTML = String(html || '').replace(/<\/(p|li)>|<br\s*\/?>/gi, '$&\n'); return (d.textContent || '').trim(); }
+  function textOf(html) { var d = document.createElement('div'); d.innerHTML = String(html || '').replace(/<\/(p|li|h5|div|tr)>|<br\s*\/?>/gi, '$&\n'); return (d.textContent || '').trim(); }
+  /* AI 답변을 읽기 쉽게: 소제목(한 줄 **굵게**·#)은 제목 줄로, '핵심:'·'정답:' 같은 이름표는 꼬리표로, 핵심·결론 문단은 강조 상자로,
+   * 굵은 낱말은 형광펜, ①~⑤는 색, "- "·"1." 목록, 표(| … |)까지. 먼저 모두 이스케이프하고 정해 둔 태그만 만든다 */
+  var AI_KEYL = /^(정답|핵심|결론|요약|한 ?줄 정리|포인트|주의|함정|실수|원인|다음 할 일|팁)$/;
   function mdLite(src) {
-    var esc = String(src).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return esc.split(/\n{2,}/).map(function (blk) {
-      var lines = blk.split('\n').filter(function (l) { return l.trim(); });
-      if (!lines.length) return '';
-      var inl = function (s) { return s.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>'); };
-      if (lines.every(function (l) { return /^\s*[-•]\s/.test(l); })) return '<ul>' + lines.map(function (l) { return '<li>' + inl(l.replace(/^\s*[-•]\s/, '')) + '</li>'; }).join('') + '</ul>';
-      return '<p>' + lines.map(function (l) { return /^\s*[-•]\s/.test(l) ? '· ' + inl(l.replace(/^\s*[-•]\s/, '')) : inl(l); }).join('<br>') + '</p>';
-    }).join('');
+    var esc = String(src || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    function inl(x) {
+      return x.replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/(^|[^*\w])\*(?!\s)([^*]+?)\*(?!\*)/g, '$1<em>$2</em>')
+        .replace(/[①②③④⑤]/g, '<span class="pr-ai-n">$&</span>');
+    }
+    function lab(x) {   // "정답: …", "**핵심**: …" → 이름표와 내용
+      var m = /^\*\*([^*]{1,16}?)\*\*\s*[:：]\s*(.*)$/.exec(x) || /^([가-힣A-Za-z][가-힣A-Za-z0-9·]*(?: [가-힣A-Za-z0-9·]+){0,2})\s*[:：]\s+(.+)$/.exec(x);
+      return m ? { k: m[1], v: m[2] } : null;
+    }
+    function line(x) { var l = lab(x); return l ? '<b class="pr-ai-lab">' + inl(l.k) + '</b> ' + inl(l.v) : inl(x); }
+    var out = [], cur = null;
+    function flush() {
+      if (!cur) return;
+      if (cur.t === 'ul') out.push('<ul>' + cur.items.map(function (x) { return '<li>' + line(x) + '</li>'; }).join('') + '</ul>');
+      else if (cur.t === 'ol') out.push('<ol' + (cur.start > 1 ? ' start="' + cur.start + '"' : '') + '>' + cur.items.map(function (x) { return '<li>' + line(x) + '</li>'; }).join('') + '</ol>');
+      else if (cur.t === 'q') out.push('<div class="pr-ai-call">' + cur.lines.map(line).join('<br>') + '</div>');
+      else if (cur.t === 'tb') out.push('<div class="pr-ai-tbl"><table>' + cur.rows.map(function (r, i) { return '<tr>' + r.map(function (c) { return i ? '<td>' + inl(c) + '</td>' : '<th>' + inl(c) + '</th>'; }).join('') + '</tr>'; }).join('') + '</table></div>');
+      else {
+        var l0 = lab(cur.lines[0]), html = cur.lines.map(line).join('<br>');
+        out.push(l0 && AI_KEYL.test(l0.k) ? '<div class="pr-ai-call">' + html + '</div>' : '<p>' + html + '</p>');
+      }
+      cur = null;
+    }
+    function open(t, extra) { if (!cur || cur.t !== t) { flush(); cur = Object.assign({ t: t }, extra); } }
+    esc.split('\n').forEach(function (raw) {
+      var t = raw.trim(), m;
+      if (!t) { flush(); return; }
+      if ((m = /^#{1,4}\s+(.+)$/.exec(t)) || (m = /^\*\*([^*]+)\*\*\s*[:：]?$/.exec(t))) { flush(); out.push('<h5 class="pr-ai-h">' + inl(m[1]) + '</h5>'); return; }
+      if (/^(-{3,}|\*{3,}|_{3,})$/.test(t)) { flush(); out.push('<hr>'); return; }
+      if (/^\|.*\|$/.test(t)) { open('tb', { rows: [] }); if (!/^\|[\s:|-]+\|$/.test(t)) cur.rows.push(t.slice(1, -1).split('|').map(function (c) { return c.trim(); })); return; }
+      if ((m = /^[-•*]\s+(.+)$/.exec(t))) { open('ul', { items: [] }); cur.items.push(m[1]); return; }
+      if ((m = /^(\d{1,2})[.)]\s+(.+)$/.exec(t))) { open('ol', { items: [], start: +m[1] }); cur.items.push(m[2]); return; }
+      if ((m = /^&gt;\s?(.*)$/.exec(t))) { open('q', { lines: [] }); cur.lines.push(m[1]); return; }
+      open('p', { lines: [] }); cur.lines.push(t);
+    });
+    flush();
+    return out.join('');
   }
   /* 실행 상태: turns = [{q?, a}] (첫 턴은 해설, 이후는 추가 질문), msgs = API로 보낸 대화(어시스턴트 응답은 content 그대로 덧붙임) */
   function aiRun(id) {
@@ -1057,6 +1092,7 @@
     var list = weakList().filter(function (w) { return w.g === g; });
     openAi('📌 ' + g + ' 약점 고치기', 'w:' + SUB + ':' + g + ':' + list.length, function () {
       return Promise.resolve({
+        persist: true,
         chips: [['확인 문제 더', '같은 약점을 점검하는 확인 문제를 3개 더 내 주세요. 문제를 먼저 쓰고 "===정답===" 줄 아래에 답과 짧은 풀이를 쓰세요.'], ['외울 것만', '이 약점들에서 시험 직전에 외울 것만 5줄로 정리해 주세요.']],
         content: [{ type: 'text', text: '내 ' + exportSubject() + ' "' + g + '" 파트 약점 노트입니다. 문제를 풀면서 몰랐거나 헷갈린 것들입니다.\n\n' + weakText(list) +
           '\n\n이 약점들을 고치게 도와주세요. 순서:\n**왜 헷갈리는지** 공통 원인\n**개념 다시 잡기** 각 개념을 짧고 정확하게\n**확인 문제** 3개 (문제를 다 쓴 뒤 "===정답===" 한 줄을 쓰고 그 아래에 답과 풀이)' }]
@@ -1174,7 +1210,7 @@
       (mine ? '\n\n(줄 끝의 헷갈림 표시·내가 고른 원인·메모는 내가 직접 남긴 기록입니다. 분석할 때 이것과 비교해 짚어 주세요.)' : '') +
       (imgs.length ? '\n\n앞의 이미지는 틀린 문항(일부)입니다.' : '') +
       '\n\n이 세트에서 드러난 나의 문제점과 강점을 분석해 주세요. 순서:\n**총평** 2~3줄\n**문제점** 약한 단원·유형과 반복된 실수 유형(개념 부족 / 조건·자료 해석 / 계산 / 시간 관리 / 찍기 의심), 근거 문항 번호를 들어서\n**강점** 안정적으로 맞힌 단원·유형, 근거 문항 번호\n**시간 사용** 풀이 시간 기록이 있으면 서두름·막힘 판단\n**다음에 할 것** 우선순위 3가지' });
-    return Promise.resolve({ content: content, chips: chips });
+    return Promise.resolve({ content: content, chips: chips, persist: true });   // 시험 분석도 이 기기에 남긴다(같은 답이면 다시 보기)
   }
   function askExam() {
     var what = (S.set.indexOf('exam:') === 0 ? '이번 시험' : '이번 세트') + '(' + setLabel() + ') — 문항별 내 답·정답·풀이 시간·메모와 틀린 문항 그림 몇 장을 보내 문제점·강점 분석을 받아요.';
@@ -1184,7 +1220,7 @@
   function askSubject() {
     openAi(exportSubject() + ' 과목 AI 분석', 's:' + SUB, function () {
       return prepareExport(Date.now()).catch(function () { throw new Error('계정의 풀이 기록을 불러오지 못했습니다. 로그인 상태를 확인하고 다시 시도해 주세요.'); }).then(function (res) {
-        return { content: [{ type: 'text', text: res.md + '\n\n---\n위 자료는 이 과목에서 내가 지금까지 푼 기록 전체입니다. 이 과목에서의 나의 문제점과 강점을 분석해 주세요. 순서:\n**한눈 요약** 3줄\n**문제점** 단원별·실수 유형별 약점, 근거 날짜·문항을 인용해서\n**강점** 안정적인 단원·유형\n**변화** 시간에 따라 나아진 것·나빠진 것\n**시간 사용 습관** 서두름·막힘·찍기 의심\n**2주 학습 계획** 우선순위대로' + (weakList().length ? '\n\n참고로 AI 해설에서 모은 내 파트별 약점 노트입니다:\n' + weakText(weakList()) : '') }], chips: [['이번 주 할 일만', '이번 주 7일 동안 하루 단위로 무엇을 풀고 복습할지만 짧게 정리해 주세요.'], ['가장 큰 약점 하나', '가장 먼저 고쳐야 할 약점 하나만 골라, 왜 그런지와 고치는 연습법을 알려 주세요.']] };
+        return { content: [{ type: 'text', text: res.md + '\n\n---\n위 자료는 이 과목에서 내가 지금까지 푼 기록 전체입니다. 이 과목에서의 나의 문제점과 강점을 분석해 주세요. 순서:\n**한눈 요약** 3줄\n**문제점** 단원별·실수 유형별 약점, 근거 날짜·문항을 인용해서\n**강점** 안정적인 단원·유형\n**변화** 시간에 따라 나아진 것·나빠진 것\n**시간 사용 습관** 서두름·막힘·찍기 의심\n**2주 학습 계획** 우선순위대로' + (weakList().length ? '\n\n참고로 AI 해설에서 모은 내 파트별 약점 노트입니다:\n' + weakText(weakList()) : '') }], persist: true, chips: [['이번 주 할 일만', '이번 주 7일 동안 하루 단위로 무엇을 풀고 복습할지만 짧게 정리해 주세요.'], ['가장 큰 약점 하나', '가장 먼저 고쳐야 할 약점 하나만 골라, 왜 그런지와 고치는 연습법을 알려 주세요.']] };
       });
     }, exportSubject() + ' — 계정에 쌓인 이 과목 풀이 기록 전체' + (weakList().length ? '와 약점 노트' : '') + '를 보내 과목 전체 분석(2주 공부 계획까지)을 받아요.');
   }

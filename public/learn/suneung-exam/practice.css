@@ -163,7 +163,24 @@
 #practice-root .pr-ai-cta { color: var(--accent) !important; border-color: var(--accent) !important; }
 .pr-ai { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--pr-line); font-size: 14px; line-height: 1.75; }
 .pr-ai-body b { color: var(--accent); }
-.pr-ai-body ul { margin: 2px 0 10px; }
+/* AI 답변 읽기 쉽게: 제목 줄 · 형광펜 굵은 글씨 · 이름표 · 핵심 상자 · ①~⑤ 색 · 목록 · 표 */
+.pr-ai-body { font-size: 15px; line-height: 1.8; }
+.pr-ai-body p { margin: 0 0 10px; }
+.pr-ai-body .pr-ai-h { margin: 16px 0 6px; padding-left: 10px; border-left: 3px solid var(--accent); font-size: 15.5px; font-weight: 800; line-height: 1.5; color: var(--text); }
+.pr-ai-body .pr-ai-h:first-child { margin-top: 2px; }
+.pr-ai-body strong { font-weight: 700; color: var(--text); background: linear-gradient(transparent 58%, color-mix(in srgb, var(--accent) 28%, transparent) 0); padding: 0 1px; }
+.pr-ai-body .pr-ai-lab { display: inline-block; margin-right: 4px; padding: 0 7px; border-radius: 6px; font-size: 12.5px; font-weight: 700; line-height: 1.75; color: var(--accent); background: color-mix(in srgb, var(--accent) 13%, transparent); }
+.pr-ai-body .pr-ai-call { margin: 6px 0 12px; padding: 9px 12px; border-left: 3px solid var(--accent); border-radius: 8px; background: color-mix(in srgb, var(--accent) 8%, transparent); }
+.pr-ai-body .pr-ai-n { font-weight: 800; color: var(--accent); }
+.pr-ai-body ul, .pr-ai-body ol { margin: 2px 0 12px; padding-left: 22px; }
+.pr-ai-body li { margin: 3px 0; }
+.pr-ai-body li::marker { color: var(--accent); font-weight: 700; }
+.pr-ai-body code { font: 13px var(--font-mono, monospace); padding: 0 4px; border-radius: 4px; background: var(--pr-el); }
+.pr-ai-body hr { border: 0; border-top: 1px dashed var(--pr-line); margin: 12px 0; }
+.pr-ai-tbl { overflow-x: auto; margin: 6px 0 12px; }
+.pr-ai-tbl table { border-collapse: collapse; font-size: 14px; }
+.pr-ai-tbl th, .pr-ai-tbl td { border: 1px solid var(--pr-line); padding: 5px 9px; text-align: left; vertical-align: top; }
+.pr-ai-tbl th { background: var(--pr-el); font-weight: 700; }
 .pr-ai-wait { margin: 6px 0 0; color: var(--text-dim); font-size: 13px; animation: pr-ai-blink 1.4s ease-in-out infinite; }
 @keyframes pr-ai-blink { 50% { opacity: .45; } }
 .pr-ai-err { margin: 0 0 8px; color: var(--pr-bad); }
