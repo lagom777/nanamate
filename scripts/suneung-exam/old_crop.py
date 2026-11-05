@@ -141,8 +141,9 @@ def header_bottom(page):
     return (max(ys) + 4) if ys else H * 0.13
 
 def footer_top(page):
+    # 쪽 번호 상자: 가운데 아래의 높이 있는 작은 네모(밑줄까지 상자로 보면 단 마지막 줄이 잘린다 — choices.py 가 2026-11 에 다시 자름)
     W, H = page.rect.width, page.rect.height
-    ys = [d['rect'].y0 for d in page.get_drawings() if d['rect'].y0 > H * 0.88 and d['rect'].width < W * 0.1 and d['rect'].height < 40]
+    ys = [d['rect'].y0 for d in page.get_drawings() if d['rect'].y0 > H * 0.88 and 20 < d['rect'].width < W * 0.1 and 10 < d['rect'].height < 40 and abs(d['rect'].x0 + d['rect'].x1 - W) < W * 0.12]
     return (min(ys) - 4) if ys else H * 0.955
 
 def make_strips(pages, prefix):

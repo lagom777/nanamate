@@ -155,7 +155,7 @@
   }
 
   /* ───────── UI shell ───────── */
-  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, authBox, exportMsg, exportTimer, exporting = false, fitBar = null, dueBtn = null, dueOpt = null, bigBtn = null;
+  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, authBox, exportMsg, exportTimer, exporting = false, dueBtn = null, dueOpt = null, omrClock = null;
 
   function buildShell() {
     root.innerHTML = '';
@@ -194,11 +194,11 @@
       row1.push(selSel);
     } else row1.push(countWrap);
     timerEl = el('button', { type: 'button', class: 'pr-timer', onclick: toggleTimer, 'aria-label': '타이머 켜기/끄기' });
-    bigBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-big-btn', title: '문항 그림을 칸 가득 크게 보여요. 그림을 누르면 화면 가득 따로 확대돼요.', onclick: toggleBig });
+    inkBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-ink-btn', title: '시험지·문항 그림에 낙서해요(이 기기에 저장). 펜슬은 그냥 쓰고 마우스는 끌면 써져요. 손가락은 이 단추를 켜야 써지고, 켜 둔 동안 두 손가락으로 화면을 움직여요. 형광펜·지우개도 여기서.', onclick: function () { toggleInk(); } });
     progEl = el('span', { class: 'pr-prog' });
     bar = el('div', { class: 'pr-bar' }, [
       el('div', { class: 'pr-bar-row' }, row1),
-      el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), timerEl, bigBtn, weakBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn', onclick: function () { openWeak(); } }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-nb-btn', text: '📋 오답 노트', onclick: openNotebook }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn', text: '📊 오답 원인', onclick: openCauses }), dueBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-due-btn', text: '📅 오늘 다시 풀', onclick: openDue }), progEl])
+      el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), timerEl, inkBtn, weakBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn', onclick: function () { openWeak(); } }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-nb-btn', text: '📋 오답 노트', onclick: openNotebook }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn', text: '📊 오답 원인', onclick: openCauses }), dueBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-due-btn', text: '📅 오늘 다시 풀', onclick: openDue }), progEl])
     ]);
     authBox = el('div', { class: 'pr-auth' });
     bar.appendChild(authBox);
@@ -211,13 +211,11 @@
       fab = el('button', { type: 'button', class: 'pr-fab', text: '📝 답안지', onclick: function () { toggleOmr(); } });
       root.appendChild(fab);
     }
-    /* 위 막대가 로그인 단추 줄로 높아져도 답안지·문항이 그 아래에 붙게 높이를 --pr-bar-h 로 알린다 */
-    fitBar = function () { root.style.setProperty('--pr-bar-h', bar.offsetHeight + 'px'); };
-    if (window.ResizeObserver) new ResizeObserver(fitBar).observe(bar);
-    S.big = !!store('sn:pr:big');
-    applyBig();
-    fitBar();
-    root.appendChild(el('p', { class: 'pr-src', html: '문항 출처: 한국교육과정평가원(KICE) 대학수학능력시험·6월/9월 모의평가 공개 문제지. 문제지에 관한 저작권은 한국교육과정평가원에 있으며, 이 페이지는 학습용으로 문항 이미지를 그대로 보여 주고 정답표로 채점합니다.' + (HAS_PARTS ? ' 파트 분류는 문항 내용 기반 자동 분류라 일부 오차가 있을 수 있습니다.' : '') + (PAPER && SUB === 'english' ? ' 듣기 음성은 제공하지 않으며, 채점 후 듣기평가 대본을 볼 수 있습니다.' : '') + (ABS_CUT[SUB] ? '' : ' 채점 후 등급은 <a href="https://www.ebsi.co.kr/ebs/xip/xipa/retrievePastGrdCutWrongAnswerRate.ebs?tab=1" target="_blank" rel="noopener">EBSi 역대 등급컷</a>(원점수는 EBSi 자체분석, 표준점수는 평가원) 기준 예상입니다.') }));
+    root.appendChild(inkPal = inkPalette());
+    root.appendChild(el('button', { type: 'button', class: 'pr-ink-fab', title: '손가락으로 낙서하려면 ✏️ 낙서를 켜요', 'aria-label': '✏️ 낙서 켜기', text: '✏️', onclick: function () { toggleInk(true); } }));   // 휴대폰: 위 막대가 스크롤로 사라져도 켤 수 있게
+    paintInk();
+    document.body.classList.add('pr-wide-page');   // 목차를 접고 본문 칸 가득 — 그림은 키우지 않고 넓으면 옆으로 나란히(practice.css)
+    root.appendChild(el('p', { class: 'pr-src', html: '문항 출처: 한국교육과정평가원(KICE) 대학수학능력시험·6월/9월 모의평가 공개 문제지. 문제지에 관한 저작권은 한국교육과정평가원에 있으며, 이 페이지는 학습용으로 문항 이미지를 그대로 보여 주고 정답표로 채점합니다.' + (HAS_PARTS ? ' 파트 분류는 문항 내용 기반 자동 분류라 일부 오차가 있을 수 있습니다.' : '') + (PAPER && SUB === 'english' ? ' 듣기 음성은 평가원이 공개한 듣기평가 음원(저작권 한국교육과정평가원)을 회차마다 한 파일로 이은 것으로 시험지 위 🎧 막대에서 들을 수 있고, 채점 후 듣기평가 대본을 볼 수 있습니다.' : '') + (ABS_CUT[SUB] ? '' : ' 채점 후 등급은 <a href="https://www.ebsi.co.kr/ebs/xip/xipa/retrievePastGrdCutWrongAnswerRate.ebs?tab=1" target="_blank" rel="noopener">EBSi 역대 등급컷</a>(원점수는 EBSi 자체분석, 표준점수는 평가원) 기준 예상입니다.' + (SUB === 'korean' || SUB === 'math' ? ' 2022학년도부터 국어·수학은 선택과목별 원점수 컷이 공개되지 않아, 시험 직후 입시업체가 발표한 가채점 예상컷(위 몇 등급)으로 보여 줍니다.' : '')) }));
   }
 
   function setMode(m) {
@@ -403,11 +401,15 @@
       timerEl.textContent = (S.tick ? '⏱ ' : '⏱ 타이머 시작 ') + fmtTime(S.left);
       timerEl.classList.toggle('on', !!S.tick);
     } else timerEl.style.display = 'none';
+    paintClock();
   }
 
+  function paintClock() { if (omrClock) omrClock.textContent = S.tick && !S.graded ? '⏱ ' + fmtTime(S.left) : ''; }
   function renderAll() {
     renderBar();
     list.innerHTML = '';
+    var tip = inkTip();
+    if (tip) list.appendChild(tip);
     if (PAPER) renderPaper();
     else {
       if (!S.items.length) {
@@ -448,7 +450,9 @@
       causeOf(it) ? el('span', { class: 'pr-cause-tag', text: CAUSE_NAME[causeOf(it)] }) : null
     ]);
     var img = el('img', { class: 'pr-img', src: it.img, alt: it.title + ' ' + it.n + '번 문항', loading: 'lazy', decoding: 'async' });
-    c.appendChild(head); c.appendChild(el('div', { class: 'pr-paper' }, [img]));
+    var ib = inkWrap(img, inkKey(it.ex, 'q' + pad(it.n)), 0, 0, true), hz = hotOfItem(it);
+    if (hz) hotAdd(ib, hz.list, hz.w, hz.h);   // 문항 그림의 ①~⑤ 를 눌러도 고른다
+    c.appendChild(head); c.appendChild(el('div', { class: 'pr-paper' }, [ib]));
     if (it.num) {
       var inp = el('input', {
         type: 'text', inputmode: 'numeric', pattern: '[0-9]*', maxlength: '3', class: 'pr-num', 'aria-label': (i + 1) + '번 답 입력',
@@ -669,7 +673,7 @@
       var cost = r.usage.input_tokens * 4e-6 + r.usage.output_tokens * 20e-6;
       foot.appendChild(el('span', { text: '🤖 Claude Opus 5.5 · 입력 ' + r.usage.input_tokens + ' · 출력 ' + r.usage.output_tokens + ' 토큰 (약 $' + cost.toFixed(3) + ') · 누적 약 $' + spent().usd.toFixed(2) }));
     }
-    if (r.build) foot.appendChild(el('button', { type: 'button', class: 'pr-ai-link', text: '처음부터 다시 생성', onclick: function () { store('sn:ai:' + r.id, null); aiStart(r.id, r.build, true); } }));
+    if (r.build) foot.appendChild(el('button', { type: 'button', class: 'pr-ai-link', text: '처음부터 다시 생성', onclick: function () { if (aiStart(r.id, r.build, true).status === 'run') store('sn:ai:' + r.id, null); } }));
     var rm = el('button', { type: 'button', class: 'pr-ai-link', text: keyMode() === 'acct' ? '계정의 API 키 지우기' : 'API 키 지우기', onclick: function () {
       if (keyMode() === 'acct') SnAuth.saveAiKey(null).then(function () { acctKey = { has: false }; rm.textContent = '계정에서 키를 지웠습니다'; }).catch(function () { rm.textContent = '지우지 못했어요'; });
       else { store(AI_KEY, null); rm.textContent = '키를 지웠습니다'; }
@@ -727,12 +731,23 @@
       aiPaintAll(r.id);
     });
   }
-  /* build(): Promise<{ content:[...], persist?, chips? }> — 같은 id는 다시 요청하지 않는다(force면 새로) */
-  function aiStart(id, build, force) {
+  /* AI 를 새로 부르기 전 확인창: 무엇을 보내 무엇을 받는지(저장된 결과를 다시 볼 때는 묻지 않는다) */
+  function aiOk(what) {
+    return confirm('🤖 AI 분석을 시작할까요?\n\n' + what + '\n\n' + (keyMode() === 'acct' ? '계정에 넣어 둔' : '이 브라우저에 넣어 둔') + ' 내 Anthropic API 키로 요청해요(요금이 조금 들어요).');
+  }
+  /* 채점 전에 맞고 틀림이 드러나지 않게 같은 말로 쓴다 */
+  function aiWhatItem(label, it, a, opens) {
+    return label + ' — 문항 그림, 내 답(' + (a > 0 ? ansText(it, a) : '없음') + ')·정답·해설' + (noteFilled(it) ? '·내 메모' : '') + '을 보내 해설과 내 답 분석을 받아요.' + (opens ? ' 이 문항 정답도 열려요.' : '');
+  }
+  /* build(): Promise<{ content:[...], persist?, chips? }> — 같은 id는 다시 요청하지 않는다(force면 새로). what: 확인창에 보일 '무엇을 분석하나'.
+     확인창에서 취소하면 상태를 그대로 두고 돌아간다(처음이면 'idle' — 부른 쪽은 아무것도 띄우지 않는다) */
+  function aiStart(id, build, force, what) {
     var r = aiRun(id);
     r.build = build;
+    if (what) r.what = what;
     if (r.status === 'run' || (r.status === 'done' && !force)) return r;
     if (!keyMode()) { r.status = 'nokey'; aiPaintAll(id); return r; }
+    if (!aiOk(r.what || '같은 자료로 AI 해설을 처음부터 다시 받아요.')) return r;
     r.turns = [{ a: '' }]; r.usage = null; r.msgs = null; r.retry = null;
     r.status = 'run'; aiPaintAll(id);
     build().then(function (req) {
@@ -776,114 +791,194 @@
     aiDlg.appendChild(node);
     if (!aiDlg.open) aiDlg.showModal();
   }
-  function openAi(title, id, build) {
-    aiStart(id, build);
+  function openAi(title, id, build, what) {
+    if (aiStart(id, build, false, what).status === 'idle') return;   // 확인창에서 취소
     showDlg(title, aiBox(id));
   }
 
-  /* ───────── 사진 크게 보기: 문항·시험지 그림을 누르면 화면 가득 띄운다(＋ − · Ctrl+휠·트랙패드 · 두 손가락으로 확대, 끌어서 이동).
-     🔍 크게 보기 단추는 목록의 그림 자체를 칸 가득 키운다(목차를 접고 본문 폭을 넓힘) ───────── */
-  var zoomDlg = null, zoomSc = null, zoomNode = null, zoomPct = null, zoomZ = 1, zoomBase = 0;
-  function zoomSet(z, cx, cy) {
-    z = Math.max(0.5, Math.min(5, z));
-    var r = zoomSc.getBoundingClientRect();
-    if (cx == null) { cx = r.left + r.width / 2; cy = r.top + r.height / 2; }
-    var a = zoomNode.getBoundingClientRect();
-    var fx = a.width ? (cx - a.left) / a.width : 0.5, fy = a.height ? (cy - a.top) / a.height : 0.5;   // 커서·손가락 아래 지점이 제자리에 남게
-    zoomZ = z;
-    zoomNode.style.width = Math.round(zoomBase * z) + 'px';
-    var b = zoomNode.getBoundingClientRect();
-    zoomSc.scrollLeft += b.left + fx * b.width - cx;
-    zoomSc.scrollTop += b.top + fy * b.height - cy;
-    zoomPct.textContent = Math.round(z * 100) + '%';
+  /* ───────── ✏️ 펜(낙서): 시험지 단·문항 그림 위에 펜·형광펜으로 쓰고 지우개로 획째 지운다.
+     그림마다 SVG 층 하나(가로 1000 기준 좌표)라 화면 폭이 바뀌어도 제자리에 남고, 이 기기에 sn:<과목>:ink:<회차>:<그림> 로 저장한다.
+     펜슬(애플 펜슬·S펜)은 언제나 바로 써지고, 마우스는 끌면 써진다(그냥 누르면 ①~⑤ 고르기만). 손가락은 ✏️ 펜을 켜야 써지고 그동안 두 손가락으로 화면을 움직인다 ───────── */
+  var INK = { on: false, tool: 'pen', cur: null }, inkBtn = null, inkPal = null, inkTouch = {}, inkPan = false, inkDrew = 0;
+  var INK_TOOL = { pen: { px: 2.4, lo: 2, hi: 9 }, hl: { px: 14, lo: 10, hi: 30 } };   // 굵기: 그릴 때 화면 px 를 그림 좌표로 바꿔 둔다(그림과 같이 커지고 작아진다)
+  function inkKey(exam, file) { return 'sn:' + SUB + ':ink:' + exam + ':' + String(file).replace(/\..*$/, ''); }   // c10.66ebca.webp(다시 자른 단)도 c10
+  function svgEl(tag, attrs) {
+    var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
   }
-  function zoomBuild() {
-    var btn = function (text, label, f) { return el('button', { type: 'button', class: 'pr-zoom-b', 'aria-label': label, text: text, onclick: f }); };
-    zoomPct = el('span', { class: 'pr-zoom-pct' });
-    zoomSc = el('div', { class: 'pr-zoom-sc' });
-    zoomDlg = el('dialog', { class: 'pr-zoom', 'aria-label': '사진 크게 보기' }, [
-      el('div', { class: 'pr-zoom-bar' }, [
-        btn('−', '작게', function () { zoomSet(zoomZ / 1.25); }), zoomPct, btn('+', '크게', function () { zoomSet(zoomZ * 1.25); }),
-        btn('맞춤', '화면 너비에 맞추기', function () { zoomSet(1); }),
-        el('span', { class: 'pr-zoom-tip', text: '두 손가락·Ctrl+휠로 확대 · 끌어서 이동 · 두 번 누르면 2배' }),
-        btn('✕', '닫기', function () { zoomDlg.close(); })
-      ]),
-      zoomSc
+  function inkD(p) {
+    var d = 'M' + p[0] + ' ' + p[1];
+    for (var i = 2; i < p.length; i += 2) d += 'L' + p[i] + ' ' + p[i + 1];
+    return p.length === 2 ? d + 'l0 .1' : d;   // 한 번 콕 → 점
+  }
+  function inkPath(s) { return svgEl('path', { d: inkD(s.p), class: 'pr-ink-' + s.t, 'stroke-width': s.w }); }
+  function inkLoad(svg) {
+    svg.textContent = '';
+    svg._s = store(svg._k) || [];
+    svg._s.forEach(function (s) { svg.appendChild(inkPath(s)); });
+  }
+  /* w·h = 그림 원래 크기(비율). 저장된 획을 그려 둔 층 */
+  function inkSvg(key, w, h, cls) {
+    var svg = svgEl('svg', { class: cls, viewBox: '0 0 1000 ' + (w && h ? Math.round(1000 * h / w) : 1000), preserveAspectRatio: 'none', 'aria-hidden': 'true' });
+    svg._k = key;
+    inkLoad(svg);
+    return svg;
+  }
+  /* 그림을 잉크 층과 함께 감싼다. w·h 를 모르면(문항 그림) 불러온 뒤 맞춘다. rw = 쓸 수 있는 층(풀이 목록) — 손가락·펜슬·마우스를 감싼 상자에서 받는다 */
+  function inkWrap(img, key, w, h, rw) {
+    var svg = inkSvg(key, w, h, 'pr-ink' + (rw ? ' rw' : ''));
+    if (!w) img.addEventListener('load', function () { svg.setAttribute('viewBox', '0 0 1000 ' + Math.round(1000 * img.naturalHeight / img.naturalWidth)); });
+    var box = el('div', { class: 'pr-ink-box' }, [img, svg]);
+    if (rw) {
+      box.addEventListener('pointerdown', inkDown);
+      box.addEventListener('pointermove', inkMove);
+      box.addEventListener('touchstart', inkHold, { passive: false });
+      box.addEventListener('touchmove', inkHold, { passive: false });
+    }
+    return box;
+  }
+  /* 오답 한 장·비슷한 기출처럼 보기만 하는 곳: 표시가 있을 때만 층을 얹는다 */
+  function inkShow(img, key) { return store(key) ? inkWrap(img, key, 0, 0, false) : img; }
+  function inkPt(svg, e) {
+    var r = svg.getBoundingClientRect();
+    return [Math.round((e.clientX - r.left) * 1000 / r.width), Math.round((e.clientY - r.top) * svg.viewBox.baseVal.height / r.height)];
+  }
+  function inkHit(s, q, r) {
+    var p = s.p;
+    for (var i = 0; i < p.length; i += 2) {
+      var x = p[i], y = p[i + 1], dx = i + 2 < p.length ? p[i + 2] - x : 0, dy = i + 2 < p.length ? p[i + 3] - y : 0, L = dx * dx + dy * dy;
+      var t = L ? Math.max(0, Math.min(1, ((q[0] - x) * dx + (q[1] - y) * dy) / L)) : 0;
+      if (Math.hypot(q[0] - x - t * dx, q[1] - y - t * dy) <= r) return true;
+    }
+    return false;
+  }
+  function inkErase(c, q) {
+    var svg = c.svg, r = 12 * 1000 / svg.getBoundingClientRect().width;   // 지우개 반경 12px
+    for (var i = svg._s.length - 1; i >= 0; i--) {
+      if (!inkHit(svg._s[i], q, r + svg._s[i].w / 2)) continue;
+      svg._s.splice(i, 1);
+      svg.removeChild(svg.childNodes[i]);
+      c.gone++;
+    }
+  }
+  /* 저장하고, 같은 그림의 다른 층(오답 한 장 조각 등)도 다시 그린다 */
+  function inkSave(svg) {
+    store(svg._k, svg._s.length ? svg._s : null);
+    Array.prototype.forEach.call(root.querySelectorAll('.pr-ink'), function (o) { if (o !== svg && o._k === svg._k) inkLoad(o); });
+  }
+  /* 펜슬로 쓰는 중이거나 ✏️ 펜이 켜져 있으면 화면이 끌려 가지 않게(iOS 는 펜슬도 터치 스크롤이다) */
+  function inkHold(e) {
+    var t = e.changedTouches[0];
+    if (INK.on || (t && t.touchType === 'stylus') || (INK.cur && INK.cur.kind === 'pen')) e.preventDefault();
+  }
+  function inkDown(e) {
+    var box = e.currentTarget, c = INK.cur, kind = e.pointerType;
+    if (kind === 'mouse' && e.button !== 0) return;
+    if (kind === 'touch') {
+      inkTouch[e.pointerId] = { x: e.clientX, y: e.clientY };
+      if (!INK.on) return;   // 손가락은 ✏️ 낙서를 켰을 때만 — 아니면 스크롤
+      if (Object.keys(inkTouch).length > 1) {   // 손가락 둘 = 화면 끌기(막 시작한 획은 버린다)
+        if (c && c.kind === 'touch' && Date.now() - c.t0 < 500) { if (c.path) c.svg.removeChild(c.path); INK.cur = c = null; }
+        if (!c) inkPan = true;
+        return;
+      }
+    }
+    var drag = kind === 'mouse' && !INK.on;   // 펜을 안 켠 마우스: 끌어야 쓴다(그냥 누르면 ①~⑤ 고르기)
+    if (c || inkPan) return;
+    e.preventDefault();
+    c = INK.cur = { box: box, svg: box.querySelector('.pr-ink'), id: e.pointerId, kind: kind, t0: Date.now(), gone: 0, x0: e.clientX, y0: e.clientY, far: 0, wait: drag, hot: e.target.closest('.pr-hot') };
+    if (!drag) inkStart(c, e);
+  }
+  function inkStart(c, e) {
+    c.wait = false;
+    try { c.box.setPointerCapture(c.id); } catch (x) {}
+    if (INK.tool === 'er') return inkErase(c, inkPt(c.svg, e));
+    var tl = INK_TOOL[INK.tool], w = tl.px * 1000 / c.svg.getBoundingClientRect().width;
+    c.s = { t: INK.tool, w: Math.round(Math.max(tl.lo, Math.min(tl.hi, w)) * 10) / 10, p: inkPt(c.svg, e) };
+    c.svg.appendChild(c.path = inkPath(c.s));
+  }
+  function inkMove(e) {   // 쓰는 중 · 두 손가락 끌기
+    var c = INK.cur, tp = inkTouch[e.pointerId];
+    if (tp) {
+      if (inkPan) window.scrollBy({ left: (tp.x - e.clientX) / Object.keys(inkTouch).length, top: (tp.y - e.clientY) / Object.keys(inkTouch).length, behavior: 'instant' });   // 페이지의 scroll-behavior: smooth 를 건너뛴다
+      tp.x = e.clientX; tp.y = e.clientY;
+      if (inkPan) return;
+    }
+    if (!c || c.id !== e.pointerId) return;
+    c.far = Math.max(c.far, Math.abs(e.clientX - c.x0) + Math.abs(e.clientY - c.y0));
+    if (c.wait) {
+      if (c.far < 5) return;
+      inkStart(c, { clientX: c.x0, clientY: c.y0 });
+    }
+    var evs = (e.getCoalescedEvents && e.getCoalescedEvents()) || [];
+    (evs.length ? evs : [e]).forEach(function (ev) {
+      var q = inkPt(c.svg, ev), p = c.s && c.s.p;
+      if (!p) inkErase(c, q);
+      else if (Math.abs(q[0] - p[p.length - 2]) + Math.abs(q[1] - p[p.length - 1]) >= 2) p.push(q[0], q[1]);
+    });
+    if (c.s) c.path.setAttribute('d', inkD(c.s.p));
+  }
+  /* 손을 떼면 획을 저장한다 — 창에서 받아 그리던 층이 다시 그려져 사라졌어도 손가락 기록이 남지 않는다 */
+  function inkUp(e) {
+    var c = INK.cur;
+    if (inkTouch[e.pointerId]) { delete inkTouch[e.pointerId]; if (!Object.keys(inkTouch).length) inkPan = false; }
+    if (!c || c.id !== e.pointerId) return;
+    INK.cur = null;
+    if (c.wait) return;   // 끌지 않고 뗀 마우스 → 그대로 클릭(번호 고르기)
+    if (c.s && c.hot && c.far < 8 && Date.now() - c.t0 < 450) {   // 번호를 톡 → 점 대신 그 답 고르기(마우스는 원래 클릭이 따라온다)
+      c.svg.removeChild(c.path);
+      if (c.kind !== 'mouse') c.hot.click();
+      return;
+    }
+    inkDrew = Date.now();
+    if (!c.svg.isConnected) return;   // 그사이 시험지를 다시 그렸으면 그 획은 버린다(새 층이 이미 저장본을 읽었다)
+    if (c.s) {
+      if (e.type === 'pointercancel') { c.svg.removeChild(c.path); return; }
+      c.svg._s.push(c.s);
+    } else if (!c.gone) return;
+    inkSave(c.svg);
+    inkTipDone();
+  }
+  window.addEventListener('pointerup', inkUp);
+  window.addEventListener('pointercancel', inkUp);
+  /* 처음 한 번만 쓰는 법 한 줄(써 보거나 '알겠어요'를 누르면 다시 안 나온다) */
+  function inkTip() {
+    if (store('sn:pr:inktip')) return null;
+    return el('p', { class: 'pr-ink-tip' }, ['✏️ 시험지·문항 그림에 바로 낙서할 수 있어요 — 마우스는 끌기, 펜슬은 그냥 쓰기, 손가락은 ✏️ 낙서를 켜고. ', el('button', { type: 'button', class: 'pr-ai-link', text: '알겠어요', onclick: inkTipDone })]);
+  }
+  function inkTipDone() {
+    if (store('sn:pr:inktip')) return;
+    store('sn:pr:inktip', 1);
+    var t = list.querySelector('.pr-ink-tip');
+    if (t) t.parentNode.removeChild(t);
+  }
+  function inkClear() {
+    var svgs = Array.prototype.slice.call(list.querySelectorAll('.pr-ink.rw')).filter(function (s) { return s._s.length; });
+    if (!svgs.length || !confirm('지금 화면의 시험지·문항에 그린 표시를 모두 지울까요?')) return;
+    svgs.forEach(function (s) { s._s = []; s.textContent = ''; inkSave(s); });
+  }
+  function toggleInk(on) {
+    INK.on = typeof on === 'boolean' ? on : !INK.on;
+    paintInk();
+  }
+  function paintInk() {
+    root.classList.toggle('pr-pen', INK.on);
+    root.classList.toggle('pr-pen-er', INK.tool === 'er');
+    inkBtn.setAttribute('aria-pressed', INK.on ? 'true' : 'false');
+    inkBtn.classList.toggle('on', INK.on);
+    inkBtn.textContent = INK.on ? '✏️ 낙서 켬' : '✏️ 낙서';
+    inkPal.hidden = !INK.on;
+    Array.prototype.forEach.call(inkPal.querySelectorAll('[data-t]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-t') === INK.tool ? 'true' : 'false'); });
+  }
+  function inkPalette() {
+    var b = function (t, icon, label, f) {
+      return el('button', { type: 'button', class: 'pr-ink-t', 'data-t': t || false, title: label, 'aria-label': label, onclick: f || function () { INK.tool = t; paintInk(); } },
+        [el('span', { text: icon, 'aria-hidden': 'true' }), el('span', { class: 'pr-ink-l', text: label })]);
+    };
+    return el('div', { class: 'pr-ink-pal', role: 'toolbar', 'aria-label': '펜 도구', hidden: 'hidden' }, [
+      b('pen', '✏️', '펜'), b('hl', '🖍️', '형광펜'), b('er', '🧽', '지우개'), b('', '🗑', '모두 지우기', inkClear), b('', '✕', '끄기', function () { toggleInk(false); })
     ]);
-    zoomDlg.addEventListener('close', function () { zoomSc.innerHTML = ''; zoomNode = null; });
-    zoomDlg.addEventListener('keydown', function (e) {
-      if (e.key === '+' || e.key === '=') zoomSet(zoomZ * 1.25);
-      else if (e.key === '-') zoomSet(zoomZ / 1.25);
-      else if (e.key === '0') zoomSet(1);
-      else return;
-      e.preventDefault();
-    });
-    zoomSc.addEventListener('dblclick', function (e) { zoomSet(zoomZ > 1.05 ? 1 : 2, e.clientX, e.clientY); });
-    zoomSc.addEventListener('wheel', function (e) {
-      if (!e.ctrlKey && !e.metaKey) return;
-      e.preventDefault();
-      zoomSet(zoomZ * Math.exp(-Math.max(-50, Math.min(50, e.deltaY)) * 0.01), e.clientX, e.clientY);
-    }, { passive: false });
-    zoomSc.addEventListener('dragstart', function (e) { e.preventDefault(); });
-    var drag = null;   // 마우스로 끌어 옮기기(손가락은 브라우저 스크롤 그대로)
-    zoomSc.addEventListener('pointerdown', function (e) {
-      if (e.pointerType !== 'mouse' || e.button !== 0) return;
-      drag = { x: e.clientX, y: e.clientY, l: zoomSc.scrollLeft, t: zoomSc.scrollTop };
-      zoomSc.setPointerCapture(e.pointerId);
-      zoomSc.classList.add('drag');
-    });
-    zoomSc.addEventListener('pointermove', function (e) {
-      if (!drag) return;
-      zoomSc.scrollLeft = drag.l - (e.clientX - drag.x);
-      zoomSc.scrollTop = drag.t - (e.clientY - drag.y);
-    });
-    var endDrag = function () { drag = null; zoomSc.classList.remove('drag'); };
-    zoomSc.addEventListener('pointerup', endDrag);
-    zoomSc.addEventListener('pointercancel', endDrag);
-    var pinch = null;   // 두 손가락 벌리기·오므리기
-    var dist = function (t) { return Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY); };
-    zoomSc.addEventListener('touchstart', function (e) { if (e.touches.length === 2) pinch = { d: dist(e.touches), z: zoomZ }; }, { passive: true });
-    zoomSc.addEventListener('touchmove', function (e) {
-      if (!pinch || e.touches.length !== 2) return;
-      e.preventDefault();
-      zoomSet(pinch.z * dist(e.touches) / pinch.d, (e.touches[0].clientX + e.touches[1].clientX) / 2, (e.touches[0].clientY + e.touches[1].clientY) / 2);
-    }, { passive: false });
-    zoomSc.addEventListener('touchend', function (e) { if (e.touches.length < 2) pinch = null; });
-    root.appendChild(zoomDlg);
-  }
-  /* host: 그림 하나(img) 또는 국어·영어 문항 조각 묶음(.pr-crops) — 복제해서 띄운다 */
-  function openZoom(host, img) {
-    if (!zoomDlg) zoomBuild();
-    zoomSc.innerHTML = '';
-    zoomNode = host === img ? el('img', { src: img.currentSrc || img.src, alt: img.alt }) : host.cloneNode(true);
-    zoomNode.classList.add('pr-zoom-node');
-    zoomSc.appendChild(zoomNode);
-    if (!zoomDlg.open) zoomDlg.showModal();
-    zoomBase = Math.max(240, Math.min(zoomSc.clientWidth - 24, (img.naturalWidth || 800) * 2));
-    zoomZ = 1;
-    zoomNode.style.width = zoomBase + 'px';
-    zoomPct.textContent = '100%';
-    zoomSc.scrollLeft = 0; zoomSc.scrollTop = 0;
-  }
-  root.addEventListener('click', function (e) {
-    var t = e.target;
-    if (!t || t.tagName !== 'IMG' || (zoomDlg && zoomDlg.contains(t))) return;
-    var host = t.closest('.pr-crops') || (t.closest('.pr-paper, .pr-strip') ? t : null);
-    if (host) openZoom(host, t);
-  });
-  function applyBig() {
-    root.classList.toggle('pr-big', !!S.big);
-    document.body.classList.toggle('pr-big-page', !!S.big);
-    if (!bigBtn) return;
-    bigBtn.setAttribute('aria-pressed', S.big ? 'true' : 'false');
-    bigBtn.classList.toggle('on', !!S.big);
-    bigBtn.textContent = S.big ? '🔍 크게 보기 켬' : '🔍 크게 보기';
-  }
-  function toggleBig() {
-    S.big = !S.big;
-    store('sn:pr:big', S.big ? 1 : null);
-    applyBig();
-    if (fitBar) fitBar();
   }
 
   /* ───────── 파트별 약점 노트: AI 해설이 짚은 '몰랐던 것'을 과목별로 이 브라우저에 모은다 ───────── */
@@ -953,7 +1048,7 @@
         content: [{ type: 'text', text: '내 ' + exportSubject() + ' "' + g + '" 파트 약점 노트입니다. 문제를 풀면서 몰랐거나 헷갈린 것들입니다.\n\n' + weakText(list) +
           '\n\n이 약점들을 고치게 도와주세요. 순서:\n**왜 헷갈리는지** 공통 원인\n**개념 다시 잡기** 각 개념을 짧고 정확하게\n**확인 문제** 3개 (문제를 다 쓴 뒤 "===정답===" 한 줄을 쓰고 그 아래에 답과 풀이)' }]
       });
-    });
+    }, '"' + g + '" 약점 노트 ' + list.length + '개를 보내 왜 헷갈리는지·개념 다시 잡기·확인 문제를 받아요.');
   }
 
   function examKeyOf(it) { return it.ex || (S.set.indexOf('exam:') === 0 ? S.set.slice(5) : ''); }
@@ -1027,16 +1122,17 @@
       content: [imgBlock(it.img), { type: 'text', text: (ex ? ex.title : '') + ' ' + (cfg.label || SUB) + ' ' + it.n + '번 (' + it.pts + '점). 공식 정답은 ' + corrText(it) + '입니다. 이 정답은 학생에게 절대 밝히지 마세요.\n\n학생이 아직 이 문제를 풀고 있습니다. 정답 번호·최종 값·어느 선택지가 맞는지 틀린지는 말하지 말고, 스스로 풀 수 있게 첫 실마리 힌트를 1~2개만 짧게 주세요. **힌트 1**, **힌트 2** 형식으로.' }]
     });
   }
+  function itemLabel(it) { return refLabel({ exam: examKeyOf(it), sec: it.sec, n: it.n }); }
   function askHint(i) {
-    aiStart(hintAiId(i), function () { return hintReq(i); });
+    if (aiStart(hintAiId(i), function () { return hintReq(i); }, false, itemLabel(S.items[i]) + ' — 문항 그림만 보내 정답은 숨긴 힌트(실마리)를 받아요.').status === 'idle') return;
     refreshCard(i);
   }
   function askItem(i) {
+    var it = S.items[i], id = itemAiId(i), build = function () { return itemReq(i); };
+    if (aiStart(id, build, false, aiWhatItem(itemLabel(it), it, S.ans[i], !isShown(i))).status === 'idle') return;   // 확인창에서 취소: 정답도 열지 않는다
     if (!isShown(i)) { S.revealed[i] = true; sendAttempt(i); }
-    var id = itemAiId(i), build = function () { return itemReq(i); };
-    if (PAPER) openAi(S.items[i].n + '번 AI 해설', id, build);
+    if (PAPER) showDlg(it.n + '번 AI 해설', aiBox(id));
     else {
-      aiStart(id, build);
       refreshCard(i);
       var b = document.querySelector('#q-' + i + ' .pr-ai');
       b && b.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -1058,7 +1154,7 @@
       }
     });
     var gc = gradeCuts();
-    var head = setLabel() + ' · ' + r.sc + '/' + r.tot + '점' + (gc ? ' (예상 ' + gradeOf(r.sc, gc) + '등급)' : '') + ' · ' + r.right + '/' + r.n + '문항 정답' + (r.unanswered ? ' · 미풀이 ' + r.unanswered : '') + (S.usedTimer && r.used > 0 ? ' · 소요 ' + fmtTime(r.used) : '') + ' · ' + (S.mode === 'exam' ? '시험 모드' : '연습 모드');
+    var head = setLabel() + ' · ' + r.sc + '/' + r.tot + '점' + (gc ? ' (예상 ' + gradeText(r.sc, gc) + ')' : '') + ' · ' + r.right + '/' + r.n + '문항 정답' + (r.unanswered ? ' · 미풀이 ' + r.unanswered : '') + (S.usedTimer && r.used > 0 ? ' · 소요 ' + fmtTime(r.used) : '') + ' · ' + (S.mode === 'exam' ? '시험 모드' : '연습 모드');
     var content = imgs.map(imgBlock);
     var chips = [['약점 복습 계획', '이번 결과의 약점 단원 위주로 3일짜리 복습 계획을 하루 단위로 짜 주세요.'], ['다음 시험 전략', '다음 시험에서 시간 배분과 문항 순서를 어떻게 바꾸면 좋을지 구체적으로 알려 주세요.']];
     content.push({ type: 'text', text: '이번에 푼 세트의 내 기록입니다.\n' + head + '\n\n' + rows.join('\n') +
@@ -1068,7 +1164,8 @@
     return Promise.resolve({ content: content, chips: chips });
   }
   function askExam() {
-    openAi('이번 ' + (S.set.indexOf('exam:') === 0 ? '시험' : '세트') + ' AI 분석', 'x:' + SUB + ':' + S.set + ':' + S.ans.join(','), examReq);
+    var what = (S.set.indexOf('exam:') === 0 ? '이번 시험' : '이번 세트') + '(' + setLabel() + ') — 문항별 내 답·정답·풀이 시간·메모와 틀린 문항 그림 몇 장을 보내 문제점·강점 분석을 받아요.';
+    openAi('이번 ' + (S.set.indexOf('exam:') === 0 ? '시험' : '세트') + ' AI 분석', 'x:' + SUB + ':' + S.set + ':' + S.ans.join(','), examReq, what);
   }
   /* 과목 전체 분석: 계정에 쌓인 풀이 기록(분석용 MD와 같은 자료) */
   function askSubject() {
@@ -1076,7 +1173,7 @@
       return prepareExport(Date.now()).catch(function () { throw new Error('계정의 풀이 기록을 불러오지 못했습니다. 로그인 상태를 확인하고 다시 시도해 주세요.'); }).then(function (res) {
         return { content: [{ type: 'text', text: res.md + '\n\n---\n위 자료는 이 과목에서 내가 지금까지 푼 기록 전체입니다. 이 과목에서의 나의 문제점과 강점을 분석해 주세요. 순서:\n**한눈 요약** 3줄\n**문제점** 단원별·실수 유형별 약점, 근거 날짜·문항을 인용해서\n**강점** 안정적인 단원·유형\n**변화** 시간에 따라 나아진 것·나빠진 것\n**시간 사용 습관** 서두름·막힘·찍기 의심\n**2주 학습 계획** 우선순위대로' + (weakList().length ? '\n\n참고로 AI 해설에서 모은 내 파트별 약점 노트입니다:\n' + weakText(weakList()) : '') }], chips: [['이번 주 할 일만', '이번 주 7일 동안 하루 단위로 무엇을 풀고 복습할지만 짧게 정리해 주세요.'], ['가장 큰 약점 하나', '가장 먼저 고쳐야 할 약점 하나만 골라, 왜 그런지와 고치는 연습법을 알려 주세요.']] };
       });
-    });
+    }, exportSubject() + ' — 계정에 쌓인 이 과목 풀이 기록 전체' + (weakList().length ? '와 약점 노트' : '') + '를 보내 과목 전체 분석(2주 공부 계획까지)을 받아요.');
   }
 
   var reportLoading = null;
@@ -1696,11 +1793,18 @@
     var parts = [[a[0], Math.max(0, a[1] - 8), nx && nx[0] === a[0] ? nx[1] : m.strips[sec][a[0]].h]];
     if (nx && nx[0] === a[0] + 1 && nx[1] > 40) parts.push([nx[0], 0, nx[1]]);
     return el('div', { class: 'pr-crops' }, parts.map(function (p) {
-      var st = m.strips[sec][p[0]], h = Math.max(60, p[2] - p[1]);
-      return el('div', { class: 'pr-crop', style: 'aspect-ratio:' + st.w + '/' + h }, [el('img', {
+      var st = m.strips[sec][p[0]], h = Math.max(60, p[2] - p[1]), shift = 'transform:translateY(' + (-p[1] / st.h * 100).toFixed(3) + '%)';
+      var box = el('div', { class: 'pr-crop', style: 'aspect-ratio:' + st.w + '/' + h }, [el('img', {
         src: (cfg.imgBase || cfg.base) + exam + '/' + SUB + '/' + st.file, alt: refLabel({ exam: exam, sec: sec, n: n }) + ' 문항', loading: 'lazy', decoding: 'async',
-        style: 'transform:translateY(' + (-p[1] / st.h * 100).toFixed(3) + '%)'
+        style: shift
       })]);
+      /* 시험지 단에 펜으로 쓴 표시도 같은 자리만큼 옮겨 보인다 */
+      if (store(inkKey(exam, st.file))) {
+        var ink = inkSvg(inkKey(exam, st.file), st.w, st.h, 'pr-ink');
+        ink.setAttribute('style', 'height:auto;aspect-ratio:' + st.w + '/' + st.h + ';' + shift);
+        box.appendChild(ink);
+      }
+      return box;
     }));
   }
   /* 원인·헷갈림·메모: 문항 카드의 메모 칸과 같은 노트에 쓴다 */
@@ -1746,7 +1850,7 @@
       if (!it) { body.appendChild(el('p', { class: 'pr-ai-note', text: '이 문항의 자료를 찾지 못했습니다.' })); return; }
       var a = row.picked || 0, lost = !a && row.why.wrong;
       /* ① 문제 */
-      body.appendChild(el('div', { class: 'pr-sheet-q' }, [PAPER ? cropOf(info.m, r.exam, r.sec, r.n) : el('div', { class: 'pr-paper' }, [el('img', { class: 'pr-img', src: it.img, alt: refLabel(r) + ' 문항', decoding: 'async' })])]));
+      body.appendChild(el('div', { class: 'pr-sheet-q' }, [PAPER ? cropOf(info.m, r.exam, r.sec, r.n) : el('div', { class: 'pr-paper' }, [inkShow(el('img', { class: 'pr-img', src: it.img, alt: refLabel(r) + ' 문항', decoding: 'async' }), inkKey(r.exam, 'q' + pad(r.n)))])]));
       /* ② 내 답 · 정답 */
       var verdict = el('p', { class: 'pr-verdict pr-sheet-ans' }, [
         a ? el('span', { class: isRight(it, a) ? 'pr-sheet-ok' : 'pr-sheet-bad', text: '내 답 ' + ansText(it, a) }) : el('span', { class: 'pr-sheet-mute', text: lost ? '내 답 기록 없음' : '헷갈림 표시' }),
@@ -1774,7 +1878,7 @@
       if (have) aiWrap.appendChild(aiBox(have));
       else {
         var go = el('button', { type: 'button', class: 'pr-btn pr-ai-cta', text: a > 0 && !isRight(it, a) ? '🤖 내가 ' + ansText(it, a) + '을(를) 고른 이유까지 분석 받기' : '🤖 AI 해설 받기', onclick: function () {
-          aiStart(id, function () { return reqFor(it, lost ? -1 : a, null, info.m); });
+          if (aiStart(id, function () { return reqFor(it, lost ? -1 : a, null, info.m); }, false, aiWhatItem(refLabel(r), it, a)).status === 'idle') return;
           aiWrap.replaceChild(aiBox(id), go);
           if (hint.parentNode) hint.parentNode.removeChild(hint);
         } });
@@ -1830,7 +1934,7 @@
       box.innerHTML = '';
       if (!it) { box.appendChild(el('p', { class: 'pr-mini-h', text: refLabel(q) + ' — 자료 없음' })); return; }
       box.appendChild(el('p', { class: 'pr-mini-h' }, [el('b', { text: refLabel(q) }), ' · ' + it.pts + '점']));
-      box.appendChild(PAPER ? cropOf(info.m, q.exam, q.sec, q.n) : el('div', { class: 'pr-paper' }, [el('img', { class: 'pr-img', src: it.img, alt: refLabel(q) + ' 문항', loading: 'lazy', decoding: 'async' })]));
+      box.appendChild(PAPER ? cropOf(info.m, q.exam, q.sec, q.n) : el('div', { class: 'pr-paper' }, [inkShow(el('img', { class: 'pr-img', src: it.img, alt: refLabel(q) + ' 문항', loading: 'lazy', decoding: 'async' }), inkKey(q.exam, 'q' + pad(q.n)))]));
       var res = el('p', { class: 'pr-mini-res', 'aria-live': 'polite' });
       var ctl = el('div', { class: it.num ? 'pr-numrow' : 'pr-choices pr-mini-ch' });
       var done = function (a) {
@@ -1866,23 +1970,140 @@
 
   /* ───────── paper 렌더 ───────── */
   function renderPaper() {
-    var m = S.meta;
+    var m = S.meta, key = S.set.slice(5);
     if (SUB === 'english' && m.script) list.appendChild(scriptBox());
     paperSecs().forEach(function (sec) {
       list.appendChild(el('h3', { class: 'pr-sec', text: SEC_NAME[sec] + ' (' + SEC_LO[sec] + '~' + (SEC_LO[sec] + m.answers[sec].length - 1) + '번)' }));
       var wrap = el('div', { class: 'pr-strips' });
-      var strips = m.strips[sec], anchors = m.anchors[sec];
+      var strips = m.strips[sec], anchors = m.anchors[sec], hots = hotByStrip(m, sec);
+      /* 영어 듣기(1~17번) 단은 음성 막대와 한 묶음 — 막대가 그 단을 지나는 동안만 위에 붙어 따라온다 */
+      var a18 = SUB === 'english' && sec === 'c' && m.audio && anchors['18'], listen = null;
+      if (a18) wrap.appendChild(listen = el('div', { class: 'pr-listen' }, [listenBar(key, m.audio)]));
       strips.forEach(function (s, idx) {
-        var box = el('div', { class: 'pr-strip' }, [
-          el('img', { src: (cfg.imgBase || cfg.base) + S.set.slice(5) + '/' + SUB + '/' + s.file, width: s.w, height: s.h, alt: SEC_NAME[sec] + ' 시험지 ' + (idx + 1) + '단', loading: 'lazy', decoding: 'async' })
-        ]);
+        var img = el('img', { src: (cfg.imgBase || cfg.base) + key + '/' + SUB + '/' + s.file, width: s.w, height: s.h, alt: SEC_NAME[sec] + ' 시험지 ' + (idx + 1) + '단', loading: 'lazy', decoding: 'async' });
+        var ib = inkWrap(img, inkKey(key, s.file), s.w, s.h, true);
+        hotAdd(ib, hots[idx], s.w, s.h);
+        var box = el('div', { class: 'pr-strip' }, [ib]);
         for (var n in anchors) {
           var a = anchors[n];
           if (a[0] === idx) box.appendChild(el('span', { class: 'pr-anchor', id: 'pq-' + sec + n, style: 'top:' + (a[1] / s.h * 100).toFixed(2) + '%', 'aria-hidden': 'true' }));
         }
-        wrap.appendChild(box);
+        (listen && (idx < a18[0] || (idx === a18[0] && a18[1] > 40)) ? listen : wrap).appendChild(box);
       });
       list.appendChild(wrap);
+    });
+  }
+  /* ───────── 시험지 위 ①~⑤ 누르기: meta.choices(PDF 글자 자리, 단 이미지 픽셀)에 투명 단추를 얹어 답안지와 같은 답을 고른다.
+     ○△✕ 표시 모드면 표시를 바꾸고, 고른 답·정답·오답은 번호에 테두리로 보인다 ───────── */
+  function hotByStrip(m, sec) {
+    var by = {}, ch = (m.choices || {})[sec] || {};
+    for (var n in ch) ch[n].forEach(function (b, k) { (by[b[0]] = by[b[0]] || []).push([sec + n, k + 1, b[1], b[2], b[3], b[4], +n]); });
+    return by;
+  }
+  /* 문항 그림(수학·탐구·한국사): hot/<과목>.json = {회차: {번호: [그림 폭, 높이, [[x, y, w, h] ×5]]}} */
+  function hotOfItem(it) {
+    var z = !it.num && HOT && HOT[it.ex] && HOT[it.ex][it.n];
+    return z ? { list: z[2].map(function (b, k) { return [it.id, k + 1, b[0], b[1], b[2], b[3], it.n]; }), w: z[0], h: z[1] } : null;
+  }
+  /* list: [[문항 키(국·영 구역+번호, 그 밖은 회차/번호), 선지, x, y, w, h, 번호]] — w·h 는 그림 원래 크기 */
+  function hotAdd(box, list, w, h) {
+    if (!list || !list.length) return;
+    box._hot = { list: list, w: w, h: h };
+    list.forEach(function (c) {
+      var q = c[0], k = c[1], p = 5;   // 누르기 쉽게 글자보다 조금 넓게
+      box.appendChild(el('button', { type: 'button', class: 'pr-hot', 'data-q': q, 'data-k': k, 'aria-label': c[6] + '번 ' + k + '번 고르기',
+        style: 'left:' + ((c[2] - p) / w * 100).toFixed(3) + '%;top:' + ((c[3] - p) / h * 100).toFixed(3) + '%;width:' + ((c[4] + 2 * p) / w * 100).toFixed(3) + '%;height:' + ((c[5] + 2 * p) / h * 100).toFixed(3) + '%',
+        onclick: function () { hotPick(q, k); } }));
+    });
+  }
+  function hotKey(it) { return it.sec ? it.sec + it.n : it.id; }
+  function hotPick(q, k) {
+    if (Date.now() - inkDrew < 400) return;   // 번호에서 시작해 끌어 쓴 경우
+    for (var i = 0; i < S.items.length; i++) if (hotKey(S.items[i]) === q) return S.markMode ? cycleMark(i, k) : choose(i, k);
+  }
+  function paintHot() {
+    var at = {};
+    S.items.forEach(function (it, i) { at[hotKey(it)] = i; });
+    Array.prototype.forEach.call(root.querySelectorAll('.pr-hot'), function (b) {
+      var i = at[b.getAttribute('data-q')], it = S.items[i], k = +b.getAttribute('data-k');
+      if (!it) return;
+      var shown = isShown(i), mark = MARK_SYM[markOf(it, k)];
+      b.classList.toggle('sel', S.ans[i] === k);
+      b.classList.toggle('right', !!(shown && it.ans !== 0 && isRight(it, k)));
+      b.classList.toggle('wrong', !!(shown && S.ans[i] === k && !isRight(it, k)));
+      b.setAttribute('aria-pressed', S.ans[i] === k ? 'true' : 'false');
+      if (mark) b.setAttribute('data-mark', mark); else b.removeAttribute('data-mark');
+    });
+  }
+  /* ───────── 영어 듣기 음성: 평가원 듣기평가 음원을 회차마다 한 파일로 이은 것(meta.audio = { file, dur, q: 문항 시작 초 · 16 = 16~17번 }).
+     소리(LS.a)는 막대와 따로 두어 채점·모드 전환으로 시험지를 다시 그려도 이어진다 ───────── */
+  var LS = { a: null, key: '', q: null, dur: 0, bar: null, drag: false, pend: null, err: false };
+  var RATES = [1, 1.25, 1.5, 0.75];
+  function listenAt(t) {
+    var cur = 0;
+    for (var n in LS.q) if (LS.q[n] <= t + 0.5 && +n > cur) cur = +n;
+    return cur;
+  }
+  /* 아직 안 불러온 소리는 위치를 기억해 두었다가 길이를 알면 옮긴다(iOS 는 그 전에 currentTime 을 무시한다) */
+  function listenSeek(t) {
+    if (LS.a.readyState >= 1) LS.a.currentTime = t;
+    else LS.pend = t;
+  }
+  function listenPlay(t) {
+    if (t != null) listenSeek(t);
+    var p = LS.a.play();
+    if (p && p.catch) p.catch(function () { LS.err = true; paintListen(); });
+  }
+  function listenBar(key, au) {
+    if (LS.key !== key) {
+      if (LS.a) LS.a.pause();
+      var a = LS.a = new Audio(), r = +store('sn:' + SUB + ':rate') || 1;
+      a.preload = 'none';
+      a.defaultPlaybackRate = a.playbackRate = r;
+      a.src = (cfg.imgBase || cfg.base) + key + '/' + SUB + '/' + au.file;
+      a.addEventListener('loadedmetadata', function () { if (LS.pend != null) { a.currentTime = LS.pend; LS.pend = null; } });
+      ['play', 'pause', 'ended', 'timeupdate', 'ratechange', 'playing', 'error'].forEach(function (ev) {
+        a.addEventListener(ev, function () { if (a !== LS.a) return; if (ev === 'playing') LS.err = false; if (ev === 'error') LS.err = true; paintListen(); });
+      });
+      LS.key = key; LS.q = au.q; LS.dur = au.dur; LS.pend = null; LS.err = false;
+    }
+    var b = LS.bar = { cur: -1 };
+    b.play = el('button', { type: 'button', class: 'pr-lb-play', onclick: function () { if (LS.a.paused) listenPlay(); else LS.a.pause(); } });
+    b.now = el('b', { class: 'pr-lb-now' });
+    b.time = el('span', { class: 'pr-lb-time' });
+    b.seek = el('input', { type: 'range', class: 'pr-lb-seek', min: '0', max: String(Math.ceil(au.dur)), step: '1', value: '0', 'aria-label': '듣기 위치' });
+    b.seek.addEventListener('input', function () { LS.drag = true; paintListen(); });
+    b.seek.addEventListener('change', function () { LS.drag = false; listenSeek(+b.seek.value); paintListen(); });
+    b.rate = el('button', { type: 'button', class: 'pr-lb-rate', title: '재생 속도', onclick: function () {
+      var r = RATES[(RATES.indexOf(LS.a.playbackRate) + 1) % RATES.length];
+      LS.a.defaultPlaybackRate = LS.a.playbackRate = r;
+      store('sn:' + SUB + ':rate', r === 1 ? null : r);
+    } });
+    b.qs = el('div', { class: 'pr-lb-qs', role: 'group', 'aria-label': '이 문항부터 듣기' });
+    Object.keys(au.q).sort(function (x, y) { return x - y; }).forEach(function (n) {
+      b.qs.appendChild(el('button', { type: 'button', class: 'pr-lb-q', 'data-n': n, text: n === '16' ? '16~17' : n, 'aria-label': n + '번부터 듣기', onclick: function () { listenPlay(au.q[n]); } }));
+    });
+    b.root = el('div', { class: 'pr-listen-bar', role: 'region', 'aria-label': '영어 듣기 음성' }, [el('div', { class: 'pr-lb-row' }, [b.play, b.now, b.time, b.seek, b.rate]), b.qs]);
+    paintListen();
+    return b.root;
+  }
+  function paintListen() {
+    var b = LS.bar, a = LS.a;
+    if (!b || !a) return;
+    var t = LS.drag ? +b.seek.value : LS.pend != null ? LS.pend : (a.currentTime || 0), cur = listenAt(t);
+    b.play.textContent = a.paused ? '▶' : '❚❚';
+    b.play.setAttribute('aria-label', a.paused ? '듣기 재생' : '일시 정지');
+    b.now.textContent = LS.err ? '음성을 못 불러왔어요' : a.paused && t < 1 ? '🎧 듣기' : cur === 16 ? '16~17번' : cur ? cur + '번' : '안내';
+    b.time.textContent = fmtTime(Math.floor(t)) + ' / ' + fmtTime(Math.round(LS.dur));
+    if (!LS.drag) b.seek.value = String(Math.floor(t));
+    b.seek.setAttribute('aria-valuetext', b.time.textContent);
+    b.rate.textContent = a.playbackRate + '×';
+    if (cur === b.cur) return;
+    b.cur = cur;
+    Array.prototype.forEach.call(b.qs.children, function (c) {
+      var on = +c.getAttribute('data-n') === cur;
+      c.classList.toggle('on', on);
+      if (on) b.qs.scrollLeft = c.offsetLeft - (b.qs.clientWidth - c.offsetWidth) / 2;   // 지금 문항 칩을 가운데로(창은 안 굴린다)
     });
   }
   function scriptBox() {
@@ -1906,7 +2127,6 @@
   }
   function jump(i) {
     if (PAPER && isNarrow()) toggleOmr(false);
-    if (fitBar) fitBar();
     var it = S.items[i], t;
     if (PAPER) t = document.getElementById('pq-' + it.sec + it.n);
     else t = document.getElementById('q-' + i);
@@ -1916,7 +2136,8 @@
   /* ───────── 답안지 ───────── */
   function renderOmr() {
     omr.innerHTML = '';
-    omr.appendChild(el('h3', { text: '답안지' }));
+    omr.appendChild(el('h3', {}, ['답안지', omrClock = el('span', { class: 'pr-omr-clock' })]));   // 위 막대가 스크롤로 사라져도 남은 시간이 보이게
+    paintClock();
     /* 국어·영어: 선지마다 ○△✕ 를 표시하는 모드(답과 따로 저장) */
     if (PAPER) {
       var modeSw = function (on, text) {
@@ -1971,10 +2192,11 @@
     if (hist.length) {
       var h = el('details', { class: 'pr-hist' }, [el('summary', { text: '내 기록 (최근 ' + Math.min(hist.length, 8) + '회)' })]);
       hist.slice(-8).reverse().forEach(function (r) {
-        h.appendChild(el('div', { class: 'pr-hrow', text: r.d + ' · ' + r.s + ' · ' + r.sc + ' / ' + r.t + '점' + (r.g ? ' · ' + r.g + '등급' : '') }));
+        h.appendChild(el('div', { class: 'pr-hrow', text: r.d + ' · ' + r.s + ' · ' + r.sc + ' / ' + r.t + '점' + (r.g ? ' · ' + r.g + (typeof r.g === 'number' ? '등급' : '') : '') }));
       });
       omr.appendChild(h);
     }
+    paintHot();
   }
 
   function setLabel() {
@@ -2008,7 +2230,7 @@
     S.result = { sc: sc, tot: tot, right: right, n: S.items.length, wrong: wrongIds, unanswered: S.ans.filter(function (a) { return !a; }).length, used: EXAM_SECONDS - S.left, bySec: bySec, listen: listen };
     var hist = store('sn:' + SUB + ':hist') || [];
     var d = new Date(), gc = gradeCuts();
-    hist.push({ d: (d.getMonth() + 1) + '/' + d.getDate(), s: setLabel(), sc: sc, t: tot, g: gc ? gradeOf(sc, gc) : undefined });
+    hist.push({ d: (d.getMonth() + 1) + '/' + d.getDate(), s: setLabel(), sc: sc, t: tot, g: gc ? gradeText(sc, gc) : undefined });
     store('sn:' + SUB + ':hist', hist.slice(-40));
     sendGraded();
     renderAll();
@@ -2017,18 +2239,29 @@
   }
 
   /* 등급: 영어·한국사는 절대평가 점수 기준, 탐구와 2021학년도까지의 국어·수학(가형)은 EBSi 역대 등급컷(원점수, cuts.json).
-     cuts 는 1~8등급 최저점 — null 은 그 시험에 없는 등급(위 등급 비율이 커서 비어 있음) */
+     cuts 는 1~8등급 최저점 — null 은 그 시험에 없는 등급(위 등급 비율이 커서 비어 있음).
+     2022학년도부터 국어·수학은 원점수 컷이 공개되지 않아, 시험 직후 입시업체가 낸 선택과목별 가채점 예상컷(est, 위 몇 등급만)을 쓴다 */
   var ABS_CUT = { english: [90, 80, 70, 60, 50, 40, 30, 20], hist: [40, 35, 30, 25, 20, 15, 10, 5] };
-  var CUTS = null;
+  var CUTS = null, EST = null, HOT = null;   // HOT: 문항 그림 ①~⑤ 자리(hot/<과목>.json)
+  var EST_KEY = { hwajak: '화작', eonmae: '언매', calc: '미적분' };
+  function estCut() {
+    var e = EST && (SUB === 'korean' || SUB === 'math') && S.set.indexOf('exam:') === 0 && EST[S.set.slice(5)];
+    return (e && e[SUB === 'math' ? 'calc' : S.sel === 'a' ? 'hwajak' : 'eonmae']) || null;
+  }
   function gradeCuts() {
     if (S.set.indexOf('exam:') !== 0) return null;
     if (ABS_CUT[SUB]) return ABS_CUT[SUB];
-    var c = CUTS && CUTS[S.set.slice(5)];
-    return (c && c[SUB]) || null;
+    var c = CUTS && CUTS[S.set.slice(5)], e = estCut();
+    return (c && c[SUB]) || (e && e.c) || null;
   }
   function gradeOf(sc, cuts) {
     for (var i = 0; i < cuts.length; i++) if (cuts[i] != null && sc >= cuts[i]) return i + 1;
-    return 9;
+    return cuts.length + 1;
+  }
+  /* 예상컷처럼 위 몇 등급만 있으면 그 아래는 'N등급 이하' */
+  function gradeText(sc, cuts) {
+    var g = gradeOf(sc, cuts);
+    return g + '등급' + (g > cuts.length && cuts.length < 8 ? ' 이하' : '');
   }
   function gradeBox(sc) {
     var cuts = gradeCuts();
@@ -2037,17 +2270,22 @@
         return el('p', { class: 'pr-sub', text: '등급: 2022학년도부터 국어·수학은 선택과목에 따라 같은 원점수도 등급이 달라서 원점수 등급컷이 공개되지 않아요(평가원·EBSi는 표준점수 컷만).' });
       return null;
     }
-    var g = gradeOf(sc, cuts), up = -1;
+    var g = gradeOf(sc, cuts), up = -1, est = estCut();
     for (var j = g - 2; j >= 0; j--) if (cuts[j] != null) { up = j; break; }
     var ol = el('ol', { class: 'pr-cuts', 'aria-label': '등급별 최저 원점수' });
     cuts.forEach(function (c, i) {
       ol.appendChild(el('li', { class: i + 1 === g ? 'on' : '', title: c == null ? '이 시험은 ' + (i + 1) + '등급이 비어 있어요(위 등급 비율이 커서)' : (i + 1) + '등급 ' + c + '점 이상' },
         [el('i', { text: (i + 1) + '등급' }), el('b', { text: c == null ? '–' : c })]));
     });
+    var src = [ABS_CUT[SUB] ? '절대평가 — 정해진 점수 기준' : 'EBSi 역대 등급컷(원점수) 기준 예상 · 실제 등급은 표준점수로 정해져요'];
+    if (est && est.c === cuts) {
+      var k = SUB === 'math' ? 'calc' : S.sel === 'a' ? 'hwajak' : 'eonmae';
+      src = [EST_KEY[k] + ' 가채점 예상컷 — ' + est.by + ', 시험 직후 집계(', el('a', { href: est.url, target: '_blank', rel: 'noopener', text: '출처' }), ') · 공식 컷이 아니고, 실제 등급은 표준점수로 정해져요'];
+    }
     return el('div', { class: 'pr-grade' }, [
-      el('p', { class: 'pr-grade-main' }, [el('b', { text: g + '등급' }), up >= 0 ? ' · ' + (up + 1) + '등급까지 ' + (cuts[up] - sc) + '점' : '']),
+      el('p', { class: 'pr-grade-main' }, [el('b', { text: gradeText(sc, cuts) }), up >= 0 ? ' · ' + (up + 1) + '등급까지 ' + (cuts[up] - sc) + '점' : '']),
       ol,
-      el('p', { class: 'pr-grade-src', text: ABS_CUT[SUB] ? '절대평가 — 정해진 점수 기준' : 'EBSi 역대 등급컷(원점수) 기준 예상 · 실제 등급은 표준점수로 정해져요' })
+      el('p', { class: 'pr-grade-src' }, src)
     ]);
   }
 
@@ -2094,10 +2332,13 @@
   var examsP = fetch(cfg.base + 'exams.json').then(function (r) { return r.json(); });
   var meP = window.SnAuth ? SnAuth.me() : Promise.resolve({ id: null });
   var cutsP = ABS_CUT[SUB] ? null : fetch(cfg.base + 'cuts.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
-  Promise.all([examsP, meP, cutsP]).then(function (pair) {
+  var hotP = PAPER ? null : fetch(cfg.base + 'hot/' + SUB + '.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+  Promise.all([examsP, meP, cutsP, hotP]).then(function (pair) {
     EXAMS = pair[0].exams;
     meUser = pair[1] && pair[1].id ? pair[1] : { id: null };
     CUTS = pair[2] && pair[2].cuts;
+    EST = pair[2] && pair[2].est;
+    HOT = pair[3];
     var ex = examList();
     buildShell();
     refreshAuth();

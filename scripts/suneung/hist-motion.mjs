@@ -92,11 +92,11 @@ const fxHTML=x=>\`<span class="f word">\${x.f}</span>\`;
 const tl=$('tl');
 const pp=document.createElement('div');pp.className='pics';pp.id='p-pics';$('p-sub').after(pp);
 const pw=document.createElement('div');pw.className='whys';pw.id='p-why';$('p-sub').after(pw);   // 이 장면의 '왜?' — 캔버스가 지금 설명하는 줄을 밝힌다
-const LBL={timeline:e=>e.t+' · '+e.y,cards:e=>e.h,compare:e=>e.cap,map:e=>e.y,chain:e=>e.t,profile:e=>e.n,acro:e=>e.name};
+const LBL={timeline:e=>e.t+' · '+e.y,cards:e=>e.h,compare:e=>e.cap,map:e=>e.y,chain:e=>e.t,profile:e=>e.n,acro:e=>e.name,tree:e=>e.n};
 function whyHTML(s){if(s.type==='quiz'||s.type==='gallery'||s.type==='intro')return '';
   const li=(i,b,x)=>\`<li data-i="\${i}"><b>\${b}</b>\${x}</li>\`,wb=(h,items,ans)=>\`<div class="wh">\${h}</div><ol>\${items}</ol>\${ans?\`<p class="ans">\${ans}</p>\`:''}\`;
   if(s.type==='territory')return wb('💡 왜 지도가 바뀌었을까?',s.snaps.map((id,i)=>TERR[id].why?li(i,TERR[id].y+' · '+TERR[id].t,TERR[id].why):'').join(''));
-  const els=s.events||s.cards||s.pairs||s.steps||s.nodes||s.people||s.rows||[];
+  const els=s.events||s.cards||s.pairs||s.steps||s.nodes||s.people||s.rows||s.branches||[];
   if(els.some(e=>e.why))return wb('💡 왜 그럴까?',els.map((e,i)=>li(i,LBL[s.type](e),e.why||'')).join(''));
   if(s.type==='chain')return wb('💡 이유의 사슬',s.nodes.map((nd,i)=>(i?\`<li class="lk">↓ \${(s.links||[])[i-1]||'그래서'}</li>\`:'')+li(i,nd.t,nd.n||'')).join(''),s.foot);
   return '';}
@@ -242,7 +242,7 @@ input[type=range]{flex:1;accent-color:var(--acc);height:28px;min-width:0}
 .tick:hover{border-color:var(--c)}.tick[aria-current="true"]{background:color-mix(in srgb,var(--c) 18%,transparent);border-color:var(--c)}
 .tick:focus-visible,.btn:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .note{color:var(--dim);font-size:12px;font-family:var(--fm)}
-@media (max-width:900px){.board{grid-template-columns:1fr}.info{border-left:0;border-top:1px solid var(--line)}
+@media (max-width:900px){.board{grid-template-columns:minmax(0,1fr)}.board>*{min-width:0}.info{border-left:0;border-top:1px solid var(--line);padding:18px 16px}
   .tick{flex-basis:96px}}
 </style>
 </head>
@@ -315,10 +315,11 @@ function frame(now){const dt=last==null?0:Math.min(.05,(now-last)/1000);last=now
   $('slider').value=v;
   const a=Math.floor(v+1e-6),k=v-a,A=SN[a],B=SN[Math.min(SN.length-1,a+1)];
   ctx.setTransform(cv.width/MW,0,0,cv.height/MH,0,0);ctx.clearRect(0,0,MW,MH);
-  drawTerritory(ctx,TERR[A.id],k>0?TERR[B.id]:null,k,{x:0,y:0,w:MW,h:MH});
+  const NARROW=cv.clientWidth<560,FS=NARROW?Math.min(1.45,560/cv.clientWidth):1; // 좁은 화면: 글자는 키우고 보조 설명은 생략(겹침 방지)
+  drawTerritory(ctx,TERR[A.id],k>0?TERR[B.id]:null,k,{x:0,y:0,w:MW,h:MH,fs:FS,compact:NARROW});
   const ka=ease(Math.max(0,Math.min(1,k*1.6-.2))),ca=CH[A.u].c,cb=CH[B.u].c;
-  ctx.save();ctx.beginPath();ctx.rect(14,10,400,92);ctx.clip();
-  const yo=(s,col,al,dy)=>{TS(ctx,s.y,22,40+dy,{size:30,font:DISP,w:400,align:'left',color:col,lw:6,alpha:al});TS(ctx,s.t,22,74+dy,{size:16,align:'left',lw:5,alpha:al});};
+  ctx.save();ctx.beginPath();ctx.rect(14,10,MW-28,92*FS);ctx.clip();
+  const yo=(s,col,al,dy)=>{TS(ctx,s.y,22,(40+dy)*FS,{size:30*FS,font:DISP,w:400,align:'left',color:col,lw:6,alpha:al});TS(ctx,s.t,22,(74+dy)*FS,{size:16*FS,align:'left',lw:5,alpha:al});};
   if(k>0&&B!==A){yo(A,ca,1-ka,-26*ka);yo(B,cb,ka,26*(1-ka));}else yo(A,ca,1,0);ctx.restore();
   panel(Math.round(v));requestAnimationFrame(frame);}
 const h0=SN.findIndex(s=>'#'+s.id===location.hash);if(h0>=0)v=h0;panel(Math.round(v));
