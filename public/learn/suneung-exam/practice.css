@@ -32,9 +32,9 @@
 .pr-ch { font: 500 20px var(--font-body, sans-serif); padding: 10px 0; border: 1px solid var(--pr-line); border-radius: 10px; background: var(--pr-el); color: var(--text); cursor: pointer; transition: transform .1s, background .15s; }
 .pr-ch:hover { border-color: var(--accent); }
 .pr-ch:active { transform: scale(.96); }
-.pr-ch.sel { background: var(--accent); border-color: var(--accent); color: #fff; }
+.pr-ch.sel { background: var(--text); border-color: var(--text); color: var(--pr-card); }   /* 내가 고른 답은 OMR처럼 검은 칠(어두운 화면은 흰 칠) */
 .pr-ch.right { background: var(--pr-ok); border-color: var(--pr-ok); color: #fff; }
-.pr-ch.wrong { background: var(--pr-bad); border-color: var(--pr-bad); color: #fff; }
+.pr-ch.wrong { background: var(--text); border-color: var(--pr-bad); color: var(--pr-card); box-shadow: 0 0 0 2px var(--pr-bad); }   /* 채점 뒤 내가 고른 오답: 검은 칠 그대로 + 빨간 테두리 */
 
 .pr-explain { margin-top: 12px; padding: 12px 14px; border-radius: 10px; background: var(--pr-el); font-size: 14px; line-height: 1.7; }
 .pr-verdict { margin: 0 0 6px; color: var(--text); }
@@ -99,9 +99,9 @@
 .pr-toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 60; max-width: min(92vw, 520px); box-sizing: border-box; padding: 11px 14px; border-radius: 12px; background: #111827; color: #fff; font-size: 14px; line-height: 1.5; box-shadow: 0 8px 24px rgba(0,0,0,.25); cursor: pointer; }
 #practice-root .pr-ch { background: var(--pr-el) !important; }
 #practice-root .pr-ch:hover { border-color: var(--accent) !important; }
-#practice-root .pr-ch.sel { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
+#practice-root .pr-ch.sel { background: var(--text) !important; border-color: var(--text) !important; color: var(--pr-card) !important; }
 #practice-root .pr-ch.right { background: var(--pr-ok) !important; border-color: var(--pr-ok) !important; color: #fff !important; }
-#practice-root .pr-ch.wrong { background: var(--pr-bad) !important; border-color: var(--pr-bad) !important; color: #fff !important; }
+#practice-root .pr-ch.wrong { background: var(--text) !important; border-color: var(--pr-bad) !important; color: var(--pr-card) !important; box-shadow: 0 0 0 2px var(--pr-bad); }
 #practice-root .pr-b { color: var(--text-dim) !important; }
 #practice-root .pr-b.sel { background: var(--text) !important; border-color: var(--text) !important; color: var(--pr-card) !important; }
 #practice-root .pr-b.right { border-color: var(--pr-ok) !important; }
@@ -208,6 +208,17 @@
 #practice-root .pr-ai-link { background: transparent !important; border: 0 !important; padding: 0; color: var(--text-dim) !important; font: inherit; text-decoration: underline; cursor: pointer; }
 .pr-ai-dlg { width: min(760px, calc(100vw - 32px)); max-height: calc(100vh - 48px); padding: 16px 18px 18px; border: 1px solid var(--pr-line); border-radius: 14px; background: var(--pr-card); color: var(--text); overflow-y: auto; }
 .pr-ai-dlg::backdrop { background: rgba(0,0,0,.55); }
+/* AI 부르기 전 확인(창을 띄우지 않고 그 자리에서) */
+.pr-ai-askbox { padding: 12px 14px; border: 1px dashed var(--accent); border-radius: 12px; background: color-mix(in srgb, var(--accent) 5%, var(--pr-card)); }
+.pr-ai-ask-h { margin: 0 0 6px; font-weight: 800; font-size: 14.5px; color: var(--text); }
+.pr-ai-ask-w { margin: 0 0 6px; font-size: 13.5px; line-height: 1.6; color: var(--text); }
+.pr-ai-ask-c { margin: 0 0 10px; font-size: 12.5px; color: var(--text-dim); }
+#practice-root .pr-ai-go { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
+/* 틀린 문제 한꺼번에 AI 해설: 옆 칸에 문항별로 */
+.pr-ai-batch { display: flex; flex-direction: column; gap: 14px; }
+.pr-ai-bitem { padding-top: 10px; border-top: 1px solid var(--pr-line); }
+.pr-ai-bh { margin: 0 0 6px; font-size: 13.5px; color: var(--text-dim); }
+#practice-root .pr-ai-bh .pr-ai-link { font-weight: 700; font-size: 14px; }
 /* 옆에 붙인 칸: 넓은 화면은 오른쪽 세로 칸(본문은 그만큼 비킨다), 좁은 화면은 아래 절반 칸 — 시험지를 보면서 읽는다 */
 :root { --pr-dock-w: min(520px, 42vw); }
 .pr-ai-dlg[open] { position: fixed; inset: 0 0 0 auto; z-index: 40; width: var(--pr-dock-w); height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; box-sizing: border-box; border-radius: 14px 0 0 14px; box-shadow: -10px 0 34px rgba(0,0,0,.18); }
@@ -427,9 +438,9 @@ body.pr-wide-page main.wide { max-width: none; padding-left: 24px; padding-right
 #practice-root .pr-hot { position: absolute; z-index: 1; margin: 0; padding: 0; border: 0 !important; border-radius: 50%; background: transparent !important; cursor: pointer; }
 #practice-root .pr-hot:hover { box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent); }
 #practice-root .pr-hot:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-#practice-root .pr-hot.sel { background: color-mix(in srgb, var(--accent) 22%, transparent) !important; box-shadow: 0 0 0 3px var(--accent); }
+#practice-root .pr-hot.sel { background: color-mix(in srgb, var(--text) 14%, transparent) !important; box-shadow: 0 0 0 3px var(--text); }   /* 시험지 그림에서 고른 번호도 검은 테두리 */
 #practice-root .pr-hot.right { box-shadow: 0 0 0 3px var(--pr-ok); }
-#practice-root .pr-hot.wrong { background: color-mix(in srgb, var(--pr-bad) 18%, transparent) !important; box-shadow: 0 0 0 3px var(--pr-bad); }
+#practice-root .pr-hot.wrong { background: color-mix(in srgb, var(--text) 14%, transparent) !important; box-shadow: 0 0 0 3px var(--text), 0 0 0 5px var(--pr-bad); }
 #practice-root.pr-pen .pr-hot { touch-action: none; cursor: crosshair; }
 .pr-hot[data-mark]::after { content: attr(data-mark); position: absolute; top: -9px; right: -9px; font: 800 14px/1 var(--font-body, sans-serif); pointer-events: none; }
 .pr-hot[data-mark="○"]::after { color: #16a34a; }

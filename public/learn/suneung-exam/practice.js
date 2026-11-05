@@ -313,6 +313,7 @@
         if (selSel) selSel.style.display = m.answers.a ? '' : 'none';
         S.items = buildPaper();
         S.ans = S.items.map(function (it) { return S.pa[it.id] || 0; });
+        if (saved && saved.g && (saved.gs || '') === (S.sel || '')) restoreGraded(saved);
         armClock();
         renderAll();
         if (!keepAns) window.scrollTo && root.scrollIntoView && root.scrollIntoView({ block: 'start' });
@@ -377,7 +378,7 @@
     if (!isExam && S.mode === 'exam') S.mode = 'practice';
     if (isExam) {
       var sv = store('sn:' + SUB + ':' + setId);
-      if (sv && sv.ans && sv.ans.length === S.items.length) S.ans = sv.ans;
+      if (sv && sv.ans && sv.ans.length === S.items.length) { S.ans = sv.ans; if (sv.g) restoreGraded(sv); }
     }
     setSel.value = setId;
     try { history.replaceState(null, '', '#' + encodeURIComponent(setId)); } catch (e) {}
@@ -388,10 +389,11 @@
 
   function persist() {
     if (S.set.indexOf('exam:') !== 0) return;
+    var g = S.graded ? { g: 1, gs: S.sel || '', left: S.left, ut: S.usedTimer ? 1 : 0 } : {};   // 채점했으면 그것도(국어는 선택과목까지)
     if (PAPER) {
       S.items.forEach(function (it, i) { S.pa[it.id] = S.ans[i]; });
-      store('sn:' + SUB + ':' + S.set, { pa: S.pa });
-    } else store('sn:' + SUB + ':' + S.set, { ans: S.ans });
+      store('sn:' + SUB + ':' + S.set, Object.assign({ pa: S.pa }, g));
+    } else store('sn:' + SUB + ':' + S.set, Object.assign({ ans: S.ans }, g));
   }
 
   /* ───────── render ───────── */
@@ -498,6 +500,7 @@
     ]));
     if (memoOpen(it, i)) c.appendChild(memoBox(it, i));
     if (!shown && aiRun(hintAiId(i)).status !== 'idle') c.appendChild(el('div', { class: 'pr-explain pr-hint' }, [aiBox(hintAiId(i))]));
+    if (!shown && aiRun(itemAiId(i)).status === 'ask') c.appendChild(el('div', { class: 'pr-explain pr-hint' }, [aiBox(itemAiId(i))]));
     if (shown) c.appendChild(reveal(it, i));
     return c;
   }
@@ -689,6 +692,19 @@
   function spent() { return store('sn:ai:spent') || { usd: 0, n: 0 }; }
   function aiPaint(b, r) {
     b.innerHTML = '';
+    if (r.status === 'idle') { b.appendChild(el('p', { class: 'pr-ai-wait', text: '⏳ 차례를 기다리는 중' })); return; }
+    if (r.status === 'ask') {
+      b.appendChild(el('div', { class: 'pr-ai-askbox' }, [
+        el('p', { class: 'pr-ai-ask-h', text: '🤖 AI에게 물어볼까요?' }),
+        el('p', { class: 'pr-ai-ask-w', text: r.what || '같은 자료로 AI 해설을 처음부터 다시 받아요.' }),
+        el('p', { class: 'pr-ai-ask-c', text: (keyMode() === 'acct' ? '계정에 넣어 둔' : '이 브라우저에 넣어 둔') + ' 내 Anthropic API 키로 요청해요(요금이 조금 들어요).' }),
+        el('div', { class: 'pr-ai-keyrow' }, [
+          el('button', { type: 'button', class: 'pr-btn pr-ai-go', text: '시작', onclick: function () { if (r.go) r.go(); } }),
+          el('button', { type: 'button', class: 'pr-btn', text: '취소', onclick: function () { aiCancel(r); } })
+        ])
+      ]));
+      return;
+    }
     if (r.status === 'nokey') {
       var acct = !!(meUser && meUser.id && window.SnAuth && SnAuth.saveAiKey);
       var inp = el('input', { type: 'password', class: 'pr-ai-key', placeholder: 'sk-ant-…', autocomplete: 'off', 'aria-label': 'Anthropic API 키' });
@@ -740,7 +756,7 @@
       var cost = r.usage.input_tokens * 4e-6 + r.usage.output_tokens * 20e-6;
       foot.appendChild(el('span', { text: '🤖 Claude Opus 5.5 · 입력 ' + r.usage.input_tokens + ' · 출력 ' + r.usage.output_tokens + ' 토큰 (약 $' + cost.toFixed(3) + ') · 누적 약 $' + spent().usd.toFixed(2) }));
     }
-    if (r.build) foot.appendChild(el('button', { type: 'button', class: 'pr-ai-link', text: '처음부터 다시 생성', onclick: function () { if (aiStart(r.id, r.build, true).status === 'run') store('sn:ai:' + r.id, null); } }));
+    if (r.build) foot.appendChild(el('button', { type: 'button', class: 'pr-ai-link', text: '처음부터 다시 생성', onclick: function () { aiStart(r.id, r.build, true, null, function () { store('sn:ai:' + r.id, null); }); } }));
     var rm = el('button', { type: 'button', class: 'pr-ai-link', text: keyMode() === 'acct' ? '계정의 API 키 지우기' : 'API 키 지우기', onclick: function () {
       if (keyMode() === 'acct') SnAuth.saveAiKey(null).then(function () { acctKey = { has: false }; rm.textContent = '계정에서 키를 지웠습니다'; }).catch(function () { rm.textContent = '지우지 못했어요'; });
       else { store(AI_KEY, null); rm.textContent = '키를 지웠습니다'; }
@@ -798,9 +814,16 @@
       aiPaintAll(r.id);
     });
   }
-  /* AI 를 새로 부르기 전 확인창: 무엇을 보내 무엇을 받는지(저장된 결과를 다시 볼 때는 묻지 않는다) */
-  function aiOk(what) {
-    return confirm('🤖 AI 분석을 시작할까요?\n\n' + what + '\n\n' + (keyMode() === 'acct' ? '계정에 넣어 둔' : '이 브라우저에 넣어 둔') + ' 내 Anthropic API 키로 요청해요(요금이 조금 들어요).');
+  /* AI 를 새로 부르기 전 확인: 창을 띄우지 않고 그 자리(옆 칸·문항 칸)에서 '무엇을 보내 무엇을 받는지'를 보이고 [시작]/[취소]
+   * (저장된 결과를 다시 볼 때는 묻지 않는다). 취소하면 정답도 열지 않는다 */
+  function aiCancel(r) {
+    r.status = r.back || 'idle'; r.go = null;
+    if (r.status !== 'idle') { aiPaintAll(r.id); return; }
+    Array.prototype.forEach.call(root.querySelectorAll('[data-ai]'), function (n) {
+      if (n.getAttribute('data-ai') !== r.id) return;
+      if (aiDlg && aiDlg.open && aiDlg.contains(n)) aiDlg.close();
+      var w = n.closest('.pr-hint') || n; if (w.parentNode) w.parentNode.removeChild(w);
+    });
   }
   /* 채점 전에 맞고 틀림이 드러나지 않게 같은 말로 쓴다 */
   function aiWhatItem(label, it, a, opens) {
@@ -808,21 +831,26 @@
   }
   /* build(): Promise<{ content:[...], persist?, chips? }> — 같은 id는 다시 요청하지 않는다(force면 새로). what: 확인창에 보일 '무엇을 분석하나'.
      확인창에서 취소하면 상태를 그대로 두고 돌아간다(처음이면 'idle' — 부른 쪽은 아무것도 띄우지 않는다) */
-  function aiStart(id, build, force, what) {
+  function aiStart(id, build, force, what, onGo) {
     var r = aiRun(id);
     r.build = build;
     if (what) r.what = what;
     if (r.status === 'run' || (r.status === 'done' && !force)) return r;
     if (!keyMode()) { r.status = 'nokey'; aiPaintAll(id); return r; }
-    if (!aiOk(r.what || '같은 자료로 AI 해설을 처음부터 다시 받아요.')) return r;
+    if (r.status !== 'ask') r.back = r.status;   // 취소하면 돌아갈 상태
+    r.status = 'ask';
+    r.go = function () { r.go = null; if (onGo) onGo(); aiRunNow(r, id, build); };
+    aiPaintAll(id);
+    return r;
+  }
+  function aiRunNow(r, id, build) {
     r.turns = [{ a: '' }]; r.usage = null; r.msgs = null; r.retry = null;
     r.status = 'run'; aiPaintAll(id);
-    build().then(function (req) {
+    return build().then(function (req) {
       r.persist = !!req.persist; r.chips = req.chips || []; r.weak = req.weak || null;
       r.msgs = [{ role: 'user', content: req.content }];
       return aiSend(r);
     }).catch(function (e) { r.status = 'err'; r.err = aiErr(e).msg; aiPaintAll(id); });
-    return r;
   }
   /* 추가 질문 — 캐시에서 불러온 해설이면 첫 요청을 다시 만들고 이전 답을 글로 붙여 대화를 잇는다 */
   function aiFollow(id, q, label) {
@@ -1212,10 +1240,69 @@
     if (aiStart(hintAiId(i), function () { return hintReq(i); }, false, itemLabel(S.items[i]) + ' — 문항 그림만 보내 정답은 숨긴 힌트(실마리)를 받아요.').status === 'idle') return;
     refreshCard(i);
   }
+  /* 틀린 문제 한꺼번에: 옆 칸에서 한 번 묻고, 동시에 AI_PAR 개씩 AI 해설을 받는다(이미 받은 문항은 그대로 보여 준다).
+   * 옆 칸에 문항별로 모아 보이고, 문항 칸(수학·탐구·한국사)에도 같이 나온다. 결과는 문항 해설처럼 이 기기에 저장된다 */
+  var AI_PAR = 4;
+  function wrongIdxs() { var out = []; S.items.forEach(function (it, i) { if (S.ans[i] && !isRight(it, S.ans[i])) out.push(i); }); return out; }
+  function showItem(i) {
+    var it = S.items[i], t = PAPER ? document.getElementById('pq-' + it.sec + it.n) : document.getElementById('q-' + i);
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function askWrongAll() {
+    var list = wrongIdxs();
+    if (!list.length) return;
+    var todo = list.filter(function (i) { var st = aiRun(itemAiId(i)).status; return st !== 'done' && st !== 'run'; });
+    var head = el('div', { class: 'pr-ai-askbox' }), box = el('div', { class: 'pr-ai-batch' }, [head]);
+    var go = function () {
+      var q = todo.slice(), running = 0, fin = 0, bad = 0;
+      var paint = function () {
+        head.innerHTML = '';
+        head.appendChild(el('p', { class: 'pr-ai-ask-h', text: fin < todo.length ? '🤖 ' + fin + ' / ' + todo.length + '개 끝 · 동시에 ' + AI_PAR + '개씩 받는 중…'
+          : bad ? '⚠️ ' + (todo.length - bad) + '개 받았고 ' + bad + '개는 받지 못했어요 — 그 문항의 ‘다시 시도’를 눌러 주세요' : '✅ ' + todo.length + '개 모두 받았어요' }));
+        head.appendChild(el('p', { class: 'pr-ai-ask-c', text: '받은 해설은 이 기기에 저장돼요. 문항 이름을 누르면 시험지의 그 문항으로 가요.' }));
+      };
+      var next = function () {
+        while (running < AI_PAR && q.length) {
+          var i = q.shift(), id = itemAiId(i), r = aiRun(id), it = S.items[i];
+          r.build = (function (k) { return function () { return itemReq(k); }; })(i);
+          r.what = aiWhatItem(itemLabel(it), it, S.ans[i], false);
+          running++;
+          aiRunNow(r, id, r.build).then((function (rr) { return function () { running--; fin++; if (rr.status !== 'done') bad++; paint(); next(); }; })(r));
+          if (!PAPER) refreshCard(i);
+        }
+      };
+      paint(); next();
+    };
+    if (!keyMode()) {
+      aiStart(itemAiId(todo[0] != null ? todo[0] : list[0]), function () { return itemReq(todo[0] != null ? todo[0] : list[0]); });   // 첫 문항 칸에 키 넣는 칸
+      head.appendChild(el('p', { class: 'pr-ai-ask-h', text: '🤖 AI 해설은 내 Anthropic API 키로 요청해요' }));
+      head.appendChild(el('p', { class: 'pr-ai-ask-c', text: '아래 첫 문항 칸에 키를 넣어 저장한 뒤, 이 단추를 다시 눌러 주세요.' }));
+    } else if (!todo.length) {
+      head.appendChild(el('p', { class: 'pr-ai-ask-h', text: '✅ 틀린 문제 ' + list.length + '개 모두 AI 해설을 받아 두었어요' }));
+    } else {
+      head.appendChild(el('p', { class: 'pr-ai-ask-h', text: '🤖 틀린 문제 ' + todo.length + '개를 한꺼번에 AI 해설 받을까요?' }));
+      head.appendChild(el('p', { class: 'pr-ai-ask-w', text: '문항마다 그림·내 답·정답·해설을 보내 해설과 내 답 분석을 받아요' + (list.length > todo.length ? '(이미 받은 ' + (list.length - todo.length) + '개는 그대로)' : '') + '. 동시에 ' + AI_PAR + '개씩 요청해요.' }));
+      head.appendChild(el('p', { class: 'pr-ai-ask-c', text: (keyMode() === 'acct' ? '계정에 넣어 둔' : '이 브라우저에 넣어 둔') + ' 내 Anthropic API 키로 ' + todo.length + '번 요청해요(대략 $' + (0.05 * todo.length).toFixed(2) + '~$' + (0.2 * todo.length).toFixed(2) + ').' }));
+      head.appendChild(el('div', { class: 'pr-ai-keyrow' }, [
+        el('button', { type: 'button', class: 'pr-btn pr-ai-go', text: '모두 시작', onclick: go }),
+        el('button', { type: 'button', class: 'pr-btn', text: '취소', onclick: function () { aiDlg.close(); } })
+      ]));
+    }
+    list.forEach(function (i) {
+      var it = S.items[i];
+      box.appendChild(el('div', { class: 'pr-ai-bitem' }, [
+        el('p', { class: 'pr-ai-bh' }, [el('button', { type: 'button', class: 'pr-ai-link', text: itemLabel(it) + ' (' + it.pts + '점)', onclick: function () { showItem(i); } }), ' · 내 답 ' + ansText(it, S.ans[i]) + ' → 정답 ' + corrText(it)]),
+        aiBox(itemAiId(i))
+      ]));
+    });
+    showDlg('🤖 틀린 문제 AI 해설 (' + list.length + ')', box);
+  }
   function askItem(i) {
     var it = S.items[i], id = itemAiId(i), build = function () { return itemReq(i); };
-    if (aiStart(id, build, false, aiWhatItem(itemLabel(it), it, S.ans[i], !isShown(i))).status === 'idle') return;   // 확인창에서 취소: 정답도 열지 않는다
-    if (!isShown(i)) { S.revealed[i] = true; sendAttempt(i); }
+    var open = function () { if (!isShown(i)) { S.revealed[i] = true; sendAttempt(i); } };   // AI 해설을 받으면 이 문항 정답도 열린다
+    var r = aiStart(id, build, false, aiWhatItem(itemLabel(it), it, S.ans[i], !isShown(i)), function () { open(); if (!PAPER) refreshCard(i); renderOmr(); });
+    if (r.status === 'idle') return;
+    if (r.status !== 'ask') open();   // 묻는 중이면 '시작'을 누를 때 연다(취소하면 정답도 열지 않는다)
     if (PAPER) showDlg(it.n + '번 AI 해설', aiBox(id));
     else {
       refreshCard(i);
@@ -1470,7 +1557,7 @@
     });
     if (rows.length) { SnAuth.record(rows); dueSoon(); }
   }
-  function reopen() { S.graded = false; S.revealed = {}; S.regrade = true; renderAll(); }
+  function reopen() { S.graded = false; S.revealed = {}; S.regrade = true; persist(); renderAll(); }
 
   /* ───────── 문제별 노트: 메모·선지 표시(○△✕)·헷갈림·오답 원인. 이 기기에 바로 저장하고, 로그인하면 계정(/api/qnotes)과 맞춘다 ─────────
    * notes["<회차>/<번호>"] = { m: 선지 1~5 표시 다섯 글자(o ○ · t △ · x ✕ · - 없음), t: 메모, f: 헷갈림 0·1, c: 오답 원인, u: 고친 시각 } */
@@ -2298,10 +2385,8 @@
     return '틀린·헷갈린 문제 다시 풀기';
   }
 
-  function grade() {
-    if (S.graded) return;
-    stopTimer();
-    S.graded = true; S.revealed = {};
+  /* 점수 계산만(기록·전송 없음) — 채점할 때와, 채점해 둔 시험을 다시 열 때 같이 쓴다 */
+  function scoreOf() {
     var sc = 0, tot = 0, right = 0, wrongIds = [], bySec = {};
     S.items.forEach(function (it, i) {
       tot += it.pts;
@@ -2310,7 +2395,6 @@
       var g = it.sec || 'c';
       bySec[g] = bySec[g] || { sc: 0, tot: 0 };
       bySec[g].tot += it.pts; if (ok) bySec[g].sc += it.pts;
-      if (!PAPER) recordWrong(it, S.ans[i]);
       if (S.ans[i] && !ok) wrongIds.push(PAPER ? it.n : i + 1);
     });
     var listen = null;
@@ -2318,13 +2402,30 @@
       listen = { sc: 0, tot: 0 };
       S.items.forEach(function (it, i) { if (it.n <= 17) { listen.tot += it.pts; if (isRight(it, S.ans[i])) listen.sc += it.pts; } });
     }
-    S.result = { sc: sc, tot: tot, right: right, n: S.items.length, wrong: wrongIds, unanswered: S.ans.filter(function (a) { return !a; }).length, used: EXAM_SECONDS - S.left, over: Math.max(0, -S.left), bySec: bySec, listen: listen };
+    return { sc: sc, tot: tot, right: right, n: S.items.length, wrong: wrongIds, unanswered: S.ans.filter(function (a) { return !a; }).length, used: EXAM_SECONDS - S.left, over: Math.max(0, -S.left), bySec: bySec, listen: listen };
+  }
+  /* 채점해 둔 시험을 다시 열면 채점된 채로(점수·정답·오답 표시). 점수 기록·계정 전송은 다시 하지 않는다 */
+  function restoreGraded(sv) {
+    S.graded = true; S.revealed = {};
+    if (typeof sv.left === 'number') S.left = sv.left;
+    S.usedTimer = !!sv.ut;
+    S.sent = S.ans.slice();
+    S.result = scoreOf();
+  }
+  function grade() {
+    if (S.graded) return;
+    stopTimer();
+    S.graded = true; S.revealed = {};
+    if (!PAPER) S.items.forEach(function (it, i) { recordWrong(it, S.ans[i]); });
+    S.result = scoreOf();
+    var sc = S.result.sc, tot = S.result.tot;
     var hist = store('sn:' + SUB + ':hist') || [];
     var d = new Date(), gc = gradeCuts();
     var entry = { d: (d.getMonth() + 1) + '/' + d.getDate(), s: setLabel(), sc: sc, t: tot, g: gc ? gradeText(sc, gc) : undefined };
     if (S.regrade && hist.length && hist[hist.length - 1].s === entry.s) hist[hist.length - 1] = entry; else hist.push(entry);   // 고쳐서 다시 채점하면 같은 기록을 바꾼다
     S.regrade = false;
     store('sn:' + SUB + ':hist', hist.slice(-40));
+    persist();   // 채점했다는 것도 저장 — 다음에 들어와도 채점된 채로
     sendGraded();
     renderAll();
     if (PAPER && isNarrow()) toggleOmr(true);
@@ -2415,6 +2516,8 @@
     }
     var acts = el('div', { class: 'pr-acts' });
     acts.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '✏️ 답 이어서 고르기', title: '채점을 풀고 답을 더 고르거나 고친 뒤 다시 채점해요', onclick: reopen }));
+    var wn = wrongIdxs().length;
+    if (wn) acts.appendChild(el('button', { type: 'button', class: 'pr-btn pr-ai-cta', text: '🤖 틀린 문제 ' + wn + '개 한꺼번에 AI 해설', onclick: askWrongAll }));
     acts.appendChild(el('button', { type: 'button', class: 'pr-btn pr-ai-cta', text: '🤖 이번 ' + (S.set.indexOf('exam:') === 0 ? '시험' : '세트') + ' AI 분석 (문제점·강점)', onclick: askExam }));
     acts.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '다시 풀기', onclick: function () { if (S.set.indexOf('exam:') === 0) store('sn:' + SUB + ':' + S.set, null); startSet(S.set); } }));
     if ((r.wrong.length || unsureCount()) && !PAPER) acts.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '틀린·헷갈린 문제 모아 풀기', onclick: function () { startSet('wrong:all'); } }));
