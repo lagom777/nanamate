@@ -120,5 +120,37 @@
     });
   }
 
-  w.SnAuth = { me: me, login: login, logout: logout, record: record, wrong: wrong, exportAttempts: exportAttempts, notes: notes, saveNotes: saveNotes, due: due, aiKey: aiKey, saveAiKey: saveAiKey };
+  /* 계정별 AI 해설·분석(수능 풀어보기): aiIndex(sub) → [{id, ts}] 이름과 고친 시각만, aiGet(sub, ids) → [{id, ts, data}] 내용(20개씩),
+     saveAiNote(id, sub, data, ts) → true(저장) · false(서버가 받지 않는 모양 — 다시 보내지 않는다) */
+  function aiJson(r) {
+    if (r.status === 401) meCache = { id: null };
+    if (!r.ok) throw new Error('ai');
+    return r.json();
+  }
+  function aiIndex(sub) {
+    return fetch('/api/ai?sub=' + encodeURIComponent(sub), { credentials: 'same-origin', cache: 'no-store' }).then(aiJson);
+  }
+  function aiGet(sub, ids) {
+    return fetch('/api/ai/get', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sub: sub, ids: ids })
+    }).then(aiJson);
+  }
+  function saveAiNote(id, sub, data, ts) {
+    return fetch('/api/ai', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: id, sub: sub, data: data, ts: ts })
+    }).then(function (r) {
+      if (r.status === 401) { meCache = { id: null }; throw new Error('auth'); }
+      if (r.status === 400) return false;
+      if (!r.ok) throw new Error('ai');
+      return true;
+    });
+  }
+
+  w.SnAuth = { me: me, login: login, logout: logout, record: record, wrong: wrong, exportAttempts: exportAttempts, notes: notes, saveNotes: saveNotes, due: due, aiKey: aiKey, saveAiKey: saveAiKey, aiIndex: aiIndex, aiGet: aiGet, saveAiNote: saveAiNote };
 })(window);

@@ -499,7 +499,7 @@
       } }) : null
     ]));
     if (memoOpen(it, i)) c.appendChild(memoBox(it, i));
-    if (!shown && aiRun(hintAiId(i)).status !== 'idle') c.appendChild(el('div', { class: 'pr-explain pr-hint' }, [aiBox(hintAiId(i))]));
+    if (!shown && aiNeed(hintAiId(i), function () { return hintReq(i); }).status !== 'idle') c.appendChild(el('div', { class: 'pr-explain pr-hint' }, [aiBox(hintAiId(i))]));
     if (!shown && aiRun(itemAiId(i)).status === 'ask') c.appendChild(el('div', { class: 'pr-explain pr-hint' }, [aiBox(itemAiId(i))]));
     if (shown) c.appendChild(reveal(it, i));
     return c;
@@ -528,7 +528,7 @@
     var body = el('div', { class: 'pr-exp-body', text: '해설 불러오는 중…' });
     box.appendChild(body);
     var aid = itemAiId(i);
-    if (aiRun(aid).status !== 'idle') box.appendChild(aiBox(aid));
+    if (aiNeed(aid, function () { return itemReq(i); }).status !== 'idle') box.appendChild(aiBox(aid));
     loadExplain(it.ex).then(function (map) {
       var t = map && map[it.n];
       if (t) { body.className = 'pr-exp-body has'; body.innerHTML = t; }
@@ -644,15 +644,118 @@
     flush();
     return out.join('');
   }
-  /* 실행 상태: turns = [{q?, a}] (첫 턴은 해설, 이후는 추가 질문), msgs = API로 보낸 대화(어시스턴트 응답은 content 그대로 덧붙임) */
+  /* 실행 상태: turns = [{q?, a}] (첫 턴은 해설, 이후는 추가 질문), msgs = API로 보낸 대화(어시스턴트 응답은 content 그대로 덧붙임).
+   * status: idle · ask(시작 확인) · nokey · run · done · err · load(계정에 둔 것을 받는 중) */
   function aiRun(id) {
     if (!aiRuns[id]) {
       var c = store('sn:ai:' + id);
       aiRuns[id] = c && c.turns
         ? { id: id, status: 'done', turns: c.turns, usage: c.u || null, chips: c.c || [], weak: c.w || null, msgs: null }
         : { id: id, status: 'idle', turns: [], usage: null, msgs: null };
+      if (aiCloudOn() && aiIdx && aiIdx[id] > aiT(c)) aiLoad(aiRuns[id]);
     }
     return aiRuns[id];
+  }
+  /* 그 자리에서 이어 묻기·다시 만들기를 하려면 처음 요청을 다시 만들 수 있어야 한다(저장해 둔 해설을 그냥 보여 주는 칸도) */
+  function aiNeed(id, build) { var r = aiRun(id); if (!r.build) r.build = build; return r; }
+
+  /* ───────── 계정에 둔 AI 해설: 로그인하면 이 과목 목록(이름·고친 시각)만 받아 두고(aiIdx), 내용은 그 해설 칸을 열 때 받아 이 기기에도 남긴다.
+   * 이 기기에만 있거나 이 기기 것이 더 새 것이면 계정으로 올린다 — 휴대폰·컴퓨터 어디서 받은 해설이든 다시 요청(요금) 없이 본다.
+   * 이 기기 저장 모양: sn:ai:<id> = { turns, u, c, w, t(고친 시각 ms · 예전 것은 없음 = 1로 친다), x(서버가 받지 않음) } ───────── */
+  var aiIdx = null, aiWant = [], aiWantT = 0, AI_GET = 20;
+  function aiCloudOn() { return !!(meUser && meUser.id && window.SnAuth && SnAuth.aiGet); }
+  function aiT(v) { return v && v.turns ? v.t || 1 : 0; }
+  function aiKeep(id, v) {   // 새로 받은(이어 물은) 해설: 이 기기에 남기고 계정에도
+    v.t = Date.now();
+    store('sn:ai:' + id, v);
+    aiUp(id, v);
+  }
+  function aiUp(id, v) {
+    if (!aiCloudOn() || !v || !v.turns) return Promise.resolve();
+    var ts = aiT(v);
+    return SnAuth.saveAiNote(id, SUB, { turns: v.turns, u: v.u || null, c: v.c || [], w: v.w || null }, ts).then(function (ok) {
+      if (!ok) { var cur = store('sn:ai:' + id); if (cur && aiT(cur) === ts) { cur.x = 1; store('sn:ai:' + id, cur); } return; }
+      if (!aiIdx) aiIdx = {};
+      if ((aiIdx[id] || 0) < ts) aiIdx[id] = ts;
+      var r = aiRuns[id];
+      if (r && r.status === 'done') aiPaintAll(id);   // ☁️ 저장됨 표시
+    }).catch(function () {});
+  }
+  /* 계정 것을 받는다: 이 기기에 없으면 '불러오는 중', 있으면(계정 것이 더 새 것) 이 기기 것을 보이다가 바꿔 넣는다 */
+  function aiLoad(r) {
+    if (r.status === 'idle') r.status = 'load';
+    else if (r.status === 'done') r.stale = 1;
+    else return;
+    if (aiWant.indexOf(r.id) < 0) aiWant.push(r.id);
+    if (!aiWantT) aiWantT = setTimeout(function () {
+      aiWantT = 0;
+      var ids = aiWant.splice(0, aiWant.length);
+      for (var k = 0; k < ids.length; k += AI_GET) aiGetPart(ids.slice(k, k + AI_GET));
+    }, 0);
+    aiPaintAll(r.id);
+  }
+  function aiGetPart(ids) {
+    SnAuth.aiGet(SUB, ids).then(function (rows) {
+      var got = {};
+      (rows || []).forEach(function (row) { if (row && row.data && Array.isArray(row.data.turns)) { got[row.id] = 1; aiTake(row); } });
+      ids.forEach(function (id) { if (!got[id]) aiMiss(id, false); });
+    }).catch(function () { ids.forEach(function (id) { aiMiss(id, true); }); });
+  }
+  function aiTake(row) {
+    var v = row.data, id = row.id, r = aiRuns[id];
+    v.t = row.ts;
+    if (aiT(store('sn:ai:' + id)) < row.ts) store('sn:ai:' + id, v);   // 저장 공간이 차면 이번에는 화면에만
+    if (!r || !(r.status === 'load' || (r.status === 'done' && r.stale))) return;
+    r.status = 'done'; r.stale = 0; r.after = null;
+    r.turns = v.turns; r.usage = v.u || null; r.chips = v.c || []; r.weak = v.w || null; r.msgs = null;
+    aiPaintAll(id);
+  }
+  /* 받지 못함: 망 오류면 '다시 시도'로 다시 받고, 계정에 없으면 처음 상태로(그사이 AI 해설을 누른 칸은 시작 확인으로) */
+  function aiMiss(id, net) {
+    var r = aiRuns[id];
+    if (!net && aiIdx) delete aiIdx[id];
+    if (!r) return;
+    if (r.stale) { r.stale = 0; return; }   // 이 기기 것을 그대로 본다
+    if (r.status !== 'load') return;
+    if (r.after) { var f = r.after; r.after = null; r.status = 'idle'; f(); return; }
+    if (net) {
+      r.status = 'err'; r.err = '계정에 저장해 둔 AI 해설을 불러오지 못했어요. 인터넷 연결을 확인하고 다시 시도해 주세요.';
+      r.retry = function () { r.retry = null; r.status = 'idle'; aiLoad(r); };
+    } else r.status = 'idle';
+    aiPaintAll(id);
+  }
+  /* 로그인 뒤 한 번(그리고 1분 넘게 다른 곳에 있다 이 탭으로 돌아올 때 — 그사이 다른 기기에서 받은 해설): 목록을 받아,
+   * 이미 그린 칸 중 계정 것이 있거나 더 새 것을 받고, 이 기기에만 있는(더 새) 것은 3개씩 올린다 */
+  var aiSyncAt = 0;
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible' && aiSyncAt && Date.now() - aiSyncAt > 60000) aiSync();
+  });
+  function aiSync() {
+    if (!aiCloudOn() || !SnAuth.aiIndex) return;
+    aiSyncAt = Date.now();
+    SnAuth.aiIndex(SUB).then(function (rows) {
+      var m = {};
+      (rows || []).forEach(function (x) { if (x && typeof x.id === 'string' && x.ts > 0) m[x.id] = x.ts; });
+      if (aiIdx) for (var k in aiIdx) if ((m[k] || 0) < aiIdx[k]) m[k] = aiIdx[k];   // 그사이 올린 것
+      aiIdx = m;
+      Object.keys(aiRuns).forEach(function (id) {
+        var r = aiRuns[id];
+        if (aiIdx[id] > aiT(store('sn:ai:' + id)) && (r.status === 'idle' || r.status === 'done')) aiLoad(r);
+      });
+      if (!PAPER) S.items.forEach(function (it, i) {
+        if ((!isShown(i) && aiIdx[hintAiId(i)] && aiRun(hintAiId(i)).status === 'load') || (isShown(i) && aiIdx[itemAiId(i)] && aiRun(itemAiId(i)).status === 'load')) refreshCard(i);
+      });
+      aiPush();
+    }).catch(function () {});
+  }
+  function aiPush() {
+    var ids = [], re = new RegExp('^sn:ai:([qxswh]:' + SUB + '(?::.*)?)$');
+    try {
+      for (var k = 0; k < localStorage.length; k++) { var mm = re.exec(localStorage.key(k) || ''); if (mm) ids.push(mm[1]); }
+    } catch (e) { return; }
+    var q = ids.filter(function (id) { var v = store('sn:ai:' + id); return v && v.turns && !v.x && aiT(v) > (aiIdx[id] || 0); });
+    var next = function () { var id = q.shift(); if (id) aiUp(id, store('sn:ai:' + id)).then(next); };
+    for (var n = 0; n < 3; n++) next();
   }
   function aiPaintAll(id) {
     var r = aiRuns[id];
@@ -712,6 +815,7 @@
   function aiPaint(b, r) {
     b.innerHTML = '';
     if (r.status === 'idle') { b.appendChild(el('p', { class: 'pr-ai-wait', text: '⏳ 차례를 기다리는 중' })); return; }
+    if (r.status === 'load') { b.appendChild(el('p', { class: 'pr-ai-wait', text: '☁️ 내 계정에 저장해 둔 AI 해설을 불러오는 중…' })); return; }
     if (r.status === 'ask') {
       b.appendChild(el('div', { class: 'pr-ai-askbox' }, [
         el('p', { class: 'pr-ai-ask-h', text: '🤖 AI에게 물어볼까요?' }),
@@ -775,6 +879,8 @@
       var cost = r.usage.input_tokens * 4e-6 + r.usage.output_tokens * 20e-6;
       foot.appendChild(el('span', { text: '🤖 Claude Opus 5.5 · 입력 ' + r.usage.input_tokens + ' · 출력 ' + r.usage.output_tokens + ' 토큰 (약 $' + cost.toFixed(3) + ') · 누적 약 $' + spent().usd.toFixed(2) }));
     }
+    if (aiCloudOn() && aiIdx && aiIdx[r.id]) foot.appendChild(el('span', { class: 'pr-ai-saved', text: '☁️ 내 계정에 저장됨 · 다른 기기에서도 보여요' }));
+    else if (!aiCloudOn() && store('sn:ai:' + r.id)) foot.appendChild(el('span', { class: 'pr-ai-saved', text: '이 기기에만 저장됨 · 로그인하면 계정에도 저장돼요' }));
     if (r.build) foot.appendChild(el('button', { type: 'button', class: 'pr-ai-link', text: '처음부터 다시 생성', onclick: function () { aiStart(r.id, r.build, true, null, function () { store('sn:ai:' + r.id, null); }); } }));
     var rm = el('button', { type: 'button', class: 'pr-ai-link', text: keyMode() === 'acct' ? '계정의 API 키 지우기' : 'API 키 지우기', onclick: function () {
       if (keyMode() === 'acct') SnAuth.saveAiKey(null).then(function () { acctKey = { has: false }; rm.textContent = '계정에서 키를 지웠습니다'; }).catch(function () { rm.textContent = '지우지 못했어요'; });
@@ -824,7 +930,7 @@
       var sp = spent();
       store('sn:ai:spent', { usd: sp.usd + inT * 4e-6 + outT * 20e-6, n: sp.n + 1 });
       if (r.turns.length === 1 && r.weak && r.weak.auto) { var wn = weakParse(turn.a, r.weak); if (wn) weakAdd(wn); }
-      if (r.persist) store('sn:ai:' + r.id, { turns: r.turns, u: r.usage, c: r.chips, w: r.weak });
+      if (r.persist) aiKeep(r.id, { turns: r.turns, u: r.usage, c: r.chips, w: r.weak });
       aiPaintAll(r.id);
     }).catch(function (e) {
       var x = aiErr(e);
@@ -854,6 +960,7 @@
     var r = aiRun(id);
     r.build = build;
     if (what) r.what = what;
+    if (r.status === 'load') { r.after = function () { aiStart(id, build, force, what, onGo); }; return r; }
     if (r.status === 'run' || (r.status === 'done' && !force)) return r;
     if (!keyMode()) { r.status = 'nokey'; aiPaintAll(id); return r; }
     if (r.status !== 'ask') r.back = r.status;   // 취소하면 돌아갈 상태
@@ -1272,7 +1379,7 @@
   function askWrongAll() {
     var list = wrongIdxs();
     if (!list.length) return;
-    var todo = list.filter(function (i) { var st = aiRun(itemAiId(i)).status; return st !== 'done' && st !== 'run'; });
+    var todo = list.filter(function (i) { var st = aiNeed(itemAiId(i), function () { return itemReq(i); }).status; return st !== 'done' && st !== 'run' && st !== 'load'; });
     var head = el('div', { class: 'pr-ai-askbox' }), box = el('div', { class: 'pr-ai-batch' }, [head]);
     var go = function () {
       var q = todo.slice(), running = 0, fin = 0, bad = 0;
@@ -1280,11 +1387,12 @@
         head.innerHTML = '';
         head.appendChild(el('p', { class: 'pr-ai-ask-h', text: fin < todo.length ? '🤖 ' + fin + ' / ' + todo.length + '개 끝 · 동시에 ' + AI_PAR + '개씩 받는 중…'
           : bad ? '⚠️ ' + (todo.length - bad) + '개 받았고 ' + bad + '개는 받지 못했어요 — 그 문항의 ‘다시 시도’를 눌러 주세요' : '✅ ' + todo.length + '개 모두 받았어요' }));
-        head.appendChild(el('p', { class: 'pr-ai-ask-c', text: '받은 해설은 이 기기에 저장돼요. 문항 이름을 누르면 시험지의 그 문항으로 가요.' }));
+        head.appendChild(el('p', { class: 'pr-ai-ask-c', text: (aiCloudOn() ? '받은 해설은 이 기기와 내 계정에 저장돼요(다른 기기에서도 보여요).' : '받은 해설은 이 기기에 저장돼요(로그인하면 계정에도).') + ' 문항 이름을 누르면 시험지의 그 문항으로 가요.' }));
       };
       var next = function () {
         while (running < AI_PAR && q.length) {
           var i = q.shift(), id = itemAiId(i), r = aiRun(id), it = S.items[i];
+          if (r.status === 'done' || r.status === 'run' || r.status === 'load') { fin++; paint(); continue; }   // 그사이 계정에서 받았거나 이미 받는 중
           r.build = (function (k) { return function () { return itemReq(k); }; })(i);
           r.what = aiWhatItem(itemLabel(it), it, S.ans[i], false);
           running++;
@@ -1354,7 +1462,7 @@
       (mine ? '\n\n(줄 끝의 헷갈림 표시·내가 고른 원인·메모는 내가 직접 남긴 기록입니다. 분석할 때 이것과 비교해 짚어 주세요.)' : '') +
       (imgs.length ? '\n\n앞의 이미지는 틀린 문항(일부)입니다.' : '') +
       '\n\n이 세트에서 드러난 나의 문제점과 강점을 분석해 주세요. 먼저 **한눈 요약** 3줄(가장 큰 문제점 하나 · 잘한 점 하나 · 바로 할 일 하나)을 쓰고, "===자세히===" 한 줄을 쓴 다음 자세한 분석을 이 순서로:\n**총평** 2~3줄\n**문제점** 약한 단원·유형과 반복된 실수 유형(개념 부족 / 조건·자료 해석 / 계산 / 시간 관리 / 찍기 의심), 근거 문항 번호를 들어서\n**강점** 안정적으로 맞힌 단원·유형, 근거 문항 번호\n**시간 사용** 풀이 시간 기록이 있으면 서두름·막힘 판단\n**다음에 할 것** 우선순위 3가지' });
-    return Promise.resolve({ content: content, chips: chips, persist: true });   // 시험 분석도 이 기기에 남긴다(같은 답이면 다시 보기)
+    return Promise.resolve({ content: content, chips: chips, persist: true });   // 시험 분석도 남긴다(이 기기·로그인하면 계정 — 같은 답이면 다시 보기)
   }
   function askExam() {
     var what = (S.set.indexOf('exam:') === 0 ? '이번 시험' : '이번 세트') + '(' + setLabel() + ') — 문항별 내 답·정답·풀이 시간·메모와 틀린 문항 그림 몇 장을 보내 문제점·강점 분석을 받아요.';
@@ -2023,10 +2131,11 @@
   }
   /* 전에 받아 둔 AI 해설이 있으면(고른 답이 달라도) 그것부터 보인다 */
   function savedAi(r) {
-    var pre = 'sn:ai:' + aiIdOf(r.exam, r.sec, r.n, 0).replace(/:0$/, ':');
+    var pre = aiIdOf(r.exam, r.sec, r.n, 0).replace(/:0$/, ':');
     try {
-      for (var k = 0; k < localStorage.length; k++) { var key = localStorage.key(k); if (key && key.indexOf(pre) === 0) return key.slice(6); }
+      for (var k = 0; k < localStorage.length; k++) { var key = localStorage.key(k); if (key && key.indexOf('sn:ai:' + pre) === 0) return key.slice(6); }
     } catch (e) {}
+    if (aiCloudOn() && aiIdx) for (var id in aiIdx) if (id.indexOf(pre) === 0) return id;
     return '';
   }
   function sheetSec(title, kids) { return el('section', { class: 'pr-sheet-sec' }, [el('h4', { text: title })].concat(kids)); }
@@ -2071,7 +2180,10 @@
       /* ⑤ AI 실수 분석 */
       var id = aiIdOf(r.exam, r.sec, r.n, a > 0 ? a : 0), have = aiRun(id).status !== 'idle' ? id : savedAi(r);
       var aiWrap = sheetSec('🤖 AI 실수 분석', []);
-      if (have) aiWrap.appendChild(aiBox(have));
+      if (have) {
+        aiNeed(have, function () { var ha = +have.split(':').pop(); return reqFor(it, ha > 0 ? ha : lost ? -1 : 0, null, info.m); });
+        aiWrap.appendChild(aiBox(have));
+      }
       else {
         var go = el('button', { type: 'button', class: 'pr-btn pr-ai-cta', text: a > 0 && !isRight(it, a) ? '🤖 내가 ' + ansText(it, a) + '을(를) 고른 이유까지 분석 받기' : '🤖 AI 해설 받기', onclick: function () {
           if (aiStart(id, function () { return reqFor(it, lost ? -1 : a, null, info.m); }, false, aiWhatItem(refLabel(r), it, a)).status === 'idle') return;
@@ -2574,6 +2686,7 @@
     if (meUser.id && start.indexOf('wrong:') === 0) migrateWrong().then(begin);
     else { begin(); if (meUser.id) migrateWrong(); }
     pullNotes();
+    aiSync();
     loadDue(PAPER && wantDue);
     if (meUser.id && window.SnAuth && SnAuth.aiKey) SnAuth.aiKey().then(function (j) { acctKey = j; }).catch(function () {});
     if (PAPER && meUser.id && window.SnAuth) SnAuth.wrong(SUB).then(function (rows) { S.wrongRows = rows; renderOmr(); }).catch(function () {});

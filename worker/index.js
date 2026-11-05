@@ -1,6 +1,7 @@
 import { b64urlToBytes, bytesToB64url, openSession, safeEqual, sealSession } from './session.js';
 import { failedNext, safeNext } from './safe-next.js';
 import { parseAttempts, validExam, validSub } from './attempts.js';
+import { parseAiNote, parseAiIds, AI_NOTES_DDL } from './ainotes.js';
 import { parseStyle } from './style.js';
 import { parseNotes } from './qnotes.js';
 import { dueList } from './due.js';
@@ -281,6 +282,57 @@ async function wrong(request, env, url) {
   return json(results || []);
 }
 
+// 계정별 AI 해설·분석: 기기마다 받아 둔 것을 계정에 모은다. 표는 처음 쓸 때 만든다(마이그레이션을 따로 돌리지 않아도 되게)
+let aiNotesReady = null;
+function ensureAiNotes(env) {
+  if (!aiNotesReady) aiNotesReady = env.DB.batch(AI_NOTES_DDL.map((sql) => env.DB.prepare(sql))).catch((e) => { aiNotesReady = null; throw e; });
+  return aiNotesReady;
+}
+
+// 목록: 이 과목에서 계정에 둔 해설의 이름과 고친 시각(ts)만 — 화면은 이것과 이 기기에 둔 것을 견줘, 열 때 내용을 받고 더 새 것은 올린다
+async function listAiNotes(request, env, url) {
+  const session = await current(request, env);
+  if (!session) return json({ error: 'unauthorized' }, 401);
+  const sub = url.searchParams.get('sub');
+  if (!validSub(sub)) return json({ error: 'bad query' }, 400);
+  await ensureAiNotes(env);
+  const { results } = await env.DB.prepare(
+    'SELECT id, updated_at AS ts FROM ai_notes WHERE user_id = ? AND sub = ? ORDER BY updated_at DESC LIMIT 5000'
+  ).bind(session.uid, sub).all();
+  return json(results || []);
+}
+
+// 내용: 고른 이름들(MAX_GET 개까지)의 해설
+async function getAiNotes(request, env) {
+  const session = await current(request, env);
+  if (!session) return json({ error: 'unauthorized' }, 401);
+  let body;
+  try { body = await request.json(); } catch { return json({ error: 'bad json' }, 400); }
+  const q = parseAiIds(body);
+  if (!q.ok) return json({ error: 'bad ids' }, 400);
+  await ensureAiNotes(env);
+  const { results } = await env.DB.prepare(
+    'SELECT id, data, updated_at AS ts FROM ai_notes WHERE user_id = ? AND sub = ? AND id IN (' + q.ids.map(() => '?').join(', ') + ')'
+  ).bind(session.uid, q.sub, ...q.ids).all();
+  return json((results || []).map((r) => ({ id: r.id, ts: r.ts, data: JSON.parse(r.data) })));
+}
+
+// 같은 id 는 고친 시각(ts)이 늦은 쪽을 남긴다
+async function saveAiNote(request, env) {
+  const session = await current(request, env);
+  if (!session) return json({ error: 'unauthorized' }, 401);
+  let body;
+  try { body = await request.json(); } catch { return json({ error: 'bad json' }, 400); }
+  const parsed = parseAiNote(body);
+  if (!parsed.ok) return json({ error: 'bad note' }, 400);
+  await ensureAiNotes(env);
+  const n = parsed.note;
+  await env.DB.prepare(
+    'INSERT INTO ai_notes (user_id, id, sub, data, updated_at) VALUES (?1, ?2, ?3, ?4, ?5) ON CONFLICT(user_id, id) DO UPDATE SET sub = excluded.sub, data = excluded.data, updated_at = excluded.updated_at WHERE excluded.updated_at >= ai_notes.updated_at'
+  ).bind(session.uid, n.id, n.sub, n.data, n.ts).run();
+  return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
+}
+
 // 계정별 AI 키: 있는지와 앞뒤 몇 글자만 알려 준다(원문은 내려보내지 않는다)
 async function getAiKey(request, env) {
   const session = await current(request, env);
@@ -361,6 +413,9 @@ export default {
       if (path === '/api/attempts' && request.method === 'GET') return await listAttempts(request, env, url);
       if (path === '/api/export' && request.method === 'GET') return await exportAttempts(request, env, url);
       if (path === '/api/wrong' && request.method === 'GET') return await wrong(request, env, url);
+      if (path === '/api/ai' && request.method === 'GET') return await listAiNotes(request, env, url);
+      if (path === '/api/ai' && request.method === 'POST') return await saveAiNote(request, env);
+      if (path === '/api/ai/get' && request.method === 'POST') return await getAiNotes(request, env);
       if (path === '/api/aikey' && request.method === 'GET') return await getAiKey(request, env);
       if (path === '/api/aikey' && request.method === 'POST') return await saveAiKey(request, env);
       if (path === '/api/claude/v1/messages' && request.method === 'POST') return await claudeRelay(request, env, url);

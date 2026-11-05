@@ -30,3 +30,5 @@ npx wrangler secret put SESSION_SECRET
 ```
 
 카카오 Redirect URI는 `https://nanamate.na7.workers.dev/api/auth/kakao/callback` 와 `http://localhost:8787/api/auth/kakao/callback` 이다. 로컬은 `npx wrangler d1 migrations apply nanamate --local` 다음 `npx wrangler dev --local --port 8787`.
+
+수능 풀어보기의 AI 해설·분석은 로그인하면 계정(`ai_notes` 표, `/api/ai`)에도 저장돼 다른 기기에서 다시 요청 없이 보인다. 이 표는 Worker가 처음 쓸 때 `IF NOT EXISTS`로 만들므로 `0007_ai_notes.sql`을 미리 적용하지 않아도 된다(나중에 적용해도 겹치지 않는다).
