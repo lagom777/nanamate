@@ -584,7 +584,9 @@
   function mdLite(src) {
     var esc = String(src || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     function inl(x) {
-      return x.replace(/`([^`]+)`/g, '<code>$1</code>')
+      return x.replace(/“[^”]{1,40}”|‘[^’]{1,40}’|"[^"]{1,40}"/g, '<span class="pr-ai-qt">$&</span>')   // 따옴표 속 낱말(사료 키워드 등)
+        .replace(/(^|[.!?]\s+)(따라서|그래서|그러므로|결국|즉|결론적으로|요컨대)(?=[,\s])/g, '$1<b class="pr-ai-tie">$2</b>')   // 결론을 여는 말
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
         .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
         .replace(/(^|[^*\w])\*(?!\s)([^*]+?)\*(?!\*)/g, '$1<em>$2</em>')
         .replace(/[①②③④⑤]/g, '<span class="pr-ai-n">$&</span>');
@@ -602,10 +604,24 @@
       else if (cur.t === 'q') out.push('<div class="pr-ai-call">' + cur.lines.map(line).join('<br>') + '</div>');
       else if (cur.t === 'tb') out.push('<div class="pr-ai-tbl"><table>' + cur.rows.map(function (r, i) { return '<tr>' + r.map(function (c) { return i ? '<td>' + inl(c) + '</td>' : '<th>' + inl(c) + '</th>'; }).join('') + '</tr>'; }).join('') + '</table></div>');
       else {
-        var l0 = lab(cur.lines[0]), html = cur.lines.map(line).join('<br>');
-        out.push(l0 && AI_KEYL.test(l0.k) ? '<div class="pr-ai-call">' + html + '</div>' : '<p>' + html + '</p>');
+        var l0 = lab(cur.lines[0]);
+        if (l0 && AI_KEYL.test(l0.k)) out.push('<div class="pr-ai-call">' + cur.lines.map(line).join('<br>') + '</div>');
+        else prose(cur.lines);
       }
       cur = null;
+    }
+    /* 긴 줄글은 두 문장씩 끊어 문단으로(짧은 줄은 그대로 한 문단에 줄바꿈으로) */
+    function prose(lines) {
+      var buf = [];
+      function put() { if (buf.length) out.push('<p>' + buf.map(line).join('<br>') + '</p>'); buf = []; }
+      lines.forEach(function (x) {
+        if (x.length < 150) { buf.push(x); return; }
+        var ss = x.replace(/([가-힣A-Za-z0-9)”’"][.!?])\s+(?=\S)/g, '$1\u0001').split('\u0001');
+        if (ss.length < 3) { buf.push(x); return; }
+        put();
+        for (var k = 0; k < ss.length; k += 2) out.push('<p>' + line(ss.slice(k, k + 2).join(' ')) + '</p>');
+      });
+      put();
     }
     function open(t, extra) { if (!cur || cur.t !== t) { flush(); cur = Object.assign({ t: t }, extra); } }
     esc.split('\n').forEach(function (raw) {
