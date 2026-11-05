@@ -581,6 +581,7 @@
   /* AI 답변을 읽기 쉽게: 소제목(한 줄 **굵게**·#)은 제목 줄로, '핵심:'·'정답:' 같은 이름표는 꼬리표로, 핵심·결론 문단은 강조 상자로,
    * 굵은 낱말은 형광펜, ①~⑤는 색, "- "·"1." 목록, 표(| … |)까지. 먼저 모두 이스케이프하고 정해 둔 태그만 만든다 */
   var AI_KEYL = /^(정답|핵심|결론|요약|한 ?줄 정리|포인트|주의|함정|실수|원인|다음 할 일|팁)$/;
+  var AI_KEYS = /(따라서|그래서|그러므로|결국|요컨대|결론|정답|핵심|중요|꼭 기억|기억하세요|주의하|헷갈리기 쉽)/;   // 이런 말이 든 문장은 진하게
   function mdLite(src) {
     var esc = String(src || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     function inl(x) {
@@ -610,16 +611,18 @@
       }
       cur = null;
     }
-    /* 긴 줄글은 두 문장씩 끊어 문단으로(짧은 줄은 그대로 한 문단에 줄바꿈으로) */
+    /* 줄글: 결론·핵심 문장은 진하게, 긴 줄은 두 문장씩 끊어 문단으로(짧은 줄은 그대로 한 문단에 줄바꿈으로) */
+    function sents(x) { return x.replace(/([가-힣A-Za-z0-9)”’"][.!?])\s+(?=\S)/g, '$1\u0001').split('\u0001'); }
+    function keyS(x) { return sents(x).map(function (z) { return AI_KEYS.test(z) ? '<span class="pr-ai-ks">' + inl(z) + '</span>' : inl(z); }).join(' '); }
+    function lineK(x) { var l = lab(x); return l ? '<b class="pr-ai-lab">' + inl(l.k) + '</b> ' + keyS(l.v) : keyS(x); }
     function prose(lines) {
       var buf = [];
-      function put() { if (buf.length) out.push('<p>' + buf.map(line).join('<br>') + '</p>'); buf = []; }
+      function put() { if (buf.length) out.push('<p>' + buf.map(lineK).join('<br>') + '</p>'); buf = []; }
       lines.forEach(function (x) {
-        if (x.length < 150) { buf.push(x); return; }
-        var ss = x.replace(/([가-힣A-Za-z0-9)”’"][.!?])\s+(?=\S)/g, '$1\u0001').split('\u0001');
-        if (ss.length < 3) { buf.push(x); return; }
+        var ss = sents(x);
+        if (x.length < 150 || ss.length < 3) { buf.push(x); return; }
         put();
-        for (var k = 0; k < ss.length; k += 2) out.push('<p>' + line(ss.slice(k, k + 2).join(' ')) + '</p>');
+        for (var k = 0; k < ss.length; k += 2) out.push('<p>' + lineK(ss.slice(k, k + 2).join(' ')) + '</p>');
       });
       put();
     }
@@ -844,16 +847,21 @@
     };
     go();
   }
+  /* AI 분석·해설·오답 노트 칸: 시험지를 가리지 않게 옆(휴대폰은 아래)에 붙여 연다 — 어둡게 덮지 않고, 시험지는 그대로 보고 넘길 수 있다.
+   * 넓은 화면은 본문을 칸 폭만큼 왼쪽으로 비켜(body.pr-dock) 시험지·답안지가 칸 밑에 숨지 않는다. 닫기: ✕ 또는 Esc */
   function showDlg(title, node) {
     if (!aiDlg) {
       aiDlg = el('dialog', { class: 'pr-ai-dlg', 'aria-label': 'AI 해설' });
-      aiDlg.addEventListener('click', function (e) { if (e.target === aiDlg) aiDlg.close(); });
+      aiDlg.addEventListener('close', function () { document.body.classList.remove('pr-dock'); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && aiDlg.open) aiDlg.close(); });
       root.appendChild(aiDlg);
     }
     aiDlg.innerHTML = '';
     aiDlg.appendChild(el('div', { class: 'pr-ai-head' }, [el('b', { text: title }), el('button', { type: 'button', class: 'pr-ai-x', 'aria-label': '닫기', text: '✕', onclick: function () { aiDlg.close(); } })]));
     aiDlg.appendChild(node);
-    if (!aiDlg.open) aiDlg.showModal();
+    document.body.classList.add('pr-dock');
+    if (!aiDlg.open) aiDlg.show();
+    aiDlg.scrollTop = 0;
   }
   function openAi(title, id, build, what) {
     if (aiStart(id, build, false, what).status === 'idle') return;   // 확인창에서 취소
@@ -1624,8 +1632,7 @@
     return { exam: p[0], sec: sec, n: n, label: (e ? shortTitle(e) : p[0]) + ' ' + (sec === 'a' ? '화작 ' : sec === 'b' ? '언매 ' : '') + n + '번' };
   }
   /* 다른 회차·선택과목의 문항으로 가기(열고 나서 그 문항으로) */
-  function goQuestion(exam, sec, n) {
-    if (aiDlg && aiDlg.open) aiDlg.close();
+  function goQuestion(exam, sec, n) {   // 옆 칸(AI 분석·오답 노트)은 열어 둔 채 — 읽으면서 문항을 확인한다
     if (PAPER && (sec === 'a' || sec === 'b') && S.sel !== sec) {
       S.sel = sec;
       if (selSel) selSel.value = sec;

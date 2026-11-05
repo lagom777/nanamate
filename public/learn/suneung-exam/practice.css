@@ -172,6 +172,13 @@
 .pr-ai-body b { color: var(--accent); }
 /* AI 답변 읽기 쉽게: 제목 줄 · 형광펜 굵은 글씨 · 이름표 · 핵심 상자 · ①~⑤ 색 · 목록 · 표 */
 .pr-ai-body { font-size: 15px; line-height: 1.8; }
+/* AI가 알려 준 내용은 한눈에 구분: 색 테두리 상자 + '🤖 AI' 머리표, 목록은 ✔, 결론 문장은 진하게 */
+.pr-ai-body { margin: 6px 0 4px; padding: 10px 14px 4px; border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--pr-line)); border-left: 4px solid var(--accent); border-radius: 12px; background: color-mix(in srgb, var(--accent) 4%, var(--pr-card)); }
+.pr-ai-body::before { content: '🤖 AI'; display: inline-block; margin: 0 0 8px; padding: 1px 9px; border-radius: 999px; font: 700 11.5px var(--font-mono, monospace); line-height: 1.7; color: #fff; background: var(--accent); }
+.pr-ai-body .pr-ai-ks { font-weight: 700; color: var(--text); }
+.pr-ai-body ul { list-style: none; padding-left: 2px; }
+.pr-ai-body ul > li { position: relative; padding-left: 24px; }
+.pr-ai-body ul > li::before { content: '✔'; position: absolute; left: 2px; top: 0; font-weight: 800; color: var(--accent); }
 .pr-ai-body p { margin: 0 0 10px; }
 .pr-ai-body .pr-ai-h { margin: 16px 0 6px; padding-left: 10px; border-left: 3px solid var(--accent); font-size: 15.5px; font-weight: 800; line-height: 1.5; color: var(--text); }
 .pr-ai-body .pr-ai-h:first-child { margin-top: 2px; }
@@ -201,6 +208,15 @@
 #practice-root .pr-ai-link { background: transparent !important; border: 0 !important; padding: 0; color: var(--text-dim) !important; font: inherit; text-decoration: underline; cursor: pointer; }
 .pr-ai-dlg { width: min(760px, calc(100vw - 32px)); max-height: calc(100vh - 48px); padding: 16px 18px 18px; border: 1px solid var(--pr-line); border-radius: 14px; background: var(--pr-card); color: var(--text); overflow-y: auto; }
 .pr-ai-dlg::backdrop { background: rgba(0,0,0,.55); }
+/* 옆에 붙인 칸: 넓은 화면은 오른쪽 세로 칸(본문은 그만큼 비킨다), 좁은 화면은 아래 절반 칸 — 시험지를 보면서 읽는다 */
+:root { --pr-dock-w: min(520px, 42vw); }
+.pr-ai-dlg[open] { position: fixed; inset: 0 0 0 auto; z-index: 40; width: var(--pr-dock-w); height: 100vh; height: 100dvh; max-width: none; max-height: none; margin: 0; box-sizing: border-box; border-radius: 14px 0 0 14px; box-shadow: -10px 0 34px rgba(0,0,0,.18); }
+body.pr-dock.pr-wide-page main.wide { padding-right: calc(var(--pr-dock-w) + 24px); }
+@media (max-width: 900px) {
+  .pr-ai-dlg[open] { inset: auto 0 0 0; width: 100%; height: 58vh; height: 58dvh; border-radius: 14px 14px 0 0; box-shadow: 0 -10px 34px rgba(0,0,0,.22); }
+  body.pr-dock { padding-bottom: 58vh; }
+  body.pr-dock.pr-wide-page main.wide { padding-right: 8px; }
+}
 .pr-ai-dlg .pr-ai { margin-top: 4px; border-top: 0; padding-top: 0; }
 .pr-ai-head { position: sticky; top: -16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: -16px -18px 8px; padding: 12px 18px; background: var(--pr-card); border-bottom: 1px solid var(--pr-line); }
 #practice-root .pr-ai-x { background: transparent !important; border: 0 !important; color: var(--text-dim) !important; font-size: 16px; cursor: pointer; padding: 4px 6px; }
