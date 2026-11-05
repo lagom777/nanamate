@@ -673,7 +673,7 @@
     var wk = text.indexOf('===약점===');
     var note = wk >= 0 && r && r.weak ? weakParse(text, r.weak) : null;
     if (wk >= 0) text = text.slice(0, wk);
-    var d = aiAnswerBody(text);
+    var d = aiAnswerBody(text, r);
     if (note) {
       var has = weakHas(note.q);
       d.appendChild(el('div', { class: 'pr-weak-chip' + (has ? ' on' : '') }, [
@@ -683,9 +683,28 @@
     }
     return d;
   }
-  function aiAnswerBody(text) {
+  /* 짧은 해설 / 자세한 해설: 모델이 "===자세히===" 줄 앞에 쓴 짧은 해설만 먼저 보이고 나머지는 접는다.
+   * 그 줄이 없는 예전의 긴 답(500자 넘게)은 앞 문단(260자쯤)만 보이고 나머지를 접는다 */
+  function aiSplit(t) {
+    var m = t.indexOf('===자세히===');
+    if (m >= 0) return { short: t.slice(0, m), long: t.slice(m + 9).replace(/^=*\s*/, '') };
+    if (t.length < 500) return { short: t, long: '' };
+    var blocks = t.split(/\n{2,}/), acc = '', i = 0;
+    while (i < blocks.length && (i < 1 || acc.length < 260)) { acc += (acc ? '\n\n' : '') + blocks[i]; i++; }
+    var rest = blocks.slice(i).join('\n\n');
+    return rest.trim().length > 120 ? { short: acc, long: rest } : { short: t, long: '' };
+  }
+  function aiAnswerBody(text, r) {
     var k = text.indexOf('===정답===');
-    var d = el('div', { class: 'pr-ai-body pr-exp-body has', html: mdLite(k < 0 ? text : text.slice(0, k)) });
+    var sp = aiSplit(k < 0 ? text : text.slice(0, k));
+    var d = el('div', { class: 'pr-ai-body pr-exp-body has', html: mdLite(sp.short) });
+    if (sp.long.trim()) {
+      var det = el('details', { class: 'pr-ai-fold pr-ai-more' }, [el('summary', { text: '📖 자세한 해설 보기' }), el('div', { html: mdLite(sp.long) })]);
+      if (r && r.more) det.open = true;   // 받는 동안 다시 그려도 펼친 채로
+      det.firstChild.textContent = det.open ? '📖 자세한 해설 접기' : '📖 자세한 해설 보기';
+      det.addEventListener('toggle', function () { if (r) r.more = det.open; det.firstChild.textContent = det.open ? '📖 자세한 해설 접기' : '📖 자세한 해설 보기'; });
+      d.appendChild(det);
+    }
     if (k >= 0) d.appendChild(el('details', { class: 'pr-ai-fold' }, [el('summary', { text: '정답·풀이 보기' }), el('div', { html: mdLite(text.slice(k + 9)) })]));
     return d;
   }
@@ -1206,7 +1225,9 @@
       var mine = noteLines(it);
       if (mine) lines.push('내가 남긴 기록(학생 본인):\n' + mine);
       var wrong = a === -1 || (a && !isRight(it, a)), skip = !a, picked = a > 0;
-      lines.push('다음 순서로 써 주세요.\n**핵심 개념** 이 문항이 묻는 개념을 1~3줄로\n**풀이** 정답에 이르는 과정을 단계별로' +
+      lines.push('먼저 **짧은 해설**을 쉬운 말로 4줄 이내로 쓰세요(30초 안에 읽게): "핵심: …"(이 문항이 묻는 것 한 줄) / "정답: …"(정답 번호와 한 줄 이유)' +
+        (wrong ? ' / "내 실수: …"(' + (picked ? '내가 고른 ' + ansText(it, a) + '이(가) 왜 틀렸는지' : '흔히 고르는 오답이 왜 틀렸는지') + ' 한 줄)' : '') + '. 그다음 "===자세히===" 한 줄을 쓰고, 그 아래에 자세한 해설을 쓰세요.');
+      lines.push('자세한 해설은 다음 순서로 써 주세요.\n**핵심 개념** 이 문항이 묻는 개념을 1~3줄로\n**풀이** 정답에 이르는 과정을 단계별로' +
         (wrong ? '\n**내 실수 분석** ' + (picked ? '내가 고른 ' + ansText(it, a) + '이(가) 왜 그럴듯해 보였는지' : '이 문항을 틀린 학생이 흔히 고르는 오답이 왜 그럴듯해 보이는지') + ', 어느 판단에서 갈렸는지, 같은 유형에서 이 실수를 막는 확인 습관' + (mine ? ' (위 "내가 남긴 기록"의 내 생각에서 출발해 짚고, 내가 고른 원인이 맞는지도 말해 주세요)' : '') :
           skip ? '\n**어디서 시작할까** 손대지 못했을 때 첫 실마리를 잡는 방법' :
           unsureOf(it) ? '\n**헷갈린 지점** 맞혔지만 확신이 없었던 이유와, 다음에 확신을 갖고 고르게 하는 판단 기준' : '\n**확인 포인트** 맞혔지만 시간을 줄이거나 실수를 막을 지점'));
@@ -1332,7 +1353,7 @@
     content.push({ type: 'text', text: '이번에 푼 세트의 내 기록입니다.\n' + head + '\n\n' + rows.join('\n') +
       (mine ? '\n\n(줄 끝의 헷갈림 표시·내가 고른 원인·메모는 내가 직접 남긴 기록입니다. 분석할 때 이것과 비교해 짚어 주세요.)' : '') +
       (imgs.length ? '\n\n앞의 이미지는 틀린 문항(일부)입니다.' : '') +
-      '\n\n이 세트에서 드러난 나의 문제점과 강점을 분석해 주세요. 순서:\n**총평** 2~3줄\n**문제점** 약한 단원·유형과 반복된 실수 유형(개념 부족 / 조건·자료 해석 / 계산 / 시간 관리 / 찍기 의심), 근거 문항 번호를 들어서\n**강점** 안정적으로 맞힌 단원·유형, 근거 문항 번호\n**시간 사용** 풀이 시간 기록이 있으면 서두름·막힘 판단\n**다음에 할 것** 우선순위 3가지' });
+      '\n\n이 세트에서 드러난 나의 문제점과 강점을 분석해 주세요. 먼저 **한눈 요약** 3줄(가장 큰 문제점 하나 · 잘한 점 하나 · 바로 할 일 하나)을 쓰고, "===자세히===" 한 줄을 쓴 다음 자세한 분석을 이 순서로:\n**총평** 2~3줄\n**문제점** 약한 단원·유형과 반복된 실수 유형(개념 부족 / 조건·자료 해석 / 계산 / 시간 관리 / 찍기 의심), 근거 문항 번호를 들어서\n**강점** 안정적으로 맞힌 단원·유형, 근거 문항 번호\n**시간 사용** 풀이 시간 기록이 있으면 서두름·막힘 판단\n**다음에 할 것** 우선순위 3가지' });
     return Promise.resolve({ content: content, chips: chips, persist: true });   // 시험 분석도 이 기기에 남긴다(같은 답이면 다시 보기)
   }
   function askExam() {
@@ -1343,7 +1364,7 @@
   function askSubject() {
     openAi(exportSubject() + ' 과목 AI 분석', 's:' + SUB, function () {
       return prepareExport(Date.now()).catch(function () { throw new Error('계정의 풀이 기록을 불러오지 못했습니다. 로그인 상태를 확인하고 다시 시도해 주세요.'); }).then(function (res) {
-        return { content: [{ type: 'text', text: res.md + '\n\n---\n위 자료는 이 과목에서 내가 지금까지 푼 기록 전체입니다. 이 과목에서의 나의 문제점과 강점을 분석해 주세요. 순서:\n**한눈 요약** 3줄\n**문제점** 단원별·실수 유형별 약점, 근거 날짜·문항을 인용해서\n**강점** 안정적인 단원·유형\n**변화** 시간에 따라 나아진 것·나빠진 것\n**시간 사용 습관** 서두름·막힘·찍기 의심\n**2주 학습 계획** 우선순위대로' + (weakList().length ? '\n\n참고로 AI 해설에서 모은 내 파트별 약점 노트입니다:\n' + weakText(weakList()) : '') }], persist: true, chips: [['이번 주 할 일만', '이번 주 7일 동안 하루 단위로 무엇을 풀고 복습할지만 짧게 정리해 주세요.'], ['가장 큰 약점 하나', '가장 먼저 고쳐야 할 약점 하나만 골라, 왜 그런지와 고치는 연습법을 알려 주세요.']] };
+        return { content: [{ type: 'text', text: res.md + '\n\n---\n위 자료는 이 과목에서 내가 지금까지 푼 기록 전체입니다. 이 과목에서의 나의 문제점과 강점을 분석해 주세요. 순서:\n**한눈 요약** 3줄 — 그 다음 줄에 "===자세히===" 한 줄\n**문제점** 단원별·실수 유형별 약점, 근거 날짜·문항을 인용해서\n**강점** 안정적인 단원·유형\n**변화** 시간에 따라 나아진 것·나빠진 것\n**시간 사용 습관** 서두름·막힘·찍기 의심\n**2주 학습 계획** 우선순위대로' + (weakList().length ? '\n\n참고로 AI 해설에서 모은 내 파트별 약점 노트입니다:\n' + weakText(weakList()) : '') }], persist: true, chips: [['이번 주 할 일만', '이번 주 7일 동안 하루 단위로 무엇을 풀고 복습할지만 짧게 정리해 주세요.'], ['가장 큰 약점 하나', '가장 먼저 고쳐야 할 약점 하나만 골라, 왜 그런지와 고치는 연습법을 알려 주세요.']] };
       });
     }, exportSubject() + ' — 계정에 쌓인 이 과목 풀이 기록 전체' + (weakList().length ? '와 약점 노트' : '') + '를 보내 과목 전체 분석(2주 공부 계획까지)을 받아요.');
   }
