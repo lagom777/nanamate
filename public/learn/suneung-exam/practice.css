@@ -238,6 +238,12 @@ body.pr-dock.pr-wide-page main.wide { padding-right: calc(var(--pr-dock-w) + 24p
 #practice-root .pr-ai-chip:hover { border-color: var(--accent) !important; color: var(--accent) !important; }
 .pr-ai-fold { margin: 6px 0 4px; }
 .pr-ai-fold summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+/* 짧은 해설 아래 '📖 자세한 해설 보기' 단추 */
+.pr-ai-more { margin: 2px 0 10px; }
+.pr-ai-more > summary { display: inline-flex; align-items: center; gap: 6px; padding: 6px 13px; border: 1px solid var(--accent); border-radius: 999px; font-size: 13.5px; font-weight: 700; color: var(--accent); list-style: none; }
+.pr-ai-more > summary::-webkit-details-marker { display: none; }
+.pr-ai-more[open] > summary { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.pr-ai-more > div { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--pr-line); }
 .pr-hint .pr-ai { margin-top: 0; padding-top: 0; border-top: 0; }
 #practice-root .pr-hint-btn { flex: 0 0 auto; width: auto; padding: 10px 14px; }
 .pr-weak-chip { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 10px 0 2px; padding: 8px 12px; border: 1px dashed var(--pr-line); border-radius: 10px; font-size: 13px; color: var(--text-dim); }
