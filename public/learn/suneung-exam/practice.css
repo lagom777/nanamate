@@ -317,9 +317,10 @@
 body.pr-wide-page .layout { grid-template-columns: minmax(0, 1fr); }
 body.pr-wide-page .layout > aside { display: none; }
 body.pr-wide-page main.wide { max-width: none; padding-left: 24px; padding-right: 24px; }
-.pr-strips { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 600px), 1fr)); gap: 10px 14px; align-items: start; }
+/* 많아야 두 단: 칸의 최소 폭을 '절반(사이 간격 뺀)'보다 작게 두지 않아 세 단이 되지 않는다. 두 단 폭에 맞춰 가운데로 */
+.pr-strips { display: grid; grid-template-columns: repeat(auto-fill, minmax(max(min(100%, 600px), calc((100% - 14px) / 2)), 1fr)); gap: 10px 14px; align-items: start; width: 100%; box-sizing: border-box; max-width: calc(686px * 2 + 14px); margin-inline: auto; }
 .pr-strips .pr-strip { width: 100%; max-width: 686px; box-sizing: border-box; justify-self: center; }
-.pr-list:not(.paper) { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 600px), 1fr)); align-items: start; }
+.pr-list:not(.paper) { display: grid; grid-template-columns: repeat(auto-fill, minmax(max(min(100%, 600px), calc((100% - 18px) / 2)), 1fr)); align-items: start; max-width: calc(760px * 2 + 18px); margin-inline: auto; width: 100%; }
 .pr-list:not(.paper) > :not(.pr-card) { grid-column: 1 / -1; }
 @media (max-width: 900px) {
   body.pr-wide-page main.wide { padding-left: 8px; padding-right: 8px; }
