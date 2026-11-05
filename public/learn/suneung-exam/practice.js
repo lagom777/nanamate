@@ -235,11 +235,18 @@
     S.timer = true; S.usedTimer = true;
     S.tick = setInterval(function () {
       S.left--;
-      if (S.left <= 0) { S.left = 0; stopTimer(); grade(); return; }
+      if (S.left === 0) timeUp();   // 시간이 끝나도 채점하거나 잠그지 않는다 — 답은 계속 고르고, 넘친 시간은 +로 센다
       renderBar();
     }, 1000);
   }
   function stopTimer() { if (S.tick) clearInterval(S.tick); S.tick = null; S.timer = false; }
+  function fmtClock(s) { return s > 0 ? fmtTime(s) : '+' + fmtTime(-s); }
+  function timeUp() {
+    var t = el('div', { class: 'pr-toast', role: 'status', text: '⏰ 시험 시간이 끝났어요. 답은 계속 고를 수 있어요 — 다 고르면 ‘제출하고 채점하기’를 누르세요. 넘긴 시간은 +로 셉니다.' });
+    t.onclick = function () { t.remove(); };
+    document.body.appendChild(t);
+    setTimeout(function () { t.remove(); }, 9000);
+  }
 
   function refreshAuth() {
     if (!authBox) return;
@@ -293,7 +300,7 @@
     S.set = setId;
     var isExam = setId.indexOf('exam:') === 0;
     if (PAPER) {
-      S.graded = false; S.left = EXAM_SECONDS; S.usedTimer = false; S.revealed = {};
+      S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.usedTimer = false; S.revealed = {};
       if (!isExam) setId = S.set = 'exam:' + examList()[0].key;
       var key = setId.slice(5);
       var saved = store('sn:' + SUB + ':' + setId);
@@ -316,7 +323,7 @@
     if (setId.indexOf('due:') === 0) {
       S.items = [];
       S.ans = [];
-      S.graded = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
+      S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
       S.mode = 'practice';
       S.wrongLoading = !!(meUser && meUser.id && window.SnAuth);
       setSel.value = setId;
@@ -339,7 +346,7 @@
     if (setId.indexOf('wrong:') === 0 && meUser && meUser.id && window.SnAuth) {
       S.items = [];
       S.ans = [];
-      S.graded = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
+      S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
       S.mode = 'practice';
       S.wrongLoading = true;
       setSel.value = setId;
@@ -366,7 +373,7 @@
     }
     S.items = buildItems(setId);
     S.ans = S.items.map(function () { return 0; });
-    S.graded = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
+    S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
     if (!isExam && S.mode === 'exam') S.mode = 'practice';
     if (isExam) {
       var sv = store('sn:' + SUB + ':' + setId);
@@ -398,13 +405,19 @@
     progEl.textContent = '푼 문항 ' + done + ' / ' + S.items.length;
     if (S.mode === 'exam' && isExam && !S.graded) {
       timerEl.style.display = '';
-      timerEl.textContent = (S.tick ? '⏱ ' : '⏱ 타이머 시작 ') + fmtTime(S.left);
-      timerEl.classList.toggle('on', !!S.tick);
+      var over = S.left <= 0;
+      timerEl.textContent = (over ? '⏰ 시간 끝 ' : S.tick ? '⏱ ' : '⏱ 타이머 시작 ') + fmtClock(S.left);
+      timerEl.classList.toggle('on', !!S.tick && !over);
+      timerEl.classList.toggle('over', over);
     } else timerEl.style.display = 'none';
     paintClock();
   }
 
-  function paintClock() { if (omrClock) omrClock.textContent = S.tick && !S.graded ? '⏱ ' + fmtTime(S.left) : ''; }
+  function paintClock() {
+    if (!omrClock) return;
+    omrClock.textContent = S.tick && !S.graded ? (S.left > 0 ? '⏱ ' : '⏰ 시간 끝 ') + fmtClock(S.left) : '';
+    omrClock.classList.toggle('over', S.left <= 0);
+  }
   function renderAll() {
     renderBar();
     list.innerHTML = '';
@@ -1154,7 +1167,7 @@
       }
     });
     var gc = gradeCuts();
-    var head = setLabel() + ' · ' + r.sc + '/' + r.tot + '점' + (gc ? ' (예상 ' + gradeText(r.sc, gc) + ')' : '') + ' · ' + r.right + '/' + r.n + '문항 정답' + (r.unanswered ? ' · 미풀이 ' + r.unanswered : '') + (S.usedTimer && r.used > 0 ? ' · 소요 ' + fmtTime(r.used) : '') + ' · ' + (S.mode === 'exam' ? '시험 모드' : '연습 모드');
+    var head = setLabel() + ' · ' + r.sc + '/' + r.tot + '점' + (gc ? ' (예상 ' + gradeText(r.sc, gc) + ')' : '') + ' · ' + r.right + '/' + r.n + '문항 정답' + (r.unanswered ? ' · 미풀이 ' + r.unanswered : '') + (S.usedTimer && r.used > 0 ? ' · 소요 ' + fmtTime(r.used) : '') + (r.over > 0 ? ' · 시간 넘김 +' + fmtTime(r.over) : '') + ' · ' + (S.mode === 'exam' ? '시험 모드' : '연습 모드');
     var content = imgs.map(imgBlock);
     var chips = [['약점 복습 계획', '이번 결과의 약점 단원 위주로 3일짜리 복습 계획을 하루 단위로 짜 주세요.'], ['다음 시험 전략', '다음 시험에서 시간 배분과 문항 순서를 어떻게 바꾸면 좋을지 구체적으로 알려 주세요.']];
     content.push({ type: 'text', text: '이번에 푼 세트의 내 기록입니다.\n' + head + '\n\n' + rows.join('\n') +
@@ -1374,14 +1387,18 @@
     if (row) { SnAuth.record([row]); dueSoon(); }
   }
   function sendGraded() {
+    var prev = S.sent;
+    S.sent = S.ans.slice();
     if (!window.SnAuth) return;
     var ts = Date.now(), rows = [];
     S.items.forEach(function (it, i) {
+      if (prev && prev[i] === S.ans[i]) return;   // ‘답 이어서 고르기’ 뒤 다시 채점: 바뀐 답만 보낸다
       var row = attemptOf(it, i, ts);
       if (row) rows.push(row);
     });
     if (rows.length) { SnAuth.record(rows); dueSoon(); }
   }
+  function reopen() { S.graded = false; S.revealed = {}; S.regrade = true; renderAll(); }
 
   /* ───────── 문제별 노트: 메모·선지 표시(○△✕)·헷갈림·오답 원인. 이 기기에 바로 저장하고, 로그인하면 계정(/api/qnotes)과 맞춘다 ─────────
    * notes["<회차>/<번호>"] = { m: 선지 1~5 표시 다섯 글자(o ○ · t △ · x ✕ · - 없음), t: 메모, f: 헷갈림 0·1, c: 오답 원인, u: 고친 시각 } */
@@ -2227,10 +2244,12 @@
       listen = { sc: 0, tot: 0 };
       S.items.forEach(function (it, i) { if (it.n <= 17) { listen.tot += it.pts; if (isRight(it, S.ans[i])) listen.sc += it.pts; } });
     }
-    S.result = { sc: sc, tot: tot, right: right, n: S.items.length, wrong: wrongIds, unanswered: S.ans.filter(function (a) { return !a; }).length, used: EXAM_SECONDS - S.left, bySec: bySec, listen: listen };
+    S.result = { sc: sc, tot: tot, right: right, n: S.items.length, wrong: wrongIds, unanswered: S.ans.filter(function (a) { return !a; }).length, used: EXAM_SECONDS - S.left, over: Math.max(0, -S.left), bySec: bySec, listen: listen };
     var hist = store('sn:' + SUB + ':hist') || [];
     var d = new Date(), gc = gradeCuts();
-    hist.push({ d: (d.getMonth() + 1) + '/' + d.getDate(), s: setLabel(), sc: sc, t: tot, g: gc ? gradeText(sc, gc) : undefined });
+    var entry = { d: (d.getMonth() + 1) + '/' + d.getDate(), s: setLabel(), sc: sc, t: tot, g: gc ? gradeText(sc, gc) : undefined };
+    if (S.regrade && hist.length && hist[hist.length - 1].s === entry.s) hist[hist.length - 1] = entry; else hist.push(entry);   // 고쳐서 다시 채점하면 같은 기록을 바꾼다
+    S.regrade = false;
     store('sn:' + SUB + ':hist', hist.slice(-40));
     sendGraded();
     renderAll();
@@ -2295,7 +2314,7 @@
     box.appendChild(el('div', { class: 'pr-score' }, [el('b', { text: r.sc }), ' / ' + r.tot + '점']));
     var gb = gradeBox(r.sc);
     if (gb) box.appendChild(gb);
-    box.appendChild(el('p', { class: 'pr-sub', text: r.right + ' / ' + r.n + '문항 정답' + (r.unanswered ? ' · 미풀이 ' + r.unanswered : '') + (S.usedTimer && r.used > 0 ? ' · 소요 ' + fmtTime(r.used) : '') }));
+    box.appendChild(el('p', { class: 'pr-sub', text: r.right + ' / ' + r.n + '문항 정답' + (r.unanswered ? ' · 미풀이 ' + r.unanswered : '') + (S.usedTimer && r.used > 0 ? ' · 소요 ' + fmtTime(r.used) : '') + (r.over > 0 ? ' · 시간 넘김 +' + fmtTime(r.over) : '') }));
     if (PAPER) {
       var ks0 = Object.keys(r.bySec);
       if (ks0.length > 1) box.appendChild(el('p', { class: 'pr-sub', text: ks0.map(function (k) { return SEC_NAME[k] + ' ' + r.bySec[k].sc + '/' + r.bySec[k].tot; }).join(' · ') }));
@@ -2321,6 +2340,7 @@
       box.appendChild(ul);
     }
     var acts = el('div', { class: 'pr-acts' });
+    acts.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '✏️ 답 이어서 고르기', title: '채점을 풀고 답을 더 고르거나 고친 뒤 다시 채점해요', onclick: reopen }));
     acts.appendChild(el('button', { type: 'button', class: 'pr-btn pr-ai-cta', text: '🤖 이번 ' + (S.set.indexOf('exam:') === 0 ? '시험' : '세트') + ' AI 분석 (문제점·강점)', onclick: askExam }));
     acts.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '다시 풀기', onclick: function () { if (S.set.indexOf('exam:') === 0) store('sn:' + SUB + ':' + S.set, null); startSet(S.set); } }));
     if ((r.wrong.length || unsureCount()) && !PAPER) acts.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '틀린·헷갈린 문제 모아 풀기', onclick: function () { startSet('wrong:all'); } }));

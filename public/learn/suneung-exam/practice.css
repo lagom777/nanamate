@@ -87,6 +87,9 @@
 #practice-root .pr-seg[aria-pressed="true"] { background: var(--accent) !important; color: #fff !important; }
 #practice-root .pr-timer { color: var(--text-dim) !important; }
 #practice-root .pr-timer.on { color: var(--accent) !important; border-color: var(--accent) !important; }
+#practice-root .pr-timer.over { color: #dc2626 !important; border-color: #dc2626 !important; }   /* 시험 시간이 끝난 뒤(답은 계속 고를 수 있다) */
+.pr-omr-clock.over { color: #dc2626; }
+.pr-toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 60; max-width: min(92vw, 520px); box-sizing: border-box; padding: 11px 14px; border-radius: 12px; background: #111827; color: #fff; font-size: 14px; line-height: 1.5; box-shadow: 0 8px 24px rgba(0,0,0,.25); cursor: pointer; }
 #practice-root .pr-ch { background: var(--pr-el) !important; }
 #practice-root .pr-ch:hover { border-color: var(--accent) !important; }
 #practice-root .pr-ch.sel { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
