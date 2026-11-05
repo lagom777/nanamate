@@ -1033,7 +1033,19 @@
     inkBtn.classList.toggle('on', INK.on);
     inkBtn.textContent = INK.on ? '✏️ 낙서 켬' : '✏️ 낙서';
     inkPal.hidden = !INK.on;
-    Array.prototype.forEach.call(inkPal.querySelectorAll('[data-t]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-t') === INK.tool ? 'true' : 'false'); });
+    Array.prototype.forEach.call(root.querySelectorAll('.pr-ink-pal [data-t], .pr-omr-ink [data-t]'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-t') === INK.tool ? 'true' : 'false'); });
+  }
+  /* 답안지 위 펜 도구: 오른쪽 답안지는 화면을 따라오므로 위 막대까지 올라가지 않고 펜·형광펜·지우개를 바꾼다
+   * (마우스·펜슬은 낙서를 켜지 않아도 고른 도구로 쓴다. 손가락은 ✏️ 낙서를 켜야 한다) */
+  function inkTools() {
+    var b = function (t, icon, label) {
+      return el('button', { type: 'button', class: 'pr-ink-t', 'data-t': t, title: label, 'aria-label': label, 'aria-pressed': INK.tool === t ? 'true' : 'false', onclick: function () { INK.tool = t; paintInk(); } },
+        [el('span', { text: icon, 'aria-hidden': 'true' }), el('span', { class: 'pr-ink-l', text: label })]);
+    };
+    return el('div', { class: 'pr-omr-ink', role: 'toolbar', 'aria-label': '펜 도구' }, [
+      b('pen', '✏️', '펜'), b('hl', '🖍️', '형광펜'), b('er', '🧽', '지우개'),
+      el('button', { type: 'button', class: 'pr-ink-t', title: '그린 표시 모두 지우기', 'aria-label': '그린 표시 모두 지우기', onclick: inkClear }, [el('span', { text: '🗑', 'aria-hidden': 'true' })])
+    ]);
   }
   function inkPalette() {
     var b = function (t, icon, label, f) {
@@ -2205,7 +2217,10 @@
   /* ───────── 답안지 ───────── */
   function renderOmr() {
     omr.innerHTML = '';
-    omr.appendChild(el('h3', {}, ['답안지', omrClock = el('span', { class: 'pr-omr-clock' })]));   // 위 막대가 스크롤로 사라져도 남은 시간이 보이게
+    omr.appendChild(el('div', { class: 'pr-omr-top' }, [   // 답안지 머리: 제목·남은 시간·펜 도구 — 답안지를 내려도 위에 붙어 있다
+      el('h3', {}, ['답안지', omrClock = el('span', { class: 'pr-omr-clock' })]),   // 위 막대가 스크롤로 사라져도 남은 시간이 보이게
+      inkTools()
+    ]));
     paintClock();
     /* 국어·영어: 선지마다 ○△✕ 를 표시하는 모드(답과 따로 저장) */
     if (PAPER) {
