@@ -34,7 +34,8 @@
 .pr-ch:active { transform: scale(.96); }
 .pr-ch.sel { background: var(--text); border-color: var(--text); color: var(--pr-card); }   /* 내가 고른 답은 OMR처럼 검은 칠(어두운 화면은 흰 칠) */
 .pr-ch.right { background: var(--pr-ok); border-color: var(--pr-ok); color: #fff; }
-.pr-ch.wrong { background: var(--text); border-color: var(--pr-bad); color: var(--pr-card); box-shadow: 0 0 0 2px var(--pr-bad); }   /* 채점 뒤 내가 고른 오답: 검은 칠 그대로 + 빨간 테두리 */
+.pr-ch.sel.right { background: var(--text); border-color: var(--pr-ok); color: var(--pr-card); box-shadow: 0 0 0 2px var(--pr-ok); }   /* 맞힌 내 답: 검은 칠 그대로 + 초록 테두리 */
+.pr-ch.wrong { background: var(--text); border-color: var(--text); color: var(--pr-card); }   /* 틀린 내 답도 검은 칠만(빨강 없음) — 정답은 초록 칠로 따로 보인다 */
 
 .pr-explain { margin-top: 12px; padding: 12px 14px; border-radius: 10px; background: var(--pr-el); font-size: 14px; line-height: 1.7; }
 .pr-verdict { margin: 0 0 6px; color: var(--text); }
@@ -101,7 +102,8 @@
 #practice-root .pr-ch:hover { border-color: var(--accent) !important; }
 #practice-root .pr-ch.sel { background: var(--text) !important; border-color: var(--text) !important; color: var(--pr-card) !important; }
 #practice-root .pr-ch.right { background: var(--pr-ok) !important; border-color: var(--pr-ok) !important; color: #fff !important; }
-#practice-root .pr-ch.wrong { background: var(--text) !important; border-color: var(--pr-bad) !important; color: var(--pr-card) !important; box-shadow: 0 0 0 2px var(--pr-bad); }
+#practice-root .pr-ch.sel.right { background: var(--text) !important; border-color: var(--pr-ok) !important; color: var(--pr-card) !important; box-shadow: 0 0 0 2px var(--pr-ok); }
+#practice-root .pr-ch.wrong { background: var(--text) !important; border-color: var(--text) !important; color: var(--pr-card) !important; }
 #practice-root .pr-b { color: var(--text-dim) !important; }
 #practice-root .pr-b.sel { background: var(--text) !important; border-color: var(--text) !important; color: var(--pr-card) !important; }
 #practice-root .pr-b.right { border-color: var(--pr-ok) !important; }
@@ -342,7 +344,7 @@ body.pr-dock.pr-wide-page main.wide { padding-right: calc(var(--pr-dock-w) + 24p
 .pr-crop img { display: block; width: 100%; height: auto; }
 .pr-sheet-ans { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin: 0 0 8px; font-size: 15px; }
 .pr-sheet-ok { font-weight: 800; color: var(--pr-ok); }
-.pr-sheet-bad { font-weight: 800; color: var(--pr-bad); }
+.pr-sheet-bad { font-weight: 800; color: var(--text); }   /* 내 답은 틀려도 검은 글씨 */
 .pr-sheet-mute { font-weight: 700; color: var(--text-dim); }
 .pr-sheet-ans .pr-tag { margin-left: auto; }
 .pr-sheet-memo { margin: 8px 0; }
@@ -421,7 +423,7 @@ body.pr-wide-page main.wide { max-width: none; padding-left: 24px; padding-right
 .pr-ink { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .pr-ink:not(:empty) { mix-blend-mode: multiply; }
 .pr-ink path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
-.pr-ink .pr-ink-pen { stroke: #e11d48; }
+.pr-ink .pr-ink-pen { stroke: #111827; }   /* 검은 펜 — 빨간색은 채점 표시와 헷갈린다 */
 .pr-ink .pr-ink-hl { stroke: #fde047; }
 #practice-root.pr-pen .pr-ink.rw { pointer-events: auto; touch-action: none; cursor: crosshair; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 #practice-root.pr-pen.pr-pen-er .pr-ink.rw { cursor: cell; }
@@ -447,7 +449,8 @@ body.pr-wide-page main.wide { max-width: none; padding-left: 24px; padding-right
 #practice-root .pr-hot:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 #practice-root .pr-hot.sel { background: color-mix(in srgb, var(--text) 14%, transparent) !important; box-shadow: 0 0 0 3px var(--text); }   /* 시험지 그림에서 고른 번호도 검은 테두리 */
 #practice-root .pr-hot.right { box-shadow: 0 0 0 3px var(--pr-ok); }
-#practice-root .pr-hot.wrong { background: color-mix(in srgb, var(--text) 14%, transparent) !important; box-shadow: 0 0 0 3px var(--text), 0 0 0 5px var(--pr-bad); }
+#practice-root .pr-hot.sel.right { box-shadow: 0 0 0 3px var(--text), 0 0 0 5px var(--pr-ok); }   /* 맞힌 내 답: 검은 테두리 + 바깥 초록 */
+#practice-root .pr-hot.wrong { background: color-mix(in srgb, var(--text) 14%, transparent) !important; box-shadow: 0 0 0 3px var(--text); }   /* 틀린 내 답도 검은 테두리만 */
 #practice-root.pr-pen .pr-hot { touch-action: none; cursor: crosshair; }
 .pr-hot[data-mark]::after { content: attr(data-mark); position: absolute; top: -9px; right: -9px; font: 800 14px/1 var(--font-body, sans-serif); pointer-events: none; }
 .pr-hot[data-mark="○"]::after { color: #16a34a; }
