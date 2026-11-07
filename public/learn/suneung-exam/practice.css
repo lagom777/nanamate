@@ -60,6 +60,7 @@
 .pr-row.ok { background: rgba(22,163,74,.14); }
 .pr-row.bad { background: rgba(220,38,38,.14); }
 .pr-row.skip { background: rgba(156,163,175,.14); }
+.pr-row.now { box-shadow: inset 0 0 0 2px var(--accent); transition: box-shadow .3s; }   /* 답안지를 열 때 지금 보던 문항 줄 */
 .pr-rn { font: 600 12px var(--font-mono, monospace); color: var(--text-dim); text-decoration: none; text-align: center; }
 .pr-b { font: 12px var(--font-mono, monospace); height: 24px; border-radius: 12px; border: 1px solid var(--pr-line); background: transparent; color: var(--text-dim); cursor: pointer; padding: 0; }
 .pr-b.sel { background: var(--text); border-color: var(--text); color: var(--pr-card); }
@@ -91,7 +92,7 @@
 
 /* light-theme.css 가 button 전체를 파란색 !important 로 덮으므로 플레이어 버튼은 id 로 다시 덮는다 */
 #practice-root button { background: transparent !important; color: var(--text) !important; border: 1px solid var(--pr-line) !important; }
-#practice-root button:hover { background: transparent !important; }
+#practice-root :where(button):hover { background: transparent !important; }   /* 사이트 공통 파란 hover 를 지운다 — :where 로 낮춰 색이 있는 단추(답안지·AI·시작…)는 제 색을 지킨다(아이패드는 누른 뒤에도 hover 가 남는다) */
 #practice-root .pr-seg { border: 0 !important; color: var(--text-dim) !important; }
 #practice-root .pr-seg[aria-pressed="true"] { background: var(--accent) !important; color: #fff !important; }
 #practice-root .pr-timer { color: var(--text-dim) !important; }
