@@ -208,7 +208,7 @@
     renderWeakBtn();
     root.appendChild(el('div', { class: 'pr-body' + (PAPER ? ' paper' : '') }, [list, omr]));
     if (PAPER) {
-      fab = el('button', { type: 'button', class: 'pr-fab', text: '📝 답안지', onclick: function () { toggleOmr(); } });
+      fab = el('button', { type: 'button', class: 'pr-fab', text: '📝 답안지', onclick: function () { toggleOmr(undefined, true); } });
       root.appendChild(fab);
     }
     root.appendChild(inkPal = inkPalette());
@@ -2429,10 +2429,32 @@
     return d;
   }
   function isNarrow() { return window.matchMedia && window.matchMedia('(max-width: 900px)').matches; }
-  function toggleOmr(force) {
+  /* 좁은 화면의 답안지(📝)는 닫으면 화면에서 빠져 스크롤 자리를 잃는다 — 단추로 열 때는 지금 시험지에서 보고 있는 문항 줄로 바로 간다 */
+  function toggleOmr(force, toNow) {
     var open = force === undefined ? !omr.classList.contains('open') : force;
     omr.classList.toggle('open', open);
     if (fab) fab.textContent = open ? '✕ 닫기' : '📝 답안지';
+    if (open && toNow) omrTo(viewQ());
+  }
+  /* 지금 보고 있는 문항: 화면 위에서 35% 선을 지난 문항 머리 중 가장 아래 것(아직 없으면 화면 아래로 가장 가까운 것) */
+  function viewQ() {
+    var line = window.innerHeight * 0.35, best = -1, bestTop = -Infinity, next = -1, nextTop = Infinity;
+    S.items.forEach(function (it, i) {
+      var a = PAPER ? document.getElementById('pq-' + it.sec + it.n) : document.getElementById('q-' + i);
+      if (!a) return;
+      var top = a.getBoundingClientRect().top;
+      if (top <= line) { if (top > bestTop) { bestTop = top; best = i; } }
+      else if (top < nextTop) { nextTop = top; next = i; }
+    });
+    return best >= 0 ? best : next;
+  }
+  /* 답안지 안에서만 그 문항 줄을 가운데로 옮기고 잠깐 테두리로 짚는다(창은 굴리지 않는다) */
+  function omrTo(i) {
+    var row = i >= 0 && omr.querySelector('.pr-row[data-i="' + i + '"]');
+    if (!row) return;
+    omr.scrollTop += row.getBoundingClientRect().top - omr.getBoundingClientRect().top - (omr.clientHeight - row.offsetHeight) / 2;
+    row.classList.add('now');
+    setTimeout(function () { row.classList.remove('now'); }, 1600);
   }
   function jump(i) {
     if (PAPER && isNarrow()) toggleOmr(false);
@@ -2465,7 +2487,7 @@
         lastSec = it.sec;
         grid.appendChild(el('div', { class: 'pr-omr-sec', text: SEC_NAME[it.sec] }));
       }
-      var row = el('div', { class: 'pr-row' + stateCls(it, i) + (it.num ? ' numrow' : '') + (PAPER && unsureOf(it) ? ' unsure' : '') });
+      var row = el('div', { class: 'pr-row' + stateCls(it, i) + (it.num ? ' numrow' : '') + (PAPER && unsureOf(it) ? ' unsure' : ''), 'data-i': i });
       var label = PAPER ? it.n : (i + 1);
       row.appendChild(el('a', { class: 'pr-rn', href: '#q-' + i, text: label, onclick: function (e) { e.preventDefault(); jump(i); } }));
       if (it.num) {
