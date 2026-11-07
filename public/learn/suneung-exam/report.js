@@ -45,6 +45,7 @@
   }
 
   function pickLabel(picked, num) {
+    if (!Number(picked)) return '안 풂';   // 채점할 때 못 푼 문제는 picked 0 · 오답으로 남는다
     if (num) return String(picked);
     var n = Number(picked);
     if (n >= 1 && n <= 5) return CIRC[n - 1];
