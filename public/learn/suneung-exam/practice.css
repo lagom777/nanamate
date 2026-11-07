@@ -196,6 +196,10 @@
 .pr-ai-body li { margin: 3px 0; }
 .pr-ai-body li::marker { color: var(--accent); font-weight: 700; }
 .pr-ai-body code { font: 13px var(--font-mono, monospace); padding: 0 4px; border-radius: 4px; background: var(--pr-el); }
+.pr-ai-body .katex { font-size: 1.12em; }   /* 수식(KaTeX): 본문보다 조금 크게 */
+.pr-ai-body .katex-display { margin: 8px 0 12px; padding: 8px 10px; border-radius: 8px; background: color-mix(in srgb, var(--pr-el) 70%, transparent); overflow-x: auto; overflow-y: hidden; }
+.pr-ai-body .katex-display > .katex { font-size: 1.18em; }
+.pr-ai-body code.pr-tex { white-space: pre-wrap; }
 .pr-ai-body hr { border: 0; border-top: 1px dashed var(--pr-line); margin: 12px 0; }
 .pr-ai-tbl { overflow-x: auto; margin: 6px 0 12px; }
 .pr-ai-tbl table { border-collapse: collapse; font-size: 14px; }
