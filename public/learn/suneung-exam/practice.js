@@ -568,9 +568,14 @@
   function keyMode() { return acctKey && acctKey.has ? 'acct' : (store(AI_KEY) ? 'local' : ''); }
   function errType(e) { return e && e.error && e.error.error && e.error.error.type; }
   var aiRuns = {}, sdkP = null, aiDlg = null, SDK = null;
+  var FORMULA = /^(math|phys|chem|earth|bio)/.test(SUB);   // 수식이 많은 과목: AI 가 LaTeX 로 쓰고 화면은 KaTeX 로 그린다
   var AI_SYS = '너는 대한민국 수능 ' + String(cfg.label || SUB).replace(/^수능\s+/, '') + ' 전문 강사다. 학생의 풀이 기록과 기출 문항 이미지를 받아 해설하고 분석한다. ' +
     '공식 정답은 주어진 것을 기준으로 하고, 네 풀이가 공식 정답과 다르면 다시 검토한다. 고등학생이 따라올 수 있게 한국어 존댓말로 쓴다. ' +
-    '형식: 마크다운 제목(#)·표·LaTeX는 쓰지 않는다. 소제목은 한 줄짜리 **굵은 글씨**로, 목록은 "- "로, 수식은 유니코드(x², √3, ≤, ∫, →)로 쓴다. ' +
+    (FORMULA
+      ? '형식: 마크다운 제목(#)·표는 쓰지 않는다. 소제목은 한 줄짜리 **굵은 글씨**로, 목록은 "- "로 쓴다. ' +
+        '수식은 모두 LaTeX로 쓴다(화면이 수식으로 그려 준다): 문장 속 짧은 식·값은 $…$ (예: $f(x)=x^2-3x$, $a_n$), 분수·극한·적분·시그마처럼 큰 식이나 계산은 한 줄에 따로 $$…$$, ' +
+        '등호로 이어지는 여러 단계 계산은 $$\\begin{aligned} … &= … \\\\ &= … \\end{aligned}$$ 로 한 단계에 한 줄씩 = 를 맞춘다. 식 하나를 여러 $로 쪼개지 않고, 식 안에 한글이 필요하면 \\text{} 로 쓴다. 유니코드 위첨자(x²)·√ 기호 대신 LaTeX(x^2, \\sqrt{3})를 쓴다. '
+      : '형식: 마크다운 제목(#)·표·LaTeX는 쓰지 않는다. 소제목은 한 줄짜리 **굵은 글씨**로, 목록은 "- "로, 수식은 유니코드(x², √3, ≤, ∫, →)로 쓴다. ') +
     '읽기 쉽게: 문단은 2~3문장으로 짧게 끊고, 꼭 기억할 낱말과 결론은 **굵게** 쓴다. 해설·분석은 맨 앞에 "핵심: …" 한 줄로 결론부터 쓴다(힌트만 줄 때는 쓰지 않는다).';
 
   function loadSdk() {
@@ -585,7 +590,47 @@
    * 굵은 낱말은 형광펜, ①~⑤는 색, "- "·"1." 목록, 표(| … |)까지. 먼저 모두 이스케이프하고 정해 둔 태그만 만든다 */
   var AI_KEYL = /^(정답|핵심|결론|요약|한 ?줄 정리|포인트|주의|함정|실수|원인|다음 할 일|팁)$/;
   var AI_KEYS = /(따라서|그래서|그러므로|결국|요컨대|결론|정답|핵심|중요|꼭 기억|기억하세요|주의하|헷갈리기 쉽)/;   // 이런 말이 든 문장은 진하게
+  /* 수식(수학·과학): $…$ · $$…$$ · \(…\) · \[…\] 를 마크다운 손질 전에 떼어 두었다가 KaTeX 로 그려 끼운다.
+   * KaTeX 는 처음 수식을 만날 때 불러오고(그동안은 식 글자 그대로), 불러오면 AI 칸을 다시 그린다 */
+  var KX = null, kxP = null, kxCache = {}, KX_URL = 'https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/';
+  var MATH_RE = /\$\$([\s\S]+?)\$\$|\\\[([\s\S]+?)\\\]|\\\(([\s\S]+?)\\\)|\$([^$\n]+?)\$/g;
+  function escH(x) { return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function loadKatex() {
+    if (!kxP) {
+      var l = document.createElement('link');
+      l.rel = 'stylesheet'; l.href = KX_URL + 'katex.min.css';
+      document.head.appendChild(l);
+      kxP = import(KX_URL + 'katex.mjs').then(function (m) { KX = m.default || m; kxCache = {}; Object.keys(aiRuns).forEach(aiPaintAll); });
+      kxP.catch(function () { kxP = null; });
+    }
+    return kxP;
+  }
+  function mathOut(src) {
+    var list = [];
+    var text = String(src || '').replace(MATH_RE, function (all, d1, d2, i1, i2) {
+      if (i2 !== undefined && /^\s|\s$/.test(i2)) return all;   // '$5 와 $' 같은 것은 수식이 아니다
+      list.push({ tex: (d1 || d2 || i1 || i2).trim(), d: !!(d1 || d2) });
+      return '\uE000' + (list.length - 1) + '\uE001';
+    });
+    return { text: text, list: list };
+  }
+  function mathHTML(x) {
+    if (!KX) { loadKatex(); return '<code class="pr-tex">' + escH(x.tex) + '</code>'; }
+    var k = (x.d ? 'D' : 'I') + x.tex;
+    if (!kxCache[k]) {
+      var tex = x.d ? x.tex : x.tex.replace(/\\frac(?=\s*\{)/g, '\\dfrac');   // 문장 속 분수도 작게 줄이지 않고 제 크기로
+      try { kxCache[k] = KX.renderToString(tex, { displayMode: x.d, throwOnError: false, strict: 'ignore' }); }
+      catch (e) { kxCache[k] = '<code class="pr-tex">' + escH(x.tex) + '</code>'; }
+    }
+    return kxCache[k];
+  }
   function mdLite(src) {
+    var mt = FORMULA ? mathOut(src) : null;
+    if (mt) src = mt.text;
+    var html = mdLiteText(src);
+    return mt && mt.list.length ? html.replace(/\uE000(\d+)\uE001/g, function (all, k) { return mt.list[+k] ? mathHTML(mt.list[+k]) : ''; }) : html;
+  }
+  function mdLiteText(src) {
     var esc = String(src || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     function inl(x) {
       return x.replace(/“[^”]{1,40}”|‘[^’]{1,40}’|"[^"]{1,40}"/g, '<span class="pr-ai-qt">$&</span>')   // 따옴표 속 낱말(사료 키워드 등)
@@ -1315,7 +1360,7 @@
     if (k < 0) return null;
     var line = text.slice(k + 8).split('\n').map(function (l) { return l.replace(/^[\s\-•*]+/, '').trim(); }).filter(Boolean)[0];
     if (!line) return null;
-    var f = line.split('|').map(function (x) { return x.replace(/\*\*/g, '').trim(); });
+    var f = line.replace(/\$/g, '').split('|').map(function (x) { return x.replace(/\*\*/g, '').trim(); });   // 약점 노트는 글로(수식 기호 $ 는 뺀다)
     var g = meta.g;
     if (!g) { g = f.length > 2 ? f.shift() : '기타'; }
     return { q: meta.q, g: g.slice(0, 30), p: meta.p || '', k: (f[0] || '').slice(0, 60), t: f.slice(1).join(' | ').slice(0, 160), x: meta.x, d: Date.now() };
