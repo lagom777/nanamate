@@ -1022,11 +1022,13 @@
     showDlg(title, aiBox(id));
   }
 
-  /* ───────── ✏️ 펜(낙서): 시험지 단·문항 그림 위에 펜·형광펜으로 쓰고 지우개로 획째 지운다.
-     그림마다 SVG 층 하나(가로 1000 기준 좌표)라 화면 폭이 바뀌어도 제자리에 남고, 이 기기에 sn:<과목>:ink:<회차>:<그림> 로 저장한다.
+  /* ───────── ✏️ 펜(낙서): 시험지 단·문항 그림 위에 펜·형광펜으로 쓰고 지우개로 획째 지운다. T(글자)는 누른 자리에 글자를 쳐 넣는다.
+     그림마다 SVG 층 하나(가로 1000 기준 좌표)라 화면 폭이 바뀌어도 제자리에 남고, 이 기기에 sn:<과목>:ink:<회차>:<그림> 로 저장한다
+     (획 {t:'pen'|'hl', w, p:[x,y…]} · 글자 {t:'tx', x, y, s(글자 크기), v(내용)}).
      펜슬(애플 펜슬·S펜)은 언제나 바로 써지고, 마우스는 끌면 써진다(그냥 누르면 ①~⑤ 고르기만). 손가락은 ✏️ 펜을 켜야 써지고 그동안 두 손가락으로 화면을 움직인다 ───────── */
   var INK = { on: false, tool: 'pen', cur: null }, inkBtn = null, inkPal = null, inkTouch = {}, inkPan = false, inkDrew = 0;
   var INK_TOOL = { pen: { px: 2.4, lo: 2, hi: 9 }, hl: { px: 14, lo: 10, hi: 30 } };   // 굵기: 그릴 때 화면 px 를 그림 좌표로 바꿔 둔다(그림과 같이 커지고 작아진다)
+  var INK_TX = { px: 16, lo: 8, hi: 90 };   // 글자 크기도 같은 식(화면 16px)
   function inkKey(exam, file) { return 'sn:' + SUB + ':ink:' + exam + ':' + String(file).replace(/\..*$/, ''); }   // c10.66ebca.webp(다시 자른 단)도 c10
   function svgEl(tag, attrs) {
     var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
@@ -1039,10 +1041,21 @@
     return p.length === 2 ? d + 'l0 .1' : d;   // 한 번 콕 → 점
   }
   function inkPath(s) { return svgEl('path', { d: inkD(s.p), class: 'pr-ink-' + s.t, 'stroke-width': s.w }); }
+  /* 글자: 줄마다 tspan, (x, y)는 글상자 왼쪽 위 */
+  function inkText(s) {
+    var t = svgEl('text', { class: 'pr-ink-tx', x: s.x, y: s.y, 'font-size': s.s });
+    String(s.v).split('\n').forEach(function (line, k) {
+      var sp = svgEl('tspan', { x: s.x, dy: k ? '1.25em' : '0.8em' });   // 첫 줄 기준선: 글자 칸(줄 높이 1.25)과 같은 자리
+      sp.textContent = line || ' ';
+      t.appendChild(sp);
+    });
+    return t;
+  }
+  function inkNode(s) { return s.t === 'tx' ? inkText(s) : inkPath(s); }   // 층의 자식 하나 = 저장 항목 하나(지울 때 같은 번호)
   function inkLoad(svg) {
     svg.textContent = '';
     svg._s = store(svg._k) || [];
-    svg._s.forEach(function (s) { svg.appendChild(inkPath(s)); });
+    svg._s.forEach(function (s) { svg.appendChild(inkNode(s)); });
   }
   /* w·h = 그림 원래 크기(비율). 저장된 획을 그려 둔 층 */
   function inkSvg(key, w, h, cls) {
@@ -1079,10 +1092,22 @@
     }
     return false;
   }
+  /* 글자 상자(그림 좌표): 그려진 크기, 못 재면 글자 수로 어림 */
+  function txBox(svg, i) {
+    var s = svg._s[i], b = null;
+    try { b = svg.childNodes[i].getBBox(); } catch (x) {}
+    if (b && b.width) return { x: b.x, y: b.y, w: b.width, h: b.height };
+    var lines = String(s.v).split('\n');
+    return { x: s.x, y: s.y, w: s.s * 0.95 * Math.max.apply(null, lines.map(function (l) { return l.length; })), h: s.s * 1.25 * lines.length };
+  }
+  function txHit(svg, i, q, r) {
+    var b = txBox(svg, i);
+    return q[0] >= b.x - r && q[0] <= b.x + b.w + r && q[1] >= b.y - r && q[1] <= b.y + b.h + r;
+  }
   function inkErase(c, q) {
     var svg = c.svg, r = 12 * 1000 / svg.getBoundingClientRect().width;   // 지우개 반경 12px
     for (var i = svg._s.length - 1; i >= 0; i--) {
-      if (!inkHit(svg._s[i], q, r + svg._s[i].w / 2)) continue;
+      if (svg._s[i].t === 'tx' ? !txHit(svg, i, q, r) : !inkHit(svg._s[i], q, r + svg._s[i].w / 2)) continue;
       svg._s.splice(i, 1);
       svg.removeChild(svg.childNodes[i]);
       c.gone++;
@@ -1095,11 +1120,13 @@
   }
   /* 펜슬로 쓰는 중이거나 ✏️ 펜이 켜져 있으면 화면이 끌려 가지 않게(iOS 는 펜슬도 터치 스크롤이다) */
   function inkHold(e) {
+    if (e.target.closest && e.target.closest('.pr-ink-edit')) return;   // 글자 칸 안은 그대로(커서 옮기기)
     var t = e.changedTouches[0];
     if (INK.on || (t && t.touchType === 'stylus') || (INK.cur && INK.cur.kind === 'pen')) e.preventDefault();
   }
   function inkDown(e) {
     var box = e.currentTarget, c = INK.cur, kind = e.pointerType;
+    if (e.target.closest && e.target.closest('.pr-ink-edit')) return;
     if (kind === 'mouse' && e.button !== 0) return;
     if (kind === 'touch') {
       inkTouch[e.pointerId] = { x: e.clientX, y: e.clientY };
@@ -1110,8 +1137,13 @@
         return;
       }
     }
-    var drag = kind === 'mouse' && !INK.on;   // 펜을 안 켠 마우스: 끌어야 쓴다(그냥 누르면 ①~⑤ 고르기)
     if (c || inkPan) return;
+    if (INK.tool === 'tx') {   // 글자: 톡 누른 자리에 글자 칸(뗄 때 연다 — 끌면 아무것도 안 한다)
+      e.preventDefault();
+      INK.cur = { box: box, svg: box.querySelector('.pr-ink'), id: e.pointerId, kind: kind, t0: Date.now(), x0: e.clientX, y0: e.clientY, far: 0, tx: true, hot: e.target.closest('.pr-hot') };
+      return;
+    }
+    var drag = kind === 'mouse' && !INK.on;   // 펜을 안 켠 마우스: 끌어야 쓴다(그냥 누르면 ①~⑤ 고르기)
     e.preventDefault();
     c = INK.cur = { box: box, svg: box.querySelector('.pr-ink'), id: e.pointerId, kind: kind, t0: Date.now(), gone: 0, x0: e.clientX, y0: e.clientY, far: 0, wait: drag, hot: e.target.closest('.pr-hot') };
     if (!drag) inkStart(c, e);
@@ -1133,6 +1165,7 @@
     }
     if (!c || c.id !== e.pointerId) return;
     c.far = Math.max(c.far, Math.abs(e.clientX - c.x0) + Math.abs(e.clientY - c.y0));
+    if (c.tx) return;
     if (c.wait) {
       if (c.far < 5) return;
       inkStart(c, { clientX: c.x0, clientY: c.y0 });
@@ -1151,6 +1184,12 @@
     if (inkTouch[e.pointerId]) { delete inkTouch[e.pointerId]; if (!Object.keys(inkTouch).length) inkPan = false; }
     if (!c || c.id !== e.pointerId) return;
     INK.cur = null;
+    if (c.tx) {
+      if (e.type === 'pointercancel' || c.far > 10 || !c.svg.isConnected) return;
+      if (c.hot && Date.now() - c.t0 < 450) { if (c.kind !== 'mouse') c.hot.click(); return; }   // 번호를 톡 → 그 답 고르기(펜과 같게)
+      txEdit(c.svg, inkPt(c.svg, { clientX: c.x0, clientY: c.y0 }));
+      return;
+    }
     if (c.wait) return;   // 끌지 않고 뗀 마우스 → 그대로 클릭(번호 고르기)
     if (c.s && c.hot && c.far < 8 && Date.now() - c.t0 < 450) {   // 번호를 톡 → 점 대신 그 답 고르기(마우스는 원래 클릭이 따라온다)
       c.svg.removeChild(c.path);
@@ -1168,6 +1207,50 @@
   }
   window.addEventListener('pointerup', inkUp);
   window.addEventListener('pointercancel', inkUp);
+  /* T 글자 칸: 누른 자리(있던 글자를 누르면 그 글자)를 고쳐 쓴다. Enter 저장 · Shift+Enter 줄 바꿈 · Esc 취소 · 다른 데를 누르면 저장, 비우면 지운다.
+   * 칸은 그림 상자 안에 겹쳐 띄우고, 저장하면 SVG 글자로 바꿔 그림과 같이 커지고 작아진다(키보드 포커스는 누르는 그 순간에 줘야 아이패드 키보드가 뜬다) */
+  function txSize(ta) {
+    ta.style.width = '0px'; ta.style.height = '0px';
+    ta.style.width = Math.max(ta.scrollWidth + 2, 48) + 'px';
+    ta.style.height = ta.scrollHeight + 'px';
+  }
+  function txEdit(svg, q) {
+    var box = svg.parentNode, k = svg.getBoundingClientRect().width / 1000, H = svg.viewBox.baseVal.height, it = null, node = null;
+    for (var i = svg._s.length - 1; i >= 0; i--) if (svg._s[i].t === 'tx' && txHit(svg, i, q, 6 / k)) { it = svg._s[i]; node = svg.childNodes[i]; break; }
+    if (!it) {
+      var sz = Math.round(Math.max(INK_TX.lo, Math.min(INK_TX.hi, INK_TX.px / k)) * 10) / 10;
+      it = { t: 'tx', x: q[0], y: Math.max(0, Math.round(q[1] - sz * 0.6)), s: sz, v: '' };   // 누른 자리가 첫 줄 가운데쯤
+    }
+    if (node) node.style.visibility = 'hidden';
+    var ta = el('textarea', { class: 'pr-ink-edit', rows: '1', wrap: 'off', spellcheck: 'false', 'aria-label': '글자 쓰기 — Enter 저장, Shift+Enter 줄 바꿈, Esc 취소',
+      style: 'left:calc(' + (it.x / 10) + '% - 4px);top:calc(' + (it.y / H * 100) + '% - 3px);font-size:' + (it.s * k).toFixed(1) + 'px' });
+    ta.value = it.v;
+    box.appendChild(ta);
+    txSize(ta);
+    ta.focus();
+    var done = false;
+    var finish = function (keep) {
+      if (done) return;
+      done = true;
+      var v = ta.value.replace(/\s+$/, '');
+      if (ta.parentNode) ta.parentNode.removeChild(ta);
+      if (node) node.style.visibility = '';
+      if (!keep || !svg.isConnected || v === it.v) return;
+      var at = svg._s.indexOf(it);
+      if (at >= 0 && !v) { svg._s.splice(at, 1); svg.removeChild(svg.childNodes[at]); }
+      else if (at >= 0) { it.v = v; svg.replaceChild(inkNode(it), svg.childNodes[at]); }
+      else if (v) { it.v = v; svg._s.push(it); svg.appendChild(inkNode(it)); }
+      inkSave(svg);
+      inkTipDone();
+    };
+    ta.addEventListener('keydown', function (ev) {
+      if (ev.isComposing || ev.keyCode === 229) return;   // 한글 조합 중 Enter 는 조합을 끝낼 뿐
+      if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); finish(true); }
+      else if (ev.key === 'Escape') { ev.preventDefault(); ev.stopPropagation(); finish(false); }
+    });
+    ta.addEventListener('input', function () { txSize(ta); });
+    ta.addEventListener('blur', function () { finish(true); });
+  }
   /* 처음 한 번만 쓰는 법 한 줄(써 보거나 '알겠어요'를 누르면 다시 안 나온다) */
   function inkTip() {
     if (store('sn:pr:inktip')) return null;
@@ -1191,6 +1274,7 @@
   function paintInk() {
     root.classList.toggle('pr-pen', INK.on);
     root.classList.toggle('pr-pen-er', INK.tool === 'er');
+    root.classList.toggle('pr-tool-tx', INK.tool === 'tx');
     inkBtn.setAttribute('aria-pressed', INK.on ? 'true' : 'false');
     inkBtn.classList.toggle('on', INK.on);
     inkBtn.textContent = INK.on ? '✏️ 낙서 켬' : '✏️ 낙서';
@@ -1205,7 +1289,7 @@
         [el('span', { text: icon, 'aria-hidden': 'true' }), el('span', { class: 'pr-ink-l', text: label })]);
     };
     return el('div', { class: 'pr-omr-ink', role: 'toolbar', 'aria-label': '펜 도구' }, [
-      b('pen', '✏️', '펜'), b('hl', '🖍️', '형광펜'), b('er', '🧽', '지우개'),
+      b('pen', '✏️', '펜'), b('hl', '🖍️', '형광펜'), b('tx', 'T', '글자'), b('er', '🧽', '지우개'),
       el('button', { type: 'button', class: 'pr-ink-t', title: '그린 표시 모두 지우기', 'aria-label': '그린 표시 모두 지우기', onclick: inkClear }, [el('span', { text: '🗑', 'aria-hidden': 'true' })])
     ]);
   }
@@ -1215,7 +1299,7 @@
         [el('span', { text: icon, 'aria-hidden': 'true' }), el('span', { class: 'pr-ink-l', text: label })]);
     };
     return el('div', { class: 'pr-ink-pal', role: 'toolbar', 'aria-label': '펜 도구', hidden: 'hidden' }, [
-      b('pen', '✏️', '펜'), b('hl', '🖍️', '형광펜'), b('er', '🧽', '지우개'), b('', '🗑', '모두 지우기', inkClear), b('', '✕', '끄기', function () { toggleInk(false); })
+      b('pen', '✏️', '펜'), b('hl', '🖍️', '형광펜'), b('tx', 'T', '글자'), b('er', '🧽', '지우개'), b('', '🗑', '모두 지우기', inkClear), b('', '✕', '끄기', function () { toggleInk(false); })
     ]);
   }
 
