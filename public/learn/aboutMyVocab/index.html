@@ -353,9 +353,24 @@ select {
 .know-btn svg { width: 18px; height: 18px; }
 .know-btn.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); font-weight: 600; }
 /* 버튼 바로 아래 잠깐 뜨는 알림 — 화면 위에 띄우면 버튼을 가려 연달아 누를 때 '되돌리기'를 잘못 누르게 된다 */
+/* 휴대폰·태블릿 세로: '뜻 가리기'(카드 위)와 '이 단어 제외'(그림·재생 버튼 아래)가 멀리 떨어져 매번 오르내려야 했다 —
+   둘을 화면 오른쪽에 붙은 버튼 둘로 옮긴다(카드가 화면에 있을 때만 보인다). '제외했어요 · 되돌리기' 알림은 화면 아래에 뜬다 */
+.rail { display: none; }
+@media (max-width: 879px) {
+  .rail { display: flex; flex-direction: column; gap: 10px; position: fixed; z-index: 30; right: calc(env(safe-area-inset-right, 0px) + 8px); top: 60%; transform: translateY(-50%); transition: opacity .2s; }
+  .rail.away { opacity: 0; pointer-events: none; }
+  .rail-btn { width: 60px; min-height: 60px; padding: 7px 2px 6px; border-radius: 16px; border: 1px solid var(--line); background: var(--card); color: var(--ink); box-shadow: var(--shadow); display: grid; justify-items: center; align-content: center; gap: 3px; font: 600 11.5px/1.15 var(--sans); cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  .rail-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .rail-btn[aria-pressed="true"], .rail-btn.on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .card-head #hideMean, .marks .know-btn { display: none; }
+}
 .notice { margin: 0; min-height: 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0 4px; text-align: center; font-size: 13.5px; color: var(--ink-2); }
 .notice:empty { display: none; }
 .notice button { height: 32px; padding: 0 8px; border: 0; background: none; color: var(--accent); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+@media (max-width: 879px) {   /* 알림은 화면 아래에 띄운다(버튼이 오른쪽으로 옮겨 가서 그 밑에는 안 보인다) */
+  .notice { position: fixed; z-index: 31; left: 12px; right: 12px; bottom: calc(env(safe-area-inset-bottom, 0px) + 14px); padding: 6px 12px; border-radius: 12px; background: var(--ink); color: var(--card); box-shadow: var(--shadow); }
+  .notice button { color: inherit; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
@@ -461,6 +476,10 @@ select {
         <svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
         <span class="badge" id="sleepBadge" hidden></span>
       </button>
+    </div>
+    <div class="rail" id="rail" role="toolbar" aria-label="빠른 버튼">
+      <button class="rail-btn" id="railMean" type="button" aria-pressed="false" title="뜻만 가리기 (눈으로 볼 때만, 소리는 그대로)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12s-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/><path d="M4 20 20 4"/></svg><span id="railMeanLbl">뜻 가리기</span></button>
+      <button class="rail-btn" id="railKnow" type="button" title="아는 단어는 빼고 모르는 단어만 들어요"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.3 12.3l2.5 2.5 4.9-5.2"/></svg><span id="railKnowLbl">제외</span></button>
     </div>
     <div class="marks">
       <button class="pill know-btn" id="knowBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.3 12.3l2.5 2.5 4.9-5.2"/></svg><span id="knowLbl">이 단어 제외</span></button>
@@ -1864,6 +1883,8 @@ function render(revealed) {
   renderViz(w, (hidden || meanOff) && !picQ, (hidden && S.order === 'ko-en') || picQ);
   if (window.clipShow) window.clipShow(w.w, hidden || meanOff || picQ, S.viz);
   $('hideMean').setAttribute('aria-pressed', S.hideMean);
+  $('railMean').setAttribute('aria-pressed', S.hideMean);
+  $('railMeanLbl').textContent = S.hideMean ? '뜻 보기' : '뜻 가리기';
   document.body.classList.toggle('hide-mean', S.hideMean);
   els.cardStar.setAttribute('aria-pressed', stars.has(w.k));
   updateCount();
@@ -1903,6 +1924,8 @@ function updateCount() {
   const b = $('knowBtn');
   b.classList.toggle('on', at < 0);
   $('knowLbl').textContent = at < 0 ? '제외 취소' : '이 단어 제외';
+  $('railKnow').classList.toggle('on', at < 0);
+  $('railKnowLbl').textContent = at < 0 ? '제외 취소' : '제외';
   b.title = at < 0 ? '재생 목록에 다시 넣어요' : '아는 단어는 빼고 모르는 단어만 들어요 (단어 목록에서 다시 넣을 수 있어요)';
 }
 function syncKnown() {
@@ -2351,6 +2374,10 @@ $('knowBtn').addEventListener('click', () => {
 $('replay').addEventListener('click', () => go(pos));
 els.card.addEventListener('click', e => { if (Date.now() - swiped < 500) return; if (e.target.closest('button')) return; if (picSkip) picSkip(); else go(pos); });
 $('hideMean').addEventListener('click', () => { S.hideMean = !S.hideMean; peek = -1; save(); render(!playing); });
+// 오른쪽 빠른 버튼은 원래 버튼과 같은 일을 한다. 카드·재생 칸이 화면에서 벗어나면(단어 목록·설정을 볼 때) 감춘다
+$('railMean').addEventListener('click', () => $('hideMean').click());
+$('railKnow').addEventListener('click', () => $('knowBtn').click());
+if ('IntersectionObserver' in window) new IntersectionObserver(es => es.forEach(e => $('rail').classList.toggle('away', !e.isIntersecting))).observe(document.querySelector('.stage'));
 els.mean.addEventListener('click', e => {
   if (!S.hideMean) return;
   e.stopPropagation();
