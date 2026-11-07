@@ -512,7 +512,7 @@
     var verdict = S.ans[i] ? (okk ? '정답입니다' : '오답입니다 · 내 답 ' + ansText(it, S.ans[i])) : '풀지 않은 문항';
     var corr = it.ans === 0 ? '정답 없음(배점 인정)' : Array.isArray(it.ans) ? it.ans.map(function (x) { return ansText(it, x); }).join(' 또는 ') + ' (복수 정답)' : ansText(it, it.ans);
     var box = el('div', { class: 'pr-explain' }, [
-      el('p', { class: 'pr-verdict' }, [el('b', { text: verdict }), ' · ' + (it.ans === 0 ? '' : '정답 ') + corr + ' · 배점 ' + it.pts + '점']),
+      el('p', { class: 'pr-verdict' }, [el('b', { text: verdict }), ' · ', el('b', { class: 'pr-ans-t', text: (it.ans === 0 ? '' : '정답 ') + corr }), ' · 배점 ' + it.pts + '점']),
     ]);
     if (S.ans[i] && !okk && !it.num && !Array.isArray(it.ans)) {
       var trap = el('p', { class: 'pr-trap', hidden: true });
@@ -1420,7 +1420,7 @@
     list.forEach(function (i) {
       var it = S.items[i];
       box.appendChild(el('div', { class: 'pr-ai-bitem' }, [
-        el('p', { class: 'pr-ai-bh' }, [el('button', { type: 'button', class: 'pr-ai-link', text: itemLabel(it) + ' (' + it.pts + '점)', onclick: function () { showItem(i); } }), ' · 내 답 ' + ansText(it, S.ans[i]) + ' → 정답 ' + corrText(it)]),
+        el('p', { class: 'pr-ai-bh' }, [el('button', { type: 'button', class: 'pr-ai-link', text: itemLabel(it) + ' (' + it.pts + '점)', onclick: function () { showItem(i); } }), ' · 내 답 ' + ansText(it, S.ans[i]) + ' → ', el('b', { class: 'pr-ans-t', text: '정답 ' + corrText(it) })]),
         aiBox(itemAiId(i))
       ]));
     });
@@ -2159,7 +2159,7 @@
       /* ② 내 답 · 정답 */
       var verdict = el('p', { class: 'pr-verdict pr-sheet-ans' }, [
         a ? el('span', { class: isRight(it, a) ? 'pr-sheet-ok' : 'pr-sheet-bad', text: '내 답 ' + ansText(it, a) }) : el('span', { class: 'pr-sheet-mute', text: lost ? '내 답 기록 없음' : '헷갈림 표시' }),
-        ' → ', el('b', { text: '정답 ' + corrText(it) }), ' · ' + it.pts + '점',
+        ' → ', el('b', { class: 'pr-ans-t', text: '정답 ' + corrText(it) }), ' · ' + it.pts + '점',
         it.tag && partName[it.tag] ? el('a', { class: 'pr-tag', href: partHref[it.tag] || '#', text: partName[it.tag] }) : null
       ]);
       body.appendChild(verdict);
@@ -2251,6 +2251,7 @@
         var ok = isRight(it, a);
         Array.prototype.forEach.call(ctl.querySelectorAll('button, input'), function (x) { x.disabled = true; });
         Array.prototype.forEach.call(ctl.querySelectorAll('.pr-ch'), function (b, k) {
+          if (k + 1 === a) b.classList.add('sel');   // 내 답은 검게(맞았으면 빨간 테두리가 더해진다)
           if (it.ans !== 0 && isRight(it, k + 1)) b.classList.add('right');
           if (k + 1 === a && !ok) b.classList.add('wrong');
         });
