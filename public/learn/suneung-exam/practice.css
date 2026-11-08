@@ -29,8 +29,8 @@
 .pr-tag:hover { background: var(--accent-glow, transparent); }
 .pr-paper { background: #fff; border-radius: 8px; padding: 10px 12px; overflow-x: auto; }
 .pr-img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
-.pr-choices { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 12px; }
-.pr-ch { font: 500 20px var(--font-body, sans-serif); padding: 10px 0; border: 1px solid var(--pr-line); border-radius: 10px; background: var(--pr-el); color: var(--text); cursor: pointer; transition: transform .1s, background .15s; }
+.pr-choices { display: grid; grid-template-columns: repeat(5, minmax(0, 60px)); justify-content: center; gap: 8px; margin-top: 10px; }   /* ①~⑤ 는 작게 가운데로(칸을 가로로 꽉 채우지 않는다) */
+.pr-ch { font: 500 17px var(--font-body, sans-serif); padding: 5px 0; border: 1px solid var(--pr-line); border-radius: 10px; background: var(--pr-el); color: var(--text); cursor: pointer; transition: transform .1s, background .15s; }
 .pr-ch:hover { border-color: var(--accent); }
 .pr-ch:active { transform: scale(.96); }
 .pr-ch.sel { background: var(--text); border-color: var(--text); color: var(--pr-card); }   /* 내가 고른 답은 OMR처럼 검은 칠(어두운 화면은 흰 칠) */
@@ -87,7 +87,7 @@
   .pr-body:not(.paper) .pr-omr-top { position: static; }
   .pr-bar { position: static; }
   .pr-card { scroll-margin-top: 20px; }
-  .pr-ch { font-size: 18px; padding: 12px 0; }
+  .pr-ch { font-size: 17px; padding: 7px 0; }   /* 손가락으로 누르기 쉬운 높이(약 40px)는 남긴다 */
 }
 
 /* light-theme.css 가 button 전체를 파란색 !important 로 덮으므로 플레이어 버튼은 id 로 다시 덮는다 */
