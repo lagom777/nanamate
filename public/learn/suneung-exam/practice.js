@@ -157,6 +157,11 @@
   /* ───────── UI shell ───────── */
   var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, authBox, exportMsg, exportTimer, exporting = false, dueBtn = null, dueOpt = null, omrClock = null;
 
+  var COLS_KEY = 'sn:pr:cols';
+  function paintCols() {
+    var n = String(store(COLS_KEY) || '');
+    for (var k = 1; k <= 4; k++) root.classList.toggle('pr-cols-' + k, n === String(k));
+  }
   function buildShell() {
     root.innerHTML = '';
     var ex = examList();
@@ -193,6 +198,12 @@
       ]);
       row1.push(selSel);
     } else row1.push(countWrap);
+    /* 가로 줄 수: 문제(시험지 단·문항 칸)를 가로로 몇 줄 놓을지 — 자동(화면 폭에 맞게: 보통 2줄, 아주 넓으면 4줄) 또는 1~4줄. 이 기기에 저장 */
+    var colsSel = el('select', { 'aria-label': '문제를 가로로 몇 줄 놓을지', title: '문제를 가로로 몇 줄 놓을지 (이 기기에 저장)', onchange: function () { store(COLS_KEY, colsSel.value || null); paintCols(); } },
+      [['', '자동'], ['1', '1줄'], ['2', '2줄'], ['3', '3줄'], ['4', '4줄']].map(function (o) { return el('option', { value: o[0], text: o[1] }); }));
+    colsSel.value = /^[1-4]$/.test(String(store(COLS_KEY))) ? String(store(COLS_KEY)) : '';
+    row1.push(el('label', { class: 'pr-count pr-cols' }, ['가로 ', colsSel]));
+    paintCols();
     timerEl = el('button', { type: 'button', class: 'pr-timer', onclick: toggleTimer, 'aria-label': '타이머 켜기/끄기' });
     inkBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-ink-btn', title: '시험지·문항 그림에 낙서해요(이 기기에 저장). 펜슬은 그냥 쓰고 마우스는 끌면 써져요. 손가락은 이 단추를 켜야 써지고, 켜 둔 동안 두 손가락으로 화면을 움직여요. 형광펜·지우개도 여기서.', onclick: function () { toggleInk(); } });
     progEl = el('span', { class: 'pr-prog' });

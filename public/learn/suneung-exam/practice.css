@@ -467,6 +467,16 @@ body.pr-wide-page main.wide { max-width: none; padding-left: 24px; padding-right
   .pr-strips { grid-template-columns: repeat(auto-fill, minmax(max(min(100%, 440px), calc((100% - 42px) / 4)), 1fr)); max-width: calc(686px * 4 + 42px); }
   .pr-list:not(.paper) { grid-template-columns: repeat(auto-fill, minmax(max(min(100%, 440px), calc((100% - 54px) / 4)), 1fr)); max-width: calc(760px * 4 + 54px); }
 }
+/* 가로 줄 수를 고르면(위 막대 '가로 1~4줄') 자동 대신 그 수로 — 칸은 그 수만큼 똑같이 나누고, 그림은 원래 크기보다 키우지 않는다 */
+#practice-root.pr-cols-1 .pr-strips { grid-template-columns: minmax(0, 1fr); max-width: 686px; }
+#practice-root.pr-cols-2 .pr-strips { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: calc(686px * 2 + 14px); }
+#practice-root.pr-cols-3 .pr-strips { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: calc(686px * 3 + 28px); }
+#practice-root.pr-cols-4 .pr-strips { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: calc(686px * 4 + 42px); }
+#practice-root.pr-cols-1 .pr-list:not(.paper) { grid-template-columns: minmax(0, 1fr); max-width: 760px; }
+#practice-root.pr-cols-2 .pr-list:not(.paper) { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: calc(760px * 2 + 18px); }
+#practice-root.pr-cols-3 .pr-list:not(.paper) { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: calc(760px * 3 + 36px); }
+#practice-root.pr-cols-4 .pr-list:not(.paper) { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: calc(760px * 4 + 54px); }
+.pr-cols select { flex: 0 0 auto; }
 @media (max-width: 900px) {
   body.pr-wide-page main.wide { padding-left: 8px; padding-right: 8px; }
   .pr-card { padding: 10px 6px 12px; }
