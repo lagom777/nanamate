@@ -73,6 +73,8 @@ for n in range(1, nq + 1):
     last = max(w[3] for w in inside) if inside else limit
     cand = last + 26  # 분수 모양 선지의 분모는 글자 상자에 잡히지 않아 여유를 둔다(빈 여백은 trim이 제거)
     dr = [d["rect"] for d in page.get_drawings() if d["rect"].x1 > left and d["rect"].x0 < right and d["rect"].y0 > y0]
+    # 그림(래스터) 블록도 문항 몸체 — 그래프·사진을 그림으로 넣은 선지(예: 2027-09 물리Ⅰ 10번 ⑤)가 잘리지 않게(2026-11 수정)
+    dr += [pymupdf.Rect(i['bbox']) for i in page.get_image_info() if pymupdf.Rect(i['bbox']).x1 > left and pymupdf.Rect(i['bbox']).x0 < right and pymupdf.Rect(i['bbox']).y0 > y0 - 5]
     def pagebox(r):
         return r.y0 > H * 0.88 and r.width < W * 0.1
     def footer(r):

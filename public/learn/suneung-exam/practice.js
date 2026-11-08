@@ -125,12 +125,17 @@
     });
     return shuffle(withUnsure(items));
   }
+  /* 아래쪽 그림 선지(그래프·사진)가 잘려 있던 문항 그림을 다시 자른 것(crop.py 가 그림 블록을 문항 몸체로 안 세던 문제) — R2 에 다시 올리기 전까지
+   * 사이트의 suneung-exam/fix/ 에서 준다. AI 도 그림을 주소로 받으므로 절대 주소로 */
+  var IMG_FIX = { chem1: '2023-jun/19', chem2: '2026-csat/1 2026-jun/15', earth1: '2022-csat/16 2024-sep/17', phys1: '2022-jun/10 2022-sep/17 2023-jun/10 2023-sep/10 2023-sep/2 2024-csat/17 2024-sep/13 2027-sep/10', phys2: '2024-csat/5 2024-jun/5 2025-csat/7 2025-jun/6 2026-sep/15 2027-jun/11' };
+  function imgFixed(key, n) { var l = IMG_FIX[SUB]; return !!l && (' ' + l + ' ').indexOf(' ' + key + '/' + n + ' ') >= 0; }
   function mk(e, n) {
     var s = e[SUB];
     return {
       id: e.key + '/' + n, ex: e.key, title: etitle(e), n: n, ans: s.a[n - 1], pts: s.p[n - 1], tag: s.t ? s.t[n - 1] : null,
       num: !!(s.n && s.n.indexOf(n) >= 0),
-      img: (cfg.imgBase || cfg.base) + e.key + '/' + SUB + '/q' + pad(n) + '.webp'
+      img: imgFixed(e.key, n) ? new URL(cfg.base + 'fix/' + e.key + '/' + SUB + '/q' + pad(n) + '.webp', location.href).href
+        : (cfg.imgBase || cfg.base) + e.key + '/' + SUB + '/q' + pad(n) + '.webp'
     };
   }
 
