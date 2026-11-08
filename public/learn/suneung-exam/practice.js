@@ -598,7 +598,7 @@
     '```흐름: "원인 → 과정 → 결과" 한 줄, 또는 한 줄에 한 단계 "단계 이름: 설명" / ' +
     '```비교: 첫 줄 "| 기준 | A | B |", 다음 줄부터 "| 항목 | … | … |" (정답 쪽 칸 제목 끝에 (정답), 칸에 ○·✕ 만 써도 된다) / ' +
     '```연표: 한 줄에 "연도 | 사건" (답과 이어지는 줄 끝에 ★)' +
-    (FORMULA ? ' / ```그래프: "y = x^2 - 3x"(여러 줄이면 여러 곡선, 조각 함수는 "y = 식, 시작 ~ 끝"), "x: -1 ~ 4", "점: (1.5, -2.25) 꼭짓점"(빈 점은 이름에 ○), "x = 2", "넓이: 0 ~ 3"(곡선과 x축 사이, 두 곡선 사이는 "넓이: 0 ~ 3, 사이") — 식은 x^2·sqrt(x)·sin(x)·e^x·ln(x)·abs(x) 같은 계산식으로(LaTeX·$ 없이)' : '') +
+    (FORMULA ? ' / ```그래프: "y = x^2 - 3x"(여러 줄이면 여러 곡선, 조각 함수는 "y = 식, 시작 ~ 끝"), "x: -1 ~ 4", "점: (1.5, -2.25) 꼭짓점"(빈 점은 이름에 ○), "x = 2", "넓이: 0 ~ 3"(곡선과 x축 사이, 두 곡선 사이는 "넓이: 0 ~ 3, 사이") — 식은 x^2·sqrt(x)·sin(x)·e^x·ln(x)·abs(x) 같은 계산식으로(LaTeX·$ 없이). 물리처럼 시간 그래프면 변수 t 와 물리량 이름을 쓰고 축 이름을 단다: "v = 2t, 0 ~ 3", "v = 6, 3 ~ 5", "t: 0 ~ 5", "축: t(s), v(m/s)", "넓이: 0 ~ 5"(이동 거리)' : '') +
     '. 블록 안에는 마크다운 꾸밈을 쓰지 않는다' + (FORMULA ? '(짧은 수식 $…$ 은 된다)' : '') + '.';
 
   function loadSdk() {
@@ -745,7 +745,7 @@
   }
   /* 그래프 식 해석: 숫자·x·+ - * / ^·괄호·|…|·함수(sqrt sin cos tan ln log abs exp)·상수(pi e)·곱셈 생략(2x, 3(x+1), x(x-1), 2sin(x)). eval 은 쓰지 않는다 */
   var VIS_FN = { sqrt: Math.sqrt, sin: Math.sin, cos: Math.cos, tan: Math.tan, ln: Math.log, log: function (v) { return Math.log(v) / Math.LN10; }, abs: Math.abs, exp: Math.exp };
-  var VIS_WORDS = ['sqrt', 'sin', 'cos', 'tan', 'exp', 'abs', 'log', 'ln', 'pi', 'x', 'e'];
+  var VIS_WORDS = ['sqrt', 'sin', 'cos', 'tan', 'exp', 'abs', 'log', 'ln', 'pi', 'x', 'e', 't'];   // t 는 x 와 같은 가로 변수(물리의 시간)
   function exprFn(src) {
     var s = String(src).replace(/\\left|\\right|\\[,;!]|\\displaystyle/g, '').replace(/\\[dt]?frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}/g, '(($1)/($2))').replace(/\\sqrt\s*\{([^{}]*)\}/g, 'sqrt($1)')
       .replace(/\\cdot|\\times|×|·/g, '*').replace(/÷/g, '/').replace(/[−–—]/g, '-').replace(/π|\\pi/g, 'pi').replace(/\\(sin|cos|tan|ln|log|exp)/g, '$1')
@@ -784,7 +784,7 @@
       var tk = toks[p++];
       if (!tk) throw 0;
       if (tk.t === 'n') { var v = tk.v; return function () { return v; }; }
-      if (tk.t === 'id') { if (tk.v === 'x') return function (x) { return x; }; var c = tk.v === 'pi' ? Math.PI : Math.E; return function () { return c; }; }
+      if (tk.t === 'id') { if (tk.v === 'x' || tk.v === 't') return function (x) { return x; }; var c = tk.v === 'pi' ? Math.PI : Math.E; return function () { return c; }; }
       if (tk.t === 'f') { var f = VIS_FN[tk.v], arg = peek() && peek().t === '(' ? primary() : power(); return function (x) { return f(arg(x)); }; }
       if (tk.t === '(') { var e = expr(); if (!eat(')')) throw 0; return e; }
       if (tk.t === '|') { absIn++; var a = expr(); absIn--; if (!eat('|')) throw 0; return function (x) { return Math.abs(a(x)); }; }
@@ -803,16 +803,17 @@
     lines.forEach(function (raw) {
       var ln = raw.trim().replace(/\$/g, '').replace(/^[-•*]\s+/, ''), m;
       if (!ln) return;
-      if ((m = /^x\s*[:：]\s*(.+?)\s*(?:~|〜|부터)\s*(.+?)\s*(?:까지)?$/i.exec(ln))) { g.xr = [visNum(m[1]), visNum(m[2])]; return; }
-      if ((m = /^y\s*[:：]\s*(.+?)\s*(?:~|〜|부터)\s*(.+?)\s*(?:까지)?$/i.exec(ln))) { g.yr = [visNum(m[1]), visNum(m[2])]; return; }
+      if ((m = /^(?:축|axes?)\s*[:：]\s*(.+?)\s*[,/]\s*(.+)$/i.exec(ln))) { g.ax = [m[1].trim(), m[2].trim()]; return; }   // "축: t(s), v(m/s)"
+      if ((m = /^(?:가로|세로)(?:축)?\s*[:：]\s*(.+)$/.exec(ln))) { g.ax = g.ax || ['', '']; g.ax[/^가로/.test(ln) ? 0 : 1] = m[1].trim(); return; }
+      if ((m = /^([a-z])\s*[:：]\s*(.+?)\s*(?:~|〜|부터)\s*(.+?)\s*(?:까지)?$/i.exec(ln))) { g[/^[xt]$/i.test(m[1]) ? 'xr' : 'yr'] = [visNum(m[2]), visNum(m[3])]; return; }   // x:·t: 는 가로, 그 밖의 글자는 세로 범위
       if ((m = /^(?:점|points?)\s*[:：]\s*(.+)$/i.exec(ln))) {
         var re = /\(\s*([^,()]+?)\s*,\s*([^()]+?)\s*\)\s*([^(]*)/g, q;
         while ((q = re.exec(m[1]))) { var lab = q[3].replace(/^[,\s]+|[,\s]+$/g, ''); g.pts.push({ x: visNum(q[1]), y: visNum(q[2]), open: /○|열린|빈/.test(lab), label: lab.replace(/○|●/g, '').trim() }); }
         return;
       }
       if ((m = /^(?:넓이|area)\s*[:：]\s*(.+?)\s*(?:~|〜)\s*([^,]+?)\s*(,\s*(?:사이|between).*)?$/i.exec(ln))) { g.area = { a: visNum(m[1]), b: visNum(m[2]), between: !!m[3] }; return; }
-      if ((m = /^x\s*=\s*([^,]+?)\s*(?:,\s*(.*))?$/i.exec(ln))) { g.vl.push({ x: visNum(m[1]), label: m[2] || '' }); return; }
-      if ((m = /^(y|[a-z]\s*\(\s*x\s*\))\s*=\s*(.+)$/i.exec(ln))) {
+      if ((m = /^[xt]\s*=\s*([^,]+?)\s*(?:,\s*(.*))?$/i.exec(ln)) && isFinite(visNum(m[1])) && !/[xt](?![a-z])/i.test(m[1].replace(/tan|sqrt|exp/gi, ''))) { g.vl.push({ x: visNum(m[1]), label: m[2] || '' }); return; }   // 세로선: x = 4 · t = 4
+      if ((m = /^([a-z]{1,2}(?:\s*\(\s*[xt]\s*\))?)\s*=\s*(.+)$/i.exec(ln))) {   // 곡선: y = … · f(x) = … · v = 2t · s(t) = …
         var body = m[2], dom = null, lb = '', d = /,\s*([^,~]+?)\s*(?:~|〜)\s*([^,]+?)\s*$/.exec(body);
         if (d) { dom = [visNum(d[1]), visNum(d[2])]; body = body.slice(0, d.index); }
         var l2 = /\s*\(([^()]*[가-힣][^()]*)\)\s*$/.exec(body);
@@ -822,6 +823,9 @@
       }
     });
     if (!g.cv.length && !g.pts.length) return '';
+    var usesT = g.cv.some(function (c) { return /(^|[^a-z])t([^a-z]|$)/i.test(c.src.replace(/tan|sqrt/gi, '')) || /\(\s*t\s*\)/.test(c.name); });
+    var yn = g.cv.length ? g.cv[0].name.replace(/\s*\(.*$/, '') : 'y';
+    g.ax = [g.ax && g.ax[0] || (usesT ? 't' : 'x'), g.ax && g.ax[1] || (/^[fgh]$/i.test(yn) ? 'y' : yn)];   // 물리(v = 2t)면 가로 t · 세로 v
     return visPlot(g);
   }
   function visStep(r) { var s = Math.pow(10, Math.floor(Math.log(r / 5) / Math.LN10)), k = r / 5 / s; return s * (k < 1.5 ? 1 : k < 3.5 ? 2 : k < 7.5 ? 5 : 10); }
@@ -867,10 +871,11 @@
       if (Math.abs(gy) > sty / 1e3) o.push('<text class="pr-vg-tick" x="' + f1(Math.max(L - 3, ay - 3)) + '" y="' + f1(sy(gy) + 3) + '" text-anchor="end">' + fmt(gy) + '</text>');
     }
     o.push('<line class="pr-vg-axis" x1="' + L + '" y1="' + f1(ax) + '" x2="' + (W - R) + '" y2="' + f1(ax) + '"/><line class="pr-vg-axis" x1="' + f1(ay) + '" y1="' + T + '" x2="' + f1(ay) + '" y2="' + (H - B) + '"/>');
-    o.push('<text class="pr-vg-tick ax" x="' + (W - R - 2) + '" y="' + f1(ax - 4) + '" text-anchor="end">x</text><text class="pr-vg-tick ax" x="' + f1(ay + 5) + '" y="' + (T + 8) + '">y</text>');
+    o.push('<text class="pr-vg-tick ax" x="' + (W - R - 2) + '" y="' + f1(ax - 4) + '" text-anchor="end">' + escH(g.ax ? g.ax[0] : 'x') + '</text><text class="pr-vg-tick ax" x="' + f1(ay + 5) + '" y="' + (T + 8) + '">' + escH(g.ax ? g.ax[1] : 'y') + '</text>');
     if (yr[0] <= 0 && yr[1] >= 0 && xr[0] <= 0 && xr[1] >= 0) o.push('<text class="pr-vg-tick" x="' + f1(ay - 3) + '" y="' + f1(ax + 11) + '" text-anchor="end">O</text>');
     if (g.area && isFinite(g.area.a) && isFinite(g.area.b) && g.cv[0]) {   // 넓이: 곡선과 x축(또는 두 곡선) 사이
-      var a = Math.min(g.area.a, g.area.b), b = Math.max(g.area.a, g.area.b), top = [], bot = [], f0 = g.cv[0].f, fb = g.area.between && g.cv[1] ? g.cv[1].f : null;
+      var fOn = function (x) { for (var i = 0; i < g.cv.length; i++) { var c = g.cv[i]; if (!c.dom || (x >= c.dom[0] - 1e-9 && x <= c.dom[1] + 1e-9)) return c.f(x); } return NaN; };   // 조각 함수면 그 구간의 식
+      var a = Math.min(g.area.a, g.area.b), b = Math.max(g.area.a, g.area.b), top = [], bot = [], f0 = g.area.between ? g.cv[0].f : fOn, fb = g.area.between && g.cv[1] ? g.cv[1].f : null;
       for (var k = 0; k <= 160; k++) { var x = a + (b - a) * k / 160, y = f0(x), y2 = fb ? fb(x) : 0; if (isFinite(y) && isFinite(y2)) { top.push(f1(sx(x)) + ',' + f1(sy(y))); bot.unshift(f1(sx(x)) + ',' + f1(sy(y2))); } }
       if (top.length > 1) o.push('<polygon class="pr-vg-area" clip-path="url(#' + id + ')" points="' + top.concat(bot).join(' ') + '"/>');
     }
@@ -886,7 +891,7 @@
     g.vl.forEach(function (v) {
       if (!isFinite(v.x)) return;
       o.push('<line class="pr-vg-v" x1="' + f1(sx(v.x)) + '" y1="' + T + '" x2="' + f1(sx(v.x)) + '" y2="' + (H - B) + '"/>');
-      if (v.label) o.push('<text class="pr-vg-lab" x="' + f1(sx(v.x) + 3) + '" y="' + (T + 10) + '">' + escH(v.label) + '</text>');
+      if (v.label) o.push('<text class="pr-vg-lab" x="' + f1(sx(v.x) + 4) + '" y="' + f1(Math.min(H - B - 6, ax - 6)) + '">' + escH(v.label) + '</text>');   // 세로선 이름은 아래쪽(위쪽 점 이름과 겹치지 않게)
     });
     g.pts.forEach(function (q) {
       if (!isFinite(q.x) || !isFinite(q.y)) return;
@@ -895,8 +900,9 @@
       var t = q.label ? q.label + ' ' : '';
       o.push('<text class="pr-vg-lab" x="' + f1(right ? px + 6 : px - 6) + '" y="' + f1(py < T + 14 ? py + 13 : py - 6) + '" text-anchor="' + (right ? 'start' : 'end') + '">' + escH(t + '(' + fmt(q.x) + ', ' + fmt(q.y) + ')') + '</text>');
     });
+    var vx = (g.ax ? g.ax[0] : 'x').replace(/\s*\(.*$/, '') || 'x';   // 범례의 범위도 가로 변수 이름으로(물리는 t)
     var leg = g.cv.map(function (c, ci) {
-      return '<span><i class="pr-vg-k' + (ci % 4) + '"></i>' + escH(c.name) + ' = ' + prettyExpr(c.src) + (c.dom ? ' <small>(' + fmt(c.dom[0]) + ' ≤ x ≤ ' + fmt(c.dom[1]) + ')</small>' : '') + (c.label ? ' · ' + escH(c.label) : '') + '</span>';
+      return '<span><i class="pr-vg-k' + (ci % 4) + '"></i>' + escH(c.name) + ' = ' + prettyExpr(c.src) + (c.dom ? ' <small>(' + fmt(c.dom[0]) + ' ≤ ' + escH(vx) + ' ≤ ' + fmt(c.dom[1]) + ')</small>' : '') + (c.label ? ' · ' + escH(c.label) : '') + '</span>';
     }).join('');
     return '<div class="pr-vis pr-vis-graph"><svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="함수 그래프">' + o.join('') + '</svg>' + (leg ? '<p class="pr-vg-leg">' + leg + '</p>' : '') + '</div>';
   }
