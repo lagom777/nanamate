@@ -520,7 +520,7 @@
 
   function reveal(it, i) {
     var okk = isRight(it, S.ans[i]);
-    var verdict = S.ans[i] ? (okk ? '정답입니다' : '오답입니다 · 내 답 ' + ansText(it, S.ans[i])) : '풀지 않은 문항';
+    var verdict = S.ans[i] ? (okk ? '정답입니다' : '오답입니다 · 내 답 ' + ansText(it, S.ans[i])) : okk ? '풀지 않은 문항(모두 정답 처리)' : '오답입니다 · 못 푼 문항';   // 못 푼 문제도 틀린 것
     var corr = it.ans === 0 ? '정답 없음(배점 인정)' : Array.isArray(it.ans) ? it.ans.map(function (x) { return ansText(it, x); }).join(' 또는 ') + ' (복수 정답)' : ansText(it, it.ans);
     var box = el('div', { class: 'pr-explain' }, [
       el('p', { class: 'pr-verdict' }, [el('b', { text: verdict }), ' · ', el('b', { class: 'pr-ans-t', text: (it.ans === 0 ? '' : '정답 ') + corr }), ' · 배점 ' + it.pts + '점']),
@@ -1323,6 +1323,14 @@
   }
   /* AI 분석·해설·오답 노트 칸: 시험지를 가리지 않게 옆(휴대폰은 아래)에 붙여 연다 — 어둡게 덮지 않고, 시험지는 그대로 보고 넘길 수 있다.
    * 넓은 화면은 본문을 칸 폭만큼 왼쪽으로 비켜(body.pr-dock) 시험지·답안지가 칸 밑에 숨지 않는다. 닫기: ✕ 또는 Esc */
+  /* 크게 보기: 옆 칸 → 화면 대부분(휴대폰은 화면 전체) + 글자 크게. 다시 누르면 옆 칸으로. 이 기기에 기억한다 */
+  var AI_BIG = 'sn:pr:aibig';
+  function aiBig() { return !!store(AI_BIG); }
+  function paintBig(btn) {
+    var on = aiBig();
+    document.body.classList.toggle('pr-ai-big', on);
+    if (btn) { btn.textContent = on ? '⤡ 작게' : '⤢ 크게'; btn.title = on ? '옆 칸으로 작게 — 시험지를 보면서 읽기' : '크게 보기 — 넓은 칸·큰 글자로 읽기'; btn.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+  }
   function showDlg(title, node) {
     if (!aiDlg) {
       aiDlg = el('dialog', { class: 'pr-ai-dlg', 'aria-label': 'AI 해설' });
@@ -1331,7 +1339,9 @@
       root.appendChild(aiDlg);
     }
     aiDlg.innerHTML = '';
-    aiDlg.appendChild(el('div', { class: 'pr-ai-head' }, [el('b', { text: title }), el('button', { type: 'button', class: 'pr-ai-x', 'aria-label': '닫기', text: '✕', onclick: function () { aiDlg.close(); } })]));
+    var big = el('button', { type: 'button', class: 'pr-ai-size', onclick: function () { store(AI_BIG, aiBig() ? null : 1); paintBig(big); } });
+    paintBig(big);
+    aiDlg.appendChild(el('div', { class: 'pr-ai-head' }, [el('b', { text: title }), el('span', { class: 'pr-ai-tools' }, [big, el('button', { type: 'button', class: 'pr-ai-x', 'aria-label': '닫기', text: '✕', onclick: function () { aiDlg.close(); } })])]));
     aiDlg.appendChild(node);
     document.body.classList.add('pr-dock');
     if (!aiDlg.open) aiDlg.show();

@@ -305,6 +305,23 @@ body.pr-dock.pr-wide-page main.wide { padding-right: calc(var(--pr-dock-w) + 24p
   body.pr-dock { padding-bottom: 58vh; }
   body.pr-dock.pr-wide-page main.wide { padding-right: 8px; }
 }
+/* 크게 보기(⤢ 크게): 넓은 화면은 화면 대부분을 덮고(시험지를 비키지 않는다), 휴대폰은 화면 전체. 글자도 크게 */
+body.pr-ai-big .pr-ai-dlg[open] { width: min(1080px, 94vw); padding: 16px 28px 24px; }
+body.pr-ai-big .pr-ai-dlg[open] .pr-ai-head { margin: -16px -28px 10px; padding: 12px 28px; }
+body.pr-dock.pr-ai-big.pr-wide-page main.wide { padding-right: 24px; }
+body.pr-ai-big .pr-ai-dlg .pr-ai-body { font-size: 17.5px; line-height: 1.85; }
+body.pr-ai-big .pr-ai-dlg .pr-ai-body .pr-ai-h { font-size: 18.5px; }
+body.pr-ai-big .pr-ai-dlg .pr-vis { font-size: 15.5px; }
+body.pr-ai-big .pr-ai-dlg .pr-vis-graph svg { max-width: 760px; }
+@media (max-width: 900px) {
+  body.pr-ai-big .pr-ai-dlg[open] { width: 100%; height: 100vh; height: 100dvh; padding: 16px 16px 20px; border-radius: 0; }
+  body.pr-ai-big .pr-ai-dlg[open] .pr-ai-head { margin: -16px -16px 10px; padding: 12px 16px; }
+  body.pr-dock.pr-ai-big { padding-bottom: 0; }
+  body.pr-ai-big .pr-ai-dlg .pr-ai-body { font-size: 17px; }
+}
+.pr-ai-tools { display: inline-flex; align-items: center; gap: 4px; flex: none; }
+#practice-root .pr-ai-size { padding: 4px 10px; border-radius: 999px; border: 1px solid var(--pr-line) !important; background: var(--pr-el) !important; color: var(--text) !important; font: 600 12.5px var(--font-body, sans-serif); cursor: pointer; white-space: nowrap; }
+#practice-root .pr-ai-size[aria-pressed="true"] { background: var(--accent) !important; border-color: var(--accent) !important; color: #fff !important; }
 .pr-ai-dlg .pr-ai { margin-top: 4px; border-top: 0; padding-top: 0; }
 .pr-ai-head { position: sticky; top: -16px; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: -16px -18px 8px; padding: 12px 18px; background: var(--pr-card); border-bottom: 1px solid var(--pr-line); }
 #practice-root .pr-ai-x { background: transparent !important; border: 0 !important; color: var(--text-dim) !important; font-size: 16px; cursor: pointer; padding: 4px 6px; }
