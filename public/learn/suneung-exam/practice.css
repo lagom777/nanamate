@@ -200,6 +200,74 @@
 .pr-ai-body .katex-display { margin: 8px 0 12px; padding: 8px 10px; border-radius: 8px; background: color-mix(in srgb, var(--pr-el) 70%, transparent); overflow-x: auto; overflow-y: hidden; }
 .pr-ai-body .katex-display > .katex { font-size: 1.18em; }
 .pr-ai-body code.pr-tex { white-space: pre-wrap; }
+/* 그림 블록(인포그래픽): AI 가 쓴 ```선지·흐름·비교·연표·그래프 를 그림으로 — 정답은 빨강, 내 답은 검정(채점 색과 같게) */
+.pr-vis { margin: 10px 0 14px; padding: 12px; border: 1px solid var(--pr-line); border-radius: 12px; background: var(--pr-card); font-size: 14px; line-height: 1.55; }
+.pr-vis-wait { color: var(--text-dim); font-size: 13px; animation: pr-ai-blink 1.4s ease-in-out infinite; }
+.pr-ai-body .pr-vis-raw { margin: 8px 0; padding: 10px; border-radius: 8px; background: var(--pr-el); font: 12.5px/1.6 var(--font-mono, monospace); white-space: pre-wrap; }
+.pr-vis-ch { display: grid; gap: 6px; padding: 8px; }
+.pr-vc-row { display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; align-items: center; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--pr-line); background: var(--pr-el); }
+.pr-vc-row.dim .pr-vc-why { color: var(--text-dim); }
+.pr-vc-row.ans { border-color: var(--pr-ans, #dc2626); box-shadow: inset 4px 0 0 var(--pr-ans, #dc2626); background: color-mix(in srgb, var(--pr-ans, #dc2626) 6%, var(--pr-card)); }
+.pr-vc-row.mine:not(.ans) { border-color: var(--text); box-shadow: inset 4px 0 0 var(--text); }
+.pr-ai-body .pr-vc-n { grid-row: span 2; display: grid; place-items: center; min-width: 30px; height: 30px; padding: 0 4px; box-sizing: border-box; border-radius: 15px; font: 800 15px/1 var(--font-body, sans-serif); background: var(--pr-card); border: 1.5px solid var(--pr-line); color: var(--text); }
+.pr-ai-body .pr-vc-row.mine .pr-vc-n { background: var(--text); border-color: var(--text); color: var(--pr-card); }
+.pr-ai-body .pr-vc-row.ans .pr-vc-n { border-color: var(--pr-ans, #dc2626); color: var(--pr-ans, #dc2626); background: var(--pr-card); box-shadow: 0 0 0 2px var(--pr-ans, #dc2626); }
+.pr-vc-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.pr-vc-b { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 800; line-height: 1.6; }
+.pr-vc-b.ans { background: var(--pr-ans, #dc2626); color: #fff; }
+.pr-vc-b.mine { background: var(--text); color: var(--pr-card); }
+.pr-vc-b.ok { background: rgba(37,99,235,.12); color: #1d4ed8; }
+.pr-vc-b.no { background: rgba(107,114,128,.16); color: #4b5563; }
+.pr-vc-why { font-size: 13.5px; }
+.pr-vis-flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 6px; }
+.pr-vf-st { flex: 1 1 120px; min-width: 0; display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border-radius: 10px; background: color-mix(in srgb, var(--accent) 7%, var(--pr-card)); border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--pr-line)); }
+.pr-vf-st.last { background: color-mix(in srgb, var(--accent) 16%, var(--pr-card)); border-color: var(--accent); }
+.pr-ai-body .pr-vf-st b { font-size: 14px; color: var(--text); }   /* 단계 이름은 검게(빨강은 정답 표시) */
+.pr-vf-st span { font-size: 12.5px; color: var(--text-dim); }
+.pr-vf-k { font: 800 11px var(--font-mono, monospace); color: var(--accent); }
+.pr-vf-ar { flex: none; align-self: center; font-style: normal; font-weight: 800; color: var(--accent); }
+.pr-vf-ar::before { content: '→'; }
+.pr-vis-flow.col { flex-direction: column; }
+.pr-vis-flow.col .pr-vf-st { flex: none; }
+.pr-vis-flow.col .pr-vf-ar { align-self: flex-start; margin-left: 16px; line-height: 1; }
+.pr-vis-flow.col .pr-vf-ar::before { content: '↓'; }
+@media (max-width: 640px) {
+  .pr-vis-flow { flex-direction: column; }
+  .pr-vis-flow .pr-vf-st { flex: none; }
+  .pr-vis-flow .pr-vf-ar { align-self: flex-start; margin-left: 16px; line-height: 1; }
+  .pr-vis-flow .pr-vf-ar::before { content: '↓'; }
+}
+.pr-vis-cmp { padding: 0; overflow-x: auto; }
+.pr-vis-cmp table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.pr-vis-cmp th, .pr-vis-cmp td { padding: 7px 10px; border-bottom: 1px solid var(--pr-line); text-align: left; vertical-align: top; }
+.pr-vis-cmp tr:last-child > * { border-bottom: 0; }
+.pr-vis-cmp thead th { background: color-mix(in srgb, var(--accent) 12%, var(--pr-card)); font-weight: 800; }
+.pr-vis-cmp tbody th { background: var(--pr-el); font-weight: 700; }
+.pr-vis-cmp .hot { box-shadow: inset 2px 0 0 var(--pr-ans, #dc2626), inset -2px 0 0 var(--pr-ans, #dc2626); background: color-mix(in srgb, var(--pr-ans, #dc2626) 5%, transparent); }
+.pr-vt-o { font-weight: 800; color: #1d4ed8; }
+.pr-vt-x { font-weight: 800; color: #6b7280; }
+.pr-vis-tl ol { list-style: none; margin: 0; padding: 0 0 0 6px; }
+.pr-vis-tl li { position: relative; display: grid; grid-template-columns: minmax(58px, auto) 1fr; gap: 10px; margin: 0; padding: 6px 0 6px 18px; border-left: 2px solid color-mix(in srgb, var(--accent) 35%, var(--pr-line)); }
+.pr-vis-tl li::before { content: ''; position: absolute; left: -7px; top: 11px; width: 12px; height: 12px; box-sizing: border-box; border-radius: 50%; background: var(--pr-card); border: 2.5px solid var(--accent); }
+.pr-vis-tl li.hot::before { background: var(--pr-ans, #dc2626); border-color: var(--pr-ans, #dc2626); }
+.pr-vis-tl li.hot { background: color-mix(in srgb, var(--pr-ans, #dc2626) 7%, transparent); border-radius: 0 8px 8px 0; }
+.pr-vis-tl li.hot span { font-weight: 700; }
+.pr-ai-body .pr-vt-y { font: 800 13px var(--font-mono, monospace); color: var(--text); }
+.pr-vis-graph svg { display: block; width: 100%; max-width: 560px; height: auto; margin: 0 auto; font-family: var(--font-body, sans-serif); overflow: visible; }
+.pr-vg-grid { stroke: var(--pr-line); stroke-width: .6; }
+.pr-vg-axis { stroke: var(--text-dim); stroke-width: 1.1; }
+.pr-vg-tick { fill: var(--text-dim); font-size: 9px; }
+.pr-vg-tick.ax { font-style: italic; font-weight: 700; font-size: 10px; }
+.pr-vg-c { fill: none; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+.pr-vg-c0 { stroke: var(--accent); } .pr-vg-c1 { stroke: #2563eb; } .pr-vg-c2 { stroke: #16a34a; } .pr-vg-c3 { stroke: #d97706; }
+.pr-vg-k0 { background: var(--accent); } .pr-vg-k1 { background: #2563eb; } .pr-vg-k2 { background: #16a34a; } .pr-vg-k3 { background: #d97706; }
+.pr-vg-area { fill: color-mix(in srgb, var(--accent) 20%, transparent); stroke: none; }
+.pr-vg-v { stroke: var(--text-dim); stroke-width: 1; stroke-dasharray: 4 3; }
+.pr-vg-pt { fill: #111827; stroke: #fff; stroke-width: 1.2; }
+.pr-vg-pt.open { fill: #fff; stroke: #111827; stroke-width: 1.5; }
+.pr-vg-lab { font-size: 10px; font-weight: 700; fill: #111827; paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round; }
+.pr-ai-body .pr-vg-leg { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 14px; margin: 6px 0 0; font-size: 13px; }
+.pr-vg-leg i { display: inline-block; width: 14px; height: 3px; margin-right: 5px; border-radius: 2px; vertical-align: middle; }
 .pr-ai-body hr { border: 0; border-top: 1px dashed var(--pr-line); margin: 12px 0; }
 .pr-ai-tbl { overflow-x: auto; margin: 6px 0 12px; }
 .pr-ai-tbl table { border-collapse: collapse; font-size: 14px; }
