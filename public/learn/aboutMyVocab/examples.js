@@ -3,6 +3,7 @@
 window.EXAMPLES = {
   "revise": ["She revised her essay before handing it in.","그녀는 제출하기 전에 에세이를 수정했다."],
   "contentment": ["She found contentment in a quiet life in the countryside.","그녀는 시골의 조용한 삶에서 만족을 찾았다."],
+  "medicinal": ["These herbs have been used for medicinal purposes for centuries.","이 약초들은 수백 년 동안 약용으로 쓰여 왔다."],
   "indifferent": ["He seemed indifferent to the needs of others.","그는 다른 사람들의 요구에 무관심한 것처럼 보였다."],
   "spatial": ["Playing with blocks improves spatial skills in children.","블록 놀이는 아이들의 공간 능력을 향상시킨다."],
   "establish": ["The school was established more than a century ago.","그 학교는 백 년도 더 전에 세워졌다."],
