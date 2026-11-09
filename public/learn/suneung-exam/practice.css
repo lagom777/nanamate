@@ -73,6 +73,10 @@
 .pr-sub { margin: 4px 0 0; font-size: 12.5px; color: var(--text-dim); }
 .pr-parts { list-style: none; margin: 6px 0 0; padding: 0; font-size: 12.5px; color: var(--text-dim); }
 .pr-parts a { color: var(--accent); text-decoration: none; }
+.pr-parts li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 6px; padding: 3px 0; }
+.pr-parts li.miss { color: var(--text); font-weight: 600; }
+#practice-root .pr-part-go { padding: 2px 8px; border-radius: 999px; border: 1px solid var(--accent) !important; color: var(--accent) !important; font: 600 11.5px var(--font-body, sans-serif); white-space: nowrap; cursor: pointer; }
+#practice-root .pr-tag-go { margin-left: 0; background: transparent !important; border-color: var(--accent) !important; color: var(--accent) !important; font: 600 12px var(--font-body, sans-serif); cursor: pointer; }   /* 문항 칸 머리 '🔁 이 파트 더 풀기' */
 .pr-acts { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
 .pr-btn { padding: 9px 10px; border: 1px solid var(--pr-line); border-radius: 8px; background: transparent; color: var(--text); font: 13px var(--font-body, sans-serif); cursor: pointer; }
 .pr-btn:hover { border-color: var(--accent); color: var(--accent); }
