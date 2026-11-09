@@ -309,6 +309,13 @@
       return SnAuth.record(extra).then(mark);
     }).catch(function () {});
   }
+  /* 비슷한 문제 모아 풀기: 같은 파트 문제를 여러 시험에서 뽑은 세트로(출제 10·20·전체는 위 막대에서) */
+  function goPart(p) {
+    if (aiDlg && aiDlg.open) aiDlg.close();
+    if (setSel) setSel.value = 'part:' + p;
+    startSet('part:' + p);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
   function startSet(setId, keepAns) {
     stopTimer();
     armClock();
@@ -476,6 +483,7 @@
       el('span', { class: 'pr-no', text: (i + 1) }),
       el('span', { class: 'pr-meta', text: it.title + ' · ' + it.n + '번 · ' + it.pts + '점' }),
       it.tag && partName[it.tag] ? el('a', { class: 'pr-tag', href: partHref[it.tag] || '#', text: partName[it.tag] }) : null,
+      HAS_PARTS && !PAPER && it.tag && partName[it.tag] && S.set !== 'part:' + it.tag ? el('button', { type: 'button', class: 'pr-tag pr-tag-go', title: partName[it.tag] + ' 문제를 여러 시험에서 모아 풀기', text: '🔁 이 파트 더 풀기', onclick: function () { goPart(it.tag); } }) : null,
       it.dueInfo ? el('span', { class: 'pr-due-tag', text: '📅 ' + dueText(it.dueInfo) }) : null,
       unsureOf(it) ? el('span', { class: 'pr-unsure-tag', text: '🤔 헷갈림' }) : null,
       causeOf(it) ? el('span', { class: 'pr-cause-tag', text: CAUSE_NAME[causeOf(it)] }) : null
@@ -1696,7 +1704,7 @@
       });
       var acts = el('div', { class: 'pr-ai-chips' }, [
         el('button', { type: 'button', class: 'pr-ai-chip', text: '🤖 이 약점 고치기', onclick: function () { fixWeak(grp.g); } }),
-        p && partName[p] && !PAPER ? el('button', { type: 'button', class: 'pr-ai-chip', text: '이 파트 모아 풀기', onclick: function () { aiDlg.close(); if (setSel) setSel.value = 'part:' + p; startSet('part:' + p); } }) : null
+        p && partName[p] && !PAPER ? el('button', { type: 'button', class: 'pr-ai-chip', text: '이 파트 모아 풀기', onclick: function () { goPart(p); } }) : null
       ]);
       box.appendChild(el('section', { class: 'pr-weak-grp' }, [head, ul, acts]));
     });
@@ -3094,14 +3102,15 @@
       partStat[p] = partStat[p] || { n: 0, ok: 0 };
       partStat[p].n++; if (isRight(it, S.ans[i])) partStat[p].ok++;
     });
-    var ks = Object.keys(partStat);
+    var ks = Object.keys(partStat).sort(function (a, b) { return (partStat[b].n - partStat[b].ok) - (partStat[a].n - partStat[a].ok); });   // 많이 틀린 파트부터
     if (ks.length > 1) {
       var ul = el('ul', { class: 'pr-parts' });
       ks.forEach(function (p) {
-        var s = partStat[p];
-        ul.appendChild(el('li', {}, [el('a', { href: partHref[p] || '#', text: partName[p] || p }), ' ' + s.ok + '/' + s.n]));
+        var s = partStat[p], miss = s.n - s.ok;
+        ul.appendChild(el('li', { class: miss ? 'miss' : '' }, [el('span', {}, [el('a', { href: partHref[p] || '#', text: partName[p] || p }), ' ' + s.ok + '/' + s.n + (miss ? ' · 틀림 ' + miss : '')]),
+          partName[p] && !PAPER ? el('button', { type: 'button', class: 'pr-part-go', title: (partName[p] || p) + ' 문제를 여러 시험에서 모아 풀기', text: '🔁 모아 풀기', onclick: function () { goPart(p); } }) : null]));
       });
-      box.appendChild(el('p', { class: 'pr-sub', text: '파트별 정답' }));
+      box.appendChild(el('p', { class: 'pr-sub', text: '파트별 정답 — 🔁 모아 풀기는 여러 시험에서 같은 파트 문제를 뽑아 풀어요' }));
       box.appendChild(ul);
     }
     var acts = el('div', { class: 'pr-acts' });
