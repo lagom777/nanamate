@@ -764,7 +764,7 @@ S.push({u:3,ch:'유전 정보와 세포 분열',title:'감수 분열',file:'06-c
   draw(c,t){
     const st=Math.floor(t/2.5)%8;
     const stages=['G₁기 · 2n','간기(S기) · 복제','감수 1분열 전기 · 2가 염색체','감수 1분열 중기','감수 1분열 후기 · 상동 분리','감수 2분열 중기 · n','감수 2분열 후기 · 염색 분체 분리','생식세포 4개 · n'];
-    const dna=['1','2','2','2','2 → 1','1','1','0.5'];
+    const dna=['1','1 → 2','2','2','2','1','1','0.5'];   // 핵이 나뉘기 전(1분열 후기)까지는 2
     label(c,stages[st],480,54,BC[3],{size:19,w:700});label(c,'핵 1개당 DNA 양 (G₁ 세포 = 1) '+dna[st],480,84,C.muted,{size:14});
     const ch=(x,y,col,dup,split)=>{const s=split?18:0;poly(c,[[x-4-s,y-34],[x-2,y],[x-4-s,y+34]],col,8);if(dup)poly(c,[[x+4+s,y-34],[x+2,y],[x+4+s,y+34]],col,8);if(!dup){}};
     const chd=(x,y,col,dup,apart)=>{const o=apart||0;poly(c,[[x-4-o,y-32],[x-1,y],[x-4-o,y+32]],col,8);if(dup)poly(c,[[x+4+o,y-32],[x+1,y],[x+4+o,y+32]],col,8);};
