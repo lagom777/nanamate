@@ -886,9 +886,9 @@
     p.push('<line class="grid" x1="' + ax(0) + '" y1="' + y5 + '" x2="' + ax(8) + '" y2="' + y5 + '"/>');
     p.push('<path class="dnaf" d="' + fill + '"/>');
     p.push('<path class="dnal fgx-vis" d="' + line + '"/>');
-    p.push('<text x="32" y="' + (Number(y2) + 4) + '" text-anchor="end" font-size="14" fill="' + DIM + '">2</text>');
-    p.push('<text x="32" y="' + (Number(y1) + 4) + '" text-anchor="end" font-size="14" fill="' + DIM + '">1</text>');
-    p.push('<text x="32" y="' + (Number(y5) + 4) + '" text-anchor="end" font-size="14" fill="' + DIM + '">0.5</text>');
+    p.push('<text x="32" y="' + (Number(y2) + 4) + '" text-anchor="end" font-size="12" fill="' + DIM + '">2</text>');
+    p.push('<text x="32" y="' + (Number(y1) + 4) + '" text-anchor="end" font-size="12" fill="' + DIM + '">1</text>');
+    p.push('<text x="32" y="' + (Number(y5) + 4) + '" text-anchor="end" font-size="12" fill="' + DIM + '">0.5</text>');
     p.push('<text x="' + ax(0) + '" y="' + Y_CAP + '" font-size="15" fill="' + INK + '">DNA 상대량 (G₁기=1)</text>');
     p.push('<line class="js-cur" x1="' + r1(sc.cur.x1) + '" y1="' + r1(sc.cur.y1) + '" x2="' + r1(sc.cur.x2) + '" y2="' + r1(sc.cur.y2) + '" stroke="' + ACC + '" stroke-width="1.5" pointer-events="none"/>');
     p.push('<circle class="js-dot" cx="' + r1(sc.dot.cx) + '" cy="' + r1(sc.dot.cy) + '" r="5" fill="' + ACC + '" stroke="var(--fgx-card,#fff)" stroke-width="1.6"/>');

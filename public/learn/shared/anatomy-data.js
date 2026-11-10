@@ -463,7 +463,7 @@ window.ANATOMY_DATA = {
       from: "thyroid",
       etym: {
         ko: "‘갑상샘(thyroid)에서 만든 물질’. T₄=요오드 원자 4개가 붙은 호르몬, T₃=3개",
-        en: "thyroid+-in. 이름의 숫자는 구조 속 요오드(iodine) 원자의 개수를 가리킴",
+        en: "thyro(갑상샘)+ox(y)+-ine. 이름의 숫자는 구조 속 요오드(iodine) 원자의 개수를 가리킴",
         memo: "T₄의 4 = 요오드 4개. 요오드가 모자라면 티록신을 못 만들어 갑상샘이 붓는다"
       },
       effect: "세포 호흡(물질대사) 촉진 → 열 발생 증가, 체온 유지. 과다: 갑상샘 기능 항진증(맥박↑·체중↓·더위 못 참음). 부족: 기능 저하증(피로·추위 탐·체중↑).",
@@ -584,7 +584,7 @@ window.ANATOMY_DATA = {
       etym: {
         ko: "‘발정(암컷의 생식 주기)을 일으키는 물질’",
         en: "그리스어 oistros(말파리·광기) → estrus(발정)+-gen(만들어 내다)",
-        memo: "-gen = ‘만들어 내다’ (oxygen=산소를 만듦). estro-는 발정 → 여성 주기를 만드는 호르몬"
+        memo: "-gen = ‘만들어 내다’ (oxygen=산(酸)을 만드는 것, hydrogen=물을 만드는 것). estro-는 발정 → 여성 주기를 만드는 호르몬"
       },
       effect: "자궁 내막 증식, 여성의 2차 성징 발현, 뼈 밀도 유지.",
       when: "난포가 자라는 시기, 사춘기 이후",
@@ -665,7 +665,7 @@ window.ANATOMY_DATA = {
         id: "heat", title: "더운 곳에서 체온 조절",
         steps: [
           { view: "mid", key: "hypothalamus", text: "① 몸이 더워져 혈액 온도가 올라가면 시상 하부(체온 조절 중추)가 이를 감지합니다." },
-          { view: "mid", key: "hypothalamus", text: "② 시상 하부가 자율 신경(교감 신경)을 통해 땀샘에서 땀을 내고, 피부 혈관을 확장하라고 명령합니다. 열 발산량이 늘어납니다." },
+          { view: "mid", key: "hypothalamus", text: "② 시상 하부가 땀 분비를 늘리고, 피부 근처 혈관에 대한 교감 신경의 작용을 완화해 혈관을 확장시킵니다. 열 발산량이 늘어납니다." },
           { view: "mid", key: "medulla", text: "③ 명령은 뇌줄기와 척수를 거쳐 몸 곳곳의 자율 신경으로 내려갑니다." },
           { view: "mid", key: "hypothalamus", text: "④ 체온이 내려오면 시상 하부가 명령을 줄입니다. 결과가 원인을 줄이는 음성 피드백입니다." }
         ]
