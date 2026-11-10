@@ -162,7 +162,7 @@ button:hover {
 /* === 인쇄/모바일 가독성 === */
 @media (max-width: 768px) {
   body { font-size: 15px !important; }
-  .layout { grid-template-columns: 1fr !important; }
+  .layout { grid-template-columns: minmax(0, 1fr) !important;   /* 1fr 은 내용의 최소 폭만큼 늘어나 쪽 전체가 옆으로 밀린다 */ }
   aside {
     position: relative !important;
     border-right: none !important;
