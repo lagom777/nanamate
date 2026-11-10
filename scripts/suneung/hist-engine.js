@@ -19,6 +19,24 @@ function WT(c,s,x,y,maxW,lh,o={}){const font=`${o.w||500} ${o.size||16}px ${o.fo
 function fit(c,s,maxW,size,w=600,font=SANS){c.save();c.font=`${w} ${size}px ${font}`;const m=c.measureText(s).width;c.restore();return m>maxW?Math.max(10,size*maxW/m):size;}
 function kicker(c,d,col){label(c,d.kick||UNITS[d.u].name,48,26,C.dim,{size:12,align:'left'});
   if(d.head)T(c,d.head,48,56,{font:DISP,size:27,color:col,w:400});}
+/* 띄어쓰기에서 줄을 바꾼다. 낱말 하나가 칸보다 길면 가운뎃점(·) 뒤에서도 끊는다 */
+function breakLines(c,s,maxW){const out=[];let line='';const fits=x=>c.measureText(x).width<=maxW;
+  String(s).split(' ').forEach(wd=>{const test=line?line+' '+wd:wd;if(fits(test)){line=test;return;}
+    if(line){out.push(line);line='';}
+    if(!fits(wd)&&wd.includes('·')){const ps=wd.split('·');ps.forEach((pt,j)=>{const q=pt+(j<ps.length-1?'·':'');if(!line||fits(line+q))line+=q;else{out.push(line);line=q;}});}
+    else line=wd;});
+  if(line)out.push(line);return out;}
+/* 카드 사이 화살표 글자: 한 줄로 틈(maxW)에 들어가면 알약 그대로, 길면 줄 수가 가장 적은 크기로 줄을 바꿔 화살표 위에 쌓는다 */
+function linkTag(c,s,cx,cy,maxW,col,alpha){
+  c.save();c.font=`600 12.5px ${SANS}`;const one=c.measureText(s).width+16<=maxW;c.restore();
+  if(one){pill(c,s,cx,cy-22,col,{alpha,size:12.5,fill:'#09131F'});return;}
+  let best=null;   // 11px 까지는 줄 수가 적은 쪽, 그래도 안 들어가면 더 작게
+  for(let z=12.5;z>=10;z-=.5){if(best&&z<11)break;c.save();c.font=`600 ${z}px ${SANS}`;const ls=breakLines(c,s,maxW-14),wide=Math.max(...ls.map(l=>c.measureText(l).width));c.restore();
+    if(wide<=maxW-14&&ls.length<=3&&(!best||ls.length<best.ls.length))best={z,ls,wide};}
+  if(!best){c.save();c.font=`600 10px ${SANS}`;const ls=wrap(c,s,maxW-14,`600 10px ${SANS}`);best={z:10,ls,wide:Math.max(...ls.map(l=>c.measureText(l).width))};c.restore();}
+  const lh=best.z+3,w=best.wide+14,h=best.ls.length*lh+9,y1=cy-10;
+  box(c,cx-w/2,y1-h,w,h,10,'#09131F',col,1.3,{alpha});
+  best.ls.forEach((l,j)=>T(c,l,cx,y1-h+5+lh*(j+.5),{size:best.z,w:600,align:'center',alpha}));}
 function pill(c,s,x,y,col,o={}){c.save();c.font=`${o.w||600} ${o.size||13}px ${SANS}`;const w=c.measureText(s).width+(o.pad||16);c.restore();
   box(c,x-w/2,y-12,w,24,12,o.fill||col+'22',col,1.3,{alpha:o.alpha});T(c,s,x,y+1,{size:o.size||13,w:o.w||600,color:o.tc||C.text,align:'center',alpha:o.alpha});return w;}
 
@@ -132,7 +150,9 @@ TPL.chain=function(c,t,d){
     if(a.r===b.r){const right=b.cp>a.cp;y1=y2=a.y+nh/2;x1=right?a.x+nw+4:a.x-4;x2=right?b.x-4:b.x+nw+4;}
     else{x1=x2=a.x+nw/2;y1=a.y+nh+4;y2=b.y-4;}
     arrow(c,x1,y1,lerp(x1,x2,k),lerp(y1,y2,k),col,3.2,12);
-    if(d.links&&d.links[i-1]&&k>.6)pill(c,d.links[i-1],(x1+x2)/2,(y1+y2)/2+(a.r===b.r?-22:0),col,{alpha:seg(k,.6,1),size:12.5,fill:'#09131F'});}
+    if(d.links&&d.links[i-1]&&k>.6){const la=seg(k,.6,1);
+      if(a.r===b.r)linkTag(c,d.links[i-1],(x1+x2)/2,y1,gapX-4,col,la);   // 옆 카드로: 틈(gapX) 안에만
+      else pill(c,d.links[i-1],(x1+x2)/2,(y1+y2)/2,col,{alpha:la,size:12.5,fill:'#09131F'});}}
   ns.forEach((nd,i)=>{const p=pos(i),tt=t0+i*step,k=ease(seg(t,tt,tt+.5));if(k<=0)return;const on=i===cur;
     c.save();c.translate(p.x+nw/2,p.y+nh/2);c.scale(.88+.12*k,.88+.12*k);c.globalAlpha=k;c.translate(-nw/2,-nh/2);
     box(c,0,0,nw,nh,14,on?col+'22':'#0E1B2A',on?col:C.line,on?2.8:1.6,{glow:on?20:0,gc:col});
@@ -176,27 +196,107 @@ const PLACES={'국내성':[126.19,41.13,'l'],'평양':[125.75,39.02,'l'],'한성
   '의주':[124.55,40.2,'l'],'고부':[126.85,35.57,'l'],'논산':[127.1,36.2,'l'],'공주(우금치)':[127.12,36.47,'r'],
   '정주':[125.33,39.69,'l'],'대구':[128.6,35.87,'r'],'원산':[127.44,39.15,'r'],'인천':[126.63,37.46,'l'],'초산':[125.8,40.83,'r'],'판문점':[126.68,37.96,'l'],
   '상하이':[121.47,31.23,'r'],'충칭':[106.55,29.56,'r'],'도쿄':[139.7,35.68,'l'],'간도':[129.0,42.5,'r'],'하얼빈':[126.6,45.75,'r']};
+/* 지도 이름표 자리 잡기 — 장면의 마지막 모습(모든 핀·화살표)을 기준으로 한 번만 계산해, 재생 내내 같은 자리에 둔다.
+   ① 서로 붙은 핀은 조금 벌린다(약도) ② 이모지는 둘레가 비면 핀 위에, 붐비면 이름표 안에
+   ③ 이름표와 화살표 글자는 핀·화살표·서로를 피해 놓고, 핀에서 멀어지면 가는 선으로 잇는다 */
+const MAPLAY=new WeakMap();
+function hitArea(a,b){return Math.max(0,Math.min(a[2],b[2])-Math.max(a[0],b[0]))*Math.max(0,Math.min(a[3],b[3])-Math.max(a[1],b[1]));}
+function segHits(A,B,b){const n=Math.max(2,Math.ceil(Math.hypot(B.x-A.x,B.y-A.y)/5));
+  for(let i=0;i<=n;i++){const x=lerp(A.x,B.x,i/n),y=lerp(A.y,B.y,i/n);if(x>b[0]&&x<b[2]&&y>b[1]&&y<b[3])return true;}return false;}
+function mapLayout(c,d,P,asia,area){
+  c.save();c.font=`600 12.5px ${SANS}`;const probe=c.measureText('가나다 Aa1').width;c.restore();
+  const was=MAPLAY.get(d);if(was&&was.probe===probe)return was;   // 글꼴이 늦게 불려 폭이 바뀌면 다시 잡는다
+  const pos={},pins=[],pin={};
+  const at=nm=>{if(!pos[nm]&&PLACES[nm]){const q=P(PLACES[nm][0],PLACES[nm][1]);pos[nm]={x:q[0],y:q[1]};}return pos[nm];};
+  d.steps.forEach(s=>(s.pins||[]).forEach(p=>{const arr=Array.isArray(p),nm=arr?p[0]:p;if(!at(nm))return;
+    let o=pin[nm];if(!o){o=pin[nm]={nm,p:pos[nm],side:PLACES[nm][2]||'r',em:null};pins.push(o);}
+    if(arr){if(p[1]&&!o.em)o.em=p[1];if(p[3])o.side=p[3];}}));
+  const arrows=[];d.steps.forEach(s=>(s.arrows||[]).forEach(a=>{if(at(a[0])&&at(a[1]))arrows.push({a,A:pos[a[0]],B:pos[a[1]],txt:a[2]||''});}));
+  const DMIN=asia?17:21;   // ① 붙은 핀 벌리기
+  for(let it=0;it<40;it++){let moved=false;
+    for(let a=0;a<pins.length;a++)for(let b=a+1;b<pins.length;b++){const A=pins[a].p,B=pins[b].p;let dx=B.x-A.x,dy=B.y-A.y,dd=Math.hypot(dx,dy);
+      if(dd>=DMIN)continue;if(dd<.01){dx=.6;dy=.8;dd=1;}const k=((DMIN-dd)/2+.05)/dd;A.x-=dx*k;A.y-=dy*k;B.x+=dx*k;B.y+=dy*k;moved=true;}
+    if(!moved)break;}
+  pins.forEach(o=>{o.up=!!o.em&&pins.every(q=>q===o||Math.hypot(q.p.x-o.p.x,q.p.y-o.p.y)>36);});   // ② 이모지 자리
+  c.save();c.font=`600 12.5px ${SANS}`;pins.forEach(o=>{o.w=c.measureText(o.em&&!o.up?o.em+' '+o.nm:o.nm).width+16;});
+  c.font=`600 12px ${SANS}`;arrows.forEach(r=>{r.w=r.txt?c.measureText(r.txt).width+16:0;});c.restore();
+  const fixed=[];pins.forEach(o=>{fixed.push({o,b:[o.p.x-9,o.p.y-9,o.p.x+9,o.p.y+9]});if(o.up)fixed.push({o,b:[o.p.x-13,o.p.y-33,o.p.x+13,o.p.y-9]});});
+  (area.blocks||[]).forEach(b=>fixed.push({o:null,b}));
+  const items=[];
+  pins.forEach(o=>{const x=o.p.x,y=o.p.y,h=o.w/2,up=o.up?24:0,cs=[],R=o.side!=='l';
+    const add=(cx,cy,base,far)=>cs.push({x:cx,y:cy,base,far});
+    add(x+(R?1:-1)*(14+h),y,0,0);add(x-(R?1:-1)*(14+h),y,4,0);add(x,y+23,6,0);add(x,y-23-up,8,0);
+    [[1,1],[-1,1],[1,-1],[-1,-1]].forEach(([sx,sy],j)=>add(x+sx*((sy<0&&up?14:6)+h),y+sy*20,10+j,0));
+    [30,48,68].forEach(r=>{const b=14+r*.45;add(x+r+h,y,b,1);add(x-r-h,y,b+1,1);add(x,y+r+12,b+2,1);add(x,y-r-12-up,b+3,1);
+      [[1,1],[-1,1],[1,-1],[-1,-1]].forEach(([sx,sy],j)=>{add(x+sx*(r*.72+h),y+sy*(r*.72+12),b+4+j,1);add(x+sx*(r+h),y+sy*r*.5,b+4+j,1);});});
+    items.push({o,w:o.w,cands:cs,crowd:pins.filter(q=>q!==o&&Math.hypot(q.p.x-x,q.p.y-y)<70).length});});
+  arrows.forEach(r=>{if(!r.txt)return;const dx=r.B.x-r.A.x,dy=r.B.y-r.A.y,L=Math.hypot(dx,dy)||1,ux=dx/L,uy=dy/L,nx=-uy,ny=ux,h=r.w/2,cs=[];
+    const off=Math.abs(nx)*h+Math.abs(ny)*12+6,side=dx<0?-1:1;   // 화살표 옆: 선에서 알약 반 폭만큼 떨어져
+    [.5,.36,.64,.24,.76].forEach((tt,j)=>{const mx=lerp(r.A.x,r.B.x,tt),my=lerp(r.A.y,r.B.y,tt);
+      [1,-1].forEach(sg=>{const q=sg*(nx*side>=0?1:-1);cs.push({x:mx+nx*off*q,y:my+ny*off*q,base:j*3+(sg>0?0:2)});cs.push({x:mx+nx*(off+16)*q,y:my+ny*(off+16)*q,base:j*3+(sg>0?5:7)});});
+      cs.push({x:mx,y:my,base:16+j*2});});
+    items.push({r,w:r.w,cands:cs,crowd:-1});});
+  const boxOf=(it,cd,m)=>[cd.x-it.w/2-m,cd.y-12-m,cd.x+it.w/2+m,cd.y+12+m];
+  const cost=(it,cd)=>{const b=boxOf(it,cd,3);let s=cd.base;
+    const out=Math.max(0,area.x0-b[0])+Math.max(0,b[2]-area.x1)+Math.max(0,area.y0-b[1])+Math.max(0,b[3]-area.y1);if(out>0)s+=300+out*8;
+    for(const f of fixed){if(f.o&&f.o===it.o)continue;const hh=hitArea(b,f.b);if(hh>0)s+=130+hh*2;}
+    for(const q of items){if(q===it)continue;const hh=hitArea(b,boxOf(q,q.cur,0));if(hh>0)s+=170+hh*3;}
+    const core=boxOf(it,cd,-1);for(const r of arrows){if(it.r===r)continue;if(segHits(r.A,r.B,core))s+=45;}
+    for(const sb of (area.soft||[]))if(hitArea(b,sb)>0)s+=12;
+    return s;};
+  items.forEach(it=>{it.cur=it.cands[0];});
+  const order=items.slice().sort((a,b)=>b.crowd-a.crowd);
+  for(let pass=0;pass<8;pass++){let ch=false;
+    order.forEach(it=>{let best=it.cur,bs=cost(it,it.cur);it.cands.forEach(cd=>{const v=cost(it,cd);if(v<bs-1e-6){bs=v;best=cd;}});if(best!==it.cur){it.cur=best;ch=true;}});
+    if(!ch)break;}
+  const res={probe,pos,pin:{},al:new Map()};
+  items.forEach(it=>{if(it.o){const o=it.o,ex=clamp(o.p.x,it.cur.x-it.w/2,it.cur.x+it.w/2),ey=clamp(o.p.y,it.cur.y-12,it.cur.y+12);
+      res.pin[o.nm]={x:o.p.x,y:o.p.y,up:o.up,lx:it.cur.x,ly:it.cur.y,ex,ey,lead:Math.hypot(ex-o.p.x,ey-o.p.y)>19};}
+    else res.al.set(it.r.a,{x:it.cur.x,y:it.cur.y});});
+  MAPLAY.set(d,res);return res;}
 TPL.map=function(c,t,d){
-  const col=colOf(d),asia=d.view==='asia';kicker(c,d,col);
-  const lon0=asia?104:123.6,lon1=asia?142:131.4,lat0=asia?27:33,lat1=asia?46.5:43.3,bx=28,by=70,bw=520,bh=440,k0=Math.cos(37*Math.PI/180);
+  const col=colOf(d),asia=d.view==='asia',fitv=d.view==='fit';kicker(c,d,col);
+  const bx=28,by=fitv?78:70,bw=520,bh=fitv?432:440,k0=Math.cos(37*Math.PI/180);   // 'fit' 은 테두리가 있어 제목에서 조금 뗀다
+  let lon0=asia?104:123.6,lon1=asia?142:131.4,lat0=asia?27:33,lat1=asia?46.5:43.3;
+  if(fitv){let a0=90,a1=-90,o0=180,o1=-180;   // 'fit': 핀이 모인 곳만 크게(예: 동학 농민군의 길) — 칸 비율에 맞춰 넓힌다
+    const use=nm=>{const q=PLACES[nm];if(!q)return;a0=Math.min(a0,q[1]);a1=Math.max(a1,q[1]);o0=Math.min(o0,q[0]);o1=Math.max(o1,q[0]);};
+    d.steps.forEach(s=>{(s.pins||[]).forEach(p=>use(Array.isArray(p)?p[0]:p));(s.arrows||[]).forEach(a=>{use(a[0]);use(a[1]);});});
+    a0-=.75;a1+=.75;o0-=1.25;o1+=1.25;
+    const needLon=(a1-a0)*bw/bh/k0;if(o1-o0<needLon){const m=(o0+o1)/2;o0=m-needLon/2;o1=m+needLon/2;}else{const needLat=(o1-o0)*k0*bh/bw,m=(a0+a1)/2;a0=m-needLat/2;a1=m+needLat/2;}
+    lon0=o0;lon1=o1;lat0=a0;lat1=a1;}
   const sc=Math.min(bw/((lon1-lon0)*k0),bh/(lat1-lat0)),ox=bx+(bw-(lon1-lon0)*k0*sc)/2,oy=by+(bh-(lat1-lat0)*sc)/2;
   const P=(lo,la)=>[ox+(lo-lon0)*k0*sc,oy+(lat1-la)*sc];
+  const soft=[],blocks=[],sea=(s,lo,la,size)=>{const [x,y]=P(lo,la);if(x<bx+24||x>bx+bw-24||y<by+14||y>by+bh-14)return;label(c,s,x,y,'#3E5E7C',{size});const w=s.length*size*.62;soft.push([x-w,y-size*.7,x+w,y+size*.7]);};
+  if(fitv){box(c,bx,by,bw,bh,14,'#0A1727',C.line,1.4);c.save();c.beginPath();c.roundRect(bx,by,bw,bh,14);c.clip();}
   if(asia){poly(c,CNCOAST.map(p=>P(...p)),'#335B7C',2,{dash:[5,5]});poly(c,JPN.map(p=>P(...p)),'#2E5A7D',2,{close:true,fill:'#0F2234'});
-    label(c,'중국',...P(112,36),C.dim,{size:15});label(c,'일본',...P(137.5,38.5),C.dim,{size:14});label(c,'만주',...P(125,43.8),C.dim,{size:14});}
+    label(c,'중국',...P(112,36),C.dim,{size:15});label(c,'일본',...P(137.5,38.5),C.dim,{size:14});label(c,'만주',...P(125,43.8),C.dim,{size:14});
+    [[112,36],[137.5,38.5],[125,43.8]].forEach(q=>{const [x,y]=P(...q);soft.push([x-20,y-11,x+20,y+11]);});}
   poly(c,KOR.map(p=>P(...p)),'#3C7AA6',2.4,{close:true,fill:'#12283C'});
-  if(!asia){label(c,'동해',...P(130.5,37.6),'#3E5E7C',{size:15});label(c,'황해',...P(124.3,36.2),'#3E5E7C',{size:15});
-    poly(c,[P(124.4,38),P(129.6,38)],'#3E5E7C',1,{dash:[3,6]});label(c,'38°',...P(129.9,38.15),'#3E5E7C',{size:11});}
+  poly(c,JEJU.map(p=>P(...p)),'#3C7AA6',asia?1.2:2,{close:true,fill:'#12283C'});
+  if(!asia){sea('동해',fitv?(lon1>129.9?lon1-(lon1-lon0)*.07:999):130.5,fitv?lerp(lat0,lat1,.62):37.6,15);sea('황해',fitv?(lon0<125.9?lon0+(lon1-lon0)*.07:999):124.3,fitv?lerp(lat0,lat1,.38):36.2,15);
+    if(lat0<37.7&&lat1>38.3){const xa=Math.max(bx+6,P(124.4,38)[0]),xb=Math.min(bx+bw-34,P(129.6,38)[0]),y38=P(127,38)[1];
+      poly(c,[[xa,y38],[xb,y38]],'#3E5E7C',1,{dash:[3,6]});label(c,'38°',xb+16,y38-6,'#3E5E7C',{size:11});soft.push([xb+2,y38-14,xb+30,y38+2]);}}
   const st=d.steps,m=st.length,t0=.5,sd=(d.dur-1.8)/m,cur=clamp(Math.floor((t-t0)/sd),0,m-1),started=t>=t0;
+  if(fitv)blocks.push([bx+6,by+6,bx+80,by+112]);   // 어디를 키운 것인지 보여 주는 작은 지도 자리
+  const L=mapLayout(c,d,P,asia,{x0:bx+4,y0:by+4,x1:bx+bw-4,y1:by+bh-4,soft,blocks});
   const shown={};
-  st.forEach((s,i)=>{if(i>cur||!started)return;(s.pins||[]).forEach(p=>{const nm=Array.isArray(p)?p[0]:p;shown[nm]={e:Array.isArray(p)?p[1]:null,i,c:Array.isArray(p)&&p[2]?p[2]:col,l:Array.isArray(p)?p[3]:null};});});
+  st.forEach((s,i)=>{if(i>cur||!started)return;(s.pins||[]).forEach(p=>{const nm=Array.isArray(p)?p[0]:p;shown[nm]={e:Array.isArray(p)?p[1]:null,i,c:Array.isArray(p)&&p[2]?p[2]:col};});});
+  const tags=[];
   st.forEach((s,i)=>{(s.arrows||[]).forEach(a=>{const ts=t0+i*sd+.5;const k=i<cur?1:ease(seg(t,ts,ts+sd*.55));if(k<=0||i>cur)return;
-    const A=PLACES[a[0]],B=PLACES[a[1]];if(!A||!B)return;const pa=P(A[0],A[1]),pb=P(B[0],B[1]);const cl=a[3]||col;
-    arrow(c,pa[0],pa[1],lerp(pa[0],pb[0],k),lerp(pa[1],pb[1],k),cl,3.4,12);
-    if(a[2]&&k>.5)pill(c,a[2],(pa[0]+pb[0])/2+(asia?0:(pb[0]<pa[0]?-70:70)),(pa[1]+pb[1])/2,cl,{alpha:seg(k,.5,1),size:12,fill:'#09131F'});});});
-  Object.keys(shown).forEach(nm=>{const pl=PLACES[nm];if(!pl)return;const [x,y]=P(pl[0],pl[1]),o=shown[nm],isCur=o.i===cur,pulse=isCur?1+.25*Math.sin(t*5):1;
-    dot(c,x,y,(asia?6:7)*pulse,o.c,{glow:isCur?18:6,stroke:'#fff',lw:1.5});
-    if(o.e)T(c,o.e,x,y-(asia?18:20),{size:asia?18:21,align:'center'});
-    const right=(o.l||pl[2])==='r';pill(c,nm,x+(right?14:-14)+(right?1:-1)*(nm.length*3.6),y+(o.e?6:0),o.c,{size:12.5,fill:'#09131F',alpha:.96});});
+    const pa=L.pos[a[0]],pb=L.pos[a[1]];if(!pa||!pb)return;const cl=a[3]||col;
+    arrow(c,pa.x,pa.y,lerp(pa.x,pb.x,k),lerp(pa.y,pb.y,k),cl,3.4,12);
+    const q=L.al.get(a);if(a[2]&&q&&k>.5)tags.push([a[2],q.x,q.y,cl,seg(k,.5,1)]);});});
+  if(fitv){c.restore();   // 작은 지도: 반도 전체와 지금 보는 칸
+    const ix=bx+10,iy=by+10,iw=66,ih=98,isc=Math.min(iw/((131.2-124)*k0),ih/(43.3-33)),iox=ix+(iw-(131.2-124)*k0*isc)/2,Q=(lo,la)=>[iox+(lo-124)*k0*isc,iy+(43.3-la)*isc];
+    box(c,ix-4,iy-4,iw+8,ih+8,8,'#081320',C.line,1.2);poly(c,KOR.map(p=>Q(...p)),'#3C7AA6',1,{close:true,fill:'#16324B'});
+    const [vx0,vy0]=Q(Math.max(124,lon0),Math.min(43.3,lat1)),[vx1,vy1]=Q(Math.min(131.2,lon1),Math.max(33,lat0));box(c,vx0,vy0,vx1-vx0,vy1-vy0,2,col+'33',col,1.4);}
+  tags.forEach(q=>pill(c,q[0],q[1],q[2],q[3],{alpha:q[4],size:12,fill:'#09131F'}));
+  Object.keys(shown).forEach(nm=>{const q=L.pin[nm];if(!q)return;const o=shown[nm],isCur=o.i===cur,pulse=isCur?1+.25*Math.sin(t*5):1;
+    if(q.lead)poly(c,[[q.x,q.y],[q.ex,q.ey]],o.c,1.3,{alpha:.8});
+    dot(c,q.x,q.y,(asia?6:7)*pulse,o.c,{glow:isCur?18:6,stroke:'#fff',lw:1.5});
+    if(o.e&&q.up)T(c,o.e,q.x,q.y-(asia?18:20),{size:asia?18:21,align:'center'});});
+  Object.keys(shown).forEach(nm=>{const q=L.pin[nm];if(!q)return;const o=shown[nm];
+    pill(c,o.e&&!q.up?o.e+' '+nm:nm,q.lx,q.ly,o.c,{size:12.5,fill:'#09131F',alpha:.96});});
   // 오른쪽 단계 목록 — 이유가 있으면 목록은 한 줄씩, 지금 단계의 설명과 '왜?'는 아래 카드에
   const lx=574;
   if(st.some(s=>s.why)){const rh=Math.min(36,240/m);
@@ -264,7 +364,8 @@ TPL.profile=function(c,t,d){
     dot(c,40,44,26,cl+'33',{stroke:cl,lw:2});T(c,p.e,40,45,{size:28,align:'center'});
     T(c,p.n,76,34,{size:fit(c,p.n,cw-92,17,700),w:700});T(c,p.h,76,56,{size:12.5,color:C.dim,font:MONO});
     const nl=WT(c,p.t,18,102,cw-36,24,{size:16.5,w:500});
-    let ty=102+nl*24+8,tx=18;(p.tags||[]).forEach(tg=>{const w=pill(c,tg,tx+10,ty,cl,{size:12,pad:14});tx+=w+6;if(tx>cw-40){tx=18;ty+=28;}});
+    let ty=102+nl*24+8,tx=18;(p.tags||[]).forEach(tg=>{c.save();c.font=`600 12px ${SANS}`;const w=c.measureText(tg).width+14;c.restore();
+      if(tx>18&&tx+w>cw-16){tx=18;ty+=28;}pill(c,tg,tx+w/2,ty,cl,{size:12,pad:14});tx+=w+6;});
     const lk=Math.floor(clamp((t-t0-.5)/1.4)*(p.likes||1200));T(c,'❤ '+lk.toLocaleString('ko-KR'),18,ch-110,{size:13.5,color:'#FF7A8A',w:600});
     const rk=ease(seg(t,t0+2.2,t0+2.8));if(rk>0){c.save();c.globalAlpha=rk;box(c,12,ch-90,cw-24,78,12,cl+'18',cl+'66',1.3);
       T(c,'💡 진짜 내용',24,ch-74,{size:12,color:cl,w:700});WT(c,p.real,24,ch-52,cw-48,17,{size:13,color:C.text});c.restore();}
@@ -416,7 +517,8 @@ function drawTerritory(c,A,B,k,bx){
     else if(L.to)draw(L.to,L.kr,6*(1-L.kr)*sz);else draw(L.from,1-L.kr,0);});
   // 핀: 같은 이름은 그대로, 새 핀은 톡 튀어나오고, 없어지는 핀은 흐려진다
   const pin=(p,a,sc)=>{if(a<=.02)return;const [x,y]=P(p[1],p[2]);dot(c,x,y,4.2*sz*sc,'#fff',{alpha:a,stroke:'#09131F',lw:1.6});
-    TS(c,p[0],x+(p[3]==='l'?-7:7)*sz,y,{size:12*sz,w:700,align:p[3]==='l'?'right':'left',color:'#FFF6D8',alpha:a,lw:3});};
+    const v=p[3]==='u'?-1:p[3]==='d'?1:0;   // 이름 자리: 'l' 왼쪽 · 'u' 위 · 'd' 아래 · 그 밖은 오른쪽
+    TS(c,p[0],x+(v?0:(p[3]==='l'?-7:7)*sz),y+v*13*sz,{size:12*sz,w:700,align:v?'center':p[3]==='l'?'right':'left',color:'#FFF6D8',alpha:a,lw:3});};
   const bp=new Set((B.pins||[]).map(p=>p[0])),ap=new Set((A.pins||[]).map(p=>p[0]));
   (A.pins||[]).forEach(p=>{if(!bp.has(p[0]))pin(p,1-k,1);});
   (B.pins||[]).forEach(p=>{if(ap.has(p[0]))pin(p,1,1);else{const q=clamp(k*1.6-.6);pin(p,q,Math.max(0,easeOutBack(q)));}});
@@ -444,12 +546,17 @@ TPL.territory=function(c,t,d){
     c.font='600 12px '+SANS;let lx=x,lrow=0;
     regs.forEach(r=>{const w=c.measureText(r.n).width+26;if(lx+w>x+352){lx=x;lrow++;}const cy=ly+lrow*22;box(c,lx,cy-6,12,12,3,r.c,null,0,{alpha:r.hi?1:.85});T(c,r.n,lx+18,cy,{size:12,w:600});lx+=w+8;});
     ly+=(lrow+1)*22+8;}
-  if(cur.king){const kg=cur.king,kh=Math.min(470-ly,34+kg.k.length*19+8);
-    if(kh>70){box(c,x-6,ly,364,kh,12,'rgba(255,255,255,.04)',col+'88',1.5);T(c,kg.e,x+16,ly+22,{size:22,align:'center'});
+  const two=m>6,yy=two?492:486,lim=two?460:470;   // 스냅숏이 많으면 연표 글자를 위아래 두 줄로 — 왕 카드는 윗줄 위에서 끝낸다
+  if(cur.king){const kg=cur.king,nk=Math.min(kg.k.length,Math.floor((lim-ly-67)/19)+1),kh=52+(nk-1)*19+15;
+    if(nk>=1){box(c,x-6,ly,364,kh,12,'rgba(255,255,255,.04)',col+'88',1.5);T(c,kg.e,x+16,ly+22,{size:22,align:'center'});
       T(c,kg.n,x+36,ly+16,{size:fit(c,kg.n,236,16,800),w:800,color:col});label(c,kg.r,x+36,ly+33,C.muted,{size:11,align:'left'});
-      kg.k.forEach((kk,j)=>{const jy=ly+52+j*19;if(jy+8>ly+kh)return;dot(c,x+12,jy,3,col);T(c,kk,x+22,jy,{size:fit(c,kk,326,12.5,500),w:500});});}}
+      kg.k.slice(0,nk).forEach((kk,j)=>{const jy=ly+52+j*19;dot(c,x+12,jy,3,col);T(c,kk,x+22,jy,{size:fit(c,kk,326,12.5,500),w:500});});}}
   c.restore();
-  if(m>1){const sx=590,ex=916,yy=486,pr=(i+ease(clamp(lt/slot)))/(m-1||1);poly(c,[[sx,yy],[ex,yy]],C.line,3);poly(c,[[sx,yy],[lerp(sx,ex,Math.min(1,pr)),yy]],col,3,{alpha:.7});
-    sn.forEach((s,j)=>{const xx=lerp(sx,ex,j/(m-1)),on=j===i;dot(c,xx,yy,on?8+Math.sin(t*4)*1.2:5,on?col:'#10202F',{stroke:col,lw:2,glow:on?14:0});
-      label(c,s.sy||s.y,xx,yy+(m>6&&j%2?-20:20),on?col:C.dim,{size:11});});}
+  if(m>1){const sx=590,ex=916,pr=(i+ease(clamp(lt/slot)))/(m-1||1);poly(c,[[sx,yy],[ex,yy]],C.line,3);poly(c,[[sx,yy],[lerp(sx,ex,Math.min(1,pr)),yy]],col,3,{alpha:.7});
+    // 연표 글자: 서로 닿으면(스냅숏 24개) 띄엄띄엄만 보이고, 지금 것은 늘 보인다(닿는 옆 글자는 잠깐 숨는다)
+    c.save();c.font=`500 11px ${MONO}`;const lab=sn.map((s,j)=>{const tx=s.sy||s.y;return{tx,w:c.measureText(tx).width,xx:lerp(sx,ex,j/(m-1)),row:two&&j%2?-1:1};});c.restore();
+    const hit=(a,b)=>a.row===b.row&&Math.abs(a.xx-b.xx)<(a.w+b.w)/2+7,keep=[];
+    lab.forEach((L,j)=>{if(keep.every(q=>!hit(L,lab[q])))keep.push(j);});
+    sn.forEach((s,j)=>{const L=lab[j],on=j===i;dot(c,L.xx,yy,on?8+Math.sin(t*4)*1.2:5,on?col:'#10202F',{stroke:col,lw:2,glow:on?14:0});
+      if(on||(keep.includes(j)&&!hit(L,lab[i])))label(c,L.tx,L.xx,yy+L.row*(two?18:20),on?col:C.dim,{size:11});});}
 };
