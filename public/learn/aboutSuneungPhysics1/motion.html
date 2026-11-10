@@ -852,11 +852,11 @@ S.push({u:1,ch:'물질의 자기적 성질',title:'자기장 영역을 지나는
     label(c,`Φ = 1 T × ${(2*w).toFixed(1)} m² = ${phi.toFixed(1)} Wb`,40,424,C.u2,{size:15,align:'left'});
     label(c,st>0?'ΔΦ/Δt = +2 Wb/s → 유도 기전력 2 V':st<0?'ΔΦ/Δt = −2 Wb/s → 2 V, 방향 반대':'ΔΦ/Δt = 0 → 0 V',40,452,C.text,{size:15,align:'left'});
     label(c,'한 변 2 m · 속력 1 m/s · B = 1 T',40,484,C.dim,{size:13,align:'left'});
-    // 오른쪽: Φ–t, 유도 전류–t (시계 반대 +)
+    // 오른쪽: Φ–t, 유도 기전력–t (부호 = 전류 방향, 시계 반대 +)
     const GX=620,GW=300,tx=q=>GX+q/12*GW;
     axes(c,GX,250,GW,130,'t','Φ');label(c,'자기 선속 (Wb)',GX+36,124,C.muted,{size:13,align:'left'});label(c,'4',GX-8,150,C.dim,{size:13,align:'right'});
     poly(c,[[GX,352],[GX,488]],C.dim,1.5);arrow(c,GX,420,GX+GW,420,C.dim,1.5,8);M(c,'t',GX+GW,437,{size:16,color:C.muted,align:'right'});
-    label(c,'유도 전류',GX+24,344,C.muted,{size:13,align:'left'});label(c,'시계 반대 +',GX-8,370,C.dim,{size:13,align:'right'});label(c,'시계 −',GX-8,470,C.dim,{size:13,align:'right'});
+    label(c,'유도 기전력',GX+24,337,C.muted,{size:13,align:'left'});label(c,'시계 반대 +',GX-8,370,C.dim,{size:13,align:'right'});label(c,'시계 −',GX-8,470,C.dim,{size:13,align:'right'});
     const pp=[],pq=[];for(let q=0;q<=t+1e-9;q+=.02){const m=pos(q);pp.push([tx(q),250-2*wid(m)*25]);pq.push([tx(q),420-dir(m)*50]);}
     poly(c,pp,C.u2,2.5);poly(c,pq,C.u1,2.5);
     poly(c,[[tx(t),122],[tx(t),492]],C.dim,1,{dash:[3,4]});

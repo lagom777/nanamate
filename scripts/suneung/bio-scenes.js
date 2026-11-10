@@ -42,6 +42,7 @@ S.push({u:-1,ch:'시작',title:'수능 생명과학Ⅰ, 움직이며 정리하�
 
 /* ───────── Ⅰ-1 생물의 특성과 탐구 과정 ───────── */
 const TRAITS=[['세포로 구성','짚신벌레는 세포 1개'],['물질대사','먹이를 소화해 에너지를 얻는다'],['자극에 대한 반응','미모사 잎이 접힌다'],['항상성','추워도 체온을 일정하게'],['발생과 생장','올챙이 → 개구리'],['생식과 유전','부모를 닮은 자손'],['적응과 진화','사막 여우의 큰 귀']];
+const TRAIT_LINES={'세포로 구성':['세포로','구성'],'자극에 대한 반응':['자극에 대한','반응'],'발생과 생장':['발생과','생장'],'생식과 유전':['생식과','유전'],'적응과 진화':['적응과','진화']};
 S.push({u:0,ch:'생명과학의 이해',title:'생물의 특성과 탐구 과정',file:'01-life.html',
   sub:'사례 문장이 일곱 가지 특성 중 무엇인지, 그리고 대조 실험에서 조작 변인·종속 변인·대조군이 무엇인지 가려내는 장면입니다.',
   fx:[{w:1,f:'세포 · 물질대사 · 자극 반응 · 항상성 · 발생과 생장',n:'한 개체 안의 일'},{w:1,f:'생식과 유전 · 적응과 진화',n:'세대를 잇는 일 (적응과 진화는 집단)'},{w:1,f:'가설 → 대조 실험 → 결과 분석 → 결론',n:'연역적 탐구 순서'}],
@@ -51,9 +52,10 @@ S.push({u:0,ch:'생명과학의 이해',title:'생물의 특성과 탐구 과정
     const cx=250,cy=250,R=150,cur=Math.floor(t/1.6)%7;
     dot(c,cx,cy,52,'rgba(123,224,127,.08)',{stroke:BC[0]+'88',lw:2});T(c,'생물',cx,cy-6,{font:DISP,size:26,align:'center',color:BC[0],w:400});label(c,'의 특성',cx,cy+22,C.muted,{size:13});
     TRAITS.forEach((tr,i)=>{const a=-Math.PI/2+i/7*TAU,x=cx+Math.cos(a)*R,y=cy+Math.sin(a)*R,on=i===cur;
-      poly(c,[[cx+Math.cos(a)*52,cy+Math.sin(a)*52],[x-Math.cos(a)*30,y-Math.sin(a)*30]],on?BC[0]:C.line,on?3:1.5);
-      dot(c,x,y,on?32:26,on?BC[0]+'33':'#0E1B2A',{stroke:on?BC[0]:C.line,lw:on?3:1.5,glow:on?20:0});
-      T(c,tr[0],x,y,{size:on?13:11.5,align:'center',w:on?700:500,color:on?C.text:C.muted});});
+      const r=on?39:34,ls=TRAIT_LINES[tr[0]]||[tr[0]],z=on?13:11.5,lh=z+3;   // 긴 이름은 두 줄로 — 원 밖으로 넘치지 않게
+      poly(c,[[cx+Math.cos(a)*52,cy+Math.sin(a)*52],[x-Math.cos(a)*r,y-Math.sin(a)*r]],on?BC[0]:C.line,on?3:1.5);
+      dot(c,x,y,r,on?BC[0]+'33':'#0E1B2A',{stroke:on?BC[0]:C.line,lw:on?3:1.5,glow:on?20:0});
+      ls.forEach((l,j)=>T(c,l,x,y+(j-(ls.length-1)/2)*lh,{size:z,align:'center',w:on?700:500,color:on?C.text:C.muted}));});
     const cur2=TRAITS[cur];label(c,'예: '+cur2[1],cx,cy+R+62,BC[0],{size:14});
     // 탐구 흐름
     const steps=['관찰·문제 인식','가설 설정','탐구 설계·수행','결과 분석','결론 도출'],st=Math.floor(t/2.4)%5;
@@ -63,7 +65,7 @@ S.push({u:0,ch:'생명과학의 이해',title:'생물의 특성과 탐구 과정
     const ex=[['실험군','비타민 C 넣음',C.u1],['대조군','비타민 C 없음',C.dim]];
     ex.forEach((e,i)=>{const x=590+i*140;rr(c,x,350,70,90,8,'#0E1B2A',e[2],2);const h=i===0?58:18;box(c,x+6,350+6+h,58,84-h-6,4,'#3B6A9A88');
       label(c,e[0],x+35,458,e[2],{size:12});label(c,e[1],x+35,478,C.dim,{size:10.5});});
-    label(c,'남은 철분',560,352,C.dim,{size:11,align:'left'});label(c,'조작 변인: 비타민 C 유무',880,500,BC[0],{size:12,align:'right'});label(c,'종속 변인: 남은 철분의 양',880,520,C.muted,{size:12,align:'right'});
+    label(c,'남은 철분',695,426,C.muted,{size:11});label(c,'조작 변인: 비타민 C 유무',880,500,BC[0],{size:12,align:'right'});label(c,'종속 변인: 남은 철분의 양',880,520,C.muted,{size:12,align:'right'});
   }});
 
 /* ───────── Ⅱ-2 물질대사와 ATP·세포 호흡 ───────── */
@@ -118,8 +120,8 @@ S.push({u:1,ch:'사람의 물질대사',title:'기관계의 통합 작용',file:
     // 요소: 순환계 → 배설계
     flow(c,[cc(B.cir,140,10),cc(B.exc,0,50)],t,G.urea,3,5,.22);label(c,'요소',640,150,G.urea,{size:12});
     // 배출
-    arrow(c,cc(B.rsp,-10,35)[0],cc(B.rsp,-10,35)[1],40,B.rsp[1]+35,C.dim,2,7);label(c,'날숨(CO₂)',48,B.rsp[1]+56,C.dim,{size:11,align:'left'});
-    arrow(c,B.exc[0]+140,B.exc[1]+35,880,B.exc[1]+35,C.dim,2,7);label(c,'오줌',890,B.exc[1]+56,C.dim,{size:11,align:'right'});
+    arrow(c,cc(B.rsp,-10,35)[0],cc(B.rsp,-10,35)[1],40,B.rsp[1]+35,C.dim,2,7);label(c,'날숨(CO₂)',40,B.rsp[1]+86,C.dim,{size:11,align:'left'});
+    arrow(c,B.exc[0]+140,B.exc[1]+35,918,B.exc[1]+35,C.dim,2,7);label(c,'오줌',900,B.exc[1]+56,C.dim,{size:11});
     label(c,'세포 호흡: 영양소 + O₂ → CO₂ + H₂O + 에너지',480,494,C.muted,{size:14});
     [['영양소',G.glu],['O₂',G.o2],['CO₂',G.co2],['요소·암모니아',G.urea]].forEach(([n,col],i)=>{dot(c,64+i*140,62,5,col);label(c,n,76+i*140,62,C.muted,{size:12,align:'left'});});
   }});
@@ -132,7 +134,7 @@ S.push({u:1,ch:'사람의 물질대사',title:'콩팥에서의 오줌 생성',fi
   dur:16,still:8,
   draw(c,t){
     const Y=250;
-    box(c,60,Y-100,120,200,60,'rgba(255,107,107,.08)','#FF6B6B',2);T(c,'사구체',120,Y,{size:14,align:'center',color:'#FF6B6B',w:600});
+    box(c,60,Y-100,120,200,60,'rgba(255,107,107,.08)','#FF6B6B',2);T(c,'사구체',120,Y+116,{size:14,align:'center',color:'#FF6B6B',w:600});
     c.save();c.beginPath();c.arc(120,Y,105,-1.1,1.1);c.strokeStyle='#7FA6CC';c.lineWidth=3;c.stroke();c.restore();label(c,'보먼주머니',170,Y-116,C.muted,{size:12});
     box(c,225,Y-14,655,28,14,'rgba(127,166,204,.16)','#7FA6CC',1.5);label(c,'세뇨관 → 오줌관',700,Y-34,C.muted,{size:12});
     rr(c,330,Y-34,270,124,10,'rgba(79,209,232,.05)',C.u2+'77',1.2);label(c,'재흡수',465,Y-46,C.u2,{size:15});
@@ -207,7 +209,7 @@ S.push({u:2,ch:'자극의 전달과 근수축',title:'흥분의 전도와 시냅
     for(let i=0;i<9;i++){const q=clamp(rel*1.6-i*.08),x=lerp(320,470,q),y=sy-24+(i%3)*22+Math.sin(i+t*2)*4;if(q>0)dot(c,x,y,3.5,G.ca,{glow:8,alpha:q<1?1:0});
       if(q>=1)dot(c,478,sy-20+(i%3)*20,3.5,G.ca);}
     for(let i=0;i<3;i++)box(c,466,sy-32+i*28,8,20,3,'#2A4C6E',BC[3],1.5);
-    label(c,'① 활동 전위 도달 → Ca²⁺ 유입',770,sy-50,C.muted,{size:12,align:'left'});label(c,'② 신경 전달 물질 방출',770,sy-26,G.ca,{size:12,align:'left'});label(c,'③ 수용체 결합 → 탈분극',770,sy-2,BC[3],{size:12,align:'left'});
+    label(c,'① 활동 전위 도달 → Ca²⁺ 유입',748,sy-50,C.muted,{size:12,align:'left'});label(c,'② 신경 전달 물질 방출',748,sy-26,G.ca,{size:12,align:'left'});label(c,'③ 수용체 결합 → 탈분극',748,sy-2,BC[3],{size:12,align:'left'});
     arrow(c,360,sy+90,480,sy+90,C.text,2.5,9);label(c,'한 방향',420,sy+108,C.text,{size:12});
   }});
 
@@ -334,14 +336,14 @@ S.push({u:2,ch:'신경계와 항상성',title:'혈당 조절',file:'04-nervous-h
     const P=(q,val)=>[g.x+q/10*(g.w-40),g.y-(val-20)/200*(g.h-30)];
     const cols=[['혈당',C.text,glu],['인슐린',BC[2],ins],['글루카곤',BC[3],gcg]];
     cols.forEach(([n,col,fn],i)=>{const pts=[];for(let q=0;q<=cyc;q+=.08)pts.push(P(q,fn(q)));if(pts.length>1)poly(c,pts,col,i?3:3.5,{dash:i?null:[6,4]});dot(c,...P(cyc,fn(cyc)),5,col);label(c,n,g.x+g.w-20,g.y-g.h+8+i*22,col,{size:13,align:'right'});});
-    poly(c,[P(0,100),P(10,100)],C.dim,1,{dash:[3,4]});label(c,'정상 혈당 기준',g.x+8,P(0,100)[1]-8,C.dim,{size:11,align:'left'});
+    poly(c,[P(0,100),P(10,100)],C.dim,1,{dash:[3,4]});label(c,'정상 혈당 기준',P(10,100)[0],P(0,100)[1]-11,C.dim,{size:11,align:'right'});
     label(c,cyc<2.4?'혈당 상승 → 인슐린 분비':cyc<5?'인슐린 작용 → 혈당 하강':'혈당 회복 · 글루카곤 ↑',g.x+g.w/2,g.y-g.h-14,C.text,{size:14});
     // 피드백 루프
     const lx=650,ly=120;const steps=[['혈당 ↑',lx,ly],['β세포',lx+100,ly+80],['인슐린 ↑',lx+100,ly+180],['혈당 ↓',lx,ly+260]];
     const on=cyc<2.4?0:cyc<5?2:3;
     steps.forEach((s,i)=>{const col=i===on?BC[2]:C.line;rr(c,s[1]-46,s[2]-20,92,40,10,i===on?'rgba(79,209,232,.15)':'#0E1B2A',col,i===on?2.5:1.5);T(c,s[0],s[1],s[2],{size:14,align:'center',color:i===on?C.text:C.muted,w:600});});
     arrow(c,lx+24,ly+18,lx+70,ly+62,C.dim,2,7);arrow(c,lx+100,ly+102,lx+100,ly+158,C.dim,2,7);arrow(c,lx+72,ly+198,lx+24,ly+242,C.dim,2,7);
-    label(c,'음성 피드백',lx-20,ly+140,C.dim,{size:12,align:'right'});arrow(c,lx-20,ly+236,lx-20,ly+40,C.dim,1.5,6);
+    label(c,'음성 피드백',lx-28,ly+140,C.dim,{size:12,align:'right'});arrow(c,lx-20,ly+236,lx-20,ly+40,C.dim,1.5,6);
     label(c,'표적: 간·근육·지방 세포',lx+20,ly+310,C.muted,{size:12});
   }});
 
@@ -405,8 +407,8 @@ S.push({u:2,ch:'방어 작용',title:'병원체와 비특이적 방어',file:'05
   dur:16,still:12,
   draw(c,t){
     // 표
-    const X=486,Y=90,cw=76;const head=['세포 구조','핵막','독립적 물질대사','항생제 효과'];
-    head.forEach((h,i)=>label(c,h,X+150+i*cw,Y-14,C.muted,{size:11}));
+    const X=486,Y=90,cw=76;const head=[['세포 구조'],['핵막'],['독립적','물질대사'],['항생제','효과']];   // 긴 머리글은 두 줄(옆 칸과 붙지 않게)
+    head.forEach((h,i)=>h.forEach((l,j)=>label(c,l,X+150+i*cw,Y-14-(h.length-1-j)*13,C.muted,{size:11})));
     PATH.forEach((r,ri)=>{const on=t>ri*1.2;c.save();c.globalAlpha=on?1:.15;
       rr(c,X,Y+ri*54,150+4*cw,44,10,'#0E1B2A',C.line,1.2);T(c,r[0],X+14,Y+ri*54+22,{size:15,color:BC[2],w:700});
       for(let i=0;i<4;i++){const ok=r[i+1]==='○';T(c,r[i+1],X+150+i*cw,Y+ri*54+22,{size:22,align:'center',color:ok?BC[0]:C.dim,w:700});}c.restore();});
@@ -421,8 +423,8 @@ S.push({u:2,ch:'방어 작용',title:'병원체와 비특이적 방어',file:'05
     const eng=seg(ph,.55,.95);dot(c,lerp(bx,mx,eng),by,7*(1-eng*.5),'#9CCC65',{stroke:'#558B2F',lw:1.5});
     if(eng>.6)label(c,'식균 작용',mx,my+70,'#CE93D8',{size:13});
     // 염증
-    label(c,'염증 반응: 히스타민 → 모세 혈관 확장 → 열·붓기',gx+170,gy+128,C.muted,{size:12});
-    label(c,'인터페론: 바이러스 감염 세포가 분비',gx+170,gy+150,C.muted,{size:12});
+    label(c,'염증 반응: 히스타민 → 모세 혈관 확장 → 열·붓기',gx+46,gy+128,C.muted,{size:12,align:'left'});
+    label(c,'인터페론: 바이러스 감염 세포가 분비',gx+46,gy+150,C.muted,{size:12,align:'left'});
   }});
 
 /* ───────── Ⅲ-13 특이적 방어와 1차·2차 면역 반응 ───────── */
@@ -441,7 +443,7 @@ S.push({u:2,ch:'방어 작용',title:'특이적 방어와 1차·2차 면역 반�
     const pa=[],pb=[];for(let q=0;q<=cyc;q+=.2){pa.push(P(q,A1(q)+A2(q)));if(q>=28)pb.push(P(q,B1(q)));}
     if(pa.length>1)poly(c,pa,BC[3],3.5);if(pb.length>1)poly(c,pb,BC[2],3.5);
     poly(c,[P(0,0),P(0,86)],C.dim,1,{dash:[3,3]});poly(c,[P(28,0),P(28,100)],C.dim,1,{dash:[3,3]});
-    label(c,'항원 A 1차 주사',P(0,0)[0]+6,g.y-g.h+18,C.muted,{size:11,align:'left'});label(c,'항원 A 2차 + B 1차 주사',P(28,0)[0]-6,g.y-g.h+8,C.muted,{size:11,align:'right'});
+    label(c,'항원 A 1차 주사',P(0,0)[0]+6,g.y-g.h+36,C.muted,{size:11,align:'left'});label(c,'항원 A 2차 + B 1차 주사',P(28,0)[0]-6,g.y-g.h+8,C.muted,{size:11,align:'right'});
     label(c,'A 항체',g.x+g.w-10,g.y-g.h+40,BC[3],{size:13,align:'right'});label(c,'B 항체',g.x+g.w-10,g.y-g.h+60,BC[2],{size:13,align:'right'});
     if(cyc>12&&cyc<27)label(c,'1차 반응: 느리고 적음',P(15,32)[0],P(15,32)[1]-18,BC[3],{size:12});
     if(cyc>33)label(c,'2차 반응: 빠르고 많음',P(34,80)[0]+6,P(34,80)[1],BC[3],{size:12,align:'left'});
@@ -450,9 +452,10 @@ S.push({u:2,ch:'방어 작용',title:'특이적 방어와 1차·2차 면역 반�
     const X=680,Y=110;
     const nodes=[['항원',X+60,Y,'#9CCC65'],['대식세포',X+60,Y+64,'#CE93D8'],['보조 T 림프구',X+60,Y+128,'#FFB74D'],['B 림프구',X+60,Y+192,BC[2]]];
     nodes.forEach((n,i)=>{dot(c,n[1],n[2],20,n[3]+'33',{stroke:n[3],lw:2});label(c,n[0],n[1]+34,n[2],C.text,{size:13,align:'left'});if(i<3)arrow(c,n[1],n[2]+22,n[1],n[2]+42,C.dim,1.5,6);});
-    dot(c,X+10,Y+270,20,BC[3]+'33',{stroke:BC[3],lw:2});label(c,'형질 세포 → 항체',X+34,Y+270,BC[3],{size:13,align:'left'});
-    dot(c,X+10,Y+318,20,'#B69CFF33',{stroke:'#B69CFF',lw:2});label(c,'기억 세포 → 2차 반응',X+34,Y+318,'#B69CFF',{size:13,align:'left'});
-    arrow(c,X+60,Y+214,X+20,Y+250,C.dim,1.5,6);arrow(c,X+70,Y+214,X+22,Y+298,C.dim,1.5,6);
+    // B 림프구 아래 좌우로 갈라진다(화살표가 이름을 가로지르지 않게 나란히)
+    dot(c,X+10,Y+272,20,BC[3]+'33',{stroke:BC[3],lw:2});label(c,'형질 세포',X+10,Y+306,BC[3],{size:13});label(c,'→ 항체',X+10,Y+324,BC[3],{size:12});
+    dot(c,X+110,Y+272,20,'#B69CFF33',{stroke:'#B69CFF',lw:2});label(c,'기억 세포',X+110,Y+306,'#B69CFF',{size:13});label(c,'→ 2차 반응',X+110,Y+324,'#B69CFF',{size:12});
+    arrow(c,X+50,Y+212,X+22,Y+252,C.dim,1.5,6);arrow(c,X+70,Y+212,X+98,Y+252,C.dim,1.5,6);
   }});
 
 /* ───────── Ⅳ-14 DNA와 염색체 ───────── */
@@ -507,9 +510,10 @@ S.push({u:3,ch:'유전 정보와 세포 분열',title:'세포 주기와 체세�
     label(c,'세포 수',490,462,C.text,{size:15,w:600});label(c,'(DNA 양별)',490,484,C.muted,{size:13});
     [['DNA 1',seg2[0][1],seg2[0][2]],['DNA 1~2',seg2[1][1],seg2[1][2]],['DNA 2',seg2[2][1]+seg2[3][1],seg2[2][2]]].forEach(([n,w,col],i)=>{const x=590+i*100,h=w*120;box(c,x-28,494-h,56,h,4,col+'aa');label(c,n,x,510,C.dim,{size:13});});
     // 딸세포
-    if(ph>.95){dot(c,690,150,26,'rgba(79,209,232,.15)',{stroke:BC[2],lw:2});dot(c,780,150,26,'rgba(79,209,232,.15)',{stroke:BC[2],lw:2});label(c,'2n 딸세포 2개',735,196,BC[2],{size:12});}
-    else{dot(c,735,150,32,'rgba(79,209,232,.15)',{stroke:BC[2],lw:2});const dup=ph>.4;for(let i=0;i<2;i++){poly(c,[[725+i*20,132],[725+i*20,168]],dup?'#FFD54F':BC[2],dup?5:3);if(dup)poly(c,[[731+i*20,132],[731+i*20,168]],'#FFD54F',5);}
-      label(c,'2n',735,196,BC[2],{size:12});}
+    const CY=96;   // 세포 그림은 그래프 제목 위에
+    if(ph>.95){dot(c,690,CY,26,'rgba(79,209,232,.15)',{stroke:BC[2],lw:2});dot(c,780,CY,26,'rgba(79,209,232,.15)',{stroke:BC[2],lw:2});label(c,'2n 딸세포 2개',735,CY+44,BC[2],{size:12});}
+    else{dot(c,735,CY,32,'rgba(79,209,232,.15)',{stroke:BC[2],lw:2});const dup=ph>.4;for(let i=0;i<2;i++){poly(c,[[725+i*20,CY-18],[725+i*20,CY+18]],dup?'#FFD54F':BC[2],dup?5:3);if(dup)poly(c,[[731+i*20,CY-18],[731+i*20,CY+18]],'#FFD54F',5);}
+      label(c,'2n',735,CY+44,BC[2],{size:12});}
     label(c,'후기: 염색 분체 분리',735,222,ph>.9&&ph<.95?BC[3]:C.dim,{size:12});
   }});
 
@@ -742,7 +746,7 @@ S.push({u:3,ch:'사람의 유전',title:'염색체 비분리와 염색체 이상
     arrow(c,480,160,480,200,C.dim,2,7);
     // 감수 1분열 후
     const r1=mode===1?[[[A,B],[]]]:[[[A],[B]]];
-    if(mode===1){cellc(400,250,46,[A,B],true);cellc(560,250,30,[],true);label(c,'상동 염색체가 한쪽으로',480,300,BC[3],{size:12});}
+    if(mode===1){cellc(400,250,46,[A,B],true);cellc(560,250,30,[],true);label(c,'상동 염색체가 한쪽으로',600,250,BC[3],{size:12,align:'left'});}
     else{cellc(400,250,40,[A],true);cellc(560,250,40,[B],true);}
     arrow(c,400,296,340,336,C.dim,1.8,6);arrow(c,400,296,460,336,C.dim,1.8,6);arrow(c,560,296,500,336,C.dim,1.8,6);arrow(c,560,296,620,336,C.dim,1.8,6);
     // 생식세포 4개
@@ -767,14 +771,14 @@ S.push({u:4,ch:'생태계와 상호 작용',title:'개체군의 생장과 생존
   draw(c,t){
     const ph=clamp((t%14)/12);
     const g1={x:80,y:400,w:340,h:280},g2={x:530,y:400,w:340,h:280};
-    axes(c,g1.x,g1.y,g1.w,g1.h,'시간','개체 수');label(c,'생장 곡선',g1.x+g1.w/2,g1.y-g1.h-8,C.muted,{size:14});
+    axes(c,g1.x,g1.y,g1.w,g1.h,'시간','개체 수');label(c,'생장 곡선',g1.x+g1.w/2,g1.y-g1.h-24,C.muted,{size:14});
     const P1=(q,v)=>[g1.x+q*(g1.w-30),g1.y-v*(g1.h-30)];
     const K=.68;poly(c,[P1(0,K),P1(1,K)],C.dim,1.5,{dash:[5,4]});label(c,'환경 수용력 K',g1.x+g1.w-20,P1(0,K)[1]-10,C.dim,{size:12,align:'right'});
     const N0=.03,r=6,J=q=>N0*Math.exp(r*q),Sg=q=>K/(1+(K/N0-1)*Math.exp(-r*q)); // 같은 출발값·증가율 → S는 언제나 J 아래 (그 차이가 환경 저항)
     const pj=[],ps=[];for(let q=0;q<=ph;q+=.01){if(J(q)<=1.02)pj.push(P1(q,J(q)));ps.push(P1(q,Sg(q)));}
     if(ps.length>1){poly(c,pj,'#FF8A65',2.5,{dash:[6,4]});poly(c,ps,BC[4],3.5);}
     label(c,'J자형(이론)',g1.x+30,g1.y-g1.h+22,'#FF8A65',{size:12,align:'left'});label(c,'S자형(실제)',g1.x+30,g1.y-g1.h+42,BC[4],{size:12,align:'left'});
-    axes(c,g2.x,g2.y,g2.w,g2.h,'상대 수명','생존 개체 수(로그)');label(c,'생존 곡선',g2.x+g2.w/2,g2.y-g2.h-8,C.muted,{size:14});
+    axes(c,g2.x,g2.y,g2.w,g2.h,'상대 수명','생존 개체 수(로그)');label(c,'생존 곡선',g2.x+g2.w/2,g2.y-g2.h-24,C.muted,{size:14});
     const P2=(q,v)=>[g2.x+q*(g2.w-30),g2.y-v*(g2.h-30)];
     const curves=[['Ⅰ형',q=>1-Math.pow(q,4.5),BC[0]],['Ⅱ형',q=>Math.pow(10,-2*q),BC[1]],['Ⅲ형',q=>Math.pow(10,-2*Math.pow(q,.35)),BC[3]]];
     curves.forEach(([n,fn,col],i)=>{const pts=[];for(let q=0;q<=ph;q+=.01){const v=fn(q);pts.push(P2(q,i===0?v:Math.log10(Math.max(v,.01))/2+1));}
@@ -820,7 +824,7 @@ S.push({u:4,ch:'생태계와 상호 작용',title:'에너지 흐름과 물질 �
       rr(c,x,y,w,60,10,col+'33',col,2);T(c,n,x+w/2,y+20,{size:i<2?14:12,align:'center',w:700,color:C.text});label(c,e+' kcal',x+w/2,y+44,col,{size:12});
       if(i>0){const eff=(e/lv[i-1][1]*100);label(c,'효율 '+(eff%1?eff.toFixed(1):eff)+' %',x+w+70,y+30,C.muted,{size:13,align:'left'});arrow(c,x+w+8,y+30,x+w+58,y+30,C.dim,1.5,6);}c.restore();
       if(sh)for(let j=0;j<3;j++)wavy(c,x+w/2-20+j*20,y,x+w/2-20+j*20,y-26,G.heat,8,2.5,t*3+j,1.5);});
-    label(c,'열로 방출',110,318,G.heat,{size:12});label(c,'태양 에너지 → 생산자',220,492,C.muted,{size:13});arrow(c,220,476,220,444,'#FFD54F',3,9);
+    label(c,'열로 방출',118,296,G.heat,{size:12,align:'right'});label(c,'태양 에너지 → 생산자',220,492,C.muted,{size:13});arrow(c,220,476,220,444,'#FFD54F',3,9);
     // 탄소 순환
     const cx=680,cy=270;label(c,'탄소 순환',cx,80,C.muted,{size:14});
     const N=[['대기 CO₂',cx,130,C.muted],['생산자',cx-100,270,'#7BE07F'],['소비자',cx+100,270,'#FFD54F'],['분해자',cx,400,'#B69CFF']];
