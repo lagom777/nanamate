@@ -290,7 +290,7 @@ ${tbl(["종류 (파장 긴 → 짧, 진동수·에너지 작은 → 큰)", "이�
 <h2>5. 파동의 간섭</h2>
 <p>두 파원 S<sub>1</sub>, S<sub>2</sub>에서 나온 파동이 만나면 <strong>경로차 Δ</strong>에 따라 결정됩니다.</p>
 ${tbl(["두 파원의 위상", "보강 간섭", "상쇄 간섭"], [["같음", "Δ = mλ (m = 0, 1, 2, …)", "Δ = (m + ½)λ"], ["반대", "Δ = (m + ½)λ", "Δ = mλ"]])}
-<ul><li>물결파 사진(마루선·골선)에서는 <strong>마루와 마루(또는 골과 골)가 만나는 곳이 보강</strong>, 마루와 골이 만나는 곳이 상쇄입니다.</li><li>이중 슬릿 무늬 간격 Δx = λL/d: 파장이 길수록, 스크린이 멀수록, 슬릿 간격이 좁을수록 넓어집니다.</li><li>상쇄 간섭 지점에서도 <em>에너지가 사라지는 것이 아니라</em> 다른 곳으로 분배됩니다(노이즈 캔슬링).</li></ul>`,
+<ul><li>물결파 사진(마루선·골선)에서는 <strong>마루와 마루(또는 골과 골)가 만나는 곳이 보강</strong>, 마루와 골이 만나는 곳이 상쇄입니다.</li><li>(참고 · 물리학Ⅱ) 이중 슬릿 무늬 간격 Δx = λL/d: 파장이 길수록, 스크린이 멀수록, 슬릿 간격이 좁을수록 넓어집니다. 물리학Ⅰ 수능은 경로차로 보강·상쇄를 가리는 데까지만 묻습니다.</li><li>상쇄 간섭 지점에서도 <em>에너지가 사라지는 것이 아니라</em> 다른 곳으로 분배됩니다(노이즈 캔슬링).</li></ul>`,
   traps: `<ul><li><strong>매질이 바뀌면 진동수가 바뀐다</strong> — 진동수는 그대로입니다.</li><li><strong>전반사는 굴절률이 작은 매질에서 큰 매질로 갈 때</strong>도 일어난다 — 큰 → 작은 방향에서만.</li><li><strong>변위–시간 그래프에서 파장을 읽는다</strong> — 가로축이 시간이면 주기만 읽습니다.</li><li><strong>소리도 진공을 통과한다</strong>는 보기 — 종파(소리)는 매질이 필수입니다.</li><li>두 파원이 <em>반대 위상</em>이면 보강·상쇄 조건이 뒤집힙니다. 파원 위상 조건을 문제에서 확인하세요.</li><li>전자기파 중 파장이 가장 긴 것이 속력이 가장 빠르다 — 진공에서는 모두 같습니다.</li></ul>`,
   examples: [
     ex("주기가 0.5 s이고 파장이 2 m인 파동의 속력은?", `<p>f = 1/T = 2 Hz. v = fλ = 2 × 2 = <strong>4 m/s</strong>.</p>`),
@@ -324,7 +324,7 @@ chapters.push({
   lead: `<p>가장 문항 수가 적은 파트(회당 1문항)이지만 <strong>거의 매 회 나오고, 개념 문장이 정해져 있어</strong> 맞히기 쉬운 문항입니다. 광전 효과의 세 가지 사실과 물질파 λ = h/p 관계만 정확히 잡으면 됩니다.</p>`,
   body: `<h2>1. 빛의 입자성 — 광전 효과</h2>
 <p>금속에 빛을 비추면 전자가 튀어나오는 현상입니다. 빛을 <strong>광자</strong>(에너지 E = hf)의 흐름으로 보면 설명됩니다.</p>
-${f("광자 에너지 E = hf = hc/λ<br>K<sub>max</sub> = hf − W  (W = hf<sub>0</sub>: 일함수)<br>정지 전압 V<sub>s</sub> = K<sub>max</sub>/e")}
+${f("광자 에너지 E = hf = hc/λ<br>K<sub>max</sub> = hf − W  (W = hf<sub>0</sub>: 일함수)<br>(참고 · 물리학Ⅱ) 정지 전압 V<sub>s</sub> = K<sub>max</sub>/e")}
 ${tbl(["바꾸는 것", "결과"], [["진동수 f ≥ f<sub>0</sub>(문턱 진동수)", "광전자 방출. f &lt; f<sub>0</sub>이면 세기가 아무리 커도 <strong>방출 없음</strong>"], ["빛의 세기 ↑ (f 고정)", "광전자 <strong>수</strong> ↑ (광전류 ↑), K<sub>max</sub> 불변"], ["진동수 ↑ (세기 고정)", "K<sub>max</sub> ↑ (광전자 수는 광자 수에 의존)"], ["금속 종류 변경", "W(문턱 진동수)가 달라짐, K<sub>max</sub>–f 그래프의 <strong>기울기(h)는 동일</strong>"]])}
 <h3>K<sub>max</sub>–f 그래프</h3>
 <ul><li>직선의 <strong>기울기 = 플랑크 상수 h</strong> (금속과 무관), f축 절편 = f<sub>0</sub>, K축 절편 = −W.</li><li>금속 A, B의 그래프는 서로 <em>평행</em>합니다. f축 절편(f<sub>0</sub>)이 큰 쪽이 일함수가 큰 금속입니다.</li></ul>
@@ -423,9 +423,9 @@ export const spec = {
     { img: "images/01-mechanics.svg", title: "고전역학 — 운동과 힘", desc: "등가속도 3공식, v-t 그래프 해석, F=ma, 충격량 I=Δp, 운동량 보존", chapter: "01-forces.html" },
     { img: "images/02-energy.svg", title: "일과 역학적 에너지", desc: "일-에너지 정리, 중력 mgh, 탄성위치에너지 ½kx², 역학적 에너지 보존", chapter: "02-energy-heat.html" },
     { img: "images/03-thermodynamics.svg", title: "열역학 — 법칙과 열기관", desc: "Q=ΔU+W, P-V 그래프 면적, 등적·등압·등온·단열, 열효율 e", chapter: "02-energy-heat.html" },
-    { img: "images/04-waves.svg", title: "파동과 소리 — 굴절과 간섭", desc: "v=fλ, 스넬의 법칙, 경로차 보강·상쇄간섭, 이중슬릿, 도플러 효과", chapter: "06-waves.html" },
-    { img: "images/05-optics.svg", title: "광학 — 전반사와 광통신", desc: "전반사 조건(n₁>n₂), 임계각, 광섬유(코어>클래딩), 빛의 분산", chapter: "06-waves.html" },
-    { img: "images/06-electromagnetism.svg", title: "전자기장 — 전류와 유도기전력", desc: "앙페르 법칙, 오른손 나사, 자기력 F=BIL, 패러데이 전자기 유도", chapter: "05-electromagnetism.html" },
+    { img: "images/04-waves.svg", title: "파동과 소리 — 굴절과 간섭", desc: "v=fλ, 스넬의 법칙, 경로차 보강·상쇄간섭 (이중슬릿 간격·도플러 효과는 물리학Ⅰ 범위 밖 — 참고)", chapter: "06-waves.html" },
+    { img: "images/05-optics.svg", title: "광학 — 전반사와 광통신", desc: "전반사 조건(n₁>n₂), 임계각, 광섬유(코어>클래딩) (빛의 분산은 범위 밖 — 참고)", chapter: "06-waves.html" },
+    { img: "images/06-electromagnetism.svg", title: "전자기장 — 전류와 유도기전력", desc: "앙페르 법칙, 오른손 나사, 패러데이 전자기 유도 (자기력 F=BIL은 물리학Ⅱ — 참고)", chapter: "05-electromagnetism.html" },
     { img: "images/07-modern.svg", title: "특수 상대성 이론", desc: "광속 불변 원리, 동시성의 상대성, 시간 지연, 길이 수축, E=mc²", chapter: "03-spacetime.html" },
     { img: "images/08-quantum.svg", title: "양자물리 — 광전효과와 물질파", desc: "광전효과 K_max = hf − W, 빛의 입자성, 드브로이 물질파 λ=h/mv, 에너지 준위", chapter: "07-duality.html" },
     { img: "images/09-nuclear.svg", title: "원자핵 — 핵반응과 질량결손", desc: "질량 결손 ΔE=Δmc², 전하량·질량수 보존, 우라늄 핵분열, 핵융합", chapter: "03-spacetime.html" },

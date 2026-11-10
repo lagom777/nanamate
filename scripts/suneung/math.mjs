@@ -28,7 +28,7 @@ export const spec = {
     { img: "images/06-exponential-log.svg", title: "지수와 로그", desc: "거듭제곱근 개수, 밑변환 공식, 지수·로그 그래프와 역함수 대칭", chapter: "01-exp-log.html" },
     { img: "images/07-sequences-limits.svg", title: "수열과 극한", desc: "등차·등비 일반항과 합, 시그마 ∑k 공식, 무한등비급수 a/(1-r)", chapter: "03-sequence.html" },
     { img: "images/08-differentiation.svg", title: "미분 — 도함수와 그래프", desc: "미분계수 정의, 극대·극소 판정, 접선의 방정식, 3·4차함수 비율관계", chapter: "05-diff.html" },
-    { img: "images/09-integration.svg", title: "적분과 통계", desc: "미적분학 기본정리(FTC), 곡선 넓이 공식, 중복조합, 정규분포 표준화 Z", chapter: "06-integral.html" },
+    { img: "images/09-integration.svg", title: "적분과 통계", desc: "미적분학 기본정리(FTC), 곡선 넓이 공식 (중복조합·정규분포 표준화 Z는 확률과 통계 — 이 노트 범위 밖)", chapter: "06-integral.html" },
   ],
   summary: true, summaryBlurb: "파트별 공식·그래프·비교표·함정을 카드 한 장씩에 — 시험 직전 훑어보기용", maps,
   motion: true, motionBlurb: "그래프가 움직이며 바뀌는 것 — 밑·주기·기울기·넓이가 변할 때 무엇이 따라 변하나", kind: "items", qn: 30, minutes: 100,
