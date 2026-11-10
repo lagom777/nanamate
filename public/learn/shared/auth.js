@@ -152,5 +152,25 @@
     });
   }
 
-  w.SnAuth = { me: me, login: login, logout: logout, record: record, wrong: wrong, exportAttempts: exportAttempts, notes: notes, saveNotes: saveNotes, due: due, aiKey: aiKey, saveAiKey: saveAiKey, aiIndex: aiIndex, aiGet: aiGet, saveAiNote: saveAiNote };
+  /* 계정별 풀이 상태(회차마다 고른 답·채점 여부): examStates(sub) → [{id, ts, data}], saveExamState(sub, id, data, ts, keep) → true · false(서버가 받지 않는 모양).
+     keep: 화면을 떠나는 순간에도 끝까지 보내기(keepalive) */
+  function examStates(sub) {
+    return fetch('/api/pstate?sub=' + encodeURIComponent(sub), { credentials: 'same-origin', cache: 'no-store' }).then(aiJson);
+  }
+  function saveExamState(sub, id, data, ts, keep) {
+    return fetch('/api/pstate', {
+      method: 'POST',
+      credentials: 'same-origin',
+      keepalive: !!keep,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sub: sub, id: id, data: data, ts: ts })
+    }).then(function (r) {
+      if (r.status === 401) { meCache = { id: null }; throw new Error('auth'); }
+      if (r.status === 400) return false;
+      if (!r.ok) throw new Error('pstate');
+      return true;
+    });
+  }
+
+  w.SnAuth = { examStates: examStates, saveExamState: saveExamState, me: me, login: login, logout: logout, record: record, wrong: wrong, exportAttempts: exportAttempts, notes: notes, saveNotes: saveNotes, due: due, aiKey: aiKey, saveAiKey: saveAiKey, aiIndex: aiIndex, aiGet: aiGet, saveAiNote: saveAiNote };
 })(window);

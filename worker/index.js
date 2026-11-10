@@ -2,6 +2,7 @@ import { b64urlToBytes, bytesToB64url, openSession, safeEqual, sealSession } fro
 import { failedNext, safeNext } from './safe-next.js';
 import { parseAttempts, validExam, validSub } from './attempts.js';
 import { parseAiNote, parseAiIds, AI_NOTES_DDL } from './ainotes.js';
+import { parseState, EXAM_STATES_DDL, MAX_LIST } from './pstate.js';
 import { parseStyle } from './style.js';
 import { parseNotes } from './qnotes.js';
 import { dueList } from './due.js';
@@ -333,6 +334,41 @@ async function saveAiNote(request, env) {
   return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
 }
 
+// 계정별 풀이 상태(회차마다 고른 답·채점 여부): 다른 기기에서도 이어서 보이게. 표는 처음 쓸 때 만든다
+let examStatesReady = null;
+function ensureExamStates(env) {
+  if (!examStatesReady) examStatesReady = env.DB.batch(EXAM_STATES_DDL.map((sql) => env.DB.prepare(sql))).catch((e) => { examStatesReady = null; throw e; });
+  return examStatesReady;
+}
+
+async function listExamStates(request, env, url) {
+  const session = await current(request, env);
+  if (!session) return json({ error: 'unauthorized' }, 401);
+  const sub = url.searchParams.get('sub');
+  if (!validSub(sub)) return json({ error: 'bad query' }, 400);
+  await ensureExamStates(env);
+  const { results } = await env.DB.prepare(
+    'SELECT id, data, updated_at AS ts FROM exam_states WHERE user_id = ? AND sub = ? ORDER BY updated_at DESC LIMIT ' + MAX_LIST
+  ).bind(session.uid, sub).all();
+  return json((results || []).map((r) => ({ id: r.id, ts: r.ts, data: JSON.parse(r.data) })));
+}
+
+// 같은 회차는 고친 시각(ts)이 늦은 쪽을 남긴다
+async function saveExamState(request, env) {
+  const session = await current(request, env);
+  if (!session) return json({ error: 'unauthorized' }, 401);
+  let body;
+  try { body = await request.json(); } catch { return json({ error: 'bad json' }, 400); }
+  const parsed = parseState(body);
+  if (!parsed.ok) return json({ error: 'bad state' }, 400);
+  await ensureExamStates(env);
+  const n = parsed.state;
+  await env.DB.prepare(
+    'INSERT INTO exam_states (user_id, sub, id, data, updated_at) VALUES (?1, ?2, ?3, ?4, ?5) ON CONFLICT(user_id, sub, id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at WHERE excluded.updated_at >= exam_states.updated_at'
+  ).bind(session.uid, n.sub, n.id, n.data, n.ts).run();
+  return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
+}
+
 // 계정별 AI 키: 있는지와 앞뒤 몇 글자만 알려 준다(원문은 내려보내지 않는다)
 async function getAiKey(request, env) {
   const session = await current(request, env);
@@ -416,6 +452,8 @@ export default {
       if (path === '/api/ai' && request.method === 'GET') return await listAiNotes(request, env, url);
       if (path === '/api/ai' && request.method === 'POST') return await saveAiNote(request, env);
       if (path === '/api/ai/get' && request.method === 'POST') return await getAiNotes(request, env);
+      if (path === '/api/pstate' && request.method === 'GET') return await listExamStates(request, env, url);
+      if (path === '/api/pstate' && request.method === 'POST') return await saveExamState(request, env);
       if (path === '/api/aikey' && request.method === 'GET') return await getAiKey(request, env);
       if (path === '/api/aikey' && request.method === 'POST') return await saveAiKey(request, env);
       if (path === '/api/claude/v1/messages' && request.method === 'POST') return await claudeRelay(request, env, url);

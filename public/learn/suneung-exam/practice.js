@@ -413,11 +413,100 @@
   function persist() {
     if (S.set.indexOf('exam:') !== 0) return;
     var g = S.graded ? { g: 1, gs: S.sel || '', left: S.left, ut: S.usedTimer ? 1 : 0 } : {};   // 채점했으면 그것도(국어는 선택과목까지)
+    g.t = Date.now();   // 고친 시각 — 계정에 둔 것과 견줘 늦은 쪽을 남긴다
     if (PAPER) {
       S.items.forEach(function (it, i) { S.pa[it.id] = S.ans[i]; });
       store('sn:' + SUB + ':' + S.set, Object.assign({ pa: S.pa }, g));
     } else store('sn:' + SUB + ':' + S.set, Object.assign({ ans: S.ans }, g));
+    psUp(S.set);
   }
+
+  /* ───────── 풀이 상태를 계정에도: 고른 답·채점 여부는 이 기기에 바로 저장하고, 로그인하면 계정(/api/pstate)과 맞춘다
+   * — 컴퓨터에서 푼 시험이 폰에서도 그대로 보이게. 회차마다 고친 시각(t)이 늦은 쪽을 남긴다.
+   * 동기화 전부터 이 기기에 있던 기록(t 없음)은 한 번만: 계정 것과 견줘 더 많이 푼 쪽을 남긴다 */
+  var psTimers = {}, psAt = 0, psBusy = false;
+  function psOn() { return !!(meUser && meUser.id && window.SnAuth && SnAuth.examStates); }
+  function psKey(id) { return 'sn:' + SUB + ':' + id; }
+  function psBody(v) {
+    var o = {};
+    if (!v) return o;
+    if (v.ans) o.ans = v.ans;
+    if (v.pa) o.pa = v.pa;
+    if (v.g) { o.g = 1; o.gs = v.gs || ''; if (typeof v.left === 'number') o.left = v.left; o.ut = v.ut ? 1 : 0; }
+    return o;
+  }
+  function psCount(v) {   // 얼마나 풀었나: 고른 답 수(채점까지 했으면 더 크게)
+    if (!v) return 0;
+    var n = 0;
+    if (v.ans) v.ans.forEach(function (a) { if (a) n++; });
+    if (v.pa) Object.keys(v.pa).forEach(function (k) { if (v.pa[k]) n++; });
+    return n + (v.g ? 1000 : 0);
+  }
+  function psSend(id, keep) {
+    if (psTimers[id]) { clearTimeout(psTimers[id]); delete psTimers[id]; }
+    if (!psOn()) return Promise.resolve();
+    var v = store(psKey(id));
+    return SnAuth.saveExamState(SUB, id, psBody(v), (v && v.t) || Date.now(), keep).catch(function () {});
+  }
+  function psUp(id) {   // 답을 고를 때마다 보내지 않게 잠깐 모았다가
+    if (!psOn()) return;
+    if (psTimers[id]) clearTimeout(psTimers[id]);
+    psTimers[id] = setTimeout(function () { psSend(id); }, 1500);
+  }
+  function psFlush() { Object.keys(psTimers).forEach(function (id) { psSend(id, true); }); }   // 화면을 떠날 때: 아직 안 보낸 것을 바로
+  function psReset(id) {   // 다시 풀기: 이 기기 것을 지우고, 계정에도 빈 상태를 남긴다(다른 기기의 옛 답이 되살아나지 않게)
+    store(psKey(id), psOn() ? { t: Date.now() } : null);
+    psSend(id);
+  }
+  function psTake(row) {
+    var v = Object.assign({}, row.data, { t: row.ts });
+    store(psKey(row.id), v);
+    if (S.set !== row.id) return;
+    // 지금 보고 있는 회차면 화면도 바꾼다
+    if (PAPER) {
+      if (v.g && (v.gs === 'a' || v.gs === 'b') && v.gs !== S.sel && SUB === 'korean') { S.sel = v.gs; store('sn:' + SUB + ':sel', S.sel); if (selSel) selSel.value = S.sel; }
+      startSet(S.set, true);
+      return;
+    }
+    stopTimer();
+    S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
+    S.ans = v.ans && v.ans.length === S.items.length ? v.ans.slice() : S.items.map(function () { return 0; });
+    if (v.g && v.ans && v.ans.length === S.items.length) restoreGraded(v);
+    armClock();
+    renderAll();
+  }
+  function psSync() {
+    if (!psOn() || psBusy) return;
+    psBusy = true;
+    psAt = Date.now();
+    SnAuth.examStates(SUB).then(function (rows) {
+      var seen = {}, up = [];
+      (rows || []).forEach(function (row) {
+        if (!row || typeof row.id !== 'string' || row.id.indexOf('exam:') !== 0 || !row.data) return;
+        seen[row.id] = 1;
+        var cur = store(psKey(row.id));
+        if (cur && !cur.t) {   // 동기화 전 기록
+          if (psCount(cur) >= psCount(row.data)) { cur.t = Date.now(); store(psKey(row.id), cur); up.push(row.id); return; }
+        } else if (cur && cur.t >= row.ts) { if (cur.t > row.ts) up.push(row.id); return; }
+        psTake(row);
+      });
+      examList().forEach(function (e) {   // 계정에 아직 없는 이 기기 기록
+        var id = 'exam:' + e.key;
+        if (seen[id]) return;
+        var cur = store(psKey(id));
+        if (!cur || !psCount(cur)) return;
+        if (!cur.t) { cur.t = Date.now(); store(psKey(id), cur); }
+        up.push(id);
+      });
+      var next = function () { var id = up.shift(); if (id) return psSend(id).then(next); };
+      return next();
+    }).catch(function () {}).then(function () { psBusy = false; });
+  }
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') psFlush();
+    else if (psAt && Date.now() - psAt > 30000) psSync();   // 다른 기기에서 푼 것이 있으면 받아 온다
+  });
+  window.addEventListener('pagehide', psFlush);
 
   /* ───────── render ───────── */
   function renderBar() {
@@ -3118,7 +3207,7 @@
     var wl = wrongIdxs(), wn = wl.length, wk = wl.filter(function (i) { return !S.ans[i]; }).length;
     if (wn) acts.appendChild(el('button', { type: 'button', class: 'pr-btn pr-ai-cta', text: '🤖 틀린 문제 ' + wn + '개' + (wk ? '(못 푼 ' + wk + '개 포함)' : '') + ' 한꺼번에 AI 해설', onclick: askWrongAll }));
     acts.appendChild(el('button', { type: 'button', class: 'pr-btn pr-ai-cta', text: '🤖 이번 ' + (S.set.indexOf('exam:') === 0 ? '시험' : '세트') + ' AI 분석 (문제점·강점)', onclick: askExam }));
-    acts.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '다시 풀기', onclick: function () { if (S.set.indexOf('exam:') === 0) store('sn:' + SUB + ':' + S.set, null); startSet(S.set); } }));
+    acts.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '다시 풀기', onclick: function () { if (S.set.indexOf('exam:') === 0) psReset(S.set); startSet(S.set); } }));
     if ((r.wrong.length || unsureCount()) && !PAPER) acts.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '틀린·헷갈린 문제 모아 풀기', onclick: function () { startSet('wrong:all'); } }));
     box.appendChild(acts);
     return box;
@@ -3153,6 +3242,7 @@
     else { begin(); if (meUser.id) migrateWrong(); }
     pullNotes();
     aiSync();
+    psSync();
     loadDue(PAPER && wantDue);
     if (meUser.id && window.SnAuth && SnAuth.aiKey) SnAuth.aiKey().then(function (j) { acctKey = j; }).catch(function () {});
     if (PAPER && meUser.id && window.SnAuth) SnAuth.wrong(SUB).then(function (rows) { S.wrongRows = rows; renderOmr(); }).catch(function () {});
