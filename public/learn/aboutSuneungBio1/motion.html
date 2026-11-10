@@ -321,7 +321,7 @@ S.push({u:1,ch:'사람의 물질대사',title:'물질대사와 ATP · 세포 호
     c.beginPath();for(let k=0;k<5;k++){const xx=mx-70+k*35;c.moveTo(xx,my-40);c.quadraticCurveTo(xx+12,my,xx,my+40);}c.strokeStyle='rgba(255,138,101,.4)';c.lineWidth=2;c.stroke();c.restore();
     label(c,'세포 호흡',mx,my-84,C.muted,{size:14});
     // 산물
-    T(c,'CO₂ + H₂O',830,150,{size:16,color:G.co2,w:600,align:'right'});flow(c,[[mx+100,my-20],[760,150]],t,G.co2,3,5,.3);
+    T(c,'CO₂ + H₂O',830,150,{size:16,color:G.co2,w:600,align:'right'});flow(c,[[mx+100,my-20],[728,150]],t,G.co2,3,5,.3);
     // ATP 40%
     const k=(tt/6);label(c,'에너지',mx,my+96,C.text,{size:15});
     poly(c,[[mx-20,my+108],[mx-120,300]],'#FFD54F',3);poly(c,[[mx+20,my+108],[mx+120,300]],G.heat,3);
@@ -511,17 +511,18 @@ S.push({u:2,ch:'자극의 전달과 근수축',title:'골격근의 수축',file:
     for(let i=0;i<4;i++){const yy=cy-66+i*44;poly(c,[[z1,yy],[z1+aL,yy]],'#4FD1E8',4);poly(c,[[z2,yy],[z2-aL,yy]],'#4FD1E8',4);}
     // 구간 계산
     const overlap=Math.max(0,(z1+aL)-m1),Hlen=Math.max(0,A-2*overlap),Ilen=L-A;
+    const dL=Math.round(L/40)*40,dI=dL-A,dOv=aL-dI/2,dH=A-2*dOv;   // 표시용 숫자(0.2 μm 단계)
     // 구간 표시
     const y0=cy+108;
     poly(c,[[m1,y0],[m2,y0]],'#F4B544',3);label(c,'A대 (일정) = '+(A/200).toFixed(1)+' μm',cx,y0+18,'#F4B544',{size:13});
-    poly(c,[[z1,y0+44],[m1,y0+44]],'#4FD1E8',3);poly(c,[[m2,y0+44],[z2,y0+44]],'#4FD1E8',3);label(c,'I대 (액틴만) 양쪽 합 = '+(Ilen/200).toFixed(1)+' μm',cx,y0+62,'#4FD1E8',{size:13});
+    poly(c,[[z1,y0+44],[m1,y0+44]],'#4FD1E8',3);poly(c,[[m2,y0+44],[z2,y0+44]],'#4FD1E8',3);label(c,'I대 (액틴만) 양쪽 합 = '+(dI/200).toFixed(1)+' μm',cx,y0+62,'#4FD1E8',{size:13});
     const hx1=z1+aL,hx2=z2-aL;if(hx2>hx1){poly(c,[[hx1,cy+96],[hx2,cy+96]],'#FF7A8A',5);label(c,'H대',cx,cy+82,'#FF7A8A',{size:12});}
-    label(c,'마디 길이 (Z선~Z선) = '+(L/200).toFixed(1)+' μm',cx,y0+92,C.text,{size:14});
-    label(c,'H대 = '+(Hlen/200).toFixed(1)+' μm',cx,y0+114,'#FF7A8A',{size:13});
+    label(c,'마디 길이 (Z선~Z선) = '+(dL/200).toFixed(1)+' μm',cx,y0+92,C.text,{size:14});
+    label(c,'H대 = '+(dH/200).toFixed(1)+' μm',cx,y0+114,'#FF7A8A',{size:13});
     // ㉠ 액틴만(한쪽) · ㉡ 겹침(한쪽) · ㉢ H대 — 문항이 실제로 주는 길이
     poly(c,[[z1,136],[m1,136]],'#4FD1E8',3);poly(c,[[m1,136],[hx1,136]],'#B69CFF',3);poly(c,[[hx1,136],[hx2,136]],'#FF7A8A',3);
     label(c,'㉠',(z1+m1)/2,124,'#4FD1E8',{size:15,w:700});label(c,'㉡',(m1+hx1)/2,124,'#B69CFF',{size:15,w:700});label(c,'㉢',cx,124,'#FF7A8A',{size:15,w:700});
-    label(c,'㉠ '+((m1-z1)/200).toFixed(1)+' · ㉡ '+(overlap/200).toFixed(1)+' · ㉢ '+(Hlen/200).toFixed(1)+' μm',cx,80,C.text,{size:15,w:600});
+    label(c,'㉠ '+(dI/400).toFixed(1)+' · ㉡ '+(dOv/200).toFixed(1)+' · ㉢ '+(dH/200).toFixed(1)+' μm',cx,80,C.text,{size:15,w:600});
     label(c,'일정: ㉠ + ㉡ = 0.7 (액틴) · 2㉡ + ㉢ = 1.6 (A대)',cx,470,C.muted,{size:15});
     label(c,'마디가 d 줄면 ㉠ −d/2 · ㉡ +d/2 · ㉢ −d',cx,500,C.muted,{size:15});
     label(c,k>.5?'수축한 상태':'이완한 상태',cx,50,k>.5?'#FF7A8A':C.muted,{size:16});
@@ -543,7 +544,7 @@ S.push({u:2,ch:'신경계와 항상성',title:'중추 신경계와 자율 신경
     parts.forEach(p=>{p.d();c.fillStyle=p.n===cur?BC[2]+'55':'#1E3A57';c.fill();c.strokeStyle=p.n===cur?BC[2]:'#4C7396';c.lineWidth=p.n===cur?3:1.5;c.stroke();});
     box(c,-4,110,20,120,8,cur===5?BC[2]+'55':'#1E3A57',cur===5?BC[2]:'#4C7396',cur===5?3:1.5);c.restore();
     const lab=[[cx-60,cy-40],[cx+130,cy+60],[cx-55,cy+20],[cx+50,cy+46],[cx+40,cy+90],[cx+20,cy+190]];
-    label(c,BRAIN[cur][0],cx,cy-130,BC[2],{size:20,w:700});label(c,BRAIN[cur][1],cx,cy-104,C.muted,{size:13});
+    label(c,BRAIN[cur][0],cx,cy-144,BC[2],{size:20,w:700});label(c,BRAIN[cur][1],cx,cy-119,C.muted,{size:13});
     const lp=lab[cur];poly(c,[[lp[0],lp[1]],[cx+(cur<3?-150:150),cy-90+cur*8]],BC[2],1.5,{dash:[3,3]});
     // 자율 신경 스위치
     const symp=Math.floor(t/4)%2===0,X=650,Y=150;
@@ -741,7 +742,7 @@ S.push({u:3,ch:'유전 정보와 세포 분열',title:'세포 주기와 체세�
     const g={x:520,y:400,w:380,h:220};axes(c,g.x,g.y,g.w,g.h,'','DNA 양');label(c,'핵 1개당 DNA 양 (G₁기 = 1)',g.x+g.w/2,g.y-g.h-10,C.muted,{size:12});
     const P=(q,val)=>[g.x+q*(g.w-30),g.y-val*95-20];
     const fn=q=>q<.4?1:q<.65?1+(q-.4)/.25:q<.9?2:q<.95?2:2-(q-.95)/.05;
-    poly(c,[P(0,1),P(1,1)],C.dim,1,{dash:[3,3]});poly(c,[P(0,2),P(1,2)],C.dim,1,{dash:[3,3]});label(c,'1',g.x-8,P(0,1)[1],C.dim,{size:12,align:'right'});label(c,'2',g.x-8,P(0,2)[1],C.dim,{size:12,align:'right'});
+    poly(c,[P(0,1),P(1,1)],C.dim,1,{dash:[3,3]});poly(c,[[g.x+72,P(0,2)[1]],P(1,2)],C.dim,1,{dash:[3,3]});label(c,'1',g.x-8,P(0,1)[1],C.dim,{size:12,align:'right'});label(c,'2',g.x-8,P(0,2)[1],C.dim,{size:12,align:'right'});
     const pts=[];for(let q=0;q<=ph;q+=.01)pts.push(P(q,fn(q)));if(pts.length>1)poly(c,pts,'#FFD54F',3.5);dot(c,...P(ph,fn(ph)),5,'#FFD54F',{glow:10});
     [['G₁',.2],['S',.525],['G₂',.775],['M',.925]].forEach(([n,q])=>label(c,n,P(q,0)[0],g.y+16,C.dim,{size:12}));
     // DNA 양별 세포 수: 세포 집단을 한 순간에 찍으면 긴 시기일수록 세포가 많다 (기출의 막대그래프)
@@ -752,7 +753,7 @@ S.push({u:3,ch:'유전 정보와 세포 분열',title:'세포 주기와 체세�
     if(ph>.95){dot(c,690,CY,26,'rgba(79,209,232,.15)',{stroke:BC[2],lw:2});dot(c,780,CY,26,'rgba(79,209,232,.15)',{stroke:BC[2],lw:2});label(c,'2n 딸세포 2개',735,CY+44,BC[2],{size:12});}
     else{dot(c,735,CY,32,'rgba(79,209,232,.15)',{stroke:BC[2],lw:2});const dup=ph>.4;for(let i=0;i<2;i++){poly(c,[[725+i*20,CY-18],[725+i*20,CY+18]],dup?'#FFD54F':BC[2],dup?5:3);if(dup)poly(c,[[731+i*20,CY-18],[731+i*20,CY+18]],'#FFD54F',5);}
       label(c,'2n',735,CY+44,BC[2],{size:12});}
-    label(c,'후기: 염색 분체 분리',735,222,ph>.9&&ph<.95?BC[3]:C.dim,{size:12});
+    label(c,'후기: 염색 분체 분리',790,240,ph>.9&&ph<.95?BC[3]:C.dim,{size:11.5});
   }});
 
 /* ───────── Ⅳ-16 감수 분열 ───────── */
@@ -1061,7 +1062,7 @@ S.push({u:4,ch:'생태계와 상호 작용',title:'에너지 흐름과 물질 �
     lv.forEach(([n,e,col],i)=>{const w=[320,190,110,60][i],y=380-i*74,x=60+(320-w)/2;const sh=i<=on;c.save();c.globalAlpha=sh?1:.2;
       rr(c,x,y,w,60,10,col+'33',col,2);T(c,n,x+w/2,y+20,{size:i<2?14:12,align:'center',w:700,color:C.text});label(c,e+' kcal',x+w/2,y+44,col,{size:12});
       if(i>0){const eff=(e/lv[i-1][1]*100);label(c,'효율 '+(eff%1?eff.toFixed(1):eff)+' %',x+w+70,y+30,C.muted,{size:13,align:'left'});arrow(c,x+w+8,y+30,x+w+58,y+30,C.dim,1.5,6);}c.restore();
-      if(sh)for(let j=0;j<3;j++)wavy(c,x+w/2-20+j*20,y,x+w/2-20+j*20,y-26,G.heat,8,2.5,t*3+j,1.5);});
+      if(sh)for(let j=0;j<3;j++){const ux=i<3?60+(320-[320,190,110,60][i+1])/2:0,hx=i<3?ux-10-j*(i===2?7:9):x+w/2-14+j*14;wavy(c,hx,y,hx,y-26,G.heat,8,2.5,t*3+j,1.5);}});   // 위 칸의 숫자를 가리지 않게 위 칸 왼쪽 바깥에
     label(c,'열로 방출',118,296,G.heat,{size:12,align:'right'});label(c,'태양 에너지 → 생산자',220,492,C.muted,{size:13});arrow(c,220,476,220,444,'#FFD54F',3,9);
     // 탄소 순환
     const cx=680,cy=270;label(c,'탄소 순환',cx,80,C.muted,{size:14});
