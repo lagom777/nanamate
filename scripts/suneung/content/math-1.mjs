@@ -418,7 +418,7 @@ ${tip("수능형 계산은 S<sub>n</sub>이 주어지면 a<sub>1</sub> = S<sub>1
 <li><strong>∑ k<sup>2</sup>과 (∑ k)<sup>2</sup>을 같은 공식</strong>으로 쓰는 경우. 세제곱의 합이 (자연수 합)의 제곱입니다.</li>
 <li><strong>등차중항과 등비중항을 바꿈</strong>. 등차중항은 평균 (a + c)/2, 등비중항은 ±√(ac)입니다.</li>
 <li><strong>귀납법에서 n = k + 1만 변형</strong>하고 n = 1 확인을 빼먹는 경우. 시작 항이 없으면 사슬이 이어지지 않습니다.</li>
-<li><strong>1/{k(k + 2)}의 부분분수에서 1/2을 빼먹음</strong>. 분자 1/k − 1/(k + 2)의 차는 2입니다.</li>
+<li><strong>1/{k(k + 2)}의 부분분수에서 1/2을 빼먹음</strong>. 1/k − 1/(k + 2) = 2/{k(k + 2)}이므로 앞에 1/2을 곱해야 합니다.</li>
 <li><strong>등비중항을 항상 하나</strong>로 쓰는 경우. 두 수의 곱이 양수이면 실수 중항은 두 개일 수 있습니다.</li>
 <li><strong>a<sub>n+1</sub> = a<sub>n</sub> + q인데도</strong> α = q/(1 − p)를 쓰는 경우. p = 1이면 등차수열로 따로 풉니다.</li>
 </ul>`,
