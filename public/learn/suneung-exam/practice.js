@@ -1881,7 +1881,7 @@
   function itemLine(it, i) { return lineOf(it, S.ans[i], S.ms && S.ms[i]); }
   function lineOf(it, a, ms) {
     var t = ms != null && ms < 600000 ? ' · 풀이 시간 약 ' + Math.round(ms / 1000) + '초' : '';
-    return it.n + '번 (' + it.pts + '점' + (it.tag && partName[it.tag] ? ', ' + partName[it.tag] : '') + (it.sec && SUB === 'korean' ? ', ' + SEC_NAME[it.sec] : '') + ') · 공식 정답 ' + corrText(it) + ' · 내 답 ' + (a === -1 ? '기록 없음(틀린 문제로 저장됨)' : pickText(it, a)) + t;
+    return it.n + '번 (' + it.pts + '점' + (it.tag && partName[it.tag] ? ', ' + partName[it.tag] + (it.tp ? ' › ' + topicName[it.tp] : '') : '') + (it.sec && SUB === 'korean' ? ', ' + SEC_NAME[it.sec] : '') + ') · 공식 정답 ' + corrText(it) + ' · 내 답 ' + (a === -1 ? '기록 없음(틀린 문제로 저장됨)' : pickText(it, a)) + t;
   }
   function itemReq(i) { return reqFor(S.items[i], S.ans[i], S.ms && S.ms[i], PAPER ? S.meta : null); }
   /* 문항 하나의 AI 해설 요청. a = 내 답(0 미응답, -1 틀렸지만 고른 답을 모름), m = 그 회차 시험지 meta(국어·영어) */
