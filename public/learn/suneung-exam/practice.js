@@ -49,6 +49,10 @@
   var EXAMS = [], partName = {}, partHref = {};
   (cfg.parts || []).forEach(function (p) { partName[p.id] = p.name; partHref[p.id] = p.href; });
   var HAS_PARTS = !!(cfg.parts && cfg.parts.length);
+  /* 세부 유형: 파트 안을 한 번 더 나눈 것(exams.json 의 u — 예: 시간과 공간 › 특수 상대성 / 핵반응). 'x' 는 옛 교육과정에만 있던 내용(지금 범위 밖) */
+  var topicName = {}, topicPart = {};
+  (cfg.parts || []).forEach(function (p) { (p.topics || []).forEach(function (t) { topicName[t.id] = t.name; topicPart[t.id] = p.id; }); });
+  function oos(s, n) { return !!(s && s.u) && s.u[n - 1] === 'x'; }
   var explainCache = {}, metaCache = {};
 
   var S = {
@@ -103,7 +107,13 @@
       for (var n = 1; n <= QN; n++) items.push(mk(e, n));
     } else if (parts[0] === 'part') {
       examList().forEach(function (e) {
-        (e[SUB].t || []).forEach(function (t, i) { if (t === parts[1]) items.push(mk(e, i + 1)); });
+        (e[SUB].t || []).forEach(function (t, i) { if (t === parts[1] && !oos(e[SUB], i + 1)) items.push(mk(e, i + 1)); });   // 범위 밖(옛 교육과정) 문항은 모아 풀기에 안 넣는다
+      });
+      items = shuffle(items);
+      if (S.count && S.count < items.length) items = items.slice(0, S.count);
+    } else if (parts[0] === 'topic') {
+      examList().forEach(function (e) {
+        (e[SUB].u || []).forEach(function (u, i) { if (u === parts[1]) items.push(mk(e, i + 1)); });
       });
       items = shuffle(items);
       if (S.count && S.count < items.length) items = items.slice(0, S.count);
@@ -132,7 +142,8 @@
   function mk(e, n) {
     var s = e[SUB];
     return {
-      id: e.key + '/' + n, ex: e.key, title: etitle(e), n: n, ans: s.a[n - 1], pts: s.p[n - 1], tag: s.t ? s.t[n - 1] : null,
+      id: e.key + '/' + n, ex: e.key, title: etitle(e), n: n, ans: s.a[n - 1], pts: s.p[n - 1], tag: s.t && !oos(s, n) ? s.t[n - 1] : null,
+      tp: s.u && topicName[s.u[n - 1]] ? s.u[n - 1] : null, oos: oos(s, n),
       num: !!(s.n && s.n.indexOf(n) >= 0),
       img: imgFixed(e.key, n) ? new URL(cfg.base + 'fix/' + e.key + '/' + SUB + '/q' + pad(n) + '.webp', location.href).href
         : (cfg.imgBase || cfg.base) + e.key + '/' + SUB + '/q' + pad(n) + '.webp'
@@ -160,7 +171,7 @@
   }
 
   /* ───────── UI shell ───────── */
-  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, authBox, exportMsg, exportTimer, exporting = false, dueBtn = null, dueOpt = null, omrClock = null;
+  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, topicRow, authBox, exportMsg, exportTimer, exporting = false, dueBtn = null, dueOpt = null, omrClock = null;
 
   var COLS_KEY = 'sn:pr:cols';
   function paintCols() {
@@ -175,10 +186,15 @@
     ex.forEach(function (e) { g1.appendChild(el('option', { value: 'exam:' + e.key, text: etitle(e) })); });
     setSel.appendChild(g1);
     if (HAS_PARTS && !PAPER) {
-      var g2 = el('optgroup', { label: '파트별 모아 풀기 (전 시험에서 뽑기)' });
+      var hasTopics = cfg.parts.some(function (p) { return p.topics && p.topics.length; });
+      var g2 = el('optgroup', { label: (hasTopics ? '파트·유형별' : '파트별') + ' 모아 풀기 (전 시험에서 뽑기)' });
       cfg.parts.forEach(function (p) {
-        var c = 0; ex.forEach(function (e) { (e[SUB].t || []).forEach(function (t) { if (t === p.id) c++; }); });
+        var c = 0; ex.forEach(function (e) { (e[SUB].t || []).forEach(function (t, i) { if (t === p.id && !oos(e[SUB], i + 1)) c++; }); });
         g2.appendChild(el('option', { value: 'part:' + p.id, text: p.name + ' (' + c + '문항)' }));
+        (p.topics || []).forEach(function (tp) {
+          var k = 0; ex.forEach(function (e) { (e[SUB].u || []).forEach(function (u) { if (u === tp.id) k++; }); });
+          if (k) g2.appendChild(el('option', { value: 'topic:' + tp.id, text: '\u00a0\u00a0\u00a0└ ' + tp.name + ' (' + k + '문항)' }));
+        });
       });
       setSel.appendChild(g2);
     }
@@ -214,6 +230,7 @@
     progEl = el('span', { class: 'pr-prog' });
     bar = el('div', { class: 'pr-bar' }, [
       el('div', { class: 'pr-bar-row' }, row1),
+      topicRow = el('div', { class: 'pr-bar-row pr-topics', role: 'group', 'aria-label': '세부 유형' }),
       el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), timerEl, inkBtn, weakBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn', onclick: function () { openWeak(); } }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-nb-btn', text: '📋 오답 노트', onclick: openNotebook }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn', text: '📊 오답 원인', onclick: openCauses }), dueBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-due-btn', text: '📅 오늘 다시 풀', onclick: openDue }), progEl])
     ]);
     authBox = el('div', { class: 'pr-auth' });
@@ -310,6 +327,27 @@
     }).catch(function () {});
   }
   /* 비슷한 문제 모아 풀기: 같은 파트 문제를 여러 시험에서 뽑은 세트로(출제 10·20·전체는 위 막대에서) */
+  function goTopic(t) {
+    if (aiDlg && aiDlg.open) aiDlg.close();
+    if (setSel) setSel.value = 'topic:' + t;
+    startSet('topic:' + t);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+  /* 파트·유형 세트를 풀 때 위 막대에 그 파트의 유형 칩: 전체 | 유형 … (눌러서 바로 옮겨 간다) */
+  function paintTopics() {
+    if (!topicRow) return;
+    topicRow.innerHTML = '';
+    var sp = S.set.split(':'), pid = sp[0] === 'part' ? sp[1] : sp[0] === 'topic' ? topicPart[sp[1]] : null;
+    var part = pid && (cfg.parts || []).filter(function (p) { return p.id === pid; })[0];
+    if (!part || !part.topics || !part.topics.length) { topicRow.style.display = 'none'; return; }
+    topicRow.style.display = '';
+    var chip = function (id, text, on) {
+      return el('button', { type: 'button', class: 'pr-topic', 'aria-pressed': on ? 'true' : 'false', text: text, onclick: function () { if (on) return; setSel.value = id; startSet(id); } });
+    };
+    topicRow.appendChild(el('span', { class: 'pr-topics-lab', text: part.name + ' ›' }));
+    topicRow.appendChild(chip('part:' + pid, '전체', sp[0] === 'part'));
+    part.topics.forEach(function (t) { topicRow.appendChild(chip('topic:' + t.id, t.name, sp[0] === 'topic' && sp[1] === t.id)); });
+  }
   function goPart(p) {
     if (aiDlg && aiDlg.open) aiDlg.close();
     if (setSel) setSel.value = 'part:' + p;
@@ -513,7 +551,8 @@
     modeBtns.exam.setAttribute('aria-pressed', S.mode === 'exam');
     modeBtns.practice.setAttribute('aria-pressed', S.mode === 'practice');
     var isExam = S.set.indexOf('exam:') === 0;
-    if (!PAPER || SUB !== 'korean') countWrap.style.display = S.set.indexOf('part:') === 0 ? '' : 'none';
+    if (!PAPER || SUB !== 'korean') countWrap.style.display = S.set.indexOf('part:') === 0 || S.set.indexOf('topic:') === 0 ? '' : 'none';
+    paintTopics();
     modeBtns.exam.disabled = !isExam;
     var done = S.ans.filter(Boolean).length;
     progEl.textContent = '푼 문항 ' + done + ' / ' + S.items.length;
@@ -571,8 +610,10 @@
     var head = el('div', { class: 'pr-card-head' }, [
       el('span', { class: 'pr-no', text: (i + 1) }),
       el('span', { class: 'pr-meta', text: it.title + ' · ' + it.n + '번 · ' + it.pts + '점' }),
-      it.tag && partName[it.tag] ? el('a', { class: 'pr-tag', href: partHref[it.tag] || '#', text: partName[it.tag] }) : null,
-      HAS_PARTS && !PAPER && it.tag && partName[it.tag] && S.set !== 'part:' + it.tag ? el('button', { type: 'button', class: 'pr-tag pr-tag-go', title: partName[it.tag] + ' 문제를 여러 시험에서 모아 풀기', text: '🔁 이 파트 더 풀기', onclick: function () { goPart(it.tag); } }) : null,
+      it.oos ? el('span', { class: 'pr-tag pr-tag-oos', title: '옛 교육과정(2020학년도까지) 시험에만 나오던 내용이라 지금 수능 범위가 아닙니다. 모아 풀기에는 나오지 않아요.', text: '지금 범위 밖 · 옛 교육과정' }) : null,
+      it.tag && partName[it.tag] ? el('a', { class: 'pr-tag', href: partHref[it.tag] || '#', text: partName[it.tag] + (it.tp ? ' › ' + topicName[it.tp] : '') }) : null,
+      HAS_PARTS && !PAPER && it.tp ? (S.set !== 'topic:' + it.tp ? el('button', { type: 'button', class: 'pr-tag pr-tag-go', title: topicName[it.tp] + ' 문제만 여러 시험에서 모아 풀기', text: '🔁 이 유형 더 풀기', onclick: function () { goTopic(it.tp); } }) : null)
+        : HAS_PARTS && !PAPER && it.tag && partName[it.tag] && S.set !== 'part:' + it.tag ? el('button', { type: 'button', class: 'pr-tag pr-tag-go', title: partName[it.tag] + ' 문제를 여러 시험에서 모아 풀기', text: '🔁 이 파트 더 풀기', onclick: function () { goPart(it.tag); } }) : null,
       it.dueInfo ? el('span', { class: 'pr-due-tag', text: '📅 ' + dueText(it.dueInfo) }) : null,
       unsureOf(it) ? el('span', { class: 'pr-unsure-tag', text: '🤔 헷갈림' }) : null,
       causeOf(it) ? el('span', { class: 'pr-cause-tag', text: CAUSE_NAME[causeOf(it)] }) : null
@@ -2742,9 +2783,10 @@
       }
       for (var n = 1; n <= QN; n++) {
         if (e.key === r.exam && n === r.n) continue;
+        if (oos(s, n) && !it.oos) continue;   // 범위 밖 문항은 권하지 않는다
         var near = it.tag ? (s.t && s.t[n - 1] === it.tag) : Math.abs(n - r.n) <= 1;
         if (!near) continue;
-        out.push({ ref: qRef(e.key, '', n), score: (s.p[n - 1] === it.pts ? 100 : 0) + (it.tag ? 0 : (n === r.n ? 50 : 0)) - ei });
+        out.push({ ref: qRef(e.key, '', n), score: (it.tp && s.u && s.u[n - 1] === it.tp ? 1000 : 0) + (s.p[n - 1] === it.pts ? 100 : 0) + (it.tag ? 0 : (n === r.n ? 50 : 0)) - ei });   // 같은 세부 유형이 먼저
       }
     });
     out.sort(function (x, y) { return y.score - x.score; });
@@ -2752,7 +2794,7 @@
   }
   function similarSec(r, it, reopen) {
     var list = similarRefs(r, it), at = 0;
-    var why = PAPER ? (SUB === 'english' ? '같은 번호(같은 유형)의 다른 회차' : '같은 체제 회차의 같은 번호') : it.tag && partName[it.tag] ? '같은 파트(' + partName[it.tag] + ')' : '같은 시대(번호 근처)';
+    var why = PAPER ? (SUB === 'english' ? '같은 번호(같은 유형)의 다른 회차' : '같은 체제 회차의 같은 번호') : it.tp ? '같은 유형(' + topicName[it.tp] + ')부터' : it.tag && partName[it.tag] ? '같은 파트(' + partName[it.tag] + ')' : '같은 시대(번호 근처)';
     var grid = el('div', { class: 'pr-sim' });
     var more = el('button', { type: 'button', class: 'pr-btn', text: '다른 문제 3개', onclick: function () { at += 3; paint(); } });
     function paint() {
@@ -3067,6 +3109,7 @@
     var p = S.set.split(':');
     if (p[0] === 'exam') return etitle(examOf(p[1])) + (SUB === 'korean' ? ' (' + (S.sel === 'a' ? '화작' : '언매') + ')' : '');
     if (p[0] === 'part') return partName[p[1]] + ' 모아 풀기';
+    if (p[0] === 'topic') return topicName[p[1]] + ' 모아 풀기';
     if (p[0] === 'due') return '오늘 다시 풀 오답';
     return '틀린·헷갈린 문제 다시 풀기';
   }
@@ -3185,11 +3228,12 @@
     if (r.wrong.length) box.appendChild(el('p', { class: 'pr-sub', text: '오답 번호: ' + r.wrong.join(', ') + (r.unanswered ? ' (못 푼 ' + r.unanswered + '문항 포함)' : '') }));
     var cl = causeLine();
     if (cl) box.appendChild(cl);
-    var partStat = {};
+    var partStat = {}, topicMiss = {};
     S.items.forEach(function (it, i) {
       var p = it.tag; if (!p) return;
       partStat[p] = partStat[p] || { n: 0, ok: 0 };
       partStat[p].n++; if (isRight(it, S.ans[i])) partStat[p].ok++;
+      else if (it.tp) { (topicMiss[p] = topicMiss[p] || {})[it.tp] = (topicMiss[p][it.tp] || 0) + 1; }
     });
     var ks = Object.keys(partStat).sort(function (a, b) { return (partStat[b].n - partStat[b].ok) - (partStat[a].n - partStat[a].ok); });   // 많이 틀린 파트부터
     if (ks.length > 1) {
@@ -3198,6 +3242,9 @@
         var s = partStat[p], miss = s.n - s.ok;
         ul.appendChild(el('li', { class: miss ? 'miss' : '' }, [el('span', {}, [el('a', { href: partHref[p] || '#', text: partName[p] || p }), ' ' + s.ok + '/' + s.n + (miss ? ' · 틀림 ' + miss : '')]),
           partName[p] && !PAPER ? el('button', { type: 'button', class: 'pr-part-go', title: (partName[p] || p) + ' 문제를 여러 시험에서 모아 풀기', text: '🔁 모아 풀기', onclick: function () { goPart(p); } }) : null]));
+        if (topicMiss[p] && !PAPER) ul.appendChild(el('li', { class: 'pr-parts-topics' }, [el('span', {}, Object.keys(topicMiss[p]).map(function (t) {
+          return el('button', { type: 'button', class: 'pr-part-go', title: topicName[t] + ' 문제만 여러 시험에서 모아 풀기', text: '🔁 ' + topicName[t] + ' · 틀림 ' + topicMiss[p][t], onclick: function () { goTopic(t); } });
+        }))]));
       });
       box.appendChild(el('p', { class: 'pr-sub', text: '파트별 정답 — 🔁 모아 풀기는 여러 시험에서 같은 파트 문제를 뽑아 풀어요' }));
       box.appendChild(ul);
@@ -3234,9 +3281,10 @@
     if (selSel) selSel.value = S.sel;
     var h = decodeURIComponent((location.hash || '').slice(1));
     var wantDue = h === 'due' || h.indexOf('due:') === 0;
-    var start = /^(exam|part|wrong):/.test(h) || (wantDue && !PAPER) ? (h === 'due' ? 'due:today' : h) : 'exam:' + ex[0].key;
+    var start = /^(exam|part|topic|wrong):/.test(h) || (wantDue && !PAPER) ? (h === 'due' ? 'due:today' : h) : 'exam:' + ex[0].key;
     if (start.indexOf('exam:') === 0 && !examOf(start.slice(5))) start = 'exam:' + ex[0].key;
     if (start.indexOf('part:') === 0 && !partName[start.slice(5)]) start = 'exam:' + ex[0].key;
+    if (start.indexOf('topic:') === 0 && !topicName[start.slice(6)]) start = 'exam:' + ex[0].key;
     var begin = function () { startSet(start); window.scrollTo(0, 0); };
     if (meUser.id && start.indexOf('wrong:') === 0) migrateWrong().then(begin);
     else { begin(); if (meUser.id) migrateWrong(); }

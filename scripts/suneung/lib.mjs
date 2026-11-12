@@ -34,13 +34,17 @@ export const figure = (id, view) => `<div data-figure="${id}" id="fig-${id}${vie
 
 export const examsOf = (sub) => EXAMS.filter((e) => e[sub]);
 
-/* 출제 통계: 최근 회차에서 이 파트 태그가 몇 문항이었나 */
+/* 출제 통계: 최근 회차에서 이 파트 태그가 몇 문항이었나.
+ * 세부 유형(u)이 있는 과목은 범위 밖 문항(u = "x")이 섞인 옛 교육과정 시험(2020학년도까지)을 통계에서 뺀다. */
 export function partStats(sub, partId) {
-  const ex = examsOf(sub).filter((e) => e[sub].t);
+  const ex = examsOf(sub).filter((e) => e[sub].t && !(e[sub].u || []).includes("x"));
   const per = ex.map((e) => e[sub].t.filter((t) => t === partId).length);
   const total = per.reduce((a, b) => a + b, 0);
   const pts = ex.reduce((s, e) => s + e[sub].t.reduce((a, t, i) => a + (t === partId ? e[sub].p[i] : 0), 0), 0);
-  return { total, exams: ex.length, avg: (total / ex.length).toFixed(1), avgPts: (pts / ex.length).toFixed(1), min: Math.min(...per), max: Math.max(...per) };
+  const min = Math.min(...per), max = Math.max(...per), years = ex.map((e) => e.year);
+  const curr = examsOf(sub).some((e) => e[sub].u);   // 세부 유형까지 문항별로 분류한 과목
+  const pool = examsOf(sub).reduce((s, e) => s + (e[sub].t || []).filter((t, i) => t === partId && (e[sub].u || [])[i] !== "x").length, 0);   // 풀어보기의 파트 모아 풀기에 나오는 문항 수
+  return { total, exams: ex.length, avg: (total / ex.length).toFixed(1), avgPts: (pts / ex.length).toFixed(1), min, max, range: min === max ? String(min) : min + "~" + max, curr, pool, y0: Math.min(...years), y1: Math.max(...years) };
 }
 
 /* ── 페이지 뼈대 ── */
@@ -141,12 +145,12 @@ export function chapterPage(spec, c, i) {
   const st = c.part ? partStats(spec.sub, c.part) : null;
   const prev = spec.chapters[i - 1], next = spec.chapters[i + 1];
   const stat = st
-    ? `<div class="stat-row"><div class="stat"><b>${st.avg}</b><span>회당 문항 수</span></div><div class="stat"><b>${st.avgPts}점</b><span>회당 배점</span></div><div class="stat"><b>${st.min}~${st.max}</b><span>회차별 범위</span></div><div class="stat"><b>${st.total}</b><span>최근 ${st.exams}회 누적</span></div></div>
-<p class="stat-note">수능 2018~2026학년도 + 6·9월 모의평가 ${st.exams}회(2018~2020학년도는 2009 개정 교육과정)(${st.exams * (spec.qn || 20)}문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>`
+    ? `<div class="stat-row"><div class="stat"><b>${st.avg}</b><span>회당 문항 수</span></div><div class="stat"><b>${st.avgPts}점</b><span>회당 배점</span></div><div class="stat"><b>${st.range}</b><span>회차별 범위</span></div><div class="stat"><b>${st.total}</b><span>최근 ${st.exams}회 누적</span></div></div>
+<p class="stat-note">${st.curr ? `${st.y0}~${st.y1}학년도 수능·6월·9월 모의평가 ${st.exams}회(${st.exams * (spec.qn || 20)}문항) 기준. 지금 교육과정으로 치른 시험만 세었고, 문항을 하나씩 보고 분류했습니다.` : `수능 2018~2026학년도 + 6·9월 모의평가 ${st.exams}회(2018~2020학년도는 2009 개정 교육과정)(${st.exams * (spec.qn || 20)}문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.`}</p>`
     : "";
   const practice = spec.practice === false ? "" : c.part
     ? `<h2>이 파트 기출 풀어보기</h2>
-<p>${spec.label} 전 시험지에서 이 파트로 분류된 <strong>${st.total}문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p>${spec.label} 전 시험지에서 이 파트로 분류된 <strong>${st.pool}문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
 <p><a class="cta" href="../practice.html#part:${c.part}">📝 ${c.title} 모아 풀기 →</a></p>`
     : `<h2>실전으로 풀어보기</h2><p><a class="cta" href="../practice.html">📝 수능 풀어보기 →</a></p>`;
   const motion = c.motion
@@ -235,11 +239,11 @@ export function practicePage(spec, o = {}) {
   const expNote = withExp.length
     ? `<p class="exp-note">📖 <strong>문항별 해설이 있는 시험</strong> ${withExp.length}회: ${withExp.map((e) => e.title).join(", ")}. 나머지 시험(과 해설을 싣지 못한 문항)은 정답·배점 채점${spec.chapters.length ? "과 관련 파트 링크" : ""}가 제공됩니다. 해설은 AI가 문항 이미지를 풀어 쓰고 공식 정답과 일치하는 것만 실었지만, 풀이 과정에 오류가 있을 수 있으니 참고용으로 보세요.</p>`
     : "";
-  const parts = spec.chapters.filter((c) => c.part).map((c) => ({ id: c.part, name: c.title, href: `chapters/${c.file}` }));
+  const parts = spec.chapters.filter((c) => c.part).map((c) => ({ id: c.part, name: c.title, href: `chapters/${c.file}`, ...(c.topics ? { topics: c.topics.map(([id, name]) => ({ id, name })) } : {}) }));
   const numeric = sub === "math" ? " 단답형(16~22번·29~30번)은 답을 숫자로 직접 입력합니다." : "";
   const lead = kind === "paper"
     ? `<p>시험지를 <strong>단(段) 단위 이미지</strong>로 그대로 보여 주고, 오른쪽 답안지에 답을 표시합니다. 시험 모드는 ${minutes}분 타이머로 ${sub === "korean" ? "공통 34문항 + 선택 11문항" : "45문항"}을 풀고 제출하면 채점합니다. 연습 모드는 답을 고르는 즉시 정오가 표시됩니다.${sub === "korean" ? " 선택과목(화법과 작문 / 언어와 매체)을 골라 풀 수 있습니다." : " 듣기(1~17번)는 시험지 위 🎧 막대로 평가원 음원을 듣고(문항별 다시 듣기·속도 조절), 채점 후 대본으로 확인합니다."}</p>`
-    : `<p>시험 모드는 ${minutes}분 타이머로 ${qn}문항을 풀고 제출하면 한 번에 채점합니다. 연습 모드는 답을 고르는 즉시 정오${withExp.length ? "와 해설" : ""}가 열립니다.${numeric}${parts.length ? " <strong>파트별 모아 풀기</strong>로 약한 단원만 골라 풀고, " : " "}틀린 문항은 자동으로 오답 노트에 쌓입니다.</p>`;
+    : `<p>시험 모드는 ${minutes}분 타이머로 ${qn}문항을 풀고 제출하면 한 번에 채점합니다. 연습 모드는 답을 고르는 즉시 정오${withExp.length ? "와 해설" : ""}가 열립니다.${numeric}${parts.length ? ` <strong>파트별 모아 풀기</strong>${parts.some((p) => p.topics) ? "(파트 안의 <strong>세부 유형</strong>까지 골라서)" : ""}로 약한 단원만 골라 풀고, ` : " "}틀린 문항은 자동으로 오답 노트에 쌓입니다.</p>`;
   const span = (k) => { const ys = ex.filter((e) => (k === "csat") === (e.kind === "csat")).map((e) => e.year); return ys.length ? `${Math.min(...ys)}~${Math.max(...ys)}학년도` : ""; };
   const years = `수능 ${span("csat")} · 6월/9월 모의평가 ${span("mock")} · 총 ${ex.length}회`;
   return `${head(`수능 풀어보기 — ${label}`, 0, spec).replace("</head>", `<link rel="stylesheet" href="../suneung-exam/practice.css">\n</head>`)}
