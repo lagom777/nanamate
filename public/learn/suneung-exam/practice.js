@@ -92,8 +92,10 @@
   var meUser = null;
 
   function examList() { return EXAMS.filter(function (e) { return e[SUB]; }); }
-  /* 회차 제목의 '(구 교육과정)'은 2022학년도에 바뀐 국·수·탐 기준이다. 한국사는 2017학년도부터 같은 체제라 붙이지 않는다. */
-  function etitle(e) { return SUB === 'hist' ? e.title.replace(' (구 교육과정)', '') : e.title; }
+  /* 회차 제목의 '(구 교육과정)'은 2022학년도에 체제가 바뀐 국어·수학 기준이다. 한국사는 2017학년도부터 같은 체제라 붙이지 않고,
+   * 과학탐구는 2021학년도부터 지금 교육과정(2015 개정) 범위라 2021학년도 시험에는 붙이지 않는다(2018~2020학년도만 옛 범위). */
+  var SCI_SUB = /^(phys|chem|bio|earth)[12]$/.test(SUB);
+  function etitle(e) { return SUB === 'hist' || (SCI_SUB && +e.year >= 2021) ? e.title.replace(' (구 교육과정)', '') : e.title; }
   function examOf(key) { return examList().filter(function (e) { return e.key === key; })[0]; }
   function isRight(it, a) { return it.ans === 0 ? true : Array.isArray(it.ans) ? it.ans.indexOf(a) >= 0 : a === it.ans; }
   function chLabel(a) { return a ? CIRC[a - 1] : '-'; }
@@ -1896,7 +1898,7 @@
     var key = examKeyOf(it), ex = examOf(key);
     return Promise.all([loadExplain(key), loadTrap(key)]).then(function (maps) {
       var content = (PAPER ? stripUrls(it, m, key) : [it.img]).map(imgBlock);
-      var lines = [(ex ? ex.title : key) + ' ' + (cfg.label || SUB) + ' ' + lineOf(it, a, ms)];
+      var lines = [(ex ? etitle(ex) : key) + ' ' + (cfg.label || SUB) + ' ' + lineOf(it, a, ms)];
       if (PAPER) lines.push('이미지는 시험지의 연속된 단(段)입니다. 그중 ' + it.n + '번 문항을 해설하세요. 앞 단은 지문 맥락용입니다.');
       if (SUB === 'english' && it.n <= 17 && m.script && m.script[String(it.n)]) lines.push('듣기 대본:\n' + m.script[String(it.n)]);
       var mine = noteLines(it);
@@ -1916,7 +1918,7 @@
       content.push({ type: 'text', text: lines.join('\n\n') });
       var qid = key + '/' + (it.sec || '') + it.n;
       return { content: content, persist: true, chips: ITEM_CHIPS,
-        weak: { q: qid, g: PAPER ? '' : (partName[it.tag] || '기타'), p: PAPER ? '' : (it.tag || ''), x: (ex ? ex.title.replace(/학년도 /, ' ').replace('대학수학능력시험', '수능') : key) + ' ' + it.n + '번', auto: !!(wrong || skip) } };
+        weak: { q: qid, g: PAPER ? '' : (partName[it.tag] || '기타'), p: PAPER ? '' : (it.tag || ''), x: (ex ? etitle(ex).replace(/학년도 /, ' ').replace('대학수학능력시험', '수능') : key) + ' ' + it.n + '번', auto: !!(wrong || skip) } };
     });
   }
   var ITEM_CHIPS = [
@@ -1931,7 +1933,7 @@
     return Promise.resolve({
       persist: true,
       chips: [['힌트 하나 더', '정답은 여전히 말하지 말고, 다음 단계 힌트를 하나만 더 주세요.']],
-      content: [imgBlock(it.img), { type: 'text', text: (ex ? ex.title : '') + ' ' + (cfg.label || SUB) + ' ' + it.n + '번 (' + it.pts + '점). 공식 정답은 ' + corrText(it) + '입니다. 이 정답은 학생에게 절대 밝히지 마세요.\n\n학생이 아직 이 문제를 풀고 있습니다. 정답 번호·최종 값·어느 선택지가 맞는지 틀린지는 말하지 말고, 스스로 풀 수 있게 첫 실마리 힌트를 1~2개만 짧게 주세요. **힌트 1**, **힌트 2** 형식으로.' }]
+      content: [imgBlock(it.img), { type: 'text', text: (ex ? etitle(ex) : '') + ' ' + (cfg.label || SUB) + ' ' + it.n + '번 (' + it.pts + '점). 공식 정답은 ' + corrText(it) + '입니다. 이 정답은 학생에게 절대 밝히지 마세요.\n\n학생이 아직 이 문제를 풀고 있습니다. 정답 번호·최종 값·어느 선택지가 맞는지 틀린지는 말하지 말고, 스스로 풀 수 있게 첫 실마리 힌트를 1~2개만 짧게 주세요. **힌트 1**, **힌트 2** 형식으로.' }]
     });
   }
   function itemLabel(it) { return refLabel({ exam: examKeyOf(it), sec: it.sec, n: it.n }); }
