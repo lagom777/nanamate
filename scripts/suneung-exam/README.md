@@ -57,6 +57,7 @@ cd r2 && for f in */english/listen-*.mp3; do ROOT=$PWD WR="npx --yes wrangler" .
 
 ## 2018~2021학년도(구 교육과정) · R2 업로드
 `old_dl.py`(다운로드·분류) → `old_ans.py`(정답표, 수학은 가형 홀수형) → `old_crop.py`(국어=통합 45문항 단일 구역, 수학=가형 30문항) → `old_script.py` → `finalize_old.py`(과탐은 `BOARDS=boards_all.json YMIN=2018 YMAX=2021 python batch.py …` 결과 `manifest_old_all.json` 사용). 2018 9월 지구과학Ⅰ 17번은 복수정답(①,⑤)이라 `finalize_old.py`에서 배열로 넣는다.
+**주의 — 2018~2020학년도 수능 과탐 정답표**는 8과목이 한 PDF(`single.pdf`)에 들어 있어, `batch.py`가 과목마다 같은 파일을 넘기면 `crop.py`가 맨 앞 물리Ⅰ 표를 읽는다. 이 때문에 생명과학Ⅰ·지구과학Ⅰ·물리Ⅱ·생명과학Ⅱ·지구과학Ⅱ에 물리Ⅰ 정답·배점이 들어가 있었고, 공식 정답표의 `( 과목 ) 과목` 구획을 과목별로 다시 읽어 `exams.json`을 바로잡았다(`public/learn/suneung-exam/keys.test.mjs`가 같은 회차에서 두 과목의 정답이 같으면 실패한다).
 문항·시험지 이미지는 저장소에 두지 않는다. `r2up.sh <경로>`(wrangler `r2 object put`)로 Cloudflare R2 버킷 `nanamate-suneung`에 올리고, 플레이어의 `imgBase`(`scripts/suneung/lib.mjs` `IMG_BASE`)가 그 공개 주소를 가리킨다. 병렬은 3 이하로(429 제한), 올린 뒤 HTTP 200을 확인하고 로컬 webp를 지운다.
 
 ## 한국사 (2017학년도~, `hist_*`)

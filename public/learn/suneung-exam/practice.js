@@ -57,11 +57,17 @@
    * 유형·파트 모아 풀기에서 '몇 문제 풀었나'를 세고, 안 푼 문제를 먼저 내는 데 쓴다(시험지형 국어·영어는 쓰지 않는다). */
   var DONE_KEY = 'sn:' + SUB + ':done', DONE = null, doneDirty = false;
   function doneOf(id) { var d = DONE && DONE[id]; return d ? (d[0] ? 1 : 0) : -1; }   // -1 안 풂 · 0 틀림 · 1 맞음
+  /* 출처 범위: 수능(대학수학능력시험) · 모의평가(6·9월) · 둘 다(수능이 먼저). 파트·유형 모아 풀기에 걸리고, 기본은 수능 — 수능 문항을 최우선으로 본다. 이 기기에 저장 */
+  var SRC_KEY = 'sn:src', SRC_NAME = { csat: '수능', mock: '모의평가', all: '수능+모의평가' };
+  var SRC = (function () { var v = store(SRC_KEY); return v === 'mock' || v === 'all' ? v : 'csat'; })();
+  function isCsat(e) { return e.kind === 'csat'; }
+  function inSrc(e) { return SRC === 'all' || (SRC === 'csat') === isCsat(e); }
   function pickedOf(id) { var d = DONE && DONE[id]; return (d && d[2]) || 0; }   // 그때 고른 답(모르면 0)
   function noteDone(exam, n, ok, ts, picked) {
     if (PAPER || !DONE || !exam || !n) return;
     var id = exam + '/' + n, d = DONE[id];
     ts = +ts || Date.now(); ok = ok ? 1 : 0; picked = +picked || 0;
+    if (picked) { var ee = examOf(exam); if (ee && ee[SUB].a[n - 1] != null) ok = isRight(mk(ee, +n), picked) ? 1 : 0; }   // 고른 답이 있으면 지금 정답표로 다시 채점(옛 기록의 맞음·틀림이 정답표 수정 뒤에도 맞게)
     if (d && d[1] > ts) return;
     if (d && d[0] === ok && d[1] === ts && (d[2] || 0) === (picked || d[2] || 0)) return;   // 달라진 것이 없다
     DONE[id] = [ok, ts, picked || (d && d[1] === ts && d[2]) || 0]; doneDirty = true;
@@ -100,7 +106,7 @@
   /* 문항 묶음에서 푼 수·맞은 수: pick(시험의 과목 칸, 번호) 가 참인 문항만 */
   function doneCount(pick) {
     var c = { n: 0, done: 0, ok: 0 };
-    examList().forEach(function (e) {
+    examList().filter(inSrc).forEach(function (e) {
       var s = e[SUB];
       for (var n = 1; n <= s.a.length; n++) {
         if (!pick(s, n)) continue;
@@ -118,6 +124,7 @@
   function freshFirst(items, count) {
     var g = [[], [], []];
     shuffle(items).forEach(function (it) { g[it.prev < 0 ? 0 : it.prev === 0 ? 1 : 2].push(it); });
+    g = g.map(function (a) { return a.filter(function (it) { return it.csat; }).concat(a.filter(function (it) { return !it.csat; })); });   // 같은 묶음 안에서는 수능이 먼저
     return (count && count < g[0].length ? g[0].slice(0, count) : g[0]).concat(g[1], g[2]);
   }
   var explainCache = {}, metaCache = {};
@@ -175,12 +182,12 @@
       var e = examOf(parts[1]);
       for (var n = 1; n <= QN; n++) items.push(mk(e, n));
     } else if (parts[0] === 'part') {
-      examList().forEach(function (e) {
+      examList().filter(inSrc).forEach(function (e) {
         (e[SUB].t || []).forEach(function (t, i) { if (t === parts[1] && !oos(e[SUB], i + 1)) items.push(mk(e, i + 1)); });   // 범위 밖(옛 교육과정) 문항은 모아 풀기에 안 넣는다
       });
       items = freshFirst(items, S.count);
     } else if (parts[0] === 'topic') {
-      examList().forEach(function (e) {
+      examList().filter(inSrc).forEach(function (e) {
         (e[SUB].u || []).forEach(function (u, i) { if (u === parts[1]) items.push(mk(e, i + 1)); });
       });
       items = freshFirst(items, S.count);
@@ -210,7 +217,7 @@
     var s = e[SUB];
     return {
       id: e.key + '/' + n, ex: e.key, title: etitle(e), n: n, ans: s.a[n - 1], pts: s.p[n - 1], tag: s.t && !oos(s, n) ? s.t[n - 1] : null,
-      tp: s.u && topicName[s.u[n - 1]] ? s.u[n - 1] : null, oos: oos(s, n), prev: doneOf(e.key + '/' + n), pp: pickedOf(e.key + '/' + n),
+      tp: s.u && topicName[s.u[n - 1]] ? s.u[n - 1] : null, oos: oos(s, n), csat: isCsat(e), prev: doneOf(e.key + '/' + n), pp: pickedOf(e.key + '/' + n),
       num: !!(s.n && s.n.indexOf(n) >= 0),
       img: imgFixed(e.key, n) ? new URL(cfg.base + 'fix/' + e.key + '/' + SUB + '/q' + pad(n) + '.webp', location.href).href
         : (cfg.imgBase || cfg.base) + e.key + '/' + SUB + '/q' + pad(n) + '.webp'
@@ -238,7 +245,7 @@
   }
 
   /* ───────── UI shell ───────── */
-  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, topicRow, setOpts = [], authBox, exportMsg, exportTimer, exporting = false, dueBtn = null, dueOpt = null, omrClock = null;
+  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, topicRow, setOpts = [], setGroup = null, setGroupBase = '', scopeWrap = null, scopeBtns = {}, authBox, exportMsg, exportTimer, exporting = false, dueBtn = null, dueOpt = null, omrClock = null;
 
   var COLS_KEY = 'sn:pr:cols';
   function paintCols() {
@@ -249,20 +256,23 @@
     root.innerHTML = '';
     var ex = examList();
     setSel = el('select', { 'aria-label': '문제 세트', onchange: function () { startSet(setSel.value); } });
-    var g1 = el('optgroup', { label: '기출 시험 (' + QN + '문항 · ' + (EXAM_SECONDS / 60) + '분)' });
-    ex.forEach(function (e) { g1.appendChild(el('option', { value: 'exam:' + e.key, text: etitle(e) })); });
-    setSel.appendChild(g1);
+    var gC = el('optgroup', { label: '수능 (' + QN + '문항 · ' + (EXAM_SECONDS / 60) + '분)' });
+    var gM = el('optgroup', { label: '모의평가 6월·9월 (' + QN + '문항 · ' + (EXAM_SECONDS / 60) + '분)' });
+    ex.forEach(function (e) { (isCsat(e) ? gC : gM).appendChild(el('option', { value: 'exam:' + e.key, text: etitle(e) })); });
+    if (gC.children.length) setSel.appendChild(gC);
+    if (gM.children.length) setSel.appendChild(gM);
     if (HAS_PARTS && !PAPER) {
       var hasTopics = cfg.parts.some(function (p) { return p.topics && p.topics.length; });
-      var g2 = el('optgroup', { label: (hasTopics ? '파트·유형별' : '파트별') + ' 모아 풀기 (전 시험에서 뽑기)' });
+      var g2 = el('optgroup', { label: (hasTopics ? '파트·유형별' : '파트별') + ' 모아 풀기' });
+      setGroup = g2; setGroupBase = (hasTopics ? '파트·유형별' : '파트별') + ' 모아 풀기';
       cfg.parts.forEach(function (p) {
-        var c = 0; ex.forEach(function (e) { (e[SUB].t || []).forEach(function (t, i) { if (t === p.id && !oos(e[SUB], i + 1)) c++; }); });
-        var po = el('option', { value: 'part:' + p.id, text: p.name + ' (' + c + '문항)' });
+        var c = 0;
+        var po = el('option', { value: 'part:' + p.id, text: p.name });
         g2.appendChild(po); setOpts.push({ el: po, name: p.name, pick: partPick(p.id) });
         (p.topics || []).forEach(function (tp) {
           var k = 0; ex.forEach(function (e) { (e[SUB].u || []).forEach(function (u) { if (u === tp.id) k++; }); });
           if (!k) return;
-          var to = el('option', { value: 'topic:' + tp.id, text: '\u00a0\u00a0\u00a0└ ' + tp.name + ' (' + k + '문항)' });
+          var to = el('option', { value: 'topic:' + tp.id, text: '\u00a0\u00a0\u00a0└ ' + tp.name });
           g2.appendChild(to); setOpts.push({ el: to, name: '\u00a0\u00a0\u00a0└ ' + tp.name, pick: topicPick(tp.id) });
         });
       });
@@ -282,6 +292,13 @@
     ]);
     countSel.value = '10'; S.count = 10;
     countWrap = el('label', { class: 'pr-count', title: '파트·유형 모아 풀기에서 한 번에 낼 새 문제 수(전에 푼 문제는 그 아래에 모두 나와요)' }, ['새 문제 ', countSel]);
+    if (HAS_PARTS && !PAPER) {
+      scopeWrap = el('div', { class: 'pr-segs pr-scope', role: 'group', 'aria-label': '출처 범위', title: '파트·유형 모아 풀기에서 어느 시험의 문제를 낼지' });
+      [['csat', '수능', '대학수학능력시험 문제만'], ['mock', '모의평가', '6월·9월 모의평가 문제만'], ['all', '둘 다', '수능 문제를 먼저, 이어서 모의평가 문제']].forEach(function (o) {
+        scopeBtns[o[0]] = el('button', { type: 'button', class: 'pr-seg', text: o[1], title: o[2], onclick: function () { setScope(o[0]); } });
+        scopeWrap.appendChild(scopeBtns[o[0]]);
+      });
+    }
     var row1 = [setSel];
     if (SUB === 'korean') {
       selSel = el('select', { 'aria-label': '선택과목', onchange: function () { S.sel = selSel.value; store('sn:' + SUB + ':sel', S.sel); startSet(setSel.value, true); } }, [
@@ -289,6 +306,7 @@
       ]);
       row1.push(selSel);
     } else row1.push(countWrap);
+    if (scopeWrap) row1.push(scopeWrap);
     /* 가로 줄 수: 문제(시험지 단·문항 칸)를 가로로 몇 줄 놓을지 — 자동(화면 폭에 맞게: 보통 2줄, 아주 넓으면 4줄) 또는 1~4줄. 이 기기에 저장 */
     var colsSel = el('select', { 'aria-label': '문제를 가로로 몇 줄 놓을지', title: '문제를 가로로 몇 줄 놓을지 (이 기기에 저장)', onchange: function () { store(COLS_KEY, colsSel.value || null); paintCols(); } },
       [['', '자동'], ['1', '1줄'], ['2', '2줄'], ['3', '3줄'], ['4', '4줄']].map(function (o) { return el('option', { value: o[0], text: o[1] }); }));
@@ -419,16 +437,25 @@
         [text, el('span', { class: 'pr-topic-n', text: c.done + '/' + c.n })]);
     };
     topicRow.appendChild(el('span', { class: 'pr-topics-lab', text: part.name + ' ›' }));
-    topicRow.appendChild(chip('part:' + pid, '전체', sp[0] === 'part', doneCount(partPick(pid))));
+    topicRow.appendChild(chip('part:' + pid, '전체', sp[0] === 'part', doneCount(partPick(pid))));   // (이 파트 안에서의 전체 — 출처 범위는 위 ‘수능·모의평가’ 단추)
     part.topics.forEach(function (t) { topicRow.appendChild(chip('topic:' + t.id, t.name, sp[0] === 'topic' && sp[1] === t.id, doneCount(topicPick(t.id)))); });
-    if (cur) topicRow.appendChild(el('span', { class: 'pr-topics-sum', html: '푼 문제 <b>' + cur.done + '</b> / ' + cur.n + (cur.done ? ' · 맞음 ' + cur.ok + ' · 틀림 ' + (cur.done - cur.ok) : '') + (cur.done < cur.n ? ' · 새 문제가 먼저, 푼 문제는 아래에' : ' · 다 풀었어요 🎉') }));
+    if (cur) {
+      topicRow.appendChild(el('span', { class: 'pr-topics-sum', html: '<em class="pr-src-name">' + SRC_NAME[SRC] + '</em> 푼 문제 <b>' + cur.done + '</b> / ' + cur.n + (cur.done ? ' · 맞음 ' + cur.ok + ' · 틀림 ' + (cur.done - cur.ok) : '') + (cur.done < cur.n ? ' · 새 문제가 먼저, 푼 문제는 아래에' : cur.n ? ' · 다 풀었어요 🎉' : '') }));
+      if (cur.n && cur.done >= cur.n && SRC === 'csat') topicRow.appendChild(el('button', { type: 'button', class: 'pr-topic more', text: '모의평가 문제까지 풀기 →', onclick: function () { setScope('all'); } }));
+    }
   }
-  /* 세트 고르기 목록의 파트·유형 줄에도 푼 수 */
+  /* 세트 고르기 목록의 파트·유형 줄에도 문항 수와 푼 수(고른 출처 범위 기준) */
   function paintSetCounts() {
     setOpts.forEach(function (o) {
       var c = doneCount(o.pick), t = o.name + ' (' + c.n + '문항' + (c.done ? ' · ' + c.done + ' 풂' : '') + ')';
       if (o.el.textContent !== t) o.el.textContent = t;
     });
+    if (setGroup) setGroup.label = setGroupBase + ' — ' + SRC_NAME[SRC];
+  }
+  function setScope(v) {
+    if (v === SRC) return;
+    SRC = v; store(SRC_KEY, v);
+    if (/^(part|topic):/.test(S.set)) startSet(S.set); else { renderBar(); }
   }
   function goPart(p) {
     if (aiDlg && aiDlg.open) aiDlg.close();
@@ -638,7 +665,9 @@
     modeBtns.exam.setAttribute('aria-pressed', S.mode === 'exam');
     modeBtns.practice.setAttribute('aria-pressed', S.mode === 'practice');
     var isExam = S.set.indexOf('exam:') === 0;
-    if (!PAPER || SUB !== 'korean') countWrap.style.display = S.set.indexOf('part:') === 0 || S.set.indexOf('topic:') === 0 ? '' : 'none';
+    var inGroup = S.set.indexOf('part:') === 0 || S.set.indexOf('topic:') === 0;
+    if (!PAPER || SUB !== 'korean') countWrap.style.display = inGroup ? '' : 'none';
+    if (scopeWrap) { scopeWrap.style.display = inGroup ? '' : 'none'; Object.keys(scopeBtns).forEach(function (k) { scopeBtns[k].setAttribute('aria-pressed', k === SRC); }); }
     paintTopics();
     modeBtns.exam.disabled = !isExam;
     var done = S.ans.filter(Boolean).length;
@@ -666,7 +695,9 @@
     if (PAPER) renderPaper();
     else {
       if (!S.items.length) {
-        if (S.set.indexOf('due:') === 0) list.appendChild(el('p', { class: 'pr-empty', text: S.wrongLoading ? '오늘 다시 풀 문제를 불러오는 중…' : meUser && meUser.id ? '오늘 다시 풀 오답이 없습니다 ✓ 틀리거나 헷갈린 문제는 1·3·7일 뒤에 여기로 돌아옵니다.' : '로그인하면 틀리거나 헷갈린 문제를 1·3·7일 뒤에 다시 풀도록 날짜별로 챙겨 드립니다.' }));
+        if (/^(part|topic):/.test(S.set)) {
+          list.appendChild(el('p', { class: 'pr-empty', text: SRC === 'all' ? '이 파트·유형으로 분류된 문제가 아직 없습니다.' : '이 파트·유형은 ' + SRC_NAME[SRC] + ' 문제에는 아직 나오지 않았습니다. 위의 출처 범위를 바꿔 보세요.' }));
+        } else if (S.set.indexOf('due:') === 0) list.appendChild(el('p', { class: 'pr-empty', text: S.wrongLoading ? '오늘 다시 풀 문제를 불러오는 중…' : meUser && meUser.id ? '오늘 다시 풀 오답이 없습니다 ✓ 틀리거나 헷갈린 문제는 1·3·7일 뒤에 여기로 돌아옵니다.' : '로그인하면 틀리거나 헷갈린 문제를 1·3·7일 뒤에 다시 풀도록 날짜별로 챙겨 드립니다.' }));
         else list.appendChild(el('p', { class: 'pr-empty', text: S.wrongLoading ? '오답을 불러오는 중…' : '아직 저장된 오답이 없습니다. 문제를 풀고 채점하면 틀린 문항이, 🤔 헷갈림을 눌러 두면 맞힌 문항도 여기에 모입니다.' }));
       }
       var gap = /^(part|topic):/.test(S.set) ? S.items.filter(function (it) { return it.prev >= 0; }).length : 0;
@@ -2903,7 +2934,7 @@
         if (oos(s, n) && !it.oos) continue;   // 범위 밖 문항은 권하지 않는다
         var near = it.tag ? (s.t && s.t[n - 1] === it.tag) : Math.abs(n - r.n) <= 1;
         if (!near) continue;
-        out.push({ ref: qRef(e.key, '', n), score: (it.tp && s.u && s.u[n - 1] === it.tp ? 1000 : 0) + (s.p[n - 1] === it.pts ? 100 : 0) + (it.tag ? 0 : (n === r.n ? 50 : 0)) - ei });   // 같은 세부 유형이 먼저
+        out.push({ ref: qRef(e.key, '', n), score: (it.tp && s.u && s.u[n - 1] === it.tp ? 1000 : 0) + (isCsat(e) ? 300 : 0) + (s.p[n - 1] === it.pts ? 100 : 0) + (it.tag ? 0 : (n === r.n ? 50 : 0)) - ei });   // 같은 세부 유형이 먼저
       }
     });
     out.sort(function (x, y) { return y.score - x.score; });
@@ -3399,10 +3430,11 @@
     if (selSel) selSel.value = S.sel;
     var h = decodeURIComponent((location.hash || '').slice(1));
     var wantDue = h === 'due' || h.indexOf('due:') === 0;
-    var start = /^(exam|part|topic|wrong):/.test(h) || (wantDue && !PAPER) ? (h === 'due' ? 'due:today' : h) : 'exam:' + ex[0].key;
-    if (start.indexOf('exam:') === 0 && !examOf(start.slice(5))) start = 'exam:' + ex[0].key;
-    if (start.indexOf('part:') === 0 && !partName[start.slice(5)]) start = 'exam:' + ex[0].key;
-    if (start.indexOf('topic:') === 0 && !topicName[start.slice(6)]) start = 'exam:' + ex[0].key;
+    var firstKey = (ex.filter(isCsat)[0] || ex[0]).key;   // 가장 최근 수능부터
+    var start = /^(exam|part|topic|wrong):/.test(h) || (wantDue && !PAPER) ? (h === 'due' ? 'due:today' : h) : 'exam:' + firstKey;
+    if (start.indexOf('exam:') === 0 && !examOf(start.slice(5))) start = 'exam:' + firstKey;
+    if (start.indexOf('part:') === 0 && !partName[start.slice(5)]) start = 'exam:' + firstKey;
+    if (start.indexOf('topic:') === 0 && !topicName[start.slice(6)]) start = 'exam:' + firstKey;
     loadDone();
     var begin = function () { startSet(start); window.scrollTo(0, 0); };
     if (meUser.id && start.indexOf('wrong:') === 0) migrateWrong().then(begin);
