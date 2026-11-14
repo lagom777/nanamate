@@ -585,3 +585,12 @@ body.pr-wide-page main.wide { max-width: none; padding-left: 24px; padding-right
 .pr-done-tag { font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--pr-line); white-space: nowrap; }
 .pr-done-tag.ok { color: #15803d; border-color: #86efac; background: rgba(22, 163, 74, .08); }
 .pr-done-tag.no { color: #b91c1c; border-color: #fca5a5; background: rgba(220, 38, 38, .07); }
+
+/* 해설의 위아래 분수(mathfmt.js): 분자 / 분모. 가운데 '/' 는 화면에는 안 보이고 복사·낭독에만 남는다 */
+.mf { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; position: relative; margin: 0 .2em; line-height: 1.25; white-space: nowrap; text-indent: 0; }
+.mf-n { padding: 0 .3em .06em; border-bottom: 1.4px solid currentColor; }
+.mf-d { padding: .06em .3em 0; }
+.mf-s { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.mf .mf { font-size: .9em; margin: 0 .1em; }
+.pr-exp-body.has { line-height: 1.95; }
+.pr-exp-body.has li { margin: 3px 0; }

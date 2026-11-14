@@ -762,7 +762,7 @@
     if (aiNeed(aid, function () { return itemReq(i); }).status !== 'idle') box.appendChild(aiBox(aid));
     loadExplain(it.ex).then(function (map) {
       var t = map && map[it.n];
-      if (t) { body.className = 'pr-exp-body has'; body.innerHTML = t; }
+      if (t) { body.className = 'pr-exp-body has'; body.innerHTML = fmtExp(t); }
       else {
         body.className = 'pr-exp-body none';
         body.textContent = '이 문항의 상세 해설은 아직 없습니다. 정답은 ' + corr + '입니다.';
@@ -777,7 +777,7 @@
   function loadExplain(key) {
     var ck = key + '-' + SUB;
     if (!explainCache[ck]) {
-      explainCache[ck] = fetch(cfg.base + 'explain/' + ck + '.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+      explainCache[ck] = Promise.all([fetch(cfg.base + 'explain/' + ck + '.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }), loadFmt()]).then(function (r) { return r[0]; });
     }
     return explainCache[ck];
   }
@@ -800,12 +800,26 @@
   function errType(e) { return e && e.error && e.error.error && e.error.error.type; }
   var aiRuns = {}, sdkP = null, aiDlg = null, SDK = null;
   var FORMULA = /^(math|phys|chem|earth|bio)/.test(SUB);   // 수식이 많은 과목: AI 가 LaTeX 로 쓰고 화면은 KaTeX 로 그린다
+  /* 저장된 해설(explain/*.json)의 식: a/b 를 위아래 분수로, = 앞뒤를 띄운다(mathfmt.js — 못 불러오면 원문 그대로).
+   * 생명과학은 / 가 유전자형(Ab/aB)에도 쓰여 숫자/숫자만 분수로 바꾼다 */
+  var fmtP = null;
+  function loadFmt() {
+    if (!FORMULA) return Promise.resolve();
+    if (!fmtP) fmtP = new Promise(function (res) {
+      if (window.SnMathFmt) return res();
+      var s = document.createElement('script');
+      s.src = cfg.base + 'mathfmt.js'; s.onload = res; s.onerror = res;
+      document.head.appendChild(s);
+    });
+    return fmtP;
+  }
+  function fmtExp(html) { return FORMULA && window.SnMathFmt ? SnMathFmt.format(html, { numOnly: /^bio/.test(SUB) }) : html; }
   var AI_SYS = '너는 대한민국 수능 ' + String(cfg.label || SUB).replace(/^수능\s+/, '') + ' 전문 강사다. 학생의 풀이 기록과 기출 문항 이미지를 받아 해설하고 분석한다. ' +
     '공식 정답은 주어진 것을 기준으로 하고, 네 풀이가 공식 정답과 다르면 다시 검토한다. 고등학생이 따라올 수 있게 한국어 존댓말로 쓴다. ' +
     (FORMULA
       ? '형식: 마크다운 제목(#)·표는 쓰지 않는다. 소제목은 한 줄짜리 **굵은 글씨**로, 목록은 "- "로 쓴다. ' +
         '수식은 모두 LaTeX로 쓴다(화면이 수식으로 그려 준다): 문장 속 짧은 식·값은 $…$ (예: $f(x)=x^2-3x$, $a_n$), 분수·극한·적분·시그마처럼 큰 식이나 계산은 한 줄에 따로 $$…$$, ' +
-        '등호로 이어지는 여러 단계 계산은 $$\\begin{aligned} … &= … \\\\ &= … \\end{aligned}$$ 로 한 단계에 한 줄씩 = 를 맞춘다. 식 하나를 여러 $로 쪼개지 않고, 식 안에 한글이 필요하면 \\text{} 로 쓴다. 유니코드 위첨자(x²)·√ 기호 대신 LaTeX(x^2, \\sqrt{3})를 쓴다. '
+        '등호로 이어지는 여러 단계 계산은 $$\\begin{aligned} … &= … \\\\ &= … \\end{aligned}$$ 로 한 단계에 한 줄씩 = 를 맞춘다. 식 하나를 여러 $로 쪼개지 않고, 식 안에 한글이 필요하면 \\text{} 로 쓴다. 분수는 문장 속 식에서도 반드시 \\frac{a}{b} 로 쓴다 — a/b, 1/2mv^2 처럼 / 로 쓰지 않는다. 곱셈은 \\times 나 \\cdot, 단위는 $3\\,\\text{m/s}$ 처럼 \\text 안에 쓰고 값과 띄운다. 식과 한글 사이는 한 칸 띄운다. 유니코드 위첨자(x²)·√ 기호 대신 LaTeX(x^2, \\sqrt{3})를 쓴다. '
       : '형식: 마크다운 제목(#)·표·LaTeX는 쓰지 않는다. 소제목은 한 줄짜리 **굵은 글씨**로, 목록은 "- "로, 수식은 유니코드(x², √3, ≤, ∫, →)로 쓴다. ') +
     '읽기 쉽게: 문단은 2~3문장으로 짧게 끊고, 꼭 기억할 낱말과 결론은 **굵게** 쓴다. 해설·분석은 맨 앞에 "핵심: …" 한 줄로 결론부터 쓴다(힌트만 줄 때는 쓰지 않는다). ' +
     '그림: 글로만 길게 풀지 말고, 이해를 돕는 그림 블록을 넣는다(화면이 인포그래픽으로 그려 준다). 블록은 줄 맨 앞 ```이름 으로 열고 다음 줄들에 한 줄에 한 항목씩 쓴 뒤 ``` 한 줄로 닫는다. 쓸 수 있는 블록 — ' +
@@ -852,11 +866,19 @@
     });
     return { text: text, list: list };
   }
+  /* AI 가 식 안에 1/2 처럼 / 로 쓴 숫자 분수를 \frac 으로(\text{m/s}·지수·첨자 안은 그대로). 1/2mv^2 도 (1/2)mv^2 로 읽는 것이 식 그대로의 뜻이다 */
+  function texFrac(tex) {
+    return String(tex).split(/(\\(?:text|mathrm|operatorname|textbf)\s*\{[^{}]*\})/).map(function (seg, i) {
+      if (i % 2) return seg;
+      return seg.replace(/(^|[^\w.^_{\\\/])(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)(?![\d.\/])/g, '$1\\frac{$2}{$3}');
+    }).join('');
+  }
   function mathHTML(x) {
     if (!KX) { loadKatex(); return '<code class="pr-tex">' + escH(x.tex) + '</code>'; }
     var k = (x.d ? 'D' : 'I') + x.tex;
     if (!kxCache[k]) {
-      var tex = x.d ? x.tex : x.tex.replace(/\\frac(?=\s*\{)/g, '\\dfrac');   // 문장 속 분수도 작게 줄이지 않고 제 크기로
+      var tex = texFrac(x.tex);
+      if (!x.d) tex = tex.replace(/\\frac(?=\s*\{)/g, '\\dfrac');   // 문장 속 분수도 작게 줄이지 않고 제 크기로
       try { kxCache[k] = KX.renderToString(tex, { displayMode: x.d, throwOnError: false, strict: 'ignore' }); }
       catch (e) { kxCache[k] = '<code class="pr-tex">' + escH(x.tex) + '</code>'; }
     }
@@ -2825,7 +2847,7 @@
       body.appendChild(exp);
       loadExplain(r.exam).then(function (map) {
         var t = map && map[r.n], d = exp.lastChild;
-        if (t) { d.className = 'pr-exp-body has'; d.innerHTML = t; exp.open = true; }
+        if (t) { d.className = 'pr-exp-body has'; d.innerHTML = fmtExp(t); exp.open = true; }
         else d.textContent = '이 문항의 상세 해설은 아직 없습니다. 아래 AI 분석을 받아 보세요.';
       });
       /* ⑤ AI 실수 분석 */
