@@ -600,3 +600,36 @@ body.pr-wide-page main.wide { max-width: none; padding-left: 24px; padding-right
 .pr-scope { flex: 0 0 auto; }
 .pr-src-name { font-style: normal; font-weight: 700; color: var(--accent); margin-right: 4px; }
 #practice-root .pr-topic.more { border-color: var(--accent) !important; color: var(--accent) !important; font-weight: 700; }
+
+/* 정답률 비교: 파트·유형마다 한 줄 — 이름 | 막대(맞음·틀림·안 풂) | 퍼센트 | 푼 수 */
+.pr-acc { flex: 1 1 100%; font-size: 12.5px; }
+.pr-acc > summary { cursor: pointer; color: var(--text-dim); padding: 2px 0 4px; user-select: none; }
+#practice-root .pr-acc-row { display: grid; grid-template-columns: minmax(0, 12.5em) minmax(70px, 1fr) 9.5em 5em; gap: 10px; align-items: center; width: 100%; padding: 5px 8px; border: 0 !important; border-radius: 7px; background: transparent !important; color: var(--text) !important; font: inherit; text-align: left; }
+#practice-root button.pr-acc-row { cursor: pointer; }
+#practice-root button.pr-acc-row:hover { background: var(--pr-el) !important; }
+#practice-root .pr-acc-row.on { background: var(--accent-glow, rgba(2, 132, 199, .1)) !important; font-weight: 700; }
+.pr-acc-row.sub .pr-acc-name { padding-left: 14px; }
+.pr-acc-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pr-acc-bar { display: flex; height: 11px; border-radius: 999px; overflow: hidden; background: var(--pr-line); }
+.pr-acc-bar i { display: block; height: 100%; }
+.pr-acc-bar i.ok { background: #16a34a; }
+.pr-acc-bar i.no { background: #dc2626; }
+.pr-acc-num { white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--text-dim); }
+.pr-acc-num b { display: inline-block; min-width: 2.9em; font-size: 13.5px; color: var(--text); }
+.pr-acc-num.hi b { color: #15803d; }
+.pr-acc-num.lo b { color: #b91c1c; }
+.pr-acc-tot { white-space: nowrap; text-align: right; font-size: 11.5px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.pr-acc-dlg .pr-scope { margin: 0 0 10px; }
+.pr-acc-key { display: inline-block; padding: 0 7px; border-radius: 999px; background: var(--pr-line); font-size: 11.5px; }
+.pr-acc-key.ok { background: #16a34a; color: #fff; }
+.pr-acc-key.no { background: #dc2626; color: #fff; }
+@media (max-width: 640px) {
+  #practice-root .pr-acc-row { grid-template-columns: minmax(0, 1fr) auto auto; row-gap: 3px; }
+  .pr-acc-bar { grid-column: 1 / -1; grid-row: 2; }
+  .pr-acc-row.sub .pr-acc-bar { margin-left: 14px; }
+}
+/* 📈 정답률 창은 폭이 좁아 이름·숫자를 한 줄, 막대를 그 아래 줄에 둔다 */
+#practice-root .pr-acc-dlg .pr-acc-row { grid-template-columns: minmax(0, 1fr) auto auto; row-gap: 3px; }
+.pr-acc-dlg .pr-acc-bar { grid-column: 1 / -1; grid-row: 2; }
+.pr-acc-dlg .pr-acc-row.sub .pr-acc-bar { margin-left: 14px; }
+.pr-acc-dlg .pr-acc-name { white-space: normal; }

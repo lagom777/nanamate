@@ -319,7 +319,7 @@
     bar = el('div', { class: 'pr-bar' }, [
       el('div', { class: 'pr-bar-row' }, row1),
       topicRow = el('div', { class: 'pr-bar-row pr-topics', role: 'group', 'aria-label': '세부 유형' }),
-      el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), timerEl, inkBtn, weakBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn', onclick: function () { openWeak(); } }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-nb-btn', text: '📋 오답 노트', onclick: openNotebook }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn', text: '📊 오답 원인', onclick: openCauses }), dueBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-due-btn', text: '📅 오늘 다시 풀', onclick: openDue }), progEl])
+      el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), timerEl, inkBtn, weakBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn', onclick: function () { openWeak(); } }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-nb-btn', text: '📋 오답 노트', onclick: openNotebook }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn', text: '📊 오답 원인', onclick: openCauses }), HAS_PARTS && !PAPER ? el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-acc-btn', text: '📈 정답률', title: '파트·유형별로 몇 문제 풀어 몇 개 맞혔는지', onclick: openAcc }) : null, dueBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-due-btn', text: '📅 오늘 다시 풀', onclick: openDue }), progEl])
     ]);
     authBox = el('div', { class: 'pr-auth' });
     bar.appendChild(authBox);
@@ -428,8 +428,15 @@
     topicRow.innerHTML = '';
     var sp = S.set.split(':'), pid = sp[0] === 'part' ? sp[1] : sp[0] === 'topic' ? topicPart[sp[1]] : null;
     var part = pid && (cfg.parts || []).filter(function (p) { return p.id === pid; })[0];
-    if (!part || !part.topics || !part.topics.length) { topicRow.style.display = 'none'; return; }
+    if (!part) { topicRow.style.display = 'none'; return; }
     topicRow.style.display = '';
+    var hasT = !!(part.topics && part.topics.length);
+    var acc = el('details', { class: 'pr-acc' });
+    acc.open = store(ACC_KEY) !== 0;
+    acc.addEventListener('toggle', function () { store(ACC_KEY, acc.open ? 1 : 0); });
+    acc.appendChild(el('summary', { text: '📊 정답률 비교 — ' + SRC_NAME[SRC] + (hasT ? '' : ' · 파트별') }));
+    accRows(hasT ? pid : null, S.set, function (id) { if (id === S.set) return; setSel.value = id; startSet(id); }).forEach(function (r) { acc.appendChild(r); });
+    if (!hasT) { topicRow.appendChild(acc); return; }
     var cur = null;
     var chip = function (id, text, on, c) {
       if (on) cur = c;
@@ -440,9 +447,56 @@
     topicRow.appendChild(chip('part:' + pid, '전체', sp[0] === 'part', doneCount(partPick(pid))));   // (이 파트 안에서의 전체 — 출처 범위는 위 ‘수능·모의평가’ 단추)
     part.topics.forEach(function (t) { topicRow.appendChild(chip('topic:' + t.id, t.name, sp[0] === 'topic' && sp[1] === t.id, doneCount(topicPick(t.id)))); });
     if (cur) {
-      topicRow.appendChild(el('span', { class: 'pr-topics-sum', html: '<em class="pr-src-name">' + SRC_NAME[SRC] + '</em> 푼 문제 <b>' + cur.done + '</b> / ' + cur.n + (cur.done ? ' · 맞음 ' + cur.ok + ' · 틀림 ' + (cur.done - cur.ok) : '') + (cur.done < cur.n ? ' · 새 문제가 먼저, 푼 문제는 아래에' : cur.n ? ' · 다 풀었어요 🎉' : '') }));
+      topicRow.appendChild(el('span', { class: 'pr-topics-sum', html: '<em class="pr-src-name">' + SRC_NAME[SRC] + '</em> 푼 문제 <b>' + cur.done + '</b> / ' + cur.n + (cur.done ? ' · 맞음 ' + cur.ok + ' · 틀림 ' + (cur.done - cur.ok) + ' · 정답률 <b>' + Math.round(cur.ok / cur.done * 100) + '%</b>' : '') + (cur.done < cur.n ? ' · 새 문제가 먼저, 푼 문제는 아래에' : cur.n ? ' · 다 풀었어요 🎉' : '') }));
       if (cur.n && cur.done >= cur.n && SRC === 'csat') topicRow.appendChild(el('button', { type: 'button', class: 'pr-topic more', text: '모의평가 문제까지 풀기 →', onclick: function () { setScope('all'); } }));
     }
+    topicRow.appendChild(acc);
+  }
+  /* 정답률 한 줄: 이름 | 막대(초록 맞음 · 빨강 틀림 · 회색 아직 안 풂) | 67% · 4/6 맞음 | 푼 6/22 */
+  function accRow(name, c, o) {
+    o = o || {};
+    var pct = c.done ? Math.round(c.ok / c.done * 100) : null;
+    var okBar = el('i', { class: 'ok' }), noBar = el('i', { class: 'no' });
+    okBar.style.width = (c.n ? c.ok / c.n * 100 : 0).toFixed(1) + '%';
+    noBar.style.width = (c.n ? (c.done - c.ok) / c.n * 100 : 0).toFixed(1) + '%';
+    var kids = [
+      el('span', { class: 'pr-acc-name', text: name }),
+      el('span', { class: 'pr-acc-bar', role: 'img', 'aria-label': '전체 ' + c.n + '문항 중 맞음 ' + c.ok + ', 틀림 ' + (c.done - c.ok) + ', 안 풂 ' + (c.n - c.done) }, [okBar, noBar]),
+      el('span', { class: 'pr-acc-num' + (pct == null ? ' none' : pct >= 80 ? ' hi' : pct < 50 ? ' lo' : '') }, pct == null ? ['아직 안 풂'] : [el('b', { text: pct + '%' }), ' ' + c.ok + '/' + c.done + ' 맞음']),
+      el('span', { class: 'pr-acc-tot', text: '푼 ' + c.done + '/' + c.n })
+    ];
+    var cls = 'pr-acc-row' + (o.on ? ' on' : '') + (o.sub ? ' sub' : '');
+    return o.onclick ? el('button', { type: 'button', class: cls, title: name + ' 모아 풀기', onclick: o.onclick }, kids) : el('div', { class: cls }, kids);
+  }
+  /* 파트(와 그 유형)별 정답률 줄들. only: 그 파트만(없으면 모든 파트), cur: 지금 푸는 세트 id, go: 줄을 눌렀을 때 */
+  function accRows(only, cur, go) {
+    var rows = [];
+    (cfg.parts || []).forEach(function (p) {
+      if (only && p.id !== only) return;
+      rows.push(accRow(p.name + (p.topics && p.topics.length ? ' 전체' : ''), doneCount(partPick(p.id)), { on: cur === 'part:' + p.id, onclick: function () { go('part:' + p.id); } }));
+      (p.topics || []).forEach(function (t) {
+        var c = doneCount(topicPick(t.id));
+        if (c.n) rows.push(accRow(t.name, c, { sub: true, on: cur === 'topic:' + t.id, onclick: function () { go('topic:' + t.id); } }));
+      });
+    });
+    return rows;
+  }
+  var ACC_KEY = 'sn:acc';   // 위 막대의 정답률 표를 접었나(이 기기)
+  /* 모든 파트·유형의 정답률을 한 화면에: 📈 정답률 단추 */
+  function openAcc() {
+    var box = el('div', { class: 'pr-acc-dlg' });
+    var all = { n: 0, done: 0, ok: 0 };
+    (cfg.parts || []).forEach(function (p) { var c = doneCount(partPick(p.id)); all.n += c.n; all.done += c.done; all.ok += c.ok; });
+    box.appendChild(el('p', { class: 'pr-ai-note', html: '범위: <b>' + SRC_NAME[SRC] + '</b> · 막대는 <span class="pr-acc-key ok">맞음</span> <span class="pr-acc-key no">틀림</span> <span class="pr-acc-key">아직 안 풂</span> · 퍼센트는 푼 문제 가운데 맞은 비율(문제마다 마지막 풀이 기준)입니다. 줄을 누르면 그 파트·유형을 모아 풉니다.' }));
+    var scope = el('div', { class: 'pr-segs pr-scope', role: 'group', 'aria-label': '출처 범위' });
+    [['csat', '수능'], ['mock', '모의평가'], ['all', '둘 다']].forEach(function (o) {
+      scope.appendChild(el('button', { type: 'button', class: 'pr-seg', 'aria-pressed': o[0] === SRC ? 'true' : 'false', text: o[1], onclick: function () { setScope(o[0]); openAcc(); } }));
+    });
+    box.appendChild(scope);
+    box.appendChild(accRow('전체', all, {}));
+    accRows(null, S.set, function (id) { if (aiDlg && aiDlg.open) aiDlg.close(); setSel.value = id; startSet(id); window.scrollTo({ top: 0, behavior: 'instant' }); }).forEach(function (r) { box.appendChild(r); });
+    if (!all.done) box.appendChild(el('p', { class: 'pr-ai-note', text: '아직 푼 문제가 없습니다. 문제를 풀면 여기에 유형별 정답률이 쌓입니다.' }));
+    showDlg('📈 ' + exportSubject() + ' 파트·유형별 정답률', box);
   }
   /* 세트 고르기 목록의 파트·유형 줄에도 문항 수와 푼 수(고른 출처 범위 기준) */
   function paintSetCounts() {
