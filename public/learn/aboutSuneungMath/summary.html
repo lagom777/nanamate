@@ -44,6 +44,22 @@
 <section class="sum-part" id="p1">
 <h2>Part 1 · 지수와 로그</h2>
 <p class="sum-sub">수학Ⅰ · 거듭제곱근·지수법칙·로그의 정의와 성질·지수함수와 로그함수</p>
+<div class="sum-quick"><p class="sum-q-one"><b>⚡ 한 줄 핵심</b> 로그는 ‘밑을 몇 제곱하면 이 수가 되나’의 답. 2<sup>3</sup> = 8이라 log<sub>2</sub> 8 = 3.</p><ol class="sum-q-how"><li>log가 보이면 → 진수(log 안의 수) &gt; 0부터 적기</li><li>밑이 다르면 → 같은 밑으로 (8 = 2<sup>3</sup>, 9 = 3<sup>2</sup>)</li><li>부등식 → 밑이 1보다 작으면 부등호 뒤집기</li><li>그래프 → 점근선과 지나는 점 (0, 1)·(1, 0)부터</li></ol><p class="sum-q-ex"><b>예</b> log<sub>2</sub>(x − 1) + log<sub>2</sub>(x + 1) = 3 → x<sup>2</sup> − 1 = 8 → x = ±3. 진수 &gt; 0이라 <mark>x = 3만</mark></p><p class="sum-q-trap"><b>조심</b> log(M + N) ≠ log M + log N — 합으로 쪼개지는 건 곱의 로그뿐</p></div>
+<details class="mg-wrap"><summary>🧠 이렇게 외우기 (3가지)</summary><section class="nmm" aria-label="이렇게 외우기">
+<div class="nmq-h"><b>🧠 이렇게 외우기</b><span>소리 내어 한 번</span></div>
+<div class="nmm-list"><div class="nmm-item"><p class="nmm-t">밑 바꾸기 — 이름이 곧 자리</p>
+<p class="nmm-say"><b>밑</b>은 <b>밑</b>(분모)으로 간다</p>
+<dl class="nmm-map"><div><dt>log<sub>a</sub> b</dt><dd>log b ÷ log a — 밑 a가 아래로</dd></div><div><dt>log<sub>a</sub> b × log<sub>b</sub> c</dt><dd>log<sub>a</sub> c — 가운데 b가 맞물려 사라짐</dd></div><div><dt>log<sub>b</sub> a</dt><dd>1 ÷ log<sub>a</sub> b — 밑과 진수를 바꾸면 역수</dd></div></dl>
+</div>
+<div class="nmm-item"><p class="nmm-t">지수와 로그 — x, y를 맞바꾼 짝</p>
+<p class="nmm-say">지수는 <b>(0, 1)</b>, 로그는 <b>(1, 0)</b></p>
+<dl class="nmm-map"><div><dt>지나는 점</dt><dd>(0, 1) ↔ (1, 0)</dd></div><div><dt>점근선</dt><dd>x축(y = 0) ↔ y축(x = 0)</dd></div><div><dt>정의역</dt><dd>모든 실수 ↔ x &gt; 0</dd></div></dl>
+<p class="nmm-note">y = x를 접는 선으로 두면 한쪽만 외워도 다른 쪽은 뒤집어 읽힌다.</p></div>
+<div class="nmm-item"><p class="nmm-t">상용로그 — 자릿수와 log 5</p>
+<p class="nmm-say"><b>지표 + 1</b> = <b>자릿수</b>, log 2 + log 5 = <b>1</b></p>
+<dl class="nmm-map"><div><dt>log 600 = 2.7781</dt><dd>지표 2 → 세 자리 수</dd></div><div><dt>2<sup>10</sup></dt><dd>10 × 0.3010 = 3.010 → 네 자리 (1024)</dd></div><div><dt>log 5</dt><dd>1 − 0.3010 = 0.6990 (2 × 5 = 10)</dd></div></dl>
+</div></div>
+</section></details>
 <div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">지수법칙 다섯 개와 로그 성질 셋으로 모든 계산이 돌아온다 — 진수 조건과 밑의 대소를 먼저 적는다</span><span class="mg-stat">회당 평균 3.9문항 · 12.5점</span></div>
 <div class="mg-grid"><section class="mg-card c1"><h3><i>🔢</i>거듭제곱근과 지수법칙</h3><div class="mg-f">n이 홀수: ⁿ√(aⁿ) = a    n이 짝수: ⁿ√(aⁿ) = |a|<br>a^(m/n) = (ⁿ√a)^m = ⁿ√(a^m)   (a > 0)<br>aᵐ·aⁿ = aᵐ⁺ⁿ    aᵐ/aⁿ = aᵐ⁻ⁿ    (aᵐ)ⁿ = aᵐⁿ<br>(ab)ⁿ = aⁿbⁿ    (a/b)ⁿ = aⁿ/bⁿ</div><div class="mg-tbl"><table><thead><tr><th>a</th><th>n 짝수</th><th>n 홀수</th></tr></thead><tbody><tr><th scope="row">a > 0</th><td data-l="n 짝수">실근 2개(±)</td><td data-l="n 홀수">실근 1개(+)</td></tr><tr><th scope="row">a = 0</th><td data-l="n 짝수">0뿐</td><td data-l="n 홀수">0뿐</td></tr><tr><th scope="row">a < 0</th><td data-l="n 짝수">실근 없음</td><td data-l="n 홀수">실근 1개(−)</td></tr></tbody></table></div><p class="mg-note tip"><span>💡</span>유리수 지수는 밑이 양수일 때만. 모든 밑을 가장 작은 소수의 거듭제곱(8=2³, 9=3², 27=3³)으로 맞춘 뒤 지수만 계산합니다.</p></section>
@@ -71,11 +87,31 @@
 <li><strong>역함수와의 교점이 언제나 y = x 위</strong>라고 외우는 경우. 밑이 1보다 커서 증가함수일 때 성립합니다. 밑이 1보다 작으면 y = x 밖의 교점이 생길 수 있습니다. 밑이 1/16인 예가 본문에 있습니다.</li>
 <li><strong>유리수 지수의 밑을 음수</strong>로 두는 경우. 실수 범위에서는 밑을 양수로 둡니다.</li>
 </ul></div></details>
-<p><a class="cta sm" href="chapters/01-exp-log.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="practice.html#part:a1">📝 기출 풀기</a></p>
+<p><a class="cta sm" href="chapters/01-exp-log.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="motion.html#s1">🎬 모션으로 보기</a> <a class="cta sm" href="practice.html#part:a1">📝 기출 풀기</a></p>
 </section>
 <section class="sum-part" id="p2">
 <h2>Part 2 · 삼각함수</h2>
 <p class="sum-sub">수학Ⅰ · 호도법·삼각함수의 그래프와 성질·삼각방정식·사인법칙과 코사인법칙</p>
+<div class="sum-quick"><p class="sum-q-one"><b>⚡ 한 줄 핵심</b> 삼각함수는 반지름 1인 원 위 점의 좌표. 가로가 cos θ, 세로가 sin θ.</p><ol class="sum-q-how"><li>값·부호 → 원 위에 점을 찍고 가로·세로 부호 읽기</li><li>a sin bx + d → 최대 |a| + d, 주기 2π/|b|</li><li>sin x = k의 해 개수 → 가로선 y = k와 만나는 점 수</li><li>삼각형 → 마주 보는 변·각 쌍은 사인법칙, 끼인각은 코사인법칙</li></ol><p class="sum-q-ex"><b>예</b> sin θ = 3/5, θ는 제2사분면(왼쪽 위) → cos<sup>2</sup>θ = 1 − 9/25 = 16/25, 가로는 음수라 <mark>cos θ = −4/5</mark></p><p class="sum-q-trap"><b>조심</b> sin 2x에서 범위를 그대로 두기 ✕ — 0 ≤ x &lt; 2π면 0 ≤ 2x &lt; 4π</p></div>
+<details class="mg-wrap"><summary>🧠 이렇게 외우기 (4가지)</summary><section class="nmm" aria-label="이렇게 외우기">
+<div class="nmq-h"><b>🧠 이렇게 외우기</b><span>소리 내어 한 번</span></div>
+<div class="nmm-list"><div class="nmm-item"><p class="nmm-t">사분면 부호 — 1·2·3·4 순서로</p>
+<p class="nmm-say"><b>얼</b><b>싸</b><b>안</b><b>코</b></p>
+<dl class="nmm-map"><div><dt>1 얼(All)</dt><dd>셋 다 +</dd></div><div><dt>2 싸(sin)</dt><dd>sin만 +</dd></div><div><dt>3 안(tan)</dt><dd>tan만 +</dd></div><div><dt>4 코(cos)</dt><dd>cos만 +</dd></div></dl>
+<p class="nmm-note">sin은 세로(y), cos는 가로(x)의 부호. 3사분면은 둘 다 −라 나눈 tan만 +.</p></div>
+<div class="nmm-item"><p class="nmm-t">특수각 — 루트 0~4를 2로</p>
+<p class="nmm-say">sin은 <b>√0 · √1 · √2 · √3 · √4</b> ÷ 2, cos는 <b>거꾸로</b></p>
+<dl class="nmm-map"><div><dt>sin (0 · π/6 · π/4 · π/3 · π/2)</dt><dd>0, 1/2, √2/2, √3/2, 1</dd></div><div><dt>cos (같은 각)</dt><dd>1, √3/2, √2/2, 1/2, 0</dd></div><div><dt>tan = sin ÷ cos</dt><dd>0, 1/√3, 1, √3, 정의 안 됨</dd></div></dl>
+</div>
+<div class="nmm-item"><p class="nmm-t">각 바꾸기 — π는 그대로, π/2는 바꾼다</p>
+<p class="nmm-say"><b>π</b> · <b>2π</b> 쪽은 이름 <b>그대로</b>, <b>π/2</b> 쪽은 <b>sin ↔ cos</b></p>
+<dl class="nmm-map"><div><dt>π − θ</dt><dd>sin θ, −cos θ (2사분면: sin만 +)</dd></div><div><dt>π + θ</dt><dd>−sin θ, −cos θ (3사분면)</dd></div><div><dt>π/2 − θ</dt><dd>cos θ, sin θ (1사분면: 모두 +)</dd></div></dl>
+<p class="nmm-note">부호는 θ를 작은 예각으로 보고, 그 각이 놓인 사분면의 ‘얼싸안코’로.</p></div>
+<div class="nmm-item"><p class="nmm-t">부채꼴 = 삼각형처럼</p>
+<p class="nmm-say">넓이는 <b>(1/2) × 호 × 반지름</b></p>
+<dl class="nmm-map"><div><dt>호의 길이</dt><dd>l = rθ (θ는 라디안, 180° = π)</dd></div><div><dt>넓이</dt><dd>S = (1/2)r<sup>2</sup>θ = (1/2)rl — 호를 밑변, 반지름을 높이로</dd></div></dl>
+</div></div>
+</section></details>
 <div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">호도법은 라디안, 한 주기만 정확히 그리면 나머지가 따라온다</span><span class="mg-stat">회당 평균 3.0문항 · 10.6점</span></div>
 <div class="mg-grid"><section class="mg-card c1"><h3><i>📐</i>호도법·부채꼴</h3><div class="mg-f">θ(라디안) = θ(도) × π/180<br>호의 길이 l = rθ<br>넓이 S = ½r²θ = ½rl</div><p class="mg-note warn"><span>⚠</span>l = rθ, S = ½r²θ 의 θ는 라디안. 60°를 60으로 넣지 말고 π/180을 먼저 곱합니다.</p></section>
@@ -103,11 +139,31 @@
 <li><strong>둔각의 sin을 음수</strong>로 넣어 넓이가 음수가 되는 경우. 넓이 공식의 sin은 양수입니다.</li>
 <li><strong>sin x = 2처럼 |k| &gt; 1인 방정식에 해가 있다</strong>고 보는 경우. 사인·코사인의 범위는 −1 이상 1 이하입니다.</li>
 </ul></div></details>
-<p><a class="cta sm" href="chapters/02-trig.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="practice.html#part:a2">📝 기출 풀기</a></p>
+<p><a class="cta sm" href="chapters/02-trig.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="motion.html#s2">🎬 모션으로 보기</a> <a class="cta sm" href="practice.html#part:a2">📝 기출 풀기</a></p>
 </section>
 <section class="sum-part" id="p3">
 <h2>Part 3 · 수열</h2>
 <p class="sum-sub">수학Ⅰ · 등차·등비수열, 시그마, 수열의 합, 귀납적 정의, 수학적 귀납법</p>
+<div class="sum-quick"><p class="sum-q-one"><b>⚡ 한 줄 핵심</b> 수열은 이웃한 항 사이의 규칙. 차가 일정하면 등차, 비가 일정하면 등비.</p><ol class="sum-q-how"><li>차가 일정 → 등차: a<sub>n</sub> = a + (n − 1)d</li><li>비가 일정 → 등비: a<sub>n</sub> = ar<sup>n−1</sup></li><li>S<sub>n</sub>(n항까지의 합)이 주어지면 → a<sub>n</sub> = S<sub>n</sub> − S<sub>n−1</sub></li><li>점화식(앞 항으로 다음 항) → 4~5항을 직접 써 보기</li></ol><p class="sum-q-ex"><b>예</b> 제3항 7, 제7항 19 → 4칸에 12 늘어 d = 3, a = 1 → S<sub>10</sub> = 10 × (1 + 28)/2 = <mark>145</mark></p><p class="sum-q-trap"><b>조심</b> S<sub>n</sub> − S<sub>n−1</sub>은 n ≥ 2에서만 — 첫째항은 a<sub>1</sub> = S<sub>1</sub>으로 따로 확인</p></div>
+<details class="mg-wrap"><summary>🧠 이렇게 외우기 (4가지)</summary><section class="nmm" aria-label="이렇게 외우기">
+<div class="nmq-h"><b>🧠 이렇게 외우기</b><span>소리 내어 한 번</span></div>
+<div class="nmm-list"><div class="nmm-item"><p class="nmm-t">중항 둘 — 차는 더하고, 비는 곱한다</p>
+<p class="nmm-say">등<b>차</b>중항은 <b>더해서 반</b>, 등<b>비</b>중항은 <b>곱해서 루트</b></p>
+<dl class="nmm-map"><div><dt>등차 a, b, c</dt><dd>2b = a + c → b = (a + c)/2</dd></div><div><dt>등비 a, b, c</dt><dd>b<sup>2</sup> = ac → b = ±√(ac)</dd></div></dl>
+<p class="nmm-note">등비중항은 ± 둘 — 양수라고 정해 준 때만 하나.</p></div>
+<div class="nmm-item"><p class="nmm-t">∑ 세 공식 — 세제곱은 합의 제곱</p>
+<p class="nmm-say"><b>k<sup>3</sup></b>의 합은 <b>k</b>의 합을 <b>제곱</b></p>
+<dl class="nmm-map"><div><dt>∑k</dt><dd>n(n + 1)/2</dd></div><div><dt>∑k<sup>2</sup></dt><dd>n(n + 1)(2n + 1)/6</dd></div><div><dt>∑k<sup>3</sup></dt><dd>{n(n + 1)/2}<sup>2</sup> = (∑k)<sup>2</sup></dd></div></dl>
+<p class="nmm-note">n = 3을 넣어 6 · 14 · 36이 나오면 맞게 외운 것. ∑k<sup>2</sup>(14)과 (∑k)<sup>2</sup>(36)은 다르다.</p></div>
+<div class="nmm-item"><p class="nmm-t">망원경 합 — 가운데가 접힌다</p>
+<p class="nmm-say"><b>이웃끼리 빼면</b> <b>처음과 끝</b>만 남는다</p>
+<dl class="nmm-map"><div><dt>부분분수</dt><dd>1/{k(k + 1)} = 1/k − 1/(k + 1) → 합 1 − 1/(n + 1)</dd></div><div><dt>유리화</dt><dd>1/(√k + √(k + 1)) = √(k + 1) − √k → 합 √(n + 1) − 1</dd></div></dl>
+<p class="nmm-note">간격이 2면 앞에 1/2 — 1/{k(k + 2)} = (1/2){1/k − 1/(k + 2)}</p></div>
+<div class="nmm-item"><p class="nmm-t">수학적 귀납법 = 도미노</p>
+<p class="nmm-say"><b>첫 조각</b>이 넘어지고, <b>앞</b>이 넘어지면 <b>다음</b>도</p>
+<dl class="nmm-map"><div><dt>1단계</dt><dd>n = 1에서 참</dd></div><div><dt>2단계</dt><dd>n = k에서 참이면 n = k + 1에서도 참</dd></div></dl>
+</div></div>
+</section></details>
 <div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">Sₙ에서 aₙ 복원은 n ≥ 2, 첫째항은 따로 — 점화식은 네다섯 항을 써 보고 푼다</span><span class="mg-stat">회당 평균 4.1문항 · 13.9점</span></div>
 <div class="mg-grid"><section class="mg-card c1"><h3><i>🪜</i>등차수열</h3><div class="mg-f">aₙ = a + (n−1)d<br>Sₙ = n(a+l)/2 = n{2a+(n−1)d}/2</div><figure class="mg-fig"><svg viewBox="0 0 300 148" role="img" aria-label="등차수열의 합" preserveAspectRatio="xMidYMid meet"><rect class="fl" x="40" y="100" width="28" height="20" rx="3"/><rect class="fb" x="40" y="20" width="28" height="80" rx="3"/><rect class="fl" x="76" y="85" width="28" height="35" rx="3"/><rect class="fb" x="76" y="20" width="28" height="65" rx="3"/><rect class="fl" x="112" y="70" width="28" height="50" rx="3"/><rect class="fb" x="112" y="20" width="28" height="50" rx="3"/><rect class="fl" x="148" y="55" width="28" height="65" rx="3"/><rect class="fb" x="148" y="20" width="28" height="35" rx="3"/><rect class="fl" x="184" y="40" width="28" height="80" rx="3"/><rect class="fb" x="184" y="20" width="28" height="20" rx="3"/><line class="ln" x1="232" y1="20" x2="232" y2="120"/><line class="ln" x1="228" y1="20" x2="236" y2="20"/><line class="ln" x1="228" y1="120" x2="236" y2="120"/><text x="240" y="74" class="t-a">a + l</text><line class="dash" x1="40" y1="130" x2="212" y2="130"/><text x="126" y="144" text-anchor="middle" class="t-m">n개</text><text x="150" y="14" text-anchor="middle" class="t-m">파랑 = 원래 수열, 분홍 = 뒤집은 수열</text><text x="240" y="92" class="t-m">합 S =</text><text x="240" y="106" class="t-b">n(a+l)/2</text></svg></figure><p class="mg-note tip"><span>💡</span>공차 ≠ 0이면 Sₙ은 n의 이차식. Sₙ = pn² + qn(상수항 0)이면 등차수열, 상수항이 남으면 첫째항만 어긋날 수 있음(Sₙ = n² + 1).</p></section>
@@ -134,11 +190,23 @@
 <li><strong>등비중항을 항상 하나</strong>로 쓰는 경우. 두 수의 곱이 양수이면 실수 중항은 두 개일 수 있습니다.</li>
 <li><strong>a<sub>n+1</sub> = a<sub>n</sub> + q인데도</strong> α = q/(1 − p)를 쓰는 경우. p = 1이면 등차수열로 따로 풉니다.</li>
 </ul></div></details>
-<p><a class="cta sm" href="chapters/03-sequence.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="practice.html#part:a3">📝 기출 풀기</a></p>
+<p><a class="cta sm" href="chapters/03-sequence.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="motion.html#s5">🎬 모션으로 보기</a> <a class="cta sm" href="practice.html#part:a3">📝 기출 풀기</a></p>
 </section>
 <section class="sum-part" id="p4">
 <h2>Part 4 · 함수의 극한과 연속</h2>
 <p class="sum-sub">수학Ⅱ · 극한값·좌우극한·극한의 성질·연속과 불연속·사잇값 정리</p>
+<div class="sum-quick"><p class="sum-q-one"><b>⚡ 한 줄 핵심</b> 극한은 다가가며 읽은 높이, 함숫값은 찍힌 점의 높이. 둘이 같아야 연속.</p><ol class="sum-q-how"><li>그래프 → 왼쪽 높이·오른쪽 높이·찍힌 점을 따로 적기</li><li>0/0 꼴 → 인수분해·유리화로 약분한 뒤 대입</li><li>∞/∞ 꼴 → 차수 같으면 최고차항 계수 비, 분모가 높으면 0</li><li>분모 → 0인데 극한이 실수 → 분자도 → 0</li></ol><p class="sum-q-ex"><b>예</b> lim<sub>x→1</sub> (x<sup>2</sup> + ax − 3)/(x − 1)이 실수면 분자도 0 → 1 + a − 3 = 0, <mark>a = 2</mark> (극한은 x + 3 → 4)</p><p class="sum-q-trap"><b>조심</b> 극한에 f(a)를 그냥 넣기 ✕ — 구멍 높이(극한)와 찍힌 점(함숫값)은 따로</p></div>
+<details class="mg-wrap"><summary>🧠 이렇게 외우기 (2가지)</summary><section class="nmm" aria-label="이렇게 외우기">
+<div class="nmq-h"><b>🧠 이렇게 외우기</b><span>소리 내어 한 번</span></div>
+<div class="nmm-list"><div class="nmm-item"><p class="nmm-t">연속 — 세 칸 체크</p>
+<p class="nmm-say">점이 <b>있고</b>, 극한이 <b>있고</b>, 둘이 <b>같다</b></p>
+<dl class="nmm-map"><div><dt>① f(a)</dt><dd>찍힌 점이 있다</dd></div><div><dt>② lim f(x)</dt><dd>왼쪽·오른쪽 높이가 한 값으로 모인다</dd></div><div><dt>③ lim f(x) = f(a)</dt><dd>모인 높이에 점이 찍혀 있다</dd></div></dl>
+<p class="nmm-note">하나라도 빠지면 불연속 — 점이 없음(①), 양쪽이 어긋남(②), 점이 딴 높이(③).</p></div>
+<div class="nmm-item"><p class="nmm-t">두 정리의 입장권</p>
+<p class="nmm-say"><b>닫힌</b> 구간에서 <b>연속</b>이어야 쓴다</p>
+<dl class="nmm-map"><div><dt>사잇값 정리</dt><dd>f(a)와 f(b) 사이 높이를 적어도 한 번 지난다 — 양 끝 부호가 다르면 근이 있다</dd></div><div><dt>최대·최소 정리</dt><dd>최댓값·최솟값이 반드시 있다</dd></div><div><dt>입장권이 없으면</dt><dd>(0, 1)의 y = x는 최대·최소 없음, 끊긴 함수는 높이를 건너뜀</dd></div></dl>
+<p class="nmm-note">둘 다 ‘있다’만 말한다 — 몇 개인지, 어디인지는 미분으로.</p></div></div>
+</section></details>
 <div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">극한은 ‘구멍의 높이’, 함숫값은 ‘찍힌 점의 높이’ — 세 칸을 따로 읽는다</span><span class="mg-stat">회당 평균 2.0문항 · 6.7점</span></div>
 <div class="mg-grid"><section class="mg-card c1 wide"><h3><i>🕳️</i>극한 vs 함숫값</h3><figure class="mg-fig"><svg viewBox="0 0 300 164" role="img" aria-label="극한값과 함숫값" preserveAspectRatio="xMidYMid meet"><line class="ln" x1="40" y1="118" x2="292" y2="118"/><line class="ln" x1="40" y1="118" x2="40" y2="8"/><polygon class="ah" points="292,118 286,115 286,121"/><polygon class="ah" points="40,8 37,14 43,14"/><text x="292" y="132" text-anchor="end" class="t-m">x</text><text x="46" y="12" class="t-m">y</text><path class="a" d="M40 88 L93 61.5"/><path class="a" d="M107 54.5 L190 13"/><circle class="box" cx="100" cy="58" r="4.5"/><circle class="ptb" cx="100" cy="28" r="4"/><line class="dash" x1="40" y1="58" x2="96" y2="58"/><line class="dash" x1="100" y1="118" x2="100" y2="62"/><text x="36" y="62" text-anchor="end" class="t-a">2</text><text x="100" y="132" text-anchor="middle" class="t-m">1</text><text x="112" y="74" class="t-a">극한 = 2</text><text x="108" y="28" class="t-b">f(1) = 3</text><text x="150" y="148" text-anchor="middle" class="t-a">구멍의 높이 = 극한</text><text x="150" y="162" text-anchor="middle" class="t-b">찍힌 점의 높이 = 함숫값</text></svg><figcaption>x = 1에서 극한은 2, 함숫값은 3 → 극한 ≠ 함숫값이라 불연속</figcaption></figure><div class="mg-tbl"><table><thead><tr><th>상황</th><th>극한값</th><th>읽는 말</th></tr></thead><tbody><tr><th scope="row">좌극한 = 우극한 = L</th><td data-l="극한값">L</td><td data-l="읽는 말">수렴</td></tr><tr><th scope="row">좌극한 ≠ 우극한</th><td data-l="극한값">없다</td><td data-l="읽는 말">발산</td></tr><tr><th scope="row">양쪽 모두 +∞</th><td data-l="극한값">없다</td><td data-l="읽는 말">양의 무한대로 발산</td></tr><tr><th scope="row">한쪽 +∞, 다른 쪽 −∞</th><td data-l="극한값">없다</td><td data-l="읽는 말">발산</td></tr></tbody></table></div><p class="mg-note tip"><span>💡</span>극한은 그 점의 함숫값(정의 여부까지)을 보지 않습니다. 그래프 문항은 x = a에 세로선을 긋고 왼쪽 높이 · 오른쪽 높이 · 찍힌 점 높이를 세 칸에 적습니다.</p></section>
@@ -164,11 +232,27 @@
 <li><strong>사잇값 정리가 근이 하나뿐임을 보장한다고 생각하기.</strong> 보장은 ‘적어도 하나’입니다. 유일은 다른 근거가 필요합니다.</li>
 <li><strong>f(g(x))가 연속이면 f도 연속이라고 생각하기.</strong> 안쪽 함수가 바깥 함수의 불연속점을 피하면 합성만 연속일 수 있습니다.</li>
 </ul></div></details>
-<p><a class="cta sm" href="chapters/04-limit.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="practice.html#part:b1">📝 기출 풀기</a></p>
+<p><a class="cta sm" href="chapters/04-limit.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="motion.html#s6">🎬 모션으로 보기</a> <a class="cta sm" href="practice.html#part:b1">📝 기출 풀기</a></p>
 </section>
 <section class="sum-part" id="p5">
 <h2>Part 5 · 미분</h2>
 <p class="sum-sub">수학Ⅱ · 미분계수·도함수·접선·증감과 극값·그래프·방정식과 부등식·속도와 가속도</p>
+<div class="sum-quick"><p class="sum-q-one"><b>⚡ 한 줄 핵심</b> f′(x)는 접선의 기울기. +면 오르고 −면 내려가며, 부호가 바뀌는 곳이 극값.</p><ol class="sum-q-how"><li>접선 → 접점 (t, f(t))와 기울기 f′(t)로 식 세우기</li><li>모양 → f′를 인수분해해 부호표 (+ − +)</li><li>극값 → f′의 부호가 바뀌는 점에서만</li><li>f(x) = k의 실근 수 → y = k와 그래프의 교점 수</li></ol><p class="sum-q-ex"><b>예</b> f(x) = x<sup>3</sup> − 3x → f′ = 3(x + 1)(x − 1), 부호 + − + → <mark>x = −1에서 극대 2</mark>, x = 1에서 극소 −2</p><p class="sum-q-trap"><b>조심</b> f′(c) = 0만 보고 극값이라 하기 ✕ — y = x<sup>3</sup>은 x = 0 양쪽 다 오르막</p></div>
+<details class="mg-wrap"><summary>🧠 이렇게 외우기 (3가지)</summary><section class="nmm" aria-label="이렇게 외우기">
+<div class="nmq-h"><b>🧠 이렇게 외우기</b><span>소리 내어 한 번</span></div>
+<div class="nmm-list"><div class="nmm-item"><p class="nmm-t">연속과 미분 — 끊김과 꺾임</p>
+<p class="nmm-say"><b>끊기면</b> 연속 ✕, <b>꺾이면</b> 미분 ✕</p>
+<dl class="nmm-map"><div><dt>끊긴 곳</dt><dd>연속 ✕ → 미분도 ✕</dd></div><div><dt>꺾인 곳</dt><dd>y = |x|의 x = 0: 연속 ○, 미분 ✕ (왼쪽 기울기 −1, 오른쪽 1)</dd></div><div><dt>매끄러운 곳</dt><dd>둘 다 ○</dd></div></dl>
+<p class="nmm-note">미분가능하면 연속 — 거꾸로는 ✕.</p></div>
+<div class="nmm-item"><p class="nmm-t">삼차함수 — 가운데 점 대칭</p>
+<p class="nmm-say">중심 x = <b>−b/(3a)</b>, 높이 = <b>극값의 평균</b></p>
+<dl class="nmm-map"><div><dt>중심 x</dt><dd>두 극점 x좌표의 중점 (변곡점)</dd></div><div><dt>중심 높이</dt><dd>(극댓값 + 극솟값)/2</dd></div><div><dt>예</dt><dd>x<sup>3</sup> − 3x<sup>2</sup> + 5: 극점 0, 2 → 중심 x = 1, (5 + 1)/2 = 3 = f(1)</dd></div></dl>
+</div>
+<div class="nmm-item"><p class="nmm-t">삼차함수 개형 — b<sup>2</sup> − 3ac 하나로</p>
+<p class="nmm-say"><b>+</b>면 <b>언덕과 골짜기</b>, <b>0 이하</b>면 <b>쭉 오르막</b></p>
+<dl class="nmm-map"><div><dt>b<sup>2</sup> − 3ac &gt; 0</dt><dd>증가 → 감소 → 증가 (a &gt; 0)</dd></div><div><dt>b<sup>2</sup> − 3ac ≤ 0</dt><dd>극값 없이 증가 (0이면 수평 접선만 하나)</dd></div><div><dt>a &lt; 0</dt><dd>모두 거꾸로 — 극대가 오른쪽</dd></div></dl>
+</div></div>
+</section></details>
 <div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">f′의 부호 변화가 극값 — 연속이라고 미분가능하지 않다</span><span class="mg-stat">회당 평균 4.9문항 · 15.4점</span></div>
 <div class="mg-grid"><section class="mg-card c1 wide"><h3><i>📉</i>미분계수와 접선</h3><div class="mg-f">f′(a) = lim (f(a+h) − f(a)) / h<br>접선: y − f(a) = f′(a)(x − a)<br>(xⁿ)′ = nxⁿ⁻¹    (fg)′ = f′g + fg′</div><dl class="mg-kv"><div><dt>미분가능 ⇒ 연속</dt><dd>역은 거짓 — y = |x|는 x = 0에서 연속이지만 미분계수 없음</dd></div><div><dt>조각 함수</dt><dd>경계에서 먼저 연속, 그다음 좌·우 도함수 비교</dd></div><div><dt>|g(x)|</dt><dd>g(c) = 0이어도 곱해진 다항식이 0이면 미분가능</dd></div></dl></section>
@@ -194,11 +278,23 @@
 <li><strong>속도가 0이면 방향이 바뀐다고 생각하기.</strong> 속도의 부호가 바뀔 때만 방향이 바뀝니다.</li>
 <li><strong>속력 증가를 가속도가 양수인 것으로만 판단하기.</strong> 속도가 음수일 때는 가속도도 음수여야 속력이 늘어납니다.</li>
 </ul></div></details>
-<p><a class="cta sm" href="chapters/05-diff.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="practice.html#part:b2">📝 기출 풀기</a></p>
+<p><a class="cta sm" href="chapters/05-diff.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="motion.html#s7">🎬 모션으로 보기</a> <a class="cta sm" href="practice.html#part:b2">📝 기출 풀기</a></p>
 </section>
 <section class="sum-part" id="p6">
 <h2>Part 6 · 적분</h2>
 <p class="sum-sub">수학Ⅱ · 부정적분·정적분·정적분의 성질·넓이·속도와 거리</p>
+<div class="sum-quick"><p class="sum-q-one"><b>⚡ 한 줄 핵심</b> 적분은 미분을 거꾸로. 정적분은 F(b) − F(a)이고, x축 아래는 음수로 센다.</p><ol class="sum-q-how"><li>∫ 계산 → 미분해서 f가 되는 F(원시함수) 찾기</li><li>넓이 → x축과 만나는 점에서 끊고 각각 절댓값</li><li>∫<sub>a</sub><sup>x</sup> f(t) dt가 든 식 → 먼저 x로 미분</li><li>속도 v(t) → v의 부호가 바뀌는 시각에서 끊기</li></ol><p class="sum-q-ex"><b>예</b> ∫<sub>0</sub><sup>2</sup> (x − 1) dx = 0이지만, 넓이는 x = 1에서 끊어 1/2 + 1/2 = <mark>1</mark></p><p class="sum-q-trap"><b>조심</b> 속도를 적분한 값을 거리로 쓰기 ✕ — 거리는 |v|를 적분 (되돌아온 길까지)</p></div>
+<details class="mg-wrap"><summary>🧠 이렇게 외우기 (2가지)</summary><section class="nmm" aria-label="이렇게 외우기">
+<div class="nmq-h"><b>🧠 이렇게 외우기</b><span>소리 내어 한 번</span></div>
+<div class="nmm-list"><div class="nmm-item"><p class="nmm-t">우함수·기함수 — 한자가 곧 답</p>
+<p class="nmm-say"><b>우</b>(偶, 짝)는 <b>두 배</b>, <b>기</b>(奇, 홀)는 <b>0</b></p>
+<dl class="nmm-map"><div><dt>우함수 偶</dt><dd>f(−x) = f(x), 짝수 차항·상수 — y축 대칭 → ∫<sub>−a</sub><sup>a</sup> = 2∫<sub>0</sub><sup>a</sup></dd></div><div><dt>기함수 奇</dt><dd>f(−x) = −f(x), 홀수 차항 — 원점 대칭 → ∫<sub>−a</sub><sup>a</sup> = 0</dd></div></dl>
+<p class="nmm-note">−a부터 a까지일 때만. 다항식은 홀수 차항을 지우고 짝수 차항만 두 배.</p></div>
+<div class="nmm-item"><p class="nmm-t">위치·속도·가속도 사다리</p>
+<p class="nmm-say"><b>미분</b>은 한 칸 <b>아래</b>로, <b>적분</b>은 한 칸 <b>위</b>로</p>
+<dl class="nmm-map"><div><dt>사다리</dt><dd>위치 x — 속도 v — 가속도 a</dd></div><div><dt>변위</dt><dd>∫v dt — 되돌아온 만큼 빠진다</dd></div><div><dt>이동 거리</dt><dd>∫|v| dt — 간 길을 다 더한다</dd></div></dl>
+</div></div>
+</section></details>
 <div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">정적분은 부호 있는 값, 넓이는 절댓값 — 변위와 이동 거리를 구분한다</span><span class="mg-stat">회당 평균 4.1문항 · 14.8점</span></div>
 <div class="mg-grid"><section class="mg-card c1"><h3><i>∫</i>부정적분과 정적분</h3><div class="mg-f">∫xⁿdx = xⁿ⁺¹/(n+1) + C<br>F′ = f ⇒ ∫ₐᵇ f dx = F(b) − F(a)</div><div class="mg-tbl"><table><thead><tr><th>성질</th><th>식</th></tr></thead><tbody><tr><th scope="row">합·차·실수배</th><td data-l="식">∫(f±g) = ∫f ± ∫g, ∫cf = c∫f</td></tr><tr><th scope="row">구간 뒤집기</th><td data-l="식">∫ₐᵇ f = −∫<sub>b</sub><sup>a</sup> f</td></tr><tr><th scope="row">같은 점</th><td data-l="식">∫ₐᵃ f = 0</td></tr><tr><th scope="row">구간 분할</th><td data-l="식">∫ₐᶜ f = ∫ₐᵇ f + ∫<sub>b</sub><sup>c</sup> f</td></tr></tbody></table></div><p class="mg-note tip"><span>💡</span>부정적분에는 C, 정적분 계산 결과에는 C를 붙이지 않습니다.</p></section>
@@ -224,11 +320,27 @@
 <li><strong>두 곡선 사이에서 어느 쪽이 위인지 확인하지 않기.</strong> 교점 사이의 한 점에 대입해 큰 쪽에서 작은 쪽을 뺍니다.</li>
 <li><strong>속도가 0인 모든 점에서 방향이 바뀐다고 보고 거리를 나누기.</strong> 부호가 유지되면 나누지 않습니다. 그 점은 거리 계산의 분할점이 아닙니다.</li>
 </ul></div></details>
-<p><a class="cta sm" href="chapters/06-integral.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="practice.html#part:b3">📝 기출 풀기</a></p>
+<p><a class="cta sm" href="chapters/06-integral.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="motion.html#s10">🎬 모션으로 보기</a> <a class="cta sm" href="practice.html#part:b3">📝 기출 풀기</a></p>
 </section>
 <section class="sum-part" id="p7">
 <h2>Part 7 · 수열의 극한</h2>
 <p class="sum-sub">미적분 · 수열의 수렴·발산·극한 계산·등비수열의 극한·급수</p>
+<div class="sum-quick"><p class="sum-q-one"><b>⚡ 한 줄 핵심</b> 급수의 합은 끝없이 더한 값이 아니라, S<sub>n</sub>(n개까지 더한 값)이 다가가는 값.</p><ol class="sum-q-how"><li>∞/∞ → 분모의 최고차항으로 나누기 (차수 같으면 계수 비)</li><li>∞ − ∞ (√ 있음) → 켤레를 곱해 유리화</li><li>등비급수 → −1 &lt; r &lt; 1일 때만 합 a/(1 − r)</li><li>도형 반복 → 길이 비가 r이면 넓이 공비는 r<sup>2</sup></li></ol><p class="sum-q-ex"><b>예</b> 한 변 2인 정사각형의 변 중점을 잇기를 반복 → 넓이 4, 2, 1, … (공비 1/2) → 합 4/(1 − 1/2) = <mark>8</mark></p><p class="sum-q-trap"><b>조심</b> 일반항이 0으로 가도 급수는 발산할 수 있다 — 1/n은 0으로 가지만 합은 ∞</p></div>
+<details class="mg-wrap"><summary>🧠 이렇게 외우기 (3가지)</summary><section class="nmm" aria-label="이렇게 외우기">
+<div class="nmq-h"><b>🧠 이렇게 외우기</b><span>소리 내어 한 번</span></div>
+<div class="nmm-list"><div class="nmm-item"><p class="nmm-t">수열은 1까지, 급수는 1 앞에서</p>
+<p class="nmm-say">r<sup>n</sup>은 <b>−1 &lt; r ≤ 1</b>, 등비급수는 <b>−1 &lt; r &lt; 1</b></p>
+<dl class="nmm-map"><div><dt>r = 1인 수열</dt><dd>1, 1, 1, … → 1로 수렴</dd></div><div><dt>r = 1인 급수</dt><dd>a + a + a + … → 발산</dd></div><div><dt>|r| &lt; 1</dt><dd>음수도 OK — (−1/2)<sup>n</sup>도 0으로</dd></div></dl>
+</div>
+<div class="nmm-item"><p class="nmm-t">일반항 → 0은 발산 판정용</p>
+<p class="nmm-say">급수가 모이면 <b>항은 0</b>, 항이 0이어도 <b>급수는 모른다</b></p>
+<dl class="nmm-map"><div><dt>쓰는 법</dt><dd>a<sub>n</sub>이 0으로 안 가면 → 급수는 바로 발산</dd></div><div><dt>못 쓰는 법</dt><dd>a<sub>n</sub> → 0이라서 수렴 ✕ — √(n + 1) − √n도 0으로 가지만 합은 ∞</dd></div></dl>
+</div>
+<div class="nmm-item"><p class="nmm-t">밑이 여럿이면 대장으로 나눈다</p>
+<p class="nmm-say"><b>절댓값이 가장 큰 밑</b>으로 위아래를 나눈다</p>
+<dl class="nmm-map"><div><dt>예</dt><dd>(3·2<sup>n</sup> + 5<sup>n</sup>)/(2<sup>n</sup> + 3·5<sup>n</sup>) → 5<sup>n</sup>으로 나눔 → 1/3</dd></div><div><dt>까닭</dt><dd>(2/5)<sup>n</sup> 같은 작은 밑은 모두 0으로</dd></div></dl>
+</div></div>
+</section></details>
 <div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">|r| < 1이면 부호가 바뀌어도 수렴 — 급수는 부분합의 극한</span><span class="mg-stat">회당 평균 2.2문항 · 6.7점</span></div>
 <div class="mg-grid"><section class="mg-card c1"><h3><i>🎯</i>수렴·발산 분류</h3><div class="mg-tbl"><table><thead><tr><th>종류</th><th>뜻</th><th>예</th></tr></thead><tbody><tr><th scope="row">수렴</th><td data-l="뜻">유한한 극한값 L</td><td data-l="예">1/n → 0, (n+1)/n → 1</td></tr><tr><th scope="row">양의 무한대</th><td data-l="뜻">어떤 수보다도 커짐</td><td data-l="예">n, n²</td></tr><tr><th scope="row">음의 무한대</th><td data-l="뜻">어떤 수보다도 작아짐</td><td data-l="예">−n</td></tr><tr><th scope="row">진동</th><td data-l="뜻">한 값으로도 무한대로도 안 감</td><td data-l="예">(−1)ⁿ</td></tr></tbody></table></div><p class="mg-note tip"><span>💡</span>수렴하면 유계(역은 거짓: (−1)ⁿ). 증가하고 위로 유계이면 수렴(단조수렴정리 — 참고·교육과정 밖). ∞−∞, 0×∞, ∞/∞는 계산 전의 모양일 뿐입니다.</p></section>
@@ -255,11 +367,31 @@
 <li><strong>부분합의 극한과 일반항의 극한을 바꾸기.</strong> 수렴하는 급수에서 S<sub>n</sub>은 합 S로, a<sub>n</sub>은 0으로 갑니다. 합이 0이라는 뜻이 아닙니다.</li>
 <li><strong>유리화할 때 √(n²)를 −n으로 꺼내기.</strong> n은 자연수이므로 √(n²) = n입니다.</li>
 </ul></div></details>
-<p><a class="cta sm" href="chapters/07-seq-limit.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="practice.html#part:c1">📝 기출 풀기</a></p>
+<p><a class="cta sm" href="chapters/07-seq-limit.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="motion.html#s12">🎬 모션으로 보기</a> <a class="cta sm" href="practice.html#part:c1">📝 기출 풀기</a></p>
 </section>
 <section class="sum-part" id="p8">
 <h2>Part 8 · 여러 가지 미분법</h2>
 <p class="sum-sub">미적분 · 지수·로그함수·삼각함수의 극한과 미분·몫·합성·역함수·음함수·매개변수 미분·도함수의 활용</p>
+<div class="sum-quick"><p class="sum-q-one"><b>⚡ 한 줄 핵심</b> 함수 안에 함수(합성)는 ‘겉 미분 × 속 미분’. 역함수·음함수·매개변수도 이 원리.</p><ol class="sum-q-how"><li>f(g(x)) → f′(g(x)) × g′(x)</li><li>역함수 → 기울기는 역수 1/f′(a)</li><li>x, y 섞인 식(음함수) → 양변 미분 후 y′로 정리</li><li>x, y가 t의 식 → dy/dx = (dy/dt) ÷ (dx/dt)</li></ol><p class="sum-q-ex"><b>예</b> y = sin(x<sup>2</sup>) → 겉 sin을 미분해 cos(x<sup>2</sup>), 속 x<sup>2</sup>을 미분해 2x → y′ = <mark>2x cos(x<sup>2</sup>)</mark></p><p class="sum-q-trap"><b>조심</b> f(2) = 5, f′(2) = 4면 (f<sup>−1</sup>)′(5) = 1/4 (1/f′(5) ✕)</p></div>
+<details class="mg-wrap"><summary>🧠 이렇게 외우기 (4가지)</summary><section class="nmm" aria-label="이렇게 외우기">
+<div class="nmq-h"><b>🧠 이렇게 외우기</b><span>소리 내어 한 번</span></div>
+<div class="nmm-list"><div class="nmm-item"><p class="nmm-t">덧셈정리 — 소리로</p>
+<p class="nmm-say"><b>싸코코싸</b>는 부호 <b>그대로</b>, <b>코코싸싸</b>는 부호 <b>반대</b></p>
+<dl class="nmm-map"><div><dt>sin(α ± β)</dt><dd>sin α cos β ± cos α sin β</dd></div><div><dt>cos(α ± β)</dt><dd>cos α cos β ∓ sin α sin β</dd></div><div><dt>tan(α ± β)</dt><dd>(tan α ± tan β)/(1 ∓ tan α tan β)</dd></div></dl>
+<p class="nmm-note">β = α를 넣으면 배각 — sin 2α = 2 sin α cos α</p></div>
+<div class="nmm-item"><p class="nmm-t">co가 붙으면 미분에 −</p>
+<p class="nmm-say"><b>co</b>가 붙은 셋(cos · cot · csc)은 미분하면 <b>−</b></p>
+<dl class="nmm-map"><div><dt>(sin x)′ = cos x</dt><dd>(cos x)′ = −sin x</dd></div><div><dt>(tan x)′ = sec<sup>2</sup>x</dt><dd>(cot x)′ = −csc<sup>2</sup>x</dd></div><div><dt>(sec x)′ = sec x tan x</dt><dd>(csc x)′ = −csc x cot x</dd></div></dl>
+<p class="nmm-note">왼쪽만 외우고 이름마다 co를 붙였다 떼며 −를 달면 오른쪽 짝.</p></div>
+<div class="nmm-item"><p class="nmm-t">몫의 미분 — 위가 먼저</p>
+<p class="nmm-say"><b>위′ × 아래</b> − <b>위 × 아래′</b>, 나누기 <b>아래<sup>2</sup></b></p>
+<dl class="nmm-map"><div><dt>(f/g)′</dt><dd>(f′g − fg′)/g<sup>2</sup></dd></div><div><dt>순서</dt><dd>빼는 쪽이 아래를 미분한 것 — 바뀌면 부호가 뒤집힘</dd></div></dl>
+</div>
+<div class="nmm-item"><p class="nmm-t">밑이 e가 아니면 ln a</p>
+<p class="nmm-say">지수는 <b>ln a를 곱하고</b>, 로그는 <b>ln a로 나눈다</b></p>
+<dl class="nmm-map"><div><dt>(e<sup>x</sup>)′</dt><dd>e<sup>x</sup> 그대로</dd></div><div><dt>(a<sup>x</sup>)′</dt><dd>a<sup>x</sup> ln a</dd></div><div><dt>(ln x)′</dt><dd>1/x</dd></div><div><dt>(log<sub>a</sub> x)′</dt><dd>1/(x ln a)</dd></div></dl>
+</div></div>
+</section></details>
 <div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">표준 극한 꼴로 맞추고, 삼각함수는 라디안으로 — 몫·합성·매개변수는 순서를 지켜 미분</span><span class="mg-stat">회당 평균 3.9문항 · 12.7점</span></div>
 <div class="mg-grid"><section class="mg-card c1"><h3><i>e</i>지수·로그·삼각함수의 극한</h3><div class="mg-f">lim(1+x)^(1/x) = e    lim ln(1+x)/x = 1<br>lim (eˣ−1)/x = 1    lim (aˣ−1)/x = ln a<br>lim sin x/x = 1    lim tan x/x = 1<br>lim (1−cos x)/x² = 1/2</div><dl class="mg-kv"><div><dt>꼴 맞추기</dt><dd>(e²ˣ−1)/x = 2·(e²ˣ−1)/(2x) → 2,  ln(1+3x)/x → 3</dd></div><div><dt>각의 단위</dt><dd>sin x/x → 1은 라디안일 때만</dd></div></dl></section>
@@ -286,11 +418,31 @@
 <li><strong>가속도가 음수이면 속력이 줄어든다고 보기.</strong> 속도도 음수이면 속력은 증가합니다. 부호가 같은지로 판정합니다.</li>
 <li><strong>아래로 볼록과 위로 볼록을 바꾸기.</strong> f''이 양수이면 아래로 볼록입니다. 접선이 곡선 아래에 있습니다.</li>
 </ul></div></details>
-<p><a class="cta sm" href="chapters/08-diff-methods.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="practice.html#part:c2">📝 기출 풀기</a></p>
+<p><a class="cta sm" href="chapters/08-diff-methods.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="motion.html#s13">🎬 모션으로 보기</a> <a class="cta sm" href="practice.html#part:c2">📝 기출 풀기</a></p>
 </section>
 <section class="sum-part" id="p9">
 <h2>Part 9 · 여러 가지 적분법</h2>
 <p class="sum-sub">미적분 · 치환적분·부분적분·정적분과 급수의 관계·넓이·부피·속도와 거리</p>
+<div class="sum-quick"><p class="sum-q-one"><b>⚡ 한 줄 핵심</b> 치환적분은 합성함수의 미분을, 부분적분은 곱의 미분을 거꾸로 쓴 것.</p><ol class="sum-q-how"><li>속의 미분이 곁에 곱해져 있음 → u = 속으로 치환</li><li>곱인데 치환이 안 됨 → 부분적분 (로그·다항식을 미분 쪽에)</li><li>lim ∑ f(k/n) · (1/n) → ∫<sub>0</sub><sup>1</sup> f(x) dx</li><li>부피 → 단면의 넓이 S(x)를 적분</li></ol><p class="sum-q-ex"><b>예</b> ∫<sub>0</sub><sup>1</sup> xe<sup>x</sup> dx: x는 미분, e<sup>x</sup>는 적분 → [xe<sup>x</sup>]<sub>0</sub><sup>1</sup> − ∫<sub>0</sub><sup>1</sup> e<sup>x</sup> dx = e − (e − 1) = <mark>1</mark></p><p class="sum-q-trap"><b>조심</b> 치환하고 구간은 그대로 ✕ — u = sin x면 0~π/2가 0~1로</p></div>
+<details class="mg-wrap"><summary>🧠 이렇게 외우기 (4가지)</summary><section class="nmm" aria-label="이렇게 외우기">
+<div class="nmq-h"><b>🧠 이렇게 외우기</b><span>소리 내어 한 번</span></div>
+<div class="nmm-list"><div class="nmm-item"><p class="nmm-t">부분적분 — 누구를 미분하나</p>
+<p class="nmm-say"><b>로</b><b>다</b><b>삼</b><b>지</b> — 앞 글자를 미분</p>
+<dl class="nmm-map"><div><dt>로그</dt><dd>ln x는 1을 곁에 두고 미분 → ∫ln x dx = x ln x − x + C</dd></div><div><dt>다항 × 지수·삼각</dt><dd>x e<sup>x</sup>: x를 미분, e<sup>x</sup>를 적분</dd></div><div><dt>삼각 × 지수</dt><dd>e<sup>x</sup> sin x: sin을 미분 — 두 번 하면 원래 적분이 돌아와 한쪽으로 모은다</dd></div></dl>
+<p class="nmm-note">로그 · 다항 · 삼각 · 지수 — 앞일수록 미분하면 간단해진다.</p></div>
+<div class="nmm-item"><p class="nmm-t">치환 신호 — 곁에 미분이 붙어 있다</p>
+<p class="nmm-say"><b>속</b>의 <b>미분</b>이 곁에 있으면 u = 속</p>
+<dl class="nmm-map"><div><dt>x<sup>2</sup></dt><dd>2x</dd></div><div><dt>sin x</dt><dd>cos x</dd></div><div><dt>e<sup>x</sup></dt><dd>e<sup>x</sup> 자신</dd></div><div><dt>ln x</dt><dd>1/x</dd></div></dl>
+</div>
+<div class="nmm-item"><p class="nmm-t">급수 → 정적분 번역</p>
+<p class="nmm-say"><b>k/n</b>은 x, <b>1/n</b>은 dx, <b>lim ∑</b>는 ∫<sub>0</sub><sup>1</sup></p>
+<dl class="nmm-map"><div><dt>1/n</dt><dd>dx — 빼먹으면 합이 n배</dd></div><div><dt>예</dt><dd>lim ∑ k<sup>2</sup>/n<sup>3</sup> = lim ∑ (k/n)<sup>2</sup> · (1/n) = ∫<sub>0</sub><sup>1</sup> x<sup>2</sup> dx = 1/3</dd></div></dl>
+</div>
+<div class="nmm-item"><p class="nmm-t">적분 부호 — co가 나오면 −</p>
+<p class="nmm-say">적분해서 <b>co</b>(cos · cot · csc)가 나오면 앞에 <b>−</b></p>
+<dl class="nmm-map"><div><dt>∫sin x dx</dt><dd>−cos x + C</dd></div><div><dt>∫csc<sup>2</sup>x dx</dt><dd>−cot x + C</dd></div><div><dt>∫csc x cot x dx</dt><dd>−csc x + C</dd></div></dl>
+<p class="nmm-note">co가 안 나오면 + — ∫cos x dx = sin x + C, ∫sec<sup>2</sup>x dx = tan x + C</p></div></div>
+</section></details>
 <div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">치환하면 구간도 함께 바꾼다 — 넓이는 절댓값, 부피는 단면의 넓이</span><span class="mg-stat">회당 평균 1.9문항 · 6.6점</span></div>
 <div class="mg-grid"><section class="mg-card c1"><h3><i>📚</i>기본 적분 표</h3><div class="mg-tbl"><table><thead><tr><th>∫</th><th>결과</th><th>∫</th><th>결과</th></tr></thead><tbody><tr><th scope="row">eˣ</th><td data-l="결과">eˣ + C</td><td data-l="∫">sec²x</td><td data-l="결과">tan x + C</td></tr><tr><th scope="row">aˣ</th><td data-l="결과">aˣ/ln a + C</td><td data-l="∫">csc²x</td><td data-l="결과">−cot x + C</td></tr><tr><th scope="row">1/x</th><td data-l="결과">ln|x| + C</td><td data-l="∫">sec x tan x</td><td data-l="결과">sec x + C</td></tr><tr><th scope="row">sin x</th><td data-l="결과">−cos x + C</td><td data-l="∫">csc x cot x</td><td data-l="결과">−csc x + C</td></tr><tr><th scope="row">cos x</th><td data-l="결과">sin x + C</td><td data-l="∫">sin²x</td><td data-l="결과">x/2 − ¼sin2x + C</td></tr></tbody></table></div></section>
@@ -318,11 +470,19 @@
 <li><strong>위끝이 x²인데 f(x²)만 쓰고 2x를 빼먹기.</strong> d/dx ∫<sub>0</sub><sup>x²</sup> f(t) dt = f(x²) · 2x입니다. 적분 변수와 위끝에 같은 문자를 쓰지 않습니다.</li>
 <li><strong>ln|x|의 절댓값과, 불연속인 기함수의 대칭 적분.</strong> ∫ 1/x dx = ln|x| + C입니다. 1/x를 −1부터 1까지 적분해 0이라고 하지 않습니다.</li>
 </ul></div></details>
-<p><a class="cta sm" href="chapters/09-int-methods.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="practice.html#part:c3">📝 기출 풀기</a></p>
+<p><a class="cta sm" href="chapters/09-int-methods.html">이 파트 자세히 보기 →</a> <a class="cta sm" href="motion.html#s15">🎬 모션으로 보기</a> <a class="cta sm" href="practice.html#part:c3">📝 기출 풀기</a></p>
 </section>
 <section class="sum-part" id="p10">
 <h2>Part 10 · 수능 수학 실전 전략</h2>
 <p class="sum-sub">전략 · 시간 배분·풀이 순서·실수 방지·오답 관리</p>
+<div class="sum-quick"><p class="sum-q-one"><b>⚡ 한 줄 핵심</b> 맞힐 수 있는 문항을 실수 없이 지키는 시험. 막히면 표시하고 넘어간다.</p><ol class="sum-q-how"><li>1번부터 차례로 → 2·3점부터 확보</li><li>막히면 → 점(계산만 꼬임)·?(실마리 없음) 표시 후 다음</li><li>단답 → 답이 나오는 즉시 자릿수 맞춰 표기</li><li>끝 덩어리 → 단답 자릿수·부호·부등호 먼저, ?는 마지막</li></ol><p class="sum-q-ex"><b>예</b> 2점 + 3점을 실수로 놓치면 5점, 4점 하나를 못 풀면 4점 → <mark>쉬운 문항 지키기가 먼저</mark></p><p class="sum-q-trap"><b>조심</b> 단답이 음수·분수인데 반올림해 적기 ✕ — 0~999 정수가 아니면 다시 풀기</p></div>
+<details class="mg-wrap"><summary>🧠 이렇게 외우기 (1가지)</summary><section class="nmm" aria-label="이렇게 외우기">
+<div class="nmq-h"><b>🧠 이렇게 외우기</b><span>소리 내어 한 번</span></div>
+<div class="nmm-list"><div class="nmm-item"><p class="nmm-t">답 옮기기 전 다섯 질문 — 앞글자</p>
+<p class="nmm-say"><b>부</b><b>부</b>가 <b>진</b>땀 빼며 <b>끝</b>까지 <b>단</b>속</p>
+<dl class="nmm-map"><div><dt>부 · 부</dt><dd>부호 · 부등호</dd></div><div><dt>진</dt><dd>진수 · 정의역</dd></div><div><dt>끝</dt><dd>끝점 (등호, 열린 끝)</dd></div><div><dt>단</dt><dd>단위 (도·라디안, 값·a+b)</dd></div></dl>
+</div></div>
+</section></details>
 <div class="mg">
 <div class="mg-top"><span class="mg-chip">📌 한눈에 요약</span><span class="mg-tag">앞의 쉬운 점수부터, 막히면 표시하고 넘어간다 — 단답 자릿수와 부호는 마지막에</span></div>
 <div class="mg-grid"><section class="mg-card c1 wide"><h3><i>📊</i>파트별 출제 비중 (회당)</h3><div class="mg-bars"><div class="row"><span class="lab">지수와 로그</span><span class="bar"><i style="width:81%"></i></span><span class="num">3.9문항 · 12.5점</span></div><div class="row"><span class="lab">삼각함수</span><span class="bar"><i style="width:69%"></i></span><span class="num">3.0문항 · 10.6점</span></div><div class="row"><span class="lab">수열</span><span class="bar"><i style="width:90%"></i></span><span class="num">4.1문항 · 13.9점</span></div><div class="row"><span class="lab">함수의 극한과 연속</span><span class="bar"><i style="width:44%"></i></span><span class="num">2.0문항 · 6.7점</span></div><div class="row"><span class="lab">미분</span><span class="bar"><i style="width:100%"></i></span><span class="num">4.9문항 · 15.4점</span></div><div class="row"><span class="lab">적분</span><span class="bar"><i style="width:96%"></i></span><span class="num">4.1문항 · 14.8점</span></div><div class="row"><span class="lab">수열의 극한</span><span class="bar"><i style="width:44%"></i></span><span class="num">2.2문항 · 6.7점</span></div><div class="row"><span class="lab">여러 가지 미분법</span><span class="bar"><i style="width:82%"></i></span><span class="num">3.9문항 · 12.7점</span></div><div class="row"><span class="lab">여러 가지 적분법</span><span class="bar"><i style="width:43%"></i></span><span class="num">1.9문항 · 6.6점</span></div></div><p class="mg-note tip"><span>💡</span>최근 회차 자동 분류 기준(±1문항 오차). 공통 22문항(수학Ⅰ·Ⅱ) + 선택 8문항(미적분)입니다.</p></section>
