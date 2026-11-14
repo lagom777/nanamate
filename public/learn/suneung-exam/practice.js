@@ -53,18 +53,25 @@
   var topicName = {}, topicPart = {};
   (cfg.parts || []).forEach(function (p) { (p.topics || []).forEach(function (t) { topicName[t.id] = t.name; topicPart[t.id] = p.id; }); });
   function oos(s, n) { return !!(s && s.u) && s.u[n - 1] === 'x'; }
-  /* 푼 문제 기록: 문항 id(시험/번호) → [맞았나 1·0, 푼 시각]. 이 기기에 두고, 로그인하면 계정의 풀이 기록(/api/done)과 합친다.
+  /* 푼 문제 기록: 문항 id(시험/번호) → [맞았나 1·0, 푼 시각, 고른 답]. 이 기기에 두고, 로그인하면 계정의 풀이 기록(/api/done)과 합친다.
    * 유형·파트 모아 풀기에서 '몇 문제 풀었나'를 세고, 안 푼 문제를 먼저 내는 데 쓴다(시험지형 국어·영어는 쓰지 않는다). */
   var DONE_KEY = 'sn:' + SUB + ':done', DONE = null, doneDirty = false;
   function doneOf(id) { var d = DONE && DONE[id]; return d ? (d[0] ? 1 : 0) : -1; }   // -1 안 풂 · 0 틀림 · 1 맞음
-  function noteDone(exam, n, ok, ts) {
+  function pickedOf(id) { var d = DONE && DONE[id]; return (d && d[2]) || 0; }   // 그때 고른 답(모르면 0)
+  function noteDone(exam, n, ok, ts, picked) {
     if (PAPER || !DONE || !exam || !n) return;
     var id = exam + '/' + n, d = DONE[id];
-    ts = +ts || Date.now();
+    ts = +ts || Date.now(); ok = ok ? 1 : 0; picked = +picked || 0;
     if (d && d[1] > ts) return;
-    DONE[id] = [ok ? 1 : 0, ts]; doneDirty = true;
+    if (d && d[0] === ok && d[1] === ts && (d[2] || 0) === (picked || d[2] || 0)) return;   // 달라진 것이 없다
+    DONE[id] = [ok, ts, picked || (d && d[1] === ts && d[2]) || 0]; doneDirty = true;
   }
   function saveDone() { if (doneDirty) { store(DONE_KEY, DONE); doneDirty = false; } }
+  /* 이 세트에서 답을 고르거나 해설을 열었나(처음 차려 준 그대로가 아닌가) */
+  function setTouched() {
+    var pre = S.pre || [];
+    return S.ans.some(function (a, i) { return a !== (pre[i] || 0); }) || Object.keys(S.revealed || {}).length > 0;
+  }
   /* 처음 한 번: 이 기기에 남아 있는 채점한 시험과, 아직 계정에 못 보낸 풀이 기록에서 채운다 */
   function loadDone() {
     if (PAPER) return;
@@ -74,19 +81,19 @@
     examList().forEach(function (e) {
       var st = store('sn:' + SUB + ':exam:' + e.key);
       if (!st || !st.g || !st.ans) return;
-      st.ans.forEach(function (a, i) { if (a) noteDone(e.key, i + 1, isRight(mk(e, i + 1), a), st.t || 1); });
+      st.ans.forEach(function (a, i) { if (a) noteDone(e.key, i + 1, isRight(mk(e, i + 1), a), st.t || 1, a); });
     });
-    ((window.SnAuth && SnAuth.pending && SnAuth.pending()) || []).forEach(function (r) { if (r && r.sub === SUB) noteDone(r.exam, r.q, r.ok, r.ts); });
+    ((window.SnAuth && SnAuth.pending && SnAuth.pending()) || []).forEach(function (r) { if (r && r.sub === SUB) noteDone(r.exam, r.q, r.ok, r.ts, r.picked); });
     doneDirty = true; saveDone();
   }
   /* 계정에 쌓인 풀이 기록(다른 기기에서 푼 것 포함)을 받아 합친다 */
   function doneSync() {
     if (PAPER || !meUser.id || !window.SnAuth || !SnAuth.done) return;
     SnAuth.done(SUB).then(function (rows) {
-      (rows || []).forEach(function (r) { noteDone(r.exam, r.q, r.ok, r.ts); });
+      (rows || []).forEach(function (r) { noteDone(r.exam, r.q, r.ok, r.ts, r.picked); });
       if (!doneDirty) return;
       saveDone();
-      if (/^(part|topic):/.test(S.set) && !S.ans.some(Boolean)) startSet(S.set);   // 아직 안 풀기 시작했으면 안 푼 문제부터 다시 뽑는다
+      if (/^(part|topic):/.test(S.set) && !setTouched()) startSet(S.set);   // 아직 손대지 않았으면 받은 기록(푼 문제·고른 답)으로 다시 차린다
       else paintTopics();
     }).catch(function () {});
   }
@@ -106,11 +113,12 @@
   }
   function partPick(id) { return function (s, n) { return !!s.t && s.t[n - 1] === id && !oos(s, n); }; }
   function topicPick(id) { return function (s, n) { return !!s.u && s.u[n - 1] === id; }; }
-  /* 모아 풀기 순서: 안 푼 문제 → 틀렸던 문제 → 맞힌 문제 (묶음 안에서는 섞는다) */
-  function freshFirst(items) {
+  /* 모아 풀기 순서: 안 푼 문제(새 문제 — count 개까지) → 틀렸던 문제 → 맞힌 문제. 묶음 안에서는 섞는다.
+   * 전에 푼 문제는 수를 줄이지 않고 다 낸다(그때 고른 답을 다시 볼 수 있게) */
+  function freshFirst(items, count) {
     var g = [[], [], []];
     shuffle(items).forEach(function (it) { g[it.prev < 0 ? 0 : it.prev === 0 ? 1 : 2].push(it); });
-    return g[0].concat(g[1], g[2]);
+    return (count && count < g[0].length ? g[0].slice(0, count) : g[0]).concat(g[1], g[2]);
   }
   var explainCache = {}, metaCache = {};
 
@@ -170,14 +178,12 @@
       examList().forEach(function (e) {
         (e[SUB].t || []).forEach(function (t, i) { if (t === parts[1] && !oos(e[SUB], i + 1)) items.push(mk(e, i + 1)); });   // 범위 밖(옛 교육과정) 문항은 모아 풀기에 안 넣는다
       });
-      items = freshFirst(items);
-      if (S.count && S.count < items.length) items = items.slice(0, S.count);
+      items = freshFirst(items, S.count);
     } else if (parts[0] === 'topic') {
       examList().forEach(function (e) {
         (e[SUB].u || []).forEach(function (u, i) { if (u === parts[1]) items.push(mk(e, i + 1)); });
       });
-      items = freshFirst(items);
-      if (S.count && S.count < items.length) items = items.slice(0, S.count);
+      items = freshFirst(items, S.count);
     } else if (parts[0] === 'wrong') {
       var w = store('sn:' + SUB + ':wrong') || [];
       w.forEach(function (id) {
@@ -204,7 +210,7 @@
     var s = e[SUB];
     return {
       id: e.key + '/' + n, ex: e.key, title: etitle(e), n: n, ans: s.a[n - 1], pts: s.p[n - 1], tag: s.t && !oos(s, n) ? s.t[n - 1] : null,
-      tp: s.u && topicName[s.u[n - 1]] ? s.u[n - 1] : null, oos: oos(s, n), prev: doneOf(e.key + '/' + n),
+      tp: s.u && topicName[s.u[n - 1]] ? s.u[n - 1] : null, oos: oos(s, n), prev: doneOf(e.key + '/' + n), pp: pickedOf(e.key + '/' + n),
       num: !!(s.n && s.n.indexOf(n) >= 0),
       img: imgFixed(e.key, n) ? new URL(cfg.base + 'fix/' + e.key + '/' + SUB + '/q' + pad(n) + '.webp', location.href).href
         : (cfg.imgBase || cfg.base) + e.key + '/' + SUB + '/q' + pad(n) + '.webp'
@@ -275,7 +281,7 @@
       el('option', { value: '10', text: '10문항' }), el('option', { value: '20', text: '20문항' }), el('option', { value: '0', text: '전체' })
     ]);
     countSel.value = '10'; S.count = 10;
-    countWrap = el('label', { class: 'pr-count' }, ['출제 ', countSel]);
+    countWrap = el('label', { class: 'pr-count', title: '파트·유형 모아 풀기에서 한 번에 낼 새 문제 수(전에 푼 문제는 그 아래에 모두 나와요)' }, ['새 문제 ', countSel]);
     var row1 = [setSel];
     if (SUB === 'korean') {
       selSel = el('select', { 'aria-label': '선택과목', onchange: function () { S.sel = selSel.value; store('sn:' + SUB + ':sel', S.sel); startSet(setSel.value, true); } }, [
@@ -415,7 +421,7 @@
     topicRow.appendChild(el('span', { class: 'pr-topics-lab', text: part.name + ' ›' }));
     topicRow.appendChild(chip('part:' + pid, '전체', sp[0] === 'part', doneCount(partPick(pid))));
     part.topics.forEach(function (t) { topicRow.appendChild(chip('topic:' + t.id, t.name, sp[0] === 'topic' && sp[1] === t.id, doneCount(topicPick(t.id)))); });
-    if (cur) topicRow.appendChild(el('span', { class: 'pr-topics-sum', html: '푼 문제 <b>' + cur.done + '</b> / ' + cur.n + (cur.done ? ' · 맞음 ' + cur.ok + ' · 틀림 ' + (cur.done - cur.ok) : '') + (cur.done < cur.n ? ' · 안 푼 문제부터 나와요' : ' · 다 풀었어요 🎉') }));
+    if (cur) topicRow.appendChild(el('span', { class: 'pr-topics-sum', html: '푼 문제 <b>' + cur.done + '</b> / ' + cur.n + (cur.done ? ' · 맞음 ' + cur.ok + ' · 틀림 ' + (cur.done - cur.ok) : '') + (cur.done < cur.n ? ' · 새 문제가 먼저, 푼 문제는 아래에' : ' · 다 풀었어요 🎉') }));
   }
   /* 세트 고르기 목록의 파트·유형 줄에도 푼 수 */
   function paintSetCounts() {
@@ -430,6 +436,7 @@
     startSet('part:' + p);
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
+  var redoSet = false;   // ‘다시 풀기’로 연 세트는 전에 고른 답을 채우지 않는다
   function startSet(setId, keepAns) {
     stopTimer();
     armClock();
@@ -513,6 +520,10 @@
     S.ans = S.items.map(function () { return 0; });
     S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
     if (!isExam && S.mode === 'exam') S.mode = 'practice';
+    /* 파트·유형 모아 풀기: 전에 푼 문제는 그때 고른 답을 그대로 보여 준다(‘다시 풀기’를 누르면 비운다) */
+    if (/^(part|topic):/.test(setId) && !redoSet) S.items.forEach(function (it, i) { if (it.prev >= 0 && it.pp) S.ans[i] = it.pp; });
+    redoSet = false;
+    S.pre = S.ans.slice();
     if (isExam) {
       var sv = store('sn:' + SUB + ':' + setId);
       if (sv && sv.ans && sv.ans.length === S.items.length) { S.ans = sv.ans; if (sv.g) restoreGraded(sv); }
@@ -658,7 +669,11 @@
         if (S.set.indexOf('due:') === 0) list.appendChild(el('p', { class: 'pr-empty', text: S.wrongLoading ? '오늘 다시 풀 문제를 불러오는 중…' : meUser && meUser.id ? '오늘 다시 풀 오답이 없습니다 ✓ 틀리거나 헷갈린 문제는 1·3·7일 뒤에 여기로 돌아옵니다.' : '로그인하면 틀리거나 헷갈린 문제를 1·3·7일 뒤에 다시 풀도록 날짜별로 챙겨 드립니다.' }));
         else list.appendChild(el('p', { class: 'pr-empty', text: S.wrongLoading ? '오답을 불러오는 중…' : '아직 저장된 오답이 없습니다. 문제를 풀고 채점하면 틀린 문항이, 🤔 헷갈림을 눌러 두면 맞힌 문항도 여기에 모입니다.' }));
       }
-      S.items.forEach(function (it, i) { list.appendChild(card(it, i)); });
+      var gap = /^(part|topic):/.test(S.set) ? S.items.filter(function (it) { return it.prev >= 0; }).length : 0;
+      S.items.forEach(function (it, i) {
+        if (gap && it.prev >= 0 && (i === 0 || S.items[i - 1].prev < 0)) list.appendChild(el('div', { class: 'pr-prev-head', text: '✔ 전에 푼 문제 ' + gap + '개 — 그때 고른 답이 그대로 보여요 (틀렸던 문제 먼저)' }));
+        list.appendChild(card(it, i));
+      });
     }
     renderOmr();
   }
@@ -2341,7 +2356,7 @@
   }
   function sendAttempt(i) {
     var row = attemptOf(S.items[i], i);
-    if (row) { noteDone(row.exam, row.q, row.ok, row.ts); saveDone(); }
+    if (row) { noteDone(row.exam, row.q, row.ok, row.ts, row.picked); saveDone(); }
     if (!window.SnAuth) return;
     if (row) { SnAuth.record([row]); dueSoon(); }
   }
@@ -2355,7 +2370,7 @@
       var row = attemptOf(it, i, ts, tried);   // 못 푼 문제도 오답으로(하나도 안 골랐으면 빼고)
       if (row) rows.push(row);
     });
-    rows.forEach(function (r) { if (r.picked) noteDone(r.exam, r.q, r.ok, r.ts); });   // 고른 문제만 '푼 문제'로
+    rows.forEach(function (r) { if (r.picked) noteDone(r.exam, r.q, r.ok, r.ts, r.picked); });   // 고른 문제만 '푼 문제'로
     saveDone();
     if (rows.length) { SnAuth.record(rows); dueSoon(); }
   }
@@ -2932,7 +2947,7 @@
         res.className = 'pr-mini-res ' + (ok ? 'ok' : 'bad');
         res.textContent = ok ? '⭕ 정답!' : '❌ 오답 · 정답 ' + corrText(it);
         if (!PAPER) recordWrong(it, a);
-        noteDone(q.exam, q.n, ok); saveDone();
+        noteDone(q.exam, q.n, ok, 0, a); saveDone();
         if (window.SnAuth) { SnAuth.record([{ exam: q.exam, sub: SUB, q: q.n, picked: a, ok: ok ? 1 : 0, ts: Date.now(), mode: 'practice' }]); dueSoon(); }
         if (!ok) box.appendChild(el('button', { type: 'button', class: 'pr-ai-link', text: '이 문제도 한 장으로 보기 →', onclick: function () { openSheet({ ref: q, why: { wrong: 1 }, picked: a, ts: Date.now() }, reopen); } }));
       };
@@ -3357,7 +3372,7 @@
     var wl = wrongIdxs(), wn = wl.length, wk = wl.filter(function (i) { return !S.ans[i]; }).length;
     if (wn) acts.appendChild(el('button', { type: 'button', class: 'pr-btn pr-ai-cta', text: '🤖 틀린 문제 ' + wn + '개' + (wk ? '(못 푼 ' + wk + '개 포함)' : '') + ' 한꺼번에 AI 해설', onclick: askWrongAll }));
     acts.appendChild(el('button', { type: 'button', class: 'pr-btn pr-ai-cta', text: '🤖 이번 ' + (S.set.indexOf('exam:') === 0 ? '시험' : '세트') + ' AI 분석 (문제점·강점)', onclick: askExam }));
-    acts.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '다시 풀기', onclick: function () { if (S.set.indexOf('exam:') === 0) psReset(S.set); startSet(S.set); } }));
+    acts.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '다시 풀기', onclick: function () { if (S.set.indexOf('exam:') === 0) psReset(S.set); redoSet = true; startSet(S.set); } }));
     if ((r.wrong.length || unsureCount()) && !PAPER) acts.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '틀린·헷갈린 문제 모아 풀기', onclick: function () { startSet('wrong:all'); } }));
     box.appendChild(acts);
     return box;
