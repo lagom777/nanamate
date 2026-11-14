@@ -236,9 +236,13 @@ export function practicePage(spec, o = {}) {
   const withExp = fs.existsSync(expDir)
     ? fs.readdirSync(expDir).filter((f) => f.endsWith(`-${sub}.json`)).map((f) => EXAMS.find((e) => e.key === f.replace(`-${sub}.json`, ""))).filter(Boolean)
     : [];
-  const expNote = withExp.length
-    ? `<p class="exp-note">📖 <strong>문항별 해설이 있는 시험</strong> ${withExp.length}회: ${withExp.map((e) => e.title).join(", ")}. 나머지 시험(과 해설을 싣지 못한 문항)은 정답·배점 채점${spec.chapters.length ? "과 관련 파트 링크" : ""}가 제공됩니다. 해설은 AI가 문항 이미지를 풀어 쓰고 공식 정답과 일치하는 것만 실었지만, 풀이 과정에 오류가 있을 수 있으니 참고용으로 보세요.</p>`
-    : "";
+  // 모든 회차에 해설이 있으면 회차 이름을 늘어놓지 않는다(옛 교육과정 시험의 범위 밖 문항에는 해설이 없다)
+  const allExp = withExp.length === ex.length;
+  const expTail = `해설은 AI가 문항 이미지를 풀어 쓰고 공식 정답과 일치하는 것만 실었지만, 풀이 과정에 오류가 있을 수 있으니 참고용으로 보세요.`;
+  const expNote = !withExp.length ? ""
+    : allExp
+      ? `<p class="exp-note">📖 <strong>모든 시험(${withExp.length}회)에 문항별 해설</strong>이 있습니다${ex.some((e) => (e[sub].u || []).includes("x")) ? "(2018~2020학년도 시험의 ‘지금 범위 밖’ 문항은 빼고)" : ""}. ${expTail}</p>`
+      : `<p class="exp-note">📖 <strong>문항별 해설이 있는 시험</strong> ${withExp.length}회: ${withExp.map((e) => e.title).join(", ")}. 나머지 시험(과 해설을 싣지 못한 문항)은 정답·배점 채점${spec.chapters.length ? "과 관련 파트 링크" : ""}가 제공됩니다. ${expTail}</p>`;
   const parts = spec.chapters.filter((c) => c.part).map((c) => ({ id: c.part, name: c.title, href: `chapters/${c.file}`, ...(c.topics ? { topics: c.topics.map(([id, name]) => ({ id, name })) } : {}) }));
   const numeric = sub === "math" ? " 단답형(16~22번·29~30번)은 답을 숫자로 직접 입력합니다." : "";
   const lead = kind === "paper"
