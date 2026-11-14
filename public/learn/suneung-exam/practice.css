@@ -576,3 +576,12 @@ body.pr-wide-page main.wide { max-width: none; padding-left: 24px; padding-right
 .pr-tag-oos { color: var(--text-dim); border-style: dashed; }
 .pr-parts li.pr-parts-topics { display: block; padding: 0 0 5px 10px; }
 .pr-parts li.pr-parts-topics span { display: flex; flex-wrap: wrap; gap: 5px; }
+
+/* 푼 문제 수: 유형 칩의 n/전체, 위 막대의 한 줄 요약, 문항 칸의 '전에 풂' */
+.pr-topic-n { margin-left: 6px; font-size: 11px; font-weight: 700; opacity: .72; font-variant-numeric: tabular-nums; }
+#practice-root .pr-topic.all { border-color: #16a34a !important; }
+.pr-topics-sum { flex: 1 1 100%; font-size: 12.5px; color: var(--text-dim); }
+.pr-topics-sum b { color: var(--accent); font-size: 14px; }
+.pr-done-tag { font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--pr-line); white-space: nowrap; }
+.pr-done-tag.ok { color: #15803d; border-color: #86efac; background: rgba(22, 163, 74, .08); }
+.pr-done-tag.no { color: #b91c1c; border-color: #fca5a5; background: rgba(220, 38, 38, .07); }

@@ -53,6 +53,65 @@
   var topicName = {}, topicPart = {};
   (cfg.parts || []).forEach(function (p) { (p.topics || []).forEach(function (t) { topicName[t.id] = t.name; topicPart[t.id] = p.id; }); });
   function oos(s, n) { return !!(s && s.u) && s.u[n - 1] === 'x'; }
+  /* 푼 문제 기록: 문항 id(시험/번호) → [맞았나 1·0, 푼 시각]. 이 기기에 두고, 로그인하면 계정의 풀이 기록(/api/done)과 합친다.
+   * 유형·파트 모아 풀기에서 '몇 문제 풀었나'를 세고, 안 푼 문제를 먼저 내는 데 쓴다(시험지형 국어·영어는 쓰지 않는다). */
+  var DONE_KEY = 'sn:' + SUB + ':done', DONE = null, doneDirty = false;
+  function doneOf(id) { var d = DONE && DONE[id]; return d ? (d[0] ? 1 : 0) : -1; }   // -1 안 풂 · 0 틀림 · 1 맞음
+  function noteDone(exam, n, ok, ts) {
+    if (PAPER || !DONE || !exam || !n) return;
+    var id = exam + '/' + n, d = DONE[id];
+    ts = +ts || Date.now();
+    if (d && d[1] > ts) return;
+    DONE[id] = [ok ? 1 : 0, ts]; doneDirty = true;
+  }
+  function saveDone() { if (doneDirty) { store(DONE_KEY, DONE); doneDirty = false; } }
+  /* 처음 한 번: 이 기기에 남아 있는 채점한 시험과, 아직 계정에 못 보낸 풀이 기록에서 채운다 */
+  function loadDone() {
+    if (PAPER) return;
+    DONE = store(DONE_KEY);
+    if (DONE && typeof DONE === 'object') return;
+    DONE = {};
+    examList().forEach(function (e) {
+      var st = store('sn:' + SUB + ':exam:' + e.key);
+      if (!st || !st.g || !st.ans) return;
+      st.ans.forEach(function (a, i) { if (a) noteDone(e.key, i + 1, isRight(mk(e, i + 1), a), st.t || 1); });
+    });
+    ((window.SnAuth && SnAuth.pending && SnAuth.pending()) || []).forEach(function (r) { if (r && r.sub === SUB) noteDone(r.exam, r.q, r.ok, r.ts); });
+    doneDirty = true; saveDone();
+  }
+  /* 계정에 쌓인 풀이 기록(다른 기기에서 푼 것 포함)을 받아 합친다 */
+  function doneSync() {
+    if (PAPER || !meUser.id || !window.SnAuth || !SnAuth.done) return;
+    SnAuth.done(SUB).then(function (rows) {
+      (rows || []).forEach(function (r) { noteDone(r.exam, r.q, r.ok, r.ts); });
+      if (!doneDirty) return;
+      saveDone();
+      if (/^(part|topic):/.test(S.set) && !S.ans.some(Boolean)) startSet(S.set);   // 아직 안 풀기 시작했으면 안 푼 문제부터 다시 뽑는다
+      else paintTopics();
+    }).catch(function () {});
+  }
+  /* 문항 묶음에서 푼 수·맞은 수: pick(시험의 과목 칸, 번호) 가 참인 문항만 */
+  function doneCount(pick) {
+    var c = { n: 0, done: 0, ok: 0 };
+    examList().forEach(function (e) {
+      var s = e[SUB];
+      for (var n = 1; n <= s.a.length; n++) {
+        if (!pick(s, n)) continue;
+        c.n++;
+        var d = doneOf(e.key + '/' + n);
+        if (d >= 0) { c.done++; if (d) c.ok++; }
+      }
+    });
+    return c;
+  }
+  function partPick(id) { return function (s, n) { return !!s.t && s.t[n - 1] === id && !oos(s, n); }; }
+  function topicPick(id) { return function (s, n) { return !!s.u && s.u[n - 1] === id; }; }
+  /* 모아 풀기 순서: 안 푼 문제 → 틀렸던 문제 → 맞힌 문제 (묶음 안에서는 섞는다) */
+  function freshFirst(items) {
+    var g = [[], [], []];
+    shuffle(items).forEach(function (it) { g[it.prev < 0 ? 0 : it.prev === 0 ? 1 : 2].push(it); });
+    return g[0].concat(g[1], g[2]);
+  }
   var explainCache = {}, metaCache = {};
 
   var S = {
@@ -111,13 +170,13 @@
       examList().forEach(function (e) {
         (e[SUB].t || []).forEach(function (t, i) { if (t === parts[1] && !oos(e[SUB], i + 1)) items.push(mk(e, i + 1)); });   // 범위 밖(옛 교육과정) 문항은 모아 풀기에 안 넣는다
       });
-      items = shuffle(items);
+      items = freshFirst(items);
       if (S.count && S.count < items.length) items = items.slice(0, S.count);
     } else if (parts[0] === 'topic') {
       examList().forEach(function (e) {
         (e[SUB].u || []).forEach(function (u, i) { if (u === parts[1]) items.push(mk(e, i + 1)); });
       });
-      items = shuffle(items);
+      items = freshFirst(items);
       if (S.count && S.count < items.length) items = items.slice(0, S.count);
     } else if (parts[0] === 'wrong') {
       var w = store('sn:' + SUB + ':wrong') || [];
@@ -145,7 +204,7 @@
     var s = e[SUB];
     return {
       id: e.key + '/' + n, ex: e.key, title: etitle(e), n: n, ans: s.a[n - 1], pts: s.p[n - 1], tag: s.t && !oos(s, n) ? s.t[n - 1] : null,
-      tp: s.u && topicName[s.u[n - 1]] ? s.u[n - 1] : null, oos: oos(s, n),
+      tp: s.u && topicName[s.u[n - 1]] ? s.u[n - 1] : null, oos: oos(s, n), prev: doneOf(e.key + '/' + n),
       num: !!(s.n && s.n.indexOf(n) >= 0),
       img: imgFixed(e.key, n) ? new URL(cfg.base + 'fix/' + e.key + '/' + SUB + '/q' + pad(n) + '.webp', location.href).href
         : (cfg.imgBase || cfg.base) + e.key + '/' + SUB + '/q' + pad(n) + '.webp'
@@ -173,7 +232,7 @@
   }
 
   /* ───────── UI shell ───────── */
-  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, topicRow, authBox, exportMsg, exportTimer, exporting = false, dueBtn = null, dueOpt = null, omrClock = null;
+  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, topicRow, setOpts = [], authBox, exportMsg, exportTimer, exporting = false, dueBtn = null, dueOpt = null, omrClock = null;
 
   var COLS_KEY = 'sn:pr:cols';
   function paintCols() {
@@ -192,10 +251,13 @@
       var g2 = el('optgroup', { label: (hasTopics ? '파트·유형별' : '파트별') + ' 모아 풀기 (전 시험에서 뽑기)' });
       cfg.parts.forEach(function (p) {
         var c = 0; ex.forEach(function (e) { (e[SUB].t || []).forEach(function (t, i) { if (t === p.id && !oos(e[SUB], i + 1)) c++; }); });
-        g2.appendChild(el('option', { value: 'part:' + p.id, text: p.name + ' (' + c + '문항)' }));
+        var po = el('option', { value: 'part:' + p.id, text: p.name + ' (' + c + '문항)' });
+        g2.appendChild(po); setOpts.push({ el: po, name: p.name, pick: partPick(p.id) });
         (p.topics || []).forEach(function (tp) {
           var k = 0; ex.forEach(function (e) { (e[SUB].u || []).forEach(function (u) { if (u === tp.id) k++; }); });
-          if (k) g2.appendChild(el('option', { value: 'topic:' + tp.id, text: '\u00a0\u00a0\u00a0└ ' + tp.name + ' (' + k + '문항)' }));
+          if (!k) return;
+          var to = el('option', { value: 'topic:' + tp.id, text: '\u00a0\u00a0\u00a0└ ' + tp.name + ' (' + k + '문항)' });
+          g2.appendChild(to); setOpts.push({ el: to, name: '\u00a0\u00a0\u00a0└ ' + tp.name, pick: topicPick(tp.id) });
         });
       });
       setSel.appendChild(g2);
@@ -338,17 +400,29 @@
   /* 파트·유형 세트를 풀 때 위 막대에 그 파트의 유형 칩: 전체 | 유형 … (눌러서 바로 옮겨 간다) */
   function paintTopics() {
     if (!topicRow) return;
+    paintSetCounts();
     topicRow.innerHTML = '';
     var sp = S.set.split(':'), pid = sp[0] === 'part' ? sp[1] : sp[0] === 'topic' ? topicPart[sp[1]] : null;
     var part = pid && (cfg.parts || []).filter(function (p) { return p.id === pid; })[0];
     if (!part || !part.topics || !part.topics.length) { topicRow.style.display = 'none'; return; }
     topicRow.style.display = '';
-    var chip = function (id, text, on) {
-      return el('button', { type: 'button', class: 'pr-topic', 'aria-pressed': on ? 'true' : 'false', text: text, onclick: function () { if (on) return; setSel.value = id; startSet(id); } });
+    var cur = null;
+    var chip = function (id, text, on, c) {
+      if (on) cur = c;
+      return el('button', { type: 'button', class: 'pr-topic' + (c.n && c.done === c.n ? ' all' : ''), 'aria-pressed': on ? 'true' : 'false', title: c.n + '문항 중 ' + c.done + '문항 풂', onclick: function () { if (on) return; setSel.value = id; startSet(id); } },
+        [text, el('span', { class: 'pr-topic-n', text: c.done + '/' + c.n })]);
     };
     topicRow.appendChild(el('span', { class: 'pr-topics-lab', text: part.name + ' ›' }));
-    topicRow.appendChild(chip('part:' + pid, '전체', sp[0] === 'part'));
-    part.topics.forEach(function (t) { topicRow.appendChild(chip('topic:' + t.id, t.name, sp[0] === 'topic' && sp[1] === t.id)); });
+    topicRow.appendChild(chip('part:' + pid, '전체', sp[0] === 'part', doneCount(partPick(pid))));
+    part.topics.forEach(function (t) { topicRow.appendChild(chip('topic:' + t.id, t.name, sp[0] === 'topic' && sp[1] === t.id, doneCount(topicPick(t.id)))); });
+    if (cur) topicRow.appendChild(el('span', { class: 'pr-topics-sum', html: '푼 문제 <b>' + cur.done + '</b> / ' + cur.n + (cur.done ? ' · 맞음 ' + cur.ok + ' · 틀림 ' + (cur.done - cur.ok) : '') + (cur.done < cur.n ? ' · 안 푼 문제부터 나와요' : ' · 다 풀었어요 🎉') }));
+  }
+  /* 세트 고르기 목록의 파트·유형 줄에도 푼 수 */
+  function paintSetCounts() {
+    setOpts.forEach(function (o) {
+      var c = doneCount(o.pick), t = o.name + ' (' + c.n + '문항' + (c.done ? ' · ' + c.done + ' 풂' : '') + ')';
+      if (o.el.textContent !== t) o.el.textContent = t;
+    });
   }
   function goPart(p) {
     if (aiDlg && aiDlg.open) aiDlg.close();
@@ -544,7 +618,7 @@
   }
   document.addEventListener('visibilitychange', function () {
     if (document.visibilityState === 'hidden') psFlush();
-    else if (psAt && Date.now() - psAt > 30000) psSync();   // 다른 기기에서 푼 것이 있으면 받아 온다
+    else if (psAt && Date.now() - psAt > 30000) { psSync(); doneSync(); }   // 다른 기기에서 푼 것이 있으면 받아 온다
   });
   window.addEventListener('pagehide', psFlush);
 
@@ -616,6 +690,7 @@
       it.tag && partName[it.tag] ? el('a', { class: 'pr-tag', href: partHref[it.tag] || '#', text: partName[it.tag] + (it.tp ? ' › ' + topicName[it.tp] : '') }) : null,
       HAS_PARTS && !PAPER && it.tp ? (S.set !== 'topic:' + it.tp ? el('button', { type: 'button', class: 'pr-tag pr-tag-go', title: topicName[it.tp] + ' 문제만 여러 시험에서 모아 풀기', text: '🔁 이 유형 더 풀기', onclick: function () { goTopic(it.tp); } }) : null)
         : HAS_PARTS && !PAPER && it.tag && partName[it.tag] && S.set !== 'part:' + it.tag ? el('button', { type: 'button', class: 'pr-tag pr-tag-go', title: partName[it.tag] + ' 문제를 여러 시험에서 모아 풀기', text: '🔁 이 파트 더 풀기', onclick: function () { goPart(it.tag); } }) : null,
+      it.prev >= 0 && S.set.indexOf('exam:') !== 0 ? el('span', { class: 'pr-done-tag ' + (it.prev ? 'ok' : 'no'), title: '이 문제를 전에 풀었어요(마지막 결과)', text: it.prev ? '✔ 전에 풂 · 맞음' : '✔ 전에 풂 · 틀림' }) : null,
       it.dueInfo ? el('span', { class: 'pr-due-tag', text: '📅 ' + dueText(it.dueInfo) }) : null,
       unsureOf(it) ? el('span', { class: 'pr-unsure-tag', text: '🤔 헷갈림' }) : null,
       causeOf(it) ? el('span', { class: 'pr-cause-tag', text: CAUSE_NAME[causeOf(it)] }) : null
@@ -2243,8 +2318,9 @@
     return row;
   }
   function sendAttempt(i) {
-    if (!window.SnAuth) return;
     var row = attemptOf(S.items[i], i);
+    if (row) { noteDone(row.exam, row.q, row.ok, row.ts); saveDone(); }
+    if (!window.SnAuth) return;
     if (row) { SnAuth.record([row]); dueSoon(); }
   }
   function sendGraded() {
@@ -2257,6 +2333,8 @@
       var row = attemptOf(it, i, ts, tried);   // 못 푼 문제도 오답으로(하나도 안 골랐으면 빼고)
       if (row) rows.push(row);
     });
+    rows.forEach(function (r) { if (r.picked) noteDone(r.exam, r.q, r.ok, r.ts); });   // 고른 문제만 '푼 문제'로
+    saveDone();
     if (rows.length) { SnAuth.record(rows); dueSoon(); }
   }
   function reopen() { S.graded = false; S.revealed = {}; S.regrade = true; persist(); renderAll(); }
@@ -2832,6 +2910,7 @@
         res.className = 'pr-mini-res ' + (ok ? 'ok' : 'bad');
         res.textContent = ok ? '⭕ 정답!' : '❌ 오답 · 정답 ' + corrText(it);
         if (!PAPER) recordWrong(it, a);
+        noteDone(q.exam, q.n, ok); saveDone();
         if (window.SnAuth) { SnAuth.record([{ exam: q.exam, sub: SUB, q: q.n, picked: a, ok: ok ? 1 : 0, ts: Date.now(), mode: 'practice' }]); dueSoon(); }
         if (!ok) box.appendChild(el('button', { type: 'button', class: 'pr-ai-link', text: '이 문제도 한 장으로 보기 →', onclick: function () { openSheet({ ref: q, why: { wrong: 1 }, picked: a, ts: Date.now() }, reopen); } }));
       };
@@ -3287,12 +3366,14 @@
     if (start.indexOf('exam:') === 0 && !examOf(start.slice(5))) start = 'exam:' + ex[0].key;
     if (start.indexOf('part:') === 0 && !partName[start.slice(5)]) start = 'exam:' + ex[0].key;
     if (start.indexOf('topic:') === 0 && !topicName[start.slice(6)]) start = 'exam:' + ex[0].key;
+    loadDone();
     var begin = function () { startSet(start); window.scrollTo(0, 0); };
     if (meUser.id && start.indexOf('wrong:') === 0) migrateWrong().then(begin);
     else { begin(); if (meUser.id) migrateWrong(); }
     pullNotes();
     aiSync();
     psSync();
+    doneSync();
     loadDue(PAPER && wantDue);
     if (meUser.id && window.SnAuth && SnAuth.aiKey) SnAuth.aiKey().then(function (j) { acctKey = j; }).catch(function () {});
     if (PAPER && meUser.id && window.SnAuth) SnAuth.wrong(SUB).then(function (rows) { S.wrongRows = rows; renderOmr(); }).catch(function () {});

@@ -265,6 +265,19 @@ async function exportAttempts(request, env, url) {
   return json(results || []);
 }
 
+// 문항별 마지막 풀이 결과: 과목의 (시험, 번호)마다 가장 늦은 기록 하나 — 풀어보기의 '유형별 푼 문제 수'가 쓴다.
+// SQLite 는 MAX() 가 있는 묶음 질의에서 나머지 칼럼을 그 최댓값이 있는 행에서 가져온다(ok 가 마지막 풀이의 것).
+async function doneList(request, env, url) {
+  const session = await current(request, env);
+  if (!session) return json({ error: 'unauthorized' }, 401);
+  const sub = url.searchParams.get('sub');
+  if (!validSub(sub)) return json({ error: 'bad query' }, 400);
+  const { results } = await env.DB.prepare(
+    'SELECT exam, q, ok, MAX(ts) AS ts FROM attempts WHERE user_id = ? AND sub = ? AND picked > 0 GROUP BY exam, q LIMIT 5000'
+  ).bind(session.uid, sub).all();
+  return json(results || []);
+}
+
 async function wrong(request, env, url) {
   const session = await current(request, env);
   if (!session) return json({ error: 'unauthorized' }, 401);
@@ -449,6 +462,7 @@ export default {
       if (path === '/api/attempts' && request.method === 'GET') return await listAttempts(request, env, url);
       if (path === '/api/export' && request.method === 'GET') return await exportAttempts(request, env, url);
       if (path === '/api/wrong' && request.method === 'GET') return await wrong(request, env, url);
+      if (path === '/api/done' && request.method === 'GET') return await doneList(request, env, url);
       if (path === '/api/ai' && request.method === 'GET') return await listAiNotes(request, env, url);
       if (path === '/api/ai' && request.method === 'POST') return await saveAiNote(request, env);
       if (path === '/api/ai/get' && request.method === 'POST') return await getAiNotes(request, env);
