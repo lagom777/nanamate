@@ -155,8 +155,8 @@ export function chapterPage(spec, c, i) {
     : `<h2>실전으로 풀어보기</h2><p><a class="cta" href="../practice.html">📝 수능 풀어보기 →</a></p>`;
   const motion = c.motion
     ? `<h2>모션으로 보기</h2>
-<p>이 파트의 개념을 움직이는 그림으로 먼저 봅니다. 그림을 누르면 멈추고, 🔁는 한 장면 반복입니다.</p>
-<div class="mo-embed" style="position:relative;padding-top:calc(56.25% + 60px);margin:12px 0 10px"><iframe src="../motion.html?embed&amp;only=${c.motion.map(([n]) => n).join(",")}" loading="lazy" title="${c.title} — 움직이는 그림" style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:12px"></iframe></div>
+<p>이 파트의 개념을 움직이는 그림으로 먼저 봅니다. 그림을 누르면 멈추고, 아래 막대로 원하는 시간으로 이동하거나 <b>½×</b>(느리게)·<b>🔁</b>(반복)·<b>⛶</b>(전체화면)로 볼 수 있습니다.</p>
+<div class="mo-embed" style="position:relative;padding-top:calc(56.25% + 134px);margin:12px 0 10px"><iframe src="../motion.html?embed&amp;only=${c.motion.map(([n]) => n).join(",")}" loading="lazy" allowfullscreen title="${c.title} — 움직이는 그림" style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:12px"></iframe></div>
 <p>${c.motion.map(([n, label]) => `<a class="cta sm" href="../motion.html#s${n}">🎬 ${label}</a>`).join(" ")}${c.motionPage ? ` <a class="cta" href="../motion/${c.motionPage}">▶ 이 파트 모션 전체 재생</a>` : ""}${c.mapLink ? ` <a class="cta sm" href="../${c.mapLink}">🗺️ 영토 변화 지도</a>` : ""}</p>`
     : "";
   const sumCta = spec.summary ? `<p><a class="cta sm" href="../summary.html#p${i + 1}">📌 이 파트 한눈에 요약 →</a></p>` : "";
@@ -450,12 +450,17 @@ export function summaryPage(spec) {
     const traps = c.traps ? `<div class="sum-traps"><h3>⚠ 자주 걸리는 함정</h3>${c.traps}</div>` : "";
     const terms = c.pairs?.length ? `<div class="sum-sec"><h3>핵심 용어</h3>${tbl(["용어", "뜻"], c.pairs.map((p) => [p.term, p.def]))}</div>` : "";
     const map = spec.maps ? mapOf(spec, i) : "";
+    const q = spec.quick && spec.quick[c.file];
+    const quickBox = q
+      ? `<div class="sum-quick"><p class="sum-q-one"><b>⚡ 한 줄 핵심</b> ${q.one}</p><ol class="sum-q-how">${q.how.map((x) => `<li>${x}</li>`).join("")}</ol>${q.ex ? `<p class="sum-q-ex"><b>예</b> ${q.ex}</p>` : ""}${q.trap ? `<p class="sum-q-trap"><b>조심</b> ${q.trap}</p>` : ""}</div>${q.mem?.length ? `\n<details class="mg-wrap"><summary>🧠 이렇게 외우기 (${q.mem.length}가지)</summary>${memCard(q.mem)}</details>` : ""}`
+      : "";
     const sheet = `${secs}\n${terms}\n${traps}`;
     return `<section class="sum-part" id="p${i + 1}">
 <h2>Part ${i + 1} · ${c.title}</h2>
 <p class="sum-sub">${c.unit} · ${c.sub}</p>
+${quickBox}
 ${map ? `${map}\n<details class="mg-wrap"><summary>📋 본문에서 뽑은 공식·표 시트 펼치기</summary>${sheet}</details>` : sheet}
-<p><a class="cta sm" href="chapters/${c.file}">이 파트 자세히 보기 →</a>${c.part ? ` <a class="cta sm" href="practice.html#part:${c.part}">📝 기출 풀기</a>` : ""}</p>
+<p><a class="cta sm" href="chapters/${c.file}">이 파트 자세히 보기 →</a>${c.motion ? ` <a class="cta sm" href="motion.html#s${c.motion[0][0]}">🎬 모션으로 보기</a>` : ""}${c.part ? ` <a class="cta sm" href="practice.html#part:${c.part}">📝 기출 풀기</a>` : ""}</p>
 </section>`;
   }).join("\n");
   return `${head(`한눈에 요약 — ${spec.label}`, 0, spec, { terms: true })}
@@ -533,6 +538,14 @@ main li { color:var(--text-dim); margin-bottom:4px; line-height:1.7; }
 .sum-sec h4 { margin:14px 0 4px; font-size:.95em; }
 .sum-traps { margin-top:22px; padding:6px 18px 10px; border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:10px; background:var(--bg-card); }
 .sum-traps h3 { margin:12px 0 4px; font-size:1.05em; }
+.sum-quick { margin:12px 0 14px; padding:14px 18px; border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:12px; background:var(--bg-elevated); }
+.sum-q-one { margin:0 0 8px; font-weight:600; color:var(--text); }
+.sum-q-one b { color:var(--accent); margin-right:6px; }
+.sum-q-how { margin:0 0 8px; padding-left:20px; }
+.sum-q-how li { margin:3px 0; color:var(--text-dim); }
+.sum-q-ex, .sum-q-trap { margin:4px 0 0; font-size:.92em; color:var(--text-dim); }
+.sum-q-ex b, .sum-q-trap b { display:inline-block; min-width:34px; color:var(--accent); }
+@media (max-width:640px) { .mo-embed { min-height:360px; } }
 ${mapCss}
 ${spec.extraCss || ""}
 .hub-back-link.my-style-link { margin-top:-10px; }

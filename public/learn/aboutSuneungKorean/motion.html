@@ -65,18 +65,24 @@ header.top{display:flex;align-items:flex-end;justify-content:space-between;gap:1
 .enter>*:nth-child(4){animation-delay:.16s}.enter>*:nth-child(5){animation-delay:.24s}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-.bar{grid-column:1/-1;display:flex;align-items:center;gap:10px;padding:10px 14px;border-top:1px solid var(--line);flex-wrap:wrap}
+.bar{grid-column:1/-1;display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid var(--line);flex-wrap:wrap}
 .btn{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;background:transparent;cursor:pointer;transition:border-color .2s,background .2s}
 .btn:hover{border-color:var(--acc)}
 .btn.main{background:var(--acc);border-color:var(--acc);color:var(--bg)}
 .btn svg{width:16px;height:16px;fill:currentColor}
+.btn.step-btn{width:auto;height:28px;padding:0 8px;border-radius:7px;font-family:var(--fm);font-size:11px;color:var(--muted)}
+.btn.step-btn:hover{color:var(--text)}
 .count{font-family:var(--fm);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:62px}
-.tl{flex:1 1 320px;display:flex;gap:3px;align-items:center;min-width:0}
+.tl{flex:1 1 280px;display:flex;gap:3px;align-items:center;min-width:0}
 .seg{flex:1;height:22px;padding:0;border:0;background:transparent;cursor:pointer;display:flex;align-items:center}
 .seg i{display:block;width:100%;height:5px;border-radius:3px;background:color-mix(in srgb,var(--c) 18%,transparent);overflow:hidden;transition:height .2s}
 .seg i b{display:block;height:100%;width:0;background:var(--c)}
 .seg:hover i,.seg[aria-current="true"] i{height:9px}
 .seg.done i b{width:100%;opacity:.55}
+.scrub-row{flex:1 0 100%;display:flex;align-items:center;gap:8px;padding-top:6px;border-top:1px dashed var(--line)}
+.scrub-lab{font-size:12px;color:var(--muted);max-width:210px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scrub{flex:1 1 160px;min-width:80px;height:22px;margin:0;accent-color:var(--acc);cursor:pointer;background:transparent}
+.time{font-family:var(--fm);font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:84px;text-align:right}
 
 .sum{display:flex;flex-direction:column;gap:14px;margin-top:18px}
 .sum-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px 16px;flex-wrap:wrap}
@@ -100,20 +106,35 @@ header.top{display:flex;align-items:flex-end;justify-content:space-between;gap:1
 .btn[aria-pressed="true"]{border-color:var(--acc);color:var(--acc);background:color-mix(in srgb,var(--acc) 14%,transparent)}
 .btn.sp{width:auto;min-width:38px;padding:0 9px;font-family:var(--fm);font-size:12px}
 .bigbar{display:none}
-.stage.big{position:fixed;left:0;top:0;width:100vw;height:100vh;height:100dvh;z-index:60;aspect-ratio:auto;max-width:none;container-type:size}
-.stage.big canvas{inset:auto;left:50%;top:50%;width:min(100cqw,177.78cqh);height:min(56.25cqw,100cqh);transform:translate(-50%,-50%)}
-.stage.big .bigbar{display:flex;gap:8px;position:absolute;right:14px;bottom:14px}
-.stage.big .bigbar .btn{background:rgba(10,21,34,.82)}
+.stage.big,.stage:fullscreen{position:fixed;left:0;top:0;width:100vw;height:100vh;height:100dvh;z-index:60;aspect-ratio:auto;max-width:none;container-type:size;background:var(--bg)}
+.stage.big canvas,.stage:fullscreen canvas{inset:auto;left:50%;top:50%;width:min(100cqw,177.78cqh);height:min(56.25cqw,100cqh);transform:translate(-50%,-50%)}
+.stage.big .bigbar,.stage:fullscreen .bigbar{display:flex;align-items:center;gap:6px;position:absolute;left:50%;bottom:14px;transform:translateX(-50%);max-width:calc(100% - 24px);padding:6px 10px;border-radius:14px;border:1px solid var(--line);background:rgba(10,21,34,.88);backdrop-filter:blur(8px);flex-wrap:wrap;justify-content:center}
+.stage.big .bigbar .btn,.stage:fullscreen .bigbar .btn{width:34px;height:34px;background:rgba(14,27,42,.92)}
+.stage.big .bigbar .btn.sp,.stage:fullscreen .bigbar .btn.sp{width:auto;min-width:34px}
+.big-title{font-size:12.5px;font-weight:600;color:var(--text);padding:0 6px;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.big-time{font-family:var(--fm);font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;padding:0 4px}
 @media (orientation:portrait){.stage.big{width:100vh;width:100dvh;height:100vw;transform-origin:0 0;transform:translateX(100vw) rotate(90deg)}}
 
-/* 장 노트에 끼워 넣을 때(?embed): 무대와 재생 막대만 */
+/* 장 노트에 끼워 넣을 때(?embed): 무대 + 한 줄 요약 띠 + 재생·탐색 막대 */
+.em-info{display:none;grid-column:1/-1;align-items:center;gap:8px;padding:7px 12px;border-top:1px solid var(--line);background:rgba(9,19,31,.6);font-size:12.5px;min-width:0}
+.em-badge{font-family:var(--fm);font-size:11px;color:var(--acc);border:1px solid color-mix(in srgb,var(--acc) 55%,transparent);border-radius:5px;padding:1px 6px;white-space:nowrap}
+.em-title{font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+.em-sub{flex:1 1 120px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.em-open{color:var(--acc);text-decoration:none;font-family:var(--fm);font-size:11.5px;white-space:nowrap;padding:2px 8px;border:1px solid var(--line);border-radius:999px}
+.em-open:hover{border-color:var(--acc)}
 .embed body{padding:0;background:transparent}
-.embed .top,.embed .sum,.embed footer,.embed .panel,.embed #b-big,.embed #b-speed{display:none}
+.embed .top,.embed .sum,.embed footer,.embed .panel,.embed .scrub-lab{display:none}
+.embed .em-info{display:flex}
 .embed .wrap{max-width:none;gap:0}
 .embed .player{grid-template-columns:1fr;border-radius:12px}
-.embed .bar{flex-wrap:nowrap;gap:6px;padding:8px 10px}
+.embed .bar{gap:5px;padding:7px 10px}
+.embed .btn{width:34px;height:34px;border-radius:8px}
+.embed .btn.step-btn{height:26px;padding:0 6px}
+.embed .btn.sp{min-width:34px}
+.embed .scrub-row{padding-top:5px}
 .embed .tl{flex:1 1 60px}
 .embed .count{min-width:0}
+@media (max-width:560px){.em-sub,.scrub-lab{display:none}}
 
 footer{color:var(--dim);font-size:12px;font-family:var(--fm)}
 
@@ -143,8 +164,14 @@ footer{color:var(--dim);font-size:12px;font-family:var(--fm)}
     <div class="stage">
       <canvas id="cv" role="img" aria-label="개념 애니메이션"></canvas>
       <div class="bigbar">
+        <span class="big-title" id="g-title"></span>
         <button class="btn" id="g-prev" aria-label="이전 개념"><svg viewBox="0 0 16 16"><path d="M3 2h2v12H3zM14 2v12L6 8z"/></svg></button>
+        <button class="btn main" id="g-play" aria-label="일시정지"><svg viewBox="0 0 16 16"><path id="g-play-ico" d="M4 2h3v12H4zM9 2h3v12H9z"/></svg></button>
+        <button class="btn" id="g-replay" aria-label="처음부터 다시" title="처음부터 다시 (R)"><svg viewBox="0 0 16 16"><path d="M8 2a6 6 0 1 1-5.2 3H1.5l2.3-3.2L7 3.6H5.1A4.2 4.2 0 1 0 8 3.8z"/></svg></button>
         <button class="btn" id="g-next" aria-label="다음 개념"><svg viewBox="0 0 16 16"><path d="M11 2h2v12h-2zM2 2v12l8-6z"/></svg></button>
+        <button class="btn" id="g-loop" aria-pressed="false" aria-label="이 장면 반복" title="이 장면 반복 (L)"><svg viewBox="0 0 16 16"><path d="M3 6V5a2 2 0 0 1 2-2h6V1l3 3-3 3V5H5v1zM13 10v1a2 2 0 0 1-2 2H5v2l-3-3 3-3v2h6v-1z"/></svg></button>
+        <button class="btn sp" id="g-speed" aria-pressed="false" aria-label="느리게 (0.5배속)" title="느리게 (S)">½×</button>
+        <span class="big-time" id="g-time">0.0 / 15.0s</span>
         <button class="btn" id="g-close" aria-label="크게 보기 닫기"><svg viewBox="0 0 16 16"><path d="M3.4 2 8 6.6 12.6 2 14 3.4 9.4 8l4.6 4.6-1.4 1.4L8 9.4 3.4 14 2 12.6 6.6 8 2 3.4z"/></svg></button>
       </div>
     </div>
@@ -155,22 +182,36 @@ footer{color:var(--dim);font-size:12px;font-family:var(--fm)}
       <div class="fx-list" id="p-fx"></div>
       <ul class="pts" id="p-pts"></ul>
     </div></div>
+    <div class="em-info" id="em-info">
+      <span class="em-badge" id="em-badge"></span>
+      <strong class="em-title" id="em-title"></strong>
+      <span class="em-sub" id="em-sub"></span>
+      <a class="em-open" id="em-open" target="_top" href="#">설명 크게 ↗</a>
+    </div>
     <div class="bar">
       <button class="btn" id="b-prev" aria-label="이전 개념"><svg viewBox="0 0 16 16"><path d="M3 2h2v12H3zM14 2v12L6 8z"/></svg></button>
       <button class="btn main" id="b-play" aria-label="일시정지"><svg viewBox="0 0 16 16"><path id="play-ico" d="M4 2h3v12H4zM9 2h3v12H9z"/></svg></button>
+      <button class="btn" id="b-replay" aria-label="처음부터 다시" title="처음부터 다시 (R)"><svg viewBox="0 0 16 16"><path d="M8 2a6 6 0 1 1-5.2 3H1.5l2.3-3.2L7 3.6H5.1A4.2 4.2 0 1 0 8 3.8z"/></svg></button>
       <button class="btn" id="b-next" aria-label="다음 개념"><svg viewBox="0 0 16 16"><path d="M11 2h2v12h-2zM2 2v12l8-6z"/></svg></button>
       <button class="btn" id="b-loop" aria-pressed="false" aria-label="이 장면 반복" title="이 장면 반복 (L)"><svg viewBox="0 0 16 16"><path d="M3 6V5a2 2 0 0 1 2-2h6V1l3 3-3 3V5H5v1zM13 10v1a2 2 0 0 1-2 2H5v2l-3-3 3-3v2h6v-1z"/></svg></button>
       <button class="btn sp" id="b-speed" aria-pressed="false" aria-label="느리게 (0.5배속)" title="느리게 (S)">½×</button>
       <button class="btn" id="b-big" aria-pressed="false" aria-label="크게 보기" title="크게 보기 (F)"><svg viewBox="0 0 16 16"><path d="M2 2h5v2H4v3H2zM9 2h5v5h-2V4H9zM2 9h2v3h3v2H2zM12 9h2v5H9v-2h3z"/></svg></button>
       <span class="count" id="count">01 / 19</span>
       <div class="tl" id="tl"></div>
+      <div class="scrub-row">
+        <span class="scrub-lab" id="scrub-lab"></span>
+        <button class="btn step-btn" id="b-back" aria-label="1초 뒤로" title="1초 뒤로 (,)">−1s</button>
+        <input type="range" class="scrub" id="scrub" min="0" max="1000" value="0" aria-label="장면 시간 이동">
+        <button class="btn step-btn" id="b-fwd" aria-label="1초 앞으로" title="1초 앞으로 (.)">+1s</button>
+        <span class="time" id="time">0.0 / 15.0s</span>
+      </div>
     </div>
   </section>
 
   <section class="sum" aria-label="한눈에 정리">
     <div class="sum-head">
       <h2>한눈에 정리</h2>
-      <p>개념 이름을 누르면 위 플레이어가 그 장면으로 이동합니다 · 키보드 ← → 이동, Space 재생/정지, L 반복, S 느리게, F 크게 보기</p>
+      <p>개념 이름을 누르면 위 플레이어가 그 장면으로 이동합니다 · 키보드 ← → 이동, Space 재생/정지, R 처음부터, , / . ±1초, L 반복, S 느리게, F 크게 보기</p>
     </div>
     <div class="sum-grid" id="sum"></div>
   </section>
@@ -948,24 +989,33 @@ S.push({u:4,ch:'문법',title:'음운 변동 — 이름은 개수로',file:'12-l
   }});
 
 /* ───────── 플레이어 ───────── */
+S.forEach((s,i)=>{s.oi=i;});
 const Q=new URLSearchParams(location.search); // ?embed&only=5,6,7 — 장 노트 안에 그 장 장면만
-if(Q.has('embed')){document.documentElement.classList.add('embed');const only=(Q.get('only')||'').split(',').filter(Boolean).map(Number).filter(i=>Number.isInteger(i)&&S[i]);
+const isEmbed=Q.has('embed');
+if(isEmbed){document.documentElement.classList.add('embed');const only=(Q.get('only')||'').split(',').filter(Boolean).map(Number).filter(i=>Number.isInteger(i)&&S[i]);
   if(only.length){const keep=only.map(i=>S[i]);S.length=0;S.push(...keep);}}
 const cv=document.getElementById('cv'),ctx=cv.getContext('2d'),$=id=>document.getElementById(id);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-let idx=0,t=0,playing=!reduce,last=null;
+let idx=0,t=0,playing=!reduce,last=null,scrubbing=false;
 function resize(){const d=Math.min(2,devicePixelRatio||1);cv.width=Math.max(1,Math.round(cv.clientWidth*d));cv.height=Math.max(1,Math.round(cv.clientHeight*d));}
 new ResizeObserver(resize).observe(cv);resize();
 const uc=s=>s.u<0?'#F4B544':UNITS[s.u].c;
 const cnt=[0,0,0,0,0];S.forEach(s=>{if(s.u>=0)s.no=++cnt[s.u];});
 const fxHTML=x=>x.w?`<span class="f word">${x.f}</span>`:`<span class="f">${fm(x.f)}</span>`;
 
-const tl=$('tl');
+const tl=$('tl'),scrub=$('scrub');
 S.forEach((s,i)=>{const b=document.createElement('button');b.className='seg';b.style.setProperty('--c',uc(s));b.title=`${i+1}. ${s.title}`;
   b.setAttribute('aria-label',`${i+1}번째 개념: ${s.title}`);b.innerHTML='<i><b></b></i>';b.onclick=()=>go(i);tl.appendChild(b);});
 UNITS.forEach((u,k)=>{const b=document.createElement('button');b.className='chip';b.dataset.u=k;b.style.setProperty('--c',u.c);b.textContent=`${u.k} ${u.name}`;
   b.onclick=()=>go(S.findIndex(s=>s.u===k));$('units').appendChild(b);});
 
+function syncTimeUI(){
+  const dur=S[idx].dur||1,pct=clamp(t/dur);
+  const b=tl.children[idx].querySelector('b');b.style.width=(pct*100)+'%';
+  if(!scrubbing)scrub.value=Math.round(pct*1000);
+  const txt=t.toFixed(1)+' / '+dur.toFixed(1)+'s';
+  $('time').textContent=txt;$('g-time').textContent=txt;
+}
 function render(){
   const s=S[idx];document.documentElement.style.setProperty('--acc',uc(s));
   $('p-eye').innerHTML=s.u<0?'<b>INTRO</b> 국어 전체 지도':`<b>${UNITS[s.u].k}-${s.no}</b> ${UNITS[s.u].name} · ${s.ch}`;
@@ -974,25 +1024,59 @@ function render(){
   $('p-pts').innerHTML=s.pts.map(p=>`<li>${p}</li>`).join('');
   const pn=$('panel');pn.classList.remove('enter');void pn.offsetWidth;pn.classList.add('enter');pn.scrollTop=0;
   $('count').textContent=String(idx+1).padStart(2,'0')+' / '+S.length;
+  $('scrub-lab').textContent=(s.u<0?'INTRO':`${UNITS[s.u].k}-${s.no}`)+' · '+s.title;
+  $('g-title').textContent=s.title;
+  if(isEmbed){
+    $('em-badge').textContent=`${idx+1}/${S.length}`;
+    $('em-title').textContent=s.title;
+    $('em-sub').textContent=s.sub;
+    $('em-open').href=`motion.html#s${s.oi??idx}`;
+  }
   [...tl.children].forEach((b,i)=>{b.classList.toggle('done',i<idx);b.setAttribute('aria-current',i===idx);b.querySelector('b').style.width='';});
   document.querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-current',+b.dataset.u===s.u));
   cv.setAttribute('aria-label',s.title+' 애니메이션');
-  try{history.replaceState(null,'','#s'+idx)}catch(e){}
+  syncTimeUI();
+  if(!isEmbed)try{history.replaceState(null,'','#s'+idx)}catch(e){}
 }
 function go(i,start){idx=(i+S.length)%S.length;t=start??(playing?0:(S[idx].still??2));render();}
-function setPlay(p){playing=p;$('b-play').setAttribute('aria-label',p?'일시정지':'재생');$('play-ico').setAttribute('d',p?'M4 2h3v12H4zM9 2h3v12H9z':'M4 2v12l10-6z');}
-$('b-play').onclick=()=>setPlay(!playing);$('b-prev').onclick=()=>go(idx-1);$('b-next').onclick=()=>go(idx+1);cv.onclick=()=>setPlay(!playing);
+function seekTo(v){t=clamp(v,0,S[idx].dur);syncTimeUI();}
+function setPlay(p){playing=p;const lbl=p?'일시정지':'재생',d=p?'M4 2h3v12H4zM9 2h3v12H9z':'M4 2v12l10-6z';
+  $('b-play').setAttribute('aria-label',lbl);$('play-ico').setAttribute('d',d);
+  $('g-play').setAttribute('aria-label',lbl);$('g-play-ico').setAttribute('d',d);}
+$('b-play').onclick=()=>setPlay(!playing);$('g-play').onclick=()=>setPlay(!playing);
+$('b-prev').onclick=()=>go(idx-1);$('b-next').onclick=()=>go(idx+1);
+$('b-replay').onclick=()=>seekTo(0);$('g-replay').onclick=()=>seekTo(0);
+$('b-back').onclick=()=>seekTo(t-1);$('b-fwd').onclick=()=>seekTo(t+1);
+cv.onclick=()=>setPlay(!playing);
+scrub.addEventListener('pointerdown',()=>{scrubbing=true;});
+scrub.addEventListener('pointerup',()=>{scrubbing=false;});
+scrub.addEventListener('input',()=>{seekTo((+scrub.value/1000)*S[idx].dur);});
+scrub.addEventListener('change',()=>{scrubbing=false;seekTo((+scrub.value/1000)*S[idx].dur);});
+
+let loop=false,speed=1;const stage=document.querySelector('.stage');
+function setLoop(v){loop=v;$('b-loop').setAttribute('aria-pressed',v);$('g-loop').setAttribute('aria-pressed',v);}
+function setSpeed(v){speed=v;$('b-speed').setAttribute('aria-pressed',v!==1);$('g-speed').setAttribute('aria-pressed',v!==1);}
+function setBig(v){
+  if(isEmbed){
+    if(v&&stage.requestFullscreen){stage.requestFullscreen().catch(()=>{stage.classList.toggle('big',true);$('b-big').setAttribute('aria-pressed',true);resize();});}
+    else if(!v&&document.fullscreenElement===stage){document.exitFullscreen().catch(()=>{});}
+    else{stage.classList.toggle('big',v);$('b-big').setAttribute('aria-pressed',v);resize();}
+    return;
+  }
+  stage.classList.toggle('big',v);$('b-big').setAttribute('aria-pressed',v);document.body.style.overflow=v?'hidden':'';resize();
+}
+document.addEventListener('fullscreenchange',()=>{$('b-big').setAttribute('aria-pressed',document.fullscreenElement===stage);resize();});
+$('b-loop').onclick=()=>setLoop(!loop);$('g-loop').onclick=()=>setLoop(!loop);
+$('b-speed').onclick=()=>setSpeed(speed===1?.5:1);$('g-speed').onclick=()=>setSpeed(speed===1?.5:1);
+$('b-big').onclick=()=>setBig(!(stage.classList.contains('big')||document.fullscreenElement===stage));
+$('g-prev').onclick=()=>go(idx-1);$('g-next').onclick=()=>go(idx+1);$('g-close').onclick=()=>setBig(false);
 document.addEventListener('keydown',e=>{if(e.target.closest('input,textarea'))return;
   if(e.key==='ArrowRight')go(idx+1);else if(e.key==='ArrowLeft')go(idx-1);
   else if(e.key===' '&&!e.target.closest('button')){e.preventDefault();setPlay(!playing);}
+  else if(e.key==='r'||e.key==='R'||e.key==='0')seekTo(0);
+  else if(e.key===',')seekTo(t-1);else if(e.key==='.')seekTo(t+1);
   else if(e.key==='l'||e.key==='L')setLoop(!loop);else if(e.key==='s'||e.key==='S')setSpeed(speed===1?.5:1);
-  else if(e.key==='f'||e.key==='F')setBig(!stage.classList.contains('big'));else if(e.key==='Escape')setBig(false);});
-let loop=false,speed=1;const stage=document.querySelector('.stage');
-function setLoop(v){loop=v;$('b-loop').setAttribute('aria-pressed',v);}
-function setSpeed(v){speed=v;$('b-speed').setAttribute('aria-pressed',v!==1);}
-function setBig(v){stage.classList.toggle('big',v);$('b-big').setAttribute('aria-pressed',v);document.body.style.overflow=v?'hidden':'';resize();}
-$('b-loop').onclick=()=>setLoop(!loop);$('b-speed').onclick=()=>setSpeed(speed===1?.5:1);$('b-big').onclick=()=>setBig(!stage.classList.contains('big'));
-$('g-prev').onclick=()=>go(idx-1);$('g-next').onclick=()=>go(idx+1);$('g-close').onclick=()=>setBig(false);
+  else if(e.key==='f'||e.key==='F')setBig(!(stage.classList.contains('big')||document.fullscreenElement===stage));else if(e.key==='Escape')setBig(false);});
 
 UNITS.forEach((u,k)=>{const col=document.createElement('div');col.className='col';col.style.setProperty('--c',u.c);
   col.innerHTML=`<h3>${u.k} ${u.name}<small>${cnt[k]} CONCEPTS</small></h3>`+S.map((s,i)=>s.u!==k?'':
@@ -1003,13 +1087,13 @@ $('sum').addEventListener('click',e=>{const b=e.target.closest('button[data-i]')
 
 function frame(now){
   const dt=last==null?0:Math.min(.05,(now-last)/1000);last=now;
-  if(playing){t+=dt*speed;if(t>=S[idx].dur){if(loop)t=0;else go(idx+1);}}
+  if(playing&&!scrubbing){t+=dt*speed;if(t>=S[idx].dur){if(loop)t=0;else go(idx+1);}}
   ctx.setTransform(cv.width/W,0,0,cv.height/H,0,0);ctx.clearRect(0,0,W,H);
   try{S[idx].draw(ctx,t);}catch(err){console.error(err);}
-  const b=tl.children[idx].querySelector('b');b.style.width=(clamp(t/S[idx].dur)*100)+'%';
+  syncTimeUI();
   requestAnimationFrame(frame);
 }
-const hm=location.hash.match(/^#s(\d+)$/);setPlay(playing);go(hm?Math.min(+hm[1],S.length-1):0,S[hm?Math.min(+hm[1],S.length-1):0].still);
+const hm=location.hash.match(/^#s(\d+)$/);setPlay(playing);go(hm?Math.min(+hm[1],S.length-1):0);
 requestAnimationFrame(frame);
 </script>
 
