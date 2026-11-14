@@ -70,6 +70,11 @@
     return fetch('/api/wrong?sub=' + encodeURIComponent(sub), { credentials: 'same-origin', cache: 'no-store' })
       .then(function (r) { if (!r.ok) throw new Error('wrong'); return r.json(); });
   }
+  /* 문항별 마지막 풀이 결과 [{exam, q, ok, ts}] — 유형별 '몇 문제 풀었나' 표시용 */
+  function done(sub) {
+    return fetch('/api/done?sub=' + encodeURIComponent(sub), { credentials: 'same-origin', cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error('done'); return r.json(); });
+  }
   function exportAttempts(sub) {
     return fetch('/api/export?sub=' + encodeURIComponent(sub), { credentials: 'same-origin', cache: 'no-store' })
       .then(function (r) { if (!r.ok) throw new Error('export'); return r.json(); });
@@ -172,5 +177,5 @@
     });
   }
 
-  w.SnAuth = { examStates: examStates, saveExamState: saveExamState, me: me, login: login, logout: logout, record: record, wrong: wrong, exportAttempts: exportAttempts, notes: notes, saveNotes: saveNotes, due: due, aiKey: aiKey, saveAiKey: saveAiKey, aiIndex: aiIndex, aiGet: aiGet, saveAiNote: saveAiNote };
+  w.SnAuth = { done: done, pending: function () { return readQ().slice(); }, examStates: examStates, saveExamState: saveExamState, me: me, login: login, logout: logout, record: record, wrong: wrong, exportAttempts: exportAttempts, notes: notes, saveNotes: saveNotes, due: due, aiKey: aiKey, saveAiKey: saveAiKey, aiIndex: aiIndex, aiGet: aiGet, saveAiNote: saveAiNote };
 })(window);
