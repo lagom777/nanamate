@@ -251,7 +251,7 @@
   }
 
   /* ───────── UI shell ───────── */
-  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, topicRow, setOpts = [], examOpts = [], setGroup = null, setGroupBase = '', scopeWrap = null, scopeBtns = {}, authBox, exportMsg, exportTimer, exporting = false, dueBtn = null, dueOpt = null, omrClock = null;
+  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, topicRow, setOpts = [], examOpts = [], setPick = null, setBtn = null, setPanel = null, setGroup = null, setGroupBase = '', scopeWrap = null, scopeBtns = {}, authBox, exportMsg, exportTimer, exporting = false, dueBtn = null, dueOpt = null, omrClock = null;
 
   var COLS_KEY = 'sn:pr:cols';
   function paintCols() {
@@ -309,7 +309,23 @@
         scopeWrap.appendChild(scopeBtns[o[0]]);
       });
     }
-    var row1 = [setSel];
+    /* 세트 목록을 누르면 줄마다 막대 그래프가 보이게: 브라우저의 <select> 목록에는 글자만 들어가므로, 과목 시험지(국어·영어)가 아니면
+       단추 + 직접 그린 목록을 쓴다. <select> 는 값의 원본으로 남겨 두고(다른 코드가 setSel.value 를 쓴다) 화면에서만 감춘다 */
+    if (!PAPER) {
+      setSel.classList.add('pr-set-native'); setSel.setAttribute('aria-hidden', 'true'); setSel.tabIndex = -1;
+      setBtn = el('button', { type: 'button', class: 'pr-set-btn', 'aria-haspopup': 'true', 'aria-expanded': 'false', title: '풀 세트 고르기 — 시험·파트·유형마다 정답률 그래프가 보여요', onclick: function () { toggleSetPanel(); } }, [el('span')]);
+      setPanel = el('div', { class: 'pr-set-panel', role: 'group', 'aria-label': '문제 세트 목록' });
+      setPanel.hidden = true;
+      setPanel.addEventListener('keydown', function (ev) {
+        if (ev.key !== 'ArrowDown' && ev.key !== 'ArrowUp') return;
+        var rows = [].slice.call(setPanel.querySelectorAll('button')), k = rows.indexOf(document.activeElement) + (ev.key === 'ArrowDown' ? 1 : -1);
+        if (rows[k]) { ev.preventDefault(); rows[k].focus(); }
+      });
+      document.addEventListener('click', function (ev) { if (setPanel && !setPanel.hidden && !setPick.contains(ev.target)) toggleSetPanel(false); });
+      document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && setPanel && !setPanel.hidden) { toggleSetPanel(false); setBtn.focus(); } });
+      setPick = el('div', { class: 'pr-set-pick' }, [setBtn, setSel, setPanel]);
+    }
+    var row1 = [setPick || setSel];
     if (SUB === 'korean') {
       selSel = el('select', { 'aria-label': '선택과목', onchange: function () { S.sel = selSel.value; store('sn:' + SUB + ':sel', S.sel); startSet(setSel.value, true); } }, [
         el('option', { value: 'a', text: '선택과목: 화법과 작문' }), el('option', { value: 'b', text: '선택과목: 언어와 매체' })
@@ -473,10 +489,10 @@
       el('span', { class: 'pr-acc-name', text: name }),
       el('span', { class: 'pr-acc-bar', role: 'img', 'aria-label': '전체 ' + c.n + '문항 중 맞음 ' + c.ok + ', 틀림 ' + (c.done - c.ok) + ', 안 풂 ' + (c.n - c.done) }, [okBar, noBar]),
       el('span', { class: 'pr-acc-num' + (pct == null ? ' none' : pct >= 80 ? ' hi' : pct < 50 ? ' lo' : '') }, pct == null ? ['아직 안 풂'] : [el('b', { text: pct + '%' }), ' ' + c.ok + '/' + c.done + ' 맞음']),
-      el('span', { class: 'pr-acc-tot', text: '푼 ' + c.done + '/' + c.n })
+      el('span', { class: 'pr-acc-tot', text: o.tot || '푼 ' + c.done + '/' + c.n })
     ];
     var cls = 'pr-acc-row' + (o.on ? ' on' : '') + (o.sub ? ' sub' : '');
-    return o.onclick ? el('button', { type: 'button', class: cls, title: name + ' 모아 풀기', onclick: o.onclick }, kids) : el('div', { class: cls }, kids);
+    return o.onclick ? el('button', { type: 'button', class: cls, title: o.title || name + ' 모아 풀기', onclick: o.onclick }, kids) : el('div', { class: cls }, kids);
   }
   /* 파트(와 그 유형)별 정답률 줄들. only: 그 파트만(없으면 모든 파트), cur: 지금 푸는 세트 id, go: 줄을 눌렀을 때 */
   function accRows(only, cur, go) {
@@ -516,12 +532,64 @@
     });
     /* 시험 줄: 그 시험에서 푼 문항과 맞은 수(다 풀었으면 점수까지) — 복습할 시험을 목록에서 바로 고르게 */
     examOpts.forEach(function (o) {
-      var s = o.e[SUB], n = s.a.length, done = 0, ok = 0, pts = 0;
-      for (var q = 1; q <= n; q++) { var d = doneOf(o.e.key + '/' + q); if (d >= 0) { done++; if (d) { ok++; pts += s.p[q - 1] || 0; } } }
-      var t = etitle(o.e) + (!done ? '' : done < n ? ' — ' + done + '/' + n + ' 풂 · ' + ok + ' 맞음' : ' — ' + ok + '/' + n + ' 맞음 · ' + pts + '점');
+      var c = examCount(o.e), n = c.n;
+      var t = etitle(o.e) + (!c.done ? '' : c.done < n ? ' — ' + c.done + '/' + n + ' 풂 · ' + c.ok + ' 맞음' : ' — ' + c.ok + '/' + n + ' 맞음 · ' + c.pts + '점');
       if (o.el.textContent !== t) o.el.textContent = t;
     });
     if (setGroup) setGroup.label = setGroupBase + ' — ' + SRC_NAME[SRC];
+    if (setBtn) {   // 단추에는 지금 푸는 세트(목록의 그 줄 글자 그대로)
+      var cur = setSel.options[setSel.selectedIndex], lab = cur ? cur.textContent.replace(/^[\u00a0\s└]+/, '') : '문제 세트';
+      if (setBtn.firstChild.textContent !== lab) setBtn.firstChild.textContent = lab;
+      if (!setPanel.hidden) paintSetPanel();
+    }
+  }
+  /* 시험 하나에서 푼 수·맞은 수·맞은 배점 */
+  function examCount(e) {
+    var s = e[SUB], c = { n: s.a.length, done: 0, ok: 0, pts: 0 };
+    for (var q = 1; q <= c.n; q++) { var d = doneOf(e.key + '/' + q); if (d >= 0) { c.done++; if (d) { c.ok++; c.pts += s.p[q - 1] || 0; } } }
+    return c;
+  }
+  /* 세트 목록(누르면 펼쳐지는 판): 시험·파트·유형마다 막대(맞음 초록 · 틀림 빨강 · 안 풂 회색)와 정답률 — 낮은 곳을 보고 바로 골라 복습한다 */
+  function paintSetPanel() {
+    var keep = setPanel.scrollTop;
+    setPanel.innerHTML = '';
+    var go = function (id) { toggleSetPanel(false); setBtn.focus(); if (id === S.set) return; setSel.value = id; startSet(id); window.scrollTo({ top: 0, behavior: 'instant' }); };
+    var head = function (t) { setPanel.appendChild(el('p', { class: 'pr-set-h', text: t })); };
+    setPanel.appendChild(el('p', { class: 'pr-set-key' }, ['막대: ', el('span', { class: 'pr-acc-key ok', text: '맞음' }), ' ', el('span', { class: 'pr-acc-key no', text: '틀림' }), ' ', el('span', { class: 'pr-acc-key', text: '안 풂' }), ' · 퍼센트는 푼 문제 중 맞은 비율']));
+    [[true, '수능'], [false, '모의평가 6월·9월']].forEach(function (g) {
+      var rows = examOpts.filter(function (o) { return isCsat(o.e) === g[0]; });
+      if (!rows.length) return;
+      head(g[1] + ' (' + QN + '문항 · ' + (EXAM_SECONDS / 60) + '분)');
+      rows.forEach(function (o) {
+        var c = examCount(o.e), id = 'exam:' + o.e.key, name = etitle(o.e).replace('학년도 대학수학능력시험', ' 수능').replace('학년도 ', ' ');
+        setPanel.appendChild(accRow(name, c, { on: S.set === id, title: etitle(o.e) + ' 풀기', tot: c.done === c.n ? c.pts + '점' : '푼 ' + c.done + '/' + c.n, onclick: function () { go(id); } }));
+      });
+    });
+    if (setOpts.length) {
+      head(setGroupBase + ' — ' + SRC_NAME[SRC] + ' 문제');
+      accRows(null, S.set, go).forEach(function (r) { setPanel.appendChild(r); });
+    }
+    head('내 오답');
+    [['wrong:all', '틀린·헷갈린 문제 다시 풀기'], ['due:today', dueOpt ? dueOpt.textContent : '오늘 다시 풀 오답']].forEach(function (w) {
+      setPanel.appendChild(el('button', { type: 'button', class: 'pr-acc-row pr-set-plain' + (S.set === w[0] ? ' on' : ''), text: w[1], onclick: function () { go(w[0]); } }));
+    });
+    setPanel.scrollTop = keep;
+  }
+  function toggleSetPanel(open) {
+    if (!setPanel) return;
+    if (open === undefined) open = setPanel.hidden;
+    if (open === !setPanel.hidden) return;
+    setPanel.hidden = !open;
+    setBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (!open) return;
+    paintSetPanel();
+    var r = setPick.getBoundingClientRect(), w = Math.min(720, window.innerWidth - 16);   // 화면 밖으로 나가지 않게 폭·위치·높이를 맞춘다
+    if (window.innerHeight - r.bottom < 380 && r.top > 12) { window.scrollBy({ top: r.top - 8, behavior: 'instant' }); r = setPick.getBoundingClientRect(); }   // 아래 자리가 모자라면 단추를 화면 위로 올린다
+    setPanel.style.width = w + 'px';
+    setPanel.style.left = Math.min(0, window.innerWidth - 8 - r.left - w) + 'px';
+    setPanel.style.maxHeight = Math.max(260, Math.min(640, window.innerHeight - r.bottom - 16)) + 'px';
+    var on = setPanel.querySelector('.pr-acc-row.on');
+    setPanel.scrollTop = on ? Math.max(0, on.offsetTop - setPanel.clientHeight / 2) : 0;
   }
   function setScope(v) {
     if (v === SRC) return;
