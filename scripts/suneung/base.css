@@ -35,3 +35,31 @@ p { margin:0 0 18px; color:var(--text-dim); }
 .outline-card p { font-size:0.85em; color:var(--text-dim); margin:0; }
 .interact-hint { display:inline-flex; align-items:center; gap:6px; padding:4px 12px; background:var(--accent-glow); border:1px solid var(--border); border-radius:20px; font-size:0.75em; color:var(--accent); font-family:var(--font-mono); margin:8px 0; }
 @media (max-width:900px) { .layout { grid-template-columns:minmax(0,1fr); } aside { position:static; height:auto; border-right:none; border-bottom:1px solid var(--border); padding:24px; } main { padding:40px 24px 80px; } .paper-header h1 { font-size:2.2em; } .scene-3d { height:300px; } }
+
+/* 과목 첫 화면의 '이 단원은 결국 이걸 배운다': 단원 | 한 줄 | 쓰는 식 | 기출 */
+.core-sec { margin: 6px 0 34px; }
+.core-sec h2 { margin-top: 0; }
+.core-sub { font-size: .88em; color: var(--text-dim); margin: -6px 0 14px; }
+.core-list { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--bg-card, transparent); }
+.core-row { display: grid; grid-template-columns: minmax(0, 8.5em) minmax(0, 1.6fr) minmax(0, 1fr) auto; gap: 6px 16px; align-items: center; padding: 11px 16px; border-top: 1px solid var(--border); }
+.core-row:first-child { border-top: 0; }
+.core-name { font-weight: 700; color: var(--accent); text-decoration: none; }
+.core-name:hover { text-decoration: underline; }
+.core-line { line-height: 1.55; }
+.core-f { font-family: var(--font-mono, ui-monospace, monospace); font-size: .9em; color: var(--text); line-height: 1.9; }
+.core-go { grid-column: 4; font-size: .8em; font-weight: 600; white-space: nowrap; padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; color: var(--accent); text-decoration: none; }
+.core-go:hover { background: var(--accent-glow, transparent); }
+.fr { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 .2em; line-height: 1.2; white-space: nowrap; }
+.fr > span:first-child { padding: 0 .3em .05em; border-bottom: 1.4px solid currentColor; }
+.fr > span:last-child { padding: .05em .3em 0; }
+@media (max-width: 760px) {
+  .core-row { grid-template-columns: minmax(0, 1fr) auto; padding: 12px 14px; }
+  .core-name { grid-column: 1; grid-row: 1; }
+  .core-go { grid-column: 2; grid-row: 1; }
+  .core-line, .core-f { grid-column: 1 / -1; }
+}
+/* 폰에서는 목차(aside)가 본문 위에 오므로, 요약 표가 있는 첫 화면은 본문을 먼저 보여 주고 목차를 아래로 내린다 */
+@media (max-width: 900px) {
+  body.core-first .layout > aside { order: 2; border-bottom: none; border-top: 1px solid var(--border); }
+  body.core-first .paper-header { margin-bottom: 26px; padding-bottom: 20px; }
+}

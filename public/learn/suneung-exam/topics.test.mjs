@@ -27,3 +27,23 @@ for (const [sub, folder] of [["phys1", "aboutSuneungPhysics1"], ["bio1", "aboutS
     for (const id of Object.keys(topicPart)) assert.ok(seen.has(id), `${id} 문항이 하나도 없다`);
   });
 }
+
+// 과목 첫 화면의 '이 단원은 결국 이걸 배운다': 기출 링크가 풀어보기에 있는 파트·유형을 가리키고, 노트 링크의 파일이 있다.
+for (const [sub, folder] of [["phys1", "aboutSuneungPhysics1"], ["bio1", "aboutSuneungBio1"]]) {
+  test(`${sub}: 첫 화면 요약 표의 링크가 살아 있다`, () => {
+    const html = fs.readFileSync(new URL(`../${folder}/index.html`, here), "utf8");
+    const ids = new Set();
+    for (const p of cfgOf(folder).parts) { ids.add("part:" + p.id); for (const t of p.topics || []) ids.add("topic:" + t.id); }
+    const rows = html.split('<div class="core-row">').slice(1).map((c) => {
+      const line = c.split("\n")[0];
+      const m = /^<a class="core-name" href="chapters\/([^"]+)">([^<]+)<\/a>/.exec(line), g = /href="practice\.html#([^"]+)"/.exec(line);
+      return [m && m[1], m && m[2], g && g[1]];
+    });
+    assert.ok(rows.length >= 12, `줄 수 ${rows.length}`);
+    for (const [file, name, go] of rows) {
+      assert.ok(file && fs.existsSync(new URL(`../${folder}/chapters/${file}`, here)), `${name}: ${file}`);
+      assert.ok(go && ids.has(go), `${name}: 기출 링크 ${go}`);
+    }
+    assert.ok(html.indexOf('class="core-sec"') < html.indexOf("이 노트가 다루는 것"), "요약 표가 소개 글보다 먼저");
+  });
+}
