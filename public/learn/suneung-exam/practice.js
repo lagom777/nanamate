@@ -945,7 +945,15 @@
     '```비교: 첫 줄 "| 기준 | A | B |", 다음 줄부터 "| 항목 | … | … |" (정답 쪽 칸 제목 끝에 (정답), 칸에 ○·✕ 만 써도 된다) / ' +
     '```연표: 한 줄에 "연도 | 사건" (답과 이어지는 줄 끝에 ★)' +
     (FORMULA ? ' / ```그래프: "y = x^2 - 3x"(여러 줄이면 여러 곡선, 조각 함수는 "y = 식, 시작 ~ 끝"), "x: -1 ~ 4", "점: (1.5, -2.25) 꼭짓점"(빈 점은 이름에 ○), "x = 2", "넓이: 0 ~ 3"(곡선과 x축 사이, 두 곡선 사이는 "넓이: 0 ~ 3, 사이") — 식은 x^2·sqrt(x)·sin(x)·e^x·ln(x)·abs(x) 같은 계산식으로(LaTeX·$ 없이). 물리처럼 시간 그래프면 변수 t 와 물리량 이름을 쓰고 축 이름을 단다: "v = 2t, 0 ~ 3", "v = 6, 3 ~ 5", "t: 0 ~ 5", "축: t(s), v(m/s)", "넓이: 0 ~ 5"(이동 거리)' : '') +
-    '. 블록 안에는 마크다운 꾸밈을 쓰지 않는다' + (FORMULA ? '(짧은 수식 $…$ 은 된다)' : '') + '.';
+    (FORMULA ? ' / ```그림: 상황을 직접 그린 도해. 블록 안에 <svg viewBox="0 0 400 300"> … </svg> 를 그대로 쓴다(가로 360~440, 세로는 내용만큼). ' +
+      '쓸 수 있는 것은 svg·g·path·line·polyline·polygon·circle·ellipse·rect·text·tspan·defs·marker(화살촉)와 fill·stroke·stroke-width·stroke-dasharray·font-size·text-anchor·transform 같은 속성뿐이다(class·script·image·use·foreignObject·애니메이션은 지워진다). ' +
+      '흰 바탕에 그려진다. 색은 #1f2937(기본 선·글자) · #94a3b8(보조선·점선) · #e2532d(강조) · #0f6b57(답·결론) · #2563eb(둘째 대상) 안에서 고르고, 속을 채우지 않는 도형에는 fill="none" 을 쓴다. ' +
+      '글자는 font-size 13 이상으로(휴대폰에서는 그림이 가로 300px쯤으로 줄어든다), 도형·선·다른 글자와 겹치지 않는 빈 곳에 놓는다. 첨자·기호는 유니코드로 쓴다(S₁, v₀, λ, θ, ½ — SVG 안에서는 $ 수식이 안 된다). ' +
+      '좌표는 어림하지 말고 계산해서 맞춘다: 교점·길이의 비·각도·개수가 답의 근거면 실제 값대로 그려, 그림에서 세거나 재면 답이 나오게 한다. ' +
+      '문항 그림을 베끼지 말고 풀이의 근거가 보이게 다시 그린다: 답과 이어지는 곳은 강조색과 "보강 지점 (4개)" 같은 이름표로 표시하고, 그림 아래쪽에 범례(어떤 선·점이 무엇인지)를 넣는다. 도형은 150개 이내. </svg> 다음 줄에 그림 읽는 법을 한두 줄 써도 된다' : '') +
+    '. 블록 안에는 마크다운 꾸밈을 쓰지 않는다' + (FORMULA ? '(짧은 수식 $…$ 은 된다)' : '') + '.' +
+    (FORMULA ? ' 그림 고르기: 공간·상황이 있는 내용(파동의 간섭·굴절·반사, 힘·운동·충돌, 전기장·자기장·회로, 빛의 경로, 에너지 준위, 원자·분자 모형, 세포 분열·염색체, 가계도, 막전위·근수축, 지층·천체 배치, 도형·좌표)은 ```그림 으로 그 상황을 직접 그려 설명한다. ' +
+      '풀이를 1·2·3·4·5 처럼 글 단계로만 길게 늘어놓지 않는다 — ```흐름 은 진짜 원인→결과 사슬일 때만 4단계 이내로 쓰고, 단계가 더 필요하면 그림에 번호(①②③)를 찍고 글에서는 그 번호를 가리켜 짧게 설명한다.' : '');
 
   function loadSdk() {
     if (!sdkP) {
@@ -1004,10 +1012,11 @@
   /* ───────── 그림 블록(인포그래픽): AI 가 줄 맨 앞 ```선지 · ```흐름 · ```비교 · ```연표 · ```그래프 로 연 블록을 그림으로 그린다.
    * 블록 안 글자는 모두 이스케이프해 끼우고(수학·과학은 $…$ 수식도 KaTeX 로), 그래프 식은 eval 없이 직접 해석해 SVG 로 그린다.
    * 받는 중(닫는 ``` 전)에는 '그림을 그리는 중…', 알아볼 수 없는 블록은 글자 그대로 보인다 ───────── */
-  var VIS_KIND = { '선지': 'ch', '보기': 'ch', choices: 'ch', '흐름': 'flow', flow: 'flow', '비교': 'cmp', compare: 'cmp', '연표': 'tl', timeline: 'tl', '그래프': 'graph', graph: 'graph' };
+  var VIS_KIND = { '선지': 'ch', '보기': 'ch', choices: 'ch', '흐름': 'flow', flow: 'flow', '비교': 'cmp', compare: 'cmp', '연표': 'tl', timeline: 'tl', '그래프': 'graph', graph: 'graph',
+    '그림': 'fig', '도해': 'fig', svg: 'fig', figure: 'fig', diagram: 'fig', xml: 'fig', html: 'fig' };
   var VIS_TAG = /\s*(★|✓|\(정답\))\s*/g, visSeq = 0;
   function fenceOut(src) {
-    var out = [], list = [], cur = null;
+    var out = [], list = [], cur = null, bare = null;
     String(src || '').split('\n').forEach(function (ln) {
       var m = /^\s*```\s*([^\s`]*)\s*$/.exec(ln);
       if (cur) {
@@ -1016,8 +1025,15 @@
         return;
       }
       if (m) { cur = { kind: VIS_KIND[m[1].toLowerCase()] || '', lines: [] }; return; }
+      if (bare) { bare.lines.push(ln); if (/<\/svg\s*>/i.test(ln)) { list.push(bare); out.push('', '\uE002' + (list.length - 1) + '\uE003', ''); bare = null; } return; }
+      if (FORMULA && /^\s*<svg[\s>]/i.test(ln)) {   // 울타리(```) 없이 바로 쓴 <svg>
+        bare = { kind: 'fig', lines: [ln] };
+        if (/<\/svg\s*>/i.test(ln)) { list.push(bare); out.push('', '\uE002' + (list.length - 1) + '\uE003', ''); bare = null; }
+        return;
+      }
       out.push(ln);
     });
+    if (bare) { bare.open = true; list.push(bare); out.push('', '\uE002' + (list.length - 1) + '\uE003', ''); }
     if (cur) { cur.open = true; list.push(cur); out.push('', '' + (list.length - 1) + '', ''); }
     return { text: out.join('\n'), list: list };
   }
@@ -1029,7 +1045,8 @@
   function visHTML(b) {
     if (b.open) return '<div class="pr-vis pr-vis-wait">🎨 그림을 그리는 중…</div>';
     var h = '';
-    try { h = b.kind === 'ch' ? visChoices(b.lines) : b.kind === 'flow' ? visFlow(b.lines) : b.kind === 'cmp' ? visCmp(b.lines) : b.kind === 'tl' ? visTl(b.lines) : b.kind === 'graph' ? visGraph(b.lines) : ''; } catch (e) { h = ''; }
+    if (!b.kind && FORMULA && /<svg[\s>]/i.test(b.lines.join('\n'))) b.kind = 'fig';   // 이름 없는 울타리 안의 <svg>
+    try { h = b.kind === 'ch' ? visChoices(b.lines) : b.kind === 'flow' ? visFlow(b.lines) : b.kind === 'cmp' ? visCmp(b.lines) : b.kind === 'tl' ? visTl(b.lines) : b.kind === 'graph' ? visGraph(b.lines) : b.kind === 'fig' ? visFig(b.lines) : ''; } catch (e) { h = ''; }
     return h || '<pre class="pr-vis-raw">' + escH(b.lines.join('\n')) + '</pre>';
   }
   /* 선지: "④ | 정답 | 근거" · "② | ✕ 내 답 | 왜 틀렸나" · "① | ○ | 근거" — 정답은 빨강(채점 색과 같게), 내 답은 검정 */
@@ -1147,6 +1164,64 @@
     try { var fn = expr(); return p === toks.length ? fn : null; } catch (e) { return null; }
   }
   function visNum(t) { var f = exprFn(String(t).trim()); var v = f ? f(0) : NaN; return isFinite(v) ? v : NaN; }
+  /* 그림(도해): AI 가 쓴 <svg> 를 그대로 믿지 않는다. 실행되지 않는 문서로 읽어, 정해 둔 도형 태그와 속성만 골라 새로 적는다
+   * (script·style·image·use·foreignObject·a·애니메이션·on*·href 는 버리고, url() 은 그림 안의 #id 만, id 는 그림마다 다른 이름으로 바꾼다).
+   * <svg> 앞뒤에 쓴 줄은 그림 설명으로 붙인다. 알아볼 수 없으면 '' — 글자 그대로 보인다 */
+  var FIG_EL = { svg: 1, g: 1, path: 1, circle: 1, ellipse: 1, line: 1, polyline: 1, polygon: 1, rect: 1, text: 1, tspan: 1, defs: 1, marker: 1, title: 1, desc: 1, clippath: 1, lineargradient: 1, radialgradient: 1, stop: 1 };
+  var FIG_TEXT = { text: 1, tspan: 1, title: 1, desc: 1 };
+  var FIG_AT = {};
+  ('x y x1 y1 x2 y2 cx cy r rx ry d points width height viewbox preserveaspectratio transform fill fill-opacity fill-rule stroke stroke-width stroke-dasharray stroke-dashoffset stroke-linecap stroke-linejoin stroke-opacity opacity ' +
+    'font-size font-weight font-style text-anchor dominant-baseline letter-spacing dx dy rotate textlength lengthadjust id marker-start marker-mid marker-end markerwidth markerheight markerunits refx refy orient ' +
+    'clip-path clippathunits gradientunits gradienttransform offset stop-color stop-opacity fx fy paint-order vector-effect').split(' ').forEach(function (k) { FIG_AT[k] = 1; });
+  var figCache = {}, figCacheN = 0;
+  function figVal(name, v, st) {
+    v = String(v).trim();
+    if (!v || v.length > 40000 || /[<>\\]|javascript:|expression|@import|&#/i.test(v)) return null;
+    if (/url\s*\(/i.test(v)) { var u = /^url\(\s*["']?#([\w-]+)["']?\s*\)$/i.exec(v); if (!u) return null; return 'url(#' + st.pre + u[1] + ')'; }
+    if (name === 'id') return /^[\w-]+$/.test(v) ? st.pre + v : null;
+    return v;
+  }
+  function figNode(n, st, inText) {
+    if (n.nodeType === 3) return inText ? escH(n.nodeValue) : '';
+    if (n.nodeType !== 1) return '';
+    var tag = n.localName, low = tag.toLowerCase();
+    if (!FIG_EL[low] || ++st.n > 2000) return '';
+    var at = {}, order = [], put = function (name, raw, v) { v = figVal(name, v, st); if (v != null && !(name in at)) { at[name] = [raw, v]; order.push(name); } };
+    Array.prototype.forEach.call(n.attributes, function (a) {
+      var name = a.name.toLowerCase();
+      if (st.root && (name === 'width' || name === 'height' || name === 'x' || name === 'y')) return;
+      if (FIG_AT[name]) put(name, a.name, a.value);
+    });
+    var style = n.getAttribute('style');   // style="fill:none;stroke:#333" 처럼 쓴 것은 허용 속성만 골라 속성으로 옮긴다
+    if (style) style.split(';').forEach(function (kv) { var c = kv.indexOf(':'), k = c > 0 ? kv.slice(0, c).trim().toLowerCase() : ''; if (k && FIG_AT[k] && k !== 'id') put(k, k, kv.slice(c + 1)); });
+    var root = st.root; st.root = false;
+    var kids = '';
+    Array.prototype.forEach.call(n.childNodes, function (c) { kids += figNode(c, st, !!FIG_TEXT[low]); });
+    return '<' + tag + (root ? ' role="img" aria-label="' + st.label + '"' : '') + order.map(function (k) { return ' ' + at[k][0] + '="' + escH(at[k][1]).replace(/"/g, '&quot;') + '"'; }).join('') + '>' + kids + '</' + tag + '>';
+  }
+  function visFig(lines) {
+    var src = lines.join('\n');
+    if (figCache[src] !== undefined) return figCache[src];
+    var out = '', a = src.search(/<svg[\s>]/i), m = /<\/svg\s*>/i.exec(src), b = m ? m.index + m[0].length : -1;
+    if (a >= 0 && b > a && src.length < 200000 && typeof DOMParser !== 'undefined') {
+      var doc = new DOMParser().parseFromString('<!doctype html><body>' + src.slice(a, b), 'text/html'), svg = doc.body && doc.body.querySelector('svg');
+      if (svg) {
+        var vb = (svg.getAttribute('viewBox') || '').trim().split(/[\s,]+/).map(Number), w = parseFloat(svg.getAttribute('width')), h = parseFloat(svg.getAttribute('height'));
+        if (!(vb.length === 4 && vb.every(isFinite) && vb[2] > 0 && vb[3] > 0)) vb = w > 0 && h > 0 ? [0, 0, w, h] : null;
+        if (vb) {
+          svg.setAttribute('viewBox', vb.join(' '));
+          var ttl = svg.querySelector('title'), st = { n: 0, pre: 'pr-fg' + (++visSeq) + '-', root: true, label: escH((ttl && ttl.textContent || '설명 그림').trim().slice(0, 80)).replace(/"/g, '&quot;') };
+          var body = figNode(svg, st, false);
+          var cap = (src.slice(0, a) + '\n' + src.slice(b)).split('\n').map(function (x) { return x.trim(); }).filter(Boolean);
+          if (body && st.n > 1) out = '<div class="pr-vis pr-vis-fig"><div class="pr-fig-pic" style="max-width:' + Math.round(Math.min(680, Math.max(260, vb[2] * 1.45))) + 'px">' + body + '</div>' +
+            (cap.length ? '<p class="pr-fig-cap">' + cap.map(richText).join('<br>') + '</p>' : '') + '</div>';
+        }
+      }
+    }
+    if (++figCacheN > 60) { figCache = {}; figCacheN = 0; }   // 받는 동안 글자가 올 때마다 다시 그리므로 같은 그림은 한 번만 손본다
+    figCache[src] = out;
+    return out;
+  }
   function prettyExpr(src) {
     return escH(String(src).trim()).replace(/\*\*/g, '^').replace(/\^\(([^()]*)\)/g, '<sup>$1</sup>').replace(/\^(-?[\w.]+)/g, '<sup>$1</sup>')
       .replace(/sqrt/g, '√').replace(/\bpi\b/g, 'π').replace(/\*/g, '·').replace(/-/g, '−');
@@ -2103,8 +2178,8 @@
   /* 문항 하나의 AI 해설 요청. a = 내 답(0 미응답, -1 틀렸지만 고른 답을 모름), m = 그 회차 시험지 meta(국어·영어) */
   /* 과목·문항에 맞는 그림 블록 권하기 */
   function visHint(it) {
-    if (SUB === 'math') return '함수·그래프·넓이가 나오면 ```그래프, 아니면 풀이 단계를 ```흐름으로' + (it.num ? '' : ', 선지 판단이 핵심이면 ```선지');
-    if (FORMULA) return '보기 ㄱ·ㄴ·ㄷ이나 선지 판단은 ```선지, 과정·원리는 ```흐름, 두 대상 비교는 ```비교, 함수·그래프가 나오면 ```그래프';
+    if (SUB === 'math') return '함수·그래프·넓이가 나오면 ```그래프, 도형·좌표·위치 관계가 핵심이면 ```그림 으로 직접 그리고, 그 밖에는 풀이의 뼈대를 ```흐름 4단계 이내로' + (it.num ? '' : ', 선지 판단이 핵심이면 ```선지');
+    if (FORMULA) return '장치·운동·파동·회로·세포·가계도처럼 상황이 있는 문항은 ```그림 으로 그 상황과 답의 근거를 직접 그리고, 시간·관계 그래프는 ```그래프, 보기 ㄱ·ㄴ·ㄷ 판단만 하는 문항은 ```선지, 두 대상 비교는 ```비교. 풀이 단계를 ```흐름 으로 길게 나열하지 않는다';
     if (SUB === 'hist') return '시대·사건 순서는 ```연표, 원인→결과는 ```흐름, 제도·인물 비교는 ```비교, 선지 판단은 ```선지';
     return '지문의 논리·구조는 ```흐름, 대상 비교는 ```비교, 선지 판단은 ```선지';
   }
@@ -2120,8 +2195,8 @@
       var wrong = a === -1 || (a && !isRight(it, a)), skip = !a, picked = a > 0;
       lines.push('먼저 **짧은 해설**을 쉬운 말로 4줄 이내로 쓰세요(30초 안에 읽게): "핵심: …"(이 문항이 묻는 것 한 줄) / "정답: …"(정답 번호와 한 줄 이유)' +
         (wrong ? ' / "내 실수: …"(' + (picked ? '내가 고른 ' + ansText(it, a) + '이(가) 왜 틀렸는지' : '흔히 고르는 오답이 왜 틀렸는지') + ' 한 줄)' : '') + '. ' +
-        '짧은 해설 바로 아래에는 이 문항을 한눈에 보여 주는 그림 블록을 하나 넣으세요(' + visHint(it) + '). 그다음 "===자세히===" 한 줄을 쓰고, 그 아래에 자세한 해설을 쓰세요(풀이 단계·비교가 있으면 그림 블록을 하나 더 써도 됩니다).');
-      lines.push('자세한 해설은 다음 순서로 써 주세요.\n**핵심 개념** 이 문항이 묻는 개념을 1~3줄로\n**풀이** 정답에 이르는 과정을 단계별로' +
+        '짧은 해설 바로 아래에는 이 문항을 한눈에 보여 주는 그림 블록을 하나 넣으세요(' + visHint(it) + '). 그다음 "===자세히===" 한 줄을 쓰고, 그 아래에 자세한 해설을 쓰세요(' + (FORMULA ? '풀이 중간 상태를 보여 주는 그림이나 비교가 있으면 그림 블록을 하나 더 쓰세요' : '풀이 단계·비교가 있으면 그림 블록을 하나 더 써도 됩니다') + ').');
+      lines.push('자세한 해설은 다음 순서로 써 주세요.\n**핵심 개념** 이 문항이 묻는 개념을 1~3줄로\n**풀이** 정답에 이르는 과정을 단계별로' + (FORMULA ? '(위 그림에서 어디를 보면 되는지 짚으면서, 한 단계는 1~2문장으로)' : '') +
         (wrong ? '\n**내 실수 분석** ' + (picked ? '내가 고른 ' + ansText(it, a) + '이(가) 왜 그럴듯해 보였는지' : '이 문항을 틀린 학생이 흔히 고르는 오답이 왜 그럴듯해 보이는지') + ', 어느 판단에서 갈렸는지, 같은 유형에서 이 실수를 막는 확인 습관' + (mine ? ' (위 "내가 남긴 기록"의 내 생각에서 출발해 짚고, 내가 고른 원인이 맞는지도 말해 주세요)' : '') :
           skip ? '\n**어디서 시작할까** 손대지 못했을 때 첫 실마리를 잡는 방법' :
           unsureOf(it) ? '\n**헷갈린 지점** 맞혔지만 확신이 없었던 이유와, 다음에 확신을 갖고 고르게 하는 판단 기준' : '\n**확인 포인트** 맞혔지만 시간을 줄이거나 실수를 막을 지점'));
