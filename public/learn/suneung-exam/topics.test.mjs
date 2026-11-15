@@ -34,7 +34,7 @@ for (const [sub, folder] of [["phys1", "aboutSuneungPhysics1"], ["bio1", "aboutS
     const html = fs.readFileSync(new URL(`../${folder}/index.html`, here), "utf8");
     const ids = new Set();
     for (const p of cfgOf(folder).parts) { ids.add("part:" + p.id); for (const t of p.topics || []) ids.add("topic:" + t.id); }
-    const rows = html.split('<div class="core-row">').slice(1).map((c) => {
+    const rows = html.split(/<div class="core-row"[^>]*>/).slice(1).map((c) => {
       const line = c.split("\n")[0];
       const m = /^<a class="core-name" href="chapters\/([^"]+)">([^<]+)<\/a>/.exec(line), g = /href="practice\.html#([^"]+)"/.exec(line);
       return [m && m[1], m && m[2], g && g[1]];
@@ -47,3 +47,22 @@ for (const [sub, folder] of [["phys1", "aboutSuneungPhysics1"], ["bio1", "aboutS
     assert.ok(html.indexOf('class="core-sec"') < html.indexOf("이 노트가 다루는 것"), "요약 표가 소개 글보다 먼저");
   });
 }
+
+// 첫 화면 요약 표의 정답률(core-acc.js): 풀어보기와 같은 방법으로 센다.
+test("요약 표 정답률: 범위·범위 밖 문항·고른 답 재채점", async () => {
+  const { createRequire } = await import("node:module");
+  const { count, merge } = createRequire(import.meta.url)("./core-acc.js");
+  const ex = [
+    { key: "2026-csat", kind: "csat", phys1: { a: [1, 2, 3, 4], t: ["p3", "p3", "p1", "p3"], u: ["p3a", "p3b", "p1a", "x"] } },
+    { key: "2026-sep", kind: "sep", phys1: { a: [5, [1, 2]], t: ["p3", "p3"], u: ["p3b", "p3b"] } },
+  ];
+  const done = { "2026-csat/1": [1, 10, 1], "2026-csat/2": [1, 11, 5], "2026-csat/4": [1, 12, 4], "2026-sep/2": [0, 13, 2] };
+  assert.deepEqual(count(ex, "phys1", "part:p3", done, "csat"), { n: 2, done: 2, ok: 1 });      // 범위 밖(x)은 세지 않고, 2번은 고른 답 5 ≠ 정답 2 라 틀림으로 다시 채점
+  assert.deepEqual(count(ex, "phys1", "topic:p3b", done, "csat"), { n: 1, done: 1, ok: 0 });
+  assert.deepEqual(count(ex, "phys1", "topic:p3b", done, "all"), { n: 3, done: 2, ok: 1 });     // 복수 정답 [1, 2] 에 2 를 고르면 맞음
+  assert.deepEqual(count(ex, "phys1", "topic:p3b", done, "mock"), { n: 2, done: 1, ok: 1 });
+  assert.deepEqual(count(ex, "phys1", "topic:p3a,topic:p3b", done, "csat"), { n: 2, done: 2, ok: 1 });   // 여러 유형을 묶은 줄
+  const m = merge({ "2026-csat/1": [1, 10, 1] }, [{ exam: "2026-csat", q: 1, ok: 0, picked: 3, ts: 20 }, { exam: "2026-csat", q: 3, ok: 1, picked: 3, ts: 5 }]);
+  assert.deepEqual(m["2026-csat/1"], [0, 20, 3]);
+  assert.deepEqual(count(ex, "phys1", "part:p1", m, "csat"), { n: 1, done: 1, ok: 1 });
+});

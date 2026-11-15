@@ -215,12 +215,13 @@ ${(spec.extraLinks || []).map((x) => `  <a class="outline-card" href="${x.href}"
   }
   // 맨 위 한눈에 보기: 단원마다 '결국 무엇을 배우나' 한 줄 + 쓰는 식 (spec.core)
   const core = spec.core
-    ? `<section class="core-sec" id="core">
+    ? `<section class="core-sec" id="core" data-sub="${spec.sub}">
 <h2>이 단원은 결국 이걸 배운다</h2>
-<p class="core-sub">단원마다 한 줄입니다. 단원 이름을 누르면 노트로, <strong>기출</strong>을 누르면 그 유형의 수능 문제로 갑니다.</p>
+<p class="core-sub">단원마다 한 줄입니다. 줄마다 내 정답률이 같이 보이니, 낮은 단원은 이름을 눌러 노트를 다시 보고 <strong>기출</strong>로 그 유형 문제를 다시 풉니다.</p>
 <div class="core-list">
-${spec.core.map((r) => `<div class="core-row"><a class="core-name" href="chapters/${r.file}">${r.name}</a><div class="core-line">${r.line}</div>${r.f ? `<div class="core-f">${r.f}</div>` : ""}${r.go ? `<a class="core-go" href="practice.html#${r.go}" title="${r.name} 기출 모아 풀기">기출 →</a>` : ""}</div>`).join("\n")}
+${spec.core.map((r) => `<div class="core-row"${r.go ? ` data-go="${(r.acc || [r.go]).join(",")}"` : ""}><a class="core-name" href="chapters/${r.file}">${r.name}</a><div class="core-line">${r.line}</div>${r.f ? `<div class="core-f">${r.f}</div>` : ""}${r.go ? `<a class="core-go" href="practice.html#${r.go}" title="${r.name} 기출 모아 풀기">기출 →</a>` : ""}</div>`).join("\n")}
 </div>
+<script defer src="../suneung-exam/core-acc.js"></script>
 </section>`
     : "";
   return `${head(`${spec.label} — 수능 노트`, 0, spec)}

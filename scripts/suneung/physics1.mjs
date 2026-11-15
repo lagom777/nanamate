@@ -434,7 +434,7 @@ export const spec = {
   extraLinks: [{ href: "../suneung-ebs/index.html#physics1", label: "🔒 수특 그림 모음", num: "EBS", blurb: "2027 수능특강 그림·그래프를 장별로 훑어보기 — 내 계정으로 로그인해야 열림" }],
   motionBlurb: "23개 핵심 개념을 움직이는 그림으로",
   chapters,
-  // 과목 첫 화면 맨 위: 단원마다 '결국 무엇을 배우나' 한 줄과 쓰는 식 (go: 풀어보기의 유형·파트 세트)
+  // 과목 첫 화면 맨 위: 단원마다 '결국 무엇을 배우나' 한 줄과 쓰는 식 (go: '기출'이 여는 풀어보기 세트, acc: 정답률에 함께 세는 세트들 — 없으면 go)
   core: [
     { name: "운동", file: "01-forces.html", go: "topic:p1a", line: "속도와 가속도로 위치를 예측한다", f: `s = ${fr("v<sub>0</sub> + v", "2")} t,  v = v<sub>0</sub> + at` },
     { name: "뉴턴 법칙", file: "01-forces.html", go: "topic:p1b", line: "힘이 가속도를 만든다 (알짜힘이 0이면 속도가 그대로다)", f: "F = ma" },
@@ -449,7 +449,7 @@ export const spec = {
     { name: "전류의 자기장", file: "05-electromagnetism.html", go: "topic:p5b", line: "전류가 자기장을 만든다 (방향은 오른손으로)", f: `직선 도선 B = k ${fr("I", "r")}` },
     { name: "자성체", file: "05-electromagnetism.html", go: "topic:p5c", line: "강자성체는 자석을 치워도 자성이 남고, 상자성체는 사라지고, 반자성체는 반대 방향으로 자기화된다", f: "" },
     { name: "전자기 유도", file: "05-electromagnetism.html", go: "topic:p5d", line: "코일을 지나는 자기 선속이 변하면, 그 변화를 방해하는 방향으로 전류가 흐른다", f: `V = −N ${fr("ΔΦ", "Δt")}` },
-    { name: "파동·굴절", file: "06-waves.html", go: "topic:p6b", line: "매질이 바뀌어도 진동수는 그대로이고 속력과 파장이 바뀐다. 느린 매질에서 빠른 매질로 임계각보다 크게 들어가면 전반사한다", f: `v = fλ,  ${fr("sin i", "sin r")} = ${fr("v<sub>1</sub>", "v<sub>2</sub>")} (각은 법선 기준)` },
+    { name: "파동·굴절", file: "06-waves.html", go: "topic:p6b", acc: ["topic:p6a", "topic:p6b"], line: "매질이 바뀌어도 진동수는 그대로이고 속력과 파장이 바뀐다. 느린 매질에서 빠른 매질로 임계각보다 크게 들어가면 전반사한다", f: `v = fλ,  ${fr("sin i", "sin r")} = ${fr("v<sub>1</sub>", "v<sub>2</sub>")} (각은 법선 기준)` },
     { name: "전자기파", file: "06-waves.html", go: "topic:p6c", line: "파장이 짧을수록 진동수와 에너지가 크다. 종류마다 쓰이는 곳이 다르다", f: "감마선 &lt; X선 &lt; 자외선 &lt; 가시광선 &lt; 적외선 &lt; 마이크로파 &lt; 라디오파 (파장)" },
     { name: "간섭", file: "06-waves.html", go: "topic:p6d", line: "두 파동이 겹치면 커지거나(보강) 없어진다(상쇄)", f: "마루+마루·골+골 / 마루+골" },
     { name: "이중성", file: "07-duality.html", go: "part:p7", line: "빛은 입자처럼(광전 효과), 입자는 파동처럼(물질파) 군다", f: `E = hf,  λ = ${fr("h", "p")} = ${fr("h", "mv")}` },
