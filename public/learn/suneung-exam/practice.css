@@ -258,6 +258,10 @@
 .pr-vis-tl li.hot span { font-weight: 700; }
 .pr-ai-body .pr-vt-y { font: 800 13px var(--font-mono, monospace); color: var(--text); }
 .pr-vis-graph svg { display: block; width: 100%; max-width: 560px; height: auto; margin: 0 auto; font-family: var(--font-body, sans-serif); overflow: visible; }
+.pr-vis-fig { padding: 10px; background: #fff; color: #1f2937; border-color: color-mix(in srgb, #94a3b8 45%, transparent); }
+.pr-fig-pic { width: 100%; margin: 0 auto; }
+.pr-fig-pic svg { display: block; width: 100%; height: auto; overflow: hidden; fill: #1f2937; font-family: var(--font-body, sans-serif); font-size: 13px; }
+.pr-ai-body .pr-fig-cap { max-width: none; margin: 8px 2px 0; padding-top: 8px; border-top: 1px dashed #cbd5e1; color: #334155; font-size: 13.5px; line-height: 1.6; text-align: center; }
 .pr-vg-grid { stroke: var(--pr-line); stroke-width: .6; }
 .pr-vg-axis { stroke: var(--text-dim); stroke-width: 1.1; }
 .pr-vg-tick { fill: var(--text-dim); font-size: 9px; }
@@ -317,6 +321,7 @@ body.pr-ai-big .pr-ai-dlg .pr-ai-body { font-size: 17.5px; line-height: 1.85; }
 body.pr-ai-big .pr-ai-dlg .pr-ai-body .pr-ai-h { font-size: 18.5px; }
 body.pr-ai-big .pr-ai-dlg .pr-vis { font-size: 15.5px; }
 body.pr-ai-big .pr-ai-dlg .pr-vis-graph svg { max-width: 760px; }
+body.pr-ai-big .pr-ai-dlg .pr-fig-pic { max-width: 780px !important; }
 @media (max-width: 900px) {
   body.pr-ai-big .pr-ai-dlg[open] { width: 100%; height: 100vh; height: 100dvh; padding: 16px 16px 20px; border-radius: 0; }
   body.pr-ai-big .pr-ai-dlg[open] .pr-ai-head { margin: -16px -16px 10px; padding: 12px 16px; }
