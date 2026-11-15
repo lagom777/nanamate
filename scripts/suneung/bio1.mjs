@@ -1,5 +1,5 @@
 // 수능 생명과학Ⅰ — 파트별 노트 내용 (2015 개정, 2027학년도까지)
-import { f, note, warn, tip, tbl, ex, partStats, examsOf, figHead, figure } from "./lib.mjs";
+import { f, fr, note, warn, tip, tbl, ex, partStats, examsOf, figHead, figure } from "./lib.mjs";
 import { maps } from "./maps-bio1.mjs";
 import { styles } from "./content/style-bio1.mjs";
 import { quick } from "./content/quick-bio1.mjs";
@@ -499,6 +499,24 @@ export const spec = {
   extraLinks: [{ href: "../suneung-ebs/index.html#bio1", label: "🔒 수특 그림 모음", num: "EBS", blurb: "2027 수능특강 그림·그래프를 장별로 훑어보기 — 내 계정으로 로그인해야 열림" }],
   motionBlurb: "27개 핵심 개념을 움직이는 그림으로",
   chapters,
+  // 과목 첫 화면 맨 위: 단원마다 '결국 무엇을 배우나' 한 줄 (go: 풀어보기의 유형·파트 세트)
+  core: [
+    { name: "생명과학의 이해", file: "01-life.html", go: "part:b1", line: "생물의 특성, 그리고 가설을 세우고 변인을 통제하는 탐구 방법" },
+    { name: "물질대사", file: "02-metabolism.html", go: "part:b2", line: "먹은 것을 세포 호흡으로 분해해 ATP를 만들고, 노폐물은 내보낸다. 에너지 균형이 깨지면 대사성 질환이 된다" },
+    { name: "흥분 전도", file: "03-neuron-muscle.html", go: "topic:b3a", line: "Na⁺이 들어오면 막전위가 +로(탈분극), K⁺이 나가면 −로(재분극) 바뀐다" },
+    { name: "근수축", file: "03-neuron-muscle.html", go: "topic:b3b", line: "액틴 필라멘트가 마이오신 사이로 미끄러져 들어간다 (A대 길이는 그대로, I대와 H대가 줄어든다)" },
+    { name: "신경계", file: "04-nervous-homeostasis.html", go: "topic:b4a", line: "뇌는 부위마다 맡은 일이 있고, 교감 신경과 부교감 신경은 서로 반대로 일한다" },
+    { name: "항상성", file: "04-nervous-homeostasis.html", go: "topic:b4b", line: "간뇌의 시상 하부가 조절 중추이고, 음성 피드백과 길항 작용(인슐린 ↔ 글루카곤)으로 유지된다" },
+    { name: "방어 작용", file: "05-defense.html", go: "part:b5", line: "비특이적 방어가 먼저 막고, 특이적 방어는 처음엔 느리게, 두 번째는 기억 세포 덕분에 빠르고 강하게 막는다" },
+    { name: "염색체·DNA 양", file: "06-cell-division.html", go: "topic:b6c", line: "DNA 양은 복제하면 2배, 분열할 때마다 절반이 된다. 핵상(2n·n)과 DNA 상대량으로 어느 세포인지 가려낸다" },
+    { name: "세포 분열", file: "06-cell-division.html", go: "topic:b6b", line: "체세포 분열은 2n → 2n, 감수 1분열에서 상동 염색체가 갈라져 2n → n이 된다" },
+    { name: "유전(가계도)", file: "07-human-genetics.html", go: "topic:b7a", line: "가계도는 우열 → 상염색체/X 염색체 → 유전자형 → 확률 순서로 푼다 (DNA 상대량 표가 있으면 염색체 위치부터)" },
+    { name: "다인자·복대립", file: "07-human-genetics.html", go: "topic:b7b", line: "다인자 유전은 대문자 대립유전자의 수가 표현형을 정한다. 부모 유전자형에서 표현형 가짓수와 확률을 센다" },
+    { name: "돌연변이", file: "07-human-genetics.html", go: "topic:b7c", line: "염색체 비분리가 감수 1분열에서 일어나면 생식세포 4개가 모두 이상, 2분열이면 2개만 이상이다" },
+    { name: "생태계", file: "08-ecosystem.html", go: "topic:b8b", line: "같은 종끼리(개체군), 다른 종끼리(군집) 어떻게 얽혀 사는지 배운다" },
+    { name: "에너지·물질", file: "08-ecosystem.html", go: "topic:b8c", line: "에너지는 한 방향으로 흐르며 줄어들고, 물질(탄소·질소)은 돌고 돈다" },
+    { name: "생물 다양성", file: "08-ecosystem.html", go: "topic:b8d", line: "유전적 다양성·종 다양성·생태계 다양성, 그리고 이것을 지키는 방법" },
+  ],
   intro: `<h2>이 노트가 다루는 것</h2>
 <p>수능 생명과학Ⅰ의 <strong>전 범위</strong>를 다섯 단원, 여덟 파트로 나눠 정리했습니다. 각 파트는 개념 정리 → 표·그래프 읽는 법 → 기출에서 반복되는 함정 → 대표 예제 → 짝짓기·퀴즈 → 실제 기출 풀어보기 순으로 이어지며, 파트마다 <em>모션 노트</em>의 해당 장면으로 바로 이동할 수 있습니다.</p>
 ${note("시험 구조", "20문항 · 50점 · 30분. 2점 10문항 + 3점 10문항. 자료(표·그래프·가계도)를 해석해 보기 ㄱ·ㄴ·ㄷ의 참/거짓을 가리는 5지 선다입니다. 3점 문항은 뒤쪽에 더 많고 유전 문항이 가장 어렵습니다.")}

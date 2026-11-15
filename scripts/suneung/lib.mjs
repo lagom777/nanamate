@@ -12,6 +12,8 @@ export const EXAMS = JSON.parse(fs.readFileSync(path.join(LEARN, "suneung-exam/e
 
 /* ── 본문 조각 ── */
 export const f = (h) => `<div class="formula">${h}</div>`;
+/* 위아래 분수(글 속 식): fr("v₀ + v", "2") */
+export const fr = (a, b) => `<span class="fr"><span>${a}</span><span>${b}</span></span>`;
 export const note = (t, h) => `<div class="info-card"><h4>${t}</h4><p>${h}</p></div>`;
 export const warn = (h) => `<div class="warning-box"><strong>함정:</strong> ${h}</div>`;
 export const tip = (h) => `<div class="study-tip"><strong>TIP:</strong> ${h}</div>`;
@@ -211,8 +213,18 @@ ${(spec.extraLinks || []).map((x) => `  <a class="outline-card" href="${x.href}"
   } else {
     roadmap = `<div class="outline-grid">\n${spec.chapters.map(card).join("\n")}\n${extraCards}\n</div>`;
   }
+  // 맨 위 한눈에 보기: 단원마다 '결국 무엇을 배우나' 한 줄 + 쓰는 식 (spec.core)
+  const core = spec.core
+    ? `<section class="core-sec" id="core">
+<h2>이 단원은 결국 이걸 배운다</h2>
+<p class="core-sub">단원마다 한 줄입니다. 단원 이름을 누르면 노트로, <strong>기출</strong>을 누르면 그 유형의 수능 문제로 갑니다.</p>
+<div class="core-list">
+${spec.core.map((r) => `<div class="core-row"><a class="core-name" href="chapters/${r.file}">${r.name}</a><div class="core-line">${r.line}</div>${r.f ? `<div class="core-f">${r.f}</div>` : ""}${r.go ? `<a class="core-go" href="practice.html#${r.go}" title="${r.name} 기출 모아 풀기">기출 →</a>` : ""}</div>`).join("\n")}
+</div>
+</section>`
+    : "";
   return `${head(`${spec.label} — 수능 노트`, 0, spec)}
-<body><div class="layout">
+<body${core ? ' class="core-first"' : ""}><div class="layout">
 ${aside(spec, "index", 0)}
 <main>
 <header class="paper-header">
@@ -220,6 +232,7 @@ ${aside(spec, "index", 0)}
   <p class="authors">${spec.authors}</p>
   <p class="affiliation">${spec.affiliation}</p>
 </header>
+${core}
 ${spec.intro}
 <h2>파트별 로드맵</h2>
 ${roadmap}
