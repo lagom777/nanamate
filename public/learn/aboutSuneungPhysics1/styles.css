@@ -63,6 +63,23 @@ p { margin:0 0 18px; color:var(--text-dim); }
   body.core-first .layout > aside { order: 2; border-bottom: none; border-top: 1px solid var(--border); }
   body.core-first .paper-header { margin-bottom: 26px; padding-bottom: 20px; }
 }
+/* 요약 표의 단원별 정답률(core-acc.js 가 채운다): 막대(초록 맞음 · 빨강 틀림 · 회색 안 풂) + 퍼센트 */
+.core-acc-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 0 0 10px; font-size: .88em; color: var(--text-dim); }
+.core-acc-sum b { color: var(--accent); font-size: 1.15em; }
+.core-sort { font: inherit; font-size: .92em; font-weight: 600; padding: 4px 12px; border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--accent); cursor: pointer; }
+.core-sort[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+.core-acc { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; font-size: .84em; color: var(--text-dim); min-height: 1.4em; }
+.core-bar { flex: 1 1 auto; max-width: 420px; display: flex; height: 9px; border-radius: 999px; overflow: hidden; background: var(--border); }
+.core-bar i { display: block; height: 100%; }
+.core-bar i.ok { background: #16a34a; }
+.core-bar i.no { background: #dc2626; }
+.core-num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.core-num b { font-size: 1.15em; color: var(--text); margin-right: 2px; }
+.core-num.hi b { color: #15803d; }
+.core-num.lo b { color: #b91c1c; }
+.core-again { font-size: .9em; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: #dc2626; color: #fff; white-space: nowrap; }
+.core-row.weak { box-shadow: inset 4px 0 0 #dc2626; }
+@media (max-width: 760px) { .core-acc { flex-wrap: wrap; gap: 6px 10px; } .core-bar { flex: 1 1 100%; max-width: none; } }
 
 aside::before { font-size:1.05em !important; word-break:break-all; }
 main.wide { max-width: 1180px; }

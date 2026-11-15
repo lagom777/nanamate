@@ -119,11 +119,17 @@
   }
   function partPick(id) { return function (s, n) { return !!s.t && s.t[n - 1] === id && !oos(s, n); }; }
   function topicPick(id) { return function (s, n) { return !!s.u && s.u[n - 1] === id; }; }
-  /* 모아 풀기 순서: 안 푼 문제(새 문제 — count 개까지) → 틀렸던 문제 → 맞힌 문제. 묶음 안에서는 섞는다.
+  /* 최신 시험 문제가 먼저 오게: 시험 목록 순서(최신 학년도부터, 같은 학년도는 수능 → 9월 → 6월), 같은 시험 안에서는 번호 순 */
+  function byRecent(items) {
+    var at = {};
+    examList().forEach(function (e, i) { at[e.key] = i; });
+    return items.slice().sort(function (a, b) { return (at[a.ex] - at[b.ex]) || (a.n - b.n); });
+  }
+  /* 모아 풀기 순서: 안 푼 문제(새 문제 — count 개까지) → 틀렸던 문제 → 맞힌 문제. 묶음 안에서는 수능이 먼저, 그다음 최신 시험부터.
    * 전에 푼 문제는 수를 줄이지 않고 다 낸다(그때 고른 답을 다시 볼 수 있게) */
   function freshFirst(items, count) {
     var g = [[], [], []];
-    shuffle(items).forEach(function (it) { g[it.prev < 0 ? 0 : it.prev === 0 ? 1 : 2].push(it); });
+    byRecent(items).forEach(function (it) { g[it.prev < 0 ? 0 : it.prev === 0 ? 1 : 2].push(it); });
     g = g.map(function (a) { return a.filter(function (it) { return it.csat; }).concat(a.filter(function (it) { return !it.csat; })); });   // 같은 묶음 안에서는 수능이 먼저
     return (count && count < g[0].length ? g[0].slice(0, count) : g[0]).concat(g[1], g[2]);
   }
@@ -197,7 +203,7 @@
         var p = id.split('/'), e2 = examOf(p[0]);
         if (e2) items.push(mk(e2, +p[1]));
       });
-      items = shuffle(withUnsure(items));
+      items = byRecent(withUnsure(items));
     }
     return items;
   }
@@ -207,7 +213,7 @@
       var e2 = examOf(r.exam);
       if (e2 && +r.q) items.push(mk(e2, +r.q));
     });
-    return shuffle(withUnsure(items));
+    return byRecent(withUnsure(items));
   }
   /* 아래쪽 그림 선지(그래프·사진)가 잘려 있던 문항 그림을 다시 자른 것(crop.py 가 그림 블록을 문항 몸체로 안 세던 문제) — R2 에 다시 올리기 전까지
    * 사이트의 suneung-exam/fix/ 에서 준다. AI 도 그림을 주소로 받으므로 절대 주소로 */
@@ -501,7 +507,7 @@
   /* 세트 고르기 목록의 파트·유형 줄에도 문항 수와 푼 수(고른 출처 범위 기준) */
   function paintSetCounts() {
     setOpts.forEach(function (o) {
-      var c = doneCount(o.pick), t = o.name + ' (' + c.n + '문항' + (c.done ? ' · ' + c.done + ' 풂' : '') + ')';
+      var c = doneCount(o.pick), t = o.name + ' (' + c.n + '문항' + (c.done ? ' · ' + c.done + ' 풂 · 정답률 ' + Math.round(c.ok / c.done * 100) + '%' : '') + ')';
       if (o.el.textContent !== t) o.el.textContent = t;
     });
     if (setGroup) setGroup.label = setGroupBase + ' — ' + SRC_NAME[SRC];
@@ -2709,7 +2715,7 @@
       it.dueInfo = r;
       items.push(it);
     });
-    return shuffle(items);
+    return byRecent(items);
   }
   function dueTarget(r) {
     var q = +r.q;
