@@ -251,7 +251,7 @@
   }
 
   /* ───────── UI shell ───────── */
-  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, topicRow, setOpts = [], setGroup = null, setGroupBase = '', scopeWrap = null, scopeBtns = {}, authBox, exportMsg, exportTimer, exporting = false, dueBtn = null, dueOpt = null, omrClock = null;
+  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, topicRow, setOpts = [], examOpts = [], setGroup = null, setGroupBase = '', scopeWrap = null, scopeBtns = {}, authBox, exportMsg, exportTimer, exporting = false, dueBtn = null, dueOpt = null, omrClock = null;
 
   var COLS_KEY = 'sn:pr:cols';
   function paintCols() {
@@ -264,7 +264,11 @@
     setSel = el('select', { 'aria-label': '문제 세트', onchange: function () { startSet(setSel.value); } });
     var gC = el('optgroup', { label: '수능 (' + QN + '문항 · ' + (EXAM_SECONDS / 60) + '분)' });
     var gM = el('optgroup', { label: '모의평가 6월·9월 (' + QN + '문항 · ' + (EXAM_SECONDS / 60) + '분)' });
-    ex.forEach(function (e) { (isCsat(e) ? gC : gM).appendChild(el('option', { value: 'exam:' + e.key, text: etitle(e) })); });
+    ex.forEach(function (e) {
+      var o = el('option', { value: 'exam:' + e.key, text: etitle(e) });
+      (isCsat(e) ? gC : gM).appendChild(o);
+      if (!PAPER) examOpts.push({ el: o, e: e });
+    });
     if (gC.children.length) setSel.appendChild(gC);
     if (gM.children.length) setSel.appendChild(gM);
     if (HAS_PARTS && !PAPER) {
@@ -507,7 +511,14 @@
   /* 세트 고르기 목록의 파트·유형 줄에도 문항 수와 푼 수(고른 출처 범위 기준) */
   function paintSetCounts() {
     setOpts.forEach(function (o) {
-      var c = doneCount(o.pick), t = o.name + ' (' + c.n + '문항' + (c.done ? ' · ' + c.done + ' 풂 · 정답률 ' + Math.round(c.ok / c.done * 100) + '%' : '') + ')';
+      var c = doneCount(o.pick), t = o.name + ' (' + c.n + '문항' + (c.done ? ' · ' + c.done + ' 풂 · ' + c.ok + ' 맞음 ' + Math.round(c.ok / c.done * 100) + '%' : '') + ')';
+      if (o.el.textContent !== t) o.el.textContent = t;
+    });
+    /* 시험 줄: 그 시험에서 푼 문항과 맞은 수(다 풀었으면 점수까지) — 복습할 시험을 목록에서 바로 고르게 */
+    examOpts.forEach(function (o) {
+      var s = o.e[SUB], n = s.a.length, done = 0, ok = 0, pts = 0;
+      for (var q = 1; q <= n; q++) { var d = doneOf(o.e.key + '/' + q); if (d >= 0) { done++; if (d) { ok++; pts += s.p[q - 1] || 0; } } }
+      var t = etitle(o.e) + (!done ? '' : done < n ? ' — ' + done + '/' + n + ' 풂 · ' + ok + ' 맞음' : ' — ' + ok + '/' + n + ' 맞음 · ' + pts + '점');
       if (o.el.textContent !== t) o.el.textContent = t;
     });
     if (setGroup) setGroup.label = setGroupBase + ' — ' + SRC_NAME[SRC];
