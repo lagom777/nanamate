@@ -1867,6 +1867,7 @@
   var INK = { on: false, tool: 'pen', cur: null }, inkBtn = null, inkPal = null, inkTouch = {}, inkPan = false, inkDrew = 0;
   var INK_TOOL = { pen: { px: 2.4, lo: 2, hi: 9 }, hl: { px: 14, lo: 10, hi: 30 } };   // 굵기: 그릴 때 화면 px 를 그림 좌표로 바꿔 둔다(그림과 같이 커지고 작아진다)
   var INK_TX = { px: 16, lo: 8, hi: 90 };   // 글자 크기도 같은 식(화면 16px)
+  var INK_KEY = { pen: 'P', hl: 'H', tx: 'T', er: 'E' }, INK_CODE = { KeyP: 'pen', KeyH: 'hl', KeyT: 'tx', KeyE: 'er' };   // 도구 단축키(글쇠 자리로 읽어 한글 자판에서도 된다)
   function inkKey(exam, file) { return 'sn:' + SUB + ':ink:' + exam + ':' + String(file).replace(/\..*$/, ''); }   // c10.66ebca.webp(다시 자른 단)도 c10
   function svgEl(tag, attrs) {
     var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
@@ -2123,8 +2124,8 @@
    * (마우스·펜슬은 낙서를 켜지 않아도 고른 도구로 쓴다. 손가락은 ✏️ 낙서를 켜야 한다) */
   function inkTools() {
     var b = function (t, icon, label) {
-      return el('button', { type: 'button', class: 'pr-ink-t', 'data-t': t, title: label, 'aria-label': label, 'aria-pressed': INK.tool === t ? 'true' : 'false', onclick: function () { INK.tool = t; paintInk(); } },
-        [el('span', { text: icon, 'aria-hidden': 'true' }), el('span', { class: 'pr-ink-l', text: label })]);
+      return el('button', { type: 'button', class: 'pr-ink-t', 'data-t': t, title: label + ' — 단축키 ' + INK_KEY[t], 'aria-label': label, 'aria-keyshortcuts': INK_KEY[t], 'aria-pressed': INK.tool === t ? 'true' : 'false', onclick: function () { INK.tool = t; paintInk(); } },
+        [el('span', { text: icon, 'aria-hidden': 'true' }), el('span', { class: 'pr-ink-l', text: label }), el('kbd', { class: 'pr-ink-k', text: INK_KEY[t], 'aria-hidden': 'true' })]);
     };
     return el('div', { class: 'pr-omr-ink', role: 'toolbar', 'aria-label': '펜 도구' }, [
       b('pen', '✏️', '펜'), b('hl', '🖍️', '형광펜'), b('tx', 'T', '글자'), b('er', '🧽', '지우개'),
@@ -2133,13 +2134,32 @@
   }
   function inkPalette() {
     var b = function (t, icon, label, f) {
-      return el('button', { type: 'button', class: 'pr-ink-t', 'data-t': t || false, title: label, 'aria-label': label, onclick: f || function () { INK.tool = t; paintInk(); } },
-        [el('span', { text: icon, 'aria-hidden': 'true' }), el('span', { class: 'pr-ink-l', text: label })]);
+      return el('button', { type: 'button', class: 'pr-ink-t', 'data-t': t || false, title: label + (t ? ' — 단축키 ' + INK_KEY[t] : ''), 'aria-label': label, 'aria-keyshortcuts': t ? INK_KEY[t] : false, onclick: f || function () { INK.tool = t; paintInk(); } },
+        [el('span', { text: icon, 'aria-hidden': 'true' }), el('span', { class: 'pr-ink-l', text: label }), t ? el('kbd', { class: 'pr-ink-k', text: INK_KEY[t], 'aria-hidden': 'true' }) : null]);
     };
     return el('div', { class: 'pr-ink-pal', role: 'toolbar', 'aria-label': '펜 도구', hidden: 'hidden' }, [
       b('pen', '✏️', '펜'), b('hl', '🖍️', '형광펜'), b('tx', 'T', '글자'), b('er', '🧽', '지우개'), b('', '🗑', '모두 지우기', inkClear), b('', '✕', '끄기', function () { toggleInk(false); })
     ]);
   }
+  /* 글쇠로 도구 바꾸기: P 펜 · H 형광펜 · T 글자 · E 지우개(한글 자판이어도 같은 글쇠). 글자를 치는 칸·열린 창에서는 건드리지 않는다.
+   * F1~F4 는 브라우저(도움말·찾기)와 맥·아이패드 자판이 먼저 가져가서 쓰지 않는다 */
+  var INK_NAME = { pen: '✏️ 펜', hl: '🖍️ 형광펜', tx: 'T 글자', er: '🧽 지우개' }, inkToast = null, inkToastT = 0;
+  function inkKeyTool(ev) {
+    if (ev.ctrlKey || ev.metaKey || ev.altKey || ev.repeat || ev.isComposing) return;
+    var a = ev.target;
+    if (a && a.closest && a.closest('input, textarea, select, [contenteditable], dialog[open], .pr-set-panel')) return;
+    if (document.querySelector('dialog[open]') || !list || !list.querySelector('.pr-ink.rw')) return;
+    var t = INK_CODE[ev.code];
+    if (!t) return;
+    ev.preventDefault();
+    if (INK.tool !== t) { INK.tool = t; paintInk(); }
+    if (!inkToast) { inkToast = el('div', { class: 'pr-toast pr-ink-toast', role: 'status' }); inkToast.onclick = function () { inkToast.remove(); }; }
+    inkToast.textContent = INK_NAME[t] + (t === 'tx' ? ' — 쓸 자리를 누르세요' : t === 'er' ? ' — 지울 획 위를 끄세요' : '');
+    document.body.appendChild(inkToast);
+    clearTimeout(inkToastT);
+    inkToastT = setTimeout(function () { inkToast.remove(); }, 1300);
+  }
+  document.addEventListener('keydown', inkKeyTool);
 
   /* ───────── 파트별 약점 노트: AI 해설이 짚은 '몰랐던 것'을 과목별로 이 브라우저에 모은다 ───────── */
   function weakList() { return store('sn:' + SUB + ':weak') || []; }
