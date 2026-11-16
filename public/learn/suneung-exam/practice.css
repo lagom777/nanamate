@@ -547,6 +547,10 @@ body.pr-wide-page main.wide { max-width: none; padding-left: 24px; padding-right
 .pr-ink-pal[hidden] { display: none; }
 #practice-root .pr-ink-t { display: inline-flex; align-items: center; gap: 5px; height: 38px; padding: 0 11px; border: 0 !important; border-radius: 10px; font: 600 13px var(--font-body, sans-serif); white-space: nowrap; cursor: pointer; }
 #practice-root .pr-ink-t[aria-pressed="true"] { background: var(--accent) !important; color: #fff !important; }
+/* 단축키 글쇠 표시: 자판이 있는 기기(마우스)에서만 */
+.pr-ink-k { display: none; min-width: 1.35em; padding: 1px 3px; border: 1px solid currentColor; border-radius: 4px; font: 700 10px/1.2 ui-monospace, Menlo, Consolas, monospace; text-align: center; opacity: .6; }
+@media (hover: hover) and (pointer: fine) { .pr-ink-k { display: inline-block; } }
+.pr-ink-toast { bottom: 74px; padding: 8px 14px; font-weight: 600; pointer-events: none; }
 @media (max-width: 640px) {
   .pr-ink-pal { left: 8px; bottom: 12px; transform: none; }
   .pr-ink-l { display: none; }
