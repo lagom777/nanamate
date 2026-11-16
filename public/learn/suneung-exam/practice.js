@@ -351,6 +351,7 @@
     bar.appendChild(authBox);
     list = el('div', { class: 'pr-list' + (PAPER ? ' paper' : '') });
     omr = el('div', { class: 'pr-omr', role: 'complementary', 'aria-label': '답안지' });
+    root.appendChild(navRow());
     root.appendChild(bar);
     renderWeakBtn();
     root.appendChild(el('div', { class: 'pr-body' + (PAPER ? ' paper' : '') }, [list, omr]));
@@ -363,6 +364,25 @@
     paintInk();
     document.body.classList.add('pr-wide-page');   // 목차를 접고 본문 칸 가득 — 그림은 키우지 않고 넓으면 옆으로 나란히(practice.css)
     root.appendChild(el('p', { class: 'pr-src', html: '문항 출처: 한국교육과정평가원(KICE) 대학수학능력시험·6월/9월 모의평가 공개 문제지. 문제지에 관한 저작권은 한국교육과정평가원에 있으며, 이 페이지는 학습용으로 문항 이미지를 그대로 보여 주고 정답표로 채점합니다.' + (HAS_PARTS ? ' 파트 분류는 문항 내용 기반 자동 분류라 일부 오차가 있을 수 있습니다.' : '') + (PAPER && SUB === 'english' ? ' 듣기 음성은 평가원이 공개한 듣기평가 음원(저작권 한국교육과정평가원)을 회차마다 한 파일로 이은 것으로 시험지 위 🎧 막대에서 들을 수 있고, 채점 후 듣기평가 대본을 볼 수 있습니다.' : '') + (ABS_CUT[SUB] ? '' : ' 채점 후 등급은 <a href="https://www.ebsi.co.kr/ebs/xip/xipa/retrievePastGrdCutWrongAnswerRate.ebs?tab=1" target="_blank" rel="noopener">EBSi 역대 등급컷</a>(원점수는 EBSi 자체분석, 표준점수는 평가원) 기준 예상입니다.' + (SUB === 'korean' || SUB === 'math' ? ' 2022학년도부터 국어·수학은 선택과목별 원점수 컷이 공개되지 않아, 시험 직후 입시업체가 발표한 가채점 예상컷(위 몇 등급)으로 보여 줍니다.' : '')) }));
+  }
+
+  /* 맨 위 이동 줄: 풀어보기 화면은 왼쪽 목차를 접으므로(pr-wide-page) 과목 목차·통합 허브로 돌아가는 길과 다른 과목 풀어보기로 가는 길을 여기 둔다.
+   * 목차·허브 주소는 접힌 목차(aside)에서 읽고, 과목 목록은 풀어보기 화면이 있는 과목 전부(폴더는 public/learn 기준) */
+  var NAV_SUBS = [
+    ['korean', '국어', 'aboutSuneungKorean/practice.html'], ['math', '수학', 'aboutSuneungMath/practice.html'], ['english', '영어', 'aboutSuneungEnglish/practice.html'], ['hist', '한국사', 'aboutSuneungHistory/practice.html'],
+    ['phys1', '물리학Ⅰ', 'aboutSuneungPhysics1/practice.html'], ['chem1', '화학Ⅰ', 'aboutSuneungChem1/practice.html'], ['bio1', '생명과학Ⅰ', 'aboutSuneungBio1/practice.html'], ['earth1', '지구과학Ⅰ', 'aboutSuneungEarth1/practice.html'],
+    ['phys2', '물리학Ⅱ', 'aboutSuneungScience2/practice-phys2.html'], ['chem2', '화학Ⅱ', 'aboutSuneungScience2/practice-chem2.html'], ['bio2', '생명과학Ⅱ', 'aboutSuneungScience2/practice-bio2.html'], ['earth2', '지구과학Ⅱ', 'aboutSuneungScience2/practice-earth2.html']
+  ];
+  function navRow() {
+    var aside = document.querySelector('.layout > aside'), q = function (sel) { return aside && aside.querySelector(sel); };
+    var toc = q('ol li a'), hub = q('a.hub-back-link'), h3 = q('h3');
+    var back = [el('a', { class: 'pr-nav-back', href: toc ? toc.getAttribute('href') : 'index.html', text: '← ' + (h3 ? h3.textContent.trim() : '목차'), title: '이 과목의 첫 화면(목차)으로' })];
+    back.push(el('a', { class: 'pr-nav-back', href: hub ? hub.getAttribute('href') : '../index.html', text: '↑ 통합 허브', title: '모든 과목이 모인 첫 화면으로' }));
+    var subs = el('div', { class: 'pr-nav-subs' }, [el('span', { class: 'pr-nav-l', text: '다른 과목 풀기' })].concat(NAV_SUBS.map(function (o) {
+      return o[0] === SUB ? el('span', { class: 'pr-nav-sub on', 'aria-current': 'page', text: o[1] }) : el('a', { class: 'pr-nav-sub', href: '../' + o[2], text: o[1] });
+    })));
+    setTimeout(function () { var on = subs.querySelector('.on'); if (on && subs.scrollWidth > subs.clientWidth) subs.scrollLeft = on.offsetLeft - subs.offsetLeft - 70; }, 0);   // 휴대폰(옆으로 미는 줄): 지금 과목이 보이게
+    return el('nav', { class: 'pr-nav', 'aria-label': '과목 이동' }, [el('div', { class: 'pr-nav-backs' }, back), subs]);
   }
 
   function setMode(m) {
