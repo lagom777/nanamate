@@ -1105,12 +1105,28 @@
       return seg.replace(/(^|[^\w.^_{\\\/])(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)(?![\d.\/])/g, '$1\\frac{$2}{$3}');
     }).join('');
   }
+  /* \frac → \dfrac, 단 지수·첨자(^{…} · _{…} · ^\frac) 안의 분수는 작은 그대로 둔다(16^{\frac{7}{4}} 이 커지지 않게) */
+  function dfracOut(tex) {
+    var out = '', stack = [], i = 0, n = tex.length;
+    while (i < n) {
+      var c = tex[i];
+      if (c === '\\' && tex.substr(i, 5) === '\\frac' && !/[a-zA-Z]/.test(tex[i + 5] || '')) {
+        var inScript = stack.indexOf(true) >= 0 || /[\^_]\s*$/.test(out);
+        out += inScript ? '\\frac' : '\\dfrac'; i += 5; continue;
+      }
+      if (c === '\\') { out += c + (tex[i + 1] || ''); i += 2; continue; }
+      if (c === '{') { stack.push(/[\^_]\s*$/.test(out) || stack.indexOf(true) >= 0); out += c; i++; continue; }
+      if (c === '}') { stack.pop(); out += c; i++; continue; }
+      out += c; i++;
+    }
+    return out;
+  }
   function mathHTML(x) {
     if (!KX) { loadKatex(); return '<code class="pr-tex">' + escH(x.tex) + '</code>'; }
     var k = (x.d ? 'D' : 'I') + x.tex;
     if (!kxCache[k]) {
       var tex = texFrac(x.tex);
-      if (!x.d) tex = tex.replace(/\\frac(?=\s*\{)/g, '\\dfrac');   // 문장 속 분수도 작게 줄이지 않고 제 크기로
+      if (!x.d) tex = dfracOut(tex);   // 문장 속 분수도 작게 줄이지 않고 제 크기로(지수·첨자 안은 그대로 작게)
       if (!x.d) tex = tex.replace(/\\(lim|sum)(?=\s*_)/g, '\\$1\\limits');   // 문장 속 극한·시그마도 교과서처럼 아래·위에 범위를 쓴다
       try { kxCache[k] = KX.renderToString(tex, { displayMode: x.d, throwOnError: false, strict: 'ignore' }); }
       catch (e) { kxCache[k] = '<code class="pr-tex">' + escH(x.tex) + '</code>'; }
