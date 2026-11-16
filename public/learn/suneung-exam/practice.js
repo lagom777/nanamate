@@ -216,7 +216,7 @@
     return byRecent(withUnsure(items));
   }
   /* 아래쪽 그림 선지(그래프·사진)가 잘려 있던 문항 그림을 다시 자른 것(crop.py 가 그림 블록을 문항 몸체로 안 세던 문제) — R2 에 다시 올리기 전까지
-   * 사이트의 suneung-exam/fix/ 에서 준다. 시험지 1쪽 오른쪽 가장자리의 과목 표시 탭(‘생명과학Ⅰ’ 등)이 같이 잘려 들어간 4~6번 문항도 여기서 탭을 잘라 낸 그림으로 준다. 큰 분수가 맨 위에 있어 윗부분이 잘린 문항(수학 23번 극한 등)은 원본 PDF 에서 위쪽을 넓혀 다시 잘랐다. AI 도 그림을 주소로 받으므로 절대 주소로 */
+   * 사이트의 suneung-exam/fix/ 에서 준다. 시험지 1쪽 오른쪽 가장자리의 과목 표시 탭(‘생명과학Ⅰ’ 등)이 같이 잘려 들어간 4~6번 문항도 여기서 탭을 잘라 낸 그림으로 준다. 큰 분수가 맨 위에 있어 윗부분이 잘린 문항(수학 23번 극한 등)은 원본 PDF 에서 위쪽을 넓혀 다시 잘랐다. 그림이 문항 아래에 떨어져 있어 잘려 나갔던 문항(2024 9월 수학 30번 등)은 아래쪽을 넓혔다. AI 도 그림을 주소로 받으므로 절대 주소로 */
   var IMG_FIX = {
     bio1: '2020-csat/4 2020-csat/5 2020-jun/4 2020-sep/4 2020-sep/5 2021-csat/4 2021-jun/4 2021-sep/4 2022-csat/4 2022-jun/4 2022-sep/4 2023-csat/4 2023-jun/4 2023-sep/4 2023-sep/5 2024-csat/4 2024-jun/4 2024-jun/5 2024-sep/4 2025-csat/4 2025-jun/4 2025-sep/4 2026-csat/4 2026-jun/4 2026-jun/5 2026-sep/4 2027-jun/4 2027-sep/4',
     bio2: '2020-csat/6 2020-jun/6 2020-sep/6 2021-csat/6 2021-jun/6 2021-sep/6 2022-csat/6 2022-jun/6 2022-sep/6 2023-csat/6 2023-jun/6 2023-sep/6 2024-csat/6 2024-jun/6 2024-sep/6 2025-csat/6 2025-jun/6 2025-sep/6 2026-csat/6 2026-jun/6 2026-sep/5 2026-sep/6 2027-jun/6 2027-sep/6',
@@ -224,8 +224,8 @@
     chem2: '2020-csat/5 2020-jun/5 2020-sep/5 2021-csat/5 2021-jun/5 2021-sep/5 2021-sep/6 2022-csat/4 2022-csat/5 2022-jun/4 2022-jun/5 2022-sep/5 2022-sep/6 2023-csat/5 2023-csat/6 2023-jun/5 2023-sep/5 2023-sep/6 2024-csat/5 2024-jun/5 2024-jun/6 2024-sep/5 2024-sep/6 2025-csat/4 2025-csat/5 2025-jun/4 2025-jun/5 2025-sep/5 2025-sep/6 2026-csat/1 2026-csat/5 2026-jun/5 2026-jun/15 2026-sep/5 2027-jun/5 2027-sep/5',
     earth1: '2020-csat/4 2020-jun/4 2020-sep/4 2021-csat/4 2021-csat/5 2021-jun/4 2021-sep/4 2022-csat/4 2022-csat/16 2022-jun/4 2022-jun/5 2022-sep/4 2023-csat/4 2023-jun/4 2023-sep/4 2024-csat/4 2024-jun/4 2024-sep/4 2024-sep/17 2025-csat/4 2025-jun/4 2025-sep/4 2026-csat/4 2026-jun/4 2026-jun/20 2026-sep/4 2027-jun/4 2027-sep/4',
     earth2: '2020-csat/5 2020-jun/5 2020-sep/5 2021-csat/5 2021-jun/5 2021-sep/5 2022-csat/5 2022-jun/5 2022-sep/5 2023-csat/4 2023-jun/5 2023-sep/5 2024-csat/5 2024-jun/5 2024-sep/6 2025-csat/6 2025-jun/6 2025-sep/5 2026-csat/5 2026-jun/5 2026-jun/7 2026-sep/5 2027-jun/5 2027-sep/5',
-    math: '2022-csat/23 2023-csat/2 2025-jun/1 2025-jun/23 2026-sep/24',
-    phys1: '2022-jun/10 2022-sep/17 2023-jun/10 2023-sep/2 2023-sep/10 2024-csat/17 2024-sep/13 2027-sep/10',
+    math: '2022-csat/23 2023-csat/2 2024-sep/30 2025-jun/1 2025-jun/23 2026-sep/24',
+    phys1: '2021-jun/5 2022-jun/10 2022-sep/17 2023-jun/10 2023-sep/2 2023-sep/10 2024-csat/17 2024-sep/13 2027-sep/10',
     phys2: '2020-csat/4 2020-jun/4 2020-jun/5 2020-sep/5 2021-csat/4 2021-csat/5 2021-jun/4 2021-sep/4 2021-sep/5 2022-csat/4 2022-jun/5 2022-sep/4 2023-csat/4 2023-jun/4 2023-jun/5 2023-sep/4 2024-csat/4 2024-csat/5 2024-jun/5 2024-sep/5 2025-csat/5 2025-csat/7 2025-jun/5 2025-jun/6 2025-sep/5 2026-csat/5 2026-jun/5 2026-sep/4 2026-sep/15 2027-jun/5 2027-jun/11 2027-sep/4'
   };
   function imgFixed(key, n) { var l = IMG_FIX[SUB]; return !!l && (' ' + l + ' ').indexOf(' ' + key + '/' + n + ' ') >= 0; }
