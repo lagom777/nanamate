@@ -976,7 +976,7 @@
     if (aiNeed(aid, function () { return itemReq(i); }).status !== 'idle') box.appendChild(aiBox(aid));
     loadExplain(it.ex).then(function (map) {
       var t = map && map[it.n];
-      if (t) { body.className = 'pr-exp-body has'; body.innerHTML = fmtExp(t); }
+      if (t) { body.className = 'pr-exp-body has'; expPaint(body, t); }
       else {
         body.className = 'pr-exp-body none';
         body.textContent = '이 문항의 상세 해설은 아직 없습니다. 정답은 ' + corr + '입니다.';
@@ -1028,6 +1028,16 @@
     return fmtP;
   }
   function fmtExp(html) { return FORMULA && window.SnMathFmt ? SnMathFmt.format(html, { numOnly: /^bio/.test(SUB) }) : html; }
+  /* 저장된 해설을 칸에 그린다. 수학 해설은 식을 LaTeX($…$ · $$…$$)로 적어 두었으므로 KaTeX 로 그리고(AI 답변과 같은 방식),
+   * KaTeX 를 아직 못 불러왔으면 식 글자 그대로 먼저 보였다가 불러온 뒤 다시 그린다. $ 가 없는 해설(과탐)은 예전처럼 a/b 를 분수로만 바꾼다 */
+  function expPaint(box, html) {
+    if (String(html).indexOf('$') < 0) { box.innerHTML = fmtExp(html); return; }
+    var m = mathOut(html);
+    var paint = function () { box.innerHTML = m.text.replace(/\uE000(\d+)\uE001/g, function (_, i) { return mathHTML(m.list[+i]); }); };
+    var had = !!KX;
+    paint();
+    if (!had && kxP) kxP.then(function () { if (box.isConnected) paint(); }, function () {});
+  }
   var AI_SYS = '너는 대한민국 수능 ' + String(cfg.label || SUB).replace(/^수능\s+/, '') + ' 전문 강사다. 학생의 풀이 기록과 기출 문항 이미지를 받아 해설하고 분석한다. ' +
     '공식 정답은 주어진 것을 기준으로 하고, 네 풀이가 공식 정답과 다르면 다시 검토한다. 고등학생이 따라올 수 있게 한국어 존댓말로 쓴다. ' +
     (FORMULA
@@ -1101,6 +1111,7 @@
     if (!kxCache[k]) {
       var tex = texFrac(x.tex);
       if (!x.d) tex = tex.replace(/\\frac(?=\s*\{)/g, '\\dfrac');   // 문장 속 분수도 작게 줄이지 않고 제 크기로
+      if (!x.d) tex = tex.replace(/\\(lim|sum)(?=\s*_)/g, '\\$1\\limits');   // 문장 속 극한·시그마도 교과서처럼 아래·위에 범위를 쓴다
       try { kxCache[k] = KX.renderToString(tex, { displayMode: x.d, throwOnError: false, strict: 'ignore' }); }
       catch (e) { kxCache[k] = '<code class="pr-tex">' + escH(x.tex) + '</code>'; }
     }
@@ -3156,7 +3167,7 @@
       body.appendChild(exp);
       loadExplain(r.exam).then(function (map) {
         var t = map && map[r.n], d = exp.lastChild;
-        if (t) { d.className = 'pr-exp-body has'; d.innerHTML = fmtExp(t); exp.open = true; }
+        if (t) { d.className = 'pr-exp-body has'; expPaint(d, t); exp.open = true; }
         else d.textContent = '이 문항의 상세 해설은 아직 없습니다. 아래 AI 분석을 받아 보세요.';
       });
       /* ⑤ AI 실수 분석 */

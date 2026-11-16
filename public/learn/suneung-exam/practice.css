@@ -216,6 +216,11 @@
 .pr-ai-body .katex-display { margin: 8px 0 12px; padding: 8px 10px; border-radius: 8px; background: color-mix(in srgb, var(--pr-el) 70%, transparent); overflow-x: auto; overflow-y: hidden; }
 .pr-ai-body .katex-display > .katex { font-size: 1.18em; }
 .pr-ai-body code.pr-tex { white-space: pre-wrap; }
+/* 저장된 해설(수학)의 수식 */
+.pr-exp-body .katex { font-size: 1.1em; }
+.pr-exp-body .katex-display { margin: 6px 0 8px; padding: 2px 0; overflow-x: auto; overflow-y: hidden; }
+.pr-exp-body code.pr-tex { white-space: pre-wrap; font-size: .92em; }
+.pr-exp-body b .katex { padding: 1px 5px; border-radius: 5px; background: color-mix(in srgb, var(--accent) 16%, transparent); }   /* 굵게 표시한 값(수식은 굵어지지 않으므로 바탕색으로) */
 /* 그림 블록(인포그래픽): AI 가 쓴 ```선지·흐름·비교·연표·그래프 를 그림으로 — 정답은 빨강, 내 답은 검정(채점 색과 같게) */
 .pr-vis { margin: 10px 0 14px; padding: 12px; border: 1px solid var(--pr-line); border-radius: 12px; background: var(--pr-card); font-size: 14px; line-height: 1.55; }
 .pr-vis-wait { color: var(--text-dim); font-size: 13px; animation: pr-ai-blink 1.4s ease-in-out infinite; }
