@@ -2,7 +2,7 @@ import { validSub } from './attempts.js';
 
 // 계정별 풀이 상태(수능 풀어보기): 회차마다 고른 답과 채점 여부 — 다른 기기에서도 이어서 보이게.
 // id 는 화면의 세트 이름('exam:<회차>'), data 는 화면이 이 기기에 두는 것과 같은 모양:
-//   { ans:[번호…](탐구·수학·한국사) | pa:{문항:번호}(국어·영어), g:1(채점함), gs:선택과목, left:남은 초, ut:타이머 씀 } — 다시 풀기는 빈 {}.
+//   { ans:[번호…](탐구·수학·한국사) | pa:{문항:번호}(국어·영어), g:1(채점함), gs:선택과목, left:남은 초, ut:타이머 씀, rs:다시 풀기 한 시각 } — 다시 풀기는 { rs }.
 const ID = /^exam:[a-z0-9][a-z0-9-]{0,39}$/;
 const PA_KEY = /^[a-c][0-9]{1,2}$/;
 export const MAX_STATE = 4000;   // JSON 길이
@@ -44,6 +44,10 @@ export function parseState(body) {
       out.left = Math.round(d.left);
     }
     out.ut = d.ut ? 1 : 0;
+  }
+  if (d.rs !== undefined) {   // 다시 풀기 한 시각(그 전에 푼 기록은 이 시험지에 다시 채우지 않는다)
+    if (!Number.isSafeInteger(d.rs) || d.rs < 0) return { ok: false };
+    if (d.rs) out.rs = d.rs;
   }
   const data = JSON.stringify(out);
   if (data.length > MAX_STATE) return { ok: false };
