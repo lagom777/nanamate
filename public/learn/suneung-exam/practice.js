@@ -1078,9 +1078,15 @@
   /* 저장된 해설을 칸에 그린다. 수학 해설은 식을 LaTeX($…$ · $$…$$)로 적어 두었으므로 KaTeX 로 그리고(AI 답변과 같은 방식),
    * KaTeX 를 아직 못 불러왔으면 식 글자 그대로 먼저 보였다가 불러온 뒤 다시 그린다. $ 가 없는 해설(과탐)은 예전처럼 a/b 를 분수로만 바꾼다 */
   function expPaint(box, html) {
-    if (String(html).indexOf('$') < 0) { box.innerHTML = fmtExp(html); return; }
+    /* 그림: <fig> <svg …>…</svg> 그림 읽는 법 한두 줄 </fig> — AI 해설의 그림 블록과 같은 방식으로(허용한 SVG 태그만) 그린다 */
+    var figs = [];
+    html = String(html).replace(/<fig>([\s\S]*?)<\/fig>/g, function (_, body) { figs.push(body); return '\uE004' + (figs.length - 1) + '\uE005'; });
+    if (!figs.length && html.indexOf('$') < 0) { box.innerHTML = fmtExp(html); return; }
     var m = mathOut(html);
-    var paint = function () { box.innerHTML = m.text.replace(/\uE000(\d+)\uE001/g, function (_, i) { return mathHTML(m.list[+i]); }); };
+    var paint = function () {
+      box.innerHTML = m.text.replace(/\uE000(\d+)\uE001/g, function (_, i) { return mathHTML(m.list[+i]); })
+        .replace(/\uE004(\d+)\uE005/g, function (_, i) { return visFig(figs[+i].split('\n')); });
+    };
     var had = !!KX;
     paint();
     if (!had && kxP) kxP.then(function () { if (box.isConnected) paint(); }, function () {});
@@ -1131,7 +1137,7 @@
       var l = document.createElement('link');
       l.rel = 'stylesheet'; l.href = KX_URL + 'katex.min.css';
       document.head.appendChild(l);
-      kxP = import(KX_URL + 'katex.mjs').then(function (m) { KX = m.default || m; kxCache = {}; Object.keys(aiRuns).forEach(aiPaintAll); });
+      kxP = import(KX_URL + 'katex.mjs').then(function (m) { KX = m.default || m; kxCache = {}; figCache = {}; figCacheN = 0; Object.keys(aiRuns).forEach(aiPaintAll); });   // 그림 설명 글의 수식도 다시 그리게
       kxP.catch(function () { kxP = null; });
     }
     return kxP;

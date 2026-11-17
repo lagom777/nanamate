@@ -278,7 +278,7 @@
 .pr-vis-fig { padding: 10px; background: #fff; color: #1f2937; border-color: color-mix(in srgb, #94a3b8 45%, transparent); }
 .pr-fig-pic { width: 100%; margin: 0 auto; }
 .pr-fig-pic svg { display: block; width: 100%; height: auto; overflow: hidden; fill: #1f2937; font-family: var(--font-body, sans-serif); font-size: 13px; }
-.pr-ai-body .pr-fig-cap { max-width: none; margin: 8px 2px 0; padding-top: 8px; border-top: 1px dashed #cbd5e1; color: #334155; font-size: 13.5px; line-height: 1.6; text-align: center; }
+.pr-ai-body .pr-fig-cap, .pr-exp-body .pr-fig-cap { max-width: none; margin: 8px 2px 0; padding-top: 8px; border-top: 1px dashed #cbd5e1; color: #334155; font-size: 13.5px; line-height: 1.6; text-align: center; }
 .pr-vg-grid { stroke: var(--pr-line); stroke-width: .6; }
 .pr-vg-axis { stroke: var(--text-dim); stroke-width: 1.1; }
 .pr-vg-tick { fill: var(--text-dim); font-size: 9px; }
@@ -697,3 +697,8 @@ body.pr-wide-page main.wide { max-width: none; padding-left: 24px; padding-right
   .pr-ai-full .pr-ai-body { font-size: 17px; line-height: 1.9; padding: 12px 14px 6px; }
   .pr-ai-full-head { padding: 10px 12px; }
 }
+
+/* 저장된 해설(수학) 안의 그림 */
+.pr-exp-body .pr-vis-fig { margin: 8px 0 10px; }
+.pr-exp-body:not(.pr-ai-body) .pr-fig-pic { max-width: min(100%, 470px) !important; }   /* 저장된 해설의 그림은 글 사이에 끼는 크기로 */
+.pr-exp-body li .pr-vis-fig { margin-left: -6px; }
