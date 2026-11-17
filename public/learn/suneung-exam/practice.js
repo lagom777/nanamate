@@ -1739,6 +1739,9 @@
       b.appendChild(say);
       return;
     }
+    if (r.turns.some(function (t) { return t.a; }) && !b.closest('.pr-ai-full')) {   // 해설만 화면 가득 크게 보기
+      b.appendChild(el('div', { class: 'pr-ai-top' }, [el('button', { type: 'button', class: 'pr-ai-fullbtn', title: '이 AI 해설만 화면 가득 크게 보기 (Esc 로 닫기)', text: '⛶ 전체 화면', onclick: function () { openAiFull(r.id, b); } })]));
+    }
     r.turns.forEach(function (t, k) {
       if (t.q) b.appendChild(el('p', { class: 'pr-ai-q', text: t.q }));
       if (t.a) b.appendChild(aiAnswer(t.a, k === 0 ? r : null));
@@ -1911,6 +1914,31 @@
     document.body.classList.add('pr-dock');
     if (!aiDlg.open) aiDlg.show();
     aiDlg.scrollTop = 0;
+  }
+  /* ⛶ 전체 화면: AI 해설 하나만 화면 전체를 덮는 창에 크게 띄운다(자세한 해설은 펼친 채). 받는 중이면 그 창에서도 이어서 써진다.
+   * 닫기: ✕ · Esc · 바깥(어두운 곳) 누르기 */
+  var aiFull = null;
+  function openAiFull(id, from) {
+    var r = aiRun(id);
+    var card = from && from.closest('.pr-card'), meta = card && card.querySelector('.pr-meta');
+    var head = from && from.closest('.pr-ai-dlg') && aiDlg.querySelector('.pr-ai-head b');
+    var title = meta ? meta.textContent + ' · AI 해설' : head ? head.textContent : 'AI 해설';
+    if (!aiFull) {
+      aiFull = el('dialog', { class: 'pr-ai-full', 'aria-label': 'AI 해설 전체 화면' });
+      aiFull.addEventListener('click', function (ev) { if (ev.target === aiFull) aiFull.close(); });   // 바깥(창 테두리 밖) 누르기
+      aiFull.addEventListener('close', function () { aiFull.innerHTML = ''; });
+      root.appendChild(aiFull);
+    }
+    r.more = true;   // 전체 화면에서는 자세한 해설까지 펼쳐 둔다
+    aiFull.innerHTML = '';
+    aiFull.appendChild(el('div', { class: 'pr-ai-full-head' }, [
+      el('b', { text: '🤖 ' + title }),
+      el('button', { type: 'button', class: 'pr-ai-x', 'aria-label': '닫기', title: '닫기 (Esc)', text: '✕', onclick: function () { aiFull.close(); } })
+    ]));
+    aiFull.appendChild(el('div', { class: 'pr-ai-full-body' }, [aiBox(id)]));
+    if (!aiFull.open) aiFull.showModal();
+    aiFull.scrollTop = 0;
+    aiPaintAll(id);   // 옆 칸·카드의 같은 해설도 펼친 모양으로
   }
   function openAi(title, id, build, what) {
     if (aiStart(id, build, false, what).status === 'idle') return;   // 확인창에서 취소
