@@ -100,6 +100,7 @@
       if (!doneDirty) return;
       saveDone();
       if (/^(part|topic):/.test(S.set) && !setTouched()) startSet(S.set);   // 아직 손대지 않았으면 받은 기록(푼 문제·고른 답)으로 다시 차린다
+      else if (S.set.indexOf('exam:') === 0 && !S.graded) { refillSeen(); renderAll(); }   // 시험 세트: 다른 기기·세트에서 푼 답을 채운다
       else paintTopics();
     }).catch(function () {});
   }
@@ -351,11 +352,12 @@
     paintCols();
     timerEl = el('button', { type: 'button', class: 'pr-timer', onclick: toggleTimer, 'aria-label': '타이머 켜기/끄기' });
     inkBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-ink-btn', title: '시험지·문항 그림에 낙서해요(이 기기에 저장). 펜슬은 그냥 쓰고 마우스는 끌면 써져요. 손가락은 이 단추를 켜야 써지고, 켜 둔 동안 두 손가락으로 화면을 움직여요. 형광펜·지우개도 여기서.', onclick: function () { toggleInk(); } });
+    if (!PAPER) { seenBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-seen-btn', title: '전에 푼 문제의 ‘그때 고른 답’을 보여 줄지 정해요(이 기기에 저장). 보임: 파트·유형에서 푼 문제가 수능·모의평가 시험지에서도 답·채점과 함께 보여요. 가림: 빈 문제로 다시 풀 수 있어요.', onclick: toggleSeen }); paintSeenBtn(); }
     progEl = el('span', { class: 'pr-prog' });
     bar = el('div', { class: 'pr-bar' }, [
       el('div', { class: 'pr-bar-row' }, row1),
       topicRow = el('div', { class: 'pr-bar-row pr-topics', role: 'group', 'aria-label': '세부 유형' }),
-      el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), timerEl, inkBtn, weakBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn', onclick: function () { openWeak(); } }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-nb-btn', text: '📋 오답 노트', onclick: openNotebook }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn', text: '📊 오답 원인', onclick: openCauses }), HAS_PARTS && !PAPER ? el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-acc-btn', text: '📈 정답률', title: '파트·유형별로 몇 문제 풀어 몇 개 맞혔는지', onclick: openAcc }) : null, dueBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-due-btn', text: '📅 오늘 다시 풀', onclick: openDue }), progEl])
+      el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), timerEl, inkBtn, seenBtn, weakBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn', onclick: function () { openWeak(); } }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-nb-btn', text: '📋 오답 노트', onclick: openNotebook }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn', text: '📊 오답 원인', onclick: openCauses }), HAS_PARTS && !PAPER ? el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-acc-btn', text: '📈 정답률', title: '파트·유형별로 몇 문제 풀어 몇 개 맞혔는지', onclick: openAcc }) : null, dueBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-due-btn', text: '📅 오늘 다시 풀', onclick: openDue }), progEl])
     ]);
     authBox = el('div', { class: 'pr-auth' });
     bar.appendChild(authBox);
@@ -633,6 +635,44 @@
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
   var redoSet = false;   // ‘다시 풀기’로 연 세트는 전에 고른 답을 채우지 않는다
+  /* 👁 푼 답 보임/가림: 전에 푼 문제의 '그때 고른 답'을 다시 보여 줄지(이 기기에 저장, 기본은 보임).
+   * 파트·유형 모아 풀기뿐 아니라 시험(수능·모의평가) 세트에서도 — 다른 세트에서 푼 문항이면 그 답과 채점·해설이 보인다.
+   * 시험 세트를 ‘다시 풀기’ 한 뒤에는 그 뒤에 새로 푼 기록만 채운다(다시 푸는데 옛 답이 되살아나지 않게: 풀이 상태의 rs = 다시 풀기 한 시각 — 계정으로 다른 기기에도 간다) */
+  var SEEN_KEY = 'sn:pr:showdone', seenBtn = null;
+  function showDone() { return store(SEEN_KEY) !== 0; }
+  function resetAt(setId) { var v = store('sn:' + SUB + ':' + setId); return (v && v.rs) || 0; }
+  function doneTs(id) { var d = DONE && DONE[id]; return (d && d[1]) || 0; }
+  /* 시험 세트: 아직 답을 안 고른 문항 중 다른 세트에서 푼 것을 그때 고른 답으로 채운다(S.seen 에 표시 — 이 답은 시험 풀이 상태로 저장하지 않는다) */
+  function fillSeen() {
+    S.seen = {};
+    if (PAPER || S.set.indexOf('exam:') !== 0) return;
+    if (!S.graded && showDone()) {
+      var rs = resetAt(S.set);
+      S.items.forEach(function (it, i) {
+        if (S.ans[i] || !(it.prev >= 0) || !it.pp || doneTs(it.id) <= rs) return;
+        S.ans[i] = it.pp; S.seen[i] = 1;
+      });
+    }
+    S.pre = S.items.map(function (it, i) { return S.seen[i] ? S.ans[i] : 0; });
+  }
+  function refillSeen() {   // 풀이 기록이 바뀐 뒤(계정에서 받았을 때): 채워 준 답을 걷고 새 기록으로 다시 채운다
+    S.items.forEach(function (it, i) { if (isSeen(i)) S.ans[i] = 0; it.prev = doneOf(it.id); it.pp = pickedOf(it.id); });
+    fillSeen();
+  }
+  function isSeen(i) { return !!(S.seen && S.seen[i] && S.ans[i] === (S.pre || [])[i]); }   // 채워 준 답 그대로인가(바꾸면 새 풀이)
+  function paintSeenBtn() {
+    if (!seenBtn) return;
+    var on = showDone();
+    seenBtn.textContent = on ? '👁 푼 답 보임' : '🙈 푼 답 가림';
+    seenBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    seenBtn.classList.toggle('on', on);
+  }
+  function toggleSeen() {
+    store(SEEN_KEY, showDone() ? 0 : null);
+    paintSeenBtn();
+    if (S.graded || !/^(exam|part|topic):/.test(S.set)) return;
+    startSet(S.set, true);
+  }
   function startSet(setId, keepAns) {
     stopTimer();
     armClock();
@@ -717,12 +757,13 @@
     S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
     if (!isExam && S.mode === 'exam') S.mode = 'practice';
     /* 파트·유형 모아 풀기: 전에 푼 문제는 그때 고른 답을 그대로 보여 준다(‘다시 풀기’를 누르면 비운다) */
-    if (/^(part|topic):/.test(setId) && !redoSet) S.items.forEach(function (it, i) { if (it.prev >= 0 && it.pp) S.ans[i] = it.pp; });
+    if (/^(part|topic):/.test(setId) && !redoSet && showDone()) S.items.forEach(function (it, i) { if (it.prev >= 0 && it.pp) S.ans[i] = it.pp; });
     redoSet = false;
-    S.pre = S.ans.slice();
+    S.pre = S.ans.slice(); S.seen = {};
     if (isExam) {
       var sv = store('sn:' + SUB + ':' + setId);
-      if (sv && sv.ans && sv.ans.length === S.items.length) { S.ans = sv.ans; if (sv.g) restoreGraded(sv); }
+      if (sv && sv.ans && sv.ans.length === S.items.length) { S.ans = sv.ans.slice(); if (sv.g) restoreGraded(sv); }
+      fillSeen();
     }
     setSel.value = setId;
     try { history.replaceState(null, '', '#' + encodeURIComponent(setId)); } catch (e) {}
@@ -735,10 +776,11 @@
     if (S.set.indexOf('exam:') !== 0) return;
     var g = S.graded ? { g: 1, gs: S.sel || '', left: S.left, ut: S.usedTimer ? 1 : 0 } : {};   // 채점했으면 그것도(국어는 선택과목까지)
     g.t = Date.now();   // 고친 시각 — 계정에 둔 것과 견줘 늦은 쪽을 남긴다
+    var rs0 = resetAt(S.set); if (rs0) g.rs = rs0;   // 다시 풀기 한 시각은 이어 간다
     if (PAPER) {
       S.items.forEach(function (it, i) { S.pa[it.id] = S.ans[i]; });
       store('sn:' + SUB + ':' + S.set, Object.assign({ pa: S.pa }, g));
-    } else store('sn:' + SUB + ':' + S.set, Object.assign({ ans: S.ans }, g));
+    } else store('sn:' + SUB + ':' + S.set, Object.assign({ ans: S.graded ? S.ans : S.ans.map(function (a, i) { return isSeen(i) ? 0 : a; }) }, g));
     psUp(S.set);
   }
 
@@ -754,6 +796,7 @@
     if (v.ans) o.ans = v.ans;
     if (v.pa) o.pa = v.pa;
     if (v.g) { o.g = 1; o.gs = v.gs || ''; if (typeof v.left === 'number') o.left = v.left; o.ut = v.ut ? 1 : 0; }
+    if (v.rs) o.rs = v.rs;
     return o;
   }
   function psCount(v) {   // 얼마나 풀었나: 고른 답 수(채점까지 했으면 더 크게)
@@ -776,7 +819,8 @@
   }
   function psFlush() { Object.keys(psTimers).forEach(function (id) { psSend(id, true); }); }   // 화면을 떠날 때: 아직 안 보낸 것을 바로
   function psReset(id) {   // 다시 풀기: 이 기기 것을 지우고, 계정에도 빈 상태를 남긴다(다른 기기의 옛 답이 되살아나지 않게)
-    store(psKey(id), psOn() ? { t: Date.now() } : null);
+    var now = Date.now();
+    store(psKey(id), psOn() ? { t: now, rs: now } : { rs: now });   // rs: 이 시각 전에 푼 기록은 이 시험지에 다시 채우지 않는다
     psSend(id);
   }
   function psTake(row) {
@@ -793,6 +837,7 @@
     S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
     S.ans = v.ans && v.ans.length === S.items.length ? v.ans.slice() : S.items.map(function () { return 0; });
     if (v.g && v.ans && v.ans.length === S.items.length) restoreGraded(v);
+    fillSeen();
     armClock();
     renderAll();
   }
@@ -871,7 +916,7 @@
       }
       var gap = /^(part|topic):/.test(S.set) ? S.items.filter(function (it) { return it.prev >= 0; }).length : 0;
       S.items.forEach(function (it, i) {
-        if (gap && it.prev >= 0 && (i === 0 || S.items[i - 1].prev < 0)) list.appendChild(el('div', { class: 'pr-prev-head', text: '✔ 전에 푼 문제 ' + gap + '개 — 그때 고른 답이 그대로 보여요 (틀렸던 문제 먼저)' }));
+        if (gap && it.prev >= 0 && (i === 0 || S.items[i - 1].prev < 0)) list.appendChild(el('div', { class: 'pr-prev-head', text: '✔ 전에 푼 문제 ' + gap + '개 — ' + (showDone() ? '그때 고른 답이 그대로 보여요' : '그때 고른 답은 가려 두었어요(위의 🙈 푼 답 가림 을 누르면 보여요)') + ' (틀렸던 문제 먼저)' }));
         list.appendChild(card(it, i));
       });
     }
@@ -880,7 +925,7 @@
 
   function isShown(i) {
     if (S.revealed[i] !== undefined) return S.revealed[i];
-    return S.graded || (S.mode === 'practice' && S.ans[i]);
+    return S.graded || (S.mode === 'practice' && S.ans[i]) || isSeen(i);   // 다른 세트에서 이미 푼 문항은 시험 모드에서도 결과를 보여 준다
   }
   /* 문항 하나만 채점·해설 열기/접기 (시험 모드에서도 가능) */
   function toggleReveal(i) {
@@ -905,7 +950,8 @@
       it.tag && partName[it.tag] ? el('a', { class: 'pr-tag', href: partHref[it.tag] || '#', text: partName[it.tag] + (it.tp ? ' › ' + topicName[it.tp] : '') }) : null,
       HAS_PARTS && !PAPER && it.tp ? (S.set !== 'topic:' + it.tp ? el('button', { type: 'button', class: 'pr-tag pr-tag-go', title: topicName[it.tp] + ' 문제만 여러 시험에서 모아 풀기', text: '🔁 이 유형 더 풀기', onclick: function () { goTopic(it.tp); } }) : null)
         : HAS_PARTS && !PAPER && it.tag && partName[it.tag] && S.set !== 'part:' + it.tag ? el('button', { type: 'button', class: 'pr-tag pr-tag-go', title: partName[it.tag] + ' 문제를 여러 시험에서 모아 풀기', text: '🔁 이 파트 더 풀기', onclick: function () { goPart(it.tag); } }) : null,
-      it.prev >= 0 && S.set.indexOf('exam:') !== 0 ? el('span', { class: 'pr-done-tag ' + (it.prev ? 'ok' : 'no'), title: '이 문제를 전에 풀었어요(마지막 결과)', text: it.prev ? '✔ 전에 풂 · 맞음' : '✔ 전에 풂 · 틀림' }) : null,
+      it.prev >= 0 && S.set.indexOf('exam:') !== 0 ? el('span', { class: 'pr-done-tag ' + (it.prev ? 'ok' : 'no'), title: '이 문제를 전에 풀었어요(마지막 결과)', text: it.prev ? '✔ 전에 풂 · 맞음' : '✔ 전에 풂 · 틀림' })
+        : isSeen(i) ? el('span', { class: 'pr-done-tag ' + (it.prev ? 'ok' : 'no'), title: '파트·유형 모아 풀기 같은 다른 세트에서 푼 문제예요. 그때 고른 답이 보입니다(위의 👁 푼 답 보임 을 끄면 가려요)', text: it.prev ? '✔ 전에 풂 · 맞음' : '✔ 전에 풂 · 틀림' }) : null,
       it.dueInfo ? el('span', { class: 'pr-due-tag', text: '📅 ' + dueText(it.dueInfo) }) : null,
       unsureOf(it) ? el('span', { class: 'pr-unsure-tag', text: '🤔 헷갈림' }) : null,
       causeOf(it) ? el('span', { class: 'pr-cause-tag', text: CAUSE_NAME[causeOf(it)] }) : null

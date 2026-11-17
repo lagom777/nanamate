@@ -42,6 +42,9 @@ test('풀이 상태 형식: 맞는 것은 정리해 JSON 으로, 틀리면 거�
   assert.deepEqual(JSON.parse(r.state.data), { ans: [1, 2, 0, 5, 3], g: 1, gs: '', left: 812, ut: 1 });
   assert.deepEqual(JSON.parse(parseState({ ...one, sub: 'korean', data: { pa: { c1: 3, a35: 5, b45: 0 }, g: 1, gs: 'b', extra: 'x' } }).state.data), { pa: { c1: 3, a35: 5, b45: 0 }, g: 1, gs: 'b', ut: 0 });
   assert.deepEqual(JSON.parse(parseState({ ...one, data: {} }).state.data), {}, '다시 풀기: 빈 상태');
+  assert.deepEqual(JSON.parse(parseState({ ...one, data: { rs: 1_700_000_000_500 } }).state.data), { rs: 1_700_000_000_500 }, '다시 풀기 한 시각');
+  assert.deepEqual(JSON.parse(parseState({ ...one, data: { ans: [3, 0], rs: 1_700_000_000_500 } }).state.data), { ans: [3, 0], rs: 1_700_000_000_500 }, '다시 푼 뒤 고른 답과 함께');
+  for (const rs of [-1, 1.5, 'x', Infinity]) assert.equal(parseState({ ...one, data: { rs } }).ok, false, 'rs ' + rs);
   assert.deepEqual(JSON.parse(parseState({ ...one, data: { ans: [1, 999], left: 5 } }).state.data), { ans: [1, 999] }, '채점 전이면 채점 정보는 싣지 않는다');
   const bad = [
     null, [], {}, { ...one, sub: 'PHYS' }, { ...one, id: 'part:3' }, { ...one, ts: -1 }, { ...one, ts: 1.5 }, { ...one, data: null }, { ...one, data: [] },
