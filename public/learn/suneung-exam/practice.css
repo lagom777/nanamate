@@ -702,3 +702,13 @@ body.pr-wide-page main.wide { max-width: none; padding-left: 24px; padding-right
 .pr-exp-body .pr-vis-fig { margin: 8px 0 10px; }
 .pr-exp-body:not(.pr-ai-body) .pr-fig-pic { max-width: min(100%, 470px) !important; }   /* 저장된 해설의 그림은 글 사이에 끼는 크기로 */
 .pr-exp-body li .pr-vis-fig { margin-left: -6px; }
+
+/* 📖 정답 보기(공부 모드): 정답이 빨간 칠로 체크되고 해설이 펼쳐진다. 답은 고를 수 없어 선지는 눌리지 않지만 흐리게 하지 않는다 */
+#practice-root .pr-study-btn.on { color: #fff !important; background: var(--pr-ans) !important; border-color: var(--pr-ans) !important; }
+#practice-root.pr-studying .pr-ch:disabled { opacity: 1; cursor: default; }
+#practice-root.pr-studying .pr-ch.sel.right { background: var(--pr-ans) !important; border-color: var(--pr-ans) !important; color: #fff !important; box-shadow: none; }
+#practice-root.pr-studying .pr-ch:hover { border-color: var(--pr-line) !important; }
+#practice-root.pr-studying .pr-num:disabled, #practice-root.pr-studying .pr-numo:disabled { opacity: 1; color: var(--pr-ans); font-weight: 700; }
+#practice-root .pr-card.study { border-left-color: var(--pr-ans); }
+#practice-root.pr-studying .pr-b.sel.right { background: var(--pr-ans) !important; border-color: var(--pr-ans) !important; color: #fff !important; }
+#practice-root.pr-studying .pr-hot.sel.right { box-shadow: 0 0 0 3px var(--pr-ans); background: color-mix(in srgb, var(--pr-ans) 16%, transparent) !important; }

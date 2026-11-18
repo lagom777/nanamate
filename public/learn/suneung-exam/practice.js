@@ -138,7 +138,7 @@
 
   var S = {
     set: '', mode: 'exam', items: [], ans: [], graded: false, timer: false, left: EXAM_SECONDS, tick: null,
-    count: 10, revealed: {}, sel: 'a', meta: null, pa: {}, wrongLoading: false, ms: {}, lastActive: null,
+    count: 10, revealed: {}, study: false, studyHide: {}, sel: 'a', meta: null, pa: {}, wrongLoading: false, ms: {}, lastActive: null,
     markMode: false, memoOpen: {}, pendingJump: null, wrongRows: null, due: null, dueNext: null
   };
   var hiddenMs = 0, hiddenAt = 0;
@@ -262,7 +262,7 @@
   }
 
   /* ───────── UI shell ───────── */
-  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, topicRow, setOpts = [], examOpts = [], setPick = null, setBtn = null, setPanel = null, setGroup = null, setGroupBase = '', scopeWrap = null, scopeBtns = {}, authBox, exportMsg, exportTimer, exporting = false, dueBtn = null, dueOpt = null, omrClock = null;
+  var fab, bar, list, omr, timerEl, progEl, setSel, selSel, modeBtns = {}, countSel, countWrap, topicRow, setOpts = [], examOpts = [], setPick = null, setBtn = null, setPanel = null, setGroup = null, setGroupBase = '', scopeWrap = null, scopeBtns = {}, authBox, exportMsg, exportTimer, exporting = false, dueBtn = null, dueOpt = null, omrClock = null, studyBtn = null;
 
   var COLS_KEY = 'sn:pr:cols';
   function paintCols() {
@@ -353,11 +353,12 @@
     timerEl = el('button', { type: 'button', class: 'pr-timer', onclick: toggleTimer, 'aria-label': '타이머 켜기/끄기' });
     inkBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-ink-btn', title: '시험지·문항 그림에 낙서해요(이 기기에 저장). 펜슬은 그냥 쓰고 마우스는 끌면 써져요. 손가락은 이 단추를 켜야 써지고, 켜 둔 동안 두 손가락으로 화면을 움직여요. 형광펜·지우개도 여기서.', onclick: function () { toggleInk(); } });
     if (!PAPER) { seenBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-seen-btn', title: '전에 푼 문제의 ‘그때 고른 답’을 보여 줄지 정해요(이 기기에 저장). 보임: 파트·유형에서 푼 문제가 수능·모의평가 시험지에서도 답·채점과 함께 보여요. 가림: 빈 문제로 다시 풀 수 있어요.', onclick: toggleSeen }); paintSeenBtn(); }
+    studyBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-study-btn', title: '정답으로 공부하기: 모든 문항에 정답이 체크되고 해설이 펼쳐져요. 내가 고른 답·채점·오답 기록은 그대로 두고 화면에서만 바꿔요. 다시 누르면 원래대로.', onclick: function () { toggleStudy(); } });
     progEl = el('span', { class: 'pr-prog' });
     bar = el('div', { class: 'pr-bar' }, [
       el('div', { class: 'pr-bar-row' }, row1),
       topicRow = el('div', { class: 'pr-bar-row pr-topics', role: 'group', 'aria-label': '세부 유형' }),
-      el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), timerEl, inkBtn, seenBtn, weakBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn', onclick: function () { openWeak(); } }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-nb-btn', text: '📋 오답 노트', onclick: openNotebook }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn', text: '📊 오답 원인', onclick: openCauses }), HAS_PARTS && !PAPER ? el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-acc-btn', text: '📈 정답률', title: '파트·유형별로 몇 문제 풀어 몇 개 맞혔는지', onclick: openAcc }) : null, dueBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-due-btn', text: '📅 오늘 다시 풀', onclick: openDue }), progEl])
+      el('div', { class: 'pr-bar-row' }, [el('div', { class: 'pr-segs', role: 'group', 'aria-label': '모드' }, [modeBtns.exam, modeBtns.practice]), studyBtn, timerEl, inkBtn, seenBtn, weakBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn', onclick: function () { openWeak(); } }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-nb-btn', text: '📋 오답 노트', onclick: openNotebook }), el('button', { type: 'button', class: 'pr-timer pr-weak-btn', text: '📊 오답 원인', onclick: openCauses }), HAS_PARTS && !PAPER ? el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-acc-btn', text: '📈 정답률', title: '파트·유형별로 몇 문제 풀어 몇 개 맞혔는지', onclick: openAcc }) : null, dueBtn = el('button', { type: 'button', class: 'pr-timer pr-weak-btn pr-due-btn', text: '📅 오늘 다시 풀', onclick: openDue }), progEl])
     ]);
     authBox = el('div', { class: 'pr-auth' });
     bar.appendChild(authBox);
@@ -397,6 +398,16 @@
     return el('nav', { class: 'pr-nav', 'aria-label': '과목 이동' }, [el('div', { class: 'pr-nav-backs' }, back), subs]);
   }
 
+  /* 📖 정답 보기(공부 모드): 화면에서만 모든 문항의 정답을 고른 것처럼 체크하고 해설을 펼친다. S.ans(내 답)·채점·기록은 건드리지 않고,
+   * 이 동안에는 답을 고르거나 채점하지 않는다. 문항마다 ‘해설 접기’ 는 S.studyHide 에만 적는다 */
+  function toggleStudy(on) {
+    S.study = on === undefined ? !S.study : !!on;
+    S.studyHide = {};
+    if (S.study) stopTimer();
+    renderAll();
+  }
+  function rightOf(it) { return it.ans === 0 ? 0 : Array.isArray(it.ans) ? it.ans[0] : it.ans; }
+  function ansView(i) { return S.study ? rightOf(S.items[i]) : S.ans[i]; }   // 화면에 ‘고른 답’ 으로 칠할 값
   function setMode(m) {
     S.mode = m;
     store('sn:' + SUB + ':mode', m);
@@ -405,7 +416,7 @@
     renderAll();
   }
   function toggleTimer() {
-    if (S.mode !== 'exam' || S.graded) return;
+    if (S.mode !== 'exam' || S.graded || S.study) return;
     if (S.tick) stopTimer(); else startTimer();
     renderBar();
   }
@@ -680,7 +691,7 @@
     S.set = setId;
     var isExam = setId.indexOf('exam:') === 0;
     if (PAPER) {
-      S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.usedTimer = false; S.revealed = {};
+      S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.usedTimer = false; S.revealed = {}; S.studyHide = {};
       if (!isExam) setId = S.set = 'exam:' + examList()[0].key;
       var key = setId.slice(5);
       var saved = store('sn:' + SUB + ':' + setId);
@@ -704,7 +715,7 @@
     if (setId.indexOf('due:') === 0) {
       S.items = [];
       S.ans = [];
-      S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
+      S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.revealed = {}; S.studyHide = {}; S.usedTimer = false;
       S.mode = 'practice';
       S.wrongLoading = !!(meUser && meUser.id && window.SnAuth);
       setSel.value = setId;
@@ -727,7 +738,7 @@
     if (setId.indexOf('wrong:') === 0 && meUser && meUser.id && window.SnAuth) {
       S.items = [];
       S.ans = [];
-      S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
+      S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.revealed = {}; S.studyHide = {}; S.usedTimer = false;
       S.mode = 'practice';
       S.wrongLoading = true;
       setSel.value = setId;
@@ -754,7 +765,7 @@
     }
     S.items = buildItems(setId);
     S.ans = S.items.map(function () { return 0; });
-    S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
+    S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.revealed = {}; S.studyHide = {}; S.usedTimer = false;
     if (!isExam && S.mode === 'exam') S.mode = 'practice';
     /* 파트·유형 모아 풀기: 전에 푼 문제는 그때 고른 답을 그대로 보여 준다(‘다시 풀기’를 누르면 비운다) */
     if (/^(part|topic):/.test(setId) && !redoSet && showDone()) S.items.forEach(function (it, i) { if (it.prev >= 0 && it.pp) S.ans[i] = it.pp; });
@@ -834,7 +845,7 @@
       return;
     }
     stopTimer();
-    S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.revealed = {}; S.usedTimer = false;
+    S.graded = false; S.sent = null; S.regrade = false; S.left = EXAM_SECONDS; S.revealed = {}; S.studyHide = {}; S.usedTimer = false;
     S.ans = v.ans && v.ans.length === S.items.length ? v.ans.slice() : S.items.map(function () { return 0; });
     if (v.g && v.ans && v.ans.length === S.items.length) restoreGraded(v);
     fillSeen();
@@ -885,8 +896,10 @@
     paintTopics();
     modeBtns.exam.disabled = !isExam;
     var done = S.ans.filter(Boolean).length;
-    progEl.textContent = '푼 문항 ' + done + ' / ' + S.items.length;
-    if (S.mode === 'exam' && isExam && !S.graded) {
+    progEl.textContent = S.study ? '📖 정답 보기 중 · 내 답(' + done + '문항)은 그대로 있어요' : '푼 문항 ' + done + ' / ' + S.items.length;
+    if (studyBtn) { studyBtn.textContent = S.study ? '📖 정답 보기 끄기' : '📖 정답 보기'; studyBtn.setAttribute('aria-pressed', S.study ? 'true' : 'false'); studyBtn.classList.toggle('on', S.study); }
+    root.classList.toggle('pr-studying', !!S.study);
+    if (S.mode === 'exam' && isExam && !S.graded && !S.study) {
       timerEl.style.display = '';
       var over = S.left <= 0;
       timerEl.textContent = (over ? '⏰ 시간 끝 ' : S.tick ? '⏱ ' : '⏱ 타이머 시작 ') + fmtClock(S.left);
@@ -924,11 +937,13 @@
   }
 
   function isShown(i) {
+    if (S.study) return !S.studyHide[i];
     if (S.revealed[i] !== undefined) return S.revealed[i];
     return S.graded || (S.mode === 'practice' && S.ans[i]) || isSeen(i);   // 다른 세트에서 이미 푼 문항은 시험 모드에서도 결과를 보여 준다
   }
   /* 문항 하나만 채점·해설 열기/접기 (시험 모드에서도 가능) */
   function toggleReveal(i) {
+    if (S.study) { S.studyHide[i] = !S.studyHide[i]; if (!PAPER) refreshCard(i); renderOmr(); return; }
     var open = !isShown(i);
     S.revealed[i] = open;
     if (open) sendAttempt(i);
@@ -936,6 +951,7 @@
     renderOmr();
   }
   function stateCls(it, i) {
+    if (S.study) return ' study';
     if (!isShown(i)) return '';
     return isRight(it, S.ans[i]) ? ' ok' : ' bad';   // 못 푼 문제도 틀린 것
   }
@@ -963,29 +979,29 @@
     if (it.num) {
       var inp = el('input', {
         type: 'text', inputmode: 'numeric', pattern: '[0-9]*', maxlength: '3', class: 'pr-num', 'aria-label': (i + 1) + '번 답 입력',
-        placeholder: '정답(0~999)', value: S.ans[i] ? String(S.ans[i]) : '', disabled: S.graded ? 'disabled' : false,
+        placeholder: '정답(0~999)', value: ansView(i) ? String(ansView(i)) : '', disabled: S.graded || S.study ? 'disabled' : false,
         onchange: function () { setNum(i, inp.value); },
         onkeydown: function (ev) { if (ev.key === 'Enter') { ev.preventDefault(); setNum(i, inp.value); } }
       });
-      c.appendChild(el('div', { class: 'pr-numrow' }, [el('span', { text: '단답형 · 답 입력' }), inp]));
+      c.appendChild(el('div', { class: 'pr-numrow' }, [el('span', { text: S.study ? '단답형 · 정답' : '단답형 · 답 입력' }), inp]));
     } else {
       var ch = el('div', { class: 'pr-choices', role: 'group', 'aria-label': (i + 1) + '번 답 선택' });
       for (var k = 1; k <= 5; k++) (function (k) {
-        var cls = 'pr-ch';
-        if (S.ans[i] === k) cls += ' sel';
-        if (shown && it.ans !== 0 && isRight(it, k)) cls += ' right';
-        if (shown && S.ans[i] === k && !isRight(it, k)) cls += ' wrong';
-        ch.appendChild(el('button', { type: 'button', class: cls, 'aria-pressed': S.ans[i] === k, text: CIRC[k - 1], onclick: function () { choose(i, k); } }));
+        var cls = 'pr-ch', A = ansView(i);
+        if (A === k) cls += ' sel';
+        if ((shown || S.study) && it.ans !== 0 && isRight(it, k)) cls += ' right';
+        if (shown && A === k && !isRight(it, k)) cls += ' wrong';
+        ch.appendChild(el('button', { type: 'button', class: cls, 'aria-pressed': A === k, disabled: S.study ? 'disabled' : false, text: CIRC[k - 1], onclick: function () { choose(i, k); } }));
       })(k);
       c.appendChild(ch);
     }
     c.appendChild(el('div', { class: 'pr-chk-row' }, [
-      el('button', { type: 'button', class: 'pr-chk-btn' + (shown ? ' on' : ''), text: shown ? '해설 접기' : '이 문제 채점 · 해설 보기', onclick: function () { toggleReveal(i); } }),
-      shown ? null : el('button', { type: 'button', class: 'pr-chk-btn pr-hint-btn', text: '💡 힌트만', title: '정답은 숨기고 실마리만', onclick: function () { askHint(i); } }),
-      el('button', { type: 'button', class: 'pr-chk-btn pr-ai-btn', text: '🤖 AI 해설' + (shown && S.ans[i] && !isRight(it, S.ans[i]) ? ' · 내 실수 분석' : ''), onclick: function () { askItem(i); } }),
+      el('button', { type: 'button', class: 'pr-chk-btn' + (shown ? ' on' : ''), text: shown ? '해설 접기' : S.study ? '해설 보기' : '이 문제 채점 · 해설 보기', onclick: function () { toggleReveal(i); } }),
+      shown || S.study ? null : el('button', { type: 'button', class: 'pr-chk-btn pr-hint-btn', text: '💡 힌트만', title: '정답은 숨기고 실마리만', onclick: function () { askHint(i); } }),
+      el('button', { type: 'button', class: 'pr-chk-btn pr-ai-btn', text: '🤖 AI 해설' + (shown && !S.study && S.ans[i] && !isRight(it, S.ans[i]) ? ' · 내 실수 분석' : ''), onclick: function () { askItem(i); } }),
       el('button', { type: 'button', class: 'pr-chk-btn pr-unsure-btn', 'aria-pressed': unsureOf(it) ? 'true' : 'false', title: '맞았어도 확신이 없었으면 — 틀린·헷갈린 문제 다시 풀기에 들어갑니다', text: '🤔 헷갈림', onclick: function () { toggleUnsure(it, i); } }),
       el('button', { type: 'button', class: 'pr-chk-btn pr-memo-btn' + (noteFilled(it) ? ' has' : ''), 'data-memo-for': noteKey(it), 'aria-expanded': memoOpen(it, i) ? 'true' : 'false', text: '📝 메모', onclick: function () { toggleMemo(it, i); } }),
-      (shown && !isRight(it, S.ans[i])) || unsureOf(it) ? el('button', { type: 'button', class: 'pr-chk-btn pr-sheet-btn', title: '시험지·내 답·원인·AI 분석·비슷한 기출을 한 화면에', text: '📋 한 장', onclick: function () {
+      (shown && !S.study && !isRight(it, S.ans[i])) || unsureOf(it) ? el('button', { type: 'button', class: 'pr-chk-btn pr-sheet-btn', title: '시험지·내 답·원인·AI 분석·비슷한 기출을 한 화면에', text: '📋 한 장', onclick: function () {
         var bad = shown && !isRight(it, S.ans[i]);
         openSheet({ ref: qRef(examKeyOf(it), it.sec, it.n), why: bad ? (S.ans[i] ? { wrong: 1 } : { wrong: 1, skip: 1 }) : { unsure: 1 }, picked: S.ans[i] || 0, ts: Date.now() }, openNotebook);
       } }) : null
@@ -1001,12 +1017,12 @@
 
   function reveal(it, i) {
     var okk = isRight(it, S.ans[i]);
-    var verdict = S.ans[i] ? (okk ? '정답입니다' : '오답입니다 · 내 답 ' + ansText(it, S.ans[i])) : okk ? '풀지 않은 문항(모두 정답 처리)' : '오답입니다 · 못 푼 문항';   // 못 푼 문제도 틀린 것
+    var verdict = S.study ? '📖 정답 보기' : S.ans[i] ? (okk ? '정답입니다' : '오답입니다 · 내 답 ' + ansText(it, S.ans[i])) : okk ? '풀지 않은 문항(모두 정답 처리)' : '오답입니다 · 못 푼 문항';   // 못 푼 문제도 틀린 것
     var corr = it.ans === 0 ? '정답 없음(배점 인정)' : Array.isArray(it.ans) ? it.ans.map(function (x) { return ansText(it, x); }).join(' 또는 ') + ' (복수 정답)' : ansText(it, it.ans);
     var box = el('div', { class: 'pr-explain' }, [
       el('p', { class: 'pr-verdict' }, [el('b', { text: verdict }), ' · ', el('b', { class: 'pr-ans-t', text: (it.ans === 0 ? '' : '정답 ') + corr }), ' · 배점 ' + it.pts + '점']),
     ]);
-    if (S.ans[i] && !okk && !it.num && !Array.isArray(it.ans)) {
+    if (!S.study && S.ans[i] && !okk && !it.num && !Array.isArray(it.ans)) {
       var trap = el('p', { class: 'pr-trap', hidden: true });
       box.appendChild(trap);
       loadTrap(it.ex).then(function (map) {
@@ -2399,7 +2415,7 @@
     var t = ms != null && ms < 600000 ? ' · 풀이 시간 약 ' + Math.round(ms / 1000) + '초' : '';
     return it.n + '번 (' + it.pts + '점' + (it.tag && partName[it.tag] ? ', ' + partName[it.tag] + (it.tp ? ' › ' + topicName[it.tp] : '') : '') + (it.sec && SUB === 'korean' ? ', ' + SEC_NAME[it.sec] : '') + ') · 공식 정답 ' + corrText(it) + ' · 내 답 ' + (a === -1 ? '기록 없음(틀린 문제로 저장됨)' : pickText(it, a)) + t;
   }
-  function itemReq(i) { return reqFor(S.items[i], S.ans[i], S.ms && S.ms[i], PAPER ? S.meta : null); }
+  function itemReq(i) { return reqFor(S.items[i], S.study ? 0 : S.ans[i], S.ms && S.ms[i], PAPER ? S.meta : null); }
   /* 문항 하나의 AI 해설 요청. a = 내 답(0 미응답, -1 틀렸지만 고른 답을 모름), m = 그 회차 시험지 meta(국어·영어) */
   /* 과목·문항에 맞는 그림 블록 권하기 */
   function visHint(it) {
@@ -2719,7 +2735,7 @@
     if (old) old.parentNode.replaceChild(card(S.items[i], i), old);
   }
   function choose(i, k) {
-    if (S.graded) return;
+    if (S.graded || S.study) return;
     S.ans[i] = S.ans[i] === k ? 0 : k;
     if (S.ans[i]) stampChoice(i);
     persist();
@@ -2729,7 +2745,7 @@
     renderBar(); renderOmr();
   }
   function setNum(i, v) {
-    if (S.graded) return;
+    if (S.graded || S.study) return;
     var n = parseInt(String(v).replace(/[^0-9]/g, ''), 10);
     S.ans[i] = isNaN(n) ? 0 : n;
     if (S.ans[i]) stampChoice(i);
@@ -2757,6 +2773,7 @@
     return row;
   }
   function sendAttempt(i) {
+    if (S.study) return;   // 정답 보기로 본 것은 푼 기록이 아니다
     var row = attemptOf(S.items[i], i);
     if (row) { noteDone(row.exam, row.q, row.ok, row.ts, row.picked); saveDone(); }
     if (!window.SnAuth) return;
@@ -2776,7 +2793,7 @@
     saveDone();
     if (rows.length) { SnAuth.record(rows); dueSoon(); }
   }
-  function reopen() { S.graded = false; S.revealed = {}; S.regrade = true; persist(); renderAll(); }
+  function reopen() { S.graded = false; S.revealed = {}; S.studyHide = {}; S.regrade = true; persist(); renderAll(); }
 
   /* ───────── 문제별 노트: 메모·선지 표시(○△✕)·헷갈림·오답 원인. 이 기기에 바로 저장하고, 로그인하면 계정(/api/qnotes)과 맞춘다 ─────────
    * notes["<회차>/<번호>"] = { m: 선지 1~5 표시 다섯 글자(o ○ · t △ · x ✕ · - 없음), t: 메모, f: 헷갈림 0·1, c: 오답 원인, u: 고친 시각 } */
@@ -3428,11 +3445,11 @@
     Array.prototype.forEach.call(root.querySelectorAll('.pr-hot'), function (b) {
       var i = at[b.getAttribute('data-q')], it = S.items[i], k = +b.getAttribute('data-k');
       if (!it) return;
-      var shown = isShown(i), mark = MARK_SYM[markOf(it, k)];
-      b.classList.toggle('sel', S.ans[i] === k);
+      var shown = isShown(i) || S.study, mark = MARK_SYM[markOf(it, k)], A = ansView(i);
+      b.classList.toggle('sel', A === k);
       b.classList.toggle('right', !!(shown && it.ans !== 0 && isRight(it, k)));
-      b.classList.toggle('wrong', !!(shown && S.ans[i] === k && !isRight(it, k)));
-      b.setAttribute('aria-pressed', S.ans[i] === k ? 'true' : 'false');
+      b.classList.toggle('wrong', !!(shown && A === k && !isRight(it, k)));
+      b.setAttribute('aria-pressed', A === k ? 'true' : 'false');
       if (mark) b.setAttribute('data-mark', mark); else b.removeAttribute('data-mark');
     });
   }
@@ -3509,8 +3526,8 @@
   }
   function scriptBox() {
     var m = S.meta;
-    var d = el('details', { class: 'pr-script' }, [el('summary', { text: S.graded ? '🎧 듣기평가 대본 (1~17번)' : '🎧 듣기평가 대본 (채점 후 열립니다)' })]);
-    if (S.graded && m.script) {
+    var d = el('details', { class: 'pr-script' }, [el('summary', { text: S.graded || S.study ? '🎧 듣기평가 대본 (1~17번)' : '🎧 듣기평가 대본 (채점 후 열립니다)' })]);
+    if ((S.graded || S.study) && m.script) {
       for (var n = 1; n <= 17; n++) {
         var t = m.script[String(n)];
         if (t) d.appendChild(el('div', { class: 'pr-script-q' }, [el('b', { text: n + '번' }), el('pre', { text: t.replace(/^\[?\d+[～~]?\d*\]?\.?\s*/, '') })]));
@@ -3584,14 +3601,14 @@
       row.appendChild(el('a', { class: 'pr-rn', href: '#q-' + i, text: label, onclick: function (e) { e.preventDefault(); jump(i); } }));
       if (it.num) {
         row.appendChild(el('input', {
-          type: 'text', inputmode: 'numeric', pattern: '[0-9]*', maxlength: '3', class: 'pr-numo', 'aria-label': (i + 1) + '번 답 입력', placeholder: '단답', value: S.ans[i] ? String(S.ans[i]) : '',
-          disabled: S.graded ? 'disabled' : false, onchange: function (ev) { setNum(i, ev.target.value); }
+          type: 'text', inputmode: 'numeric', pattern: '[0-9]*', maxlength: '3', class: 'pr-numo', 'aria-label': (i + 1) + '번 답 입력', placeholder: '단답', value: ansView(i) ? String(ansView(i)) : '',
+          disabled: S.graded || S.study ? 'disabled' : false, onchange: function (ev) { setNum(i, ev.target.value); }
         }));
-        if (S.graded) row.appendChild(el('span', { class: 'pr-numans', text: '정답 ' + it.ans }));
+        if (S.graded && !S.study) row.appendChild(el('span', { class: 'pr-numans', text: '정답 ' + it.ans }));
       } else for (var k = 1; k <= 5; k++) (function (k) {
         var cls = 'pr-b';
-        if (S.ans[i] === k) cls += ' sel';
-        if (isShown(i) && it.ans !== 0 && isRight(it, k)) cls += ' right';
+        if (ansView(i) === k) cls += ' sel';
+        if ((isShown(i) || S.study) && it.ans !== 0 && isRight(it, k)) cls += ' right';
         var mark = PAPER ? MARK_SYM[markOf(it, k)] : '';
         row.appendChild(el('button', {
           type: 'button', class: cls, 'data-mark': mark || false, text: k,
@@ -3610,7 +3627,8 @@
     });
     omr.appendChild(grid);
     if (PAPER) { var rv = reviewBox(); if (rv) omr.appendChild(rv); }
-    if (!S.graded && S.items.length) {
+    if (S.study && S.items.length) omr.appendChild(el('button', { type: 'button', class: 'pr-submit pr-study-off', text: '📖 정답 보기 끄고 내 답으로', onclick: function () { toggleStudy(false); } }));
+    else if (!S.graded && S.items.length) {
       omr.appendChild(el('button', { type: 'button', class: 'pr-submit', text: S.mode === 'exam' ? '제출하고 채점하기' : '지금까지 채점하기', onclick: grade }));
     }
     if (S.graded) omr.appendChild(resultPanel());
@@ -3655,7 +3673,7 @@
   }
   /* 채점해 둔 시험을 다시 열면 채점된 채로(점수·정답·오답 표시). 점수 기록·계정 전송은 다시 하지 않는다 */
   function restoreGraded(sv) {
-    S.graded = true; S.revealed = {};
+    S.graded = true; S.revealed = {}; S.studyHide = {};
     if (typeof sv.left === 'number') S.left = sv.left;
     S.usedTimer = !!sv.ut;
     S.sent = S.ans.slice();
@@ -3664,7 +3682,7 @@
   function grade() {
     if (S.graded) return;
     stopTimer();
-    S.graded = true; S.revealed = {};
+    S.graded = true; S.revealed = {}; S.studyHide = {};
     var tried = S.ans.some(function (a) { return a; });   // 하나도 안 고르고 누른 채점은 못 푼 문제를 오답 기록으로 남기지 않는다(화면엔 오답으로 보인다)
     if (!PAPER) S.items.forEach(function (it, i) { recordWrong(it, S.ans[i], tried); });
     S.result = scoreOf();
