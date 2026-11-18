@@ -3539,7 +3539,13 @@
       window.addEventListener('resize', function () { if (arrowCur) drawArrow(); });
     }
     var a = arrowCur.from.getBoundingClientRect(), b = arrowCur.to.getBoundingClientRect();
-    var bx = b.left + b.width / 2, by = b.top + b.height / 2, r = Math.max(b.width, b.height) / 2 + 6;
+    var bx = b.left + b.width / 2, by = b.top + b.height / 2, r = Math.max(b.width, b.height) / 2 + 6, isBox = b.width > 60 || b.height > 60;
+    if (isBox) {   // 보기 줄·넓은 칸: 동그라미 대신 상자 테두리(이미 점선으로 보임)의 가장 가까운 곳까지
+      var acx = a.left + a.width / 2, acy = a.top + a.height / 2;
+      bx = Math.max(b.left + 12, Math.min(acx, b.right - 12));
+      by = acy < b.top ? b.top : acy > b.bottom ? b.bottom : b.top + b.height / 2;
+      r = 0;
+    }
     var vh = window.innerHeight, off = by < 8 ? -1 : by > vh - 8 ? 1 : 0, lab = '';
     if (off) {   // 선지가 화면 밖: 화살표는 화면 가장자리까지, 끝에 ‘N번 ③ ↓’ 표시
       lab = (arrowCur.lab || '') + (off > 0 ? ' ↓' : ' ↑');
@@ -3548,13 +3554,14 @@
     var ax = Math.max(a.left, Math.min(bx, a.right)), ay = by > a.bottom ? a.bottom : by < a.top ? a.top : a.top + a.height / 2;
     if (by >= a.top && by <= a.bottom) ax = bx < a.left ? a.left : a.right;
     var dx = bx - ax, dy = by - ay, L = Math.sqrt(dx * dx + dy * dy) || 1;
-    var ex = bx - dx / L * (r || 16), ey = by - dy / L * (r || 16);   // 동그라미 테두리(또는 화면 끝 표시) 앞에서 멈춘다
+    var stop = isBox && !lab ? 3 : (r || 16);
+    var ex = bx - dx / L * stop, ey = by - dy / L * stop;   // 동그라미 테두리(또는 상자 끝·화면 끝 표시) 앞에서 멈춘다
     var bend = Math.min(90, L * 0.3), mx = (ax + ex) / 2 - dy / L * bend, my = (ay + ey) / 2 + dx / L * bend;
     var ns = 'http://www.w3.org/2000/svg', col = '#ea580c';
     arrowSvg.innerHTML = '<defs><marker id="pr-arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="' + col + '"/></marker></defs>' +
       '<path d="M' + ax.toFixed(1) + ',' + ay.toFixed(1) + ' Q' + mx.toFixed(1) + ',' + my.toFixed(1) + ' ' + ex.toFixed(1) + ',' + ey.toFixed(1) + '" fill="none" stroke="' + col + '" stroke-width="3" stroke-linecap="round" marker-end="url(#pr-arw)" opacity=".92"/>' +
       (lab ? '<rect x="' + (bx - 44).toFixed(1) + '" y="' + (by - 13).toFixed(1) + '" width="88" height="26" rx="13" fill="' + col + '"/><text x="' + bx.toFixed(1) + '" y="' + (by + 5).toFixed(1) + '" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">' + lab + '</text>'
-        : '<circle cx="' + bx.toFixed(1) + '" cy="' + by.toFixed(1) + '" r="' + r.toFixed(1) + '" fill="rgba(234,88,12,.12)" stroke="' + col + '" stroke-width="3"/>');
+        : isBox ? '' : '<circle cx="' + bx.toFixed(1) + '" cy="' + by.toFixed(1) + '" r="' + r.toFixed(1) + '" fill="rgba(234,88,12,.12)" stroke="' + col + '" stroke-width="3"/>');
     void ns;
   }
   function openExq(k, fromQ, j) {
