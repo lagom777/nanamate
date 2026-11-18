@@ -3439,7 +3439,7 @@
           if (!ib) return;
           var d = el('button', { type: 'button', class: 'pr-ev' + (v.c === rightOfKey(k) ? ' ans' : ''), 'data-k': k, 'data-j': j, title: k.slice(1) + '번' + (v.c ? ' ' + CIRC[v.c - 1] : '') + ' — ' + (v.n || ''), 'aria-label': k.slice(1) + '번 근거' + (v.n ? ': ' + v.n : ''),
             style: 'left:' + (b[2] / ib._w * 100).toFixed(3) + '%;top:' + (b[3] / ib._h * 100).toFixed(3) + '%;width:' + (b[4] / ib._w * 100).toFixed(3) + '%;height:' + (b[5] / ib._h * 100).toFixed(3) + '%',
-            onclick: function () { openExq(k, false, j); }, onmouseenter: function () { evArrow(d, k, v.c); }, onmouseleave: function () { evArrow(null); } });
+            onclick: function () { openExq(k, false, j); }, onmouseenter: function () { if (canHover()) evArrow(d, k, v.c); }, onmouseleave: function () { evArrow(null); } });
           if (bi === 0) d.appendChild(el('span', { class: 'pr-ev-tag', text: k.slice(1) + (v.c ? CIRC[v.c - 1] : '') }));
           ib.appendChild(d);
         });
@@ -3470,6 +3470,7 @@
   }
   /* 근거 형광펜 → 그 근거가 받치는 선지 번호(시험지 위 ①~⑤ 자리, 없으면 문항 번호)로 화살표. 화면 고정 SVG 에 그리고 스크롤하면 다시 그린다 */
   var arrowSvg = null, arrowCur = null, arrowTimer = null;
+  function canHover() { return !window.matchMedia || window.matchMedia('(hover: hover) and (pointer: fine)').matches; }   // 손가락 화면: 누르면 mouseenter 만 오고 leave 가 없어 화살표가 남는다
   function evTarget(k, c) {
     return (c && root.querySelector('.pr-hot[data-q="' + k + '"][data-k="' + c + '"]')) || root.querySelector('.pr-exq[data-k="' + k + '"]');
   }
@@ -3516,7 +3517,7 @@
     var body = el('div', { class: 'pr-exq-body' });
     var why = el('div', { class: 'pr-exq-why' }); why.innerHTML = e.w || ''; body.appendChild(why);
     if (e.ev && e.ev.length) body.appendChild(el('div', { class: 'pr-exq-evs' }, [el('span', { class: 'pr-exq-l', text: '지문 근거' })].concat(e.ev.map(function (v, jj) {
-      return el('button', { type: 'button', class: 'pr-exq-ev' + (v.c === a ? ' ans' : ''), onclick: function () { evGo(k, jj); }, onmouseenter: function () { var d = root.querySelector('.pr-ev[data-k="' + k + '"][data-j="' + jj + '"]'); if (d) evArrow(d, k, v.c); }, onmouseleave: function () { evArrow(null); } }, [v.c && (v.n || '').indexOf(CIRC[v.c - 1]) !== 0 ? el('b', { text: CIRC[v.c - 1] + ' ' }) : null, v.n || '근거 ' + (jj + 1)]);
+      return el('button', { type: 'button', class: 'pr-exq-ev' + (v.c === a ? ' ans' : ''), onclick: function () { evGo(k, jj); }, onmouseenter: function () { if (!canHover()) return; var d = root.querySelector('.pr-ev[data-k="' + k + '"][data-j="' + jj + '"]'); if (d) evArrow(d, k, v.c); }, onmouseleave: function () { evArrow(null); } }, [v.c && (v.n || '').indexOf(CIRC[v.c - 1]) !== 0 ? el('b', { text: CIRC[v.c - 1] + ' ' }) : null, v.n || '근거 ' + (jj + 1)]);
     }))));
     if (e.x && e.x.length) body.appendChild(el('ol', { class: 'pr-exq-x' }, e.x.map(function (t, c) { return el('li', { class: c + 1 === a ? 'ans' : '' }, [el('b', { text: CIRC[c] + ' ' }), t]); })));
     exqDock = el('section', { class: 'pr-exq-dock', role: 'dialog', 'aria-label': it.n + '번 해설' }, [
