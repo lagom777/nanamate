@@ -1011,9 +1011,57 @@
     if (!shown && aiNeed(hintAiId(i), function () { return hintReq(i); }).status !== 'idle') c.appendChild(el('div', { class: 'pr-explain pr-hint' }, [aiBox(hintAiId(i))]));
     if (!shown && aiRun(itemAiId(i)).status === 'ask') c.appendChild(el('div', { class: 'pr-explain pr-hint' }, [aiBox(itemAiId(i))]));
     if (shown) c.appendChild(reveal(it, i));
+    if (S.study && shown && !PAPER) cardEv(it, i, ib, c);
     return c;
   }
 
+  /* 수학·과탐 해설모드: explain/<회차>-<과목>-ev.json = {번호: {w, h, ev: [{b: [[x,y,w,h]…], tc?: 선지, tb?: [[…]] 보기 줄, n: 설명}]}}
+     문항 그림 위에 근거 형광펜, 마우스를 올리면 그 근거가 판정하는 보기 줄(점선 파랑)이나 선지로 화살표. 해설 칸에는 근거 목록 */
+  var evCache = {};
+  function loadEv(key) {
+    var ck = key + '-' + SUB;
+    if (!evCache[ck]) evCache[ck] = fetch(cfg.base + 'explain/' + ck + '-ev.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+    return evCache[ck];
+  }
+  function cardEv(it, i, ib, c) {
+    loadEv(it.ex).then(function (map) {
+      var e = map && map[it.n];
+      if (!e || !S.study || !c.isConnected) return;
+      var pct = function (b, cls, extra) {
+        return el('div', Object.assign({ class: cls, style: 'left:' + (b[0] / e.w * 100).toFixed(3) + '%;top:' + (b[1] / e.h * 100).toFixed(3) + '%;width:' + (b[2] / e.w * 100).toFixed(3) + '%;height:' + (b[3] / e.h * 100).toFixed(3) + '%' }, extra || {}));
+      };
+      var items = e.ev.map(function (v, j) {
+        var tos = (v.tb || []).map(function (b) { var t = pct(b, 'pr-ev-to'); ib.appendChild(t); return t; });
+        var target = tos[0] || (v.tc && (c.querySelector('.pr-hot[data-k="' + v.tc + '"]') || c.querySelectorAll('.pr-choices .pr-ch')[v.tc - 1])) || null;
+        var lab = v.tc ? CIRC[v.tc - 1] : '';
+        var on = function (yes, ms) {
+          tos.forEach(function (t) { t.classList.toggle('on', yes); });
+          boxes.forEach(function (d) { d.classList.toggle('on', yes); });
+          c.classList.toggle('pr-ev-focus', yes);
+          if (yes && target) evArrow(boxes[0], target, lab, ms); else if (!yes) evArrow(null);
+        };
+        var boxes = v.b.map(function (b, bi) {
+          var d = pct(b, 'pr-ev pr-qev ans', { role: 'button', tabindex: '0', title: v.n, 'aria-label': '근거 ' + (j + 1) + ': ' + v.n });
+          if (bi === 0) d.appendChild(el('span', { class: 'pr-ev-tag', text: String(j + 1) }));
+          d.addEventListener('mouseenter', function () { if (canHover()) on(true); });
+          d.addEventListener('mouseleave', function () { if (canHover()) on(false); });
+          d.addEventListener('click', function () { var ch = c.querySelector('.pr-qev-chip[data-j="' + j + '"]'); if (ch) ch.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); on(true, 3500); setTimeout(function () { on(false); }, 3500); });
+          ib.appendChild(d); return d;
+        });
+        return { v: v, on: on, boxes: boxes };
+      });
+      var box = c.querySelector('.pr-qev-list');
+      if (!box) return;
+      box.hidden = false;
+      items.forEach(function (o, j) {
+        var ch = el('button', { type: 'button', class: 'pr-qev-chip', 'data-j': j }, [el('b', { text: (j + 1) + '' }), ' ' + o.v.n]);
+        ch.addEventListener('mouseenter', function () { if (canHover()) o.on(true); });
+        ch.addEventListener('mouseleave', function () { if (canHover()) o.on(false); });
+        ch.addEventListener('click', function () { o.boxes[0].scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(function () { o.on(true, 3500); setTimeout(function () { o.on(false); }, 3500); }, 450); });
+        box.appendChild(ch);
+      });
+    });
+  }
   function ansText(it, a) { return it.num ? String(a) : chLabel(a); }
 
   function reveal(it, i) {
@@ -1034,6 +1082,7 @@
         trap.hidden = false;
       });
     }
+    if (S.study && !PAPER) box.appendChild(el('div', { class: 'pr-qev-list', hidden: true }, [el('span', { class: 'pr-exq-l', text: '문제 속 근거 — 마우스를 올리면 문제 위에 표시돼요' })]));
     var body = el('div', { class: 'pr-exp-body', text: '해설 불러오는 중…' });
     box.appendChild(body);
     var aid = itemAiId(i);
@@ -3476,7 +3525,7 @@
   }
   function evArrow(from, k, c, ms) {
     clearTimeout(arrowTimer);
-    arrowCur = from ? { from: from, to: evTarget(k, c), c: c, k: k } : null;
+    arrowCur = from ? (k && k.nodeType ? { from: from, to: k, lab: c } : { from: from, to: evTarget(k, c), lab: k.slice(1) + '번' + (c ? ' ' + CIRC[c - 1] : '') }) : null;
     drawArrow();
     if (from && ms) arrowTimer = setTimeout(function () { evArrow(null); }, ms);
   }
@@ -3490,22 +3539,29 @@
       window.addEventListener('resize', function () { if (arrowCur) drawArrow(); });
     }
     var a = arrowCur.from.getBoundingClientRect(), b = arrowCur.to.getBoundingClientRect();
-    var bx = b.left + b.width / 2, by = b.top + b.height / 2, r = Math.max(b.width, b.height) / 2 + 6;
+    var bx = b.left + b.width / 2, by = b.top + b.height / 2, r = Math.max(b.width, b.height) / 2 + 6, isBox = b.width > 60 || b.height > 60;
+    if (isBox) {   // 보기 줄·넓은 칸: 동그라미 대신 상자 테두리(이미 점선으로 보임)의 가장 가까운 곳까지
+      var acx = a.left + a.width / 2, acy = a.top + a.height / 2;
+      bx = Math.max(b.left + 12, Math.min(acx, b.right - 12));
+      by = acy < b.top ? b.top : acy > b.bottom ? b.bottom : b.top + b.height / 2;
+      r = 0;
+    }
     var vh = window.innerHeight, off = by < 8 ? -1 : by > vh - 8 ? 1 : 0, lab = '';
     if (off) {   // 선지가 화면 밖: 화살표는 화면 가장자리까지, 끝에 ‘N번 ③ ↓’ 표시
-      lab = arrowCur.k.slice(1) + '번' + (arrowCur.c ? ' ' + CIRC[arrowCur.c - 1] : '') + (off > 0 ? ' ↓' : ' ↑');
+      lab = (arrowCur.lab || '') + (off > 0 ? ' ↓' : ' ↑');
       by = off > 0 ? vh - 26 : 26; r = 0;
     }
     var ax = Math.max(a.left, Math.min(bx, a.right)), ay = by > a.bottom ? a.bottom : by < a.top ? a.top : a.top + a.height / 2;
     if (by >= a.top && by <= a.bottom) ax = bx < a.left ? a.left : a.right;
     var dx = bx - ax, dy = by - ay, L = Math.sqrt(dx * dx + dy * dy) || 1;
-    var ex = bx - dx / L * (r || 16), ey = by - dy / L * (r || 16);   // 동그라미 테두리(또는 화면 끝 표시) 앞에서 멈춘다
+    var stop = isBox && !lab ? 3 : (r || 16);
+    var ex = bx - dx / L * stop, ey = by - dy / L * stop;   // 동그라미 테두리(또는 상자 끝·화면 끝 표시) 앞에서 멈춘다
     var bend = Math.min(90, L * 0.3), mx = (ax + ex) / 2 - dy / L * bend, my = (ay + ey) / 2 + dx / L * bend;
     var ns = 'http://www.w3.org/2000/svg', col = '#ea580c';
     arrowSvg.innerHTML = '<defs><marker id="pr-arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="' + col + '"/></marker></defs>' +
       '<path d="M' + ax.toFixed(1) + ',' + ay.toFixed(1) + ' Q' + mx.toFixed(1) + ',' + my.toFixed(1) + ' ' + ex.toFixed(1) + ',' + ey.toFixed(1) + '" fill="none" stroke="' + col + '" stroke-width="3" stroke-linecap="round" marker-end="url(#pr-arw)" opacity=".92"/>' +
       (lab ? '<rect x="' + (bx - 44).toFixed(1) + '" y="' + (by - 13).toFixed(1) + '" width="88" height="26" rx="13" fill="' + col + '"/><text x="' + bx.toFixed(1) + '" y="' + (by + 5).toFixed(1) + '" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">' + lab + '</text>'
-        : '<circle cx="' + bx.toFixed(1) + '" cy="' + by.toFixed(1) + '" r="' + r.toFixed(1) + '" fill="rgba(234,88,12,.12)" stroke="' + col + '" stroke-width="3"/>');
+        : isBox ? '' : '<circle cx="' + bx.toFixed(1) + '" cy="' + by.toFixed(1) + '" r="' + r.toFixed(1) + '" fill="rgba(234,88,12,.12)" stroke="' + col + '" stroke-width="3"/>');
     void ns;
   }
   function openExq(k, fromQ, j) {
