@@ -943,7 +943,8 @@
   }
   /* 문항 하나만 채점·해설 열기/접기 (시험 모드에서도 가능) */
   function toggleReveal(i) {
-    if (S.study) { S.studyHide[i] = !S.studyHide[i]; if (!PAPER) refreshCard(i); renderOmr(); return; }
+    if (S.study && PAPER) { var it1 = S.items[i]; return exqKey === it1.sec + it1.n ? closeExq() : openExq(it1.sec + it1.n); }
+    if (S.study) { S.studyHide[i] = !S.studyHide[i]; refreshCard(i); renderOmr(); return; }
     var open = !isShown(i);
     S.revealed[i] = open;
     if (open) sendAttempt(i);
@@ -3389,6 +3390,18 @@
   /* ───────── paper 렌더 ───────── */
   function renderPaper() {
     var m = S.meta, key = S.set.slice(5);
+    evBoxes = []; evMap = null; closeExq();
+    if (S.study) {
+      var note = el('p', { class: 'pr-ev-note', text: '📖 정답 보기 중 — 해설·근거를 불러오는 중…' });
+      list.appendChild(note);
+      loadExplain(key).then(function (map) {
+        if (S.set.slice(5) !== key || !S.study) return;
+        evMap = map || null;
+        if (!map) { note.textContent = '📖 정답 보기 중 — 이 회차는 지문 근거 해설이 아직 없어 정답만 표시합니다.'; return; }
+        note.textContent = '📖 정답 보기 중 — 노란 형광펜이 정답의 근거예요. 문항 옆 💡 단추나 답안지의 ✓ 를 누르면 그 문항의 해설과 근거만 진하게 보여요.';
+        paintEvidence(map);
+      });
+    }
     if (SUB === 'english' && m.script) list.appendChild(scriptBox());
     paperSecs().forEach(function (sec) {
       list.appendChild(el('h3', { class: 'pr-sec', text: SEC_NAME[sec] + ' (' + SEC_LO[sec] + '~' + (SEC_LO[sec] + m.answers[sec].length - 1) + '번)' }));
@@ -3402,15 +3415,82 @@
         var ib = inkWrap(img, inkKey(key, s.file), s.w, s.h, true);
         hotAdd(ib, hots[idx], s.w, s.h);
         var box = el('div', { class: 'pr-strip' }, [ib]);
+        ib._sec = sec; ib._idx = idx; ib._w = s.w; ib._h = s.h; evBoxes.push(ib);
         for (var n in anchors) {
           var a = anchors[n];
           if (a[0] === idx) box.appendChild(el('span', { class: 'pr-anchor', id: 'pq-' + sec + n, style: 'top:' + (a[1] / s.h * 100).toFixed(2) + '%', 'aria-hidden': 'true' }));
+          if (a[0] === idx && S.study) (function (k) { box.appendChild(el('button', { type: 'button', class: 'pr-exq', 'data-k': k, style: 'top:' + (a[1] / s.h * 100).toFixed(2) + '%', title: k.slice(1) + '번 해설과 지문 근거 보기', text: '💡 ' + k.slice(1) + '번 해설', onclick: function () { openExq(k, true); } })); })(sec + n);
         }
         (listen && (idx < a18[0] || (idx === a18[0] && a18[1] > 40)) ? listen : wrap).appendChild(box);
       });
       list.appendChild(wrap);
     });
   }
+  /* ───────── 📖 정답 보기 · 국어·영어 해설모드: explain/<회차>-<과목>.json = {구역+번호: {w: 해설(HTML), x: [선지별 한 줄 ×5], ev: [{c: 선지, n: 설명, b: [[구역, 단, x, y, w, h]…]}]}}
+     근거 인용은 원본 PDF 글자 자리에서 찾아 단 그림 픽셀로 바꿔 둔 것(kor/build.py). 형광펜은 모두 옅게, 고른 문항 것만 진하게 ───────── */
+  var evBoxes = [], evMap = null, exqDock = null, exqKey = '';
+  function paintEvidence(map) {
+    var by = {};
+    evBoxes.forEach(function (ib) { by[ib._sec + ':' + ib._idx] = ib; });
+    Object.keys(map).forEach(function (k) {
+      (map[k].ev || []).forEach(function (v, j) {
+        (v.b || []).forEach(function (b, bi) {
+          var ib = by[b[0] + ':' + b[1]];
+          if (!ib) return;
+          var d = el('button', { type: 'button', class: 'pr-ev' + (v.c === rightOfKey(k) ? ' ans' : ''), 'data-k': k, 'data-j': j, title: k.slice(1) + '번' + (v.c ? ' ' + CIRC[v.c - 1] : '') + ' — ' + (v.n || ''), 'aria-label': k.slice(1) + '번 근거' + (v.n ? ': ' + v.n : ''),
+            style: 'left:' + (b[2] / ib._w * 100).toFixed(3) + '%;top:' + (b[3] / ib._h * 100).toFixed(3) + '%;width:' + (b[4] / ib._w * 100).toFixed(3) + '%;height:' + (b[5] / ib._h * 100).toFixed(3) + '%',
+            onclick: function () { openExq(k, false, j); } });
+          if (bi === 0) d.appendChild(el('span', { class: 'pr-ev-tag', text: k.slice(1) + (v.c ? CIRC[v.c - 1] : '') }));
+          ib.appendChild(d);
+        });
+      });
+    });
+    if (exqKey) focusEv(exqKey);
+  }
+  function rightOfKey(k) {
+    for (var i = 0; i < S.items.length; i++) { var it = S.items[i]; if (it.sec + it.n === k) return rightOf(it); }
+    return 0;
+  }
+  function focusEv(k, j) {
+    root.classList.toggle('pr-ev-focus', !!k);
+    Array.prototype.forEach.call(root.querySelectorAll('.pr-ev'), function (d) { d.classList.toggle('on', d.getAttribute('data-k') === k); d.classList.toggle('pick', d.getAttribute('data-k') === k && j !== undefined && +d.getAttribute('data-j') === j); });
+    Array.prototype.forEach.call(root.querySelectorAll('.pr-exq'), function (b) { b.classList.toggle('on', b.getAttribute('data-k') === k); });
+  }
+  function closeExq() {
+    if (exqDock) { exqDock.remove(); exqDock = null; }
+    exqKey = ''; if (root) focusEv('');
+  }
+  function evGo(k, j) {
+    var d = root.querySelector('.pr-ev[data-k="' + k + '"][data-j="' + j + '"]');
+    if (d) d.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    focusEv(k, j);
+  }
+  function openExq(k, fromQ, j) {
+    if (!evMap) { var it0 = S.items.filter(function (x) { return x.sec + x.n === k; })[0]; if (it0) jump(S.items.indexOf(it0)); return; }
+    var e = evMap[k], it = S.items.filter(function (x) { return x.sec + x.n === k; })[0];
+    if (!e || !it) return;
+    closeExq(); exqKey = k;
+    var a = rightOf(it), sec = k[0];
+    var body = el('div', { class: 'pr-exq-body' });
+    var why = el('div', { class: 'pr-exq-why' }); why.innerHTML = e.w || ''; body.appendChild(why);
+    if (e.ev && e.ev.length) body.appendChild(el('div', { class: 'pr-exq-evs' }, [el('span', { class: 'pr-exq-l', text: '지문 근거' })].concat(e.ev.map(function (v, jj) {
+      return el('button', { type: 'button', class: 'pr-exq-ev' + (v.c === a ? ' ans' : ''), onclick: function () { evGo(k, jj); } }, [v.c && (v.n || '').indexOf(CIRC[v.c - 1]) !== 0 ? el('b', { text: CIRC[v.c - 1] + ' ' }) : null, v.n || '근거 ' + (jj + 1)]);
+    }))));
+    if (e.x && e.x.length) body.appendChild(el('ol', { class: 'pr-exq-x' }, e.x.map(function (t, c) { return el('li', { class: c + 1 === a ? 'ans' : '' }, [el('b', { text: CIRC[c] + ' ' }), t]); })));
+    exqDock = el('section', { class: 'pr-exq-dock', role: 'dialog', 'aria-label': it.n + '번 해설' }, [
+      el('div', { class: 'pr-exq-head' }, [el('b', { text: (SUB === 'korean' ? SEC_NAME[sec].replace('선택 · ', '') + ' ' : '') + it.n + '번 해설' }), el('span', { class: 'pr-exq-ans', text: '정답 ' + CIRC[a - 1] }),
+        el('button', { type: 'button', class: 'pr-exq-go', text: '문항으로', title: '시험지에서 이 문항 자리로', onclick: function () { jump(S.items.indexOf(it)); } }),
+        el('button', { type: 'button', class: 'pr-exq-x-btn', 'aria-label': '해설 닫기', text: '✕', onclick: closeExq })]),
+      body
+    ]);
+    root.appendChild(exqDock);
+    focusEv(k, j);
+    if (j !== undefined) return;
+    var first = root.querySelector('.pr-ev.ans[data-k="' + k + '"]') || root.querySelector('.pr-ev[data-k="' + k + '"]');
+    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && exqDock) closeExq(); });
+
   /* ───────── 시험지 위 ①~⑤ 누르기: meta.choices(PDF 글자 자리, 단 이미지 픽셀)에 투명 단추를 얹어 답안지와 같은 답을 고른다.
      ○△✕ 표시 모드면 표시를 바꾸고, 고른 답·정답·오답은 번호에 테두리로 보인다 ───────── */
   function hotByStrip(m, sec) {
@@ -3437,7 +3517,7 @@
   function hotKey(it) { return it.sec ? it.sec + it.n : it.id; }
   function hotPick(q, k) {
     if (Date.now() - inkDrew < 400) return;   // 번호에서 시작해 끌어 쓴 경우
-    for (var i = 0; i < S.items.length; i++) if (hotKey(S.items[i]) === q) return S.markMode ? cycleMark(i, k) : choose(i, k);
+    for (var i = 0; i < S.items.length; i++) if (hotKey(S.items[i]) === q) return S.study && PAPER ? openExq(S.items[i].sec + S.items[i].n) : S.markMode ? cycleMark(i, k) : choose(i, k);
   }
   function paintHot() {
     var at = {};
@@ -3616,7 +3696,7 @@
           onclick: function () { if (PAPER && S.markMode) cycleMark(i, k); else choose(i, k); }
         }));
       })(k);
-      if (PAPER) row.appendChild(el('button', { type: 'button', class: 'pr-chk' + (isShown(i) ? ' on' : ''), title: isShown(i) ? '정답 가리기' : '이 문제 채점', 'aria-label': label + '번 채점', text: '✓', onclick: function () { toggleReveal(i); } }));
+      if (PAPER) row.appendChild(el('button', { type: 'button', class: 'pr-chk' + (isShown(i) ? ' on' : ''), title: S.study ? '이 문제 해설·지문 근거 보기' : isShown(i) ? '정답 가리기' : '이 문제 채점', 'aria-label': label + '번 채점', text: '✓', onclick: function () { toggleReveal(i); } }));
       if (PAPER && !it.num) row.appendChild(el('button', { type: 'button', class: 'pr-chk pr-ai-mini', title: 'AI 해설 · 내 실수 분석', 'aria-label': label + '번 AI 해설', text: 'AI', onclick: function () { askItem(i); } }));
       if (PAPER) row.appendChild(el('button', {
         type: 'button', class: 'pr-chk pr-memo-mini' + (noteFilled(it) ? ' has' : memoWanted(it, i) ? ' want' : ''), title: '메모 · 헷갈림 · 틀린 이유', 'data-memo-for': noteKey(it),
