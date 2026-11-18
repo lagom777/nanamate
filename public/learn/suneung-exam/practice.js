@@ -3439,7 +3439,7 @@
           if (!ib) return;
           var d = el('button', { type: 'button', class: 'pr-ev' + (v.c === rightOfKey(k) ? ' ans' : ''), 'data-k': k, 'data-j': j, title: k.slice(1) + '번' + (v.c ? ' ' + CIRC[v.c - 1] : '') + ' — ' + (v.n || ''), 'aria-label': k.slice(1) + '번 근거' + (v.n ? ': ' + v.n : ''),
             style: 'left:' + (b[2] / ib._w * 100).toFixed(3) + '%;top:' + (b[3] / ib._h * 100).toFixed(3) + '%;width:' + (b[4] / ib._w * 100).toFixed(3) + '%;height:' + (b[5] / ib._h * 100).toFixed(3) + '%',
-            onclick: function () { openExq(k, false, j); } });
+            onclick: function () { openExq(k, false, j); }, onmouseenter: function () { evArrow(d, k, v.c); }, onmouseleave: function () { evArrow(null); } });
           if (bi === 0) d.appendChild(el('span', { class: 'pr-ev-tag', text: k.slice(1) + (v.c ? CIRC[v.c - 1] : '') }));
           ib.appendChild(d);
         });
@@ -3457,6 +3457,7 @@
     Array.prototype.forEach.call(root.querySelectorAll('.pr-exq'), function (b) { b.classList.toggle('on', b.getAttribute('data-k') === k); });
   }
   function closeExq() {
+    if (arrowCur) evArrow(null);
     if (exqDock) { exqDock.remove(); exqDock = null; }
     exqKey = ''; if (root) focusEv('');
   }
@@ -3464,6 +3465,47 @@
     var d = root.querySelector('.pr-ev[data-k="' + k + '"][data-j="' + j + '"]');
     if (d) d.scrollIntoView({ behavior: 'smooth', block: 'start' });
     focusEv(k, j);
+    var e = evMap && evMap[k], v = e && e.ev[j];
+    if (d && v) setTimeout(function () { evArrow(d, k, v.c, 3500); }, 650);   // 휴대폰(마우스 올리기 없음): 근거로 옮긴 뒤 잠깐 화살표
+  }
+  /* 근거 형광펜 → 그 근거가 받치는 선지 번호(시험지 위 ①~⑤ 자리, 없으면 문항 번호)로 화살표. 화면 고정 SVG 에 그리고 스크롤하면 다시 그린다 */
+  var arrowSvg = null, arrowCur = null, arrowTimer = null;
+  function evTarget(k, c) {
+    return (c && root.querySelector('.pr-hot[data-q="' + k + '"][data-k="' + c + '"]')) || root.querySelector('.pr-exq[data-k="' + k + '"]');
+  }
+  function evArrow(from, k, c, ms) {
+    clearTimeout(arrowTimer);
+    arrowCur = from ? { from: from, to: evTarget(k, c), c: c, k: k } : null;
+    drawArrow();
+    if (from && ms) arrowTimer = setTimeout(function () { evArrow(null); }, ms);
+  }
+  function drawArrow() {
+    if (!arrowCur || !arrowCur.to) { if (arrowSvg) arrowSvg.innerHTML = ''; return; }
+    if (!arrowSvg) {
+      arrowSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      arrowSvg.setAttribute('class', 'pr-ev-arrow'); arrowSvg.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(arrowSvg);
+      window.addEventListener('scroll', function () { if (arrowCur) requestAnimationFrame(drawArrow); }, { passive: true });
+      window.addEventListener('resize', function () { if (arrowCur) drawArrow(); });
+    }
+    var a = arrowCur.from.getBoundingClientRect(), b = arrowCur.to.getBoundingClientRect();
+    var bx = b.left + b.width / 2, by = b.top + b.height / 2, r = Math.max(b.width, b.height) / 2 + 6;
+    var vh = window.innerHeight, off = by < 8 ? -1 : by > vh - 8 ? 1 : 0, lab = '';
+    if (off) {   // 선지가 화면 밖: 화살표는 화면 가장자리까지, 끝에 ‘N번 ③ ↓’ 표시
+      lab = arrowCur.k.slice(1) + '번' + (arrowCur.c ? ' ' + CIRC[arrowCur.c - 1] : '') + (off > 0 ? ' ↓' : ' ↑');
+      by = off > 0 ? vh - 26 : 26; r = 0;
+    }
+    var ax = Math.max(a.left, Math.min(bx, a.right)), ay = by > a.bottom ? a.bottom : by < a.top ? a.top : a.top + a.height / 2;
+    if (by >= a.top && by <= a.bottom) ax = bx < a.left ? a.left : a.right;
+    var dx = bx - ax, dy = by - ay, L = Math.sqrt(dx * dx + dy * dy) || 1;
+    var ex = bx - dx / L * (r || 16), ey = by - dy / L * (r || 16);   // 동그라미 테두리(또는 화면 끝 표시) 앞에서 멈춘다
+    var bend = Math.min(90, L * 0.3), mx = (ax + ex) / 2 - dy / L * bend, my = (ay + ey) / 2 + dx / L * bend;
+    var ns = 'http://www.w3.org/2000/svg', col = '#ea580c';
+    arrowSvg.innerHTML = '<defs><marker id="pr-arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="' + col + '"/></marker></defs>' +
+      '<path d="M' + ax.toFixed(1) + ',' + ay.toFixed(1) + ' Q' + mx.toFixed(1) + ',' + my.toFixed(1) + ' ' + ex.toFixed(1) + ',' + ey.toFixed(1) + '" fill="none" stroke="' + col + '" stroke-width="3" stroke-linecap="round" marker-end="url(#pr-arw)" opacity=".92"/>' +
+      (lab ? '<rect x="' + (bx - 44).toFixed(1) + '" y="' + (by - 13).toFixed(1) + '" width="88" height="26" rx="13" fill="' + col + '"/><text x="' + bx.toFixed(1) + '" y="' + (by + 5).toFixed(1) + '" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">' + lab + '</text>'
+        : '<circle cx="' + bx.toFixed(1) + '" cy="' + by.toFixed(1) + '" r="' + r.toFixed(1) + '" fill="rgba(234,88,12,.12)" stroke="' + col + '" stroke-width="3"/>');
+    void ns;
   }
   function openExq(k, fromQ, j) {
     if (!evMap) { var it0 = S.items.filter(function (x) { return x.sec + x.n === k; })[0]; if (it0) jump(S.items.indexOf(it0)); return; }
@@ -3474,7 +3516,7 @@
     var body = el('div', { class: 'pr-exq-body' });
     var why = el('div', { class: 'pr-exq-why' }); why.innerHTML = e.w || ''; body.appendChild(why);
     if (e.ev && e.ev.length) body.appendChild(el('div', { class: 'pr-exq-evs' }, [el('span', { class: 'pr-exq-l', text: '지문 근거' })].concat(e.ev.map(function (v, jj) {
-      return el('button', { type: 'button', class: 'pr-exq-ev' + (v.c === a ? ' ans' : ''), onclick: function () { evGo(k, jj); } }, [v.c && (v.n || '').indexOf(CIRC[v.c - 1]) !== 0 ? el('b', { text: CIRC[v.c - 1] + ' ' }) : null, v.n || '근거 ' + (jj + 1)]);
+      return el('button', { type: 'button', class: 'pr-exq-ev' + (v.c === a ? ' ans' : ''), onclick: function () { evGo(k, jj); }, onmouseenter: function () { var d = root.querySelector('.pr-ev[data-k="' + k + '"][data-j="' + jj + '"]'); if (d) evArrow(d, k, v.c); }, onmouseleave: function () { evArrow(null); } }, [v.c && (v.n || '').indexOf(CIRC[v.c - 1]) !== 0 ? el('b', { text: CIRC[v.c - 1] + ' ' }) : null, v.n || '근거 ' + (jj + 1)]);
     }))));
     if (e.x && e.x.length) body.appendChild(el('ol', { class: 'pr-exq-x' }, e.x.map(function (t, c) { return el('li', { class: c + 1 === a ? 'ans' : '' }, [el('b', { text: CIRC[c] + ' ' }), t]); })));
     exqDock = el('section', { class: 'pr-exq-dock', role: 'dialog', 'aria-label': it.n + '번 해설' }, [
