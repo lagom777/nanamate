@@ -221,13 +221,14 @@
   var IMG_FIX = {
     bio1: '2019-csat/16 2020-csat/4 2020-csat/5 2020-csat/12 2020-jun/4 2020-sep/4 2020-sep/5 2020-sep/14 2021-csat/4 2021-jun/4 2021-sep/4 2021-sep/11 2022-csat/4 2022-jun/4 2022-jun/14 2022-sep/4 2023-csat/4 2023-csat/9 2023-jun/4 2023-sep/4 2023-sep/5 2024-csat/4 2024-csat/13 2024-jun/4 2024-jun/5 2024-sep/4 2024-sep/13 2025-csat/4 2025-jun/4 2025-jun/14 2025-sep/4 2026-csat/4 2026-csat/18 2026-jun/4 2026-jun/5 2026-jun/14 2026-sep/4 2026-sep/18 2027-jun/4 2027-jun/18 2027-sep/4 2027-sep/14 2027-csat/4 2027-csat/5',
     bio2: '2020-csat/6 2020-jun/6 2020-sep/6 2021-csat/6 2021-jun/6 2021-sep/6 2022-csat/6 2022-jun/6 2022-sep/6 2023-csat/6 2023-jun/6 2023-sep/6 2024-csat/6 2024-jun/6 2024-sep/6 2025-csat/6 2025-jun/6 2025-sep/6 2026-csat/6 2026-jun/6 2026-sep/5 2026-sep/6 2027-jun/6 2027-sep/6 2027-csat/6',
-    chem1: '2020-csat/4 2020-jun/4 2020-sep/4 2021-csat/4 2021-jun/4 2021-sep/4 2022-csat/4 2022-jun/4 2022-sep/4 2023-csat/4 2023-csat/19 2023-jun/3 2023-jun/19 2023-sep/3 2024-csat/4 2024-jun/4 2024-sep/4 2025-csat/4 2025-csat/15 2025-jun/4 2025-sep/4 2026-csat/3 2026-jun/4 2026-jun/12 2026-sep/4 2027-jun/4 2027-jun/13 2027-sep/5 2027-csat/4',
+    chem1: '2019-sep/11 2020-csat/4 2020-jun/4 2020-sep/4 2021-csat/4 2021-jun/4 2021-sep/4 2022-csat/4 2022-jun/4 2022-sep/4 2023-csat/4 2023-csat/19 2023-jun/3 2023-jun/19 2023-sep/3 2024-csat/4 2024-jun/4 2024-sep/4 2025-csat/4 2025-csat/15 2025-jun/4 2025-sep/4 2026-csat/3 2026-jun/4 2026-jun/12 2026-sep/4 2027-jun/4 2027-jun/13 2027-sep/5 2027-csat/4',
     chem2: '2020-csat/5 2020-jun/5 2020-sep/5 2021-csat/5 2021-jun/5 2021-sep/5 2021-sep/6 2022-csat/4 2022-csat/5 2022-jun/4 2022-jun/5 2022-sep/5 2022-sep/6 2023-csat/5 2023-csat/6 2023-jun/5 2023-sep/5 2023-sep/6 2024-csat/5 2024-jun/5 2024-jun/6 2024-sep/5 2024-sep/6 2025-csat/4 2025-csat/5 2025-jun/4 2025-jun/5 2025-sep/5 2025-sep/6 2026-csat/1 2026-csat/5 2026-jun/5 2026-jun/15 2026-sep/5 2027-jun/5 2027-sep/5 2027-csat/5 2027-csat/6',
     earth1: '2020-csat/4 2020-jun/4 2020-sep/4 2021-csat/4 2021-csat/5 2021-jun/4 2021-sep/4 2022-csat/4 2022-csat/16 2022-jun/4 2022-jun/5 2022-sep/4 2023-csat/4 2023-jun/4 2023-sep/4 2024-csat/4 2024-jun/4 2024-sep/4 2024-sep/17 2025-csat/4 2025-jun/4 2025-sep/4 2026-csat/4 2026-jun/4 2026-jun/20 2026-sep/4 2027-jun/4 2027-sep/4 2027-csat/4',
     earth2: '2020-csat/5 2020-jun/5 2020-sep/5 2021-csat/5 2021-jun/5 2021-sep/5 2022-csat/5 2022-jun/5 2022-sep/5 2023-csat/4 2023-jun/5 2023-sep/5 2024-csat/5 2024-jun/5 2024-sep/6 2025-csat/6 2025-jun/6 2025-sep/5 2026-csat/5 2026-jun/5 2026-jun/7 2026-sep/5 2027-jun/5 2027-sep/5 2027-csat/6',
-    math: '2018-sep/10 2018-sep/16 2018-sep/28 2019-csat/28 2020-csat/24 2020-jun/18 2020-jun/24 2020-jun/28 2020-jun/30 2021-csat/10 2021-csat/24 2021-csat/26 2021-jun/8 2021-jun/16 2021-jun/28 2021-jun/30 2021-sep/12 2021-sep/28 2022-csat/23 2022-sep/10 2022-sep/12 2022-sep/28 2023-csat/2 2023-csat/10 2023-sep/12 2024-jun/10 2024-sep/30 2025-jun/1 2025-jun/23 2025-jun/26 2026-csat/7 2026-jun/14 2026-sep/14 2026-sep/24 2027-jun/28 2027-sep/26 2027-sep/28 2027-csat/14',
+    math: '2018-sep/10 2018-sep/16 2018-sep/28 2019-sep/24 2019-csat/28 2020-csat/24 2020-jun/18 2020-jun/24 2020-jun/28 2020-jun/30 2021-csat/10 2021-csat/24 2021-csat/26 2021-jun/8 2021-jun/16 2021-jun/28 2021-jun/30 2021-sep/12 2021-sep/28 2022-csat/23 2022-sep/10 2022-sep/12 2022-sep/28 2023-csat/2 2023-csat/10 2023-sep/12 2024-jun/10 2024-sep/30 2025-jun/1 2025-jun/23 2025-jun/26 2026-csat/7 2026-jun/14 2026-sep/14 2026-sep/24 2027-jun/28 2027-sep/26 2027-sep/28 2027-csat/14',
     phys1: '2019-jun/8 2020-csat/12 2020-jun/4 2021-jun/5 2022-jun/10 2022-sep/17 2023-jun/10 2023-sep/2 2023-sep/10 2024-csat/17 2024-sep/13 2026-jun/5 2027-sep/10',
     phys2: '2020-csat/4 2020-jun/4 2020-jun/5 2020-sep/5 2021-csat/4 2021-csat/5 2021-jun/4 2021-sep/4 2021-sep/5 2022-csat/4 2022-jun/5 2022-sep/4 2023-csat/4 2023-jun/4 2023-jun/5 2023-sep/4 2024-csat/4 2024-csat/5 2024-jun/5 2024-sep/5 2025-csat/5 2025-csat/7 2025-jun/5 2025-jun/6 2025-sep/5 2026-csat/5 2026-jun/5 2026-sep/4 2026-sep/15 2027-jun/5 2027-jun/11 2027-sep/4 2027-csat/4 2027-csat/5',
+    hist: '2020-jun/1',
     eahist: '2027-csat/4',
     econ: '2027-csat/5',
     ethth: '2027-csat/3',
@@ -1033,10 +1034,21 @@
 
   /* 수학·과탐 해설모드: explain/<회차>-<과목>-ev.json = {번호: {w, h, ev: [{b: [[x,y,w,h]…], tc?: 선지, tb?: [[…]] 보기 줄, n: 설명}]}}
      문항 그림 위에 근거 형광펜, 마우스를 올리면 그 근거가 판정하는 보기 줄(점선 파랑)이나 선지로 화살표. 해설 칸에는 근거 목록 */
+  function getJson(url) { return fetch(url).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  /* 확률과 통계·기하의 공통 1~22번은 미적분(math)과 같은 문항(그림도 같은 것)이라, 저장된 해설·근거도 math 것을 함께 쓴다. 선택 23~30번은 자기 과목 것만 */
+  function withCommon(get) {
+    if (SUB !== 'mathprob' && SUB !== 'mathgeo') return get(SUB);
+    return Promise.all([get(SUB), get('math')]).then(function (r) {
+      var own = r[0], com = r[1], out = {}, n = 0, k;
+      if (com) for (k in com) if (+k <= 22) { out[k] = com[k]; n++; }
+      if (own) for (k in own) { out[k] = own[k]; n++; }
+      return n ? out : null;
+    });
+  }
   var evCache = {};
   function loadEv(key) {
     var ck = key + '-' + SUB;
-    if (!evCache[ck]) evCache[ck] = fetch(cfg.base + 'explain/' + ck + '-ev.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+    if (!evCache[ck]) evCache[ck] = withCommon(function (sub) { return getJson(cfg.base + 'explain/' + key + '-' + sub + '-ev.json'); });
     return evCache[ck];
   }
   function cardEv(it, i, ib, c) {
@@ -1044,7 +1056,9 @@
       var e = map && map[it.n];
       if (!e || !S.study || !c.isConnected) return;
       var pct = function (b, cls, extra) {
-        return el('div', Object.assign({ class: cls, style: 'left:' + (b[0] / e.w * 100).toFixed(3) + '%;top:' + (b[1] / e.h * 100).toFixed(3) + '%;width:' + (b[2] / e.w * 100).toFixed(3) + '%;height:' + (b[3] / e.h * 100).toFixed(3) + '%' }, extra || {}));
+        /* 키 큰 식(분수·극한)이 든 첫 줄은 줄 상자가 그림 위로 삐져나오기도 해서 그림 안으로 자른다 */
+        var x0 = Math.max(0, b[0]), y0 = Math.max(0, b[1]), x1 = Math.min(e.w, b[0] + b[2]), y1 = Math.min(e.h, b[1] + b[3]);
+        return el('div', Object.assign({ class: cls, style: 'left:' + (x0 / e.w * 100).toFixed(3) + '%;top:' + (y0 / e.h * 100).toFixed(3) + '%;width:' + ((x1 - x0) / e.w * 100).toFixed(3) + '%;height:' + ((y1 - y0) / e.h * 100).toFixed(3) + '%' }, extra || {}));
       };
       var items = e.ev.map(function (v, j) {
         var tos = (v.tb || []).map(function (b) { var t = pct(b, 'pr-ev-to'); ib.appendChild(t); return t; });
@@ -1120,7 +1134,7 @@
   function loadExplain(key) {
     var ck = key + '-' + SUB;
     if (!explainCache[ck]) {
-      explainCache[ck] = Promise.all([fetch(cfg.base + 'explain/' + ck + '.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }), loadFmt()]).then(function (r) { return r[0]; });
+      explainCache[ck] = Promise.all([withCommon(function (sub) { return getJson(cfg.base + 'explain/' + key + '-' + sub + '.json'); }), loadFmt()]).then(function (r) { return r[0]; });
     }
     return explainCache[ck];
   }
@@ -3453,7 +3467,11 @@
       loadExplain(key).then(function (map) {
         if (S.set.slice(5) !== key || !S.study) return;
         evMap = map || null;
-        if (!map) { note.textContent = '📖 정답 보기 중 — 이 회차는 지문 근거 해설이 아직 없어 정답만 표시합니다.'; return; }
+        if (!map) {   // 해설이 없는 회차: 눌러도 열 것이 없는 💡 단추는 지운다
+          note.textContent = '📖 정답 보기 중 — 이 회차는 지문 근거 해설이 아직 없어 정답만 표시합니다.';
+          Array.prototype.forEach.call(root.querySelectorAll('.pr-exq'), function (b) { b.remove(); });
+          return;
+        }
         note.textContent = '📖 정답 보기 중 — 노란 형광펜이 정답의 근거예요. 문항 옆 💡 단추나 답안지의 ✓ 를 누르면 그 문항의 해설과 근거만 진하게 보여요.';
         paintEvidence(map);
       });
