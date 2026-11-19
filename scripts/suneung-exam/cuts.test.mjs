@@ -13,7 +13,7 @@ const SCI = ["phys1", "chem1", "bio1", "earth1", "phys2", "chem2", "bio2", "eart
 
 test("등급컷: 시험·과목이 기출 목록과 맞고 1~8등급 최저점이 만점 안에서 내려간다", () => {
   const exams = Object.fromEntries(read("exams.json").exams.map((e) => [e.key, e]));
-  const { cuts } = read("cuts.json");
+  const { cuts, pending = {} } = read("cuts.json");
   const errs = [];
   for (const [key, subs] of Object.entries(cuts)) {
     if (!exams[key]) { errs.push(`${key}: exams.json 에 없는 시험`); continue; }
@@ -28,7 +28,7 @@ test("등급컷: 시험·과목이 기출 목록과 맞고 1~8등급 최저점�
     }
   }
   for (const e of Object.values(exams)) {
-    if (e.year < 2018) continue;
+    if (e.year < 2018 || pending[e.key]) continue;   // pending: 막 치른 시험(등급컷 발표 전)
     const have = cuts[e.key] || {};
     const miss = SCI.filter((s) => !have[s]);
     if (miss.length) errs.push(`${e.key}: 과탐 등급컷 없음 ${miss.join(",")}`);
@@ -39,22 +39,23 @@ test("등급컷: 시험·과목이 기출 목록과 맞고 1~8등급 최저점�
 
 // 2022학년도부터 국어·수학은 원점수 컷이 없어 시험 직후 입시업체 가채점 예상컷(est)을 선택과목별로 둔다(위 몇 등급만, 출처 기사 링크)
 const EST = ["hwajak", "eonmae", "calc"];
+const EST_OPT = ["prob", "geo"];   // 확률과 통계·기하: 출처에 값이 있는 시험만
 test("가채점 예상컷: 2022학년도부터 국어·수학 시험마다 화작·언매·미적분이 출처와 함께 1등급부터 내려간다", () => {
   const exams = Object.fromEntries(read("exams.json").exams.map((e) => [e.key, e]));
-  const { est } = read("cuts.json");
+  const { est, pending = {} } = read("cuts.json");
   const errs = [];
   for (const [key, subs] of Object.entries(est)) {
     if (!exams[key]) { errs.push(`${key}: exams.json 에 없는 시험`); continue; }
     if (exams[key].year < 2022) errs.push(`${key}: 2021학년도까지는 EBSi 원점수 컷(cuts)을 쓴다`);
     for (const [k, v] of Object.entries(subs)) {
       const where = `${key} ${k}`, c = v.c;
-      if (!EST.includes(k)) errs.push(`${where}: 화작·언매·미적분(hwajak·eonmae·calc)만`);
+      if (!EST.includes(k) && !EST_OPT.includes(k)) errs.push(`${where}: 화작·언매·미적분·확통·기하(hwajak·eonmae·calc·prob·geo)만`);
       if (!Array.isArray(c) || !c.length || c.length > 8 || !c.every((x, i) => Number.isInteger(x) && x > 0 && x <= 100 && (i === 0 || x < c[i - 1]))) errs.push(`${where}: 1등급부터 내려가는 정수 ${JSON.stringify(c)}`);
       if (!v.by || !/^https:\/\//.test(v.url || "")) errs.push(`${where}: 출처(by·url) 없음`);
     }
   }
   for (const e of Object.values(exams)) {
-    if (e.year < 2022) continue;
+    if (e.year < 2022 || pending[e.key]) continue;
     const miss = EST.filter((k) => !(est[e.key] || {})[k]);
     if (miss.length) errs.push(`${e.key}: 예상컷 없음 ${miss.join(",")}`);
   }

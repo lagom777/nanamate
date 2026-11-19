@@ -15,6 +15,7 @@ LIST = 'https://www.suneung.re.kr/boardCnts/list.do?boardID={}&m=0403&s=suneung&
 CIRC = '①②③④⑤'
 SCI = {'phys1': '물리학Ⅰ', 'bio1': '생명과학Ⅰ', 'chem1': '화학Ⅰ', 'earth1': '지구과학Ⅰ', 'phys2': '물리학Ⅱ', 'chem2': '화학Ⅱ', 'bio2': '생명과학Ⅱ', 'earth2': '지구과학Ⅱ'}
 DPIS = (140, 150, 160, 180)
+ELEC_HDR = {'math': '(미적분)', 'mathprob': '(확률과 통계)', 'mathgeo': '(기하)'}   # 2022학년도~ 23~30번 선택과목 쪽 머리
 
 
 def boards():
@@ -137,14 +138,14 @@ def found_of(doc, sub, key):
             for n, col, y0, x0 in margin_numbers(doc[pi], lo, hi):
                 if n not in found:
                     found[n] = (pi, col, y0, x0)
-    if sub != 'math':
+    if not sub.startswith('math'):
         scan(range(len(doc)), 1, 20)   # crop.py: 모든 쪽
     elif int(key[:4]) >= 2022:
         pages = set_pages(doc)
         hdr = lambda pi, s: any(l.strip() == s for l in doc[pi].get_text().split('\n'))
         first_prob = next(pi for pi in pages if hdr(pi, '(확률과 통계)'))
         scan([pi for pi in pages if pi < first_prob], 1, 22)
-        scan([pi for pi in pages if hdr(pi, '(미적분)')], 23, 30)
+        scan([pi for pi in pages if hdr(pi, ELEC_HDR[sub])], 23, 30)
     else:
         scan(set_pages(doc), 1, 30)
     return found
@@ -164,7 +165,7 @@ def clip_of(doc, found, n, sub):
     cp = [w[1] for w in words if w[4] == '저작권은' and w[1] > y0]
     if cp:
         limit = min(limit, min(cp) - 3)
-    if sub == 'math':
+    if sub.startswith('math'):
         dd = [w[1] for w in ws if '단답형' in w[4] and w[1] > y0 + 8]
         if dd:
             limit = min(limit, min(dd) - 3)
@@ -175,6 +176,8 @@ def clip_of(doc, found, n, sub):
     last = max(w[3] for w in inside) if inside else limit
     cand = last + 26
     dr = [d['rect'] for d in page.get_drawings() if d['rect'].x1 > left and d['rect'].x0 < right and d['rect'].y0 > y0]
+    if sub in ('mathprob', 'mathgeo'):   # kse_crop.py MATH_ELEC: 글 아래 그림(래스터)도 몸체
+        dr += [pymupdf.Rect(b['bbox']) for b in page.get_text('dict')['blocks'] if b['type'] == 1 and b['bbox'][2] > left and b['bbox'][0] < right and b['bbox'][1] > y0]
     pagebox = lambda r: r.y0 > H * 0.88 and r.width < W * 0.1
     footer = lambda r: pagebox(r) or (ckY is not None and r.y0 >= ckY - 16)
     for r in dr:
@@ -187,7 +190,7 @@ def clip_of(doc, found, n, sub):
         if ckY is not None and not pagebox(r) and footer(r) and r.y0 > last + 1:
             cand = min(cand, r.y0 - 1)
     masks = [r for r in dr if pagebox(r)]
-    return page, pymupdf.Rect(left + 6, y0 - (11 if sub == 'math' else 5), right - 6, min(limit, cand)), masks
+    return page, pymupdf.Rect(left + 6, y0 - (11 if sub.startswith('math') else 5), right - 6, min(limit, cand)), masks
 
 
 def render_box(page, clip, masks, dpi):
@@ -202,11 +205,16 @@ def render_box(page, clip, masks, dpi):
 
 
 def webp_size(url):
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0', 'Range': 'bytes=0-63'})
-    try:
-        b = urllib.request.urlopen(req, timeout=30).read()
-    except Exception:
-        return None
+    # LOCAL_R2=<올리려는 그림 트리>: 아직 올리는 중이면 로컬 파일 머리로(없으면 R2)
+    loc = os.environ.get('LOCAL_R2') and os.path.join(os.environ['LOCAL_R2'], url[len(R2):])
+    if loc and os.path.exists(loc):
+        b = open(loc, 'rb').read(64)
+    else:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0', 'Range': 'bytes=0-63'})
+        try:
+            b = urllib.request.urlopen(req, timeout=30).read()
+        except Exception:
+            return None
     fmt = b[12:16]
     if fmt == b'VP8 ':
         return int.from_bytes(b[26:28], 'little') & 0x3fff, int.from_bytes(b[28:30], 'little') & 0x3fff
@@ -261,7 +269,9 @@ def build(row, sub, entry):
     numeric = set(entry.get('n') or [])
     sizes = {}
     with cf.ThreadPoolExecutor(8) as ex:
-        for n, s in zip(range(1, nq + 1), ex.map(lambda n: webp_size(f'{R2}{key}/{sub}/q{n:02d}.webp'), range(1, nq + 1))):
+        # 확통·기하의 공통 1~22번 그림은 math 폴더 것(R2 에 따로 올리지 않는다)
+        isub = lambda n: 'math' if sub in ('mathprob', 'mathgeo') and n <= 22 else sub
+        for n, s in zip(range(1, nq + 1), ex.map(lambda n: webp_size(f'{R2}{key}/{isub(n)}/q{n:02d}.webp'), range(1, nq + 1))):
             sizes[n] = s
     dpi, out, miss, off = None, {}, [], []
     for n in range(1, nq + 1):
@@ -276,6 +286,9 @@ def build(row, sub, entry):
             if abs(box[2] - box[0] - sizes[n][0]) <= 2 and abs(box[3] - box[1] - sizes[n][1]) <= 2:
                 hit = (d, box)
                 break
+        if not hit and dpi and os.environ.get('TOL'):
+            # TOL=1: 올린 그림이 다시 자른 것(1쪽 과목 탭을 잘라 냄·묶음 문항 자료를 붙임 → hot_fix.py 가 자리를 옮긴다)이라 크기가 달라도 원래 자르기 기준으로 자리를 낸다
+            hit = (dpi, render_box(page, clip, masks, dpi)); off.append(n)
         if not hit:
             off.append(n)
             continue
@@ -299,7 +312,7 @@ if __name__ == '__main__':
     rows = boards()
     os.makedirs(os.path.join(EXAM, 'hot'), exist_ok=True)
     for sub in want:
-        subj = '수학' if sub == 'math' else '한국사' if sub == 'hist' else '과학탐구'
+        subj = '수학' if sub.startswith('math') else '한국사' if sub == 'hist' else '과학탐구' if sub in SCI else '사회탐구'
         dest = os.path.join(EXAM, 'hot', f'{sub}.json')
         res = json.load(open(dest)) if os.path.exists(dest) else {}
         for e in exams:
@@ -313,4 +326,9 @@ if __name__ == '__main__':
                 res[e['key']] = build(row, sub, e[sub])
             except AssertionError as err:
                 print('SKIP', e['key'], sub, err)
+                continue
+            if sub in ('mathprob', 'mathgeo'):   # 공통 1~22번 자리는 math 것 그대로(다시 자른 그림의 크기까지 맞춰 둔 값)
+                mh = json.load(open(os.path.join(EXAM, 'hot', 'math.json'))).get(e['key'], {})
+                cur = {n: v for n, v in res[e['key']].items() if int(n) > 22}
+                res[e['key']] = {**{n: v for n, v in mh.items() if int(n) <= 22}, **cur}
         open(dest, 'w').write(json.dumps(res, ensure_ascii=False, separators=(',', ':')))

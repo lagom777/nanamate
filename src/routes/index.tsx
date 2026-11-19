@@ -58,6 +58,12 @@ const TRACKS = [
     title: "수능 과학탐구Ⅱ",
     blurb: "물리Ⅱ·화학Ⅱ·생명Ⅱ·지구Ⅱ 기출 채점.",
   },
+  {
+    href: "/learn/aboutSuneungSocial/index.html",
+    tag: "탐구",
+    title: "수능 사회탐구",
+    blurb: "사탐 9과목 기출 채점.",
+  },
 ];
 
 function Home() {

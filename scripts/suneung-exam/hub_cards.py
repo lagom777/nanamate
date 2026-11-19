@@ -6,6 +6,8 @@ n=lambda sub: sum(1 for e in ex if sub in e)
 def parts(folder):
     s=open(R+f'public/learn/{folder}/index.html').read()
     return len(re.findall(r'class="outline-card" href="chapters/',s))
+def scenes(folder):  # 모션 노트 장면 수(머리글 'N개 핵심 개념' — 생성기가 센 값)
+    return int(re.search(r'(\d+)개 핵심 개념', open(R+f'public/learn/{folder}/motion.html').read()).group(1))
 def sec(folder):  # 전략 챕터 제외
     return parts(folder)
 cards=[
@@ -13,11 +15,12 @@ cards=[
  ('aboutSuneungMath','#7c3aed','수학','수능 수학','CSAT Math','수학Ⅰ·수학Ⅱ·미적분 %d파트 정리 · 기출 %d회 %d문항 채점'%(parts('aboutSuneungMath'),n('math'),n('math')*30),['📄 %d파트'%parts('aboutSuneungMath'),'수Ⅰ·수Ⅱ·미적분','📝 기출 %d문항'%(n('math')*30)]),
  ('aboutSuneungEnglish','#2563eb','영어','수능 영어','CSAT English','듣기·독해 유형 %d파트 · 기출 %d회 채점 · 듣기 음성·대본'%(parts('aboutSuneungEnglish'),n('english')),['📄 %d파트'%parts('aboutSuneungEnglish'),'듣기','절대평가']),
  ('aboutSuneungHistory','#be123c','필수','수능 한국사','CSAT Korean History','시대별 9파트 정리 · 모션 노트 86장면 · 영토 지도 · 기출 %d회 채점'%n('hist'),['📄 9파트','🎬 모션 86장면','📝 기출 %d회'%n('hist')]),
- ('aboutSuneungPhysics1','#0284c7','탐구','수능 물리학Ⅰ','CSAT Physics I','3단원 %d파트 정리 · 모션 노트 · 기출 %d회 채점·해설'%(parts('aboutSuneungPhysics1'),n('phys1')),['📄 %d파트'%parts('aboutSuneungPhysics1'),'🎬 모션 19장면','📝 기출 %d문항'%(n('phys1')*20)]),
+ ('aboutSuneungPhysics1','#0284c7','탐구','수능 물리학Ⅰ','CSAT Physics I','3단원 %d파트 정리 · 모션 노트 · 기출 %d회 채점·해설'%(parts('aboutSuneungPhysics1'),n('phys1')),['📄 %d파트'%parts('aboutSuneungPhysics1'),'🎬 모션 %d장면'%scenes('aboutSuneungPhysics1'),'📝 기출 %d문항'%(n('phys1')*20)]),
  ('aboutSuneungChem1','#0d9488','탐구','수능 화학Ⅰ','CSAT Chemistry I','4단원 %d파트 정리 · 기출 %d회 채점'%(parts('aboutSuneungChem1'),n('chem1')),['📄 %d파트'%parts('aboutSuneungChem1'),'📝 기출 %d문항'%(n('chem1')*20)]),
- ('aboutSuneungBio1','#16a34a','탐구','수능 생명과학Ⅰ','CSAT Biology I','5단원 %d파트 정리 · 모션 노트 · 기출 %d회 채점·해설'%(parts('aboutSuneungBio1'),n('bio1')),['📄 %d파트'%parts('aboutSuneungBio1'),'🎬 모션 23장면','📝 기출 %d문항'%(n('bio1')*20)]),
+ ('aboutSuneungBio1','#16a34a','탐구','수능 생명과학Ⅰ','CSAT Biology I','5단원 %d파트 정리 · 모션 노트 · 기출 %d회 채점·해설'%(parts('aboutSuneungBio1'),n('bio1')),['📄 %d파트'%parts('aboutSuneungBio1'),'🎬 모션 %d장면'%scenes('aboutSuneungBio1'),'📝 기출 %d문항'%(n('bio1')*20)]),
  ('aboutSuneungEarth1','#ca8a04','탐구','수능 지구과학Ⅰ','CSAT Earth Science I','3단원 %d파트 정리 · 기출 %d회 채점'%(parts('aboutSuneungEarth1'),n('earth1')),['📄 %d파트'%parts('aboutSuneungEarth1'),'📝 기출 %d문항'%(n('earth1')*20)]),
  ('aboutSuneungScience2','#475569','탐구','수능 과학탐구Ⅱ','CSAT Science II','물리Ⅱ·화학Ⅱ·생명Ⅱ·지구Ⅱ 기출 풀어보기 · 채점',['📝 4과목','기출 %d문항×4'%(n('phys2')*20)]),
+ ('aboutSuneungSocial','#c2410c','탐구','수능 사회탐구','CSAT Social Studies','생윤·윤사·한지·세지·동사·세사·경제·정법·사문 기출 풀어보기 · 채점',['📝 9과목','기출 %d문항×9'%(n('lifeeth')*20)]),
 ]
 def card(c,pref):
     f,col,tag,title,en,desc,meta=c
