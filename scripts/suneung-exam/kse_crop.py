@@ -90,6 +90,8 @@ def crop_one(n, found):
     last = max(w[3] for w in inside) if inside else limit
     cand = last + 26
     dr = [d['rect'] for d in page.get_drawings() if d['rect'].x1 > left and d['rect'].x0 < right and d['rect'].y0 > y0]
+    if os.environ.get('MATH_ELEC'):   # 확통·기하(새로 자르는 것): 글 아래에 놓인 그림(래스터)도 문항 몸체로 — 미적분은 예전 크기를 지키려고 그대로 두고 fix/ 로 고쳤다
+        dr += [pymupdf.Rect(b['bbox']) for b in page.get_text('dict')['blocks'] if b['type'] == 1 and b['bbox'][2] > left and b['bbox'][0] < right and b['bbox'][1] > y0]
     pagebox = lambda r: r.y0 > H * 0.88 and r.width < W * 0.1
     footer = lambda r: pagebox(r) or (ckY is not None and r.y0 >= ckY - 16)
     for r in dr:

@@ -75,7 +75,19 @@ python3 hist_fix.py               # 2025 수능 정답표(그림)·2017 수능 1
 - `x` = 옛 교육과정(2020학년도까지)에만 있던 내용. 파트·유형 모아 풀기와 「비슷한 문제」에서 빠지고, 문항 칸에 ‘지금 범위 밖’이 붙는다. `x` 가 든 회차는 노트의 출제 통계(`partStats`)에서도 뺀다.
 - 붙인 방법: 해설이 있는 회차는 해설 주제어로 1차 분류한 뒤 애매한 문항을 직접 정했고, 해설이 없는 회차는 문항 그림을 보고 붙였다. 새 회차를 넣으면 `u` 도 함께 넣는다(없으면 그 과목 테스트가 실패).
 
-## 사회탐구 9과목 · 수학 확률과 통계·기하 (2027학년도 수능부터)
-- 사탐: KICE `42_1..9`(+a) → `crop.py <q> <a> <out> 20`(150/62, 과목별 정답표라 라벨 없이). 과목 키 `lifeeth ethth kgeo wgeo eahist whist econ pol soc`, `exams.json` 에는 `a/p`만. 페이지는 `scripts/suneung/social.mjs`(aboutSuneungSocial, 과탐Ⅱ처럼 노트 없이 풀어보기만).
-- 확통·기하: `MATH_ELEC='확률과 통계'|'기하' python3 kse_crop.py <회차> 수학 <outroot>` 가 23~30번을 그 선택과목으로 자른다(정답표 구역 m 미적분 · g 확률과 통계 · h 기하). 키 `mathprob`·`mathgeo`(30문항, R2 에 공통 1~22번 그림도 같이 둔다), 페이지는 수학 폴더의 `practice-prob.html`·`practice-geo.html`(math.mjs `spec.extra`).
-- 1쪽 오른쪽 과목 탭이 같이 잘린 문항은 폭이 튀니(대부분 3~6번) 탭을 잘라 `fix/` + `IMG_FIX` 에 두고 `hot/` 폭·높이를 맞춘다.
+## 사회탐구 9과목 · 수학 확률과 통계·기하 (2022학년도~)
+작업 디렉터리에 게시판 행(`rows.json`)으로 받은 `dl/<회차>/<사회탐구|수학>/` 가 있다고 보고:
+```bash
+python3 soc_batch.py crop.py     # 사탐 9과목 × 회차 → soc/<회차>/<과목>/q01~q20.webp + meta.json (150/62, 배점합 50·정답 20 검증)
+python3 soc_sets.py              # 묶음 문항([14～15] 다음 자료를 보고…) 자료를 앞 문항에서 떼어 두 문항 위에 붙임 → sets/ + sets.json
+python3 math_ans.py              # 수학 정답표 → kse_answers.json (공통 c · 확통 g · 미적분 m · 기하 h, 미적분은 exams.json 과 대조)
+MATH_ELEC='확률과 통계' python3 kse_crop.py <회차> 수학 mprob   # 23~30번을 그 선택과목으로(기하도 같게)
+TOL=1 LOCAL_R2=$PWD/r2 python3 choices_items.py mathprob mathgeo lifeeth …   # hot/
+python3 hot_fix.py sets.json     # 묶음 문항 자리 옮기기 + fix/ 그림 크기 맞추기 + 모든 자리가 그림 안인지 확인
+python3 ebsi_cuts.py 사회 <회차 …> > soc_cuts.json   # EBSi 역대 등급컷(원점수 1~8등급) → cuts.json
+```
+- 과목 키 `lifeeth ethth kgeo wgeo eahist whist econ pol soc`(`exams.json` 에는 `a/p`만), 페이지는 `scripts/suneung/social.mjs`(aboutSuneungSocial, 과탐Ⅱ처럼 노트 없이 풀어보기만).
+- 확통·기하 키 `mathprob`·`mathgeo`(30문항). **공통 1~22번 그림은 math 폴더 것을 같이 쓴다**(practice.js `imgSub`, fix/ 도 math 것) — R2 에는 23~30번만 올린다(2027학년도 수능만 30장 다 있다). 페이지는 수학 폴더의 `practice-prob.html`·`practice-geo.html`(math.mjs `spec.extra`). 가채점 예상컷은 `cuts.json` est 의 `prob`·`geo`(출처에 값이 있는 시험만).
+- `MATH_ELEC` 를 주면 `kse_crop.py` 가 **글 아래에 놓인 그림(래스터)도 문항 몸체**로 센다. 안 주면(예전 미적분 방식) 그림이 잘린다 — 2027학년도 수능 공통 14번·확통 28·30번·기하 30번이 그래서 `fix/` 에 있다. 새 회차 수학은 `MATH_ELEC=미적분` 으로 자르고 `TOL=1` 로 hot 을 만든다.
+- 1쪽 오른쪽 과목 탭이 같이 잘린 문항은 폭이 튀니(3~5번 중 하나, 765px) 탭을 잘라 올린다(2027학년도 수능만 이미 올린 뒤라 `fix/` + `IMG_FIX`).
+- 2025학년도 수능 정답표는 그림이라 수학은 눈으로 옮겼고, 사탐 9장은 2024학년도 수능 정답표(글자) 칸 위치·글자 틀과 맞춰 읽었다(같은 방법으로 2026학년도 수능 9장을 읽어 원본과 같은 것을 확인).
