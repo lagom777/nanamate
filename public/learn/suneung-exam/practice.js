@@ -3883,7 +3883,7 @@
      cuts 는 1~8등급 최저점 — null 은 그 시험에 없는 등급(위 등급 비율이 커서 비어 있음).
      2022학년도부터 국어·수학은 원점수 컷이 공개되지 않아, 시험 직후 입시업체가 낸 선택과목별 가채점 예상컷(est, 위 몇 등급만)을 쓴다 */
   var ABS_CUT = { english: [90, 80, 70, 60, 50, 40, 30, 20], hist: [40, 35, 30, 25, 20, 15, 10, 5] };
-  var CUTS = null, EST = null, HOT = null;   // HOT: 문항 그림 ①~⑤ 자리(hot/<과목>.json)
+  var CUTS = null, EST = null, PENDING = null, HOT = null;   // HOT: 문항 그림 ①~⑤ 자리(hot/<과목>.json)
   var EST_KEY = { hwajak: '화작', eonmae: '언매', calc: '미적분' };
   function estCut() {
     var e = EST && (SUB === 'korean' || SUB === 'math') && S.set.indexOf('exam:') === 0 && EST[S.set.slice(5)];
@@ -3907,6 +3907,8 @@
   function gradeBox(sc) {
     var cuts = gradeCuts();
     if (!cuts) {
+      if (S.set.indexOf('exam:') === 0 && PENDING && PENDING[S.set.slice(5)])
+        return el('p', { class: 'pr-sub', text: '등급: 막 치른 시험이라 아직 등급컷이 없어요. 가채점 예상컷·실제 등급컷이 나오면 넣을게요.' });
       if (S.set.indexOf('exam:') === 0 && (SUB === 'korean' || SUB === 'math') && +S.set.slice(5, 9) >= 2022)
         return el('p', { class: 'pr-sub', text: '등급: 2022학년도부터 국어·수학은 선택과목에 따라 같은 원점수도 등급이 달라서 원점수 등급컷이 공개되지 않아요(평가원·EBSi는 표준점수 컷만).' });
       return null;
@@ -3987,6 +3989,7 @@
     meUser = pair[1] && pair[1].id ? pair[1] : { id: null };
     CUTS = pair[2] && pair[2].cuts;
     EST = pair[2] && pair[2].est;
+    PENDING = pair[2] && pair[2].pending;
     HOT = pair[3];
     var ex = examList();
     buildShell();
