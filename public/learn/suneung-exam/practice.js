@@ -451,7 +451,10 @@
           if (S.set.indexOf('wrong:') === 0) startSet(S.set);
         });
       } }));
-      authBox.appendChild(el('button', { type: 'button', class: 'pr-btn pr-ai-cta', text: '🤖 이 과목 AI 분석', onclick: askSubject }));
+      authBox.appendChild(el('button', { type: 'button', class: 'pr-btn pr-ai-cta', text: '🤖 이 시험 AI 분석', title: '지금 푼 시험 하나의 문항별 기록으로 문제점·강점을 분석해요', onclick: function () {
+        if (!S.result) { flashExport('채점한 뒤에 이 시험을 분석할 수 있어요'); return; }
+        askExam();
+      } }));
       authBox.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '분석용 PDF', onclick: function () { exportHtml(); } }));
       authBox.appendChild(el('button', { type: 'button', class: 'pr-btn', text: '분석용 MD 복사', onclick: function () { exportMarkdown('copy'); } }));
       authBox.appendChild(el('button', { type: 'button', class: 'pr-btn', text: 'MD 다운로드', onclick: function () { exportMarkdown('download'); } }));
@@ -2621,15 +2624,6 @@
     var what = (S.set.indexOf('exam:') === 0 ? '이번 시험' : '이번 세트') + '(' + setLabel() + ') — 문항별 내 답·정답·풀이 시간·메모와 틀린 문항 그림 몇 장을 보내 문제점·강점 분석을 받아요.';
     openAi('이번 ' + (S.set.indexOf('exam:') === 0 ? '시험' : '세트') + ' AI 분석', 'x:' + SUB + ':' + S.set + ':' + S.ans.join(','), examReq, what);
   }
-  /* 과목 전체 분석: 계정에 쌓인 풀이 기록(분석용 MD와 같은 자료) */
-  function askSubject() {
-    openAi(exportSubject() + ' 과목 AI 분석', 's:' + SUB, function () {
-      return prepareExport(Date.now()).catch(function () { throw new Error('계정의 풀이 기록을 불러오지 못했습니다. 로그인 상태를 확인하고 다시 시도해 주세요.'); }).then(function (res) {
-        return { content: [{ type: 'text', text: res.md + '\n\n---\n위 자료는 이 과목에서 내가 지금까지 푼 기록 전체입니다. 이 과목에서의 나의 문제점과 강점을 분석해 주세요. 순서:\n**한눈 요약** 3줄 — 그 다음 줄에 "===자세히===" 한 줄\n**문제점** 단원별·실수 유형별 약점, 근거 날짜·문항을 인용해서\n**강점** 안정적인 단원·유형\n**변화** 시간에 따라 나아진 것·나빠진 것\n**시간 사용 습관** 서두름·막힘·찍기 의심\n**2주 학습 계획** 우선순위대로' + (weakList().length ? '\n\n참고로 AI 해설에서 모은 내 파트별 약점 노트입니다:\n' + weakText(weakList()) : '') }], persist: true, chips: [['이번 주 할 일만', '이번 주 7일 동안 하루 단위로 무엇을 풀고 복습할지만 짧게 정리해 주세요.'], ['가장 큰 약점 하나', '가장 먼저 고쳐야 할 약점 하나만 골라, 왜 그런지와 고치는 연습법을 알려 주세요.']] };
-      });
-    }, exportSubject() + ' — 계정에 쌓인 이 과목 풀이 기록 전체' + (weakList().length ? '와 약점 노트' : '') + '를 보내 과목 전체 분석(2주 공부 계획까지)을 받아요.');
-  }
-
   var reportLoading = null;
   function loadReport() {
     if (window.SnReport) return Promise.resolve();
