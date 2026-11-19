@@ -18,6 +18,7 @@
     {"n": "수능 생명과학Ⅰ", "e": "CSAT Biology I", "d": "5단원 8파트, 모션 노트, 기출 채점·해설", "u": "aboutSuneungBio1/index.html", "c": "수능", "a": "#16a34a"},
     {"n": "수능 지구과학Ⅰ", "e": "CSAT Earth Science I", "d": "3단원 6파트, 기출 채점", "u": "aboutSuneungEarth1/index.html", "c": "수능", "a": "#ca8a04"},
     {"n": "수능 과학탐구Ⅱ", "e": "CSAT Science II", "d": "물리학Ⅱ·화학Ⅱ·생명과학Ⅱ·지구과학Ⅱ 기출 채점", "u": "aboutSuneungScience2/index.html", "c": "수능", "a": "#475569"},
+    {"n": "수능 사회탐구", "e": "CSAT Social Studies", "d": "생활과 윤리·윤리와 사상·한국지리·세계지리·동아시아사·세계사·경제·정치와 법·사회·문화 기출 채점", "u": "aboutSuneungSocial/index.html", "c": "수능", "a": "#c2410c"},
     {"n": "물리학", "e": "Interactive Physics Lab", "d": "역학~양자역학, 상대성이론까지 3D 시뮬레이션", "u": "aboutPhysics/index.html", "c": "자연과학", "a": "#00d4ff"},
     {"n": "화학", "e": "Molecular Chemistry", "d": "원자~유기화학, 생화학 3D 분자 모델", "u": "aboutChemistry/index.html", "c": "자연과학", "a": "#00e890"},
     {"n": "생물학", "e": "Biology Lab", "d": "세포, DNA, 진화, 생태학 3D 시뮬레이션", "u": "aboutBiology/index.html", "c": "자연과학", "a": "#22c55e"},

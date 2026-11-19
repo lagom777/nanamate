@@ -113,7 +113,10 @@ def do_math():
     hdr = lambda pi, s: any(l.strip() == s for l in doc[pi].get_text().split('\n'))
     first_prob = next(pi for pi in PAGES if hdr(pi, '(확률과 통계)'))
     common = [pi for pi in PAGES if pi < first_prob]
-    calc = [pi for pi in PAGES if hdr(pi, '(미적분)')]
+    # MATH_ELEC=확률과 통계|기하 → 23~30번을 그 선택과목으로(정답표 구역: 미적분 m · 확률과 통계 g · 기하 h)
+    elec = os.environ.get('MATH_ELEC', '미적분')
+    asec = {'미적분': 'm', '확률과 통계': 'g', '기하': 'h'}[elec]
+    calc = [pi for pi in PAGES if hdr(pi, f'({elec})')]
     found = {}
     crop_questions(common, 1, 22, found)
     crop_questions(calc, 23, 30, found)
@@ -123,11 +126,11 @@ def do_math():
     texts = {n: crop_one(n, found) for n in sorted(found)}
     ans = [None] * 30
     pts = [None] * 30
-    for sec in ('c', 'm'):
+    for sec in ('c', asec):
         for n, (a, p, isnum) in ANS[sec].items():
             ans[int(n) - 1] = a
             pts[int(n) - 1] = p
-    meta = {'answers': ans, 'points': pts, 'numeric': [n for sec in ('c', 'm') for n, v in ANS[sec].items() if v[2]]}
+    meta = {'answers': ans, 'points': pts, 'numeric': [n for sec in ('c', asec) for n, v in ANS[sec].items() if v[2]]}
     json.dump(texts, open(os.path.join(OUT, 'text.json'), 'w'), ensure_ascii=False)
     json.dump(meta, open(os.path.join(OUT, 'meta.json'), 'w'), ensure_ascii=False)
     print('math', key, 'cropped', len(found), 'sum', sum(p or 0 for p in pts if p))

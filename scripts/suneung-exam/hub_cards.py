@@ -18,6 +18,7 @@ cards=[
  ('aboutSuneungBio1','#16a34a','탐구','수능 생명과학Ⅰ','CSAT Biology I','5단원 %d파트 정리 · 모션 노트 · 기출 %d회 채점·해설'%(parts('aboutSuneungBio1'),n('bio1')),['📄 %d파트'%parts('aboutSuneungBio1'),'🎬 모션 23장면','📝 기출 %d문항'%(n('bio1')*20)]),
  ('aboutSuneungEarth1','#ca8a04','탐구','수능 지구과학Ⅰ','CSAT Earth Science I','3단원 %d파트 정리 · 기출 %d회 채점'%(parts('aboutSuneungEarth1'),n('earth1')),['📄 %d파트'%parts('aboutSuneungEarth1'),'📝 기출 %d문항'%(n('earth1')*20)]),
  ('aboutSuneungScience2','#475569','탐구','수능 과학탐구Ⅱ','CSAT Science II','물리Ⅱ·화학Ⅱ·생명Ⅱ·지구Ⅱ 기출 풀어보기 · 채점',['📝 4과목','기출 %d문항×4'%(n('phys2')*20)]),
+ ('aboutSuneungSocial','#c2410c','탐구','수능 사회탐구','CSAT Social Studies','생윤·윤사·한지·세지·동사·세사·경제·정법·사문 기출 풀어보기 · 채점',['📝 9과목','기출 %d회'%n('lifeeth')]),
 ]
 def card(c,pref):
     f,col,tag,title,en,desc,meta=c

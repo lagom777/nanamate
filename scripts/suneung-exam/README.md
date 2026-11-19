@@ -74,3 +74,8 @@ python3 hist_fix.py               # 2025 수능 정답표(그림)·2017 수능 1
 - id 는 `파트 id + 글자`이고 이름은 과목 명세(`scripts/suneung/physics1.mjs`·`bio1.mjs` 각 장의 `topics`)에 있다. `t` 는 늘 `u` 의 앞 두 글자와 같아야 한다(`public/learn/suneung-exam/topics.test.mjs`).
 - `x` = 옛 교육과정(2020학년도까지)에만 있던 내용. 파트·유형 모아 풀기와 「비슷한 문제」에서 빠지고, 문항 칸에 ‘지금 범위 밖’이 붙는다. `x` 가 든 회차는 노트의 출제 통계(`partStats`)에서도 뺀다.
 - 붙인 방법: 해설이 있는 회차는 해설 주제어로 1차 분류한 뒤 애매한 문항을 직접 정했고, 해설이 없는 회차는 문항 그림을 보고 붙였다. 새 회차를 넣으면 `u` 도 함께 넣는다(없으면 그 과목 테스트가 실패).
+
+## 사회탐구 9과목 · 수학 확률과 통계·기하 (2027학년도 수능부터)
+- 사탐: KICE `42_1..9`(+a) → `crop.py <q> <a> <out> 20`(150/62, 과목별 정답표라 라벨 없이). 과목 키 `lifeeth ethth kgeo wgeo eahist whist econ pol soc`, `exams.json` 에는 `a/p`만. 페이지는 `scripts/suneung/social.mjs`(aboutSuneungSocial, 과탐Ⅱ처럼 노트 없이 풀어보기만).
+- 확통·기하: `MATH_ELEC='확률과 통계'|'기하' python3 kse_crop.py <회차> 수학 <outroot>` 가 23~30번을 그 선택과목으로 자른다(정답표 구역 m 미적분 · g 확률과 통계 · h 기하). 키 `mathprob`·`mathgeo`(30문항, R2 에 공통 1~22번 그림도 같이 둔다), 페이지는 수학 폴더의 `practice-prob.html`·`practice-geo.html`(math.mjs `spec.extra`).
+- 1쪽 오른쪽 과목 탭이 같이 잘린 문항은 폭이 튀니(대부분 3~6번) 탭을 잘라 `fix/` + `IMG_FIX` 에 두고 `hot/` 폭·높이를 맞춘다.

@@ -15,6 +15,7 @@ LIST = 'https://www.suneung.re.kr/boardCnts/list.do?boardID={}&m=0403&s=suneung&
 CIRC = '①②③④⑤'
 SCI = {'phys1': '물리학Ⅰ', 'bio1': '생명과학Ⅰ', 'chem1': '화학Ⅰ', 'earth1': '지구과학Ⅰ', 'phys2': '물리학Ⅱ', 'chem2': '화학Ⅱ', 'bio2': '생명과학Ⅱ', 'earth2': '지구과학Ⅱ'}
 DPIS = (140, 150, 160, 180)
+ELEC_HDR = {'math': '(미적분)', 'mathprob': '(확률과 통계)', 'mathgeo': '(기하)'}   # 2022학년도~ 23~30번 선택과목 쪽 머리
 
 
 def boards():
@@ -137,14 +138,14 @@ def found_of(doc, sub, key):
             for n, col, y0, x0 in margin_numbers(doc[pi], lo, hi):
                 if n not in found:
                     found[n] = (pi, col, y0, x0)
-    if sub != 'math':
+    if not sub.startswith('math'):
         scan(range(len(doc)), 1, 20)   # crop.py: 모든 쪽
     elif int(key[:4]) >= 2022:
         pages = set_pages(doc)
         hdr = lambda pi, s: any(l.strip() == s for l in doc[pi].get_text().split('\n'))
         first_prob = next(pi for pi in pages if hdr(pi, '(확률과 통계)'))
         scan([pi for pi in pages if pi < first_prob], 1, 22)
-        scan([pi for pi in pages if hdr(pi, '(미적분)')], 23, 30)
+        scan([pi for pi in pages if hdr(pi, ELEC_HDR[sub])], 23, 30)
     else:
         scan(set_pages(doc), 1, 30)
     return found
@@ -164,7 +165,7 @@ def clip_of(doc, found, n, sub):
     cp = [w[1] for w in words if w[4] == '저작권은' and w[1] > y0]
     if cp:
         limit = min(limit, min(cp) - 3)
-    if sub == 'math':
+    if sub.startswith('math'):
         dd = [w[1] for w in ws if '단답형' in w[4] and w[1] > y0 + 8]
         if dd:
             limit = min(limit, min(dd) - 3)
@@ -187,7 +188,7 @@ def clip_of(doc, found, n, sub):
         if ckY is not None and not pagebox(r) and footer(r) and r.y0 > last + 1:
             cand = min(cand, r.y0 - 1)
     masks = [r for r in dr if pagebox(r)]
-    return page, pymupdf.Rect(left + 6, y0 - (11 if sub == 'math' else 5), right - 6, min(limit, cand)), masks
+    return page, pymupdf.Rect(left + 6, y0 - (11 if sub.startswith('math') else 5), right - 6, min(limit, cand)), masks
 
 
 def render_box(page, clip, masks, dpi):
@@ -299,7 +300,7 @@ if __name__ == '__main__':
     rows = boards()
     os.makedirs(os.path.join(EXAM, 'hot'), exist_ok=True)
     for sub in want:
-        subj = '수학' if sub == 'math' else '한국사' if sub == 'hist' else '과학탐구'
+        subj = '수학' if sub.startswith('math') else '한국사' if sub == 'hist' else '과학탐구' if sub in SCI else '사회탐구'
         dest = os.path.join(EXAM, 'hot', f'{sub}.json')
         res = json.load(open(dest)) if os.path.exists(dest) else {}
         for e in exams:
