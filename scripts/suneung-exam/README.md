@@ -61,7 +61,7 @@ cd r2 && for f in */english/listen-*.mp3; do ROOT=$PWD WR="npx --yes wrangler" .
 문항·시험지 이미지는 저장소에 두지 않는다. `r2up.sh <경로>`(wrangler `r2 object put`)로 Cloudflare R2 버킷 `nanamate-suneung`에 올리고, 플레이어의 `imgBase`(`scripts/suneung/lib.mjs` `IMG_BASE`)가 그 공개 주소를 가리킨다. 병렬은 3 이하로(429 제한), 올린 뒤 HTTP 200을 확인하고 로컬 webp를 지운다.
 
 ## 한국사 (2017학년도~, `hist_*`)
-한국사는 2017학년도 수능부터 필수·절대평가(20문항 50점 30분)라 그 해부터 모은다(수능 10회 + 6·9월 모의평가 22회 = 32회, 2027학년도 9월까지).
+한국사는 2017학년도 수능부터 필수·절대평가(20문항 50점 30분)라 그 해부터 모은다(수능 11회 + 6·9월 모의평가 22회 = 33회, 2027학년도 수능까지).
 ```bash
 python3 hist_boards.py            # 게시판에서 한국사 행 → boards_hist.json
 ./venv/bin/python hist_batch.py   # PDF → out/<회차>/hist/q01~q20.webp + manifest_hist.json (CROP_DPI=160 CROP_Q=70)
