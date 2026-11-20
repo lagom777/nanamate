@@ -64,6 +64,12 @@ const TRACKS = [
     title: "수능 사회탐구",
     blurb: "사탐 9과목 기출 채점.",
   },
+  {
+    href: "/learn/aboutSuneungIntegrated/index.html",
+    tag: "2028 수능",
+    title: "수능 통합사회·통합과학",
+    blurb: "2028 수능 대비, 평가원 예시문항 채점.",
+  },
 ];
 
 function Home() {

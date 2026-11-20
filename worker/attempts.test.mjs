@@ -11,6 +11,11 @@ test('정상적인 풀이 기록', () => {
   assert.deepEqual(parsed.attempts[0], { ...row, ms: null, mode: null });
 });
 
+test('수능 예시문항(ex) 회차도 받는다', () => {
+  assert.equal(parseAttempts({ attempts: [{ ...row, exam: '2028-ex', sub: 'intsci', q: 25 }] }).ok, true);
+  assert.equal(parseAttempts({ attempts: [{ ...row, exam: '2028-exam' }] }).ok, false);
+});
+
 test('이전용 picked 0 허용, 빈 배열 허용', () => {
   assert.equal(parseAttempts({ attempts: [{ ...row, picked: 0, ok: 0 }] }).ok, true);
   assert.equal(parseAttempts({ attempts: [] }).ok, true);

@@ -21,6 +21,7 @@ cards=[
  ('aboutSuneungEarth1','#ca8a04','탐구','수능 지구과학Ⅰ','CSAT Earth Science I','3단원 %d파트 정리 · 기출 %d회 채점'%(parts('aboutSuneungEarth1'),n('earth1')),['📄 %d파트'%parts('aboutSuneungEarth1'),'📝 기출 %d문항'%(n('earth1')*20)]),
  ('aboutSuneungScience2','#475569','탐구','수능 과학탐구Ⅱ','CSAT Science II','물리Ⅱ·화학Ⅱ·생명Ⅱ·지구Ⅱ 기출 풀어보기 · 채점',['📝 4과목','기출 %d문항×4'%(n('phys2')*20)]),
  ('aboutSuneungSocial','#c2410c','탐구','수능 사회탐구','CSAT Social Studies','생윤·윤사·한지·세지·동사·세사·경제·정법·사문 기출 풀어보기 · 채점',['📝 9과목','기출 %d문항×9'%(n('lifeeth')*20)]),
+ ('aboutSuneungIntegrated','#0f766e','2028 수능','수능 통합사회·통합과학','CSAT Integrated Social Studies &amp; Science','2028학년도 수능부터의 탐구 · 평가원 예시문항 풀어보기 · 채점',['📝 2과목','25문항 · 40분','예시문항 %d문항'%(n('intsoc')*25+n('intsci')*25)]),
 ]
 def card(c,pref):
     f,col,tag,title,en,desc,meta=c
