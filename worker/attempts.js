@@ -1,4 +1,5 @@
-const EXAM = /^[0-9]{4}-(?:csat|jun|sep)$/;
+// ex = 수능 예시문항(2028학년도 체제 안내용 문제지)
+const EXAM = /^[0-9]{4}-(?:csat|jun|sep|ex)$/;
 const SUB = /^[a-z][a-z0-9]{0,15}$/;
 
 export function validExam(s) { return typeof s === 'string' && EXAM.test(s); }

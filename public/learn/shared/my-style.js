@@ -172,7 +172,8 @@
     ['bio2', '생명과학Ⅱ', 'aboutSuneungScience2/practice-bio2.html'], ['earth2', '지구과학Ⅱ', 'aboutSuneungScience2/practice-earth2.html'],
     ['lifeeth', '생활과 윤리', 'aboutSuneungSocial/practice-lifeeth.html'], ['ethth', '윤리와 사상', 'aboutSuneungSocial/practice-ethth.html'], ['kgeo', '한국지리', 'aboutSuneungSocial/practice-kgeo.html'],
     ['wgeo', '세계지리', 'aboutSuneungSocial/practice-wgeo.html'], ['eahist', '동아시아사', 'aboutSuneungSocial/practice-eahist.html'], ['whist', '세계사', 'aboutSuneungSocial/practice-whist.html'],
-    ['econ', '경제', 'aboutSuneungSocial/practice-econ.html'], ['pol', '정치와 법', 'aboutSuneungSocial/practice-pol.html'], ['soc', '사회·문화', 'aboutSuneungSocial/practice-soc.html']
+    ['econ', '경제', 'aboutSuneungSocial/practice-econ.html'], ['pol', '정치와 법', 'aboutSuneungSocial/practice-pol.html'], ['soc', '사회·문화', 'aboutSuneungSocial/practice-soc.html'],
+    ['intsoc', '통합사회', 'aboutSuneungIntegrated/practice-soc.html'], ['intsci', '통합과학', 'aboutSuneungIntegrated/practice-sci.html']
   ];
   function paintDue(box, j) {
     var n = {};

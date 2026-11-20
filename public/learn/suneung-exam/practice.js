@@ -239,6 +239,9 @@
     whist: '2027-csat/4',
     mathprob: '2027-csat/28 2027-csat/30',
     mathgeo: '2027-csat/30',
+    /* 2028학년도 수능 예시문항(통합사회·통합과학)은 R2 에 올리지 않고 그림 50장을 모두 저장소(fix/2028-ex/)에 둔다 */
+    intsoc: '2028-ex/1 2028-ex/2 2028-ex/3 2028-ex/4 2028-ex/5 2028-ex/6 2028-ex/7 2028-ex/8 2028-ex/9 2028-ex/10 2028-ex/11 2028-ex/12 2028-ex/13 2028-ex/14 2028-ex/15 2028-ex/16 2028-ex/17 2028-ex/18 2028-ex/19 2028-ex/20 2028-ex/21 2028-ex/22 2028-ex/23 2028-ex/24 2028-ex/25',
+    intsci: '2028-ex/1 2028-ex/2 2028-ex/3 2028-ex/4 2028-ex/5 2028-ex/6 2028-ex/7 2028-ex/8 2028-ex/9 2028-ex/10 2028-ex/11 2028-ex/12 2028-ex/13 2028-ex/14 2028-ex/15 2028-ex/16 2028-ex/17 2028-ex/18 2028-ex/19 2028-ex/20 2028-ex/21 2028-ex/22 2028-ex/23 2028-ex/24 2028-ex/25',
   };
   function imgFixed(key, n, sub) { var l = IMG_FIX[sub || SUB]; return !!l && (' ' + l + ' ').indexOf(' ' + key + '/' + n + ' ') >= 0; }
   /* 확률과 통계·기하의 공통 1~22번은 미적분(math)과 같은 문항이라 그림도 math 것을 쓴다(R2 에는 23~30번만 따로 있다, 2027학년도 수능만 30장 다 있다) */
@@ -293,7 +296,11 @@
       (isCsat(e) ? gC : gM).appendChild(o);
       if (!PAPER) examOpts.push({ el: o, e: e });
     });
+    /* 예시문항(kind 'ex' — 2028학년도 수능 체제 안내용으로 평가원이 낸 문제지)은 모의평가와 따로 묶는다 */
+    var gX = el('optgroup', { label: '수능 예시문항 (' + QN + '문항 · ' + (EXAM_SECONDS / 60) + '분)' });
+    Array.prototype.slice.call(gM.children).forEach(function (o) { var e = examOf(o.value.slice(5)); if (e && e.kind === 'ex') gX.appendChild(o); });
     if (gC.children.length) setSel.appendChild(gC);
+    if (gX.children.length) setSel.appendChild(gX);
     if (gM.children.length) setSel.appendChild(gM);
     if (HAS_PARTS && !PAPER) {
       var hasTopics = cfg.parts.some(function (p) { return p.topics && p.topics.length; });
@@ -389,7 +396,7 @@
     root.appendChild(el('button', { type: 'button', class: 'pr-ink-fab', title: '손가락으로 낙서하려면 ✏️ 낙서를 켜요', 'aria-label': '✏️ 낙서 켜기', text: '✏️', onclick: function () { toggleInk(true); } }));   // 휴대폰: 위 막대가 스크롤로 사라져도 켤 수 있게
     paintInk();
     document.body.classList.add('pr-wide-page');   // 목차를 접고 본문 칸 가득 — 그림은 키우지 않고 넓으면 옆으로 나란히(practice.css)
-    root.appendChild(el('p', { class: 'pr-src', html: '문항 출처: 한국교육과정평가원(KICE) 대학수학능력시험·6월/9월 모의평가 공개 문제지. 문제지에 관한 저작권은 한국교육과정평가원에 있으며, 이 페이지는 학습용으로 문항 이미지를 그대로 보여 주고 정답표로 채점합니다.' + (HAS_PARTS ? ' 파트 분류는 문항 내용 기반 자동 분류라 일부 오차가 있을 수 있습니다.' : '') + (PAPER && SUB === 'english' ? ' 듣기 음성은 평가원이 공개한 듣기평가 음원(저작권 한국교육과정평가원)을 회차마다 한 파일로 이은 것으로 시험지 위 🎧 막대에서 들을 수 있고, 채점 후 듣기평가 대본을 볼 수 있습니다.' : '') + (ABS_CUT[SUB] ? '' : ' 채점 후 등급은 <a href="https://www.ebsi.co.kr/ebs/xip/xipa/retrievePastGrdCutWrongAnswerRate.ebs?tab=1" target="_blank" rel="noopener">EBSi 역대 등급컷</a>(원점수는 EBSi 자체분석, 표준점수는 평가원) 기준 예상입니다.' + (SUB === 'korean' || /^math/.test(SUB) ? ' 2022학년도부터 국어·수학은 선택과목별 원점수 컷이 공개되지 않아, 시험 직후 입시업체가 발표한 가채점 예상컷(위 몇 등급)으로 보여 줍니다.' : '')) }));
+    root.appendChild(el('p', { class: 'pr-src', html: '문항 출처: 한국교육과정평가원(KICE) 대학수학능력시험·6월/9월 모의평가·예시문항 공개 문제지. 문제지에 관한 저작권은 한국교육과정평가원에 있으며, 이 페이지는 학습용으로 문항 이미지를 그대로 보여 주고 정답표로 채점합니다.' + (HAS_PARTS ? ' 파트 분류는 문항 내용 기반 자동 분류라 일부 오차가 있을 수 있습니다.' : '') + (PAPER && SUB === 'english' ? ' 듣기 음성은 평가원이 공개한 듣기평가 음원(저작권 한국교육과정평가원)을 회차마다 한 파일로 이은 것으로 시험지 위 🎧 막대에서 들을 수 있고, 채점 후 듣기평가 대본을 볼 수 있습니다.' : '') + (ABS_CUT[SUB] ? '' : ' 채점 후 등급은 <a href="https://www.ebsi.co.kr/ebs/xip/xipa/retrievePastGrdCutWrongAnswerRate.ebs?tab=1" target="_blank" rel="noopener">EBSi 역대 등급컷</a>(원점수는 EBSi 자체분석, 표준점수는 평가원) 기준 예상입니다.' + (SUB === 'korean' || /^math/.test(SUB) ? ' 2022학년도부터 국어·수학은 선택과목별 원점수 컷이 공개되지 않아, 시험 직후 입시업체가 발표한 가채점 예상컷(위 몇 등급)으로 보여 줍니다.' : '')) }));
   }
 
   /* 맨 위 이동 줄: 풀어보기 화면은 왼쪽 목차를 접으므로(pr-wide-page) 과목 목차·통합 허브로 돌아가는 길과 다른 과목 풀어보기로 가는 길을 여기 둔다.
@@ -398,7 +405,8 @@
     ['korean', '국어', 'aboutSuneungKorean/practice.html'], ['math', '수학', 'aboutSuneungMath/practice.html'], ['mathprob', '확률과 통계', 'aboutSuneungMath/practice-prob.html'], ['mathgeo', '기하', 'aboutSuneungMath/practice-geo.html'], ['english', '영어', 'aboutSuneungEnglish/practice.html'], ['hist', '한국사', 'aboutSuneungHistory/practice.html'],
     ['phys1', '물리학Ⅰ', 'aboutSuneungPhysics1/practice.html'], ['chem1', '화학Ⅰ', 'aboutSuneungChem1/practice.html'], ['bio1', '생명과학Ⅰ', 'aboutSuneungBio1/practice.html'], ['earth1', '지구과학Ⅰ', 'aboutSuneungEarth1/practice.html'],
     ['phys2', '물리학Ⅱ', 'aboutSuneungScience2/practice-phys2.html'], ['chem2', '화학Ⅱ', 'aboutSuneungScience2/practice-chem2.html'], ['bio2', '생명과학Ⅱ', 'aboutSuneungScience2/practice-bio2.html'], ['earth2', '지구과학Ⅱ', 'aboutSuneungScience2/practice-earth2.html'],
-    ['lifeeth', '생활과 윤리', 'aboutSuneungSocial/practice-lifeeth.html'], ['ethth', '윤리와 사상', 'aboutSuneungSocial/practice-ethth.html'], ['kgeo', '한국지리', 'aboutSuneungSocial/practice-kgeo.html'], ['wgeo', '세계지리', 'aboutSuneungSocial/practice-wgeo.html'], ['eahist', '동아시아사', 'aboutSuneungSocial/practice-eahist.html'], ['whist', '세계사', 'aboutSuneungSocial/practice-whist.html'], ['econ', '경제', 'aboutSuneungSocial/practice-econ.html'], ['pol', '정치와 법', 'aboutSuneungSocial/practice-pol.html'], ['soc', '사회·문화', 'aboutSuneungSocial/practice-soc.html']
+    ['lifeeth', '생활과 윤리', 'aboutSuneungSocial/practice-lifeeth.html'], ['ethth', '윤리와 사상', 'aboutSuneungSocial/practice-ethth.html'], ['kgeo', '한국지리', 'aboutSuneungSocial/practice-kgeo.html'], ['wgeo', '세계지리', 'aboutSuneungSocial/practice-wgeo.html'], ['eahist', '동아시아사', 'aboutSuneungSocial/practice-eahist.html'], ['whist', '세계사', 'aboutSuneungSocial/practice-whist.html'], ['econ', '경제', 'aboutSuneungSocial/practice-econ.html'], ['pol', '정치와 법', 'aboutSuneungSocial/practice-pol.html'], ['soc', '사회·문화', 'aboutSuneungSocial/practice-soc.html'],
+    ['intsoc', '통합사회', 'aboutSuneungIntegrated/practice-soc.html'], ['intsci', '통합과학', 'aboutSuneungIntegrated/practice-sci.html']
   ];
   function navRow() {
     var aside = document.querySelector('.layout > aside'), q = function (sel) { return aside && aside.querySelector(sel); };
@@ -492,7 +500,7 @@
         if (have[id]) return;
         var p = String(id).split('/');
         var q = parseInt(p[1], 10);
-        if (!/^[0-9]{4}-(csat|jun|sep)$/.test(p[0]) || !q) return;
+        if (!/^[0-9]{4}-(csat|jun|sep|ex)$/.test(p[0]) || !q) return;
         extra.push({ exam: p[0], sub: SUB, q: q, picked: 0, ok: 0, ts: ts });
       });
       var mark = function () { store('sn:' + SUB + ':migrated', 1); };
@@ -616,8 +624,8 @@
     var go = function (id) { toggleSetPanel(false); setBtn.focus(); if (id === S.set) return; setSel.value = id; startSet(id); window.scrollTo({ top: 0, behavior: 'instant' }); };
     var head = function (t) { setPanel.appendChild(el('p', { class: 'pr-set-h', text: t })); };
     setPanel.appendChild(el('p', { class: 'pr-set-key' }, ['막대: ', el('span', { class: 'pr-acc-key ok', text: '맞음' }), ' ', el('span', { class: 'pr-acc-key no', text: '틀림' }), ' ', el('span', { class: 'pr-acc-key', text: '안 풂' }), ' · 퍼센트는 푼 문제 중 맞은 비율']));
-    [[true, '수능'], [false, '모의평가 6월·9월']].forEach(function (g) {
-      var rows = examOpts.filter(function (o) { return isCsat(o.e) === g[0]; });
+    [['csat', '수능'], ['ex', '수능 예시문항'], ['mock', '모의평가 6월·9월']].forEach(function (g) {
+      var rows = examOpts.filter(function (o) { return (isCsat(o.e) ? 'csat' : o.e.kind === 'ex' ? 'ex' : 'mock') === g[0]; });
       if (!rows.length) return;
       head(g[1] + ' (' + QN + '문항 · ' + (EXAM_SECONDS / 60) + '분)');
       rows.forEach(function (o) {
@@ -1156,7 +1164,7 @@
   function keyMode() { return acctKey && acctKey.has ? 'acct' : (store(AI_KEY) ? 'local' : ''); }
   function errType(e) { return e && e.error && e.error.error && e.error.error.type; }
   var aiRuns = {}, sdkP = null, aiDlg = null, SDK = null;
-  var FORMULA = /^(math|phys|chem|earth|bio)/.test(SUB);   // 수식이 많은 과목: AI 가 LaTeX 로 쓰고 화면은 KaTeX 로 그린다
+  var FORMULA = /^(math|phys|chem|earth|bio|intsci)/.test(SUB);   // 수식이 많은 과목: AI 가 LaTeX 로 쓰고 화면은 KaTeX 로 그린다
   /* 저장된 해설(explain/*.json)의 식: a/b 를 위아래 분수로, = 앞뒤를 띄운다(mathfmt.js — 못 불러오면 원문 그대로).
    * 생명과학은 / 가 유전자형(Ab/aB)에도 쓰여 숫자/숫자만 분수로 바꾼다 */
   var fmtP = null;
@@ -3936,6 +3944,8 @@
     if (!cuts) {
       if (S.set.indexOf('exam:') === 0 && PENDING && PENDING[S.set.slice(5)])
         return el('p', { class: 'pr-sub', text: '등급: 막 치른 시험이라 아직 등급컷이 없어요. 가채점 예상컷·실제 등급컷이 나오면 넣을게요.' });
+      if (S.set.indexOf('exam:') === 0 && (examOf(S.set.slice(5)) || {}).kind === 'ex')
+        return el('p', { class: 'pr-sub', text: '등급: 예시문항은 실제로 치른 시험이 아니라서 등급컷이 없어요. 2028학년도 수능부터 통합사회·통합과학은 과목당 25문항·40분·50점(1.5점·2점·2.5점)입니다.' });
       if (S.set.indexOf('exam:') === 0 && (SUB === 'korean' || IS_MATH) && +S.set.slice(5, 9) >= 2022)
         return el('p', { class: 'pr-sub', text: '등급: 2022학년도부터 국어·수학은 선택과목에 따라 같은 원점수도 등급이 달라서 원점수 등급컷이 공개되지 않아요(평가원·EBSi는 표준점수 컷만).' });
       return null;

@@ -28,7 +28,7 @@ test("등급컷: 시험·과목이 기출 목록과 맞고 1~8등급 최저점�
     }
   }
   for (const e of Object.values(exams)) {
-    if (e.year < 2018 || pending[e.key]) continue;   // pending: 막 치른 시험(등급컷 발표 전)
+    if (e.year < 2018 || pending[e.key] || e.kind === "ex") continue;   // pending: 막 치른 시험(등급컷 발표 전) · ex: 예시문항(치른 시험이 아니라 등급컷이 없다)
     const have = cuts[e.key] || {};
     const miss = SCI.filter((s) => !have[s]);
     if (miss.length) errs.push(`${e.key}: 과탐 등급컷 없음 ${miss.join(",")}`);
@@ -55,7 +55,7 @@ test("가채점 예상컷: 2022학년도부터 국어·수학 시험마다 화�
     }
   }
   for (const e of Object.values(exams)) {
-    if (e.year < 2022 || pending[e.key]) continue;
+    if (e.year < 2022 || pending[e.key] || e.kind === "ex") continue;
     const miss = EST.filter((k) => !(est[e.key] || {})[k]);
     if (miss.length) errs.push(`${e.key}: 예상컷 없음 ${miss.join(",")}`);
   }

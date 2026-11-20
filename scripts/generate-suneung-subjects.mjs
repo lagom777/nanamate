@@ -12,9 +12,11 @@ import { spec as earth } from "./suneung/earth1.mjs";
 import { spec as hist } from "./suneung/hist.mjs";
 import { writeScience2 } from "./suneung/science2.mjs";
 import { writeSocial } from "./suneung/social.mjs";
+import { writeIntegrated } from "./suneung/integrated.mjs";
 
 const only = process.argv.slice(2);
 const want = (spec) => !only.length || only.some((k) => spec.folder.toLowerCase().includes(k.toLowerCase()));
 for (const s of [phys, bio, math, korean, english, chem, earth, hist]) if (want(s)) writeAll(s, s.extra || {});
 if (!only.length || only.some((k) => "science2".includes(k.toLowerCase()))) writeScience2();
 if (!only.length || only.some((k) => "social".includes(k.toLowerCase()))) writeSocial();
+if (!only.length || only.some((k) => "integrated".includes(k.toLowerCase()))) writeIntegrated();
