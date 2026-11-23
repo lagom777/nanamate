@@ -1,5 +1,5 @@
 // 수능 영어 — 듣기 · 독해 유형별 (content/en-*.mjs, 전략은 content/st-en.mjs)
-import { note, tip, tbl, examsOf, BANNER_2028 } from "./lib.mjs";
+import { note, tip, tbl, examsOf } from "./lib.mjs";
 import { maps } from "./maps-english.mjs";
 import { styles } from "./content/style-english.mjs";
 import { quick } from "./content/quick-english.mjs";
@@ -17,14 +17,13 @@ export const spec = {
   glow: "rgba(37,99,235,0.12)", border: "rgba(37,99,235,0.16)",
   asideSub: "수능 영어 — 듣기·독해 유형 + 기출",
   h1: "수능 영어,<br><em>유형별</em>로<br>정리하기",
-  authors: "2015 개정 교육과정 · 2027학년도 수능까지 · 실제 시험지 " + N + "회 풀어보기",
+  authors: "45문항(듣기 17) · 70분 · 절대평가 · 실제 시험지 " + N + "회 풀어보기",
   affiliation: "듣기 · 독해 유형 6파트 · 전략 · 수능 풀어보기(채점·듣기 음성·대본)",
   summary: true, summaryBlurb: "파트별 유형 지도·표·함정을 카드 한 장씩에 — 시험 직전 훑어보기용", maps,
   extraLinks: [{ href: "../aboutMyVocab/index.html", label: "🔊 나만의 영단어장", num: "VOCAB", blurb: "단어·어원 · 뜻 가리기 · ★ 표시 · 발음 듣기" }],
   motion: true, motionBlurb: "유형별 풀이를 움직이는 그림으로 — 신호어·흐름 화살표·빈자리·대명사 추적", kind: "paper", qn: 45, minutes: 70,
   practiceBlurb: `실제 시험지 ${N}회 · 45문항 · 듣기 음성 · 답안지 채점 · 채점 후 듣기 대본`,
   chapters,
-  banner: BANNER_2028.english,
   intro: `<h2>이 노트가 다루는 것</h2>
 <p>수능 영어는 <strong>45문항(듣기 17 + 독해 28)</strong>을 유형별로 풀어야 하는 시험입니다. 절대평가라 90점 이상이면 1등급이지만, 유형마다 함정이 정해져 있어 <em>유형별 풀이 절차</em>를 익히는 것이 핵심입니다. 이 노트는 문항 유형(듣기, 목적·심경·주장·요지·주제·제목, 도표·내용 일치·안내문, 어법·어휘, 빈칸, 무관한 문장·순서·삽입·요약, 장문)마다 묻는 것, 단서, 풀이 절차, 오답 패턴을 정리합니다.</p>
 ${note("시험 구조", "70분 · 45문항 · 100점(절대평가: 90점 이상 1등급, 10점 간격). 듣기 1~17번(약 25분 방송), 독해 18~45번. 2점 문항이 대부분이고 3점 문항이 일부입니다.")}

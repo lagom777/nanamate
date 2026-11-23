@@ -164,16 +164,7 @@
 
   /* 📅 오늘 다시 풀 오답(1·3·7일, /api/due): 과목마다 개수와 그 과목 풀어보기로 가는 길. 국어·영어(시험지형)는 목록 창(#due) */
   var SUBJECTS = [
-    ['korean', '국어', 'aboutSuneungKorean/practice.html', 1], ['math', '수학', 'aboutSuneungMath/practice.html'], ['mathprob', '확률과 통계', 'aboutSuneungMath/practice-prob.html'], ['mathgeo', '기하', 'aboutSuneungMath/practice-geo.html'],
-    ['english', '영어', 'aboutSuneungEnglish/practice.html', 1], ['hist', '한국사', 'aboutSuneungHistory/practice.html'],
-    ['phys1', '물리학Ⅰ', 'aboutSuneungPhysics1/practice.html'], ['chem1', '화학Ⅰ', 'aboutSuneungChem1/practice.html'],
-    ['bio1', '생명과학Ⅰ', 'aboutSuneungBio1/practice.html'], ['earth1', '지구과학Ⅰ', 'aboutSuneungEarth1/practice.html'],
-    ['phys2', '물리학Ⅱ', 'aboutSuneungScience2/practice-phys2.html'], ['chem2', '화학Ⅱ', 'aboutSuneungScience2/practice-chem2.html'],
-    ['bio2', '생명과학Ⅱ', 'aboutSuneungScience2/practice-bio2.html'], ['earth2', '지구과학Ⅱ', 'aboutSuneungScience2/practice-earth2.html'],
-    ['lifeeth', '생활과 윤리', 'aboutSuneungSocial/practice-lifeeth.html'], ['ethth', '윤리와 사상', 'aboutSuneungSocial/practice-ethth.html'], ['kgeo', '한국지리', 'aboutSuneungSocial/practice-kgeo.html'],
-    ['wgeo', '세계지리', 'aboutSuneungSocial/practice-wgeo.html'], ['eahist', '동아시아사', 'aboutSuneungSocial/practice-eahist.html'], ['whist', '세계사', 'aboutSuneungSocial/practice-whist.html'],
-    ['econ', '경제', 'aboutSuneungSocial/practice-econ.html'], ['pol', '정치와 법', 'aboutSuneungSocial/practice-pol.html'], ['soc', '사회·문화', 'aboutSuneungSocial/practice-soc.html'],
-    ['intsoc', '통합사회', 'aboutSuneungIntegrated/practice-soc.html'], ['intsci', '통합과학', 'aboutSuneungIntegrated/practice-sci.html']
+    ['korean', '국어', 'aboutSuneungKorean/practice.html', 1], ['math', '수학', 'aboutSuneungMath/practice.html'], ['english', '영어', 'aboutSuneungEnglish/practice.html', 1], ['hist', '한국사', 'aboutSuneungHistory/practice.html'], ['intsoc', '통합사회', 'aboutSuneungIntegrated/practice-soc.html'], ['intsci', '통합과학', 'aboutSuneungIntegrated/practice-sci.html']
   ];
   function paintDue(box, j) {
     var n = {};

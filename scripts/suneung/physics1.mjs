@@ -1,5 +1,5 @@
 // 수능 물리학Ⅰ — 파트별 노트 내용 (2015 개정, 2027학년도까지)
-import { f, fr, note, warn, tip, tbl, ex, partStats, examsOf, figHead, figure, BANNER_2028 } from "./lib.mjs";
+import { f, fr, note, warn, tip, tbl, ex, partStats, examsOf, figHead, figure } from "./lib.mjs";
 import { maps } from "./maps-physics1.mjs";
 import { styles } from "./content/style-physics1.mjs";
 import { quick } from "./content/quick-physics1.mjs";
@@ -454,7 +454,6 @@ export const spec = {
     { name: "간섭", file: "06-waves.html", go: "topic:p6d", line: "두 파동이 겹치면 커지거나(보강) 없어진다(상쇄)", f: "마루+마루·골+골 / 마루+골" },
     { name: "이중성", file: "07-duality.html", go: "part:p7", line: "빛은 입자처럼(광전 효과), 입자는 파동처럼(물질파) 군다", f: `E = hf,  λ = ${fr("h", "p")} = ${fr("h", "mv")}` },
   ],
-  banner: BANNER_2028.science,
   intro: `<h2>이 노트가 다루는 것</h2>
 <p>수능 물리학Ⅰ의 <strong>전 범위</strong>를 세 단원, 일곱 파트로 나눠 정리했습니다. 각 파트는 개념 정리 → 그래프·표 읽는 법 → 기출에서 반복되는 함정 → 대표 예제 → 짝짓기·퀴즈 → 실제 기출 풀어보기 순으로 이어집니다. 파트마다 <em>모션 노트</em>의 해당 장면으로 바로 이동할 수 있습니다.</p>
 ${note("시험 구조", "20문항 · 50점 · 30분. 2점 10문항 + 3점 10문항. 그림과 표를 읽고 보기 ㄱ·ㄴ·ㄷ의 참/거짓을 가리는 5지 선다입니다.")}

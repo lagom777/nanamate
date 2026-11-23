@@ -1,7 +1,7 @@
 // 수능 사회탐구 9과목 — 개념 노트 없이 기출 풀어보기(채점)만 제공(2022학년도~)
 import fs from "fs";
 import path from "path";
-import { LEARN, head, practicePage, stylesCss, examsOf, note, BANNER_2028 } from "./lib.mjs";
+import { LEARN, head, practicePage, stylesCss, examsOf, note } from "./lib.mjs";
 
 const SUBS = [
   { sub: "lifeeth", label: "생활과 윤리", file: "practice-lifeeth.html", blurb: "생명·사회·과학·문화·평화 윤리 등 현대 생활의 응용 윤리" },
@@ -48,7 +48,6 @@ ${asideFor("index")}
   <p class="authors">${SUBS.map((s) => s.label).join(" · ")} · 실제 시험지 그대로</p>
   <p class="affiliation">${titles}</p>
 </header>
-${BANNER_2028.social}
 <h2>이 폴더가 제공하는 것</h2>
 <p>사회탐구 아홉 과목의 <strong>실제 시험지(문항 이미지)</strong>를 시험 모드(30분·20문항)와 연습 모드로 풀고, 정답표로 <strong>채점</strong>하고, 틀린 문항을 오답 노트로 모읍니다. <strong>개념 노트와 문항별 해설은 없고</strong> 정답과 배점만 확인할 수 있습니다. 2015 개정 교육과정 선택과목 체제인 <strong>2022학년도부터</strong>의 수능과 6월·9월 모의평가가 들어 있습니다. 정치와 법·사회·문화 등의 묶음 문항(“[14~15] 다음 자료를 보고…”)은 두 문항 모두에 공통 자료를 붙여 보여 줍니다.</p>
 ${note("시험 구조", "과목당 20문항 · 50점 · 30분. 2점 10문항 + 3점 10문항. 자료·지도·그래프를 읽고 옳은 설명을 고르거나 보기 ㄱ·ㄴ·ㄷ·ㄹ을 가리는 5지 선다입니다.")}

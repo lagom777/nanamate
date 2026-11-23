@@ -225,7 +225,7 @@
     chem2: '2020-csat/5 2020-jun/5 2020-sep/5 2021-csat/5 2021-jun/5 2021-sep/5 2021-sep/6 2022-csat/4 2022-csat/5 2022-jun/4 2022-jun/5 2022-sep/5 2022-sep/6 2023-csat/5 2023-csat/6 2023-jun/5 2023-sep/5 2023-sep/6 2024-csat/5 2024-jun/5 2024-jun/6 2024-sep/5 2024-sep/6 2025-csat/4 2025-csat/5 2025-jun/4 2025-jun/5 2025-sep/5 2025-sep/6 2026-csat/1 2026-csat/5 2026-jun/5 2026-jun/15 2026-sep/5 2027-jun/5 2027-sep/5 2027-csat/5 2027-csat/6',
     earth1: '2020-csat/4 2020-jun/4 2020-sep/4 2021-csat/4 2021-csat/5 2021-jun/4 2021-sep/4 2022-csat/4 2022-csat/16 2022-jun/4 2022-jun/5 2022-sep/4 2023-csat/4 2023-jun/4 2023-sep/4 2024-csat/4 2024-jun/4 2024-sep/4 2024-sep/17 2025-csat/4 2025-jun/4 2025-sep/4 2026-csat/4 2026-jun/4 2026-jun/20 2026-sep/4 2027-jun/4 2027-sep/4 2027-csat/4',
     earth2: '2020-csat/5 2020-jun/5 2020-sep/5 2021-csat/5 2021-jun/5 2021-sep/5 2022-csat/5 2022-jun/5 2022-sep/5 2023-csat/4 2023-jun/5 2023-sep/5 2024-csat/5 2024-jun/5 2024-sep/6 2025-csat/6 2025-jun/6 2025-sep/5 2026-csat/5 2026-jun/5 2026-jun/7 2026-sep/5 2027-jun/5 2027-sep/5 2027-csat/6',
-    math: '2018-sep/10 2018-sep/16 2018-sep/28 2019-sep/24 2019-csat/28 2020-csat/24 2020-jun/18 2020-jun/24 2020-jun/28 2020-jun/30 2021-csat/10 2021-csat/24 2021-csat/26 2021-jun/8 2021-jun/16 2021-jun/28 2021-jun/30 2021-sep/12 2021-sep/28 2022-csat/23 2022-sep/10 2022-sep/12 2022-sep/28 2023-csat/2 2023-csat/10 2023-sep/12 2024-jun/10 2024-sep/30 2025-jun/1 2025-jun/23 2025-jun/26 2026-csat/7 2026-jun/14 2026-sep/14 2026-sep/24 2027-jun/28 2027-sep/26 2027-sep/28 2027-csat/14',
+    math: '2022-sep/10 2022-sep/12 2023-csat/2 2023-csat/10 2023-sep/12 2024-jun/10 2025-jun/1 2026-csat/7 2026-jun/14 2026-sep/14 2027-csat/14 2027-csat/28 2027-csat/30',
     phys1: '2019-jun/8 2020-csat/12 2020-jun/4 2021-jun/5 2022-jun/10 2022-sep/17 2023-jun/10 2023-sep/2 2023-sep/10 2024-csat/17 2024-sep/13 2026-jun/5 2027-sep/10',
     phys2: '2020-csat/4 2020-jun/4 2020-jun/5 2020-sep/5 2021-csat/4 2021-csat/5 2021-jun/4 2021-sep/4 2021-sep/5 2022-csat/4 2022-jun/5 2022-sep/4 2023-csat/4 2023-jun/4 2023-jun/5 2023-sep/4 2024-csat/4 2024-csat/5 2024-jun/5 2024-sep/5 2025-csat/5 2025-csat/7 2025-jun/5 2025-jun/6 2025-sep/5 2026-csat/5 2026-jun/5 2026-sep/4 2026-sep/15 2027-jun/5 2027-jun/11 2027-sep/4 2027-csat/4 2027-csat/5',
     hist: '2020-jun/1',
@@ -237,23 +237,21 @@
     soc: '2027-csat/5',
     wgeo: '2027-csat/3',
     whist: '2027-csat/4',
-    mathprob: '2027-csat/28 2027-csat/30',
-    mathgeo: '2027-csat/30',
     /* 2028학년도 수능 예시문항(통합사회·통합과학)은 R2 에 올리지 않고 그림 50장을 모두 저장소(fix/2028-ex/)에 둔다 */
     intsoc: '2028-ex/1 2028-ex/2 2028-ex/3 2028-ex/4 2028-ex/5 2028-ex/6 2028-ex/7 2028-ex/8 2028-ex/9 2028-ex/10 2028-ex/11 2028-ex/12 2028-ex/13 2028-ex/14 2028-ex/15 2028-ex/16 2028-ex/17 2028-ex/18 2028-ex/19 2028-ex/20 2028-ex/21 2028-ex/22 2028-ex/23 2028-ex/24 2028-ex/25',
     intsci: '2028-ex/1 2028-ex/2 2028-ex/3 2028-ex/4 2028-ex/5 2028-ex/6 2028-ex/7 2028-ex/8 2028-ex/9 2028-ex/10 2028-ex/11 2028-ex/12 2028-ex/13 2028-ex/14 2028-ex/15 2028-ex/16 2028-ex/17 2028-ex/18 2028-ex/19 2028-ex/20 2028-ex/21 2028-ex/22 2028-ex/23 2028-ex/24 2028-ex/25',
   };
-  function imgFixed(key, n, sub) { var l = IMG_FIX[sub || SUB]; return !!l && (' ' + l + ' ').indexOf(' ' + key + '/' + n + ' ') >= 0; }
-  /* 확률과 통계·기하의 공통 1~22번은 미적분(math)과 같은 문항이라 그림도 math 것을 쓴다(R2 에는 23~30번만 따로 있다, 2027학년도 수능만 30장 다 있다) */
-  function imgSub(n) { return (SUB === 'mathprob' || SUB === 'mathgeo') && n <= 22 ? 'math' : SUB; }
+  function imgFixed(key, n) { var l = IMG_FIX[SUB]; return !!l && (' ' + l + ' ').indexOf(' ' + key + '/' + n + ' ') >= 0; }
+  /* 수학 23~30번(확률과 통계)의 R2 그림은 2022~2027학년도 시험에서 mathprob 폴더에 있다(선택과목이 있던 때 미적분과 따로 올린 것). 2028학년도부터는 한 벌이라 math 폴더 */
+  function r2Sub(key, n) { return SUB === 'math' && n >= 23 && +key.slice(0, 4) <= 2027 ? 'mathprob' : SUB; }
   function mk(e, n) {
     var s = e[SUB];
     return {
       id: e.key + '/' + n, ex: e.key, title: etitle(e), n: n, ans: s.a[n - 1], pts: s.p[n - 1], tag: s.t && !oos(s, n) ? s.t[n - 1] : null,
       tp: s.u && topicName[s.u[n - 1]] ? s.u[n - 1] : null, oos: oos(s, n), csat: isCsat(e), prev: doneOf(e.key + '/' + n), pp: pickedOf(e.key + '/' + n),
       num: !!(s.n && s.n.indexOf(n) >= 0),
-      img: imgFixed(e.key, n, imgSub(n)) ? new URL(cfg.base + 'fix/' + e.key + '/' + imgSub(n) + '/q' + pad(n) + '.webp', location.href).href
-        : (cfg.imgBase || cfg.base) + e.key + '/' + imgSub(n) + '/q' + pad(n) + '.webp'
+      img: imgFixed(e.key, n) ? new URL(cfg.base + 'fix/' + e.key + '/' + SUB + '/q' + pad(n) + '.webp', location.href).href
+        : (cfg.imgBase || cfg.base) + e.key + '/' + r2Sub(e.key, n) + '/q' + pad(n) + '.webp'
     };
   }
 
@@ -402,11 +400,7 @@
   /* 맨 위 이동 줄: 풀어보기 화면은 왼쪽 목차를 접으므로(pr-wide-page) 과목 목차·통합 허브로 돌아가는 길과 다른 과목 풀어보기로 가는 길을 여기 둔다.
    * 목차·허브 주소는 접힌 목차(aside)에서 읽고, 과목 목록은 풀어보기 화면이 있는 과목 전부(폴더는 public/learn 기준) */
   var NAV_SUBS = [
-    ['korean', '국어', 'aboutSuneungKorean/practice.html'], ['math', '수학', 'aboutSuneungMath/practice.html'], ['mathprob', '확률과 통계', 'aboutSuneungMath/practice-prob.html'], ['mathgeo', '기하', 'aboutSuneungMath/practice-geo.html'], ['english', '영어', 'aboutSuneungEnglish/practice.html'], ['hist', '한국사', 'aboutSuneungHistory/practice.html'],
-    ['phys1', '물리학Ⅰ', 'aboutSuneungPhysics1/practice.html'], ['chem1', '화학Ⅰ', 'aboutSuneungChem1/practice.html'], ['bio1', '생명과학Ⅰ', 'aboutSuneungBio1/practice.html'], ['earth1', '지구과학Ⅰ', 'aboutSuneungEarth1/practice.html'],
-    ['phys2', '물리학Ⅱ', 'aboutSuneungScience2/practice-phys2.html'], ['chem2', '화학Ⅱ', 'aboutSuneungScience2/practice-chem2.html'], ['bio2', '생명과학Ⅱ', 'aboutSuneungScience2/practice-bio2.html'], ['earth2', '지구과학Ⅱ', 'aboutSuneungScience2/practice-earth2.html'],
-    ['lifeeth', '생활과 윤리', 'aboutSuneungSocial/practice-lifeeth.html'], ['ethth', '윤리와 사상', 'aboutSuneungSocial/practice-ethth.html'], ['kgeo', '한국지리', 'aboutSuneungSocial/practice-kgeo.html'], ['wgeo', '세계지리', 'aboutSuneungSocial/practice-wgeo.html'], ['eahist', '동아시아사', 'aboutSuneungSocial/practice-eahist.html'], ['whist', '세계사', 'aboutSuneungSocial/practice-whist.html'], ['econ', '경제', 'aboutSuneungSocial/practice-econ.html'], ['pol', '정치와 법', 'aboutSuneungSocial/practice-pol.html'], ['soc', '사회·문화', 'aboutSuneungSocial/practice-soc.html'],
-    ['intsoc', '통합사회', 'aboutSuneungIntegrated/practice-soc.html'], ['intsci', '통합과학', 'aboutSuneungIntegrated/practice-sci.html']
+    ['korean', '국어', 'aboutSuneungKorean/practice.html'], ['math', '수학', 'aboutSuneungMath/practice.html'], ['english', '영어', 'aboutSuneungEnglish/practice.html'], ['hist', '한국사', 'aboutSuneungHistory/practice.html'], ['intsoc', '통합사회', 'aboutSuneungIntegrated/practice-soc.html'], ['intsci', '통합과학', 'aboutSuneungIntegrated/practice-sci.html']
   ];
   function navRow() {
     var aside = document.querySelector('.layout > aside'), q = function (sel) { return aside && aside.querySelector(sel); };
@@ -1043,16 +1037,7 @@
   /* 수학·과탐 해설모드: explain/<회차>-<과목>-ev.json = {번호: {w, h, ev: [{b: [[x,y,w,h]…], tc?: 선지, tb?: [[…]] 보기 줄, n: 설명}]}}
      문항 그림 위에 근거 형광펜, 마우스를 올리면 그 근거가 판정하는 보기 줄(점선 파랑)이나 선지로 화살표. 해설 칸에는 근거 목록 */
   function getJson(url) { return fetch(url).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
-  /* 확률과 통계·기하의 공통 1~22번은 미적분(math)과 같은 문항(그림도 같은 것)이라, 저장된 해설·근거도 math 것을 함께 쓴다. 선택 23~30번은 자기 과목 것만 */
-  function withCommon(get) {
-    if (SUB !== 'mathprob' && SUB !== 'mathgeo') return get(SUB);
-    return Promise.all([get(SUB), get('math')]).then(function (r) {
-      var own = r[0], com = r[1], out = {}, n = 0, k;
-      if (com) for (k in com) if (+k <= 22) { out[k] = com[k]; n++; }
-      if (own) for (k in own) { out[k] = own[k]; n++; }
-      return n ? out : null;
-    });
-  }
+  function withCommon(get) { return get(SUB); }
   var evCache = {};
   function loadEv(key) {
     var ck = key + '-' + SUB;
@@ -3857,7 +3842,7 @@
 
   function setLabel() {
     var p = S.set.split(':');
-    if (p[0] === 'exam') return etitle(examOf(p[1])) + (SUB === 'korean' ? ' (' + (S.sel === 'a' ? '화작' : '언매') + ')' : '');
+    if (p[0] === 'exam') return etitle(examOf(p[1])) + (SUB === 'korean' && S.meta && S.meta.answers && S.meta.answers[S.sel] ? ' (' + (S.sel === 'a' ? '화작' : '언매') + ')' : '');
     if (p[0] === 'part') return partName[p[1]] + ' 모아 풀기';
     if (p[0] === 'topic') return topicName[p[1]] + ' 모아 풀기';
     if (p[0] === 'due') return '오늘 다시 풀 오답';
@@ -3917,9 +3902,9 @@
      2022학년도부터 국어·수학은 원점수 컷이 공개되지 않아, 시험 직후 입시업체가 낸 선택과목별 가채점 예상컷(est, 위 몇 등급만)을 쓴다 */
   var ABS_CUT = { english: [90, 80, 70, 60, 50, 40, 30, 20], hist: [40, 35, 30, 25, 20, 15, 10, 5] };
   var CUTS = null, EST = null, PENDING = null, HOT = null;   // HOT: 문항 그림 ①~⑤ 자리(hot/<과목>.json)
-  var EST_KEY = { hwajak: '화작', eonmae: '언매', calc: '미적분', prob: '확률과 통계', geo: '기하' };
-  var IS_MATH = /^math/.test(SUB);   // 수학(미적분)·확률과 통계·기하
-  function estKey() { return SUB === 'math' ? 'calc' : SUB === 'mathprob' ? 'prob' : SUB === 'mathgeo' ? 'geo' : S.sel === 'a' ? 'hwajak' : 'eonmae'; }
+  var EST_KEY = { hwajak: '화작', eonmae: '언매', prob: '확률과 통계' };
+  var IS_MATH = SUB === 'math';
+  function estKey() { return SUB === 'math' ? 'prob' : S.sel === 'a' ? 'hwajak' : 'eonmae'; }
   function estCut() {
     var e = EST && (SUB === 'korean' || IS_MATH) && S.set.indexOf('exam:') === 0 && EST[S.set.slice(5)];
     return (e && e[estKey()]) || null;

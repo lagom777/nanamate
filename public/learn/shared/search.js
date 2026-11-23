@@ -9,17 +9,11 @@
 
   // === 과목 색인 (index.html 에서 추출, 정렬 유지) ===
   var SUBJECTS = [
-    {"n": "수능 국어", "e": "CSAT Korean", "d": "독서·문학·화법과 작문·언어와 매체 파트 정리, 기출 채점", "u": "aboutSuneungKorean/index.html", "c": "수능", "a": "#b45309"},
-    {"n": "수능 수학", "e": "CSAT Math", "d": "수학Ⅰ·수학Ⅱ·미적분 9파트, 기출 30문항 채점", "u": "aboutSuneungMath/index.html", "c": "수능", "a": "#7c3aed"},
+    {"n": "수능 국어", "e": "CSAT Korean", "d": "독서·문학·화법·작문·언어 파트 정리, 예시문항·기출 채점", "u": "aboutSuneungKorean/index.html", "c": "수능", "a": "#b45309"},
+    {"n": "수능 수학", "e": "CSAT Math", "d": "대수·미적분Ⅰ 6파트, 예시문항·기출 30문항 채점", "u": "aboutSuneungMath/index.html", "c": "수능", "a": "#7c3aed"},
     {"n": "수능 영어", "e": "CSAT English", "d": "듣기·독해 유형 7파트, 기출 채점·듣기 대본", "u": "aboutSuneungEnglish/index.html", "c": "수능", "a": "#2563eb"},
     {"n": "수능 한국사", "e": "CSAT Korean History", "d": "시대별 9파트, 모션 노트 54장면, 영토 변화 지도, 암기법", "u": "aboutSuneungHistory/index.html", "c": "수능", "a": "#be123c"},
-    {"n": "수능 물리학Ⅰ", "e": "CSAT Physics I", "d": "3단원 7파트, 모션 노트, 기출 채점·해설", "u": "aboutSuneungPhysics1/index.html", "c": "수능", "a": "#0284c7"},
-    {"n": "수능 화학Ⅰ", "e": "CSAT Chemistry I", "d": "4단원 9파트, 기출 채점", "u": "aboutSuneungChem1/index.html", "c": "수능", "a": "#0d9488"},
-    {"n": "수능 생명과학Ⅰ", "e": "CSAT Biology I", "d": "5단원 8파트, 모션 노트, 기출 채점·해설", "u": "aboutSuneungBio1/index.html", "c": "수능", "a": "#16a34a"},
-    {"n": "수능 지구과학Ⅰ", "e": "CSAT Earth Science I", "d": "3단원 6파트, 기출 채점", "u": "aboutSuneungEarth1/index.html", "c": "수능", "a": "#ca8a04"},
-    {"n": "수능 과학탐구Ⅱ", "e": "CSAT Science II", "d": "물리학Ⅱ·화학Ⅱ·생명과학Ⅱ·지구과학Ⅱ 기출 채점", "u": "aboutSuneungScience2/index.html", "c": "수능", "a": "#475569"},
-    {"n": "수능 사회탐구", "e": "CSAT Social Studies", "d": "생활과 윤리·윤리와 사상·한국지리·세계지리·동아시아사·세계사·경제·정치와 법·사회·문화 기출 채점", "u": "aboutSuneungSocial/index.html", "c": "수능", "a": "#c2410c"},
-    {"n": "수능 통합사회·통합과학", "e": "CSAT Integrated Social Studies & Science", "d": "2028학년도 수능부터의 탐구 — 평가원 예시문항 25문항 풀어보기·채점", "u": "aboutSuneungIntegrated/index.html", "c": "수능", "a": "#0f766e"},
+    {"n": "수능 통합사회·통합과학", "e": "CSAT Integrated Social Studies & Science", "d": "수능 탐구 — 평가원 예시문항 풀어보기·해설·채점", "u": "aboutSuneungIntegrated/index.html", "c": "수능", "a": "#0f766e"},
     {"n": "물리학", "e": "Interactive Physics Lab", "d": "역학~양자역학, 상대성이론까지 3D 시뮬레이션", "u": "aboutPhysics/index.html", "c": "자연과학", "a": "#00d4ff"},
     {"n": "화학", "e": "Molecular Chemistry", "d": "원자~유기화학, 생화학 3D 분자 모델", "u": "aboutChemistry/index.html", "c": "자연과학", "a": "#00e890"},
     {"n": "생물학", "e": "Biology Lab", "d": "세포, DNA, 진화, 생태학 3D 시뮬레이션", "u": "aboutBiology/index.html", "c": "자연과학", "a": "#22c55e"},

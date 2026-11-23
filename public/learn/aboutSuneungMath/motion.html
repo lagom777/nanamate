@@ -156,7 +156,7 @@ footer{color:var(--dim);font-size:12px;font-family:var(--fm)}
   <header class="top">
     <div class="brand">
       <h1>수학 <span>모션 노트</span></h1>
-      <p><a class="back" href="index.html">← 수능 수학 노트</a> · <a class="back" href="practice.html">📝 기출 풀어보기</a> · 16개 핵심 개념을 움직이는 그림으로</p>
+      <p><a class="back" href="index.html">← 수능 수학 노트</a> · <a class="back" href="practice.html">📝 기출 풀어보기</a> · 11개 핵심 개념을 움직이는 그림으로</p>
     </div>
     <nav class="units" id="units" aria-label="단원"></nav>
   </header>
@@ -197,7 +197,7 @@ footer{color:var(--dim);font-size:12px;font-family:var(--fm)}
       <button class="btn" id="b-loop" aria-pressed="false" aria-label="이 장면 반복" title="이 장면 반복 (L)"><svg viewBox="0 0 16 16"><path d="M3 6V5a2 2 0 0 1 2-2h6V1l3 3-3 3V5H5v1zM13 10v1a2 2 0 0 1-2 2H5v2l-3-3 3-3v2h6v-1z"/></svg></button>
       <button class="btn sp" id="b-speed" aria-pressed="false" aria-label="느리게 (0.5배속)" title="느리게 (S)">½×</button>
       <button class="btn" id="b-big" aria-pressed="false" aria-label="크게 보기" title="크게 보기 (F)"><svg viewBox="0 0 16 16"><path d="M2 2h5v2H4v3H2zM9 2h5v5h-2V4H9zM2 9h2v3h3v2H2zM12 9h2v5H9v-2h3z"/></svg></button>
-      <span class="count" id="count">01 / 17</span>
+      <span class="count" id="count">01 / 12</span>
       <div class="tl" id="tl"></div>
       <div class="scrub-row">
         <span class="scrub-lab" id="scrub-lab"></span>
@@ -216,7 +216,7 @@ footer{color:var(--dim);font-size:12px;font-family:var(--fm)}
     </div>
     <div class="sum-grid" id="sum"></div>
   </section>
-  <footer>2015 개정 교육과정 수학Ⅰ·수학Ⅱ·미적분 범위 기준 · 그림 속 수치는 개념 설명용 예시값</footer>
+  <footer>대수·미적분Ⅰ 범위 기준 · 그림 속 수치는 개념 설명용 예시값</footer>
 </div>
 
 <script>
@@ -225,7 +225,7 @@ const W=960,H=540,TAU=Math.PI*2;
 const C={u1:'#F4B544',u2:'#4FD1E8',u3:'#FF7A8A',text:'#E6EDF5',muted:'#91A5BA',dim:'#5E738B',line:'#27405C',panel:'#0E1B2A',
   el:'#6EA8FF',pos:'#FF6B6B',neu:'#AAB6C4',hot:'#FF9A4D',green:'#7BE07F'};
 const SANS='"IBM Plex Sans KR",system-ui,sans-serif',MONO='"IBM Plex Mono",Menlo,monospace',SERIF='"Source Serif 4",Georgia,serif',DISP='"Black Han Sans","IBM Plex Sans KR",sans-serif';
-const UNITS=[{k:'Ⅰ',name:'수학Ⅰ',c:'#F4B544'},{k:'Ⅱ',name:'수학Ⅱ',c:'#4FD1E8'},{k:'Ⅲ',name:'미적분',c:'#FF7A8A'}];
+const UNITS=[{k:'Ⅰ',name:'대수',c:'#F4B544'},{k:'Ⅱ',name:'미적분Ⅰ',c:'#4FD1E8'}];
 const S=[];
 const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
 const lerp=(a,b,k)=>a+(b-a)*k;
@@ -280,7 +280,7 @@ function M(c,s,x,y,o={}){ // 캔버스용 수식: _아래첨자 ^위첨자
 
 /* 수학 모션 노트 장면들 — build-motion.mjs 가 물리학Ⅰ 모션 노트의 플레이어 엔진 뒤에 붙인다.
    전제: W, H, TAU, C, UNITS, S, clamp, lerp, ease, seg, rnd, T, arrow, poly, dot, box, label, M 이 이미 정의되어 있다.
-   사실·예시는 content/math-1·2·3.mjs 와 quick-math.mjs(⚡ 짧게 보기·🧠 외우기)에서 가져왔다. */
+   사실·예시는 content/math-1·2.mjs 와 quick-math.mjs(⚡ 짧게 보기·🧠 외우기)에서 가져왔다. */
 const VIO='#B69CFF',GRN='#7BE07F',PINK='#FF7A8A';
 
 /* 패널 수식: 엔진의 fm은 sin만 바로 세우므로 이 노트에서는 cos·tan·log·ln·lim도 세운다(같은 이름의 선언이 엔진 것을 덮는다). */
@@ -334,27 +334,23 @@ const nf=(v,k=1)=>(Math.abs(v-Math.round(v))<.005?String(Math.round(v)):v.toFixe
 
 /* ───────── 0. 인트로 ───────── */
 S.push({u:-1,ch:'시작',title:'수능 수학, 움직이며 정리하기',
-  sub:'세 과목, 열여섯 개 개념. 식의 문자 하나가 바뀌면 그래프의 무엇이 따라 바뀌는지 움직여서 보여 줍니다.',
-  fx:[{w:1,f:'Ⅰ 수학Ⅰ',n:'지수·로그 · 삼각함수 · 수열'},{w:1,f:'Ⅱ 수학Ⅱ',n:'함수의 극한과 연속 · 미분 · 적분'},{w:1,f:'Ⅲ 미적분',n:'수열의 극한 · 여러 가지 미분법 · 여러 가지 적분법'}],
+  sub:'두 과목, 열한 개 개념. 식의 문자 하나가 바뀌면 그래프의 무엇이 따라 바뀌는지 움직여서 보여 줍니다.',
+  fx:[{w:1,f:'Ⅰ 대수',n:'지수·로그 · 삼각함수 · 수열'},{w:1,f:'Ⅱ 미적분Ⅰ',n:'함수의 극한과 연속 · 미분 · 적분'}],
   pts:['장면마다 <em>무엇을 바꾸면 무엇이 따라오는지</em>를 보세요. 밑 a, 계수, h, n 하나가 움직이면 그래프가 이유를 보여 줍니다.','재생 중에는 약 15초마다 다음 개념으로 넘어갑니다. 아래 막대를 눌러 원하는 개념으로 바로 이동할 수 있어요.','외우는 말(얼싸안코, 끊기면 연속 ✕ · 꺾이면 미분 ✕ …)은 각 장면 설명에 함께 적었습니다.','페이지 아래 <em>한눈에 정리</em>에 과목별 핵심 식이 모여 있습니다.'],
   dur:14,still:4,
   draw(c,t){
-    label(c,'3 SUBJECTS · 16 CONCEPTS',480,52,C.dim,{size:15});
-    const cx=[190,480,770],cy=230,R=110,nn=[5,6,5];
+    label(c,'2 SUBJECTS · 11 CONCEPTS',480,52,C.dim,{size:15});
+    const cx=[300,660],cy=230,R=110,nn=[5,6];
     UNITS.forEach((u,i)=>{const k=ease(seg(t,.1+i*.25,1+i*.25)),x0=cx[i];
       c.save();c.globalAlpha=k;dot(c,x0,cy,R,'rgba(255,255,255,.025)',{stroke:u.c+'66',lw:1.5});
       c.beginPath();c.arc(x0,cy,R-2,0,TAU);c.clip();
       if(i===0){ // 사인 곡선이 흘러간다
         poly(c,[[x0-R,cy],[x0+R,cy]],C.line,1.5);const pts=[];for(let x=-R;x<=R;x+=3)pts.push([x0+x,cy-42*Math.sin(x/26-t*2)]);
         poly(c,pts,u.c,3);dot(c,x0,cy-42*Math.sin(-t*2),7,u.c,{glow:14});
-      }else if(i===1){ // 삼차 곡선 위를 미끄러지는 접선
+      }else{ // 삼차 곡선 위를 미끄러지는 접선
         const f=q=>q*q*q-1.6*q,df=q=>3*q*q-1.6,X=q=>x0+q*62,Y=v=>cy-v*42,pts=[];for(let q=-1.7;q<=1.7;q+=.03)pts.push([X(q),Y(f(q))]);
         poly(c,pts,C.muted,2.5);const q0=1.25*Math.sin(t*.9),m=df(q0);
         poly(c,[[X(q0-.7),Y(f(q0)-.7*m)],[X(q0+.7),Y(f(q0)+.7*m)]],u.c,3);dot(c,X(q0),Y(f(q0)),7,u.c,{glow:14});
-      }else{ // 변의 중점을 이어 넓이가 반씩 줄어드는 정사각형
-        for(let j=0;j<7;j++){const s=150/Math.pow(Math.SQRT2,j),a=j*Math.PI/4+t*.15,pts=[];
-          for(let v=0;v<4;v++){const b=a+Math.PI/4+v*Math.PI/2;pts.push([x0+Math.cos(b)*s/Math.SQRT2,cy+Math.sin(b)*s/Math.SQRT2]);}
-          poly(c,pts,u.c,2,{close:true,alpha:1-j*.11,fill:j%2?'rgba(255,122,138,.10)':null});}
       }
       c.restore();c.save();c.globalAlpha=k;
       T(c,u.k,x0,cy+R+40,{font:DISP,size:34,color:u.c,align:'center',w:400});
@@ -686,140 +682,6 @@ S.push({u:1,ch:'적분',title:'속도 그래프로 위치와 이동 거리',file
     F(c,'4 + 4 + 4 = 12',600,456,{size:21,color:G,alpha:seg(t,11,12)});
   }});
 
-/* ───────── Ⅲ-1 rⁿ의 극한과 등비급수 ───────── */
-S.push({u:2,ch:'수열의 극한',title:'rⁿ의 극한과 등비급수',file:'07-seq-limit.html',
-  sub:'공비 r의 크기가 1보다 작으면 rⁿ은 0으로 줄고, 등비급수도 첫째항/(1 − 공비)로 모입니다. 변의 중점을 이어 만든 정사각형의 넓이 4 + 2 + 1 + …은 8로 다가갑니다.',
-  fx:[{f:'lim r^n = 0 (|r| < 1),  1 (r = 1)',n:'r > 1이면 ∞, r ≤ −1이면 진동'},{f:'a + ar + ar^2 + … = a / (1 − r)',n:'−1 < r < 1일 때만 · 그 밖은 발산'},{w:1,f:'수열은 1까지, 급수는 1 앞에서',n:'rⁿ: −1 &lt; r ≤ 1 · 등비급수: −1 &lt; r &lt; 1'}],
-  pts:['−1 &lt; r &lt; 0이어도 <em>수렴</em>합니다. 부호는 바뀌지만 진폭이 0으로 줄어듭니다. 진동 발산은 r ≤ −1일 때.','r = 1이면 수열 1, 1, 1, …은 1로 수렴하지만 급수 a + a + a + …는 <em>발산</em>합니다.','도형 반복은 길이 비가 r이면 넓이 공비는 <em>r<sup>2</sup></em>. 중점 연결은 변이 1/√2배라 넓이 공비 1/2.','일반항이 0으로 가도 급수는 발산할 수 있습니다(1/n). 거꾸로, 급수가 수렴하면 일반항은 반드시 0으로 수렴합니다.'],
-  dur:16,still:8,
-  draw(c,t){
-    const RS=[1.2,1,.6,-.6,-1],st=Math.min(4,Math.floor(t/3)),r=st?lerp(RS[st-1],RS[st],ease(seg(t-3*st,0,.7))):RS[0],K=C.u3,G=C.u1;
-    const P=PL(70,70,380,300,-.5,10.5,-1.6,2.6),X=P.X,Y=P.Y;
-    AX(c,P,'n','');[1,-1].forEach(v=>poly(c,[[P.x,Y(v)],[P.x+P.w,Y(v)]],C.dim,1,{dash:[4,5]}));
-    c.save();c.beginPath();c.rect(P.x,P.y-8,P.w,P.h+8);c.clip();for(let n=0;n<=10;n++)dot(c,X(n),Y(Math.pow(r,n)),6,K,{glow:8});c.restore();
-    const one=Math.abs(r-1)<=1e-3,conv=Math.abs(r)<1-1e-3,col=one||conv?GRN:PINK;
-    F(c,'r = '+r.toFixed(2),70,36,{size:24,color:K});
-    T(c,r>1+1e-3?'∞로 발산':one?'1로 수렴':conv?(r<0?'0으로 수렴 (부호가 바뀌며)':'0으로 수렴'):'진동 (발산)',200,36,{size:19,w:700,color:col});
-    // r의 자리: 수열은 −1 < r ≤ 1, 급수는 −1 < r < 1
-    const RX=v=>70+(v+1.5)/3*380,bg='#0B1724';
-    poly(c,[[RX(-1.5),462],[RX(1.5),462]],C.dim,1.5);[-1,0,1].forEach(v=>poly(c,[[RX(v),456],[RX(v),468]],C.muted,2));
-    label(c,'−1',RX(-1),444,C.muted,{size:15});label(c,'1',RX(1),444,C.muted,{size:15});
-    poly(c,[[RX(-1),486],[RX(1),486]],GRN,6,{alpha:.55});dot(c,RX(-1),486,6,bg,{stroke:GRN,lw:2});dot(c,RX(1),486,6,GRN);
-    poly(c,[[RX(-1),510],[RX(1),510]],GRN,6,{alpha:.55});dot(c,RX(-1),510,6,bg,{stroke:GRN,lw:2});dot(c,RX(1),510,6,bg,{stroke:GRN,lw:2});
-    T(c,'수열',458,486,{size:16,color:C.muted});T(c,'급수',458,510,{size:16,color:C.muted});
-    dot(c,RX(clamp(r,-1.5,1.5)),462,8,K,{glow:12});
-    // 오른쪽: 4 + 2 + 1 + … → 8
-    const m=1+Math.floor(seg(t,.5,7)*7.999),cx=700,cy=225;
-    T(c,'변의 중점을 이으면 넓이가 반 → 공비 1/2',cx,46,{size:17,align:'center',color:C.muted});
-    for(let j=0;j<m;j++){const s=220/Math.pow(Math.SQRT2,j),pts=[];for(let q=0;q<4;q++){const b=j*Math.PI/4+Math.PI/4+q*Math.PI/2;pts.push([cx+Math.cos(b)*s/Math.SQRT2,cy+Math.sin(b)*s/Math.SQRT2]);}
-      poly(c,pts,j===m-1?C.text:K,j===m-1?3:2,{close:true,fill:'rgba(255,122,138,'+(j%2?.10:.18)+')'});}
-    const BX=v=>520+v*50,BY=430;let Sm=0;box(c,BX(0),BY-10,400,20,4,'rgba(255,255,255,.05)',C.line,1);
-    for(let j=0;j<m;j++){const ar=4/Math.pow(2,j);box(c,BX(Sm)+1,BY-9,Math.max(1,ar*50-2),18,3,j%2?'rgba(255,122,138,.55)':K,null);Sm+=ar;}
-    poly(c,[[BX(8),BY-22],[BX(8),BY+22]],C.text,2,{dash:[3,3]});label(c,'8',BX(8),BY-34,C.text,{size:16});
-    F(c,'S_'+m+' = '+nf(Sm,3),520,394,{size:22,color:K});
-    F(c,'S = 4 + 2 + 1 + 1/2 + …',520,472,{size:21});F(c,'= 4 / (1 − 1/2) = 8',520,506,{size:21,color:G});
-  }});
-
-/* ───────── Ⅲ-2 합성함수의 미분 ───────── */
-S.push({u:2,ch:'여러 가지 미분법',title:'합성함수 미분 — 겉 미분 × 속 미분',file:'08-diff-methods.html',
-  sub:'x를 조금 움직이면 속 u = x²가 2x배로 늘고, 그 변화가 겉 y = sin u에서 다시 cos u배가 됩니다. 두 배율이 곱해져 dy/dx = cos(x²) · 2x입니다.',
-  fx:[{f:'{f(g(x))}′ = f′(g(x)) · g′(x)',n:'겉 미분(속은 그대로) × 속 미분'},{f:'dy/dx = (dy/du) · (du/dx)',n:'변화율이 사슬처럼 곱해진다'},{f:'(f^{−1})′(b) = 1 / f′(a)',n:'b = f(a) · 역함수의 기울기는 역수'}],
-  pts:['y = sin(x<sup>2</sup>) → 겉 sin을 미분해 cos(x<sup>2</sup>), 속 x<sup>2</sup>을 미분해 2x → <em>y′ = 2x cos(x<sup>2</sup>)</em>.','속을 미분하지 않으면 (e<sup>2x</sup>)′을 e<sup>2x</sup>로 쓰게 됩니다. 맞는 값은 <em>2e<sup>2x</sup></em>.','cos(x<sup>2</sup>)가 음수가 되면 늘어난 폭이 <em>뒤집혀</em> 기울기도 음수가 됩니다.','역함수: f(2) = 5, f′(2) = 4면 (f<sup>−1</sup>)′(5) = <em>1/4</em> (1/f′(5) ✕).'],
-  dur:16,still:.13,
-  draw(c,t){
-    const x=.95+.55*Math.sin(TAU*t/9),dx=.16,u1=x*x,u2=(x+dx)**2,y1=Math.sin(u1),y2=Math.sin(u2),K=C.u3,G=C.u1,CY=C.u2;
-    const L=v=>120+v*150,Ly=v=>270+v*150,Y0=[118,268,418];
-    poly(c,[[L(0),Y0[0]],[L(2),Y0[0]]],C.dim,2);poly(c,[[L(0),Y0[1]],[L(4),Y0[1]]],C.dim,2);poly(c,[[Ly(-1),Y0[2]],[Ly(1),Y0[2]]],C.dim,2);
-    [0,1,2].forEach(v=>poly(c,[[L(v),Y0[0]-6],[L(v),Y0[0]+6]],C.dim,2));[0,1,2,3,4].forEach(v=>poly(c,[[L(v),Y0[1]-6],[L(v),Y0[1]+6]],C.dim,2));
-    [-1,0,1].forEach(v=>poly(c,[[Ly(v),Y0[2]-(v?6:10)],[Ly(v),Y0[2]+(v?6:10)]],C.dim,2));
-    poly(c,[[L(x),Y0[0]+8],[L(x+dx),Y0[0]+8],[L(u2),Y0[1]-8],[L(u1),Y0[1]-8]],null,0,{fill:'rgba(244,181,68,.22)',close:true});
-    poly(c,[[L(u1),Y0[1]+8],[L(u2),Y0[1]+8],[Ly(y2),Y0[2]-8],[Ly(y1),Y0[2]-8]],null,0,{fill:'rgba(255,122,138,.22)',close:true});
-    arrow(c,L(x),Y0[0],L(x+dx),Y0[0],CY,6,10);arrow(c,L(u1),Y0[1],L(u2),Y0[1],G,6,10);arrow(c,Ly(y1),Y0[2],Ly(y2),Y0[2],K,6,10);
-    F(c,'x',100,Y0[0],{size:22,color:CY,align:'right'});F(c,'u = x^2',100,Y0[1],{size:20,color:G,align:'right'});F(c,'y = sin u',100,Y0[2],{size:20,color:K,align:'right'});
-    T(c,'속을 미분',760,176,{size:16,color:C.muted});F(c,'× 2x = '+(2*x).toFixed(2),760,204,{size:22,color:G});
-    T(c,'겉을 미분',760,326,{size:16,color:C.muted});F(c,'× cos u = '+Math.cos(u1).toFixed(2),760,354,{size:22,color:K});
-    F(c,'y = sin(x^2)',120,46,{size:26});F(c,'x = '+x.toFixed(2),330,46,{size:24,color:CY});
-    F(c,'dy/dx = cos(x^2) · 2x = '+(2*x*Math.cos(u1)).toFixed(2),480,492,{size:24,align:'center'});
-  }});
-
-/* ───────── Ⅲ-3 오목·볼록과 변곡점 ───────── */
-S.push({u:2,ch:'여러 가지 미분법',title:'오목·볼록과 변곡점 — f″의 부호',file:'08-diff-methods.html',
-  sub:'접선의 기울기 f′이 줄어드는 동안 곡선은 위로 볼록(f″ < 0), 늘어나는 동안 아래로 볼록(f″ > 0)입니다. f″의 부호가 바뀌는 점이 변곡점입니다.',
-  fx:[{f:'f″(x) > 0 → 아래로 볼록',n:'접선이 곡선 아래 · 물이 고이는 모양'},{f:'f″(x) < 0 → 위로 볼록',n:'접선이 곡선 위'},{w:1,f:'변곡점: f″의 부호가 바뀌는 점',n:'f″(c) = 0만으로는 부족 (x⁴은 변곡점이 아니다)'}],
-  pts:['f′의 그래프가 오르는 구간에서 f는 아래로 볼록, 내리는 구간에서 위로 볼록입니다. <em>f′의 극점 = f의 변곡점 후보</em>.','f″(c) = 0만으로는 변곡점이 아닙니다. x<sup>4</sup>은 f″(0) = 0이지만 부호가 안 바뀌어 변곡점이 아닙니다.','y = e<sup>x</sup>는 아래로 볼록, y = ln x는 위로 볼록(f″ = −1/x<sup>2</sup> &lt; 0)입니다.','x e<sup>−x</sup>: f″ = e<sup>−x</sup>(x − 2) → x = 2에서 부호가 바뀌어 변곡점 <em>(2, 2/e<sup>2</sup>)</em>.'],
-  dur:16,still:5,
-  draw(c,t){
-    const K=C.u3,P1=PL(70,60,600,250,-.3,TAU+.3,-1.4,1.4),P2=PL(70,350,600,150,-.3,TAU+.3,-1.3,1.3),pi=Math.PI;
-    const fill=(a,b,col)=>{const pts=[[P2.X(a),P2.Y(0)]];for(let i=0;i<=50;i++){const x=a+(b-a)*i/50;pts.push([P2.X(x),P2.Y(-Math.sin(x))]);}pts.push([P2.X(b),P2.Y(0)]);
-      poly(c,pts,null,0,{fill:col,close:true});};
-    fill(-.3,0,'rgba(123,224,127,.16)');fill(0,pi,'rgba(255,122,138,.16)');fill(pi,TAU,'rgba(123,224,127,.16)');fill(TAU,TAU+.3,'rgba(255,122,138,.16)');
-    AX(c,P1,'','');AX(c,P2,'','');
-    [[-.3,0,GRN],[0,pi,PINK],[pi,TAU,GRN],[TAU,TAU+.3,PINK]].forEach(([a,b,col])=>FN(c,P1,Math.sin,a,b,col,3.5));
-    FN(c,P2,x=>-Math.sin(x),-.3,TAU+.3,K,3);
-    [0,pi,TAU].forEach(v=>{poly(c,[[P1.X(v),P1.Y(0)],[P1.X(v),P2.Y(0)]],C.dim,1.2,{dash:[4,5]});dot(c,P1.X(v),P1.Y(0),6,C.text);});
-    T(c,'위로 볼록',P1.X(pi/2),P1.Y(1)-22,{size:18,align:'center',w:700,color:PINK});T(c,'아래로 볼록',P1.X(1.5*pi),P1.Y(-1)+26,{size:18,align:'center',w:700,color:GRN});
-    T(c,'변곡점',P1.X(pi)+12,P1.Y(0)-20,{size:17,w:700});
-    T(c,'−',P2.X(pi/2),P2.Y(-.55),{size:28,align:'center',w:700,color:PINK});T(c,'+',P2.X(1.5*pi),P2.Y(.55),{size:28,align:'center',w:700,color:GRN});
-    label(c,'π',P2.X(pi)+12,P2.Y(0)+18,C.muted,{size:16});label(c,'2π',P2.X(TAU)+16,P2.Y(0)+18,C.muted,{size:16});
-    // 움직이는 접선: 곡선 위(위로 볼록)인지 아래(아래로 볼록)인지
-    const xs=.2+(TAU-.4)*ease(seg(t%8,.3,7.3)),d2=-Math.sin(xs),col=d2<-.03?PINK:d2>.03?GRN:C.text;
-    FN(c,P1,x=>Math.sin(xs)+Math.cos(xs)*(x-xs),xs-.9,xs+.9,col,3);dot(c,P1.X(xs),P1.Y(Math.sin(xs)),7,col,{glow:14});
-    poly(c,[[P1.X(xs),P1.Y(Math.sin(xs))],[P2.X(xs),P2.Y(d2)]],C.muted,1.2,{dash:[2,4]});dot(c,P2.X(xs),P2.Y(d2),6,col,{glow:12});
-    // 오른쪽
-    F(c,'f(x) = sin x',700,80,{size:22});
-    T(c,d2<-.03?'위로 볼록 · f″ < 0':d2>.03?'아래로 볼록 · f″ > 0':'변곡점 · f″ = 0',700,150,{size:20,w:700,color:col});
-    T(c,'기울기 f′ 감소 → 위로 볼록',700,200,{size:16,color:C.muted});T(c,'기울기 f′ 증가 → 아래로 볼록',700,230,{size:16,color:C.muted});
-    F(c,'f″(x) = −sin x',700,380,{size:20,color:K});
-  }});
-
-/* ───────── Ⅲ-4 구분구적법 ───────── */
-S.push({u:2,ch:'여러 가지 적분법',title:'구분구적법 — 급수를 정적분으로',file:'09-int-methods.html',
-  sub:'[0, 1]을 n등분한 직사각형의 높이는 f(k/n), 너비는 1/n입니다. n → ∞이면 합 Σ f(k/n) · 1/n이 넓이 ∫₀¹ f(x) dx로 다가갑니다.',
-  fx:[{f:'lim_{n→∞} Σ_{k=1}^n f(k/n) · 1/n = ∫_0^1 f(x) dx',n:'k/n → x, 1/n → dx, lim Σ → ∫₀¹'},{f:'lim Σ k^2/n^3 = ∫_0^1 x^2 dx = 1/3',n:'(k/n)² · (1/n)로 쪼개 읽기'},{f:'Σ f(a + k(b − a)/n) · (b − a)/n',n:'구간이 [a, b]이면 너비는 (b − a)/n'}],
-  pts:['번역 순서: <em>1/n을 먼저 떼어 낸다</em> → 남은 것이 f(k/n)인지 확인 → k/n을 x로, 1/n을 dx로.','1/n을 빼먹으면 합이 n배 커진 채 극한을 구하게 됩니다.','왼쪽 끝(k = 0 ~ n − 1)으로 세워도 연속함수면 같은 정적분입니다.','√(n + k)/n<sup>3/2</sup> = (1/n)√(1 + k/n) → ∫<sub>0</sub><sup>1</sup> √(1 + x) dx.'],
-  dur:16,still:13,
-  draw(c,t){
-    const ns=[2,4,8,16,32,64],n=ns[clamp(Math.floor((t-.4)/1.8),0,5)],f=x=>x*x,K=C.u3,G=C.u1,CY=C.u2;
-    const P=PL(70,60,470,420,-.08,1.15,-.06,1.12),X=P.X,Y=P.Y,hk=Math.max(1,Math.round(n*.7)),h0=f(hk/n);
-    let sum=0;for(let k=1;k<=n;k++){const h=f(k/n),on=k===hk;sum+=h/n; // 오른쪽 끝 높이 f(k/n), 너비 1/n
-      box(c,X((k-1)/n),Y(h),X(k/n)-X((k-1)/n),Y(0)-Y(h),0,on?'rgba(244,181,68,.5)':'rgba(255,122,138,.26)',on?G:K,on?2:1);}
-    AX(c,P,'x','');FN(c,P,f,0,1.08,C.text,3.5);
-    poly(c,[[X(1),Y(0)],[X(1),Y(1)]],C.dim,1.2,{dash:[4,4]});label(c,'1',X(1),Y(0)+18,C.muted,{size:15});
-    const xa=X((hk-1)/n),xb=X(hk/n);
-    poly(c,[[xa,Y(h0)-14],[xa,Y(h0)-8],[xb,Y(h0)-8],[xb,Y(h0)-14]],G,2);FB(c,'1/n',(xa+xb)/2,Y(h0)-30,{size:19,color:G,align:'center'});
-    FB(c,'(k/n)^2',xa-12,Y(h0),{size:18,align:'right'});F(c,'k/n',xb,Y(0)+20,{size:18,color:CY,align:'center'});
-    // 오른쪽: 합 → 번역 → 정적분
-    F(c,'n = '+n,600,80,{size:28,color:K});
-    F(c,'Σ_{k=1}^n (k/n)^2 · 1/n = '+sum.toFixed(3),600,136,{size:21});
-    F(c,'k/n  →  x',600,234,{size:24,color:CY});F(c,'1/n  →  dx',600,280,{size:24,color:G});F(c,'lim Σ  →  ∫_0^1',600,326,{size:24,color:K});
-    F(c,'∫_0^1 x^2 dx = 1/3 ≈ 0.333',600,420,{size:22,color:GRN,alpha:seg(t,10,11)});
-  }});
-
-/* ───────── Ⅲ-5 단면으로 구하는 부피 ───────── */
-S.push({u:2,ch:'여러 가지 적분법',title:'단면으로 부피 — 넓이 S(x)를 쌓기',file:'09-int-methods.html',
-  sub:'x축에 수직인 단면의 넓이 S(x)를 알면 얇은 조각 S(x) · Δx를 쌓아 부피를 구합니다. 넓이를 적분하면 부피, V = ∫ S(x) dx입니다.',
-  fx:[{f:'V = ∫_a^b S(x) dx',n:'S(x): x에서 x축에 수직으로 자른 단면의 넓이'},{f:'S(x) = (√x)^2 = x',n:'그림: 밑면 0 ≤ y ≤ √x, 한 변 √x인 정사각형 단면'},{f:'V = ∫_0^1 x dx = 1/2',n:'π는 원·반원 단면에만 붙인다'}],
-  pts:['먼저 적을 두 가지: 단면이 <em>어느 축에 수직</em>인지, 단면이 <em>어떤 모양</em>(정사각형·정삼각형·반원)인지.','한 변 s(x)인 정삼각형 단면이면 S(x) = (√3/4)s(x)<sup>2</sup>, 지름 s(x)인 반원이면 πs(x)<sup>2</sup>/8.','곡선을 축 둘레로 돌린 회전체의 부피는 2015 개정 미적분 범위 밖입니다. 문제가 알려 주는 단면에서 넓이를 구해 적분합니다.'],
-  dur:16,still:12.5,
-  draw(c,t){
-    const K=C.u3,G=C.u1,pr=(x,y,z)=>[110+330*x+110*y,440-230*z-80*y],xc=seg(t,.5,9); // 비스듬히 본 입체: x 오른쪽, y 안쪽, z 위
-    const slab=(x,fill,stroke,lw)=>{const s=Math.sqrt(x);poly(c,[pr(x,0,0),pr(x,s,0),pr(x,s,s),pr(x,0,s)],stroke,lw,{close:true,fill});};
-    const edge=(g,col,w,o)=>{const pts=[];for(let i=0;i<=60;i++){const x=i/60;pts.push(g(x,Math.sqrt(x)));}poly(c,pts,col,w,o);};
-    arrow(c,...pr(-.05,0,0),...pr(1.18,0,0),C.dim,1.6,9);F(c,'x',pr(1.18,0,0)[0]+4,pr(1.18,0,0)[1]+18,{size:18,color:C.muted});
-    edge((x,s)=>pr(x,s,0),C.muted,2.5);F(c,'y = √x',pr(1,1,0)[0]+12,pr(1,1,0)[1],{size:19,color:C.muted});
-    edge((x,s)=>pr(x,0,s),C.dim,1.5,{dash:[4,4]});edge((x,s)=>pr(x,s,s),C.dim,1.5,{dash:[4,4]});slab(1,null,C.dim,1.5);
-    for(let k=1;k<=12;k++){const x=k/12;if(x>xc+1e-9)break;slab(x,'rgba(255,122,138,.16)',K,1.2);}
-    if(xc>.004)slab(xc,'rgba(244,181,68,.5)',G,2.5);
-    F(c,'단면의 넓이 S(x) = (√x)^2 = x',60,56,{size:21,color:G});
-    // 오른쪽: S(x) 그래프 아래 넓이 = 지금까지 쌓인 부피
-    const Q=PL(660,130,250,250,0,1.1,0,1.1);
-    poly(c,[[Q.X(0),Q.Y(0)],[Q.X(xc),Q.Y(xc)],[Q.X(xc),Q.Y(0)]],null,0,{fill:'rgba(244,181,68,.32)',close:true});
-    AX(c,Q,'x','S');FN(c,Q,x=>x,0,1.05,G,3.5);poly(c,[[Q.X(1),Q.Y(0)],[Q.X(1),Q.Y(1)]],C.dim,1.2,{dash:[4,4]});label(c,'1',Q.X(1),Q.Y(0)+18,C.muted,{size:15});
-    T(c,'S(x) 아래 넓이 = 쌓인 부피',660,96,{size:17,color:C.muted});
-    F(c,'V(x) = x^2/2 = '+(xc*xc/2).toFixed(3),660,442,{size:22,color:G});
-    F(c,'V = ∫_0^1 x dx = 1/2',660,488,{size:24,color:GRN,alpha:seg(t,9.5,10.5)});
-  }});
-
 /* ───────── 플레이어 ───────── */
 S.forEach((s,i)=>{s.oi=i;});
 const Q=new URLSearchParams(location.search); // ?embed&only=5,6,7 — 장 노트 안에 그 장 장면만
@@ -832,7 +694,7 @@ let idx=0,t=0,playing=!reduce,last=null,scrubbing=false;
 function resize(){const d=Math.min(2,devicePixelRatio||1);cv.width=Math.max(1,Math.round(cv.clientWidth*d));cv.height=Math.max(1,Math.round(cv.clientHeight*d));}
 new ResizeObserver(resize).observe(cv);resize();
 const uc=s=>s.u<0?'#B69CFF':UNITS[s.u].c;
-const cnt=[0,0,0];S.forEach(s=>{if(s.u>=0)s.no=++cnt[s.u];});
+const cnt=[0,0];S.forEach(s=>{if(s.u>=0)s.no=++cnt[s.u];});
 const fxHTML=x=>x.w?`<span class="f word">${x.f}</span>`:`<span class="f">${fm(x.f)}</span>`;
 
 const tl=$('tl'),scrub=$('scrub');

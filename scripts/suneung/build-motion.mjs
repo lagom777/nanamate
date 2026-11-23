@@ -21,8 +21,8 @@ export const MOTION = {
   },
   math: {
     folder: "aboutSuneungMath", name: "수학", scenes: "math-scenes.js", intro: "#B69CFF",
-    footer: "2015 개정 교육과정 수학Ⅰ·수학Ⅱ·미적분 범위 기준 · 그림 속 수치는 개념 설명용 예시값",
-    units: [u("Ⅰ", "수학Ⅰ", "#F4B544"), u("Ⅱ", "수학Ⅱ", "#4FD1E8"), u("Ⅲ", "미적분", "#FF7A8A")],
+    footer: "대수·미적분Ⅰ 범위 기준 · 그림 속 수치는 개념 설명용 예시값",
+    units: [u("Ⅰ", "대수", "#F4B544"), u("Ⅱ", "미적분Ⅰ", "#4FD1E8")],
   },
   english: {
     folder: "aboutSuneungEnglish", name: "영어", scenes: "english-scenes.js", intro: "#4FD1E8",

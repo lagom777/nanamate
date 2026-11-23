@@ -32,14 +32,14 @@ test("등급컷: 시험·과목이 기출 목록과 맞고 1~8등급 최저점�
     const have = cuts[e.key] || {};
     const miss = SCI.filter((s) => !have[s]);
     if (miss.length) errs.push(`${e.key}: 과탐 등급컷 없음 ${miss.join(",")}`);
-    if (e.year <= 2021 && !(have.korean && have.math)) errs.push(`${e.key}: 국어·수학(가형) 등급컷 없음`);
+    if (e.year <= 2021 && !have.korean) errs.push(`${e.key}: 국어 등급컷 없음`);   // 수학 2021학년도까지(가형)는 지금 범위가 아니라 뺐다
   }
   assert.deepEqual(errs, []);
 });
 
 // 2022학년도부터 국어·수학은 원점수 컷이 없어 시험 직후 입시업체 가채점 예상컷(est)을 선택과목별로 둔다(위 몇 등급만, 출처 기사 링크)
-const EST = ["hwajak", "eonmae", "calc"];
-const EST_OPT = ["prob", "geo"];   // 확률과 통계·기하: 출처에 값이 있는 시험만
+const EST = ["hwajak", "eonmae"];
+const EST_OPT = ["prob", "calc", "geo"];   // 수학: 풀어보기는 확률과 통계(prob)를 쓴다. 미적분·기하 값은 자료로만 남김. 출처에 값이 있는 시험만
 test("가채점 예상컷: 2022학년도부터 국어·수학 시험마다 화작·언매·미적분이 출처와 함께 1등급부터 내려간다", () => {
   const exams = Object.fromEntries(read("exams.json").exams.map((e) => [e.key, e]));
   const { est, pending = {} } = read("cuts.json");

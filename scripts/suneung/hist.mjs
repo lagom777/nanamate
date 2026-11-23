@@ -1,5 +1,5 @@
 // 수능 한국사 — 시대별 9파트 + 암기법 + 전략 (content/hi-*.mjs, 전략은 content/st-hi.mjs). 기출은 필수 영역이 된 2017학년도부터(exams.json 의 hist).
-import { note, tip, tbl, examsOf, BANNER_2028 } from "./lib.mjs";
+import { note, tip, tbl, examsOf } from "./lib.mjs";
 import { UNITS, TERR, TERR_ORDER } from "./hist-scenes.mjs";
 import { motionPages, mapPage, sceneIndex } from "./hist-motion.mjs";
 import { styles } from "./content/style-hist.mjs";
@@ -23,14 +23,13 @@ export const spec = {
   glow: "rgba(190,18,60,0.12)", border: "rgba(190,18,60,0.16)",
   asideSub: "수능 한국사 — 시대별 9파트 + 암기법 + 전략",
   h1: "수능 한국사,<br><em>시대별</em>로<br>흐름 잡기",
-  authors: "2015 개정 교육과정 · 2027학년도 수능까지 · 필수 영역 · 절대평가",
+  authors: "20문항 · 30분 · 필수 영역 · 절대평가",
   affiliation: "고대 · 중세·근세 · 근대·현대 · 9파트 · 암기법 · 전략 · 한눈에 요약",
   summary: true, summaryBlurb: "파트별 연표·표·함정을 카드 한 장씩에 — 시험 직전 훑어보기용",
   motion: true, motionBlurb: "‘왜?’ 인과 사슬·유물 따져 보기·연표·지도·퀴즈로 이유부터 이해하기 — 전체 합본과 파트별 재생", extra: { ...motionPages(), "map.html": mapPage() },
   extraLinks: [{ href: "map.html", label: "🗺️ 영토 변화 지도", num: "MAP", blurb: "기원전 4세기부터 1953년까지, 연도 슬라이더로 넘겨 보는 지도 인포그래픽" }],
   kind: "items", qn: 20, minutes: 30,
   chapters,
-  banner: BANNER_2028.hist,
   intro: `<h2>이 노트가 다루는 것</h2>
 <p>수능 한국사는 <strong>모든 수험생이 응시해야 하는 필수 영역</strong>이고, 20문항 50점 만점의 절대평가입니다(40점 이상이면 1등급). 문항은 사료·유물·지도 같은 자료를 보고 시대와 사건을 알아맞힌 다음, 그에 맞는 설명을 고르는 방식이 대부분입니다. 이 노트는 선사 시대부터 현대까지를 아홉 파트로 나누어, 파트마다 <em>흐름 → 핵심 표(왕·제도·사건) → 함정 → 대표 예제 → 짝짓기·퀴즈</em> 순서로 정리했습니다.</p>
 ${note("시험 구조", "20문항 · 50점 · 30분. 2점 10문항 + 3점 10문항, 5지선다. 성적은 표준점수·백분위 없이 1~9등급으로만 통지되고, 응시하지 않으면 그 해 수능 성적이 모두 무효 처리됩니다.")}
