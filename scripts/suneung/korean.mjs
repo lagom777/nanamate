@@ -1,5 +1,5 @@
 // 수능 국어 — 독서 · 문학 · 선택(화법과 작문 / 언어와 매체) (content/ko-*.mjs, 전략은 content/st-ko.mjs)
-import { note, tip, tbl, examsOf } from "./lib.mjs";
+import { note, tip, tbl, examsOf, BANNER_2028 } from "./lib.mjs";
 import { maps } from "./maps-korean.mjs";
 import { styles } from "./content/style-korean.mjs";
 import { quick } from "./content/quick-korean.mjs";
@@ -37,7 +37,7 @@ export const spec = {
   summary: true, summaryBlurb: "파트별 표·기호·함정을 카드 한 장씩에 — 시험 직전 훑어보기용", maps, extraCss,
   motion: true, motionBlurb: "문학 개념을 움직이는 그림으로 — 화자·시점·구성·갈래·형식, 독서·문법 한 장면씩", kind: "paper", qn: 45, minutes: 80,
   practiceBlurb: `실제 시험지 ${N}회 · 공통 34 + 선택 11문항 · 답안지 채점`,
-  chapters,
+  chapters, banner: BANNER_2028.korean,
   intro: `<h2>이 노트가 다루는 것</h2>
 <p>수능 국어 영역의 <strong>독서·문학(공통)</strong>과 <strong>선택과목(화법과 작문 / 언어와 매체)</strong>을 갈래별로 나눠, 지문을 읽는 절차와 선지를 가르는 기준을 정리했습니다. 국어는 외워서 푸는 과목이 아니라 <em>읽는 순서와 판단 기준</em>을 익히는 과목이라, 각 파트는 개념 → 읽는 절차 → 오답 패턴 → 직접 만든 예제 → 짝짓기·퀴즈로 구성했습니다. 실제 시험지로 풀어 보는 <em>수능 풀어보기</em>는 시험지 전체를 그대로 보여 주고 답안지로 채점합니다.</p>
 ${note("시험 구조", "80분 · 45문항 · 100점. 공통(독서·문학) 1~34번과 선택 35~45번(화법과 작문 또는 언어와 매체 중 택1)입니다. 모두 5지 선다이며 점수는 2점·3점 문항으로 나뉩니다.")}

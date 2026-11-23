@@ -1,5 +1,5 @@
 // 수능 수학 — 수학Ⅰ · 수학Ⅱ · 미적분 (파트별 노트는 content/math-*.mjs, 전략은 content/st-math.mjs)
-import { note, tip, tbl, examsOf, practicePage, aside } from "./lib.mjs";
+import { note, tip, tbl, examsOf, practicePage, aside, BANNER_2028 } from "./lib.mjs";
 import { maps } from "./maps-math.mjs";
 import { styles } from "./content/style-math.mjs";
 import { quick } from "./content/quick-math.mjs";
@@ -10,6 +10,9 @@ const chapters = [...(await load("math-1")), ...(await load("math-2")), ...(awai
 // 모션 노트 장면 중 이 장 file 이 붙은 것을 장 노트의 '🎬 모션으로 보기' 링크로
 const ml = motionLinks("math");
 for (const c of chapters) if (ml[c.file]) c.motion = ml[c.file];
+// 2028학년도 수능 출제 과목 이름으로 묶음 표시(노트 내용은 2015 개정 수학Ⅰ·수학Ⅱ·미적분 그대로)
+const GROUP_2028 = { "수학Ⅰ": "대수 (수학Ⅰ)", "수학Ⅱ": "미적분Ⅰ (수학Ⅱ)", "미적분": "미적분Ⅱ (미적분) — 2028 수능 범위 밖" };
+for (const c of chapters) if (GROUP_2028[c.group]) c.group = GROUP_2028[c.group];
 const N = examsOf("math").length;
 
 export const spec = {
@@ -18,7 +21,7 @@ export const spec = {
   asideSub: "수능 수학 — 수학Ⅰ·수학Ⅱ·미적분 + 기출",
   h1: "수능 수학,<br><em>Ⅰ·Ⅱ·미적분</em><br>파트별로 끝까지",
   authors: "2015 개정 교육과정 · 2027학년도 수능까지 · 실제 기출 " + N + "회 " + N * 30 + "문항 풀어보기",
-  affiliation: "수학Ⅰ 3파트 · 수학Ⅱ 3파트 · 미적분 3파트 · 전략 · 수능 풀어보기(채점)",
+  affiliation: "대수(수학Ⅰ) 3파트 · 미적분Ⅰ(수학Ⅱ) 3파트 · 미적분Ⅱ 3파트(2028 범위 밖) · 전략 · 수능 풀어보기(채점)",
   imageMaps: [
     { img: "images/01-numbers-sets.svg", title: "수와 집합", desc: "수 체계 확장(ℕ~ℂ), 벤다이어그램, 드모르간 법칙, 귀류법", chapter: "01-exp-log.html" },
     { img: "images/02-algebra.svg", title: "대수 — 다항식과 방정식", desc: "곱셈공식, 나머지정리, 판별식 D, 근과 계수의 관계, 근의 분리", chapter: "01-exp-log.html" },
@@ -37,6 +40,7 @@ export const spec = {
   motion: true, motionBlurb: "그래프가 움직이며 바뀌는 것 — 밑·주기·기울기·넓이가 변할 때 무엇이 따라 변하나", kind: "items", qn: 30, minutes: 100,
   practiceBlurb: `실제 시험지 ${N}회 ${N * 30}문항(2022~: 공통 22 + 미적분 8, ~2021: 가형) · 단답형 입력 · 채점`,
   chapters,
+  banner: BANNER_2028.math,
   intro: `<h2>이 노트가 다루는 것</h2>
 <p>수능 수학의 <strong>공통 범위(수학Ⅰ·수학Ⅱ)와 선택과목 미적분</strong>을 과목별로 묶고, 각 과목을 다시 세 파트로 나눠 정리했습니다. 파트마다 개념 정리 → 그래프·식 읽는 법 → 기출에서 반복되는 함정 → 대표 예제 → 짝짓기·퀴즈 순으로 이어지고, 맨 아래에서 그 파트의 기출만 모아 풀 수 있습니다. 실제 시험지로 풀어 보는 <em>수능 풀어보기</em>는 이 수학 폴더 하나에서 통합해 제공합니다.</p>
 ${note("시험 구조", "100분 · 30문항 · 100점. 공통 22문항(수학Ⅰ·수학Ⅱ, 1~22번)과 선택 8문항(23~30번)으로 구성되고, 1~15·23~28번은 5지 선다, 16~22·29~30번은 답을 숫자로 적는 단답형입니다. 이 사이트의 노트는 선택과목 중 <strong>미적분</strong>을 다룹니다. 확률과 통계·기하는 2022학년도부터의 기출을 <a href=\"practice-prob.html\">확률과 통계 풀어보기</a>·<a href=\"practice-geo.html\">기하 풀어보기</a>(노트 없이 채점만)가 있습니다.")}

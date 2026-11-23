@@ -1,5 +1,5 @@
 // 수능 지구과학Ⅰ — 3단원 6파트 (content/es-*.mjs, 전략은 content/st-es.mjs)
-import { note, tip, tbl, examsOf } from "./lib.mjs";
+import { note, tip, tbl, examsOf, BANNER_2028 } from "./lib.mjs";
 
 const load = async (n) => { try { return (await import(`./content/${n}.mjs`)).chapters; } catch { return []; } };
 const chapters = [...(await load("es-1")), ...(await load("es-2")), ...(await load("es-3")), ...(await load("st-es"))];
@@ -14,6 +14,7 @@ export const spec = {
   affiliation: "3단원 · 6파트 · 전략 · 수능 풀어보기(채점)",
   motion: false, kind: "items", qn: 20, minutes: 30,
   chapters,
+  banner: BANNER_2028.science,
   intro: `<h2>이 노트가 다루는 것</h2>
 <p>수능 지구과학Ⅰ의 <strong>전 범위</strong>를 고체 지구·유체 지구·우주 세 단원, 여섯 파트로 나눠 정리했습니다. 지구과학Ⅰ은 그림·그래프·표 읽기가 문항의 대부분이라, 각 파트에 ‘자료를 읽는 법’ 절을 넣었습니다. 파트마다 개념 → 자료 읽기 → 함정 → 대표 예제 → 짝짓기·퀴즈 → 그 파트 기출 풀어보기로 이어집니다.</p>
 ${note("시험 구조", "20문항 · 50점 · 30분. 2점 10문항 + 3점 10문항. 그림·자료를 읽고 보기 ㄱ·ㄴ·ㄷ의 참/거짓을 가리는 5지 선다입니다.")}

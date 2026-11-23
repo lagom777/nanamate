@@ -1,5 +1,5 @@
 // 수능 생명과학Ⅰ — 파트별 노트 내용 (2015 개정, 2027학년도까지)
-import { f, fr, note, warn, tip, tbl, ex, partStats, examsOf, figHead, figure } from "./lib.mjs";
+import { f, fr, note, warn, tip, tbl, ex, partStats, examsOf, figHead, figure, BANNER_2028 } from "./lib.mjs";
 import { maps } from "./maps-bio1.mjs";
 import { styles } from "./content/style-bio1.mjs";
 import { quick } from "./content/quick-bio1.mjs";
@@ -517,6 +517,7 @@ export const spec = {
     { name: "에너지·물질", file: "08-ecosystem.html", go: "topic:b8c", line: "에너지는 한 방향으로 흐르며 줄어들고, 물질(탄소·질소)은 돌고 돈다" },
     { name: "생물 다양성", file: "08-ecosystem.html", go: "topic:b8d", line: "유전적 다양성·종 다양성·생태계 다양성, 그리고 이것을 지키는 방법" },
   ],
+  banner: BANNER_2028.science,
   intro: `<h2>이 노트가 다루는 것</h2>
 <p>수능 생명과학Ⅰ의 <strong>전 범위</strong>를 다섯 단원, 여덟 파트로 나눠 정리했습니다. 각 파트는 개념 정리 → 표·그래프 읽는 법 → 기출에서 반복되는 함정 → 대표 예제 → 짝짓기·퀴즈 → 실제 기출 풀어보기 순으로 이어지며, 파트마다 <em>모션 노트</em>의 해당 장면으로 바로 이동할 수 있습니다.</p>
 ${note("시험 구조", "20문항 · 50점 · 30분. 2점 10문항 + 3점 10문항. 자료(표·그래프·가계도)를 해석해 보기 ㄱ·ㄴ·ㄷ의 참/거짓을 가리는 5지 선다입니다. 3점 문항은 뒤쪽에 더 많고 유전 문항이 가장 어렵습니다.")}

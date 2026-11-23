@@ -151,7 +151,7 @@ def strips_of(doc, pages, keep=False):
 def sections(doc, pages, subj, key):
     if subj == '영어':
         return [('c', pages)]
-    if int(key[:4]) < 2022:   # 구 교육과정 국어: 45문항 한 구역(old_crop.py)
+    if int(key[:4]) < 2022 or int(key[:4]) >= 2028:   # 구 교육과정 국어(old_crop.py)와 2028학년도 수능부터(선택과목 없음): 45문항 한 구역
         return [('c', pages)]
     starts = [pi for pi in pages if any(n == 35 for n, *_ in margin_numbers(doc[pi], 35, 35))]
     a, b = pages.index(starts[0]), pages.index(starts[1])

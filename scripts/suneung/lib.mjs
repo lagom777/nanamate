@@ -7,6 +7,8 @@ import { mapHtml, mapCss } from "./map.mjs";
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const LEARN = path.resolve(HERE, "../../public/learn");
 // 문항·시험지 이미지는 저장소 대신 Cloudflare R2(공개 r2.dev)에서 불러온다. exams.json·해설·meta.json 은 사이트에 그대로 둔다.
+// Cloudflare Web Analytics 비콘(2026-11-21 학습 페이지 전체에 넣음, plan/sitestats.md) — 생성기가 만드는 모든 쪽의 </head> 바로 앞
+export const BEACON = `<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5b7e3f1c91c242e3baa66c5d377d7a53"}'></script>`;
 export const IMG_BASE = "https://pub-920d78ae5be2443d84da6b3e8a54a5af.r2.dev/";
 export const EXAMS = JSON.parse(fs.readFileSync(path.join(LEARN, "suneung-exam/exams.json"), "utf8")).exams;
 
@@ -34,6 +36,18 @@ export const figHead = (...ids) => `<link rel="stylesheet" href="../../shared/fi
 ${ids.map((id) => `<script defer src="../../shared/figures/data/${id}.js"></script>\n<script defer src="../../shared/figures/${id}.js"></script>`).join("\n")}`;
 export const figure = (id, view) => `<div data-figure="${id}" id="fig-${id}${view ? "-" + view : ""}"${view ? ` data-view="${view}"` : ""}></div>`;
 
+/* 2028학년도 수능(2027년 11월 시행) 체제 안내 상자 — 과목 첫 화면 머리 바로 아래(spec.banner)와 묶음 폴더 첫 화면에 쓴다.
+ * 근거: 교육부·평가원 「2028학년도 대학수학능력시험 예시문항 안내」(2025-04-15) — 국어 45문항 80분(화법과 언어·독서와 작문·문학), 수학 30문항 100분(대수·미적분Ⅰ·확률과 통계),
+ * 영어 45문항 70분, 한국사 20문항 30분, 통합사회·통합과학 각 25문항 40분(1.5·2·2.5점). 선택과목은 모두 없어진다. */
+const INT = `<a href="../aboutSuneungIntegrated/index.html">통합사회·통합과학</a>`;
+export const BANNER_2028 = {
+  korean: note("2028학년도 수능부터 달라지는 점", `선택과목(화법과 작문 / 언어와 매체)이 없어지고 <strong>45문항 · 80분을 모두 같은 문제</strong>로 봅니다. 출제 과목은 <strong>화법과 언어 · 독서와 작문 · 문학</strong>입니다. 예전 ‘언어와 매체’의 문법(언어)은 ‘화법과 언어’로 들어가고, ‘매체’는 출제 과목 이름에서 빠졌습니다. 새 구성은 평가원 <a href="practice.html#exam%3A2028-ex">2028 예시문항</a>으로 확인하세요.`),
+  math: note("2028학년도 수능부터 달라지는 점", `선택과목이 없어지고 <strong>30문항 · 100분을 모두 같은 문제</strong>로 봅니다(예시문항 기준 5지선다 21 + 단답형 9). 출제 과목은 <strong>대수 · 미적분Ⅰ · 확률과 통계</strong>입니다. 이 노트의 수학Ⅰ은 대수, 수학Ⅱ는 미적분Ⅰ에 해당하고, <strong>미적분(7~9파트)은 ‘미적분Ⅱ’라 범위 밖</strong>입니다. 확률과 통계는 아직 노트가 없고 <a href="practice-prob.html">기출(공통 + 확률과 통계)</a>과 <a href="practice.html#exam%3A2028-ex">2028 예시문항</a>으로 풀 수 있습니다.`),
+  english: note("2028학년도 수능에서도", `영어는 형식이 그대로입니다 — <strong>45문항(듣기 17) · 70분 · 절대평가</strong>. 이 노트와 기출을 그대로 쓰면 됩니다.`),
+  hist: note("2028학년도 수능에서도", `한국사는 형식이 그대로입니다 — <strong>20문항 · 30분 · 필수 · 절대평가</strong>. 이 노트와 기출을 그대로 쓰면 됩니다.`),
+  science: note("2027학년도 수능까지의 선택과목", `2028학년도 수능(2027년 11월 시행)부터 과학탐구는 선택과목이 없어지고, 모두 <strong>통합과학</strong> 한 과목(25문항 · 40분)을 봅니다 → ${INT}. 이 노트와 기출은 통합과학의 관련 단원을 더 깊게 다질 때 쓰세요(범위와 깊이는 선택과목 쪽이 더 넓습니다).`),
+  social: note("2027학년도 수능까지의 선택과목", `2028학년도 수능(2027년 11월 시행)부터 사회탐구는 선택과목이 없어지고, 모두 <strong>통합사회</strong> 한 과목(25문항 · 40분)을 봅니다 → ${INT}. 이 기출은 통합사회의 관련 단원을 더 깊게 다질 때 쓰세요.`),
+};
 export const examsOf = (sub) => EXAMS.filter((e) => e[sub]);
 
 /* 출제 통계: 최근 회차에서 이 파트 태그가 몇 문항이었나.
@@ -71,6 +85,7 @@ export function head(title, depth, spec, opts = {}) {
 <script defer src="${up}../shared/practice-simple.js"></script>
 <link rel="stylesheet" href="${up}../shared/sections.css">
 <script defer src="${up}../shared/sections.js"></script>${terms}${spec.styles ? `\n<link rel="stylesheet" href="${up}../shared/study-style.css">\n<script defer src="${up}../shared/study-style.js"></script>` : ""}${opts.extra ? "\n" + opts.extra : ""}
+${BEACON}
 </head>`;
 }
 
@@ -233,6 +248,7 @@ ${aside(spec, "index", 0)}
   <p class="authors">${spec.authors}</p>
   <p class="affiliation">${spec.affiliation}</p>
 </header>
+${spec.banner || ""}
 ${core}
 ${spec.intro}
 <h2>파트별 로드맵</h2>
@@ -265,7 +281,7 @@ export function practicePage(spec, o = {}) {
   const kindOf = (e) => (e.kind === "csat" ? "csat" : e.kind === "ex" ? "ex" : "mock");
   const span = (k) => { const ys = ex.filter((e) => kindOf(e) === k).map((e) => e.year); return !ys.length ? "" : Math.min(...ys) === Math.max(...ys) ? `${ys[0]}학년도` : `${Math.min(...ys)}~${Math.max(...ys)}학년도`; };
   const years = [span("csat") && `수능 ${span("csat")}`, span("ex") && `수능 예시문항 ${span("ex")}`, span("mock") && `6월/9월 모의평가 ${span("mock")}`, `총 ${ex.length}회`].filter(Boolean).join(" · ");
-  return `${head(`수능 풀어보기 — ${label}`, 0, spec).replace("</head>", `<link rel="stylesheet" href="../suneung-exam/practice.css">\n</head>`)}
+  return `${head(`수능 풀어보기 — ${label}`, 0, spec).replace(`${BEACON}\n</head>`, `<link rel="stylesheet" href="../suneung-exam/practice.css">\n${BEACON}\n</head>`)}
 <body><div class="layout">
 ${o.aside || aside(spec, "practice", 0)}
 <main class="wide">

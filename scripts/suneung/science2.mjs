@@ -1,7 +1,7 @@
 // 수능 과학탐구Ⅱ(물리학Ⅱ·화학Ⅱ·생명과학Ⅱ·지구과학Ⅱ) — 개념 노트 없이 기출 풀어보기(채점)만 제공
 import fs from "fs";
 import path from "path";
-import { LEARN, head, practicePage, stylesCss, examsOf, note, tbl } from "./lib.mjs";
+import { LEARN, head, practicePage, stylesCss, examsOf, note, tbl, BANNER_2028 } from "./lib.mjs";
 
 const SUBS = [
   { sub: "phys2", label: "물리학Ⅱ", file: "practice-phys2.html", blurb: "역학적 상호 작용·전자기장·파동과 물질의 성질" },
@@ -41,6 +41,7 @@ ${asideFor("index")}
   <p class="authors">물리학Ⅱ · 화학Ⅱ · 생명과학Ⅱ · 지구과학Ⅱ · 실제 시험지 그대로</p>
   <p class="affiliation">수능 2018~2027학년도 · 6월/9월 모의평가 2018~2027학년도 (2018~2020학년도는 2009 개정, 2021학년도부터 2015 개정 교육과정)</p>
 </header>
+${BANNER_2028.science}
 <h2>이 폴더가 제공하는 것</h2>
 <p>과학탐구Ⅱ 네 과목의 <strong>실제 시험지(문항 이미지)</strong>를 시험 모드(30분·20문항)와 연습 모드로 풀고, 정답표로 <strong>채점</strong>하고, 틀린 문항을 오답 노트로 모읍니다. 과학Ⅰ(물리학Ⅰ·화학Ⅰ·생명과학Ⅰ·지구과학Ⅰ)과 달리 <strong>개념 노트와 문항별 해설은 아직 없습니다</strong> — 정답과 배점만 확인할 수 있습니다.</p>
 ${note("시험 구조", "과목당 20문항 · 50점 · 30분. 2점 10문항 + 3점 10문항. 그림·자료를 읽고 보기 ㄱ·ㄴ·ㄷ의 참/거짓을 가리거나 수치를 구하는 5지 선다입니다.")}

@@ -3,7 +3,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { LEARN } from "./lib.mjs";
+import { LEARN, BEACON } from "./lib.mjs";
 import { UNITS, scenes, TERR, TERR_ORDER } from "./hist-scenes.mjs";
 import { IMAGES } from "./hist-images.mjs";
 
@@ -245,6 +245,7 @@ input[type=range]{flex:1;accent-color:var(--acc);height:28px;min-width:0}
 @media (max-width:900px){.board{grid-template-columns:minmax(0,1fr)}.board>*{min-width:0}.info{border-left:0;border-top:1px solid var(--line);padding:18px 16px}
   .tick{flex-basis:96px}}
 </style>
+${BEACON}
 </head>
 <body>
 <div class="wrap">

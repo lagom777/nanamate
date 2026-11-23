@@ -111,9 +111,25 @@ def crop_one(n, found):
     img.save(os.path.join(OUT, f'q{n:02d}.webp'), 'WEBP', quality=QUAL, method=6)
     return text
 
+def do_math_single():
+    found = {}
+    crop_questions(PAGES, 1, 30, found)
+    missing = [n for n in range(1, 31) if n not in found]
+    if missing:
+        print('MISSING', key, missing)
+    texts = {n: crop_one(n, found) for n in sorted(found)}
+    ans = [ANS['c'][str(n)][0] for n in range(1, 31)]
+    pts = [ANS['c'][str(n)][1] for n in range(1, 31)]
+    meta = {'answers': ans, 'points': pts, 'numeric': [n for n, v in ANS['c'].items() if v[2]]}
+    json.dump(texts, open(os.path.join(OUT, 'text.json'), 'w'), ensure_ascii=False)
+    json.dump(meta, open(os.path.join(OUT, 'meta.json'), 'w'), ensure_ascii=False)
+    print('math(single)', key, 'cropped', len(found), 'sum', sum(pts))
+
 def do_math():
     hdr = lambda pi, s: any(l.strip() == s for l in doc[pi].get_text().split('\n'))
-    first_prob = next(pi for pi in PAGES if hdr(pi, '(확률과 통계)'))
+    first_prob = next((pi for pi in PAGES if hdr(pi, '(확률과 통계)')), None)
+    if first_prob is None:   # 2028학년도 수능부터(예시문항 포함): 선택과목이 없어 1~30번이 한 벌
+        return do_math_single()
     common = [pi for pi in PAGES if pi < first_prob]
     # MATH_ELEC=확률과 통계|기하 → 23~30번을 그 선택과목으로(정답표 구역: 미적분 m · 확률과 통계 g · 기하 h)
     elec = os.environ.get('MATH_ELEC', '미적분')
