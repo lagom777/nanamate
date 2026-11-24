@@ -21,7 +21,7 @@ test('과목 이동 줄의 주소는 그 과목의 풀어보기 화면이다', (
 });
 
 // 2027학년도 수능까지의 선택과목(지금 수능에는 없는 과목): 메뉴에서 내렸고 주소만 살아 있다
-const ARCHIVED = ['aboutSuneungPhysics1', 'aboutSuneungChem1', 'aboutSuneungBio1', 'aboutSuneungEarth1', 'aboutSuneungScience2', 'aboutSuneungSocial'];
+const ARCHIVED = ['aboutSuneungPhysics1', 'aboutSuneungChem1', 'aboutSuneungBio1', 'aboutSuneungEarth1', 'aboutSuneungScience2', 'aboutSuneungSocial', 'aboutSuneungArchive'];
 
 test('풀어보기 화면이 있는 과목은 모두 과목 이동 줄에 있다', () => {
   const pages = [];

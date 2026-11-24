@@ -18,10 +18,10 @@ for (const c of chapters) if (ml[c.file]) c.motion = ml[c.file];
 // 묶음 이름을 지금 과목 이름으로(2015 개정 수학Ⅰ → 대수, 수학Ⅱ → 미적분Ⅰ)
 const GROUP = { "수학Ⅰ": "대수", "수학Ⅱ": "미적분Ⅰ" };
 for (const c of chapters) if (GROUP[c.group]) c.group = GROUP[c.group];
-const N = examsOf("math").length;
+const N = examsOf("mathprob").length;   // 지금 시험과 같은 구성(공통 1~22 + 확률과 통계 23~30) + 예시문항. 과목 키 math 는 옛 공통+미적분(지난 수능 복습용)
 
 export const spec = {
-  sub: "math", styles, quick, folder: "aboutSuneungMath", label: "수능 수학", short: "수학", color: "#7c3aed",
+  sub: "mathprob", styles, quick, folder: "aboutSuneungMath", label: "수능 수학", short: "수학", color: "#7c3aed",
   glow: "rgba(124,58,237,0.12)", border: "rgba(124,58,237,0.16)",
   asideSub: "수능 수학 — 대수·미적분Ⅰ + 기출",
   h1: "수능 수학,<br><em>대수·미적분Ⅰ·확통</em><br>파트별로 끝까지",

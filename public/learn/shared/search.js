@@ -14,6 +14,7 @@
     {"n": "수능 영어", "e": "CSAT English", "d": "듣기·독해 유형 7파트, 기출 채점·듣기 대본", "u": "aboutSuneungEnglish/index.html", "c": "수능", "a": "#2563eb"},
     {"n": "수능 한국사", "e": "CSAT Korean History", "d": "시대별 9파트, 모션 노트 54장면, 영토 변화 지도, 암기법", "u": "aboutSuneungHistory/index.html", "c": "수능", "a": "#be123c"},
     {"n": "수능 통합사회·통합과학", "e": "CSAT Integrated Social Studies & Science", "d": "수능 탐구 — 평가원 예시문항 풀어보기·해설·채점", "u": "aboutSuneungIntegrated/index.html", "c": "수능", "a": "#0f766e"},
+    {"n": "지난 수능 복습", "e": "Past CSAT Review", "d": "2027학년도 수능까지의 선택과목 시험(미적분·기하·과탐·사탐) — 풀이 기록·오답 복습", "u": "aboutSuneungArchive/index.html", "c": "수능", "a": "#64748b"},
     {"n": "물리학", "e": "Interactive Physics Lab", "d": "역학~양자역학, 상대성이론까지 3D 시뮬레이션", "u": "aboutPhysics/index.html", "c": "자연과학", "a": "#00d4ff"},
     {"n": "화학", "e": "Molecular Chemistry", "d": "원자~유기화학, 생화학 3D 분자 모델", "u": "aboutChemistry/index.html", "c": "자연과학", "a": "#00e890"},
     {"n": "생물학", "e": "Biology Lab", "d": "세포, DNA, 진화, 생태학 3D 시뮬레이션", "u": "aboutBiology/index.html", "c": "자연과학", "a": "#22c55e"},
