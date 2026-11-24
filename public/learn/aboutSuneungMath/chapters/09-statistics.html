@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>통계 — 수능 수학</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<link rel="stylesheet" href="../../shared/practice-simple.css">
+<script defer src="../../shared/practice-simple.js"></script>
+<link rel="stylesheet" href="../../shared/sections.css">
+<script defer src="../../shared/sections.js"></script>
+<link rel="stylesheet" href="../../shared/study-style.css">
+<script defer src="../../shared/study-style.js"></script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5b7e3f1c91c242e3baa66c5d377d7a53"}'></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><a href="../../my-style.html" class="hub-back-link my-style-link">🙋 내 성향</a><h3>수학 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li class="grp">대수</li>
+<li><a href="01-exp-log.html">1. 지수와 로그</a></li>
+<li><a href="02-trig.html">2. 삼각함수</a></li>
+<li><a href="03-sequence.html">3. 수열</a></li>
+<li class="grp">미적분Ⅰ</li>
+<li><a href="04-limit.html">4. 함수의 극한과 연속</a></li>
+<li><a href="05-diff.html">5. 미분</a></li>
+<li><a href="06-integral.html">6. 적분</a></li>
+<li class="grp">확률과 통계</li>
+<li><a href="07-counting.html">7. 경우의 수</a></li>
+<li><a href="08-probability.html">8. 확률</a></li>
+<li><a href="09-statistics.html" style="color:var(--accent);font-weight:600;">9. 통계</a></li>
+<li class="grp">전략</li>
+<li><a href="10-strategy.html">10. 수능 수학 실전 전략</a></li>
+<li><a href="../motion.html">🎬 모션 노트</a></li>
+<li><a href="../summary.html">📌 한눈에 요약</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+<li><a href="../study-style.html">🧭 논리형 공부법</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>통계</h1><p class="authors">Part 9 · 확률과 통계</p><p class="affiliation">확률분포·기댓값과 표준편차·이항분포·정규분포·표본평균과 표본비율·추정</p></header>
+
+<div class="nms-stepband"><b>① 틀 잡기</b><span>30초 — ‘짧게 보기’만 먼저. 더 필요할 때 아래를 펼치기</span></div>
+<section class="nmq" aria-label="짧게 보기">
+<div class="nmq-h"><b>⚡ 짧게 보기</b><span>30초</span></div>
+<p class="nmq-one">평균과 표준편차만 알면 정규분포는 Z = (값 − 평균) / (표준편차) 하나로 푼다.</p>
+<ol class="nmq-flow"><li>묻는 것이 X인지 표본평균 X̄인지 표본비율 p̂인지 정하기</li><li>평균·표준편차 적기 (X̄는 σ/√n)</li><li>표준화하고 종 모양 곡선에 구하는 넓이 칠하기</li><li>문제에 준 P(0 ≤ Z ≤ z) 값을 더하거나 0.5에서 빼기</li></ol>
+<p class="nmq-keys-h">평균과 퍼짐</p><dl class="nmq-keys"><div><dt>이항분포 B(n, p)</dt><dd>평균 np, 분산 npq (q = 1 − p)</dd></div><div><dt>aX + b</dt><dd>평균 aE(X) + b, 분산 a<sup>2</sup>V(X)</dd></div><div><dt>표본평균 X̄</dt><dd>평균 m, 표준편차 σ/√n</dd></div><div><dt>표본비율 p̂</dt><dd>평균 p, 표준편차 √(pq/n)</dd></div><div><dt>신뢰구간(95%)</dt><dd>x̄ ± 1.96 × σ/√n</dd></div></dl>
+<p class="nmq-ex"><b>예</b><span>X가 N(50, 10<sup>2</sup>), P(0 ≤ Z ≤ 2) = 0.4772 → P(X ≥ 70) = P(Z ≥ 2) = 0.5 − 0.4772 = <mark>0.0228</mark></span></p>
+<p class="nmq-trap"><b>조심</b><span>N(m, σ<sup>2</sup>)의 둘째 수는 분산 — 표준화는 표준편차 σ로 나눈다</span></p>
+
+</section>
+<section class="nmm" aria-label="이렇게 외우기">
+<div class="nmq-h"><b>🧠 이렇게 외우기</b><span>소리 내어 한 번</span></div>
+<div class="nmm-list"><div class="nmm-item"><p class="nmm-t">표준편차 — 무엇으로 나누나</p>
+<p class="nmm-say">낱개는 <b>σ</b>, 평균 내면 <b>σ/√n</b>, 비율은 <b>√(pq/n)</b></p>
+<dl class="nmm-map"><div><dt>X</dt><dd>σ</dd></div><div><dt>표본평균 X̄</dt><dd>σ/√n — n이 4배면 절반</dd></div><div><dt>표본비율 p̂</dt><dd>√(pq/n)</dd></div><div><dt>횟수 X, B(n, p)</dt><dd>√(npq)</dd></div></dl>
+</div></div>
+</section>
+
+
+<p><a class="cta sm" href="../summary.html#p9">📌 이 파트 한눈에 요약 →</a></p>
+<div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="stat-row"><div class="stat"><b>1.9</b><span>회당 문항 수</span></div><div class="stat"><b>6.4점</b><span>회당 배점</span></div><div class="stat"><b>0~3</b><span>회차별 범위</span></div><div class="stat"><b>37</b><span>최근 19회 누적</span></div></div>
+<p class="stat-note">수능 2022~2028학년도 + 6·9월 모의평가 19회(570문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>통계는 <strong>어떤 확률변수가 어떤 분포를 따르는지 적는 일</strong>에서 시작합니다. 분포가 정해지면 평균과 표준편차가 나오고, 정규분포는 표준화 하나로 확률이 넓이가 됩니다. 수능에서는 확률분포표에서 평균과 분산 구하기, 이항분포의 평균과 분산, 정규분포의 확률, 표본평균의 분포, 신뢰구간을 묻습니다. 표준정규분포의 넓이 값은 문제에 주어진 것만 씁니다. 기출 풀어보기에서는 23~30번이 확률과 통계 문항입니다.</p>
+
+<div class="sec-bar"><span>본문 7절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
+<details class="sec"><summary><h2>1. 확률변수와 확률분포</h2></summary>
+<p>시행의 결과마다 수를 하나씩 대응시킨 것을 <strong>확률변수</strong>라고 합니다. 동전 2개를 던질 때 ‘앞면이 나온 개수’를 X라 하면 X는 0, 1, 2의 값을 가집니다. 확률변수 X가 가지는 값과 그 값을 가질 확률의 대응을 X의 <strong>확률분포</strong>라고 합니다. 가지는 값을 0, 1, 2처럼 하나씩 셀 수 있으면 이산확률변수입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>X</th><th>0</th><th>1</th><th>2</th><th>합계</th></tr></thead><tbody><tr><td data-l="X">P(X = x)</td><td data-l="0">1/4</td><td data-l="1">1/2</td><td data-l="2">1/4</td><td data-l="합계">1</td></tr></tbody></table></div>
+<p>확률분포표는 두 가지를 반드시 만족합니다.</p>
+<div class="formula">0 ≤ P(X = x<sub>i</sub>) ≤ 1<br>모든 확률의 합 = 1</div>
+<p>표에 모르는 문자가 있으면 ‘합이 1’이 첫 식입니다. X가 1, 2, 3의 값을 가지고 확률이 차례로 a, 2a, 1/4이면 3a + 1/4 = 1에서 a = 1/4입니다. 범위의 확률은 해당하는 값의 확률을 더합니다. 이 분포에서 P(X ≥ 2) = 1/2 + 1/4 = 3/4입니다.</p>
+<h3>기댓값(평균), 분산, 표준편차</h3>
+<div class="formula">E(X) = x<sub>1</sub>p<sub>1</sub> + x<sub>2</sub>p<sub>2</sub> + … + x<sub>n</sub>p<sub>n</sub> = m<br>V(X) = E((X − m)<sup>2</sup>) = E(X<sup>2</sup>) − {E(X)}<sup>2</sup><br>σ(X) = √V(X)</div>
+<p>기댓값은 값에 확률을 곱해 더한 것, 곧 확률을 무게로 한 평균입니다. 분산은 ‘평균에서 떨어진 거리의 제곱’의 기댓값이고, 계산은 ‘제곱의 평균 − 평균의 제곱’이 빠릅니다. 표준편차는 분산의 양의 제곱근이며 X와 단위가 같습니다.</p>
+<p>동전 2개의 예에서 E(X) = 0 × 1/4 + 1 × 1/2 + 2 × 1/4 = 1입니다. E(X<sup>2</sup>) = 0 × 1/4 + 1 × 1/2 + 4 × 1/4 = 3/2이므로 V(X) = 3/2 − 1<sup>2</sup> = 1/2이고 σ(X) = √2/2입니다.</p>
+<h3>aX + b의 평균과 분산</h3>
+<div class="formula">E(aX + b) = aE(X) + b<br>V(aX + b) = a<sup>2</sup>V(X)<br>σ(aX + b) = |a|σ(X)</div>
+<p>모든 값을 a배 하고 b를 더하면 평균도 똑같이 a배 하고 b를 더한 값이 됩니다. 분산은 평균과의 차이로 정해지므로 b를 더해도 변하지 않습니다. 차이가 a배가 되므로 그 제곱인 a<sup>2</sup>배가 됩니다. E(X) = 1, V(X) = 1/2이면 E(4X + 3) = 7, V(4X + 3) = 16 × 1/2 = 8, σ(4X + 3) = 2√2입니다.</p>
+<div class="warning-box"><strong>함정:</strong> V(aX + b)에 b를 더하거나 a만 곱하면 안 됩니다. 분산에는 a<sup>2</sup>이 곱해지고 b는 사라집니다. 표준편차에는 |a|가 곱해지므로 a가 음수여도 표준편차는 양수입니다.</div>
+
+</details><details class="sec"><summary><h2>2. 이항분포</h2></summary>
+<p>한 번의 시행에서 사건 A가 일어날 확률이 p인 독립시행을 n번 반복할 때, A가 일어나는 횟수를 X라 하면 X의 확률분포는 다음과 같습니다. q = 1 − p입니다.</p>
+<div class="formula">P(X = r) = <sub>n</sub>C<sub>r</sub> p<sup>r</sup> q<sup>n−r</sup> &nbsp; (r = 0, 1, 2, …, n)</div>
+<p>이 분포를 <strong>이항분포</strong>라 하고 B(n, p)로 적습니다. 각 확률이 (q + p)<sup>n</sup>을 이항정리로 전개한 항이어서 붙은 이름이고, 그래서 모두 더하면 (q + p)<sup>n</sup> = 1입니다. n은 시행 횟수, p는 한 번의 시행에서 사건이 일어날 확률입니다.</p>
+<div class="formula">X가 B(n, p)를 따르면<br>E(X) = np, &nbsp; V(X) = npq, &nbsp; σ(X) = √(npq)</div>
+<p>평균 np는 ‘n번 가운데 비율 p만큼 일어난다’로 읽으면 자연스럽습니다. 이 공식의 증명은 이 과목에서 다루지 않고 결과를 씁니다. 동전 2개의 예는 B(2, 1/2)이고 np = 1, npq = 1/2로, 앞에서 표로 직접 구한 값과 같습니다.</p>
+<p>주사위를 180번 던질 때 6의 눈이 나오는 횟수 X는 B(180, 1/6)을 따릅니다. E(X) = 180 × 1/6 = 30, V(X) = 180 × 1/6 × 5/6 = 25, σ(X) = 5입니다. E(X<sup>2</sup>)이 필요하면 V(X) = E(X<sup>2</sup>) − {E(X)}<sup>2</sup>을 돌려 E(X<sup>2</sup>) = 25 + 900 = 925로 구합니다.</p>
+<p>거꾸로 묻기도 합니다. B(n, p)를 따르는 X의 평균이 12, 분산이 8이면 분산을 평균으로 나눈 값이 q이므로 q = 8/12 = 2/3입니다. p = 1/3이고 n = 12 ÷ 1/3 = 36입니다.</p>
+<h3>큰 수의 법칙</h3>
+<p>한 번의 시행에서 사건 A가 일어날 확률이 p일 때, n번의 독립시행에서 A가 일어나는 횟수를 X라 하겠습니다. n이 커질수록 상대도수 X/n이 p에 가까이 있을 확률이 1에 가까워집니다. 이것이 큰 수의 법칙입니다. 시행 횟수가 충분히 크면 상대도수(통계적 확률)를 수학적 확률 대신 쓸 수 있다는 근거입니다. ‘다음 번에는 반드시 나온다’는 뜻이 아니라, 오래 반복한 비율에 대한 말입니다.</p>
+<div class="study-tip"><strong>TIP:</strong> 문장에서 ‘n번 반복’, ‘각 시행이 독립’, ‘일어나는 횟수’ 세 가지가 보이면 이항분포입니다. B(n, p)를 적고 np, npq를 먼저 구해 둡니다. 횟수 X가 아니라 점수 Y = aX + b를 물으면 aX + b의 공식으로 넘깁니다.</div>
+
+</details><details class="sec"><summary><h2>3. 연속확률변수와 정규분포</h2></summary>
+<p>키, 무게, 시간처럼 어떤 범위의 모든 실수 값을 가질 수 있는 확률변수를 연속확률변수라고 합니다. 값이 끝없이 촘촘해 ‘한 값의 확률’을 표로 적을 수 없으므로, 확률을 <strong>그래프 아래의 넓이</strong>로 나타냅니다. 이 그래프의 함수 f(x)를 확률밀도함수라고 부릅니다.</p>
+<ul>
+<li>그래프는 x축 아래로 내려가지 않습니다. f(x) ≥ 0입니다.</li>
+<li>그래프와 x축 사이의 전체 넓이는 1입니다.</li>
+<li>P(a ≤ X ≤ b)는 x = a에서 x = b까지의 넓이입니다.</li>
+</ul>
+<p>한 점 위의 넓이는 0이므로 P(X = a) = 0입니다. 그래서 연속확률변수에서는 P(a ≤ X ≤ b)와 P(a &lt; X &lt; b)가 같습니다. 0 ≤ x ≤ 2에서 f(x) = kx이면 그래프 아래는 밑변이 2, 높이가 2k인 삼각형이므로 넓이 2k = 1에서 k = 1/2입니다. P(0 ≤ X ≤ 1)은 밑변이 1, 높이가 1/2인 삼각형의 넓이 1/4이고, P(1 ≤ X ≤ 2) = 1 − 1/4 = 3/4입니다.</p>
+<h3>정규분포</h3>
+<p>자연과 사회의 많은 자료는 평균 가까이에 몰리고 양쪽으로 갈수록 드물어지는 종 모양의 분포를 보입니다. 이 분포가 <strong>정규분포</strong>이고, 평균이 m, 표준편차가 σ인 정규분포를 N(m, σ<sup>2</sup>)으로 적습니다. 괄호 안의 둘째 수는 분산입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>곡선의 성질</th><th>읽는 법</th></tr></thead><tbody><tr><td data-l="곡선의 성질">직선 x = m에 대하여 대칭이다</td><td data-l="읽는 법">P(X ≤ m) = P(X ≥ m) = 0.5</td></tr><tr><td data-l="곡선의 성질">x = m에서 가장 높다</td><td data-l="읽는 법">평균 근처의 값이 가장 흔하다</td></tr><tr><td data-l="곡선의 성질">x축이 점근선이고 전체 넓이가 1이다</td><td data-l="읽는 법">넓이가 곧 확률이다</td></tr><tr><td data-l="곡선의 성질">σ가 같으면 m에 따라 좌우로 평행이동한다</td><td data-l="읽는 법">모양은 같고 위치만 다르다</td></tr><tr><td data-l="곡선의 성질">m이 같으면 σ가 클수록 낮고 넓게 퍼진다</td><td data-l="읽는 법">넓이가 1로 같으므로 퍼지면 낮아진다</td></tr></tbody></table></div>
+<h3>표준화</h3>
+<p>평균이 0, 표준편차가 1인 정규분포 N(0, 1)을 <strong>표준정규분포</strong>라고 합니다. 정규분포마다 넓이를 따로 구할 수 없으므로, 어떤 정규분포든 표준정규분포로 옮겨 확률을 구합니다.</p>
+<div class="formula">X가 N(m, σ<sup>2</sup>)을 따르면 Z = (X − m) / σ 는 N(0, 1)을 따른다</div>
+<p>Z는 ‘평균에서 표준편차의 몇 배만큼 떨어져 있는가’입니다. aX + b의 공식으로 확인하면 E(Z) = (m − m)/σ = 0, V(Z) = V(X)/σ<sup>2</sup> = 1입니다. 나누는 수는 분산 σ<sup>2</sup>이 아니라 표준편차 σ입니다.</p>
+<p>표준정규분포의 확률은 문제에 주어진 값으로 계산합니다. 보통 P(0 ≤ Z ≤ z) 꼴로 주어지므로 대칭성으로 필요한 넓이를 만듭니다. a &gt; 0일 때</p>
+<div class="formula">P(Z ≥ 0) = P(Z ≤ 0) = 0.5<br>P(−a ≤ Z ≤ 0) = P(0 ≤ Z ≤ a)<br>P(Z ≥ a) = 0.5 − P(0 ≤ Z ≤ a)<br>P(Z ≤ a) = 0.5 + P(0 ≤ Z ≤ a)</div>
+<p>X가 N(50, 10<sup>2</sup>)을 따르고, 문제에서 P(0 ≤ Z ≤ 1) = 0.3413, P(0 ≤ Z ≤ 2) = 0.4772로 주어졌다고 하겠습니다.</p>
+<ul>
+<li>P(40 ≤ X ≤ 70) = P(−1 ≤ Z ≤ 2) = 0.3413 + 0.4772 = 0.8185</li>
+<li>P(X ≥ 70) = P(Z ≥ 2) = 0.5 − 0.4772 = 0.0228</li>
+<li>P(X ≤ 60) = P(Z ≤ 1) = 0.5 + 0.3413 = 0.8413</li>
+</ul>
+<h3>이항분포와 정규분포의 관계</h3>
+<p>B(n, p)에서 p를 그대로 두고 n을 키우면 확률분포의 그래프가 좌우 대칭인 종 모양에 가까워집니다. n이 충분히 크면 B(n, p)를 따르는 X는 근사적으로 정규분포 N(np, npq)를 따릅니다. 평균과 분산은 이항분포의 것을 그대로 옮깁니다.</p>
+<p>동전을 100번 던질 때 앞면이 나오는 횟수 X는 B(100, 1/2)을 따릅니다. np = 50, npq = 25이므로 X는 근사적으로 N(50, 5<sup>2</sup>)을 따릅니다. 위와 같은 값이 주어지면 P(45 ≤ X ≤ 60) = P(−1 ≤ Z ≤ 2) = 0.8185입니다. 이항분포의 확률을 r = 45부터 60까지 하나씩 더하는 대신 넓이 하나로 구한 것입니다.</p>
+
+</details><details class="sec"><summary><h2>4. 모집단과 표본, 표본평균</h2></summary>
+<p>조사 대상 전체를 <strong>모집단</strong>, 그 가운데 뽑은 일부를 <strong>표본</strong>, 뽑은 개수를 표본의 크기라고 합니다. 전체를 다 조사하면 전수조사, 일부만 조사하면 표본조사입니다. 표본으로 전체를 짐작하려면 표본이 한쪽으로 치우치지 않아야 하므로, 모집단의 각 대상이 뽑힐 가능성이 같도록 뽑습니다. 이것이 <strong>임의추출</strong>입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th></th><th>모집단</th><th>표본</th></tr></thead><tbody><tr><td data-l="">평균</td><td data-l="모집단">모평균 m</td><td data-l="표본">표본평균 X̄</td></tr><tr><td data-l="">분산</td><td data-l="모집단">모분산 σ<sup>2</sup></td><td data-l="표본">표본분산 S<sup>2</sup></td></tr><tr><td data-l="">표준편차</td><td data-l="모집단">모표준편차 σ</td><td data-l="표본">표본표준편차 S</td></tr><tr><td data-l="">성격</td><td data-l="모집단">정해진 하나의 수</td><td data-l="표본">표본을 뽑을 때마다 달라지는 확률변수</td></tr></tbody></table></div>
+<p>핵심은 마지막 줄입니다. 모평균 m은 고정된 수이지만, 표본평균 X̄는 어떤 표본이 뽑히느냐에 따라 값이 달라집니다. 그래서 X̄ 자신도 분포를 가집니다.</p>
+<div class="formula">모평균이 m, 모표준편차가 σ인 모집단에서 크기가 n인 표본을 임의추출하면<br>E(X̄) = m, &nbsp; V(X̄) = σ<sup>2</sup>/n, &nbsp; σ(X̄) = σ/√n</div>
+<p>평균은 그대로이고 분산은 n분의 1이 됩니다. 여러 개를 평균 내면 큰 값과 작은 값이 서로 상쇄되어, 표본평균은 낱개의 값보다 모평균 가까이에 모입니다. 표본이 클수록 더 좁게 모입니다.</p>
+<p>작은 예로 확인합니다. 1, 3, 5가 적힌 카드 세 장에서 한 장을 뽑아 수를 확인하고 다시 넣는 일을 2번 반복합니다. 모평균은 3, 모분산은 {(−2)<sup>2</sup> + 0<sup>2</sup> + 2<sup>2</sup>}/3 = 8/3입니다. 두 수의 평균 X̄의 분포는 다음과 같습니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>X̄</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead><tbody><tr><td data-l="X̄">확률</td><td data-l="1">1/9</td><td data-l="2">2/9</td><td data-l="3">3/9</td><td data-l="4">2/9</td><td data-l="5">1/9</td></tr></tbody></table></div>
+<p>E(X̄) = (1 + 4 + 9 + 8 + 5)/9 = 3으로 모평균과 같습니다. V(X̄) = (4 × 1 + 1 × 2 + 0 × 3 + 1 × 2 + 4 × 1)/9 = 12/9 = 4/3이고, 이는 σ<sup>2</sup>/n = (8/3)/2와 같습니다.</p>
+<div class="formula">모집단이 정규분포 N(m, σ<sup>2</sup>)을 따르면 X̄는 정규분포 N(m, σ<sup>2</sup>/n)을 따른다</div>
+<p>모집단이 N(60, 8<sup>2</sup>)이고 n = 16이면 X̄는 N(60, 2<sup>2</sup>)을 따릅니다. P(0 ≤ Z ≤ 2) = 0.4772가 주어지면 P(X̄ ≥ 64) = P(Z ≥ 2) = 0.5 − 0.4772 = 0.0228입니다. 낱개 X가 64 이상일 확률은 P(Z ≥ 0.5)이므로 이보다 훨씬 큽니다. 같은 64라도 X를 표준화할 때는 8로, X̄를 표준화할 때는 2로 나눕니다.</p>
+<div class="warning-box"><strong>함정:</strong> X̄의 표준편차는 σ가 아니라 σ/√n입니다. 문제에 ‘크기가 n인 표본’, ‘n개를 임의추출하여 구한 평균’이 보이면 표준화의 분모를 σ/√n으로 바꿉니다. σ/n이나 σ<sup>2</sup>/n으로 나누는 것도 틀립니다. σ<sup>2</sup>/n은 분산입니다.</div>
+
+</details><details class="sec"><summary><h2>5. 표본비율과 추정</h2></summary>
+<p>모집단에서 어떤 성질을 가진 것의 비율을 <strong>모비율</strong>이라 하고 p로 적습니다. 크기가 n인 표본에서 그 성질을 가진 것이 X개이면 <strong>표본비율</strong>은 p̂ = X/n입니다. 표본비율도 표본마다 달라지는 확률변수입니다.</p>
+<p>X는 ‘n번 가운데 그 성질이 나온 횟수’이므로 이항분포 B(n, p)를 따릅니다. X/n에 aX + b의 공식을 쓰면 표본비율의 평균과 분산이 나옵니다. q = 1 − p입니다.</p>
+<div class="formula">E(p̂) = np/n = p<br>V(p̂) = npq/n<sup>2</sup> = pq/n, &nbsp; σ(p̂) = √(pq/n)<br>n이 충분히 크면 p̂는 근사적으로 N(p, pq/n)을 따른다</div>
+<p>모비율이 0.2인 모집단에서 크기가 100인 표본을 임의추출하면 E(p̂) = 0.2, σ(p̂) = √(0.2 × 0.8 / 100) = √0.0016 = 0.04입니다. P(0 ≤ Z ≤ 2) = 0.4772가 주어지면 표본비율이 0.28 이상일 확률은 (0.28 − 0.2)/0.04 = 2이므로 P(Z ≥ 2) = 0.0228입니다.</p>
+<h3>모평균의 추정</h3>
+<p>표본에서 얻은 값으로 모집단의 값을 짐작하는 것이 <strong>추정</strong>입니다. 한 점으로 찍지 않고 ‘이 범위 안에 있을 것’이라는 범위로 답하며, 이 범위를 <strong>신뢰구간</strong>, 그 믿을 만한 정도를 <strong>신뢰도</strong>라고 합니다.</p>
+<p>정규분포 N(m, σ<sup>2</sup>)을 따르는 모집단에서 크기가 n인 표본을 임의추출하면 X̄는 N(m, σ<sup>2</sup>/n)을 따릅니다. 문제에서 P(|Z| ≤ 1.96) = 0.95로 주어지면 다음이 성립합니다.</p>
+<div class="formula">P(−1.96 ≤ (X̄ − m) / (σ/√n) ≤ 1.96) = 0.95</div>
+<p>괄호 안의 부등식을 m에 대하여 정리한 것이 신뢰구간입니다. 표본평균의 값이 x̄일 때</p>
+<div class="formula">신뢰도 95%: x̄ − 1.96 × σ/√n ≤ m ≤ x̄ + 1.96 × σ/√n<br>신뢰도 99%: x̄ − 2.58 × σ/√n ≤ m ≤ x̄ + 2.58 × σ/√n</div>
+<p>99%의 2.58은 P(|Z| ≤ 2.58) = 0.99에서 옵니다. 이 값들도 문제에 주어집니다. 모표준편차가 10인 정규분포를 따르는 모집단에서 크기가 100인 표본의 평균이 72이면 σ/√n = 1입니다. 신뢰도 95%의 신뢰구간은 72 − 1.96 ≤ m ≤ 72 + 1.96, 곧 70.04 ≤ m ≤ 73.96입니다.</p>
+<h3>모비율의 추정</h3>
+<p>표본의 크기 n이 충분히 클 때, 표본비율의 값 p̂으로 모비율 p의 신뢰구간을 만듭니다. q̂ = 1 − p̂입니다. 구조는 모평균과 같고 표준편차 자리만 √(p̂q̂/n)으로 바뀝니다.</p>
+<div class="formula">신뢰도 95%: p̂ − 1.96 × √(p̂q̂/n) ≤ p ≤ p̂ + 1.96 × √(p̂q̂/n)<br>신뢰도 99%: p̂ − 2.58 × √(p̂q̂/n) ≤ p ≤ p̂ + 2.58 × √(p̂q̂/n)</div>
+<p>400명을 임의추출해 조사했더니 80명이 찬성했다면 p̂ = 80/400 = 0.2이고 √(0.2 × 0.8 / 400) = √0.0004 = 0.02입니다. 신뢰도 95%의 신뢰구간은 0.2 − 1.96 × 0.02 ≤ p ≤ 0.2 + 1.96 × 0.02, 곧 0.1608 ≤ p ≤ 0.2392입니다.</p>
+<h3>신뢰구간의 길이와 뜻</h3>
+<div class="formula">모평균의 신뢰구간의 길이 = 2 × k × σ/√n &nbsp; (k는 1.96 또는 2.58)</div>
+<ul>
+<li>표본의 크기 n을 4배로 하면 √n이 2배가 되어 길이는 절반이 됩니다.</li>
+<li>신뢰도를 95%에서 99%로 높이면 k가 커져 길이가 길어집니다. 더 확실하게 말하려면 범위를 넓혀야 합니다.</li>
+<li>길이는 표본평균의 값 x̄와 관계없습니다. x̄는 신뢰구간의 가운데 위치만 정합니다.</li>
+</ul>
+<p>신뢰도 95%는 ‘같은 방법으로 표본을 여러 번 뽑아 신뢰구간을 만들면 그 가운데 약 95%가 모평균을 포함한다’는 뜻입니다. 모평균 m은 고정된 수이고, 표본에 따라 달라지는 것은 신뢰구간입니다.</p>
+<div class="info-card"><h4>범위</h4><p>모평균의 추정은 모집단이 정규분포를 따르는 경우만, 모비율의 추정은 표본의 크기가 충분히 큰 경우만 다룹니다. 계산이 복잡한 신뢰구간은 다루지 않으므로, √n과 √(p̂q̂/n)이 깔끔하게 떨어지는 수로 연습하면 됩니다.</p></div>
+
+</details><details class="sec"><summary><h2>6. 수능에서 묻는 방식</h2></summary>
+<p>통계 문항은 ‘어떤 확률변수가 어떤 분포를 따르는가’를 적는 데서 시작합니다. 평균과 표준편차만 바꿔 끼우면 나머지 계산은 같습니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>확률변수</th><th>평균</th><th>표준편차</th><th>분포</th></tr></thead><tbody><tr><td data-l="확률변수">횟수 X (n번의 독립시행)</td><td data-l="평균">np</td><td data-l="표준편차">√(npq)</td><td data-l="분포">B(n, p). n이 충분히 크면 근사적으로 N(np, npq)</td></tr><tr><td data-l="확률변수">정규분포를 따르는 X</td><td data-l="평균">m</td><td data-l="표준편차">σ</td><td data-l="분포">N(m, σ<sup>2</sup>)</td></tr><tr><td data-l="확률변수">표본평균 X̄</td><td data-l="평균">m</td><td data-l="표준편차">σ/√n</td><td data-l="분포">모집단이 정규분포이면 N(m, σ<sup>2</sup>/n)</td></tr><tr><td data-l="확률변수">표본비율 p̂</td><td data-l="평균">p</td><td data-l="표준편차">√(pq/n)</td><td data-l="분포">n이 충분히 크면 근사적으로 N(p, pq/n)</td></tr></tbody></table></div>
+<ol>
+<li>묻는 확률변수가 X인지 X̄인지 p̂인지 정하고 분포를 N(평균, 분산) 꼴로 적습니다.</li>
+<li>경계가 되는 값을 Z = (값 − 평균) / (표준편차)로 바꿉니다.</li>
+<li>종 모양 곡선을 그리고 구하는 부분을 칠합니다. 0을 기준으로 왼쪽과 오른쪽으로 갈라, 주어진 P(0 ≤ Z ≤ z) 값을 더하거나 0.5에서 뺍니다.</li>
+<li>추정이면 x̄ ± k × σ/√n 또는 p̂ ± k × √(p̂q̂/n)에 수를 넣습니다. 길이를 물으면 2k × σ/√n을 씁니다.</li>
+</ol>
+<h3>대칭으로 평균 찾기, 두 곡선 비교</h3>
+<p>정규분포 곡선은 직선 x = m에 대하여 대칭이므로, P(X ≤ a) = P(X ≥ b)이면 a와 b는 m에서 같은 거리에 있고 m = (a + b)/2입니다. X가 N(m, 4<sup>2</sup>)을 따르고 P(X ≤ 46) = P(X ≥ 58)이면 m = 52입니다.</p>
+<p>두 정규분포 곡선이 함께 그려진 그림에서는 대칭축의 위치로 평균의 크기를, 곡선의 높이와 폭으로 표준편차의 크기를 비교합니다. 꼭대기가 높고 폭이 좁은 쪽의 표준편차가 작습니다. 평균이 다른 두 분포의 확률은 각각 표준화해 Z의 범위로 바꾸어 비교합니다. X가 N(60, 10<sup>2</sup>), Y가 N(70, 5<sup>2</sup>)을 따를 때 P(X ≥ 80)과 P(Y ≥ 80)은 둘 다 P(Z ≥ 2)로 같습니다.</p>
+<div class="study-tip"><strong>TIP:</strong> 표준정규분포의 넓이 값은 외우지 않습니다. 문제에 주어진 값만 쓰고, 주어지지 않은 z가 나오면 표준화가 틀렸다는 신호입니다. 평균, 표준편차(분산을 넣지 않았는지), √n을 다시 확인합니다.</div>
+
+</details><details class="sec"><summary><h2>근거</h2></summary>
+<p>「2022 개정 수학과 교육과정」(교육부 고시 제2022-33호) 고등학교 「확률과 통계」 과목 ‘통계’ 영역의 성취기준 [12확통03-01](확률변수와 확률분포), [12확통03-02](이산확률변수의 기댓값과 표준편차), [12확통03-03](이항분포), [12확통03-04](정규분포, 이항분포와의 관계), [12확통03-05](모집단과 표본, 표본추출), [12확통03-06](표본평균과 모평균, 표본비율과 모비율의 관계), [12확통03-07](모평균 및 모비율의 추정)과 그 성취기준 해설·적용 시 고려 사항(이항분포의 평균과 분산 공식의 증명은 다루지 않음 / 정규분포의 확률은 표준정규분포로 바꾸어 구함 / 표본추출은 임의추출로 제한 / 모평균의 추정은 모집단이 정규분포인 경우만, 모비율의 추정은 표본의 크기가 충분히 큰 경우만 / 복잡한 신뢰구간 계산은 다루지 않음)에 맞추어 썼습니다.</p></details>
+<div class="nms-stepband"><b>③ 확인하기</b><span>조건이 바뀐 문제로 확인 — 막히면 가장 쉬운 문제부터</span></div>
+<h2>자주 나오는 함정</h2><div class="trap-list"><ul>
+<li><strong>V(aX + b)에 b를 더하거나 a만 곱하는</strong> 경우. 분산은 a<sup>2</sup>V(X)이고 b는 영향을 주지 않습니다. V(2X + 1) = 4V(X)입니다.</li>
+<li><strong>N(m, σ<sup>2</sup>)의 둘째 수를 표준편차로</strong> 읽는 경우. 둘째 수는 분산입니다. N(50, 100)이면 표준편차는 10이고, 표준화는 10으로 나눕니다.</li>
+<li><strong>표본평균을 σ로 표준화하는</strong> 경우. X̄의 표준편차는 σ/√n입니다. σ/n도 아니고 σ<sup>2</sup>/n(분산)도 아닙니다.</li>
+<li><strong>P(Z ≥ a)를 P(0 ≤ Z ≤ a)로</strong> 그대로 쓰는 경우. 꼬리의 넓이는 0.5 − P(0 ≤ Z ≤ a)입니다. 곡선을 그려 칠한 부분을 확인합니다.</li>
+<li><strong>이항분포의 분산을 np로</strong> 쓰는 경우. 평균이 np, 분산이 npq입니다. 표준편차를 물었는지 분산을 물었는지도 확인합니다.</li>
+<li><strong>신뢰구간의 길이에서 2배를 빠뜨리는</strong> 경우. 길이는 2 × k × σ/√n입니다. 표본의 크기를 4배로 해야 길이가 절반이 됩니다.</li>
+<li><strong>‘모평균이 이 구간에 있을 확률이 95%’로</strong> 읽는 경우. 모평균은 고정된 수입니다. 같은 방법으로 만든 신뢰구간 가운데 약 95%가 모평균을 포함한다는 뜻입니다.</li>
+<li><strong>확률분포표에서 합이 1이라는 조건을 쓰지 않는</strong> 경우. 모르는 문자가 있으면 이 식이 첫 식입니다.</li>
+</ul></div>
+<h2 id="examples">대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>확률변수 X가 −1, 0, 1, 2의 값을 가지고 그 확률이 차례로 1/4, a, 1/4, 1/4일 때, E(4X + 3)과 V(4X + 3)을 구하시오.</summary><div class="example-sol"><p>확률의 합이 1이므로 a + 3/4 = 1, a = 1/4입니다. 네 값의 확률이 모두 1/4입니다.</p><p>E(X) = (−1 + 0 + 1 + 2)/4 = 1/2입니다.</p><p>E(X<sup>2</sup>) = (1 + 0 + 1 + 4)/4 = 3/2이므로 V(X) = 3/2 − (1/2)<sup>2</sup> = 5/4입니다.</p><p>E(4X + 3) = 4 × 1/2 + 3 = <strong>5</strong>, V(4X + 3) = 16 × 5/4 = <strong>20</strong>입니다.</p></div></details><details class="example"><summary>확률변수 X가 이항분포 B(n, p)를 따르고 E(X) = 20, σ(X) = 4일 때, n과 p의 값과 E(X<sup>2</sup>)을 구하시오.</summary><div class="example-sol"><p>np = 20이고 V(X) = npq = 4<sup>2</sup> = 16입니다.</p><p>두 식을 나누면 q = 16/20 = 4/5이므로 p = <strong>1/5</strong>입니다.</p><p>n × 1/5 = 20에서 n = <strong>100</strong>입니다.</p><p>E(X<sup>2</sup>) = V(X) + {E(X)}<sup>2</sup> = 16 + 400 = <strong>416</strong>입니다.</p></div></details><details class="example"><summary>어느 공장에서 만드는 제품 한 개의 무게는 평균이 200 g, 표준편차가 4 g인 정규분포를 따른다. 이 제품 한 개의 무게가 194 g 이상 208 g 이하일 확률을 구하시오. (단, Z가 표준정규분포를 따를 때 P(0 ≤ Z ≤ 1.5) = 0.4332, P(0 ≤ Z ≤ 2) = 0.4772로 계산한다.)</summary><div class="example-sol"><p>무게를 X라 하면 X는 N(200, 4<sup>2</sup>)을 따릅니다. Z = (X − 200)/4로 표준화합니다.</p><p>194는 (194 − 200)/4 = −1.5, 208은 (208 − 200)/4 = 2에 대응합니다.</p><p>P(194 ≤ X ≤ 208) = P(−1.5 ≤ Z ≤ 2) = P(0 ≤ Z ≤ 1.5) + P(0 ≤ Z ≤ 2)입니다.</p><p>0.4332 + 0.4772 = <strong>0.9104</strong>입니다.</p></div></details><details class="example"><summary>모표준편차가 12인 정규분포를 따르는 모집단에서 크기가 36인 표본을 임의추출하여 구한 표본평균이 150이었다. 모평균 m에 대한 신뢰도 95%의 신뢰구간을 구하시오. 또 같은 신뢰도에서 신뢰구간의 길이를 절반으로 줄이려면 표본의 크기를 얼마로 해야 하는지 구하시오. (단, Z가 표준정규분포를 따를 때 P(|Z| ≤ 1.96) = 0.95로 계산한다.)</summary><div class="example-sol"><p>σ/√n = 12/6 = 2입니다.</p><p>150 − 1.96 × 2 ≤ m ≤ 150 + 1.96 × 2이므로 <strong>146.08 ≤ m ≤ 153.92</strong>입니다. 길이는 2 × 1.96 × 2 = 7.84입니다.</p><p>길이는 σ/√n에 비례하므로, 절반이 되려면 √n이 2배, 곧 n이 4배가 되어야 합니다. 표본의 크기는 36 × 4 = <strong>144</strong>입니다.</p><p>검산: n = 144이면 σ/√n = 12/12 = 1이고 길이는 2 × 1.96 × 1 = 3.92로 7.84의 절반입니다.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>평균은 “가운데가 어디인가”, 표준편차는 “얼마나 퍼졌는가”입니다. 정규분포는 이 두 수만 알면 정해지고, 어떤 값이든 “평균에서 표준편차의 몇 배 떨어졌나”(Z)로 바꾸어 넓이를 읽습니다.</p><ul><li>n번 던져 일어난 횟수는 이항분포이고, 평균은 np입니다.</li><li>여러 개의 평균은 낱개보다 덜 흔들립니다. 표준편차가 σ/√n으로 줄어듭니다.</li><li>신뢰구간은 “표본평균 ± 여유”입니다. 표본을 많이 뽑을수록 여유가 줄어듭니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>풀이 순서는 (1) 묻는 확률변수가 X, X̄, p̂ 가운데 무엇인지 정하기 (2) 평균과 표준편차를 적어 분포를 N(평균, 분산)으로 쓰기 (3) 경계값을 표준화하기 (4) 곡선을 그려 0을 기준으로 넓이를 나누기 (5) 주어진 값으로 계산하기입니다. 이항분포가 주어지면 np와 npq를 구해 정규분포로 옮긴 뒤 같은 순서를 따릅니다.</p><p>미지수를 묻는 문항은 표준화한 Z의 경계가 주어진 z 값과 같다는 식을 세웁니다. P(X ≤ a) = P(X ≥ b) 꼴은 대칭으로 평균을 먼저 구합니다. 추정 문항은 신뢰구간의 양 끝을 더하면 2x̄, 빼면 길이 2k × σ/√n이라는 두 식으로 x̄, n, σ 가운데 모르는 것을 구합니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>확률변수와 그 평균·분산·표준편차를 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"확률변수와 그 평균·분산·표준편차를 짝지으세요.","pairs":[{"term":"B(n, p)의 평균","def":"np"},{"term":"B(n, p)의 분산","def":"np(1−p)"},{"term":"V(aX+b)","def":"a²V(X)"},{"term":"표준화","def":"Z=(X−m)/σ"},{"term":"표본평균 X̄의 표준편차","def":"σ/√n"},{"term":"표본비율 p̂의 표준편차","def":"√(p(1−p)/n)"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"확률변수 X가 이항분포 B(100, 1/5)을 따를 때 평균과 분산은?","choices":["평균 20, 분산 16","평균 20, 분산 4","평균 5, 분산 16","평균 20, 분산 80"],"answer":0},{"q":"E(X)=3, V(X)=2일 때 V(2X+1)의 값은?","choices":["4","5","9","8"],"answer":3},{"q":"X가 정규분포 N(50, 10²)을 따를 때 X=70을 표준화한 Z의 값은?","choices":["20","0.2","2","7"],"answer":2},{"q":"모표준편차가 σ인 모집단에서 크기 n인 표본을 임의추출할 때 표본평균의 표준편차는?","choices":["σ","σ/√n","σ/n","σ²/n"],"answer":1},{"q":"같은 신뢰도에서 표본의 크기를 4배로 하면 모평균의 신뢰구간의 길이는?","choices":["1/2배가 된다","1/4배가 된다","2배가 된다","변하지 않는다"],"answer":0}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 수학 전 시험지에서 이 파트로 분류된 <strong>37문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:d3">📝 통계 모아 풀기 →</a></p>
+
+<div class="pager"><a href="08-probability.html">← 확률</a><a href="10-strategy.html">수능 수학 실전 전략 →</a></div>
+</main></div>
+</body></html>

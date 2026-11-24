@@ -10,7 +10,7 @@
   // === 과목 색인 (index.html 에서 추출, 정렬 유지) ===
   var SUBJECTS = [
     {"n": "수능 국어", "e": "CSAT Korean", "d": "독서·문학·화법·작문·언어 파트 정리, 예시문항·기출 채점", "u": "aboutSuneungKorean/index.html", "c": "수능", "a": "#b45309"},
-    {"n": "수능 수학", "e": "CSAT Math", "d": "대수·미적분Ⅰ 6파트, 예시문항·기출 30문항 채점", "u": "aboutSuneungMath/index.html", "c": "수능", "a": "#7c3aed"},
+    {"n": "수능 수학", "e": "CSAT Math", "d": "대수·미적분Ⅰ·확률과 통계 9파트, 예시문항·기출 30문항 채점", "u": "aboutSuneungMath/index.html", "c": "수능", "a": "#7c3aed"},
     {"n": "수능 영어", "e": "CSAT English", "d": "듣기·독해 유형 7파트, 기출 채점·듣기 대본", "u": "aboutSuneungEnglish/index.html", "c": "수능", "a": "#2563eb"},
     {"n": "수능 한국사", "e": "CSAT Korean History", "d": "시대별 9파트, 모션 노트 54장면, 영토 변화 지도, 암기법", "u": "aboutSuneungHistory/index.html", "c": "수능", "a": "#be123c"},
     {"n": "수능 통합사회", "e": "CSAT Integrated Social Studies", "d": "통합사회1·2 단원별 정리, 평가원 예시문항 풀어보기·해설", "u": "aboutSuneungIntSocial/index.html", "c": "수능", "a": "#c2410c"},

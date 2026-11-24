@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>확률 — 수능 수학</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<link rel="stylesheet" href="../../shared/practice-simple.css">
+<script defer src="../../shared/practice-simple.js"></script>
+<link rel="stylesheet" href="../../shared/sections.css">
+<script defer src="../../shared/sections.js"></script>
+<link rel="stylesheet" href="../../shared/study-style.css">
+<script defer src="../../shared/study-style.js"></script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5b7e3f1c91c242e3baa66c5d377d7a53"}'></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><a href="../../my-style.html" class="hub-back-link my-style-link">🙋 내 성향</a><h3>수학 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li class="grp">대수</li>
+<li><a href="01-exp-log.html">1. 지수와 로그</a></li>
+<li><a href="02-trig.html">2. 삼각함수</a></li>
+<li><a href="03-sequence.html">3. 수열</a></li>
+<li class="grp">미적분Ⅰ</li>
+<li><a href="04-limit.html">4. 함수의 극한과 연속</a></li>
+<li><a href="05-diff.html">5. 미분</a></li>
+<li><a href="06-integral.html">6. 적분</a></li>
+<li class="grp">확률과 통계</li>
+<li><a href="07-counting.html">7. 경우의 수</a></li>
+<li><a href="08-probability.html" style="color:var(--accent);font-weight:600;">8. 확률</a></li>
+<li><a href="09-statistics.html">9. 통계</a></li>
+<li class="grp">전략</li>
+<li><a href="10-strategy.html">10. 수능 수학 실전 전략</a></li>
+<li><a href="../motion.html">🎬 모션 노트</a></li>
+<li><a href="../summary.html">📌 한눈에 요약</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+<li><a href="../study-style.html">🧭 논리형 공부법</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>확률</h1><p class="authors">Part 8 · 확률과 통계</p><p class="affiliation">수학적 확률과 통계적 확률·덧셈정리·여사건·조건부확률·독립·독립시행</p></header>
+
+<div class="nms-stepband"><b>① 틀 잡기</b><span>30초 — ‘짧게 보기’만 먼저. 더 필요할 때 아래를 펼치기</span></div>
+<section class="nmq" aria-label="짧게 보기">
+<div class="nmq-h"><b>⚡ 짧게 보기</b><span>30초</span></div>
+<p class="nmq-one">확률은 ‘전체 가운데 몇’. 조건이 붙으면 전체를 그 조건으로 줄인다.</p>
+<ol class="nmq-flow"><li>사건에 A, B 이름을 붙이고 묻는 것이 ∩·∪·| 중 무엇인지 적기</li><li>적어도 → 1 − (하나도 없을 확률)</li><li>‘~일 때’ → 그 줄의 합계가 분모</li><li>n번 반복 → <sub>n</sub>C<sub>r</sub> p<sup>r</sup>(1 − p)<sup>n−r</sup></li></ol>
+<p class="nmq-keys-h">확률 계산은 이 다섯으로</p><dl class="nmq-keys"><div><dt>덧셈정리</dt><dd>P(A∪B) = P(A) + P(B) − P(A∩B)</dd></div><div><dt>여사건</dt><dd>P(A<sup>C</sup>) = 1 − P(A)</dd></div><div><dt>조건부확률</dt><dd>P(B|A) = P(A∩B) / P(A)</dd></div><div><dt>곱셈정리</dt><dd>P(A∩B) = P(A) × P(B|A)</dd></div><div><dt>독립</dt><dd>P(A∩B) = P(A) × P(B)</dd></div></dl>
+<p class="nmq-ex"><b>예</b><span>주사위 3번, 3의 배수가 정확히 2번 → <sub>3</sub>C<sub>2</sub> × (1/3)<sup>2</sup> × (2/3) = <mark>2/9</mark></span></p>
+<p class="nmq-trap"><b>조심</b><span>배반(동시에 안 일어남)과 독립(서로 영향 없음)은 다르다 — 배반이면 P(A∩B) = 0</span></p>
+
+</section>
+<section class="nmm" aria-label="이렇게 외우기">
+<div class="nmq-h"><b>🧠 이렇게 외우기</b><span>소리 내어 한 번</span></div>
+<div class="nmm-list"><div class="nmm-item"><p class="nmm-t">표지어 → 도구</p>
+<p class="nmm-say"><b>또는</b>은 더하고 빼기, <b>적어도</b>는 1에서 빼기, <b>~일 때</b>는 나누기, <b>차례로</b>는 곱하기</p>
+<dl class="nmm-map"><div><dt>또는</dt><dd>덧셈정리 — 겹친 P(A∩B)를 한 번 뺀다</dd></div><div><dt>적어도</dt><dd>여사건 — 1 − (하나도 없을 확률)</dd></div><div><dt>~일 때</dt><dd>조건부확률 — 조건의 합계가 분모</dd></div><div><dt>차례로</dt><dd>곱셈정리 — P(A) × P(B|A)</dd></div></dl>
+</div></div>
+</section>
+
+
+<p><a class="cta sm" href="../summary.html#p8">📌 이 파트 한눈에 요약 →</a></p>
+<div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="stat-row"><div class="stat"><b>3.2</b><span>회당 문항 수</span></div><div class="stat"><b>10.8점</b><span>회당 배점</span></div><div class="stat"><b>2~4</b><span>회차별 범위</span></div><div class="stat"><b>61</b><span>최근 19회 누적</span></div></div>
+<p class="stat-note">수능 2022~2028학년도 + 6·9월 모의평가 19회(570문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>확률은 <strong>전체 가운데 몇인가</strong>를 묻는 한 가지 질문입니다. 달라지는 것은 ‘전체’를 무엇으로 잡느냐입니다. 조건이 붙으면 전체가 그 조건으로 줄어들고(조건부확률), 서로 영향을 주지 않으면 곱하기만 하면 됩니다(독립). 수능에서는 문장을 사건 기호로 옮기는 일, 표로 갈라 조건부확률을 읽는 일, 같은 시행을 반복한 횟수의 확률을 구하는 일을 묻습니다. 기출 풀어보기에서는 23~30번이 확률과 통계 문항입니다.</p>
+
+<div class="sec-bar"><span>본문 7절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
+<details class="sec"><summary><h2>1. 시행과 사건, 확률의 두 가지 뜻</h2></summary>
+<p>같은 조건에서 반복할 수 있고 결과가 우연에 따라 정해지는 실험이나 관찰을 <strong>시행</strong>이라고 합니다. 시행에서 일어날 수 있는 모든 결과의 집합을 표본공간이라 하고 S로 적습니다. 표본공간의 부분집합이 <strong>사건</strong>입니다. 사건을 집합으로 보면 ‘또는’은 합집합 A∪B, ‘그리고’는 교집합 A∩B, ‘A가 일어나지 않는다’는 여집합 A<sup>C</sup>가 됩니다. A<sup>C</sup>를 A의 <strong>여사건</strong>이라고 합니다. A∩B = ∅이어서 동시에 일어날 수 없는 두 사건은 서로 <strong>배반사건</strong>이라고 합니다.</p>
+<p>확률은 두 가지 길로 정합니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th></th><th>수학적 확률</th><th>통계적 확률</th></tr></thead><tbody><tr><td data-l="">정하는 법</td><td data-l="수학적 확률">경우의 수의 비 n(A) / n(S)</td><td data-l="통계적 확률">시행을 많이 반복했을 때 상대도수가 가까워지는 값</td></tr><tr><td data-l="">전제</td><td data-l="수학적 확률">각 결과가 일어날 가능성이 같은 정도로 기대된다</td><td data-l="통계적 확률">같은 조건에서 시행을 충분히 많이 반복한다</td></tr><tr><td data-l="">예</td><td data-l="수학적 확률">주사위에서 3의 배수의 눈: 2/6 = 1/3</td><td data-l="통계적 확률">윷짝 하나를 1000번 던져 평평한 면이 600번 나왔다: 0.6으로 본다</td></tr></tbody></table></div>
+<div class="formula">P(A) = n(A) / n(S) = (사건 A가 일어나는 경우의 수) / (일어날 수 있는 모든 경우의 수)</div>
+<p>두 확률은 따로 놀지 않습니다. 주사위를 던지는 횟수를 늘리면 3의 배수의 눈이 나온 상대도수는 1/3에 가까워집니다. 윷짝이나 불량률처럼 경우의 수로 따질 수 없는 상황에서는 상대도수를 확률로 씁니다.</p>
+<p>수학적 확률의 전제는 ‘같은 정도로 기대된다’입니다. 주사위 두 개를 던질 때 눈의 합은 2부터 12까지 11가지이지만, 합이 8일 확률은 1/11이 아닙니다. 같은 정도로 기대되는 것은 (첫째 눈, 둘째 눈)의 36가지입니다. 합이 8인 것은 (2, 6), (3, 5), (4, 4), (5, 3), (6, 2)의 5가지이므로 확률은 5/36입니다.</p>
+<div class="warning-box"><strong>함정:</strong> 분모와 분자는 같은 기준으로 셉니다. 흰 공 3개, 검은 공 2개에서 2개를 꺼낼 때 둘 다 흰 공일 확률은 조합으로 세면 <sub>3</sub>C<sub>2</sub> / <sub>5</sub>C<sub>2</sub> = 3/10이고, 순서를 두어 세어도 (3 × 2) / (5 × 4) = 3/10으로 같습니다. 한쪽만 순서를 두면 틀립니다. 색이 같은 공이라도 확률을 구할 때는 공 하나하나를 서로 다른 것으로 봅니다. 그래야 각 경우가 같은 정도로 기대됩니다.</div>
+
+</details><details class="sec"><summary><h2>2. 확률의 기본 성질, 덧셈정리, 여사건</h2></summary>
+<div class="formula">0 ≤ P(A) ≤ 1<br>P(S) = 1, &nbsp; P(∅) = 0</div>
+<p>n(A)가 0 이상 n(S) 이하이기 때문입니다. 반드시 일어나는 사건의 확률이 1, 절대로 일어나지 않는 사건의 확률이 0입니다. 계산한 값이 1보다 크거나 음수이면 겹쳐 세었거나 잘못 뺀 것입니다.</p>
+<div class="formula">P(A∪B) = P(A) + P(B) − P(A∩B)<br>A, B가 배반사건이면 P(A∪B) = P(A) + P(B)</div>
+<p>이 덧셈정리는 원소의 개수에 대한 식 n(A∪B) = n(A) + n(B) − n(A∩B)를 n(S)로 나눈 것입니다. 둘 다에 속한 부분이 두 번 더해졌으므로 한 번 뺍니다. 배반이면 겹치는 부분이 없어 뺄 것이 없습니다.</p>
+<p>1부터 20까지의 수가 하나씩 적힌 카드 20장에서 한 장을 뽑을 때 2의 배수 또는 3의 배수가 나올 확률을 구합니다. 2의 배수는 10장, 3의 배수는 6장, 둘 다인 6의 배수는 6, 12, 18의 3장입니다. 10/20 + 6/20 − 3/20 = 13/20입니다.</p>
+<div class="formula">P(A<sup>C</sup>) = 1 − P(A)</div>
+<p>A와 A<sup>C</sup>는 배반이고 합치면 S이므로 P(A) + P(A<sup>C</sup>) = 1입니다. ‘적어도 하나’, ‘~ 이상’, ‘~가 아닌’처럼 직접 세면 경우가 많은 사건은 여사건으로 돌립니다.</p>
+<p>남학생 4명, 여학생 3명 가운데 3명을 뽑을 때 여학생이 적어도 한 명 뽑힐 확률을 구합니다. 여사건은 ‘3명 모두 남학생’이고 확률은 <sub>4</sub>C<sub>3</sub> / <sub>7</sub>C<sub>3</sub> = 4/35입니다. 따라서 1 − 4/35 = 31/35입니다. 직접 세면 여학생이 1명, 2명, 3명인 경우 18 + 12 + 1 = 31가지를 따로 구해야 합니다.</p>
+<div class="study-tip"><strong>TIP:</strong> ‘적어도 하나’의 여사건은 ‘하나도 없다’입니다. ‘A 또는 B’의 여사건은 ‘A도 아니고 B도 아니다’입니다. 여사건을 말로 한 번 적은 다음 계산합니다.</div>
+
+</details><details class="sec"><summary><h2>3. 조건부확률</h2></summary>
+<p>사건 A가 일어났다는 것을 알 때 사건 B가 일어날 확률을 <strong>조건부확률</strong>이라 하고 P(B|A)로 적습니다. P(A) &gt; 0일 때 다음과 같이 정합니다.</p>
+<div class="formula">P(B|A) = P(A∩B) / P(A) = n(A∩B) / n(A)</div>
+<p>뜻은 ‘전체를 A로 줄인다’입니다. A가 일어났다는 정보가 들어오면 A 밖의 결과는 더 볼 필요가 없습니다. 새 전체는 A이고, 그 안에서 B이기도 한 부분 A∩B의 비율을 구합니다.</p>
+<p>주사위를 한 번 던질 때 A를 ‘3 이상의 눈’, B를 ‘짝수의 눈’이라 하면 A = {3, 4, 5, 6}, B = {2, 4, 6}, A∩B = {4, 6}입니다.</p>
+<div class="formula">P(B|A) = n(A∩B) / n(A) = 2/4 = 1/2<br>P(A|B) = n(A∩B) / n(B) = 2/3</div>
+<p>분자는 같고 분모가 다릅니다. P(B|A)와 P(A|B)는 다른 값입니다. 세로줄 | 뒤에 있는 사건이 분모, 곧 줄어든 전체입니다.</p>
+<h3>표로 읽기</h3>
+<p>조건부확률 문제는 대부분 2 × 2 표로 정리됩니다. 학생 100명을 조사한 다음 표에서 한 명을 임의로 뽑습니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th></th><th>안경을 쓴다</th><th>쓰지 않는다</th><th>합계</th></tr></thead><tbody><tr><td data-l="">남학생</td><td data-l="안경을 쓴다">24</td><td data-l="쓰지 않는다">36</td><td data-l="합계">60</td></tr><tr><td data-l="">여학생</td><td data-l="안경을 쓴다">20</td><td data-l="쓰지 않는다">20</td><td data-l="합계">40</td></tr><tr><td data-l="">합계</td><td data-l="안경을 쓴다">44</td><td data-l="쓰지 않는다">56</td><td data-l="합계">100</td></tr></tbody></table></div>
+<ul>
+<li>뽑은 학생이 여학생일 때, 그 학생이 안경을 쓴 학생일 확률: 여학생 줄만 봅니다. 20/40 = 1/2.</li>
+<li>뽑은 학생이 안경을 쓴 학생일 때, 그 학생이 여학생일 확률: 안경을 쓴 칸만 봅니다. 20/44 = 5/11.</li>
+<li>뽑은 학생이 안경을 쓴 여학생일 확률: 조건이 없으므로 전체가 분모입니다. 20/100 = 1/5.</li>
+</ul>
+<p>‘~일 때’, ‘~인 것을 알았을 때’가 조건입니다. 그 말이 가리키는 줄이나 칸의 합계가 분모가 됩니다. 세 답이 모두 같은 칸 20에서 나오지만 분모가 40, 44, 100으로 다릅니다.</p>
+<div class="info-card"><h4>조건은 원인이 아니라 정보입니다</h4><p>P(B|A)는 A가 B보다 먼저 일어났다는 뜻도, A가 B의 원인이라는 뜻도 아닙니다. 두 번째로 꺼낸 공이 흰 공일 때 첫 번째 공이 흰 공이었을 확률처럼, 나중 일을 조건으로 앞의 일을 물을 수 있습니다. ‘알려진 것’이 세로줄 뒤에, ‘묻는 것’이 앞에 옵니다.</p></div>
+
+</details><details class="sec"><summary><h2>4. 확률의 곱셈정리</h2></summary>
+<div class="formula">P(A∩B) = P(A) × P(B|A) = P(B) × P(A|B)</div>
+<p>조건부확률의 정의에서 분모를 넘긴 식입니다. ‘A가 일어나고, 그 상태에서 B가 일어난다’를 차례로 곱합니다. 꺼낸 것을 다시 넣지 않아 둘째 확률이 바뀌는 문제를 이 식이 처리합니다.</p>
+<p>제비 10개 가운데 당첨 제비가 3개 있습니다. 갑과 을이 차례로 하나씩 뽑고, 뽑은 제비는 다시 넣지 않습니다.</p>
+<ul>
+<li>둘 다 당첨: 3/10 × 2/9 = 1/15.</li>
+<li>갑은 당첨이 아니고 을은 당첨: 7/10 × 3/9 = 7/30.</li>
+<li>을이 당첨: 위 두 경우가 배반이므로 더합니다. 1/15 + 7/30 = 2/30 + 7/30 = 3/10.</li>
+</ul>
+<p>을이 당첨될 확률은 갑과 같은 3/10입니다. 뽑는 순서는 당첨 확률을 바꾸지 않습니다.</p>
+<h3>전체를 갈라 더하고, 거꾸로 묻기</h3>
+<p>사건 B의 확률을 바로 구하기 어려우면 A가 일어난 경우와 일어나지 않은 경우로 가릅니다. 두 경우는 배반이므로 더합니다.</p>
+<div class="formula">P(B) = P(A∩B) + P(A<sup>C</sup>∩B) = P(A)P(B|A) + P(A<sup>C</sup>)P(B|A<sup>C</sup>)</div>
+<p>수능형 문항은 이 값을 분모로 삼아 조건부확률을 다시 묻습니다. 주머니 A에는 흰 공 3개와 검은 공 2개, 주머니 B에는 흰 공 1개와 검은 공 4개가 들어 있습니다. 두 주머니 가운데 하나를 임의로 골라 공 하나를 꺼냅니다. 각 주머니를 고를 확률은 1/2입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th></th><th>흰 공</th><th>검은 공</th><th>합계</th></tr></thead><tbody><tr><td data-l="">주머니 A</td><td data-l="흰 공">1/2 × 3/5 = 3/10</td><td data-l="검은 공">1/2 × 2/5 = 2/10</td><td data-l="합계">1/2</td></tr><tr><td data-l="">주머니 B</td><td data-l="흰 공">1/2 × 1/5 = 1/10</td><td data-l="검은 공">1/2 × 4/5 = 4/10</td><td data-l="합계">1/2</td></tr><tr><td data-l="">합계</td><td data-l="흰 공">4/10</td><td data-l="검은 공">6/10</td><td data-l="합계">1</td></tr></tbody></table></div>
+<p>꺼낸 공이 흰 공일 확률은 3/10 + 1/10 = 2/5입니다. 꺼낸 공이 흰 공일 때 그 공이 주머니 A에서 나왔을 확률은 흰 공 칸만 보아 (3/10) / (4/10) = 3/4입니다. 표의 칸에는 곱셈정리로 구한 P(A∩B) 꼴의 값을 적고, 조건부확률은 칸을 합계로 나누어 읽습니다. 사람 수로 된 표와 읽는 법이 같습니다.</p>
+
+</details><details class="sec"><summary><h2>5. 독립과 종속, 독립시행</h2></summary>
+<p>사건 A가 일어났는지가 B의 확률에 영향을 주지 않을 때, 곧 P(B|A) = P(B)일 때 두 사건은 서로 <strong>독립</strong>이라고 합니다. 독립이 아니면 <strong>종속</strong>입니다. 이 조건을 곱셈정리에 넣으면 판정식이 나옵니다.</p>
+<div class="formula">A, B가 서로 독립 ⇔ P(A∩B) = P(A) × P(B)</div>
+<p>독립인지는 느낌이 아니라 이 식의 양변을 계산해 판단합니다. 주사위를 한 번 던질 때 A = {2, 4, 6}(짝수), B = {3, 6}(3의 배수), C = {4, 5, 6}(4 이상)이라 하겠습니다.</p>
+<ul>
+<li>A와 B: A∩B = {6}이므로 P(A∩B) = 1/6입니다. P(A)P(B) = 1/2 × 1/3 = 1/6입니다. 같으므로 독립입니다.</li>
+<li>A와 C: A∩C = {4, 6}이므로 P(A∩C) = 1/3입니다. P(A)P(C) = 1/2 × 1/2 = 1/4입니다. 다르므로 종속입니다.</li>
+</ul>
+<p>A와 B가 독립이면 A와 B<sup>C</sup>도 독립입니다. P(A∩B<sup>C</sup>) = P(A) − P(A∩B) = P(A) − P(A)P(B) = P(A){1 − P(B)} = P(A)P(B<sup>C</sup>)이기 때문입니다. 같은 이유로 A<sup>C</sup>와 B, A<sup>C</sup>와 B<sup>C</sup>도 독립입니다.</p>
+<div class="warning-box"><strong>함정:</strong> 배반과 독립은 다른 말입니다. 배반은 ‘동시에 일어나지 않는다’(P(A∩B) = 0)이고, 독립은 ‘서로 영향을 주지 않는다’(P(A∩B) = P(A)P(B))입니다. 확률이 0이 아닌 두 사건이 배반이면 P(A)P(B) &gt; 0 = P(A∩B)이므로 오히려 종속입니다. 한쪽이 일어나면 다른 쪽은 일어날 수 없다는 강한 영향을 주고 있습니다.</div>
+<h3>독립시행</h3>
+<p>동전이나 주사위를 여러 번 던지는 것처럼, 같은 시행을 반복하고 각 시행의 결과가 서로 독립인 것을 <strong>독립시행</strong>이라고 합니다. 한 번의 시행에서 사건 A가 일어날 확률이 p일 때, n번의 독립시행에서 A가 정확히 r번 일어날 확률은 다음과 같습니다.</p>
+<div class="formula"><sub>n</sub>C<sub>r</sub> p<sup>r</sup> (1 − p)<sup>n−r</sup> &nbsp; (r = 0, 1, 2, …, n)</div>
+<p>이유는 두 단계입니다. A가 r번, A가 아닌 것이 (n − r)번 일어나는 특정한 순서 하나의 확률은 각 시행이 독립이므로 곱해서 p<sup>r</sup>(1 − p)<sup>n−r</sup>입니다. 그런 순서는 n번 가운데 A가 일어날 r번의 자리를 고르는 <sub>n</sub>C<sub>r</sub>가지이고, 서로 배반이므로 더합니다.</p>
+<p>주사위를 3번 던질 때 3의 배수의 눈이 정확히 2번 나올 확률은 p = 1/3이므로 <sub>3</sub>C<sub>2</sub> × (1/3)<sup>2</sup> × (2/3) = 3 × 1/9 × 2/3 = 2/9입니다. 적어도 한 번 나올 확률은 여사건으로 1 − (2/3)<sup>3</sup> = 19/27입니다.</p>
+<p>점수나 위치로 묻는 문항은 횟수로 바꾸는 식을 먼저 세웁니다. 동전을 6번 던져 앞면이 나오면 +2만큼, 뒷면이 나오면 −1만큼 움직이는 점이 원점에서 출발해 3에 있을 확률을 구합니다. 앞면이 a번이면 2a − (6 − a) = 3에서 a = 3입니다. <sub>6</sub>C<sub>3</sub> × (1/2)<sup>6</sup> = 20/64 = 5/16입니다.</p>
+<div class="warning-box"><strong>함정:</strong> 꺼낸 것을 다시 넣지 않으면 독립시행이 아닙니다. 매번 확률이 달라지므로 곱셈정리나 조합의 비로 구합니다. ‘꺼낸 공을 다시 넣는다’, ‘주사위나 동전을 던진다’가 독립시행의 표지입니다.</div>
+
+</details><details class="sec"><summary><h2>6. 수능에서 묻는 방식</h2></summary>
+<p>확률 문항은 문장을 기호로 옮기는 순간 절반이 풀립니다. 문장의 표지와 도구를 짝지어 둡니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>문장의 표지</th><th>도구</th><th>식</th></tr></thead><tbody><tr><td data-l="문장의 표지">또는, ~이거나</td><td data-l="도구">덧셈정리</td><td data-l="식">P(A) + P(B) − P(A∩B)</td></tr><tr><td data-l="문장의 표지">적어도, ~ 이상, ~가 아닌</td><td data-l="도구">여사건</td><td data-l="식">1 − P(A<sup>C</sup>)</td></tr><tr><td data-l="문장의 표지">~일 때, ~임을 알았을 때</td><td data-l="도구">조건부확률</td><td data-l="식">P(A∩B) / P(A)</td></tr><tr><td data-l="문장의 표지">차례로, 이어서(다시 넣지 않음)</td><td data-l="도구">곱셈정리</td><td data-l="식">P(A) × P(B|A)</td></tr><tr><td data-l="문장의 표지">서로 독립이다</td><td data-l="도구">독립의 판정식</td><td data-l="식">P(A∩B) = P(A)P(B)</td></tr><tr><td data-l="문장의 표지">n번 반복한다(던진다, 다시 넣는다)</td><td data-l="도구">독립시행</td><td data-l="식"><sub>n</sub>C<sub>r</sub> p<sup>r</sup>(1 − p)<sup>n−r</sup></td></tr></tbody></table></div>
+<ol>
+<li>사건에 이름(A, B)을 붙이고, 묻는 것이 P(A∩B)인지 P(B|A)인지 P(A∪B)인지 적습니다.</li>
+<li>같은 정도로 기대되는 ‘모든 경우’를 정합니다. 분모가 흔들리면 답도 흔들립니다.</li>
+<li>경우가 갈리면 표나 가지로 나누어 칸마다 곱셈정리로 확률을 적습니다.</li>
+<li>조건부확률이면 조건이 가리키는 줄의 합계를 분모로 둡니다.</li>
+<li>구한 값이 0과 1 사이인지, 갈라 놓은 경우의 확률을 모두 더하면 1인지 확인합니다.</li>
+</ol>
+<p>식으로만 주는 문항도 같은 도구로 풉니다. P(A) = 1/2, P(B) = 1/3이고 A, B가 독립이면 P(A∩B) = 1/6이고 P(A∪B) = 1/2 + 1/3 − 1/6 = 2/3입니다. 배반이면 P(A∩B) = 0이므로 P(A∪B) = 5/6입니다. ‘독립’과 ‘배반’이라는 한 단어가 교집합의 값을 정합니다.</p>
+<div class="info-card"><h4>범위</h4><p>이 과목은 두 사건의 배반과 독립을 중심으로 다룹니다. 세 개 이상의 사건이 서로 배반이거나 서로 독립인 복잡한 상황은 다루지 않습니다.</p></div>
+
+</details><details class="sec"><summary><h2>근거</h2></summary>
+<p>「2022 개정 수학과 교육과정」(교육부 고시 제2022-33호) 고등학교 「확률과 통계」 과목 ‘확률’ 영역의 성취기준 [12확통02-01](확률의 개념과 기본 성질), [12확통02-02](덧셈정리), [12확통02-03](여사건의 확률), [12확통02-04](조건부확률), [12확통02-05](사건의 독립과 종속), [12확통02-06](곱셈정리)과 그 성취기준 해설·적용 시 고려 사항(용어와 기호: 시행, 통계적 확률, 수학적 확률, 여사건, 배반사건, 조건부확률, 종속, 독립, 독립시행, P(A), P(B|A) / 조건부확률을 시간 순서나 인과 관계로 해석하지 않음 / 세 사건 이상이 서로 배반이거나 독립인 복잡한 문제는 다루지 않음)에 맞추어 썼습니다.</p></details>
+<div class="nms-stepband"><b>③ 확인하기</b><span>조건이 바뀐 문제로 확인 — 막히면 가장 쉬운 문제부터</span></div>
+<h2>자주 나오는 함정</h2><div class="trap-list"><ul>
+<li><strong>같은 정도로 기대되지 않는 결과를 같은 확률로</strong> 두는 경우. 주사위 두 개의 눈의 합은 11가지이지만 확률은 36가지의 순서쌍으로 셉니다. 합이 8일 확률은 5/36입니다.</li>
+<li><strong>P(B|A)와 P(A|B)를 바꾸는</strong> 경우. 세로줄 뒤의 사건이 분모입니다. 문장에서 ‘~일 때’가 붙은 쪽이 조건입니다.</li>
+<li><strong>배반과 독립을 같은 말로</strong> 쓰는 경우. 배반은 P(A∩B) = 0, 독립은 P(A∩B) = P(A)P(B)입니다. 확률이 0이 아닌 두 사건이 배반이면 종속입니다.</li>
+<li><strong>덧셈정리에서 겹치는 부분을 빼지 않는</strong> 경우. 배반이라는 말이 없으면 P(A∩B)를 반드시 확인합니다.</li>
+<li><strong>다시 넣지 않는데 독립시행의 식을</strong> 쓰는 경우. 꺼낼 때마다 확률이 달라지면 곱셈정리나 조합의 비로 구합니다.</li>
+<li><strong>독립시행에서 <sub>n</sub>C<sub>r</sub>을 빠뜨리는</strong> 경우. p<sup>r</sup>(1 − p)<sup>n−r</sup>은 순서 하나의 확률이고, 그런 순서가 <sub>n</sub>C<sub>r</sub>가지입니다.</li>
+<li><strong>여사건을 잘못 잡는</strong> 경우. ‘적어도 하나’의 여사건은 ‘하나도 없다’이고, ‘2개 이상’의 여사건은 ‘0개 또는 1개’입니다.</li>
+<li><strong>분모와 분자를 다른 기준으로</strong> 세는 경우. 분모를 조합으로 세었으면 분자도 조합으로, 순서를 두었으면 분자도 순서를 둡니다.</li>
+</ul></div>
+<h2 id="examples">대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>흰 공 4개와 검은 공 3개가 들어 있는 주머니에서 공 3개를 동시에 꺼낼 때, 흰 공이 2개 이상일 확률을 구하시오.</summary><div class="example-sol"><p>전체 경우의 수는 <sub>7</sub>C<sub>3</sub> = 35입니다.</p><p>흰 공 2개와 검은 공 1개: <sub>4</sub>C<sub>2</sub> × <sub>3</sub>C<sub>1</sub> = 6 × 3 = 18가지.</p><p>흰 공 3개: <sub>4</sub>C<sub>3</sub> = 4가지.</p><p>두 경우는 배반이므로 더해 (18 + 4) / 35 = <strong>22/35</strong>입니다.</p><p>검산: 흰 공이 1개 이하인 경우는 <sub>4</sub>C<sub>1</sub> × <sub>3</sub>C<sub>2</sub> + <sub>3</sub>C<sub>3</sub> = 12 + 1 = 13가지이고, 22 + 13 = 35로 전체와 맞습니다.</p></div></details><details class="example"><summary>두 사건 A, B에 대하여 P(A) = 1/2, P(B) = 1/3, P(A∪B) = 2/3일 때, P(B|A)를 구하고 A와 B가 독립인지 판단하시오.</summary><div class="example-sol"><p>덧셈정리에서 P(A∩B) = P(A) + P(B) − P(A∪B) = 1/2 + 1/3 − 2/3 = 1/6입니다.</p><p>P(B|A) = P(A∩B) / P(A) = (1/6) / (1/2) = <strong>1/3</strong>입니다.</p><p>P(A)P(B) = 1/2 × 1/3 = 1/6 = P(A∩B)이므로 A와 B는 <strong>독립</strong>입니다. P(B|A) = P(B) = 1/3인 것으로도 확인됩니다.</p></div></details><details class="example"><summary>어느 공장에서 기계 A는 전체 제품의 60%, 기계 B는 40%를 만든다. A가 만든 제품의 2%, B가 만든 제품의 5%가 불량품이다. 전체 제품에서 임의로 고른 한 개가 불량품일 때, 이 제품이 기계 A에서 만든 것일 확률을 구하시오.</summary><div class="example-sol"><p>칸마다 곱셈정리로 확률을 적습니다.</p><p>A가 만들었고 불량: 0.6 × 0.02 = 0.012.</p><p>B가 만들었고 불량: 0.4 × 0.05 = 0.020.</p><p>불량품일 확률은 두 경우의 합 0.012 + 0.020 = 0.032입니다.</p><p>구하는 조건부확률은 0.012 / 0.032 = <strong>3/8</strong>입니다. A가 더 많이 만들지만 불량률이 낮아서 절반에 못 미칩니다.</p></div></details><details class="example"><summary>주사위 한 개를 4번 던질 때, 3의 배수의 눈이 2번 이상 나올 확률을 구하시오.</summary><div class="example-sol"><p>한 번 던질 때 3의 배수의 눈이 나올 확률은 p = 1/3이고, 4번의 독립시행입니다.</p><p>여사건은 ‘0번 또는 1번’입니다.</p><p>0번: (2/3)<sup>4</sup> = 16/81.</p><p>1번: <sub>4</sub>C<sub>1</sub> × (1/3) × (2/3)<sup>3</sup> = 4 × 8/81 = 32/81.</p><p>따라서 1 − 16/81 − 32/81 = 33/81 = <strong>11/27</strong>입니다.</p><p>검산: 2번 24/81, 3번 8/81, 4번 1/81을 더해도 33/81입니다.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>확률은 “전체 가운데 몇”입니다. ‘~일 때’라는 말이 붙으면 전체를 그 조건에 맞는 것만으로 줄이고, 그 안에서 다시 “몇”을 셉니다.</p><ul><li>‘또는’은 더하되 겹친 부분을 한 번 뺍니다.</li><li>‘적어도’는 1에서 ‘하나도 없을 확률’을 뺍니다.</li><li>‘차례로’는 곱하되, 둘째 확률은 첫째가 일어난 뒤의 상황으로 구합니다.</li><li>독립은 “상대가 일어나든 말든 내 확률이 그대로”라는 뜻입니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>풀이 순서는 (1) 사건에 이름을 붙이고 묻는 것을 기호로 적기 (2) 같은 정도로 기대되는 전체를 정하기 (3) 경우가 갈리면 표나 가지로 나누어 칸마다 P(A∩B) 꼴의 값을 적기 (4) 조건부확률이면 조건이 가리키는 합계로 나누기 (5) 모든 칸의 합이 1인지 확인하기입니다.</p><p>독립시행 문항은 점수·위치·개수 조건을 ‘성공 횟수 r’에 대한 식으로 바꾸는 것이 먼저입니다. 가능한 r이 여러 개이면 각각의 확률을 구해 더하고, 가짓수가 많으면 여사건을 씁니다. 독립인지 묻는 문항은 P(A∩B)와 P(A)P(B)를 각각 계산해 비교하는 것 말고 다른 판단 근거를 쓰지 않습니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>확률의 말과 식을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"확률의 말과 식을 짝지으세요.","pairs":[{"term":"수학적 확률","def":"n(A)/n(S)"},{"term":"통계적 확률","def":"상대도수가 가까워지는 값"},{"term":"배반사건","def":"A∩B=∅"},{"term":"독립","def":"P(A∩B)=P(A)P(B)"},{"term":"조건부확률 P(B|A)","def":"P(A∩B)/P(A)"},{"term":"독립시행 n번 중 r번","def":"ₙCᵣ pʳ(1−p)ⁿ⁻ʳ"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"주사위 두 개를 동시에 던질 때 두 눈의 수의 합이 5일 확률은?","choices":["1/11","5/36","1/12","1/9"],"answer":3},{"q":"P(A)=0.5, P(B)=0.4, P(A∩B)=0.2일 때 P(A∪B)는?","choices":["0.9","0.2","0.7","0.3"],"answer":2},{"q":"P(A)=0.4, P(A∩B)=0.1일 때 P(B|A)는?","choices":["0.04","0.25","0.5","0.3"],"answer":1},{"q":"두 사건 A, B가 서로 독립일 때 항상 성립하는 것은?","choices":["P(A∩B)=P(A)P(B)","P(A∩B)=0","P(A∪B)=P(A)+P(B)","P(A)=P(B)"],"answer":0},{"q":"동전을 4번 던질 때 앞면이 정확히 2번 나올 확률은?","choices":["1/2","1/4","1/16","3/8"],"answer":3}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 수학 전 시험지에서 이 파트로 분류된 <strong>61문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:d2">📝 확률 모아 풀기 →</a></p>
+
+<div class="pager"><a href="07-counting.html">← 경우의 수</a><a href="09-statistics.html">통계 →</a></div>
+</main></div>
+</body></html>

@@ -176,7 +176,7 @@ ${aside(spec, c.file, 1)}
 <header class="paper-header"><h1>${c.title}</h1><p class="authors">Part ${i + 1} · ${c.unit}</p><p class="affiliation">${c.sub}</p></header>
 ${short ? "" : `${stat}\n${c.lead}`}
 ${styleCard(spec, c)}
-${spec.maps ? `<details class="mg-wrap"${short ? "" : " open"}><summary>📌 이 파트 한눈에 요약 맵</summary>${mapOf(spec, i)}</details>` : ""}
+${spec.maps && spec.maps[i] ? `<details class="mg-wrap"${short ? "" : " open"}><summary>📌 이 파트 한눈에 요약 맵</summary>${mapOf(spec, i)}</details>` : ""}
 ${sumCta}
 ${spec.styles ? stepBand("②", "이해하기", "본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기") : ""}
 ${short ? `${stat}\n${c.lead}` : ""}

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>경우의 수 — 수능 수학</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../shared/light-theme.css">
+<script defer src="../../shared/i18n.js"></script>
+<script defer src="../../shared/support.js"></script>
+<script defer src="../../shared/search.js"></script>
+<script defer src="../../shared/difficulty.js"></script>
+<link rel="stylesheet" href="../../shared/practice-simple.css">
+<script defer src="../../shared/practice-simple.js"></script>
+<link rel="stylesheet" href="../../shared/sections.css">
+<script defer src="../../shared/sections.js"></script>
+<link rel="stylesheet" href="../../shared/study-style.css">
+<script defer src="../../shared/study-style.js"></script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5b7e3f1c91c242e3baa66c5d377d7a53"}'></script>
+</head>
+<body><div class="layout">
+<aside><a href="../../index.html" class="hub-back-link">↑ 통합 허브</a><a href="../../my-style.html" class="hub-back-link my-style-link">🙋 내 성향</a><h3>수학 목차</h3><ol>
+<li><a href="../index.html">표지 · 범위와 로드맵</a></li>
+<li class="grp">대수</li>
+<li><a href="01-exp-log.html">1. 지수와 로그</a></li>
+<li><a href="02-trig.html">2. 삼각함수</a></li>
+<li><a href="03-sequence.html">3. 수열</a></li>
+<li class="grp">미적분Ⅰ</li>
+<li><a href="04-limit.html">4. 함수의 극한과 연속</a></li>
+<li><a href="05-diff.html">5. 미분</a></li>
+<li><a href="06-integral.html">6. 적분</a></li>
+<li class="grp">확률과 통계</li>
+<li><a href="07-counting.html" style="color:var(--accent);font-weight:600;">7. 경우의 수</a></li>
+<li><a href="08-probability.html">8. 확률</a></li>
+<li><a href="09-statistics.html">9. 통계</a></li>
+<li class="grp">전략</li>
+<li><a href="10-strategy.html">10. 수능 수학 실전 전략</a></li>
+<li><a href="../motion.html">🎬 모션 노트</a></li>
+<li><a href="../summary.html">📌 한눈에 요약</a></li>
+<li><a href="../practice.html">📝 수능 풀어보기</a></li>
+<li><a href="../study-style.html">🧭 논리형 공부법</a></li>
+</ol></aside>
+<main>
+<header class="paper-header"><h1>경우의 수</h1><p class="authors">Part 7 · 확률과 통계</p><p class="affiliation">중복순열·같은 것이 있는 순열·중복조합·이항정리</p></header>
+
+<div class="nms-stepband"><b>① 틀 잡기</b><span>30초 — ‘짧게 보기’만 먼저. 더 필요할 때 아래를 펼치기</span></div>
+<section class="nmq" aria-label="짧게 보기">
+<div class="nmq-h"><b>⚡ 짧게 보기</b><span>30초</span></div>
+<p class="nmq-one">‘순서를 따지나’와 ‘또 뽑아도 되나’ 두 질문이면 식이 하나로 정해진다.</p>
+<ol class="nmq-flow"><li>대상이 서로 다른지 같은지부터 표시</li><li>나열·자리·함숫값 → 순서 있음, 묶음·개수 → 순서 없음</li><li>또 고를 수 있으면 → 중복순열이나 중복조합</li><li>이웃 → 묶기, 적어도 → 전체에서 빼기, 1개 이상 → 먼저 나눠 주기</li></ol>
+<p class="nmq-keys-h">세는 식 넷</p><dl class="nmq-keys"><div><dt>중복순열</dt><dd><sub>n</sub>Π<sub>r</sub> = n<sup>r</sup> — 자리마다 n가지</dd></div><div><dt>같은 것이 있는 순열</dt><dd>n!/(p! q! … r!) — 겹친 만큼 나누기</dd></div><div><dt>중복조합</dt><dd><sub>n</sub>H<sub>r</sub> = <sub>n+r−1</sub>C<sub>r</sub> — ○ r개와 칸막이 n − 1개</dd></div><div><dt>이항정리의 일반항</dt><dd><sub>n</sub>C<sub>r</sub> a<sup>n−r</sup>b<sup>r</sup></dd></div></dl>
+<p class="nmq-ex"><b>예</b><span>x + y + z = 5의 음이 아닌 정수해 → <sub>3</sub>H<sub>5</sub> = <sub>7</sub>C<sub>5</sub> = <mark>21개</mark></span></p>
+<p class="nmq-trap"><b>조심</b><span>함수의 개수는 (공역 크기)<sup>(정의역 크기)</sup> — 고르는 쪽이 지수</span></p>
+
+</section>
+<section class="nmm" aria-label="이렇게 외우기">
+<div class="nmq-h"><b>🧠 이렇게 외우기</b><span>소리 내어 한 번</span></div>
+<div class="nmm-list"><div class="nmm-item"><p class="nmm-t">상자 3개에 공 5개 — 공이 다르면 Π, 같으면 H</p>
+<p class="nmm-say"><b>다른</b> 공은 <b>공마다 고르기</b>, <b>같은</b> 공은 <b>칸막이</b></p>
+<dl class="nmm-map"><div><dt>서로 다른 공 5개</dt><dd>3<sup>5</sup> = 243</dd></div><div><dt>같은 공 5개</dt><dd><sub>3</sub>H<sub>5</sub> = <sub>7</sub>C<sub>5</sub> = 21</dd></div><div><dt>같은 공, 빈 상자 없이</dt><dd><sub>3</sub>H<sub>2</sub> = 6</dd></div></dl>
+</div>
+<div class="nmm-item"><p class="nmm-t">이항계수의 합</p>
+<p class="nmm-say">1을 넣으면 <b>2<sup>n</sup></b>, −1을 넣으면 <b>0</b></p>
+<dl class="nmm-map"><div><dt>모두 더하기</dt><dd><sub>n</sub>C<sub>0</sub> + <sub>n</sub>C<sub>1</sub> + … + <sub>n</sub>C<sub>n</sub> = 2<sup>n</sup></dd></div><div><dt>번갈아 빼기</dt><dd><sub>n</sub>C<sub>0</sub> − <sub>n</sub>C<sub>1</sub> + … = 0</dd></div><div><dt>n = 5</dt><dd>1 + 5 + 10 + 10 + 5 + 1 = 32</dd></div></dl>
+</div></div>
+</section>
+
+
+<p><a class="cta sm" href="../summary.html#p7">📌 이 파트 한눈에 요약 →</a></p>
+<div class="nms-stepband"><b>② 이해하기</b><span>본문은 절 제목만 보입니다 — 지금 필요한 절만 펼쳐 ‘왜’를 두 번 물으며 읽기</span></div>
+<div class="stat-row"><div class="stat"><b>2.8</b><span>회당 문항 수</span></div><div class="stat"><b>8.8점</b><span>회당 배점</span></div><div class="stat"><b>2~4</b><span>회차별 범위</span></div><div class="stat"><b>54</b><span>최근 19회 누적</span></div></div>
+<p class="stat-note">수능 2022~2028학년도 + 6·9월 모의평가 19회(570문항) 기준. 문항 본문 키워드로 분류한 값이라 ±1문항 오차가 있을 수 있습니다.</p>
+<p>경우의 수는 공식보다 <strong>무엇을 세는지 가르는 일</strong>이 먼저입니다. 뽑은 순서를 구별하는지, 같은 것을 다시 뽑을 수 있는지, 대상이 서로 다른지 같은지를 정하면 식은 하나로 정해집니다. 수능에서는 함수의 개수, 문자 나열, 방정식의 정수해, 전개식의 계수로 모습을 바꿔 묻습니다. 이 장의 세기는 다음 장에서 확률의 분모와 분자가 됩니다. 기출 풀어보기에서는 23~30번이 확률과 통계 문항입니다.</p>
+
+<div class="sec-bar"><span>본문 7절 · 제목을 누르면 펼쳐집니다</span><button type="button" class="sec-all" data-sec-all aria-pressed="false">모두 펼치기</button></div>
+<details class="sec"><summary><h2>1. 네 가지 세기 — 순서와 중복으로 가릅니다</h2></summary>
+<p>경우의 수는 두 법칙에서 출발합니다. 동시에 일어나지 않는 두 사건은 경우의 수를 더하고(합의 법칙), 잇달아 일어나는 두 사건은 곱합니다(곱의 법칙). 이 장의 공식은 모두 곱의 법칙을 상황에 맞게 정리한 것입니다.</p>
+<p>서로 다른 n개에서 r개를 뽑는 방법은 두 질문으로 넷으로 나뉩니다. <strong>뽑은 순서를 구별하는가</strong>, 그리고 <strong>같은 것을 다시 뽑을 수 있는가</strong>입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th></th><th>중복 없음</th><th>중복 허락</th></tr></thead><tbody><tr><td data-l="">순서 있음(나열)</td><td data-l="중복 없음">순열 <sub>n</sub>P<sub>r</sub> = n! / (n − r)!</td><td data-l="중복 허락">중복순열 <sub>n</sub>Π<sub>r</sub> = n<sup>r</sup></td></tr><tr><td data-l="">순서 없음(선택)</td><td data-l="중복 없음">조합 <sub>n</sub>C<sub>r</sub> = n! / {r! (n − r)!}</td><td data-l="중복 허락">중복조합 <sub>n</sub>H<sub>r</sub> = <sub>n+r−1</sub>C<sub>r</sub></td></tr></tbody></table></div>
+<p>왼쪽 열의 순열과 조합은 공통수학1에서 배운 내용입니다. 이 과목에서는 오른쪽 열의 두 가지와 ‘같은 것이 있는 순열’, 이항정리를 새로 다룹니다. 서로 다른 5개에서 2개를 뽑는 수로 네 칸을 채워 보면 차이가 보입니다.</p>
+<div class="formula"><sub>5</sub>P<sub>2</sub> = 5 × 4 = 20, &nbsp; <sub>5</sub>Π<sub>2</sub> = 5<sup>2</sup> = 25<br><sub>5</sub>C<sub>2</sub> = 10, &nbsp; <sub>5</sub>H<sub>2</sub> = <sub>6</sub>C<sub>2</sub> = 15</div>
+<p>25 − 20 = 5는 같은 것을 두 번 뽑은 다섯 가지입니다. 15 − 10 = 5도 같은 다섯 가지입니다. 중복을 허락하면 ‘같은 것끼리 뽑은 경우’만큼 늘어납니다. 20 = 10 × 2!인 것은 뽑은 2개를 줄 세우는 방법이 2!가지이기 때문입니다. 순서를 구별하면 조합의 수에 줄 세우는 수가 곱해집니다.</p>
+<div class="study-tip"><strong>TIP:</strong> 문제를 읽으면 식을 쓰기 전에 두 가지를 여백에 적습니다. ‘순서: 있다/없다’, ‘중복: 된다/안 된다’. 이 두 줄이 정해지지 않은 채 공식을 고르면 맞아도 우연입니다.</div>
+
+</details><details class="sec"><summary><h2>2. 중복순열</h2></summary>
+<p>서로 다른 n개에서 <strong>중복을 허락하여</strong> r개를 택해 일렬로 나열하는 것을 중복순열이라 하고, 그 수를 <sub>n</sub>Π<sub>r</sub>로 적습니다.</p>
+<div class="formula"><sub>n</sub>Π<sub>r</sub> = n<sup>r</sup></div>
+<p>이유는 곱의 법칙입니다. 첫째 자리에 올 수 있는 것이 n가지입니다. 같은 것을 또 쓸 수 있으므로 둘째 자리도 n가지이고, r째 자리까지 모두 n가지입니다. 그래서 n을 r번 곱합니다. 순열과 달리 r이 n보다 커도 됩니다.</p>
+<p>숫자 1, 2, 3으로 만드는 네 자리 수는 <sub>3</sub>Π<sub>4</sub> = 3<sup>4</sup> = 81개입니다. 자리가 4개이고 자리마다 3가지입니다. <strong>‘고르는 쪽’의 개수가 지수, ‘골라지는 후보’의 개수가 밑</strong>입니다.</p>
+<h3>함수의 개수</h3>
+<p>집합 X = {1, 2, 3}에서 Y = {a, b, c, d}로 가는 함수는 X의 원소마다 함숫값을 하나씩 정하면 만들어집니다. 1의 함숫값이 4가지, 2도 4가지, 3도 4가지이므로 4<sup>3</sup> = 64개입니다. 서로 다른 편지 5통을 우체통 3개에 넣는 방법도 같은 구조입니다. 편지마다 우체통을 하나 고르므로 3<sup>5</sup> = 243가지입니다.</p>
+<div class="warning-box"><strong>함정:</strong> 함수의 개수를 3<sup>4</sup> = 81로 쓰는 실수가 많습니다. 고르는 주체는 정의역의 원소입니다. 정의역의 원소가 3개이므로 3번 고르고, 고를 때마다 공역의 4가지가 후보입니다. (공역의 크기)<sup>(정의역의 크기)</sup>입니다.</div>
+<h3>자리에 조건이 붙을 때</h3>
+<p>자리마다 후보의 수가 다르면 n<sup>r</sup> 대신 곱의 법칙을 그대로 씁니다. 숫자 0, 1, 2, 3에서 중복을 허락해 세 자리 자연수를 만들면, 백의 자리는 0을 뺀 3가지이고 십의 자리와 일의 자리는 4가지씩이므로 3 × 4 × 4 = 48개입니다. 이 가운데 짝수는 일의 자리가 0 또는 2이므로 3 × 4 × 2 = 24개입니다.</p>
+<p>‘적어도 하나’는 전체에서 ‘하나도 없는 경우’를 뺍니다. 1, 2, 3으로 만든 네 자리 수 81개 가운데 1이 적어도 한 번 나오는 수는, 2와 3만으로 만든 2<sup>4</sup> = 16개를 뺀 65개입니다.</p>
+
+</details><details class="sec"><summary><h2>3. 같은 것이 있는 순열</h2></summary>
+<p>n개 가운데 같은 것이 각각 p개, q개, …, r개 있을 때(p + q + … + r = n), 이들을 모두 일렬로 나열하는 경우의 수는 다음과 같습니다.</p>
+<div class="formula">n! / (p! × q! × … × r!)</div>
+<p>이유는 ‘구별해서 센 뒤 겹친 만큼 나누기’입니다. a, a, b, b, b를 a<sub>1</sub>, a<sub>2</sub>, b<sub>1</sub>, b<sub>2</sub>, b<sub>3</sub>으로 구별하면 5! = 120가지로 나열됩니다. 번호를 지우면 a끼리 자리를 바꾼 2!가지, b끼리 자리를 바꾼 3!가지가 모두 같은 배열이 됩니다. 한 배열이 2! × 3! = 12번씩 세어졌으므로 120 / 12 = 10가지입니다.</p>
+<p>같은 답을 조합으로도 얻습니다. 다섯 자리 가운데 a가 들어갈 두 자리를 고르면 나머지는 b로 정해지므로 <sub>5</sub>C<sub>2</sub> = 10입니다. 같은 것이 두 종류뿐이면 ‘자리 고르기’로 읽어도 됩니다.</p>
+<p>BANANA의 여섯 글자는 A가 3개, N이 2개, B가 1개입니다. 나열하는 방법은 6! / (3! × 2! × 1!) = 720 / 12 = 60가지입니다. 두 N이 이웃하는 배열은 NN을 한 덩어리로 보아 B, A, A, A, (NN)의 다섯 개를 나열하므로 5! / 3! = 20가지입니다.</p>
+<h3>최단 경로</h3>
+<p>가로 4칸, 세로 3칸인 바둑판 모양 도로의 왼쪽 아래 A에서 오른쪽 위 B까지 최단 거리로 가려면 오른쪽으로 4번, 위로 3번 움직여야 합니다. 오른쪽을 →, 위쪽을 ↑로 적으면 → 4개와 ↑ 3개를 나열하는 것과 같습니다.</p>
+<div class="formula">7! / (4! × 3!) = 35</div>
+<p>A에서 오른쪽으로 2칸, 위로 1칸 떨어진 지점 P를 반드시 지나는 길은 A→P와 P→B를 따로 세어 곱합니다. A→P는 3! / (2! × 1!) = 3가지입니다. P→B는 남은 오른쪽 2칸, 위 2칸이므로 4! / (2! × 2!) = 6가지입니다. 합쳐 3 × 6 = 18가지입니다. P를 지나지 않는 길은 35 − 18 = 17가지입니다.</p>
+<h3>순서가 정해진 것은 같은 것으로 봅니다</h3>
+<p>a, b, c, d, e를 나열할 때 a가 b보다 앞에 오는 경우를 셉니다. a와 b가 들어갈 두 자리가 정해지면 앞자리에 a, 뒷자리에 b를 넣는 방법은 하나뿐입니다. 따라서 a, b를 같은 문자 ○, ○로 보고 ○, ○, c, d, e를 나열한 수 5! / 2! = 60과 같습니다. 전체 120가지의 절반이라는 사실과도 맞습니다.</p>
+<div class="warning-box"><strong>함정:</strong> 같은 것이 있는데 n!로 세면 답이 몇 배로 커집니다. 반대로 ‘서로 다른 공’, ‘번호가 적힌 카드’처럼 구별되는 것을 같은 것으로 보고 나누어도 안 됩니다. 문제에서 ‘같은 종류’, ‘구별하지 않는’이라는 말을 먼저 찾습니다.</div>
+
+</details><details class="sec"><summary><h2>4. 중복조합</h2></summary>
+<p>서로 다른 n개에서 중복을 허락하여 r개를 택하는 조합을 중복조합이라 하고, 그 수를 <sub>n</sub>H<sub>r</sub>로 적습니다. 순서는 구별하지 않고 ‘각각을 몇 개씩 택했는가’만 봅니다.</p>
+<div class="formula"><sub>n</sub>H<sub>r</sub> = <sub>n+r−1</sub>C<sub>r</sub></div>
+<p>이유는 칸막이입니다. 세 종류 a, b, c에서 5개를 택하는 한 방법, 예를 들어 a 2개·b 0개·c 3개를 ○○||○○○로 적습니다. ○는 택한 물건, |는 종류를 가르는 칸막이입니다. 종류가 3개이면 칸막이는 2개입니다. 택하는 방법 하나가 ○ 5개와 | 2개를 나열한 것 하나에 정확히 대응합니다. 같은 것이 있는 순열로 세면 7! / (5! × 2!) = <sub>7</sub>C<sub>5</sub> = 21가지입니다. 일반적으로 ○ r개와 칸막이 (n − 1)개를 나열하므로 <sub>n+r−1</sub>C<sub>r</sub>입니다.</p>
+<div class="formula"><sub>3</sub>H<sub>5</sub> = <sub>7</sub>C<sub>5</sub> = <sub>7</sub>C<sub>2</sub> = 21</div>
+<h3>방정식의 정수해</h3>
+<p>방정식 x + y + z = 5를 만족하는 <strong>음이 아닌 정수</strong> x, y, z의 순서쌍은, 세 문자 x, y, z에서 중복을 허락해 5개를 택하는 것과 같습니다. x를 택한 횟수가 x의 값입니다. 따라서 <sub>3</sub>H<sub>5</sub> = 21개입니다.</p>
+<p><strong>양의 정수</strong>해는 각 문자에 1씩 먼저 나누어 줍니다. x = x′ + 1, y = y′ + 1, z = z′ + 1로 두면 x′ + y′ + z′ = 2이고 x′, y′, z′은 음이 아닌 정수입니다. <sub>3</sub>H<sub>2</sub> = <sub>4</sub>C<sub>2</sub> = 6개입니다. 직접 적어 보면 (3, 1, 1) 꼴 3개와 (2, 2, 1) 꼴 3개로 6개가 맞습니다.</p>
+<p>‘x는 2 이상’ 같은 조건도 같은 방법입니다. x + y + z = 7에서 x ≥ 2이면 x = x′ + 2로 두어 x′ + y + z = 5가 되고, 다시 21개입니다.</p>
+<h3>같은 물건 나누어 담기, 크기 순서</h3>
+<p>같은 종류의 공 6개를 서로 다른 상자 3개에 넣는 방법은 상자 3개에서 중복을 허락해 6번 택하는 것이므로 <sub>3</sub>H<sub>6</sub> = <sub>8</sub>C<sub>6</sub> = <sub>8</sub>C<sub>2</sub> = 28가지입니다. 빈 상자가 없게 하려면 상자마다 1개씩 먼저 넣고 남은 3개를 나누므로 <sub>3</sub>H<sub>3</sub> = <sub>5</sub>C<sub>3</sub> = 10가지입니다.</p>
+<p>1부터 5까지의 자연수에서 a ≤ b ≤ c를 만족하는 순서쌍 (a, b, c)는, 다섯 수에서 중복을 허락해 3개를 택한 뒤 작은 것부터 놓으면 하나로 정해집니다. <sub>5</sub>H<sub>3</sub> = <sub>7</sub>C<sub>3</sub> = 35개입니다. 등호가 없는 a &lt; b &lt; c이면 중복이 없으므로 <sub>5</sub>C<sub>3</sub> = 10개입니다.</p>
+<div class="warning-box"><strong>함정:</strong> <sub>n</sub>H<sub>r</sub>의 n과 r을 바꿔 넣는 실수가 많습니다. n은 ‘서로 다른 종류의 수’(상자, 문자, 사람)이고 r은 ‘택하는 횟수’(같은 공의 개수, 우변의 값)입니다. <sub>3</sub>H<sub>5</sub> = <sub>7</sub>C<sub>5</sub> = 21이고 <sub>5</sub>H<sub>3</sub> = <sub>7</sub>C<sub>3</sub> = 35로 값이 다릅니다.</div>
+<div class="tbl-wrap"><table><thead><tr><th>상황(상자 3개, 공 5개)</th><th>세는 법</th><th>경우의 수</th></tr></thead><tbody><tr><td data-l="상황(상자 3개, 공 5개)">서로 다른 공을 서로 다른 상자에</td><td data-l="세는 법">공마다 상자를 고른다 — 중복순열</td><td data-l="경우의 수">3<sup>5</sup> = 243</td></tr><tr><td data-l="상황(상자 3개, 공 5개)">같은 공을 서로 다른 상자에</td><td data-l="세는 법">상자를 5번 택한다 — 중복조합</td><td data-l="경우의 수"><sub>3</sub>H<sub>5</sub> = 21</td></tr><tr><td data-l="상황(상자 3개, 공 5개)">같은 공을 빈 상자 없이</td><td data-l="세는 법">1개씩 먼저 넣고 남은 2개를 중복조합</td><td data-l="경우의 수"><sub>3</sub>H<sub>2</sub> = 6</td></tr></tbody></table></div>
+
+</details><details class="sec"><summary><h2>5. 이항정리와 파스칼의 삼각형</h2></summary>
+<p>자연수 n에 대하여 (a + b)<sup>n</sup>을 전개하면 다음과 같습니다. 이것이 이항정리입니다.</p>
+<div class="formula">(a + b)<sup>n</sup> = <sub>n</sub>C<sub>0</sub> a<sup>n</sup> + <sub>n</sub>C<sub>1</sub> a<sup>n−1</sup>b + … + <sub>n</sub>C<sub>r</sub> a<sup>n−r</sup>b<sup>r</sup> + … + <sub>n</sub>C<sub>n</sub> b<sup>n</sup></div>
+<p>이유는 조합입니다. (a + b)<sup>n</sup>은 (a + b)를 n개 곱한 것이고, 전개식의 각 항은 n개의 괄호에서 a나 b를 하나씩 골라 곱한 것입니다. a<sup>n−r</sup>b<sup>r</sup>은 n개의 괄호 가운데 b를 꺼낼 r개를 고를 때마다 하나씩 생기므로 모두 <sub>n</sub>C<sub>r</sub>개입니다. 이 <sub>n</sub>C<sub>r</sub>을 <strong>이항계수</strong>, <sub>n</sub>C<sub>r</sub> a<sup>n−r</sup>b<sup>r</sup>을 <strong>일반항</strong>이라고 합니다.</p>
+<p>(a + b)<sup>4</sup> = a<sup>4</sup> + 4a<sup>3</sup>b + 6a<sup>2</sup>b<sup>2</sup> + 4ab<sup>3</sup> + b<sup>4</sup>입니다. 계수 1, 4, 6, 4, 1이 <sub>4</sub>C<sub>0</sub>부터 <sub>4</sub>C<sub>4</sub>까지입니다.</p>
+<h3>특정한 항의 계수</h3>
+<p>계수 문제는 일반항을 쓰고 지수를 맞추는 한 가지 방법으로 풉니다. (x + 2)<sup>5</sup>의 일반항은 <sub>5</sub>C<sub>r</sub> x<sup>5−r</sup> 2<sup>r</sup>입니다. x<sup>3</sup>의 계수는 r = 2일 때이므로 <sub>5</sub>C<sub>2</sub> × 2<sup>2</sup> = 10 × 4 = 40입니다.</p>
+<p>(2x − 1/x)<sup>6</sup>의 일반항은 <sub>6</sub>C<sub>r</sub> (2x)<sup>6−r</sup> (−1/x)<sup>r</sup> = <sub>6</sub>C<sub>r</sub> × 2<sup>6−r</sup> × (−1)<sup>r</sup> × x<sup>6−2r</sup>입니다. 상수항은 6 − 2r = 0, 곧 r = 3일 때이고 값은 20 × 8 × (−1) = −160입니다. x 앞의 수 2와 부호 −도 함께 거듭제곱된다는 점이 핵심입니다.</p>
+<h3>파스칼의 삼각형</h3>
+<p>이항계수를 n = 1, 2, 3, … 순서로 한 줄씩 늘어놓아 삼각형 모양으로 쌓은 것이 파스칼의 삼각형입니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>n</th><th>이항계수</th><th>합</th></tr></thead><tbody><tr><td data-l="n">1</td><td data-l="이항계수">1 &nbsp; 1</td><td data-l="합">2</td></tr><tr><td data-l="n">2</td><td data-l="이항계수">1 &nbsp; 2 &nbsp; 1</td><td data-l="합">4</td></tr><tr><td data-l="n">3</td><td data-l="이항계수">1 &nbsp; 3 &nbsp; 3 &nbsp; 1</td><td data-l="합">8</td></tr><tr><td data-l="n">4</td><td data-l="이항계수">1 &nbsp; 4 &nbsp; 6 &nbsp; 4 &nbsp; 1</td><td data-l="합">16</td></tr><tr><td data-l="n">5</td><td data-l="이항계수">1 &nbsp; 5 &nbsp; 10 &nbsp; 10 &nbsp; 5 &nbsp; 1</td><td data-l="합">32</td></tr></tbody></table></div>
+<p>각 수는 바로 윗줄의 이웃한 두 수의 합이고, 줄마다 좌우 대칭입니다. 식으로는 다음과 같습니다.</p>
+<div class="formula"><sub>n</sub>C<sub>r</sub> = <sub>n−1</sub>C<sub>r−1</sub> + <sub>n−1</sub>C<sub>r</sub><br><sub>n</sub>C<sub>r</sub> = <sub>n</sub>C<sub>n−r</sub></div>
+<p>이유도 조합으로 읽습니다. n개에서 r개를 뽑을 때 특정한 하나를 포함하면 나머지 n − 1개에서 r − 1개를 뽑고, 포함하지 않으면 n − 1개에서 r개를 뽑습니다. 예를 들어 <sub>5</sub>C<sub>2</sub> = <sub>4</sub>C<sub>1</sub> + <sub>4</sub>C<sub>2</sub> = 4 + 6 = 10입니다. 좌우 대칭인 것은 ‘뽑을 r개를 정하는 일’과 ‘남길 n − r개를 정하는 일’이 같기 때문입니다.</p>
+<h3>이항계수의 합</h3>
+<p>(1 + x)<sup>n</sup> = <sub>n</sub>C<sub>0</sub> + <sub>n</sub>C<sub>1</sub> x + <sub>n</sub>C<sub>2</sub> x<sup>2</sup> + … + <sub>n</sub>C<sub>n</sub> x<sup>n</sup>에 수를 대입하면 계수끼리의 관계가 나옵니다.</p>
+<div class="formula">x = 1을 대입: <sub>n</sub>C<sub>0</sub> + <sub>n</sub>C<sub>1</sub> + <sub>n</sub>C<sub>2</sub> + … + <sub>n</sub>C<sub>n</sub> = 2<sup>n</sup><br>x = −1을 대입: <sub>n</sub>C<sub>0</sub> − <sub>n</sub>C<sub>1</sub> + <sub>n</sub>C<sub>2</sub> − … + (−1)<sup>n</sup> <sub>n</sub>C<sub>n</sub> = 0</div>
+<p>두 식을 더하고 빼면 <sub>n</sub>C<sub>0</sub> + <sub>n</sub>C<sub>2</sub> + <sub>n</sub>C<sub>4</sub> + …와 <sub>n</sub>C<sub>1</sub> + <sub>n</sub>C<sub>3</sub> + <sub>n</sub>C<sub>5</sub> + …가 각각 2<sup>n−1</sup>로 같습니다. n = 5에서 1 + 10 + 5 = 16, 5 + 10 + 1 = 16이고 전체는 32 = 2<sup>5</sup>입니다. 2<sup>n</sup>은 원소가 n개인 집합의 부분집합의 개수와도 같습니다. 원소를 0개, 1개, …, n개 뽑는 방법을 모두 더한 것이기 때문입니다.</p>
+<div class="info-card"><h4>범위</h4><p>이 과목의 이항정리는 항이 두 개인 식의 거듭제곱만 다룹니다. 항이 세 개 이상인 식의 전개 공식(다항정리)이나 허수단위가 들어간 전개는 다루지 않습니다.</p></div>
+
+</details><details class="sec"><summary><h2>6. 수능에서 묻는 방식</h2></summary>
+<p>문항은 공식의 이름을 말해 주지 않습니다. 상황을 읽고 네 가지 세기 가운데 하나로 옮기는 것이 풀이의 대부분입니다. 아래 순서로 읽습니다.</p>
+<ol>
+<li>대상이 서로 다른지 같은지 표시합니다. ‘같은 종류의 공’, ‘서로 다른 상자’처럼 문제에 적혀 있습니다.</li>
+<li>순서를 구별하는지 봅니다. 나열·자리·함숫값은 순서가 있고, 묶음·선택·개수는 순서가 없습니다.</li>
+<li>같은 것을 다시 고를 수 있는지 봅니다. 고를 수 있으면 중복순열이나 중복조합입니다.</li>
+<li>조건을 처리합니다. ‘이웃한다’는 묶기, ‘적어도’는 전체에서 빼기, ‘1개 이상’은 먼저 나누어 주기, ‘순서가 정해졌다’는 같은 것으로 보기입니다.</li>
+<li>수를 줄인 작은 예로 식을 검산합니다. 2~3개짜리로 직접 적어 보면 n과 r이 바뀐 것을 잡을 수 있습니다.</li>
+</ol>
+<h3>함수의 개수로 묻는 네 가지</h3>
+<p>X = {1, 2, 3}에서 Y = {1, 2, 3, 4}로 가는 함수 f를 조건별로 세면 네 공식이 한 번에 나옵니다.</p>
+<div class="tbl-wrap"><table><thead><tr><th>조건</th><th>세는 법</th><th>개수</th></tr></thead><tbody><tr><td data-l="조건">조건 없음</td><td data-l="세는 법">함숫값을 중복을 허락해 나열</td><td data-l="개수"><sub>4</sub>Π<sub>3</sub> = 64</td></tr><tr><td data-l="조건">서로 다른 원소의 함숫값이 서로 다르다</td><td data-l="세는 법">서로 다른 함숫값을 나열</td><td data-l="개수"><sub>4</sub>P<sub>3</sub> = 24</td></tr><tr><td data-l="조건">f(1) &lt; f(2) &lt; f(3)</td><td data-l="세는 법">함숫값 3개를 고르면 순서는 하나</td><td data-l="개수"><sub>4</sub>C<sub>3</sub> = 4</td></tr><tr><td data-l="조건">f(1) ≤ f(2) ≤ f(3)</td><td data-l="세는 법">중복을 허락해 3개를 고르면 순서는 하나</td><td data-l="개수"><sub>4</sub>H<sub>3</sub> = <sub>6</sub>C<sub>3</sub> = 20</td></tr></tbody></table></div>
+<p>조건이 섞이면 경우를 나눕니다. f(1) ≤ f(2) ≤ f(3)이면서 f(3) = 4인 함수는 f(1) ≤ f(2) ≤ 4만 남으므로 <sub>4</sub>H<sub>2</sub> = <sub>5</sub>C<sub>2</sub> = 10개입니다. 나눈 경우끼리 겹치지 않는지, 빠진 경우가 없는지를 마지막에 확인합니다.</p>
+<p>전개식 문제는 두 식의 곱으로도 나옵니다. (x + 1)(x + 2)<sup>4</sup>의 x<sup>2</sup>의 계수를 구할 때, 앞 괄호에서 x를 고르면 뒤에서 x의 계수가, 1을 고르면 뒤에서 x<sup>2</sup>의 계수가 필요합니다. (x + 2)<sup>4</sup>에서 x의 계수는 <sub>4</sub>C<sub>3</sub> × 2<sup>3</sup> = 32, x<sup>2</sup>의 계수는 <sub>4</sub>C<sub>2</sub> × 2<sup>2</sup> = 24이므로 답은 32 + 24 = 56입니다.</p>
+<div class="study-tip"><strong>TIP:</strong> 세는 대상을 한 문장으로 바꿔 말해 봅니다. ‘공마다 상자를 고른다’, ‘상자를 다섯 번 택한다’, ‘→ 4개와 ↑ 3개를 나열한다’처럼 말이 정해지면 공식은 따라옵니다.</div>
+
+</details><details class="sec"><summary><h2>근거</h2></summary>
+<p>「2022 개정 수학과 교육과정」(교육부 고시 제2022-33호) 고등학교 「확률과 통계」 과목 ‘경우의 수’ 영역의 성취기준 [12확통01-01](중복순열, 같은 것이 있는 순열), [12확통01-02](중복조합), [12확통01-03](이항정리)과 그 성취기준 적용 시 고려 사항(용어와 기호: 중복순열, 중복조합, 이항정리, 이항계수, 파스칼의 삼각형, <sub>n</sub>Π<sub>r</sub>, <sub>n</sub>H<sub>r</sub> / 다항정리와 허수단위가 포함된 이항정리는 다루지 않음)에 맞추어 썼습니다. 순열과 조합의 기본은 같은 교육과정 「공통수학1」의 내용을 필요한 만큼만 이어 썼습니다.</p></details>
+<div class="nms-stepband"><b>③ 확인하기</b><span>조건이 바뀐 문제로 확인 — 막히면 가장 쉬운 문제부터</span></div>
+<h2>자주 나오는 함정</h2><div class="trap-list"><ul>
+<li><strong>함수의 개수에서 밑과 지수를 바꾸는</strong> 경우. 정의역의 원소가 고르는 쪽이므로 (공역의 크기)<sup>(정의역의 크기)</sup>입니다. 원소 3개에서 4개로 가는 함수는 4<sup>3</sup> = 64개입니다.</li>
+<li><strong><sub>n</sub>H<sub>r</sub>의 n과 r을 바꾸는</strong> 경우. n은 서로 다른 종류의 수, r은 택하는 횟수입니다. <sub>3</sub>H<sub>5</sub> = 21, <sub>5</sub>H<sub>3</sub> = 35입니다.</li>
+<li><strong>양의 정수해를 음이 아닌 정수해의 식으로</strong> 세는 경우. 양의 정수이면 1씩 먼저 나누어 주고 남은 수로 셉니다. x + y + z = 5는 음이 아닌 정수해 21개, 양의 정수해 6개입니다.</li>
+<li><strong>같은 것이 있는데 n!로</strong> 세는 경우. 같은 것끼리 자리를 바꾼 수만큼 나눕니다. a, a, b, b, b는 120이 아니라 10가지입니다.</li>
+<li><strong>‘서로 다른 공’과 ‘같은 공’을 구별하지 않는</strong> 경우. 상자 3개에 서로 다른 공 5개를 넣으면 3<sup>5</sup> = 243, 같은 공 5개를 넣으면 <sub>3</sub>H<sub>5</sub> = 21입니다.</li>
+<li><strong>맨 앞자리에 0을 넣어</strong> 세는 경우. 자연수를 만들 때는 맨 앞자리의 후보에서 0을 뺍니다.</li>
+<li><strong>일반항에서 계수와 부호를 빠뜨리는</strong> 경우. (2x − 1/x)<sup>6</sup>의 일반항에는 2<sup>6−r</sup>과 (−1)<sup>r</sup>이 함께 붙습니다.</li>
+<li><strong>‘적어도’를 직접 세다가 겹치게 세는</strong> 경우. 전체에서 ‘하나도 없는 경우’를 빼는 쪽이 안전합니다.</li>
+</ul></div>
+<h2 id="examples">대표 예제</h2><p>눌러서 풀이를 펼치세요.</p><details class="example"><summary>숫자 0, 1, 2, 3에서 중복을 허락하여 세 개를 택해 만든 세 자리 자연수 가운데 짝수의 개수를 구하시오.</summary><div class="example-sol"><p>자리마다 후보를 셉니다. 백의 자리는 0이 올 수 없으므로 1, 2, 3의 3가지입니다.</p><p>십의 자리는 조건이 없으므로 4가지입니다. 일의 자리는 짝수가 되도록 0 또는 2의 2가지입니다.</p><p>곱의 법칙으로 3 × 4 × 2 = <strong>24</strong>개입니다. 중복이 허락되므로 앞자리에 쓴 숫자를 뒤에서 다시 써도 됩니다.</p></div></details><details class="example"><summary>문자 a, a, b, b, c를 일렬로 나열할 때, 두 a가 서로 이웃하지 않는 경우의 수를 구하시오.</summary><div class="example-sol"><p>전체는 같은 것이 있는 순열로 5! / (2! × 2!) = 30가지입니다.</p><p>두 a가 이웃하는 경우는 (aa)를 한 덩어리로 보아 (aa), b, b, c를 나열하므로 4! / 2! = 12가지입니다.</p><p>따라서 30 − 12 = <strong>18</strong>가지입니다.</p><p>검산: b, b, c를 먼저 나열하면 3! / 2! = 3가지이고, 그 사이와 양 끝의 네 자리 가운데 a가 들어갈 두 자리를 고르면 <sub>4</sub>C<sub>2</sub> = 6가지입니다. 3 × 6 = 18로 같습니다.</p></div></details><details class="example"><summary>방정식 x + y + z + w = 8을 만족하는 양의 정수 x, y, z, w의 순서쌍 (x, y, z, w)의 개수를 구하시오.</summary><div class="example-sol"><p>양의 정수이므로 네 문자에 1씩 먼저 나누어 줍니다. x = x′ + 1처럼 두면 x′ + y′ + z′ + w′ = 4이고 네 수는 음이 아닌 정수입니다.</p><p>네 문자에서 중복을 허락해 4개를 택하는 수이므로 <sub>4</sub>H<sub>4</sub> = <sub>7</sub>C<sub>4</sub> = <sub>7</sub>C<sub>3</sub> = <strong>35</strong>개입니다.</p><p>음이 아닌 정수해로 잘못 세면 <sub>4</sub>H<sub>8</sub> = <sub>11</sub>C<sub>8</sub> = 165가 되어 크게 달라집니다.</p></div></details><details class="example"><summary>(x + a/x)<sup>6</sup>의 전개식에서 x<sup>2</sup>의 계수가 60일 때, 양수 a의 값을 구하시오.</summary><div class="example-sol"><p>일반항은 <sub>6</sub>C<sub>r</sub> x<sup>6−r</sup> (a/x)<sup>r</sup> = <sub>6</sub>C<sub>r</sub> a<sup>r</sup> x<sup>6−2r</sup>입니다.</p><p>x<sup>2</sup>의 항은 6 − 2r = 2에서 r = 2입니다. 계수는 <sub>6</sub>C<sub>2</sub> a<sup>2</sup> = 15a<sup>2</sup>입니다.</p><p>15a<sup>2</sup> = 60에서 a<sup>2</sup> = 4이고, a가 양수이므로 a = <strong>2</strong>입니다.</p></div></details>
+<h2>난이도별 한 줄 정리</h2>
+<div class="difficulty-tabs">
+  <button class="difficulty-tab" data-target="easy">쉬움</button>
+  <button class="difficulty-tab" data-target="hard">고급</button>
+</div>
+<div class="difficulty-content" data-level="easy">
+  <span class="difficulty-badge easy">쉬움</span>
+<h3>한 줄</h3><p>경우의 수는 “순서를 따지나, 또 뽑아도 되나”를 정하는 일입니다. 줄을 세우면 순열, 고르기만 하면 조합이고, 같은 것을 또 써도 되면 앞에 ‘중복’이 붙습니다.</p><ul><li>중복순열은 자리마다 n가지라서 n을 r번 곱합니다.</li><li>같은 것이 있으면 다르다고 보고 센 뒤, 같은 것끼리 자리를 바꾼 수만큼 나눕니다.</li><li>중복조합은 ○와 칸막이를 한 줄로 늘어놓는 수입니다.</li><li>이항정리의 계수는 ‘괄호 n개 가운데 b를 꺼낼 r개를 고르는 수’입니다.</li></ul>
+</div>
+<div class="difficulty-content" data-level="hard">
+  <span class="difficulty-badge hard">고급</span>
+<p>풀이 순서는 (1) 대상이 서로 다른지 같은지 (2) 순서를 구별하는지 (3) 중복이 되는지를 정한 뒤 (4) 조건을 묶기·빼기·먼저 나누어 주기로 처리하고 (5) 작은 수로 검산하는 것입니다. 조건이 둘 이상이면 가장 제한이 강한 자리나 값부터 정하고, 경우를 나누었다면 서로 겹치지 않는지 확인합니다.</p><p>정수해 문제는 모든 조건을 ‘음이 아닌 정수’로 바꾸는 치환이 핵심입니다. x ≥ k이면 x = x′ + k로 두고 우변에서 k를 뺍니다. 전개식 문제는 일반항을 x의 거듭제곱 하나로 정리한 다음 지수의 방정식을 풉니다. 두 식의 곱이면 필요한 차수의 짝을 모두 찾아 더합니다.</p>
+</div>
+<h2>직접 해보기</h2>
+<p>세는 방법과 식을 짝지으세요.</p>
+<div id="nm-game-host"></div>
+<script>window.NANAMATE_GAME={"type":"matching","color":"#7c3aed","prompt":"세는 방법과 식을 짝지으세요.","pairs":[{"term":"중복순열 ₙΠᵣ","def":"nʳ"},{"term":"중복조합 ₙHᵣ","def":"ₙ₊ᵣ₋₁Cᵣ"},{"term":"같은 것이 p개, q개 있는 순열","def":"n!/(p!q!)"},{"term":"(a+b)ⁿ의 일반항","def":"ₙCᵣ aⁿ⁻ʳbʳ"},{"term":"이항계수의 합","def":"2ⁿ"},{"term":"x+y+z=5의 음이 아닌 정수해","def":"₃H₅=21"}]};</script>
+<h2>개념 확인</h2>
+<p>이 파트 핵심만 고르세요. 보기를 누르면 바로 정답이 보입니다.</p>
+<div id="nm-quiz-host"></div>
+<script>window.NANAMATE_QUIZ={"color":"#7c3aed","questions":[{"q":"서로 다른 3개에서 중복을 허락하여 4개를 택해 일렬로 나열하는 경우의 수는?","choices":["64","24","81","15"],"answer":2},{"q":"a, a, a, b, b를 일렬로 나열하는 경우의 수는?","choices":["120","10","20","12"],"answer":1},{"q":"₃H₄의 값은?","choices":["15","81","20","35"],"answer":0},{"q":"(x+1)⁶의 전개식에서 x²의 계수는?","choices":["6","12","20","15"],"answer":3},{"q":"집합 X={1,2,3}에서 Y={1,2,3,4}로 가는 함수의 개수는?","choices":["81","24","64","12"],"answer":2}]};</script>
+<h2>이 파트 기출 풀어보기</h2>
+<p>수능 수학 전 시험지에서 이 파트로 분류된 <strong>54문항</strong>을 실제 시험지 그대로 풀고, 채점과 해설까지 볼 수 있습니다.</p>
+<p><a class="cta" href="../practice.html#part:d1">📝 경우의 수 모아 풀기 →</a></p>
+
+<div class="pager"><a href="06-integral.html">← 적분</a><a href="08-probability.html">확률 →</a></div>
+</main></div>
+</body></html>
