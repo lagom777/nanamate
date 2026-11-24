@@ -1,0 +1,28 @@
+// 수능 통합사회 — 통합사회1·2 (25문항 40분, 1.5·2·2.5점). 노트는 content/iso-*.mjs, 풀어보기는 평가원 예시문항(2028-ex)
+import { note, tip, tbl, examsOf } from "./lib.mjs";
+
+// 검수를 마친 내용 파일만 여기에 적는다(쓰는 중인 파일이 섞여 들어가지 않게)
+const READY = [];
+const mods = await Promise.all(READY.map(async (n) => { try { return await import(`./content/${n}.mjs`); } catch { return { chapters: [], quick: {} }; } }));
+const chapters = mods.flatMap((m) => m.chapters).sort((a, b) => a.file.localeCompare(b.file));
+const quick = Object.assign({}, ...mods.map((m) => m.quick || {}));
+const N = examsOf("intsoc").length;
+
+export const spec = {
+  sub: "intsoc", quick, folder: "aboutSuneungIntSocial", label: "수능 통합사회", short: "통합사회", color: "#c2410c",
+  glow: "rgba(194,65,12,0.12)", border: "rgba(194,65,12,0.16)",
+  asideSub: "수능 통합사회 — 통합사회1·2 + 예시문항",
+  h1: "수능 통합사회,<br><em>단원별</em>로<br>끝까지",
+  authors: "25문항 · 40분 · 50점 · 모든 수험생 공통 · 평가원 예시문항 " + N * 25 + "문항 풀어보기",
+  affiliation: "통합사회1 5파트 · 통합사회2 5파트 · 수능 풀어보기(채점·해설)",
+  motion: false, kind: "items", qn: 25, minutes: 40,
+  practiceBlurb: `평가원 예시문항 ${N}회 ${N * 25}문항 · 단원별 모아 풀기 · 채점·해설`,
+  chapters,
+  intro: `<h2>이 노트가 다루는 것</h2>
+<p>수능 통합사회는 <strong>통합사회1·통합사회2</strong> 전 범위에서 나옵니다. 한 자료(대화·지도·그래프·사례)에 윤리·지리·역사·일반사회의 관점을 함께 묻기 때문에, 파트마다 개념 → 자료 읽는 법 → 함정 → 직접 만든 예제 → 짝짓기·퀴즈 순으로 정리했습니다.</p>
+${note("시험 구조", "25문항 · 40분 · 50점. 문항 배점은 1.5점 · 2점 · 2.5점입니다. 모든 수험생이 통합사회와 통합과학을 둘 다 봅니다.")}
+<h2>단원 구성</h2>
+${tbl(["과목", "파트"], [["통합사회1", "1 통합적 관점 · 2 인간, 사회, 환경과 행복 · 3 자연환경과 인간 · 4 문화와 다양성 · 5 생활공간과 사회"], ["통합사회2", "6 인권보장과 헌법 · 7 사회정의와 불평등 · 8 시장경제와 지속가능발전 · 9 세계화와 평화 · 10 미래와 지속가능한 삶"]])}
+${tip("선지를 읽기 전에 자료가 어느 관점(시간·공간·사회·윤리)에서 무엇을 말하는지 한 줄로 정리하세요. 사상가 문항은 ‘누가 무엇을 긍정하고 부정하는가’만 가르면 됩니다.")}`,
+  after: `<h2>풀어보기</h2><p>평가원이 공개한 <strong>수능 예시문항</strong> 문제지 ${N * 25}문항을 시험 모드(40분)와 연습 모드로 풀고 채점합니다. 문항마다 단원을 붙여 두어 파트별로 모아 풀 수 있습니다. 출처: 한국교육과정평가원 「2028학년도 대학수학능력시험 예시문항 안내」(2025년 4월).</p><p><a class="cta" href="practice.html">📝 통합사회 풀어보기 →</a></p>`,
+};

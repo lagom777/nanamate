@@ -72,7 +72,7 @@ export function head(title, depth, spec, opts = {}) {
 <link rel="stylesheet" href="${up}../shared/practice-simple.css">
 <script defer src="${up}../shared/practice-simple.js"></script>
 <link rel="stylesheet" href="${up}../shared/sections.css">
-<script defer src="${up}../shared/sections.js"></script>${terms}${spec.styles ? `\n<link rel="stylesheet" href="${up}../shared/study-style.css">\n<script defer src="${up}../shared/study-style.js"></script>` : ""}${opts.extra ? "\n" + opts.extra : ""}
+<script defer src="${up}../shared/sections.js"></script>${terms}${spec.styles || spec.quick ? `\n<link rel="stylesheet" href="${up}../shared/study-style.css">\n<script defer src="${up}../shared/study-style.js"></script>` : ""}${opts.extra ? "\n" + opts.extra : ""}
 ${BEACON}
 </head>`;
 }

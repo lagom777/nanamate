@@ -164,7 +164,7 @@
 
   /* 📅 오늘 다시 풀 오답(1·3·7일, /api/due): 과목마다 개수와 그 과목 풀어보기로 가는 길. 국어·영어(시험지형)는 목록 창(#due) */
   var SUBJECTS = [
-    ['korean', '국어', 'aboutSuneungKorean/practice.html', 1], ['mathprob', '수학', 'aboutSuneungMath/practice.html'], ['english', '영어', 'aboutSuneungEnglish/practice.html', 1], ['hist', '한국사', 'aboutSuneungHistory/practice.html'], ['intsoc', '통합사회', 'aboutSuneungIntegrated/practice-soc.html'], ['intsci', '통합과학', 'aboutSuneungIntegrated/practice-sci.html'],
+    ['korean', '국어', 'aboutSuneungKorean/practice.html', 1], ['mathprob', '수학', 'aboutSuneungMath/practice.html'], ['english', '영어', 'aboutSuneungEnglish/practice.html', 1], ['hist', '한국사', 'aboutSuneungHistory/practice.html'], ['intsoc', '통합사회', 'aboutSuneungIntSocial/practice.html'], ['intsci', '통합과학', 'aboutSuneungIntScience/practice.html'],
     // 지난 수능 복습(2027학년도까지의 선택과목): 오답이 남아 있으면 여기서도 보인다
     ['math', '수학(미적분)', 'aboutSuneungArchive/practice-math.html'], ['mathgeo', '수학(기하)', 'aboutSuneungArchive/practice-mathgeo.html'], ['phys1', '물리학Ⅰ', 'aboutSuneungPhysics1/practice.html'], ['chem1', '화학Ⅰ', 'aboutSuneungChem1/practice.html'],
     ['bio1', '생명과학Ⅰ', 'aboutSuneungBio1/practice.html'], ['earth1', '지구과학Ⅰ', 'aboutSuneungEarth1/practice.html'], ['phys2', '물리학Ⅱ', 'aboutSuneungScience2/practice-phys2.html'], ['chem2', '화학Ⅱ', 'aboutSuneungScience2/practice-chem2.html'],

@@ -12,13 +12,15 @@ import { spec as earth } from "./suneung/earth1.mjs";
 import { spec as hist } from "./suneung/hist.mjs";
 import { writeScience2 } from "./suneung/science2.mjs";
 import { writeSocial } from "./suneung/social.mjs";
-import { writeIntegrated } from "./suneung/integrated.mjs";
+import { spec as intsci } from "./suneung/intsci.mjs";
+import { spec as intsoc } from "./suneung/intsoc.mjs";
+import { writeIntegratedStubs } from "./suneung/integrated.mjs";
 import { writeArchive } from "./suneung/archive.mjs";
 
 const only = process.argv.slice(2);
 const want = (spec) => !only.length || only.some((k) => spec.folder.toLowerCase().includes(k.toLowerCase()));
-for (const s of [phys, bio, math, korean, english, chem, earth, hist]) if (want(s)) writeAll(s, s.extra || {});
+for (const s of [phys, bio, math, korean, english, chem, earth, hist, intsoc, intsci]) if (want(s)) writeAll(s, s.extra || {});
 if (!only.length || only.some((k) => "science2".includes(k.toLowerCase()))) writeScience2();
 if (!only.length || only.some((k) => "social".includes(k.toLowerCase()))) writeSocial();
-if (!only.length || only.some((k) => "integrated".includes(k.toLowerCase()))) writeIntegrated();
+if (!only.length || only.some((k) => "integrated".includes(k.toLowerCase()))) writeIntegratedStubs();
 if (!only.length || only.some((k) => "archive".includes(k.toLowerCase()))) writeArchive();

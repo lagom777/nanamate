@@ -15,7 +15,8 @@ cards=[   # 지금 수능 과목(국어·수학·영어·한국사 + 통합사�
  ('aboutSuneungMath','#7c3aed','수학','수능 수학','CSAT Math','대수·미적분Ⅰ %d파트 정리 · 예시문항·기출 %d회 %d문항 채점'%(parts('aboutSuneungMath'),n('mathprob'),n('mathprob')*30),['📄 %d파트'%parts('aboutSuneungMath'),'30문항 · 100분','📝 %d회'%n('mathprob')]),
  ('aboutSuneungEnglish','#2563eb','영어','수능 영어','CSAT English','듣기·독해 유형 %d파트 · 기출 %d회 채점 · 듣기 음성·대본'%(parts('aboutSuneungEnglish'),n('english')),['📄 %d파트'%parts('aboutSuneungEnglish'),'듣기','절대평가']),
  ('aboutSuneungHistory','#be123c','필수','수능 한국사','CSAT Korean History','시대별 9파트 정리 · 모션 노트 86장면 · 영토 지도 · 기출 %d회 채점'%n('hist'),['📄 9파트','🎬 모션 86장면','📝 기출 %d회'%n('hist')]),
- ('aboutSuneungIntegrated','#0f766e','탐구','수능 통합사회·통합과학','CSAT Integrated Social Studies &amp; Science','평가원 예시문항 풀어보기 · 해설 · 채점',['📝 2과목','25문항 · 40분','예시문항 %d문항'%(n('intsoc')*25+n('intsci')*25)]),
+ ('aboutSuneungIntSocial','#c2410c','탐구','수능 통합사회','CSAT Integrated Social Studies','통합사회1·2 %d파트 정리 · 평가원 예시문항 %d문항 풀어보기·해설'%(parts('aboutSuneungIntSocial'),n('intsoc')*25),['📄 %d파트'%parts('aboutSuneungIntSocial'),'25문항 · 40분','📝 예시문항']),
+ ('aboutSuneungIntScience','#0f766e','탐구','수능 통합과학','CSAT Integrated Science','통합과학1·2 %d파트 정리 · 평가원 예시문항 %d문항 풀어보기·해설'%(parts('aboutSuneungIntScience'),n('intsci')*25),['📄 %d파트'%parts('aboutSuneungIntScience'),'25문항 · 40분','📝 예시문항']),
  ('aboutSuneungArchive','#64748b','복습','지난 수능 복습','Past CSAT Review','2027학년도 수능까지의 선택과목 시험 · 내 풀이 기록·오답 그대로',['📝 미적분·기하','과탐·사탐']),
 ]
 def card(c,pref):

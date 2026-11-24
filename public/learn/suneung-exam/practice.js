@@ -61,7 +61,7 @@
   var SRC_KEY = 'sn:src', SRC_NAME = { csat: '수능', mock: '모의평가', all: '수능+모의평가' };
   var SRC = (function () { var v = store(SRC_KEY); return v === 'mock' || v === 'all' ? v : 'csat'; })();
   function isCsat(e) { return e.kind === 'csat'; }
-  function inSrc(e) { return SRC === 'all' || (SRC === 'csat') === isCsat(e); }
+  function inSrc(e) { return SRC === 'all' || (SRC === 'csat') === (isCsat(e) || e.kind === 'ex'); }   // 예시문항(ex)은 수능 형식이라 '수능' 쪽에 센다(통합사회·통합과학은 예시문항뿐)
   function pickedOf(id) { var d = DONE && DONE[id]; return (d && d[2]) || 0; }   // 그때 고른 답(모르면 0)
   function noteDone(exam, n, ok, ts, picked) {
     if (PAPER || !DONE || !exam || !n) return;
@@ -402,7 +402,7 @@
   /* 맨 위 이동 줄: 풀어보기 화면은 왼쪽 목차를 접으므로(pr-wide-page) 과목 목차·통합 허브로 돌아가는 길과 다른 과목 풀어보기로 가는 길을 여기 둔다.
    * 목차·허브 주소는 접힌 목차(aside)에서 읽고, 과목 목록은 풀어보기 화면이 있는 과목 전부(폴더는 public/learn 기준) */
   var NAV_SUBS = [
-    ['korean', '국어', 'aboutSuneungKorean/practice.html'], ['mathprob', '수학', 'aboutSuneungMath/practice.html'], ['english', '영어', 'aboutSuneungEnglish/practice.html'], ['hist', '한국사', 'aboutSuneungHistory/practice.html'], ['intsoc', '통합사회', 'aboutSuneungIntegrated/practice-soc.html'], ['intsci', '통합과학', 'aboutSuneungIntegrated/practice-sci.html']
+    ['korean', '국어', 'aboutSuneungKorean/practice.html'], ['mathprob', '수학', 'aboutSuneungMath/practice.html'], ['english', '영어', 'aboutSuneungEnglish/practice.html'], ['hist', '한국사', 'aboutSuneungHistory/practice.html'], ['intsoc', '통합사회', 'aboutSuneungIntSocial/practice.html'], ['intsci', '통합과학', 'aboutSuneungIntScience/practice.html']
   ];
   function navRow() {
     var aside = document.querySelector('.layout > aside'), q = function (sel) { return aside && aside.querySelector(sel); };
