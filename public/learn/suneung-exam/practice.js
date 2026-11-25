@@ -92,11 +92,25 @@
     ((window.SnAuth && SnAuth.pending && SnAuth.pending()) || []).forEach(function (r) { if (r && r.sub === SUB) noteDone(r.exam, r.q, r.ok, r.ts, r.picked); });
     doneDirty = true; saveDone();
   }
+  /* 지금 수학(mathprob)의 1~22번은 옛 수학(math · 공통+미적분, 지금은 ‘지난 수능 복습’)과 같은 문항 — 옛 페이지에서 푼 답(이 기기·계정)도 여기 기록으로 같이 쓴다 */
+  var SHARE = SUB === 'mathprob' ? { sub: 'math', max: 22 } : null;
+  function shareNote(exam, n, ok, ts, picked) { if (+n <= SHARE.max && examOf(exam)) noteDone(exam, +n, ok, ts, picked); }
+  function shareLocal() {
+    if (!SHARE || !DONE) return;
+    var od = store('sn:' + SHARE.sub + ':done') || {};
+    Object.keys(od).forEach(function (id) { var p = id.split('/'), d = od[id]; if (d) shareNote(p[0], p[1], d[0], d[1], d[2]); });
+    examList().forEach(function (e) {
+      var st = store('sn:' + SHARE.sub + ':exam:' + e.key);
+      if (st && st.g && st.ans) st.ans.forEach(function (a, i) { if (a) shareNote(e.key, i + 1, 0, st.t || 1, a); });
+    });
+    saveDone();
+  }
   /* 계정에 쌓인 풀이 기록(다른 기기에서 푼 것 포함)을 받아 합친다 */
   function doneSync() {
     if (PAPER || !meUser.id || !window.SnAuth || !SnAuth.done) return;
-    SnAuth.done(SUB).then(function (rows) {
-      (rows || []).forEach(function (r) { noteDone(r.exam, r.q, r.ok, r.ts, r.picked); });
+    Promise.all([SnAuth.done(SUB), SHARE ? SnAuth.done(SHARE.sub).catch(function () { return []; }) : []]).then(function (rr) {
+      (rr[0] || []).forEach(function (r) { noteDone(r.exam, r.q, r.ok, r.ts, r.picked); });
+      (rr[1] || []).forEach(function (r) { shareNote(r.exam, r.q, r.ok, r.ts, r.picked); });
       if (!doneDirty) return;
       saveDone();
       if (/^(part|topic):/.test(S.set) && !setTouched()) startSet(S.set);   // 아직 손대지 않았으면 받은 기록(푼 문제·고른 답)으로 다시 차린다
@@ -4087,7 +4101,7 @@
     if (start.indexOf('exam:') === 0 && !examOf(start.slice(5))) start = 'exam:' + firstKey;
     if (start.indexOf('part:') === 0 && !partName[start.slice(5)]) start = 'exam:' + firstKey;
     if (start.indexOf('topic:') === 0 && !topicName[start.slice(6)]) start = 'exam:' + firstKey;
-    loadDone();
+    loadDone(); shareLocal();
     var begin = function () { startSet(start); window.scrollTo(0, 0); };
     if (meUser.id && start.indexOf('wrong:') === 0) migrateWrong().then(begin);
     else { begin(); if (meUser.id) migrateWrong(); }
