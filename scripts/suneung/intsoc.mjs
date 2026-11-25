@@ -2,7 +2,7 @@
 import { note, tip, tbl, examsOf } from "./lib.mjs";
 
 // 검수를 마친 내용 파일만 여기에 적는다(쓰는 중인 파일이 섞여 들어가지 않게)
-const READY = [];
+const READY = ["iso-1", "iso-2", "iso-3", "iso-4"];
 const mods = await Promise.all(READY.map(async (n) => { try { return await import(`./content/${n}.mjs`); } catch { return { chapters: [], quick: {} }; } }));
 const chapters = mods.flatMap((m) => m.chapters).sort((a, b) => a.file.localeCompare(b.file));
 const quick = Object.assign({}, ...mods.map((m) => m.quick || {}));
