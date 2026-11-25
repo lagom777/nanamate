@@ -251,7 +251,7 @@ export function practicePage(spec, o = {}) {
   const ex = examsOf(sub);
   const expDir = path.join(LEARN, "suneung-exam/explain");
   const withExp = fs.existsSync(expDir)
-    ? fs.readdirSync(expDir).filter((f) => f.endsWith(`-${sub === "mathprob" ? "math" : sub}.json`)).map((f) => EXAMS.find((e) => e.key === f.replace(/-[a-z0-9]+\.json$/, "") && e[sub])).filter(Boolean)
+    ? [...new Set(fs.readdirSync(expDir).filter((f) => f.endsWith(`-${sub}.json`) || (sub === "mathprob" && f.endsWith("-math.json"))).map((f) => f.replace(/-[a-z0-9]+\.json$/, "")))].map((k) => EXAMS.find((e) => e.key === k && e[sub])).filter(Boolean)
     : [];
   // 모든 회차에 해설이 있으면 회차 이름을 늘어놓지 않는다(옛 교육과정 시험의 범위 밖 문항에는 해설이 없다)
   const allExp = withExp.length === ex.length;
