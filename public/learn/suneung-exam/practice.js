@@ -973,7 +973,7 @@
   }
   /* 문항 하나만 채점·해설 열기/접기 (시험 모드에서도 가능) */
   function toggleReveal(i) {
-    if (S.study && PAPER) { var it1 = S.items[i]; return exqKey === it1.sec + it1.n ? closeExq() : openExq(it1.sec + it1.n); }
+    if ((S.study || S.graded) && PAPER) { var it1 = S.items[i]; return exqKey === it1.sec + it1.n ? closeExq() : openExq(it1.sec + it1.n); }
     if (S.study) { S.studyHide[i] = !S.studyHide[i]; refreshCard(i); renderOmr(); return; }
     var open = !isShown(i);
     S.revealed[i] = open;
@@ -1041,7 +1041,7 @@
     if (!shown && aiNeed(hintAiId(i), function () { return hintReq(i); }).status !== 'idle') c.appendChild(el('div', { class: 'pr-explain pr-hint' }, [aiBox(hintAiId(i))]));
     if (!shown && aiRun(itemAiId(i)).status === 'ask') c.appendChild(el('div', { class: 'pr-explain pr-hint' }, [aiBox(itemAiId(i))]));
     if (shown) c.appendChild(reveal(it, i));
-    if (S.study && shown && !PAPER) cardEv(it, i, ib, c);
+    if (shown && !PAPER) cardEv(it, i, ib, c);
     return c;
   }
 
@@ -1067,7 +1067,7 @@
   function cardEv(it, i, ib, c) {
     loadEv(it.ex).then(function (map) {
       var e = map && map[it.n];
-      if (!e || !S.study || !c.isConnected) return;
+      if (!e || (!S.study && !isShown(i)) || !c.isConnected) return;
       var pct = function (b, cls, extra) {
         /* 키 큰 식(분수·극한)이 든 첫 줄은 줄 상자가 그림 위로 삐져나오기도 해서 그림 안으로 자른다 */
         var x0 = Math.max(0, b[0]), y0 = Math.max(0, b[1]), x1 = Math.min(e.w, b[0] + b[2]), y1 = Math.min(e.h, b[1] + b[3]);
@@ -1096,6 +1096,13 @@
       var box = c.querySelector('.pr-qev-list');
       if (!box) return;
       box.hidden = false;
+      var tog = el('button', { type: 'button', class: 'pr-ev-toggle', 'aria-pressed': 'true', text: '🖍 형광펜 숨기기', onclick: function () {
+        var hide = c.classList.toggle('pr-ev-hide');
+        tog.textContent = hide ? '🖍 형광펜 보기' : '🖍 형광펜 숨기기';
+        tog.setAttribute('aria-pressed', hide ? 'false' : 'true');
+        if (hide) evArrow(null);
+      } });
+      box.appendChild(tog);
       items.forEach(function (o, j) {
         var ch = el('button', { type: 'button', class: 'pr-qev-chip', 'data-j': j }, [el('b', { text: (j + 1) + '' }), ' ' + o.v.n]);
         ch.addEventListener('mouseenter', function () { if (canHover()) o.on(true); });
@@ -1125,7 +1132,7 @@
         trap.hidden = false;
       });
     }
-    if (S.study && !PAPER) box.appendChild(el('div', { class: 'pr-qev-list', hidden: true }, [el('span', { class: 'pr-exq-l', text: '문제 속 근거 — 마우스를 올리면 문제 위에 표시돼요' })]));
+    if (!PAPER) box.appendChild(el('div', { class: 'pr-qev-list', hidden: true }, [el('span', { class: 'pr-exq-l', text: '문제 속 근거 — 마우스를 올리면 문제 위에 표시돼요' })]));
     var body = el('div', { class: 'pr-exp-body', text: '해설 불러오는 중…' });
     box.appendChild(body);
     var aid = itemAiId(i);
@@ -1163,6 +1170,26 @@
   /* ───────── AI 해설·분석: 내 Anthropic API 키로 브라우저에서 바로 호출 (키는 이 브라우저에만 저장) ───────── */
   var AI_MODEL = 'claude-opus-5-5';
   var AI_SDK = 'https://cdn.jsdelivr.net/npm/@anthropic-ai/sdk@0.131.0/+esm';
+  var AI_EFFORT_KEY = 'sn:ai:effort';
+  function aiEffort() { return store(AI_EFFORT_KEY) === 'low' ? 'low' : 'high'; }
+  function aiEffortSwitch() {
+    var cur = aiEffort();
+    var row = el('div', { class: 'pr-ai-eff', role: 'group', 'aria-label': 'AI 생각 깊이' }, [
+      el('span', { class: 'pr-ai-eff-l', text: '풀이 깊이:' })
+    ]);
+    [['high', '깊게 (킬러용)'], ['low', '빠르게 (비용 절약)']].forEach(function (o) {
+      var btn = el('button', { type: 'button', class: 'pr-ai-eff-b' + (cur === o[0] ? ' on' : ''), 'aria-pressed': cur === o[0] ? 'true' : 'false', text: o[1], onclick: function () {
+        store(AI_EFFORT_KEY, o[0]);
+        Array.prototype.forEach.call(root.querySelectorAll('.pr-ai-eff-b'), function (b) {
+          var on = b.getAttribute('data-eff') === o[0];
+          b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+      } });
+      btn.setAttribute('data-eff', o[0]);
+      row.appendChild(btn);
+    });
+    return row;
+  }
   var AI_KEY = 'sn:ai:key';
   /* 로그인해 계정에 키를 저장했으면 서버(/api/claude)가 그 키로 대신 보낸다 — 키 원문은 브라우저에 없다. 아니면 이 브라우저의 키 */
   var acctKey = null;
@@ -1867,6 +1894,7 @@
         el('p', { class: 'pr-ai-ask-h', text: '🤖 AI에게 물어볼까요?' }),
         el('p', { class: 'pr-ai-ask-w', text: r.what || '같은 자료로 AI 해설을 처음부터 다시 받아요.' }),
         el('p', { class: 'pr-ai-ask-c', text: (keyMode() === 'acct' ? '계정에 넣어 둔' : '이 브라우저에 넣어 둔') + ' 내 Anthropic API 키로 요청해요(요금이 조금 들어요).' }),
+        aiEffortSwitch(),
         el('div', { class: 'pr-ai-keyrow' }, [
           el('button', { type: 'button', class: 'pr-btn pr-ai-go', text: '시작', onclick: function () { if (r.go) r.go(); } }),
           el('button', { type: 'button', class: 'pr-btn', text: '취소', onclick: function () { aiCancel(r); } })
@@ -1930,6 +1958,7 @@
     }
     if (aiCloudOn() && aiIdx && aiIdx[r.id]) foot.appendChild(el('span', { class: 'pr-ai-saved', text: '☁️ 내 계정에 저장됨 · 다른 기기에서도 보여요' }));
     else if (!aiCloudOn() && store('sn:ai:' + r.id)) foot.appendChild(el('span', { class: 'pr-ai-saved', text: '이 기기에만 저장됨 · 로그인하면 계정에도 저장돼요' }));
+    if (r.build) foot.appendChild(aiEffortSwitch());
     if (r.build) foot.appendChild(el('button', { type: 'button', class: 'pr-ai-link', text: '처음부터 다시 생성', onclick: function () { aiStart(r.id, r.build, true, null, function () { store('sn:ai:' + r.id, null); }); } }));
     var rm = el('button', { type: 'button', class: 'pr-ai-link', text: keyMode() === 'acct' ? '계정의 API 키 지우기' : 'API 키 지우기', onclick: function () {
       if (keyMode() === 'acct') SnAuth.saveAiKey(null).then(function () { acctKey = { has: false }; rm.textContent = '계정에서 키를 지웠습니다'; }).catch(function () { rm.textContent = '지우지 못했어요'; });
@@ -1963,7 +1992,7 @@
       var stream = client.beta.messages.stream({
         model: AI_MODEL, max_tokens: 64000,
         betas: ['server-side-fallback-2026-07-01'], fallbacks: 'default',
-        thinking: { type: 'adaptive' }, output_config: { effort: 'high' },
+        thinking: { type: 'adaptive' }, output_config: { effort: aiEffort() },
         system: AI_SYS,
         messages: r.msgs
       });
@@ -3472,20 +3501,30 @@
 
   /* ───────── paper 렌더 ───────── */
   function renderPaper() {
-    var m = S.meta, key = S.set.slice(5);
+    var m = S.meta, key = S.set.slice(5), evOn = !!(S.study || S.graded);
     evBoxes = []; evMap = null; closeExq();
-    if (S.study) {
-      var note = el('p', { class: 'pr-ev-note', text: '📖 정답 보기 중 — 해설·근거를 불러오는 중…' });
+    if (evOn) {
+      var prefix = S.study ? '📖 정답 보기 중' : '✅ 채점 완료';
+      var noteTxt = el('span', { text: prefix + ' — 해설·근거를 불러오는 중…' });
+      var note = el('p', { class: 'pr-ev-note' }, [noteTxt]);
       list.appendChild(note);
       loadExplain(key).then(function (map) {
-        if (S.set.slice(5) !== key || !S.study) return;
+        if (S.set.slice(5) !== key || !(S.study || S.graded)) return;
         evMap = map || null;
         if (!map) {   // 해설이 없는 회차: 눌러도 열 것이 없는 💡 단추는 지운다
-          note.textContent = '📖 정답 보기 중 — 이 회차는 지문 근거 해설이 아직 없어 정답만 표시합니다.';
+          noteTxt.textContent = prefix + ' — 이 회차는 지문 근거 해설이 아직 없어 정답만 표시합니다.';
           Array.prototype.forEach.call(root.querySelectorAll('.pr-exq'), function (b) { b.remove(); });
           return;
         }
-        note.textContent = '📖 정답 보기 중 — 노란 형광펜이 정답의 근거예요. 문항 옆 💡 단추나 답안지의 ✓ 를 누르면 그 문항의 해설과 근거만 진하게 보여요.';
+        noteTxt.textContent = prefix + ' — 노란 형광펜이 정답의 근거예요. 문항 옆 💡 단추나 답안지의 ✓ 를 누르면 그 문항의 해설과 근거만 진하게 보여요.';
+        var hide = root.classList.contains('pr-ev-hide');
+        var tog = el('button', { type: 'button', class: 'pr-ev-toggle', 'aria-pressed': hide ? 'false' : 'true', text: hide ? '🖍 형광펜 보기' : '🖍 형광펜 숨기기', onclick: function () {
+          var h = root.classList.toggle('pr-ev-hide');
+          tog.textContent = h ? '🖍 형광펜 보기' : '🖍 형광펜 숨기기';
+          tog.setAttribute('aria-pressed', h ? 'false' : 'true');
+          if (h) evArrow(null);
+        } });
+        note.appendChild(tog);
         paintEvidence(map);
       });
     }
@@ -3506,7 +3545,7 @@
         for (var n in anchors) {
           var a = anchors[n];
           if (a[0] === idx) box.appendChild(el('span', { class: 'pr-anchor', id: 'pq-' + sec + n, style: 'top:' + (a[1] / s.h * 100).toFixed(2) + '%', 'aria-hidden': 'true' }));
-          if (a[0] === idx && S.study) (function (k) { box.appendChild(el('button', { type: 'button', class: 'pr-exq', 'data-k': k, style: 'top:' + (a[1] / s.h * 100).toFixed(2) + '%', title: k.slice(1) + '번 해설과 지문 근거 보기', text: '💡 ' + k.slice(1) + '번 해설', onclick: function () { openExq(k, true); } })); })(sec + n);
+          if (a[0] === idx && evOn) (function (k) { box.appendChild(el('button', { type: 'button', class: 'pr-exq', 'data-k': k, style: 'top:' + (a[1] / s.h * 100).toFixed(2) + '%', title: k.slice(1) + '번 해설과 지문 근거 보기', text: '💡 ' + k.slice(1) + '번 해설', onclick: function () { openExq(k, true); } })); })(sec + n);
         }
         (listen && (idx < a18[0] || (idx === a18[0] && a18[1] > 40)) ? listen : wrap).appendChild(box);
       });
@@ -3654,7 +3693,7 @@
   function hotKey(it) { return it.sec ? it.sec + it.n : it.id; }
   function hotPick(q, k) {
     if (Date.now() - inkDrew < 400) return;   // 번호에서 시작해 끌어 쓴 경우
-    for (var i = 0; i < S.items.length; i++) if (hotKey(S.items[i]) === q) return S.study && PAPER ? openExq(S.items[i].sec + S.items[i].n) : S.markMode ? cycleMark(i, k) : choose(i, k);
+    for (var i = 0; i < S.items.length; i++) if (hotKey(S.items[i]) === q) return (S.study || S.graded) && PAPER ? openExq(S.items[i].sec + S.items[i].n) : S.markMode ? cycleMark(i, k) : choose(i, k);
   }
   function paintHot() {
     var at = {};
@@ -3833,7 +3872,7 @@
           onclick: function () { if (PAPER && S.markMode) cycleMark(i, k); else choose(i, k); }
         }));
       })(k);
-      if (PAPER) row.appendChild(el('button', { type: 'button', class: 'pr-chk' + (isShown(i) ? ' on' : ''), title: S.study ? '이 문제 해설·지문 근거 보기' : isShown(i) ? '정답 가리기' : '이 문제 채점', 'aria-label': label + '번 채점', text: '✓', onclick: function () { toggleReveal(i); } }));
+      if (PAPER) row.appendChild(el('button', { type: 'button', class: 'pr-chk' + (isShown(i) ? ' on' : ''), title: (S.study || S.graded) ? '이 문제 해설·지문 근거 보기' : isShown(i) ? '정답 가리기' : '이 문제 채점', 'aria-label': label + '번 채점', text: '✓', onclick: function () { toggleReveal(i); } }));
       if (PAPER && !it.num) row.appendChild(el('button', { type: 'button', class: 'pr-chk pr-ai-mini', title: 'AI 해설 · 내 실수 분석', 'aria-label': label + '번 AI 해설', text: 'AI', onclick: function () { askItem(i); } }));
       if (PAPER) row.appendChild(el('button', {
         type: 'button', class: 'pr-chk pr-memo-mini' + (noteFilled(it) ? ' has' : memoWanted(it, i) ? ' want' : ''), title: '메모 · 헷갈림 · 틀린 이유', 'data-memo-for': noteKey(it),
