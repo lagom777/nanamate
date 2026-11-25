@@ -1,4 +1,4 @@
-// 수능 한국사 — 고대 (선사·고조선·초기 국가 / 삼국과 가야 / 남북국) (2015 개정, 2027학년도 수능까지)
+// 수능 한국사 — 고대 (선사·고조선·초기 국가 / 삼국과 가야 / 남북국)
 import { f, note, warn, tip, tbl, ex } from "../lib.mjs";
 
 export const chapters = [

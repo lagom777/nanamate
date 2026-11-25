@@ -16,7 +16,7 @@ export const MOTION = {
   },
   korean: {
     folder: "aboutSuneungKorean", name: "국어", scenes: "korean-scenes.js", intro: "#F4B544",
-    footer: "2015 개정 교육과정 국어 범위 기준 · 그림 속 예시는 개념 설명용으로 새로 만든 것",
+    footer: "수능 국어 범위 기준 · 그림 속 예시는 개념 설명용으로 새로 만든 것",
     units: [u("Ⅰ", "현대시", "#F4B544"), u("Ⅱ", "현대 소설", "#FF7A8A"), u("Ⅲ", "고전 시가", "#7BE07F"), u("Ⅳ", "고전 산문·극·수필", "#B69CFF"), u("Ⅴ", "독서·문법", "#4FD1E8")],
   },
   math: {
@@ -26,7 +26,7 @@ export const MOTION = {
   },
   english: {
     folder: "aboutSuneungEnglish", name: "영어", scenes: "english-scenes.js", intro: "#4FD1E8",
-    footer: "2015 개정 교육과정 영어 범위 기준 · 그림 속 영어 문장은 개념 설명용으로 새로 만든 것",
+    footer: "수능 영어 범위 기준 · 그림 속 영어 문장은 개념 설명용으로 새로 만든 것",
     units: [u("Ⅰ", "듣기", "#4FD1E8"), u("Ⅱ", "대의·세부", "#F4B544"), u("Ⅲ", "어법·어휘", "#7BE07F"), u("Ⅳ", "빈칸·간접 쓰기", "#FF7A8A"), u("Ⅴ", "장문", "#B69CFF")],
   },
 };

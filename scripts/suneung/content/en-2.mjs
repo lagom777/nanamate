@@ -1,5 +1,5 @@
 // 수능 영어 — 독해 후반 (어법·어휘, 빈칸, 간접 쓰기, 장문)
-// 2015 개정, 2027학년도 수능까지. 예문은 직접 작성한 것이다.
+// 예문은 직접 작성한 것이다.
 import { f, note, warn, tip, tbl, ex } from "../lib.mjs";
 
 export const chapters = [

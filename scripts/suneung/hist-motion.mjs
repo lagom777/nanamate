@@ -173,7 +173,7 @@ export function motionPages() {
     src, title: "한국사 모션 노트", h1: `한국사 <span>모션 노트</span>`, base: "",
     backs: `<a class="back" href="index.html">← 수능 한국사 노트</a> · ${scenes.length}개 장면을 움직이는 그림으로 · 파트만 골라 보려면 아래 바로가기`,
     unitsHere: allUnits, list: scenes, linkNav: nav("", "all"),
-    footer: "2015 개정 교육과정 한국사 범위 기준 · 지도는 개념 설명용 약도이며 위치는 대략적입니다",
+    footer: "수능 한국사 범위 기준 · 지도는 개념 설명용 약도이며 위치는 대략적입니다",
   });
   UNITS.forEach((u, k) => {
     const list = scenes.filter((s) => s.u === k);
@@ -181,7 +181,7 @@ export function motionPages() {
       src, title: `${u.name} 모션 노트 — 한국사`, h1: `${u.name} <span>모션 노트</span>`, base: "../",
       backs: `<a class="back" href="../index.html">← 수능 한국사 노트</a> · <a class="back" href="../chapters/${u.file}">📖 ${u.name} 파트 노트</a> · <a class="back" href="../motion.html">🎬 전체 합본</a> · 장면 ${list.length}개`,
       unitsHere: [k], list, linkNav: nav("../", k),
-      footer: "2015 개정 교육과정 한국사 범위 기준 · 지도는 개념 설명용 약도이며 위치는 대략적입니다",
+      footer: "수능 한국사 범위 기준 · 지도는 개념 설명용 약도이며 위치는 대략적입니다",
     });
   });
   return out;
@@ -275,7 +275,7 @@ ${BEACON}
       <div class="ticks" id="ticks">${ticks}</div>
     </div>
   </section>
-  <p class="note">경계는 교과서 지도를 단순화한 약도입니다. 정확한 경계는 시기와 학설에 따라 다릅니다. · 2015 개정 교육과정 한국사 범위</p>
+  <p class="note">경계는 교과서 지도를 단순화한 약도입니다. 정확한 경계는 시기와 학설에 따라 다릅니다.</p>
 </div>
 <script>
 ${tools}

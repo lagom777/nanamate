@@ -1,4 +1,4 @@
-// 수능 한국사 — 고려 · 조선 전기 · 조선 후기 (2015 개정, 2027학년도 수능까지)
+// 수능 한국사 — 고려 · 조선 전기 · 조선 후기
 import { f, note, warn, tip, tbl, ex } from "../lib.mjs";
 
 export const chapters = [

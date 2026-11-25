@@ -1,4 +1,4 @@
-// 수능 국어(문학) — 파트별 노트 (2015 개정, 2027학년도 수능까지)
+// 수능 국어(문학) — 파트별 노트 (출제 과목 「문학」)
 import { f, note, warn, tip, tbl, ex } from "../lib.mjs";
 
 export const chapters = [

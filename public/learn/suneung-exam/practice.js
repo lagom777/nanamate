@@ -259,6 +259,8 @@
 
   /* ───────── paper (국어·영어) ───────── */
   var SEC_NAME = { c: '공통', a: '선택 · 화법과 작문', b: '선택 · 언어와 매체' };
+  /* 구역이 하나뿐인 시험(선택과목이 없는 시험·영어)은 '공통'이라는 이름을 붙이지 않는다 */
+  function secName(sec, m) { m = m || S.meta; return m && m.answers && !m.answers.a ? '' : SEC_NAME[sec]; }
   var SEC_LO = { c: 1, a: 35, b: 35 };
   function paperSecs() { return SUB === 'korean' && S.meta && S.meta.answers[S.sel] ? ['c', S.sel] : ['c']; }
   function buildPaper() {
@@ -361,6 +363,7 @@
       selSel = el('select', { 'aria-label': '선택과목', onchange: function () { S.sel = selSel.value; store('sn:' + SUB + ':sel', S.sel); startSet(setSel.value, true); } }, [
         el('option', { value: 'a', text: '선택과목: 화법과 작문' }), el('option', { value: 'b', text: '선택과목: 언어와 매체' })
       ]);
+      selSel.style.display = 'none';   // 선택 구역이 있는 시험(2022~2027학년도)을 열었을 때만 보인다
       row1.push(selSel);
     } else row1.push(countWrap);
     if (scopeWrap) row1.push(scopeWrap);
@@ -2497,7 +2500,7 @@
   function itemLine(it, i) { return lineOf(it, S.ans[i], S.ms && S.ms[i]); }
   function lineOf(it, a, ms) {
     var t = ms != null && ms < 600000 ? ' · 풀이 시간 약 ' + Math.round(ms / 1000) + '초' : '';
-    return it.n + '번 (' + it.pts + '점' + (it.tag && partName[it.tag] ? ', ' + partName[it.tag] + (it.tp ? ' › ' + topicName[it.tp] : '') : '') + (it.sec && SUB === 'korean' ? ', ' + SEC_NAME[it.sec] : '') + ') · 공식 정답 ' + corrText(it) + ' · 내 답 ' + (a === -1 ? '기록 없음(틀린 문제로 저장됨)' : pickText(it, a)) + t;
+    return it.n + '번 (' + it.pts + '점' + (it.tag && partName[it.tag] ? ', ' + partName[it.tag] + (it.tp ? ' › ' + topicName[it.tp] : '') : '') + (it.sec && SUB === 'korean' && secName(it.sec) ? ', ' + secName(it.sec) : '') + ') · 공식 정답 ' + corrText(it) + ' · 내 답 ' + (a === -1 ? '기록 없음(틀린 문제로 저장됨)' : pickText(it, a)) + t;
   }
   function itemReq(i) { return reqFor(S.items[i], S.study ? 0 : S.ans[i], S.ms && S.ms[i], PAPER ? S.meta : null); }
   /* 문항 하나의 AI 해설 요청. a = 내 답(0 미응답, -1 틀렸지만 고른 답을 모름), m = 그 회차 시험지 meta(국어·영어) */
@@ -2528,7 +2531,7 @@
       var exp = maps[0] && maps[0][it.n], trap = picked && wrong && maps[1] && maps[1][it.n] && maps[1][it.n].o && maps[1][it.n].o[a];
       if (exp || trap) lines.push('참고(사이트에 실린 기존 해설, 틀릴 수 있음):' + (exp ? '\n' + textOf(exp) : '') + (trap ? '\n고른 선택지 메모: ' + trap : ''));
       lines.push('맨 끝에 "===약점===" 한 줄을 쓰고, 그 다음 줄에 이 문항에서 ' + (wrong || skip ? '내가 몰랐거나 놓친' : '핵심이 되는') + ' 것을 ' +
-        (PAPER ? '"문항 유형 | 개념 이름 | 한 줄 설명" (문항 유형 예: ' + (SUB === 'korean' ? '독서-과학, 문학-현대시, 언어와 매체' : '빈칸 추론, 어법, 글의 순서') + ')' : '"개념 이름 | 한 줄 설명"') + ' 형식으로 한 줄만 쓰세요.');
+        (PAPER ? '"문항 유형 | 개념 이름 | 한 줄 설명" (문항 유형 예: ' + (SUB === 'korean' ? '독서-과학, 문학-현대시, 문법-음운' : '빈칸 추론, 어법, 글의 순서') + ')' : '"개념 이름 | 한 줄 설명"') + ' 형식으로 한 줄만 쓰세요.');
       content.push({ type: 'text', text: lines.join('\n\n') });
       var qid = key + '/' + (it.sec || '') + it.n;
       return { content: content, persist: true, chips: ITEM_CHIPS,
@@ -3482,14 +3485,14 @@
     }
     if (SUB === 'english' && m.script) list.appendChild(scriptBox());
     paperSecs().forEach(function (sec) {
-      list.appendChild(el('h3', { class: 'pr-sec', text: SEC_NAME[sec] + ' (' + SEC_LO[sec] + '~' + (SEC_LO[sec] + m.answers[sec].length - 1) + '번)' }));
+      list.appendChild(el('h3', { class: 'pr-sec', text: secName(sec, m) ? secName(sec, m) + ' (' + SEC_LO[sec] + '~' + (SEC_LO[sec] + m.answers[sec].length - 1) + '번)' : SEC_LO[sec] + '~' + (SEC_LO[sec] + m.answers[sec].length - 1) + '번' }));
       var wrap = el('div', { class: 'pr-strips' });
       var strips = m.strips[sec], anchors = m.anchors[sec], hots = hotByStrip(m, sec);
       /* 영어 듣기(1~17번) 단은 음성 막대와 한 묶음 — 막대가 그 단을 지나는 동안만 위에 붙어 따라온다 */
       var a18 = SUB === 'english' && sec === 'c' && m.audio && anchors['18'], listen = null;
       if (a18) wrap.appendChild(listen = el('div', { class: 'pr-listen' }, [listenBar(key, m.audio)]));
       strips.forEach(function (s, idx) {
-        var img = el('img', { src: (cfg.imgBase || cfg.base) + key + '/' + SUB + '/' + s.file, width: s.w, height: s.h, alt: SEC_NAME[sec] + ' 시험지 ' + (idx + 1) + '단', loading: 'lazy', decoding: 'async' });
+        var img = el('img', { src: (cfg.imgBase || cfg.base) + key + '/' + SUB + '/' + s.file, width: s.w, height: s.h, alt: (secName(sec, m) ? secName(sec, m) + ' ' : '') + '시험지 ' + (idx + 1) + '단', loading: 'lazy', decoding: 'async' });
         var ib = inkWrap(img, inkKey(key, s.file), s.w, s.h, true);
         hotAdd(ib, hots[idx], s.w, s.h);
         var box = el('div', { class: 'pr-strip' }, [ib]);
@@ -3606,7 +3609,7 @@
     }))));
     if (e.x && e.x.length) body.appendChild(el('ol', { class: 'pr-exq-x' }, e.x.map(function (t, c) { return el('li', { class: c + 1 === a ? 'ans' : '' }, [el('b', { text: CIRC[c] + ' ' }), t]); })));
     exqDock = el('section', { class: 'pr-exq-dock', role: 'dialog', 'aria-label': it.n + '번 해설' }, [
-      el('div', { class: 'pr-exq-head' }, [el('b', { text: (SUB === 'korean' ? SEC_NAME[sec].replace('선택 · ', '') + ' ' : '') + it.n + '번 해설' }), el('span', { class: 'pr-exq-ans', text: '정답 ' + CIRC[a - 1] }),
+      el('div', { class: 'pr-exq-head' }, [el('b', { text: (SUB === 'korean' && secName(sec) ? secName(sec).replace('선택 · ', '') + ' ' : '') + it.n + '번 해설' }), el('span', { class: 'pr-exq-ans', text: '정답 ' + CIRC[a - 1] }),
         el('button', { type: 'button', class: 'pr-exq-go', text: '문항으로', title: '시험지에서 이 문항 자리로', onclick: function () { jump(S.items.indexOf(it)); } }),
         el('button', { type: 'button', class: 'pr-exq-x-btn', 'aria-label': '해설 닫기', text: '✕', onclick: closeExq })]),
       body
@@ -3802,7 +3805,7 @@
     S.items.forEach(function (it, i) {
       if (PAPER && it.sec !== lastSec) {
         lastSec = it.sec;
-        grid.appendChild(el('div', { class: 'pr-omr-sec', text: SEC_NAME[it.sec] }));
+        if (secName(it.sec)) grid.appendChild(el('div', { class: 'pr-omr-sec', text: SEC_NAME[it.sec] }));
       }
       var row = el('div', { class: 'pr-row' + stateCls(it, i) + (it.num ? ' numrow' : '') + (PAPER && unsureOf(it) ? ' unsure' : ''), 'data-i': i });
       var label = PAPER ? it.n : (i + 1);

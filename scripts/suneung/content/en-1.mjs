@@ -1,4 +1,4 @@
-// 수능 영어(듣기·글의 기본 이해) — 파트별 노트 (2015 개정, 2027학년도 수능까지)
+// 수능 영어(듣기·글의 기본 이해) — 파트별 노트
 import { f, note, warn, tip, tbl, ex } from "../lib.mjs";
 
 export const chapters = [

@@ -1,4 +1,4 @@
-// 수능 한국사 — 근대(개항~국권 피탈) · 일제 강점기 · 현대 (2015 개정, 2027학년도 수능까지)
+// 수능 한국사 — 근대(개항~국권 피탈) · 일제 강점기 · 현대
 import { f, note, warn, tip, tbl, ex } from "../lib.mjs";
 
 export const chapters = [

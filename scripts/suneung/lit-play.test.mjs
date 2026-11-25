@@ -1,11 +1,11 @@
-// 국어 EBS 연계 '내용 재생기' 데이터(content/lit/*.mjs 의 PLAYS) 점검.
-// 작품은 2027 수능특강 목록(ebs-2027.mjs WORKS)과 갈래·제목·작가가 같고, 독서는 READING.suteuk 의 이름·묶음과 같아야 하며, 칸 길이를 지킨다.
+// 국어 '내용 재생기' 데이터(content/lit/*.mjs 의 PLAYS) 점검. 문학 작품은 lit-works.html 에 실리고, 독서(reading-*)는 쪽에 싣지 않고 규격만 본다.
+// 작품은 2027 수능특강 목록(lit-works.mjs WORKS)과 갈래·제목·작가가 같고, 독서는 READING.suteuk 의 이름·묶음과 같아야 하며, 칸 길이를 지킨다.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath, pathToFileURL } from "url";
-import { WORKS, READING } from "./content/ebs-2027.mjs";
+import { WORKS, READING } from "./content/lit-works.mjs";
 
 const DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), "content", "lit");
 // 파일 → 갈래(독서는 READING 묶음 이름들)
