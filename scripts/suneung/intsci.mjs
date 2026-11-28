@@ -1,19 +1,22 @@
 // 수능 통합과학 — 통합과학1·2 (25문항 40분, 1.5·2·2.5점). 노트는 content/is-*.mjs, 풀어보기는 평가원 예시문항(2028-ex)
 import { note, tip, tbl, examsOf } from "./lib.mjs";
+import { motionLinks } from "./build-motion.mjs";
 
 const mods = await Promise.all(["is-1", "is-2", "is-3", "is-4"].map(async (n) => { try { return await import(`./content/${n}.mjs`); } catch { return { chapters: [], quick: {} }; } }));
 const chapters = mods.flatMap((m) => m.chapters).sort((a, b) => a.file.localeCompare(b.file));
 const quick = Object.assign({}, ...mods.map((m) => m.quick || {}));
 const N = examsOf("intsci").length;
+const ml = motionLinks("intsci");
+for (const c of chapters) if (ml[c.file]) c.motion = ml[c.file];
 
 export const spec = {
   sub: "intsci", quick, folder: "aboutSuneungIntScience", label: "수능 통합과학", short: "통합과학", color: "#0f766e",
   glow: "rgba(15,118,110,0.12)", border: "rgba(15,118,110,0.16)",
-  asideSub: "수능 통합과학 — 통합과학1·2 + 예시문항",
+  asideSub: "수능 통합과학 — 통합과학1·2 + 모션 + 예시문항",
   h1: "수능 통합과학,<br><em>단원별</em>로<br>끝까지",
   authors: "25문항 · 40분 · 50점 · 모든 수험생 공통 · 평가원 예시문항 " + N * 25 + "문항 풀어보기",
-  affiliation: "통합과학1 5파트 · 통합과학2 5파트 · 수능 풀어보기(채점·해설)",
-  motion: false, kind: "items", qn: 25, minutes: 40,
+  affiliation: "통합과학1 5파트 · 통합과학2 5파트 · 모션 노트 · 수능 풀어보기(채점·해설)",
+  motion: true, motionBlurb: "핵심 개념을 움직이는 그림으로 — 스펙트럼·판의 경계·낙하 운동·세포막·산화 환원·열수지·발전", kind: "items", qn: 25, minutes: 40,
   practiceBlurb: `평가원 예시문항 ${N}회 ${N * 25}문항 · 단원별 모아 풀기 · 채점·해설`,
   chapters,
   intro: `<h2>이 노트가 다루는 것</h2>

@@ -29,13 +29,25 @@ export const MOTION = {
     footer: "수능 영어 범위 기준 · 그림 속 영어 문장은 개념 설명용으로 새로 만든 것",
     units: [u("Ⅰ", "듣기", "#4FD1E8"), u("Ⅱ", "대의·세부", "#F4B544"), u("Ⅲ", "어법·어휘", "#7BE07F"), u("Ⅳ", "빈칸·간접 쓰기", "#FF7A8A"), u("Ⅴ", "장문", "#B69CFF")],
   },
+  // 통합과학·통합사회: 장면이 많아 파일을 나눴다(scenes 가 배열 — 적힌 순서로 잇는다. 첫 파일에 도구와 인트로)
+  intsci: {
+    folder: "aboutSuneungIntScience", name: "통합과학", scenes: ["intsci-scenes.js", "intsci-scenes-1.js", "intsci-scenes-2.js"], intro: "#4FD1E8",
+    footer: "2022 개정 교육과정 통합과학1·2 범위 기준 · 그림 속 수치는 개념 설명용 예시값",
+    units: [u("Ⅰ", "과학의 기초", "#F4B544"), u("Ⅱ", "물질과 규칙성", "#B69CFF"), u("Ⅲ", "시스템과 상호작용", "#4FD1E8"), u("Ⅳ", "변화와 다양성", "#7BE07F"), u("Ⅴ", "환경과 에너지", "#FF9A4D"), u("Ⅵ", "과학과 미래 사회", "#FF7A8A")],
+  },
+  intsoc: {
+    folder: "aboutSuneungIntSocial", name: "통합사회", scenes: ["intsoc-scenes.js", "intsoc-scenes-1.js", "intsoc-scenes-2.js"], intro: "#F4B544",
+    footer: "2022 개정 교육과정 통합사회1·2 범위 기준 · 그림 속 사례·수치는 개념 설명용 예시",
+    units: [u("Ⅰ", "관점과 행복", "#F4B544"), u("Ⅱ", "환경·문화·공간", "#7BE07F"), u("Ⅲ", "인권과 정의", "#FF7A8A"), u("Ⅳ", "시장과 세계", "#4FD1E8"), u("Ⅴ", "미래와 지속가능한 삶", "#B69CFF")],
+  },
 };
 
 const PHYSICS = path.join(LEARN, "aboutSuneungPhysics1/motion.html");
 // 장면 소스: 물리는 손으로 만든 motion.html 자체, 나머지는 <과목>-scenes.js (아직 없으면 빈 문자열)
-const scenesSrc = (key) => {
-  const f = key === "physics1" ? PHYSICS : path.join(HERE, MOTION[key].scenes);
-  return fs.existsSync(f) ? fs.readFileSync(f, "utf8") : "";
+const sceneFiles = (key) => [].concat(MOTION[key].scenes).map((f) => path.join(HERE, f));
+const scenesSrc = (key, files) => {
+  if (key === "physics1") return fs.readFileSync(PHYSICS, "utf8");
+  return (files || sceneFiles(key)).filter((f) => fs.existsSync(f)).map((f) => fs.readFileSync(f, "utf8")).join("\n");
 };
 
 /* 장면 목록(합본 안 번호 i, title, file)을 소스에서 읽는다. 인트로가 0번이다. */
@@ -55,10 +67,10 @@ export function motionLinks(key) {
 }
 
 /** 과목 모션 노트 HTML 전체(파일로 쓰기 전) */
-export function renderMotion(key) {
+export function renderMotion(key, files) {   // files: 장면 파일을 따로 줄 때(motion-try.mjs — 조각 하나만 시험)
   const cfg = MOTION[key];
   const src = fs.readFileSync(PHYSICS, "utf8");
-  const scenes = scenesSrc(key);
+  const scenes = scenesSrc(key, files);
   const n = sceneList(scenes).filter((s) => s.u >= 0).length;
 
   const iIntro = src.indexOf("/* ───────── 0. 인트로");
@@ -105,7 +117,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const keys = process.argv.slice(2).length ? process.argv.slice(2) : Object.keys(MOTION);
   for (const k of keys) {
     if (!MOTION[k]) throw new Error("모르는 과목: " + k);
-    if (!fs.existsSync(path.join(HERE, MOTION[k].scenes))) { console.log(k, "장면 파일 없음 — 건너뜀"); continue; }
+    if (!fs.existsSync(sceneFiles(k)[0])) { console.log(k, "장면 파일 없음 — 건너뜀"); continue; }
     const r = buildMotion(k);
     console.log(k, r.n, "개념 →", path.relative(process.cwd(), r.dest), r.bytes, "bytes");
   }

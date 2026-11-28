@@ -1,0 +1,1579 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>통합과학 모션 노트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@1,8..60,500&display=swap">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#09131F;--bg2:#0E1B2A;--line:#1F3349;--grid:rgba(130,170,210,.075);
+  --text:#E6EDF5;--muted:#91A5BA;--dim:#5E738B;
+  --u1:#F4B544;--u2:#4FD1E8;--u3:#FF7A8A;--acc:var(--u1);
+  --fd:"Black Han Sans","IBM Plex Sans KR",system-ui,sans-serif;
+  --fb:"IBM Plex Sans KR",system-ui,-apple-system,sans-serif;
+  --fm:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --fs:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+html,body{background:var(--bg);color:var(--text)}
+body{font-family:var(--fb);font-size:15px;line-height:1.6;padding-inline:clamp(16px,3vw,40px);padding-block:22px 56px}
+.wrap{max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+button{font:inherit;color:inherit}
+button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+
+header.top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px 20px;flex-wrap:wrap}
+.brand h1{font-family:var(--fd);font-weight:400;font-size:clamp(28px,3.6vw,40px);line-height:1.05;margin:0;letter-spacing:.01em;text-wrap:balance}
+.brand h1 span{color:var(--acc);transition:color .5s}
+.brand p{margin:6px 0 0;color:var(--muted);font-size:13px}
+.units{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-family:var(--fm);font-size:12px;letter-spacing:.02em;padding:6px 12px;border:1px solid var(--line);border-radius:999px;color:var(--muted);background:transparent;cursor:pointer;transition:all .3s}
+.chip:hover{border-color:var(--c);color:var(--c)}
+.chip[aria-current="true"]{color:var(--bg);background:var(--c);border-color:var(--c)}
+
+.player{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--bg2)}
+.stage{position:relative;aspect-ratio:16/9;max-width:100%;
+  background:
+    linear-gradient(var(--grid) 1px,transparent 1px) 0 0/calc(100%/32) calc(100%/18),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/calc(100%/32) calc(100%/18),
+    radial-gradient(120% 100% at 25% 15%,#132740 0%,#0A1522 70%)}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.stage .tag{position:absolute;left:14px;top:12px;font-family:var(--fm);font-size:11px;letter-spacing:.08em;color:var(--dim);pointer-events:none}
+
+.panel{position:relative;border-left:1px solid var(--line);min-height:0}
+.panel-in{position:absolute;inset:0;overflow:auto;padding:22px 24px 24px;display:flex;flex-direction:column;gap:14px}
+.eyebrow{font-family:var(--fm);font-size:12px;letter-spacing:.06em;color:var(--acc);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.eyebrow b{font-weight:500;border:1px solid currentColor;border-radius:4px;padding:0 6px}
+.panel h2{font-family:var(--fd);font-weight:400;font-size:clamp(24px,2.3vw,31px);line-height:1.15;margin:0;text-wrap:balance}
+.lede{margin:0;color:var(--muted);font-size:14px}
+.fx-list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.fx{display:flex;flex-direction:column;gap:1px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.fx .f{font-family:var(--fs);font-style:normal;font-size:20px;line-height:1.35;color:var(--text)}
+.fx .f.word{font-family:var(--fb);font-size:15px;font-weight:600}
+.fx .f i{font-style:italic;font-weight:500}
+.fx .f sub,.fx .f sup{font-size:.62em;line-height:0}
+.fx .f .u{font-family:var(--fb);font-size:.8em;color:var(--muted)}
+.fx .n{font-size:12.5px;color:var(--muted)}
+.pts{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.pts li{position:relative;padding-left:16px;font-size:14px;line-height:1.55}
+.pts li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;border:1.5px solid var(--acc)}
+.pts li em{font-style:normal;color:var(--acc);font-weight:600}
+.enter>*{animation:rise .55s cubic-bezier(.2,.7,.2,1) both}
+.enter>*:nth-child(2){animation-delay:.05s}.enter>*:nth-child(3){animation-delay:.1s}
+.enter>*:nth-child(4){animation-delay:.16s}.enter>*:nth-child(5){animation-delay:.24s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.bar{grid-column:1/-1;display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid var(--line);flex-wrap:wrap}
+.btn{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;background:transparent;cursor:pointer;transition:border-color .2s,background .2s}
+.btn:hover{border-color:var(--acc)}
+.btn.main{background:var(--acc);border-color:var(--acc);color:var(--bg)}
+.btn svg{width:16px;height:16px;fill:currentColor}
+.btn.step-btn{width:auto;height:28px;padding:0 8px;border-radius:7px;font-family:var(--fm);font-size:11px;color:var(--muted)}
+.btn.step-btn:hover{color:var(--text)}
+.count{font-family:var(--fm);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:62px}
+.tl{flex:1 1 280px;display:flex;gap:3px;align-items:center;min-width:0}
+.seg{flex:1;height:22px;padding:0;border:0;background:transparent;cursor:pointer;display:flex;align-items:center}
+.seg i{display:block;width:100%;height:5px;border-radius:3px;background:color-mix(in srgb,var(--c) 18%,transparent);overflow:hidden;transition:height .2s}
+.seg i b{display:block;height:100%;width:0;background:var(--c)}
+.seg:hover i,.seg[aria-current="true"] i{height:9px}
+.seg.done i b{width:100%;opacity:.55}
+.scrub-row{flex:1 0 100%;display:flex;align-items:center;gap:8px;padding-top:6px;border-top:1px dashed var(--line)}
+.scrub-lab{font-size:12px;color:var(--muted);max-width:210px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scrub{flex:1 1 160px;min-width:80px;height:22px;margin:0;accent-color:var(--acc);cursor:pointer;background:transparent}
+.time{font-family:var(--fm);font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:84px;text-align:right}
+
+.sum{display:flex;flex-direction:column;gap:14px;margin-top:18px}
+.sum-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px 16px;flex-wrap:wrap}
+.sum-head h2{font-family:var(--fd);font-weight:400;font-size:26px;margin:0}
+.sum-head p{margin:0;color:var(--muted);font-size:13px}
+.sum-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.col{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--bg2);display:flex;flex-direction:column;gap:4px}
+.col h3{margin:0 0 6px;font-family:var(--fd);font-weight:400;font-size:20px;color:var(--c);display:flex;gap:8px;align-items:baseline}
+.col h3 small{font-family:var(--fm);font-size:11px;color:var(--dim);letter-spacing:.05em}
+.item{display:flex;flex-direction:column;gap:3px;padding:10px 0;border-top:1px solid var(--line)}
+.item button{all:unset;cursor:pointer;font-weight:600;font-size:14.5px;display:flex;justify-content:space-between;gap:8px}
+.item button:hover{color:var(--c)}
+.item button:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+.item button span{font-family:var(--fm);font-size:11px;color:var(--dim);font-weight:400}
+.item .fs{font-family:var(--fs);font-size:15.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:2px 14px}
+.item .fs i{font-style:italic;color:var(--text)}
+.item .fs sub,.item .fs sup{font-size:.62em;line-height:0}
+.item .fs .u{font-family:var(--fb);font-size:.8em}
+.item .fs .word{font-family:var(--fb);font-size:13px}
+.brand .back{color:var(--acc);text-decoration:none}.brand .back:hover{text-decoration:underline}
+.btn[aria-pressed="true"]{border-color:var(--acc);color:var(--acc);background:color-mix(in srgb,var(--acc) 14%,transparent)}
+.btn.sp{width:auto;min-width:38px;padding:0 9px;font-family:var(--fm);font-size:12px}
+.bigbar{display:none}
+.stage.big,.stage:fullscreen{position:fixed;left:0;top:0;width:100vw;height:100vh;height:100dvh;z-index:60;aspect-ratio:auto;max-width:none;container-type:size;background:var(--bg)}
+.stage.big canvas,.stage:fullscreen canvas{inset:auto;left:50%;top:50%;width:min(100cqw,177.78cqh);height:min(56.25cqw,100cqh);transform:translate(-50%,-50%)}
+.stage.big .bigbar,.stage:fullscreen .bigbar{display:flex;align-items:center;gap:6px;position:absolute;left:50%;bottom:14px;transform:translateX(-50%);max-width:calc(100% - 24px);padding:6px 10px;border-radius:14px;border:1px solid var(--line);background:rgba(10,21,34,.88);backdrop-filter:blur(8px);flex-wrap:wrap;justify-content:center}
+.stage.big .bigbar .btn,.stage:fullscreen .bigbar .btn{width:34px;height:34px;background:rgba(14,27,42,.92)}
+.stage.big .bigbar .btn.sp,.stage:fullscreen .bigbar .btn.sp{width:auto;min-width:34px}
+.big-title{font-size:12.5px;font-weight:600;color:var(--text);padding:0 6px;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.big-time{font-family:var(--fm);font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;padding:0 4px}
+@media (orientation:portrait){.stage.big{width:100vh;width:100dvh;height:100vw;transform-origin:0 0;transform:translateX(100vw) rotate(90deg)}}
+
+/* 장 노트에 끼워 넣을 때(?embed): 무대 + 한 줄 요약 띠 + 재생·탐색 막대 */
+.em-info{display:none;grid-column:1/-1;align-items:center;gap:8px;padding:7px 12px;border-top:1px solid var(--line);background:rgba(9,19,31,.6);font-size:12.5px;min-width:0}
+.em-badge{font-family:var(--fm);font-size:11px;color:var(--acc);border:1px solid color-mix(in srgb,var(--acc) 55%,transparent);border-radius:5px;padding:1px 6px;white-space:nowrap}
+.em-title{font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+.em-sub{flex:1 1 120px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.em-open{color:var(--acc);text-decoration:none;font-family:var(--fm);font-size:11.5px;white-space:nowrap;padding:2px 8px;border:1px solid var(--line);border-radius:999px}
+.em-open:hover{border-color:var(--acc)}
+.embed body{padding:0;background:transparent}
+.embed .top,.embed .sum,.embed footer,.embed .panel,.embed .scrub-lab{display:none}
+.embed .em-info{display:flex}
+.embed .wrap{max-width:none;gap:0}
+.embed .player{grid-template-columns:1fr;border-radius:12px}
+.embed .bar{gap:5px;padding:7px 10px}
+.embed .btn{width:34px;height:34px;border-radius:8px}
+.embed .btn.step-btn{height:26px;padding:0 6px}
+.embed .btn.sp{min-width:34px}
+.embed .scrub-row{padding-top:5px}
+.embed .tl{flex:1 1 60px}
+.embed .count{min-width:0}
+@media (max-width:560px){.em-sub,.scrub-lab{display:none}}
+
+footer{color:var(--dim);font-size:12px;font-family:var(--fm)}
+
+@media (max-width:900px){
+  .player{grid-template-columns:1fr}
+  .panel{border-left:0;border-top:1px solid var(--line)}
+  .panel-in{position:static;padding:18px 18px 20px}
+  .sum-grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){.enter>*{animation:none}}
+</style>
+<style>body{margin:0}</style>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5b7e3f1c91c242e3baa66c5d377d7a53"}'></script>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>통합과학 <span>모션 노트</span></h1>
+      <p><a class="back" href="index.html">← 수능 통합과학 노트</a> · <a class="back" href="practice.html">📝 기출 풀어보기</a> · 37개 핵심 개념을 움직이는 그림으로</p>
+    </div>
+    <nav class="units" id="units" aria-label="단원"></nav>
+  </header>
+
+  <section class="player" aria-label="개념 플레이어">
+    <div class="stage">
+      <canvas id="cv" role="img" aria-label="개념 애니메이션"></canvas>
+      <div class="bigbar">
+        <span class="big-title" id="g-title"></span>
+        <button class="btn" id="g-prev" aria-label="이전 개념"><svg viewBox="0 0 16 16"><path d="M3 2h2v12H3zM14 2v12L6 8z"/></svg></button>
+        <button class="btn main" id="g-play" aria-label="일시정지"><svg viewBox="0 0 16 16"><path id="g-play-ico" d="M4 2h3v12H4zM9 2h3v12H9z"/></svg></button>
+        <button class="btn" id="g-replay" aria-label="처음부터 다시" title="처음부터 다시 (R)"><svg viewBox="0 0 16 16"><path d="M8 2a6 6 0 1 1-5.2 3H1.5l2.3-3.2L7 3.6H5.1A4.2 4.2 0 1 0 8 3.8z"/></svg></button>
+        <button class="btn" id="g-next" aria-label="다음 개념"><svg viewBox="0 0 16 16"><path d="M11 2h2v12h-2zM2 2v12l8-6z"/></svg></button>
+        <button class="btn" id="g-loop" aria-pressed="false" aria-label="이 장면 반복" title="이 장면 반복 (L)"><svg viewBox="0 0 16 16"><path d="M3 6V5a2 2 0 0 1 2-2h6V1l3 3-3 3V5H5v1zM13 10v1a2 2 0 0 1-2 2H5v2l-3-3 3-3v2h6v-1z"/></svg></button>
+        <button class="btn sp" id="g-speed" aria-pressed="false" aria-label="느리게 (0.5배속)" title="느리게 (S)">½×</button>
+        <span class="big-time" id="g-time">0.0 / 15.0s</span>
+        <button class="btn" id="g-close" aria-label="크게 보기 닫기"><svg viewBox="0 0 16 16"><path d="M3.4 2 8 6.6 12.6 2 14 3.4 9.4 8l4.6 4.6-1.4 1.4L8 9.4 3.4 14 2 12.6 6.6 8 2 3.4z"/></svg></button>
+      </div>
+    </div>
+    <div class="panel"><div class="panel-in" id="panel" aria-live="polite">
+      <div class="eyebrow" id="p-eye"></div>
+      <h2 id="p-title"></h2>
+      <p class="lede" id="p-sub"></p>
+      <div class="fx-list" id="p-fx"></div>
+      <ul class="pts" id="p-pts"></ul>
+    </div></div>
+    <div class="em-info" id="em-info">
+      <span class="em-badge" id="em-badge"></span>
+      <strong class="em-title" id="em-title"></strong>
+      <span class="em-sub" id="em-sub"></span>
+      <a class="em-open" id="em-open" target="_top" href="#">설명 크게 ↗</a>
+    </div>
+    <div class="bar">
+      <button class="btn" id="b-prev" aria-label="이전 개념"><svg viewBox="0 0 16 16"><path d="M3 2h2v12H3zM14 2v12L6 8z"/></svg></button>
+      <button class="btn main" id="b-play" aria-label="일시정지"><svg viewBox="0 0 16 16"><path id="play-ico" d="M4 2h3v12H4zM9 2h3v12H9z"/></svg></button>
+      <button class="btn" id="b-replay" aria-label="처음부터 다시" title="처음부터 다시 (R)"><svg viewBox="0 0 16 16"><path d="M8 2a6 6 0 1 1-5.2 3H1.5l2.3-3.2L7 3.6H5.1A4.2 4.2 0 1 0 8 3.8z"/></svg></button>
+      <button class="btn" id="b-next" aria-label="다음 개념"><svg viewBox="0 0 16 16"><path d="M11 2h2v12h-2zM2 2v12l8-6z"/></svg></button>
+      <button class="btn" id="b-loop" aria-pressed="false" aria-label="이 장면 반복" title="이 장면 반복 (L)"><svg viewBox="0 0 16 16"><path d="M3 6V5a2 2 0 0 1 2-2h6V1l3 3-3 3V5H5v1zM13 10v1a2 2 0 0 1-2 2H5v2l-3-3 3-3v2h6v-1z"/></svg></button>
+      <button class="btn sp" id="b-speed" aria-pressed="false" aria-label="느리게 (0.5배속)" title="느리게 (S)">½×</button>
+      <button class="btn" id="b-big" aria-pressed="false" aria-label="크게 보기" title="크게 보기 (F)"><svg viewBox="0 0 16 16"><path d="M2 2h5v2H4v3H2zM9 2h5v5h-2V4H9zM2 9h2v3h3v2H2zM12 9h2v5H9v-2h3z"/></svg></button>
+      <span class="count" id="count">01 / 38</span>
+      <div class="tl" id="tl"></div>
+      <div class="scrub-row">
+        <span class="scrub-lab" id="scrub-lab"></span>
+        <button class="btn step-btn" id="b-back" aria-label="1초 뒤로" title="1초 뒤로 (,)">−1s</button>
+        <input type="range" class="scrub" id="scrub" min="0" max="1000" value="0" aria-label="장면 시간 이동">
+        <button class="btn step-btn" id="b-fwd" aria-label="1초 앞으로" title="1초 앞으로 (.)">+1s</button>
+        <span class="time" id="time">0.0 / 15.0s</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sum" aria-label="한눈에 정리">
+    <div class="sum-head">
+      <h2>한눈에 정리</h2>
+      <p>개념 이름을 누르면 위 플레이어가 그 장면으로 이동합니다 · 키보드 ← → 이동, Space 재생/정지, R 처음부터, , / . ±1초, L 반복, S 느리게, F 크게 보기</p>
+    </div>
+    <div class="sum-grid" id="sum"></div>
+  </section>
+  <footer>2022 개정 교육과정 통합과학1·2 범위 기준 · 그림 속 수치는 개념 설명용 예시값</footer>
+</div>
+
+<script>
+/* ───────── 공통 도구 ───────── */
+const W=960,H=540,TAU=Math.PI*2;
+const C={u1:'#F4B544',u2:'#4FD1E8',u3:'#FF7A8A',text:'#E6EDF5',muted:'#91A5BA',dim:'#5E738B',line:'#27405C',panel:'#0E1B2A',
+  el:'#6EA8FF',pos:'#FF6B6B',neu:'#AAB6C4',hot:'#FF9A4D',green:'#7BE07F'};
+const SANS='"IBM Plex Sans KR",system-ui,sans-serif',MONO='"IBM Plex Mono",Menlo,monospace',SERIF='"Source Serif 4",Georgia,serif',DISP='"Black Han Sans","IBM Plex Sans KR",sans-serif';
+const UNITS=[{k:'Ⅰ',name:'과학의 기초',c:'#F4B544'},{k:'Ⅱ',name:'물질과 규칙성',c:'#B69CFF'},{k:'Ⅲ',name:'시스템과 상호작용',c:'#4FD1E8'},{k:'Ⅳ',name:'변화와 다양성',c:'#7BE07F'},{k:'Ⅴ',name:'환경과 에너지',c:'#FF9A4D'},{k:'Ⅵ',name:'과학과 미래 사회',c:'#FF7A8A'}];
+const S=[];
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const lerp=(a,b,k)=>a+(b-a)*k;
+const ease=k=>{k=clamp(k);return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2};
+const seg=(t,a,b)=>clamp((t-a)/(b-a));
+const rnd=i=>{const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)};
+
+function fm(s){
+  return s.split('`').map((p,i)=>i%2?`<span class="u">${p}</span>`:
+    p.replace(/(sin|max|eV)|([A-Za-zθλΦ]+)|_\{([^}]*)\}|_(\S)|\^\{([^}]*)\}|\^(\S)/g,(m,up,w,b1,b2,p1,p2)=>{
+      if(up)return up;
+      if(w)return `<i>${w}</i>`;
+      if(b1!=null||b2!=null)return `<sub>${fm(b1??b2)}</sub>`;
+      return `<sup>${fm(p1??p2)}</sup>`;
+    })).join('');
+}
+function T(c,s,x,y,o={}){c.save();c.font=`${o.it?'italic ':''}${o.w||500} ${o.size||18}px ${o.font||SANS}`;c.fillStyle=o.color||C.text;
+  c.textAlign=o.align||'left';c.textBaseline=o.base||'middle';if(o.alpha!=null)c.globalAlpha*=o.alpha;c.fillText(s,x,y);c.restore();}
+function arrow(c,x1,y1,x2,y2,col,w=3,hd=11){const L=Math.hypot(x2-x1,y2-y1);if(L<2)return;const a=Math.atan2(y2-y1,x2-x1);hd=Math.min(hd,L*.6);
+  c.save();c.strokeStyle=c.fillStyle=col;c.lineWidth=w;c.lineCap='round';c.beginPath();c.moveTo(x1,y1);c.lineTo(x2-Math.cos(a)*hd*.7,y2-Math.sin(a)*hd*.7);c.stroke();
+  c.beginPath();c.moveTo(x2,y2);c.lineTo(x2-hd*Math.cos(a-.42),y2-hd*Math.sin(a-.42));c.lineTo(x2-hd*Math.cos(a+.42),y2-hd*Math.sin(a+.42));c.closePath();c.fill();c.restore();}
+function poly(c,pts,col,w=2,o={}){if(pts.length<2)return;c.save();c.strokeStyle=col;c.lineWidth=w;c.lineJoin=c.lineCap='round';if(o.dash)c.setLineDash(o.dash);
+  if(o.alpha!=null)c.globalAlpha*=o.alpha;c.beginPath();pts.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));if(o.close)c.closePath();
+  if(o.fill){c.fillStyle=o.fill;c.fill();}if(col)c.stroke();c.restore();}
+function dot(c,x,y,r,fill,o={}){c.save();if(o.glow){c.shadowColor=o.gc||fill;c.shadowBlur=o.glow;}if(o.alpha!=null)c.globalAlpha*=o.alpha;
+  c.beginPath();c.arc(x,y,Math.max(0,r),0,TAU);if(fill){c.fillStyle=fill;c.fill();}if(o.stroke){c.strokeStyle=o.stroke;c.lineWidth=o.lw||2;if(o.dash)c.setLineDash(o.dash);c.stroke();}c.restore();}
+function box(c,x,y,w,h,r,fill,stroke,lw=2,o={}){c.save();if(o.alpha!=null)c.globalAlpha*=o.alpha;if(o.glow){c.shadowColor=o.gc||fill||stroke;c.shadowBlur=o.glow;}
+  c.beginPath();c.roundRect(x,y,w,h,r);if(fill){c.fillStyle=fill;c.fill();}if(stroke){c.strokeStyle=stroke;c.lineWidth=lw;c.stroke();}c.restore();}
+function axes(c,x0,y0,w,h,xl,yl,col=C.dim){arrow(c,x0,y0,x0+w,y0,col,1.5,8);arrow(c,x0,y0,x0,y0-h,col,1.5,8);
+  T(c,xl,x0+w,y0+17,{size:16,color:C.muted,font:SERIF,it:true,align:'right'});T(c,yl,x0+9,y0-h+4,{size:16,color:C.muted,font:SERIF,it:true});}
+function wavy(c,x1,y1,x2,y2,col,lam=16,amp=6,ph=0,w=2.5){const L=Math.hypot(x2-x1,y2-y1);if(L<14)return;const a=Math.atan2(y2-y1,x2-x1);
+  c.save();c.translate(x1,y1);c.rotate(a);c.strokeStyle=c.fillStyle=col;c.lineWidth=w;c.beginPath();
+  for(let s=0;s<=L-10;s+=1.5){const y=Math.sin(s/lam*TAU-ph)*amp*Math.min(1,s/12,(L-10-s)/12);s?c.lineTo(s,y):c.moveTo(s,y);}c.stroke();
+  c.beginPath();c.moveTo(L,0);c.lineTo(L-12,-6);c.lineTo(L-12,6);c.closePath();c.fill();c.restore();}
+function wl2rgb(l){if(l<380)return '#A58CFF';if(l>780)return '#B4453A';let r=0,g=0,b=0;
+  if(l<440){r=-(l-440)/60;b=1}else if(l<490){g=(l-440)/50;b=1}else if(l<510){g=1;b=-(l-510)/20}else if(l<580){r=(l-510)/70;g=1}else if(l<645){r=1;g=-(l-645)/65}else{r=1}
+  const f=l<420?.35+.65*(l-380)/40:l>700?.35+.65*(780-l)/80:1;const q=v=>Math.round(255*Math.pow(v*f,.8));return `rgb(${q(r)},${q(g)},${q(b)})`;}
+function label(c,s,x,y,col,o={}){T(c,s,x,y,{size:o.size||15,color:col||C.muted,font:o.font||MONO,align:o.align||'center',w:o.w||500,alpha:o.alpha});}
+
+function M(c,s,x,y,o={}){ // 캔버스용 수식: _아래첨자 ^위첨자
+  const size=o.size||18,parts=[];let i=0;
+  while(i<s.length){const ch=s[i];
+    if((ch==='_'||ch==='^')&&i+1<s.length){let txt;if(s[i+1]==='{'){const j=s.indexOf('}',i);txt=s.slice(i+2,j);i=j+1}else{txt=s[i+1];i+=2}parts.push({t:txt,k:ch});}
+    else{let j=i;while(j<s.length&&s[j]!=='_'&&s[j]!=='^')j++;parts.push({t:s.slice(i,j),k:''});i=j;}}
+  c.save();c.fillStyle=o.color||C.text;c.textBaseline='middle';if(o.alpha!=null)c.globalAlpha*=o.alpha;
+  const fnt=k=>`italic 500 ${k?size*.64:size}px ${SERIF}`;let w=0;
+  parts.forEach(p=>{c.font=fnt(p.k);p.w=c.measureText(p.t).width;w+=p.w;});
+  let cx=o.align==='center'?x-w/2:o.align==='right'?x-w:x;
+  parts.forEach(p=>{c.font=fnt(p.k);c.fillText(p.t,cx,y+(p.k==='_'?size*.3:p.k==='^'?-size*.36:0));cx+=p.w;});
+  c.restore();return w;}
+
+
+/* 통합과학 모션 노트 장면들 — build-motion.mjs 가 물리학Ⅰ 모션 노트의 플레이어 엔진 뒤에 붙인다(이 파일 → intsci-scenes-1.js → intsci-scenes-2.js 순서).
+   전제: W, H, TAU, C, SANS, MONO, SERIF, DISP, UNITS, S, clamp, lerp, ease, seg, rnd, fm, T, arrow, poly, dot, box, axes, wavy, wl2rgb, label, M 이 이미 정의되어 있다.
+   내용은 장 노트(content/is-*.mjs)에 있는 개념만 쓴다. 엔진·플레이어의 전역 이름(frame, go, t, cnt, idx, Q, $, loop, speed, stage, render …)은 쓰지 않는다.
+   조각 파일의 최상위 이름은 접두사를 붙인다(-1: SA_, -2: SB_). */
+const IC=['#F4B544','#B69CFF','#4FD1E8','#7BE07F','#FF9A4D','#FF7A8A'];   // 단원 색(UNITS 와 같은 순서)
+const ra=(h,a)=>`rgba(${parseInt(h.slice(1,3),16)},${parseInt(h.slice(3,5),16)},${parseInt(h.slice(5,7),16)},${a})`;
+const fin=(t,a,d=.5)=>ease(seg(t,a,a+d));                    // a초부터 d초 동안 나타남(0→1)
+const win=(t,a,b,f=.35)=>clamp(Math.min((t-a)/f,(b-t)/f));    // a~b 동안 켜졌다 꺼짐(앞뒤 f초 페이드)
+function rr(c,x,y,w,h,r,fill,stroke,lw,a){box(c,x,y,w,h,r,fill,stroke,lw||2,a==null?{}:{alpha:a});}
+function K(c,s,x,y,o={}){T(c,s,x,y,Object.assign({size:17,align:'center'},o));}       // 가운데 정렬 글자
+function kw(c,s,size,w=500,font=SANS){c.save();c.font=`${w} ${size}px ${font}`;const v=c.measureText(s).width;c.restore();return v;}
+function arc(c,x,y,r,a0,a1,col,w=6,o={}){c.save();c.strokeStyle=col;c.lineWidth=w;c.lineCap='round';if(o.alpha!=null)c.globalAlpha*=o.alpha;c.beginPath();c.arc(x,y,r,a0,a1);c.stroke();c.restore();}
+function arw(c,x1,y1,x2,y2,col,w=2.5,hd=10,a=1){if(a<=0)return;c.save();c.globalAlpha*=a;arrow(c,x1,y1,x2,y2,col,w,hd);c.restore();}
+function chk(c,x,y,s,col,a=1){if(a<=0)return;c.save();c.globalAlpha*=a;poly(c,[[x-s,y],[x-s*.3,y+s*.7],[x+s,y-s*.8]],col,3.5);c.restore();}   // ✓
+function crs(c,x,y,s,col,a=1){if(a<=0)return;c.save();c.globalAlpha*=a;poly(c,[[x-s,y-s],[x+s,y+s]],col,3.5);poly(c,[[x+s,y-s],[x-s,y+s]],col,3.5);c.restore();}   // ✕
+function flow(c,pts,tt,col,n=4,r=5,sp=.25){ // 경로를 따라 흐르는 입자(물질·에너지·사람·돈의 이동)
+  poly(c,pts,'rgba(150,175,205,.22)',2,{dash:[2,5]});
+  const L=[];let tot=0;for(let i=1;i<pts.length;i++){const d=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);L.push(d);tot+=d;}
+  for(let k=0;k<n;k++){let q=((tt*sp+k/n)%1)*tot,i=0;while(i<L.length-1&&q>L[i]){q-=L[i];i++;}
+    const u=q/L[i],x=lerp(pts[i][0],pts[i+1][0],u),y=lerp(pts[i][1],pts[i+1][1],u);dot(c,x,y,r,col,{glow:8});}}
+function smooth(P,n=14){const o=[];for(let i=0;i<P.length-1;i++){const p0=P[Math.max(0,i-1)],p1=P[i],p2=P[i+1],p3=P[Math.min(P.length-1,i+2)];   // 점들을 지나는 부드러운 곡선
+  for(let k=0;k<n;k++){const u=k/n,u2=u*u,u3=u2*u,f=j=>.5*(2*p1[j]+(p2[j]-p0[j])*u+(2*p0[j]-5*p1[j]+4*p2[j]-p3[j])*u2+(3*p1[j]-p0[j]-3*p2[j]+p3[j])*u3);o.push([f(0),f(1)]);}}
+  o.push(P[P.length-1]);return o;}
+function para(c,s,x,y,maxW,lh,o={}){ // 긴 글을 maxW 에 맞춰 여러 줄로(띄어쓰기에서 끊음) → 줄 수
+  const size=o.size||15,w=o.w||500,words=String(s).split(' '),lines=[];let cur='';
+  words.forEach(wd=>{const nx=cur?cur+' '+wd:wd;if(cur&&kw(c,nx,size,w,o.font)>maxW){lines.push(cur);cur=wd;}else cur=nx;});if(cur)lines.push(cur);
+  lines.forEach((l,i)=>T(c,l,x,y+i*lh,o));return lines.length;}
+function bar(c,x,y,w,h,k,col,o={}){ // 가로 막대(k = 0~1 채움)
+  box(c,x,y,w,h,h/2,'#0E1B2A',C.line,1.5);if(k>0)box(c,x,y,Math.max(h,w*clamp(k)),h,h/2,col,null,0,o);}
+
+/* ───────── 0. 인트로 ───────── */
+S.push({u:-1,ch:'시작',title:'수능 통합과학, 움직이며 정리하기',
+  sub:'여섯 단원, 서른일곱 개 개념. 표·그래프·실험으로 나오는 장면을 움직여서 보여 줍니다.',
+  fx:[{w:1,f:'Ⅰ 과학의 기초',n:'규모 · 단위 · 측정 · 신호'},{w:1,f:'Ⅱ 물질과 규칙성',n:'원소의 기원 · 주기율 · 결합'},{w:1,f:'Ⅲ 시스템과 상호작용',n:'지구시스템 · 역학 · 생명'},{w:1,f:'Ⅳ 변화와 다양성',n:'지질 시대 · 진화 · 화학 변화'},{w:1,f:'Ⅴ 환경과 에너지',n:'생태계 · 기후 · 발전'},{w:1,f:'Ⅵ 과학과 미래 사회',n:'감염병 · 빅데이터 · 인공지능'}],
+  pts:['장면마다 <em>무엇이 원인이고 무엇이 결과인가</em>를 먼저 보세요. 통합과학 문항은 그 방향을 자료로 묻습니다.','재생 중에는 약 15초마다 다음 개념으로 넘어갑니다. 아래 막대를 눌러 원하는 개념으로 이동할 수 있어요.','페이지 아래 <em>한눈에 정리</em>에 단원별 핵심이 모여 있습니다.'],
+  dur:14,still:5,
+  draw(c,t){
+    label(c,'6 UNITS · 37 CONCEPTS',480,46,C.dim,{size:14});
+    const names=['과학의 기초','물질과 규칙성','시스템과 상호작용','변화와 다양성','환경과 에너지','과학과 미래 사회'],rom=['Ⅰ','Ⅱ','Ⅲ','Ⅳ','Ⅴ','Ⅵ'];
+    names.forEach((nm,i)=>{const col=i%3,row=Math.floor(i/3),x0=180+col*300,y0=150+row*220,k=fin(t,.2+i*.3,.7);c.save();c.globalAlpha=k;
+      dot(c,x0,y0,58,'rgba(255,255,255,.03)',{stroke:ra(IC[i],.55),lw:1.6});
+      if(i===0){[10,22,36,52].forEach((r,j)=>dot(c,x0,y0,r*(.9+.1*Math.sin(t*1.5+j)),null,{stroke:ra(IC[0],.9-j*.2),lw:2}));}
+      else if(i===1){dot(c,x0,y0,10,IC[1]);for(let j=0;j<3;j++){const a=t*1.2+j*TAU/3,r=26+j*10;dot(c,x0,y0,r,null,{stroke:ra(IC[1],.3),lw:1});dot(c,x0+Math.cos(a)*r,y0+Math.sin(a)*r,4,'#E6EDF5');}}
+      else if(i===2){dot(c,x0,y0,24,ra(IC[2],.25),{stroke:IC[2],lw:2});const a=t*.9;dot(c,x0+Math.cos(a)*44,y0+Math.sin(a)*44,6,'#E6EDF5');arc(c,x0,y0,44,a-1.2,a,ra(IC[2],.7),2);}
+      else if(i===3){const P=smooth([[x0-44,y0+26],[x0-22,y0+10],[x0,y0+16],[x0+20,y0-12],[x0+44,y0-28]]);poly(c,P.slice(0,Math.max(2,Math.floor(P.length*clamp((t%5)/3.5)))),IC[3],3);[-44,-22,0,20,44].forEach((dx,j)=>dot(c,x0+dx,y0+[26,10,16,-12,-28][j],4,IC[3]));}
+      else if(i===4){dot(c,x0,y0,16,IC[4],{glow:14+6*Math.sin(t*3)});for(let j=0;j<8;j++){const a=j*TAU/8+t*.4;poly(c,[[x0+Math.cos(a)*24,y0+Math.sin(a)*24],[x0+Math.cos(a)*40,y0+Math.sin(a)*40]],IC[4],2.5);}}
+      else{for(let j=0;j<5;j++){const a=j*TAU/5-Math.PI/2,x1=x0+Math.cos(a)*36,y1=y0+Math.sin(a)*36;poly(c,[[x0,y0],[x1,y1]],ra(IC[5],.5),1.5);dot(c,x1,y1,6,(Math.floor(t*2)%5===j)?'#E6EDF5':IC[5]);}dot(c,x0,y0,9,IC[5]);}
+      c.restore();c.save();c.globalAlpha=k;T(c,rom[i],x0-92,y0+86,{font:DISP,size:26,color:IC[i],align:'center',w:400});
+      T(c,nm,x0-70,y0+86,{size:16,w:600});c.restore();});
+  }});
+
+/* 통합과학 1~5장(과학의 기초 · 물질과 규칙성 · 지구시스템 · 역학 시스템 · 생명 시스템) 장면 — 최상위 이름은 SA_ 로 시작한다. 도구는 첫 파일(intsci-scenes.js)에 있다. */
+const SA_PK='#FF7A8A',SA_BL='#6EA8FF',SA_GR='#7BE07F',SA_HOT='#FF9A4D',SA_INK='#0E1B2A';
+function SA_g(c,a,fn){if(a<=.02)return;c.save();c.globalAlpha*=clamp(a);fn();c.restore();}   // 투명도를 걸고 그리기
+function SA_part(P,k){const L=[];let tot=0;for(let i=1;i<P.length;i++){const d=Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);L.push(d);tot+=d;}   // 꺾은선 P 의 앞쪽 k(0~1)만큼
+  let q=clamp(k)*tot;const o=[P[0]];for(let i=0;i<L.length;i++){if(q>=L[i]){o.push(P[i+1]);q-=L[i];}else{const u=q/L[i];o.push([lerp(P[i][0],P[i+1][0],u),lerp(P[i][1],P[i+1][1],u)]);break;}}return o;}
+
+/* ───────── Ⅰ-1 기본량과 유도량 ───────── */
+S.push({u:0,ch:'과학의 기초',title:'기본량에서 유도량으로',file:'01-basics.html',
+  sub:'시간·길이·질량 같은 기본량을 곱하거나 나누면 속력·부피·밀도·힘 같은 유도량이 됩니다. 단위를 보면 어떤 기본량에서 왔는지 읽힙니다.',
+  fx:[{w:1,f:'기본량: 시간 s · 길이 m · 질량 kg · 전류 A · 온도 K',n:'물질량 mol · 광도 cd 까지 일곱 개'},{w:1,f:'속력 = 길이 ÷ 시간',n:'m/s'},{w:1,f:'밀도 = 질량 ÷ 부피',n:'kg/m³ · 부피 = 길이 × 길이 × 길이'},{w:1,f:'1 mL = 1 cm³ · 1 g/cm³ = 1000 kg/m³',n:'단위 환산'}],
+  pts:['<em>기본량</em>은 다른 양으로 나타낼 수 없는 양이고, <em>유도량</em>은 기본량을 곱하거나 나누어 만든 양입니다.','부피가 길이를 세 번 곱한 양이라서, 밀도(질량 ÷ 부피)는 <em>질량과 길이</em> 두 기본량에서 나옵니다.','함정: 질량의 기본 단위는 g이 아니라 <em>kg</em>, 온도는 ℃가 아니라 <em>K</em>입니다. ℃로 적혀 있어도 온도 자체는 기본량입니다.','두 양을 비교하거나 나누기 전에 단위부터 하나로 맞춥니다. 72 km/h = 20 m/s.'],
+  dur:16,still:13.5,
+  draw(c,t){
+    const G=IC[0],base=[['시간','s','초',C.u2],['길이','m','미터',G],['질량','kg','킬로그램 · g 아님',SA_PK],['전류','A','암페어',C.neu],['온도','K','켈빈 · ℃ 아님',C.neu]];
+    const der=[['속력','길이 ÷ 시간','m/s',[1,0]],['부피','길이 × 길이 × 길이','m³',[1]],['밀도','질량 ÷ 부피','kg/m³',[2]],['힘','질량 × 길이 ÷ (시간 × 시간)','N = kg·m/s²',[2,1,0]]];
+    const by=i=>66+i*88,cy=j=>62+j*110,cur=clamp(Math.floor((t-1.4)/3.3),-1,3);
+    label(c,'기본량 (SI)',136,40,C.muted,{size:14});label(c,'유도량 = 기본량을 곱하거나 나눈 양',735,40,C.muted,{size:14});
+    der.forEach((d,j)=>{const a=fin(t,1.4+j*3.3,.6);if(a<=0)return;const on=j===cur;
+      d[3].forEach((b,q)=>{const p=[[224,by(b)+28],[556,cy(j)+42+(q-(d[3].length-1)/2)*18]];
+        SA_g(c,a,()=>{if(on)flow(c,p,t,base[b][3],2,5,.55);else poly(c,p,ra(base[b][3],.38),1.8);});});});
+    base.forEach((b,i)=>{const y=by(i),a=fin(t,.1+i*.18,.5),used=cur>=0&&der[cur][3].includes(i),dim=i>2;
+      SA_g(c,a,()=>{rr(c,50,y,172,56,12,used?ra(b[3],.16):SA_INK,dim?C.line:b[3],used?2.8:1.8);
+        T(c,b[0],68,y+28,{size:18,w:700,color:dim?C.muted:C.text});dot(c,192,y+28,19,ra(b[3],.14),{stroke:b[3],lw:1.5});
+        T(c,b[1],192,y+29,{size:15,font:MONO,align:'center',color:b[3],w:600});T(c,b[2],54,y+70,{size:12,color:i===2||i===4?SA_HOT:C.dim});});});
+    der.forEach((d,j)=>{const a=fin(t,1.4+j*3.3,.6),y=cy(j),on=j===cur;
+      SA_g(c,a,()=>{rr(c,560,y,350,84,14,on?ra(G,.13):SA_INK,on?G:C.line,on?2.6:1.6);T(c,d[0],582,y+29,{size:20,w:700,color:on?G:C.text});
+        T(c,d[1],582,y+59,{size:14,color:C.muted});T(c,d[2],890,y+30,{size:17,font:MONO,align:'right',color:G,w:600});});});
+    SA_g(c,fin(t,8.4,.6),()=>{arw(c,700,cy(1)+86,700,cy(2)-3,G,2.5,9);T(c,'부피를 다시 쓴다',714,cy(1)+97,{size:12,color:G});});
+    SA_g(c,fin(t,11.6,.7),()=>K(c,'단위를 기본량까지 거슬러 올라가 적는다 — 밀도 → 질량 ÷ 부피 → 질량 ÷ (길이 × 길이 × 길이)',480,516,{size:14,color:C.text}));
+  }});
+
+/* ───────── Ⅰ-2 측정 표준 ───────── */
+S.push({u:0,ch:'과학의 기초',title:'측정 표준이 바뀐 방향',file:'01-basics.html',
+  sub:'1 m·1초·1 kg의 기준은 사람이 만든 물건이나 지구처럼 변할 수 있는 것에서, 빛의 속력이나 원자의 성질처럼 변하지 않는 자연의 값으로 옮겨 왔습니다.',
+  fx:[{w:1,f:'변할 수 있는 기준 → 변하지 않는 자연의 값',n:'표준이 바뀐 방향'},{w:1,f:'1 m: 미터원기 → 빛이 1/299 792 458초 동안 가는 거리',n:'길이를 시간으로 정함'},{w:1,f:'1초: 하루의 1/86400 → 세슘 원자가 내는 빛의 진동',n:'9 192 631 770번'},{w:1,f:'1 kg: 킬로그램원기 → 플랑크 상수',n:'변하지 않는 값으로 정의'}],
+  pts:['<em>측정 표준</em>은 누가 어디에서 재어도 같은 값이 나오게 하려는 약속입니다.','금속 원기는 온도에 따라 늘거나 줄고 닳으며, 지구 자전도 완전히 일정하지 않습니다. 그래서 <em>어디서나 같은</em> 빛의 속력과 원자의 진동으로 바꿨습니다.','함정: 지금의 1 m 정의 안에는 <em>‘초’</em>가 들어 있습니다. 시간을 정밀하게 재야 길이의 기준도 정밀해집니다.','변천 순서를 물으면 <em>변할 수 있는 기준 → 변하지 않는 기준</em> 방향으로 세웁니다.'],
+  dur:15,still:13,
+  draw(c,t){
+    const ry=[140,275,410],U=['1 m','1초','1 kg'],G=IC[0];
+    K(c,'예전 기준 — 변할 수 있는 것',290,50,{size:16,w:700,color:SA_HOT});K(c,'지금 기준 — 변하지 않는 자연의 값',720,50,{size:16,w:700,color:SA_GR});
+    ry.forEach((y,i)=>SA_g(c,fin(t,.4+i*2.8,.7),()=>{
+      T(c,U[i],32,y,{font:DISP,size:28,color:G,w:400});
+      rr(c,130,y-52,320,104,14,ra(SA_HOT,.06),ra(SA_HOT,.55),1.6);rr(c,530,y-52,380,104,14,ra(SA_GR,.06),ra(SA_GR,.6),1.6);
+      const k=fin(t,1.6+i*2.8,.6);arw(c,460,y,460+62*k,y,C.text,3,11,k);
+      if(i===0){const w=150*(1+.06*Math.sin(t*2.4));box(c,160,y-36,w,13,3,'#B8C4D0');poly(c,[[160,y-42],[160,y-17]],C.muted,1.5);poly(c,[[310,y-42],[310,y-17]],C.muted,1.5,{dash:[3,3]});
+        T(c,'미터원기 (백금·이리듐 합금)',160,y+6,{size:15,w:700});T(c,'온도에 따라 늘거나 줄고, 닳는다',160,y+30,{size:13,color:C.muted});
+        poly(c,[[560,y-30],[880,y-30]],C.line,2);poly(c,[[560,y-38],[560,y-22]],SA_GR,2);poly(c,[[880,y-38],[880,y-22]],SA_GR,2);dot(c,560+320*((t*.7)%1),y-30,6,'#FFF3B0',{glow:14});
+        T(c,'빛이 1/299 792 458초 동안 가는 거리',560,y+6,{size:15,w:700});T(c,'빛의 속력은 어디에서나 같다',560,y+30,{size:13,color:C.muted});}
+      if(i===1){const a=t*1.4+.5*Math.sin(t*.9);dot(c,178,y-4,26,ra(SA_BL,.2),{stroke:SA_BL,lw:2});poly(c,[[178,y-4],[178+Math.cos(a)*26,y-4+Math.sin(a)*26]],C.text,2.5);arc(c,178,y-4,34,a-1.1,a,ra(SA_BL,.7),2);
+        T(c,'하루 길이의 1/86400',228,y-14,{size:15,w:700});T(c,'지구 자전이 완전히 일정하지 않다',228,y+12,{size:13,color:C.muted});
+        dot(c,572,y-28,13,ra('#B69CFF',.3),{stroke:'#B69CFF',lw:2});T(c,'Cs',572,y-27,{size:12,align:'center',font:MONO,color:C.text});wavy(c,592,y-28,884,y-28,'#FFF3B0',20,7,t*9,2);
+        T(c,'세슘 원자의 빛이 9 192 631 770번 진동',560,y+6,{size:15,w:700});T(c,'원자가 내는 빛의 진동은 일정하다',560,y+30,{size:13,color:C.muted});}
+      if(i===2){box(c,158,y-26,40,44,5,'#B8C4D0');c.save();c.fillStyle='#DDE5EE';c.beginPath();c.ellipse(178,y-26,20,6,0,0,TAU);c.fill();c.restore();
+        for(let q=0;q<3;q++){const u=((t*.5+q/3)%1);dot(c,204+q*5+u*10,y-8+u*26,2,ra('#B8C4D0',1-u));}
+        T(c,'킬로그램원기의 질량',228,y-14,{size:15,w:700});T(c,'닳거나 손상될 수 있다',228,y+12,{size:13,color:C.muted});
+        T(c,'h',574,y-6,{size:44,font:SERIF,it:true,color:SA_GR,align:'center'});T(c,'플랑크 상수로 정의',612,y-14,{size:15,w:700});T(c,'변하지 않는 값',612,y+12,{size:13,color:C.muted});}}));
+    SA_g(c,fin(t,9.4,.7),()=>{arw(c,896,222,896,194,G,2.5,9);T(c,'1 m의 정의 안에 ‘초’가 들어 있다 → 시간 측정이 길이 표준의 바탕',884,208,{size:13,color:G,align:'right'});});
+    SA_g(c,fin(t,11.5,.7),()=>K(c,'누가 어디에서 재어도 같은 값 · 설비만 있으면 누구나 다시 만들어 낼 수 있다',480,494,{size:15,color:C.text}));
+  }});
+
+/* ───────── Ⅰ-3 신호와 정보 ───────── */
+S.push({u:0,ch:'과학의 기초',title:'아날로그 신호에서 디지털 정보로',file:'01-basics.html',
+  sub:'끊김 없이 이어지는 자연의 신호를 센서가 전기 신호로 바꾸고, 일정한 간격으로 읽어 수로, 다시 0과 1로 나타냅니다.',
+  fx:[{w:1,f:'신호 → 센서 → 전기 신호 → 수 → 0과 1',n:'디지털 정보가 되는 순서'},{w:1,f:'아날로그: 끊김 없이 이어지는 값',n:'목소리 · 기온 변화 · 수은 온도계'},{w:1,f:'디지털: 0과 1처럼 구분되는 값',n:'잡음에 강함 · 복제와 전송이 쉬움'}],
+  pts:['<em>신호</em>는 전달되는 변화이고, 그것을 측정·분석해 얻은 뜻 있는 내용이 <em>정보</em>입니다.','디지털은 0인지 1인지만 구분하면 되므로 <em>잡음</em>의 영향이 작고, 같은 내용을 그대로 복제해 멀리 보낼 수 있습니다.','함정: 일정한 간격으로 읽는 동안 <em>그 사이의 값은 빠집니다.</em> 디지털 정보가 원래 신호와 완전히 같은 것은 아닙니다.','센서는 빛·소리·온도·압력 같은 신호를 <em>전기 신호</em>로 바꾸는 장치입니다.'],
+  dur:15,still:13,
+  draw(c,t){
+    const G=IC[0],f=x=>3.5+2.4*Math.sin(x*.0105+.5)+.9*Math.sin(x*.027+1.2),Y=v=>205-v*19,nz=fin(t,10.8,.8);
+    T(c,'① 자연의 변화(아날로그 신호)  →  ② 센서가 전기 신호로',90,46,{size:14,color:C.muted});
+    SA_g(c,nz,()=>T(c,'잡음이 섞이면 가려내기 어렵다',870,46,{size:14,color:SA_HOT,align:'right'}));
+    poly(c,[[90,210],[880,210]],C.line,2);
+    const P=[],xe=100+770*seg(t,.4,3);for(let x=100;x<=xe;x+=4)P.push([x,Y(f(x))+nz*7*(rnd(x*.37+Math.floor(t*10)*5.1)-.5)]);poly(c,P,G,3);
+    const xs=i=>120+i*64,lv=i=>Math.round(f(xs(i)));
+    if(t>8.6){const k=fin(t,8.6,.8),Q=[];for(let i=0;i<12;i++){Q.push([xs(i),Y(lv(i))]);Q.push([i<11?xs(i+1):860,Y(lv(i))]);}poly(c,Q,C.u2,2,{dash:[5,4],alpha:k});}
+    for(let i=0;i<12;i++){const a=fin(t,3.4+i*.42,.4);if(a<=0)continue;const x=xs(i),v=lv(i);
+      SA_g(c,a,()=>{poly(c,[[x,Y(f(x))],[x,216]],ra(C.u2,.7),1.5,{dash:[3,3]});dot(c,x,Y(f(x)),5,C.u2,{glow:8});
+        box(c,x-17,400-v*17*a,34,Math.max(2,v*17*a),4,ra(C.u2,.35),C.u2,1.5);label(c,String(v),x,400-v*17-13,C.text,{size:15});
+        label(c,v.toString(2).padStart(3,'0'),x,424,SA_GR,{size:14});});}
+    poly(c,[[90,400],[880,400]],C.line,2);
+    SA_g(c,fin(t,3.2,.6),()=>T(c,'③ 일정한 간격으로 읽어 수로 바꾼다',90,242,{size:14,color:C.u2}));
+    SA_g(c,fin(t,5,.6),()=>T(c,'④ 0과 1로 나타낸다 → 저장 · 처리 · 전송',90,454,{size:14,color:SA_GR}));
+    SA_g(c,nz,()=>T(c,'0인지 1인지만 구분 → 잡음의 영향이 작다',870,454,{size:14,color:SA_GR,align:'right'}));
+    SA_g(c,fin(t,9,.7),()=>K(c,'읽는 간격 사이의 값은 빠진다 → 원래 신호와 완전히 같지는 않다',480,496,{size:15,color:G,w:600}));
+  }});
+
+/* ───────── Ⅱ-1 스펙트럼 ───────── */
+function SA_rain(c,x,y,w,h){c.save();for(let i=0;i<w;i+=2){c.fillStyle=wl2rgb(390+i/w*320);c.fillRect(x+i,y,2.4,h);}c.restore();}
+S.push({u:1,ch:'물질과 규칙성',title:'스펙트럼으로 원소 찾기',file:'02-matter.html',
+  sub:'원소마다 선이 나타나는 위치가 다릅니다. 별빛의 흡수선을 원소의 방출선과 세로로 맞대어 보면 별의 대기에 어떤 원소가 있는지 알 수 있습니다.',
+  fx:[{w:1,f:'연속: 고온의 물체 · 방출: 고온의 기체 · 흡수: 저온의 기체를 지난 빛',n:'스펙트럼 세 가지'},{w:1,f:'같은 원소의 방출선과 흡수선은 같은 위치',n:'선의 위치 = 원소의 지문'},{w:1,f:'우주의 질량비  수소 : 헬륨 ≈ 3 : 1',n:'여러 천체의 스펙트럼을 분석한 결과'}],
+  pts:['<em>방출 스펙트럼</em>은 검은 바탕에 밝은 선, <em>흡수 스펙트럼</em>은 연속 띠 위에 검은 선입니다.','원소마다 선의 위치(파장)가 달라서, 선을 맞대어 보면 직접 갈 수 없는 별의 구성 원소를 빛만으로 알아냅니다.','함정: 어떤 원소의 선이 <em>모두</em> 들어 있어야 그 원소가 있다고 판단합니다. 하나라도 빠지면 있다고 할 수 없습니다.','별의 스펙트럼에 다른 선이 남아 있으면 <em>다른 원소도 있다</em>는 뜻입니다. ‘이 원소로만 이루어졌다’고 할 수 없습니다.'],
+  dur:15,still:13,
+  draw(c,t){
+    const X=l=>250+(l-390)/320*640,H0=44,yC=64,yX=152,yS=246,yY=340,LX=[410,434,486,656],LY=[447,502,589],LS=[410,434,486,656,589];
+    const strip=(y,a,nm,sb,kind,L)=>SA_g(c,a,()=>{T(c,nm,36,y+13,{size:15,w:700});T(c,sb,36,y+34,{size:12,color:C.muted});
+      if(kind)SA_rain(c,250,y,640,H0);else box(c,250,y,640,H0,0,'#04070C');box(c,250,y,640,H0,0,null,C.line,1.5);
+      L.forEach(l=>{if(kind)box(c,X(l)-2.5,y,5,H0,0,'#04070C');else box(c,X(l)-2,y+2,4,H0-4,0,wl2rgb(l),null,0,{glow:10});});});
+    strip(yC,fin(t,.2,.6),'연속 스펙트럼','고온의 물체가 내는 빛',1,[]);
+    SA_g(c,fin(t,.6,.6),()=>{T(c,'← 파장이 짧다',250,128,{size:12,color:C.dim});T(c,'파장이 길다 →',890,128,{size:12,color:C.dim,align:'right'});});
+    strip(yX,fin(t,1.2,.6),'원소 X의 방출 스펙트럼','고온의 기체 X가 내는 빛',0,LX);
+    strip(yS,fin(t,2.2,.6),'별빛의 흡수 스펙트럼','별의 대기(저온 기체)를 지난 빛',1,LS);
+    strip(yY,fin(t,6.6,.6),'원소 Y의 방출 스펙트럼','고온의 기체 Y가 내는 빛',0,LY);
+    LX.forEach((l,k)=>{const a=fin(t,3.4+k*.55,.4);poly(c,[[X(l),yX+H0],[X(l),yX+H0+(yS-yX-H0)*a]],SA_GR,2.5,{dash:[4,3],alpha:a});chk(c,X(l)+14,221,6,SA_GR,a);});
+    LY.forEach((l,k)=>{const a=fin(t,7.6+k*.7,.4),ok=l===589,col=ok?SA_GR:SA_PK;poly(c,[[X(l),yY],[X(l),yY-(yY-yS-H0)*a]],col,2.5,{dash:[4,3],alpha:a});
+      if(ok)chk(c,X(l)+14,315,6,col,a);else{crs(c,X(l)+14,315,5,col,a);SA_g(c,a,()=>dot(c,X(l),yS+H0/2,13,null,{stroke:SA_PK,lw:2,dash:[3,3]}));}});
+    const V=[[5.8,SA_GR,'X: 선 4개가 모두 같은 위치','→ 별의 대기에 X가 있다'],[10,SA_PK,'Y: 선 3개 중 1개만 같은 위치','→ Y가 있다고 할 수 없다'],[11.4,IC[0],'X의 선이 아닌 흡수선이 남는다','→ X로만 이루어진 것은 아니다']];
+    V.forEach((v,i)=>SA_g(c,fin(t,v[0],.6),()=>{const x=40+i*300;rr(c,x,418,280,84,12,ra(v[1],.1),v[1],2);T(c,v[2],x+18,446,{size:15,w:700});T(c,v[3],x+18,476,{size:14,color:v[1]});}));
+  }});
+
+/* ───────── Ⅱ-2 원소의 기원 ───────── */
+S.push({u:1,ch:'물질과 규칙성',title:'원소가 만들어진 세 곳',file:'02-matter.html',
+  sub:'수소와 헬륨의 대부분은 빅뱅 직후에, 철까지의 원소는 별 내부의 핵융합으로, 철보다 무거운 원소는 초신성 폭발로 만들어졌습니다.',
+  fx:[{w:1,f:'빅뱅 직후: 수소 · 헬륨(대부분)',n:'개수비 12 : 1 → 질량비 3 : 1'},{w:1,f:'별 내부 핵융합: 헬륨보다 무겁고 철까지',n:'중심으로 갈수록 무거운 원소'},{w:1,f:'초신성 폭발: 철보다 무거운 원소',n:'금 · 우라늄'}],
+  pts:['헬륨 원자핵 1개의 질량이 수소 원자핵의 약 4배라서, 개수비 12 : 1이 <em>질량비 3 : 1</em>이 됩니다. 관측한 값과 맞아 빅뱅의 근거가 됩니다.','핵융합은 <em>철</em>에서 멈춥니다. 철 원자핵이 매우 안정해서 융합해도 에너지를 얻을 수 없기 때문입니다.','함정: 헬륨 <em>원자핵</em>은 약 3분 무렵, <em>원자</em>는 약 38만 년 뒤에 만들어졌습니다. ‘헬륨의 대부분이 별에서 만들어졌다’도 틀린 말입니다.','중심에 철이 있는 내부 구조 그림이면 태양보다 질량이 훨씬 큰 별입니다. 태양과 비슷한 별은 탄소·산소까지 만듭니다.'],
+  dur:16,still:14,
+  draw(c,t){
+    const cy=205,ZC=[C.u2,IC[0],SA_PK],a1=fin(t,.2,.6),a2=fin(t,3.4,.7),a3=fin(t,9.2,.7);
+    SA_g(c,a1,()=>{K(c,'① 빅뱅 직후',160,48,{size:17,w:700,color:ZC[0]});
+      label(c,'H 원자핵(양성자) 12개',160,100,C.muted,{size:12});
+      for(let j=0;j<12;j++){const a=j/12*TAU+t*.18;dot(c,160+Math.cos(a)*84,cy+Math.sin(a)*84,7,'#FF8A7A',{glow:6});}
+      const k=ease(seg(t,.9,3)),d=lerp(44,8,k);[[-1,-1,1],[1,1,1],[1,-1,0],[-1,1,0]].forEach(p=>dot(c,160+p[0]*d,cy-6+p[1]*d,8,p[2]?'#FF8A7A':'#AAB6C4',{stroke:SA_INK,lw:1}));
+      if(k>.95)dot(c,160,cy-6,24,null,{stroke:ra(C.u2,.8),lw:2,glow:10,gc:C.u2});
+      label(c,'He 원자핵 1개',160,cy+36,C.u2,{size:12.5,alpha:fin(t,2.8,.5)});
+      K(c,'개수비  H 12 : He 1',160,318,{size:14});SA_g(c,fin(t,2.9,.6),()=>K(c,'질량비  12×1 : 1×4 = 3 : 1',160,342,{size:15,w:700,color:ZC[0]}));
+      K(c,'약 3분: 헬륨 원자핵 (양성자 2 + 중성자 2)',160,372,{size:12.5,color:C.muted});K(c,'약 38만 년: 원자 (전자를 붙잡음)',160,392,{size:12.5,color:C.muted});});
+    arw(c,264,cy,364,cy,C.text,3,11,a2);
+    SA_g(c,a2,()=>{K(c,'② 별 내부 — 핵융합',480,48,{size:17,w:700,color:ZC[1]});
+      const R=[100,83,66,50,34,18],N=['H','He','C','O','Si','Fe'],F=['#24476B','#34608F','#5F5AA6','#9A5C97','#CF6E4F','#F4B544'];
+      R.forEach((r,i)=>{const a=fin(t,3.6+i*.8,.6);if(a<=0)return;dot(c,480,cy,r,F[i],{stroke:ra('#E6EDF5',.35),lw:1,alpha:a,glow:i===5?12:0});
+        SA_g(c,a,()=>T(c,N[i],480,i<5?cy-(r+R[i+1])/2:cy,{size:13,w:700,align:'center',color:i===5?'#1B1300':C.text}));});
+      K(c,'중심으로 갈수록 온도 ↑ → 더 무거운 원소',480,318,{size:13.5});SA_g(c,fin(t,7.8,.6),()=>{K(c,'철에서 멈춘다',480,342,{size:15,w:700,color:ZC[1]});
+        K(c,'철은 융합해도 에너지를 얻지 못한다',480,366,{size:12.5,color:C.muted});});K(c,'태양과 비슷한 별: 탄소 · 산소까지',480,390,{size:12.5,color:C.muted});});
+    arw(c,598,cy,694,cy,C.text,3,11,a3);
+    SA_g(c,a3,()=>{K(c,'③ 초신성 폭발',800,48,{size:17,w:700,color:ZC[2]});
+      const sh=ease(seg(t,9.5,10.3)),u=t<10.3?0:((t-10.3)*.42)%1;dot(c,800,cy,lerp(30,11,sh),'#F4B544',{glow:16});
+      if(t>=10.3){dot(c,800,cy,12+80*u,ra(SA_PK,.12*(1-u)),{stroke:ra(SA_PK,1-u*.8),lw:3});
+        for(let j=0;j<22;j++){const a=j/22*TAU+rnd(j+3)*.25,r=16+(54+rnd(j+40)*22)*u,hv=j%3===0,ca=Math.cos(a),sa=Math.sin(a);
+          poly(c,[[800+ca*r*.55,cy+sa*r*.55],[800+ca*r,cy+sa*r]],ra(hv?'#FFD54F':'#E6EDF5',.35*(1-u*.6)),hv?2.5:1.5);dot(c,800+ca*r,cy+sa*r,hv?6:3.5,hv?'#FFD54F':'#E6EDF5',{alpha:1-u*.6,glow:hv?10:0});}}
+      K(c,'중심부가 급격히 수축 → 폭발',800,318,{size:13.5});K(c,'철보다 무거운 원소',800,342,{size:15,w:700,color:ZC[2]});
+      K(c,'금 · 우라늄 등',800,366,{size:12.5,color:C.muted});K(c,'원소가 우주로 흩어져 새 성운으로',800,390,{size:12.5,color:C.muted});});
+    label(c,'원소가 무거워지는 방향 →',480,424,C.dim,{size:12});
+    [[80,220,'H · He',a1,'빅뱅 직후'],[300,320,'C · N · O · Si … Fe',a2,'별 내부의 핵융합'],[620,260,'Au · U …',a3,'초신성 폭발']].forEach((b,i)=>{
+      SA_g(c,.28+.72*b[3],()=>{box(c,b[0]+2,438,b[1]-4,34,8,ra(ZC[i],.2),ZC[i],2);K(c,b[2],b[0]+b[1]/2,455,{size:15,w:700,color:ZC[i]});K(c,b[4],b[0]+b[1]/2,490,{size:13,color:C.muted});});});
+  }});
+
+/* ───────── Ⅱ-3 주기율표와 전자 배치 ───────── */
+const SA_PT=[['H','','','','','','','He'],['Li','Be','B','C','N','O','F','Ne'],['Na','Mg','Al','Si','P','S','Cl','Ar']];
+S.push({u:1,ch:'물질과 규칙성',title:'전자 배치로 주기와 족 읽기',file:'02-matter.html',
+  sub:'전자를 안쪽 껍질부터 채워 (2, 8, 1)처럼 적으면 숫자의 개수가 주기, 마지막 숫자가 족의 일의 자리입니다. 같은 족은 원자가 전자 수가 같아 성질이 비슷합니다.',
+  fx:[{w:1,f:'주기 = 전자가 들어 있는 껍질 수',n:'가로줄'},{w:1,f:'족 = 가장 바깥 껍질의 전자 수가 같은 세로줄',n:'화학적 성질이 비슷'},{w:1,f:'1족 Li < Na < K · 17족 F > Cl > Br > I',n:'반응성이 커지는 방향이 반대'}],
+  pts:['<em>원자가 전자</em>(가장 바깥 껍질에서 결합에 참여하는 전자)가 화학적 성질을 정합니다. 그래서 같은 족 원소의 성질이 비슷합니다.','1족 알칼리 금속은 전자 1개를 잃어 +1의 양이온, 17족 할로젠은 전자 1개를 얻어 −1의 음이온이 됩니다.','함정: <em>수소</em>는 1족에 있지만 알칼리 금속이 아닌 비금속입니다. 헬륨은 전자가 2개뿐이지만 18족입니다.','반응성이 커지는 방향은 1족은 <em>아래쪽</em>, 17족은 <em>위쪽</em>으로 서로 반대입니다.'],
+  dur:15,still:8,
+  draw(c,t){
+    const P=IC[1],G=IC[0],E=[['Li',[2,1],1,0],['O',[2,6],1,5],['Na',[2,8,1],2,0],['Cl',[2,8,7],2,6],['Ar',[2,8,8],2,7]],GN=['1','2','13','14','15','16','17','18'];
+    const e=E[Math.floor(t/2.9)%5],q=t%2.9,ax=190,ay=232,RS=[44,84,124],tot=e[1].reduce((a,b)=>a+b,0),shown=Math.round(tot*ease(seg(q,.15,1.5))),fa=Math.min(fin(q,0,.3),1-seg(q,2.7,2.9));
+    label(c,'전자는 안쪽 껍질부터 채운다: 2 → 8 → 8',190,62,C.muted,{size:13});
+    SA_g(c,fa,()=>{let left=shown;e[1].forEach((m,s)=>{dot(c,ax,ay,RS[s],null,{stroke:ra(P,.45),lw:1.5});const n=Math.min(m,left);left-=n;const out=s===e[1].length-1;
+        for(let j=0;j<n;j++){const a=j/m*TAU-Math.PI/2+t*.3*(s%2?-1:1);dot(c,ax+Math.cos(a)*RS[s],ay+Math.sin(a)*RS[s],out?6.5:5,out?G:'#E6EDF5',{glow:out?10:0});}});
+      dot(c,ax,ay,23,ra(P,.35),{stroke:P,lw:2});T(c,e[0],ax,ay+1,{size:17,w:700,align:'center'});
+      const k=fin(q,1.5,.4);SA_g(c,k,()=>{T(c,e[0]+'  ('+e[1].join(', ')+')',ax,392,{size:20,font:MONO,align:'center',w:600});
+        K(c,'숫자 '+e[1].length+'개 → '+e[1].length+'주기',ax,424,{size:15,color:C.u2,w:600});K(c,'마지막 숫자 '+e[1][e[1].length-1]+' → '+GN[e[3]]+'족',ax,450,{size:15,color:G,w:600});});});
+    const x0=432,y0=104,cw=58,ch=54;
+    label(c,'족(세로줄): 가장 바깥 껍질의 전자 수가 같다',664,62,C.muted,{size:13});label(c,'주기',410,86,C.dim,{size:12});
+    GN.forEach((g,i)=>label(c,g,x0+i*cw+cw/2,86,i===e[3]&&q>1.5?G:C.muted,{size:13}));
+    SA_PT.forEach((row,r)=>{label(c,String(r+1),410,y0+r*ch+ch/2,r===e[2]&&q>1.5?C.u2:C.muted,{size:13});
+      row.forEach((s,i)=>{if(!s)return;const x=x0+i*cw,y=y0+r*ch,col=i===0&&r>0?G:i===6?SA_PK:i===7?C.u2:null,on=s===e[0]&&q>1.5,z=r===0?(i?2:1):r*8-5+i;
+        rr(c,x+2,y+2,cw-4,ch-4,7,col?ra(col,.16):SA_INK,on?'#FFFFFF':col||C.line,on?3:1.3);if(on)box(c,x+2,y+2,cw-4,ch-4,7,null,'#FFFFFF',2,{glow:14});
+        T(c,s,x+cw/2,y+ch/2+6,{size:17,w:700,align:'center',color:col||C.text});T(c,String(z),x+8,y+14,{size:12,font:MONO,color:C.dim});});});
+    T(c,'수소는 1족이지만 알칼리 금속이 아니다 (비금속)',500,131,{size:13,color:C.muted});
+    arw(c,x0+50,y0+ch+12,x0+50,y0+3*ch-8,G,2,8);arw(c,x0+6*cw+50,y0+3*ch-8,x0+6*cw+50,y0+ch+12,SA_PK,2,8);
+    [[G,'1족 알칼리 금속','Li · Na · K','원자가 전자 1개 → 잃고 +1의 양이온','반응성: 아래로 갈수록 크다  Li < Na < K',0],[SA_PK,'17족 할로젠','F · Cl · Br · I','원자가 전자 7개 → 1개 얻고 −1의 음이온','반응성: 위로 갈수록 크다  F > Cl > Br > I',6],[C.u2,'18족 비활성 기체','He · Ne · Ar','가장 바깥 껍질이 가득 참 → 안정','다른 원소와 거의 반응하지 않는다',7]].forEach((g,i)=>{
+      const y=290+i*66,on=g[5]===e[3]&&q>1.5;rr(c,x0,y,464,58,12,ra(g[0],on?.2:.07),g[0],on?2.6:1.4);
+      T(c,g[1],x0+16,y+20,{size:15,w:700,color:g[0]});T(c,g[2],x0+16,y+42,{size:12.5,color:C.muted,font:MONO});T(c,g[3],x0+166,y+20,{size:14});T(c,g[4],x0+166,y+42,{size:12.5,color:C.muted});});
+    K(c,'전자 배치를 (2, 8, …)로 적으면 원자 번호 · 주기 · 족이 한 번에 나온다',480,512,{size:14,color:C.text});
+  }});
+
+/* ───────── Ⅱ-4 이온 결합과 공유 결합 ───────── */
+function SA_bulb(c,x,y,on){box(c,x-6,y+12,12,10,2,'#5E738B');dot(c,x,y,14,on?'#FFE28A':'#16263A',{stroke:on?'#FFE28A':C.dim,lw:2,glow:on?22:0});}
+S.push({u:1,ch:'물질과 규칙성',title:'이온 결합과 공유 결합',file:'02-matter.html',
+  sub:'금속과 비금속은 전자를 주고받아 이온 결합을, 비금속끼리는 전자쌍을 함께 가져 공유 결합을 합니다. 전류는 전하를 띤 입자가 움직일 수 있을 때만 흐릅니다.',
+  fx:[{w:1,f:'이온 결합: 금속 + 비금속',n:'양이온과 음이온의 전기적 인력'},{w:1,f:'공유 결합: 비금속 + 비금속',n:'전자쌍을 함께 가짐'},{w:1,f:'전류: 전하를 띤 입자가 움직일 수 있어야 흐른다',n:'이온 결합 물질은 액체 · 수용액에서'}],
+  pts:['가장 바깥 껍질이 가득 찬 <em>비활성 기체의 전자 배치</em>가 안정해서, 원자들은 전자를 잃거나 얻거나 함께 가집니다.','Na(2, 8, 1)은 전자 1개를 잃어 Na⁺(2, 8), Cl(2, 8, 7)은 1개를 얻어 Cl⁻(2, 8, 8)이 됩니다. 물은 O가 H 2개와 전자쌍을 1개씩 공유합니다.','함정: 고체 염화 나트륨에 전류가 흐르지 않는 것은 이온이 없어서가 아니라 <em>움직이지 못해서</em>입니다.','설탕 같은 공유 결합 물질은 물에 녹아도 <em>분자 그대로</em>라서 전류가 흐르지 않습니다.'],
+  dur:15,still:13,
+  draw(c,t){
+    const G=IC[0],y=158,k1=ease(seg(t,1,2.6)),k2=ease(seg(t,2.8,4)),k3=ease(seg(t,5,7));
+    T(c,'이온 결합',50,50,{size:18,w:700,color:G});T(c,'금속 Na + 비금속 Cl',148,51,{size:14,color:C.muted});
+    T(c,'공유 결합',520,50,{size:18,w:700,color:C.u2});T(c,'비금속 O + 비금속 H',618,51,{size:14,color:C.muted});poly(c,[[480,40],[480,282]],C.line,1.5,{dash:[3,5]});
+    const nx=150+20*k2,cx=350-20*k2,done=k1>.97;
+    dot(c,nx,y,44,null,{stroke:ra(G,.6*(1-k1)+.12),lw:1.5,dash:done?[3,4]:null});dot(c,nx,y,21,ra(G,.3),{stroke:G,lw:2});T(c,done?'Na⁺':'Na',nx,y+1,{size:15,w:700,align:'center'});
+    dot(c,cx,y,48,null,{stroke:ra(SA_GR,.6),lw:1.5});dot(c,cx,y,21,ra(SA_GR,.28),{stroke:SA_GR,lw:2});T(c,done?'Cl⁻':'Cl',cx,y+1,{size:15,w:700,align:'center'});
+    for(let j=0;j<8;j++)if(j!==4){const a=j/8*TAU;dot(c,cx+Math.cos(a)*48,y+Math.sin(a)*48,5,'#E6EDF5');}
+    dot(c,lerp(nx+44,cx-48,k1),y-Math.sin(k1*Math.PI)*26,6,G,{glow:12});
+    K(c,done?'(2, 8) 네온과 같다':'(2, 8, 1)',nx-14,y+68,{size:12.5,color:C.muted});K(c,done?'(2, 8, 8) 아르곤과 같다':'(2, 8, 7)',cx+14,y+68,{size:12.5,color:C.muted});
+    SA_g(c,k2,()=>{arw(c,nx+26,y-62,nx+58,y-62,SA_HOT,2.5,8);arw(c,cx-26,y-62,cx-58,y-62,SA_HOT,2.5,8);K(c,'전자를 주고받는다 → 양이온과 음이온이 서로 끌어당긴다',250,262,{size:13.5});});
+    const ox=720,h1=lerp(596,654,k3),h2=lerp(844,786,k3);
+    dot(c,ox,y,50,null,{stroke:ra(SA_PK,.6),lw:1.5});dot(c,ox,y,22,ra(SA_PK,.28),{stroke:SA_PK,lw:2});T(c,'O',ox,y+1,{size:15,w:700,align:'center'});
+    [h1,h2].forEach((hx,i)=>{const s=i?-1:1,xm=(ox-s*50+hx+s*30)/2;dot(c,hx,y,30,null,{stroke:ra(C.u2,.6),lw:1.5});dot(c,hx,y,13,ra(C.u2,.28),{stroke:C.u2,lw:2});T(c,'H',hx,y+1,{size:13,w:700,align:'center'});
+      if(k3>.97)c.save(),c.strokeStyle=ra(G,.8),c.lineWidth=1.5,c.beginPath(),c.ellipse(xm,y,9,17,0,0,TAU),c.stroke(),c.restore();
+      dot(c,lerp(ox-s*50,xm,k3),y-7*k3,5,'#E6EDF5');dot(c,lerp(hx+s*30,xm,k3),y+7*k3,5,C.u2);});
+    [-1,1].forEach(s=>[-.2,.2].forEach(d=>dot(c,ox+Math.sin(d)*50,y+s*Math.cos(d)*50,5,'#E6EDF5')));
+    SA_g(c,k3,()=>{K(c,'H₂O — 공유 전자쌍 2개',720,238,{size:14,w:700,color:C.u2});K(c,'전자쌍을 함께 가진다 → 모두 비활성 기체와 같은 배치',720,262,{size:13.5});});
+    SA_g(c,fin(t,7.6,.6),()=>K(c,'전류가 흐르려면 — 전하를 띤 입자가 움직일 수 있어야 한다',480,306,{size:15,w:700,color:G}));
+    [['고체 염화 나트륨 — 전류 ✕','이온은 있지만 제자리에 묶여 있다',0],['염화 나트륨 수용액 — 전류 ○','양이온과 음이온으로 나뉘어 움직인다',1],['설탕물 — 전류 ✕','분자 그대로 녹아 전하를 띤 입자가 없다',0]].forEach((p,i)=>SA_g(c,fin(t,8.2+i*1.3,.6),()=>{
+      const x=60+i*285;rr(c,x,326,270,114,12,SA_INK,p[2]?SA_GR:C.line,p[2]?2.2:1.5);SA_bulb(c,x+236,372,p[2]);
+      const ion=(px,py,pos)=>{dot(c,px,py,9,ra(pos?SA_HOT:SA_BL,.3),{stroke:pos?SA_HOT:SA_BL,lw:1.5});T(c,pos?'+':'−',px,py+1,{size:12,align:'center',w:700,color:C.text});};
+      if(i===0)for(let r=0;r<3;r++)for(let q=0;q<5;q++)ion(x+34+q*34+Math.sin(t*9+r+q*2)*1.2,354+r*30,(r+q)%2===0);
+      if(i===1)for(let q=0;q<6;q++){const pos=q<3,u=(t*.22+rnd(q+11))%1;ion(x+26+(pos?1-u:u)*172,346+q*15,pos);}
+      if(i===2)for(let q=0;q<7;q++){const px=x+40+rnd(q+60)*150+Math.sin(t*.9+q)*9,py=350+rnd(q+70)*66+Math.cos(t*.7+q*2)*7;dot(c,px,py,8,ra('#AAB6C4',.25),{stroke:'#AAB6C4',lw:1.5});}
+      K(c,p[0],x+135,462,{size:14,w:700,color:p[2]?SA_GR:C.text});K(c,p[1],x+135,486,{size:13,color:C.muted});}));
+  }});
+
+/* ───────── Ⅲ-1 기권과 해수의 층상 구조 ───────── */
+function SA_loop(c,x,y,rx,ry,t,col){c.save();c.strokeStyle=ra(col,.45);c.lineWidth=1.5;c.beginPath();c.ellipse(x,y,rx,ry,0,0,TAU);c.stroke();c.restore();   // 대류(빙글 도는 흐름)
+  for(let k=0;k<2;k++){const a=t*1.6+k*Math.PI;dot(c,x+Math.cos(a)*rx,y+Math.sin(a)*ry,3.5,col);}}
+S.push({u:2,ch:'지구시스템',title:'기권과 해수의 층상 구조',file:'03-earth-system.html',
+  sub:'기권은 높이에 따른 기온으로, 해수는 깊이에 따른 수온으로 층을 나눕니다. 무엇이 그 층을 데우는지를 알면 기온이 꺾이는 방향이 설명됩니다.',
+  fx:[{w:1,f:'대류권 ↓ · 성층권 ↑ · 중간권 ↓ · 열권 ↑',n:'높이 올라갈수록 기온'},{w:1,f:'기상 현상 = 대류 + 수증기',n:'대류권에서만'},{w:1,f:'혼합층 · 수온 약층 · 심해층',n:'수온 약층은 안정한 층'}],
+  pts:['대류권은 <em>지표</em>가 내보내는 열로, 성층권은 <em>오존층</em>이 자외선을 흡수해서, 열권은 태양 에너지를 직접 흡수해서 데워집니다.','아래가 따뜻하고 위가 차가우면 대류가 일어나고(대류권·중간권), 아래가 차갑고 위가 따뜻하면 <em>안정</em>합니다(성층권).','함정: 중간권은 대류가 일어나지만 <em>수증기가 거의 없어</em> 기상 현상이 없습니다.','<em>수온 약층</em>은 위아래로 섞이지 않아 혼합층과 심해층 사이의 교환을 막습니다. 혼합층은 바람이 강할수록 두꺼워집니다.'],
+  dur:15,still:13,
+  draw(c,t){
+    const U=C.u2,B=[['대류권','↓','지표가 내보내는 열로 데워진다','대류 ○ · 수증기 ○ → 기상 현상'],['성층권','↑','오존층이 자외선을 흡수해 데워진다','아래가 차가워 안정하다 (대류 ✕)'],['중간권','↓','아래가 따뜻해 대류가 일어난다','수증기가 거의 없다 → 기상 현상 ✕'],['열권','↑','태양 에너지를 직접 흡수한다','공기가 매우 희박 · 오로라']];
+    T(c,'기권 — 높이에 따른 기온',40,40,{size:16,w:700,color:U});T(c,'해수 — 깊이에 따른 수온',640,40,{size:16,w:700,color:U});
+    arrow(c,70,480,70,70,C.dim,1.5,8);arrow(c,70,480,284,480,C.dim,1.5,8);T(c,'기온 →',284,500,{size:12.5,color:C.muted,align:'right'});T(c,'높이',84,74,{size:12.5,color:C.muted});
+    [['11 km',380],['50 km',280],['80 km',180]].forEach(k=>{poly(c,[[70,k[1]],[572,k[1]]],C.line,1.2,{dash:[4,5]});T(c,k[0],62,k[1],{size:12,color:C.muted,align:'right',font:MONO});});
+    box(c,72,331,208,26,0,ra(SA_GR,.14));T(c,'오존층',276,344,{size:12,color:SA_GR,align:'right'});
+    const P=SA_part([[247,480],[138,380],[221,280],[93,180],[258,84]],seg(t,.6,6)),pe=P[P.length-1];
+    SA_loop(c,104,438,14,26,t,SA_HOT);if(t>3.4)SA_loop(c,240,214,14,24,t,SA_HOT);
+    poly(c,P,IC[0],3.5);if(t<6)dot(c,pe[0],pe[1],6,IC[0],{glow:12});
+    B.forEach((b,i)=>SA_g(c,fin(t,.7+i*1.35,.6),()=>{const m=430-i*100,col=b[1]==='↓'?SA_BL:SA_HOT;
+      T(c,b[0],296,m-26,{size:16,w:700,color:col});T(c,'올라갈수록 기온 '+b[1],296+kw(c,b[0],16,700)+12,m-25,{size:13,color:col});T(c,b[2],296,m-2,{size:13.5});T(c,b[3],296,m+20,{size:13.5,color:C.muted});}));
+    SA_g(c,fin(t,6.5,.7),()=>{
+      const wv=[];for(let x=650;x<=900;x+=6)wv.push([x,118+Math.sin(x*.07+t*2.2)*2.5]);poly(c,wv,SA_BL,2.5);arrow(c,650,118,650,452,C.dim,1.5,8);T(c,'깊이',662,446,{size:12.5,color:C.muted});T(c,'수온 →',900,98,{size:12.5,color:C.muted,align:'right'});
+      T(c,'바람',656,98,{size:12.5,color:C.muted});for(let k=0;k<3;k++){const u=(t*.4+k/3)%1;arw(c,692+u*70,98,712+u*70,98,C.muted,2,7,Math.sin(u*Math.PI));}
+      [190,305].forEach(y=>poly(c,[[650,y],[900,y]],C.line,1.2,{dash:[4,5]}));
+      SA_loop(c,748,154,22,14,t,SA_BL);SA_loop(c,812,154,22,14,-t,SA_BL);
+      const Q=smooth([[860,118],[860,150],[860,186],[800,232],[738,280],[714,314],[705,370],[701,440]],12),m=Math.max(2,Math.floor(Q.length*seg(t,7,10)));poly(c,Q.slice(0,m),IC[0],3.5);
+      T(c,'혼합층',662,154,{size:14,w:700,color:U});SA_g(c,fin(t,8.2,.5),()=>T(c,'수온 약층',662,250,{size:14,w:700,color:U}));SA_g(c,fin(t,9.2,.5),()=>T(c,'심해층',888,372,{size:14,w:700,color:U,align:'right'}));
+      [['혼합층: 바람이 섞어 수온이 고르다',7.4],['수온 약층: 안정 → 위아래 교환을 막는다',8.6],['심해층: 태양 에너지가 닿지 않는다',9.8]].forEach((r,i)=>SA_g(c,fin(t,r[1],.6),()=>T(c,r[0],640,476+i*22,{size:13.5,color:i===1?C.text:C.muted})));});
+  }});
+
+/* ───────── Ⅲ-2 탄소의 순환 ───────── */
+S.push({u:2,ch:'지구시스템',title:'탄소의 순환',file:'03-earth-system.html',
+  sub:'탄소는 권역마다 다른 모습으로 있으면서 권역 사이를 이동합니다. 들어오는 양과 나가는 양이 같으면 그 권역의 탄소량은 일정합니다.',
+  fx:[{w:1,f:'기권 ⇄ 생물권: 광합성 · 호흡',n:'이산화 탄소 ⇄ 유기물'},{w:1,f:'지권 → 기권: 화산 분출 · 화석 연료의 연소',n:'석회암 · 화석 연료에 있던 탄소'},{w:1,f:'탄소 변화량 = 들어온 양 − 나간 양',n:'두 양이 같으면 균형'}],
+  pts:['탄소는 기권에서 <em>이산화 탄소·메테인</em>, 생물권에서 <em>유기물</em>, 수권에서 <em>탄산 이온</em>, 지권에서 <em>석회암·화석 연료</em>로 있습니다.','화석 연료를 태우면 지권에 오래 갇혀 있던 탄소가 짧은 시간에 기권으로 나갑니다. 들어오는 양이 나가는 양보다 많아져 <em>대기 중 이산화 탄소가 늘어납니다.</em>','함정: 탄소가 가장 많이 들어 있는 권역은 기권이 아니라 <em>지권</em>입니다. 석회암에 갇혀 있기 때문입니다.','권역 화살표는 <em>원인이 된 권역 → 결과가 나타난 권역</em>입니다. ‘비가 내려 암석이 깎였다’는 기권 → 지권입니다.'],
+  dur:16,still:14,
+  draw(c,t){
+    const A=C.u2,Bc=SA_GR,Hc=SA_BL,Gc=IC[0],hot=fin(t,11,.8);
+    const F=[[[[400,134],[200,228]],Bc,'광합성',314,164,'right',1],[[[250,228],[450,134]],Bc,'호흡',332,200,'left',2.1],[[[560,134],[760,228]],Hc,'해수에 녹는다',646,164,'left',3.2],[[[710,228],[510,134]],Hc,'수온이 오르면 빠져나온다',628,200,'right',4.3],
+      [[[200,308],[346,440]],Gc,'유해가 묻혀 화석 연료로',276,396,'right',5.4],[[[760,308],[614,440]],Gc,'탄산염으로 가라앉아 석회암으로',684,396,'left',6.5],[[[480,406],[480,134]],SA_HOT,'',0,0,'left',7.6]];
+    F.forEach((f,i)=>SA_g(c,fin(t,f[6],.6),()=>{const p=f[0],last=i===6;arw(c,p[0][0],p[0][1],p[1][0],p[1][1],ra(f[1],.55),last?2+2*hot:1.8,10);
+      flow(c,p,t*(last?1+1.4*hot:1),f[1],last?3+Math.round(3*hot):3,last?5+hot:4.5,.3);if(f[2])T(c,f[2],f[3],f[4],{size:13,color:f[1],align:f[5]});}));
+    SA_g(c,fin(t,7.6,.6),()=>{T(c,'화산 분출',468,286,{size:13,color:SA_HOT,align:'right'});T(c,'화석 연료의 연소',492,286,{size:13+hot,color:SA_HOT,w:hot>.5?700:500});});
+    [[360,58,240,72,A,'기권','이산화 탄소 · 메테인'],[60,232,220,72,Bc,'생물권','유기물 (탄소 화합물)'],[680,232,220,72,Hc,'수권','물에 녹은 탄산 이온'],[350,410,260,90,Gc,'지권','석회암 · 화석 연료']].forEach((b,i)=>SA_g(c,fin(t,.1+i*.2,.5),()=>{
+      rr(c,b[0],b[1],b[2],b[3],14,SA_INK,b[4],2.4);K(c,b[5],b[0]+b[2]/2,b[1]+24,{size:18,w:700,color:b[4]});K(c,b[6],b[0]+b[2]/2,b[1]+51,{size:14});
+      if(i===3)K(c,'탄소가 가장 많이 들어 있는 곳',480,b[1]+74,{size:12.5,color:Gc});}));
+    rr(c,60,44,270,92,12,'rgba(255,255,255,.03)',C.line,1.4);T(c,'어느 권역의 탄소 변화량',78,66,{size:13,color:C.muted});T(c,'= 들어온 양 − 나간 양',78,92,{size:16,w:700});T(c,'두 양이 같으면 변화 없음 (균형)',78,118,{size:12.5,color:C.muted});
+    rr(c,630,44,270,92,12,'rgba(255,255,255,.03)',hot>.1?SA_HOT:C.line,1.4);T(c,'대기 중 이산화 탄소',648,66,{size:13,color:C.muted});bar(c,648,82,234,15,.42+.38*ease(seg(t,11.3,13.6)),SA_HOT);
+    SA_g(c,hot,()=>T(c,'들어오는 양 > 나가는 양 → 늘어난다',648,118,{size:12.5,color:SA_HOT}));
+  }});
+
+/* ───────── Ⅲ-3 판의 경계 ───────── */
+function SA_quake(c,x,y,t,k){const u=(t*.8+k*.37)%1;dot(c,x,y,3,'#FFE28A');dot(c,x,y,3+12*u,null,{stroke:ra('#FFE28A',1-u),lw:2});}   // 지진(퍼지는 고리)
+S.push({u:2,ch:'지구시스템',title:'판의 경계와 지각 변동',file:'03-earth-system.html',
+  sub:'맨틀 대류로 판이 움직이면 경계에 힘이 쌓여 지진과 화산 활동이 일어납니다. 두 판이 멀어지는지, 가까워지는지, 어긋나는지로 경계를 나눕니다.',
+  fx:[{w:1,f:'발산형: 해령 · 열곡대',n:'판이 생성 · 맨틀 대류의 상승부'},{w:1,f:'수렴형: 해구 · 호상 열도 · 습곡 산맥',n:'섭입형에서는 판이 소멸'},{w:1,f:'보존형: 변환 단층',n:'판의 생성도 소멸도 없음'},{w:1,f:'지진: 모두 활발 · 화산 활동: 발산형 · 섭입형만',n:'충돌형 · 보존형은 거의 없음'}],
+  pts:['<em>지구 내부 에너지 → 맨틀 대류 → 판의 이동 → 경계에 힘이 쌓임 → 지진·화산</em>. 그래서 지진대·화산대가 판의 경계와 거의 겹칩니다.','화산 활동에는 마그마가 필요합니다. 벌어진 틈으로 맨틀 물질이 올라오는 발산형, 들어간 판 위쪽에서 마그마가 생기는 섭입형에서만 활발합니다.','함정: <em>충돌형</em>(히말라야산맥)과 <em>보존형</em>(산안드레아스 단층)은 지진은 잦지만 화산 활동이 거의 없습니다.','경계를 가릴 때는 <em>화산 유무 → 지형</em> 순서로 봅니다. 섭입형에서는 판이 들어가는 쪽으로 갈수록 지진이 깊은 곳에서 일어납니다.'],
+  dur:16,still:12,
+  draw(c,t){
+    const OC='#34587C',OS='#7FA6CC',CT='#4C6B58',CS='#8FB79B',MAN=ra(SA_HOT,.1);
+    const PN=[['발산형','서로 멀어진다',1,'해령 · 열곡대 — 맨틀 물질이 올라와 새 판이 된다'],['수렴형 · 섭입형','밀도 큰 판이 아래로',1,'해구 · 호상 열도 · 화산이 있는 산맥 — 판이 소멸한다'],['수렴형 · 충돌형','대륙끼리 부딪친다',0,'습곡 산맥 (히말라야산맥) — 지층이 휘어지며 솟는다'],['보존형','어긋나 스친다 (위에서 본 모습)',0,'변환 단층 (산안드레아스 단층) — 생성도 소멸도 없다']];
+    PN.forEach((p,i)=>SA_g(c,fin(t,.3+i*2.3,.7),()=>{const x=30+(i%2)*460,y=44+Math.floor(i/2)*226;
+      rr(c,x,y,440,212,14,'rgba(255,255,255,.025)',C.line,1.4);T(c,p[0],x+16,y+22,{size:16,w:700,color:C.u2});T(c,p[1],x+28+kw(c,p[0],16,700),y+23,{size:13,color:C.muted});
+      K(c,'지진 ○',x+336,y+23,{size:13,color:SA_GR,w:600});K(c,p[2]?'화산 ○':'화산 ✕',x+398,y+23,{size:13,color:p[2]?SA_GR:SA_PK,w:600});K(c,p[3],x+220,y+192,{size:13.5});
+      if(i<3)box(c,x+16,y+124,408,48,6,MAN);
+      if(i===0){const g=5+11*((t*.28)%1);box(c,x+30,y+92,188-g,30,4,OC,OS,1.5);box(c,x+222+g,y+92,188-g,30,4,OC,OS,1.5);
+        poly(c,[[x+218-g-26,y+92],[x+218-g,y+78],[x+218-g,y+92]],OS,1.5,{fill:OC,close:true});poly(c,[[x+222+g+26,y+92],[x+222+g,y+78],[x+222+g,y+92]],OS,1.5,{fill:OC,close:true});
+        box(c,x+218-g,y+84,4+2*g,84,2,ra(SA_HOT,.55));flow(c,[[x+220,y+168],[x+220,y+86]],t,SA_HOT,3,4.5,.5);
+        arw(c,x+196,y+148,x+96,y+148,ra(SA_HOT,.7),2,8);arw(c,x+244,y+148,x+344,y+148,ra(SA_HOT,.7),2,8);T(c,'맨틀 대류의 상승부',x+28,y+160,{size:12,color:SA_HOT});
+        arw(c,x+150,y+107,x+84,y+107,C.text,2.5,9);arw(c,x+290,y+107,x+356,y+107,C.text,2.5,9);K(c,'해령',x+220,y+62,{size:13,w:600});SA_quake(c,x+220,y+100,t,0);}
+      if(i===1){poly(c,[[x+30,y+92],[x+226,y+92],[x+338,y+156],[x+324,y+172],[x+214,y+118],[x+30,y+118]],OS,1.5,{fill:OC,close:true});
+        poly(c,[[x+240,y+84],[x+410,y+84],[x+410,y+122],[x+300,y+122]],CS,1.5,{fill:CT,close:true});poly(c,[[x+326,y+84],[x+346,y+56],[x+366,y+84]],CS,1.5,{fill:'#6B4F3F',close:true});
+        flow(c,[[x+318,y+152],[x+340,y+110],[x+346,y+60]],t,SA_HOT,3,4,.45);arw(c,x+60,y+105,x+130,y+105,C.text,2.5,9);arw(c,x+402,y+103,x+372,y+103,C.text,2.5,9);
+        poly(c,[[x+232,y+62],[x+232,y+86]],C.muted,1.2);K(c,'해구',x+232,y+52,{size:13,w:600});T(c,'화산',x+374,y+62,{size:13,w:600});
+        [[250,104],[278,122],[306,139]].forEach((q,k)=>SA_quake(c,x+q[0],y+q[1],t,k));T(c,'들어가는 쪽으로 갈수록',x+28,y+142,{size:12,color:C.muted});T(c,'지진이 깊은 곳에서 일어난다',x+28,y+160,{size:12,color:C.muted});}
+      if(i===2){const h=25+6*Math.sin(t*1.4);box(c,x+30,y+92,180,34,4,CT,CS,1.5);box(c,x+234,y+92,176,34,4,CT,CS,1.5);
+        poly(c,[[x+176,y+92],[x+198,y+92-h*.6],[x+210,y+92-h*.32],[x+222,y+92-h],[x+235,y+92-h*.46],[x+248,y+92-h*.76],[x+268,y+92],[x+268,y+126],[x+176,y+126]],CS,1.5,{fill:CT,close:true});
+        for(let k=0;k<2;k++){const W=[];for(let q=0;q<=92;q+=4)W.push([x+176+q,y+104+k*11+Math.sin(q*.2+k)*4]);poly(c,W,ra(CS,.6),1.2);}
+        arw(c,x+60,y+109,x+130,y+109,C.text,2.5,9);arw(c,x+380,y+109,x+310,y+109,C.text,2.5,9);K(c,'습곡 산맥',x+222,y+50,{size:13,w:600});SA_quake(c,x+222,y+118,t,0);T(c,'어느 판도 깊이 들어가지 못한다',x+28,y+152,{size:12,color:C.muted});}
+      if(i===3){box(c,x+30,y+48,380,54,4,OC,OS,1.5);box(c,x+30,y+104,380,54,4,'#2C4B6B',OS,1.5);
+        c.save();c.beginPath();c.rect(x+31,y+49,378,108);c.clip();for(let k=0;k<5;k++){const a=x+30+((k*76+t*20)%380),b=x+30+((k*76+380-(t*20)%380)%380);poly(c,[[a,y+50],[a,y+100]],ra(OS,.5),2);poly(c,[[b,y+106],[b,y+156]],ra(OS,.5),2);}c.restore();
+        poly(c,[[x+30,y+103],[x+410,y+103]],SA_PK,3);arw(c,x+84,y+70,x+164,y+70,C.text,2.5,9);arw(c,x+356,y+136,x+276,y+136,C.text,2.5,9);
+        [[110,0],[220,1],[330,2]].forEach(q=>SA_quake(c,x+q[0],y+103,t,q[1]));T(c,'변환 단층',x+268,y+82,{size:13,w:600,color:SA_PK});}}));
+    SA_g(c,fin(t,9.8,.7),()=>K(c,'지진: 네 경계 모두 활발   ·   화산 활동: 발산형 · 섭입형은 활발, 충돌형 · 보존형은 거의 없음',480,510,{size:14,color:C.text}));
+  }});
+
+/* ───────── Ⅲ-4 자유 낙하 ───────── */
+S.push({u:2,ch:'역학 시스템',title:'자유 낙하 운동',file:'04-mechanics.html',
+  sub:'중력만 받아 떨어지는 물체는 속도가 1초마다 같은 양씩 커집니다. 속도–시간 그래프 아래 넓이가 떨어진 거리입니다.',
+  fx:[{f:'v = gt',n:'t초 뒤의 속도'},{f:'s = ½gt^2',n:'t초 동안 낙하한 거리'},{w:1,f:'1초마다 떨어지는 거리: 5 m → 15 m → 25 m',n:'차가 10 m로 일정 (g = 10 m/s²)'}],
+  pts:['힘(중력)이 연직 아래로 일정하게 작용하므로 <em>속도가 일정하게 커지는</em> 운동이 됩니다.','속도–시간 그래프가 원점을 지나는 직선이라, 아래 넓이는 삼각형 ½ × t × gt = <em>½gt²</em>입니다.','함정: 공기 저항을 무시하면 <em>질량이 달라도</em> 낙하 시간과 바닥에 닿는 속도가 같습니다. 질량이 2배면 중력도 2배지만 속도를 바꾸는 데 필요한 힘도 2배입니다.','섬광 사진에서 물체 사이 간격이 일정하게 넓어지면 가속도가 일정한 운동입니다.'],
+  dur:15,still:6.8,
+  draw(c,t){
+    const G=IC[0],tau=clamp(((t%7.5)-.6)*.6,0,3),Y=m=>70+m*8,yb=Y(5*tau*tau),x1=150,x2=215;
+    poly(c,[[84,70],[84,430]],C.dim,1.5);for(let m=0;m<=45;m+=5){poly(c,[[78,Y(m)],[84,Y(m)]],C.dim,1.5);if([0,5,20,45].includes(m))T(c,m+' m',72,Y(m),{size:12,font:MONO,color:C.muted,align:'right'});}
+    T(c,'m',x1,40,{size:17,font:SERIF,it:true,align:'center',color:C.muted});T(c,'2m',x2,40,{size:17,font:SERIF,it:true,align:'center',color:C.muted});
+    poly(c,[[50,446],[450,446]],C.line,3);
+    for(let k=0;k<=3&&k<=tau+1e-6;k++){const y=Y(5*k*k);dot(c,x1,y,9,null,{stroke:G,lw:1.5,alpha:.5});dot(c,x2,y,14,null,{stroke:G,lw:1.5,alpha:.5});T(c,k+'초',246,y,{size:12.5,color:C.muted});
+      if(k>0){const ya=Y(5*(k-1)*(k-1));poly(c,[[312,ya+3],[312,y-3]],G,2);poly(c,[[306,ya+3],[318,ya+3]],G,2);poly(c,[[306,y-3],[318,y-3]],G,2);T(c,(10*k-5)+' m',326,(ya+y)/2,{size:15,w:700,color:G});}
+      if(k>1){const ym=(Y(5*(k-2)*(k-2))+Y(5*(k-1)*(k-1)))/2,yn=(Y(5*(k-1)*(k-1))+y)/2;T(c,'차 10 m',392,(ym+yn)/2,{size:13,color:C.u2});}}
+    dot(c,x1,yb,9,G,{glow:14});dot(c,x2,yb,14,G,{glow:14});if(tau>.05&&tau<2.97)arw(c,114,yb,114,yb+tau*14,C.u2,3,9);
+    SA_g(c,seg(tau,2.9,3),()=>{K(c,'공기 저항을 무시하면 — 질량이 달라도 동시에 닿는다',250,474,{size:14.5,w:600});K(c,'질량 2배 → 중력 2배, 속도를 바꾸는 데 필요한 힘도 2배',250,500,{size:12.5,color:C.muted});});
+    const x0=560,y0=440,gx=q=>x0+q*100,gy=v=>y0-v*9;
+    axes(c,x0,y0,372,310,'t (초)','v (m/s)');[1,2,3].forEach(k=>{label(c,String(k),gx(k),y0+15,C.muted,{size:12});T(c,String(k*10),x0-8,gy(k*10),{size:12,font:MONO,color:C.muted,align:'right'});poly(c,[[x0,gy(k*10)],[x0+5,gy(k*10)]],C.dim,1.5);});
+    poly(c,[[x0,y0],[gx(tau),y0],[gx(tau),gy(10*tau)]],null,0,{fill:ra(G,.2),close:true});
+    [1,2].forEach(k=>{if(tau>k)poly(c,[[gx(k),y0],[gx(k),gy(10*k)]],ra(G,.7),1.5,{dash:[4,4]});});
+    poly(c,[[x0,y0],[gx(tau),gy(10*tau)]],G,3.5);dot(c,gx(tau),gy(10*tau),6,G,{glow:12});
+    [[5,626,422],[15,712,398],[25,812,372]].forEach((a,k)=>SA_g(c,seg(tau,k+.85,k+1),()=>K(c,a[0]+' m',a[1],a[2],{size:14,w:700,color:G})));
+    T(c,'기울기 = g = 10 m/s²',580,178,{size:13.5,color:C.muted});T(c,'아래 넓이 = 떨어진 거리 = ½gt²',580,202,{size:13.5,color:C.muted});
+    label(c,'t = '+tau.toFixed(1)+' 초',610,62,C.text,{size:15});label(c,'v = '+(10*tau).toFixed(0)+' m/s',735,62,C.u2,{size:15});label(c,'s = '+(5*tau*tau).toFixed(1)+' m',860,62,G,{size:15});
+  }});
+
+/* ───────── Ⅲ-5 수평으로 던진 물체 ───────── */
+S.push({u:2,ch:'역학 시스템',title:'수평으로 던진 물체의 운동',file:'04-mechanics.html',
+  sub:'수평 방향으로는 힘이 없어 등속 운동, 연직 방향으로는 중력을 받아 자유 낙하와 똑같이 움직입니다. 그래서 가만히 놓은 물체와 동시에 바닥에 닿습니다.',
+  fx:[{w:1,f:'수평: 힘 없음 → 등속 운동',n:'수평 거리 = 던진 속도 × 시간'},{w:1,f:'연직: 중력 → 자유 낙하와 같은 운동',n:'연직 속도 = gt · 낙하 거리 = ½gt²'},{w:1,f:'낙하 시간은 높이로만 정해진다',n:'던진 속도와 관계없음'}],
+  pts:['중력은 연직 아래로만 작용하고 수평 방향으로는 힘이 없습니다. 그래서 <em>수평은 등속, 연직은 자유 낙하</em>로 나누어 봅니다.','같은 높이에서 가만히 놓은 물체와 수평으로 던진 물체는 <em>동시에</em> 바닥에 닿습니다. 연직 방향 운동이 같기 때문입니다.','함정: 더 빠르게 던져도 낙하 시간은 같습니다. 달라지는 것은 수평 거리뿐이고, <em>2배 빠르게 던지면 2배 멀리</em> 갑니다.','운동 방향은 계속 아래로 꺾이지만 <em>가속도</em>는 언제나 연직 아래 방향, 크기 g로 일정합니다.'],
+  dur:16,still:6.5,
+  draw(c,t){
+    const G=IC[0],tau=2*clamp(((t%8)-.8)/2.4),Y=q=>96+75*q*q,XA=124,XB=q=>156+225*q,XC=q=>156+112.5*q;
+    [['#E6EDF5','가만히 놓는다'],[SA_PK,'7.5 m/s로 던진다'],[G,'15 m/s로 던진다']].forEach((l,i)=>{dot(c,48+i*150,38,6,l[0]);T(c,l[1],60+i*150,38,{size:13,color:C.muted});});
+    T(c,'높이 20 m',22,68,{size:12.5,color:C.muted});poly(c,[[22,84],[112,84]],C.dim,1.5,{dash:[3,4]});poly(c,[[20,408],[650,408]],C.line,3);
+    for(let k=0;k<=4&&k*.5<=tau+1e-6;k++){const q=k*.5,y=Y(q);poly(c,[[XA,y],[XB(q),y]],C.dim,1.2,{dash:[3,5]});
+      dot(c,XA,y,10,null,{stroke:'#E6EDF5',lw:1.5,alpha:.5});dot(c,XC(q),y,10,null,{stroke:SA_PK,lw:1.5,alpha:.55});dot(c,XB(q),y,10,null,{stroke:G,lw:1.5,alpha:.55});
+      if(k>0){poly(c,[[XB(q-.5)+3,72],[XB(q)-3,72]],G,2);poly(c,[[XB(q)-3,66],[XB(q)-3,78]],G,2);K(c,'7.5 m',(XB(q-.5)+XB(q))/2,60,{size:12.5,color:G});
+        T(c,(2.5*k-1.25)+' m',104,(Y(q-.5)+y)/2,{size:12.5,color:C.u2,align:'right'});}}
+    poly(c,[[XB(0)+3,66],[XB(0)+3,78]],G,2);
+    const y=Y(tau),bx=XB(tau);dot(c,XA,y,10,'#E6EDF5',{glow:10});dot(c,XC(tau),y,10,SA_PK,{glow:10});dot(c,bx,y,10,G,{glow:14});
+    if(tau>.02&&tau<1.98){arw(c,bx+12,y,bx+52,y,G,3,9);arw(c,bx,y+12,bx,y+12+tau*17,C.u2,3,9);}
+    SA_g(c,seg(tau,1.9,2),()=>{K(c,'15 m',XC(2),428,{size:13,color:SA_PK,w:600});K(c,'30 m',XB(2),428,{size:13,color:G,w:600});
+      K(c,'같은 시각에 높이가 같다 → 셋이 동시에 바닥에 닿는다',335,462,{size:15,w:700});K(c,'낙하 시간은 높이로만 정해진다 (2초) · 던진 속도 2배 → 수평 거리 2배',335,490,{size:13,color:C.muted});});
+    T(c,'두 방향으로 나누어 본다',690,56,{size:15,w:700});
+    [[G,'수평 방향','힘이 없다 → 등속 운동','속도 15 m/s · 거리 '+(15*tau).toFixed(1)+' m'],[C.u2,'연직 방향','중력 → 자유 낙하와 같다','속도 '+(10*tau).toFixed(0)+' m/s · 거리 '+(5*tau*tau).toFixed(1)+' m']].forEach((d,i)=>{const yy=78+i*112;
+      rr(c,690,yy,240,98,12,ra(d[0],.08),d[0],2);T(c,d[1],706,yy+22,{size:15,w:700,color:d[0]});T(c,d[2],706,yy+48,{size:13.5});T(c,d[3],706,yy+76,{size:12.5,font:MONO,color:C.muted});});
+    rr(c,690,302,240,74,12,ra(SA_PK,.08),SA_PK,2);T(c,'가속도',706,324,{size:15,w:700,color:SA_PK});T(c,'언제나 연직 아래, 크기 g',706,352,{size:13.5});arw(c,902,316,902,362,SA_PK,3,10);
+    label(c,'t = '+tau.toFixed(1)+' 초',810,404,C.text,{size:16});
+  }});
+
+/* ───────── Ⅲ-6 지구 주위를 도는 운동 ───────── */
+S.push({u:2,ch:'역학 시스템',title:'지구 주위를 도는 운동',file:'04-mechanics.html',
+  sub:'높은 곳에서 수평으로 충분히 빠르게 던지면 물체가 떨어지는 만큼 지표면도 휘어 내려가, 땅에 닿지 않고 지구 둘레를 돕니다. 인공위성과 달이 이렇게 움직입니다.',
+  fx:[{w:1,f:'자유 낙하 · 수평으로 던진 물체 · 원운동',n:'힘은 모두 중력, 지구 중심 방향'},{w:1,f:'원운동: 속력 일정 · 운동 방향은 계속 변함',n:'그래도 가속도 운동'},{w:1,f:'중력이 사라지면 → 접선 방향으로 곧게',n:'그 순간의 운동 방향'}],
+  pts:['충분히 빠르게 던지면 물체가 떨어지는 만큼 지표면도 휘어 내려가서, <em>계속 떨어지지만 땅에 닿지 않고</em> 지구 둘레를 돕니다.','속력이 그대로여도 <em>운동 방향이 바뀌면 가속도 운동</em>입니다. 방향을 바꾸는 힘이 지구 중심을 향하는 중력입니다.','함정: ‘인공위성에는 중력이 작용하지 않는다’는 틀린 문장입니다. 중력이 계속 당기기 때문에 원을 그립니다.','세 운동의 차이는 처음에 <em>수평 방향 속도</em>가 있었는지, 그 속도가 얼마나 컸는지뿐입니다.'],
+  dur:16,still:13.5,
+  draw(c,t){
+    const G=IC[0],ex=250,ey=335,R=118,Ro=150,pt=(r,f)=>[ex+r*Math.sin(f),ey-r*Math.cos(f)];
+    dot(c,ex,ey,R,ra(C.u2,.14),{stroke:C.u2,lw:2.5});dot(c,ex,ey,3,C.u2);T(c,'지구',ex,ey+22,{size:15,align:'center',color:C.u2,w:600});
+    poly(c,[[ex-12,ey-R+2],[ex,ey-Ro+8],[ex+12,ey-R+2]],C.u2,2,{fill:'#1D4257',close:true});
+    [[.55,.8,2.6,'①'],[1.5,3,5.4,'②']].forEach(s=>{const k=seg(t,s[1],s[2]);if(k<=0)return;const P=[];for(let q=0;q<=40*k;q++){const f=s[0]*q/40;P.push(pt(Ro-(Ro-R)*Math.pow(q/40,2),f));}
+      poly(c,P,ra('#E6EDF5',k<1?.9:.5),2,{dash:[5,5]});const e=P[P.length-1];dot(c,e[0],e[1],k<1?7:4,k<1?G:'#E6EDF5',{glow:k<1?12:0});
+      if(k>=1){const q=pt(R-16,s[0]);T(c,s[3],q[0],q[1],{size:15,align:'center',color:C.text});}});
+    const lg=[['① 느리게 던지면 가까이 떨어진다',.8],['② 더 빠르게 던지면 더 멀리 가서 떨어진다',3],['③ 충분히 빠르면 떨어지는 만큼 지표면도 휘어',5.8],['     땅에 닿지 않고 계속 돈다',5.8]];
+    lg.forEach((l,i)=>SA_g(c,fin(t,l[1],.5),()=>T(c,l[0],36,48+i*22,{size:13.5,color:i>1?G:C.text})));
+    if(t>5.8){const f=(t-5.8)*1.1,p=pt(Ro,f),tx=Math.cos(f),ty=Math.sin(f);arc(c,ex,ey,Ro,-Math.PI/2,-Math.PI/2+Math.min(f,TAU),ra(G,.55),2);
+      arw(c,p[0],p[1],p[0]+(ex-p[0])/Ro*46,p[1]+(ey-p[1])/Ro*46,SA_PK,3,10);arw(c,p[0],p[1],p[0]+tx*50,p[1]+ty*50,G,3,10);dot(c,p[0],p[1],8,'#E6EDF5',{glow:12});
+      const q3=pt(Ro+16,-.5);T(c,'③',q3[0],q3[1],{size:15,align:'center',color:G});}
+    SA_g(c,fin(t,6.4,.6),()=>{arw(c,60,512,92,512,G,3,9);T(c,'속도: 접선 방향',100,512,{size:13,color:C.muted});arw(c,236,512,268,512,SA_PK,3,9);T(c,'중력: 지구 중심 방향',276,512,{size:13,color:C.muted});});
+    SA_g(c,fin(t,11.5,.7),()=>{const p=pt(Ro,4),ux=Math.cos(4),uy=Math.sin(4);dot(c,p[0],p[1],4,C.muted);poly(c,[p,[p[0]+ux*76,p[1]+uy*76]],C.muted,2,{dash:[5,4]});arw(c,p[0]+ux*76,p[1]+uy*76,p[0]+ux*96,p[1]+uy*96,C.muted,2,9);T(c,'중력이 없다면',126,p[1]+22,{size:12.5,color:C.muted,align:'right'});});
+    T(c,'세 운동 모두 — 힘은 중력, 방향은 지구 중심',520,50,{size:15,w:700,color:SA_PK});
+    T(c,'운동',536,84,{size:12.5,color:C.dim});K(c,'속력',730,84,{size:12.5,color:C.dim});K(c,'운동 방향',856,84,{size:12.5,color:C.dim});
+    [['자유 낙하','커진다','변하지 않는다',-1],['수평으로 던진 물체','커진다','계속 변한다',t>.8&&t<5.8],['지구 주위의 원운동','일정하다','계속 변한다',t>=5.8]].forEach((r,i)=>SA_g(c,fin(t,.2+i*.25,.5),()=>{const y=100+i*56,on=r[3]===true;
+      rr(c,520,y,410,48,10,on?ra(G,.13):SA_INK,on?G:C.line,on?2.4:1.4);T(c,r[0],536,y+24,{size:14.5,w:700});K(c,r[1],730,y+24,{size:14,color:r[1]==='일정하다'?C.u2:C.text,w:r[1]==='일정하다'?700:500});K(c,r[2],856,y+24,{size:14,color:i?G:C.text});}));
+    SA_g(c,fin(t,7.6,.6),()=>T(c,'속력이 일정해도 방향이 바뀌면 가속도 운동',520,298,{size:15,w:700}));
+    SA_g(c,fin(t,9.4,.6),()=>{crs(c,530,346,6,SA_PK);T(c,'“인공위성에는 중력이 작용하지 않는다”',548,346,{size:14,color:SA_PK});T(c,'→ 중력이 지구 중심 쪽으로 계속 당기므로',548,374,{size:13.5});T(c,'    직선으로 날아가 버리지 않고 원을 그린다',548,396,{size:13.5});});
+    SA_g(c,fin(t,11.5,.6),()=>T(c,'중력이 갑자기 사라진다면 → 그 순간의 접선 방향으로 곧게',520,444,{size:13.5,color:C.muted}));
+  }});
+
+/* ───────── Ⅲ-7 운동량과 충격량 ───────── */
+S.push({u:2,ch:'역학 시스템',title:'충격량과 충돌 시간',file:'04-mechanics.html',
+  sub:'멈출 때 운동량의 변화량이 같으면 받는 충격량도 같습니다. 충돌 시간을 늘리면 같은 충격량에서 힘이 작아집니다.',
+  fx:[{f:'p = mv',n:'운동량'},{f:'I = FΔt',n:'충격량 = 운동량의 변화량'},{w:1,f:'충격량이 같을 때: 충돌 시간 ↑ → 평균 힘 ↓',n:'에어백 · 범퍼 · 매트'},{w:1,f:'힘–시간 그래프 아래의 넓이 = 충격량',n:'가로 폭은 충돌 시간'}],
+  pts:['멈출 때 <em>운동량의 변화량</em>은 이미 정해져 있어서 받는 충격량도 정해져 있습니다. 줄일 수 있는 것은 힘뿐이고, 방법은 <em>충돌 시간을 늘리는 것</em>입니다.','60 kg인 탑승자가 20 m/s에서 멈추면 변화량은 1200 kg·m/s입니다. 0.05초 만에 멈추면 평균 힘 24000 N, 에어백으로 0.4초에 걸쳐 멈추면 3000 N입니다.','함정: 에어백은 <em>충격량을 줄이는 것이 아닙니다.</em> 충격량은 같고 힘만 작아집니다.','운동량과 충격량에는 <em>방향</em>이 있습니다. 벽에 부딪혀 튀어나오면 처음과 나중 운동량에 부호를 붙여 뺍니다.'],
+  dur:15,still:7.5,
+  draw(c,t){
+    const G=IC[0],p=t%9,v=110,L=[[128,.3,SA_HOT,'단단한 벽','0.05초 만에 멈춘다','평균 힘 = 1200 ÷ 0.05 = 24000 N'],[268,2.4,SA_GR,'에어백','0.4초에 걸쳐 멈춘다','평균 힘 = 1200 ÷ 0.4 = 3000 N']];
+    T(c,'질량 60 kg · 속도 20 m/s → 운동량 60 × 20 = 1200 kg·m/s',40,46,{size:14});
+    L.forEach((l,i)=>{const y=l[0],D=l[1],u=clamp((p-2)/D),d=v*D*(u-u*u/2),xr=p<2?300-v*(2-p):300+(i?d:0),w=i?50:50-d,hit=p>=2&&u<1;
+      T(c,l[3],40,y-44,{size:15,w:700,color:l[2]});T(c,l[4],48+kw(c,l[3],15,700),y-43,{size:13,color:C.muted});poly(c,[[30,y+24],[480,y+24]],C.line,2);
+      if(i){box(c,xr,y-30,448-xr,54,Math.min(22,(448-xr)/2),ra(SA_GR,.22),SA_GR,2);box(c,448,y-40,14,64,2,'#5E738B');}else box(c,300,y-40,14,64,2,'#5E738B');
+      box(c,xr-w,y-22,w,44,6,ra(G,.85),G,2);
+      if(p<2)arw(c,xr+6,y,xr+46,y,C.text,3,9);
+      if(hit){const fl=i?16:92;arw(c,xr-w/2+fl/2,y-34,xr-w/2-fl/2,y-34,l[2],i?3:5,i?8:12);}
+      SA_g(c,fin(p,2+D,.5),()=>T(c,l[5],40,y+46,{size:14,w:700,color:l[2]}));});
+    SA_g(c,fin(p,4.8,.5),()=>rr(c,40,350,440,146,14,'rgba(255,255,255,.03)',C.line,1.4));
+    [['멈출 때 운동량의 변화량: 둘 다 1200 kg·m/s',376,14.5,C.text,500],['→ 받는 충격량(F × Δt)도 같다',406,14.5,C.text,500],['충돌 시간 8배 → 평균 힘 1/8',442,18,G,700],['줄어드는 것은 충격량이 아니라 힘이다',472,13,C.muted,500]].forEach((r,i)=>SA_g(c,fin(p,4.8+i*.5,.5),()=>T(c,r[0],60,r[1],{size:r[2],color:r[3],w:r[4]})));
+    const x0=560,y0=450;axes(c,x0,y0,350,330,'','힘');
+    [[575,'0'],[617,'0.05초'],[895,'0.4초']].forEach(k=>{poly(c,[[k[0]===617?615:k[0],y0],[k[0]===617?615:k[0],y0+5]],C.dim,1.5);label(c,k[1],k[0],y0+17,C.muted,{size:12});});
+    [[40,300,.3,SA_HOT],[320,37.5,2.4,SA_GR]].forEach(b=>{const u=clamp((p-2)/b[2]);if(u<=0)return;const P=[[575,y0]];for(let q=0;q<=u+1e-6;q+=.02)P.push([575+b[0]*q,y0-b[1]*Math.pow(Math.sin(Math.PI*q),2)]);P.push([575+b[0]*u,y0]);
+      poly(c,P,b[3],2.5,{fill:ra(b[3],.3)});});
+    SA_g(c,fin(p,2.4,.5),()=>{T(c,'단단한 벽',628,170,{size:14,w:700,color:SA_HOT});T(c,'폭 0.05초 · 힘이 크다',628,194,{size:13,color:C.muted});T(c,'넓이 1200 N·s',628,216,{size:13,color:C.muted});});
+    SA_g(c,fin(p,4.5,.5),()=>{K(c,'에어백 — 폭 0.4초 · 힘이 작다',760,368,{size:14,w:700,color:SA_GR});K(c,'넓이는 똑같이 1200 N·s',760,392,{size:13,color:C.muted});});
+    SA_g(c,fin(p,5.4,.6),()=>K(c,'넓이(충격량)는 같고, 폭과 높이만 다르다',745,92,{size:15,w:700}));
+  }});
+
+/* ───────── Ⅲ-8 세포막과 확산 ───────── */
+function SA_hex(c,x,y,r,col){const P=[];for(let k=0;k<6;k++)P.push([x+Math.cos(k*TAU/6)*r,y+Math.sin(k*TAU/6)*r]);poly(c,P,col,1.5,{fill:ra(col,.45),close:true});}
+function SA_ion(c,x,y,col){dot(c,x,y,8,ra(col,.3),{stroke:col,lw:1.5});poly(c,[[x-4,y],[x+4,y]],col,2);poly(c,[[x,y-4],[x,y+4]],col,2);}
+S.push({u:2,ch:'생명 시스템',title:'세포막을 지나는 두 가지 길',file:'05-life-system.html',
+  sub:'세포막은 인지질 2중층에 막단백질이 박힌 구조입니다. 물질의 크기와 성질에 따라 지나는 길이 다르고, 확산은 농도가 높은 쪽에서 낮은 쪽으로 일어납니다.',
+  fx:[{w:1,f:'세포막 = 인지질 2중층 + 막단백질',n:'선택적 투과성'},{w:1,f:'산소 · 이산화 탄소: 2중층을 직접 통과',n:'작고 전하를 띠지 않음'},{w:1,f:'포도당 · 아미노산 · 이온: 막단백질로 통과',n:'크거나 전하를 띰'},{w:1,f:'확산: 농도 높은 쪽 → 낮은 쪽',n:'세포가 에너지를 쓰지 않음'}],
+  pts:['인지질의 머리는 물과 잘 섞이고 꼬리는 섞이지 않습니다. 세포 안팎이 모두 물이라서 꼬리끼리 마주 보는 <em>2중층</em>이 저절로 됩니다.','작고 전하가 없는 산소·이산화 탄소는 2중층을 직접 지나고, 크거나 전하를 띤 포도당·이온은 <em>막단백질</em>로만 지납니다.','함정: 폐포에서 산소와 이산화 탄소는 방향이 반대지만 규칙은 같습니다. <em>각 물질이 자기 농도가 높은 쪽에서 낮은 쪽으로</em> 갑니다.','확산은 분자가 스스로 움직인 결과라서 세포가 에너지를 쓰지 않습니다.'],
+  dur:15,still:12.5,
+  draw(c,t){
+    const PU=IC[1],PX=[610,800],GL='#FFD54F',CO='#C9D4E0';
+    T(c,'세포 밖',28,150,{size:15,w:700,color:C.muted});T(c,'세포 안',28,400,{size:15,w:700,color:C.muted});T(c,'머리: 친수성',28,236,{size:12.5,color:C.muted});T(c,'꼬리: 소수성',28,275,{size:12.5,color:C.muted});
+    poly(c,[[112,236],[146,236]],C.dim,1.2);poly(c,[[112,275],[146,275]],C.dim,1.2);
+    SA_g(c,fin(t,.2,.8),()=>{for(let x=158;x<=926;x+=17){if(PX.some(p=>Math.abs(x-p)<40))continue;
+        [[236,1],[314,-1]].forEach(h=>{poly(c,[[x-2.5,h[0]+h[1]*6],[x-2.5,h[0]+h[1]*33]],'#6C86A3',1.6);poly(c,[[x+2.5,h[0]+h[1]*6],[x+2.5,h[0]+h[1]*33]],'#6C86A3',1.6);dot(c,x,h[0],6.5,'#3F6C99',{stroke:'#8FB4DB',lw:1.3});});}
+      PX.forEach(p=>{rr(c,p-32,222,64,106,14,ra(PU,.3),PU,2);box(c,p-8,222,16,106,0,'#0B1420');});});
+    const col=(cx,nm,hue,down,a0,shape,ch)=>SA_g(c,fin(t,a0,.7),()=>{K(c,nm,cx,54,{size:15,w:700,color:hue});
+      K(c,'농도가 '+(down?'높다':'낮다'),cx,84,{size:12.5,color:C.muted});K(c,'농도가 '+(down?'낮다':'높다'),cx,446,{size:12.5,color:C.muted});
+      const many=(n,y0,y1,sd)=>{for(let k=0;k<n;k++)shape(cx-50+rnd(k*3.1+sd)*100+Math.sin(t*1.3+k)*3,y0+rnd(k*5.7+sd+9)*(y1-y0)+Math.cos(t*1.1+k*2)*3);};
+      many(down?8:2,106,196,cx);many(down?2:8,352,424,cx+50);
+      for(let k=0;k<3;k++){const u=(t*.26+k/3)%1,v=down?u:1-u,x=ch?cx:cx-34+k*34+Math.sin(u*7+k)*5;if(ch&&k===2)continue;shape(x,lerp(196,356,v));}
+      const ax=cx+(ch?-58:66);if(ch){const yb=down?188+24*Math.abs(Math.sin(t*1.6)):362-24*Math.abs(Math.sin(t*1.6));shape(ax,yb);crs(c,ax,down?244:306,5,SA_PK,clamp(Math.abs(Math.sin(t*1.6))*1.6-.7));}
+      else arw(c,ax,down?204:346,ax,down?346:204,ra(hue,.75),3.5,11);});
+    col(250,'O₂ 산소',SA_BL,1,1.2,(x,y)=>dot(c,x,y,5.5,SA_BL),0);
+    col(420,'CO₂ 이산화 탄소',CO,0,3.6,(x,y)=>dot(c,x,y,5.5,CO),0);
+    col(610,'포도당',GL,1,6,(x,y)=>SA_hex(c,x,y,8,GL),1);
+    col(800,'이온',SA_HOT,1,8.4,(x,y)=>SA_ion(c,x,y,SA_HOT),1);
+    SA_g(c,fin(t,4.4,.6),()=>K(c,'작고 전하가 없다 → 인지질 2중층을 직접 통과',335,480,{size:14,color:SA_BL,w:600}));
+    SA_g(c,fin(t,9.4,.6),()=>K(c,'크거나 전하를 띤다 → 막단백질로만 통과',705,480,{size:14,color:PU,w:600}));
+    SA_g(c,fin(t,10.6,.6),()=>K(c,'확산: 농도가 높은 쪽 → 낮은 쪽 · 세포는 에너지를 쓰지 않는다',480,512,{size:15,w:700}));
+  }});
+
+/* ───────── Ⅲ-9 삼투 ───────── */
+S.push({u:2,ch:'생명 시스템',title:'삼투: 움직이는 것은 물',file:'05-life-system.html',
+  sub:'물은 잘 통과시키고 용질은 잘 통과시키지 않는 막을 사이에 두면, 물이 농도가 낮은 용액 쪽에서 높은 용액 쪽으로 이동합니다.',
+  fx:[{w:1,f:'삼투: 물이 농도 낮은 용액 → 높은 용액 쪽으로',n:'용질은 막을 잘 지나지 못함'},{w:1,f:'밖이 더 묽다: 물이 들어온다 → 부푼다',n:'식물 세포는 세포벽이 있어 터지지 않음'},{w:1,f:'밖이 더 진하다: 물이 나간다 → 쭈그러든다',n:'식물 세포는 세포막이 세포벽에서 떨어짐'}],
+  pts:['용질이 막을 지나지 못하니 <em>물이 움직여</em> 농도 차를 줄입니다. 물 분자 쪽에서 보면 물이 많은 쪽에서 적은 쪽으로 퍼지는 확산입니다.','함정: 이동하는 것은 물입니다. <em>‘소금이 세포 안으로 들어가서’</em>라고 설명하면 틀립니다. 배추가 절여지는 것도 물이 빠져나가서입니다.','함정: 농도가 같을 때 물의 이동이 멈춘 것이 아닙니다. <em>드나드는 양이 같아</em> 겉으로 변화가 없을 뿐입니다.','표에서 질량이 늘었으면 물이 들어온 것이고 바깥 용액이 더 묽습니다. 변화가 0인 용액의 농도가 세포 안과 같습니다.'],
+  dur:14,still:8,
+  draw(c,t){
+    const k=ease(seg(t,1.2,5)),WA='#7EC8FF',SO='#FFB74D',CX=[190,480,770],ka=seg(k,.55,1);
+    const HD=[['세포 밖 농도 < 세포 안','물: 밖 → 안'],['세포 밖 농도 = 세포 안','물: 드나드는 양이 같다'],['세포 밖 농도 > 세포 안','물: 안 → 밖']],C1=['부푼다 (심하면 터진다)','변화 없다','쭈그러든다'],C2=['팽팽해진다 · 세포벽이 있어 터지지 않는다','변화 없다','세포막이 세포벽에서 떨어진다'];
+    T(c,'동물 세포 (적혈구)',24,116,{size:13,color:C.muted});T(c,'식물 세포',24,296,{size:13,color:C.muted});
+    const wat=(x,y,dx,dy,r0,r1,dir,ph)=>{const u=(t*.55+ph)%1,v=dir>0?u:1-u,a=lerp(r0,r1,v),b=a+(dir>0?-13:13);arw(c,x+dx*a,y+dy*a,x+dx*b,y+dy*b,WA,2.2,7,Math.sin(u*Math.PI));};
+    CX.forEach((cx,i)=>{const dir=i===0?1:i===2?-1:0,n=[3,9,18][i];
+      rr(c,cx-130,38,260,58,12,'rgba(255,255,255,.03)',C.line,1.4);K(c,HD[i][0],cx,57,{size:15,w:700});K(c,HD[i][1],cx,80,{size:13.5,color:WA});
+      const R=i===0?lerp(40,57,k):i===2?lerp(40,27,k):40,cy=192;let m=0;
+      for(let q=0;q<60&&m<n;q++){const x=cx-122+rnd(q*2.3+i*17)*244,y=132+rnd(q*4.1+i*29+5)*128;if(Math.hypot(x-cx,y-cy)<72)continue;dot(c,x,y,3.2,SO);m++;}
+      const O=[];for(let q=0;q<=48;q++){const a=q/48*TAU,r=R*(1+(i===2?.13*k*Math.sin(a*9):0));O.push([cx+Math.cos(a)*r,cy+Math.sin(a)*r]);}
+      poly(c,O,SA_PK,2.5,{fill:ra(SA_PK,.28),close:true});dot(c,cx,cy,R*.42,null,{stroke:ra(SA_PK,.5),lw:1.5});
+      for(let q=0;q<5;q++){const a=q/5*TAU+.4;dot(c,cx+Math.cos(a)*R*.66,cy+Math.sin(a)*R*.66,3.2,SO);}
+      for(let q=0;q<6;q++){const a=q/6*TAU+.5,d=dir||(q%2?1:-1);wat(cx,cy,Math.cos(a),Math.sin(a),R+30,R-6,d,q/6);}
+      SA_g(c,i===1?1:ka,()=>K(c,C1[i],cx,272,{size:14,w:700,color:i===1?C.muted:C.text}));
+      const py=372;m=0;for(let q=0;q<70&&m<n;q++){const x=cx-122+rnd(q*3.7+i*13+40)*244,y=310+rnd(q*1.9+i*31+60)*122;if(Math.abs(x-cx)<92&&Math.abs(y-py)<62)continue;dot(c,x,y,3.2,SO);m++;}
+      rr(c,cx-76,py-48,152,96,8,'#0B1622',SA_GR,4);const ins=i===0?lerp(8,5,k):i===2?lerp(8,24,k):8,rad=i===2?lerp(6,22,k):6;
+      rr(c,cx-76+ins,py-48+ins,152-2*ins,96-2*ins,rad,ra(SA_GR,.25),'#B7F0BA',1.8);c.save();c.fillStyle=ra(WA,.3);c.beginPath();c.ellipse(cx,py,(76-ins)*.62,(48-ins)*.6,0,0,TAU);c.fill();c.restore();
+      for(let q=0;q<4;q++){const a=q/4*TAU,d=dir||(q%2?1:-1),hx=Math.abs(Math.cos(a))>.5;wat(cx,py,Math.cos(a),Math.sin(a),(hx?76:48)+26,(hx?76:48)-10,d,q/4);}
+      SA_g(c,i===1?1:ka,()=>K(c,C2[i],cx,444,{size:13,w:600,color:i===1?C.muted:C.text}));});
+    dot(c,32,484,3.5,SO);T(c,'용질',44,484,{size:12.5,color:C.muted});arw(c,26,506,40,506,WA,2.2,7);T(c,'물',46,506,{size:12.5,color:C.muted});
+    SA_g(c,fin(t,5.4,.6),()=>{K(c,'이동하는 것은 물 — 용질(소금)은 막을 잘 지나지 못한다',480,484,{size:15,w:700});K(c,'농도가 같을 때도 물은 드나든다. 드나드는 양이 같을 뿐이다',480,510,{size:13,color:C.muted});});
+  }});
+
+/* ───────── Ⅲ-10 효소 ───────── */
+S.push({u:2,ch:'생명 시스템',title:'효소와 활성화 에너지',file:'05-life-system.html',
+  sub:'효소는 반응물이 넘어야 하는 에너지 턱(활성화 에너지)을 낮춰 반응을 빠르게 합니다. 기질과 결합해 생성물을 내놓은 뒤 변하지 않고 다시 쓰입니다.',
+  fx:[{w:1,f:'효소 + 기질 → 효소·기질 복합체 → 효소 + 생성물',n:'효소는 다시 쓰인다'},{w:1,f:'효소는 활성화 에너지를 낮춘다',n:'반응물 · 생성물의 에너지는 그대로'},{w:1,f:'2H₂O₂ → 2H₂O + O₂',n:'카탈레이스 (간 · 감자)'}],
+  pts:['활성화 에너지(넘어야 하는 에너지 턱)가 낮아지면 같은 온도에서 턱을 넘는 분자가 많아져 <em>반응이 빨라집니다.</em>','효소는 봉우리만 낮춥니다. <em>반응물과 생성물의 에너지</em>, 드나드는 에너지의 양은 효소가 있든 없든 같습니다.','함정: 효소는 반응 전후에 변하지 않고 <em>다시 쓰입니다.</em> 기포가 멈춘 것은 효소가 아니라 기질이 다 쓰였기 때문입니다.','활성 부위와 구조가 맞는 기질만 결합합니다(<em>기질 특이성</em>). 삶은 간은 단백질의 입체 구조가 변해 기능을 잃습니다.'],
+  dur:16,still:12.9,
+  draw(c,t){
+    const PU=IC[1],yR=290,yP=370,E=(x,Hh)=>{const u=clamp((x-170)/200);return lerp(yR,yP,ease(u))-Hh*Math.pow(Math.sin(Math.PI*u),1.5);};
+    axes(c,70,420,410,340,'반응의 진행','에너지');T(c,'화살표 = 활성화 에너지 (반응물에서 봉우리 꼭대기까지)',96,56,{size:13,color:C.muted});
+    [[195,SA_PK,.5,104,'효소가 없을 때'],[105,SA_GR,3.4,152,'효소가 있을 때']].forEach((cv,i)=>{const k=seg(t,cv[2],cv[2]+2);if(k<=0)return;const P=[];let bx=170,by=yR;
+      for(let x=90;x<=450;x+=3){const y=E(x,cv[0]);if(y<by){by=y;bx=x;}if(x<=90+360*k)P.push([x,y]);}poly(c,P,cv[1],3);
+      SA_g(c,fin(t,cv[2]+1.6,.5),()=>{poly(c,[[cv[3],by],[bx,by]],ra(cv[1],.7),1.3,{dash:[4,4]});arw(c,cv[3],yR,cv[3],by+2,cv[1],2.5,9);arw(c,cv[3],by+14,cv[3],yR,cv[1],2.5,9);T(c,cv[4],i?112:70,by-13,{size:12.5,color:cv[1],w:600});});
+      if(k>=1)for(let q=0;q<4;q++){const ph=(t*.2+q/4+i*.11)%1,over=i===1||q===0,x=over?100+340*ph:100+128*Math.sin(Math.PI*ph);dot(c,x,E(x,cv[0])-8,5,cv[1],{glow:6,alpha:over?Math.min(1,(1-ph)*6):1});}});
+    poly(c,[[372,yR],[452,yR]],C.dim,1.2,{dash:[4,4]});K(c,'반응물',128,308,{size:13,color:C.muted});K(c,'생성물',412,390,{size:13,color:C.muted});
+    arw(c,444,yR+2,444,yP-2,SA_HOT,2.5,9);T(c,'에너지 방출',436,332,{size:12.5,color:SA_HOT,align:'right'});
+    SA_g(c,fin(t,6,.6),()=>{K(c,'효소는 봉우리(활성화 에너지)만 낮춘다',275,464,{size:15,w:700,color:SA_GR});K(c,'반응물 · 생성물의 높이와 드나드는 에너지는 그대로',275,490,{size:13.5,color:C.muted});});
+    const ex=700,ey=205,R=58,q=t<1?-1:(t-1)%5,ap=ease(seg(q,0,1.4)),cmp=q>=1.4&&q<2.4,out=ease(seg(q,2.4,3.8)),step=q<0?0:q<1.4?1:q<2.4?2:3;
+    K(c,'효소 + 기질 → 효소·기질 복합체 → 효소 + 생성물',725,50,{size:14.5,w:700});
+    c.save();c.beginPath();c.arc(ex,ey,R,-Math.PI/2+.44,-Math.PI/2-.44+TAU);c.lineTo(ex,ey-R+30);c.closePath();c.fillStyle=ra(PU,cmp?.5:.3);c.fill();c.strokeStyle=PU;c.lineWidth=2.5;if(cmp){c.shadowColor=PU;c.shadowBlur=18;}c.stroke();c.restore();
+    T(c,'효소',ex,ey+14,{size:16,w:700,align:'center'});T(c,'활성 부위',640,128,{size:12.5,color:C.muted,align:'right'});poly(c,[[644,130],[684,152]],C.dim,1.2);
+    const dia=(x,y,a,gap)=>{if(a<=.02)return;const D=[[0,-26],[24.6,-2],[0,26],[-24.6,-2]];c.save();c.globalAlpha*=a;
+      [[-1,[D[0],D[3],D[2]]],[1,[D[0],D[1],D[2]]]].forEach(h=>poly(c,h[1].map(d=>[x+d[0]+h[0]*gap,y+d[1]-Math.abs(h[0])*gap*.5*(h[0]>0?1:2)]),GLD,2,{fill:ra(GLD,.5),close:true}));c.restore();};
+    const GLD=IC[0],sx=lerp(590,ex,ap),sy=lerp(88,ey-R+4,ap);
+    if(q>=0&&q<2.4){dia(sx,sy,1,0);if(q<1.4)K(c,'기질',sx,sy-40,{size:13,color:GLD,w:600});}
+    if(q>=2.4&&q<3.8){dia(lerp(ex,790,out),lerp(ey-R+4,96,out),1-seg(q,3.4,3.8),2+26*out);K(c,'생성물',848,62+34,{size:13,color:GLD,w:600,alpha:1-seg(q,3.4,3.8)});}
+    if(cmp)K(c,'효소·기질 복합체',ex,ey+R+22,{size:13.5,color:PU,w:700});
+    const wz=Math.abs(Math.sin(t*.9)),wx=lerp(560,618,wz);box(c,wx-12,ey-12,24,24,3,ra(C.neu,.4),C.neu,1.8);crs(c,632,ey-26,5,SA_PK,clamp(wz*3-2));T(c,'구조가 맞지 않는 물질',534,ey+34,{size:12.5,color:C.muted});
+    if(q>=0)K(c,'반응 '+(Math.floor((t-1)/5)+1)+'회째 — 효소는 변하지 않는다',ex,306,{size:13.5,color:C.text});
+    [['① 기질이 활성 부위에 결합한다',1],['② 효소·기질 복합체가 된다',2],['③ 생성물을 내놓고, 효소는 새 기질과 다시 결합한다',3]].forEach((l,i)=>T(c,l[0],540,346+i*28,{size:13.5,color:step===l[1]?PU:C.muted,w:step===l[1]?700:500}));
+    T(c,'기질 특이성: 활성 부위와 구조가 맞는 기질만 결합한다',540,440,{size:13.5,color:SA_PK});T(c,'카탈레이스: 2H₂O₂ → 2H₂O + O₂',540,468,{size:13,color:C.muted});
+  }});
+
+/* ───────── Ⅲ-11 유전자에서 단백질까지 ───────── */
+const SA_BC={A:'#7BE07F',T:'#FF7A8A',U:'#FF9A4D',G:'#F4B544',C:'#6EA8FF'},SA_PAIR={A:'U',T:'A',G:'C',C:'G'};
+function SA_base(c,x,y,ch,on){rr(c,x,y,40,36,7,ra(SA_BC[ch],on?.45:.2),SA_BC[ch],on?2.6:1.5);T(c,ch,x+20,y+19,{size:17,font:MONO,w:700,align:'center'});}
+S.push({u:2,ch:'생명 시스템',title:'유전자에서 단백질까지',file:'05-life-system.html',
+  sub:'DNA의 유전 정보는 핵에서 RNA로 옮겨지고(전사), 세포질의 리보솜에서 RNA의 염기 3개마다 아미노산 하나가 이어져 단백질이 됩니다(번역).',
+  fx:[{w:1,f:'DNA —전사→ RNA —번역→ 단백질',n:'생명 중심 원리'},{w:1,f:'전사: 핵 · 번역: 세포질의 리보솜',n:'원본 DNA는 핵 안에 둔다'},{w:1,f:'RNA 염기 3개 = 코돈 1개 → 아미노산 1개',n:'4 × 4 × 4 = 64가지'},{w:1,f:'본 가닥 A · T · G · C → RNA U · A · C · G',n:'RNA에는 T 대신 U'}],
+  pts:['유전자의 정보로 단백질이 만들어지고 그 단백질이 작용해 <em>형질</em>이 나타납니다. 염기 서열 → 아미노산 서열 → 단백질의 구조와 기능 → 형질.','염기는 4종류, 아미노산은 20종류입니다. 2개씩이면 16가지라 모자라고 <em>3개씩이면 64가지</em>라 충분합니다.','함정: 전사는 <em>핵</em>에서, 번역은 <em>세포질의 리보솜</em>에서 일어납니다. ‘번역이 핵에서 일어난다’는 틀린 보기입니다.','가닥에 <em>U가 보이면 RNA</em>입니다. 아미노산 수 = 코돈 수 = RNA 염기 수 ÷ 3.'],
+  dur:16,still:14.5,
+  draw(c,t){
+    const PU=IC[1],U=C.u2,D='TACGGACTT',bx=i=>84+i*44+Math.floor(i/3)*12,m=ease(seg(t,6.2,7.8)),rx=170*m,ry=196+196*m,cur=t<1.2||t>5.9?-1:Math.min(8,Math.floor((t-1.2)/.5));
+    rr(c,40,60,490,202,22,ra(PU,.07),ra(PU,.7),2);T(c,'핵 — 전사 (DNA → RNA)',58,81,{size:15,w:700,color:PU});T(c,'본 가닥',84,103,{size:12.5,color:C.muted});T(c,'DNA',74,132,{size:13,color:C.muted,align:'right',font:MONO});
+    for(let i=0;i<9;i++){SA_base(c,bx(i),114,D[i],i===cur);const a=fin(t,1.2+i*.5,.35);if(a<=0)continue;
+      poly(c,[[bx(i)+20,150],[bx(i)+20,196]],ra(SA_BC[SA_PAIR[D[i]]],.8),1.5,{dash:[3,3],alpha:a*(1-m)});SA_g(c,a,()=>SA_base(c,bx(i)+rx,ry,SA_PAIR[D[i]],i===cur));}
+    SA_g(c,fin(t,1.2,.4),()=>T(c,'RNA',74+rx,ry+18,{size:13,color:C.muted,align:'right',font:MONO}));
+    SA_g(c,m,()=>T(c,'원본 DNA는 핵 안에 남는다 — 필요한 유전자만 RNA로 복사해 내보낸다',84,206,{size:12.5,color:C.muted}));
+    SA_g(c,Math.min(m*3,1),()=>{arw(c,96,268,96,372,ra(U,.8),2.5,10);T(c,'RNA가 핵 밖으로 나온다',110,284,{size:12.5,color:C.muted});});
+    T(c,'세포질의 리보솜 — 번역',40,400,{size:15,w:700,color:U,alpha:.4+.6*fin(t,7.6,.6)});T(c,'(RNA → 단백질)',40,424,{size:13,color:C.muted,alpha:.4+.6*fin(t,7.6,.6)});
+    if(t<=7.9)rr(c,bx(1)+190-76,346,152,94,28,ra(U,.04),ra(U,.35),1.5);
+    if(t>7.9){const cxj=j=>bx(3*j+1)+190,jf=clamp((t-8.4)/1.4,0,2),j0=Math.floor(jf),rxx=lerp(cxj(j0),cxj(Math.min(2,j0+1)),ease(clamp((jf-j0)*2.2-1.2)));
+      SA_g(c,fin(t,7.9,.5),()=>{rr(c,rxx-76,346,152,94,28,ra(U,.1),U,2);T(c,'리보솜',rxx,368,{size:12.5,align:'center',color:U});
+        for(let j=0;j<3;j++){poly(c,[[cxj(j)-64,436],[cxj(j)+64,436]],ra(U,.6),2);K(c,'코돈 '+(j+1),cxj(j),454,{size:12.5,color:U});}});
+      for(let j=0;j<3;j++){const a=fin(t,8.9+j*1.4,.5);if(a<=0)continue;if(j>0)poly(c,[[cxj(j-1)+17,318],[cxj(j)-17,318]],ra(SA_GR,a),3);
+        SA_g(c,a,()=>{dot(c,cxj(j),318,17,ra(SA_GR,.3),{stroke:SA_GR,lw:2});T(c,'①②③'[j],cxj(j),319,{size:15,align:'center',w:700});});}
+      SA_g(c,fin(t,8.9,.5),()=>T(c,'아미노산',cxj(0)-28,318,{size:12.5,color:SA_GR,align:'right'}));
+      SA_g(c,fin(t,12.4,.6),()=>T(c,'→ 이어져 단백질이 된다',cxj(2)+28,318,{size:13,color:SA_GR}));}
+    rr(c,560,60,370,128,14,'rgba(255,255,255,.03)',C.line,1.4);T(c,'전사: 짝이 되는 염기로 옮겨 쓴다',578,82,{size:14,w:700});T(c,'본 가닥',578,118,{size:12.5,color:C.muted});T(c,'RNA',578,164,{size:12.5,color:C.muted});
+    'ATGC'.split('').forEach((b,i)=>{const x=672+i*62,on=cur>=0&&D[cur]===b;c.save();c.translate(x,100);c.scale(.8,.8);SA_base(c,0,0,b,on);c.restore();arw(c,x+16,131,x+16,146,on?C.text:C.dim,2,7);
+      c.save();c.translate(x,148);c.scale(.8,.8);SA_base(c,0,0,SA_PAIR[b],on);c.restore();});
+    rr(c,560,200,370,96,14,'rgba(255,255,255,.03)',C.line,1.4);T(c,'번역: 염기 3개(코돈) → 아미노산 1개',578,222,{size:14,w:700});T(c,'1개씩 4가지 · 2개씩 16가지 · 3개씩 64가지',578,248,{size:13});T(c,'아미노산 20종류를 가리키려면 3개가 필요하다',578,273,{size:13,color:C.muted});
+    SA_g(c,fin(t,13,.7),()=>K(c,'염기 9개 → 코돈 3개 → 아미노산 3개  ·  염기 서열이 바뀌면 아미노산 → 단백질 → 형질이 달라질 수 있다',480,504,{size:13.5,color:C.text}));
+  }});
+
+/* 통합과학 6~10장(지질 시대와 생물 다양성 · 화학 변화 · 생태계와 환경 · 에너지 · 과학과 미래 사회) 장면 — 최상위 이름은 SB_ 로 시작한다. 도구는 첫 파일(intsci-scenes.js)에 있다. */
+const SB_G=IC[3],SB_O=IC[4],SB_INK='#0B1722';
+function SB_al(c,a,fn){if(a<=.02)return;c.save();c.globalAlpha*=clamp(a);fn();c.restore();}   // 투명도를 걸고 그리기
+function SB_mix(h1,h2,k){const p=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)),a=p(h1),b=p(h2);return 'rgb('+a.map((v,i)=>Math.round(lerp(v,b[i],clamp(k)))).join(',')+')';}   // 두 색 사이
+function SB_fat(c,x1,y1,x2,y2,col,w,a=1){ // 굵기가 양을 나타내는 화살표
+  if(a<=.02)return;const L=Math.hypot(x2-x1,y2-y1),ux=(x2-x1)/L,uy=(y2-y1)/L,hd=Math.max(11,w*.9),hw=Math.max(6,w*.5+5);
+  c.save();c.globalAlpha*=a;c.strokeStyle=c.fillStyle=col;c.lineWidth=w;c.lineCap='butt';c.beginPath();c.moveTo(x1,y1);c.lineTo(x2-ux*hd,y2-uy*hd);c.stroke();
+  c.beginPath();c.moveTo(x2,y2);c.lineTo(x2-ux*hd-uy*hw,y2-uy*hd+ux*hw);c.lineTo(x2-ux*hd+uy*hw,y2-uy*hd-ux*hw);c.closePath();c.fill();c.restore();}
+function SB_ion(c,x,y,r,col,s,a=1){SB_al(c,a,()=>{dot(c,x,y,r,ra(col,.28),{stroke:col,lw:2});T(c,s,x,y+.5,{size:12,align:'center',w:600});});}   // 이온(원 + 이름)
+function SB_fossil(c,kind,x,y,s,col){ // 화석 기호(도형으로 직접 그림)
+  if(kind==='tri'){c.save();c.strokeStyle=col;c.lineWidth=1.6;c.beginPath();c.ellipse(x,y,s*.62,s,0,0,TAU);c.stroke();c.restore();
+    poly(c,[[x-s*.22,y-s*.82],[x-s*.22,y+s*.82]],col,1.2);poly(c,[[x+s*.22,y-s*.82],[x+s*.22,y+s*.82]],col,1.2);
+    for(let j=-1;j<=1;j++)poly(c,[[x-s*.55,y+j*s*.42],[x+s*.55,y+j*s*.42]],col,1,{alpha:.7});}
+  else if(kind==='amm'){const P=[];for(let a=0;a<TAU*2.4;a+=.25){const r=s*(.12+.88*a/(TAU*2.4));P.push([x+Math.cos(a)*r,y+Math.sin(a)*r]);}poly(c,P,col,1.8);}
+  else if(kind==='num'){dot(c,x,y,s,null,{stroke:col,lw:1.8});dot(c,x,y,s*.6,null,{stroke:col,lw:1.2});dot(c,x,y,s*.22,col);}
+  else if(kind==='coral'){poly(c,[[x,y+s],[x,y-s*.1]],col,2);poly(c,[[x,y+s*.35],[x-s*.6,y-s*.5]],col,2);poly(c,[[x,y+s*.1],[x+s*.6,y-s*.7]],col,2);poly(c,[[x,y-s*.1],[x-s*.12,y-s]],col,2);
+    [[-.6,-.5],[.6,-.7],[-.12,-1]].forEach(p=>dot(c,x+p[0]*s,y+p[1]*s,2.2,col));}
+  else{poly(c,[[x,y+s],[x,y-s]],col,1.8);for(let j=0;j<4;j++){const yy=y+s*.7-j*s*.45,l=s*(.75-j*.14);poly(c,[[x,yy],[x-l,yy-l*.5]],col,1.5);poly(c,[[x,yy],[x+l,yy-l*.5]],col,1.5);}}}
+
+/* ───────── Ⅳ-1 표준 화석과 시상 화석 ───────── */
+S.push({u:3,ch:'지질 시대와 생물 다양성',title:'표준 화석과 시상 화석',file:'06-earth-history-diversity.html',
+  sub:'같은 화석이라도 쓰임이 다릅니다. 한 층에서만 나오는 화석은 지층이 쌓인 시대를, 특정 환경에서만 살던 생물의 화석은 그때의 환경을 알려 줍니다.',
+  fx:[{w:1,f:'표준 화석 → 시대',n:'생존 기간 짧고 · 분포 넓고 · 개체 수 많음'},{w:1,f:'시상 화석 → 환경',n:'생존 기간 길고 · 특정 환경에서만 삶'},{w:1,f:'삼엽충 · 암모나이트 · 화폐석',n:'고생대 · 중생대 · 신생대'}],
+  pts:['<em>생존 기간이 짧아야</em> 그 화석이 나온 지층의 시대가 좁혀지고, <em>분포가 넓어야</em> 멀리 떨어진 지층끼리 비교할 수 있습니다.','환경을 알려면 사는 조건이 까다로워야 합니다. <em>산호</em>는 따뜻하고 얕은 바다, <em>고사리</em>는 따뜻하고 습한 육지입니다.','함정: 산호가 나왔다고 <em>시대</em>를 정할 수 없습니다. 표준 화석의 조건은 생존 기간이 ‘길다’가 아니라 <em>짧다</em>입니다.'],
+  dur:16,still:10,
+  draw(c,t){
+    const GR=SB_G,CY=C.u2,Y0=326,LC=['#3b3527','#2c3a3b','#40392a','#30303e','#324030'];
+    const strata=(x,w,hs,fi,kind,gc,t0)=>{let off=0;const mid=[];hs.forEach((h,i)=>{const a=fin(t,t0+i*.5,.5),y=Y0-off-h,on=fi.includes(i);off+=h;mid.push(y+h/2);
+      SB_al(c,a,()=>{box(c,x,y-(1-a)*12,w,h,0,on?ra(gc,.16):LC[i],on?ra(gc,.8):'rgba(230,237,245,.16)',on?1.6:1);
+        if(on)for(let j=0;j<3;j++)SB_fossil(c,kind,x+w*(.2+.3*j),y+h/2-(1-a)*12,Math.min(12,h*.3),gc);});});return mid;};
+    // 왼쪽: 표준 화석 — 두 지역의 지층에서 같은 화석이 한 층에서만
+    T(c,'표준 화석',50,40,{size:21,w:700,color:GR});T(c,'→ 지층이 쌓인 시대',50+kw(c,'표준 화석',21,700)+12,41,{size:16});
+    arrow(c,72,Y0,72,98,C.dim,1.5,8);label(c,'과거',72,Y0+14,C.dim,{size:12});label(c,'현재',72,84,C.dim,{size:12});
+    K(c,'지역 A',165,80,{size:14,color:C.muted});K(c,'지역 B',365,80,{size:14,color:C.muted});
+    const mA=strata(100,130,[46,46,46,46,46],[2],'tri',GR,.3),mB=strata(300,130,[30,34,46,64,56],[2],'tri',GR,.5);
+    const kc=fin(t,3.3,.8);
+    if(kc>0){poly(c,[[230,mA[2]],[lerp(230,300,kc),lerp(mA[2],mB[2],kc)]],GR,2,{dash:[5,4]});SB_al(c,fin(t,3.9,.5),()=>K(c,'같은 시대',265,mA[2]-24,{size:13,color:GR,w:600}));}
+    SB_al(c,fin(t,4.4,.6),()=>{T(c,'한 층에서만 나옴 → 생존 기간이 짧다 → 시대가 좁혀진다',50,362,{size:14.5});T(c,'먼 두 지역에서 나옴 → 분포가 넓다 → 지층끼리 비교',50,386,{size:14.5,color:C.muted});});
+    // 오른쪽: 시상 화석 — 여러 층에 걸쳐 나오지만 한 환경에서만
+    poly(c,[[480,28],[480,400]],C.line,1.5);
+    T(c,'시상 화석',505,40,{size:21,w:700,color:CY});T(c,'→ 쌓일 당시의 환경',505+kw(c,'시상 화석',21,700)+12,41,{size:16});
+    K(c,'어느 지역의 지층',595,80,{size:14,color:C.muted});
+    strata(530,130,[46,46,46,46,46],[0,1,2,3],'coral',CY,.7);
+    const ke=fin(t,5.2,.7);
+    SB_al(c,ke,()=>{arw(c,666,211,694,211,CY,2.5,9);rr(c,700,104,220,196,12,'rgba(79,209,232,.06)',ra(CY,.45),1.3);
+      dot(c,884,134,12,C.u1,{glow:14+4*Math.sin(t*3)});
+      const sea=[];for(let x=712;x<=908;x+=7)sea.push([x,176+Math.sin(x*.08+t*2)*2.5]);poly(c,sea,'#7EC8FF',2);
+      poly(c,[[712,288],[712,268],[772,236],[908,230],[908,288]],null,0,{close:true,fill:'rgba(217,199,160,.28)'});poly(c,[[712,268],[772,236],[908,230]],'#D9C7A0',1.5);
+      [800,840,880].forEach((x,j)=>SB_fossil(c,'coral',x+Math.sin(t*1.5+j)*1.5,218-j%2*2,13,CY));
+      T(c,'당시의 환경',712,120,{size:12.5,color:C.muted});K(c,'따뜻하고 얕은 바다',810,318,{size:15,w:700,color:CY});});
+    SB_al(c,fin(t,5.8,.6),()=>{T(c,'여러 층에서 나옴 → 생존 기간이 길다 → 시대는 못 좁힘',505,362,{size:14.5});T(c,'특정 환경에서만 삶 → 그 환경을 알려 준다',505,386,{size:14.5,color:C.muted});});
+    // 아래: 외울 것
+    const CH=[['고생대','삼엽충 · 방추충','tri',0],['중생대','암모나이트 · 공룡','amm',0],['신생대','화폐석 · 매머드','num',0],['산호','따뜻하고 얕은 바다','coral',1],['고사리','따뜻하고 습한 육지','fern',1]];
+    const hi=t>10.5?Math.floor((t-10.5)/1.1)%5:-1;
+    CH.forEach((d,i)=>{const x=40+i*178,col=d[3]?CY:GR,a=fin(t,6.4+i*.45,.5);SB_al(c,a,()=>{
+      rr(c,x,420,168,88,10,ra(col,i===hi?.2:.07),ra(col,i===hi?1:.55),i===hi?2.2:1.4);
+      T(c,d[0],x+14,441,{size:16,w:700,color:col});SB_fossil(c,d[2],x+142,447,13,col);
+      T(c,d[1],x+14,468,{size:14.5});T(c,d[3]?'시상 화석 → 환경':'표준 화석 → 시대',x+14,492,{size:12.5,color:C.muted});});});
+  }});
+
+/* ───────── Ⅳ-2 지질 시대의 길이와 대멸종 ───────── */
+const SB_ERA=[[46,5.4,'선캄브리아 시대','#7E8FA6'],[5.4,2.5,'고생대','#4FD1E8'],[2.5,.66,'중생대','#7BE07F'],[.66,0,'신생대','#F4B544']];
+const SB_DIV=[[5.4,.06],[5,.3],[4.5,.5],[4.42,.37],[4.2,.5],[3.8,.57],[3.72,.43],[3.4,.56],[3,.6],[2.54,.63],[2.5,.2],[2.3,.33],[2.06,.46],[2,.35],[1.7,.5],[1.2,.66],[.7,.75],[.66,.5],[.4,.76],[0,.95]];   // 생물 과의 수(개념도) — 다섯 번의 급락
+S.push({u:3,ch:'지질 시대와 생물 다양성',title:'지질 시대의 길이와 대멸종',file:'06-earth-history-diversity.html',
+  sub:'46억 년 가운데 선캄브리아 시대가 약 88 %입니다. 고생대 이후를 늘려 보면 생물 과의 수가 다섯 번 급락하고, 그 자리가 시대의 경계와 겹칩니다.',
+  fx:[{w:1,f:'선캄브리아 > 고생대 > 중생대 > 신생대',n:'길이 순서 · 경계 시각의 차로 계산'},{w:1,f:'고생대 말: 가장 큰 대멸종',n:'삼엽충 · 방추충이 사라짐'},{w:1,f:'대멸종 → 빈자리 → 다시 다양해짐',n:'공룡 멸종 뒤 포유류 번성'}],
+  pts:['시대를 나누는 기준이 <em>생물계의 큰 변화</em>라서, 대멸종이 일어난 자리가 곧 시대의 경계가 됩니다.','대멸종으로 서식지와 먹이가 비면 → 살아남은 생물이 퍼져 적응하며 <em>다시 다양해집니다</em>. 그래프는 떨어진 뒤 다시 올라갑니다.','함정: 화석이 많이 나오는 고생대가 가장 긴 시대가 아닙니다. 가장 긴 것은 <em>선캄브리아 시대</em>, 가장 짧은 것은 신생대입니다.','<em>오존층이 형성된 뒤</em>(고생대) 생물이 육지로 진출했습니다. 순서가 뒤집힌 보기는 틀립니다.'],
+  dur:16,still:11.8,
+  draw(c,t){
+    const X0=60,BW=840,xs=a=>X0+BW*(1-a/46),gx=a=>100+780*(1-a/5.4),gy=v=>400-v*200;
+    T(c,'지구의 역사 46억 년 — 시대의 길이는 경계 시각의 차',60,36,{size:15,color:C.muted});
+    const k=fin(t,.3,2.4);
+    c.save();c.beginPath();c.rect(X0-2,50,(BW+4)*k,50);c.clip();
+    SB_ERA.forEach(e=>{const x1=xs(e[0]),x2=xs(e[1]);box(c,x1,58,x2-x1,34,0,ra(e[3],.45),ra(e[3],.95),1.2);});
+    K(c,'선캄브리아 시대   40.6억 년 · 약 88 %',xs(25.7),75.5,{size:15,w:600});c.restore();
+    T(c,'46억 년 전',60,108,{size:12.5,color:C.muted});
+    SB_al(c,fin(t,2.4,.5),()=>{K(c,'5.4억 년 전',xs(5.4),108,{size:12.5,color:C.muted});T(c,'현재',908,75,{size:12.5,color:C.muted});
+      T(c,'고생대 6 % · 중생대 4 % · 신생대 1 %',900,36,{size:13.5,align:'right'});});
+    const kz=fin(t,2.9,.7);if(kz>0){poly(c,[[xs(5.4),92],[lerp(xs(5.4),100,kz),lerp(92,150,kz)]],C.dim,1.2,{dash:[4,4]});poly(c,[[900,92],[lerp(900,880,kz),lerp(92,150,kz)]],C.dim,1.2,{dash:[4,4]});}
+    // 고생대 이후를 늘린 그래프
+    SB_al(c,fin(t,3.4,.7),()=>{SB_ERA.slice(1).forEach(e=>{const x1=gx(e[0]),x2=gx(e[1]);box(c,x1,150,x2-x1,250,0,ra(e[3],.07),ra(e[3],.35),1);
+        K(c,e[2],(x1+x2)/2,168,{size:15,w:700,color:e[3]});K(c,(e[0]-e[1]).toFixed(2).replace(/0$/,'')+'억 년',(x1+x2)/2,187,{size:12.5,color:C.muted});});
+      poly(c,[[100,150],[100,400],[880,400]],C.dim,1.5);T(c,'생물 과의 수',92,232,{size:12.5,color:C.muted,align:'right'});
+      [[5.4,'5.4억 년 전'],[2.5,'2.5'],[.66,'0.66'],[0,'현재']].forEach(d=>K(c,d[1],gx(d[0]),415,{size:12.5,color:C.muted}));});
+    const P=SB_DIV.map(d=>[gx(d[0]),gy(d[1])]),kc=seg(t,4.3,9.3),xe=lerp(100,880,kc),Q=[];
+    for(let i=0;i<P.length;i++){if(P[i][0]<=xe)Q.push(P[i]);else{if(i>0){const u=(xe-P[i-1][0])/(P[i][0]-P[i-1][0]);Q.push([xe,lerp(P[i-1][1],P[i][1],u)]);}break;}}
+    if(kc>0)poly(c,Q,C.text,2.5);
+    [3,6,10,13,17].forEach(i=>{if(P[i][0]<=xe){const big=i===10||i===17;dot(c,P[i][0],P[i][1],big?6:4,big?C.u3:C.hot,{glow:big?12:0});}});
+    SB_al(c,fin(t,9.5,.6),()=>{T(c,'가장 큰 대멸종',505,350,{size:14,w:700,color:C.u3,align:'right'});T(c,'삼엽충 · 방추충이 사라짐',505,369,{size:12.5,color:C.muted,align:'right'});
+      T(c,'공룡 · 암모나이트가 사라짐',772,334,{size:12.5,color:C.muted,align:'right'});});
+    SB_al(c,fin(t,10.2,.6),()=>{arw(c,542,366,584,334,C.green,2.5,9);T(c,'살아남은 생물이 다시 다양해짐',556,384,{size:12.5,color:C.green});});
+    SB_al(c,fin(t,8.8,.6),()=>{T(c,'표준 화석',92,441,{size:12.5,color:C.muted,align:'right'});T(c,'환경 · 생물',92,463,{size:12.5,color:C.muted,align:'right'});
+      [['삼엽충 · 방추충','오존층 형성 → 생물이 육지로'],['암모나이트 · 공룡','빙하기 없이 온난 · 판게아 분리'],['화폐석 · 매머드','포유류 · 속씨식물 번성']].forEach((d,i)=>{const e=SB_ERA[i+1],x=(gx(e[0])+gx(e[1]))/2;
+        K(c,d[0],x,441,{size:14,w:600,color:e[3]});K(c,d[1],x,463,{size:12.5});});});
+    SB_al(c,fin(t,10.8,.6),()=>K(c,'대멸종 → 서식지와 먹이가 빔 → 살아남은 생물이 퍼져 적응 → 생물 다양성이 다시 늘어남',480,503,{size:14.5}));
+    if(t>12){const u=((t-12)%4)/4,xx=lerp(100,880,u);let i=1;while(i<P.length-1&&P[i][0]<xx)i++;const v=(xx-P[i-1][0])/(P[i][0]-P[i-1][0]);dot(c,xx,lerp(P[i-1][1],P[i][1],v),5,C.u1,{glow:12});}
+  }});
+
+/* ───────── Ⅳ-3 변이와 자연선택 ───────── */
+const SB_NS=(()=>{const ord=[...Array(40).keys()].sort((a,b)=>rnd(a+100)-rnd(b+100)),g=ord.slice(0,20),b=ord.slice(20);   // 초록 20 · 갈색 20, 그중 초록 5 · 갈색 15 를 집어낸다
+  return {green:new Set(g),pos:i=>[77.5+(i%8)*55+(rnd(i)-.5)*20,102+Math.floor(i/8)*56+(rnd(i+50)-.5)*20],
+    out:[...g.slice(0,5),...b.slice(0,15)].sort((x,y)=>rnd(x+200)-rnd(y+200)),stay:[...g.slice(5),...b.slice(15)]};})();
+S.push({u:3,ch:'지질 시대와 생물 다양성',title:'변이와 자연선택',file:'06-earth-history-diversity.html',
+  sub:'초록색 천 위의 조각 40개에서 눈에 띄는 것부터 집어내고, 남은 것이 2배로 늘어납니다. 조각은 그대로인데 집단의 비율이 달라집니다.',
+  fx:[{w:1,f:'변이 → 생존 경쟁 → 자연선택 → 진화',n:'과잉 생산에서 출발'},{w:1,f:'초록 20 : 갈색 20 → 15 : 5 → 30 : 10',n:'초록 비율 50 % → 75 %'},{w:1,f:'색 = 변이 · 천 = 환경 · 집는 사람 = 포식자',n:'모의실험의 대응'}],
+  pts:['<em>변이가 먼저</em> 있고 환경이 그중에서 고릅니다. 환경이 필요한 변이를 만들어 주는 것이 아닙니다.','초록색 천에서는 초록 조각이 덜 띄어 더 많이 살아남고 → 자손을 더 남겨 → <em>집단에서 비율</em>이 높아집니다.','함정: ‘개체가 변했다’는 틀리고 ‘집단의 비율이 변했다’가 맞습니다. 내성 세균도 항생제 때문에 생긴 것이 아니라 <em>원래 있던 것이 살아남은 것</em>입니다.','‘유리하다’는 환경에 따라 달라집니다. 배경이 갈색이면 갈색 조각이 유리합니다.'],
+  dur:16,still:11.5,
+  draw(c,t){
+    const GD='#57B868',BR='#D0894A',N=SB_NS;
+    T(c,'초록색 천 = 환경',50,52,{size:15,w:600,color:GD});T(c,'조각 40개 · 색 = 변이',490,52,{size:13,color:C.muted,align:'right'});
+    rr(c,50,74,440,280,10,'rgba(60,150,85,.30)','rgba(110,200,130,.6)',1.5);
+    const D=(i,x,y,a,r=11)=>{const g=N.green.has(i);SB_al(c,a,()=>dot(c,x,y,r,g?GD:BR,{stroke:g?'rgba(20,60,30,.55)':'rgba(255,230,200,.75)',lw:1.5}));};
+    N.stay.forEach((i,j)=>{const p=N.pos(i);D(i,p[0],p[1],fin(t,.3+j*.03,.4));
+      const q=N.pos(N.out[j]),kk=ease(seg(t,8+j*.06,8.9+j*.06));if(kk>0)D(i,lerp(p[0],q[0],kk),lerp(p[1],q[1],kk),Math.min(1,kk*3));});   // 번식: 빈자리로 자손이 퍼짐
+    N.out.forEach((i,m)=>{const p=N.pos(i),t0=3+m*.17,kk=seg(t,t0,t0+.5),a=fin(t,.3+m*.03,.4)*(1-kk);D(i,p[0],p[1]-kk*26,a);
+      if(t>t0-.25&&t<t0+.5)dot(c,p[0],p[1]-kk*26,17,null,{stroke:C.text,lw:2});});   // 집어냄
+    const ph=t<3?0:t<6.5?1:t<8?2:3;
+    dot(c,752,60,7,GD);T(c,'초록',764,60,{size:14});dot(c,852,60,7,BR);T(c,'갈색',864,60,{size:14});
+    [['① 처음','20','20',.4],['② 눈에 띄는 것부터 집어냄','−5','−15',3],['③ 남은 조각','15','5',6.5],['④ 2배로 번식','30','10',8]].forEach((d,i)=>{const y=98+i*38,a=fin(t,d[3],.5);SB_al(c,a,()=>{
+      if(i===ph)rr(c,524,y-16,396,32,8,ra(SB_G,.12),ra(SB_G,.6),1.2);T(c,d[0],536,y,{size:14.5,w:i===ph?700:500});
+      K(c,d[1],770,y,{size:16,w:700,color:GD,font:MONO});K(c,d[2],870,y,{size:16,w:700,color:BR,font:MONO});});});
+    const q=seg(t,3,6.4),r=(20-5*q)/(40-20*q);
+    T(c,'초록 조각의 비율',524,262,{size:14,color:C.muted});
+    box(c,524,278,396,28,6,BR,null,0,{alpha:.85});box(c,524,278,396*r,28,6,GD,null,0);K(c,Math.round(r*100)+' %',524+396*r/2,292.5,{size:15,w:700,color:SB_INK});
+    SB_al(c,fin(t,6.6,.5),()=>{T(c,'50 % → 75 %',524,328,{size:17,w:700,color:GD});T(c,'조각 하나하나는 그대로 — 달라진 것은 집단의 비율',524,353,{size:13.5});});
+    [['조각의 색 = 변이 (먼저 있다)',GD],['초록색 천 = 환경 (고르는 기준)',C.u2],['집는 사람 = 포식자',C.u3]].forEach((d,i)=>{const x=50+i*293,a=fin(t,9+i*.4,.5);rr(c,x,382,283,42,10,ra(d[1],.08),ra(d[1],.6),1.4,a);SB_al(c,a,()=>K(c,d[0],x+141.5,403,{size:15,w:600}));});
+    SB_al(c,fin(t,10.3,.5),()=>{K(c,'변이가 먼저 있다 → 환경이 그중에서 고른다 → 살아남은 쪽이 자손을 남긴다 → 비율이 달라진다',480,456,{size:14.5});
+      K(c,'배경을 갈색 천으로 바꾸면 → 이번에는 갈색 조각의 비율이 높아진다 (‘원래 더 뛰어난 색’은 없다)',480,490,{size:13.5,color:C.muted});});
+  }});
+
+/* ───────── Ⅳ-4 생물 다양성의 세 수준 ───────── */
+S.push({u:3,ch:'지질 시대와 생물 다양성',title:'생물 다양성 — 세 수준과 종 다양성 비교',file:'06-earth-history-diversity.html',
+  sub:'생물 다양성은 유전자·종·생태계 세 수준으로 봅니다. 종 다양성은 종의 수와 종별 개체 수가 고른 정도를 함께 따집니다.',
+  fx:[{w:1,f:'유전적 다양성 · 종 다양성 · 생태계 다양성',n:'세 수준'},{w:1,f:'종 다양성 = 종의 수 + 고른 정도',n:'개체 수 합계로는 판단하지 않음'},{w:1,f:'A(25×4) > B(85·5·5·5),  A(4종) > C(2종)',n:'지역 비교'}],
+  pts:['<em>유전적 다양성</em>이 높으면 환경이 급변하거나 전염병이 돌아도 살아남는 개체가 있어 → 멸종 위험이 낮습니다.','<em>종 다양성</em>이 높으면 먹이 관계가 복잡해져 → 한 종이 사라져도 생태계가 안정적으로 유지됩니다.','함정: 종의 수가 같으면 종 다양성도 같다고 보면 틀립니다. 종별 개체 수가 <em>고를수록</em> 높습니다.','같은 종 무당벌레의 무늬 차이는 종 다양성이 아니라 <em>유전적 다양성</em>입니다.'],
+  dur:15,still:10,
+  draw(c,t){
+    const L=[['유전적 다양성','같은 종 안에서 형질이 다양','예: 무당벌레의 무늬',C.u3],['종 다양성','종의 수가 많고 · 고르게 분포','예: 숲의 여러 식물 · 곤충 · 새',SB_G],['생태계 다양성','한 지역에 생태계가 다양','예: 숲 · 습지 · 갯벌 · 강 · 바다',C.u2]];
+    L.forEach((d,i)=>{const x=40+i*300,a=fin(t,.2+i*.6,.6);rr(c,x,34,280,116,12,ra(d[3],.07),ra(d[3],.55),1.4,a);SB_al(c,a,()=>{
+      T(c,d[0],x+16,56,{size:17,w:700,color:d[3]});T(c,d[1],x+16,81,{size:14});T(c,d[2],x+16,134,{size:12.5,color:C.muted});
+      for(let j=0;j<6;j++){const px=x+28+j*30,py=108+Math.sin(t*2+j+i)*1.5;
+        if(i===0){dot(c,px,py,10,'#E0604A',{stroke:'#FFC2B5',lw:1.2});poly(c,[[px,py-10],[px,py+10]],'#5a1d14',1.2);for(let q=0;q<j;q++)dot(c,px+(q%2?4.5:-4.5),py-5+Math.floor(q/2)*5,1.7,'#2a0d08');}
+        else if(i===1){const col=['#7BE07F','#F4B544','#4FD1E8','#FF7A8A','#B69CFF','#E6EDF5'][j];
+          if(j%3===0)dot(c,px,py,9,col);else if(j%3===1)poly(c,[[px,py-10],[px+10,py+8],[px-10,py+8]],col,0,{close:true,fill:col});else box(c,px-8,py-8,16,16,3,col);}
+        else if(j<5)box(c,x+18+j*36,98,32,20,4,['#3F9A55','#3E8F8A','#A98958','#4C8FD9','#2F5FAF'][j],'rgba(255,255,255,.35)',1);}});
+      if(i<2)arw(c,x+282,92,x+298,92,C.dim,2,7,a);});
+    const R=[['지역 B',[85,5,5,5],'4종 · 한 종에 치우침',180],['지역 A',[25,25,25,25],'4종 · 고르다',480],['지역 C',[50,50],'2종 · 고르다',780]],SC=['#7BE07F','#F4B544','#4FD1E8','#FF7A8A'];
+    R.forEach((d,i)=>{const cx=d[3],a=fin(t,2.2+i*.8,.5),n=d[1].length,bw=36,gp=14,x0=cx-(n*bw+(n-1)*gp)/2;SB_al(c,a,()=>{
+      K(c,d[0],cx,180,{size:16,w:700,color:i===1?C.u1:C.text});poly(c,[[cx-110,410],[cx+110,410]],C.dim,1.5);
+      d[1].forEach((v,j)=>{const h=v*2.2*fin(t,2.5+i*.8+j*.12,.8),x=x0+j*(bw+gp);box(c,x,410-h,bw,h,4,ra(SC[j],.7),SC[j],1.2);K(c,String(v),x+bw/2,410-h-12,{size:13,font:MONO});});
+      K(c,d[2],cx,430,{size:13.5,color:C.muted});});});
+    SB_al(c,fin(t,5.6,.5),()=>{K(c,'<',330,320,{size:40,w:700,color:C.u1,font:MONO});K(c,'종 수가 같다 → 고른 쪽(A)이 높다',330,464,{size:14,w:600});});
+    SB_al(c,fin(t,7,.5),()=>{K(c,'>',630,320,{size:40,w:700,color:C.u1,font:MONO});K(c,'고른 정도가 같다 → 종 수 많은 쪽(A)이 높다',630,464,{size:14,w:600});});
+    SB_al(c,fin(t,8.4,.5),()=>K(c,'종 다양성 = 종의 수 + 종별 개체 수가 고른 정도   (전체 개체 수는 세 지역 모두 100)',480,502,{size:14.5}));
+  }});
+
+/* ───────── Ⅳ-5 산화와 환원: 산소의 이동 ───────── */
+S.push({u:3,ch:'화학 변화',title:'산화와 환원 — 산소의 이동',file:'07-chemical-change.html',
+  sub:'산화 구리(Ⅱ)와 탄소를 섞어 가열하면 산소가 구리에서 탄소로 옮겨 갑니다. 산소를 잃은 쪽은 환원, 얻은 쪽은 산화입니다.',
+  fx:[{w:1,f:'산화: 산소를 얻음 · 환원: 산소를 잃음'},{w:1,f:'2CuO + C → 2Cu + CO₂',n:'CuO 환원 · C 산화'},{w:1,f:'광합성: CO₂ 환원 · 연소: 연료 산화 · 제련: 산화 철 환원',n:'역사를 바꾼 세 반응'}],
+  pts:['산소를 잃는 물질이 있으면 그 산소를 얻는 물질이 반드시 있어서 → <em>산화와 환원은 항상 함께</em> 일어납니다.','검은색 가루가 <em>붉은색</em>이 되는 것은 환원(CuO → Cu), 석회수가 <em>뿌옇게</em> 흐려지는 것은 산화(C → CO₂)의 증거입니다.','함정: 광합성에서 이산화 탄소는 산화가 아니라 <em>환원</em>되어 포도당이 됩니다. 포도당이 산화되는 것은 세포 호흡입니다.'],
+  dur:16,still:11.5,
+  draw(c,t){
+    const RD=C.u2,OX=SB_O,OC='#FF6B6B';
+    K(c,'2CuO  +  C   →   2Cu  +  CO₂',280,40,{size:22,w:600,font:MONO});
+    const k1=ease(seg(t,2.2,5)),k2=ease(seg(t,3.2,6));
+    [[140,k1],[250,k2]].forEach(d=>{dot(c,120,d[0],34,SB_mix('#2A2E35','#C5673A',d[1]),{stroke:SB_mix('#7C8794','#F0A070',d[1]),lw:2.5});K(c,'Cu',120,d[0]+1,{size:17,w:700});});
+    dot(c,380,195,24,'#39424E',{stroke:'#AAB6C4',lw:2.5});K(c,'C',380,196,{size:17,w:700});
+    [[173,140,334,k1],[173,250,426,k2]].forEach(d=>{const x=lerp(d[0],d[2],d[3]),y=lerp(d[1],195,d[3])-Math.sin(d[3]*Math.PI)*46;
+      dot(c,x,y,19,ra(OC,.3),{stroke:OC,lw:2.5,glow:d[3]>0&&d[3]<1?12:0});K(c,'O',x,y+1,{size:15,w:700});});
+    SB_al(c,1-fin(t,4.6,.6),()=>K(c,'검은색 산화 구리(Ⅱ) + 탄소 가루를 가열',250,330,{size:14,color:C.muted}));
+    SB_al(c,fin(t,5.2,.6),()=>{K(c,'CuO → Cu',120,308,{size:16,w:700});K(c,'산소를 잃음 = 환원',120,333,{size:15,w:600,color:RD});K(c,'검은색 → 붉은색',120,357,{size:13,color:C.muted});});
+    SB_al(c,fin(t,6,.6),()=>{K(c,'C → CO₂',380,250,{size:16,w:700});K(c,'산소를 얻음 = 산화',380,275,{size:15,w:600,color:OX});});
+    const kg=fin(t,6.4,.6);
+    if(kg>0){c.save();c.globalAlpha*=kg;flow(c,[[400,165],[470,100],[700,100],[700,205]],t,'#AAB6C4',5,4,.22);c.restore();SB_al(c,kg,()=>K(c,'CO₂ 기체',585,82,{size:13,color:C.muted}));}
+    const km=fin(t,7.6,2.4);
+    box(c,642,205,216,123,0,SB_mix('#1B3550','#C9D3DC',km*.8),null,0);poly(c,[[640,170],[640,330],[860,330],[860,170]],'#7FA6CC',2.5);K(c,'석회수',770,188,{size:13,color:C.muted});
+    SB_al(c,fin(t,8.8,.6),()=>{K(c,'뿌옇게 흐려짐',750,268,{size:16,w:700,color:SB_INK});K(c,'석회수가 흐려짐 → CO₂가 생겼다는 증거',750,352,{size:13.5});});
+    SB_al(c,fin(t,9.3,.6),()=>K(c,'산소가 CuO에서 C로 옮겨 간다 → 환원과 산화는 항상 함께 일어난다',400,398,{size:15,w:600}));
+    [['광합성',['CO₂ → 포도당 : 환원',RD],['H₂O → O₂ : 산화',OX]],['화석 연료의 연소',['CH₄ + 2O₂ → CO₂ + 2H₂O',C.text],['메테인이 산소를 얻음 : 산화',OX]],['철의 제련',['Fe₂O₃ → Fe : 환원',RD],['CO → CO₂ : 산화',OX]]].forEach((d,i)=>{
+      const x=40+i*300,a=fin(t,9.8+i*.4,.5);rr(c,x,424,280,92,10,'rgba(255,255,255,.03)',C.line,1.4,a);
+      SB_al(c,a,()=>{T(c,d[0],x+16,444,{size:15,w:700,color:C.u1});T(c,d[1][0],x+16,470,{size:14.5,color:d[1][1]});T(c,d[2][0],x+16,496,{size:14.5,color:d[2][1]});});});
+  }});
+
+/* ───────── Ⅳ-6 산화와 환원: 전자의 이동 ───────── */
+S.push({u:3,ch:'화학 변화',title:'산화와 환원 — 전자의 이동과 이온 수',file:'07-chemical-change.html',
+  sub:'질산 은 수용액에 구리선을 넣으면 구리가 전자를 잃고 녹아 나오고, 은 이온이 전자를 얻어 붙습니다. 이온 수는 전하로 셉니다.',
+  fx:[{w:1,f:'산화: 전자를 잃음 · 환원: 전자를 얻음'},{w:1,f:'Cu + 2Ag⁺ → Cu²⁺ + 2Ag',n:'Cu 산화 · Ag⁺ 환원'},{w:1,f:'잃은 전자 수 = 얻은 전자 수',n:'Ag⁺ 6개 → Cu²⁺ 3개'}],
+  pts:['구리 원자 1개가 전자 2개를 잃으면 → Ag⁺ 2개가 전자를 1개씩 얻습니다. 그래서 <em>양이온 수는 6에서 3으로</em> 줄어듭니다.','반응에 참여하지 않는 <em>음이온(NO₃⁻) 수와 전하의 합</em>은 변하지 않습니다. (+1)×6 = (+2)×3.','함정: 산소는 얻으면 산화인데 전자는 <em>잃으면</em> 산화입니다. 금속이 산화되는 까닭은 산소를 얻어서가 아니라 전자를 잃어서입니다.','용액의 푸른색은 Cu²⁺ 때문입니다. 구리가 녹아 나올수록 용액이 푸르러집니다.'],
+  dur:16,still:11.5,
+  draw(c,t){
+    const AG='#C9D3DC',CU='#6EA8FF',NO='#8FB39A',EV=[2,4.6,7.2],AL=[[110,200],[135,295],[95,345]],AR=[[390,200],[365,295],[405,345]],CR=[[335,190],[170,190],[250,395]];
+    const nE=EV.filter(e=>t>=e+1.5).length,sE=EV.reduce((s,e)=>s+fin(t,e+1.5,.4),0);
+    box(c,62,150,376,278,0,ra(CU,.04+.07*sE),null,0);poly(c,[[60,120],[60,430],[440,430],[440,120]],'#7FA6CC',2.5);
+    box(c,236,50,28,300,4,'#C5673A','#F0A070',1.5);K(c,'구리선 Cu',250,34,{size:14,color:'#F0A070',w:600});
+    K(c,'질산 은 수용액',350,135,{size:13,color:C.muted});dot(c,80,135,4,C.u1,{glow:8});T(c,'전자 e⁻',90,135,{size:12.5,color:C.u1});
+    [[165,245],[175,345],[110,405],[335,245],[325,345],[390,405]].forEach((p,i)=>SB_ion(c,p[0]+Math.sin(t*1.1+i)*3,p[1]+Math.cos(t*.9+i*2)*3,17,NO,'NO₃⁻'));
+    EV.forEach((e,k)=>{const yk=185+k*50,km=ease(seg(t,e,e+1.2)),dn=t>=e+1.5;
+      [[AL[k],221],[AR[k],279]].forEach((d,j)=>{const x=lerp(d[0][0],d[1],km)+Math.sin(t*1.3+k+j)*3*(1-km),y=lerp(d[0][1],yk,km);
+        if(dn){dot(c,x,y,13,AG,{stroke:'#F2F5F8',lw:1.5});K(c,'Ag',x,y+.5,{size:12,w:700,color:SB_INK});}else SB_ion(c,x,y,15,AG,'Ag⁺');
+        const ke=seg(t,e+.9,e+1.5);if(ke>0&&ke<1)dot(c,lerp(250,d[1],ke),yk,4.5,C.u1,{glow:10});});
+      if(dn){const kc=ease(seg(t,e+1.5,e+2.4));SB_ion(c,lerp(250,CR[k][0],kc),lerp(yk+25,CR[k][1],kc),16,CU,'Cu²⁺');}});
+    T(c,'Cu → Cu²⁺ + 2e⁻',60,456,{size:15,w:600});T(c,'전자를 잃음 = 산화',250,456,{size:15,w:700,color:SB_O});
+    T(c,'2Ag⁺ + 2e⁻ → 2Ag',60,482,{size:15,w:600});T(c,'전자를 얻음 = 환원',250,482,{size:15,w:700,color:C.u2});
+    T(c,'용액이 점점 푸른색 ← Cu²⁺이 녹아 나옴',60,510,{size:13,color:CU});
+    T(c,'이온 수 세기',510,56,{size:17,w:700});T(c,'Ag⁺ 6개가 모두 반응할 때',618,57,{size:13,color:C.muted});
+    [['Ag⁺',6-2*sE,6-2*nE,AG,''],['Cu²⁺',sE,nE,CU,''],['NO₃⁻',6,6,NO,'일정'],['양이온 수',6-sE,6-nE,C.text,'감소'],['양전하의 합',6,'+6',SB_O,'일정'],['음전하의 합',6,'−6',NO,'일정']].forEach((d,i)=>{const y=100+i*46+(i>2?14:0);
+      T(c,d[0],510,y,{size:15,w:600,color:d[3]});bar(c,630,y-8,200,16,d[1]/6,d[3]);K(c,String(d[2]),858,y,{size:16,w:700,font:MONO});if(d[4])T(c,d[4],884,y,{size:12.5,color:C.muted});});
+    poly(c,[[510,222],[920,222]],C.line,1.2,{dash:[3,4]});
+    [['잃은 전자 수 = 얻은 전자 수  (Cu 1개 : Ag⁺ 2개)',8.8],['반응하지 않는 음이온(NO₃⁻)의 수는 그대로',9.3],['전하가 다른 이온끼리 바뀌면 양이온 수가 변한다',9.8]].forEach((d,i)=>{const y=402+i*29,a=fin(t,d[1],.5);chk(c,520,y,6,C.green,a);SB_al(c,a,()=>T(c,d[0],538,y,{size:14.5}));});
+    SB_al(c,fin(t,10.4,.5),()=>T(c,'Ag⁺ 6개 → Cu²⁺ 3개 :  (+1)×6 = (+2)×3 = +6',520,496,{size:14.5,w:600,color:SB_O}));
+  }});
+
+/* ───────── Ⅳ-7 중화 반응과 이온 수 변화 ───────── */
+S.push({u:3,ch:'화학 변화',title:'중화 반응 — 이온 수의 변화',file:'07-chemical-change.html',
+  sub:'묽은 염산에 수산화 나트륨 수용액을 조금씩 넣습니다. H⁺과 OH⁻이 1 : 1로 만나 물이 되고, 나머지 이온은 그대로 남습니다.',
+  fx:[{w:1,f:'H⁺ + OH⁻ → H₂O',n:'1 : 1로 반응'},{w:1,f:'중화점까지: H⁺ 감소 · Na⁺ 증가 · Cl⁻ 일정 · 전체 일정'},{w:1,f:'중화점 뒤: OH⁻ · Na⁺ 증가 → 전체 증가'},{w:1,f:'BTB: 노란색 → 초록색 → 파란색',n:'산성 → 중성 → 염기성'}],
+  pts:['H⁺ 1개가 사라질 때 Na⁺ 1개가 들어오므로 → 중화점까지 <em>전체 이온 수는 일정</em>합니다. 그 뒤에는 넣는 대로 늘어납니다.','<em>Na⁺과 Cl⁻은 반응에 참여하지 않습니다.</em> 섞은 용액의 액성은 H⁺과 OH⁻ 가운데 많은 쪽이 정합니다.','함정: 생성된 물 분자 수는 넣은 양이 아니라 H⁺과 OH⁻ 가운데 <em>적은 쪽</em>의 수와 같습니다.','물이 생길 때 열이 나오므로, 생성된 물이 가장 많은 혼합 용액의 온도가 가장 높습니다.'],
+  dur:17,still:13.6,
+  draw(c,t){
+    const HC='#FF6B6B',CLC='#9AD17F',NAC=C.u1,OHC='#6EA8FF',TD=k=>1.5+(k-1)*1.7;
+    const HP=[[105,285],[320,235],[160,390],[270,335]],CLP=[[215,285],[105,390],[320,390],[160,235]],NAP=[[270,235],[105,335],[215,390],[320,285],[215,335],[160,285]],OHP=[[270,285],[160,340]];
+    let d=0;for(let k=1;k<=6;k++)d+=seg(t,TD(k)+.4,TD(k)+1.3);
+    const nd=[1,2,3,4,5,6].filter(k=>t>=TD(k)+1.3).length,liq=d>4?SB_mix('#3E9A58','#3E6FD0',d-4):SB_mix('#C9A92E','#3E9A58',d-3);
+    box(c,201,36,18,112,3,'rgba(110,168,255,.18)','#7FA6CC',1.5);poly(c,[[205,148],[210,160],[215,148]],'#7FA6CC',1.5);
+    T(c,'NaOH 수용액',230,58,{size:14,color:C.muted});T(c,'Na⁺ · OH⁻',230,80,{size:12.5,color:C.dim});
+    T(c,'넣은 OH⁻ : '+[1,2,3,4,5,6].filter(k=>t>=TD(k)+.4).length+'개',40,58,{size:14});T(c,'생긴 물 : '+Math.min(nd,4)+'개',40,82,{size:14,color:'#BFE3FF'});
+    T(c,nd<4?'물이 생길 때마다 열 방출':nd===4?'중화점: 물 4개 생성':'H⁺이 없어 열이 안 남',40,106,{size:12.5,color:nd<=4?C.hot:C.muted});
+    c.save();c.globalAlpha*=.32;box(c,72,205,276,223,0,liq,null,0);c.restore();poly(c,[[70,175],[70,430],[350,430],[350,175]],'#7FA6CC',2.5);
+    CLP.forEach((p,i)=>SB_ion(c,p[0],p[1]+Math.sin(t+i)*2,15,CLC,'Cl⁻'));
+    HP.forEach((p,i)=>{const t1=TD(i+1)+1.3;if(t<t1)SB_ion(c,p[0],p[1]+Math.cos(t+i)*2,15,HC,'H⁺');
+      else SB_al(c,1-.4*seg(t,t1,t1+1),()=>{dot(c,p[0],p[1],15,'rgba(126,200,255,.12)',{stroke:'#7EC8FF',lw:1.5,dash:[3,3]});K(c,'H₂O',p[0],p[1]+.5,{size:12,color:'#BFE3FF'});});});
+    for(let k=1;k<=6;k++){const t0=TD(k);if(t<t0)continue;const kd=seg(t,t0,t0+.4);
+      if(kd<1){dot(c,210,lerp(162,205,kd),5,OHC);continue;}
+      const km=ease(seg(t,t0+.4,t0+1.3)),n=NAP[k-1],o=k<=4?HP[k-1]:OHP[k-5];
+      if(k>4||km<1)SB_ion(c,lerp(210,o[0],km),lerp(215,o[1],km),15,OHC,'OH⁻');
+      SB_ion(c,lerp(210,n[0],km),lerp(215,n[1],km),15,NAC,'Na⁺');}
+    K(c,'묽은 염산 (H⁺ 4개 · Cl⁻ 4개) + BTB 용액',210,452,{size:13.5,color:C.muted});
+    const st=nd<4?0:nd===4?1:2;[['산성 · 노란색','#D9B93A'],['중성 · 초록색','#4DB36A'],['염기성 · 파란색','#5B8DEB']].forEach((s,i)=>{const x=40+i*116;
+      rr(c,x,472,108,30,8,ra(s[1],i===st?.35:.08),ra(s[1],i===st?1:.4),i===st?2:1.2);K(c,s[0],x+54,487.5,{size:12.5,w:i===st?700:500,color:i===st?C.text:C.muted});});
+    // 그래프: 넣은 양에 따른 이온 수
+    const X=470,Y=410,gx=v=>X+v*380/6,gy=v=>Y-v*25,xp=clamp(d,0,6);
+    poly(c,[[X,96],[X,Y],[X+392,Y]],C.dim,1.5);T(c,'이온 수',X-8,104,{size:12.5,color:C.muted,align:'right'});K(c,'넣은 NaOH 수용액의 양 →',X+190,430,{size:12.5,color:C.muted});
+    poly(c,[[gx(4),Y],[gx(4),104]],C.muted,1.2,{dash:[4,4]});K(c,'중화점',gx(4),88,{size:13.5,w:700,color:'#4DB36A'});
+    [['H⁺',HC,v=>Math.max(0,4-v),2.5,0],['Cl⁻',CLC,v=>4,2.5,0],['Na⁺',NAC,v=>v,2.5,0],['OH⁻',OHC,v=>Math.max(0,v-4),2.5,-2.5],['전체',C.text,v=>v<4?8:8+2*(v-4),3.5,0]].forEach(L=>{const pts=[];
+      for(let v=0;v<xp;v+=.1)pts.push([gx(v),gy(L[2](v))+L[4]]);pts.push([gx(xp),gy(L[2](xp))+L[4]]);if(pts.length>1)poly(c,pts,L[1],L[3]);dot(c,gx(xp),gy(L[2](xp))+L[4],4,L[1]);
+      T(c,L[0],X+396,gy(L[2](6)),{size:14,w:700,color:L[1]});});
+    SB_al(c,fin(t,TD(4)+1.3,.5),()=>T(c,'중화점까지: H⁺ 1개가 사라질 때 Na⁺ 1개가 들어옴 → 전체 일정',470,456,{size:13.5}));
+    SB_al(c,fin(t,TD(6)+1.3,.5),()=>T(c,'중화점 뒤: Na⁺ · OH⁻이 넣는 대로 쌓임 → 전체 증가',470,481,{size:13.5}));
+    SB_al(c,fin(t,TD(6)+1.9,.5),()=>T(c,'물이 생기는 동안만 열이 나온다 → 생긴 물이 많을수록 나온 열이 많다',470,507,{size:13.5,color:C.hot}));
+  }});
+
+/* ───────── Ⅳ-8 물질 변화와 에너지 출입 ───────── */
+S.push({u:3,ch:'화학 변화',title:'발열과 흡열 — 에너지의 출입',file:'07-chemical-change.html',
+  sub:'반응물과 생성물이 가진 에너지의 높낮이 차이만큼 열이 드나듭니다. 내보내면 주위가 따뜻해지고, 받아들이면 주위가 차가워집니다.',
+  fx:[{w:1,f:'발열: 반응물 > 생성물 → 열 방출',n:'주위 온도 상승'},{w:1,f:'흡열: 반응물 < 생성물 → 열 흡수',n:'주위 온도 하강'},{w:1,f:'발열: 연소 · 중화 · 세포 호흡  /  흡열: 광합성 · 증발 · 융해'}],
+  pts:['반응물의 에너지가 생성물보다 크면 → 그 차이만큼 주위로 나와 <em>주위의 온도가 올라갑니다</em>(발열).','<em>광합성과 세포 호흡</em>은 짝입니다. 산화·환원의 방향도, 에너지의 출입도 서로 반대입니다.','함정: 온도계가 재는 것은 <em>주위</em>의 온도입니다. ‘흡수하니까 뜨거워진다’가 아니라, 주위는 열을 빼앗겨 차가워집니다.','상태 변화도 같습니다. 물이 얼 때는 방출, 얼음이 녹거나 물이 증발할 때는 흡수입니다.'],
+  dur:14,still:6.5,
+  draw(c,t){
+    const u=(t%5)/5,kT=fin(t,1.5,3);
+    const P=(ox,exo)=>{const col=exo?C.hot:'#6EA8FF',yR=exo?150:280,yP=exo?280:150;
+      T(c,exo?'발열':'흡열',ox+50,48,{size:21,w:700,color:col});T(c,exo?'열을 주위로 내보낸다':'열을 주위에서 받아들인다',ox+104,49,{size:15});
+      arrow(c,ox+80,335,ox+80,98,C.dim,1.5,8);T(c,'에너지',ox+90,102,{size:12.5,color:C.muted});
+      poly(c,[[ox+110,yR],[ox+215,yR]],C.text,3);K(c,'반응물',ox+162,yR+(exo?-17:19),{size:14.5,w:600});
+      poly(c,[[ox+265,yP],[ox+370,yP]],C.text,3);K(c,'생성물',ox+318,yP+(exo?19:-17),{size:14.5,w:600});
+      poly(c,[[ox+215,yR],[ox+250,yR]],C.dim,1.2,{dash:[3,4]});poly(c,[[ox+230,yP],[ox+265,yP]],C.dim,1.2,{dash:[3,4]});
+      arrow(c,ox+240,yR+(exo?5:-5),ox+240,yP+(exo?-5:5),col,3.5,12);T(c,exo?'차이만큼 방출':'모자란 만큼 흡수',ox+254,215,{size:14,w:600,color:col});
+      const bx=u<.25?lerp(162,240,u/.25):u<.75?240:lerp(240,318,(u-.75)/.25),by=u<.25?yR:u<.75?lerp(yR,yP,ease((u-.25)/.5)):yP;dot(c,ox+bx,by,7,C.u1,{glow:12});
+      [185,245].forEach((y,j)=>{if(exo)wavy(c,ox+366,y,ox+410,y,C.hot,12,3.5,t*6+j,2);else wavy(c,ox+410,y,ox+366,y,'#6EA8FF',12,3.5,t*6+j,2);});
+      const lv=lerp(.45,exo?.82:.14,kT)+Math.sin(t*2)*.008;
+      box(c,ox+419,118,12,192,6,'#0E1B2A',C.muted,1.5);box(c,ox+421,120+188*(1-lv),8,188*lv+6,4,col,null,0);dot(c,ox+425,318,11,col,{stroke:C.muted,lw:1.5});
+      K(c,exo?'주위 온도 ↑':'주위 온도 ↓',ox+425,348,{size:13.5,w:700,color:col});
+      rr(c,ox+40,368,410,62,10,ra(col,.06),ra(col,.4),1.2);
+      K(c,exo?'연소 · 중화 반응 · 손난로(철 가루의 산화)':'광합성 · 냉찜질 팩(질산 암모늄의 용해)',ox+245,387,{size:14});
+      K(c,exo?'세포 호흡 · 물이 얼 때 · 수증기 → 물':'얼음이 녹을 때 · 물의 증발 · 드라이아이스의 승화',ox+245,411,{size:14});};
+    P(0,true);P(450,false);poly(c,[[470,30],[470,356]],C.line,1.5);
+    K(c,'온도계가 재는 것은 ‘주위’의 온도 — 열을 흡수하는 변화가 일어나면 주위는 차가워진다',480,464,{size:15,w:600});
+    K(c,'광합성(흡열) ↔ 세포 호흡(발열): 산화·환원의 방향도, 에너지의 출입도 반대',480,498,{size:14,color:C.muted});
+  }});
+
+/* ───────── Ⅴ-1 생태 피라미드 ───────── */
+S.push({u:4,ch:'생태계와 환경',title:'생태 피라미드 — 에너지양과 넘어간 비율',file:'08-ecosystem-environment.html',
+  sub:'에너지는 먹이 관계를 따라 한 방향으로 흐르고, 단계마다 호흡으로 열이 되어 빠져나갑니다. 줄어드는 것은 에너지양이고, 넘어간 비율은 따로 계산합니다.',
+  fx:[{w:1,f:'넘어간 비율(%) = 그 단계 ÷ 바로 아래 단계 × 100'},{w:1,f:'2000 → 200 → 30 → 6',n:'에너지양은 줄어든다'},{w:1,f:'10 % → 15 % → 20 %',n:'비율은 커질 수 있다'},{w:1,f:'에너지는 흐르고 · 물질은 순환한다'}],
+  pts:['각 단계의 생물이 에너지의 많은 부분을 <em>호흡에 써서 열로</em> 내보내므로 → 위 단계로 갈수록 에너지양이 줄어듭니다.','에너지는 순환하지 않고 열로 빠져나가므로 → 생태계가 유지되려면 <em>태양 에너지가 계속</em> 들어와야 합니다.','함정: 층의 넓이만 보고 ‘위로 갈수록 넘어가는 비율도 작아진다’고 하면 틀립니다. <em>양과 비율</em>은 자료의 수로 따로 나눕니다.'],
+  dur:16,still:11.5,
+  draw(c,t){
+    const LV=[['생산자',2000,420,370,'#7BE07F'],['1차 소비자',200,300,294,'#F4B544'],['2차 소비자',30,190,218,'#FF9A4D'],['3차 소비자',6,124,142,'#FF7A8A']],cx=300;
+    dot(c,62,96,22,C.u1,{glow:16+5*Math.sin(t*3)});for(let j=0;j<8;j++){const a=j*TAU/8+t*.3;poly(c,[[62+Math.cos(a)*29,96+Math.sin(a)*29],[62+Math.cos(a)*38,96+Math.sin(a)*38]],C.u1,2.5);}
+    T(c,'태양의 빛에너지',108,84,{size:13.5,color:C.u1});flow(c,[[70,134],[106,368]],t,C.u1,4,4,.3);
+    LV.forEach((L,i)=>{const x=cx-L[2]/2,a=fin(t,.4+i*.5,.6);SB_al(c,a,()=>{rr(c,x,L[3],L[2],52,8,ra(L[4],.2),L[4],2);
+      K(c,L[0],cx,L[3]+17,{size:13.5,w:600,color:L[4]});K(c,String(L[1]),cx,L[3]+37,{size:17,w:700,font:MONO});
+      wavy(c,cx+L[2]/2+6,L[3]+32,cx+L[2]/2+50,L[3]+10,C.hot,12,3.5,t*5+i,2);});});
+    SB_al(c,fin(t,2.4,.6),()=>T(c,'각 단계에서 호흡 → 열',428,152,{size:13,color:C.hot}));
+    T(c,'다음 단계로 넘어간 비율',630,60,{size:16,w:700});T(c,'= 그 단계 ÷ 바로 아래 단계 × 100',630,84,{size:13,color:C.muted});
+    [['생산자 → 1차 소비자','200 ÷ 2000 =','10 %',10,4],['1차 → 2차 소비자','30 ÷ 200 =','15 %',15,6],['2차 → 3차 소비자','6 ÷ 30 =','20 %',20,8]].forEach((d,i)=>{const y=126+i*74,a=fin(t,d[4],.5),gy=358-i*76;
+      SB_al(c,a,()=>{T(c,d[0],630,y,{size:13,color:C.muted});T(c,d[1],630,y+24,{size:16,font:MONO});T(c,d[2],790,y+24,{size:18,w:700,color:C.u1,font:MONO});
+        bar(c,630,y+41,290,10,d[3]/29*fin(t,d[4]+.3,.8),C.u1);T(c,d[2],cx+14,gy,{size:13,w:700,color:C.u1});});
+      arw(c,cx,gy+9,cx,gy-9,C.u1,2.5,8,a);});
+    SB_al(c,fin(t,9.6,.6),()=>{T(c,'에너지양  2000 → 200 → 30 → 6',630,360,{size:14.5});T(c,'줄어든다',920,360,{size:14.5,w:700,color:C.hot,align:'right'});
+      T(c,'비율  10 → 15 → 20 %',630,386,{size:14.5});T(c,'커졌다',920,386,{size:14.5,w:700,color:C.green,align:'right'});
+      T(c,'→ ‘양’과 ‘비율’은 따로 계산한다',630,414,{size:15,w:700,color:C.u1});});
+    SB_al(c,fin(t,10.4,.6),()=>{K(c,'에너지: 태양 → 생산자 → 소비자, 한 방향으로 흐르며 열로 빠져나간다 (순환하지 않는다)',480,468,{size:14.5});
+      K(c,'물질(탄소): 생산자 → 소비자 → 분해자 → 환경 → 다시 생산자로 순환한다',480,498,{size:14.5,color:C.muted});});
+  }});
+
+/* ───────── Ⅴ-2 생태계 평형의 회복 ───────── */
+S.push({u:4,ch:'생태계와 환경',title:'생태계 평형 — 먹이 관계가 되돌린다',file:'08-ecosystem-environment.html',
+  sub:'1차 소비자가 잠깐 늘면 먹이인 생산자는 줄고 포식자인 2차 소비자는 늘어, 다시 1차 소비자가 줄어듭니다. 다섯 단계를 거쳐 처음 상태로 돌아옵니다.',
+  fx:[{w:1,f:'1차 ↑ → 생산자 ↓ · 2차 ↑ → 1차 ↓ → 생산자 ↑ · 2차 ↓ → 회복'},{w:1,f:'먹이 쪽은 반대로 · 잡아먹는 쪽은 같은 방향으로'},{w:1,f:'봉우리가 먼저 나오는 곡선 = 피식자',n:'포식자가 뒤따른다'}],
+  pts:['먹이는 줄고 잡아먹는 쪽은 늘었으므로 → 늘어났던 1차 소비자가 <em>다시 줄어듭니다</em>. 이 되돌림이 평형을 유지합니다.','<em>먹이 그물이 복잡할수록</em> 다른 먹이로 바꿀 수 있어 충격이 흩어지고 평형이 잘 유지됩니다.','함정: 개체수 변동 그래프에서 <em>먼저 늘어나는 쪽이 피식자</em>입니다. 포식자가 먼저 늘어난다고 읽으면 반대로 답합니다.','되돌리는 힘에는 한계가 있습니다. 서식지 파괴·외래생물·기후변화처럼 변화가 너무 크면 회복하지 못합니다.'],
+  dur:16,still:12,
+  draw(c,t){
+    const cx=250,B=[['2차 소비자',130,194,'#FF9A4D',[0,0,40,40,0,0]],['1차 소비자',240,262,'#F4B544',[0,60,60,0,0,0]],['생산자',360,330,'#7BE07F',[0,0,-60,-60,0,0]]];
+    const s=clamp(Math.floor((t-1)/2.4),-1,4),u=s<0?0:ease(seg(t,1+s*2.4,2.5+s*2.4));
+    T(c,'1차 소비자가 일시적으로 늘어나면?',50,52,{size:17,w:700});
+    if(s>=0){dot(c,cx,128,24,ra(C.u1,.14),{stroke:C.u1,lw:2});K(c,String(s+1),cx,129,{size:22,w:700,color:C.u1,font:MONO});}
+    if(s===4){chk(c,cx+52,128,9,C.green,u);SB_al(c,u,()=>T(c,'평형 회복',cx+70,129,{size:15,w:700,color:C.green}));}
+    B.forEach(b=>{const d=s<0?0:lerp(b[4][s],b[4][s+1],u),w=b[1]+d,dir=s<0?0:Math.sign(b[4][s+1]-b[4][s]);
+      poly(c,[[cx-b[1]/2,b[2]],[cx+b[1]/2,b[2]],[cx+b[1]/2,b[2]+54],[cx-b[1]/2,b[2]+54]],'rgba(230,237,245,.4)',1.2,{dash:[4,4],close:true});
+      rr(c,cx-w/2,b[2],w,54,8,ra(b[3],.22),b[3],2.2);K(c,b[0],cx,b[2]+27,{size:15,w:700});
+      if(dir){const x=cx+Math.max(w,b[1])/2+24;arw(c,x,b[2]+27+dir*15,x,b[2]+27-dir*15,dir>0?C.green:C.u3,4,11,.45+.55*Math.abs(Math.sin(t*3)));}});
+    K(c,'점선 = 처음 크기',cx,402,{size:12.5,color:C.dim});
+    K(c,'한 단계가 변하면',cx,432,{size:14,color:C.muted});K(c,'먹이 쪽은 반대로 · 잡아먹는 쪽은 같은 방향으로',cx,458,{size:15.5,w:700,color:C.u1});K(c,'먹이 그물이 복잡할수록 평형이 잘 유지된다',cx,492,{size:14});
+    ['① 1차 소비자가 늘어난다','② 먹이인 생산자 ↓ · 포식자인 2차 소비자 ↑','③ 먹이는 줄고 포식자는 늘어 → 1차 소비자 ↓','④ 생산자 ↑ · 2차 소비자 ↓','⑤ 처음과 비슷한 상태로 → 평형 회복'].forEach((x,i)=>{const y=58+i*44,on=i===s,a=i<=s?1:.4;
+      rr(c,500,y-17,420,34,8,on?ra(C.u1,.14):'rgba(255,255,255,.02)',on?C.u1:C.line,on?2:1.2,a);SB_al(c,a,()=>T(c,x,514,y,{size:14.5,w:on?700:500}));});
+    const X=540,Y=474,GW=340,f1=v=>392-42*Math.sin(v),f2=v=>434-26*Math.sin(v-1.35),P1=[],P2=[];
+    T(c,'포식자와 피식자의 개체수 변동',500,296,{size:14.5,w:700});
+    poly(c,[[X,322],[X,Y],[X+GW+6,Y]],C.dim,1.5);T(c,'개체수',X-8,330,{size:12,color:C.muted,align:'right'});T(c,'시간',X+GW+6,Y+13,{size:12,color:C.muted,align:'right'});
+    for(let i=0;i<=120;i++){const v=i/120*4*Math.PI,x=X+i/120*GW;P1.push([x,f1(v)]);P2.push([x,f2(v)]);}
+    poly(c,P1,'#F4B544',2.5);poly(c,P2,'#FF9A4D',2.5,{dash:[6,4]});
+    T(c,'피식자',X+GW+10,f1(4*Math.PI),{size:13,w:700,color:'#F4B544'});T(c,'포식자',X+GW+10,f2(4*Math.PI),{size:13,w:700,color:'#FF9A4D'});
+    const xa=X+GW/8,xb=X+(Math.PI/2+1.35)/(4*Math.PI)*GW;poly(c,[[xa,350],[xa,Y]],ra(C.u1,.6),1.2,{dash:[3,3]});poly(c,[[xb,408],[xb,Y]],'rgba(255,154,77,.6)',1.2,{dash:[3,3]});
+    T(c,'봉우리가 먼저',xa+8,336,{size:12.5,color:'#F4B544',w:600});
+    const uu=(t*.12)%1,vv=uu*4*Math.PI;dot(c,X+uu*GW,f1(vv),5,'#F4B544',{glow:10});dot(c,X+uu*GW,f2(vv),5,'#FF9A4D',{glow:10});
+    K(c,'피식자가 먼저 늘고 → 포식자가 뒤따라 늘어난다',710,510,{size:13.5,color:C.muted});
+  }});
+
+/* ───────── Ⅴ-3 지구 열수지와 온실효과 ───────── */
+S.push({u:4,ch:'생태계와 환경',title:'지구 열수지와 온실효과',file:'08-ecosystem-environment.html',
+  sub:'태양 복사 100 가운데 30은 반사되고 70이 흡수됩니다. 대기는 지표가 내보낸 에너지를 흡수했다가 지표로 다시 내보내 지표를 데웁니다.',
+  fx:[{w:1,f:'지구 전체: 100 = 30 + 65 + 5'},{w:1,f:'대기: 20 + 135 = 65 + 90'},{w:1,f:'지표: 50 + 90 = 140',n:'재복사 90 = 온실효과의 크기'},{w:1,f:'온실 기체 ↑ → 재복사 ↑ → 지표 온도 ↑',n:'지구온난화'}],
+  pts:['지표가 내보내는 140이 태양에서 받은 50보다 큰 까닭은 → 대기가 <em>재복사한 90</em>을 더 받기 때문입니다.','온실 기체가 늘면 → 대기의 흡수와 재복사가 늘어 → 지표가 받는 양이 내보내는 양보다 많아져 <em>기온이 오릅니다</em>. 태양 에너지가 늘어난 것이 아닙니다.','함정: <em>온실효과</em>는 대기가 있으면 언제나 일어나는 현상이고, <em>지구온난화</em>는 그것이 강화되어 평균 기온이 오르는 현상입니다.','숫자는 자료마다 다릅니다. 세 곳 모두 ‘들어온 양 = 나간 양’이라는 식으로 읽습니다.'],
+  dur:17,still:12.5,
+  draw(c,t){
+    const SUN=C.u1,IR='#FF7A5C',A=a=>fin(t,a,.6),mv=(x1,y1,x2,y2,a,ph)=>{if(a>.6){const u=(t*.45+ph)%1;dot(c,lerp(x1,x2,u),lerp(y1,y2,u),3,'#fff',{alpha:.85});}};
+    T(c,'우주',52,52,{size:14,color:C.dim});T(c,'복사 평형: 흡수 70 = 방출 70',920,58,{size:13.5,color:C.muted,align:'right'});
+    rr(c,40,160,880,90,14,'rgba(110,168,255,.10)','rgba(110,168,255,.45)',1.5);T(c,'대기 (온실 기체)',52,234,{size:13.5,color:'#9DBBFF'});
+    box(c,40,350,880,24,6,'#3a3326','#7d6b4a',1.5);T(c,'지표',52,362,{size:13.5,color:'#D9C7A0',w:600});
+    SB_fat(c,190,44,190,196,SUN,18,A(.4));mv(190,44,190,186,A(.4),0);SB_al(c,A(.4),()=>T(c,'태양 복사 100',208,62,{size:15,w:700,color:SUN}));
+    SB_fat(c,176,168,112,48,SUN,5.5,A(1.3));mv(176,168,116,56,A(1.3),.3);SB_al(c,A(1.3),()=>T(c,'반사 30',128,112,{size:14,color:SUN,align:'right'}));
+    SB_al(c,A(2),()=>{dot(c,190,210,7,SUN,{glow:12});T(c,'대기가 흡수 20',208,208,{size:14,color:SUN});});
+    SB_fat(c,190,224,190,350,SUN,9,A(2.7));mv(190,224,190,340,A(2.7),.5);SB_al(c,A(2.7),()=>T(c,'지표가 흡수 50',206,304,{size:14,color:SUN}));
+    SB_fat(c,440,350,440,254,IR,24,A(3.8));mv(440,348,440,266,A(3.8),.1);SB_al(c,A(3.8),()=>{T(c,'지표가 내보냄 140',462,302,{size:15,w:700,color:IR});T(c,'대기가 흡수 135',462,216,{size:13.5,color:IR});});
+    SB_fat(c,372,350,372,48,IR,2.2,A(4.8));mv(372,350,372,56,A(4.8),.6);SB_al(c,A(4.8),()=>T(c,'우주로 바로 5',362,112,{size:13.5,color:IR,align:'right'}));
+    SB_fat(c,640,160,640,48,IR,11.5,A(5.8));mv(640,160,640,58,A(5.8),.2);SB_al(c,A(5.8),()=>T(c,'대기 → 우주 65',658,104,{size:14.5,w:600,color:IR}));
+    SB_fat(c,790,250,790,350,IR,16+(t>11.5?1.5+1.5*Math.sin(t*2.5):0),A(6.8));mv(790,250,790,340,A(6.8),.4);
+    SB_al(c,A(6.8),()=>{T(c,'재복사 90',770,292,{size:15,w:700,color:IR,align:'right'});T(c,'= 온실효과의 크기',770,314,{size:13,align:'right'});});
+    [['지구 전체','100 = 30 + 65 + 5','태양 복사 = 반사 + 대기 · 지표의 방출'],['대기','20 + 135 = 65 + 90','흡수 = 우주로 + 지표로 재복사'],['지표','50 + 90 = 140','태양에서 + 재복사 = 내보냄']].forEach((d,i)=>{const x=40+i*300,a=A(8+i*.6);
+      rr(c,x,392,280,58,10,'rgba(255,255,255,.03)',C.line,1.4,a);SB_al(c,a,()=>{T(c,d[0],x+14,410,{size:14.5,w:700,color:C.u2});T(c,d[1],x+266,410,{size:15.5,w:700,font:MONO,align:'right'});T(c,d[2],x+14,435,{size:12,color:C.muted});});});
+    SB_al(c,A(10.2),()=>K(c,'온실 기체 ↑ → 대기의 흡수·재복사 ↑ (90 → 93) → 지표: 받는 143 > 내보내는 140 → 기온 ↑',480,480,{size:14.5,w:600}));
+    SB_al(c,A(11),()=>K(c,'태양에서 오는 에너지(100)가 늘어난 것이 아니다 · 온실효과(늘 있는 재복사) ≠ 지구온난화(강화되어 기온 상승)',480,510,{size:13,color:C.muted}));
+  }});
+
+/* ───────── Ⅴ-4 엘니뇨 ───────── */
+function SB_pac(c,y0,k,t,name){ // 적도 태평양 단면(서 ← → 동). k = 0 평상시, 1 엘니뇨
+  const s=y0+62,b=y0+150,dW=lerp(62,44,k),dE=lerp(8,36,k),on=k>.5;
+  T(c,name,50,y0+10,{size:16,w:700,color:on?C.u3:name==='엘니뇨'?C.dim:C.text});
+  box(c,110,s,740,b-s,0,'rgba(60,110,200,.28)',null,0);poly(c,[[110,s],[850,s],[850,s+dE],[110,s+dW]],null,0,{close:true,fill:'rgba(255,140,60,.5)'});
+  box(c,50,s-14,60,b-s+14,4,'#3a3326','#7d6b4a',1.5);box(c,850,s-14,60,b-s+14,4,'#3a3326','#7d6b4a',1.5);
+  K(c,'서',80,s+38,{size:15,w:700,color:'#D9C7A0'});K(c,'동',880,s+38,{size:15,w:700,color:'#D9C7A0'});poly(c,[[110,s],[850,s]],'#9DBBFF',2);
+  T(c,'따뜻한 표층 해수',130,s+17,{size:12.5,color:'#FFE9D2'});T(c,'차가운 해수',420,b-14,{size:12.5,color:'#B9D0FF'});
+  const len=lerp(380,150,k),wx=lerp(720,710,k);arrow(c,wx,y0+42,wx-len,y0+42,C.text,lerp(6,2.5,k),lerp(14,9,k));
+  K(c,on?'무역풍 약해짐':'무역풍 (동 → 서)',wx-len/2,y0+22,{size:13.5,w:600,color:on?C.u3:C.text});
+  const cx=lerp(190,470,k),cy=y0+20;[[-16,4,12],[0,-3,15],[16,4,12]].forEach(p=>dot(c,cx+p[0],cy+p[1],p[2],'#C9D3DC'));
+  for(let j=0;j<5;j++){const xx=cx-20+j*10,ph=(t*1.6+j*.37)%1;poly(c,[[xx,cy+18+ph*18],[xx-2,cy+24+ph*18]],'#7EC8FF',2);}
+  const up=1-.75*k;for(let j=0;j<3;j++){const x=782+j*22;arw(c,x,b-6,x,b-6-44*up,'#7EC8FF',2.5,8,.4+.6*up);dot(c,x,b-6-44*up*((t*.5+j*.33)%1),2.5,'#fff',{alpha:.7*up});}
+  T(c,on?'용승 약해짐':'용승',770,b-24,{size:12.5,color:'#B9D0FF',align:'right',w:600});
+  for(let j=0;j<6;j++){const u=((j/6-t*.12*(1-.8*k))%1+1)%1;dot(c,110+740*u,s+5,2.5,'#FFE9D2',{alpha:.8});}
+  T(c,on?'서태평양: 비가 줄어 가뭄 · 산불':'서태평양: 따뜻한 물이 모여 비가 많다',50,b+17,{size:13,color:on?C.u3:C.muted});
+  T(c,on?'동태평양: 수온 높음 · 홍수 · 어획량 감소':'동태평양: 수온 낮음 · 건조 · 좋은 어장',910,b+17,{size:13,color:on?C.u3:C.muted,align:'right'});}
+S.push({u:4,ch:'생태계와 환경',title:'엘니뇨 — 무역풍에서 시작하는 사슬',file:'08-ecosystem-environment.html',
+  sub:'평상시에는 무역풍이 따뜻한 해수를 서쪽으로 밀고 동쪽에서는 찬 해수가 올라옵니다. 무역풍이 약해지면 이 모습이 차례로 무너집니다.',
+  fx:[{w:1,f:'무역풍 약화 → 따뜻한 해수 동쪽으로 → 용승 약화 → 동태평양 수온 상승'},{w:1,f:'엘니뇨: 동태평양 홍수 · 서태평양 가뭄'},{w:1,f:'라니냐: 무역풍 강화 → 반대',n:'동태평양 수온이 평상시보다 낮음'}],
+  pts:['<em>출발점은 바람</em>입니다. 무역풍이 약해져 → 따뜻한 해수가 동쪽으로 퍼지고 → 용승이 약해져 → 동태평양 수온이 오릅니다.','용승이 약해지면 영양분이 줄어 → 식물 플랑크톤이 줄고 → <em>어획량이 감소</em>합니다. 지구 현상이 생태계로 이어집니다.','함정: 수온이 올라서 용승이 약해지는 것이 아니라, <em>용승이 약해져서 수온이 오릅니다</em>. 보기는 사슬의 한 칸을 뒤집어 놓습니다.'],
+  dur:16,still:11.5,
+  draw(c,t){
+    SB_pac(c,36,0,t,'평상시');SB_pac(c,222,ease(seg(t,4.5,8.5)),t,'엘니뇨');
+    ['무역풍 약화','따뜻한 해수가 동쪽으로','동태평양 용승 약화','동태평양 수온 상승','비 오는 곳이 동쪽으로'].forEach((x,i)=>{const bx=34+i*182,on=fin(t,4.6+i*.9,.5);
+      rr(c,bx,412,164,34,8,ra(C.u3,.05+.13*on),ra(C.u3,.35+.65*on),1.3+on*.7);K(c,x,bx+82,429,{size:13.5,w:600,alpha:.55+.45*on});if(i<4)arw(c,bx+166,429,bx+180,429,C.muted,2,7,.4+.6*on);});
+    SB_al(c,fin(t,9.4,.6),()=>K(c,'출발점은 바람 — 수온이 올라서 용승이 약해지는 것이 아니라, 용승이 약해져서 수온이 오른다',480,474,{size:14,w:600}));
+    SB_al(c,fin(t,10.2,.6),()=>K(c,'생태계로: 용승 약화 → 영양분 ↓ → 식물 플랑크톤 ↓ → 어류 ↓   ·   라니냐는 반대(무역풍 강화)',480,504,{size:13,color:C.muted}));
+  }});
+
+/* ───────── Ⅴ-5 태양에서 전기까지 ───────── */
+S.push({u:4,ch:'에너지',title:'태양에서 전기까지 — 에너지 전환의 사슬',file:'09-energy.html',
+  sub:'태양의 핵융합에서 나온 빛이 지구에서 여러 형태로 바뀌어 발전소까지 옵니다. 발전 방식마다 어떤 에너지를 거쳐 전기가 되는지 줄별로 따라갑니다.',
+  fx:[{w:1,f:'수소 원자핵 4개 → 헬륨 원자핵 1개 + 에너지',n:'줄어든 질량이 에너지로'},{w:1,f:'화력: 화학 → 열 → 운동 → 전기',n:'핵발전: 핵 → 열 → 운동 → 전기'},{w:1,f:'수력: 위치 → 운동 → 전기 · 풍력: 운동 → 전기'},{w:1,f:'태양광: 빛 → 전기',n:'터빈 · 발전기 없음'}],
+  pts:['화력 발전의 전기를 거슬러 올라가면 화석 연료 → 옛 생물의 광합성 → <em>태양의 핵융합</em>입니다. 수력·풍력도 맨 앞에 태양이 있습니다.','터빈과 발전기가 있으면 → <em>운동 에너지 → 전기 에너지</em> 단계(전자기 유도)가 들어 있습니다. 화력과 핵발전은 열원만 다릅니다.','함정: 모든 발전이 터빈을 돌리지는 않습니다. <em>태양광</em>은 태양 전지가 빛을 바로 전기로 바꿉니다.','함정: 파도(파력)는 바람에서 오므로 근원이 태양이고, <em>조력</em>은 달과 태양의 인력입니다. 핵융합 뒤 질량은 줄어듭니다.'],
+  dur:16,still:10.5,
+  draw(c,t){
+    const SUN=C.u1,A=a=>fin(t,a,.5);
+    T(c,'태양 중심의 핵융합: 수소 원자핵 4개 → 헬륨 원자핵 1개 + 에너지',40,38,{size:15,w:600});T(c,'줄어든 질량만큼 에너지가 나온다 (연소가 아니다)',40,62,{size:13,color:C.muted});
+    const u=(t%2.4)/2.4,fy=50;for(let j=0;j<4;j++){const hx=520+(j%2)*15,hy=42+Math.floor(j/2)*15;dot(c,hx,hy,5.5,C.pos,{stroke:'#FFC2B5',lw:1});dot(c,lerp(hx,596,ease(u)),lerp(hy,fy,ease(u)),3.5,C.pos,{alpha:1-u});}   // 수소 원자핵 4개가 합쳐져 헬륨 원자핵 1개로
+    arrow(c,548,fy,574,fy,C.muted,2,7);dot(c,596,fy,9,'#FFE38A',{glow:10+10*u});for(let j=0;j<8;j++){const a=j*TAU/8,r=14+u*10;poly(c,[[596+Math.cos(a)*r,fy+Math.sin(a)*r],[596+Math.cos(a)*(r+7),fy+Math.sin(a)*(r+7)]],SUN,2,{alpha:1-u*.8});}
+    dot(c,78,235,38,SUN,{glow:22+6*Math.sin(t*2.5)});K(c,'태양',78,236,{size:17,w:700,color:'#3a2a05'});
+    [['지구에서 거치는 길',230],['에너지원 (형태)',410],['열',560],['운동 (터빈)',680],['발전기',765],['전기 에너지',850]].forEach(d=>K(c,d[0],d[1],98,{size:12.5,color:d[1]===765?C.u2:C.muted}));
+    box(c,740,114,50,172,8,ra(C.u2,.08),ra(C.u2,.4),1.2);rr(c,740,378,50,44,8,ra(C.u2,.08),ra(C.u2,.4),1.2,A(6.2));poly(c,[[40,360],[920,360]],C.line,1.2,{dash:[3,5]});
+    const chip=(x,w,y,s,col,a,dx=0)=>{rr(c,x-w/2,y-19,w,38,9,ra(col,.1),ra(col,.65),1.4,a);SB_al(c,a,()=>K(c,s,x+dx,y,{size:13,w:600}));};
+    const gap=(x1,x2,y,col,a,y1=y)=>{arw(c,x1,y1,x2,y,col,2,7,a);if(a>.9){const q=(t*.9+x1*.013+y*.007)%1;dot(c,lerp(x1,x2,q),lerp(y1,y,q),3,'#fff',{alpha:.85});}};
+    [{y:140,a:1,c1:'옛 생물의 광합성',c2:'화석 연료 (화학)',heat:1,turb:1,name:'화력 발전',col:'#FF9A4D'},{y:200,a:2.2,c1:'물의 증발 · 비',c2:'높은 곳의 물 (위치)',turb:1,name:'수력 발전',col:'#4FD1E8'},
+     {y:260,a:3.4,c1:'공기가 데워짐',c2:'바람 (운동)',turb:1,name:'풍력 발전',col:'#7BE07F'},{y:320,a:4.6,c1:'태양 전지에 빛이 닿음',c2:'햇빛 (빛)',name:'태양광 발전',col:'#F4B544'},
+     {y:400,a:6.2,c1:'무거운 원자핵이 쪼개짐',c2:'우라늄 (핵)',heat:1,turb:1,name:'핵발전',col:'#B69CFF',nosun:1}].forEach(r=>{const a=A(r.a),y=r.y;
+      if(r.nosun)SB_al(c,a,()=>{K(c,'태양에서',78,y-9,{size:12.5,color:C.u3,w:600});K(c,'오지 않음',78,y+9,{size:12.5,color:C.u3,w:600});});else gap(120,153,y,SUN,a,235+(y-235)*.3);
+      chip(230,150,y,r.c1,r.col,a);gap(307,333,y,r.col,a);chip(410,150,y,r.c2,r.col,a);
+      if(r.turb){if(r.heat){gap(487,523,y,r.col,a);chip(560,70,y,'열',C.hot,a);gap(597,628,y,r.col,a);}else gap(487,628,y,r.col,a);
+        chip(680,100,y,'운동',r.col,a,10);SB_al(c,a,()=>{for(let j=0;j<3;j++){const an=t*3+j*TAU/3;poly(c,[[652,y],[652+Math.cos(an)*10,y+Math.sin(an)*10]],C.text,2.5);}dot(c,652,y,2.5,C.text);});
+        gap(732,798,y,C.u2,a);}
+      else{gap(487,798,y,r.col,a);SB_al(c,a,()=>K(c,'터빈 · 발전기를 거치지 않는다',642,y-13,{size:12.5,color:C.u1}));}
+      chip(850,100,y,r.name,r.col,a);});
+    SB_al(c,A(7.4),()=>K(c,'터빈·발전기가 있으면 운동 에너지 → 전기 에너지 (전자기 유도)  ·  화력과 핵발전은 열원만 다르다',480,452,{size:14,w:600}));
+    SB_al(c,A(8.2),()=>K(c,'태양이 근원이 아닌 것: 핵에너지 · 지열(지구 내부의 열) · 조력(달과 태양의 인력)',480,482,{size:14}));
+    SB_al(c,A(9),()=>K(c,'함정: 파도(파력)는 바람에서 오므로 근원이 태양 · 밀물과 썰물(조력)은 인력',480,510,{size:13,color:C.muted}));
+  }});
+
+/* ───────── Ⅴ-6 전자기 유도와 발전기 ───────── */
+S.push({u:4,ch:'에너지',title:'전자기 유도 — 자기장이 변할 때만',file:'09-energy.html',
+  sub:'자석을 코일에 가까이 하거나 멀리 하면 유도 전류가 흐르고, 코일 속에 멈춰 있으면 흐르지 않습니다. 검류계 바늘과 그래프를 함께 보세요.',
+  fx:[{w:1,f:'코일을 지나는 자기장이 변한다 → 유도 전류'},{w:1,f:'가까이 ↔ 멀리: 전류 방향 반대 · 멈춤: 0'},{w:1,f:'세게: 빠르게 · 센 자석 · 많이 감기'},{w:1,f:'발전기: 운동 에너지 → 전기 에너지'}],
+  pts:['조건은 ‘자기장이 있다’가 아니라 <em>‘자기장이 변한다’</em>입니다. 자석 대신 코일을 움직여도 변하므로 전류가 흐릅니다.','자석을 빠르게 움직이거나 센 자석을 쓰면 변화가 크고 빨라져 → <em>유도 전류가 세집니다</em>. 코일을 많이 감아도 세집니다.','함정: 자석이 코일 속에 <em>있기만 하면</em> 전류가 흐른다고 보면 틀립니다. 멈추면 0입니다.','실험에서 ‘떨어뜨리는 높이를 같게 한 이유’는 코일을 지날 때의 <em>빠르기를 같게</em> 하기 위해서입니다.'],
+  dur:15,still:1.7,
+  draw(c,t){
+    const PD=10,u=t%PD,sm=k=>(1-Math.cos(Math.PI*k))/2,pos=v=>{v=((v%PD)+PD)%PD;return v<3?sm(v/3):v<5?1:v<8?1-sm((v-5)/3):0;},cur=v=>clamp((pos(v+.02)-pos(v-.02))/.04/(Math.PI/6),-1,1),p=pos(u),I=cur(u);
+    const xt=lerp(300,560,p),cy=160,ph=u<3?0:u<5?1:u<8?2:3;
+    T(c,'조건은 ‘자기장이 있다’가 아니라 ‘자기장이 변한다’',50,40,{size:16.5,w:700});
+    const ST=[['자석이 가까워짐 → 코일을 지나는 자기장이 세짐 → 전류 흐름',C.green],['코일 속에서 멈춤 → 자기장 변화 없음 → 전류 0',C.muted],['자석이 멀어짐 → 자기장이 약해짐 → 반대 방향 전류',C.u3],['멈춤 → 자기장 변화 없음 → 전류 0',C.muted]][ph];
+    K(c,ST[0],400,82,{size:14.5,w:600,color:ST[1]});
+    const loop=(a0,a1,col,w)=>{for(let j=0;j<8;j++){c.save();c.strokeStyle=col;c.lineWidth=w;c.beginPath();c.ellipse(480+j*24,cy,12,52,0,a0,a1);c.stroke();c.restore();}};
+    loop(-Math.PI/2,Math.PI/2,'#6b5330',3);
+    box(c,xt-170,cy-23,85,46,5,'#3E6FD0','#9DBBFF',1.5);box(c,xt-85,cy-23,85,46,5,'#D0483E','#FFB3AB',1.5);K(c,'S',xt-128,cy+1,{size:18,w:700});K(c,'N',xt-42,cy+1,{size:18,w:700});
+    if(Math.abs(I)>.05){const sg=I>0?1:-1;arw(c,xt-85-sg*26,cy-40,xt-85+sg*26,cy-40,C.text,2.5,9,.5+.5*Math.abs(I));}
+    loop(Math.PI/2,Math.PI*1.5,'#D9A441',3.5);K(c,'코일',564,228,{size:12.5,color:C.muted});
+    const on=Math.abs(I)>.03;flow(c,[[480,212],[480,262],[850,262],[850,210]],p,on?C.u1:C.dim,6,on?4:2.5,1.5);poly(c,[[648,212],[648,246],[790,246],[790,210]],'#C9A46A',2);poly(c,[[480,212],[480,262],[850,262],[850,210]],'#C9A46A',2,{alpha:.6});
+    dot(c,820,160,56,'#0E1B2A',{stroke:C.muted,lw:2.5});
+    for(let j=-3;j<=3;j++){const a=-Math.PI/2+j*.3;poly(c,[[820+Math.cos(a)*42,176+Math.sin(a)*42],[820+Math.cos(a)*(j?48:52),176+Math.sin(a)*(j?48:52)]],C.muted,j?1.5:2.5);}
+    const na=-Math.PI/2+I*.9;poly(c,[[820,176],[820+Math.cos(na)*40,176+Math.sin(na)*40]],I>.05?C.green:I<-.05?C.u3:C.text,3);dot(c,820,176,4,C.text);K(c,'검류계',820,198,{size:12.5,color:C.muted});
+    // 그래프
+    const X=90,Y=400,PX=54,G=[];poly(c,[[X,334],[X,466]],C.dim,1.5);arrow(c,X,Y,X+PD*PX+16,Y,C.dim,1.5,8);T(c,'유도 전류',X+8,330,{size:12.5,color:C.muted});T(c,'시간',X+PD*PX+16,Y+15,{size:12,color:C.muted,align:'right'});
+    [3,5,8].forEach(v=>poly(c,[[X+v*PX,340],[X+v*PX,462]],C.line,1.2,{dash:[3,4]}));
+    for(let v=0;v<=PD+.001;v+=.05)G.push([X+v*PX,Y-cur(Math.min(v,PD-.03))*52]);poly(c,G,C.u1,2.5);
+    poly(c,[[X+u*PX,342],[X+u*PX,460]],ra(C.u1,.5),1);dot(c,X+u*PX,Y-I*52,6,C.u1,{glow:12});
+    [['가까이 가져감','전류 흐름',1.5,C.green],['코일 속에서 멈춤','전류 0',4,C.muted],['멀리 가져감','반대 방향',6.5,C.u3],['멈춤','전류 0',9,C.muted]].forEach((d,i)=>{const x=X+d[2]*PX;
+      K(c,d[0],x,484,{size:13,w:ph===i?700:500,color:ph===i?C.text:C.muted});K(c,d[1],x,504,{size:13,w:600,color:d[3]});});
+    rr(c,680,318,245,196,12,'rgba(255,255,255,.03)',C.line,1.4);T(c,'유도 전류를 세게 하려면',696,342,{size:14.5,w:700});
+    ['① 자석을 더 빠르게 움직인다','② 더 센 자석을 쓴다','③ 코일을 더 많이 감는다'].forEach((s,i)=>T(c,s,696,372+i*26,{size:13.5}));
+    poly(c,[[696,446],[909,446]],C.line,1.2);T(c,'운동 에너지 → 전기 에너지',696,468,{size:14.5,w:700,color:SB_O});T(c,'발전기: 이 과정을 계속 일으킨다',696,494,{size:12.5,color:C.muted});
+  }});
+
+/* ───────── Ⅴ-7 에너지 효율 ───────── */
+S.push({u:4,ch:'에너지',title:'에너지 효율 — 보존되지만 흩어진다',file:'09-energy.html',
+  sub:'연료에서 얻은 1000 J이 발전소와 전등을 거치며 전기, 빛으로 바뀝니다. 전환할 때마다 일부가 다시 쓰기 어려운 열로 흩어집니다.',
+  fx:[{w:1,f:'효율(%) = 유용하게 쓰인 에너지 ÷ 공급한 에너지 × 100'},{w:1,f:'공급한 에너지 = 유용한 에너지 + 버려진 에너지',n:'총량은 보존'},{w:1,f:'전환을 여러 번 거치면 효율은 곱한다',n:'0.4 × 0.3 = 0.12'}],
+  pts:['전환할 때마다 일부가 <em>다시 모아 쓰기 어려운 열</em>로 흩어지므로 → 총량이 보존되어도 쓸모 있는 에너지는 줄어듭니다.','효율 40 %인 발전소의 전기를 효율 30 %인 전등에 쓰면 → 전체 효율은 <em>0.4 × 0.3 = 12 %</em>입니다.','함정: 효율은 100 %를 넘을 수 없습니다. 넘으면 분자와 분모를 바꾼 것입니다. 분모는 <em>공급한 에너지</em>입니다.','‘효율이 낮으면 에너지가 사라진다’가 아니라 ‘쓸모없는 열로 바뀐다’가 맞습니다.'],
+  dur:15,still:10.5,
+  draw(c,t){
+    const FU='#F4B544',EL='#6EA8FF',LI='#FFE38A',HT='#FF7A5C',A=a=>fin(t,a,.6),k1=A(.5),k2=A(2.2),k3=A(4.2),k4=A(6);
+    const run=(x1,x2,y,a,n=3)=>{if(a>.8)for(let j=0;j<n;j++){const q=(t*.45+j/n)%1;dot(c,lerp(x1,x2,q),y,3,'#fff',{alpha:.8});}};
+    const fall=(x,y1,y2,a)=>{if(a>.8)for(let j=0;j<2;j++){const q=(t*.4+j/2)%1;dot(c,x,lerp(y1,y2,q),3,'#fff',{alpha:.7});}};
+    K(c,'에너지 효율(%) = 유용하게 쓰인 에너지 ÷ 공급한 에너지 × 100',480,44,{size:16.5,w:700});
+    SB_al(c,k1,()=>{box(c,50,120,170,180,6,ra(FU,.3),FU,1.5);K(c,'연료에서 얻은 열',135,146,{size:12.5,color:C.muted});K(c,'공급한 에너지',135,200,{size:14.5});K(c,'1000 J',135,228,{size:21,w:700,font:MONO,color:FU});});run(60,215,270,k1);
+    SB_al(c,k2,()=>{box(c,316,120,214,72,0,ra(EL,.3),EL,1.5);K(c,'전기 400 J',423,157,{size:16.5,w:700});
+      box(c,330,192,108,150,0,ra(HT,.28),HT,1.5);poly(c,[[322,342],[446,342],[384,374]],HT,1.5,{close:true,fill:ra(HT,.5)});K(c,'버려진 열',384,252,{size:14});K(c,'600 J',384,277,{size:16,w:700,font:MONO,color:HT});
+      K(c,'400 ÷ 1000 × 100 = 40 %',176,336,{size:14,font:MONO,color:EL});});run(320,526,176,k2);fall(350,200,338,k2);
+    box(c,220,104,96,212,10,'#13263a',C.muted,2);K(c,'발전소',268,198,{size:16,w:700});K(c,'효율 40 %',268,223,{size:13,color:C.muted});
+    SB_al(c,k3,()=>{box(c,626,120,150,22,0,ra(LI,.45),LI,1.5);poly(c,[[776,112],[776,150],[802,131]],LI,1.5,{close:true,fill:ra(LI,.6)});
+      T(c,'빛 120 J',812,124,{size:16.5,w:700,color:LI});T(c,'유용하게 쓰인 에너지',812,147,{size:12.5,color:C.muted});
+      box(c,640,142,50,200,0,ra(HT,.28),HT,1.5);poly(c,[[632,342],[698,342],[665,374]],HT,1.5,{close:true,fill:ra(HT,.5)});K(c,'열',665,240,{size:14});K(c,'280 J',665,263,{size:13.5,w:700,font:MONO,color:HT});
+      K(c,'120 ÷ 400 × 100 = 30 %',533,236,{size:14,font:MONO,color:LI});});run(630,790,131,k3,2);fall(665,282,338,k3);
+    SB_al(c,k2,()=>{box(c,530,104,96,104,10,'#13263a',C.muted,2);K(c,'전등',578,146,{size:16,w:700});K(c,'효율 30 %',578,171,{size:13,color:C.muted});});
+    SB_al(c,k4,()=>{K(c,'버려진 열 600 J',384,392,{size:13,color:HT});K(c,'열 280 J',665,392,{size:13,color:HT});});
+    SB_al(c,A(7.4),()=>K(c,'전체 효율 = 0.4 × 0.3 = 0.12 → 12 %   (처음 1000 J 가운데 빛이 되는 것은 120 J)',480,430,{size:15.5,w:700,color:C.u1}));
+    SB_al(c,A(8.4),()=>K(c,'보존: 120 + 280 + 600 = 1000 J — 총량은 그대로이고, 쓸모 있는 에너지만 줄어든다',480,464,{size:14.5}));
+    SB_al(c,A(9.2),()=>K(c,'함정: 효율은 100 %를 넘을 수 없다 · ‘에너지가 사라진다’ ✕ → ‘다시 쓰기 어려운 열로 흩어진다’ ○',480,498,{size:13,color:C.muted}));
+  }});
+
+/* ───────── Ⅵ-1 세균과 바이러스 ───────── */
+S.push({u:5,ch:'과학과 미래 사회',title:'세균과 바이러스',file:'10-future.html',
+  sub:'세균은 스스로 분열해 늘어나는 세포이고, 바이러스는 세포가 아니어서 살아 있는 세포 안에서만 늘어납니다. 둘 다 핵산과 단백질을 가집니다.',
+  fx:[{w:1,f:'세균: 세포 · 스스로 분열 · 항생제'},{w:1,f:'바이러스: 세포 아님 · 세포 안에서만 증식 · 항바이러스제'},{w:1,f:'공통: 핵산(유전 물질) + 단백질',n:'진단 검사가 찾는 것'}],
+  pts:['차이는 <em>스스로 살아갈 수 있는가</em>입니다. 세균은 혼자 물질대사를 하고, 바이러스는 다른 생물의 세포와 그 재료를 써야 증식합니다.','둘 다 <em>핵산과 단백질</em>을 가지므로 → 진단 검사는 이 두 물질 가운데 하나를 찾습니다.','함정: 감기·독감의 원인은 바이러스라서 <em>항생제는 듣지 않습니다</em>. 항생제는 세균에 쓰는 약입니다.','결핵·콜레라·파상풍은 세균, 독감·코로나19·홍역은 바이러스입니다.'],
+  dur:14,still:5,
+  draw(c,t){
+    const BC='#7BE07F',VC='#FF7A8A',NA='#F4B544',PR='#B69CFF';
+    const sq=(x,y,w,col,ph=0)=>{const P=[];for(let q=0;q<=20;q++)P.push([x-w/2+q/20*w,y+Math.sin(q*.95+ph)*4]);poly(c,P,col,2.2);};   // 핵산(구불구불한 줄)
+    const bact=(x,y,w)=>{box(c,x-w/2,y-28,w,56,28,ra(BC,.14),BC,2.5);sq(x,y-4,w*.5,NA,x*.1);[[-.3,13],[.05,15],[.3,11]].forEach(p=>dot(c,x+p[0]*w,y+p[1],3,PR));};
+    const vir=(x,y,r,a=1)=>SB_al(c,a,()=>{const P=[];for(let q=0;q<6;q++)P.push([x+Math.cos(q*TAU/6)*r,y+Math.sin(q*TAU/6)*r]);poly(c,P,PR,3,{close:true,fill:ra(PR,.16)});sq(x,y,r*1.1,NA,x*.2);});
+    T(c,'세균',50,44,{size:22,w:700,color:BC});T(c,'세포로 이루어진 생물',106,46,{size:14.5,color:C.muted});
+    T(c,'바이러스',500,44,{size:22,w:700,color:VC});T(c,'세포가 아니다 · 세균보다 훨씬 작다',600,46,{size:14.5,color:C.muted});poly(c,[[480,28],[480,392]],C.line,1.5);
+    // 세균: 스스로 분열
+    const u=(t%6)/6;if(u<.35)bact(255,150,lerp(112,184,ease(u/.35)));else{const d=ease(clamp((u-.35)/.25));bact(255-lerp(46,66,d),150,lerp(92,108,d));bact(255+lerp(46,66,d),150,lerp(92,108,d));}
+    K(c,'양분이 있으면 스스로 분열해 늘어난다',255,214,{size:13.5,color:BC});
+    dot(c,62,244,5,NA);T(c,'핵산',72,244,{size:12.5,color:NA});dot(c,122,244,4,PR);T(c,'단백질',132,244,{size:12.5,color:PR});
+    // 바이러스: 살아 있는 세포 안에서만
+    dot(c,770,160,60,'rgba(79,209,232,.07)',{stroke:C.u2,lw:2.5});K(c,'살아 있는 세포',770,84,{size:12.5,color:C.u2});
+    vir(545,118,15);T(c,'단백질 껍질',568,110,{size:12.5,color:PR});T(c,'핵산',568,128,{size:12.5,color:NA});
+    const w=(t%8)/8;if(w<.4){const k=ease(w/.4);vir(lerp(560,742,k),lerp(172,160,k),13,w<.3?1:1-(w-.3)/.1*.4);}
+    else{const n=Math.min(4,1+Math.floor((w-.4)/.09)),out=ease(clamp((w-.78)/.22));[[-22,-18],[22,-16],[-18,22],[24,20]].slice(0,n).forEach((p,j)=>vir(770+p[0]*(1+out*2.6),160+p[1]*(1+out*2),12,1-out*.75));}
+    K(c,'세포 안에 들어가야만 늘어난다',705,238,{size:13.5,color:VC});
+    [['구조','세포 (스스로 물질대사)','핵산 + 단백질 껍질 (세포 아님)'],['증식','양분이 있으면 스스로 분열','살아 있는 세포 안에서만'],['치료','항생제','항바이러스제 — 항생제는 듣지 않는다'],['예','결핵 · 콜레라 · 파상풍','독감 · 코로나19 · 홍역']].forEach((d,i)=>{const y=278+i*30,a=fin(t,.6+i*.5,.5);SB_al(c,a,()=>{
+      T(c,d[0],50,y,{size:12.5,color:C.dim});T(c,d[1],96,y,{size:15,w:i===2?700:500});T(c,d[0],500,y,{size:12.5,color:C.dim});T(c,d[2],546,y,{size:15,w:i===2?700:500});
+      if(i===2){chk(c,96+kw(c,d[1],15,700)+18,y,6,C.green);crs(c,546+kw(c,d[2],15,700)+18,y,5.5,C.u3);}});});
+    const a=fin(t,3,.6);rr(c,180,412,600,52,12,ra(C.u1,.1),C.u1,1.8,a);arw(c,300,386,300,408,C.u1,2,7,a);arw(c,660,386,660,408,C.u1,2,7,a);
+    SB_al(c,a,()=>K(c,'둘 다 가진 것: 핵산(유전 물질) + 단백질 → 진단 검사가 찾는 두 물질',480,438,{size:15.5,w:700}));
+    SB_al(c,fin(t,3.8,.6),()=>K(c,'함정: 감기 · 독감의 원인은 바이러스 → 항생제(세균에 쓰는 약)로 낫지 않는다',480,496,{size:14,color:C.muted}));
+  }});
+
+/* ───────── Ⅵ-2 핵산 검사와 단백질 검사 ───────── */
+S.push({u:5,ch:'과학과 미래 사회',title:'감염병 진단 — 핵산 검사와 단백질 검사',file:'10-future.html',
+  sub:'핵산 검사는 병원체의 핵산을 복제해 양을 늘려 찾고, 단백질 검사는 병원체의 단백질에 달라붙는 물질로 선을 띄웁니다. 정확도와 빠르기가 서로 다릅니다.',
+  fx:[{w:1,f:'핵산 검사(유전자 증폭): 정확 · 장비와 시간 필요'},{w:1,f:'단백질 검사(신속 항원): 빠름 · 양이 적으면 놓침'},{f:'2^{10} = 1024',n:'10번 복제하면 1024배, 20번이면 약 100만 배'}],
+  pts:['한 번 복제할 때마다 2배가 되므로 → 아주 적어 보이지 않던 핵산도 <em>검출할 수 있는 양</em>이 됩니다. 그래서 정확도가 높습니다.','신속 항원 검사는 늘리는 과정이 없어서 → 빠르지만 병원체의 <em>양이 적으면 놓칠</em> 수 있습니다.','함정: 유전자 증폭 검사가 찾는 것은 단백질이 아니라 <em>핵산</em>입니다. 두 검사가 찾는 물질을 바꿔 쓴 보기가 나옵니다.','빠른 검사로 먼저 거르고, 정확한 검사로 다시 확인합니다.'],
+  dur:15,still:9.5,
+  draw(c,t){
+    const NA='#F4B544',PR='#B69CFF',A=a=>fin(t,a,.5);
+    T(c,'핵산 검사',50,42,{size:20,w:700,color:NA});T(c,'유전자 증폭 검사',146,44,{size:14.5,color:C.muted});T(c,'병원체의 핵산을 여러 번 복제해 양을 늘린 뒤 확인',50,68,{size:13,color:C.muted});
+    T(c,'단백질 검사',500,42,{size:20,w:700,color:PR});T(c,'신속 항원 검사',614,44,{size:14.5,color:C.muted});T(c,'병원체의 단백질에만 달라붙는 물질로 선을 띄움',500,68,{size:13,color:C.muted});
+    poly(c,[[480,28],[480,452]],C.line,1.5);
+    // 왼쪽: 복제할 때마다 2배
+    const n=clamp(Math.floor((t-1)/.65),0,10),X=80,Y=336;
+    poly(c,[[X,112],[X,Y],[X+356,Y]],C.dim,1.5);T(c,'핵산의 양',X+8,108,{size:12.5,color:C.muted});K(c,'복제 횟수',X+178,Y+36,{size:12.5,color:C.muted});
+    for(let i=0;i<=10;i++){const x=X+14+i*31,g=fin(t,1+i*.65,.4),h=Math.max(2.5,Math.pow(2,i)/1024*196)*g;if(g>0)box(c,x,Y-h,24,h,3,ra(NA,.6),NA,1.2);K(c,String(i),x+12,Y+15,{size:12,color:C.muted,font:MONO});}
+    poly(c,[[X,Y-38],[X+356,Y-38]],C.u2,1.5,{dash:[5,4]});T(c,'검출할 수 있는 양',X+10,Y-52,{size:12.5,color:C.u2});
+    T(c,n+'번 복제하면 '+Math.pow(2,n)+'배',X+24,150,{size:18,w:700,color:NA});T(c,'복제할 때마다 2배 · 20번이면 약 100만 배',X+24,178,{size:13,color:C.muted});
+    // 오른쪽: 검사 도구
+    rr(c,540,146,350,84,18,'#16293d',C.muted,2);dot(c,592,188,20,SB_INK,{stroke:C.muted,lw:2});K(c,'시료',592,122,{size:13,color:C.muted});
+    box(c,650,168,210,40,6,'#E9EEF3',null,0);
+    const kd=seg(t,1.2,2);if(kd>0&&kd<1)dot(c,592,lerp(136,182,kd),6,'#FF9DB0');
+    if(t>=2){dot(c,592,188,13,'rgba(255,150,170,.6)');const fr=lerp(612,860,seg(t,2,6));box(c,612,182,Math.min(fr,650)-612,12,0,'rgba(255,150,170,.5)',null,0);if(fr>650)box(c,650,168,fr-650,40,0,'rgba(255,150,170,.25)',null,0);}
+    SB_al(c,fin(t,2+143/248*4,.6),()=>{box(c,752,170,6,36,0,'#D6336C',null,0);K(c,'선이 나타남',755,157,{size:12.5,w:600,color:'#FF9DB0'});});
+    T(c,'선이 생기는 자리를 확대하면',540,258,{size:13,color:C.muted});poly(c,[[548,334],[872,334]],C.muted,2);
+    for(let j=0;j<5;j++){const x=580+j*65,y=316,kk=ease(seg(t,3.6+j*.4,4.6+j*.4)),px=lerp(x+46,x,kk),py=lerp(272,y-19,kk);
+      poly(c,[[x,y+18],[x,y]],PR,3);poly(c,[[x,y],[x-10,y-12]],PR,3);poly(c,[[x,y],[x+10,y-12]],PR,3);
+      SB_al(c,kk*1.5,()=>poly(c,[[px-8,py-7],[px+8,py-7],[px,py+6]],'#FF7A8A',1.5,{close:true,fill:'rgba(255,122,138,.6)'}));}
+    SB_al(c,A(5.6),()=>K(c,'병원체의 단백질(▽)이 결합 → 선이 나타난다',710,356,{size:13.5,w:600,color:PR}));
+    [['찾는 것','병원체의 핵산(유전 물질)','병원체의 단백질'],['장점','아주 적은 양도 찾아낸다 → 정확도가 높다','장비 없이 짧은 시간에 결과를 본다'],['한계','장비 · 전문 인력이 필요하고 시간이 걸린다','병원체의 양이 적으면 놓칠 수 있다']].forEach((d,i)=>{const y=394+i*26,a=A(6.4+i*.4);SB_al(c,a,()=>{
+      T(c,d[0],50,y,{size:12.5,color:C.dim});T(c,d[1],110,y,{size:14,w:i?500:700});T(c,d[0],500,y,{size:12.5,color:C.dim});T(c,d[2],560,y,{size:14,w:i?500:700});});});
+    SB_al(c,A(7.8),()=>K(c,'빠른 검사(단백질)로 먼저 거르고 → 정확한 검사(핵산)로 다시 확인한다',480,482,{size:15.5,w:700,color:C.u1}));
+    SB_al(c,A(8.5),()=>K(c,'함정: 유전자 증폭 검사가 찾는 것은 단백질이 아니라 핵산 · 신속 항원 검사가 찾는 것은 단백질',480,512,{size:13,color:C.muted}));
+  }});
+
+/* ───────── Ⅵ-3 검사 결과표 읽기 ───────── */
+const SB_FP=(()=>{const a=[];for(let i=0;i<1000;i++)if(i%50>=5)a.push(i);a.sort((p,q)=>rnd(p+7)-rnd(q+7));return new Set(a.slice(0,18));})();   // 비감염자 900명 가운데 양성으로 나온 18명
+S.push({u:5,ch:'과학과 미래 사회',title:'검사 결과표 — 분모부터 정한다',file:'10-future.html',
+  sub:'감염자 100명과 비감염자 900명을 신속 검사로 검사한 결과입니다. 같은 80명이라도 무엇으로 나누느냐에 따라 비율이 달라집니다.',
+  fx:[{w:1,f:'감염자 가운데 양성: 80 ÷ 100 = 80 %'},{w:1,f:'비감염자 가운데 음성: 882 ÷ 900 = 98 %'},{w:1,f:'양성 가운데 감염자: 80 ÷ 98 ≈ 82 %',n:'분모가 다르다'}],
+  pts:['‘감염자 가운데 양성’과 ‘양성 가운데 감염자’는 <em>분모가 달라</em> 값이 다릅니다. 표에서 가로줄로 나눌지 세로 칸으로 나눌지부터 정합니다.','양성 98명 가운데 18명은 감염되지 않은 사람이고 감염자 20명은 음성으로 놓쳤으므로 → <em>정확한 검사로 다시 확인</em>합니다.','함정: 양성이면 모두 감염자라고 읽으면 틀립니다. 비감염자가 훨씬 많으면 <em>적은 비율의 오류</em>도 사람 수로는 커집니다.'],
+  dur:16,still:11,
+  draw(c,t){
+    const INF='#FF7A8A',NON='#5E7A99',POS=C.u1,A=a=>fin(t,a,.5),sw=lerp(40,562,seg(t,2.2,5)),g0=c.globalAlpha;
+    const which=t<6?-1:t<7.5?0:t<9?1:t<10.5?2:Math.floor((t-10.5)/1.8)%3;
+    T(c,'1000명을 검사한다',50,52,{size:16,w:700});T(c,'점 하나 = 한 사람',550,54,{size:12.5,color:C.muted,align:'right'});
+    c.save();for(let i=0;i<1000;i++){const col=i%50,row=Math.floor(i/50),x=55+col*10,y=89+row*10,inf=col<5,pos=inf?row<16:SB_FP.has(i),a=clamp((t-.2)*2-col*.02);if(a<=0)continue;
+      c.globalAlpha=g0*a*(which===0&&!inf||which===1&&inf||which===2&&!pos?.35:1);c.fillStyle=inf?INF:NON;c.beginPath();c.arc(x,y,3.3,0,TAU);c.fill();
+      if(pos&&x<sw){c.strokeStyle=POS;c.lineWidth=which===2?2.4:1.8;c.beginPath();c.arc(x,y,4.7,0,TAU);c.stroke();}}c.restore();
+    if(t>2.2&&t<5.2){poly(c,[[sw,78],[sw,292]],POS,2);K(c,'검사',clamp(sw,60,540),70,{size:12.5,color:POS,w:600});}
+    if(which===0)box(c,49,83,52,202,4,null,INF,2);if(which===1)box(c,101,83,452,202,4,null,'#9DB6D3',2);
+    dot(c,58,310,5,INF);T(c,'감염자 100',70,310,{size:13});dot(c,188,310,5,NON);T(c,'비감염자 900',200,310,{size:13});dot(c,338,310,5.5,null,{stroke:POS,lw:2});T(c,'양성으로 나온 사람',350,310,{size:13,color:POS});
+    SB_al(c,A(5.2),()=>{T(c,'감염자 100명 → 양성 80 · 음성 20 (놓침)',50,346,{size:14});T(c,'비감염자 900명 → 양성 18 (잘못 나옴) · 음성 882',50,372,{size:14});});
+    // 표
+    const TB=[['','양성','음성','합계'],['감염자','80','20','100'],['비감염자','18','882','900'],['합계','98','902','1000']],CX=[606,740,810,885],HL=[[[1,1],[1,3]],[[2,2],[2,3]],[[1,1],[3,1]]][which]||[];
+    poly(c,[[600,80],[920,80]],C.line,1.5);poly(c,[[600,144],[920,144]],C.line,1,{dash:[3,4]});
+    TB.forEach((r,i)=>r.forEach((s,j)=>{if(!s)return;const y=64+i*32,hl=HL.some(h=>h[0]===i&&h[1]===j);if(hl)rr(c,CX[j]-32,y-14,64,28,6,ra(C.u1,.2),C.u1,1.5);
+      if(j===0)T(c,s,CX[0],y,{size:14,color:C.muted});else K(c,s,CX[j],y,{size:i?15.5:13.5,font:i?MONO:SANS,w:hl?700:500,color:i?C.text:C.muted});}));
+    [['① 감염자 가운데 양성','80 ÷ 100 = 80 %','감염자 20명은 음성으로 나와 놓쳤다',6],['② 비감염자 가운데 음성','882 ÷ 900 = 98 %','비감염자 18명은 양성으로 나왔다',7.5],['③ 양성 가운데 실제 감염자','80 ÷ 98 ≈ 82 %','분모가 ‘양성 98명’으로 바뀌었다',9]].forEach((d,i)=>{const y=212+i*62,on=which===i;SB_al(c,A(d[3]),()=>{
+      if(on)rr(c,592,y-18,336,56,8,ra(C.u1,.1),ra(C.u1,.7),1.4);T(c,d[0],604,y,{size:14,w:600});T(c,d[1],916,y,{size:15,w:700,font:MONO,color:C.u1,align:'right'});T(c,d[2],604,y+22,{size:12.5,color:C.muted});});});
+    SB_al(c,A(10),()=>{K(c,'분모부터 정한다 — ‘감염자 가운데’(80 %)와 ‘양성 가운데’(82 %)는 다른 값이다',480,432,{size:15.5,w:700,color:C.u1});
+      K(c,'그래서 빠른 검사로 먼저 거르고, 정확한 검사로 다시 확인한다',480,466,{size:14});
+      K(c,'함정: 표에서 가로로 나눌지(감염자 줄), 세로로 나눌지(양성 칸)를 먼저 확인',480,498,{size:13,color:C.muted});});
+  }});
+
+/* ───────── Ⅵ-4 사물인터넷 · 빅데이터 · 인공지능 · 로봇 ───────── */
+S.push({u:5,ch:'과학과 미래 사회',title:'사물인터넷 · 빅데이터 · 인공지능 · 로봇',file:'10-future.html',
+  sub:'센서가 모은 데이터가 쌓이고, 인공지능이 거기서 규칙을 익혀 판단하고, 로봇이 움직입니다. 사례 글에서는 낱말 하나로 기술을 가릅니다.',
+  fx:[{w:1,f:'센서 + 통신 → 사물인터넷'},{w:1,f:'대량의 자료 분석 → 빅데이터'},{w:1,f:'학습 · 판단 → 인공지능',n:'감지하고 움직이면 로봇'},{w:1,f:'유용성과 한계는 함께 있다'}],
+  pts:['데이터가 재료이고 인공지능이 분석 도구라서 → <em>빅데이터와 인공지능은 짝</em>입니다. 한 사례에 여러 기술이 함께 들어 있는 경우가 많습니다.','치우친 데이터로 학습하면 → <em>판단도 치우칩니다</em>. 결과는 실험과 관측으로 다시 확인해야 합니다.','함정: 사물인터넷은 사물끼리 데이터를 주고받는 <em>연결</em>이고, 인공지능은 학습하고 판단하는 기술입니다. 같은 말이 아닙니다.','함정: ‘데이터가 많으면 항상 옳다’, ‘함께 변하면 원인과 결과다’는 틀린 문장입니다.'],
+  dur:15,still:8.5,
+  draw(c,t){
+    const CD=[['사물인터넷','센서 + 통신','사물끼리 데이터를 주고받는다','스마트 홈 · 스마트 팜','착용형 기기','#4FD1E8'],['빅데이터','대량의 자료 분석','숨은 규칙과 경향을 찾는다','기상 예보 · 유전체 분석','신약 후보 물질 추리기','#F4B544'],
+      ['인공지능','학습 · 추론 · 판단','데이터에서 규칙을 익힌다','관측 자료 분류','단백질 구조 · 날씨 예측','#B69CFF'],['로봇','감지 → 판단 → 움직임','스스로 움직여 일을 한다','조립 · 수술 보조 로봇','구조 · 탐사 로봇','#7BE07F']];
+    CD.forEach((d,i)=>{const x=40+i*225,cx=x+102.5,cy=140,col=d[5],a=fin(t,.3+i*.7,.6);rr(c,x,52,205,268,12,ra(col,.06),ra(col,.55),1.4,a);SB_al(c,a,()=>{
+      T(c,d[0],x+14,76,{size:18,w:700,color:col});
+      if(i===0){dot(c,cx,cy-18,13,ra(col,.25),{stroke:col,lw:2});[[-52,26],[0,40],[52,26]].forEach((p,j)=>{box(c,cx+p[0]-11,cy+p[1]-9,22,18,4,ra(col,.25),col,1.5);const q=(t*.7+j*.33)%1;poly(c,[[cx+p[0],cy+p[1]-10],[cx,cy-6]],ra(col,.4),1.2,{dash:[2,4]});dot(c,lerp(cx+p[0],cx,q),lerp(cy+p[1]-10,cy-6,q),3,'#fff');});
+        for(let j=1;j<=2;j++)arc(c,cx,cy-18,13+j*7+(t*6%7),-2.2,-.9,ra(col,.5-j*.15),1.5);}
+      else if(i===1){for(let j=0;j<40;j++){const px=cx-62+(j%10)*13.8,py=cy+36-Math.floor(j/10)*14-rnd(j)*8-(j%10)*3.4;if((t*8)%60>j||t>6)dot(c,px,py,2.6,ra(col,.85));}poly(c,[[cx-64,cy+30],[cx+64,cy-34]],C.text,2,{dash:[5,4]});}
+      else if(i===2){const Ls=[[-50,[-26,0,26]],[0,[-36,-12,12,36]],[50,[-14,14]]],hot=Math.floor(t*2.5)%3;Ls.forEach((L,q)=>{if(q<2)L[1].forEach(y1=>Ls[q+1][1].forEach(y2=>poly(c,[[cx+L[0],cy+y1],[cx+Ls[q+1][0],cy+y2]],ra(col,q===hot?.7:.25),1.1)));});
+        Ls.forEach((L,q)=>L[1].forEach(y1=>dot(c,cx+L[0],cy+y1,6,q===hot?'#fff':ra(col,.5),{stroke:col,lw:1.5})));}
+      else{const a1=-1.1+Math.sin(t*1.4)*.35,a2=a1+1.2+Math.sin(t*1.4+1)*.4,x1=cx-30+Math.cos(a1)*44,y1=cy+34+Math.sin(a1)*44,x2=x1+Math.cos(a2)*38,y2=y1+Math.sin(a2)*38;
+        box(c,cx-52,cy+34,44,12,3,ra(col,.4),col,1.5);poly(c,[[cx-30,cy+34],[x1,y1],[x2,y2]],col,6);dot(c,cx-30,cy+34,5,C.text);dot(c,x1,y1,5,C.text);poly(c,[[x2-6,y2-7],[x2,y2],[x2+7,y2-5]],C.text,2.5);box(c,cx+30,cy+30,18,16,3,ra(C.u1,.5),C.u1,1.5);}
+      rr(c,x+12,196,181,28,8,ra(col,.16),ra(col,.7),1.2);K(c,d[1],cx,210.5,{size:13.5,w:700});
+      K(c,d[2],cx,244,{size:13});K(c,d[3],cx,276,{size:12.5,color:C.muted});K(c,d[4],cx,296,{size:12.5,color:C.muted});});
+      if(i<3){arw(c,x+207,140,x+223,140,C.muted,2,6,a);}});
+    T(c,'사례 글에서 이 낱말이 보이면 →',40,34,{size:13,color:C.muted});
+    const pu=.5+.5*Math.sin(t*1.6);
+    [['유용성','숨은 규칙을 찾아 예측 · 시간과 비용을 줄인다','위험하거나 반복되는 일을 대신한다',C.green,40,pu],['한계와 우려','개인 정보 유출 · 격차 · 사고의 책임','치우친 데이터 → 치우친 판단',C.u3,490,1-pu]].forEach((d,i)=>{const a=fin(t,3.6+i*.7,.6);
+      rr(c,d[4],340,430,100,12,ra(d[3],.05+.06*d[5]),ra(d[3],.5+.4*d[5]),1.5,a);SB_al(c,a,()=>{T(c,d[0],d[4]+16,362,{size:16,w:700,color:d[3]});T(c,d[1],d[4]+16,392,{size:14});T(c,d[2],d[4]+16,418,{size:14});});});
+    SB_al(c,fin(t,5.2,.6),()=>K(c,'어떤 기술이든 유용성과 한계가 함께 있다 — 한쪽만 말하는 보기는 대부분 틀린다',480,470,{size:15,w:700,color:C.u1}));
+    SB_al(c,fin(t,6,.6),()=>K(c,'함정: 데이터가 많아도 치우치면 결론이 틀린다 · 두 값이 함께 변해도 원인과 결과라고 단정할 수 없다',480,502,{size:13,color:C.muted}));
+  }});
+
+/* ───────── 플레이어 ───────── */
+S.forEach((s,i)=>{s.oi=i;});
+const Q=new URLSearchParams(location.search); // ?embed&only=5,6,7 — 장 노트 안에 그 장 장면만
+const isEmbed=Q.has('embed');
+if(isEmbed){document.documentElement.classList.add('embed');const only=(Q.get('only')||'').split(',').filter(Boolean).map(Number).filter(i=>Number.isInteger(i)&&S[i]);
+  if(only.length){const keep=only.map(i=>S[i]);S.length=0;S.push(...keep);}}
+const cv=document.getElementById('cv'),ctx=cv.getContext('2d'),$=id=>document.getElementById(id);
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let idx=0,t=0,playing=!reduce,last=null,scrubbing=false;
+function resize(){const d=Math.min(2,devicePixelRatio||1);cv.width=Math.max(1,Math.round(cv.clientWidth*d));cv.height=Math.max(1,Math.round(cv.clientHeight*d));}
+new ResizeObserver(resize).observe(cv);resize();
+const uc=s=>s.u<0?'#4FD1E8':UNITS[s.u].c;
+const cnt=[0,0,0,0,0,0];S.forEach(s=>{if(s.u>=0)s.no=++cnt[s.u];});
+const fxHTML=x=>x.w?`<span class="f word">${x.f}</span>`:`<span class="f">${fm(x.f)}</span>`;
+
+const tl=$('tl'),scrub=$('scrub');
+S.forEach((s,i)=>{const b=document.createElement('button');b.className='seg';b.style.setProperty('--c',uc(s));b.title=`${i+1}. ${s.title}`;
+  b.setAttribute('aria-label',`${i+1}번째 개념: ${s.title}`);b.innerHTML='<i><b></b></i>';b.onclick=()=>go(i);tl.appendChild(b);});
+UNITS.forEach((u,k)=>{const b=document.createElement('button');b.className='chip';b.dataset.u=k;b.style.setProperty('--c',u.c);b.textContent=`${u.k} ${u.name}`;
+  b.onclick=()=>go(S.findIndex(s=>s.u===k));$('units').appendChild(b);});
+
+function syncTimeUI(){
+  const dur=S[idx].dur||1,pct=clamp(t/dur);
+  const b=tl.children[idx].querySelector('b');b.style.width=(pct*100)+'%';
+  if(!scrubbing)scrub.value=Math.round(pct*1000);
+  const txt=t.toFixed(1)+' / '+dur.toFixed(1)+'s';
+  $('time').textContent=txt;$('g-time').textContent=txt;
+}
+function render(){
+  const s=S[idx];document.documentElement.style.setProperty('--acc',uc(s));
+  $('p-eye').innerHTML=s.u<0?'<b>INTRO</b> 통합과학 전체 지도':`<b>${UNITS[s.u].k}-${s.no}</b> ${UNITS[s.u].name} · ${s.ch}`;
+  $('p-title').textContent=s.title;$('p-sub').textContent=s.sub;
+  $('p-fx').innerHTML=s.fx.map(x=>`<div class="fx">${fxHTML(x)}<span class="n">${x.n||''}</span></div>`).join('');
+  $('p-pts').innerHTML=s.pts.map(p=>`<li>${p}</li>`).join('');
+  const pn=$('panel');pn.classList.remove('enter');void pn.offsetWidth;pn.classList.add('enter');pn.scrollTop=0;
+  $('count').textContent=String(idx+1).padStart(2,'0')+' / '+S.length;
+  $('scrub-lab').textContent=(s.u<0?'INTRO':`${UNITS[s.u].k}-${s.no}`)+' · '+s.title;
+  $('g-title').textContent=s.title;
+  if(isEmbed){
+    $('em-badge').textContent=`${idx+1}/${S.length}`;
+    $('em-title').textContent=s.title;
+    $('em-sub').textContent=s.sub;
+    $('em-open').href=`motion.html#s${s.oi??idx}`;
+  }
+  [...tl.children].forEach((b,i)=>{b.classList.toggle('done',i<idx);b.setAttribute('aria-current',i===idx);b.querySelector('b').style.width='';});
+  document.querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-current',+b.dataset.u===s.u));
+  cv.setAttribute('aria-label',s.title+' 애니메이션');
+  syncTimeUI();
+  if(!isEmbed)try{history.replaceState(null,'','#s'+idx)}catch(e){}
+}
+function go(i,start){idx=(i+S.length)%S.length;t=start??(playing?0:(S[idx].still??2));render();}
+function seekTo(v){t=clamp(v,0,S[idx].dur);syncTimeUI();}
+function setPlay(p){playing=p;const lbl=p?'일시정지':'재생',d=p?'M4 2h3v12H4zM9 2h3v12H9z':'M4 2v12l10-6z';
+  $('b-play').setAttribute('aria-label',lbl);$('play-ico').setAttribute('d',d);
+  $('g-play').setAttribute('aria-label',lbl);$('g-play-ico').setAttribute('d',d);}
+$('b-play').onclick=()=>setPlay(!playing);$('g-play').onclick=()=>setPlay(!playing);
+$('b-prev').onclick=()=>go(idx-1);$('b-next').onclick=()=>go(idx+1);
+$('b-replay').onclick=()=>seekTo(0);$('g-replay').onclick=()=>seekTo(0);
+$('b-back').onclick=()=>seekTo(t-1);$('b-fwd').onclick=()=>seekTo(t+1);
+cv.onclick=()=>setPlay(!playing);
+scrub.addEventListener('pointerdown',()=>{scrubbing=true;});
+scrub.addEventListener('pointerup',()=>{scrubbing=false;});
+scrub.addEventListener('input',()=>{seekTo((+scrub.value/1000)*S[idx].dur);});
+scrub.addEventListener('change',()=>{scrubbing=false;seekTo((+scrub.value/1000)*S[idx].dur);});
+
+let loop=false,speed=1;const stage=document.querySelector('.stage');
+function setLoop(v){loop=v;$('b-loop').setAttribute('aria-pressed',v);$('g-loop').setAttribute('aria-pressed',v);}
+function setSpeed(v){speed=v;$('b-speed').setAttribute('aria-pressed',v!==1);$('g-speed').setAttribute('aria-pressed',v!==1);}
+function setBig(v){
+  if(isEmbed){
+    if(v&&stage.requestFullscreen){stage.requestFullscreen().catch(()=>{stage.classList.toggle('big',true);$('b-big').setAttribute('aria-pressed',true);resize();});}
+    else if(!v&&document.fullscreenElement===stage){document.exitFullscreen().catch(()=>{});}
+    else{stage.classList.toggle('big',v);$('b-big').setAttribute('aria-pressed',v);resize();}
+    return;
+  }
+  stage.classList.toggle('big',v);$('b-big').setAttribute('aria-pressed',v);document.body.style.overflow=v?'hidden':'';resize();
+}
+document.addEventListener('fullscreenchange',()=>{$('b-big').setAttribute('aria-pressed',document.fullscreenElement===stage);resize();});
+$('b-loop').onclick=()=>setLoop(!loop);$('g-loop').onclick=()=>setLoop(!loop);
+$('b-speed').onclick=()=>setSpeed(speed===1?.5:1);$('g-speed').onclick=()=>setSpeed(speed===1?.5:1);
+$('b-big').onclick=()=>setBig(!(stage.classList.contains('big')||document.fullscreenElement===stage));
+$('g-prev').onclick=()=>go(idx-1);$('g-next').onclick=()=>go(idx+1);$('g-close').onclick=()=>setBig(false);
+document.addEventListener('keydown',e=>{if(e.target.closest('input,textarea'))return;
+  if(e.key==='ArrowRight')go(idx+1);else if(e.key==='ArrowLeft')go(idx-1);
+  else if(e.key===' '&&!e.target.closest('button')){e.preventDefault();setPlay(!playing);}
+  else if(e.key==='r'||e.key==='R'||e.key==='0')seekTo(0);
+  else if(e.key===',')seekTo(t-1);else if(e.key==='.')seekTo(t+1);
+  else if(e.key==='l'||e.key==='L')setLoop(!loop);else if(e.key==='s'||e.key==='S')setSpeed(speed===1?.5:1);
+  else if(e.key==='f'||e.key==='F')setBig(!(stage.classList.contains('big')||document.fullscreenElement===stage));else if(e.key==='Escape')setBig(false);});
+
+UNITS.forEach((u,k)=>{const col=document.createElement('div');col.className='col';col.style.setProperty('--c',u.c);
+  col.innerHTML=`<h3>${u.k} ${u.name}<small>${cnt[k]} CONCEPTS</small></h3>`+S.map((s,i)=>s.u!==k?'':
+    `<div class="item"><button data-i="${i}">${s.title}<span>${u.k}-${s.no}</span></button><div class="fs">${s.fx.map(x=>x.w?`<span class="word">${x.f}</span>`:`<span>${fm(x.f)}</span>`).join('')}</div></div>`).join('');
+  $('sum').appendChild(col);});
+$('sum').addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(!b)return;go(+b.dataset.i);
+  document.querySelector('.player').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});});
+
+function frame(now){
+  const dt=last==null?0:Math.min(.05,(now-last)/1000);last=now;
+  if(playing&&!scrubbing){t+=dt*speed;if(t>=S[idx].dur){if(loop)t=0;else go(idx+1);}}
+  ctx.setTransform(cv.width/W,0,0,cv.height/H,0,0);ctx.clearRect(0,0,W,H);
+  try{S[idx].draw(ctx,t);}catch(err){console.error(err);}
+  syncTimeUI();
+  requestAnimationFrame(frame);
+}
+const hm=location.hash.match(/^#s(\d+)$/);setPlay(playing);go(hm?Math.min(+hm[1],S.length-1):0);
+requestAnimationFrame(frame);
+</script>
+
+</body>
+</html>

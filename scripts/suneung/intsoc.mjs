@@ -1,5 +1,6 @@
 // 수능 통합사회 — 통합사회1·2 (25문항 40분, 1.5·2·2.5점). 노트는 content/iso-*.mjs, 풀어보기는 평가원 예시문항(2028-ex)
 import { note, tip, tbl, examsOf } from "./lib.mjs";
+import { motionLinks } from "./build-motion.mjs";
 
 // 검수를 마친 내용 파일만 여기에 적는다(쓰는 중인 파일이 섞여 들어가지 않게)
 const READY = ["iso-1", "iso-2", "iso-3", "iso-4"];
@@ -7,15 +8,17 @@ const mods = await Promise.all(READY.map(async (n) => { try { return await impor
 const chapters = mods.flatMap((m) => m.chapters).sort((a, b) => a.file.localeCompare(b.file));
 const quick = Object.assign({}, ...mods.map((m) => m.quick || {}));
 const N = examsOf("intsoc").length;
+const ml = motionLinks("intsoc");
+for (const c of chapters) if (ml[c.file]) c.motion = ml[c.file];
 
 export const spec = {
   sub: "intsoc", quick, folder: "aboutSuneungIntSocial", label: "수능 통합사회", short: "통합사회", color: "#c2410c",
   glow: "rgba(194,65,12,0.12)", border: "rgba(194,65,12,0.16)",
-  asideSub: "수능 통합사회 — 통합사회1·2 + 예시문항",
+  asideSub: "수능 통합사회 — 통합사회1·2 + 모션 + 예시문항",
   h1: "수능 통합사회,<br><em>단원별</em>로<br>끝까지",
   authors: "25문항 · 40분 · 50점 · 모든 수험생 공통 · 평가원 예시문항 " + N * 25 + "문항 풀어보기",
-  affiliation: "통합사회1 5파트 · 통합사회2 5파트 · 수능 풀어보기(채점·해설)",
-  motion: false, kind: "items", qn: 25, minutes: 40,
+  affiliation: "통합사회1 5파트 · 통합사회2 5파트 · 모션 노트 · 수능 풀어보기(채점·해설)",
+  motion: true, motionBlurb: "핵심 개념을 움직이는 그림으로 — 네 관점 가르기·문화 변동·도시화·기본권·정의관·무역·인구", kind: "items", qn: 25, minutes: 40,
   practiceBlurb: `평가원 예시문항 ${N}회 ${N * 25}문항 · 단원별 모아 풀기 · 채점·해설`,
   chapters,
   intro: `<h2>이 노트가 다루는 것</h2>
